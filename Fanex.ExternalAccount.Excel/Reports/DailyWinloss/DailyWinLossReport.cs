@@ -9,6 +9,12 @@
     internal class DailyWinLossReport : TemplateReport, IReportBuilder
     {
         private readonly DailyWinLossReportBuilder _builder;
+        private const int OddRowIndex = 1;
+        private const int EvenRowIndex = 3;
+        private const int FirstRowIndex = 0;
+        private const int FirstColumnIndex = 0;
+        private const int LastColumnIndex = 18;
+        private const int FirstColumnTotalIndex = 5;
 
         public DailyWinLossReport(string filePath, DailyWinLossReportBuilder builder)
             : base(filePath)
@@ -18,12 +24,6 @@
 
         public HSSFWorkbook Build()
         {
-            var data = _builder.Data;
-            if (data == null)
-            {
-                return null;
-            }
-
             var templateSheet = HssfWorkbook.GetSheet("Template");
             var resultSheet = HssfWorkbook.GetSheet("DailyWinLoss");
             if (_builder.IsBold)
@@ -31,28 +31,22 @@
                 BoldAllFonts();
             }
 
-            var rowId = 0;
-            const int colId = 0;
-            var mainTitle = BuildMainTitle(_builder.WinlostDate, _builder.RoleId);
-            resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
-            if (data.Count > 0)
-            {
-                WriteCells(resultSheet, templateSheet, colId);
-            }
-
+            BuildMainTitle(resultSheet);
+            WriteBodyReport(resultSheet, templateSheet);
             HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(templateSheet));
+
             return HssfWorkbook;
         }
 
-        private void WriteCells(ISheet resultSheet, ISheet templateSheet, int colId)
+        private void WriteBodyReport(ISheet resultSheet, ISheet templateSheet)
         {
-            var id = 1;
-            var rowId = 3;
-            const int totalColumn = 19;
-            var lastColumnIndex = colId + totalColumn - 1;
+            var index = 1;
+            var toRowId = 3;
+
             foreach (var item in _builder.Data)
             {
-                resultSheet.CopyRow(templateSheet, id % 2 == 0 ? 1 : 3, rowId, colId, lastColumnIndex);
+                var fromRowId = index % 2 == 0 ? OddRowIndex : EvenRowIndex;
+                resultSheet.CopyRow(templateSheet, fromRowId, toRowId, FirstColumnIndex, LastColumnIndex);
 
                 var values = new List<object>
                 {
@@ -76,19 +70,18 @@
                     item.AgWinlost,
                     item.AgWinlostPercent
                 };
-                resultSheet.GetRow(rowId).WriteCells(colId, values);
-                id++;
-                rowId++;
+                resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, values);
+                index++;
+                toRowId++;
             }
 
-            WriteTotal(resultSheet, templateSheet, rowId, colId, lastColumnIndex);
+            WriteTotal(resultSheet, templateSheet, toRowId);
         }
 
-        private void WriteTotal(ISheet resultSheet, ISheet templateSheet, int rowId, int colId,
-            int lastColumnIndex)
+        private void WriteTotal(ISheet resultSheet, ISheet templateSheet, int toRowIndex)
         {
             var data = _builder.Data;
-            resultSheet.CopyRow(templateSheet, 5, rowId, colId, lastColumnIndex);
+            resultSheet.CopyRow(templateSheet, FirstColumnTotalIndex, toRowIndex, FirstColumnIndex, LastColumnIndex);
             var values = new List<object>
             {
                 string.Empty,
@@ -126,11 +119,16 @@
                 !data.Sum(p => p.AgTO).Equals(0)
                     ? data.Sum(p => p.AgWinlost) / data.Sum(p => p.AgTO) * 100
                     : 0            };
-            resultSheet.GetRow(rowId).WriteCells(colId, values);
+
+            resultSheet.GetRow(toRowIndex).WriteCells(FirstColumnIndex, values);
         }
 
-        private static string BuildMainTitle(string winlostDate, int roleId)
-            => $"{(roleId == 5 ? "Super" : roleId == 4 ? "Master" : roleId == 3 ? "Agent" : "Member")} Daily Win Loss on {winlostDate}";
+        private void BuildMainTitle(ISheet resultSheet)
+        {
+            var mainTitle = $"{(_builder.RoleId == 5 ? "Super" : _builder.RoleId == 4 ? "Master" : _builder.RoleId == 3 ? "Agent" : "Member")} Daily Win Loss on {_builder.WinlostDate}";
+
+            resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
+        }
 
     }
 }

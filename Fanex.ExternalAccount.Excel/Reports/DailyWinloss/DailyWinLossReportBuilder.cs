@@ -30,11 +30,8 @@
 
             using (var report = new DailyWinLossReport(filePath, this))
             {
-                var hssfWorkbook = ((IReportBuilder)report).Build();
-                if (hssfWorkbook != null)
-                {
-                    hssfWorkbook.Write(mem);
-                }
+                var hssfWorkbook = report.Build();
+                hssfWorkbook.Write(mem);
             }
 
             return mem;

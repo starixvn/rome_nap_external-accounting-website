@@ -154,7 +154,7 @@
                 case CellType.Error:
                     newCell.SetCellValue(oldCell.ErrorCellValue);
                     break;
-                default:
+                case CellType.Formula:
                     newCell.CellFormula = oldCell.CellFormula;
                     break;
             }
