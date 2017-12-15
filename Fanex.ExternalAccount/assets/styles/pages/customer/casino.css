@@ -1,0 +1,59 @@
+﻿.tableInfo {
+  border: none;
+  border-color: #ccc;
+  border-collapse: collapse;
+  border-style: none;
+  width: 100%; }
+
+.tableInfo tr {
+  height: 26px; }
+
+td {
+  border: 1px solid #ccc; }
+
+.tdTitleLeft {
+  width: 15%;
+  text-align: right;
+  font-weight: bold;
+  border-left: none; }
+
+.tdTitleRight {
+  width: 15%;
+  text-align: right;
+  font-weight: bold; }
+
+.noneBorderLR {
+  border-left: none;
+  border-right: none; }
+
+.noneBorderR {
+  border-right: none; }
+
+.noneBorderL {
+  border-left: none; }
+
+.noneBorderT {
+  border-top: none; }
+
+.noneBorderB {
+  border-bottom: none; }
+
+.gameTitle {
+  text-align: center;
+  font-weight: bold;
+  width: 70px;
+  border-left: none; }
+
+.ptTitle {
+  text-align: center;
+  font-weight: bold; }
+
+.R {
+  text-align: right; }
+
+.C {
+  text-align: center; }
+
+select {
+  width: 61px !important; }
+

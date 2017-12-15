@@ -1372,33 +1372,6 @@ div#contentSplitter > div#msg {
   border-width: 1px;
   width: 147px; }
 
-/*#btnSearch, .btnSearch, #btnSearchLeftPanel {
-    background: url(../images/btn-bgsubmit-original.png) repeat-x scroll 5px center;
-    border: 1px solid #5897C3;
-    color: #fff;
-    cursor: pointer;
-    width: 80px;
-    height: 25px;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    text-align: center;
-    vertical-align: text-top;
-    padding-bottom: 2px;
-    text-indent: 0 !important;
-}
-
-    #btnSearch:hover, .btnSearch:hover {
-        background: url(../images/btn-bgsubmit-hover.png) repeat-x scroll 5px center;
-        border: 1px solid #5897C3;
-        color: #fff;
-        cursor: pointer;
-        width: 80px;
-        height: 25px;
-        border-radius: 3px;
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px;
-    }*/
 #exporttoexcel {
   float: right;
   margin: 3px 2px 3px 3px;

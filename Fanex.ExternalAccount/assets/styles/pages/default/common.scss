@@ -466,34 +466,6 @@ div#contentSplitter > div#msg {
     width: 147px;
 }
 
-/*#btnSearch, .btnSearch, #btnSearchLeftPanel {
-    background: url(../images/btn-bgsubmit-original.png) repeat-x scroll 5px center;
-    border: 1px solid #5897C3;
-    color: #fff;
-    cursor: pointer;
-    width: 80px;
-    height: 25px;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    text-align: center;
-    vertical-align: text-top;
-    padding-bottom: 2px;
-    text-indent: 0 !important;
-}
-
-    #btnSearch:hover, .btnSearch:hover {
-        background: url(../images/btn-bgsubmit-hover.png) repeat-x scroll 5px center;
-        border: 1px solid #5897C3;
-        color: #fff;
-        cursor: pointer;
-        width: 80px;
-        height: 25px;
-        border-radius: 3px;
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px;
-    }*/
-
 #exporttoexcel {
     float: right;
     margin: 3px 2px 3px 3px;
@@ -661,17 +633,17 @@ div#contentSplitter > div#msg {
     font-weight: bold;
 }
 
-    .tabDisableSuper:hover {
-        padding: 8px 0 0 20px;
-        float: right;
-        cursor: pointer;
-        width: 53px;
-        height: 25px;
-        position: absolute;
-        margin-left: 76px;
-        color: #0088cc !important;
-        font-weight: bold;
-    }
+.tabDisableSuper:hover {
+    padding: 8px 0 0 20px;
+    float: right;
+    cursor: pointer;
+    width: 53px;
+    height: 25px;
+    position: absolute;
+    margin-left: 76px;
+    color: #0088cc !important;
+    font-weight: bold;
+}
 
 .tabDisable {
     background: url(../images/arrow-icn.png) no-repeat 0 11px !important;

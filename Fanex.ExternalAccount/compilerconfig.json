@@ -54,5 +54,21 @@
   {
     "outputFile": "assets/styles/pages/customer/bet-limit.css",
     "inputFile": "assets/styles/pages/customer/bet-limit.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/pt-engine.css",
+    "inputFile": "assets/styles/pages/customer/pt-engine.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/live-casino.css",
+    "inputFile": "assets/styles/pages/customer/live-casino.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/virtual-sport.css",
+    "inputFile": "assets/styles/pages/customer/virtual-sport.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/casino.css",
+    "inputFile": "assets/styles/pages/customer/casino.scss"
   }
 ]
