@@ -25,9 +25,9 @@
     var statusJSON = JsonConvert.SerializeObject(status, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
 }
 <link href="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/Customer/Customer.css")" rel="stylesheet" type="text/css" />
 <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/Customer/PTEngine.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/assets/styles/pages/customer-setting.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/Customer/LiveCasino.css")" rel="stylesheet" type="text/css" />
 <div id="tabs" style="border:none">
     <ul class="tabs">
