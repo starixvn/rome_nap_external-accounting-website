@@ -72,9 +72,9 @@
                 </div>
             </div>
             <div id="viewInfo" class="view-info" data-ng-controller="ViewInfoController" data-ng-hide="{{model==null}}">
-                <div id="btnCustList" data-ng-hide="{{personalInfo.roleId.value == 1}}" class="{{className}} btn -list" data-ng-click="GetCustomerList()">{{personalInfo.custList.value}}</div>
-                <input id="btnStatement" type="button" class="{{className}} btn -green" data-ng-click="GetStatementList({{personalInfo.custId.value}})" value="Statement" />
-                <input id="btnBalance" type="button" data-ng-hide="{{personalInfo.roleId.value != 2}}" class="{{className}} btn -list" data-ng-click="GetBalance({{personalInfo.custId.value}})" value="Balance" />
+                <div id="btnCustList" data-ng-hide="{{personalInfo.roleId.value == 1}}" class="btn -list" data-ng-click="GetCustomerList()">{{personalInfo.custList.value}}</div>
+                <div id="btnStatement" class="btn -green" data-ng-click="GetStatementList({{personalInfo.custId.value}})">Statement</div>
+                <div id="btnBalance"data-ng-hide="{{personalInfo.roleId.value != 2}}" class="btn -special" data-ng-click="GetBalance({{personalInfo.custId.value}})">Balance</div>
             </div>
             <div id="balanceInfo" class="balance-info" data-ng-controller="BalanceDownlineInfoController" data-ng-hide="{{model==null}}">
                 <ul class="tabs nav-tabs">

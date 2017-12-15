@@ -195,6 +195,12 @@ a {
     .btn.-add:hover, .btn.-green:hover {
       background-color: #539c67;
       color: #fff; }
+  .btn.-special {
+    background-color: #dd852f;
+    color: #fff; }
+    .btn.-special:hover {
+      background-color: #d07822;
+      color: #fff; }
   .btn.-list {
     background-color: #637187;
     color: #fff; }

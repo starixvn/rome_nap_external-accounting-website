@@ -59,6 +59,16 @@
         }
     }
 
+    &.-special {
+        background-color: $btn-special-bg;
+        color: $btn-special-color;
+
+        &:hover {
+            background-color: $btn-special-bg-hover;
+            color: $btn-special-color-hover;
+        }
+    }
+
     &.-list {
         background-color: $btn-list-bg-hover;
         color: $btn-list-color-hover;

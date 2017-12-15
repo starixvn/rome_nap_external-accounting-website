@@ -77,9 +77,13 @@ body {
 }
 
 .icon-link {
-    font-size: 16px;
+    position: relative;
+    top: 3px;
+    margin-left: -5px;
+    font-size: 19px;
     cursor: pointer;
-    color: #fff;
+    color: #fff;    
+
     @media screen and (min-device-width: 768px) {
         color: #000;
     }
@@ -162,13 +166,13 @@ body {
 /* View info */
 
 .view-info {
-   float: left;
-   display: inline-block;
+   display: table;
+   border-spacing: 10px 0;
    width: 100%;
    padding: 16px 0 10px;
 
    .btn {
-       float: left;
+       display: table-cell;       
        margin-right: 10px;
        text-align: center;
 
@@ -319,7 +323,7 @@ body {
         position: relative;
         margin-right: 6px;
         padding: 0 25px 0 20px;
-        background-color: #5faa72;
+        background-color: #929292;
         color: #fff;  
         font-weight: bold;
         text-transform: uppercase;
