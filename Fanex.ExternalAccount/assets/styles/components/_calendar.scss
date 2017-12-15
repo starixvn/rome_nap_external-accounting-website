@@ -109,8 +109,13 @@ $font-family: 'Montserrat', sans-serif;
     @include border-radius(30px);
     background: #5faa73;    
     .ui-state-default {
-        background: #5faa73 !important;
         color: #fff;
+        height: 25px;
+        width: 26px;
+        background: #5faa73 !important;
+        border-radius: 50%;
+        line-height: 23px;
+        text-align: center;
     }
     @media all and (min-device-width: 768px) {
         @include border-radius(20px);
