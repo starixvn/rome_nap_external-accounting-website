@@ -70,5 +70,13 @@
   {
     "outputFile": "assets/styles/pages/customer/casino.css",
     "inputFile": "assets/styles/pages/customer/casino.scss"
+  },
+   {
+    "outputFile": "assets/styles/pages/statement/statement.css",
+    "inputFile": "assets/styles/pages/statement/statement.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/statement/guideline.css",
+    "inputFile": "assets/styles/pages/statement/guideline.scss"
   }
 ]

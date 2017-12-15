@@ -401,7 +401,13 @@ no-info {
     }
 }
 
-
+#msgNoinfo {
+    text-align: center;
+    padding: 12px 0 10px 50px;
+    color: #999;
+    font-weight: bold;
+    display: none;
+}
 
 
 

@@ -390,6 +390,8 @@ a {
     background-color: #f8eb95; }
   .table .width-60 {
     width: 60px; }
+  .table.width-700 {
+    width: 700px; }
 
 /*@font-face {
   font-family: 'AlphaAdmin';
@@ -1328,6 +1330,13 @@ no-info {
 
 .menuInactive:before, .permInactive:before {
   content: '\e901'; }
+
+#msgNoinfo {
+  text-align: center;
+  padding: 12px 0 10px 50px;
+  color: #999;
+  font-weight: bold;
+  display: none; }
 
 div#contentSplitter > div#msg {
   margin: 10px; }

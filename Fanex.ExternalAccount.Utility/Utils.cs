@@ -902,14 +902,14 @@ namespace Fanex.ExternalAccount.Utilities
         public static void EnableStatementBundle(this BundleCollection bundles)
         {
             // For css and js external group selection using
-            var bootstrapCss = new Bundle("~/bootstrap/Statement/css", new CssMinify());
+            //var bootstrapCss = new Bundle("~/bootstrap/Statement/css", new CssMinify());
             var bootstrapJs = new Bundle("~/bootstrap/Statement/js", new JsMinify());
 
-            var css = Config.CssStatement.Split(';');
+            //var css = Config.CssStatement.Split(';');
             var js = Config.JsStatement.Split(';');
 
-            bootstrapCss.Include(css);
-            bundles.Add(bootstrapCss);
+            //bootstrapCss.Include(css);
+            //bundles.Add(bootstrapCss);
 
             bootstrapJs.Include(js);
             bundles.Add(bootstrapJs);

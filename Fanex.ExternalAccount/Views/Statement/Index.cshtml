@@ -12,24 +12,14 @@
     var balanceUpDay = string.Format("{0:MM/dd/yyyy}", ReportService.BalanceUpDate);
     var moveBetsDay = string.Format("{0:MM/dd/yyyy}", ReportService.MoveBetsDate); 
 }
-<link rel="stylesheet" type="text/css" href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.css")"  />
-<link rel="stylesheet" type="text/css" href="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.css")" />
-<link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/Statement/Views/Report/Styles/Statement.css?ver=1")" />
-@if (HttpContext.Current.IsDebuggingEnabled)
-{
-    <link href="@Url.Content("~/Content/Statement/Statement.css")" rel="stylesheet" type="text/css" />
-}
-else
-{
-    <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/Statement/css")" rel="stylesheet" type="text/css" />
-}
+
 <div>
     <div class="page-title">
         <div class="wlDetail">
             Statement - <span id="StatementUsername">@Request.QueryString["username"]</span>
         </div>
     </div>
-    <div class="search-form pdr-normal">
+    <div class="search-form filterbox">
         <div class="searchBar floatL w100">
             <input type="hidden" id="MaxDate" value="@DateTime.Now"/>
             <div class="wFrom">@ViewLang.From</div>
@@ -41,7 +31,7 @@ else
                 <input id="dtpToDate" type="text" readonly="readonly" />
             </div>
             <div class="float-margin-left-normal">
-                <input type="button" value="Submit" id='Submit' class="btnSearch" />
+                <input type="button" value="Submit" id='Submit' class="btn -submit" />
             </div>
             <span id="view-guidelines-icon" class="note-info-message" title=""></span>
             <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel"></span>
