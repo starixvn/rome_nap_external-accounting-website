@@ -41,6 +41,8 @@
             return View(LeftPanelIndexView);
         }
 
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult GetData(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
         {
             ViewBag.UserId = CurrentSession.UserId;
@@ -54,6 +56,12 @@
 
             var model = _service.GetCustomerInfo(CurrentSession.UserId, string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId,
                 pageIndex);
+
+            ////var productStatusInfo = model.Get3rdPartyProducts(
+            ////    CurrentSession.UserId, 
+            ////    uplineId, 
+            ////    id, 
+            ////    model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
 
             model?.GetProductStatuses(CurrentSession.UserId, uplineId, id);
 

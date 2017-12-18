@@ -148,12 +148,12 @@
             </ul>
             <div id="tab-1" class="auto" style="height: 100%">
                 <div class="floatLeft" data-ng-repeat="editItem in setting.editItems">
-                    <div data-ng-hide="{{editItem.isHide }}" class="settingEdit floatLeft" title="{{editItem.tooltip}}" data-ng-click="{{editItem.key}}()">{{editItem.text}}</div>
+                    <div data-ng-hide="{{editItem.isHide || !enableItem.visibled}}" class="settingEdit floatLeft" title="{{editItem.tooltip}}" data-ng-click="{{editItem.key}}()">{{editItem.text}}</div>
                 </div>
                 <br />
                 <div class="floatLeft" data-ng-repeat="enableItem in setting.enableItems">
-                    <div data-ng-hide="{{enableItem.isHide}}" class="settingTitle floatLeft" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
-                    <div data-ng-hide="{{enableItem.isHide}}" class="floatLeft">
+                    <div data-ng-hide="{{enableItem.isHide || !enableItem.visibled}}" class="settingTitle floatLeft" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
+                    <div data-ng-hide="{{enableItem.isHide || !enableItem.visibled}}" class="floatLeft">
                         <input title="{{enableItem.tooltip}}" data-ng-disabled="{{enableItem.disabled}}" id="{{enableItem.key}}" type="checkbox" data-ng-model="enableItem.value"
                                data-ng-click="{{enableItem.key}}({{enableItem.value}}, '{{enableItem.key}}')" />
                     </div>
@@ -169,22 +169,22 @@
                 <div style="clear: both"></div>
                 <div id="edit">
                     <div class="detail icn-right" data-ng-repeat="item in setting.details">
-                        <a data-ng-hide="item.isHide" data-ng-click="{{item.key}}()" href="javascript:;">{{item.value}}</a>
+                        <a data-ng-hide="{{item.isHide || !item.visibled}}" data-ng-click="{{item.key}}()" href="javascript:;">{{item.value}}</a>
                     </div>
                 </div>
                 <div id="minMax" style="display: none">
                     <div class="detail icn-right" data-ng-repeat="minMaxPt in setting.minMaxPts">
-                        <a data-ng-hide="minMaxPt.isHide" data-ng-click="{{minMaxPt.key}}()" href="javascript:;">{{minMaxPt.value}}</a>
+                        <a data-ng-hide="{{minMaxPt.isHide || !minMaxPt.visibled}}" data-ng-click="{{minMaxPt.key}}()" href="javascript:;">{{minMaxPt.value}}</a>
                     </div>
                 </div>
                 <div id="superPT" style="display: none">
                     <div class="detail icn-right" data-ng-repeat="superPt in setting.superPts">
-                        <a data-ng-hide="superPt.isHide" data-ng-click="Super{{superPt.key}}()" href="javascript:;">{{superPt.value}}</a>
+                        <a data-ng-hide="{{superPt.isHide || !superPt.visibled}}" data-ng-click="Super{{superPt.key}}()" href="javascript:;">{{superPt.value}}</a>
                     </div>
                 </div>
                 <div id="masterPT" style="display: none">
                     <div class="detail icn-right" data-ng-repeat="masterPt in setting.masterPts">
-                        <a data-ng-hide="masterPt.isHide" data-ng-click="Master{{masterPt.key}}()" href="javascript:;">{{masterPt.value}}</a>
+                        <a data-ng-hide="{{masterPt.isHide || !masterPt.visibled}}" data-ng-click="Master{{masterPt.key}}()" href="javascript:;">{{masterPt.value}}</a>
                     </div>
                 </div>
             </div>

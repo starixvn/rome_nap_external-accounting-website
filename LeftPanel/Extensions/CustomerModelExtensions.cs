@@ -237,18 +237,18 @@
 
         public static CustomerModel GetProductStatuses(this CustomerModel model, int userId, string groupName, string username)
         {
-            var product = model.Get3rdPartyProducts(userId, groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
+            var productStatusInfo = model.Get3rdPartyProducts(userId, groupName, username, model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
             model.GetSuperMasterPtsOnMember();
-            model.RemoveEnableAndPtforProducts(product);
+            model.RemoveEnableAndPtforProducts(productStatusInfo);
 
-            if (product.RoleId.IsSuper())
+            if (productStatusInfo.RoleId.IsSuper())
             {
                 model.CheckConfig();
 
                 return model;
             }
 
-            model.DisableUplineStatuses(product);
+            model.CheckAndDisableStatusSettingFollowUpline(productStatusInfo);
 
             return model;
         }
@@ -262,22 +262,22 @@
 
             if (hideVS)
             {
-                model.RemoveProduct("VirtualSports");
+                model.RemoveProductSetting("VirtualSports");
             }
 
             if (hideKeno)
             {
-                model.RemoveProduct("Keno");
+                model.RemoveProductSetting("Keno");
             }
 
             if (hideGoldDeluxe)
             {
-                model.RemoveProduct("GoldDeluxe");
+                model.RemoveProductSetting("GoldDeluxe");
             }
 
             if (hideColossusBets)
             {
-                model.RemoveProduct("ColossusBets");
+                model.RemoveProductSetting("ColossusBets");
             }
 
             return model;
@@ -293,29 +293,29 @@
         {
             if (!product.SyncCasino)
             {
-                model.RemoveEnableProduct("EnableCasino");
+                model.RemoveProductStatusSetting("EnableCasino");
 
                 if (!product.UplineStatuses.SyncCasino)
                 {
-                    model.RemoveProduct("Casino")
-                        .RemoveCrossLevelProduct("Casino");
+                    model.RemoveProductSetting("Casino")
+                        .RemoveCrossLevelProductSetting("Casino");
                 }
             }
 
             if (!product.SyncLiveCasino)
             {
-                model.RemoveEnableProduct("EnableLiveCasino");
+                model.RemoveProductStatusSetting("EnableLiveCasino");
 
                 if (!product.UplineStatuses.SyncLiveCasino)
                 {
-                    model.RemoveProduct("LiveCasino")
-                        .RemoveCrossLevelProduct("LiveCasino");
+                    model.RemoveProductSetting("LiveCasino")
+                        .RemoveCrossLevelProductSetting("LiveCasino");
                 }
             }
 
             if (product.HideVirtualSports)
             {
-                model.RemoveEnableProduct("EnableVirtualSports");
+                model.RemoveProductStatusSetting("EnableVirtualSports");
 
                 bool hideVirtualSports = product.RoleId == 1 ?
                     product.UplineStatuses.HideVirtualSports :
@@ -323,59 +323,58 @@
 
                 if (hideVirtualSports)
                 {
-                    model.RemoveProduct("VirtualSports")
-                        .RemoveCrossLevelProduct("VirtualSports");
+                    model.RemoveProductSetting("VirtualSports")
+                        .RemoveCrossLevelProductSetting("VirtualSports");
                 }
             }
 
             if (product.HideEsports)
             {
-                model.RemoveEnableProduct("EnableESports")
-                    .RemoveProduct("ESports")
-                    .RemoveCrossLevelProduct("ESports");
+                model.RemoveProductStatusSetting("EnableESports")
+                    .RemoveProductSetting("ESports")
+                    .RemoveCrossLevelProductSetting("ESports");
             }
 
             if (product.HideGoldDeluxe)
             {
-                model.RemoveEnableProduct("EnableGoldDeluxe");
+                model.RemoveProductStatusSetting("EnableGoldDeluxe");
             }
 
             if (product.UplineStatuses.HideGoldDeluxe)
             {
-                model.RemoveProduct("GoldDeluxe")
-                    .RemoveCrossLevelProduct("GoldDeluxe");
+                model.RemoveProductSetting("GoldDeluxe")
+                    .RemoveCrossLevelProductSetting("GoldDeluxe");
             }
 
             if (product.HideColossusBets)
             {
-                model.RemoveEnableProduct("EnableColossusBets")
-                    .RemoveProduct("ColossusBets");
+                model.RemoveProductStatusSetting("EnableColossusBets")
+                    .RemoveProductSetting("ColossusBets");
             }
 
             if (product.HideSportsbook2)
             {
-                model.RemoveProduct("Sportsbook2")
-                    .RemoveCrossLevelProduct("Sportsbook2");
+                model.RemoveProductSetting("Sportsbook2")
+                    .RemoveCrossLevelProductSetting("Sportsbook2");
             }
 
             if (product.HideCockfighting)
             {
-                model.RemoveEnableProduct("EnableCockfighting")
-                    .RemoveProduct("Cockfighting")
-                    .RemoveCrossLevelProduct("Cockfighting");
+                model.RemoveProductStatusSetting("EnableCockfighting")
+                    .RemoveProductSetting("Cockfighting")
+                    .RemoveCrossLevelProductSetting("Cockfighting");
             }
 
             if (product.HideCricket)
             {
-                model.RemoveProduct("Cricket")
-                    .RemoveCrossLevelProduct("Cricket");
+                model.RemoveProductSetting("Cricket")
+                    .RemoveCrossLevelProductSetting("Cricket");
             }
 
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
-                0,
-                product.RoleId < 4 ? product.UplineStatuses.HideAllbet : product.HideAllbet,
-                product.RoleId < 4 ? product.UplineStatuses.SyncAllbet : product.SyncAllbet,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.HideAllbet : product.HideAllbet,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.SyncAllbet : product.SyncAllbet,
                 product.HideAllbet,
                 product.SyncAllbet,
                 product.SyncAllbetDownlines,
@@ -384,9 +383,8 @@
 
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
-                1,
-                product.RoleId < 4 ? product.UplineStatuses.HideVoidbridge : product.HideVoidbridge,
-                product.RoleId < 4 ? product.UplineStatuses.SyncVoidbridge : product.SyncVoidbridge,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.HideVoidbridge : product.HideVoidbridge,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.SyncVoidbridge : product.SyncVoidbridge,
                 product.HideVoidbridge,
                 product.SyncVoidbridge,
                 product.SyncVoidbridgeDownlines,
@@ -395,9 +393,8 @@
 
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
-                2,
-                product.RoleId < 4 ? product.UplineStatuses.HideNG2 : product.HideNG2,
-                product.RoleId < 4 ? product.UplineStatuses.SyncNG2 : product.SyncNG2,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.HideNG2 : product.HideNG2,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.SyncNG2 : product.SyncNG2,
                 product.HideNG2,
                 product.SyncNG2,
                 true,
@@ -405,9 +402,8 @@
 
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
-                3,
-                product.RoleId < 4 ? product.UplineStatuses.HideFishingWorld : product.HideFishingWorld,
-                product.RoleId < 4 ? product.UplineStatuses.SyncFishingWorld : product.SyncFishingWorld,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.HideFishingWorld : product.HideFishingWorld,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.SyncFishingWorld : product.SyncFishingWorld,
                 product.HideFishingWorld,
                 product.SyncFishingWorld,
                 product.SyncFishingWorldDownlines,
@@ -415,9 +411,8 @@
 
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
-                4,
-                product.RoleId < 4 ? product.UplineStatuses.HideLottery : product.HideLottery,
-                product.RoleId < 4 ? product.UplineStatuses.SyncLottery : product.SyncLottery,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.HideLottery : product.HideLottery,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.SyncLottery : product.SyncLottery,
                 product.HideLottery,
                 product.SyncLottery,
                 product.SyncLotteryDownlines,
@@ -425,9 +420,8 @@
 
             model.RemoveEnableAndEditProductDCS(
                 product.RoleId,
-                5,
-                product.RoleId < 4 ? product.UplineStatuses.HideLucky3 : product.HideLucky3,
-                product.RoleId < 4 ? product.UplineStatuses.SyncLucky3 : product.SyncLucky3,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.HideLucky3 : product.HideLucky3,
+                product.RoleId.IsNotSuper() ? product.UplineStatuses.SyncLucky3 : product.SyncLucky3,
                 product.HideLucky3,
                 product.SyncLucky3,
                 product.SyncLucky3Downlines,
@@ -439,7 +433,6 @@
         private static CustomerModel RemoveEnableAndEditProductDCS(
             this CustomerModel model,
             int roleId,
-            int productIndex,
             bool hideUpline,
             bool syncUpline,
             bool hide,
@@ -448,247 +441,233 @@
             string productName,
             bool isCheckSyncDownlineField = true)
         {
-            var showProductIndex = productIndex == 0 ? productIndex : productIndex * 2;
-            if (hide)
-            {
-                model.PersonalInfo.IsShowProducts[showProductIndex + 1].Value = false;
-            }
-
             if ((roleId.IsNotMember() && hide)
                 || (roleId.IsMember() && hideUpline))
             {
-                model.RemoveEnableProduct("Enable" + productName);
-                model.RemoveProduct(productName);
-
-                model.PersonalInfo.IsShowProducts[showProductIndex].Value = false;
-
-                if (roleId.IsMember())
-                {
-                    model.RemoveCrossLevelProduct(productName);
-                }
-
-                return model;
+                return RemoveProduct(model, roleId, productName, true);
             }
 
-            if (hideUpline || !syncUpline)
+            if (!syncUpline)
             {
-                model.RemoveEnableProduct("Enable" + productName);
-                if ((roleId.IsNotSuper())
+                if (roleId.IsNotSuper()
                     || (roleId.IsSuper() && hideUpline))
                 {
-                    model.RemoveProduct(productName);
+                    model.RemoveProductSetting(productName);
                 }
 
-                model.PersonalInfo.IsShowProducts[showProductIndex].Value = false;
-
-                if (roleId.IsMember())
-                {
-                    model.RemoveCrossLevelProduct(productName);
-                }
+                return RemoveProduct(model, roleId, productName, false);
             }
-            else if ((!sync && roleId.IsMember())
+
+            if ((!sync && roleId.IsMember())
                 || (!hide && !sync)
                 || (isCheckSyncDownlineField && !syncDownline))
             {
-                model.RemoveEnableProduct("Enable" + productName);
-                model.PersonalInfo.IsShowProducts[showProductIndex].Value = false;
-                if (roleId.IsMember())
-                {
-                    model.RemoveCrossLevelProduct(productName);
-                }
+                return RemoveProduct(model, roleId, productName, false);
             }
 
             return model;
         }
 
+        private static CustomerModel RemoveProduct(
+            CustomerModel model, 
+            int roleId, 
+            string productName, 
+            bool isRemoveProductSetting)
+        {
+            model.RemoveProductStatusSetting("Enable" + productName);
 
-        private static CustomerModel DisableUplineStatuses(this CustomerModel model, ProductStatuses product)
+            if (isRemoveProductSetting)
+            {
+                model.RemoveProductSetting(productName);
+            }
+
+            if (roleId.IsMember())
+            {
+                model.RemoveCrossLevelProductSetting(productName);
+            }
+
+            return model;
+        }
+
+        private static CustomerModel CheckAndDisableStatusSettingFollowUpline(this CustomerModel model, ProductStatuses product)
+        {
+            DisableNonProductStatusSettingFollowUpline(model, product);
+
+            DisableProductStatusSettingFollowUpline(model, product);
+
+            return model;
+        }
+
+        private static void DisableNonProductStatusSettingFollowUpline(CustomerModel model, ProductStatuses product)
         {
             if (!product.UplineStatuses.AllowDoubleComm)
             {
-                model.DisableProduct("DoubleComm");
-            }
-
-            if (product.UplineStatuses.DisableNumberGame)
-            {
-                model.DisableProduct("EnableNumberGame");
-            }
-
-            if (!product.UplineStatuses.AllowOutright)
-            {
-                model.DisableProduct("Outright");
-            }
-
-            if (product.UplineStatuses.DisableVirtualSports)
-            {
-                model.DisableProduct("EnableVirtualSports");
-            }
-
-            if (product.UplineStatuses.DisableESports)
-            {
-                model.DisableProduct("EnableESports");
-            }
-
-            if (product.UplineStatuses.DisableHRFixedOdds)
-            {
-                model.DisableProduct("EnableHRFixedOdds");
-            }
-
-            if (product.UplineStatuses.DisableCasino)
-            {
-                model.DisableProduct("EnableCasino");
-            }
-
-            if (product.UplineStatuses.DisableLiveCasino)
-            {
-                model.DisableProduct("EnableLiveCasino");
-            }
-
-            if (product.UplineStatuses.DisableGoldDeluxe)
-            {
-                model.DisableProduct("EnableGoldDeluxe");
-            }
-
-            if (product.UplineStatuses.DisableColossusBets)
-            {
-                model.DisableProduct("EnableColossusBets");
+                model.DisableStatusSetting("DoubleComm");
             }
 
             if (product.UplineStatuses.Closed)
             {
-                model.DisableProduct("Closed");
+                model.DisableStatusSetting("Closed");
             }
 
             if (product.UplineStatuses.Suspended)
             {
-                model.DisableProduct("Suspended");
+                model.DisableStatusSetting("Suspended");
+            }
+
+            if (!product.UplineStatuses.AllowOutright)
+            {
+                model.DisableStatusSetting("Outright");
+            }
+        }
+
+        private static void DisableProductStatusSettingFollowUpline(CustomerModel model, ProductStatuses product)
+        {
+            if (product.UplineStatuses.DisableNumberGame)
+            {
+                model.DisableStatusSetting("EnableNumberGame");
+            }
+
+            if (product.UplineStatuses.DisableVirtualSports)
+            {
+                model.DisableStatusSetting("EnableVirtualSports");
+            }
+
+            if (product.UplineStatuses.DisableESports)
+            {
+                model.DisableStatusSetting("EnableESports");
+            }
+
+            if (product.UplineStatuses.DisableHRFixedOdds)
+            {
+                model.DisableStatusSetting("EnableHRFixedOdds");
+            }
+
+            if (product.UplineStatuses.DisableCasino)
+            {
+                model.DisableStatusSetting("EnableCasino");
+            }
+
+            if (product.UplineStatuses.DisableLiveCasino)
+            {
+                model.DisableStatusSetting("EnableLiveCasino");
+            }
+
+            if (product.UplineStatuses.DisableGoldDeluxe)
+            {
+                model.DisableStatusSetting("EnableGoldDeluxe");
+            }
+
+            if (product.UplineStatuses.DisableColossusBets)
+            {
+                model.DisableStatusSetting("EnableColossusBets");
             }
 
             if (product.UplineStatuses.DisableAllbet)
             {
-                model.DisableProduct("EnableAllbet");
+                model.DisableStatusSetting("EnableAllbet");
             }
 
             if (product.UplineStatuses.DisableVoidbridge)
             {
-                model.DisableProduct("EnableMacauGames");
+                model.DisableStatusSetting("EnableMacauGames");
             }
 
             if (product.UplineStatuses.DisableNG2)
             {
-                model.DisableProduct("EnableNG2");
+                model.DisableStatusSetting("EnableNG2");
             }
 
             if (product.UplineStatuses.DisableFishingWorld)
             {
-                model.DisableProduct("EnableFishingWorld");
+                model.DisableStatusSetting("EnableFishingWorld");
             }
 
             if (product.UplineStatuses.DisableLottery)
             {
-                model.DisableProduct("EnableLottery");
+                model.DisableStatusSetting("EnableLottery");
             }
 
             if (product.UplineStatuses.DisableLucky3)
             {
-                model.DisableProduct("EnableLucky3");
+                model.DisableStatusSetting("EnableLucky3");
             }
-
-            return model;
         }
 
-        private static CustomerModel RemoveProduct(this CustomerModel model, string key)
+        private static CustomerModel RemoveProductSetting(this CustomerModel model, string key)
         {
-            int index = -1;
-            for (int i = 0; i < model.Setting.Details.Count; i++)
+            foreach (var detail in model.Setting.Details)
             {
-                if (model.Setting.Details[i].Key.Equals(key, StringComparison.OrdinalIgnoreCase))
+                if (detail.Key.Equals(key, StringComparison.OrdinalIgnoreCase))
                 {
-                    index = i;
+                    detail.Visibled = false;
+
                     break;
                 }
             }
 
-            if (index != -1)
-            {
-                model.Setting.Details.RemoveAt(index);
-            }
-
             return model;
         }
 
-        private static CustomerModel RemoveCrossLevelProduct(this CustomerModel model, string key)
+        private static CustomerModel RemoveCrossLevelProductSetting(this CustomerModel model, string key)
         {
-            int index = -1;
-            for (int i = 0; i < model.Setting.SuperPts.Count; i++)
+            foreach (var superPt in model.Setting.SuperPts)
             {
-                if (model.Setting.SuperPts[i].Key.Equals(key, StringComparison.OrdinalIgnoreCase))
+                if (superPt.Key.Equals(key, StringComparison.OrdinalIgnoreCase))
                 {
-                    index = i;
+                    superPt.Visibled = false;
+
                     break;
                 }
             }
 
-            if (index != -1)
-            {
-                model.Setting.MasterPts.RemoveAt(index);
-            }
-
             return model;
         }
 
-        private static CustomerModel RemoveEnableProduct(this CustomerModel model, string key)
+        private static CustomerModel RemoveProductStatusSetting(this CustomerModel model, string key)
         {
-            int index = -1;
-            for (int i = 0; i < model.Setting.EnableItems.Count; i++)
+            foreach (var enableItem in model.Setting.EnableItems)
             {
-                if (model.Setting.EnableItems[i].Key.Equals(key, StringComparison.OrdinalIgnoreCase))
+                if(enableItem.Key.Equals(key, StringComparison.OrdinalIgnoreCase))
                 {
-                    index = i;
-                    model.Setting.EnableItems.RemoveAt(index);
+                    enableItem.Visibled = false;
+
                     break;
                 }
             }
 
-            if (index == -1)
+            foreach (var editItem in model.Setting.EditItems)
             {
-                for (int i = 0; i < model.Setting.EditItems.Count; i++)
+                if (editItem.Key.Equals(key, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (model.Setting.EditItems[i].Key.Equals(key, StringComparison.OrdinalIgnoreCase))
-                    {
-                        index = i;
-                        model.Setting.EditItems.RemoveAt(index);
-                        break;
-                    }
-                }
-            }
+                    editItem.Visibled = false;
 
-            return model;
-        }
-
-        private static CustomerModel DisableProduct(this CustomerModel model, string key)
-        {
-            int index = -1;
-            for (int i = 0; i < model.Setting.EnableItems.Count; i++)
-            {
-                if (model.Setting.EnableItems[i].Key.Equals(key, StringComparison.OrdinalIgnoreCase))
-                {
-                    index = i;
                     break;
                 }
             }
 
-            if (index != -1)
+            return model;
+        }
+
+        private static CustomerModel DisableStatusSetting(this CustomerModel model, string key)
+        {
+            foreach (var enableItem in model.Setting.EnableItems)
             {
-                model.Setting.EnableItems[index].Disabled = true;
-                model.Setting.EnableItems[index].Tooltip = key.Equals("Closed", StringComparison.OrdinalIgnoreCase) ?
-                    "Upline has been closed" : key.Equals("Suspended", StringComparison.OrdinalIgnoreCase) ? "Upline has been suspended" : "Upline has been disabled";
+                if (enableItem.Key.Equals(key, StringComparison.OrdinalIgnoreCase))
+                {
+                    enableItem.Disabled = true;
+                    enableItem.Tooltip = key.Equals("Closed", StringComparison.OrdinalIgnoreCase) 
+                            ? "Upline has been closed" 
+                            : key.Equals("Suspended", StringComparison.OrdinalIgnoreCase) 
+                                ? "Upline has been suspended" 
+                                : "Upline has been disabled";
+                }
             }
 
             return model;
         }
 
-        private static ProductStatuses Get3rdPartyProducts(this CustomerModel model, int userId, string groupName, string username, int uplineId = 0)
+        public static ProductStatuses Get3rdPartyProducts(this CustomerModel model, int userId, string groupName, string username, int uplineId = 0)
         {
             IReportService report = new ReportService();
 
@@ -858,66 +837,78 @@
 
 
 
-        public static CustomerModel AddEnableAndDetailProduct(this CustomerModel model, DataTable table3rdDCS, int productId, string productName, string editBetLimitFunc = "", bool checkboxType = true, bool getFromRemotingRef = false)
+        public static CustomerModel AddEnableAndDetailProduct(
+            this CustomerModel model, 
+            DataTable table3rdDCS, 
+            int productId, 
+            string defaultProductName, 
+            string editBetLimitFunc = "", 
+            bool statusSettingIsCheckbox = true, 
+            bool getFromRemotingRef = false)
         {
 
-            var productNameNoSpace = productName.Replace(" ", string.Empty);
+            var productNameNoSpace = defaultProductName.Replace(" ", string.Empty);
 
-            model
-                .PersonalInfo
-                .IsShowProducts
-                .Add(new ObjectInfo
-                {
-                    Key = "isShow" + productNameNoSpace,
-                    Value = true
-                });
-            model
-                .PersonalInfo
-                .IsShowProducts
-                .Add(new ObjectInfo
-                {
-                    Key = "isShow" + productNameNoSpace + "Betting",
-                    Value = !string.IsNullOrEmpty(editBetLimitFunc)
-                            && IsAuthorized(CurrentSession.Instance.UserId, editBetLimitFunc, AuthenticateAction.AuthenticationType.Read)
-                });
-
-            if (table3rdDCS.Select("ProductID = " + productId).Length > 0
-                && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]))
+            if (IsProductVisibledToSite(table3rdDCS, productId, defaultProductName))
             {
-                var productDataRow = table3rdDCS.Select("ProductID = " + productId)[0];
+                var productDataRow = table3rdDCS.Select($"ProductID = {productId}")[0];
                 var isDisabled = Utils.ToBoolean(productDataRow["isDisabled"]);
+                string productName = GetProductName(productId, defaultProductName, getFromRemotingRef);
 
-                var name = getFromRemotingRef
-                    ? RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en-US", productName)
-                    : productName;
+                AddEditSettingLink(model, productNameNoSpace, productName);
 
-                model.Setting.Details.Add(
-                    new ObjectInfo
-                    {
-                        Key = productNameNoSpace, Value = "Edit " + name
-                    });
-
-                if (checkboxType)
+                if (statusSettingIsCheckbox)
                 {
-                    model.Setting.EnableItems.Add(new ObjectInfo
-                    {
-                        Key = "Enable" + productNameNoSpace,
-                        Value = !isDisabled,
-                        Text = name,
-                        Tooltip = "Enable " + name
-                    });
+                    AddEnableCheckboxItem(model, productNameNoSpace, isDisabled, productName);
                 }
                 else
                 {
-                    model.Setting.EditItems.Add(new ObjectInfo
-                    {
-                        Key = "Enable" + productNameNoSpace,
-                        Text = "Enable " + name
-                    });
+                    AddEnableLinkItem(model, productNameNoSpace, productName);
                 }
             }
 
             return model;
         }
+
+        private static void AddEditSettingLink(CustomerModel model, string productNameNoSpace, string productName)
+        => model.Setting.Details.Add(
+                                new ObjectInfo
+                                {
+                                    Key = productNameNoSpace,
+                                    Value = $"Edit {productName}"
+                                });
+
+        private static bool IsProductVisibledToSite(DataTable table3rdDCS, int productId, string defaultProductName)
+         => table3rdDCS.Select("ProductID = " + productId).Length > 0
+                && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + defaultProductName.Replace(" ", string.Empty)]);
+
+        private static string GetProductName(int productId, string productName, bool getFromRemotingRef)
+        => getFromRemotingRef
+                ? RefData.GetResourceDataByRefIdAndResourceId(
+                        "Product", 
+                        productId.ToString(), 
+                        "en-US", 
+                        productName)
+                : productName;
+
+        private static void AddEnableLinkItem(CustomerModel model, string productNameNoSpace, string name)
+            => model.Setting.EditItems.Add(new ObjectInfo
+            {
+                Key = $"Enable{productNameNoSpace}",
+                Text = $"Enable {name}"
+            });
+
+        private static void AddEnableCheckboxItem(
+            CustomerModel model, 
+            string productNameNoSpace, 
+            bool isDisabled, 
+            string name)
+            => model.Setting.EnableItems.Add(new ObjectInfo
+            {
+                Key = $"Enable{productNameNoSpace}",
+                Value = !isDisabled,
+                Text = name,
+                Tooltip = $"Enable {name}"
+            });
     }
 }

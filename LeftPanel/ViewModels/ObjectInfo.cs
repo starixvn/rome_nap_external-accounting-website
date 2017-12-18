@@ -49,5 +49,7 @@
         public string Tooltip { get; set; }
 
         public bool Disabled { get; set; }
+
+        public bool Visibled { get; set; } = true;
     }
 }
