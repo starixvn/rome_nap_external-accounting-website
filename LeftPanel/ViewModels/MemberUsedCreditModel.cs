@@ -15,9 +15,9 @@
         {
             get
             {
-                if (this.MemberUsedCreditItems != null && this.MemberUsedCreditItems.Count > 0)
+                if (MemberUsedCreditItems != null && MemberUsedCreditItems.Count > 0)
                 {
-                    return this.MemberUsedCreditItems.Where(o => o.IsClosed == false).ToList();
+                    return MemberUsedCreditItems.Where(o => !o.IsClosed).ToList();
                 }
 
                 return null;
@@ -28,9 +28,9 @@
         {
             get
             {
-                if (this.MemberUsedCreditItems != null && this.MemberUsedCreditItems.Count > 0)
+                if (MemberUsedCreditItems != null && MemberUsedCreditItems.Count > 0)
                 {
-                    return this.MemberUsedCreditItems.Where(o => o.IsClosed == true).ToList();
+                    return MemberUsedCreditItems.Where(o => o.IsClosed).ToList();
                 }
 
                 return null;
@@ -41,12 +41,12 @@
         {
             get
             {
-                if (this.MemberUsedCreditItems == null || this.MemberUsedCreditItems.Count == 0)
+                if (MemberUsedCreditItems == null || MemberUsedCreditItems.Count == 0)
                 {
                     return 0m;
                 }
 
-                return this.MemberUsedCreditItems.Where(x => x.IsClosed == false).Sum(o => o.Amount);                
+                return this.MemberUsedCreditItems.Where(x => !x.IsClosed).Sum(o => o.Amount);                
             }
         }
 
@@ -54,12 +54,12 @@
         {
             get
             {
-                if (this.MemberUsedCreditItems == null || this.MemberUsedCreditItems.Count == 0)
+                if (MemberUsedCreditItems == null || MemberUsedCreditItems.Count == 0)
                 {
                     return 0m;
                 }
 
-                return this.MemberUsedCreditItems.Where(x => x.IsClosed == true).Sum(o => o.Amount);
+                return MemberUsedCreditItems.Where(x => x.IsClosed).Sum(o => o.Amount);
             }
         }
     }
