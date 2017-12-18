@@ -31,23 +31,34 @@
 
         public static bool DisableOutright(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableOutright"]);
 
-        public static bool DisableCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableCasino"]);
+        public static bool EnableOutright(this DataRow dataRow) => !DisableOutright(dataRow);
 
-        public static bool DisableNumber(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableNumber"]);
+        public static bool DisableCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableCasino"]);
+        public static bool EnableCasino(this DataRow dataRow) => !DisableCasino(dataRow);
+
+        public static bool DisableNumberGame(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableNumber"]);
+
+        public static bool EnableNumberGame(this DataRow dataRow) => !DisableNumberGame(dataRow);
 
         public static bool DisableLiveCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableLiveCasino"]);
 
+        public static bool EnableLiveCasino(this DataRow dataRow) => !DisableLiveCasino(dataRow);
+
         public static bool EnableDoubleComm(this DataRow dataRow) => Utils.ToBoolean(dataRow["doubleCommLosing"]);
 
-        public static bool EnableHorseRacingFixedOdds(this DataRow dataRow) => Utils.ToBoolean(dataRow["DisableHRFixedOdds"]);
+        public static bool EnableHorseRacingFixedOdds(this DataRow dataRow) => !Utils.ToBoolean(dataRow["DisableHRFixedOdds"]);
 
         public static bool DisableESports(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableESports"]);
 
+        public static bool EnableESports(this DataRow dataRow) => !DisableESports(dataRow);
+
         public static bool DisableColossusBet(this DataRow dataRow) => Utils.ToBoolean(dataRow["DisableColossusBet"]);
 
-        public static bool SyncCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncCasino"]);
+        public static bool EnableColossusBet(this DataRow dataRow) => !DisableColossusBet(dataRow);
 
-        public static bool SyncLiveCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncLiveCasino"]);
+        public static bool IsSyncedCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncCasino"]);
+
+        public static bool IsSyncedLiveCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncLiveCasino"]);
 
         public static decimal MasterCash(this DataRow dataRow) => Utils.ToDecimal(dataRow["masterCash"]);
 

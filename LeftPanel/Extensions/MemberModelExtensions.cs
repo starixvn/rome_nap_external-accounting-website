@@ -23,13 +23,13 @@
 
             model.PersonalInfo.UplineId = new ObjectInfo
             {
-                Value = Utils.ToInt32(lineRow["agentID"]),
+                Value = lineRow.AgentId(),
                 Text = "Agent ID"
             };
 
             model.PersonalInfo.CurrentLevel = new ObjectInfo
             {
-                Value = Utils.ToString(lineRow["memberName"]),
+                Value = lineRow.MemberName(),
                 Text = "Member"
             };
 
@@ -37,20 +37,20 @@
             {
                 new ObjectInfo
                 {
-                    Key = lineRow.ToInt32("superID").ToString(),
-                    Value = Utils.ToString(lineRow["superName"]),
+                    Key = lineRow.SuperId().ToString(),
+                    Value = lineRow.SuperName(),
                     Text = "Super"
                 },
                 new ObjectInfo
                 {
-                    Key = lineRow.ToInt32("masterID").ToString(),
-                    Value = Utils.ToString(lineRow["masterName"]),
+                    Key = lineRow.MasterId().ToString(),
+                    Value = lineRow.MasterName(),
                     Text = "Master"
                 },
                 new ObjectInfo
                 {
-                    Key = lineRow.ToInt32("agentID").ToString(),
-                    Value = Utils.ToString(lineRow["agentName"]),
+                    Key = lineRow.AgentId().ToString(),
+                    Value = lineRow.AgentName(),
                     Text = "Agent"
                 }
             };
@@ -117,8 +117,8 @@
         {
             return new List<ObjectInfo>
             {
-                new ObjectInfo("SyncCasino", Utils.ToBoolean(customerRow["syncCasino"]), "Casino Synced"),
-                new ObjectInfo("SyncLiveCasino", Utils.ToBoolean(customerRow["syncLiveCasino"]), "Live Casino Synced"),
+                new ObjectInfo("SyncCasino", customerRow.IsSyncedCasino(), "Casino Synced"),
+                new ObjectInfo("SyncLiveCasino", customerRow.IsSyncedLiveCasino(), "Live Casino Synced"),
                 new ObjectInfo("HideAllbet", Get3rdProductStatus(table3RdDcs, 21)),
                 new ObjectInfo("HideVoidbridge", Get3rdProductStatus(table3RdDcs, 22)),
                 new ObjectInfo("HideNG2", GetNG2ProductStatus(table3RdDcs)),
@@ -154,83 +154,20 @@
             return drowVirtualSports.Length > 0 && !Utils.ToBoolean(drowVirtualSports[0]["isDisabled"]);
         }
 
-        private static List<ObjectInfo> EnableItems(DataRow customerRow, DataTable table3rdDCS)
+        private static List<ObjectInfo> EnableItems(DataRow customerRow, DataTable table3rdDCS) => new List<ObjectInfo>
         {
-            return new List<ObjectInfo>
-            {
-                new ObjectInfo
-                {
-                    Key = "Closed",
-                    Value = Utils.ToBoolean(customerRow["closed"]),
-                    Text = "Closed"
-                },
-                new ObjectInfo
-                {
-                    Key = "Suspended",
-                    Value = Utils.ToBoolean(customerRow["suspended"]),
-                    Text = "Suspened"
-                },
-                new ObjectInfo
-                {
-                    Key = "Outright",
-                    Value = !Utils.ToBoolean(customerRow["disableOutright"]),
-                    Text = "Allow Outright"
-                },
-                new ObjectInfo
-                {
-                    Key = "EnableCasino",
-                    Value = !Utils.ToBoolean(customerRow["disableCasino"]),
-                    Text = "Enable Casino"
-                },
-                new ObjectInfo
-                {
-                    Key = "EnableNumberGame",
-                    Value = !Utils.ToBoolean(customerRow["disableNumber"]),
-                    Text = "Enable Num Game",
-                    Tooltip = "Enable Number Game"
-                },
-                new ObjectInfo
-                {
-                    Key = "EnableLiveCasino",
-                    Value = !Utils.ToBoolean(customerRow["disableLiveCasino"]),
-                    Text = "Enable Live Casino"
-                },
-                new ObjectInfo
-                {
-                    Key = "EnableVirtualSports",
-                    Value = GetVirtualSportsStatus(table3rdDCS),
-                    Text = "Virtual Sports"
-                },
-                new ObjectInfo
-                {
-                    Key = "DoubleComm",
-                    Value = Utils.ToBoolean(customerRow["doubleCommLosing"]),
-                    Text = "Double Comm",
-                    Tooltip = "Enable Double Commission"
-                },
-                new ObjectInfo
-                {
-                    Key = "EnableHRFixedOdds",
-                    Value = !customerRow.ToBoolean("DisableHRFixedOdds"),
-                    Text = "HR Fixed Odds",
-                    Tooltip = "Enable Horse Racing Fixed Odds"
-                },
-                new ObjectInfo
-                {
-                    Key = "EnableESports",
-                    Value = !Utils.ToBoolean(customerRow["disableESports"]),
-                    Text = "E-Sports",
-                    Tooltip = "Enable E-Sports"
-                },
-                new ObjectInfo
-                {
-                    Key = "EnableColossusBets",
-                    Value = !Utils.ToBoolean(customerRow["DisableColossusBet"]),
-                    Text = "Colossus Bets",
-                    Tooltip = "Enable Colossus Bets"
-                }
-            };
-        }
+            new ObjectInfo("Closed", customerRow.Closed(),"Closed"),
+            new ObjectInfo("Suspended",customerRow.Suspended(),"Suspened"),
+            new ObjectInfo("Outright", customerRow.EnableOutright(),"Allow Outright"),
+            new ObjectInfo("EnableCasino",  customerRow.EnableCasino(),"Enable Casino"),
+            new ObjectInfo("EnableNumberGame", customerRow.EnableNumberGame(),"Enable Num Game", "Enable Number Game"),
+            new ObjectInfo("EnableLiveCasino", customerRow.EnableLiveCasino(),"Enable Live Casino"),
+            new ObjectInfo("EnableVirtualSports", GetVirtualSportsStatus(table3rdDCS),"Virtual Sports"),
+            new ObjectInfo("DoubleComm", customerRow.EnableDoubleComm(),"Double Comm",  "Enable Double Commission"),
+            new ObjectInfo("EnableHRFixedOdds",  customerRow.EnableHorseRacingFixedOdds(),"HR Fixed Odds",  "Enable Horse Racing Fixed Odds"),
+            new ObjectInfo("EnableESports",customerRow.EnableESports(),"E-Sports",  "Enable E-Sports"),
+            new ObjectInfo("EnableColossusBets",  customerRow.EnableColossusBet(),"Colossus Bets", "Enable Colossus Bets" )
+        };
 
         public static CustomerModel GetSuperMasterPtsOnMember(this CustomerModel model)
         {
