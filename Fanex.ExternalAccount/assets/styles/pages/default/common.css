@@ -392,12 +392,26 @@ a {
     background-color: #6f7d95;
     color: #fff;
     text-align: center; }
+  .table .col-no {
+    width: 40px;
+    text-align: right; }
   .table tr:hover td {
     background-color: #f8eb95; }
   .table .width-60 {
     width: 60px; }
   .table.width-700 {
     width: 700px; }
+  .table .col-130 {
+    width: 130px; }
+  .table .col-100 {
+    width: 100px; }
+
+#tbl-report tbody .align-right, #tbl-report tfoot .align-right {
+  text-align: right; }
+
+#tbl-report tfoot .row-grand-total td {
+  font-weight: bold;
+  background: #f1f1a6; }
 
 /*@font-face {
   font-family: 'AlphaAdmin';
@@ -1282,7 +1296,8 @@ textarea {
     color: #fff; }
 
 .icon-excel {
-  font-size: 16px; }
+  font-size: 16px;
+  border: none !important; }
 
 /* Popup grant permission in group management*/
 .group-name {

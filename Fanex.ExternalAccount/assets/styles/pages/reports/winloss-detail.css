@@ -2,6 +2,10 @@
   border-radius: 0 !important;
   border: 1px solid #7b7c7e; }
 
+#mainGrid {
+  width: 100%;
+  overflow: auto; }
+
 #GroupProducts {
   height: 32px;
   border: 1px solid #7b7c7e;

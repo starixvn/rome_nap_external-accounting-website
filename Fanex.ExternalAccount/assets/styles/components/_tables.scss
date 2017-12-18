@@ -17,7 +17,10 @@
         color: $table-header-color;
         text-align: center;
     }
-
+    .col-no {
+        width: 40px;
+        text-align: right;
+    }
     tr:hover td {
 	    background-color: $table-td-hover-color;
     }
@@ -28,6 +31,23 @@
 
     &.width-700 {
         width: 700px;
+    }
+    .col-130 {
+        width: 130px;
+    }
+    .col-100 {
+        width: 100px;
+    }
+}
+
+
+#tbl-report {
+    tbody .align-right, tfoot .align-right {
+        text-align: right;
+    }
+    tfoot .row-grand-total td {
+        font-weight: bold;
+        background: #f1f1a6;
     }
 }
 

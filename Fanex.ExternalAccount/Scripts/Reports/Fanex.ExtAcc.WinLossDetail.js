@@ -463,7 +463,7 @@ Fanex.ExtAcc.WinLossDetail = {
 
     renderFooter: function (grandTotal) {
         var html = $this.renderRow(grandTotal, true);
-        html += '<tr><td><div id="report-pager"></div></td></tr>';
+        html += '<tr><td colspan="19"><div id="report-pager"></div></td></tr>';
 
         return html;
     },

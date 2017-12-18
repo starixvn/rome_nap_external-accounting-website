@@ -329,7 +329,7 @@ Fanex.ExtAcc.DailyWinLoss = {
                         <td colspan="2" class="align-right">Grand Total</td>';
         } else {
             html = '<tr class="hide">\
-                        <td class="align-right">' + rowNo + '</td>\
+                        <td class="align-right"><div class="col-no">' + rowNo + '</div></td>\
                         <td>' + $this.renderUsernameColumn(row.Username, row.CustId) + '</td>';
         }
 
@@ -370,7 +370,7 @@ Fanex.ExtAcc.DailyWinLoss = {
     },
     renderFooter: function (grandTotal) {
         var html = $this.renderRow(grandTotal, true);
-        html += '<tr><td><div id="report-pager"></div></td></tr>';
+        html += '<tr><td colspan="19"><div id="report-pager"></div></td></tr>';
 
         return html;
     },
