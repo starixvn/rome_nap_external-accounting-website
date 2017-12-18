@@ -311,7 +311,8 @@
             ViewBag.custId = custId;
             ViewBag.roleId = roleId;
             ViewBag.Username = username;
-            return PartialViewBase(SecurityCodeIndexView);
+
+            return PartialView(SecurityCodeIndexView);
         }
 
         [HttpPost]

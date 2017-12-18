@@ -2,7 +2,7 @@
 {
     public class Menu
     {
-        public int MenuId { get; set; }
+        public int MenuID { get; set; }
 
         public string MenuName { get; set; }
 
@@ -10,11 +10,11 @@
 
         public string Url { get; set; }
 
-        public int FuncId { get; set; }
+        public int FuncID { get; set; }
 
         public string FuncName { get; set; }
 
-        public int ParentId { get; set; }
+        public int ParentID { get; set; }
 
         public string ParentName { get; set; }
 

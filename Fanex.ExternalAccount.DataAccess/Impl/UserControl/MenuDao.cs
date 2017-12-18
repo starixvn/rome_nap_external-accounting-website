@@ -26,13 +26,13 @@
                         {
                             result.Add(new Menu
                             {
-                                MenuId = reader.ToInt32("MenuID"),
+                                MenuID = reader.ToInt32("MenuID"),
                                 MenuName = reader.ToString("MenuName"),
                                 MenuDesc = reader.ToString("MenuDesc"),
-                                ParentId = reader.ToInt32("ParentID"),
+                                ParentID = reader.ToInt32("ParentID"),
                                 ParentName = reader.ToString("ParentName"),
                                 Url = reader.ToString("Url"),
-                                FuncId = reader.ToInt32("FuncID"),
+                                FuncID = reader.ToInt32("FuncID"),
                                 FuncName = reader.ToString("FuncName"),
                                 DisplayOrder = reader.ToInt32("DisplayOrder"),
                                 ModifiedDate = reader.ToString("ModifiedDate"),
@@ -64,12 +64,12 @@
                                      let parentId = c.Field<int>("ParentID")
                                      select new Menu
                                      {
-                                         MenuId = c.Field<int>("MenuID"),
+                                         MenuID = c.Field<int>("MenuID"),
                                          MenuName = c.Field<string>("MenuName"),
-                                         ParentId = c.Field<int>("ParentID"),
+                                         ParentID = c.Field<int>("ParentID"),
                                          ParentName = c.Field<string>("ParentName"),
                                          Url = c.Field<string>("Url"),
-                                         FuncId = c.Field<int>("FuncID"),
+                                         FuncID = c.Field<int>("FuncID"),
                                          DisplayOrder = c.Field<int>("DisplayOrder"),
                                          IsActive = c.Field<bool>("Active")
                                      }).ToList();

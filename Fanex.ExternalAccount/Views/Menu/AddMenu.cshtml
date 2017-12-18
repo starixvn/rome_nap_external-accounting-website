@@ -17,7 +17,7 @@
         </tr>
         <tr>
             <td style="width: 80px; text-align: right">
-                @Html.HiddenFor(m => m.MenuId) @Html.LabelFor(m => m.MenuName, ViewLang.MenuItem, new { @class = "divMargin" })
+                @Html.HiddenFor(m => m.MenuID) @Html.LabelFor(m => m.MenuName, ViewLang.MenuItem, new { @class = "divMargin" })
             </td>
             <td>
                 @Html.TextBoxFor(m => m.MenuName, new { @class = "editControl" })
@@ -41,13 +41,13 @@
         </tr>
         <tr>
             <td style="text-align: right">
-                @Html.LabelFor(m => m.FuncId, ViewLang.Function, new { @class = "divMargin" })
+                @Html.LabelFor(m => m.FuncID, ViewLang.Function, new { @class = "divMargin" })
             </td>
             <td class="groupCboMenu">
                 <select id="FuncID" name="FuncID" class="cboControl">
                     @foreach (var item in funcList)
                     {
-                        <option value="@item.FuncID" @(item.FuncID == Model.FuncId ? "selected=selected" : "") @(item.ParentID != 0 ? "class=subItem" : "")>@item.FuncName</option>
+                        <option value="@item.FuncID" @(item.FuncID == Model.FuncID ? "selected=selected" : "") @(item.ParentID != 0 ? "class=subItem" : "")>@item.FuncName</option>
                     }
                 </select>
             </td>
@@ -61,7 +61,7 @@
                     <option value="-1">@ViewLang.None</option>
                     @foreach (var item in menuList)
                     {
-                        <option value="@item.MenuId" @(item.MenuId == Model.ParentId ? "selected=selected" : "") @(item.ParentId != 0 ? "class=subItem" : "")>@item.MenuName</option>
+                        <option value="@item.MenuID" @(item.MenuID == Model.ParentID ? "selected=selected" : "") @(item.ParentID != 0 ? "class=subItem" : "")>@item.MenuName</option>
                     }
                 </select>
             </td>

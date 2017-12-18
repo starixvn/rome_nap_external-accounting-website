@@ -52,7 +52,7 @@
         [AntiXSRFFilter]
         public ActionResult EditMenu(int id)
         {
-            var model = _menuService.GetAllMenus().FirstOrDefault(o => o.MenuId == id);
+            var model = _menuService.GetAllMenus().FirstOrDefault(o => o.MenuID == id);
 
             if (model != null)
             {
@@ -140,12 +140,12 @@
         private List<Menu> GetAllMenus()
         {
             var menuList = _menuService.GetAllMenus();
-            var parents = menuList.Where(x => x.ParentId == 0);
+            var parents = menuList.Where(x => x.ParentID == 0);
             var list = new List<Menu>();
             foreach (var parent in parents)
             {
                 list.Add(parent);
-                var items = menuList.Where(x => x.ParentId != 0 && x.ParentId == parent.MenuId);
+                var items = menuList.Where(x => x.ParentID != 0 && x.ParentID == parent.MenuID);
                 if (items.Any())
                 {
                     list.AddRange(items);
@@ -160,7 +160,7 @@
         private List<Menu> GetMenus()
         {
             var menuList = new CachingService().GetUserCache(CurrentSession.UserId).MenuList;
-            var parents = menuList.Where(x => x.ParentId == 0);
+            var parents = menuList.Where(x => x.ParentID == 0);
             var list = new List<Menu>();
             foreach (var parent in parents)
             {
