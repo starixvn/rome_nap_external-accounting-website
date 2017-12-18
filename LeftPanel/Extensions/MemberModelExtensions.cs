@@ -285,9 +285,7 @@
 
             if (product.Count > 0)
             {
-                product
-                    .FirstOrDefault()
-                    .Value = productName;
+                product[0].Value = productName;
             }
 
             model.Setting.SuperPts = model.Setting.MasterPts;

@@ -1,12 +1,4 @@
-﻿
-
-
-
-
-
-
-
-namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
     using System;
     using System.Collections.Generic;
@@ -141,6 +133,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
                         }
 
                         break;
+
                     case AuthenticateAction.AuthenticationType.Host:
                         if (firstItem.Policy == EPolicy.Read)
                         {

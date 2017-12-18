@@ -207,6 +207,7 @@
     <Compile Include="App_Start\ModuleRegistrator.cs" />
     <Compile Include="Controllers\SearchCustomerController.cs" />
     <Compile Include="Criteria\RemoveOTPCriteria.cs" />
+    <Compile Include="Extensions\DataRowExtensions.cs" />
     <Compile Include="Extensions\MemberModelExtensions.cs" />
     <Compile Include="Extensions\AgentModelExtensions.cs" />
     <Compile Include="Extensions\MasterModelExtensions.cs" />
