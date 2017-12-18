@@ -1094,6 +1094,7 @@
     <Content Include="Areas\Statement\StatementSection.config" />
     <Content Include="Areas\Statement\Views\Guideline\MemberGuildeline.cshtml" />
     <Content Include="Areas\Statement\Views\Guideline\SMAGuildeline.cshtml" />
+    <Content Include="Areas\Statement\Views\Guideline\Styles\Guideline.less" />
     <Content Include="Areas\Statement\Views\Report\Index.cshtml" />
     <Content Include="Areas\Statement\Views\Report\Scripts\StatementReportManager.js" />
     <Content Include="Areas\Statement\Views\Report\Styles\Images\information-icon2.png" />
@@ -1141,7 +1142,6 @@
     <Content Include="assets\styles\images\important.gif" />
     <Content Include="assets\styles\images\info.gif" />
     <Content Include="assets\styles\images\info.png" />
-    <Content Include="assets\styles\images\information-icon2.png" />
     <Content Include="assets\styles\images\loading.gif" />
     <Content Include="assets\styles\images\login-logo.png" />
     <Content Include="assets\styles\images\logo.png" />
@@ -1176,6 +1176,12 @@
     <Content Include="assets\styles\pages\customer\bet-limit.min.css">
       <DependentUpon>bet-limit.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\customer\casino.css">
+      <DependentUpon>casino.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\casino.min.css">
+      <DependentUpon>casino.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\pages\customer\customer-setting.css">
       <DependentUpon>customer-setting.scss</DependentUpon>
     </Content>
@@ -1188,11 +1194,29 @@
     <Content Include="assets\styles\pages\customer\keno-setting.min.css">
       <DependentUpon>keno-setting.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\customer\live-casino.css">
+      <DependentUpon>live-casino.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\live-casino.min.css">
+      <DependentUpon>live-casino.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\pt-engine.css">
+      <DependentUpon>pt-engine.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\pt-engine.min.css">
+      <DependentUpon>pt-engine.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\pages\customer\racing-setting.css">
       <DependentUpon>racing-setting.scss</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\customer\racing-setting.min.css">
       <DependentUpon>racing-setting.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\virtual-sport.css">
+      <DependentUpon>virtual-sport.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\virtual-sport.min.css">
+      <DependentUpon>virtual-sport.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\default\common.css">
       <DependentUpon>common.scss</DependentUpon>
@@ -1217,18 +1241,6 @@
     </Content>
     <Content Include="assets\styles\pages\reports\winloss-detail.min.css">
       <DependentUpon>winloss-detail.css</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\statement\guideline.css">
-      <DependentUpon>guideline.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\statement\guideline.min.css">
-      <DependentUpon>guideline.css</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\statement\statement.css">
-      <DependentUpon>statement.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\statement\statement.min.css">
-      <DependentUpon>statement.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\vendors-extensions\bootstrap-ex.css">
       <DependentUpon>bootstrap-ex.scss</DependentUpon>
@@ -1551,13 +1563,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Customer\Casino.css" />
-    <Content Include="Content\Customer\copyChecked.png" />
-    <Content Include="Content\Customer\copyUnChecked.png" />
-    <Content Include="Content\Customer\LiveCasino.css" />
-    <Content Include="Content\Customer\PTEngine.css" />
-    <Content Include="Content\Customer\Customer.css" />
-    <Content Include="Content\Customer\VirtualSports.css" />
     <Content Include="Content\Images\ajax-loader.png" />
     <Content Include="Content\Images\balance.png" />
     <Content Include="Content\Images\bg-top.png" />
@@ -1708,8 +1713,8 @@
     <Content Include="Content\Images\warning.png" />
     <Content Include="Content\LeftMenu\AccountInfo.css" />
     <Content Include="Content\LeftMenu\styles.css" />
-    <Content Include="Content\Main.css" />
     <Content Include="Content\normalize.css" />
+    <Content Include="Content\Statement\Statement.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
     <Content Include="Images\tick.png" />
@@ -2756,7 +2761,6 @@
     <Folder Include="Areas\Common\Views\Shared\Styles\" />
     <Folder Include="Areas\LiveCasinoSetting\Scripts\libs\core\language\" />
     <Folder Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\actions\" />
-    <Folder Include="Content\themes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />
@@ -2994,8 +2998,10 @@
     <Content Include="assets\styles\pages\customer\customer-setting.scss" />
     <Content Include="assets\styles\pages\customer\racing-setting.scss" />
     <Content Include="assets\styles\pages\customer\bet-limit.scss" />
-    <Content Include="assets\styles\pages\statement\statement.scss" />
-    <Content Include="assets\styles\pages\statement\guideline.scss" />
+    <Content Include="assets\styles\pages\customer\casino.scss" />
+    <Content Include="assets\styles\pages\customer\live-casino.scss" />
+    <Content Include="assets\styles\pages\customer\virtual-sport.scss" />
+    <Content Include="assets\styles\pages\customer\pt-engine.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

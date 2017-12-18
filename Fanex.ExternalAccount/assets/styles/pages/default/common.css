@@ -753,8 +753,9 @@ textarea {
     width: 26px;
     background: #5faa73 !important;
     border-radius: 50%;
-    line-height: 23px;
-    text-align: center; }
+    line-height: 20px;
+    position: relative;
+    left: 1px; }
   @media all and (min-device-width: 768px) {
     .ui-datepicker-current-day {
       -webkit-border-radius: 20px;
