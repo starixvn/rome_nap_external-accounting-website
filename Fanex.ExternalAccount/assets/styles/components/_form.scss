@@ -67,9 +67,18 @@
         width: 225px;
     }
 
+    .width-320 {
+        width: 320px;
+    }
+
     .form-action {
         padding-left: 110px;
+
+        .btn:first-child {
+            margin-right: 16px;
+        }
     }
+
     .groupCboMenu {
         input {
             width: 225px;

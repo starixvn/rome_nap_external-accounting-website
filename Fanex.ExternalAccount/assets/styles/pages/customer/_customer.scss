@@ -125,13 +125,16 @@
     }
 }
 
-input[type='text'], input[type='password'], input[type='email'] {
-    @include border-radius(2px);
-    height: 20px;
-    border: 1px solid #bbb;
-    box-sizing: content-box;
-    padding: 0;
+.customerInfo, .positionTaking, #bettingLimitContainer {
+    input[type='text'], input[type='password'], input[type='email'] {
+        @include border-radius(2px);
+        height: 20px;
+        border: 1px solid #bbb;
+        box-sizing: content-box;
+        padding: 0;
+    }
 }
+
 
 
 

@@ -271,20 +271,6 @@
     line-height: 50px;
     background-color: #fff;
     font-size: $font-size + 1;
-    //position: relative;
-    /*.btnexpand-box {
-        position: absolute;
-        right: 10px;
-        
-        @media all and (max-width: 480px){
-            position: relative;
-            right: unset;
-            left: 0;
-        }
-    }
-    @media all and (max-width: 480px) {
-        margin-top: -50px;
-    }*/
 }
 
 .icon-add {
@@ -350,6 +336,7 @@ no-info {
     display: none;
 }
 
+
 /* icons in tables */
 
 %icon-in-tables {
@@ -411,6 +398,16 @@ no-info {
 }
 
 
+/* Credit Detail */
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.group-title {
+    background-color: #e1e1e1 !important;
+    color: #444 !important;
+}
 
 
 

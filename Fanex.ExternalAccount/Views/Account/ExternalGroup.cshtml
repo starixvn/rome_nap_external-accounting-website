@@ -27,8 +27,8 @@
         {
             <div class="info" id="accMenu">
                 <ul class="list" id="userNameMenu">
-                    <li><span class="icon-lock-reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')"></span></li>
-                    <li><span class="icon-logout" onclick="Fanex.ExtAcc.Account.Logout()"></span></li>
+                    <li><span class="icon-lock-reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')" title="Reset Password"></span></li>
+                    <li><span class="icon-logout" onclick="Fanex.ExtAcc.Account.Logout()" title="Log out"></span></li>
                     <li><span class="circle">@CurrentSession.Instance.UserName</span></li>
                 </ul>
             </div>

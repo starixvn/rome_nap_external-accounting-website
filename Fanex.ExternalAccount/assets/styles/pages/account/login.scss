@@ -22,7 +22,7 @@ body {
 	border: 1px solid #c7c7c7;
     background-color: $block-bg;
 	@include border-radius(5px);
-    @include box-shadow-multiple(0px 15px 15px #b9b9b9);
+    @include box-shadow-multiple(0px 7px 15px #b9b9b9);
 }
 
 .login-logo {

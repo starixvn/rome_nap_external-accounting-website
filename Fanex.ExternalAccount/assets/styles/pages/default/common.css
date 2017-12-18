@@ -557,8 +557,12 @@ a {
     width: 100px; }
   .form-add .width-250 {
     width: 225px; }
+  .form-add .width-320 {
+    width: 320px; }
   .form-add .form-action {
     padding-left: 110px; }
+    .form-add .form-action .btn:first-child {
+      margin-right: 16px; }
   .form-add .groupCboMenu input {
     width: 225px;
     margin-left: 10px;
@@ -649,15 +653,6 @@ textarea {
 
 .filterbox {
   padding: 12px 0; }
-  .filterbox input[type='text'], .filterbox input[type='password'], .filterbox input[type='email'] {
-    height: 32px;
-    line-height: 32px;
-    border: none;
-    outline: none;
-    padding-left: 8px;
-    padding-right: 8px;
-    /*width: 120px;*/
-    border: 1px solid #7b7c7e; }
 
 /*********** Customize Calendar Jquery UI ************/
 /*@font-face {
@@ -1274,20 +1269,7 @@ textarea {
   height: 50px;
   line-height: 50px;
   background-color: #fff;
-  font-size: 15px;
-  /*.btnexpand-box {
-        position: absolute;
-        right: 10px;
-        
-        @media all and (max-width: 480px){
-            position: relative;
-            right: unset;
-            left: 0;
-        }
-    }
-    @media all and (max-width: 480px) {
-        margin-top: -50px;
-    }*/ }
+  font-size: 15px; }
 
 .icon-add {
   -webkit-border-radius: 10px;
@@ -1373,6 +1355,14 @@ no-info {
   color: #999;
   font-weight: bold;
   display: none; }
+
+/* Credit Detail */
+.margin-top-20 {
+  margin-top: 20px; }
+
+.group-title {
+  background-color: #e1e1e1 !important;
+  color: #444 !important; }
 
 div#contentSplitter > div#msg {
   margin: 10px; }

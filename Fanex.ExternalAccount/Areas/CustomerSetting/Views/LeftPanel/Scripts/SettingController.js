@@ -627,7 +627,7 @@
     };
 
     $scope.EnableAllbet = function () {
-        $scope.EnableThirdpartyProduct(21, "Allbet", 400, 150);
+        $scope.EnableThirdpartyProduct(21, "Allbet", 400, 180);
     };
 
     $scope.EnableMacauGames = function (enable, id) {

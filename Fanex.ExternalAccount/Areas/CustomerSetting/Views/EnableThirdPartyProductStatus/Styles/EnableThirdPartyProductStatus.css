@@ -1,4 +1,8 @@
-﻿.table-info {
+﻿body {
+    font-size: 13px;
+}
+
+.table-info {
     border: 1px solid #606b7c;
     border-collapse: collapse;
     width: 100%;
@@ -12,10 +16,12 @@
     .table-info td, .table-info th {
         border: 1px solid #606b7c;
         min-width: 160px;
+        font-size: 13px;
     }
 
     .table-info th {
         background-color: #80a2d6;
+        color: #fff;
     }
 
     .table-info .group-row {
@@ -23,23 +29,22 @@
     }
 
 .button-popup, .ui-button, button[type=button] {
-    background: url(../../../Images/btn-bgsubmit-original.png) repeat-x scroll 5px center !important;
+    background: #6f7d95;
     color: #fff !important;
     cursor: pointer;
     width: 80px;
     height: 30px;
     border: none !important;
-    border-radius: 3px !important;
-    -moz-border-radius: 3px !important;
-    -webkit-border-radius: 3px !important;
+    border-radius: 2px !important;
+    -moz-border-radius: 2px !important;
+    -webkit-border-radius: 2px !important;
     padding-bottom: 2px;
     margin-top: 5px;
-    text-indent: 0 !important;
     margin-bottom: 5px;
 }
 
     .button-popup:hover, .ui-button:hover {
-        background: url(../../../Images/btn-bgsubmit-hover.png) repeat-x scroll 5px center !important;
+        background: #637187 !important;
         color: #fff !important;
         border: none !important;
         cursor: pointer;

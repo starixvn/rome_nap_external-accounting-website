@@ -107,7 +107,7 @@
 .BettingLimitHeaderCopiedActive:before, .BetTypeHeaderActive:before, .PTSportCopiedActive:before, .btnCopyAll:before, .bettingCommSportCopiedActive:before, .copied:before {
   content: '\e929'; }
 
-input[type='text'], input[type='password'], input[type='email'] {
+.customerInfo input[type='text'], .customerInfo input[type='password'], .customerInfo input[type='email'], .positionTaking input[type='text'], .positionTaking input[type='password'], .positionTaking input[type='email'], #bettingLimitContainer input[type='text'], #bettingLimitContainer input[type='password'], #bettingLimitContainer input[type='email'] {
   -webkit-border-radius: 2px;
   -khtml-border-radius: 2px;
   -moz-border-radius: 2px;
