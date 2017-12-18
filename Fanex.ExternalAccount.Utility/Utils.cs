@@ -138,6 +138,14 @@
             return val;
         }
 
+        public static string ToStringFormat(this decimal obj, int prec = 2)
+        {
+            var ret = decimal.Round(obj, prec);
+            var valRet = ret.ToString("#,##0.########");
+
+            return ret < 0.0m ? "<font color=\"red\">" + valRet + "</font>" : valRet;
+        }
+
         public static int ToInt32(this IDataReader obj, string fieldName)
             => ToInt32(obj[fieldName]);
 

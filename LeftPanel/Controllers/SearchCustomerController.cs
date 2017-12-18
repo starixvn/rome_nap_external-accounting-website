@@ -93,13 +93,13 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult UsedCreditPage(int id, int roleId)
+        public ActionResult UsedCreditPage(int custId, int roleId)
         {
-            ViewBag.CustId = id;
+            ViewBag.CustId = custId;
 
             if (roleId == Super || roleId == Master)
             {
-                var items = _service.MasterAgentUsedCreditItems(id, roleId);
+                var items = _service.MasterAgentUsedCreditItems(custId, roleId);
                 var model = new MasterAgentUsedCreditModel
                 {
                     MasterAgentUsedCreditItems = items
@@ -109,7 +109,7 @@
             }
             else
             {
-                var items = _service.MemberUsedCreditItems(id);
+                var items = _service.MemberUsedCreditItems(custId);
                 var model = new MemberUsedCreditModel
                 {
                     MemberUsedCreditItems = items
