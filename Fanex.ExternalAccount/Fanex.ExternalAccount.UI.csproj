@@ -1820,6 +1820,7 @@
     <Content Include="Scripts\_Libs\PopUp\dialogbox.js" />
     <Content Include="Scripts\_Libs\PopUp\dialogbox.js" />
     <Content Include="Images\Content\view.png" />
+    <Content Include="Scripts\_Libs\tablesorter\tablesorter.js" />
     <Content Include="SpNames.CustDB.kbt67.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -3112,6 +3113,7 @@
     <Content Include="Web.staging.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Scripts\_Libs\tablesorter\tablesorter.scss" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">

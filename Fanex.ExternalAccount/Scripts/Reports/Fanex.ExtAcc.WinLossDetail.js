@@ -621,6 +621,7 @@ Fanex.ExtAcc.WinLossDetail = {
         $("#tbl-report tfoot").empty().append(footerContent);
 
         $this.renderPager();
+        $this.renderSorter();
         $('#netTurnover').bind('click',
             function () {
                 var message =
@@ -675,6 +676,13 @@ Fanex.ExtAcc.WinLossDetail = {
         for (var i = startIndex; i < endIndex && i < $this.totalRows; i++) {
             $($this.bodyRows[i]).removeClass("hide");
         }
+    },
+    sortedColumn: null,
+    renderSorter: function () {
+
+
+
+
     }
 };
 

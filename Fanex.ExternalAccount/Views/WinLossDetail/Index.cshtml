@@ -5,6 +5,7 @@
 @*<link href="@Url.Content("~/assets/styles/pages/reports/winloss-detail.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Scripts/monthPicker/monPickr-0.0.1.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />*@
+<link href="@Url.Content("~/Scripts/_Libs/tablesorter/tablesorter.css")" rel="stylesheet" type="text/css" />
 <div>
     <div class="page-title">
         <div class="wlDetail">
@@ -175,67 +176,67 @@
         <input id="exporttoexcel" title="@ViewLang.ExportExcel" type="image" src="@Url.Content("~/Images/excel-icn.png")" name="image" />
     </div>
     <div id="mainGrid" class="hide">
-        <table id="tbl-report" class="table">
+        <table id="tbl-report" class="table tablesorter">
             <thead>
                 <tr>
-                    <th rowspan="2">
+                    <th rowspan="2" class="sorting" data-sortedname="Username" data-colindex="0">
                         <div class="col-130">Username</div>
                     </th>
-                    <th rowspan="2">
+                    <th rowspan="2" class="sorting" data-sortedname="Turnover" data-colindex="1">
                         <div class="col-130">Turnover</div>
                     </th>
-                    <th rowspan="2">
+                    <th rowspan="2" class="sorting" data-sortedname="NetTurnover" data-colindex="2">
                         <div class="col-130">
                             Net Turnover
                             <span id="netTurnover" class="bet-type-detail-icon"></span>
                         </div>
                     </th>
-                    <th rowspan="2">
-                        <div class="col-130">GrossComm</div>
+                    <th rowspan="2" class="sorting" data-sortedname="GrossComm" data-colindex="3">
+                        <div class="col-130">Gross Comm</div>
                     </th>
                     <th colspan="3">Member</th>
                     <th colspan="3">Agent</th>
                     <th colspan="3" class="col-master">Master</th>
                     <th colspan="3" class="col-super">Super</th>
-                    <th rowspan="2">
+                    <th rowspan="2" class="sorting" data-sortedname="Company" data-colindex="16">
                         <div class="col-130">Company</div>
                     </th>
                 </tr>
                 <tr>
-                    <th>
+                    <th class="sorting" data-sortedname="MemberWinlost" data-colindex="4">
                         <div class="col-130">Win/Loss</div>
                     </th>
-                    <th>
+                    <th class="sorting" data-sortedname="PlayerComm" data-colindex="5">
                         <div class="col-130">Comm</div>
                     </th>
-                    <th>
+                    <th class="sorting" data-sortedname="MemberTotal" data-colindex="6">
                         <div class="col-130">Total</div>
                     </th>
-                    <th>
+                    <th class="sorting" data-sortedname="AgWinlost" data-colindex="7">
                         <div class="col-130">Win/Loss</div>
                     </th>
-                    <th>
+                    <th class="sorting" data-sortedname="AgComm" data-colindex="8">
                         <div class="col-130">Comm</div>
                     </th>
-                    <th>
+                    <th class="sorting" data-sortedname="AgTotal" data-colindex="9">
                         <div class="col-130">Total</div>
                     </th>
-                    <th class="col-master">
+                    <th class="col-master sorting" data-sortedname="MAgWinlost" data-colindex="10">
                         <div class="col-130">Win/Loss</div>
                     </th>
-                    <th class="col-master">
+                    <th class="col-master sorting" data-sortedname="MAgComm" data-colindex="11">
                         <div class="col-130">Comm</div>
                     </th>
-                    <th class="col-master">
+                    <th class="col-master sorting" data-sortedname="MAgTotal" data-colindex="12">
                         <div class="col-130">Total</div>
                     </th>
-                    <th class="col-super">
+                    <th class="col-super sorting" data-sortedname="SAgWinlost" data-colindex="13">
                         <div class="col-130">Win/Loss</div>
                     </th>
-                    <th class="col-super">
+                    <th class="col-super sorting" data-sortedname="SAgComm" data-colindex="14">
                         <div class="col-130">Comm</div>
                     </th>
-                    <th class="col-super">
+                    <th class="col-super sorting" data-sortedname="SAgTotal" data-colindex="15">
                         <div class="col-130">Total</div>
                     </th>
                 </tr>
@@ -256,4 +257,5 @@
 <script src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.parser.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.resizable.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.pagination.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/_Libs/tablesorter/tablesorter.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/Reports/Fanex.ExtAcc.WinLossDetail.js")" type="text/javascript"></script>
