@@ -21,38 +21,15 @@
         {
             var lineRow = ds.Tables[1].Rows[0];
 
-            model.PersonalInfo.UplineId = new ObjectInfo
-            {
-                Value = lineRow.AgentId(),
-                Text = "Agent ID"
-            };
-
-            model.PersonalInfo.CurrentLevel = new ObjectInfo
-            {
-                Value = lineRow.MemberName(),
-                Text = "Member"
-            };
+            model.PersonalInfo.UplineId = new ObjectInfo(lineRow.AgentId().ToString(), "Agent ID");
+            model.PersonalInfo.CurrentLevel = new ObjectInfo(lineRow.MemberName(), "Member");
 
             model.PersonalInfo.Downlines = new List<ObjectInfo>
             {
-                new ObjectInfo
-                {
-                    Key = lineRow.SuperId().ToString(),
-                    Value = lineRow.SuperName(),
-                    Text = "Super"
-                },
-                new ObjectInfo
-                {
-                    Key = lineRow.MasterId().ToString(),
-                    Value = lineRow.MasterName(),
-                    Text = "Master"
-                },
-                new ObjectInfo
-                {
-                    Key = lineRow.AgentId().ToString(),
-                    Value = lineRow.AgentName(),
-                    Text = "Agent"
-                }
+                new ObjectInfo (lineRow.SuperId().ToString(),lineRow.SuperName(),"Super"),
+                new ObjectInfo (lineRow.MasterId().ToString(), lineRow.MasterName(),"Master"),
+                new ObjectInfo (lineRow.AgentId().ToString(), lineRow.AgentName(),"Agent")
+
             };
         }
 
@@ -76,98 +53,62 @@
             model.AddEnableAndDetailProduct(table3rdDCS, 28, "Lottery", eFunctions.LotteryBetting);
             model.AddEnableAndDetailProduct(table3rdDCS, 26, "Lucky 3");
 
-            model.Setting.EnableItems.Add(new ObjectInfo
-            {
-                Key = "EnableGoldDeluxe",
-                Value = !Utils.ToBoolean(customerRow["DisableGoldDeluxe"]),
-                Text = "Gold Deluxe"
-            });
+            model.Setting.EnableItems.Add(new ObjectInfo("EnableGoldDeluxe", customerRow.EnableGoldDeluxe(), "Gold Deluxe"));
         }
 
         private static List<ObjectInfo> Details()
-        {
-            return new List<ObjectInfo>
+            => new List<ObjectInfo>
             {
-                new ObjectInfo { Key = "Info", Value = "Edit Info" },
-                new ObjectInfo { Key = "PT", Value = "Edit Position Taking" },
-                new ObjectInfo { Key = "Racing", Value = "Edit Racing" },
-                new ObjectInfo { Key = "Casino", Value = "Edit Casino" },
-                new ObjectInfo { Key = "LiveCasino", Value = "Edit Live Casino" },
-                new ObjectInfo { Key = "VirtualSports", Value = "Edit Virtual Sports" },
-                new ObjectInfo { Key = "Keno", Value = "Edit Keno" },
-                new ObjectInfo { Key = "GoldDeluxe", Value = "Edit Gold Deluxe" },
-                new ObjectInfo { Key = "ColossusBets", Value = "Edit Colossus Bets" },
-                new ObjectInfo { Key = "Sportsbook2", Value = "Edit Sportsbook 2" },
-                new ObjectInfo { Key = "Cockfighting", Value = "Edit Cockfighting" },
-                new ObjectInfo { Key = "Cricket", Value = "Edit Cricket" }
+                new ObjectInfo ("Info","Edit Info" ),
+                new ObjectInfo ("PT","Edit Position Taking" ),
+                new ObjectInfo ("Racing","Edit Racing" ),
+                new ObjectInfo ("Casino","Edit Casino" ),
+                new ObjectInfo ("LiveCasino","Edit Live Casino" ),
+                new ObjectInfo ("VirtualSports","Edit Virtual Sports" ),
+                new ObjectInfo ("Keno","Edit Keno" ),
+                new ObjectInfo ("GoldDeluxe","Edit Gold Deluxe" ),
+                new ObjectInfo ("ColossusBets","Edit Colossus Bets" ),
+                new ObjectInfo ("Sportsbook2","Edit Sportsbook 2" ),
+                new ObjectInfo ("Cockfighting","Edit Cockfighting" ),
+                new ObjectInfo ("Cricket","Edit Cricket" )
             };
-        }
 
         private static List<ObjectInfo> EditItems()
-        {
-            return new List<ObjectInfo>
+            => new List<ObjectInfo>
             {
                 new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
                 new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" },
                 new ObjectInfo { Key = "EnableCockfighting", Text = "Enable Cockfighting" }
             };
-        }
 
         private static List<ObjectInfo> SyncItems(DataRow customerRow, DataTable table3RdDcs)
-        {
-            return new List<ObjectInfo>
+            => new List<ObjectInfo>
             {
                 new ObjectInfo("SyncCasino", customerRow.IsSyncedCasino(), "Casino Synced"),
                 new ObjectInfo("SyncLiveCasino", customerRow.IsSyncedLiveCasino(), "Live Casino Synced"),
-                new ObjectInfo("HideAllbet", Get3rdProductStatus(table3RdDcs, 21)),
-                new ObjectInfo("HideVoidbridge", Get3rdProductStatus(table3RdDcs, 22)),
-                new ObjectInfo("HideNG2", GetNG2ProductStatus(table3RdDcs)),
-                new ObjectInfo("HideFishingWorld", Get3rdProductStatus(table3RdDcs, 24)),
-                new ObjectInfo("HideLottery", Get3rdProductStatus(table3RdDcs, 28)),
-                new ObjectInfo("HideLucky3", Get3rdProductStatus(table3RdDcs, 26))
+                new ObjectInfo("HideAllbet", table3RdDcs.Get3rdProductStatus(21)),
+                new ObjectInfo("HideVoidbridge", table3RdDcs.Get3rdProductStatus(22)),
+                new ObjectInfo("HideNG2", table3RdDcs.GetNG2ProductStatus()),
+                new ObjectInfo("HideFishingWorld", table3RdDcs.Get3rdProductStatus(24)),
+                new ObjectInfo("HideLottery", table3RdDcs.Get3rdProductStatus(28)),
+                new ObjectInfo("HideLucky3", table3RdDcs.Get3rdProductStatus(26))
             };
-        }
 
-        private static DataRow GetProductRow(DataTable table3RdDcs, int productId)
-            => table3RdDcs.Select($"ProductID = {productId}").FirstOrDefault();
-
-        private static bool Get3rdProductStatus(DataTable table3RdDcs, int productId)
-        {
-            var productRow = GetProductRow(table3RdDcs, productId);
-
-            return productRow == null
-                   || Utils.ToBoolean(productRow["IsHidden"])
-                   || !Utils.ToBoolean(productRow["IsSync"]);
-        }
-
-        private static bool GetNG2ProductStatus(DataTable table3RdDcs)
-        {
-            var productRow = GetProductRow(table3RdDcs, 23);
-
-            return productRow == null || !Utils.ToBoolean(productRow["IsSync"]);
-        }
-
-        private static bool GetVirtualSportsStatus(DataTable table3rdDCS)
-        {
-            var drowVirtualSports = table3rdDCS.Select("ProductID = 5");
-
-            return drowVirtualSports.Length > 0 && !Utils.ToBoolean(drowVirtualSports[0]["isDisabled"]);
-        }
-
-        private static List<ObjectInfo> EnableItems(DataRow customerRow, DataTable table3rdDCS) => new List<ObjectInfo>
-        {
-            new ObjectInfo("Closed", customerRow.Closed(),"Closed"),
-            new ObjectInfo("Suspended",customerRow.Suspended(),"Suspened"),
-            new ObjectInfo("Outright", customerRow.EnableOutright(),"Allow Outright"),
-            new ObjectInfo("EnableCasino",  customerRow.EnableCasino(),"Enable Casino"),
-            new ObjectInfo("EnableNumberGame", customerRow.EnableNumberGame(),"Enable Num Game", "Enable Number Game"),
-            new ObjectInfo("EnableLiveCasino", customerRow.EnableLiveCasino(),"Enable Live Casino"),
-            new ObjectInfo("EnableVirtualSports", GetVirtualSportsStatus(table3rdDCS),"Virtual Sports"),
-            new ObjectInfo("DoubleComm", customerRow.EnableDoubleComm(),"Double Comm",  "Enable Double Commission"),
-            new ObjectInfo("EnableHRFixedOdds",  customerRow.EnableHorseRacingFixedOdds(),"HR Fixed Odds",  "Enable Horse Racing Fixed Odds"),
-            new ObjectInfo("EnableESports",customerRow.EnableESports(),"E-Sports",  "Enable E-Sports"),
-            new ObjectInfo("EnableColossusBets",  customerRow.EnableColossusBet(),"Colossus Bets", "Enable Colossus Bets" )
-        };
+        private static List<ObjectInfo> EnableItems(DataRow customerRow, DataTable table3rdDCS)
+            => new List<ObjectInfo>
+            {
+                new ObjectInfo("Closed", customerRow.Closed(),"Closed"),
+                new ObjectInfo("Suspended",customerRow.Suspended(),"Suspened"),
+                new ObjectInfo("Outright", customerRow.EnableOutright(),"Allow Outright"),
+                new ObjectInfo("EnableCasino",  customerRow.EnableCasino(),"Enable Casino"),
+                new ObjectInfo("EnableNumberGame", customerRow.EnableNumberGame(),"Enable Num Game", "Enable Number Game"),
+                new ObjectInfo("EnableLiveCasino", customerRow.EnableLiveCasino(),"Enable Live Casino"),
+                new ObjectInfo("EnableVirtualSports", table3rdDCS.GetVirtualSportsStatus(),"Virtual Sports"),
+                new ObjectInfo("DoubleComm", customerRow.EnableDoubleComm(),"Double Comm",  "Enable Double Commission"),
+                new ObjectInfo("EnableHRFixedOdds",  customerRow.EnableHorseRacingFixedOdds(),"HR Fixed Odds",  "Enable Horse Racing Fixed Odds"),
+                new ObjectInfo("EnableESports",customerRow.EnableESports(),"E-Sports",  "Enable E-Sports"),
+                new ObjectInfo("EnableColossusBets",  customerRow.EnableColossusBet(),"Colossus Bets", "Enable Colossus Bets" )
+            };
 
         public static CustomerModel GetSuperMasterPtsOnMember(this CustomerModel model)
         {
@@ -178,16 +119,11 @@
             {
                 if (!IgnoreOrExcludeProducts().Contains(item.Key))
                 {
-                    model.Setting.MasterPts.Add(new ObjectInfo { Key = item.Key, Value = item.Value });
+                    model.Setting.MasterPts.Add(new ObjectInfo(item.Key, item.Value));
                 }
             }
 
-            model.Setting.MasterPts.Add(
-                new ObjectInfo
-                {
-                    Key = "SBPT",
-                    Value = "Sportsbook's PT"
-                });
+            model.Setting.MasterPts.Add(new ObjectInfo("SBPT", "Sportsbook's PT"));
 
             model.AddDetailProductForCrossLevel("PT", "Sportsbook");
             model.AddDetailProductForCrossLevel("Racing", "Racing");
