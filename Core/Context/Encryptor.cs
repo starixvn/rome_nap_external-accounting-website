@@ -2,45 +2,32 @@
 {
     using System;
     using System.Collections.Generic;
-using System.Diagnostics;
     using System.Text;
     using System.Web;
-using Fanex.Logging.Extensions.Web;
+    using Module.Logs;
+    using Module.Logs.Services;
 
-    public class Encryptor
+    public static class Encryptor
     {
         private const string HexDigit = "0123456789abcdef";
         private const string RandomCaptchaKey = "RandomCaptcha";
         private const string DefaultCaptcha = "0000";
 
-        public static Encryptor Instance
-        {
-            get
-            {
-                return new Encryptor();
-            }
-        }
 
-        public string RandomCaptcha
+        public static string RandomCaptcha
         {
-            get
-            {
-                return (HttpContext.Current.Session[RandomCaptchaKey] as string) ?? DefaultCaptcha;
-            }
+            get { return HttpContext.Current.Session[RandomCaptchaKey] as string ?? DefaultCaptcha; }
 
-            set
-            {
-                HttpContext.Current.Session[RandomCaptchaKey] = value;
-            }
+            set { HttpContext.Current.Session[RandomCaptchaKey] = value; }
         }
 
         public static string HexDecode(string data)
         {
-            var b16_digits = HexDigit;
-            var b16_map = new char[256];
+            const string b16Digits = HexDigit;
+            var b16Map = new char[256];
             for (var i = 0; i < 256; i++)
             {
-                b16_map[Convert.ToInt32(string.Concat(b16_digits[i >> 4], b16_digits[i & 15]), 16)] = Convert.ToChar(i);
+                b16Map[Convert.ToInt32(string.Concat(b16Digits[i >> 4], b16Digits[i & 15]), 16)] = Convert.ToChar(i);
             }
 
             var c = data.Length;
@@ -52,7 +39,7 @@ using Fanex.Logging.Extensions.Web;
             var result = new List<char>();
             for (var i = 0; i < c; i += 2)
             {
-                result.Add(b16_map[Convert.ToInt32(data.Substring(i, 2), 16)]);
+                result.Add(b16Map[Convert.ToInt32(data.Substring(i, 2), 16)]);
             }
 
             return new string(result.ToArray());
@@ -97,7 +84,7 @@ using Fanex.Logging.Extensions.Web;
             return ct.ToString();
         }
 
-        public string Decrypt(string encrypted, string key)
+        public static string Decrypt(string encrypted, string key)
         {
             try
             {
@@ -105,7 +92,7 @@ using Fanex.Logging.Extensions.Web;
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex, TraceEventType.Warning);
+                ex.Write(Formater.LogType.Warning);
             }
 
             return string.Empty;

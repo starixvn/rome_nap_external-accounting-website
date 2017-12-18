@@ -50,11 +50,11 @@ using Fanex.Logging.Extensions.Web;
 
             SetUMTokenForInternalAlphaLogin();
 
-            Encryptor.Instance.RandomCaptcha = CaptchaUtil.GetCaptchaString(4);
+            Encryptor.RandomCaptcha = CaptchaUtil.GetCaptchaString(4);
 
             return View(new LoginModel
             {
-                Code = Encryptor.Instance.RandomCaptcha,
+                Code = Encryptor.RandomCaptcha,
                 LoginAttempt = _currentSession.LoginAttempt
             });
         }

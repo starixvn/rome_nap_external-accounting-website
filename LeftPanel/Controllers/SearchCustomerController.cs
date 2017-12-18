@@ -25,7 +25,6 @@
     {
         private const string MasterAgentCreditViewl = "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MasterAgentCredit.cshtml";
         private const string MemberCreditView = "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MemberCredit.cshtml";
-        private const string EnableRacingIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/EnableRacing/Index.cshtml";
         private const string SecurityCodeIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/SecurityCode/Index.cshtml";
         private const string LeftPanelIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml";
         private const string LeftpanelBalanceIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/Balance/Index.cshtml";

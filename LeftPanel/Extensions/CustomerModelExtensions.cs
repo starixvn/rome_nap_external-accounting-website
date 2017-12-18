@@ -109,39 +109,36 @@
         public static bool IsAuthorized(int userId, string functionKey, AuthenticateAction.AuthenticationType policy)
         {
             var userCache = new CachingService().GetUserCache(userId);
+
             var menuList = userCache.MenuList;
-            var foundItems = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
-            var hasPerm = true;
+            var foundItems = userCache.PolicyList.Where(x => x.FuncKey == functionKey).ToList();
 
-            hasPerm = menuList.Any(o => !string.IsNullOrWhiteSpace(o.Url));
+            var hasPerm = menuList.Any(menuItem => !string.IsNullOrWhiteSpace(menuItem.Url));
 
-            if (!hasPerm && (foundItems == null || foundItems.Any()))
+            if (!hasPerm && foundItems.Any())
             {
                 return false;
             }
 
-            if (foundItems.Any())
+            if (foundItems.Count <= 0)
             {
-                var firstItem = foundItems.First();
-                switch (policy)
+                return false;
+            }
+
+            var firstItem = foundItems.First();
+
+            if (policy == AuthenticateAction.AuthenticationType.Read)
+            {
+                if (firstItem.Policy == EPolicy.Read || firstItem.Policy == EPolicy.Update ||
+                    firstItem.Policy == EPolicy.Delete
+                    || firstItem.Policy == EPolicy.Create)
                 {
-                    case AuthenticateAction.AuthenticationType.Read:
-                        if (firstItem.Policy == EPolicy.Read || firstItem.Policy == EPolicy.Update || firstItem.Policy == EPolicy.Delete
-                            || firstItem.Policy == EPolicy.Create)
-                        {
-                            return true;
-                        }
-
-                        break;
-
-                    case AuthenticateAction.AuthenticationType.Host:
-                        if (firstItem.Policy == EPolicy.Read)
-                        {
-                            return false;
-                        }
-
-                        return true;
+                    return true;
                 }
+            }
+            else
+            {
+                return firstItem.Policy != EPolicy.Read;
             }
 
             return false;
