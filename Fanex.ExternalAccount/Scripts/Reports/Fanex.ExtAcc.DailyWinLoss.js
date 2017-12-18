@@ -375,11 +375,6 @@ Fanex.ExtAcc.DailyWinLoss = {
         return html;
     },
     renderReport: function () {
-        $this.totalRows = 1000;
-        for (var i = 0; i < 999; i++) {
-            $this.dataSource.push($this.dataSource[0]);
-        }
-
         var grandTotal = {
             TotalTO: 0,
             ComTO: 0,
