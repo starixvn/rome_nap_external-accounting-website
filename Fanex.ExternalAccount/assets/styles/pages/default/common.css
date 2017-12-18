@@ -384,18 +384,18 @@ a {
 .table {
   border: 1px solid #d3d3d3;
   border-collapse: collapse; }
-  .table tr th, .table tr td {
+  .table > thead > tr > th, .table > tbody > tr > td, .table > tfoot > tr > td {
     min-height: 28px;
     border: 1px solid #d3d3d3;
     padding: 4px; }
-  .table tr th {
+  .table > thead > tr > th {
     background-color: #6f7d95;
     color: #fff;
     text-align: center; }
   .table .col-no {
     width: 40px;
     text-align: right; }
-  .table tr:hover td {
+  .table > tbody > tr:hover > td {
     background-color: #f8eb95; }
   .table .width-60 {
     width: 60px; }
@@ -405,6 +405,12 @@ a {
     width: 130px; }
   .table .col-100 {
     width: 100px; }
+
+.pagination table {
+  float: left; }
+
+.pagination .pagination-info {
+  float: right; }
 
 #tbl-report tbody .align-right, #tbl-report tfoot .align-right {
   text-align: right; }
@@ -1218,29 +1224,32 @@ textarea {
   margin: 0;
   border-right: 1px solid #ccc;
   border-left: 1px solid #ccc;
-  cursor: pointer; }
-  #splitterBar div.expanded {
-    width: 4px;
-    background-color: #aaa;
-    border: 1px solid #ccc;
-    top: 45%;
-    left: -2px;
-    position: relative;
-    height: 50px;
-    background-image: url(../images/arrow-icn.png);
-    background-position: -1px 20px;
-    background-repeat: no-repeat; }
-  #splitterBar div.collapsed {
-    width: 4px;
-    background-color: #aaa;
-    border: 1px solid #ccc;
-    top: 45%;
-    left: -2px;
-    position: relative;
-    height: 50px;
-    background-image: url(../images/arrow-icn-right.png);
-    background-position: -3px 20px;
-    background-repeat: no-repeat; }
+  cursor: pointer;
+  /*div.expanded {
+        width: 4px;
+        background-color: #aaa;
+        border: 1px solid #ccc;
+        top: 45%;
+        left: -2px;
+        position: relative;
+        height: 50px;
+        background-image: url(../images/arrow-icn.png);
+        background-position: -1px 20px;
+        background-repeat: no-repeat;
+    }
+
+    div.collapsed {
+        width: 4px;
+        background-color: #aaa;
+        border: 1px solid #ccc;
+        top: 45%;
+        left: -2px;
+        position: relative;
+        height: 50px;
+        background-image: url(../images/arrow-icn-right.png);
+        background-position: -3px 20px;
+        background-repeat: no-repeat;
+    }*/ }
 
 /* Content */
 .content {
@@ -1396,12 +1405,10 @@ div#contentSplitter > div#msg {
   padding: 5px 5px 0px 20px; }
 
 .groupBack {
-  width: 300px;
   float: right; }
 
 #mainGrid {
-  visibility: hidden;
-  margin: 1px 3px 0px 3px; }
+  visibility: hidden; }
 
 .usernameInput {
   height: 22px;
@@ -1498,137 +1505,140 @@ div#contentSplitter > div#msg {
   -moz-border-radius: 3px;
   border-radius: 3px; }
 
+[id^="tab"] {
+  height: 31px;
+  line-height: 29px;
+  float: left !important; }
+  [id^="tab"][class^="tabActive"] {
+    line-height: 31px; }
+
 #tabSuper {
-  padding: 8px 0 0 20px;
+  /*padding: 8px 0 0 20px;*/
   float: right;
   cursor: pointer;
-  width: 65px;
-  height: 25px;
-  position: absolute;
-  margin-left: 192px;
+  /*width: 65px;
+    height: 25px;
+    position: absolute;
+    margin-left: 192px;*/
   color: #0088cc;
   font-weight: bold; }
 
-#tabSuper:hover {
-  padding: 8px 0 0 20px;
-  float: right;
-  cursor: pointer;
-  width: 65px;
-  height: 25px;
-  position: absolute;
-  margin-left: 192px;
-  color: #0088cc;
-  font-weight: bold; }
-
-.tabActive {
-  padding: 8px 0 0 17px;
-  float: right;
-  cursor: pointer;
-  width: 60px;
-  height: 25px;
-  position: absolute;
-  margin-left: 76px;
-  color: #0088cc !important;
-  font-weight: bold; }
+/*#tabSuper:hover {
+    padding: 8px 0 0 20px;
+    float: right;
+    cursor: pointer;
+    width: 65px;
+    height: 25px;
+    position: absolute;
+    margin-left: 192px;
+    color: #0088cc;
+    font-weight: bold;
+}*/
+/*.tabActive {
+    padding: 8px 0 0 17px;
+    float: right;
+    cursor: pointer;
+    width: 60px;
+    height: 25px;
+    position: absolute;
+    margin-left: 76px;
+    color: #0088cc !important;
+    font-weight: bold;
+}
 
 .tabActiveSuper {
-  padding: 8px 0 0 20px;
-  float: right;
-  cursor: pointer;
-  width: 53px;
-  height: 25px;
-  position: absolute;
-  margin-left: 76px;
-  color: #0088cc !important;
-  font-weight: bold; }
+    padding: 6px 0 0 0px ;
+    float: right;
+    cursor: pointer;
+    width: 53px;
+    height: 25px;
+    position: absolute;
+    margin-left: 76px;
+    color: #0088cc !important;
+    font-weight: bold;
+}*/
+[class^="tabDisable"]:before {
+  content: '\e905';
+  font-family: 'AlphaAdmin';
+  font-size: 16px;
+  color: #888;
+  position: relative;
+  top: 2px; }
 
 .tabDisableSuper {
-  background: url(../images/arrow-icn.png) no-repeat 4px 11px !important;
-  padding: 8px 0 0 20px;
   float: right;
   cursor: pointer;
-  width: 53px;
-  height: 25px;
-  position: absolute;
-  margin-left: 76px;
   color: #0088cc !important;
   font-weight: bold; }
 
-.tabDisableSuper:hover {
-  padding: 8px 0 0 20px;
-  float: right;
-  cursor: pointer;
-  width: 53px;
-  height: 25px;
-  position: absolute;
-  margin-left: 76px;
-  color: #0088cc !important;
-  font-weight: bold; }
-
+/*.tabDisableSuper:hover {
+    padding: 6px 0 0 0px !important;
+    float: right;
+    cursor: pointer;
+    width: 53px;
+    height: 25px;
+    position: absolute;
+    margin-left: 76px;
+    color: #0088cc !important;
+    font-weight: bold;
+}*/
 .tabDisable {
-  background: url(../images/arrow-icn.png) no-repeat 0 11px !important;
-  padding: 8px 0 0 20px;
   float: right;
   cursor: pointer;
-  width: 53px;
-  height: 25px;
-  position: absolute;
-  margin-left: 76px;
+  /*width: 53px;
+    height: 25px;
+    position: absolute;
+    margin-left: 76px;*/
   color: #0088cc !important;
   font-weight: bold; }
 
 .tabDisable:hover {
-  padding: 8px 0 0 20px;
   float: right;
   cursor: pointer;
-  width: 53px;
-  height: 25px;
-  position: absolute;
-  margin-left: 76px;
+  /*width: 53px;
+    height: 25px;
+    position: absolute;
+    margin-left: 76px;*/
   color: #0088cc !important;
   font-weight: bold; }
 
 #tabMaster {
-  padding: 8px 0 0 17px;
   float: right;
   cursor: pointer;
-  width: 60px;
-  height: 25px;
-  position: absolute;
-  margin-left: 126px;
+  /*width: 60px;
+    height: 25px;
+    position: absolute;
+    margin-left: 126px;*/
   color: #0088cc;
   font-weight: bold; }
 
 #tabMaster:hover {
-  padding: 8px 0 0 17px;
   float: right;
   cursor: pointer;
-  width: 60px;
-  height: 25px;
-  position: absolute;
-  margin-left: 126px;
+  /*width: 60px;
+        height: 25px;
+        position: absolute;
+        margin-left: 126px;*/
   color: #0088cc;
   font-weight: bold; }
 
 #tabAgent {
-  padding: 8px 0 0 18px;
   float: right;
   cursor: pointer;
-  width: 60px;
-  height: 25px;
-  position: absolute;
-  margin-left: 59px;
+  /*width: 60px;
+    height: 25px;
+    position: absolute;
+    margin-left: 59px;*/
   color: #0088cc;
   font-weight: bold; }
 
 #tabAgent:hover {
-  padding: 8px 0 0 18px;
   float: right;
-  cursor: pointer;
-  width: 60px;
-  height: 25px;
-  position: absolute;
-  margin-left: 59px;
+  /*cursor: pointer;
+        width: 60px;
+        height: 25px;
+        position: absolute;
+        margin-left: 59px;*/
   color: #0088cc;
   font-weight: bold; }
 
@@ -1639,13 +1649,19 @@ div#contentSplitter > div#msg {
 
 #headlineDaily {
   visibility: hidden;
-  background: #c7c7c7 url(../images/bg-Title-Grid.png) repeat-x 0px 0px;
+  background-color: #c7c7c7;
   height: 31px;
   border-left: 1px solid #c7c7c7;
   border-right: 1px solid #c7c7c7;
   clear: both;
   min-width: 700px;
-  margin: 1px 3px 0px 3px; }
+  padding-right: 40px;
+  position: relative; }
+  #headlineDaily #exporttoexcel {
+    float: unset;
+    position: absolute;
+    right: 5px;
+    top: 2px; }
 
 #InfoDate {
   font-weight: normal;

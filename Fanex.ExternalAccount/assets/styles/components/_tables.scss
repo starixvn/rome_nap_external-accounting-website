@@ -6,13 +6,13 @@
 	border: 1px solid $table-border-color;
 	border-collapse: collapse;
 
-    tr th, tr td {
+    > thead > tr > th,  > tbody > tr > td, > tfoot > tr > td  {
         min-height: 28px;
         border: 1px solid $table-border-color;
         padding: 4px;
     }
 
-    tr th {	    
+    > thead > tr > th {	    
         background-color: $table-header-bg-color;
         color: $table-header-color;
         text-align: center;
@@ -21,7 +21,7 @@
         width: 40px;
         text-align: right;
     }
-    tr:hover td {
+    > tbody > tr:hover  > td {
 	    background-color: $table-td-hover-color;
     }
 
@@ -40,6 +40,14 @@
     }
 }
 
+.pagination {
+    table {
+        float: left;
+    }
+    .pagination-info {
+        float: right;
+    }
+} 
 
 #tbl-report {
     tbody .align-right, tfoot .align-right {

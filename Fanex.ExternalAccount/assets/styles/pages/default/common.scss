@@ -216,7 +216,7 @@
     border-left: 1px solid #ccc;
     cursor: pointer;
 
-    div.expanded {
+    /*div.expanded {
         width: 4px;
         background-color: #aaa;
         border: 1px solid #ccc;
@@ -240,7 +240,7 @@
         background-image: url(../images/arrow-icn-right.png);
         background-position: -3px 20px;
         background-repeat: no-repeat;
-    }
+    }*/
 }
 
 
@@ -458,13 +458,12 @@ div#contentSplitter > div#msg {
 }
 
 .groupBack {
-    width: 300px;
     float: right;
 }
 
 #mainGrid {
     visibility: hidden;
-    margin: 1px 3px 0px 3px;
+    //margin: 1px 3px 0px 3px;
 }
 
 .usernameInput {
@@ -579,7 +578,27 @@ div#contentSplitter > div#msg {
     border-radius: 3px;
 }
 
+[id^="tab"] {
+    height: 31px;
+    line-height: 29px;
+    float: left !important;
+    &[class^="tabActive"] {
+        line-height: 31px;
+    } 
+}
 #tabSuper {
+    /*padding: 8px 0 0 20px;*/
+    float: right;
+    cursor: pointer;
+    /*width: 65px;
+    height: 25px;
+    position: absolute;
+    margin-left: 192px;*/
+    color: #0088cc;
+    font-weight: bold;
+}
+
+/*#tabSuper:hover {
     padding: 8px 0 0 20px;
     float: right;
     cursor: pointer;
@@ -589,21 +608,9 @@ div#contentSplitter > div#msg {
     margin-left: 192px;
     color: #0088cc;
     font-weight: bold;
-}
+}*/
 
-    #tabSuper:hover {
-        padding: 8px 0 0 20px;
-        float: right;
-        cursor: pointer;
-        width: 65px;
-        height: 25px;
-        position: absolute;
-        margin-left: 192px;
-        color: #0088cc;
-        font-weight: bold;
-    }
-
-.tabActive {
+/*.tabActive {
     padding: 8px 0 0 17px;
     float: right;
     cursor: pointer;
@@ -616,7 +623,7 @@ div#contentSplitter > div#msg {
 }
 
 .tabActiveSuper {
-    padding: 8px 0 0 20px;
+    padding: 6px 0 0 0px ;
     float: right;
     cursor: pointer;
     width: 53px;
@@ -625,23 +632,25 @@ div#contentSplitter > div#msg {
     margin-left: 76px;
     color: #0088cc !important;
     font-weight: bold;
+}*/
+[class^="tabDisable"]:before {
+    content: '\e905';
+    font-family: 'AlphaAdmin';
+    font-size: 16px;
+    color: #888;
+    position: relative;
+    top: 2px;
 }
 
 .tabDisableSuper {
-    background: url(../images/arrow-icn.png) no-repeat 4px 11px !important;
-    padding: 8px 0 0 20px;
     float: right;
     cursor: pointer;
-    width: 53px;
-    height: 25px;
-    position: absolute;
-    margin-left: 76px;
     color: #0088cc !important;
     font-weight: bold;
 }
 
-.tabDisableSuper:hover {
-    padding: 8px 0 0 20px;
+/*.tabDisableSuper:hover {
+    padding: 6px 0 0 0px !important;
     float: right;
     cursor: pointer;
     width: 53px;
@@ -650,77 +659,77 @@ div#contentSplitter > div#msg {
     margin-left: 76px;
     color: #0088cc !important;
     font-weight: bold;
-}
+}*/
 
 .tabDisable {
-    background: url(../images/arrow-icn.png) no-repeat 0 11px !important;
-    padding: 8px 0 0 20px;
+    //background: url(../images/arrow-icn.png) no-repeat 0 11px !important;
+    //padding: 8px 0 0 20px;
     float: right;
     cursor: pointer;
-    width: 53px;
+    /*width: 53px;
     height: 25px;
     position: absolute;
-    margin-left: 76px;
+    margin-left: 76px;*/
     color: #0088cc !important;
     font-weight: bold;
 }
 
-    .tabDisable:hover {
-        padding: 8px 0 0 20px;
-        float: right;
-        cursor: pointer;
-        width: 53px;
-        height: 25px;
-        position: absolute;
-        margin-left: 76px;
-        color: #0088cc !important;
-        font-weight: bold;
-    }
-
-#tabMaster {
-    padding: 8px 0 0 17px;
+.tabDisable:hover {
+    //padding: 8px 0 0 20px;
     float: right;
     cursor: pointer;
-    width: 60px;
+    /*width: 53px;
     height: 25px;
     position: absolute;
-    margin-left: 126px;
+    margin-left: 76px;*/
+    color: #0088cc !important;
+    font-weight: bold;
+}
+
+#tabMaster {
+    //padding: 8px 0 0 17px;
+    float: right;
+    cursor: pointer;
+    /*width: 60px;
+    height: 25px;
+    position: absolute;
+    margin-left: 126px;*/
     color: #0088cc;
     font-weight: bold;
 }
 
     #tabMaster:hover {
-        padding: 8px 0 0 17px;
+        //padding: 8px 0 0 17px;
         float: right;
         cursor: pointer;
-        width: 60px;
+        /*width: 60px;
         height: 25px;
         position: absolute;
-        margin-left: 126px;
+        margin-left: 126px;*/
         color: #0088cc;
         font-weight: bold;
     }
 
 #tabAgent {
-    padding: 8px 0 0 18px;
+    //padding: 8px 0 0 18px;
     float: right;
     cursor: pointer;
-    width: 60px;
+    /*width: 60px;
     height: 25px;
     position: absolute;
-    margin-left: 59px;
+    margin-left: 59px;*/
     color: #0088cc;
     font-weight: bold;
 }
 
     #tabAgent:hover {
-        padding: 8px 0 0 18px;
+        //padding: 8px 0 0 18px;
         float: right;
-        cursor: pointer;
+        /*cursor: pointer;
         width: 60px;
         height: 25px;
         position: absolute;
-        margin-left: 59px;
+        margin-left: 59px;*/
         color: #0088cc;
         font-weight: bold;
     }
@@ -735,13 +744,21 @@ div#contentSplitter > div#msg {
 
 #headlineDaily {
     visibility: hidden;
-    background: #c7c7c7 url(../images/bg-Title-Grid.png) repeat-x 0px 0px;
+    background-color: #c7c7c7;
     height: 31px;
     border-left: 1px solid #c7c7c7;
     border-right: 1px solid #c7c7c7;
     clear: both;
     min-width: 700px;
-    margin: 1px 3px 0px 3px;
+    padding-right: 40px;
+    position: relative;
+    //margin: 1px 3px 0px 3px;
+    #exporttoexcel {
+        float: unset;
+        position: absolute;
+        right: 5px;
+        top: 2px;
+    }
 }
 
 #InfoDate {
