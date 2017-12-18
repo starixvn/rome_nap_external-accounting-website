@@ -1,13 +1,7 @@
-﻿    
-
-
-
-
-namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
     using System.Collections.Generic;
     using System.Data;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Utilities;
     using ViewModels;
@@ -57,7 +51,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 
             return model;
         }
-        
+
         private static CustomerModel MasterSettings(this CustomerModel model, DataTable table3rdDCS, DataTable tableCustomer, DataTable tableCash = null)
         {
             model.Setting = new Setting

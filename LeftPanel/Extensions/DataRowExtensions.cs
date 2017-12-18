@@ -54,7 +54,7 @@
 
         public static bool DisableColossusBet(this DataRow dataRow) => Utils.ToBoolean(dataRow["DisableColossusBet"]);
 
-        public static bool EnableColossusBet(this DataRow dataRow) => !DisableColossusBet(dataRow);
+        public static bool EnableColossusBet(this DataRow dataRow) => !dataRow.DisableColossusBet();
 
         public static bool IsSyncedCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncCasino"]);
 
@@ -66,11 +66,17 @@
 
         public static decimal CustomerCash(this DataRow dataRow) => Utils.ToDecimal(dataRow["customerCash"]);
 
-
+        public static decimal TotalAgentBalance(this DataRow dataRow)
+            => dataRow.CustomerCash() + dataRow.AgentCash();
         public static decimal MasterYesterdayCash(this DataRow dataRow) => Utils.ToDecimal(dataRow["yesterday_masterCash"]);
 
         public static decimal AgentYesterdayCash(this DataRow dataRow) => Utils.ToDecimal(dataRow["yesterday_agentCash"]);
 
         public static decimal CustomerYesterdayCash(this DataRow dataRow) => Utils.ToDecimal(dataRow["yesterday_customerCash"]);
+
+        public static decimal TotalAgentYesterdayCash(this DataRow dataRow)
+            => dataRow.AgentYesterdayCash() + dataRow.CustomerYesterdayCash();
+
+        public static decimal MemberOutstanding(this DataRow dataRow) => Utils.ToDecimal(dataRow["customerOutstanding"]);
     }
 }
