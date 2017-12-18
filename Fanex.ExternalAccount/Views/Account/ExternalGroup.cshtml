@@ -9,14 +9,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=9" />    
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="@Url.Content("~/Content/normalize.css")" rel="stylesheet" type="text/css" />
+    
+    <link rel="stylesheet" href="@Url.Content("~/assets/styles/fonts/AlphaAdmin/style.css?v=1")" />
+
     @if (HttpContext.Current.IsDebuggingEnabled)
-    {
-        @*<link href="@Url.Content("~/Content/UserControl/UserControl.css")" rel="stylesheet" />*@
-        <link href="@Url.Content("~/assets/styles/base/Validators.css")" rel="stylesheet" />
-        <link href="@Url.Content("~/Scripts/superfish/superfish.css")" rel="stylesheet" />
-        <link href="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css")" rel="stylesheet" />
-        <link rel="stylesheet" href="@Url.Content("~/assets/styles/fonts/AlphaAdmin/style.css?v=1")" />
+    {        
         <link href="@Url.Content("~/assets/styles/pages/account/external-group.css")" rel="stylesheet" />
     }
     else
@@ -30,7 +27,7 @@
         {
             <div class="info" id="accMenu">
                 <ul class="list" id="userNameMenu">
-                    <li><span class="icon-reset-password" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')"></span></li>
+                    <li><span class="icon-lock-reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')"></span></li>
                     <li><span class="icon-logout" onclick="Fanex.ExtAcc.Account.Logout()"></span></li>
                     <li><span class="circle">@CurrentSession.Instance.UserName</span></li>
                 </ul>
