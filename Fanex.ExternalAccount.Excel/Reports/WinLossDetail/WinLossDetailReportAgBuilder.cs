@@ -6,8 +6,12 @@
 
     public class WinLossDetailReportAgBuilder
     {
-        public WinLossDetailReportAgBuilder(List<WinLossDetailAg> winLossDetailAg, bool isBold, int roleId,
-            string fromDate, string toDate)
+        public WinLossDetailReportAgBuilder(
+            List<WinLossDetailAg> winLossDetailAg,
+            bool isBold,
+            int roleId,
+            string fromDate,
+            string toDate)
         {
             FromDate = fromDate;
             ToDate = toDate;
@@ -30,14 +34,12 @@
         {
             var settings = new TemplateSettings();
             var filePath = settings.WinLossDetailPath(RoleId);
+
             var mem = new MemoryStream();
             using (var report = new WinLossDetailReportAg(filePath, this, products))
             {
-                var hssfWorkbook = ((IReportBuilder)report).Build();
-                if (hssfWorkbook != null)
-                {
-                    hssfWorkbook.Write(mem);
-                }
+                var hssfWorkbook = report.Build();
+                hssfWorkbook.Write(mem);
             }
 
             return mem;

@@ -4,28 +4,23 @@
     using System.Collections.Generic;
     using System.Globalization;
     using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
     using Utilities;
     using Utility;
 
     internal class StatementPage : TemplateReport, IReportBuilder
     {
         private readonly StatementPageBuilder _builder;
+        private const int LastColumnIndex = 3;
 
         public StatementPage(string filePath, StatementPageBuilder builder)
             : base(filePath)
         {
             _builder = builder;
         }
-        
+
         public HSSFWorkbook Build()
         {
-            var data = _builder.Data;
-            if (data == null)
-            {
-                return null;
-            }
-
-            var templateSheet = HssfWorkbook.GetSheet("Template");
             var resultSheet = HssfWorkbook.GetSheet("Statement");
 
             if (_builder.IsBold)
@@ -33,87 +28,86 @@
                 BoldAllFonts();
             }
 
-            var rowId = 0;
-            const int colId = 0;
+            
+            BuildMainTitle(resultSheet);
+            WriteBodyReport(resultSheet);
 
-            var mainTitle = BuildMainTitle();
+            HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(TemplateSheet));
 
-            resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
+            return HssfWorkbook;
+        }
 
-            rowId = 2;
-            var id = 0;
+        private void WriteBodyReport(ISheet resultSheet)
+        {
+            var index = 0;
+            var toRowId = 2;
 
-            if (data.Count > 0)
+            double accumulatedTotal = 0;
+            var ballanceResult = "OK";
+
+            foreach (var item in _builder.Data)
             {
-                const int totalColumn = 4;
-                var lastColumnIndex = colId + totalColumn - 1;
-                double accumulatedTotal = 0;
-                var ballanceResult = "OK";
+                var isText = false;
 
-                foreach (var item in data)
+                resultSheet.CopyRow(TemplateSheet, index % 2 == 0 ? OddRowIndex : EvenRowIndex, toRowId, FirstColumnIndex, LastColumnIndex);
+
+                if (string.Equals(item.TransType, "BAL", StringComparison.CurrentCultureIgnoreCase)
+                    && item.TransDesc.ToUpper(CultureInfo.InvariantCulture) != "ACCUMULATED BALANCE")
                 {
-                    var isText = false;
-
-                    resultSheet.CopyRow(templateSheet, id % 2 == 0 ? 1 : 3, rowId, colId, lastColumnIndex);
-
-                    if (string.Equals(item.TransType, "BAL", StringComparison.CurrentCultureIgnoreCase)
-                        && item.TransDesc.ToUpper(CultureInfo.InvariantCulture) != "ACCUMULATED BALANCE")
+                    isText = true;
+                    if (Math.Abs(accumulatedTotal - item.TotalAmt) < 0.00001 || index == 0)
                     {
-                        isText = true;
-                        if (Math.Abs(accumulatedTotal - item.TotalAmt) < 0.00001 || id == 0)
-                        {
-                            ballanceResult = "OK";
-                        }
-                        else
-                        {
-                            accumulatedTotal -= item.TotalAmt;
-                            ballanceResult = "NOT EQUAL \nDiff: " + Utils.ToDecimal(accumulatedTotal);
-                        }
+                        ballanceResult = "OK";
                     }
                     else
                     {
-                        accumulatedTotal = item.TotalAmt + accumulatedTotal;
+                        accumulatedTotal -= item.TotalAmt;
+                        ballanceResult = "NOT EQUAL \nDiff: " + Utils.ToDecimal(accumulatedTotal);
                     }
+                }
+                else
+                {
+                    accumulatedTotal = item.TotalAmt + accumulatedTotal;
+                }
 
-                    List<object> values;
-                    if (isText)
-                    {
-                        values = new List<object>
+                List<object> values;
+                if (isText)
+                {
+
+                    values = new List<object>
                         {
                             item.AccDate.Replace("<br/>", "\n"),
                             item.TransType + "\n- " + item.TransDesc,
                             item.TotalAmt,
                             ballanceResult
                         };
-                        accumulatedTotal = item.TotalAmt;
-                    }
-                    else
-                    {
-                        values = new List<object>
+                    accumulatedTotal = item.TotalAmt;
+                }
+                else
+                {
+                    values = new List<object>
                         {
                             item.AccDate.Replace("<br/>", "\n"),
                             item.TransType + "\n- " + item.TransDesc,
                             item.TotalAmt,
                             accumulatedTotal
                         };
-                    }
-
-                    resultSheet.GetRow(rowId).WriteCells(colId, values);
-
-                    id++;
-                    rowId++;
                 }
+
+                resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, values);
+
+                index++;
+                toRowId++;
             }
 
-            HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(templateSheet));
-            return HssfWorkbook;
         }
 
-        private string BuildMainTitle()
+
+        private void BuildMainTitle(ISheet resultSheet)
         {
-            var mainTitle = " Statement - " + _builder.Username + " - From " + _builder.FromDate + " To " +
-                            _builder.ToDate;
-            return mainTitle;
+            var mainTitle = $" Statement - {_builder.Username} - From {_builder.FromDate} To {_builder.ToDate}";
+
+            resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
         }
     }
 }

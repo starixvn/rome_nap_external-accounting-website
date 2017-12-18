@@ -16,31 +16,31 @@
             {
                 if (value is string)
                 {
-                    cell.SetCellValue((string) value);
+                    cell.SetCellValue((string)value);
                 }
                 else if (value is int)
                 {
-                    cell.SetCellValue((int) value);
+                    cell.SetCellValue((int)value);
                 }
                 else if (value is long)
                 {
-                    cell.SetCellValue((long) value);
+                    cell.SetCellValue((long)value);
                 }
                 else if (value is double)
                 {
-                    cell.SetCellValue((double) value);
+                    cell.SetCellValue((double)value);
                 }
                 else if (value is decimal)
                 {
-                    SetCellValue(cell, (object) (decimal) value);
+                    SetCellValue(cell, (object)(decimal)value);
                 }
                 else if (value is bool)
                 {
-                    cell.SetCellValue((bool) value);
+                    cell.SetCellValue((bool)value);
                 }
                 else if (value is DateTime)
                 {
-                    cell.SetCellValue((DateTime) value);
+                    cell.SetCellValue((DateTime)value);
                 }
                 else
                 {
@@ -59,12 +59,9 @@
 
         public static void SetCellValue(this ICell cell, double? value)
         {
-            if (value == null)
-            {
-                value = 0;
-            }
+            var newValue = value ?? 0;
 
-            cell.SetCellValue((double) value);
+            cell.SetCellValue(newValue);
         }
 
         public static void SetCellValue(this ICell cell, decimal value)
@@ -74,12 +71,9 @@
 
         public static void SetCellValue(this ICell cell, decimal? value)
         {
-            if (value == null)
-            {
-                value = 0;
-            }
+            var newValue = value ?? 0;
 
-            cell.SetCellValue((decimal) value);
+            cell.SetCellValue(newValue);
         }
 
         public static void SetCellValue(this ICell cell, int value)
@@ -89,12 +83,9 @@
 
         public static void SetCellValue(this ICell cell, int? value)
         {
-            if (value == null)
-            {
-                value = 0;
-            }
+            var newValue = value ?? 0;
 
-            cell.SetCellValue((int) value);
+            cell.SetCellValue(newValue);
         }
 
         public static void SetCellValue(this ICell cell, long value)
@@ -104,12 +95,9 @@
 
         public static void SetCellValue(this ICell cell, long? value)
         {
-            if (value == null)
-            {
-                value = 0;
-            }
+            var newValue = value ?? 0;
 
-            cell.SetCellValue((long) value);
+            cell.SetCellValue(newValue);
         }
 
         public static void CopyFrom(this ICell cell, ICell sourceCell)

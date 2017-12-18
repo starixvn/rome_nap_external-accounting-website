@@ -33,12 +33,8 @@
             var mem = new MemoryStream();
             using (var report = new StatementPage(filePath, this))
             {
-                var hssfWorkbook = ((IReportBuilder)report).Build();
-                if (hssfWorkbook != null)
-                {
-                    hssfWorkbook.Write(mem);
-                }
-
+                var hssfWorkbook = report.Build();
+                hssfWorkbook.Write(mem);
             }
 
             return mem;

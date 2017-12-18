@@ -200,12 +200,9 @@
                         mergedRegion.FirstColumn--;
                         mergedRegion.LastColumn--;
                     }
-                    else
+                    else if (columnIndex <= mergedRegion.LastColumn)
                     {
-                        if (columnIndex <= mergedRegion.LastColumn)
-                        {
-                            mergedRegion.LastColumn--;
-                        }
+                        mergedRegion.LastColumn--;
                     }
                 }
             }

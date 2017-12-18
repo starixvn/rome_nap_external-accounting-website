@@ -6,7 +6,11 @@
 
     public class WinLossDetailReportBuilder
     {
-        public WinLossDetailReportBuilder(List<WinLossDetail> winLossDetail, bool isBold, int roleId, string fromDate,
+        public WinLossDetailReportBuilder(
+            List<WinLossDetail> winLossDetail,
+            bool isBold,
+            int roleId,
+            string fromDate,
             string toDate)
         {
             FromDate = fromDate;
@@ -34,11 +38,8 @@
 
             using (var report = new WinLossDetailReport(filePath, this, products))
             {
-                var hssfWorkbook = ((IReportBuilder)report).Build();
-                if (hssfWorkbook != null)
-                {
-                    hssfWorkbook.Write(mem);
-                }
+                var hssfWorkbook = report.Build();
+                hssfWorkbook.Write(mem);
             }
 
             return mem;

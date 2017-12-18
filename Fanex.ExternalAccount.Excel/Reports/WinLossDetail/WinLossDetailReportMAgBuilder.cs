@@ -34,12 +34,8 @@
 
             using (var report = new WinLossDetailReportMAg(filePath, this, products))
             {
-                var hssfWorkbook = ((IReportBuilder)report).Build();
-                if (hssfWorkbook != null)
-                {
-                    hssfWorkbook.Write(mem);
-                }
-
+                var hssfWorkbook = report.Build();
+                hssfWorkbook.Write(mem);
             }
 
             return mem;

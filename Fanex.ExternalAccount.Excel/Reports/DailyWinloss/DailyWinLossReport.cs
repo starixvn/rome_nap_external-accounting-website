@@ -9,12 +9,7 @@
     internal class DailyWinLossReport : TemplateReport, IReportBuilder
     {
         private readonly DailyWinLossReportBuilder _builder;
-        private const int OddRowIndex = 1;
-        private const int EvenRowIndex = 3;
-        private const int FirstRowIndex = 0;
-        private const int FirstColumnIndex = 0;
         private const int LastColumnIndex = 18;
-        private const int FirstColumnTotalIndex = 5;
 
         public DailyWinLossReport(string filePath, DailyWinLossReportBuilder builder)
             : base(filePath)
@@ -24,7 +19,6 @@
 
         public HSSFWorkbook Build()
         {
-            var templateSheet = HssfWorkbook.GetSheet("Template");
             var resultSheet = HssfWorkbook.GetSheet("DailyWinLoss");
             if (_builder.IsBold)
             {
@@ -32,13 +26,13 @@
             }
 
             BuildMainTitle(resultSheet);
-            WriteBodyReport(resultSheet, templateSheet);
-            HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(templateSheet));
+            WriteBodyReport(resultSheet);
+            HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(TemplateSheet));
 
             return HssfWorkbook;
         }
 
-        private void WriteBodyReport(ISheet resultSheet, ISheet templateSheet)
+        private void WriteBodyReport(ISheet resultSheet)
         {
             var index = 1;
             var toRowId = 3;
@@ -46,7 +40,7 @@
             foreach (var item in _builder.Data)
             {
                 var fromRowId = index % 2 == 0 ? OddRowIndex : EvenRowIndex;
-                resultSheet.CopyRow(templateSheet, fromRowId, toRowId, FirstColumnIndex, LastColumnIndex);
+                resultSheet.CopyRow(TemplateSheet, fromRowId, toRowId, FirstColumnIndex, LastColumnIndex);
 
                 var values = new List<object>
                 {
@@ -75,13 +69,13 @@
                 toRowId++;
             }
 
-            WriteTotal(resultSheet, templateSheet, toRowId);
+            WriteTotal(resultSheet, toRowId);
         }
 
-        private void WriteTotal(ISheet resultSheet, ISheet templateSheet, int toRowIndex)
+        private void WriteTotal(ISheet resultSheet, int toRowIndex)
         {
             var data = _builder.Data;
-            resultSheet.CopyRow(templateSheet, FirstColumnTotalIndex, toRowIndex, FirstColumnIndex, LastColumnIndex);
+            resultSheet.CopyRow(TemplateSheet, FirstColumnTotalIndex, toRowIndex, FirstColumnIndex, LastColumnIndex);
             var values = new List<object>
             {
                 string.Empty,
