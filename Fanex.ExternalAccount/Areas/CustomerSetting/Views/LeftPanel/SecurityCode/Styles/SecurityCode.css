@@ -1,50 +1,199 @@
 ﻿body {
-    font-size: 12px;
+    font-family: Arial, Tahoma, Helvetica, sans-serif;
+    font-size: 13px;
     line-height: 18px;
-    color: #222222;
+    color: #232428;
 }
 
-div {
-    font-size: 12px;
-    line-height: 22px;
+* {
+    box-sizing: border-box;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.hide {
+    display: none;
+}
+
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
 }
 
 #reportNote {
     font-size: 12px !important;
 }
 
-    #reportNote ul {
-        margin: 0;
-        padding: 10px;
+#reportNote ul {
+    margin: 0;
+    padding: 10px;
+}
+
+.checkbox {
+    position: relative;
+    top: 7px;
+    margin-left: 10px;
+}
+
+/* Forms */
+.form-add {
+    padding-top: 16px;
+}
+
+    .form-add .group {
+        display: table;
+        width: 100%;
+        margin-bottom: 10px;
     }
 
-.table-securty-code td {
-    font-size: 12px;
+    .form-add .label {
+        text-align: right;
+        line-height: 32px;
+    }
+
+    .form-add .form-control {
+        margin-left: 10px;
+        height: 32px;
+    }
+
+    .form-add .textarea {
+        height: 150px;
+    }
+
+    .form-add .width-150 {
+        width: 150px;
+    }
+
+    .form-add .width-250 {
+        width: 225px;
+    }
+
+
+    .form-add .form-action .btn:first-child {
+        margin-right: 16px;
+    }
+
+    .form-add .form-action.with-label-150 {
+        padding-left: 160px;
+    }
+
+    
+/* Textbox */
+input[type='text'], input[type='password'], input[type='email'] {
+    height: 32px;
+    line-height: 32px;
     border: none;
+    outline: none;
+    padding-left: 8px;
+    padding-right: 8px;
+    /*width: 120px;*/
+    border: 1px solid #7b7c7e;
+    -webkit-appearance: none;
+}
+
+@media all and (max-width: 480px) {
+    input[type='text'], input[type='password'], input[type='email'] {
+        width: 110px;
+    }
+}
+
+input[type='text']::-ms-clear, input[type='password']::-ms-clear, input[type='email']::-ms-clear {
+    display: none;
+}
+
+input[type='text'][disabled], input[type='text'] .disabled, input[type='password'][disabled], input[type='password'] .disabled, input[type='email'][disabled], input[type='email'] .disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+textarea {
+    border: 1px solid #7b7c7e;
+}
+
+/* Messages */
+.successMsg, .errMsg {
+    -webkit-border-radius: 2px;
+    -khtml-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+    padding: 10px 10px 10px 30px;
+    line-height: 1.5;
+    max-height: 180px;
+    clear: both;
+    white-space: pre-line;
     overflow: auto;
-    white-space: normal;
+    text-align: left;
+    vertical-align: middle;
 }
 
-.table-securty-code .field-name {
-    width: 200px;
-    text-align: right;
+.successMsg {
+    background: url("../../images/Success.gif") #eefbe9 no-repeat 5px 9px;
+    border: 1px solid #1db51a;
+    color: #52a220;
 }
 
-input[type="text"] {
-    border: 1px solid #bbb;
-    border-radius: 3px;
-    height: 22px;
-    text-indent: 5px;
+.errMsg {
+    background: url("../../images/warning.png") #faf8dd no-repeat 5px 9px;
+    border: 1px solid #bcba7d;
+    color: #7e3d00;
 }
 
-button, input {
-    font-family: inherit;
-    font-size: 100%;
-    margin: 0;
+/* Buttons */
+.btn {
+    height: 32px;
+    line-height: 32px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: none;
+    -webkit-border-radius: 2px;
+    -khtml-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    border-radius: 2px;
 }
 
-#securityCode, #securityCodeConfirm {
-    width: 235px;
-    font-size: 1em;
-    height: 26px !important;
+.btn.-normal {
+    background-color: #e1e1e1;
+    color: #212121;
+}
+
+.btn.-normal:hover {
+    background-color: #0286b7;
+    color: #212121;
+}
+
+.btn.-submit {
+    background-color: #6f7d95;
+    color: #fff;
+}
+
+.btn.-submit:hover {
+    background-color: #637187;
+    color: #fff;
+}
+
+/* Hint tooltip */
+.hint {
+    height: 35px;
 }

@@ -63,6 +63,10 @@
         width: 100px;
     }
 
+    .width-120 {
+        width: 120px;
+    }
+
     .width-250 {
         width: 225px;
     }
@@ -76,6 +80,10 @@
 
         .btn:first-child {
             margin-right: 16px;
+        }
+
+        &.with-label-120 {
+            padding-left: 130px;
         }
     }
 

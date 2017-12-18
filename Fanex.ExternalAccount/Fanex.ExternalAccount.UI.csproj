@@ -1242,6 +1242,10 @@
     <Content Include="assets\styles\pages\reports\winloss-detail.min.css">
       <DependentUpon>winloss-detail.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\statement\guideline.css" />
+    <Content Include="assets\styles\pages\statement\guideline.min.css" />
+    <Content Include="assets\styles\pages\statement\statement.css" />
+    <Content Include="assets\styles\pages\statement\statement.min.css" />
     <Content Include="assets\styles\vendors-extensions\bootstrap-ex.css">
       <DependentUpon>bootstrap-ex.scss</DependentUpon>
     </Content>
@@ -2761,6 +2765,7 @@
     <Folder Include="Areas\Common\Views\Shared\Styles\" />
     <Folder Include="Areas\LiveCasinoSetting\Scripts\libs\core\language\" />
     <Folder Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\actions\" />
+    <Folder Include="assets\styles\pages\CustomerSetting\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />
@@ -3002,6 +3007,8 @@
     <Content Include="assets\styles\pages\customer\live-casino.scss" />
     <Content Include="assets\styles\pages\customer\virtual-sport.scss" />
     <Content Include="assets\styles\pages\customer\pt-engine.scss" />
+    <Content Include="assets\styles\pages\statement\guideline.scss" />
+    <Content Include="assets\styles\pages\statement\statement.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

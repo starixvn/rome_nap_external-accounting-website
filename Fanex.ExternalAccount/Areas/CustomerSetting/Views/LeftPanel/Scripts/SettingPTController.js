@@ -174,7 +174,7 @@
             'custId=' + $scope.model.personalInfo.custId.value +
             "&groupName=" + parent.$('#selectedGroupName').html());
         var title = parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
-        parent.Fanex.ExtAcc.Form.Show(url, title, 500, 460, false);
+        parent.Fanex.ExtAcc.Form.Show(url, title, 500, 560, false);
     };
 
     $scope.Transfer = function () {

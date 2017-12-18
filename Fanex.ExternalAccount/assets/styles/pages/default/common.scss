@@ -409,7 +409,19 @@ no-info {
     color: #444 !important;
 }
 
+/* Password */
+.note {
+    color: #dd0000;
+    line-height: 15px;
 
+    li:hover {
+        color: #dd0000;
+    }
+
+    p {
+        margin: 5px 0;
+    }
+}
 
 
 
