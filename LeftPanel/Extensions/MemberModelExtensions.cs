@@ -26,10 +26,9 @@
 
             model.PersonalInfo.Downlines = new List<ObjectInfo>
             {
-                new ObjectInfo (lineRow.SuperId().ToString(),lineRow.SuperName(),"Super"),
-                new ObjectInfo (lineRow.MasterId().ToString(), lineRow.MasterName(),"Master"),
-                new ObjectInfo (lineRow.AgentId().ToString(), lineRow.AgentName(),"Agent")
-
+                new ObjectInfo(lineRow.SuperId().ToString(), lineRow.SuperName(), "Super"),
+                new ObjectInfo(lineRow.MasterId().ToString(), lineRow.MasterName(),"Master"),
+                new ObjectInfo(lineRow.AgentId().ToString(), lineRow.AgentName(),"Agent")
             };
         }
 
@@ -59,18 +58,18 @@
         private static List<ObjectInfo> Details()
             => new List<ObjectInfo>
             {
-                new ObjectInfo ("Info","Edit Info" ),
-                new ObjectInfo ("PT","Edit Position Taking" ),
-                new ObjectInfo ("Racing","Edit Racing" ),
-                new ObjectInfo ("Casino","Edit Casino" ),
-                new ObjectInfo ("LiveCasino","Edit Live Casino" ),
-                new ObjectInfo ("VirtualSports","Edit Virtual Sports" ),
-                new ObjectInfo ("Keno","Edit Keno" ),
-                new ObjectInfo ("GoldDeluxe","Edit Gold Deluxe" ),
-                new ObjectInfo ("ColossusBets","Edit Colossus Bets" ),
-                new ObjectInfo ("Sportsbook2","Edit Sportsbook 2" ),
-                new ObjectInfo ("Cockfighting","Edit Cockfighting" ),
-                new ObjectInfo ("Cricket","Edit Cricket" )
+                new ObjectInfo ("Info", "Edit Info"),
+                new ObjectInfo ("PT", "Edit Position Taking"),
+                new ObjectInfo ("Racing", "Edit Racing"),
+                new ObjectInfo ("Casino", "Edit Casino"),
+                new ObjectInfo ("LiveCasino", "Edit Live Casino"),
+                new ObjectInfo ("VirtualSports", "Edit Virtual Sports"),
+                new ObjectInfo ("Keno", "Edit Keno"),
+                new ObjectInfo ("GoldDeluxe", "Edit Gold Deluxe"),
+                new ObjectInfo ("ColossusBets", "Edit Colossus Bets"),
+                new ObjectInfo ("Sportsbook2", "Edit Sportsbook 2"),
+                new ObjectInfo ("Cockfighting", "Edit Cockfighting"),
+                new ObjectInfo ("Cricket",  "Edit Cricket" )
             };
 
         private static List<ObjectInfo> EditItems()
@@ -93,7 +92,6 @@
                 new ObjectInfo("HideLottery", table3RdDcs.Get3rdProductStatus(28)),
                 new ObjectInfo("HideLucky3", table3RdDcs.Get3rdProductStatus(26))
             };
-
         private static List<ObjectInfo> EnableItems(DataRow customerRow, DataTable table3rdDCS)
             => new List<ObjectInfo>
             {
