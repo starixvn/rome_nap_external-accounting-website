@@ -1124,23 +1124,6 @@ textarea {
 .ui-menu .ui-menu-item a {
   font-size: 12px !important; }
 
-/* 4 corners jqGrid */
-/*.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
-    border-bottom-right-radius: 0px !important;
-}
-
-.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
-    border-bottom-left-radius: 0px !important;
-}
-
-.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
-    border-top-right-radius: 0px !important;
-}
-
-.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
-    border-top-left-radius: 0px !important;
-}*/
-/* END: FOR Nexcel JQGRID */
 #ui-datepicker-div {
   z-index: 9999 !important; }
 
@@ -1184,6 +1167,48 @@ textarea {
     -ms-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
     -o-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
     transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out; }
+  .splitter-panel.collapse-leftpanel {
+    left: -100%;
+    opacity: 0;
+    -webkit-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
+    -khtml-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
+    -moz-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
+    -ms-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
+    -o-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
+    transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s; }
+
+/* Collapse/ expend left-panel */
+.splitter-bar {
+  display: none; }
+  @media screen and (min-device-width: 768px) {
+    .splitter-bar {
+      display: block;
+      position: absolute;
+      left: 398px;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 10px;
+      background-color: #ddd; } }
+  .splitter-bar.collapse-leftpanel {
+    left: 0; }
+
+.icon-collapse-on-desktop {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -25px;
+  width: 10px;
+  height: 50px;
+  background-color: #3b475f;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold; }
+  .icon-collapse-on-desktop:before {
+    position: absolute;
+    left: -2px;
+    top: 50%;
+    margin-top: -5px; }
 
 .group-search {
   position: relative;
@@ -1260,43 +1285,6 @@ textarea {
   border: none;
   overflow: auto; }
 
-/* Collapse/ expend left-panel */
-#splitterBar {
-  float: left;
-  width: 3px;
-  display: block;
-  background-color: #ddd;
-  padding: 0;
-  margin: 0;
-  border-right: 1px solid #ccc;
-  border-left: 1px solid #ccc;
-  cursor: pointer;
-  /*div.expanded {
-        width: 4px;
-        background-color: #aaa;
-        border: 1px solid #ccc;
-        top: 45%;
-        left: -2px;
-        position: relative;
-        height: 50px;
-        background-image: url(../images/arrow-icn.png);
-        background-position: -1px 20px;
-        background-repeat: no-repeat;
-    }
-
-    div.collapsed {
-        width: 4px;
-        background-color: #aaa;
-        border: 1px solid #ccc;
-        top: 45%;
-        left: -2px;
-        position: relative;
-        height: 50px;
-        background-image: url(../images/arrow-icn-right.png);
-        background-position: -3px 20px;
-        background-repeat: no-repeat;
-    }*/ }
-
 /* Content */
 .content {
   position: absolute;
@@ -1309,7 +1297,9 @@ textarea {
   overflow: auto; }
   @media screen and (min-device-width: 768px) {
     .content {
-      left: 398px; } }
+      left: 408px; } }
+  .content.expand-content {
+    left: 10px; }
 
 /* Title */
 .page-title {

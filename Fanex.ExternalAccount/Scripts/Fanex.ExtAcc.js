@@ -358,37 +358,31 @@ Fanex.ExtAcc = {
         $.blockUI.defaults.css.backgroundColor = "transparent";
         $.blockUI.defaults.overlayCSS.backgroundColor = "transparent";
 
-        //$('body').height($("#footer").position().top);
-        //$('#container').height($("#footer").position().top);
-        //$('#splitterBar').height($("#footer").position().top - 30);
-
-        //$('#contentSplitter').width($("#footer").position().left - this.leftMenuWidth);
-
-        //$('#contentSplitter').css('height', $('#splitterBar').height() - 20 + 'px');
-
-        //$('#leftSplitter').height($('#contentSplitter').height());
         $('#leftFrame').height($('#contentSplitter').height() - 40);
         $('#mainFrame').height($('#contentSplitter').height() - 35);
 
-        //$('#splitterBar').click(function (event) {
-        //    Fanex.ExtAcc.ToggleSpliter();
-        //    Fanex.ExtAcc.Resize();
-        //});
+        var leftSplitter = $("#leftSplitter");
+        var iconCollapseExpand = $("#collapseExpandOnDesktop");
+        var content = $("#contentSplitter");
+        var splitterBar = $("#splitterBar");
+        
+        iconCollapseExpand.on("click", function () {
+            if(!iconCollapseExpand.hasClass("active")) { 
+                iconCollapseExpand.removeClass("icon-chevron-left").addClass("icon-chevron-right").addClass("active");
+                leftSplitter.addClass("collapse-leftpanel").removeClass("expand-leftpanel");
+                content.addClass("expand-content");
+                splitterBar.addClass("collapse-leftpanel");
+            } else {
+                iconCollapseExpand.removeClass("icon-chevron-right").addClass("icon-chevron-left").removeClass("active");
+                leftSplitter.removeClass("collapse-leftpanel").addClass("expand-leftpanel");
+                content.removeClass("expand-content");
+                splitterBar.removeClass("collapse-leftpanel");
+            }            
+        });
 
         $(window).resize(function () {
             Fanex.ExtAcc.Resize();
         });
-        //if (this.leftMenuWidth === 300) {
-        //    $('#leftSplitter').show();
-        //    $('#splitterBar').attr('title', 'Hide left panel');
-        //    $('#splitterBar div').attr('class', 'expanded');
-        //}
-        //else {
-        //    $('#leftSplitter').hide();
-        //    $('#splitterBar').attr('title', 'Show left panel');
-        //    $('#splitterBar div').attr('class', 'collapsed');
-        //}
-
         this.LoadModule(Fanex.ExtAcc.Form);
         var interval = setInterval(function () {
             if (typeof Fanex.ExtAcc.Header != 'undefined') {
@@ -398,12 +392,12 @@ Fanex.ExtAcc = {
 
                 var module = Fanex.ExtAcc.GetCurrentModule();
                 Fanex.ExtAcc.LoadModule(module);
-            }
-        }, 100);
+        }
+    }, 100);
 
         $('#txtLeftPanelUserName').keypress(function (e) {
             if (typeof e == 'undefined') e = window.event;
-            var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
+            var key = (typeof e.keyCode == 'undefined') ? e.which: e.keyCode;
             if (key == 13) {
                 if (this.SuggestionXHR != null)
                     this.SuggestionXHR.abort();
@@ -414,17 +408,17 @@ Fanex.ExtAcc = {
 
                 $('.ui-autocomplete').hide();
 
-                $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?id=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=1'));
+                $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?id=' + (username == '' ? "''" : username) + '&uplineId=' +$('#selectedGroupName').html() + '&pageIndex=1'));
 
                 setTimeout(function () {
                     $('#txtLeftPanelUserName').focus();
-                }, 100);
+            }, 100);
 
                 return true;
             } else {
                 return true;
-            }
-        });
+        }
+    });
 
         $('#searchPanel').bind('click', function () {
             if (this.SuggestionXHR != null)
@@ -436,14 +430,14 @@ Fanex.ExtAcc = {
 
             $('.ui-autocomplete').hide();
 
-            $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?id=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=1'));
-        });
+            $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?id=' + (username == '' ? "''" : username) + '&uplineId=' +$('#selectedGroupName').html() + '&pageIndex=1'));
+    });
 
         $('#txtLeftPanelUserName').keyup(function (e) {
             if ($('#txtLeftPanelUserName').val().length > 1) {
                 Fanex.ExtAcc.InitSuggestion('txtLeftPanelUserName');
-            }
-        });
+        }
+    });
 
         Fanex.ExtAcc.InitSuggestion('txtLeftPanelUserName');
     },

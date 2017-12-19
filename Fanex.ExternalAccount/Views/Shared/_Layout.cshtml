@@ -128,9 +128,9 @@
                     <button class="btn -logout" onclick="Fanex.ExtAcc.Account.Logout()">Log Out</button>
                 </div>
             </div>
-            @Html.Action("_Menu", "Shared")
-           
+            @Html.Action("_Menu", "Shared")           
         </div>
+        
         <div id='mainContent' class="main-content">
             <div id="mainSplitter">
                 <div class="splitter-panel" id="leftSplitter">
@@ -140,11 +140,10 @@
                     </div>
                     <iframe id="leftFrame" class="iframe"></iframe>
                 </div>
-                <div id="splitterBar">
-                    <div>
-                    </div>
+                <div class="splitter-bar" id="splitterBar">
+                    <div class="icon-chevron-left icon-collapse-on-desktop" id="collapseExpandOnDesktop"></div>
                 </div>
-                <div class="content" id="contentSplitter">
+                <div class="content" id="contentSplitter">                    
                     @RenderBody()
                 </div>
             </div>

@@ -59,24 +59,6 @@
     font-size: 12px !important;
 }
 
-/* 4 corners jqGrid */
-/*.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
-    border-bottom-right-radius: 0px !important;
-}
-
-.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
-    border-bottom-left-radius: 0px !important;
-}
-
-.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
-    border-top-right-radius: 0px !important;
-}
-
-.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
-    border-top-left-radius: 0px !important;
-}*/
-/* END: FOR Nexcel JQGRID */
-
 #ui-datepicker-div {
     z-index: 9999 !important;
 }
@@ -114,6 +96,55 @@
         left: 0;
         opacity: 1;
         @include transition(left .2s ease-in .1s, opacity .1s ease-out);
+    }
+
+
+    &.collapse-leftpanel {        
+        left: -100%;
+        opacity: 0;
+        @include transition(left .2s ease-in .1s, opacity .2s ease-in .2s);
+    }
+}
+
+/* Collapse/ expend left-panel */
+
+.splitter-bar {
+    display: none;
+    
+
+    @media screen and (min-device-width: 768px) {
+        display: block;
+        position: absolute;
+        left: 398px;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 10px;
+        background-color: #ddd;         
+    }
+
+    &.collapse-leftpanel {
+        left: 0;
+    }
+}
+
+.icon-collapse-on-desktop {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -25px;
+    width: 10px;
+    height: 50px;    
+    background-color: #3b475f;    
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+
+    &:before {
+        position: absolute;
+        left: -2px;
+        top: 50%;
+        margin-top: -5px;
     }
 }
 
@@ -204,46 +235,6 @@
 }
 
 
-/* Collapse/ expend left-panel */
-#splitterBar {
-    float: left;
-    width: 3px;
-    display: block;
-    background-color: #ddd;
-    padding: 0;
-    margin: 0;
-    border-right: 1px solid #ccc;
-    border-left: 1px solid #ccc;
-    cursor: pointer;
-
-    /*div.expanded {
-        width: 4px;
-        background-color: #aaa;
-        border: 1px solid #ccc;
-        top: 45%;
-        left: -2px;
-        position: relative;
-        height: 50px;
-        background-image: url(../images/arrow-icn.png);
-        background-position: -1px 20px;
-        background-repeat: no-repeat;
-    }
-
-    div.collapsed {
-        width: 4px;
-        background-color: #aaa;
-        border: 1px solid #ccc;
-        top: 45%;
-        left: -2px;
-        position: relative;
-        height: 50px;
-        background-image: url(../images/arrow-icn-right.png);
-        background-position: -3px 20px;
-        background-repeat: no-repeat;
-    }*/
-}
-
-
 /* Content */
 .content {
     position: absolute;
@@ -256,7 +247,11 @@
     overflow: auto;
 
     @media screen and (min-device-width: 768px) {
-        left: 398px; 
+        left: 408px; 
+    }
+
+    &.expand-content {
+        left: 10px; 
     }
 }
 
