@@ -5,9 +5,11 @@
     height: 32px;
     border: 1px solid #7b7c7e;
     border-radius: 0 !important;
+
     input {
         height: 30px;
     }
+
     .ui-icon {
         margin-top: -22px !important;
     }
@@ -15,6 +17,7 @@
 
 #GroupMonthDay .form-group .user-group {
     width: 60px;
+
     &.dll-month {
         width: 148px;
     }
@@ -22,102 +25,100 @@
 
 .filterbox .label {
     width: 60px;
+
     @media all and (min-width-device: 768px) {
         &.to-width {
-            width: 20px; 
+            width: 20px;
         }
     }
-    
 }
+
 .last-item {
     padding-left: 66px;
 }
 
-#userGroup input
-{
-	width: 147px !important;
+#userGroup input {
+    width: 147px !important;
 }
 
-.frozen-div
-{
-	border-right: 1px solid #999 !important;
-	width: 336px;
-}
-.fixedColumnFooter
-{
-	width: 335px !important;
+.frozen-div {
+    border-right: 1px solid #999 !important;
+    width: 336px;
 }
 
-.ui-multiselect
-{
-	height: 23px;
-	border: 1px solid #bbb;
-	border-bottom-left-radius: 3px !important;
-	border-bottom-right-radius: 3px !important;
-	border-top-left-radius: 3px !important;
-	border-top-right-radius: 3px !important;
+.fixedColumnFooter {
+    width: 335px !important;
 }
-.ui-multiselect .ui-state-default
-{
-	color: #444;
-	border-bottom-left-radius: 3px !important;
-	border-bottom-right-radius: 3px !important;
-	border-top-left-radius: 3px !important;
-	border-top-right-radius: 3px !important;
+
+.ui-multiselect {
+    height: 23px;
+    border: 1px solid #bbb;
+    border-bottom-left-radius: 3px !important;
+    border-bottom-right-radius: 3px !important;
+    border-top-left-radius: 3px !important;
+    border-top-right-radius: 3px !important;
 }
-.ui-multiselect .ui-state-hover
-{
-	border: 1px solid #999;
-	border-bottom-left-radius: 3px !important;
-	border-bottom-right-radius: 3px !important;
-	border-top-left-radius: 3px !important;
-	border-top-right-radius: 3px !important;
+
+.ui-multiselect .ui-state-default {
+    color: #444;
+    border-bottom-left-radius: 3px !important;
+    border-bottom-right-radius: 3px !important;
+    border-top-left-radius: 3px !important;
+    border-top-right-radius: 3px !important;
+}
+
+.ui-multiselect .ui-state-hover {
+    border: 1px solid #999;
+    border-bottom-left-radius: 3px !important;
+    border-bottom-right-radius: 3px !important;
+    border-top-left-radius: 3px !important;
+    border-top-right-radius: 3px !important;
 }
 
 
 
-.ui-multiselect-options
-{
-	margin-top: 34px !important;
+.ui-multiselect-options {
+    margin-top: 34px !important;
 }
 
-#DateList
-{
-	width: 153px;
+#DateList {
+    width: 153px;
 }
 
 
-.history
-{
+.history {
     margin-left: 1px;
-	color: #2489ce;
-	cursor: pointer;
-	font-style: italic;
+    color: #2489ce;
+    cursor: pointer;
+    font-style: italic;
 }
-.arrow
-{
-	background: url("../../Images/arrow.png") no-repeat left;
-	width: 13px;
-	height: 12px;
-	padding-left: 18px;
+
+.arrow {
+    background: url("../../Images/arrow.png") no-repeat left;
+    width: 13px;
+    height: 12px;
+    padding-left: 18px;
 }
-.iconscontainer
-{
-	background-repeat: no-repeat;
-	background-position: 80% 50%;
-	background-image: url(/Images/sort.png);
+
+.iconscontainer {
+    background-repeat: no-repeat;
+    background-position: 80% 50%;
+    background-image: url(/Images/sort.png);
 }
-span.selectedMonth
-{
-	margin-right: 15px;
+
+span.selectedMonth {
+    margin-right: 15px;
 }
-.monPickrWrapParent .monPickrWrap{
+
+.monPickrWrapParent .monPickrWrap {
     position: relative !important;
     border-radius: 0 !important;
+
     .monPickr {
         height: unset;
         padding: 6px 2px;
         border-radius: 0 !important;
+
         .next {
             top: 6px;
         }
@@ -127,7 +128,28 @@ span.selectedMonth
 .selectedDayWrapParent .selectedDayWrap {
     width: 60px;
     border-radius: 0 !important;
+
     .dayPickr {
         height: unset;
     }
+}
+
+.col-sorter {
+    background-image: url("../../../../bootstrap/images/sort-icon-new3.png") !important;
+    background-position: 0 -5px;
+    background-repeat: no-repeat !important;
+    cursor: pointer;
+    height: 16px;
+    margin-right: 10px;
+    width: 10px;
+    display: inline-block;
+    float: right;
+}
+
+.col-sorter.asc {
+    background-position: 0 -32px !important;
+}
+
+.col-sorter.desc {
+    background-position: 0 -53px !important;
 }

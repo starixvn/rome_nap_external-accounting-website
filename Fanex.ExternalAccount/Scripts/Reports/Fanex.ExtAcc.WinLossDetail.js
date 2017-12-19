@@ -305,6 +305,12 @@ Fanex.ExtAcc.WinLossDetail = {
                 return true;
             }
         });
+
+        $this.sorters = $(".col-sorter");
+        $this.sorters.click(function () {
+            var elem = $(this);
+            $this.sortTable(elem);
+        });
     },
     ToggleTabs: function (statusSAg, statusMAg, statusAg, status) {
         $('#tabSuper').css('display', statusSAg);
@@ -583,10 +589,10 @@ Fanex.ExtAcc.WinLossDetail = {
         }
     },
     renderReport: function (data) {
-        $this.totalRows = 1000;
-        for (var i = 0; i < 999; i++) {
-            $this.dataSource.push($this.dataSource[0]);
-        }
+        //$this.totalRows = 1000;
+        //for (var i = 0; i < 999; i++) {
+        //    $this.dataSource.push($this.dataSource[0]);
+        //}
 
         $this.hideColumnByLevel();
 
@@ -614,14 +620,16 @@ Fanex.ExtAcc.WinLossDetail = {
             Company: 0
         };
 
+        $this.sortWithFixedSort();
+
         var bodyContent = $this.renderBody(grandTotal);
         var footerContent = $this.renderFooter(grandTotal);
 
+        $this.sorters.removeClass("desc").removeClass("asc");
         $("#tbl-report tbody").empty().append(bodyContent);
         $("#tbl-report tfoot").empty().append(footerContent);
 
         $this.renderPager();
-        $this.renderSorter();
         $('#netTurnover').bind('click',
             function () {
                 var message =
@@ -677,12 +685,94 @@ Fanex.ExtAcc.WinLossDetail = {
             $($this.bodyRows[i]).removeClass("hide");
         }
     },
-    sortedColumn: null,
-    renderSorter: function () {
 
+    sorters: null,
+    sortTable: function (elem) {
+        var currentDirection = elem.hasClass("desc") ? -1 : 1;
+        $this.updateSortIcon(elem, currentDirection);
 
+        var sortedColumnName = elem.attr("data-sortedname");
+        if (sortedColumnName === "Username") {
+            $this.sortByUsername(currentDirection);
+        } else {
+            $this.sortWithFixedSort(sortedColumnName, currentDirection);
+        }
 
+        $this.reRenderBody();
+    },
+    updateSortIcon: function (elem, currentDirection) {
+        $this.sorters.removeClass("desc").removeClass("asc");
+        var nextDirection = currentDirection === 1 ? "desc" : "asc";
+        elem.addClass(nextDirection);
+    },
+    sortByUsername: function (currentDirection) {
+        $this.dataSource.sort(function (a, b) {
+            return $this.sortValues(a.Username, b.Username, currentDirection);
+        });
+    },
+    sortWithFixedSort: function (sortedColumnName, currentDirection) {
+        var countFixedSort = $this.fixedsortlist.length;
+        if (countFixedSort === 0) {
+            return;
+        }
 
+        var fixedRows = [];
+        var usedRows = {};
+        var j;
+        var data;
+
+        for (var i = 0; i < countFixedSort; i++) {
+            var fixedSort = $this.fixedsortlist[i];
+
+            for (j = 0; j < $this.dataSource.length; j++) {
+                data = $this.dataSource[j];
+
+                if (fixedSort === data.CustId) {
+                    usedRows[fixedSort] = true;
+                    fixedRows.push(data);
+                }
+            }
+        }
+
+        var canSortRows = [];
+        for (j = 0; j < $this.dataSource.length; j++) {
+            data = $this.dataSource[j];
+
+            if (usedRows[data.CustId]) {
+                continue;
+            }
+
+            canSortRows.push(data);
+        }
+
+        if (sortedColumnName !== undefined) {
+            canSortRows.sort(function (a, b) {
+                return $this.sortValues(a[sortedColumnName], b[sortedColumnName], currentDirection);
+            });
+        }
+
+        $this.dataSource = fixedRows.concat(canSortRows);
+    },
+    reRenderBody: function () {
+        var html = '';
+
+        for (var i = 0; i < $this.totalRows; i++) {
+            var row = $this.dataSource[i];
+            html += $this.renderRow(row, false);
+        }
+
+        $("#tbl-report > tbody").empty().append(html);
+
+        $this.bodyRows = $("#tbl-report > tbody > tr");
+        $this.showBodyRows();
+    },
+    sortValues: function (aValue, bValue, currentDirection) {
+        if (aValue === bValue) {
+            return 0;
+        }
+
+        var direction = aValue < bValue ? 1 : -1;
+        return direction * currentDirection;
     }
 };
 
