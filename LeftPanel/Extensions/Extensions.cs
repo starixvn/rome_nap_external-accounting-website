@@ -73,6 +73,10 @@
 
         internal static decimal TotalAgentBalance(this DataRow dataRow)
             => dataRow.CustomerCash() + dataRow.AgentCash();
+
+        internal static decimal TotalMasterBalance(this DataRow dataRow)
+            => dataRow.TotalAgentBalance() + dataRow.MasterCash();
+
         internal static decimal MasterYesterdayCash(this DataRow dataRow)
             => Utils.ToDecimal(dataRow["yesterday_masterCash"]);
 
@@ -85,7 +89,10 @@
         internal static decimal TotalAgentYesterdayCash(this DataRow dataRow)
             => dataRow.AgentYesterdayCash() + dataRow.CustomerYesterdayCash();
 
-        internal static decimal MemberOutstanding(this DataRow dataRow)
+        internal static decimal TotalMasterYesterdayCash(this DataRow dataRow)
+            => dataRow.TotalAgentYesterdayCash() + dataRow.MasterYesterdayCash();
+
+        internal static decimal CustomerOutstanding(this DataRow dataRow)
             => Utils.ToDecimal(dataRow["customerOutstanding"]);
 
         private static DataRow GetProductRow(DataTable table3RdDcs, int productId)

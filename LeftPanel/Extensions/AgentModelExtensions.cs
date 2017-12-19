@@ -47,7 +47,7 @@
             });
             model.BalanceInfo.Balances.Add(new ObjectInfo
             {
-                Value = cashRow.MemberOutstanding(),
+                Value = cashRow.CustomerOutstanding(),
                 Text = "Member Outstanding"
             });
         }

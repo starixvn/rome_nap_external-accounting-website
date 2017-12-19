@@ -21,8 +21,8 @@
         {
             var lineRow = ds.Tables[1].Rows[0];
 
-            model.PersonalInfo.UplineId = new ObjectInfo(lineRow.AgentId().ToString(), "Agent ID");
-            model.PersonalInfo.CurrentLevel = new ObjectInfo(lineRow.MemberName(), "Member");
+            model.PersonalInfo.UplineId = new ObjectInfo { Value = lineRow.AgentId(), Text = "Agent ID" };
+            model.PersonalInfo.CurrentLevel = new ObjectInfo { Value = lineRow.MemberName(), Text = "Member" };
 
             model.PersonalInfo.Downlines = new List<ObjectInfo>
             {

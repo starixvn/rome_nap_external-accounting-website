@@ -1,5 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
+    using System;
+
     public class ObjectInfo
     {
         public ObjectInfo()
@@ -8,6 +10,16 @@
 
         public ObjectInfo(string key, object value)
         {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            if (ReferenceEquals(null, value))
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             Key = key;
             Value = value;
         }

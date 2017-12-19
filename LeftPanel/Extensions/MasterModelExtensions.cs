@@ -37,21 +37,17 @@
 
             model.BalanceInfo.Balances.Add(new ObjectInfo
             {
-                Value = Utils.ToDecimal(cashRow["masterCash"])
-                        + Utils.ToDecimal(cashRow["agentCash"])
-                        + Utils.ToDecimal(cashRow["customerCash"]),
+                Value = cashRow.TotalMasterBalance(),
                 Text = "Total Balance"
             });
             model.BalanceInfo.Balances.Add(new ObjectInfo
             {
-                Value = Utils.ToDecimal(cashRow["yesterday_masterCash"])
-                        + Utils.ToDecimal(cashRow["yesterday_agentCash"])
-                        + Utils.ToDecimal(cashRow["yesterday_customerCash"]),
+                Value = cashRow.TotalMasterYesterdayCash(),
                 Text = "Yesterday Balance"
             });
             model.BalanceInfo.Balances.Add(new ObjectInfo
             {
-                Value = Utils.ToDecimal(cashRow["customerOutstanding"]),
+                Value = cashRow.CustomerOutstanding(),
                 Text = "Agent Outstanding"
             });
         }
