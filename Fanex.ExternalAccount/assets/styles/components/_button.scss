@@ -2,12 +2,13 @@
 @import "../abstracts/mixins";
 
 .btn {
+    @include border-radius(2px);
     height: 32px;
     line-height: 32px;
     padding-left: 10px;
     padding-right: 10px;
     border: none;
-    @include border-radius(2px);
+    -webkit-appearance: none;    
 
     &.-reset {
         background-color: $btn-reset-bg;

@@ -127,6 +127,9 @@ a {
 .hide {
   display: none; }
 
+.show {
+  overflow: auto !important; }
+
 .pull-left {
   float: left; }
 
@@ -159,17 +162,18 @@ a {
   font-style: normal;
 }*/
 .btn {
-  height: 32px;
-  line-height: 32px;
-  padding-left: 10px;
-  padding-right: 10px;
-  border: none;
   -webkit-border-radius: 2px;
   -khtml-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
-  border-radius: 2px; }
+  border-radius: 2px;
+  height: 32px;
+  line-height: 32px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: none;
+  -webkit-appearance: none; }
   .btn.-reset {
     background-color: #e04d4d;
     color: #fff; }
@@ -1413,6 +1417,13 @@ no-info {
     color: #dd0000; }
   .note p {
     margin: 5px 0; }
+
+/* Reset Password Owner */
+.warningResetPwd {
+  color: #dd0000;
+  float: left;
+  height: 30px;
+  margin-top: 10px; }
 
 div#contentSplitter > div#msg {
   margin: 10px; }

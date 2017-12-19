@@ -2,6 +2,10 @@
 @import "../../abstracts/mixins";
 @import "../../base/scaffolding";
 @import "../../components/button";
+@import "../../components/popup";
+@import "../../components/form";
+@import "../../components/textbox";
+@import "../../components/messages";
 @import "../../layout/header";
 @import "../../layout/sidebar";
 
@@ -67,3 +71,28 @@
     }
 }
 
+.hint {
+    display: none;
+    position: absolute;
+	padding: 6px 12px;
+    white-space: nowrap;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    min-width: 150px;
+    background-color: #ffc;
+    margin-top: -4px;
+    border: 1px solid #c93;
+    z-index: 999999;
+    font-size: 12px;
+    @include box-sizing(content-box);    
+}
+
+/* Reset Password Owner */
+.warningResetPwd
+{
+	color: #dd0000;
+	float: left;
+	height: 30px;
+	margin-top: 10px;
+}

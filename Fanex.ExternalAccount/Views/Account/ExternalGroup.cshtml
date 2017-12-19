@@ -13,8 +13,11 @@
     <link rel="stylesheet" href="@Url.Content("~/assets/styles/fonts/AlphaAdmin/style.css?v=1")" />
 
     @if (HttpContext.Current.IsDebuggingEnabled)
-    {        
+    {
+        <link href="@Url.Content("~/assets/styles/base/Validators.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css")" rel="stylesheet" />
         <link href="@Url.Content("~/assets/styles/pages/account/external-group.css")" rel="stylesheet" />
+        
     }
     else
     {
@@ -47,10 +50,10 @@
                 <span class="text">S</span>
             </div>
             <span class="username">sa</span>
-        </div>      
-        <div class="list-action">
-            <button class="btn -reset">Reset Password</button>
-            <button class="btn -logout">Log Out</button>
+            <div class="list-action">
+                <button class="btn -reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')">Reset Password</button>
+                <button class="btn -logout" onclick="Fanex.ExtAcc.Account.Logout()">Log Out</button>
+            </div>
         </div>
     </div>
     <div class="container-fluid">

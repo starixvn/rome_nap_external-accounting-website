@@ -19,17 +19,18 @@
   font-style: normal;
 }*/
 .btn {
-  height: 32px;
-  line-height: 32px;
-  padding-left: 10px;
-  padding-right: 10px;
-  border: none;
   -webkit-border-radius: 2px;
   -khtml-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
-  border-radius: 2px; }
+  border-radius: 2px;
+  height: 32px;
+  line-height: 32px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: none;
+  -webkit-appearance: none; }
   .btn.-reset {
     background-color: #e04d4d;
     color: #fff; }
@@ -252,6 +253,9 @@ a {
 
 .hide {
   display: none; }
+
+.show {
+  overflow: auto !important; }
 
 .pull-left {
   float: left; }

@@ -124,7 +124,7 @@ Fanex.ExtAcc.Account = {
             }
             
             if (!iconUserInfo.hasClass('active')) {
-                leftPanel.addClass("expand-leftpanel").show("fast");
+                leftPanel.addClass("expand-leftpanel").addClass("show").show("fast");
                 iconUserInfo.addClass("active");
 
             } else {

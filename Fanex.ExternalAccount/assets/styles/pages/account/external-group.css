@@ -125,6 +125,9 @@ a {
 .hide {
   display: none; }
 
+.show {
+  overflow: auto !important; }
+
 .pull-left {
   float: left; }
 
@@ -157,17 +160,18 @@ a {
   font-style: normal;
 }*/
 .btn {
-  height: 32px;
-  line-height: 32px;
-  padding-left: 10px;
-  padding-right: 10px;
-  border: none;
   -webkit-border-radius: 2px;
   -khtml-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
-  border-radius: 2px; }
+  border-radius: 2px;
+  height: 32px;
+  line-height: 32px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: none;
+  -webkit-appearance: none; }
   .btn.-reset {
     background-color: #e04d4d;
     color: #fff; }
@@ -210,6 +214,186 @@ a {
     .btn.-list:hover {
       background-color: #637187;
       color: #fff; }
+
+/*@font-face {
+  font-family: 'AlphaAdmin';
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}*/
+/* 4 corners */
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+  border-bottom-right-radius: 0px !important; }
+
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
+  border-bottom-left-radius: 0px !important; }
+
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+  border-top-right-radius: 0px !important; }
+
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
+  border-top-left-radius: 0px !important; }
+
+.ui-dialog .ui-dialog-titlebar {
+  background: #3b475f;
+  color: #fff;
+  text-indent: 5px;
+  padding: 5px 5px;
+  font-weight: normal; }
+  .ui-dialog .ui-dialog-titlebar .ui-icon {
+    background: none !important;
+    font-size: 0;
+    text-indent: unset;
+    overflow: unset; }
+    .ui-dialog .ui-dialog-titlebar .ui-icon:before {
+      font-family: 'AlphaAdmin' !important;
+      content: '\e909';
+      color: #fff;
+      font-size: 16px; }
+  .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
+    right: 8px;
+    margin: unset;
+    padding: unset;
+    top: unset;
+    height: unset;
+    width: unset; }
+    .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close.ui-state-hover {
+      background: unset;
+      border: none; }
+
+.ui-dialog-buttonpane .btn.-submit {
+  background: #6f7d95 !important; }
+
+.ui-dialog-buttonpane .btn.-normal {
+  background: #e1e1e1 !important; }
+
+.search-form {
+  display: inline-block;
+  width: 100%;
+  padding: 10px 0; }
+  .search-form .form-line {
+    margin-bottom: 12px; }
+  .search-form .form-group {
+    float: left;
+    line-height: 30px;
+    margin-right: 24px; }
+    @media all and (max-width: 480px) {
+      .search-form .form-group {
+        margin-bottom: 8px; } }
+  .search-form .label {
+    float: left;
+    margin-right: 6px;
+    text-align: left; }
+  .search-form .user-group button {
+    background-image: none !important;
+    width: 20px !important;
+    height: 32px;
+    margin-left: -20px !important; }
+  .search-form .user-group button:hover {
+    background-image: none !important; }
+
+.form-add {
+  padding-top: 16px; }
+  .form-add .group {
+    display: table;
+    width: 100%;
+    margin-bottom: 10px; }
+  .form-add .label {
+    text-align: right;
+    line-height: 32px; }
+  .form-add .form-control {
+    margin-left: 10px;
+    height: 32px; }
+  .form-add .textarea {
+    height: 150px; }
+  .form-add .width-100 {
+    width: 100px; }
+  .form-add .width-120 {
+    width: 120px; }
+  .form-add .width-250 {
+    width: 225px; }
+  .form-add .width-320 {
+    width: 320px; }
+  .form-add .form-action {
+    padding-left: 110px; }
+    .form-add .form-action .btn:first-child {
+      margin-right: 16px; }
+    .form-add .form-action.with-label-120 {
+      padding-left: 130px; }
+  .form-add .groupCboMenu input {
+    width: 225px;
+    margin-left: 10px;
+    vertical-align: top;
+    text-indent: 5px; }
+  .form-add .groupCboMenu button {
+    width: 20px !important;
+    margin-left: -21px !important;
+    height: 30px; }
+    .form-add .groupCboMenu button:hover {
+      background-image: none !important; }
+
+input[type='text'], input[type='password'], input[type='email'] {
+  height: 32px;
+  line-height: 32px;
+  border: none;
+  outline: none;
+  padding-left: 8px;
+  padding-right: 8px;
+  /*width: 120px;*/
+  border: 1px solid #7b7c7e;
+  -webkit-appearance: none; }
+  @media all and (max-width: 480px) {
+    input[type='text'], input[type='password'], input[type='email'] {
+      width: 110px; } }
+  input[type='text']::-ms-clear, input[type='password']::-ms-clear, input[type='email']::-ms-clear {
+    display: none; }
+  input[type='text'][disabled], input[type='text'] .disabled, input[type='password'][disabled], input[type='password'] .disabled, input[type='email'][disabled], input[type='email'] .disabled {
+    opacity: .4;
+    cursor: not-allowed; }
+
+textarea {
+  border: 1px solid #7b7c7e; }
+
+/*@font-face {
+  font-family: 'AlphaAdmin';
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
+  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
+    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}*/
+.successMsg, .errMsg {
+  -webkit-border-radius: 2px;
+  -khtml-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+  padding: 10px 10px 10px 30px;
+  line-height: 1.5;
+  max-height: 180px;
+  clear: both;
+  white-space: pre-line;
+  overflow: auto;
+  text-align: left;
+  vertical-align: middle; }
+
+.successMsg {
+  background: url("../../images/Success.gif") #eefbe9 no-repeat 5px 9px;
+  border: 1px solid #1db51a;
+  color: #52a220; }
+
+.errMsg {
+  background: url("../../images/warning.png") #faf8dd no-repeat 5px 9px;
+  border: 1px solid #bcba7d;
+  color: #7e3d00; }
 
 .list {
   list-style: none;
@@ -532,4 +716,32 @@ a {
   @media (min-width: 768px) {
     .currencyGroup {
       line-height: 80px; } }
+
+.hint {
+  display: none;
+  position: absolute;
+  padding: 6px 12px;
+  white-space: nowrap;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  min-width: 150px;
+  background-color: #ffc;
+  margin-top: -4px;
+  border: 1px solid #c93;
+  z-index: 999999;
+  font-size: 12px;
+  -webkit-box-sizing: content-box;
+  -khtml-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -ms-box-sizing: content-box;
+  -o-box-sizing: content-box;
+  box-sizing: content-box; }
+
+/* Reset Password Owner */
+.warningResetPwd {
+  color: #dd0000;
+  float: left;
+  height: 30px;
+  margin-top: 10px; }
 
