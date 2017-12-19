@@ -441,4 +441,15 @@
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
     }
+
+    $scope.collapseSidebar = function () {
+        
+        var iconUserInfo = top.$("#iconUserInfo");
+        var leftPanel = top.$("#leftSplitter");
+        
+        leftPanel.fadeIn("fast", function () {
+            leftPanel.removeClass("expand-leftpanel");
+            iconUserInfo.removeClass("active");
+        });
+    }
 };

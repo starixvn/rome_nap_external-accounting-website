@@ -93,6 +93,9 @@ body {
   color: #444;
   font-size: 13px !important;
   font-family: Arial, Tahoma, Helvetica, sans-serif; }
+  @media screen and (max-device-width: 767px) {
+    body {
+      overflow: auto; } }
 
 * {
   box-sizing: border-box; }

@@ -1,59 +1,69 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @model System.Data.DataTable
-<table width="99%" id="tblInner" border="1" cellpadding="0" cellspacing="0" style="margin: 3px 0 0 3px">
-    <tr>
-        <td colspan="9" class="bgTitle titleForm creditDetail" style="padding-top: 0; height: 33px !important">Customer Balance</td>
-    </tr>
-    <tr>
-        <td colspan="5" class="C bold" style="background: #F6F6F6">&nbsp;</td>
-        <td class="C bold" style="background: #F6F6F6"><input type="button" value="Submit" class="btn -submit buttonPopup" onclick="Update()" /></td>
-        <td colspan="3" class="C bold" style="background: #F6F6F6"></td>
-    </tr>
-    <tr>
-        <td class="C bold" style="background: #D4E3EB">No.</td>
-        <td class="C bold" style="background: #D4E3EB">Credit</td>
-        <td class="C bold" style="background: #D4E3EB">Balance</td>
-        <td class="C bold" style="background: #D4E3EB">Yesterday Balance</td>
-        <td class="C bold" style="background: #D4E3EB">Outstanding</td>
-        <td class="C bold" style="background: #D4E3EB"><input id="all" type="checkbox" onclick="CheckAll()"/></td>
-        <td class="C bold" style="background: #D4E3EB">Username</td>
-        <td class="C bold" style="background: #D4E3EB">First Name</td>
-        <td class="C bold" style="background: #D4E3EB">Last Name</td>
-    </tr>
-    @if (Model == null || Model.Rows.Count == 0)
-    {
-        <tr>
-            <td colspan="9" class="C">There is no information available</td>
+
+<div class="page-title">Customer Balance</div>
+
+<table id="tblInner" class="table w100">
+    <thead>
+        <tr class="row-special">
+            <th colspan="5"></th>
+            <th>
+                <input type="button" value="Submit" class="btn -submit" onclick="Update()" />
+            </th>
+            <th colspan="3"></th>
         </tr>
-    }
-    else
-    {
-        int index = 0;
-        string disabled = string.Empty;
-                
-        foreach (System.Data.DataRow row in Model.Rows)
+        <tr>
+            <th>No.</th>
+            <th>Credit</th>
+            <th>Balance</th>
+            <th>Yesterday Balance</th>
+            <th>Outstanding</th>
+            <th><input id="all" type="checkbox" onclick="CheckAll()" /></th>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null || Model.Rows.Count == 0)
         {
-            index++;
-            disabled = Utils.ToDecimal(row["YesterdayBalance"]) == 0m ? "disabled='disabled'" : string.Empty;
             <tr>
-                <td class="C">@index</td>
-                <td class="R bold">@Html.Raw(Utils.ToDecimal(row["GivenCredit"]).ToStringFormat())</td>
-                <td class="R bold">@Html.Raw(Utils.ToDecimal(row["Balance"]).ToStringFormat())</td>
-                <td class="R bold">@Html.Raw(Utils.ToDecimal(row["YesterdayBalance"]).ToStringFormat())</td>
-                <td class="R bold">@Html.Raw(Utils.ToDecimal(row["Outstanding"]).ToStringFormat())</td>
-                <td class="C"><input type="checkbox" @disabled id="@row["CustId"]" onclick="Check(this)"/></td>
-                <td class="C bold">@row.DecodeHtml("UserName")</td>
-                <td class="C bold">@row.DecodeHtml("FirstName")</td>
-                <td class="C bold">@row.DecodeHtml("LastName")</td>
+                <td colspan="9" class="C">There is no information available</td>
             </tr>
         }
-    }
-    <tr>
-        <td colspan="5" class="C bold" style="background: #F6F6F6">&nbsp;</td>
-        <td class="C bold" style="background: #F6F6F6"><input type="button" value="Submit" class="btn -submit buttonPopup" onclick="Update()" /></td>
-        <td colspan="3" class="C bold" style="background: #F6F6F6"></td>
-    </tr>
+        else
+        {
+            int index = 0;
+            string disabled = string.Empty;
+
+            foreach (System.Data.DataRow row in Model.Rows)
+            {
+                index++;
+                disabled = Utils.ToDecimal(row["YesterdayBalance"]) == 0m ? "disabled='disabled'" : string.Empty;
+                <tr>
+                    <td class="text-center">@index</td>
+                    <td class="text-right bold">@Html.Raw(Utils.ToDecimal(row["GivenCredit"]).ToStringFormat())</td>
+                    <td class="text-right bold">@Html.Raw(Utils.ToDecimal(row["Balance"]).ToStringFormat())</td>
+                    <td class="text-right bold">@Html.Raw(Utils.ToDecimal(row["YesterdayBalance"]).ToStringFormat())</td>
+                    <td class="text-right bold">@Html.Raw(Utils.ToDecimal(row["Outstanding"]).ToStringFormat())</td>
+                    <td class="text-center"><input type="checkbox" @disabled id="@row["CustId"]" onclick="Check(this)" /></td>
+                    <td class="text-center bold">@row.DecodeHtml("UserName")</td>
+                    <td class="text-center bold">@row.DecodeHtml("FirstName")</td>
+                    <td class="text-center bold">@row.DecodeHtml("LastName")</td>
+                </tr>
+            }
+        }
+        <tr class="row-special">
+            <td colspan="5"></td>
+            <td class="text-center">
+                <input type="button" value="Submit" class="btn -submit" onclick="Update()" />
+            </td>
+            <td colspan="3"></td>
+        </tr>
+    </tbody>
+
 </table>
+
 @Html.AntiForgeryToken()
 <script type="text/javascript">
     var custId = '@ViewBag.CustId';

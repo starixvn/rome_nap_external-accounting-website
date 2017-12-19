@@ -21,6 +21,11 @@
         width: 40px;
         text-align: right;
     }
+
+    > tbody > tr > td {
+        background-color: $table-bg;
+    }
+
     > tbody > tr:hover  > td {
 	    background-color: $table-td-hover-color;
     }
@@ -37,6 +42,10 @@
     }
     .col-100 {
         width: 100px;
+    }
+
+    .row-special th, .row-special td {
+        background-color: #e1e1e1;
     }
 }
 

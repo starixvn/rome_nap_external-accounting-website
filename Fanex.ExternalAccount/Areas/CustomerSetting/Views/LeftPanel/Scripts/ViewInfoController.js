@@ -35,5 +35,5 @@
                 console.log(result);
             }
         });
-    };
+    };    
 };

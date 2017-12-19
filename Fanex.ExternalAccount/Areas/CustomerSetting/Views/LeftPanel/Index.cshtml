@@ -72,9 +72,9 @@
                 </div>
             </div>
             <div id="viewInfo" class="view-info" data-ng-controller="ViewInfoController" data-ng-hide="{{model==null}}">
-                <div id="btnCustList" data-ng-hide="{{personalInfo.roleId.value == 1}}" class="btn -list" data-ng-click="GetCustomerList()">{{personalInfo.custList.value}}</div>
-                <div id="btnStatement" class="btn -green" data-ng-click="GetStatementList({{personalInfo.custId.value}})">Statement</div>
-                <div id="btnBalance"data-ng-hide="{{personalInfo.roleId.value != 2}}" class="btn -special" data-ng-click="GetBalance({{personalInfo.custId.value}})">Balance</div>
+                <div id="btnCustList" data-ng-hide="{{personalInfo.roleId.value == 1}}" class="btn -list" data-ng-click="GetCustomerList(); collapseSidebar();">{{personalInfo.custList.value}}</div>
+                <div id="btnStatement" class="btn -green" data-ng-click="GetStatementList({{personalInfo.custId.value}}); collapseSidebar();">Statement</div>
+                <div id="btnBalance"data-ng-hide="{{personalInfo.roleId.value != 2}}" class="btn -special" data-ng-click="GetBalance({{personalInfo.custId.value}}); collapseSidebar();">Balance</div>
             </div>
             <div id="balanceInfo" class="balance-info" data-ng-controller="BalanceDownlineInfoController" data-ng-hide="{{model==null}}">
                 <ul class="tabs nav-tabs">
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                     <div data-ng-hide="{{isHide}}" class="row">
-                        <div class="pull-left">{{balances[4].text}}&nbsp;[<a href="javascript:;" data-ng-click="CreditDetail()">Detail</a>]</div>
+                        <div class="pull-left">{{balances[4].text}}&nbsp;[<a href="javascript:;" data-ng-click="CreditDetail(); collapseSidebar();">Detail</a>]</div>
                         <div class="{{myClass4}} pull-right bold" data-ng-init="myClass4 = balances[4].value < 0">
                             {{balances[4].value.toFixed(2).formatNumber()}}
                         </div>

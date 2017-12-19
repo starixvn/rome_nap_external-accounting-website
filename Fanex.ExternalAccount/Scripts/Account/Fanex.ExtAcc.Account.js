@@ -96,6 +96,7 @@ Fanex.ExtAcc.Account = {
         var sidebar = $("#sidebar");
         var hasMenu = $("#sidebar .menu .hasChild");
         var leftPanel = $("#leftSplitter");
+        var $this = this;
 
         iconNav.on("click", function () {
             if (iconUserInfo.hasClass('active')) {
@@ -119,10 +120,7 @@ Fanex.ExtAcc.Account = {
 
         iconUserInfo.on("click", function () {
             if (iconNav.hasClass('active')) {
-                sidebar.fadeIn("fast", function () {
-                    sidebar.removeClass("expand-sidebar");
-                    iconNav.removeClass("active");
-                });
+                $this.collapseSidebar();
             }
             
             if (!iconUserInfo.hasClass('active')) {
@@ -153,9 +151,19 @@ Fanex.ExtAcc.Account = {
                 });
             }
         });
-        
-    },
 
+        $(".submenu .link").on("click", this.collapseSidebar);
+
+    },
+    collapseSidebar: function () {
+        var iconNav = $("#iconNav");
+        var sidebar = $("#sidebar");
+
+        sidebar.fadeIn("fast", function () {
+            sidebar.removeClass("expand-sidebar");
+            iconNav.removeClass("active"); 
+        });
+    },
     GetValidateImage: function () {
         $("#imgCode").attr("src", resolveClientUrl('Images/Loading.gif'));
 

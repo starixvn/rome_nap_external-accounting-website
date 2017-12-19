@@ -347,11 +347,10 @@
 }
 .warningResetPwd
 {
-	color: #8d1b25;
+	color: #fe0000;
 	float: left;
 	height: 30px;
 	margin-top: 10px;
-	font-size: 11px;
 }
 
 /*.groupMenuTop
