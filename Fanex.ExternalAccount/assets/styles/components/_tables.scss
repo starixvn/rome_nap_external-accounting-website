@@ -53,8 +53,26 @@
     table {
         float: left;
     }
+    .pagination-page-list {
+        height: 28px;
+        width: 60px;
+    }
+    .pagination-num {
+        height: 28px;
+        width: 50px;
+        margin: 0 4px;
+    }
     .pagination-info {
         float: right;
+    }
+    [class^="pagination-"] {
+        font-family: 'AlphaAdmin';
+    }
+    .pagination-last:before {
+        content:'\e91d';
+    }
+    .pagination-first:before {
+        content: '\e92d';
     }
 } 
 

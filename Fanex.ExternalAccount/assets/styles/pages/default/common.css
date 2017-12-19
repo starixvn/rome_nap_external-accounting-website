@@ -416,8 +416,26 @@ a {
 .pagination table {
   float: left; }
 
+.pagination .pagination-page-list {
+  height: 28px;
+  width: 60px; }
+
+.pagination .pagination-num {
+  height: 28px;
+  width: 50px;
+  margin: 0 4px; }
+
 .pagination .pagination-info {
   float: right; }
+
+.pagination [class^="pagination-"] {
+  font-family: 'AlphaAdmin'; }
+
+.pagination .pagination-last:before {
+  content: '\e91d'; }
+
+.pagination .pagination-first:before {
+  content: '\e92d'; }
 
 #tbl-report tbody .align-right, #tbl-report tfoot .align-right {
   text-align: right; }

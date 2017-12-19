@@ -2765,7 +2765,6 @@
     <Folder Include="Areas\Common\Views\Shared\Styles\" />
     <Folder Include="Areas\LiveCasinoSetting\Scripts\libs\core\language\" />
     <Folder Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\actions\" />
-    <Folder Include="assets\styles\pages\CustomerSetting\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />
