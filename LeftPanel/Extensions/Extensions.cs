@@ -65,10 +65,9 @@
 
         internal static bool IsSyncedLiveCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncLiveCasino"]);
 
+        internal static decimal SuperCash(this DataRow dataRow) => Utils.ToDecimal(dataRow["superCash"]);
         internal static decimal MasterCash(this DataRow dataRow) => Utils.ToDecimal(dataRow["masterCash"]);
-
         internal static decimal AgentCash(this DataRow dataRow) => Utils.ToDecimal(dataRow["agentCash"]);
-
         internal static decimal CustomerCash(this DataRow dataRow) => Utils.ToDecimal(dataRow["customerCash"]);
 
         internal static decimal TotalAgentBalance(this DataRow dataRow)
@@ -76,6 +75,12 @@
 
         internal static decimal TotalMasterBalance(this DataRow dataRow)
             => dataRow.TotalAgentBalance() + dataRow.MasterCash();
+
+        internal static decimal TotalSuperBalance(this DataRow dataRow)
+            => dataRow.TotalMasterBalance() + dataRow.SuperCash();
+
+        internal static decimal SuperYesterdayCash(this DataRow dataRow)
+            => Utils.ToDecimal(dataRow["yesterday_superCash"]);
 
         internal static decimal MasterYesterdayCash(this DataRow dataRow)
             => Utils.ToDecimal(dataRow["yesterday_masterCash"]);
@@ -91,6 +96,9 @@
 
         internal static decimal TotalMasterYesterdayCash(this DataRow dataRow)
             => dataRow.TotalAgentYesterdayCash() + dataRow.MasterYesterdayCash();
+
+        internal static decimal TotalSuperYesterdayCash(this DataRow dataRow)
+            => dataRow.TotalMasterYesterdayCash() + dataRow.SuperYesterdayCash();
 
         internal static decimal CustomerOutstanding(this DataRow dataRow)
             => Utils.ToDecimal(dataRow["customerOutstanding"]);
