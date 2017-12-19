@@ -9,7 +9,7 @@
 
     $scope.ResetPassword = function (custId, title) {
         var roleId = model.personalInfo.roleId.value;
-        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>', 415, (roleId != 1 ? 400 : 350));
+        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>', 415, (roleId != 1 ? 400 : 400));
     };
 
     $scope.ShowIp = function (ip) {
