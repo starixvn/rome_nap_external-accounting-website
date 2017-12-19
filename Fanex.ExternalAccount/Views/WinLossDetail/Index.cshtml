@@ -11,7 +11,7 @@
             Win Loss Detail
         </div>
     </div>
-    <div class="search-form filterbox">
+    <div class="search-form filterbox filter-winloss-detail">
         <div id="GroupFromToDate" class="form-line clearfix">
             <div class="form-group">
                 <input type="hidden" id="MinDate" value="@DateTime.Now.AddMonths(-3).AddDays((-DateTime.Now.Day) + 1)" />
@@ -172,9 +172,9 @@
                 Super
             </div>
         </div>
-        <input id="exporttoexcel" title="@ViewLang.ExportExcel" type="image" src="@Url.Content("~/Images/excel-icn.png")" name="image" />
+        <span id="exporttoexcel" title="@ViewLang.ExportExcel"  class="icon-excel"></span>
     </div>
-    <div id="mainGrid" class="hide">
+    <div id="mainGrid" class="hide tbl-winloss-detail">
         <table id="tbl-report" class="table tablesorter">
             <thead>
                 <tr>
@@ -189,7 +189,7 @@
                     <th rowspan="2">
                         <div class="col-130">
                             Net Turnover
-                            <span id="netTurnover" class="bet-type-detail-icon"></span>
+                            <span id="netTurnover" class="icon-alert-circle-outline"></span>
                         </div>
                         <div class="col-sorter" data-sortedname="NetTurnover"></div>
                     </th>

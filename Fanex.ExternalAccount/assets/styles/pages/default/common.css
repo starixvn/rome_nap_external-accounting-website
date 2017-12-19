@@ -418,7 +418,8 @@ a {
 
 .pagination .pagination-page-list {
   height: 28px;
-  width: 60px; }
+  width: 60px;
+  margin-right: 24px; }
 
 .pagination .pagination-num {
   height: 28px;
@@ -428,14 +429,37 @@ a {
 .pagination .pagination-info {
   float: right; }
 
-.pagination [class^="pagination-"] {
-  font-family: 'AlphaAdmin'; }
+.pagination .l-btn-icon[class*="pagination-"] {
+  font-family: 'AlphaAdmin';
+  font-size: 16px;
+  color: #888; }
+  .pagination .l-btn-icon[class*="pagination-"]:before {
+    position: relative;
+    left: 2px;
+    color: #fff; }
+
+.pagination .l-btn-text:focus, .pagination td:focus, .pagination .l-btn-text:active, .pagination td:active {
+  outline: none; }
+
+.pagination .l-btn-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border: 1px solid #c4c4c4;
+  margin-top: 4px;
+  background: #c5c5c5; }
 
 .pagination .pagination-last:before {
   content: '\e91d'; }
 
 .pagination .pagination-first:before {
   content: '\e92d'; }
+
+.pagination .pagination-next:before {
+  content: '\e906'; }
+
+.pagination .pagination-prev:before {
+  content: '\e905'; }
 
 #tbl-report tbody .align-right, #tbl-report tfoot .align-right {
   text-align: right; }
@@ -554,8 +578,6 @@ a {
     float: left;
     margin-right: 6px;
     text-align: left; }
-    .search-form .label.to-width {
-      width: 20px; }
   .search-form .user-group button {
     background-image: none !important;
     width: 20px !important;

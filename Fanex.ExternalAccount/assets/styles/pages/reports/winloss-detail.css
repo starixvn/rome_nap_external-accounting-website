@@ -21,11 +21,15 @@
   #GroupMonthDay .form-group .user-group.dll-month {
     width: 148px; }
 
-.filterbox .label {
-  width: 60px; }
-  @media all and (min-width-device: 768px) {
-    .filterbox .label.to-width {
-      width: 20px; } }
+.filterbox.filter-winloss-detail .label {
+  width: 60px;
+  /*@media all and (min-width-device: 768px) {
+        &.to-width {
+            width: 20px; 
+        }
+    }*/ }
+  .filterbox.filter-winloss-detail .label.to-width {
+    width: 20px; }
 
 .last-item {
   padding-left: 66px; }
@@ -103,4 +107,15 @@ span.selectedMonth {
   border-radius: 0 !important; }
   .selectedDayWrapParent .selectedDayWrap .dayPickr {
     height: unset; }
+
+.icon-alert-circle-outline {
+  font-size: 16px;
+  position: relative;
+  top: 3px;
+  cursor: pointer; }
+  .icon-alert-circle-outline:hover {
+    color: #b50000; }
+
+.tbl-winloss-detail {
+  max-height: 625px !important; }
 

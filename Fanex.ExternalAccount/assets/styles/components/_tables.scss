@@ -56,6 +56,7 @@
     .pagination-page-list {
         height: 28px;
         width: 60px;
+        margin-right: 24px;
     }
     .pagination-num {
         height: 28px;
@@ -65,14 +66,39 @@
     .pagination-info {
         float: right;
     }
-    [class^="pagination-"] {
+
+    .l-btn-icon[class*="pagination-"] {
         font-family: 'AlphaAdmin';
+        font-size: 16px;
+        color: #888;
+        &:before {
+            position: relative;
+            left: 2px;
+            color: #fff;
+        }
+    }
+    .l-btn-text:focus, td:focus, .l-btn-text:active, td:active {
+        outline: none;
+    }
+    .l-btn-icon {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        border: 1px solid $border-color;
+        margin-top: 4px;
+        background: #c5c5c5;
     }
     .pagination-last:before {
         content:'\e91d';
     }
     .pagination-first:before {
         content: '\e92d';
+    }
+    .pagination-next:before {
+        content: '\e906';
+    }
+    .pagination-prev:before {
+        content: '\e905';
     }
 } 
 

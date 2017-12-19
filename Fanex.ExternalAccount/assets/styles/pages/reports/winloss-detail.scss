@@ -23,14 +23,16 @@
     }
 }
 
-.filterbox .label {
+.filterbox.filter-winloss-detail .label {
     width: 60px;
-
-    @media all and (min-width-device: 768px) {
+    /*@media all and (min-width-device: 768px) {
         &.to-width {
             width: 20px;
         }
-    }
+    }*/  
+    &.to-width {
+        width: 20px;
+    }  
 }
 
 .last-item {
@@ -132,6 +134,20 @@ span.selectedMonth {
     .dayPickr {
         height: unset;
     }
+}
+
+.icon-alert-circle-outline {
+    font-size: 16px;
+    position: relative;
+    top: 3px;
+    cursor: pointer;
+    &:hover {
+        color: #b50000;
+    }
+}
+
+.tbl-winloss-detail {
+    max-height: 625px !important;
 }
 
 .col-sorter {
