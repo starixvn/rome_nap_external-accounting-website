@@ -16,6 +16,7 @@
             var tableLine = ds.Tables[1];
             var tableCash = ds.Tables[2];
             var table3rdDCS = ds.Tables[4];
+
             model.BalanceInfo.Balances.Add(
                 new ObjectInfo
                 {

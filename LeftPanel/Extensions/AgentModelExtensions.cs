@@ -2,19 +2,17 @@
 {
     using System.Collections.Generic;
     using System.Data;
-    using System.Linq;
-    using Utilities;
     using ViewModels;
 
     public static class AgentModelExtensions
     {
         public static CustomerModel AgentInfo(this CustomerModel model, DataSet ds)
         {
-            SetAgentBalanceInfo(model, ds);
-
             SetAgentPersonalInfo(model, ds);
 
-            model.AgentSettings(ds);
+            SetAgentBalanceInfo(model, ds);
+
+            SetAgentSettings(model, ds);
 
             return model;
         }
@@ -54,7 +52,7 @@
             });
         }
 
-        private static CustomerModel AgentSettings(this CustomerModel model, DataSet ds)
+        private static void SetAgentSettings(CustomerModel model, DataSet ds)
         {
             var tableCustomer = ds.Tables[0];
             var table3rdDCS = ds.Tables[4];
@@ -74,127 +72,63 @@
             model.AddEnableAndDetailProduct(table3rdDCS, 24, "Fishing World");
             model.AddEnableAndDetailProduct(table3rdDCS, 28, "Lottery", eFunctions.LotteryBetting);
             model.AddEnableAndDetailProduct(table3rdDCS, 26, "Lucky 3");
-
-            model.Setting.EnableItems.Add(new ObjectInfo
-            {
-                Key = "EnableGoldDeluxe",
-                Value = !Utils.ToBoolean(customerRow["DisableGoldDeluxe"]),
-                Text = "Gold Deluxe"
-            });
-
-            return model;
         }
 
-        private static List<ObjectInfo> Details() => new List<ObjectInfo>
-        {
-            new ObjectInfo("Info","Edit Info"),
-            new ObjectInfo("PT","Edit Position Taking"),
-            new ObjectInfo("AddNew","Add New"),
-            new ObjectInfo("Transfer","Edit Transfer Condition"),
-            new ObjectInfo("Racing","Edit Racing"),
-            new ObjectInfo("Casino","Edit Casino"),
-            new ObjectInfo("LiveCasino","Edit Live Casino"),
-            new ObjectInfo("VirtualSports","Edit Virtual Sports"),
-            new ObjectInfo("Keno","Edit Keno"),
-            new ObjectInfo("GoldDeluxe","Edit Gold Deluxe"),
-            new ObjectInfo("ColossusBets","Edit Colossus Bets"),
-            new ObjectInfo("Sportsbook2","Edit Sportsbook 2"),
-            new ObjectInfo("Cockfighting","Edit Cockfighting"),
-            new ObjectInfo("Cricket","Edit Cricket" )
-        };
+        private static List<ObjectInfo> EnableItems(DataRow customerRow, DataTable table3rdDCS)
+            => new List<ObjectInfo>
+            {
+                new ObjectInfo("Closed", customerRow.Closed(),"Closed"),
+                new ObjectInfo("Suspended",customerRow.Suspended(),"Suspened"),
+                new ObjectInfo("Outright", customerRow.EnableOutright(),"Allow Outright"),
+                new ObjectInfo("EnableCasino",  customerRow.EnableCasino(),"Enable Casino"),
+                new ObjectInfo("EnableNumberGame", customerRow.EnableNumberGame(),"Enable Num Game", "Enable Number Game"),
+                new ObjectInfo("EnableLiveCasino", customerRow.EnableLiveCasino(),"Enable Live Casino"),
+                new ObjectInfo("EnableVirtualSports", table3rdDCS.GetVirtualSportsStatus(),"Virtual Sports"),
+                new ObjectInfo("DoubleComm", customerRow.EnableDoubleComm(),"Double Comm",  "Enable Double Commission"),
+                new ObjectInfo("EnableHRFixedOdds",  customerRow.EnableHorseRacingFixedOdds(),"HR Fixed Odds",  "Enable Horse Racing Fixed Odds"),
+                new ObjectInfo("EnableESports",customerRow.EnableESports(),"E-Sports",  "Enable E-Sports"),
+                new ObjectInfo("EnableColossusBets",  customerRow.EnableColossusBet(),"Colossus Bets", "Enable Colossus Bets" ),
+                new ObjectInfo("EnableGoldDeluxe", customerRow.EnableGoldDeluxe(), "Gold Deluxe")
+            };
+
+        private static List<ObjectInfo> SyncItems(DataRow customerRow, DataTable table3RdDcs)
+            => new List<ObjectInfo>
+            {
+                new ObjectInfo("SyncCasino", customerRow.IsSyncedCasino(), "Casino Synced"),
+                new ObjectInfo("SyncLiveCasino", customerRow.IsSyncedLiveCasino(), "Live Casino Synced"),
+                new ObjectInfo("HideAllbet", table3RdDcs.Get3rdProductStatus(21)),
+                new ObjectInfo("HideVoidbridge", table3RdDcs.Get3rdProductStatus(22)),
+                new ObjectInfo("HideNG2", table3RdDcs.GetNG2ProductStatus()),
+                new ObjectInfo("HideFishingWorld", table3RdDcs.Get3rdProductStatus(24)),
+                new ObjectInfo("HideLottery", table3RdDcs.Get3rdProductStatus(28)),
+                new ObjectInfo("HideLucky3", table3RdDcs.Get3rdProductStatus(26))
+            };
 
         private static List<ObjectInfo> EditItems()
-        {
-            return new List<ObjectInfo>
+            => new List<ObjectInfo>
             {
                 new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
                 new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" },
                 new ObjectInfo { Key = "EnableCockfighting", Text = "Enable Cockfighting" }
             };
-        }
 
-        private static List<ObjectInfo> SyncItems(DataRow customerRow, DataTable table3rdDCS)
-        {
-            return new List<ObjectInfo>
+        private static List<ObjectInfo> Details()
+            => new List<ObjectInfo>
             {
-                new ObjectInfo { Key = "SyncCasino", Value = Utils.ToBoolean(customerRow["syncCasino"]), Text = "Casino Synced" },
-                new ObjectInfo { Key = "SyncLiveCasino", Value = Utils.ToBoolean(customerRow["syncLiveCasino"]), Text = "Live Casino Synced" },
-                new ObjectInfo
-                {
-                    Key = "HideAllbet",
-                    Value = table3rdDCS.Select("ProductID = 21").Length<=0
-                            || (Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()?["IsHidden"])
-                                || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 21").FirstOrDefault()?["IsSync"]))                             },
-                new ObjectInfo
-                {
-                    Key = "HideVoidbridge",
-                    Value = table3rdDCS.Select("ProductID = 22").Length<=0
-                            || (Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()?["IsHidden"])
-                                || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 22").FirstOrDefault()?["IsSync"]))                             },
-                new ObjectInfo
-                {
-                    Key = "HideNG2",
-                    Value = table3rdDCS.Select("ProductID = 23").Length<=0
-                            || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 23").FirstOrDefault()?["IsSync"])                             },
-                new ObjectInfo
-                {
-                    Key = "HideFishingWorld",
-                    Value = table3rdDCS.Select("ProductID = 24").Length<=0
-                            || (Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()?["IsHidden"])
-                                || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 24").FirstOrDefault()?["IsSync"]))                             },
-                new ObjectInfo
-                {
-                    Key = "HideLottery",
-                    Value = table3rdDCS.Select("ProductID = 28").Length<=0
-                            || (Utils.ToBoolean(table3rdDCS.Select("ProductID = 28").FirstOrDefault()?["IsHidden"])
-                                || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 28").FirstOrDefault()?["IsSync"]))                             },
-                new ObjectInfo
-                {
-                    Key = "HideLucky3",
-                    Value = table3rdDCS.Select("ProductID = 26").Length<=0
-                            || (Utils.ToBoolean(table3rdDCS.Select("ProductID = 26").FirstOrDefault()?["IsHidden"])
-                                || !Utils.ToBoolean(table3rdDCS.Select("ProductID = 26").FirstOrDefault()?["IsSync"]))                             }
+                new ObjectInfo("Info","Edit Info"),
+                new ObjectInfo("PT","Edit Position Taking"),// Todo: noted
+                new ObjectInfo("AddNew","Add New"),// Todo: noted
+                new ObjectInfo("Transfer","Edit Transfer Condition"),// Todo: noted
+                new ObjectInfo("Racing","Edit Racing"),
+                new ObjectInfo("Casino","Edit Casino"),
+                new ObjectInfo("LiveCasino","Edit Live Casino"),
+                new ObjectInfo("VirtualSports","Edit Virtual Sports"),
+                new ObjectInfo("Keno","Edit Keno"),
+                new ObjectInfo("GoldDeluxe","Edit Gold Deluxe"),
+                new ObjectInfo("ColossusBets","Edit Colossus Bets"),
+                new ObjectInfo("Sportsbook2","Edit Sportsbook 2"),
+                new ObjectInfo("Cockfighting","Edit Cockfighting"),
+                new ObjectInfo("Cricket","Edit Cricket" )
             };
-        }
-
-        private static List<ObjectInfo> EnableItems(DataRow customerRow, DataTable table3rdDCS)
-        {
-            return new List<ObjectInfo>
-            {
-                new ObjectInfo { Key = "Closed", Value = Utils.ToBoolean(customerRow["closed"]), Text = "Closed" },
-                new ObjectInfo { Key = "Suspended", Value = Utils.ToBoolean(customerRow["suspended"]), Text = "Suspened" },
-                new ObjectInfo { Key = "Outright", Value = !Utils.ToBoolean(customerRow["disableOutright"]), Text = "Allow Outright" },
-                new ObjectInfo { Key = "EnableCasino", Value = !Utils.ToBoolean(customerRow["disableCasino"]), Text = "Enable Casino" },
-                new ObjectInfo
-                {
-                    Key = "EnableNumberGame", Value = !Utils.ToBoolean(customerRow["disableNumber"]), Text = "Enable Num Game", Tooltip = "Enable Number Game"
-                },
-                new ObjectInfo { Key = "EnableLiveCasino", Value = !Utils.ToBoolean(customerRow["disableLiveCasino"]), Text = "Enable Live Casino" },
-                new ObjectInfo { Key = "EnableVirtualSports", Value = GetVirtualSportsStatus(table3rdDCS), Text = "Virtual Sports" },
-                new ObjectInfo
-                {
-                    Key = "DoubleComm", Value = Utils.ToBoolean(customerRow["doubleCommLosing"]), Text = "Double Comm", Tooltip = "Enable Double Commission"
-                },
-                new ObjectInfo
-                {
-                    Key = "EnableHRFixedOdds", Value = !customerRow.ToBoolean("DisableHRFixedOdds"), Text = "HR Fixed Odds", Tooltip = "Enable Horse Racing Fixed Odds"
-                },
-                new ObjectInfo { Key = "EnableESports", Value = !Utils.ToBoolean(customerRow["disableESports"]), Text = "E-Sports", Tooltip = "Enable E-Sports" },
-                new ObjectInfo
-                {
-                    Key = "EnableColossusBets",
-                    Value = !Utils.ToBoolean(customerRow["DisableColossusBet"]),
-                    Text = "Colossus Bets",
-                    Tooltip = "Enable Colossus Bets"
-                }
-            };
-        }
-
-        private static bool GetVirtualSportsStatus(DataTable table3rdDCS)
-        {
-            DataRow[] drowVirtualSports = table3rdDCS.Select("ProductID = 5");
-
-            return drowVirtualSports.Length > 0 && !Utils.ToBoolean(drowVirtualSports[0]["isDisabled"]);
-        }
     }
 }

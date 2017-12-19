@@ -45,6 +45,8 @@
 
         internal static bool EnableLiveCasino(this DataRow dataRow) => !DisableLiveCasino(dataRow);
 
+        internal static bool EnableAutoMasterPT(this DataRow dataRow) => !Utils.ToBoolean(dataRow["disableAutoMPT"]);
+
         internal static bool EnableDoubleComm(this DataRow dataRow) => Utils.ToBoolean(dataRow["doubleCommLosing"]);
 
         internal static bool EnableHorseRacingFixedOdds(this DataRow dataRow) => !Utils.ToBoolean(dataRow["DisableHRFixedOdds"]);
