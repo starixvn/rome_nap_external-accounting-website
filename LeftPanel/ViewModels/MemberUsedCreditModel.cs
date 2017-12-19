@@ -46,7 +46,7 @@
                     return 0m;
                 }
 
-                return this.MemberUsedCreditItems.Where(x => !x.IsClosed).Sum(o => o.Amount);                
+                return this.MemberUsedCreditItems.Where(x => !x.IsClosed).Sum(o => o.Amount);
             }
         }
 

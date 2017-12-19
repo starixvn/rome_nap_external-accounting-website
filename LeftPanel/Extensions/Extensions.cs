@@ -35,6 +35,7 @@
         internal static bool EnableOutright(this DataRow dataRow) => !DisableOutright(dataRow);
 
         internal static bool DisableCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableCasino"]);
+
         internal static bool EnableCasino(this DataRow dataRow) => !DisableCasino(dataRow);
 
         internal static bool DisableNumberGame(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableNumber"]);
@@ -66,8 +67,11 @@
         internal static bool IsSyncedLiveCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncLiveCasino"]);
 
         internal static decimal SuperCash(this DataRow dataRow) => Utils.ToDecimal(dataRow["superCash"]);
+
         internal static decimal MasterCash(this DataRow dataRow) => Utils.ToDecimal(dataRow["masterCash"]);
+
         internal static decimal AgentCash(this DataRow dataRow) => Utils.ToDecimal(dataRow["agentCash"]);
+
         internal static decimal CustomerCash(this DataRow dataRow) => Utils.ToDecimal(dataRow["customerCash"]);
 
         internal static decimal TotalAgentBalance(this DataRow dataRow)
@@ -119,6 +123,7 @@
 
             return productRow == null || !Utils.ToBoolean(productRow["IsSync"]);
         }
+
         internal static bool GetVirtualSportsStatus(this DataTable table3rdDCS)
         {
             var drowVirtualSports = table3rdDCS.Select("ProductID = 5");

@@ -96,7 +96,7 @@
         {
             ViewBag.CustId = custId;
 
-            if (roleId == Super || roleId == Master)
+            if (roleId.IsSuper() || roleId.IsMaster())
             {
                 var items = _service.MasterAgentUsedCreditItems(custId, roleId);
                 var model = new MasterAgentUsedCreditModel
