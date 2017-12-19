@@ -46,30 +46,19 @@
             for (var i = firstCellNum; i < lastCellNum; i++)
             {
                 var oldCell = sourceRow.GetCell(i);
-                if (oldCell == null)
+                if (oldCell != null)
                 {
-                    continue;
-                }
+                    var newCell = newRow.CreateCell(i);
+                    CloneCell(newCell, oldCell);
 
-                var newCell = newRow.CreateCell(i);
-                CloneCell(newCell, oldCell);
-                CellRangeAddress sourceRange = null;
-                for (var j = 0; j < sourceSheet.NumMergedRegions; j++)
-                {
-                    var range = sourceSheet.GetMergedRegion(j);
-                    if (range.FirstColumn == oldCell.ColumnIndex && range.FirstRow == oldCell.RowIndex)
+                    var sourceRange = FindSourceRange(sourceSheet, oldCell);
+                    if (sourceRange != null)
                     {
-                        sourceRange = range;
-                        break;
+                        var lastRow = newCell.RowIndex + sourceRange.LastRow - sourceRange.FirstRow;
+                        var firstCol = newCell.ColumnIndex + sourceRange.LastColumn - sourceRange.FirstColumn;
+                        var newRange = new CellRangeAddress(newCell.RowIndex, lastRow, newCell.ColumnIndex, firstCol);
+                        sheet.AddMergedRegion(newRange);
                     }
-                }
-
-                if (sourceRange != null)
-                {
-                    var lastRow = newCell.RowIndex + sourceRange.LastRow - sourceRange.FirstRow;
-                    var firstCol = newCell.ColumnIndex + sourceRange.LastColumn - sourceRange.FirstColumn;
-                    var newRange = new CellRangeAddress(newCell.RowIndex, lastRow, newCell.ColumnIndex, firstCol);
-                    sheet.AddMergedRegion(newRange);
                 }
             }
         }
@@ -115,8 +104,22 @@
             }
         }
 
-        public static ICell GetCell(this ISheet sheet, int rowIndex, int colIndex) =>
-            sheet.GetRow(rowIndex).GetCell(colIndex);
+        public static ICell GetCell(this ISheet sheet, int rowIndex, int colIndex) => sheet.GetRow(rowIndex).GetCell(colIndex);
+
+        private static CellRangeAddress FindSourceRange(ISheet sourceSheet, ICell oldCell)
+        {
+            CellRangeAddress sourceRange = null;
+            for (var j = 0; j < sourceSheet.NumMergedRegions; j++)
+            {
+                var range = sourceSheet.GetMergedRegion(j);
+                if (range.FirstColumn == oldCell.ColumnIndex && range.FirstRow == oldCell.RowIndex)
+                {
+                    return range;
+                }
+            }
+
+            return sourceRange;
+        }
 
         private static void CloneCell(ICell newCell, ICell oldCell)
         {

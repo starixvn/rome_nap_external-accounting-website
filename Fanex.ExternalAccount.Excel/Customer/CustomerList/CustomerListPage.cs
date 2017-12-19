@@ -42,18 +42,18 @@
             var lastColumnIndex = FirstColumnIndex + totalColumn - 1;
             if (_builder.RoleId != 1)
             {
-                GetOtherList(resultSheet, dtr, lastColumnIndex);
+                WriteOthersReport(resultSheet, dtr, lastColumnIndex);
             }
             else
             {
                 totalColumn = 20;
                 lastColumnIndex = FirstColumnIndex + totalColumn - 1;
-                GetMemberList(resultSheet, dtr, lastColumnIndex, _builder.IsMyanmarOdds);
+                WriteMemberReport(resultSheet, dtr, lastColumnIndex, _builder.IsMyanmarOdds);
             }
 
         }
 
-        private void GetMemberList(
+        private void WriteMemberReport(
             ISheet resultSheet,
             DataRowCollection dtr,
             int lastColumnIndex,
@@ -106,79 +106,52 @@
             }
         }
 
-        private void GetOtherList(
+        private void WriteOthersReport(
             ISheet resultSheet,
             DataRowCollection dtr,
             int lastColumnIndex)
         {
-            List<object> values;
             var id = 1;
             var rowId = 3;
             foreach (DataRow items in dtr)
             {
                 var custStatus = SetBackgroundRow(resultSheet, rowId, lastColumnIndex, items);
-
-                if (_builder.RoleId != 4 && Utils.ToBoolean(items["ismyanmarodds"]))
+                var values = new List<object>
                 {
-                    values = new List<object>
-                        {
-                            id,
-                            items["username"].ToString(),
-                            custStatus,
-                            Utils.ToBoolean(items["DoubleCommLosing"]) ? "ALLOWED" : "DISALLOWED",
-                            items["firstname"].ToString(),
-                            items["lastname"].ToString(),
-                            Utils.ToDouble(items["groupa"]),
-                            Utils.ToDouble(items["discount1x2"]),
-                            Utils.ToDouble(items["discountcs"]),
-                            Utils.ToDouble(items["discountnumber"]),
-                            $"{items["createdate"]:MM/dd/yyyy HH:mm:ss tt}",
-                            items["lastloginip"].ToString()
-                        };
+                    id,
+                    items["username"].ToString(),
+                    custStatus,
+                    Utils.ToBoolean(items["DoubleCommLosing"]) ? "ALLOWED" : "DISALLOWED",
+                    items["firstname"].ToString(),
+                    items["lastname"].ToString(),
+                    Utils.ToDouble(items["groupa"]),
+                    Utils.ToDouble(items["groupb"]),
+                    Utils.ToDouble(items["groupc"]),
+                    Utils.ToDouble(items["groupd"]),
+                    Utils.ToDouble(items["discount1x2"]),
+                    Utils.ToDouble(items["discountcs"]),
+                    Utils.ToDouble(items["discountnumber"]),
+                    Utils.ToBoolean(items["ismyanmarodds"]) ? Utils.ToDouble(items["discountmyanmarodds"]).ToString(CultureInfo.InvariantCulture) : "N/A",
+                    $"{items["createdate"]:MM/dd/yyyy HH:mm:ss tt}",
+                    items["lastloginip"].ToString()
+                };
 
-                    values.Insert(10,
-                        Utils.ToDouble(items["discountmyanmarodds"]).ToString(CultureInfo.InvariantCulture));
-                }
-                else
-                {
-                    values = new List<object>
-                        {
-                            id,
-                            items["username"].ToString(),
-                            custStatus,
-                            Utils.ToBoolean(items["DoubleCommLosing"]) ? "ALLOWED" : "DISALLOWED",
-                            items["firstname"].ToString(),
-                            items["lastname"].ToString(),
-                            Utils.ToDouble(items["groupa"]),
-                            Utils.ToDouble(items["groupb"]),
-                            Utils.ToDouble(items["groupc"]),
-                            Utils.ToDouble(items["groupd"]),
-                            Utils.ToDouble(items["discount1x2"]),
-                            Utils.ToDouble(items["discountcs"]),
-                            Utils.ToDouble(items["discountnumber"]),
-                            $"{items["createdate"]:MM/dd/yyyy HH:mm:ss tt}",
-                            items["lastloginip"].ToString()
-                        };
-
-
-                    values.Insert(13,
-                        Utils.ToBoolean(items["ismyanmarodds"])
-                            ? Utils.ToDouble(items["discountmyanmarodds"])
-                                .ToString(CultureInfo.InvariantCulture)
-                            : "N/A");
-
-                    if (_builder.RoleId != 4)
-                    {
-                        values.RemoveAt(7);
-                        values.RemoveAt(8);
-                        values.RemoveAt(9);
-                    }
-                }
-
+                values = RemoveOddsColumn(values);
                 resultSheet.GetRow(rowId).WriteCells(FirstColumnIndex, values);
                 id++;
                 rowId++;
             }
+        }
+
+        private List<object> RemoveOddsColumn(List<object> values)
+        {
+            var newValues = values;
+            if (_builder.RoleId != 4)
+            {
+                newValues.RemoveAt(13);
+            }
+
+            return newValues;
         }
 
         private string SetBackgroundRow(
@@ -188,51 +161,26 @@
             DataRow items)
         {
             var custStatus = !Utils.ToBoolean(items["enabled"])
-                ? "Disabled"
+                ? "disabled"
                 : Utils.ToBoolean(items["closed"])
-                    ? "Closed"
+                    ? "closed"
                     : Utils.ToBoolean(items["suspended"])
-                        ? "Suspended"
-                        : "Open";
+                        ? "suspended"
+                        : "open";
+            var rowIdFromStatus = new Dictionary<string, int> { { "open", 1 }, { "suspended", 3 }, { "disabled", 7 } };
+            var rowIdFromCloseStatus = new Dictionary<byte, int> { { 1, 11 }, { 2, 13 }, { 3, 15 } };
+            var closedReason = Convert.ToByte(items["closedreason"]);
 
-            if (custStatus.Equals("open", StringComparison.OrdinalIgnoreCase))
+            var fromRowId = 5;
+            if (rowIdFromStatus.ContainsKey(custStatus))
             {
-                resultSheet.CopyRow(TemplateSheet, 1, rowId, FirstColumnIndex, lastColumnIndex);
+                fromRowId = rowIdFromStatus[custStatus];
             }
-            else if (custStatus.Equals("suspended", StringComparison.OrdinalIgnoreCase))
             {
-                resultSheet.CopyRow(TemplateSheet, 3, rowId, FirstColumnIndex, lastColumnIndex);
+                fromRowId = rowIdFromCloseStatus.ContainsKey(closedReason) ? rowIdFromCloseStatus[closedReason] : fromRowId;
             }
-            else if (custStatus.Equals("closed", StringComparison.OrdinalIgnoreCase))
-            {
-                var closedReason = Convert.ToByte(items["closedreason"]);
-                int templateRowIndex;
 
-                switch (closedReason)
-                {
-                    case 1:
-                        templateRowIndex = 11;
-                        break;
-                    case 2:
-                        templateRowIndex = 13;
-                        break;
-                    case 3:
-                        templateRowIndex = 15;
-                        break;
-                    default:
-                        templateRowIndex = 5;
-                        break;
-                }
-
-                resultSheet.CopyRow(TemplateSheet, templateRowIndex, rowId, FirstColumnIndex, lastColumnIndex);
-            }
-            else
-            {
-                if (custStatus.Equals("disabled", StringComparison.OrdinalIgnoreCase))
-                {
-                    resultSheet.CopyRow(TemplateSheet, 7, rowId, FirstColumnIndex, lastColumnIndex);
-                }
-            }
+            resultSheet.CopyRow(TemplateSheet, fromRowId, rowId, FirstColumnIndex, lastColumnIndex);
 
             return custStatus;
         }
@@ -244,7 +192,5 @@
 
             resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
         }
-
-
     }
 }

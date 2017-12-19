@@ -8,11 +8,11 @@
     public abstract class TemplateReport : IDisposable
     {
         private readonly string _products;
-        protected int OddRowIndex => 1;
-        protected int EvenRowIndex => 3;
-        protected int FirstRowIndex => 0;
-        protected int FirstColumnIndex => 0;
-        protected int FirstColumnTotalIndex => 5;
+        protected const int OddRowIndex = 1;
+        protected const int EvenRowIndex = 3;
+        protected const int FirstRowIndex = 0;
+        protected const int FirstColumnIndex = 0;
+        protected const int FirstColumnTotalIndex = 5;
 
         protected TemplateReport(string filePath, string products = null)
         {

@@ -14,9 +14,10 @@
             }
             else
             {
-                if (value is string)
+                var newString = value as string;
+                if (newString != null)
                 {
-                    cell.SetCellValue((string)value);
+                    cell.SetCellValue(newString);
                 }
                 else if (value is int)
                 {
@@ -102,7 +103,7 @@
 
         public static void CopyFrom(this ICell cell, ICell sourceCell)
         {
-            CellRangeAddress sourceRange = null;
+            cell.CellStyle = sourceCell.CellStyle;
             for (var i = 0; i < sourceCell.Sheet.NumMergedRegions; i++)
             {
                 var range = sourceCell.Sheet.GetMergedRegion(i);
@@ -111,17 +112,9 @@
                     && range.FirstRow <= sourceCell.RowIndex
                     && range.LastRow >= sourceCell.RowIndex)
                 {
-                    sourceRange = range;
-                    break;
+                    cell.Sheet.AddMergedRegion(range.Clone());
                 }
             }
-
-            if (sourceRange != null)
-            {
-                cell.Sheet.AddMergedRegion(sourceRange.Clone());
-            }
-
-            cell.CellStyle = sourceCell.CellStyle;
         }
     }
 }
