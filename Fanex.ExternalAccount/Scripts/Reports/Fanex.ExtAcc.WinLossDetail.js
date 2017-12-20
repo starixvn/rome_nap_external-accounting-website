@@ -619,8 +619,7 @@ Fanex.ExtAcc.WinLossDetail = {
 
             Company: 0
         };
-
-        $this.sortWithFixedSort();
+        $this.movePriorityInfoToFirst();
 
         var bodyContent = $this.renderBody(grandTotal);
         var footerContent = $this.renderFooter(grandTotal);
@@ -692,11 +691,9 @@ Fanex.ExtAcc.WinLossDetail = {
         $this.updateSortIcon(elem, currentDirection);
 
         var sortedColumnName = elem.attr("data-sortedname");
-        if (sortedColumnName === "Username") {
-            $this.sortByUsername(currentDirection);
-        } else {
-            $this.sortWithFixedSort(sortedColumnName, currentDirection);
-        }
+        $this.dataSource.sort(function (a, b) {
+            return $this.sortValues(a[sortedColumnName], b[sortedColumnName], currentDirection);
+        });
 
         $this.reRenderBody();
     },
@@ -705,12 +702,7 @@ Fanex.ExtAcc.WinLossDetail = {
         var nextDirection = currentDirection === 1 ? "desc" : "asc";
         elem.addClass(nextDirection);
     },
-    sortByUsername: function (currentDirection) {
-        $this.dataSource.sort(function (a, b) {
-            return $this.sortValues(a.Username, b.Username, currentDirection);
-        });
-    },
-    sortWithFixedSort: function (sortedColumnName, currentDirection) {
+    movePriorityInfoToFirst: function () {
         var countFixedSort = $this.fixedsortlist.length;
         if (countFixedSort === 0) {
             return;
@@ -743,12 +735,6 @@ Fanex.ExtAcc.WinLossDetail = {
             }
 
             canSortRows.push(data);
-        }
-
-        if (sortedColumnName !== undefined) {
-            canSortRows.sort(function (a, b) {
-                return $this.sortValues(a[sortedColumnName], b[sortedColumnName], currentDirection);
-            });
         }
 
         $this.dataSource = fixedRows.concat(canSortRows);
