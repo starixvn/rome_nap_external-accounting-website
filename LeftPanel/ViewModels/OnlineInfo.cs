@@ -2,8 +2,14 @@
 {
     public class OnlineInfo
     {
-        public ObjectInfo IP { get; set; }
+        public OnlineInfo(ObjectInfo ip, ObjectInfo loginTime)
+        {
+            IP = ip;
+            LoginTime = loginTime;
+        }
 
-        public ObjectInfo LoginTime { get; set; }
+        public ObjectInfo IP { get; }
+
+        public ObjectInfo LoginTime { get; }
     }
 }

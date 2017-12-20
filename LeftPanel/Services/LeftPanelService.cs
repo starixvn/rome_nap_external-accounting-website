@@ -7,13 +7,13 @@
 
     public interface LeftPanelService
     {
-        CustomerModel GetCustomerInfo(int actorId, string username, string groupName = "ACCDDD", int pageIndex= 1);
+        CustomerModel GetCustomerInfo(int actorId, string username, string groupName = "ACCDDD", int pageIndex = 1);
 
         Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit);
 
         DataTable GetDownlineList(int custid, int pageSize, int pageIndex, out int totalPages);
 
-        DataRowCollection GetOnlineList(int custid);
+        OnlineList GetOnlineList(int custId);
 
         IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId);
 
@@ -41,7 +41,7 @@
 
         Result AutoMasterPT(int id, bool allow, int uplineId);
 
-        Result ResetSecurityCode(int id, string code, bool force);
+        Result UpdateSecurityCode(int custId, string code, bool force, int roleId);
 
         Result EnableHRFixedOdds(int id, bool enable, bool enableDownline);
 

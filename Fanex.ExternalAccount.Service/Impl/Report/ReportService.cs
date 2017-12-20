@@ -19,7 +19,7 @@
 
         public ReportService(IReportDao reportRespository = null)
         {
-            _reportDao = reportRespository ?? new ReportDAO();
+            _reportDao = reportRespository ?? new ReportDao();
         }
 
         public static DateTime BalanceUpDate => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["BalanceUpDay"]);
@@ -92,7 +92,7 @@
             var balanceUpDay = Cache.Get<DataTable>(BalanceUpDayKey);
             if (balanceUpDay == null)
             {
-                var reportDao = new ReportDAO();
+                var reportDao = new ReportDao();
                 balanceUpDay = reportDao.Age_SelBalanceUpDay();
                 if (balanceUpDay != null)
                 {

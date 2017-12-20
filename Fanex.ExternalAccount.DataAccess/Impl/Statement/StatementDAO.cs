@@ -10,7 +10,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
     using Interface.Statement;
     using Utilities;
 
-    public class StatementDAO : DAOBase, IStatementDao
+    public class StatementDao : DAOBase, IStatementDao
     {
         public List<Statement> Acc_AllStatement_Full(int custId, DateTime fromDate, DateTime toDate,
             DateTime balanceUpDay, DateTime moveBetDay, bool includeAccBal)
@@ -26,8 +26,6 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
                 {"showexchangerate", false}
             };
 
-            var type = string.Empty;
-            var remark = string.Empty;
             var result = new List<Statement>();
 
             using (var reader = ExecDataReader("Acc_AllStatement_Full", parameters))
@@ -36,10 +34,10 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
                 {
                     while (reader.Read())
                     {
-                        type = reader.IsDBNull(reader.GetOrdinal("TransType"))
+                        var type = reader.IsDBNull(reader.GetOrdinal("TransType"))
                             ? string.Empty
                             : reader["TransType"].ToString().ToUpper(CultureInfo.InvariantCulture);
-                        remark = reader.IsDBNull(reader.GetOrdinal("TransDesc"))
+                        var remark = reader.IsDBNull(reader.GetOrdinal("TransDesc"))
                             ? string.Empty
                             : reader["TransDesc"].ToString();
                         var isAccBal = string.Compare(remark.ToLowerInvariant(), "accumulated balance",

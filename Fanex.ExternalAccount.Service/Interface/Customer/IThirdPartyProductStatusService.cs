@@ -8,8 +8,8 @@ namespace Fanex.ExternalAccount.Service.Interface.Customer
     {
         ThirdPartyProductStatusViewModel Select(int custId, string custName, int roleId, int productId);
 
-        List<ProductStatusResult> Update(
-            int custId,
+        List<ProductStatusResult> Update
+            (int custId,
             int subAccId,
             int productId,
             int userId,

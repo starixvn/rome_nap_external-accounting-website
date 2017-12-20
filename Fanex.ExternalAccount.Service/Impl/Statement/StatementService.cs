@@ -14,7 +14,7 @@
 
         public StatementService(IStatementDao statementRepository = null)
         {
-            StatementRepository = statementRepository ?? new StatementDAO();
+            StatementRepository = statementRepository ?? new StatementDao();
         }
 
         public List<Statement> GetStatement(int custId, DateTime fromDate, DateTime toDate)

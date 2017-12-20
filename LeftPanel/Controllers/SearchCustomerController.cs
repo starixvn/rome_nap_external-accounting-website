@@ -8,12 +8,10 @@
     using Core.Context;
     using CustomerSetting.Security.Authenticate;
     using Extensions;
-    using IBCUtils;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using PTRacing.BusinessObjects;
     using PTRacing.Services;
-    using Security;
     using Service.Impl.Customer.Casino;
     using Services;
     using Shared;
@@ -83,8 +81,7 @@
         {
             ViewBag.UserId = CurrentSession.UserId;
 
-            var model = _service.GetCustomerInfo(CurrentSession.UserId, string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId,
-                pageIndex);
+            var model = _service.GetCustomerInfo(CurrentSession.UserId, id, uplineId, pageIndex);
 
             return JsonBase(model);
         }
@@ -226,7 +223,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.EnableESports,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult UpdateESports(int custId, bool enable, bool enableDownline) 
+        public ActionResult UpdateESports(int custId, bool enable, bool enableDownline)
             => JsonBase(_service.EnableESports(custId, enable, enableDownline));
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableNumberGame,
@@ -246,6 +243,7 @@
             ViewBag.roleId = roleId;
             ViewBag.id = id;
             ViewBag.uplineId = uplineId;
+
             var bettingLimitService = new CustomerService();
             var model = bettingLimitService.GetCustomer(new RequestContext
             {
@@ -329,14 +327,7 @@
         [AntiXSRFFilter]
         public ActionResult UpdateSecurityCode(int custId, string code, bool force, int roleId = 2)
         {
-            var hashCode = Encryption.CfsEnCode(code);
-            if (roleId.IsNotMember())
-            {
-                var md5 = Cryptography.ComputeHash("MD5", custId.ToString(), "1qaw3+{:P)"); //DevSkim: ignore DS126858
-                hashCode = Cryptography.ComputeHash("SHA1", code, md5); //DevSkim: ignore DS126858
-            }
-
-            var result = _service.ResetSecurityCode(custId, hashCode, force || roleId.IsNotSuper());
+            var result = _service.UpdateSecurityCode(custId, code, force, roleId);
 
             return JsonBase(result);
         }
@@ -356,18 +347,7 @@
         [AntiXSRFFilter]
         public ActionResult GetOnlineList(int custId)
         {
-            var model = new OnlineList();
-            foreach (DataRow row in _service.GetOnlineList(custId))
-            {
-                model.Onlines.Add(new OnlineInfo
-                {
-                    IP = new ObjectInfo { Text = CustomerModelExtensions.CheckVNIP(row.ToString("ip")) },
-                    LoginTime = new ObjectInfo
-                    {
-                        Text = Utils.ToDateTime(row["reload_time"]).ToStringExt()
-                    }
-                });
-            }
+            var model = _service.GetOnlineList(custId);
 
             return JsonBase(model);
         }

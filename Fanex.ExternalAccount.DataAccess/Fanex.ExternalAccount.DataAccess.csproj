@@ -153,8 +153,8 @@
     <Compile Include="Impl\Customer\MasterDao.cs" />
     <Compile Include="Impl\Customer\SuperDao.cs" />
     <Compile Include="Impl\Login\LoginDao.cs" />
-    <Compile Include="Impl\Report\ReportDAO.cs" />
-    <Compile Include="Impl\Statement\StatementDAO.cs" />
+    <Compile Include="Impl\Report\ReportDao.cs" />
+    <Compile Include="Impl\Statement\StatementDao.cs" />
     <Compile Include="Impl\UserControl\FunctionDao.cs" />
     <Compile Include="Impl\UserControl\GroupDao.cs" />
     <Compile Include="Impl\UserControl\MenuDao.cs" />

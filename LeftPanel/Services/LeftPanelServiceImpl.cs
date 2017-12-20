@@ -8,7 +8,9 @@
     using Criteria;
     using DTO;
     using Extensions;
+    using IBCUtils;
     using Repositories;
+    using Security;
     using Service.Impl.Customer.Casino;
     using Shared;
     using Utilities;
@@ -25,7 +27,9 @@
 
         public CustomerModel GetCustomerInfo(int actorId, string username, string groupName = "ACCDDD", int pageIndex = 1)
         {
-            var ds = dataAccess.GetCustomerInfo(username, groupName);
+
+            var ds = dataAccess.GetCustomerInfo(
+                string.IsNullOrWhiteSpace(username) ? string.Empty : username, groupName);
 
             if (ds == null || ds.Tables.Count <= 0)
             {
@@ -82,8 +86,24 @@
 
             return dr.ResultSet.Tables[0];
         }
+        
 
-        public DataRowCollection GetOnlineList(int custid) => dataAccess.GetOnlineList(custid);
+        public OnlineList GetOnlineList(int custId)
+        {
+            var model = new OnlineList();
+            foreach (DataRow row in dataAccess.GetOnlineList(custId))
+            {
+                model.Onlines.Add(new OnlineInfo
+                (
+                    new ObjectInfo { Text = CustomerModelExtensions.CheckVNIP(row.ToString("ip")) },
+                    new ObjectInfo
+                    {
+                        Text = Utils.ToDateTime(row["reload_time"]).ToStringExt()
+                    }
+                ));
+            }
+            return model;
+        }
 
         public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId) =>
             dataAccess.MasterAgentUsedCreditItems(custId, roleId);
@@ -152,8 +172,20 @@
             return result;
         }
 
-        public Result ResetSecurityCode(int id, string code, bool force) =>
-            dataAccess.ResetSecurityCode(id, code, force);
+        public Result UpdateSecurityCode(int custId, string code, bool force, int roleId)
+        {
+            var hashCode = Encryption.CfsEnCode(code);
+
+            if (!roleId.IsNotMember())
+            {
+                return dataAccess.ResetSecurityCode(custId, hashCode, force || roleId.IsNotSuper());
+            }
+
+            var md5 = Cryptography.ComputeHash("MD5", custId.ToString(), "1qaw3+{:P)"); //DevSkim: ignore DS126858
+            hashCode = Cryptography.ComputeHash("SHA1", code, md5); //DevSkim: ignore DS126858
+
+            return dataAccess.ResetSecurityCode(custId, hashCode, force || roleId.IsNotSuper());
+        }
 
         public Result EnableHrFixedOdds(int id, bool enable, bool enableDownline) =>
             dataAccess.EnableHRFixedOdds(id, enable, enableDownline);

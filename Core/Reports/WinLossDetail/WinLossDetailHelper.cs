@@ -24,10 +24,14 @@
             var requestUrl = HttpContext.Current.Request.UrlReferrer?.AbsolutePath.Split(new[] {"/"},
                 StringSplitOptions.RemoveEmptyEntries);
 
-            var groupName = requestUrl != null && (requestUrl.Length == 0
-                                                   || !currentSession.IsInternalAdmin)
+            var groupName = requestUrl != null && (requestUrl.Length == 0 || !currentSession.IsInternalAdmin)
                 ? currentSession.CurrencyGroup
                 : requestUrl?[requestUrl.Length - 1];
+
+            if (string.IsNullOrWhiteSpace(groupName))
+            {
+                return true;
+            }
 
             foreach (var group in groups)
             {
