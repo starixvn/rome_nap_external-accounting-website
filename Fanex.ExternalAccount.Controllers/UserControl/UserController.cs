@@ -311,7 +311,7 @@
             if (IsAdminHasPermissionOnCustomer(checkCustomerBelongToSpecialSiteResult.IsSpecialSite))
             {
                 var encryption = new EncryptionThread();
-                var param = string.Join("&", username, CurrentSession.UserId, new LoginService().GetDBTime().Ticks,
+                var param = string.Join("&", username, CurrentSession.UserId, new LoginService().GetDbTime().Ticks,
                     "NAPEXT");
                 param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
 

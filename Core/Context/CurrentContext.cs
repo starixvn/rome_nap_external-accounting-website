@@ -101,7 +101,7 @@
             {
                 var variables = HttpContext.Current.Request.ServerVariables;
 
-                var protocol = variables["SERVER_PORT_SECURE"] == "1" ? "https://" : "http://";
+                var protocol = variables["SERVER_PORT_SECURE"] == "1" ? "https://" : "http://"; //DevSkim: ignore DS137138
                 var domain = variables["SERVER_NAME"];
                 var port = variables["SERVER_PORT"];
 

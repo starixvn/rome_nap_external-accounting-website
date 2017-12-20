@@ -70,6 +70,6 @@
             return _loginDao.CheckExternalGroup(custId, funcId, funcKey);
         }
 
-        public DateTime GetDBTime() => _loginDao.GetDbTime();
+        public DateTime GetDbTime() => _loginDao.GetDbTime();
     }
 }

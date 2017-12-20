@@ -23,6 +23,6 @@
 
         bool CheckExternalGroup(int custId, int? funcId, string funcKey);
 
-        DateTime GetDBTime();
+        DateTime GetDbTime();
     }
 }

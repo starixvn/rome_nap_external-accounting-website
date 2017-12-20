@@ -29,14 +29,18 @@
 
         public bool HadNoSessionData => !IsLogin;
 
+#pragma warning disable S2325 // Methods and properties that don't access instance data should be static
         public int LoginAttempt
+#pragma warning restore S2325 // Methods and properties that don't access instance data should be static
         {
             get { return Utils.ToInt32(HttpContext.Current.Session[EASLoginAttempt]); }
 
             set { HttpContext.Current.Session[EASLoginAttempt] = value; }
         }
 
+#pragma warning disable S2325 // Methods and properties that don't access instance data should be static
         public string UserAttempt
+#pragma warning restore S2325 // Methods and properties that don't access instance data should be static
         {
             get { return Utils.ToString(HttpContext.Current.Session[EASUserAttempt]); }
 

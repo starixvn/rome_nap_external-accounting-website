@@ -9,12 +9,12 @@
     public class CustomerService : ICustomerService
 
     {
-        private readonly ICustomerDao _dao = new CustomerDao();
+        private readonly ICustomerDao customerDao = new CustomerDao();
 
         public bool IsValidUsername(string userName, int uplineId, out int custId)
-            => _dao.IsValidUsername(userName, uplineId, out custId);
+            => customerDao.IsValidUsername(userName, uplineId, out custId);
 
-        public Customer UserInfo(int custId) => _dao.UserInfo(custId);
+        public Customer UserInfo(int custId) => customerDao.UserInfo(custId);
 
         public Result EditUserInfo(
             int custId,
@@ -29,13 +29,13 @@
             int userId,
             int subAccId,
             string language)
-            => _dao.EditUserInfo(custId, firstName, lastName, homePhone, mobilePhone, email, fax, remark, ip,
+            => customerDao.EditUserInfo(custId, firstName, lastName, homePhone, mobilePhone, email, fax, remark, ip,
                     userId, subAccId, language);
 
         public Result ResetPassword(int custId, string password, Request request)
-            => _dao.ResetPassword(custId, password, request);
+            => customerDao.ResetPassword(custId, password, request);
 
         public Result ConfigDoubleComm(int custId, bool allow, Request request)
-            => _dao.ConfigDoubleComm(custId, allow, request);
+            => customerDao.ConfigDoubleComm(custId, allow, request);
     }
 }

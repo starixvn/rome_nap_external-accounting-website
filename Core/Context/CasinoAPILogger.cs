@@ -2,73 +2,77 @@
 {
     using System;
     using System.Collections;
+    using System.Globalization;
     using System.Web;
     using System.Xml;
-    using Fanex.Data;
-    using Fanex.ExternalAccount.Utilities;
-    using Logging.Extensions.Database;
+    using Data;
     using Sunplus.Libraries.APILogger;
+    using Utilities;
 
     public class CasinoAPILogger : IAPILogger
     {
         public void Write(int actionId, string functionName, string strackingValue, string returnValue, int returnCode)
         {
-            var param = new Hashtable();
             var custId = HttpContext.Current.Request["id"];
             var urlRef = HttpContext.Current.Request.UrlReferrer;
 
             custId = string.IsNullOrWhiteSpace(custId) ? HttpContext.Current.Request["custid"] : custId;
-            if (string.IsNullOrWhiteSpace(custId) || custId == "0")
+            if (urlRef != null)
             {
                 var qryCustId = urlRef.Query.Replace("?", string.Empty).Split('&');
-                foreach (var item in qryCustId)
-                {
-                    if (item.ToLower().Contains("custid"))
-                    {
-                        custId = item.Split('=')[1];
-                        break;
-                    }
-                }
-
                 if (string.IsNullOrWhiteSpace(custId) || custId == "0")
                 {
-                    var tracking = new XmlDocument();
-                    tracking.LoadXml(strackingValue);
-
-                    try
+                    foreach (var item in qryCustId)
                     {
-                        var id = tracking.GetElementsByTagName("DocumentElement").Item(0).FirstChild;
-                        var nodeId = id.SelectSingleNode("intIBCCustID");
-                        nodeId = nodeId == null ? id.SelectSingleNode("IBCCustID") : nodeId;
-                        custId = nodeId.FirstChild.Value;
+                        if (item.ToLower(CultureInfo.InvariantCulture).Contains("custid"))
+                        {
+                            custId = item.Split('=')[1];
+                            break;
+                        }
                     }
-                    catch
+
+                    if (string.IsNullOrWhiteSpace(custId) || custId == "0")
                     {
+                        var tracking = new XmlDocument();
+                        tracking.LoadXml(strackingValue);
+
+                        try
+                        {
+                            var id = tracking.GetElementsByTagName("DocumentElement").Item(0)?.FirstChild;
+                            var nodeId = id?.SelectSingleNode("intIBCCustID");
+                            if (id != null)
+                            {
+                                nodeId = nodeId ?? id.SelectSingleNode("IBCCustID");
+                            }
+
+                            if (nodeId != null)
+                            {
+                                custId = nodeId.FirstChild.Value;
+                            }
+                        }
+                        catch
+                        {
+                            // TODO: Writelog
+                        }
                     }
                 }
-            } 
-            
-            param.Add("systemid", 3);
-            param.Add("userid", CurrentSession.Instance.UserId);
-            param.Add("custid", Utils.ToInt32(custId));
-            param.Add("actionid", actionId);
-            param.Add("funcname", functionName);
-            param.Add("trackingvalue", strackingValue);
-            param.Add("returnvalue", returnValue);
-            param.Add("returncode", returnCode);
+            }
+            var param = new Hashtable
+            {
+                {"systemid", 3},
+                {"userid", CurrentSession.Instance.UserId},
+                {"custid", Utils.ToInt32(custId)},
+                {"actionid", actionId},
+                {"funcname", functionName},
+                {"trackingvalue", strackingValue},
+                {"returnvalue", returnValue},
+                {"returncode", returnCode}
+            };
 
-            using (ObjectDb db = new ObjectDb("WriteLog_UserLog_CasinoAPI", 600))
+            using (var db = new ObjectDb("WriteLog_UserLog_CasinoAPI", 600))
             {
                 db.AssignParamValues(param);
-
-                try
-                {
-                    var ds = db.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                db.ExecuteNonQuery();
             }
         }
     }
