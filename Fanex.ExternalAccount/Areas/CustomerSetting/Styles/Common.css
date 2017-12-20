@@ -109,6 +109,7 @@ input[type=text]
 	margin-top: 5px;
 	text-indent: 0 !important;
 	margin-bottom: 5px;
+    -webkit-appearance: none; 
 }
 
 .buttonPopup:hover, .ui-button:hover

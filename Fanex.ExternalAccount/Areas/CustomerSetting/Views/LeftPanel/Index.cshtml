@@ -248,7 +248,7 @@
                         <div class="pull-right">{{loginInfo[7].value}}</div>
                     </div>
                     <div class="row" data-ng-hide="{{model.personalInfo.roleId.value == 1}}">
-                        <div class="pull-left bold">{{loginInfo[8].text}}&nbsp;[<a href="javascript:;" data-ng-click="RemoveOTP({{model != null ? model.personalInfo.custId.value : 0}}, '{{model != null ? model.personalInfo.currentLevel.value : 0}}')">Remove</a>]</div>
+                        <div class="pull-left bold">{{loginInfo[8].text}}&nbsp;[<a href="javascript:;" data-ng-click="RemoveOTP({{model != null ? model.personalInfo.custId.value : 0}}, '{{model != null ? model.personalInfo.currentLevel.value : 0}}');collapseSidebar();">Remove</a>]</div>
                         <div class="pull-right">{{loginInfo[8].value}}</div>
                     </div>
                 </div>

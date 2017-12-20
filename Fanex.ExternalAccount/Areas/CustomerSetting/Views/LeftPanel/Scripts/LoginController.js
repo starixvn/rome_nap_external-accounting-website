@@ -9,7 +9,7 @@
 
     $scope.ResetPassword = function (custId, title) {
         var roleId = model.personalInfo.roleId.value;
-        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>', 415, (roleId != 1 ? 400 : 400));
+        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>', 415, (roleId != 1 ? 400 : 400), false);
     };
 
     $scope.ShowIp = function (ip) {
@@ -29,5 +29,16 @@
     $scope.RemoveOTP = function (custId, username) {
         var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/RemoveOTP?custId=' + custId + '&username=' + username + '&groupName=' + parent.$('#selectedGroupName').html());
         parent.Fanex.ExtAcc.LoadMainIFrame(url);
+    };
+
+    $scope.collapseSidebar = function () {
+
+        var iconUserInfo = top.$("#iconUserInfo");
+        var leftPanel = top.$("#leftSplitter");
+
+        leftPanel.fadeIn("fast", function () {
+            leftPanel.removeClass("expand-leftpanel");
+            iconUserInfo.removeClass("active");
+        });
     };
 };
