@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Data;
-using Fanex.Data.DNAide;
-using Fanex.ExternalAccount.DTO.Customer.Casino;
-using Fanex.ExternalAccount.Utilities;
-
-namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
+﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
 {
+    using System;
+    using System.Collections;
+    using System.Data;
+    using CasinoLibrary.SBAgent;
+    using Data.DNAide;
+    using DTO.Customer.Casino;
+    using Utilities;
+
     public class CasinoDao
     {
         public CasinoCustomer GetCustInfoIBC(int ibcCustId, int uplineId)
@@ -59,7 +60,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
                 customerDetail.UplineCasinoSync = Utils.ToBoolean(drupline["synccasino"]);
             }
 
-            var customer = new CasinoLibrary.SBAgent.Customer();
+            var customer = new Customer();
 
             try
             {
@@ -78,7 +79,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
                     customerDetail.DefaultTransferCredit = Utils.ToDouble(dt.Rows[0]["SuperMaxTransfer"]);
                 }
             }
-            catch (Exception exception)
+            catch
             {
                 // TODO: Writelog
             }
@@ -95,9 +96,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
             int userId,
             string ip,
             int subAccId,
-            string lang,
-            string username,
-            string subUsername)
+            string lang)
         {
             var param = new Hashtable
             {

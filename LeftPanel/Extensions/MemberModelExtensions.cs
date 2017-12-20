@@ -115,7 +115,7 @@
 
             foreach (var item in model.Setting.Details)
             {
-                if (!IgnoreOrExcludeProducts().Contains(item.Key))
+                if (!IgnoreOrExcludeProducts.Contains(item.Key))
                 {
                     model.Setting.MasterPts.Add(new ObjectInfo(item.Key, item.Value));
                 }
@@ -144,7 +144,7 @@
             return model;
         }
 
-        private static IList<string> IgnoreOrExcludeProducts() => new List<string> { "Info", "ColossusBets" };
+        private static readonly IList<string> IgnoreOrExcludeProducts = new List<string> { "Info", "ColossusBets" };
 
         private static CustomerModel AddDetailProductForCrossLevel(this CustomerModel model, string productKey, string productName)
         {

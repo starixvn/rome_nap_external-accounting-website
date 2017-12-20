@@ -856,7 +856,7 @@
             return product;
         }
 
-        
+
 
         public static CustomerModel AddEnableAndDetailProduct(this CustomerModel model, DataTable table3rdDCS, int productId, string productName, string editBetLimitFunc = "", bool checkboxType = true, bool getFromRemotingRef = false)
         {

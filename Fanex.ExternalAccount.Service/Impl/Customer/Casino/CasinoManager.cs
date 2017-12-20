@@ -6,7 +6,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
     public class CasinoManager
     {
         private static readonly CasinoManager instance = new CasinoManager();
-        private readonly CasinoDao _casino = new CasinoDao();
+        private readonly CasinoDao casinoDao = new CasinoDao();
 
         public static CasinoManager Instance => instance ?? new CasinoManager();
 
@@ -18,12 +18,9 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             int userId,
             string ip,
             int subAccId,
-            string lang,
-            string username,
-            string subUsername)
+            string lang)
         {
-            return _casino.UpdateCSStatus(custid, syncCS, disabledCS, userId, ip, subAccId, lang, username,
-                subUsername);
+            return casinoDao.UpdateCSStatus(custid, syncCS, disabledCS, userId, ip, subAccId, lang);
         }
 
         public bool UpdateCSStatus(
@@ -38,7 +35,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             string username,
             string subUsername)
         {
-            var errMsg = string.Empty;
+            string errMsg;
             return UpdateCSStatus(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, username,
                 subUsername, out errMsg);
         }
@@ -71,7 +68,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
 
         public CasinoCustomer GetCustInfoIBC(int custid, int uplineId)
         {
-            return _casino.GetCustInfoIBC(custid, uplineId);
+            return casinoDao.GetCustInfoIBC(custid, uplineId);
         }
 
         private bool DoUpdateCSStatusWithoutSync(
@@ -85,7 +82,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             string lang,
             out string errMsg)
         {
-            return _casino.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId,
+            return casinoDao.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId,
                 lang, out errMsg);
         }
     }

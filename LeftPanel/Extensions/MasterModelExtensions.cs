@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Data;
-    using Utilities;
     using ViewModels;
 
     public static class MasterModelExtensions

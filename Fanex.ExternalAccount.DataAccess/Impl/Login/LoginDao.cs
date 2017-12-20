@@ -43,19 +43,12 @@
                 db.AddOutParameter("ErrMsg", DbType.String, 200);
                 db.AddOutParameter("GroupID", DbType.Int32, sizeof(int));
 
-                try
-                {
-                    db.ExecuteNonQuery();
+                db.ExecuteNonQuery();
 
-                    custId = (int)db.GetParameterValue("Custid");
-                    result.ErrorCode = db.GetParameterValue("ErrCode").ToString();
-                    result.ErrorMessage = db.GetParameterValue("ErrMsg").ToString();
-                    result.ResultData = db.GetParameterValue("GroupID");
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                custId = (int) db.GetParameterValue("Custid");
+                result.ErrorCode = db.GetParameterValue("ErrCode").ToString();
+                result.ErrorMessage = db.GetParameterValue("ErrMsg").ToString();
+                result.ResultData = db.GetParameterValue("GroupID");
             }
 
             return result;
@@ -67,20 +60,13 @@
             {
                 db.AddInParameter("on_userid", DbType.Int32, custId);
                 db.AddInParameter("username", DbType.String, username);
-                try
-                {
-                    db.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                db.ExecuteNonQuery();
 
                 return new Result();
             }
         }
 
-        public Result Checkin(int custId, string netSessionID, string ip, out int onuserId)
+        public Result Checkin(int custId, string netSessionId, string ip, out int onuserId)
         {
             var result = new Result();
 
@@ -88,20 +74,13 @@
 
             using (var db = new ObjectDb("EAS_UserCheckIn"))
             {
-                db.AddInParameter("custid", System.Data.DbType.Int32, custId);
-                db.AddInParameter("NetSessionID", System.Data.DbType.String, netSessionID);
-                db.AddInParameter("IP", System.Data.DbType.String, ip);
-                db.AddOutParameter("on_userid", System.Data.DbType.Int32, sizeof(int));
+                db.AddInParameter("custid", DbType.Int32, custId);
+                db.AddInParameter("NetSessionID", DbType.String, netSessionId);
+                db.AddInParameter("IP", DbType.String, ip);
+                db.AddOutParameter("on_userid", DbType.Int32, sizeof(int));
+                db.ExecuteNonQuery();
 
-                try
-                {
-                    db.ExecuteNonQuery();
-                    onuserId = (int)db.GetParameterValue("on_userid");
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                onuserId = (int) db.GetParameterValue("on_userid");
             }
 
             return result;
@@ -125,23 +104,16 @@
 
             using (var db = new ObjectDb("EAS_GroupInfoSelExternalGroup"))
             {
-                try
+                using (var reader = db.ExecuteReader())
                 {
-                    using (var reader = db.ExecuteReader())
-                    {
                     while (reader?.Read() == true)
+                    {
+                        list.Add(new Group
                         {
-                            list.Add(new Group
-                            {
-                                GroupID = reader.ToInt("GroupID"),
-                                GroupName = reader.To<string>("GroupName")
-                            });
-                        }
+                            GroupID = reader.ToInt("GroupID"),
+                            GroupName = reader.To<string>("GroupName")
+                        });
                     }
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
                 }
             }
 
@@ -158,32 +130,21 @@
 
                 AddResultParams(db.Database, db.DbCommand);
 
-                try
-                {
-                    db.ExecuteNonQuery();
-                    var result = this.GetResultParams(db.Database, db.DbCommand);
+                db.ExecuteNonQuery();
 
-                    return result.IsSuccess;
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                var result = GetResultParams(db.Database, db.DbCommand);
+
+                return result.IsSuccess;
             }
         }
 
         public DateTime GetDbTime()
         {
-            DbResult dr = null;
-            DateTime loginTime;
-            var p = new Hashtable();
+            var p = new Hashtable {{"logintime", null}};
 
-            p.Add("logintime", null);
+            var dr = DbHelper.ExecuteDbResult("Age_LoginAdminVerifyTicket", p);
 
-            dr = DbHelper.ExecuteDbResult("Age_LoginAdminVerifyTicket", p);
-            loginTime = Converter.ToDateTime(dr.Outputs["logintime"]);
-
-            return loginTime;
+            return Converter.ToDateTime(dr.Outputs["logintime"]);
         }
     }
 }

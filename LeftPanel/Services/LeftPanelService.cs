@@ -7,11 +7,11 @@
 
     public interface LeftPanelService
     {
-        CustomerModel GetCustomerInfo(string username, string groupName = "ACCDDD", int pageIndex = 1);
+        CustomerModel GetCustomerInfo(int actorId, string username, string groupName = "ACCDDD", int pageIndex= 1);
 
         Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit);
 
-        DataTable GetDownlineList(int custid, int pageSize, int pageIndex);
+        DataTable GetDownlineList(int custid, int pageSize, int pageIndex, out int totalPages);
 
         DataRowCollection GetOnlineList(int custid);
 

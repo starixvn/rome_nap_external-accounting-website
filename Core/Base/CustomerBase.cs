@@ -97,7 +97,7 @@
 
                     if (isSuccess)
                     {
-                        new CasinoManager().UpdateCSStatus(custId, true, custInfo.CasinoDisabled, CurrentSession.UserId, CurrentContext.Ip4Address, 0, "E", string.Empty, string.Empty);
+                        new CasinoManager().UpdateCSStatus(custId, true, custInfo.CasinoDisabled, CurrentSession.UserId, CurrentContext.Ip4Address, 0, "E");
                     }
                     else
                     {
@@ -164,37 +164,36 @@
 
             var ds = DbHelper.ExecuteDataSet("Acc_CustSetting_StatusSettingSelect", param);
 
-            if (ds?.Tables.Count > 0)
+            if (ds?.Tables.Count <= 0)
             {
-                var cust = ds.Tables[0];
-                var product = cust.Select("ProductID = " + productId).FirstOrDefault();
-                if (product == null)
-                {
-                    return new DcsEntity {IsHidden = true};
-                }
-                var isSyncedUpline = product.ToBoolean("IsSyncedUpline");
-                var isDisabledUpline = product.ToBoolean("IsDisabledUpline");
-                var isHidden = product.ToBoolean("IsHidden");
-                var isSynced = product.ToBoolean("IsSync");
-                var isDisabled = product.ToBoolean("IsDisabled");
-                var isDisabledDownline = product.ToBoolean("IsDisabledDownline");
-                var isSyncedDownline = product.ToBoolean("IsSyncedDownline");
-                var hasDownline = product.ToBoolean("HasDownline");
-
-                return new DcsEntity
-                {
-                    IsDisabledUpline = isDisabledUpline,
-                    IsSyncedUpline = isSyncedUpline,
-                    IsHidden = isHidden,
-                    HasDownline = hasDownline,
-                    IsSynced = isSynced,
-                    IsDisabled = isDisabled,
-                    IsDisabledDownline = isDisabledDownline,
-                    IsSyncedDownline = isSyncedDownline
-                };
+                return new DcsEntity {IsHidden = true};
             }
+            var cust = ds.Tables[0];
+            var product = cust.Select("ProductID = " + productId).FirstOrDefault();
+            if (product == null)
+            {
+                return new DcsEntity {IsHidden = true};
+            }
+            var isSyncedUpline = product.ToBoolean("IsSyncedUpline");
+            var isDisabledUpline = product.ToBoolean("IsDisabledUpline");
+            var isHidden = product.ToBoolean("IsHidden");
+            var isSynced = product.ToBoolean("IsSync");
+            var isDisabled = product.ToBoolean("IsDisabled");
+            var isDisabledDownline = product.ToBoolean("IsDisabledDownline");
+            var isSyncedDownline = product.ToBoolean("IsSyncedDownline");
+            var hasDownline = product.ToBoolean("HasDownline");
 
-            return new DcsEntity { IsHidden = true };
+            return new DcsEntity
+            {
+                IsDisabledUpline = isDisabledUpline,
+                IsSyncedUpline = isSyncedUpline,
+                IsHidden = isHidden,
+                HasDownline = hasDownline,
+                IsSynced = isSynced,
+                IsDisabled = isDisabled,
+                IsDisabledDownline = isDisabledDownline,
+                IsSyncedDownline = isSyncedDownline
+            };
         }
     }
 }

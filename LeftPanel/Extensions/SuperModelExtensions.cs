@@ -3,20 +3,19 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-    using Core.Context;
     using CustomerSetting.Security.Authenticate;
-    using Utilities;
     using ViewModels;
+    using static eFunctions;
 
     public static class SuperModelExtensions
     {
-        public static CustomerModel SuperInfo(this CustomerModel model, DataSet ds)
+        public static CustomerModel SuperInfo(this CustomerModel model, DataSet ds, int actorId)
         {
             SetSuperBalanceInfo(model, ds);
 
             SetSuperPersonalInfo(model, ds);
 
-            SetSuperSettings(model, ds);
+            SetSuperSettings(model, ds, actorId);
 
             return model;
         }
@@ -56,7 +55,7 @@
             });
         }
 
-        private static void SetSuperSettings(CustomerModel model, DataSet ds)
+        private static void SetSuperSettings(CustomerModel model, DataSet ds, int userId)
         {
             var tableCustomer = ds.Tables[0];
             var table3rdDCS = ds.Tables[4];
@@ -70,14 +69,14 @@
                 Details = Details()
             };
 
-            model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", eFunctions.AllbetBetting, false);
-            model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games", eFunctions.VoidbridgeBetting);
-            model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", eFunctions.NG2Betting, true, true);
+            model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", AllbetBetting, false);
+            model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games", VoidbridgeBetting);
+            model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", NG2Betting, true, true);
             model.AddEnableAndDetailProduct(table3rdDCS, 24, "Fishing World");
-            model.AddEnableAndDetailProduct(table3rdDCS, 28, "Lottery", eFunctions.LotteryBetting);
+            model.AddEnableAndDetailProduct(table3rdDCS, 28, "Lottery", LotteryBetting);
             model.AddEnableAndDetailProduct(table3rdDCS, 26, "Lucky 3");
 
-            model.AddBettingLimitForSuper();
+            model.AddBettingLimitForSuper(userId);
         }
 
         private static List<ObjectInfo> EnableItems(DataRow customerRow, DataTable table3rdDCS)
@@ -139,29 +138,29 @@
                 new ObjectInfo("Cricket", "Edit Cricket")
             };
 
-        private static CustomerModel AddBettingLimitForSuper(this CustomerModel model)
+        private static readonly List<string> BetLimitSettingProductKeys = new List<string>
         {
-            var userId = CurrentSession.Instance.UserId;
-            var showBetSetting =
-                   CustomerModelExtensions.IsAuthorized(userId, eFunctions.CasinoBetting, AuthenticateAction.AuthenticationType.Read)
-                || CustomerModelExtensions.IsAuthorized(userId, eFunctions.GoldDeluxeBetting, AuthenticateAction.AuthenticationType.Read)
-                || CustomerModelExtensions.IsAuthorized(userId, eFunctions.KenoBetting, AuthenticateAction.AuthenticationType.Read)
-                || CustomerModelExtensions.IsAuthorized(userId, eFunctions.LiveCasinoBetting, AuthenticateAction.AuthenticationType.Read)
-                || CustomerModelExtensions.IsAuthorized(userId, eFunctions.RacingBetting, AuthenticateAction.AuthenticationType.Read)
-                || CustomerModelExtensions.IsAuthorized(userId, eFunctions.SportsbookBetting, AuthenticateAction.AuthenticationType.Read)
-                || CustomerModelExtensions.IsAuthorized(userId, eFunctions.VirtualSportsBetting, AuthenticateAction.AuthenticationType.Read)
-                || CustomerModelExtensions.IsAuthorized(userId, eFunctions.AllbetBetting, AuthenticateAction.AuthenticationType.Read)
-                || CustomerModelExtensions.IsAuthorized(userId, eFunctions.VoidbridgeBetting, AuthenticateAction.AuthenticationType.Read)
-                || CustomerModelExtensions.IsAuthorized(userId, eFunctions.NG2Betting, AuthenticateAction.AuthenticationType.Read)
-                || CustomerModelExtensions.IsAuthorized(userId, eFunctions.LotteryBetting, AuthenticateAction.AuthenticationType.Read);
+            CasinoBetting,
+            GoldDeluxeBetting,
+            KenoBetting,
+            LiveCasinoBetting,
+            RacingBetting,
+            SportsbookBetting,
+            VirtualSportsBetting,
+            AllbetBetting,
+            VoidbridgeBetting,
+            NG2Betting,
+            LotteryBetting
+        };
+
+        private static CustomerModel AddBettingLimitForSuper(this CustomerModel model, int actorId)
+        {
+            var showBetSetting = BetLimitSettingProductKeys.Any(productKey =>
+                 CustomerModelExtensions.IsAuthorized(actorId, productKey, AuthenticateAction.AuthenticationType.Read));
 
             if (showBetSetting)
             {
-                model.Setting.Details.Add(new ObjectInfo
-                {
-                    Key = "BetSetting",
-                    Value = "Edit Betting Limit"
-                });
+                model.Setting.Details.Add(new ObjectInfo("BetSetting", "Edit Betting Limit"));
             }
 
             return model;

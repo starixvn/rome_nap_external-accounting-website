@@ -52,7 +52,7 @@
                     "var model = null; $(\"div[data-ng-controller='NoInfoController']\").html(\"You don\'t have permission to access\")");
             }
 
-            var model = _service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId,
+            var model = _service.GetCustomerInfo(CurrentSession.UserId, string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId,
                 pageIndex);
 
             model?.GetProductStatuses(CurrentSession.UserId, uplineId, id);
@@ -75,7 +75,7 @@
         {
             ViewBag.UserId = CurrentSession.UserId;
 
-            var model = _service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId,
+            var model = _service.GetCustomerInfo(CurrentSession.UserId, string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId,
                 pageIndex);
 
             return JsonBase(model);
@@ -368,9 +368,10 @@
         [AntiXSRFFilter]
         public ActionResult GetDownlineList(int custId, int pageIndex)
         {
-            var downlines = _service.GetDownlineList(custId, 100, pageIndex);
+            int totalPages;
+            var downlines = _service.GetDownlineList(custId, 100, pageIndex, out totalPages);
+
             var model = new DownlineList();
-            var totalPages = LeftPanelServiceImpl.TotalPages;
 
             if (downlines?.Rows.Count <= 0)
             {
