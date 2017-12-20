@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'AlphaAdmin';
-  src:  url('fonts/AlphaAdmin.eot?byof56');
-  src:  url('fonts/AlphaAdmin.eot?byof56#iefix') format('embedded-opentype'),
-    url('fonts/AlphaAdmin.ttf?byof56') format('truetype'),
-    url('fonts/AlphaAdmin.woff?byof56') format('woff'),
-    url('fonts/AlphaAdmin.svg?byof56#AlphaAdmin') format('svg');
+  src:  url('fonts/AlphaAdmin.eot?6xhfce');
+  src:  url('fonts/AlphaAdmin.eot?6xhfce#iefix') format('embedded-opentype'),
+    url('fonts/AlphaAdmin.ttf?6xhfce') format('truetype'),
+    url('fonts/AlphaAdmin.woff?6xhfce') format('woff'),
+    url('fonts/AlphaAdmin.svg?6xhfce#AlphaAdmin') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -25,16 +25,22 @@
 }
 
 .icon-customer:before {
+  content: "\e930";
+}
+.icon-arrow-right-bold:before {
   content: "\e91d";
 }
-.icon-alert-circle-outline:before {
-  content: "\e92c";
+.icon-arrow-left-bold:before {
+  content: "\e92f";
 }
 .icon-skip-next:before {
-  content: "\e92e";
+  content: "\e92c";
 }
 .icon-skip-previous:before {
-  content: "\e92f";
+  content: "\e92d";
+}
+.icon-alert-circle-outline:before {
+  content: "\e92e";
 }
 .icon-excel:before {
   content: "\e92b";

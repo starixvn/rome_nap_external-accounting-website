@@ -75,14 +75,20 @@
 .history {
   margin-left: 1px;
   color: #2489ce;
-  cursor: pointer;
-  font-style: italic; }
+  cursor: pointer; }
 
 .arrow {
-  background: url("../../Images/arrow.png") no-repeat left;
-  width: 13px;
-  height: 12px;
-  padding-left: 18px; }
+  /*background: url("../../Images/arrow.png") no-repeat left;
+    width: 13px;
+    height: 12px;*/ }
+  .arrow:before {
+    content: '\e92f';
+    font-family: 'AlphaAdmin';
+    color: #2489ce;
+    font-size: 18px;
+    position: relative;
+    top: 2px;
+    left: -2px; }
 
 .iconscontainer {
   background-repeat: no-repeat;
@@ -108,13 +114,9 @@ span.selectedMonth {
   .selectedDayWrapParent .selectedDayWrap .dayPickr {
     height: unset; }
 
-.icon-alert-circle-outline {
-  font-size: 16px;
+#netTurnover.icon-alert-circle-outline {
   position: relative;
-  top: 3px;
-  cursor: pointer; }
-  .icon-alert-circle-outline:hover {
-    color: #b50000; }
+  top: 3px; }
 
 .tbl-winloss-detail {
   max-height: 625px !important; }

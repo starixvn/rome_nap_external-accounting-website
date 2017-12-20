@@ -22,7 +22,7 @@
   font-size: 20px;
   color: #4872eb; }
   .note-info-message:before {
-    content: "\e92c"; }
+    content: "\e92e"; }
 
 .note-info-message:hover {
   background-position: 0 -16px;

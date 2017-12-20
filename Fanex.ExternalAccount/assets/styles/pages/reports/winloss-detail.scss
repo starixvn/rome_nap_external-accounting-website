@@ -92,14 +92,23 @@
     margin-left: 1px;
     color: #2489ce;
     cursor: pointer;
-    font-style: italic;
+    //font-style: italic;
 }
 
 .arrow {
-    background: url("../../Images/arrow.png") no-repeat left;
+    /*background: url("../../Images/arrow.png") no-repeat left;
     width: 13px;
-    height: 12px;
-    padding-left: 18px;
+    height: 12px;*/
+    //padding-left: 18px;
+    &:before {
+        content: '\e92f';
+        font-family: 'AlphaAdmin';
+        color: #2489ce;
+        font-size: 18px;
+        position: relative;
+        top: 2px;
+        left: -2px;
+    }
 }
 
 .iconscontainer {
@@ -136,14 +145,9 @@ span.selectedMonth {
     }
 }
 
-.icon-alert-circle-outline {
-    font-size: 16px;
+#netTurnover.icon-alert-circle-outline {
     position: relative;
     top: 3px;
-    cursor: pointer;
-    &:hover {
-        color: #b50000;
-    }
 }
 
 .tbl-winloss-detail {

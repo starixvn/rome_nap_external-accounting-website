@@ -453,7 +453,7 @@ a {
   background: #c5c5c5; }
 
 .pagination .pagination-last:before {
-  content: '\e91d'; }
+  content: '\e92c'; }
 
 .pagination .pagination-first:before {
   content: '\e92d'; }
@@ -815,24 +815,23 @@ textarea {
   -ms-border-radius: 30px;
   -o-border-radius: 30px;
   border-radius: 30px;
-  background: #5faa73; }
+  background: #5faa73;
+  /*@media all and (min-device-width: 768px) {
+        @include border-radius(20px);
+    }*/ }
   .ui-datepicker-current-day .ui-state-default {
     color: #fff;
-    height: 25px;
-    width: 26px;
+    width: 44px;
+    height: 28px;
     background: #5faa73 !important;
     border-radius: 50%;
     line-height: 20px;
     position: relative;
     left: 1px; }
-  @media all and (min-device-width: 768px) {
-    .ui-datepicker-current-day {
-      -webkit-border-radius: 20px;
-      -khtml-border-radius: 20px;
-      -moz-border-radius: 20px;
-      -ms-border-radius: 20px;
-      -o-border-radius: 20px;
-      border-radius: 20px; } }
+    @media all and (min-device-width: 768px) {
+      .ui-datepicker-current-day .ui-state-default {
+        height: 25px;
+        width: 26px; } }
 
 .list {
   list-style: none;
@@ -1108,6 +1107,12 @@ textarea {
 @media (min-device-width: 678px) {
   .sidebar {
     display: none; } }
+
+.icon-alert-circle-outline {
+  font-size: 16px;
+  cursor: pointer; }
+  .icon-alert-circle-outline:hover {
+    color: #b50000; }
 
 .ui-button .ui-button-text {
   line-height: initial; }

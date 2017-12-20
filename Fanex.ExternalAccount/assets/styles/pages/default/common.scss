@@ -17,6 +17,14 @@
 
 
 
+.icon-alert-circle-outline {
+    font-size: 16px;
+    cursor: pointer;
+    &:hover {
+        color: #b50000;
+    }
+}
+
 .ui-button .ui-button-text {
     line-height: initial;
 }

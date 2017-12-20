@@ -16,32 +16,19 @@
 
 #btnHideMG {
     font-family: Tahoma;
-    background: url(../Images/hideMargin.png) repeat-x scroll 5px center;
-    border: 1px solid #aaa;
+    background-color: #ececec;
+    border: 1px solid #c4c4c4;
     color: #464646;
     cursor: pointer;
-    width: 100px;
-    height: 25px;
+    height: 32px;
     border-radius: 2px;
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
     text-align: center;
-    vertical-align: text-top;
-    padding-bottom: 2px;
     margin-top: 5px;
-}
-
-#btnHideMG:hover {
-    font-family: Tahoma;
-    background: url(../Images/showMargin.png) repeat-x scroll 5px center;
-    border: 1px solid #aaa;
-    color: #464646;
-    cursor: pointer;
-    width: 100px;
-    height: 25px;
-    border-radius: 2px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
+    &:hover {
+        background-color: #C3C3C3;
+    }
 }
 
 .jqx-grid-column-header a:link {
