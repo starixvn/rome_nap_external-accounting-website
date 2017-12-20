@@ -105,6 +105,7 @@
     <Compile Include="Customer\Casino\Stakes.cs" />
     <Compile Include="Customer\Commission.cs" />
     <Compile Include="Customer\Casino\CasinoCustomer.cs" />
+    <Compile Include="Customer\CustomerSetting.cs" />
     <Compile Include="Customer\Customer.cs" />
     <Compile Include="Customer\Casino\GameKindDetail.cs" />
     <Compile Include="Customer\Casino\GameTypeDetail.cs" />

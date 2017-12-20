@@ -54,7 +54,7 @@
                 }
             }
 
-            return JsonBase(new {total = 1, page = 1, records = result.Count(), rows = result},
+            return JsonBase(new { total = 1, page = 1, records = result.Count(), rows = result },
                 new JsonSerializerSettings());
         }
 
@@ -86,7 +86,7 @@
         [AntiXSRFFilter]
         public ActionResult Add(string name, string description)
         {
-          
+
             var result = _groupService.CreateGroup(name, description, CurrentSession.CustId, CurrentContext.Ip4Address);
 
             return JsonBase(result);
@@ -151,19 +151,9 @@
                 functionList = allowFunctions;
             }
 
-            var isEditExtGroup = false;
             ViewBag.GroupID = groupId;
             ViewBag.GroupName = groupName;
-
-            foreach (var item in externalGroup)
-            {
-                if (item.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase))
-                {
-                    isEditExtGroup = true;
-                    break;
-                }
-            }
-
+            var isEditExtGroup = externalGroup.Any(i => i.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase));
             if (!isEditExtGroup)
             {
                 isEditExtGroup = groupId != 1 && !groupName.Equals("Finance", StringComparison.OrdinalIgnoreCase)

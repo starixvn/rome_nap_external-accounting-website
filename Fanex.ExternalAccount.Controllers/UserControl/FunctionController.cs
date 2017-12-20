@@ -21,14 +21,9 @@
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult FunctionList()
         {
-            var internalGroup = new GroupService()
-                .GetListGroup().FirstOrDefault(o => o.GroupID == 1);
+            var internalGroupId = 1;
 
-            var ids = string.Empty;
-
-            ids += internalGroup.GroupID;
-
-            ViewBag.InternalGroupIDs = ids;
+            ViewBag.InternalGroupIDs = internalGroupId;
 
             return PartialViewBase();
         }
@@ -77,7 +72,7 @@
                 }
             }
 
-            return JsonBase(new {total = 1, page = 1, records = funcsOrder.Count, rows = funcsOrder},
+            return JsonBase(new { total = 1, page = 1, records = funcsOrder.Count, rows = funcsOrder },
                 new JsonSerializerSettings());
         }
 
@@ -174,10 +169,9 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult Edit(int funcId, string name, string desc, int parentId, string parent, int order,
-            string oldGroups, string groups)
+        public ActionResult Edit(Function funtion, string oldGroups, string groups)
         {
-            var result = _funcService.UpdateFunction(funcId, name, desc, parentId, parent, order, CurrentSession.CustId,
+            var result = _funcService.UpdateFunction(funtion, CurrentSession.CustId,
                 CurrentContext.Ip4Address, oldGroups, groups);
 
             return JsonBase(result);
@@ -186,11 +180,10 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult Add(string name, string key, string desc, int parentId, string parent, int order,
-            string groups)
+        public ActionResult Add(Function function, string groups)
         {
 
-            var result = _funcService.CreateFunction(name, key, desc, parentId, parent, order, CurrentSession.CustId,
+            var result = _funcService.CreateFunction(function, CurrentSession.CustId,
                 CurrentContext.Ip4Address, groups);
 
             return JsonBase(result);

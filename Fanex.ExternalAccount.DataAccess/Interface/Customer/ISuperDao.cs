@@ -1,6 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Interface.Customer
 {
-    public interface ISuperDao : IData
+    using System.Data;
+
+    public interface ISuperDao
     {
+        DataTable GetData(int? userId, int? custId = null, bool? enabled = null,
+            bool? closed = null, bool? suspended = null, string groupName = "ACCDDD");
     }
 }

@@ -74,11 +74,11 @@
                     {
                         result.Add(new Function
                         {
-                            FuncID = reader.ToInt("FuncID"),
+                            FuncID = reader.ToInt("FuncId"),
                             FuncKey = reader.ToString("FuncKey"),
                             FuncName = reader.ToString("FuncName"),
                             DisplayOrder = reader.ToInt("DisplayOrder"),
-                            ParentID = reader.ToInt("ParentID"),
+                            ParentID = reader.ToInt("ParentId"),
                             ParentName = reader.ToString("ParentName"),
                             GroupPolicy = (EPolicy)Convert.ToInt32(reader["Policy"]),
                             FuncDesc = reader.ToString("FuncDesc")

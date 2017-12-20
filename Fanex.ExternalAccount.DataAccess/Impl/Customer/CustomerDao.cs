@@ -11,10 +11,8 @@
 
     public class CustomerDao : DAOBase, ICustomerDao
     {
-        public bool IsValidUsername(string userName, int uplineId, out int custId)
+        public bool IsValidUsername(string userName, int uplineId)
         {
-            custId = 0;
-
             if (string.IsNullOrEmpty(userName))
             {
                 return false;
@@ -55,35 +53,23 @@
             }
         }
 
-        public Result EditUserInfo(
-            int custId,
-            string firstName,
-            string lastName,
-            string homePhone,
-            string mobilePhone,
-            string email,
-            string fax,
-            string remark,
-            string ip,
-            int userId,
-            int subAccId,
-            string language)
+        public Result EditUserInfo(Customer customer, string ip, int userId, int subAccId, string language)
         {
             var param = new Hashtable
             {
-                {"custid", custId},
-                {"firstname", firstName},
-                {"lastname", lastName},
-                {"phone", homePhone},
-                {"mobilephone", mobilePhone},
-                {"email", email},
-                {"fax", fax},
+                {"custid", customer.CustId},
+                {"firstname", customer.FirstName},
+                {"lastname", customer.LastName},
+                {"phone", customer.HomePhone},
+                {"mobilephone", customer.MobilePhone},
+                {"email", customer.Email},
+                {"fax", customer.Fax},
                 {"discasino", 0},
                 {"ip", ip},
                 {"userid", userId},
                 {"subaccid", subAccId},
                 {"language", language},
-                {"remark", remark},
+                {"remark", customer.Remark},
                 {"errorcode", 0},
                 {"errormsg", string.Empty}
             };

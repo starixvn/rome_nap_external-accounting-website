@@ -26,20 +26,9 @@
             return userCache.MenuList;
         }
 
-        public Result CreateMenu(
-            string name,
-            string description,
-            string path,
-            int functionId,
-            int parentId,
-            string parentName,
-            int displayOrder,
-            bool isActive,
-            int custId,
-            string ip)
+        public Result CreateMenu(Menu menu, int custId, string ip)
         {
-            var result = _menuDao.CreateMenu(name, description, path, functionId, parentId, parentName, displayOrder,
-                isActive, custId, ip);
+            var result = _menuDao.CreateMenu(menu, custId, ip);
 
             if (result.IsSuccess)
             {
@@ -49,20 +38,9 @@
             return result;
         }
 
-        public Result UpdateMenu(
-            int id,
-            string name,
-            string description,
-            string path,
-            int functionId,
-            int parentId,
-            string parentName,
-            int displayOrder,
-            int custId,
-            string ip)
+        public Result UpdateMenu(Menu menu, int custId, string ip)
         {
-            var result = _menuDao.UpdateMenu(id, name, description, path, functionId, parentId, parentName,
-                displayOrder, custId, ip);
+            var result = _menuDao.UpdateMenu(menu, custId, ip);
 
             if (result.IsSuccess)
             {

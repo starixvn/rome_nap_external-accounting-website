@@ -220,7 +220,7 @@
                     result = _commissionService.UpdateCommissionAgent(commissionSetting, requestContext);
                     break;
 
-                case (int)CustomerRole.Member:
+                default:
                     result = _commissionService.UpdateCommissionMember(commissionSetting, requestContext);
                     break;
             }

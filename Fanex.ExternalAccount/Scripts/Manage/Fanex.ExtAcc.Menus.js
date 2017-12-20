@@ -354,10 +354,10 @@ Fanex.ExtAcc.Menus = {
         var editUrl = 'Menu/Add';
         var params = new Object();
 
-        params.name = Fanex.ExtAcc.EscapeHtml(name);
-        params.description = Fanex.ExtAcc.EscapeHtml(desc);
+        params.menuname = Fanex.ExtAcc.EscapeHtml(name);
+        params.menudesc = Fanex.ExtAcc.EscapeHtml(desc);
         params.url = Fanex.ExtAcc.EscapeHtml(url);
-        params.functionId = funcId;
+        params.funcId = funcId;
         params.parentId = parentId;
         params.parentName = ($('#ParentName').val() != '-1' ? $('#ParentName option:selected').text() : '');
         params.displayOrder = order;
@@ -423,10 +423,10 @@ Fanex.ExtAcc.Menus = {
         var params = new Object();
 
         params.menuId = $('#MenuID').val();
-        params.name = Fanex.ExtAcc.EscapeHtml(name);
-        params.description = Fanex.ExtAcc.EscapeHtml(desc);
+        params.menuname = Fanex.ExtAcc.EscapeHtml(name);
+        params.menudesc = Fanex.ExtAcc.EscapeHtml(desc);
         params.url = Fanex.ExtAcc.EscapeHtml(url);
-        params.functionId = funcId;
+        params.funcId = funcId;
         params.parentId = parentId;
         params.parentName = ($('#ParentName').val() != '-1' ? $('#ParentName option:selected').text() : '');
         params.displayOrder = order;

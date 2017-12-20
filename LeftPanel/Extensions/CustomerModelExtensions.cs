@@ -686,12 +686,12 @@
 
                 if (roleId == 4)
                 {
-                    result = new SuperService().GetData(userId, null, custId, null, null, null, groupName);
+                    result = new SuperService().GetData(userId, custId, null, null, null, groupName);
                 }
                 else if (roleId == 3)
                 {
                     result = new MasterService().GetData(userId, srecommend, custId);
-                    upperInfo = new SuperService().GetData(userId, null, uplineId, null, null, null, groupName);
+                    upperInfo = new SuperService().GetData(userId, uplineId, null, null, null, groupName);
                 }
                 else if (roleId == 2)
                 {

@@ -6,9 +6,9 @@
 
     public interface IFunctionDao
     {
-        Result CreateFunction(string name, string key, string description, int parentId, string parentName, int displayOrder, int custId, string ip, string assignedGroupIDs);
+        Result CreateFunction(Function function, int custId, string ip, string assignedGroupIDs);
 
-        Result UpdateFunction(int id, string name, string description, int parentId, string parentName, int displayOrder, int custId, string ip, string oldAssignedGroupIDs, string assignedGroupIDs);
+        Result UpdateFunction(Function function, int custId, string ip, string oldAssignedGroupIDs, string assignedGroupIDs);
 
         IEnumerable<Function> GetAllFunctions();
 

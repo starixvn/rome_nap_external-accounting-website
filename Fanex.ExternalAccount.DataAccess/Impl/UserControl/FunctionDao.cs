@@ -13,32 +13,23 @@
 
     public class FunctionDao : DAOBase, IFunctionDao
     {
-        public Result CreateFunction(
-            string name,
-            string key,
-            string description,
-            int parentId,
-            string parentName,
-            int displayOrder,
-            int custId,
-            string ip,
-            string assignedGroupIDs)
+        public Result CreateFunction(Function function, int custId, string ip, string assignedGroupIDs)
         {
             using (var db = new ObjectDb("EAS_FunctionIns"))
             {
                 db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("ParentID", DbType.Int32, parentId);
-                db.AddInParameter("DisplayOrder", DbType.Int32, displayOrder);
+                db.AddInParameter("ParentId", DbType.Int32, function.ParentID);
+                db.AddInParameter("DisplayOrder", DbType.Int32, function.DisplayOrder);
                 db.AddInParameter("IsTest", DbType.Boolean, false);
 
-                db.AddInParameter("ParentName", DbType.String, parentName);
-                db.AddInParameter("FuncName", DbType.String, name);
-                db.AddInParameter("FuncDesc", DbType.String, description);
-                db.AddInParameter("FuncKey", DbType.String, key);
+                db.AddInParameter("ParentName", DbType.String, function.ParentName);
+                db.AddInParameter("FuncName", DbType.String, function.FuncName);
+                db.AddInParameter("FuncDesc", DbType.String, function.FuncDesc);
+                db.AddInParameter("FuncKey", DbType.String, function.FuncKey);
                 db.AddInParameter("IP", DbType.String, ip);
                 db.AddInParameter("AssigedGroupIDs", DbType.String, assignedGroupIDs);
 
-                db.AddOutParameter("FuncID", DbType.Int32, sizeof(int));
+                db.AddOutParameter("FuncId", DbType.Int32, sizeof(int));
 
                 AddResultParams(db.Database, db.DbCommand);
 
@@ -48,28 +39,18 @@
             }
         }
 
-        public Result UpdateFunction(
-            int id,
-            string name,
-            string description,
-            int parentId,
-            string parentName,
-            int displayOrder,
-            int custId,
-            string ip,
-            string oldAssignedGroupIDs,
-            string assignedGroupIDs)
+        public Result UpdateFunction(Function function, int custId, string ip, string oldAssignedGroupIDs, string assignedGroupIDs)
         {
             using (var db = new ObjectDb("EAS_FunctionUpd"))
             {
                 db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("FuncID", DbType.Int32, id);
-                db.AddInParameter("ParentID", DbType.Int32, parentId);
-                db.AddInParameter("DisplayOrder", DbType.Int32, displayOrder);
+                db.AddInParameter("FuncId", DbType.Int32, function.FuncID);
+                db.AddInParameter("ParentId", DbType.Int32, function.ParentID);
+                db.AddInParameter("DisplayOrder", DbType.Int32, function.DisplayOrder);
 
-                db.AddInParameter("ParentName", DbType.String, parentName);
-                db.AddInParameter("FuncName", DbType.String, name);
-                db.AddInParameter("FuncDesc", DbType.String, description);
+                db.AddInParameter("ParentName", DbType.String, function.ParentName);
+                db.AddInParameter("FuncName", DbType.String, function.FuncName);
+                db.AddInParameter("FuncDesc", DbType.String, function.FuncDesc);
                 db.AddInParameter("IP", DbType.String, ip);
                 db.AddInParameter("AssigedGroupIDs", DbType.String, assignedGroupIDs);
                 db.AddInParameter("OldAssigedGroupIDs", DbType.String, oldAssignedGroupIDs);
@@ -99,11 +80,11 @@
                                 ModifiedDate = reader.ToString("ModifiedDate"),
                                 DisplayOrder = reader.ToInt32("DisplayOrder"),
                                 FuncDesc = reader.ToString("FuncDesc"),
-                                FuncID = reader.ToInt32("FuncID"),
+                                FuncID = reader.ToInt32("FuncId"),
                                 FuncKey = reader.ToString("FuncKey"),
                                 FuncName = reader.ToString("FuncName"),
                                 IsTest = reader.ToBoolean("IsTest"),
-                                ParentID = reader.ToInt32("ParentID"),
+                                ParentID = reader.ToInt32("ParentId"),
                                 ParentName = reader.ToString("ParentName")
                             });
                         }
@@ -153,7 +134,7 @@
             using (var db = new ObjectDb("EAS_FuncUpdStatus"))
             {
                 db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("FuncID", DbType.Int32, id);
+                db.AddInParameter("FuncId", DbType.Int32, id);
                 db.AddInParameter("IsTest", DbType.Boolean, isTest);
                 db.AddInParameter("IP", DbType.String, ip);
 

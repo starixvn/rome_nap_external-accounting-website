@@ -125,7 +125,7 @@
             using (var db = new ObjectDb("EAS_UserCheckPermission"))
             {
                 db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("FuncID", DbType.Int32, funcId);
+                db.AddInParameter("FuncId", DbType.Int32, funcId);
                 db.AddInParameter("FuncKey", DbType.String, funcKey);
 
                 AddResultParams(db.Database, db.DbCommand);

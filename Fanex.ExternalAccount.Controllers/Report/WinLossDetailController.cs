@@ -22,18 +22,12 @@
     public class WinLossDetailController : BaseController
     {
         private readonly ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
-        private readonly int _pageSize = 50;
         private readonly IReportService _reportService = new ReportService();
         private string _cacheList = string.Empty;
         private int _custId;
-        private ICollection<KeyValuePair<string, bool>> _filterParams;
-        private IList<int> _formatedProductIds = new List<int>();
         private string _formatedProducts = string.Empty;
         private DateTime _fromDate = DateTime.Today;
         private string _groupname = string.Empty;
-        private List<WinLossDetail> _listWinLossDetail;
-        private List<WinLossDetailAg> _listWinLossDetailAg;
-        private List<WinLossDetailMAg> _listWinLossDetailMAg;
         private int _memberId;
         private int _mrecommend;
         private string _productIds = string.Empty;
@@ -43,7 +37,7 @@
         private ArrayList _sortingOrderList;
         private int _srecommend;
         private DateTime _toDate = DateTime.Today;
-        private int _totalPages = 1;
+        
         private string _username = string.Empty;
         private int _viewlevel = 5;
 
@@ -55,7 +49,7 @@
         {
             _products = string.Empty;
             _formatedProducts = string.Empty;
-            _formatedProductIds = new List<int>();
+            var _formatedProductIds = new List<int>();
             _productIds = string.Empty;
             _username = CheckRequest.GetStringRequest("username", string.Empty);
             _viewlevel = CheckRequest.GetIntRequest("viewlevel", 0);
@@ -65,9 +59,10 @@
                 : CurrentSession.CurrencyGroup;
             _fromDate = CheckRequest.GetDateTimeRequest("fromdate", DateTime.Today);
             _toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);
-            _filterParams = new FilterController().AsCollection();
+
+            var filterParams = new FilterController().AsCollection();
             var list = GetProductList();
-            _filterParams.ToList().ForEach(o =>
+            filterParams.ToList().ForEach(o =>
             {
                 _products += o.Key + o.Value;
                 list.ForEach(p =>
@@ -87,14 +82,9 @@
 
             foreach (ProductElementConfiguration item in ProductsConfiguration.Instance.ProductCollection)
             {
-                foreach (var product in _filterParams)
+                foreach (var product in filterParams)
                 {
-                    if (item.ProductId == 0)
-                    {
-                        break;
-                    }
-
-                    if (product.Key.Equals(item.Id, StringComparison.OrdinalIgnoreCase) && product.Value)
+                    if (item.ProductId != 0 && product.Key.Equals(item.Id, StringComparison.OrdinalIgnoreCase) && product.Value)
                     {
                         _formatedProductIds.Add(item.ProductId);
                     }
@@ -129,8 +119,6 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
         public void GetExportToExcelWinLossDetail()
         {
             GetRequestPage();
@@ -233,9 +221,7 @@
 
             return true;
         }
-
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
+        
         private ActionResult GetWinLossDetailSearch()
         {
             if (!CheckSearchCustomer())
@@ -258,9 +244,8 @@
 
             if (_roleId > 3)
             {
-                _listWinLossDetail = _reportService.GetWinLossDetail(
+                var _listWinLossDetail = _reportService.GetWinLossDetail(
                     _groupname, _srecommend, _fromDate, _toDate, _productIds);
-                _totalPages = (_listWinLossDetail.Count / _pageSize) + 1;
                 _cache.Set(_cacheList, _listWinLossDetail);
                 return JsonBase(
                     new
@@ -280,9 +265,8 @@
             }
             if (_roleId == 3)
             {
-                _listWinLossDetail = _reportService.GetWinLossDetailSuper(
+                var _listWinLossDetail = _reportService.GetWinLossDetailSuper(
                     _srecommend, _mrecommend, _fromDate, _toDate, _productIds);
-                _totalPages = (_listWinLossDetail.Count / _pageSize) + 1;
                 _cache.Set(_cacheList, _listWinLossDetail);
                 return JsonBase(
                     new
@@ -304,9 +288,8 @@
             }
             if (_roleId == 2)
             {
-                _listWinLossDetailMAg = _reportService.GetWinLossDetailMAg(
+                var _listWinLossDetailMAg = _reportService.GetWinLossDetailMAg(
                     _mrecommend, _recommend, _fromDate, _toDate, _productIds);
-                _totalPages = (_listWinLossDetailMAg.Count / _pageSize) + 1;
                 _cache.Set(_cacheList, _listWinLossDetailMAg);
                 return JsonBase(
                     new
@@ -327,9 +310,8 @@
                     },
                     new JsonSerializerSettings());
             }
-            _listWinLossDetailAg = _reportService.GetWinLossDetailAg(
+            var _listWinLossDetailAg = _reportService.GetWinLossDetailAg(
                 _recommend, _memberId, _fromDate, _toDate, _productIds);
-            _totalPages = (_listWinLossDetailAg.Count / _pageSize) + 1;
             _cache.Set(_cacheList, _listWinLossDetailAg);
             return JsonBase(
                 new
@@ -355,8 +337,7 @@
         {
             if (_viewlevel == 4)
             {
-                _listWinLossDetail = _reportService.GetWinLossDetailSuper(_custId, 0, _fromDate, _toDate, _productIds);
-                _totalPages = (_listWinLossDetail.Count / _pageSize) + 1;
+                var _listWinLossDetail = _reportService.GetWinLossDetailSuper(_custId, 0, _fromDate, _toDate, _productIds);
                 _cache.Set(_cacheList, _listWinLossDetail);
                 return JsonBase(
                     new
@@ -374,8 +355,7 @@
             }
             if (_viewlevel == 3)
             {
-                _listWinLossDetailMAg = _reportService.GetWinLossDetailMAg(_custId, 0, _fromDate, _toDate, _productIds);
-                _totalPages = (_listWinLossDetailMAg.Count / _pageSize) + 1;
+                var _listWinLossDetailMAg = _reportService.GetWinLossDetailMAg(_custId, 0, _fromDate, _toDate, _productIds);
                 _cache.Set(_cacheList, _listWinLossDetailMAg);
                 return JsonBase(
                     new
@@ -392,8 +372,7 @@
                     },
                     new JsonSerializerSettings());
             }
-            _listWinLossDetailAg = _reportService.GetWinLossDetailAg(_custId, 0, _fromDate, _toDate, _productIds);
-            _totalPages = (_listWinLossDetailAg.Count / _pageSize) + 1;
+            var _listWinLossDetailAg = _reportService.GetWinLossDetailAg(_custId, 0, _fromDate, _toDate, _productIds);
             _cache.Set(_cacheList, _listWinLossDetailAg);
             return JsonBase(
                 new

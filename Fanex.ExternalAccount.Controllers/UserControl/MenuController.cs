@@ -32,7 +32,7 @@
         {
             var result = GetAllMenus();
 
-            return JsonBase(new {total = 1, page = 1, records = result.Count, rows = result},
+            return JsonBase(new { total = 1, page = 1, records = result.Count, rows = result },
                 new JsonSerializerSettings());
         }
 
@@ -52,7 +52,7 @@
         [AntiXSRFFilter]
         public ActionResult EditMenu(int id)
         {
-            var model = _menuService.GetAllMenus().FirstOrDefault(o => o.MenuID == id);
+            var model = _menuService.GetAllMenus().FirstOrDefault(o => o.MenuId == id);
 
             if (model != null)
             {
@@ -70,21 +70,13 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult Add(string name, string description, string url, int functionId, int parentId,
-            string parentName, int displayOrder)
+        public ActionResult Add(Menu menu)
         {
-          
-            var result = _menuService.CreateMenu(
-                name,
-                description,
-                url,
-                functionId,
-                parentId,
-                parentName,
-                displayOrder,
-                true,
-                CurrentSession.CustId,
-                CurrentContext.Ip4Address);
+            if (menu != null)
+            {
+                menu.IsActive = true;
+            }
+            var result = _menuService.CreateMenu(menu, CurrentSession.CustId, CurrentContext.Ip4Address);
 
             return JsonBase(result);
         }
@@ -92,20 +84,9 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult Edit(int menuId, string name, string description, string url, int functionId, int parentId,
-            string parentName, int displayOrder)
+        public ActionResult Edit(Menu menu)
         {
-            var result = _menuService.UpdateMenu(
-                menuId,
-                name,
-                description,
-                url,
-                functionId,
-                parentId,
-                parentName,
-                displayOrder,
-                CurrentSession.CustId,
-                CurrentContext.Ip4Address);
+            var result = _menuService.UpdateMenu(menu, CurrentSession.CustId, CurrentContext.Ip4Address);
 
             return JsonBase(result);
         }
@@ -140,12 +121,12 @@
         private List<Menu> GetAllMenus()
         {
             var menuList = _menuService.GetAllMenus();
-            var parents = menuList.Where(x => x.ParentID == 0);
+            var parents = menuList.Where(x => x.ParentId == 0);
             var list = new List<Menu>();
             foreach (var parent in parents)
             {
                 list.Add(parent);
-                var items = menuList.Where(x => x.ParentID != 0 && x.ParentID == parent.MenuID);
+                var items = menuList.Where(x => x.ParentId != 0 && x.ParentId == parent.MenuId);
                 if (items.Any())
                 {
                     list.AddRange(items);
@@ -160,7 +141,7 @@
         private List<Menu> GetMenus()
         {
             var menuList = new CachingService().GetUserCache(CurrentSession.UserId).MenuList;
-            var parents = menuList.Where(x => x.ParentID == 0);
+            var parents = menuList.Where(x => x.ParentId == 0);
             var list = new List<Menu>();
             foreach (var parent in parents)
             {

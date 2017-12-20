@@ -26,13 +26,13 @@
                         {
                             result.Add(new Menu
                             {
-                                MenuID = reader.ToInt32("MenuID"),
+                                MenuId = reader.ToInt32("MenuId"),
                                 MenuName = reader.ToString("MenuName"),
                                 MenuDesc = reader.ToString("MenuDesc"),
-                                ParentID = reader.ToInt32("ParentID"),
+                                ParentId = reader.ToInt32("ParentId"),
                                 ParentName = reader.ToString("ParentName"),
                                 Url = reader.ToString("Url"),
-                                FuncID = reader.ToInt32("FuncID"),
+                                FuncId = reader.ToInt32("FuncId"),
                                 FuncName = reader.ToString("FuncName"),
                                 DisplayOrder = reader.ToInt32("DisplayOrder"),
                                 ModifiedDate = reader.ToString("ModifiedDate"),
@@ -61,15 +61,15 @@
                         var func = ds.Tables[1];
 
                         var menus = (from c in menu.AsEnumerable()
-                                     let parentId = c.Field<int>("ParentID")
+                                     let parentId = c.Field<int>("ParentId")
                                      select new Menu
                                      {
-                                         MenuID = c.Field<int>("MenuID"),
+                                         MenuId = c.Field<int>("MenuId"),
                                          MenuName = c.Field<string>("MenuName"),
-                                         ParentID = c.Field<int>("ParentID"),
+                                         ParentId = c.Field<int>("ParentId"),
                                          ParentName = c.Field<string>("ParentName"),
                                          Url = c.Field<string>("Url"),
-                                         FuncID = c.Field<int>("FuncID"),
+                                         FuncId = c.Field<int>("FuncId"),
                                          DisplayOrder = c.Field<int>("DisplayOrder"),
                                          IsActive = c.Field<bool>("Active")
                                      }).ToList();
@@ -97,31 +97,21 @@
             }
         }
 
-        public Result CreateMenu(
-            string name,
-            string description,
-            string url,
-            int functionId,
-            int parentId,
-            string parentName,
-            int displayOrder,
-            bool isActive,
-            int custId,
-            string ip)
+        public Result CreateMenu(Menu menu, int custId, string ip)
         {
             using (var db = new ObjectDb("EAS_MenuIns"))
             {
                 db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("FuncID", DbType.Int32, functionId);
-                db.AddInParameter("ParentID", DbType.Int32, parentId);
-                db.AddInParameter("DisplayOrder", DbType.Int32, displayOrder);
+                db.AddInParameter("FuncId", DbType.Int32, menu.FuncId);
+                db.AddInParameter("ParentId", DbType.Int32, menu.ParentId);
+                db.AddInParameter("DisplayOrder", DbType.Int32, menu.DisplayOrder);
 
-                db.AddInParameter("MenuName", DbType.String, name);
-                db.AddInParameter("MenuDesc", DbType.String, description);
-                db.AddInParameter("ParentName", DbType.String, parentName);
-                db.AddInParameter("URL", DbType.String, url);
+                db.AddInParameter("MenuName", DbType.String, menu.FuncName);
+                db.AddInParameter("MenuDesc", DbType.String, menu.MenuDesc);
+                db.AddInParameter("ParentName", DbType.String, menu.ParentName);
+                db.AddInParameter("URL", DbType.String, menu.Url);
                 db.AddInParameter("IP", DbType.String, ip);
-                db.AddOutParameter("MenuID", DbType.Int32, sizeof(int));
+                db.AddOutParameter("MenuId", DbType.Int32, sizeof(int));
 
                 AddResultParams(db.Database, db.DbCommand);
 
@@ -131,30 +121,20 @@
             }
         }
 
-        public Result UpdateMenu(
-            int id,
-            string name,
-            string description,
-            string url,
-            int functionId,
-            int parentId,
-            string parentName,
-            int displayOrder,
-            int custId,
-            string ip)
+        public Result UpdateMenu(Menu menu, int custId, string ip)
         {
             using (var db = new ObjectDb("EAS_MenuUpd"))
             {
                 db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("MenuID", DbType.Int32, id);
-                db.AddInParameter("FuncID", DbType.Int32, functionId);
-                db.AddInParameter("ParentID", DbType.Int32, parentId);
-                db.AddInParameter("DisplayOrder", DbType.Int32, displayOrder);
+                db.AddInParameter("MenuId", DbType.Int32, menu.MenuId);
+                db.AddInParameter("FuncId", DbType.Int32, menu.FuncId);
+                db.AddInParameter("ParentId", DbType.Int32, menu.ParentId);
+                db.AddInParameter("DisplayOrder", DbType.Int32, menu.DisplayOrder);
 
-                db.AddInParameter("MenuName", DbType.String, name);
-                db.AddInParameter("MenuDesc", DbType.String, description);
-                db.AddInParameter("ParentName", DbType.String, parentName);
-                db.AddInParameter("URL", DbType.String, url);
+                db.AddInParameter("MenuName", DbType.String, menu.FuncName);
+                db.AddInParameter("MenuDesc", DbType.String, menu.MenuDesc);
+                db.AddInParameter("ParentName", DbType.String, menu.ParentName);
+                db.AddInParameter("URL", DbType.String, menu.Url);
                 db.AddInParameter("IP", DbType.String, ip);
 
                 AddResultParams(db.Database, db.DbCommand);
@@ -170,7 +150,7 @@
             using (var db = new ObjectDb("EAS_MenuUpdStatus"))
             {
                 db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("MenuID", DbType.Int32, id);
+                db.AddInParameter("MenuId", DbType.Int32, id);
                 db.AddInParameter("Active", DbType.Boolean, isActive);
 
                 AddResultParams(db.Database, db.DbCommand);
@@ -186,7 +166,7 @@
             using (var db = new ObjectDb("EAS_MenuDel"))
             {
                 db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("MenuID", DbType.Int32, id);
+                db.AddInParameter("MenuId", DbType.Int32, id);
 
                 AddResultParams(db.Database, db.DbCommand);
 

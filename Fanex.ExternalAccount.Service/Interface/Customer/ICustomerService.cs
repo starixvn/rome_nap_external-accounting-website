@@ -5,19 +5,11 @@
 
     public interface ICustomerService
     {
-        bool IsValidUsername(string userName, int uplineId, out int custId);
+        bool IsValidUsername(string userName, int uplineId);
 
         Customer UserInfo(int custId);
 
-        Result EditUserInfo(
-            int custId,
-            string firstName,
-            string lastName,
-            string homePhone,
-            string mobilePhone,
-            string email,
-            string fax,
-            string remark,
+        Result EditUserInfo(Customer customer,
             string ip,
             int userId,
             int subAccId,

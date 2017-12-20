@@ -62,7 +62,7 @@
                 }
             }
 
-            return JsonBase(new {total = 1, page = 1, records = result.Count(), rows = result},
+            return JsonBase(new { total = 1, page = 1, records = result.Count(), rows = result },
                 new JsonSerializerSettings());
         }
 
@@ -207,8 +207,6 @@
             return PartialViewBase(model);
         }
 
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
@@ -240,18 +238,10 @@
             ViewBag.UserID = userId;
             ViewBag.Username = username;
 
-            var isEditExtGroup = false;
+            var isExistedGroup =
+                externalGroup.Any(i => i.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase));
 
-            foreach (var item in externalGroup)
-            {
-                if (item.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase))
-                {
-                    isEditExtGroup = true;
-                    break;
-                }
-            }
-
-            if (isEditExtGroup)
+            if (isExistedGroup)
             {
                 ViewBag.UserFunc = functionList.Where(x => x.ParentID == 0 && x.FuncKey != eFunctions.ManageFunction
                                                            && x.FuncKey != eFunctions.ManageGroup
@@ -316,7 +306,7 @@
                 param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
 
                 url =
-                    $"{GetInternalLoginUrl((AlphaSiteCode) checkCustomerBelongToSpecialSiteResult.SiteCode)}" +
+                    $"{GetInternalLoginUrl((AlphaSiteCode)checkCustomerBelongToSpecialSiteResult.SiteCode)}" +
                     $"?{(Session[Config.InternalAgentUMToken] == null ? string.Empty : $"UMToken={Session[Config.InternalAgentUMToken]}&")}params={param}";
             }
             else

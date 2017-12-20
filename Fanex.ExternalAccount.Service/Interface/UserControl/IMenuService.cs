@@ -10,29 +10,9 @@
 
         IEnumerable<Menu> GetMenusByUserId(int userId);
 
-        Result CreateMenu(
-            string name,
-            string description,
-            string path,
-            int functionId,
-            int parentId,
-            string parentName,
-            int displayOrder,
-            bool isActive,
-            int custId,
-            string ip);
+        Result CreateMenu(Menu menu, int custId, string ip);
 
-        Result UpdateMenu(
-            int id,
-            string name,
-            string description,
-            string path,
-            int functionId,
-            int parentId,
-            string parentName,
-            int displayOrder,
-            int custId,
-            string ip);
+        Result UpdateMenu(Menu menu, int custId, string ip);
 
         Result UpdateMenuStatus(int id, bool isActive, int custId);
 

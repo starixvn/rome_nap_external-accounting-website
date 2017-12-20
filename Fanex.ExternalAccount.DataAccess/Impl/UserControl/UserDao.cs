@@ -2,58 +2,49 @@
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.Common;
-    using Fanex.Common.Extensions;
-    using Fanex.Data;
-    using Fanex.ExternalAccount.DataAccess.Impl.Base;
-    using Fanex.ExternalAccount.DataAccess.Interface.UserControl;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.DTO.UserControl;
-    using Logging.Extensions.Database;
+    using System.Data;
+    using Base;
+    using Common;
+    using Common.Extensions;
+    using Data;
+    using DTO;
+    using DTO.UserControl;
+    using Interface.UserControl;
 
     public class UserDao : DAOBase, IUserDao
     {
-        #region IUserDao Members
-
         public IEnumerable<User> GetListUsers(string userName, int? groupId)
         {
             var result = new List<User>();
 
             using (var db = new ObjectDb("EAS_UserInfoSel"))
             {
-                db.AddInParameter("GroupID", System.Data.DbType.Int32, groupId);
-                db.AddInParameter("Username", System.Data.DbType.String, userName);
+                db.AddInParameter("GroupID", DbType.Int32, groupId);
+                db.AddInParameter("Username", DbType.String, userName);
 
-                try
+                using (var reader = db.ExecuteReader())
                 {
-                    using (var reader = db.ExecuteReader())
+                    if (reader != null)
                     {
-                        if (reader != null)
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            result.Add(new User
                             {
-                                result.Add(new User
-                                {
-                                    CreatedDate = reader.ToString("CreatedDate"),
-                                    Creator = reader.ToString("Creator"),
-                                    Enabled = reader.ToBool("Enabled"),
-                                    GroupID = reader.ToInt("GroupID"),
-                                    UserID = reader.ToInt("CustId"),
-                                    Username = reader.ToString("Username"),
-                                    FirstName = reader.ToString("FirstName"),
-                                    LastName = reader.ToString("LastName"),
-                                    GroupName = reader.ToString("GroupName")
-                                });
-                            }
+                                CreatedDate = reader.ToString("CreatedDate"),
+                                Creator = reader.ToString("Creator"),
+                                Enabled = reader.ToBool("Enabled"),
+                                GroupID = reader.ToInt("GroupID"),
+                                UserID = reader.ToInt("CustId"),
+                                Username = reader.ToString("Username"),
+                                FirstName = reader.ToString("FirstName"),
+                                LastName = reader.ToString("LastName"),
+                                GroupName = reader.ToString("GroupName")
+                            });
                         }
                     }
+                }
 
-                    return result;
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return result;
             }
         }
 
@@ -63,167 +54,124 @@
 
             using (var db = new ObjectDb("EAS_UserInfoSelByUserID"))
             {
-                db.AddInParameter("UserID", System.Data.DbType.Int32, userId);
+                db.AddInParameter("UserID", DbType.Int32, userId);
 
-                try
+                using (var reader = db.ExecuteReader())
                 {
-                    using (var reader = db.ExecuteReader())
+                    if (reader != null)
                     {
-                        if (reader != null)
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            result = new User
                             {
-                                result = new User
-                                {
-                                    Enabled = reader.ToBool("Enabled"),
-                                    GroupID = reader.ToInt("GroupID"),
-                                    UserID = reader.ToInt("CustId"),
-                                    Username = reader.ToString("Username"),
-                                    FirstName = reader.ToString("FirstName"),
-                                    LastName = reader.ToString("LastName"),
-                                    GroupName = reader.ToString("GroupName")
-                                };
-                            }
+                                Enabled = reader.ToBool("Enabled"),
+                                GroupID = reader.ToInt("GroupID"),
+                                UserID = reader.ToInt("CustId"),
+                                Username = reader.ToString("Username"),
+                                FirstName = reader.ToString("FirstName"),
+                                LastName = reader.ToString("LastName"),
+                                GroupName = reader.ToString("GroupName")
+                            };
                         }
                     }
+                }
 
-                    return result;
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return result;
             }
         }
 
-        public DTO.Result ResetPassword(int adminId, int userId, string password, string ip)
+        public Result ResetPassword(int adminId, int userId, string password, string ip)
         {
-            var result = new DTO.Result();
-
             using (var db = new ObjectDb("EAS_UserInfoUpdUserPwd"))
             {
-                db.AddInParameter("UserID", System.Data.DbType.Int32, adminId);
-                db.AddInParameter("CustID", System.Data.DbType.Int32, userId);
-                db.AddInParameter("UserPwd", System.Data.DbType.String, Cryptography.CfsEnCode(password));
-                db.AddInParameter("IP", System.Data.DbType.String, ip);
+                db.AddInParameter("UserID", DbType.Int32, adminId);
+                db.AddInParameter("CustID", DbType.Int32, userId);
+                db.AddInParameter("UserPwd", DbType.String, Cryptography.CfsEnCode(password));
+                db.AddInParameter("IP", DbType.String, ip);
 
-                this.AddResultParams(db.Database, db.DbCommand);
+                AddResultParams(db.Database, db.DbCommand);
 
-                try
-                {
-                    db.ExecuteNonQuery();
+                db.ExecuteNonQuery();
 
-                    return result = this.GetResultParams(db.Database, db.DbCommand);
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return GetResultParams(db.Database, db.DbCommand);
             }
         }
 
-        public DTO.Result CreateUser(int adminId, string userName, string password, string firstName, string lastName, int groupId, string ip)
+        public Result CreateUser(int adminId, string userName, string password, string firstName, string lastName,
+            int groupId, string ip)
         {
-            var custId = 0;
+            const int custId = 0;
 
             using (var db = new ObjectDb("EAS_UserInfoAddNew"))
             {
-                db.AddInParameter("UserID", System.Data.DbType.Int32, adminId);
-                db.AddInParameter("Username", System.Data.DbType.String, userName);
-                db.AddInParameter("UserPwd", System.Data.DbType.String, Cryptography.CfsEnCode(password));
-                db.AddInParameter("FirstName", System.Data.DbType.String, firstName);
-                db.AddInParameter("LastName", System.Data.DbType.String, lastName);
-                db.AddInParameter("GroupID", System.Data.DbType.Int32, groupId);
-                db.AddInParameter("IP", System.Data.DbType.String, ip);
-                db.AddOutParameter("CustID", System.Data.DbType.Int32, custId);
+                db.AddInParameter("UserID", DbType.Int32, adminId);
+                db.AddInParameter("Username", DbType.String, userName);
+                db.AddInParameter("UserPwd", DbType.String, Cryptography.CfsEnCode(password));
+                db.AddInParameter("FirstName", DbType.String, firstName);
+                db.AddInParameter("LastName", DbType.String, lastName);
+                db.AddInParameter("GroupID", DbType.Int32, groupId);
+                db.AddInParameter("IP", DbType.String, ip);
+                db.AddOutParameter("CustID", DbType.Int32, custId);
 
-                this.AddResultParams(db.Database, db.DbCommand);
+                AddResultParams(db.Database, db.DbCommand);
 
-                try
-                {
-                    db.ExecuteNonQuery();
+                db.ExecuteNonQuery();
 
-                    return this.GetResultParams(db.Database, db.DbCommand);
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return GetResultParams(db.Database, db.DbCommand);
             }
         }
 
-        public DTO.Result EditUser(int adminId, int userId, string firstName, string lastName, string ip, int groupId)
+        public Result EditUser(int adminId, int userId, string firstName, string lastName, string ip, int groupId)
         {
             using (var db = new ObjectDb("EAS_UserInfoUpdAll"))
             {
-                db.AddInParameter("UserID", System.Data.DbType.Int32, adminId);
-                db.AddInParameter("FirstName", System.Data.DbType.String, firstName);
-                db.AddInParameter("LastName", System.Data.DbType.String, lastName);
-                db.AddInParameter("GroupID", System.Data.DbType.Int32, groupId);
-                db.AddInParameter("IP", System.Data.DbType.String, ip);
-                db.AddInParameter("CustID", System.Data.DbType.Int32, userId);
+                db.AddInParameter("UserID", DbType.Int32, adminId);
+                db.AddInParameter("FirstName", DbType.String, firstName);
+                db.AddInParameter("LastName", DbType.String, lastName);
+                db.AddInParameter("GroupID", DbType.Int32, groupId);
+                db.AddInParameter("IP", DbType.String, ip);
+                db.AddInParameter("CustID", DbType.Int32, userId);
 
-                this.AddResultParams(db.Database, db.DbCommand);
+                AddResultParams(db.Database, db.DbCommand);
 
-                try
-                {
-                    db.ExecuteNonQuery();
+                db.ExecuteNonQuery();
 
-                    return this.GetResultParams(db.Database, db.DbCommand);
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return GetResultParams(db.Database, db.DbCommand);
             }
         }
 
-        public DTO.Result UpdateStatus(int adminId, int userId, bool active, string ip)
+        public Result UpdateStatus(int adminId, int userId, bool active, string ip)
         {
             using (var db = new ObjectDb("EAS_UserInfoUpdStatus"))
             {
-                db.AddInParameter("UserID", System.Data.DbType.Int32, adminId);
-                db.AddInParameter("CustID", System.Data.DbType.Int32, userId);
-                db.AddInParameter("Enabled", System.Data.DbType.Boolean, active);
-                db.AddInParameter("IP", System.Data.DbType.String, ip);
+                db.AddInParameter("UserID", DbType.Int32, adminId);
+                db.AddInParameter("CustID", DbType.Int32, userId);
+                db.AddInParameter("Enabled", DbType.Boolean, active);
+                db.AddInParameter("IP", DbType.String, ip);
 
-                this.AddResultParams(db.Database, db.DbCommand);
+                AddResultParams(db.Database, db.DbCommand);
 
-                try
-                {
-                    db.ExecuteNonQuery();
+                db.ExecuteNonQuery();
 
-                    return this.GetResultParams(db.Database, db.DbCommand);
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return GetResultParams(db.Database, db.DbCommand);
             }
         }
 
-        public DTO.Result CreateExistUser(int adminId, string userName, int groupId, string ip)
+        public Result CreateExistUser(int adminId, string userName, int groupId, string ip)
         {
             using (var db = new ObjectDb("EAS_UserInfoAddExistingUser"))
             {
-                db.AddInParameter("userID", System.Data.DbType.Int32, adminId);
-                db.AddInParameter("Username", System.Data.DbType.String, userName);
-                db.AddInParameter("groupid", System.Data.DbType.Int32, groupId);
-                db.AddInParameter("IP", System.Data.DbType.String, ip);
-                db.AddOutParameter("custid", System.Data.DbType.Int32, sizeof(int));
+                db.AddInParameter("userID", DbType.Int32, adminId);
+                db.AddInParameter("Username", DbType.String, userName);
+                db.AddInParameter("groupid", DbType.Int32, groupId);
+                db.AddInParameter("IP", DbType.String, ip);
+                db.AddOutParameter("custid", DbType.Int32, sizeof(int));
 
-                this.AddResultParams(db.Database, db.DbCommand);
+                AddResultParams(db.Database, db.DbCommand);
 
-                try
-                {
-                    db.ExecuteNonQuery();
+                db.ExecuteNonQuery();
 
-                    return this.GetResultParams(db.Database, db.DbCommand);
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return GetResultParams(db.Database, db.DbCommand);
             }
         }
 
@@ -233,66 +181,50 @@
             {
                 var result = new List<Function>();
 
-                db.AddInParameter("UserID", System.Data.DbType.Int32, userId);
+                db.AddInParameter("UserID", DbType.Int32, userId);
 
-                try
+                using (var reader = db.ExecuteReader())
                 {
-                    using (var reader = db.ExecuteReader())
+                    if (reader != null)
                     {
-                        if (reader != null)
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            result.Add(new Function
                             {
-                                result.Add(new Function
-                                {
-                                    FuncID = reader.ToInt("FuncID"),
-                                    FuncName = reader.ToString("FuncName"),
-                                    FuncKey = reader.ToString("FuncKey"),
-                                    DisplayOrder = reader.ToInt("DisplayOrder"),
-                                    ParentID = reader.ToInt("ParentID"),
-                                    ParentName = reader.ToString("ParentName"),
-                                    Policy = (EPolicy)Convert.ToInt32(reader["UserPolicy"]),
-                                    GroupPolicy = (EPolicy)Convert.ToInt32(reader["GroupPolicy"]),
-                                    FuncDesc = reader.ToString("FuncDesc")
-                                });
-                            }
+                                FuncID = reader.ToInt("FuncId"),
+                                FuncName = reader.ToString("FuncName"),
+                                FuncKey = reader.ToString("FuncKey"),
+                                DisplayOrder = reader.ToInt("DisplayOrder"),
+                                ParentID = reader.ToInt("ParentId"),
+                                ParentName = reader.ToString("ParentName"),
+                                Policy = (EPolicy) Convert.ToInt32(reader["UserPolicy"]),
+                                GroupPolicy = (EPolicy) Convert.ToInt32(reader["GroupPolicy"]),
+                                FuncDesc = reader.ToString("FuncDesc")
+                            });
                         }
                     }
+                }
 
-                    return result;
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return result;
             }
         }
 
-        public DTO.Result UpdateUserPolicy(int adminId, int userId, string oldPolicy, string policy, string ip)
+        public Result UpdateUserPolicy(int adminId, int userId, string oldPolicy, string policy, string ip)
         {
             using (var db = new ObjectDb("EAS_UserPolicyUpd"))
             {
-                db.AddInParameter("userID", System.Data.DbType.Int32, adminId);
-                db.AddInParameter("OldUserPolicy", System.Data.DbType.String, oldPolicy);
-                db.AddInParameter("UserPolicy", System.Data.DbType.String, policy);
-                db.AddInParameter("IP", System.Data.DbType.String, ip);
-                db.AddInParameter("custid", System.Data.DbType.Int32, userId);
+                db.AddInParameter("userID", DbType.Int32, adminId);
+                db.AddInParameter("OldUserPolicy", DbType.String, oldPolicy);
+                db.AddInParameter("UserPolicy", DbType.String, policy);
+                db.AddInParameter("IP", DbType.String, ip);
+                db.AddInParameter("custid", DbType.Int32, userId);
 
-                this.AddResultParams(db.Database, db.DbCommand);
+                AddResultParams(db.Database, db.DbCommand);
 
-                try
-                {
-                    db.ExecuteNonQuery();
+                db.ExecuteNonQuery();
 
-                    return this.GetResultParams(db.Database, db.DbCommand);
-                }
-                catch (Exception ex)
-                {
-                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
-                }
+                return GetResultParams(db.Database, db.DbCommand);
             }
         }
-
-        #endregion IUserDao Members
     }
 }

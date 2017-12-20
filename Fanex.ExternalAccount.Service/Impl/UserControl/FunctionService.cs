@@ -16,34 +16,11 @@
             _funcDao = funcDao ?? new FunctionDao();
         }
 
-        public Result CreateFunction(
-            string name,
-            string key,
-            string description,
-            int parentId,
-            string parentName,
-            int displayOrder,
-            int custId,
-            string ip,
-            string assignedGroupIDs)
-        {
-            return _funcDao.CreateFunction(name, key, description, parentId, parentName, displayOrder, custId, ip,
-                    assignedGroupIDs);
-        }
+        public Result CreateFunction(Function function, int custId, string ip, string assignedGroupIDs)
+            => _funcDao.CreateFunction(function, custId, ip, assignedGroupIDs);
 
-        public Result UpdateFunction(
-            int id,
-            string name,
-            string description,
-            int parentId,
-            string parentName,
-            int displayOrder,
-            int custId,
-            string ip,
-            string oldAssignedGroupIDs,
-            string assignedGroupIDs)
-            => _funcDao.UpdateFunction(id, name, description, parentId, parentName, displayOrder, custId, ip,
-                    oldAssignedGroupIDs, assignedGroupIDs);
+        public Result UpdateFunction(Function function, int custId, string ip, string oldAssignedGroupIDs, string assignedGroupIDs)
+            => _funcDao.UpdateFunction(function, custId, ip, oldAssignedGroupIDs, assignedGroupIDs);
 
         public IEnumerable<Function> GetAllFunctions() => _funcDao.GetAllFunctions();
 

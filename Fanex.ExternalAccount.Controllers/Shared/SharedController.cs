@@ -51,7 +51,7 @@
         {
             var menuService = new MenuService();
             var menuList = menuService.GetMenusByUserId(CurrentSession.UserId);
-            var rootMenuList = menuList.Where(x => x.ParentID == 0);
+            var rootMenuList = menuList.Where(x => x.ParentId == 0);
             var menuDict = new Dictionary<string, MenuItem>();
 
             foreach (var item in rootMenuList)
@@ -64,7 +64,7 @@
                     Children = new List<MenuItem>()
                 };
 
-                var value = menuList.Where(x => x.ParentID != 0 && x.ParentID == item.MenuID).Select(
+                var value = menuList.Where(x => x.ParentId != 0 && x.ParentId == item.MenuId).Select(
                     x => new MenuItem
                     {
                         Name = x.MenuName,
