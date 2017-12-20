@@ -132,9 +132,9 @@
   background: #5faa73; }
 
 @media only screen and (max-width: 1024px) {
-  .nav.nav-tabs > li:hover:after {
+  .nav-tabs > li:hover:after {
     width: 0; }
-  .nav.nav-tabs > li.ui-tabs-active:after {
+  .nav-tabs > li.ui-tabs-active:after {
     width: 100%; } }
 
 /*@font-face {

@@ -1,6 +1,5 @@
 ﻿@import "../../abstracts/variables";
 @import "../../abstracts/mixins";
-@import "../../fonts/AlphaAdmin/style.css";
 @import "../../base/scaffolding";
 @import "../../components/button";
 @import "../../components/main-menu";
@@ -50,14 +49,12 @@
     padding-left: 25px;
 }
 
+
 /* START: FOR JQGRID */
 .freegrid .row-footer-background {
     background-color: #f1f1a6;
 }
 
-.ui-menu .ui-menu-item a {
-    font-size: 12px !important;
-}
 
 #ui-datepicker-div {
     z-index: 9999 !important;
@@ -71,8 +68,36 @@
     width: 100%;
 }
 
+
+/* Customize autocomplete combobox */
+.ui-menu {
+    border-color: #aaa;
+}
+
+.ui-menu .ui-menu-item a {
+    padding: 5px 10px !important;
+    font-size: 13px;
+    background-color: #FFF;
+    color: $text-color;
+}
+
+.ui-menu .ui-menu-item a.ui-state-focus,
+.ui-menu .ui-menu-item a.ui-state-active {
+    background-color: #ddd !important;
+    color: $text-color;
+    height: auto !important;
+    margin: 0 !important;
+    border: none;
+}
+
+.ui-menu li a:hover {
+    color: $text-color;
+}
+
+
 /* Left panel */
 .splitter-panel {
+    @include transition(left .2s ease-in .1s, opacity .2s ease-in .2s);
     position: absolute;
     left: -100%;
     top: 0;
@@ -81,7 +106,8 @@
     background-color: #404c64;
     z-index: 1000;
     opacity: 0;
-    @include transition(left .2s ease-in .1s, opacity .2s ease-in .2s);
+    -webkit-overflow-scrolling: touch;
+    
 
     @media screen and (min-device-width: 768px) {
         left: 0;
@@ -202,8 +228,8 @@
     .icon-magnify {
         display: inline-block;
         position: absolute;
-        right: 28px;
-        top: 22px;     
+        right: 26px;
+        top: 21px;     
         cursor: pointer;
         color: #444;  
         font-size: 20px;
@@ -224,14 +250,17 @@
             height: 30px;
             width: 30px;
         }
-
     }
 }
 
 .iframe {
     width: 100%;
     border: none;
-    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+
+    @media screen and (min-device-width: 768px) {
+        overflow: auto;
+    }
 }
 
 

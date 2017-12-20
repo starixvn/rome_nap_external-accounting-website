@@ -8,7 +8,6 @@
   font-weight: normal;
   font-style: normal;
 }*/
-@import url(../../fonts/AlphaAdmin/style.css);
 /*@font-face {
   font-family: 'AlphaAdmin';
   src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
@@ -933,10 +932,24 @@ textarea {
     border-color: #6b7587; }
   .group-user #accMenuGroup:hover .select2-selection__rendered {
     color: #a7bbe3; }
-  .group-user .select2-container--default .select2-results > .select2-results__options {
-    max-height: 500px; }
   .group-user .group-user .select2-container {
     width: 100% !important; }
+
+.select2-container--default .select2-results > .select2-results__options {
+  max-height: 200px; }
+  @media screen and (min-device-width: 768px) {
+    .select2-container--default .select2-results > .select2-results__options {
+      max-height: 400px; } }
+  .select2-container--default .select2-results > .select2-results__options li:hover {
+    color: #232428; }
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #ddd;
+  color: #232428; }
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+  background-color: #5897fb;
+  color: #fff !important; }
 
 .main-menu {
   display: none; }
@@ -1012,6 +1025,12 @@ textarea {
   font-weight: bold; }
 
 .sidebar {
+  -webkit-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
+  -khtml-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
+  -moz-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
+  -ms-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
+  -o-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
+  transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
   position: absolute;
   left: -100%;
   top: 60px;
@@ -1022,12 +1041,7 @@ textarea {
   background-color: #424e66;
   color: #949494;
   opacity: 0;
-  -webkit-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
-  -khtml-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
-  -moz-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
-  -ms-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
-  -o-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
-  transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s; }
+  overflow: auto !important; }
   .sidebar .main-menu {
     display: block;
     padding-top: 20px; }
@@ -1125,9 +1139,6 @@ textarea {
 .freegrid .row-footer-background {
   background-color: #f1f1a6; }
 
-.ui-menu .ui-menu-item a {
-  font-size: 12px !important; }
-
 #ui-datepicker-div {
   z-index: 9999 !important; }
 
@@ -1138,8 +1149,35 @@ textarea {
   bottom: 0;
   width: 100%; }
 
+/* Customize autocomplete combobox */
+.ui-menu {
+  border-color: #aaa; }
+
+.ui-menu .ui-menu-item a {
+  padding: 5px 10px !important;
+  font-size: 13px;
+  background-color: #FFF;
+  color: #232428; }
+
+.ui-menu .ui-menu-item a.ui-state-focus,
+.ui-menu .ui-menu-item a.ui-state-active {
+  background-color: #ddd !important;
+  color: #232428;
+  height: auto !important;
+  margin: 0 !important;
+  border: none; }
+
+.ui-menu li a:hover {
+  color: #232428; }
+
 /* Left panel */
 .splitter-panel {
+  -webkit-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
+  -khtml-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
+  -moz-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
+  -ms-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
+  -o-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
+  transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
   position: absolute;
   left: -100%;
   top: 0;
@@ -1148,12 +1186,7 @@ textarea {
   background-color: #404c64;
   z-index: 1000;
   opacity: 0;
-  -webkit-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
-  -khtml-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
-  -moz-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
-  -ms-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
-  -o-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
-  transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s; }
+  -webkit-overflow-scrolling: touch; }
   @media screen and (min-device-width: 768px) {
     .splitter-panel {
       left: 0;
@@ -1266,8 +1299,8 @@ textarea {
   .group-search .icon-magnify {
     display: inline-block;
     position: absolute;
-    right: 28px;
-    top: 22px;
+    right: 26px;
+    top: 21px;
     cursor: pointer;
     color: #444;
     font-size: 20px; }
@@ -1287,7 +1320,10 @@ textarea {
 .iframe {
   width: 100%;
   border: none;
-  overflow: auto; }
+  -webkit-overflow-scrolling: touch; }
+  @media screen and (min-device-width: 768px) {
+    .iframe {
+      overflow: auto; } }
 
 /* Content */
 .content {
