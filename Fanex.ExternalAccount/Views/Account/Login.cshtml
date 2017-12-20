@@ -33,8 +33,15 @@
     {
         <div class="block-login">
             <div class="row">
-                <div class="login-logo"><img src="~/assets/styles/images/login-logo.png"/></div>
+                <div class="login-logo icon-lock"></div>
             </div>
+            @if (!string.IsNullOrWhiteSpace(CurrentContext.LoginErrorMessage))
+            {
+                <div class="row errMsg">
+                    @CurrentContext.LoginErrorMessage
+                    @{CurrentContext.LoginErrorMessage = string.Empty;}
+                </div>
+            }
             <div class="row">
                 @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @maxlength = 50, @placeholder = "UserName" })
                 <span class="icon-user"></span>
@@ -60,13 +67,7 @@
                 <button id="btnLogin" class="btnLogin">@ViewLang.LoginTitle</button>
             </div>
 
-            @if (!string.IsNullOrWhiteSpace(CurrentContext.LoginErrorMessage))
-            {
-                <div class="row errMsg">
-                    @CurrentContext.LoginErrorMessage
-                    @{CurrentContext.LoginErrorMessage = string.Empty;}
-                </div>
-                        }
+            
         </div>
         @Html.Hidden("Code", Encryptor.Instance.Code)
                         @Html.AntiForgeryToken()

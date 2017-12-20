@@ -471,8 +471,6 @@ no-info {
 
 
 
-
-
 div#contentSplitter > div#msg {
     margin: 10px;
 }
@@ -515,7 +513,6 @@ div#contentSplitter > div#msg {
 
 #mainGrid {
     visibility: hidden;
-    //margin: 1px 3px 0px 3px;
 }
 
 .usernameInput {
@@ -638,53 +635,14 @@ div#contentSplitter > div#msg {
         line-height: 31px;
     } 
 }
+
 #tabSuper {
-    /*padding: 8px 0 0 20px;*/
     float: right;
     cursor: pointer;
-    /*width: 65px;
-    height: 25px;
-    position: absolute;
-    margin-left: 192px;*/
     color: #0088cc;
     font-weight: bold;
 }
 
-/*#tabSuper:hover {
-    padding: 8px 0 0 20px;
-    float: right;
-    cursor: pointer;
-    width: 65px;
-    height: 25px;
-    position: absolute;
-    margin-left: 192px;
-    color: #0088cc;
-    font-weight: bold;
-}*/
-
-/*.tabActive {
-    padding: 8px 0 0 17px;
-    float: right;
-    cursor: pointer;
-    width: 60px;
-    height: 25px;
-    position: absolute;
-    margin-left: 76px;
-    color: #0088cc !important;
-    font-weight: bold;
-}
-
-.tabActiveSuper {
-    padding: 6px 0 0 0px ;
-    float: right;
-    cursor: pointer;
-    width: 53px;
-    height: 25px;
-    position: absolute;
-    margin-left: 76px;
-    color: #0088cc !important;
-    font-weight: bold;
-}*/
 [class^="tabDisable"]:before {
     content: '\e905';
     font-family: 'AlphaAdmin';
@@ -701,87 +659,43 @@ div#contentSplitter > div#msg {
     font-weight: bold;
 }
 
-/*.tabDisableSuper:hover {
-    padding: 6px 0 0 0px !important;
-    float: right;
-    cursor: pointer;
-    width: 53px;
-    height: 25px;
-    position: absolute;
-    margin-left: 76px;
-    color: #0088cc !important;
-    font-weight: bold;
-}*/
-
 .tabDisable {
-    //background: url(../images/arrow-icn.png) no-repeat 0 11px !important;
-    //padding: 8px 0 0 20px;
     float: right;
     cursor: pointer;
-    /*width: 53px;
-    height: 25px;
-    position: absolute;
-    margin-left: 76px;*/
     color: #0088cc !important;
     font-weight: bold;
 }
 
 .tabDisable:hover {
-    //padding: 8px 0 0 20px;
     float: right;
     cursor: pointer;
-    /*width: 53px;
-    height: 25px;
-    position: absolute;
-    margin-left: 76px;*/
     color: #0088cc !important;
     font-weight: bold;
 }
 
 #tabMaster {
-    //padding: 8px 0 0 17px;
     float: right;
     cursor: pointer;
-    /*width: 60px;
-    height: 25px;
-    position: absolute;
-    margin-left: 126px;*/
     color: #0088cc;
     font-weight: bold;
 }
 
     #tabMaster:hover {
-        //padding: 8px 0 0 17px;
         float: right;
         cursor: pointer;
-        /*width: 60px;
-        height: 25px;
-        position: absolute;
-        margin-left: 126px;*/
         color: #0088cc;
         font-weight: bold;
     }
 
 #tabAgent {
-    //padding: 8px 0 0 18px;
     float: right;
     cursor: pointer;
-    /*width: 60px;
-    height: 25px;
-    position: absolute;
-    margin-left: 59px;*/
     color: #0088cc;
     font-weight: bold;
 }
 
     #tabAgent:hover {
-        //padding: 8px 0 0 18px;
         float: right;
-        /*cursor: pointer;
-        width: 60px;
-        height: 25px;
-        position: absolute;
-        margin-left: 59px;*/
         color: #0088cc;
         font-weight: bold;
     }
@@ -804,7 +718,7 @@ div#contentSplitter > div#msg {
     min-width: 700px;
     padding-right: 40px;
     position: relative;
-    //margin: 1px 3px 0px 3px;
+
     #exporttoexcel {
         float: unset;
         position: absolute;
@@ -833,14 +747,6 @@ div#contentSplitter > div#msg {
         float: right;
         cursor: pointer;
     }
-
-/*#msgNoinfo {
-    text-align: center;
-    padding: 12px 0 10px 50px;
-    color: #999;
-    font-weight: bold;
-    display: none;
-}*/
 
 .UnderMaintenance {
     width: 650px;
@@ -1257,12 +1163,6 @@ label.ui-input-text, input.ui-input-text, textarea.ui-input-text {
 .ui-navbar-noicons li .ui-btn .ui-btn-inner, .ui-navbar-noicons .ui-navbar-toggle .ui-btn-inner {
     padding: .5em 5px;
 }
-/*Icon*/
-/*.icon-user {
-    background: url('images/user.png');
-    width: 12px;
-    height: 12px;
-}*/
 
 /*New Grid*/
 .pr5 {
@@ -1541,9 +1441,6 @@ li:hover {
     padding: 0;
 }
 
-/*#accMenu, #accMenuGroup {
-    height: 25px !important;
-}*/
 
 .menuULRight {
     background: #262626 !important;
@@ -1589,41 +1486,10 @@ li:hover {
     color: #fff !important;
 }
 
-/*.ui-datepicker-header .ui-datepicker-prev-hover {
-    background-color: transparent !important;
-    background-image: none !important;
-    border: none !important;
-    background-position: -80px -192px;
-}
-
-.ui-datepicker-header .ui-datepicker-next-hover {
-    background-color: transparent !important;
-    background-image: none !important;
-    border: none !important;
-    background-position: -48px -192px;
-}*/
-
 .ui-datepicker-header .ui-state-hover .ui-icon, .ui-datepicker-header .ui-state-focus .ui-icon {
     background-color: transparent !important;
     background-image: url(../images/ui-icons_2e83ff_256x240.png);
 }
-
-/*input[type=text], input[type=password] {
-    border: 1px solid #bbb;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    height: 22px;
-}
-
-textarea {
-    border: 1px solid #bbb;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    resize: none;
-    padding: 0 !important;
-}*/
 
 .ui-autocomplete-input {
     vertical-align: top;
@@ -1633,11 +1499,6 @@ textarea {
 .ui-helper-hidden-accessible {
     display: none;
 }
-
-/*.ui-dialog .ui-dialog-titlebar {
-    padding: 5px 5px !important;
-    font-weight: normal !important;
-}*/
 
 .search {
     padding: 2px;
@@ -1722,28 +1583,3 @@ textarea {
     text-overflow: ellipsis;
     overflow: hidden;
 }
-
-/*.select2-container .select2-selection--single {
-    height: 32px;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 30px;
-}
-
-.select2-container--default .select2-selection--single {
-    background-color: #303030;
-    border: none;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    color: #ACACAC;
-    font-weight: bold;
-}
-
-#accMenuGroup:hover .select2-selection__rendered {
-    color: #ffffff;
-}
-.select2-container--default .select2-results > .select2-results__options {
-    max-height: 500px;
-}*/

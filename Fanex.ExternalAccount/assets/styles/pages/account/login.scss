@@ -26,16 +26,22 @@ body {
 }
 
 .login-logo {
-    background: url(../../images/login-logo.png) no-repeat center center;
     background-color: $block-bg;
     padding: 7px;
     width: 48px;
     height: 48px;
-    margin: 30px auto 22px;
+    margin: 30px auto 40px;
     text-align: center;
     line-height: 43px;
     @include box-shadow-multiple('0 0 2px 3px rgba(0,0,0,.2)');
     @include border-radius(50%);
+
+    &.icon-lock:before {
+        position: relative;
+        top: -5px;
+        color: #0299D0;
+        font-size: 26px;
+    }
 }
 
 .row {
@@ -133,8 +139,21 @@ body {
 /* Validation */
 
 .hint {
-    height: auto !important;
+    display: none;
+    position: absolute;
+	height: auto !important;
     padding: 12px;
+    white-space: nowrap;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    min-width: 150px;
+    background-color: #ffc;
+    margin-top: -4px;
+    border: 1px solid #c93;
+    z-index: 999999;
+    font-size: 13px;
+    @include box-sizing(content-box);    
 }
 
 @media (max-width: 767px) {

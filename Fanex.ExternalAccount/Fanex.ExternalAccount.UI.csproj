@@ -1143,10 +1143,6 @@
     <Content Include="assets\styles\images\info.gif" />
     <Content Include="assets\styles\images\info.png" />
     <Content Include="assets\styles\images\loading.gif" />
-    <Content Include="assets\styles\images\login-logo.png" />
-    <Content Include="assets\styles\images\logo.png" />
-    <Content Include="assets\styles\images\password-icon.png" />
-    <Content Include="assets\styles\images\permission-icn.png" />
     <Content Include="assets\styles\images\pointer.png" />
     <Content Include="assets\styles\images\pointerDown.png" />
     <Content Include="assets\styles\images\sprites.png" />
@@ -1154,7 +1150,6 @@
     <Content Include="assets\styles\images\tick.png" />
     <Content Include="assets\styles\images\topmenu-bg.png" />
     <Content Include="assets\styles\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="assets\styles\images\user.png" />
     <Content Include="assets\styles\images\view.png" />
     <Content Include="assets\styles\images\warning.png" />
     <Content Include="assets\styles\images\x5.gif" />

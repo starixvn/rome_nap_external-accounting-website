@@ -15,10 +15,31 @@
 	position: absolute;
 	left: 10px;
 	top: 33px;
-	width: 20px;
-	height: 19px;
-	background: url('../images/pointer.png') left top no-repeat;
 	z-index: 999999;
+}
+
+.hint .hint-pointer:before {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    width: 0;
+    height: 0;
+    border-top: solid 13px #ffc;
+    border-left: solid 12px transparent;
+    border-right: solid 13px transparent;    
+    z-index: 200;
+}
+
+.hint .hint-pointer:after {
+    content: "";
+    position: absolute;
+    bottom: -14px;
+    width: 0;
+    height: 0;
+    border-top: solid 12px #c93;
+    border-left: solid 13px transparent;
+    border-right: solid 10px transparent;
+    z-index: 100;    
 }
 
 .hint .hint-pointer-down {
