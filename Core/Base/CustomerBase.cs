@@ -8,16 +8,14 @@
     using System.Web.Mvc;
     using CasinoLibrary.Model.UserException;
     using Data.DNAide;
-    using LiveCasino.CoreSetting.Services;
-    using Module.NG2.Entities;
-    using Module.NG2.Services;
     using Service.Impl.Customer.Casino;
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Utilities;
     using ViewModel.Customer;
-    using Customer = CasinoLibrary.SBAgent.Customer;
-    using Result = CustomerSetting.Module.Core.Models.Result;
+    using LiveCasino.CoreSetting.Services;
+    using Module.NG2.Entities;
+    using Module.NG2.Services;
 
     public class CustomerBase : BaseController
     {
@@ -26,7 +24,7 @@
         private readonly IReportService _report = new ReportService();
 
         [NonAction]
-        protected Task<Result> AutoInsertLiveCasinoPost(
+        protected Task<CustomerSetting.Module.Core.Models.Result> AutoInsertLiveCasinoPost(
             int custId,
             int parentId,
             int actorId,
@@ -53,15 +51,15 @@
                         ip,
                         "E");
 
-                    return new Result(results.Code, results.Message);
+                    return new CustomerSetting.Module.Core.Models.Result(results.Code, results.Message);
                 }
 
-                return new Result(0, string.Empty);
+                return new CustomerSetting.Module.Core.Models.Result(0, string.Empty);
             });
         }
 
         [NonAction]
-        protected Result AutoInsertCasinoPost(int custId, int uplineId)
+        protected CustomerSetting.Module.Core.Models.Result AutoInsertCasinoPost(int custId, int uplineId)
         {
             try
             {
@@ -69,7 +67,7 @@
 
                 if (custInfo?.UplineCasinoSync == true && !custInfo.CasinoSync)
                 {
-                    var isSuccess = new Customer().AutoInsertAccount(
+                    var isSuccess = new CasinoLibrary.SBAgent.Customer().AutoInsertAccount(
                         CasinoNo,
                         custInfo.IBCCustID,
                         custInfo.UserName,
@@ -99,44 +97,40 @@
 
                     if (isSuccess)
                     {
-                        new CasinoManager().UpdateCSStatus(custId, true, custInfo.CasinoDisabled, CurrentSession.UserId,
-                            CurrentContext.Ip4Address, 0, "E");
+                        new CasinoManager().UpdateCSStatus(custId, true, custInfo.CasinoDisabled, CurrentSession.UserId, CurrentContext.Ip4Address, 0, "E", string.Empty, string.Empty);
                     }
                     else
                     {
-                        new Customer().RemoveAccount(custInfo.UserName, CurrentContext.Ip4Address,
-                            CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                        new CasinoLibrary.SBAgent.Customer().RemoveAccount(custInfo.UserName, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                     }
                 }
 
-                return new Result(0, string.Empty);
+                return new CustomerSetting.Module.Core.Models.Result(0, string.Empty);
             }
             catch (ErrorException casinoEx)
             {
                 Logs.CasinoError(casinoEx);
-                return new Result(999, casinoEx.Message);
+                return new CustomerSetting.Module.Core.Models.Result(999, casinoEx.Message);
             }
             catch (Exception ex)
             {
                 Logs.Error(ex);
             }
 
-            return new Result(999, string.Empty);
+            return new CustomerSetting.Module.Core.Models.Result(999, string.Empty);
         }
 
-        protected Module.NG2.Entities.Result AutoInsertNG2Product(int custId, string username, RoleId roleId,
-            int uplineId, SiteId siteId, int currencyId)
+        protected Result AutoInsertNG2Product(int custId, string username, RoleId roleId, int uplineId, SiteId siteId, int currencyId)
         {
-            var dcsStatuses = GetDcsStatuses(custId, (int) roleId, 23);
+            var dcsStatuses = GetDcsStatuses(custId, (int)roleId, 23);
 
             if (dcsStatuses.IsSyncedUpline)
             {
                 ING2StatusService service = new NG2StatusService();
-                return service.AutoInsertAccount(custId, username, roleId, uplineId, dcsStatuses.IsDisabledUpline,
-                    siteId, currencyId, CurrentSession.UserId, (byte) Config.SystemId);
+                return service.AutoInsertAccount(custId, username, roleId, uplineId, dcsStatuses.IsDisabledUpline, siteId, currencyId, CurrentSession.UserId, (byte)Config.SystemId);
             }
 
-            return new Module.NG2.Entities.Result();
+            return new Result();
         }
 
         protected CustInfo GetCustomerInfo(int custId, string groupName)
@@ -149,16 +143,17 @@
             }
 
             var item = custInfo.Rows[0];
+
             return new CustInfo
             {
-                AgentId = (int) item["recommend"],
-                MasterId = (int) item["mrecommend"],
-                SuperId = (int) item["srecommend"],
+                AgentId = (int)item["recommend"],
+                MasterId = (int)item["mrecommend"],
+                SuperId = (int)item["srecommend"],
                 AgentName = item["agentname"] is DBNull ? string.Empty : item["agentname"].ToString(),
                 MasterName = item["mastername"] is DBNull ? string.Empty : item["mastername"].ToString(),
                 SuperName = item["supername"] is DBNull ? string.Empty : item["supername"].ToString(),
-                CustId = (int) item["custid"],
-                Username = (string) item["username"],
+                CustId = (int)item["custid"],
+                Username = (string)item["username"],
                 RoleId = Utils.ToInt32(item["roleid"])
             };
         }
@@ -173,30 +168,33 @@
             {
                 var cust = ds.Tables[0];
                 var product = cust.Select("ProductID = " + productId).FirstOrDefault();
-                if (product != null)
+                if (product == null)
                 {
-                    var isSyncedUpline = product.ToBoolean("IsSyncedUpline");
-                    var isDisabledUpline = product.ToBoolean("IsDisabledUpline");
-                    var isHidden = product.ToBoolean("IsHidden");
-                    var isSynced = product.ToBoolean("IsSync");
-                    var isDisabled = product.ToBoolean("IsDisabled");
-                    var isDisabledDownline = product.ToBoolean("IsDisabledDownline");
-                    var hasDownline = product.ToBoolean("HasDownline");
-
-                    return new DcsEntity
-                    {
-                        IsDisabledUpline = isDisabledUpline,
-                        IsSyncedUpline = isSyncedUpline,
-                        IsHidden = isHidden,
-                        HasDownline = hasDownline,
-                        IsSynced = isSynced,
-                        IsDisabled = isDisabled,
-                        IsDisabledDownline = isDisabledDownline
-                    };
+                    return new DcsEntity {IsHidden = true};
                 }
+                var isSyncedUpline = product.ToBoolean("IsSyncedUpline");
+                var isDisabledUpline = product.ToBoolean("IsDisabledUpline");
+                var isHidden = product.ToBoolean("IsHidden");
+                var isSynced = product.ToBoolean("IsSync");
+                var isDisabled = product.ToBoolean("IsDisabled");
+                var isDisabledDownline = product.ToBoolean("IsDisabledDownline");
+                var isSyncedDownline = product.ToBoolean("IsSyncedDownline");
+                var hasDownline = product.ToBoolean("HasDownline");
+
+                return new DcsEntity
+                {
+                    IsDisabledUpline = isDisabledUpline,
+                    IsSyncedUpline = isSyncedUpline,
+                    IsHidden = isHidden,
+                    HasDownline = hasDownline,
+                    IsSynced = isSynced,
+                    IsDisabled = isDisabled,
+                    IsDisabledDownline = isDisabledDownline,
+                    IsSyncedDownline = isSyncedDownline
+                };
             }
 
-            return new DcsEntity {IsHidden = true};
+            return new DcsEntity { IsHidden = true };
         }
     }
 }

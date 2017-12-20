@@ -738,6 +738,7 @@
                 UplineStatuses = new ProductStatuses(),
                 RoleId = roleId
             };
+
             if (result.Rows.Count == 0)
             {
                 return product;
@@ -855,22 +856,52 @@
             return product;
         }
 
-        public static CustomerModel AddEnableAndDetailProduct(this CustomerModel model, DataTable table3rdDCS, int productId, string productName, string editBettingLimitFunction = "", bool checkboxType = true, bool getFromRemotingRef = false)
+        
+
+        public static CustomerModel AddEnableAndDetailProduct(this CustomerModel model, DataTable table3rdDCS, int productId, string productName, string editBetLimitFunc = "", bool checkboxType = true, bool getFromRemotingRef = false)
         {
-            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty), Value = true });
-            model.PersonalInfo.IsShowProducts.Add(new ObjectInfo { Key = "isShow" + productName.Replace(" ", string.Empty) + "Betting", Value = !string.IsNullOrEmpty(editBettingLimitFunction) && IsAuthorized(CurrentSession.Instance.UserId, editBettingLimitFunction, AuthenticateAction.AuthenticationType.Read) });
+
+            var productNameNoSpace = productName.Replace(" ", string.Empty);
+
+            model
+                .PersonalInfo
+                .IsShowProducts
+                .Add(new ObjectInfo
+                {
+                    Key = "isShow" + productNameNoSpace,
+                    Value = true
+                });
+            model
+                .PersonalInfo
+                .IsShowProducts
+                .Add(new ObjectInfo
+                {
+                    Key = "isShow" + productNameNoSpace + "Betting",
+                    Value = !string.IsNullOrEmpty(editBetLimitFunc)
+                            && IsAuthorized(CurrentSession.Instance.UserId, editBetLimitFunc, AuthenticateAction.AuthenticationType.Read)
+                });
+
             if (table3rdDCS.Select("ProductID = " + productId).Length > 0
                 && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]))
             {
                 var productDataRow = table3rdDCS.Select("ProductID = " + productId)[0];
                 var isDisabled = Utils.ToBoolean(productDataRow["isDisabled"]);
-                var name = getFromRemotingRef ? RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en-US", productName) : productName;
-                model.Setting.Details.Add(new ObjectInfo { Key = productName.Replace(" ", string.Empty), Value = "Edit " + name });
+
+                var name = getFromRemotingRef
+                    ? RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en-US", productName)
+                    : productName;
+
+                model.Setting.Details.Add(
+                    new ObjectInfo
+                    {
+                        Key = productNameNoSpace, Value = "Edit " + name
+                    });
+
                 if (checkboxType)
                 {
                     model.Setting.EnableItems.Add(new ObjectInfo
                     {
-                        Key = "Enable" + productName.Replace(" ", string.Empty),
+                        Key = "Enable" + productNameNoSpace,
                         Value = !isDisabled,
                         Text = name,
                         Tooltip = "Enable " + name
@@ -880,7 +911,7 @@
                 {
                     model.Setting.EditItems.Add(new ObjectInfo
                     {
-                        Key = "Enable" + productName.Replace(" ", string.Empty),
+                        Key = "Enable" + productNameNoSpace,
                         Text = "Enable " + name
                     });
                 }

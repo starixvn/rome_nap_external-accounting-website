@@ -1,14 +1,15 @@
-﻿namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
-{
-    using CasinoLibrary.SBAgent;
-    using DataAccess.Impl.Customer.Casino;
-    using DTO.Customer.Casino;
+﻿using Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino;
+using Fanex.ExternalAccount.DTO.Customer.Casino;
 
+namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
+{
     public class CasinoManager
     {
-        private readonly CasinoDao _casinoDao = new CasinoDao();
+        private static readonly CasinoManager instance = new CasinoManager();
+        private readonly CasinoDao _casino = new CasinoDao();
 
-        public static CasinoManager Instance { get; } = new CasinoManager();
+        public static CasinoManager Instance => instance ?? new CasinoManager();
+
 
         public bool UpdateCSStatus(
             int custid,
@@ -17,8 +18,13 @@
             int userId,
             string ip,
             int subAccId,
-            string lang)
-            => _casinoDao.UpdateCSStatus(custid, syncCS, disabledCS, userId, ip, subAccId, lang);
+            string lang,
+            string username,
+            string subUsername)
+        {
+            return _casino.UpdateCSStatus(custid, syncCS, disabledCS, userId, ip, subAccId, lang, username,
+                subUsername);
+        }
 
         public bool UpdateCSStatus(
             int custid,
@@ -32,8 +38,9 @@
             string username,
             string subUsername)
         {
+            var errMsg = string.Empty;
             return UpdateCSStatus(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, username,
-                subUsername);
+                subUsername, out errMsg);
         }
 
         public bool UpdateCSStatus(
@@ -52,12 +59,20 @@
             var status = DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId,
                 lang, out errMsg);
 
-            var cust = new Customer();
-            return status ? cust.UpdateCustEnableCasino(custid, !disabledCS, isUpdDownline, ip, userId,
-                subAccId == 0 ? username : subUsername, 3) : status;
+            if (!status)
+            {
+                return false;
+            }
+
+            var cust = new CasinoLibrary.SBAgent.Customer();
+            return cust.UpdateCustEnableCasino(custid, !disabledCS, isUpdDownline, ip, userId,
+                subAccId == 0 ? username : subUsername, 3);
         }
 
-        public CasinoCustomer GetCustInfoIBC(int custid, int uplineId) => _casinoDao.GetCustInfoIBC(custid, uplineId);
+        public CasinoCustomer GetCustInfoIBC(int custid, int uplineId)
+        {
+            return _casino.GetCustInfoIBC(custid, uplineId);
+        }
 
         private bool DoUpdateCSStatusWithoutSync(
             int custid,
@@ -69,7 +84,9 @@
             int subAccId,
             string lang,
             out string errMsg)
-            => _casinoDao.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId,
-            lang, out errMsg);
+        {
+            return _casino.DoUpdateCSStatusWithoutSync(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId,
+                lang, out errMsg);
+        }
     }
 }
