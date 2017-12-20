@@ -25,7 +25,7 @@
   width: 60px;
   /*@media all and (min-width-device: 768px) {
         &.to-width {
-            width: 20px; 
+            width: 20px;
         }
     }*/ }
   .filterbox.filter-winloss-detail .label.to-width {
@@ -118,4 +118,37 @@ span.selectedMonth {
 
 .tbl-winloss-detail {
   max-height: 625px !important; }
+
+th .col-130 {
+  position: relative; }
+
+.col-sorter {
+  position: absolute;
+  right: 8px; }
+  .col-sorter:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 4px solid #fff;
+    position: absolute;
+    top: 6px;
+    cursor: pointer; }
+  .col-sorter:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #fff;
+    position: absolute;
+    top: 11px;
+    cursor: pointer; }
+
+.col-sorter.desc:before {
+  border-top: 4px solid #333; }
+
+.col-sorter.asc:after {
+  border-bottom: 4px solid #333; }
 
