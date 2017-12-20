@@ -127,6 +127,10 @@ Fanex.ExtAcc.Customer.Settings = {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.RenderDCS(26, "#lucky3Frame", "#tabs-20");
         });
+        $('#tab30').bind('click', function () {
+            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
+            Fanex.ExtAcc.Customer.Settings.RenderDCS(30, "#bullfightingFrame", "#tabs-30");
+        });
     },
 
     GetSportsbookMinPT: function () {

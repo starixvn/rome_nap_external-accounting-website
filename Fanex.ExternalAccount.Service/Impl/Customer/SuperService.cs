@@ -13,6 +13,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
     using Fanex.ExternalAccount.DataAccess.Impl.Customer;
     using Fanex.ExternalAccount.DataAccess.Interface.Customer;
     using Fanex.ExternalAccount.Service.Interface.Customer;
+    using Logging.Extensions.Web;
 
     /// <summary>
     /// TODO: Update summary.
@@ -48,7 +49,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;

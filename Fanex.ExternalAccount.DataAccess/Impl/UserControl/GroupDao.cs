@@ -17,6 +17,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
     using Fanex.ExternalAccount.DataAccess.Interface.UserControl;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
+    using Logging.Extensions.Database;
 
     /// <summary>
     /// Group Data object.
@@ -35,22 +36,29 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
             using (var db = new ObjectDb("EAS_GroupInfoSel"))
             {
-                using (var reader = db.ExecuteReader())
+                try
                 {
-                    while (reader != null && reader.Read())
+                    using (var reader = db.ExecuteReader())
                     {
-                        result.Add(new Group()
+                        while (reader != null && reader.Read())
                         {
-                            GroupID = reader.ToInt("GroupID"),
-                            GroupName = reader.ToString("GroupName"),
-                            NoUsers = reader.ToInt("NoUsers"),
-                            Description = reader.ToString("Description"),
-                            Creator = reader.ToString("Creator"),
-                            CreatedDate = reader.ToString("CreatedDate")
-                        });
+                            result.Add(new Group
+                            {
+                                GroupID = reader.ToInt("GroupID"),
+                                GroupName = reader.ToString("GroupName"),
+                                NoUsers = reader.ToInt("NoUsers"),
+                                Description = reader.ToString("Description"),
+                                Creator = reader.ToString("Creator"),
+                                CreatedDate = reader.ToString("CreatedDate")
+                            });
+                        }
                     }
                 }
-
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
+                
                 return result;
             }
         }
@@ -65,16 +73,23 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
             using (var db = new ObjectDb("EAS_GroupInfoSelAllGroup"))
             {
-                using (var reader = db.ExecuteReader())
+                try
                 {
-                    while (reader != null && reader.Read())
+                    using (var reader = db.ExecuteReader())
                     {
-                        result.Add(new Group()
+                        while (reader != null && reader.Read())
                         {
-                            GroupID = reader.ToInt("GroupID"),
-                            GroupName = reader.ToString("GroupName")
-                        });
+                            result.Add(new Group
+                            {
+                                GroupID = reader.ToInt("GroupID"),
+                                GroupName = reader.ToString("GroupName")
+                            });
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
                 }
 
                 return result;
@@ -94,22 +109,29 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
             {
                 db.AddInParameter("GroupID", System.Data.DbType.Int32, groupId);
 
-                using (var reader = db.ExecuteReader())
+                try
                 {
-                    while (reader != null && reader.Read())
+                    using (var reader = db.ExecuteReader())
                     {
-                        result.Add(new Function()
+                        while (reader != null && reader.Read())
                         {
-                            FuncID = reader.ToInt("FuncID"),
-                            FuncKey = reader.ToString("FuncKey"),
-                            FuncName = reader.ToString("FuncName"),
-                            DisplayOrder = reader.ToInt("DisplayOrder"),
-                            ParentID = reader.ToInt("ParentID"),
-                            ParentName = reader.ToString("ParentName"),
-                            GroupPolicy = (EPolicy)Convert.ToInt32(reader["Policy"]),
-                            FuncDesc = reader.ToString("FuncDesc")
-                        });
+                            result.Add(new Function
+                            {
+                                FuncID = reader.ToInt("FuncID"),
+                                FuncKey = reader.ToString("FuncKey"),
+                                FuncName = reader.ToString("FuncName"),
+                                DisplayOrder = reader.ToInt("DisplayOrder"),
+                                ParentID = reader.ToInt("ParentID"),
+                                ParentName = reader.ToString("ParentName"),
+                                GroupPolicy = (EPolicy)Convert.ToInt32(reader["Policy"]),
+                                FuncDesc = reader.ToString("FuncDesc")
+                            });
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
                 }
             }
 
@@ -123,23 +145,28 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
         /// <returns>Group object.</returns>
         public Group GetGroupById(int groupId)
         {
-            var result = new Group();
-
             using (var db = new ObjectDb("EAS_GroupInfoSelByGroupID"))
             {
                 db.AddInParameter("GroupID", System.Data.DbType.Int32, groupId);
 
-                using (var reader = db.ExecuteReader())
+                try
                 {
-                    while (reader != null && reader.Read())
+                    using (var reader = db.ExecuteReader())
                     {
-                        return new Group()
+                        if (reader != null && reader.Read())
                         {
-                            GroupID = reader.ToInt("GroupID"),
-                            GroupName = reader.ToString("GroupName"),
-                            Description = reader.ToString("Description")
-                        };
+                            return new Group
+                            {
+                                GroupID = reader.ToInt("GroupID"),
+                                GroupName = reader.ToString("GroupName"),
+                                Description = reader.ToString("Description")
+                            };
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
                 }
             }
 
@@ -169,16 +196,22 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
-
-                var result = this.GetResultParams(db.Database, db.DbCommand);
-
-                if (result.IsSuccess)
+                try
                 {
-                    groupId = (int)db.GetParameterValue("GroupID");
-                }
+                    db.ExecuteNonQuery();
+                    var result = this.GetResultParams(db.Database, db.DbCommand);
 
-                return result;
+                    if (result.IsSuccess)
+                    {
+                        groupId = (int)db.GetParameterValue("GroupID");
+                    }
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -203,9 +236,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return this.GetResultParams(db.Database, db.DbCommand);
+                    return this.GetResultParams(db.Database, db.DbCommand);
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -230,9 +270,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return this.GetResultParams(db.Database, db.DbCommand);
+                    return this.GetResultParams(db.Database, db.DbCommand);
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -240,20 +287,27 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
         /// Deletes the group.
         /// </summary>
         /// <param name="groupID">The group ID.</param>
-        /// <param name="userID">The user ID.</param>
+        /// <param name="userId">The user ID.</param>
         /// <returns>Result object.</returns>
-        public Result DeleteGroup(int groupID, int userID)
+        public Result DeleteGroup(int groupID, int userId)
         {
             using (var db = new ObjectDb("EAS_GroupInfoDel"))
             {
                 db.AddInParameter("GroupID", System.Data.DbType.Int32, groupID);
-                db.AddInParameter("UserID", System.Data.DbType.Int32, userID);
+                db.AddInParameter("UserID", System.Data.DbType.Int32, userId);
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return this.GetResultParams(db.Database, db.DbCommand);
+                    return this.GetResultParams(db.Database, db.DbCommand);
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 

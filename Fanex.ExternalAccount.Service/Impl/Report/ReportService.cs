@@ -10,23 +10,22 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    using System.Data.SqlClient;
     using Fanex.Caching;
     using Fanex.ExternalAccount.DataAccess.Impl.Report;
     using Fanex.ExternalAccount.DataAccess.Interface.Report;
     using Fanex.ExternalAccount.DTO.Report;
-    using Fanex.ExternalAccount.Service.Impl.Base;
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Utilities;
+    using Logging.Extensions.Web;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class ReportService : ServiceBase, IReportService
+    public class ReportService : IReportService
     {
         private const string BalanceUpDayKey = "SUNPLUS.AGENT.MODEL.BL.REPORTS.BALANCEUPDAY";
-        private static ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache); 
-        private readonly IReportDAO _reportDAO = null;
+        private static ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
+        private readonly IReportDAO _reportDAO;
 
         public ReportService(IReportDAO reportDAO = null)
         {
@@ -67,13 +66,9 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
                 {
                     balanceUpDay = reportDao.Age_SelBalanceUpDay();
                 }
-                catch (SqlException ex)
-                {
-                    Logs.Error(ex);
-                }
                 catch (Exception ex)
                 {
-                    Logs.Error(ex);
+                    ExceptionHandler.Handle(ex);
                 }
                 
                 if (balanceUpDay != null)
@@ -106,7 +101,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
                 }
                 catch (Exception ex)
                 {
-                    this.ProcessException(ex);
+                    ExceptionHandler.Handle(ex);
                 }
             }
 

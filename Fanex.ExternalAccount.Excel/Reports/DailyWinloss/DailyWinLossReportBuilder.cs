@@ -46,21 +46,15 @@ namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
 
             report = new DailyWinLossReport(filePath, this);
 
-            if (report != null)
+            MemoryStream mem = new MemoryStream();
+            HSSFWorkbook hssfWorkbook = ((IReportBuilder)report).Build();
+            if (hssfWorkbook != null)
             {
-                if (report is IReportBuilder)
-                {
-                    MemoryStream mem = new MemoryStream();
-                    HSSFWorkbook hssfWorkbook = ((IReportBuilder)report).Build();
-                    if (hssfWorkbook != null)
-                    {
-                        hssfWorkbook.Write(mem);
-                        return mem;
-                    }
-
-                    report.Dispose();
-                }
+                hssfWorkbook.Write(mem);
+                return mem;
             }
+
+            report.Dispose();
 
             return null;
         }

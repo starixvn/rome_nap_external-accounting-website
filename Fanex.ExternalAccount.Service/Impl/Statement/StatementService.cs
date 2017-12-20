@@ -11,14 +11,13 @@ namespace Fanex.ExternalAccount.Service.Impl.Statement
     using Fanex.ExternalAccount.DataAccess.Impl.Statement;
     using Fanex.ExternalAccount.DataAccess.Interface.Statement;
     using Fanex.ExternalAccount.DTO.Statement;
-    using Fanex.ExternalAccount.Service.Impl.Base;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Interface.Statement;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class StatementService : ServiceBase, IStatementService
+    public class StatementService : IStatementService
     {
         private const string BalanceUpDayKey = "SUNPLUS.AGENT.MODEL.BL.STATEMENT.BALANCEUPDAY";
         private readonly IStatementDAO _statementDAO = null;

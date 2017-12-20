@@ -18,6 +18,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
     using Fanex.ExternalAccount.DataAccess.Impl.Base;
     using Fanex.ExternalAccount.DataAccess.Interface.Report;
     using Fanex.ExternalAccount.DTO.Report;
+    using Logging.Extensions.Database;
 
     /// <summary>
     /// Report data access object.
@@ -30,7 +31,14 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
         {
             using (var db = new ObjectDb("Age_SelBalanceUpDay"))
             {
-                return db.ExecuteDataSet().Tables[0];
+                try
+                {
+                    return db.ExecuteDataSet().Tables[0];
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -59,15 +67,17 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 db.AddInParameter("username", DbType.String, userName);
                 db.AddInParameter("isgetuplineinfo", DbType.Boolean, isGetUplineInfo);
 
-                var ds = db.ExecuteDataSet();
+                try
+                {
+                    var ds = db.ExecuteDataSet();
 
-                if (ds != null && ds.Tables.Count > 0)
-                {
-                    return ds.Tables[0];
+                    return ds == null || ds.Tables.Count == 0
+                        ? null :
+                        ds.Tables[0];
                 }
-                else
+                catch (Exception ex)
                 {
-                    return null;
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
                 }
             }
         }
@@ -88,32 +98,46 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 db.AddInParameter("username", DbType.String, username);
                 db.AddInParameter("groupname", DbType.String, groupname);
 
-                using (var reader = db.ExecuteReader())
+                try
                 {
-                    if (reader != null)
+                    using (var reader = db.ExecuteReader())
                     {
-                        var updated = false;
-
-                        while (reader.Read())
+                        if (reader != null)
                         {
-                            if (!updated)
-                            {
-                                // Update User Search
-                                using (var updUserSearch = new ObjectDb("EAS_CustomerUpdUserSearch"))
-                                {
-                                    updUserSearch.AddInParameter("userid", DbType.Int32, custId);
-                                    updUserSearch.AddInParameter("search", DbType.String, username.ToUpper());
-                                    updUserSearch.AddInParameter("groupname", DbType.String, groupname);
+                            var updated = false;
 
-                                    updUserSearch.ExecuteNonQuery();
+                            while (reader.Read())
+                            {
+                                if (!updated)
+                                {
+                                    // Update User Search
+                                    using (var updUserSearch = new ObjectDb("EAS_CustomerUpdUserSearch"))
+                                    {
+                                        updUserSearch.AddInParameter("userid", DbType.Int32, custId);
+                                        updUserSearch.AddInParameter("search", DbType.String, username.ToUpperInvariant());
+                                        updUserSearch.AddInParameter("groupname", DbType.String, groupname);
+
+                                        try
+                                        {
+                                            updUserSearch.ExecuteNonQuery();
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                                        }
+                                    }
+
+                                    updated = true;
                                 }
 
-                                updated = true;
+                                entityList.Add(new SuggestedUserName { Username = reader.To<string>("username") });
                             }
-
-                            entityList.Add(new SuggestedUserName { Username = reader.To<string>("username") });
                         }
                     }
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
                 }
             }
 

@@ -9,6 +9,7 @@
 
 namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
@@ -18,6 +19,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.ExternalAccount.Utilities;
+    using Logging.Extensions.Database;
 
     /// <summary>
     /// MenuDao object.
@@ -36,13 +38,15 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
             using (var db = new ObjectDb("EAS_MenuSel"))
             {
-                using (var reader = db.ExecuteReader())
+                try
                 {
-                    if (reader != null)
+                    using (var reader = db.ExecuteReader())
                     {
-                        while (reader.Read())
+                        if (reader != null)
                         {
-                            result.Add(new Menu
+                            while (reader.Read())
+                            {
+                                result.Add(new Menu
                                 {
                                     MenuID = reader.ToInt32("MenuID"),
                                     MenuName = reader.ToString("MenuName"),
@@ -56,13 +60,18 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
                                     ModifiedDate = reader.ToString("ModifiedDate"),
                                     IsActive = reader.ToBoolean("Active")
                                 });
+                            }
+
+                            return result;
                         }
-
-                        return result;
                     }
-                }
 
-                return null;
+                    return null;
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -75,50 +84,59 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
         {
             var menus = new List<Menu>();
             var funcs = new List<Function>();
+
             using (var db = new ObjectDb("EAS_MenuSelByUserID"))
             {
                 db.AddInParameter("UserID", System.Data.DbType.Int32, userId);
-                using (var ds = db.ExecuteDataSet())
+
+                try
                 {
-                    if (ds != null && ds.Tables.Count == 2)
+                    using (var ds = db.ExecuteDataSet())
                     {
-                        var menu = ds.Tables[0];
-                        var func = ds.Tables[1];
+                        if (ds != null && ds.Tables.Count == 2)
+                        {
+                            var menu = ds.Tables[0];
+                            var func = ds.Tables[1];
 
-                        menus = (from c in menu.AsEnumerable()
-                                 let parentId = c.Field<int>("ParentID")
-                                 select new Menu
-                                 {
-                                     MenuID = c.Field<int>("MenuID"),
-                                     MenuName = c.Field<string>("MenuName"),
-                                     ParentID = c.Field<int>("ParentID"),
-                                     ParentName = c.Field<string>("ParentName"),
-                                     Url = c.Field<string>("Url"),
-                                     FuncID = c.Field<int>("FuncID"),
-                                     DisplayOrder = c.Field<int>("DisplayOrder"),
-                                     IsActive = c.Field<bool>("Active")
-                                 }).ToList();
+                            menus = (from c in menu.AsEnumerable()
+                                     let parentId = c.Field<int>("ParentID")
+                                     select new Menu
+                                     {
+                                         MenuID = c.Field<int>("MenuID"),
+                                         MenuName = c.Field<string>("MenuName"),
+                                         ParentID = c.Field<int>("ParentID"),
+                                         ParentName = c.Field<string>("ParentName"),
+                                         Url = c.Field<string>("Url"),
+                                         FuncID = c.Field<int>("FuncID"),
+                                         DisplayOrder = c.Field<int>("DisplayOrder"),
+                                         IsActive = c.Field<bool>("Active")
+                                     }).ToList();
 
-                        funcs = (from c in func.AsEnumerable()
-                                 select new Function
-                                 {
-                                     FuncID = c.Field<int>("funcid"),
-                                     ParentID = c.Field<int>("parentId"),
-                                     FuncName = c.Field<string>("funcName"),
-                                     FuncKey = c.Field<string>("funcKey"),
-                                     Policy = c.Field<EPolicy>("policy"),
-                                     IsTest = c.Field<bool>("IsTest")
-                                 }).ToList();
+                            funcs = (from c in func.AsEnumerable()
+                                     select new Function
+                                     {
+                                         FuncID = c.Field<int>("funcid"),
+                                         ParentID = c.Field<int>("parentId"),
+                                         FuncName = c.Field<string>("funcName"),
+                                         FuncKey = c.Field<string>("funcKey"),
+                                         Policy = c.Field<EPolicy>("policy"),
+                                         IsTest = c.Field<bool>("IsTest")
+                                     }).ToList();
 
-                        return new UserCache
+                            return new UserCache
                             {
                                 MenuList = menus,
                                 PolicyList = funcs
                             };
+                        }
                     }
-                }
 
-                return null;
+                    return null;
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -168,16 +186,22 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
-
-                var result = this.GetResultParams(db.Database, db.DbCommand);
-
-                if (result.IsSuccess)
+                try
                 {
-                    menuId = (int)db.GetParameterValue("MenuID");
-                }
+                    db.ExecuteNonQuery();
+                    var result = this.GetResultParams(db.Database, db.DbCommand);
 
-                return result;
+                    if (result.IsSuccess)
+                    {
+                        menuId = (int)db.GetParameterValue("MenuID");
+                    }
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -223,9 +247,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return this.GetResultParams(db.Database, db.DbCommand);
+                    return this.GetResultParams(db.Database, db.DbCommand);
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -246,9 +277,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return this.GetResultParams(db.Database, db.DbCommand);
+                    return this.GetResultParams(db.Database, db.DbCommand);
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -267,9 +305,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.UserControl
 
                 this.AddResultParams(db.Database, db.DbCommand);
 
-                db.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return this.GetResultParams(db.Database, db.DbCommand);
+                    return this.GetResultParams(db.Database, db.DbCommand);
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 

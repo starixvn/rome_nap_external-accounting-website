@@ -6,11 +6,11 @@
 // For current session info
 // </summary>
 // --------------------------------------------------------------------------
+
 namespace Fanex.ExternalAccount.Controllers.Report
 {
     using System;
     using System.Collections.Generic;
-    using System.Data;
     using System.Web.Mvc;
     using Fanex.Caching;
     using Fanex.CustomerSetting.Security.Authenticate;
@@ -43,7 +43,6 @@ namespace Fanex.ExternalAccount.Controllers.Report
         private int _recommend = 0;
         private int _memberId = 0;
         private int _custId = 0;
-        private readonly string _searchName = string.Empty;
 
         #endregion Init DailyWinLoss
 

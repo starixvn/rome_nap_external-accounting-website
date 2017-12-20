@@ -17,14 +17,14 @@ namespace Fanex.ExternalAccount.Service.Impl.Login
     using Fanex.ExternalAccount.DataAccess.Interface.Login;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
-    using Fanex.ExternalAccount.Service.Impl.Base;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.Login;
+    using Logging.Extensions.Web;
 
     /// <summary>
     /// Login service.
     /// </summary>
-    public class LoginService : ServiceBase, ILoginService
+    public class LoginService : ILoginService
     {
         private readonly ILoginDao _loginDao = null;
 
@@ -75,7 +75,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Login
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex, false);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -99,7 +99,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Login
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -123,7 +123,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Login
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -141,7 +141,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Login
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -166,7 +166,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Login
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return true;
@@ -184,7 +184,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Login
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return DateTime.Now;

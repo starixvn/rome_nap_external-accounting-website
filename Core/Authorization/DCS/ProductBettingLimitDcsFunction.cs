@@ -9,6 +9,7 @@
         VoidbridgeBetting = 22,
         NG2Betting = 23,
         FishingWorldBetting = 24,
-        LotteryBetting = 28
+        LotteryBetting = 28,
+        BullfightingBetting = 30
     }
 }

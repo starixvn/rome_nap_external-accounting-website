@@ -12,13 +12,13 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
     using Fanex.ExternalAccount.DataAccess.Impl.UserControl;
     using Fanex.ExternalAccount.DataAccess.Interface.UserControl;
     using Fanex.ExternalAccount.DTO.UserControl;
-    using Fanex.ExternalAccount.Service.Impl.Base;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
+    using Logging.Extensions.Web;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class GroupService : ServiceBase, IGroupService
+    public class GroupService : IGroupService
     {
         private IGroupDao _groupDao = null;
 
@@ -41,7 +41,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -59,7 +59,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -78,7 +78,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -99,7 +99,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -124,7 +124,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -147,7 +147,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -170,7 +170,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -190,7 +190,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;

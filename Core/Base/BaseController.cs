@@ -23,6 +23,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using System.Web.SessionState;
     using CasinoLibrary.Model.UserException;
     using CustomerSetting.Module.Core.Criteria;
+    using CustomerSetting.Module.Core.Models;
     using CustomerSetting.Module.Core.Services.Impl;
     using CustomerSetting.Module.Core.Services.Interface;
     using Fanex.CustomerSetting.IP.Utils;
@@ -35,10 +36,10 @@ namespace Fanex.ExternalAccount.Core.Base
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.PTEngine.BusinessObjects;
+    using Logging.Extensions.Web;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Reports.WinLossDetail;
-    using CustomerSetting.Module.Core.Models;
 
     /// <summary>
     /// Base controller for controller to inherit.
@@ -247,7 +248,7 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             catch (Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
         }
 
@@ -274,7 +275,7 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             catch (Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
         }
 
@@ -295,11 +296,11 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             catch (ErrorException casinoEx)
             {
-                Logs.CasinoError(casinoEx);
+                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
             }
             catch (Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
         }
 
@@ -320,11 +321,11 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             catch (ErrorException casinoEx)
             {
-                Logs.CasinoError(casinoEx);
+                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
             }
             catch (Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
         }
 

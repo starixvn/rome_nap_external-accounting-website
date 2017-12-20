@@ -85,3 +85,11 @@ function LoadLottery() {
         Fanex.CustomerSetting.Core.UnBlockUI();
     }, 1000);
 };
+
+// From Bullfighting=30 to later on we SHOULD use this function. 
+function LoadProduct(productId) {
+    Fanex.CustomerSetting.Core.BlockUI();
+    var url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=" + productId + "&customerId=" + custId + "&sssss=v&customerLevel=4&isreadonly=false&groupName=" + parent.$('#selectedGroupName').html() + '&v=0001');
+    document.getElementById("product-" + productId).src = url;
+    setTimeout(Fanex.CustomerSetting.Core.UnBlockUI, 1000);
+};

@@ -25,6 +25,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
     using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Utilities;
+    using Logging.Extensions.Database;
 
     /// <summary>
     /// TODO: Update summary.
@@ -64,7 +65,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         /// <returns>Result object.</returns>
         public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
         {
-            using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdCredit"))
+            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdCredit"))
             {
                 var param = new Hashtable();
                 param.Add("userid", uplineId);
@@ -74,11 +75,18 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 param.Add("errcode", 0);
                 param.Add("errmsg", string.Empty);
 
-                objDb.AssignParamValues(param);
+                db.AssignParamValues(param);
 
-                objDb.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
+                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -149,19 +157,26 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
             {
                 db.AddInParameter("agentid", DbType.Int32, custId);
 
-                using (IDataReader reader = db.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
+                    using (IDataReader reader = db.ExecuteReader())
                     {
-                        items.Add(new MemberUsedCreditItem
+                        while (reader.Read())
                         {
-                            Username = reader.ToString("username"),
-                            FirstName = reader.ToString("firstname"),
-                            LastName = reader.ToString("lastname"),
-                            Amount = reader.ToDecimal("credit"),
-                            IsClosed = reader.ToBoolean("closed")
-                        });
+                            items.Add(new MemberUsedCreditItem
+                            {
+                                Username = reader.ToString("username"),
+                                FirstName = reader.ToString("firstname"),
+                                LastName = reader.ToString("lastname"),
+                                Amount = reader.ToDecimal("credit"),
+                                IsClosed = reader.ToBoolean("closed")
+                            });
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
                 }
             }
 
@@ -177,7 +192,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         /// <returns>List object.</returns>
         public Result ResetMemberCredit(int custId, int agentId, bool closedOnly)
         {
-            using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdResetMemberCredit", 600))
+            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdResetMemberCredit", 600))
             {
                 var param = new Hashtable();
                 param.Add("userid", custId);
@@ -188,13 +203,19 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 param.Add("errcode", 0);
                 param.Add("errmsg", string.Empty);
 
-                objDb.AssignParamValues(param);
+                db.AssignParamValues(param);
 
-                objDb.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
+                    var errorCode = Utils.ToInt32(db.GetParameterValue("errcode"));
 
-                var errorCode = Utils.ToInt32(objDb.GetParameterValue("errcode"));
-
-                return new Result(errorCode, objDb.GetParameterValue("errmsg"));
+                    return new Result(errorCode, db.GetParameterValue("errmsg"));
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }        
 
@@ -222,13 +243,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 param.Add("system", "EXTERNAL");
 
                 db.AssignParamValues(param);
-                db.ExecuteNonQuery();
 
-                return new Result
+                try
                 {
-                    ErrorCode = Utils.ToString(db.GetParameterValue("errcode")),
-                    ErrorMessage = Utils.ToString(db.GetParameterValue("errmsg"))
-                };
+                    db.ExecuteNonQuery();
+
+                    return new Result
+                    {
+                        ErrorCode = Utils.ToString(db.GetParameterValue("errcode")),
+                        ErrorMessage = Utils.ToString(db.GetParameterValue("errmsg"))
+                    };
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -238,9 +267,17 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
             {
                 var param = new Hashtable();
                 param.Add("custid", custId);
-                var result = db.ExecuteDataSet(param);
 
-                return result != null && result.Tables != null ? result.Tables[0] : null;
+                try
+                {
+                    var result = db.ExecuteDataSet(param);
+
+                    return result != null && result.Tables != null ? result.Tables[0] : null;
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -254,7 +291,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         /// <returns>Result object.</returns>
         public Result CloseCutomer(int custId, bool close, bool clearCredit, string custName)
         {
-            using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdClosed", 600))
+            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdClosed", 600))
             {
                 Hashtable param = new Hashtable();
                 param.Add("userid", CurrentSession.Instance.UserId);
@@ -266,16 +303,23 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 param.Add("ip", CurrentContext.Instance.Ip4Address);
                 param.Add("systemid", Config.SystemId);
                 
-                objDb.AssignParamValues(param);
+                db.AssignParamValues(param);
 
-                objDb.ExecuteNonQuery();
-                                
-                if (Utils.ToInt32(objDb.GetParameterValue("errcode")) <= 0 && clearCredit)
+                try
                 {
-                    return this.ClearCredit(CurrentSession.Instance.UserId, custName);
-                }
+                    db.ExecuteNonQuery();
 
-                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
+                    if (Utils.ToInt32(db.GetParameterValue("errcode")) <= 0 && clearCredit)
+                    {
+                        return this.ClearCredit(CurrentSession.Instance.UserId, custName);
+                    }
+
+                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -287,7 +331,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         /// <returns>Result object.</returns>
         public Result SuspendCustomer(int custId, bool suspend)
         {
-            using (ObjectDb objDB = new ObjectDb("Acc_CustomerUpdSuspended"))
+            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdSuspended"))
             {
                 var param = new Hashtable();
                 param.Add("userid", CurrentSession.Instance.UserId);
@@ -298,10 +342,18 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 param.Add("errmsg", string.Empty);
                 param.Add("ip", CurrentContext.Instance.Ip4Address);
 
-                objDB.AssignParamValues(param);
-                objDB.ExecuteNonQuery();
+                db.AssignParamValues(param);
 
-                return new Result(objDB.GetParameterValue("errcode"), objDB.GetParameterValue("errmsg"));
+                try
+                {
+                    db.ExecuteNonQuery();
+
+                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -313,7 +365,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         /// <returns>Result object.</returns>
         public Result AllowOutright(int custId, bool allow)
         {
-            using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdDisableOutright", 600))
+            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableOutright", 600))
             {
                 var param = new Hashtable();
                 param.Add("userid", CurrentSession.Instance.UserId);
@@ -324,10 +376,18 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 param.Add("errmsg", string.Empty);
                 param.Add("ip", CurrentContext.Instance.Ip4Address);
 
-                objDb.AssignParamValues(param);
-                objDb.ExecuteNonQuery();
+                db.AssignParamValues(param);
 
-                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
+                try
+                {
+                    db.ExecuteNonQuery();
+
+                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
                 
@@ -366,7 +426,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         /// <returns>Result object.</returns>
         public Result EnableNumberGame(int id, bool enable, bool enableDownline)
         {
-            using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdDisableNumber", 600))
+            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableNumber", 600))
             {
                 var param = new Hashtable();
                 param.Add("userid", CurrentSession.Instance.UserId);
@@ -378,10 +438,18 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 param.Add("ip", CurrentContext.Instance.Ip4Address);
                 param.Add("disabledownline", !enableDownline);
 
-                objDb.AssignParamValues(param);
-                objDb.ExecuteNonQuery();
+                db.AssignParamValues(param);
 
-                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
+                try
+                {
+                    db.ExecuteNonQuery();
+
+                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -407,9 +475,17 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 param.Add("errmsg", string.Empty);
 
                 db.AssignParamValues(param);
-                db.ExecuteNonQuery();
 
-                return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
+                try
+                {
+                    db.ExecuteNonQuery();
+
+                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -435,9 +511,17 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
             using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableESports", 120))
             {
                 db.AssignParamValues(param);
-                db.ExecuteNonQuery();
 
-                return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
+                try
+                {
+                    db.ExecuteNonQuery();
+
+                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -458,12 +542,20 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
             param.Add("errmsg", string.Empty);
             param.Add("ip", CurrentContext.Instance.Ip4Address);
 
-            using (ObjectDb objDB = new ObjectDb("Acc_CustomerUpdMaster_DisableAutoMPT"))
+            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdMaster_DisableAutoMPT"))
             {
-                objDB.AssignParamValues(param);
-                objDB.ExecuteNonQuery();
+                db.AssignParamValues(param);
 
-                return new Result(objDB.GetParameterValue("errcode"), objDB.GetParameterValue("errmsg"));
+                try
+                {
+                    db.ExecuteNonQuery();
+
+                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -477,21 +569,29 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         public Result ResetSecurityCode(int id, string code, bool force)
         {
             Hashtable outputParams = new Hashtable();
-            using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdSecurityCode"))
+            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdSecurityCode"))
             {
-                objDb.AddInParameter("Custid", System.Data.DbType.Int32, id);
-                objDb.AddInParameter("Userid", System.Data.DbType.Int32, CurrentSession.Instance.UserId);
-                objDb.AddInParameter("IsForcedChangeSecurityCode", System.Data.DbType.Boolean, force);
-                objDb.AddInParameter("Securitycode", System.Data.DbType.String, code);
-                objDb.AddInParameter("Language", System.Data.DbType.String, "En");
-                objDb.AddInParameter("IP", System.Data.DbType.String, CurrentContext.Instance.Ip4Address);
-                objDb.AddInParameter("system", System.Data.DbType.String, "EXTERNAL");
-                objDb.AddOutParameter("ErrCode", System.Data.DbType.Int32, 8);
-                objDb.AddOutParameter("ErrMsg", System.Data.DbType.String, 1000);
-                objDb.ExecuteNonQuery();
-                outputParams = objDb.GetOuputParams();
+                db.AddInParameter("Custid", System.Data.DbType.Int32, id);
+                db.AddInParameter("Userid", System.Data.DbType.Int32, CurrentSession.Instance.UserId);
+                db.AddInParameter("IsForcedChangeSecurityCode", System.Data.DbType.Boolean, force);
+                db.AddInParameter("Securitycode", System.Data.DbType.String, code);
+                db.AddInParameter("Language", System.Data.DbType.String, "En");
+                db.AddInParameter("IP", System.Data.DbType.String, CurrentContext.Instance.Ip4Address);
+                db.AddInParameter("system", System.Data.DbType.String, "EXTERNAL");
+                db.AddOutParameter("ErrCode", System.Data.DbType.Int32, 8);
+                db.AddOutParameter("ErrMsg", System.Data.DbType.String, 1000);
 
-                return new Result(outputParams["ErrCode"], outputParams["ErrMsg"]);
+                try
+                {
+                    db.ExecuteNonQuery();
+                    outputParams = db.GetOuputParams();
+
+                    return new Result(outputParams["ErrCode"], outputParams["ErrMsg"]);
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -517,11 +617,19 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
             using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableHRFixedOdds", 120))
             {
                 db.AssignParamValues(param);
-                db.ExecuteNonQuery();
-                var errorCode = Utils.ToString(db.GetParameterValue("errcode"));
-                var errorMessage = Utils.ToString(db.GetParameterValue("errmsg"));
 
-                return new Result { ErrorCode = errorCode, ErrorMessage = errorMessage };
+                try
+                {
+                    db.ExecuteNonQuery();
+                    var errorCode = Utils.ToString(db.GetParameterValue("errcode"));
+                    var errorMessage = Utils.ToString(db.GetParameterValue("errmsg"));
+
+                    return new Result { ErrorCode = errorCode, ErrorMessage = errorMessage };
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -538,17 +646,24 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
             {
                 db.AddInParameter("superid", DbType.Int32, custId);
 
-                using (IDataReader reader = db.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
+                    using (IDataReader reader = db.ExecuteReader())
                     {
-                        items.Add(new MasterAgentUsedCreditItem
+                        while (reader.Read())
                         {
-                            Username = reader.ToString("mastername"),
-                            GivenCredit = reader.ToDecimal("givencredit"),
-                            UsedCredit = reader.ToDecimal("usedcredit")
-                        });
+                            items.Add(new MasterAgentUsedCreditItem
+                            {
+                                Username = reader.ToString("mastername"),
+                                GivenCredit = reader.ToDecimal("givencredit"),
+                                UsedCredit = reader.ToDecimal("usedcredit")
+                            });
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
                 }
             }
 
@@ -568,17 +683,24 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
             {
                 db.AddInParameter("masterid", DbType.Int32, custId);
 
-                using (IDataReader reader = db.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
+                    using (IDataReader reader = db.ExecuteReader())
                     {
-                        items.Add(new MasterAgentUsedCreditItem
+                        while (reader.Read())
                         {
-                            Username = reader.ToString("agentname"),
-                            GivenCredit = reader.ToDecimal("givencredit"),
-                            UsedCredit = reader.ToDecimal("usedcredit")
-                        });
+                            items.Add(new MasterAgentUsedCreditItem
+                            {
+                                Username = reader.ToString("agentname"),
+                                GivenCredit = reader.ToDecimal("givencredit"),
+                                UsedCredit = reader.ToDecimal("usedcredit")
+                            });
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
                 }
             }
 
@@ -594,7 +716,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
         private Result ClearCredit(int userId, string username = null)
         {
-            using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdClearCredit", 600))
+            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdClearCredit", 600))
             {
                 var hash = new Hashtable();
                 hash.Add("username", username);
@@ -604,11 +726,18 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 hash.Add("errmsg", string.Empty);
                 hash.Add("ip", CurrentContext.Instance.Ip4Address);
                 hash.Add("system", "EXTERNAL");
-                objDb.AssignParamValues(hash);
+                db.AssignParamValues(hash);
 
-                objDb.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
+                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -622,7 +751,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
         /// <returns>Result object.</returns>
         public Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId)
         {
-            using (ObjectDb objDb = new ObjectDb("Acc_CustomerUpdDisableGoldDeluxe", 600))
+            using (ObjectDb db = new ObjectDb("Acc_CustomerUpdDisableGoldDeluxe", 600))
             {
                 var hash = new Hashtable();
                 hash.Add("custid", id);
@@ -633,11 +762,18 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
                 hash.Add("enabledownlines", enableDownline);
                 hash.Add("errcode", 0);
                 hash.Add("errmsg", string.Empty);
-                objDb.AssignParamValues(hash);
+                db.AssignParamValues(hash);
 
-                objDb.ExecuteNonQuery();
+                try
+                {
+                    db.ExecuteNonQuery();
 
-                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
+                    return new Result(db.GetParameterValue("errcode"), db.GetParameterValue("errmsg"));
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
 
@@ -650,14 +786,21 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories.Impl
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
-
-                return new Result
+                try
                 {
-                    ErrorCode = outputParams["errcode"].ToString(),
-                    ErrorMessage = outputParams["errmsg"].ToString()
-                };
+                    db.ExecuteNonQuery(criteria.GetSpParams());
+                    var outputParams = db.GetOuputParams();
+
+                    return new Result
+                    {
+                        ErrorCode = outputParams["errcode"].ToString(),
+                        ErrorMessage = outputParams["errmsg"].ToString()
+                    };
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
     }

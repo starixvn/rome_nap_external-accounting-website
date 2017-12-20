@@ -18,6 +18,7 @@ using Fanex.ExternalAccount.Core.Base;
 using Fanex.ExternalAccount.Core.Context;
 using Fanex.ExternalAccount.Service.Impl.Login;
 using Fanex.ExternalAccount.Utilities;
+using Fanex.Logging.Extensions.Web;
 using ONEbook.UM.Services;
 using ONEbook.UM.Services.Impl;
 
@@ -59,7 +60,7 @@ namespace Fanex.ExternalAccount.Controllers.Home
 
         public ActionResult TestLog()
         {
-            Logs.Error(new Exception("Testing log"));
+            ExceptionHandler.Handle(new Exception("Testing log"));
 
             return ViewBase();
         }

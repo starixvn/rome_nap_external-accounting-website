@@ -13,6 +13,7 @@
         EnableFishingWorld = 24,
         EnableGoldDeluxe = 12,
         EnableLottery = 28,
-        EnableLucky3 = 26
+        EnableLucky3 = 26,
+        EnableBullfighting = 30
     }
 }

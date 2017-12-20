@@ -24,6 +24,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
     using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
     using Fanex.ExternalAccount.Utilities;
+    using Logging.Extensions.Web;
 
     /// <summary>
     /// TODO: Update summary.
@@ -220,7 +221,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Impl
                 }
                 catch (ErrorException casinoEx)
                 {
-                    Logs.CasinoError(casinoEx);
+                    ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
                 }
                 catch (Exception)
                 {

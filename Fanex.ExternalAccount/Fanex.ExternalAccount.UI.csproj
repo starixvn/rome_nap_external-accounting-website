@@ -44,6 +44,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>Fanex.ExternalAccount.UI.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,6 +53,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>Fanex.ExternalAccount.UI.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoMapper, Version=2.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
@@ -152,8 +154,20 @@
       <HintPath>..\packages\Fanex.LiveCasino.CoreSetting.NAP.1.2.2.6\lib\net40\Fanex.LiveCasino.CoreSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
+    <Reference Include="Fanex.Logging, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.1.0.4\lib\net40\Fanex.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Logging.Extensions, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.Extensions.1.0.5\lib\net40\Fanex.Logging.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Logging.Extensions.Database.V59, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.Extensions.Database.V59.1.0.3\lib\net40\Fanex.Logging.Extensions.Database.V59.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Logging.Extensions.Web, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.Extensions.Web.1.0.5\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Module.Logs, Version=2.0.0.3, Culture=neutral, processorArchitecture=MSIL">
@@ -407,8 +421,8 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.1.6\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
+    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.1.8\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="TplCore">
@@ -2089,202 +2103,6 @@
     <Content Include="Scripts\jquery-1.8.3-vsdoc.js" />
     <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\knockout.min-2.0.js" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\accordion\collapsible.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\accordion\custom-icons.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\accordion\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\accordion\fillspace.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\accordion\hoverintent.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\accordion\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\accordion\no-auto-height.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\accordion\sortable.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\addClass\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\addClass\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\animate\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\animate\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\categories.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\combobox.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\custom-data.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\folding.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\images\jqueryui_32x32.png" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\images\jquery_32x32.png" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\images\sizzlejs_32x32.png" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\images\transparent_1x1.png" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\images\ui-anim_basic_16x16.gif" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\london.xml" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\maxheight.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\multiple-remote.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\multiple.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\remote-jsonp.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\remote.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\xml.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\button\checkbox.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\button\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\button\icons.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\button\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\button\radio.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\button\splitbutton.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\button\toolbar.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\datepicker\alt-field.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\datepicker\animation.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\datepicker\buttonbar.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\datepicker\date-formats.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\datepicker\date-range.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\datepicker\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\datepicker\dropdown-month-year.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\datepicker\icon-trigger.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\datepicker\images\calendar.gif" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\datepicker\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\datepicker\inline.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\datepicker\localization.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\datepicker\min-max.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\datepicker\multiple-calendars.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\datepicker\other-months.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\datepicker\show-week.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\demos.css" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\dialog\animated.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\dialog\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\dialog\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\dialog\modal-confirmation.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\dialog\modal-form.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\dialog\modal-message.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\dialog\modal.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\draggable\constrain-movement.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\draggable\cursor-style.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\draggable\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\draggable\delay-start.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\draggable\events.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\draggable\handle.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\draggable\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\draggable\revert.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\draggable\scroll.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\draggable\snap-to.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\draggable\sortable.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\draggable\visual-feedback.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\droppable\accepted-elements.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\droppable\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\droppable\images\high_tatras.jpg" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\droppable\images\high_tatras2.jpg" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\droppable\images\high_tatras2_min.jpg" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\droppable\images\high_tatras3.jpg" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\droppable\images\high_tatras3_min.jpg" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\droppable\images\high_tatras4.jpg" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\droppable\images\high_tatras4_min.jpg" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\droppable\images\high_tatras_min.jpg" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\droppable\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\droppable\photo-manager.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\droppable\propagation.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\droppable\revert.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\droppable\shopping-cart.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\droppable\visual-feedback.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\effect\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\effect\easing.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\effect\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\hide\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\hide\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\images\calendar.gif" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\images\demo-config-on-tile.gif" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\images\demo-config-on.gif" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\images\demo-spindown-closed.gif" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\images\demo-spindown-open.gif" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\images\icon-docs-info.gif" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\images\pbar-ani.gif" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\menu\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\menu\icons.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\menu\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\position\cycler.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\position\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\position\images\earth.jpg" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\position\images\flight.jpg" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\position\images\rocket.jpg" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\position\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\progressbar\animated.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\progressbar\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\progressbar\images\pbar-ani.gif" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\progressbar\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\progressbar\resize.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\removeClass\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\removeClass\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\resizable\animate.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\resizable\aspect-ratio.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\resizable\constrain-area.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\resizable\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\resizable\delay-start.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\resizable\helper.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\resizable\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\resizable\max-min.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\resizable\snap-to-grid.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\resizable\synchronous-resize.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\resizable\textarea.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\resizable\visual-feedback.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\selectable\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\selectable\display-grid.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\selectable\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\selectable\serialize.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\show\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\show\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\slider\colorpicker.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\slider\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\slider\hotelrooms.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\slider\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\slider\multiple-vertical.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\slider\range-vertical.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\slider\range.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\slider\rangemax.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\slider\rangemin.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\slider\side-scroll.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\slider\slider-vertical.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\slider\steps.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\sortable\connect-lists-through-tabs.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\sortable\connect-lists.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\sortable\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\sortable\delay-start.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\sortable\display-grid.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\sortable\empty-lists.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\sortable\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\sortable\items.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\sortable\placeholder.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\sortable\portlets.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\spinner\currency.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\spinner\decimal.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\spinner\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\spinner\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\spinner\latlong.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\spinner\overflow.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\spinner\time.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\switchClass\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\switchClass\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content1.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content2.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\bottom.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\collapsible.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\manipulation.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\mouseover.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\sortable.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\vertical.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\toggleClass\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\toggleClass\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\toggle\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\toggle\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tooltip\ajax\content1.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tooltip\ajax\content2.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tooltip\custom-animation.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tooltip\custom-content.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tooltip\custom-style.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tooltip\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tooltip\forms.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tooltip\images\st-stephens.jpg" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tooltip\images\tower-bridge.jpg" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tooltip\index.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tooltip\tracking.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\tooltip\video-player.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\widget\default.html" />
-    <Content Include="Scripts\Lib\jquery-ui-1.9.1\demos\widget\index.html" />
     <Content Include="Scripts\Lib\jquery-ui-1.9.1\external\globalize.culture.de-DE.js" />
     <Content Include="Scripts\Lib\jquery-ui-1.9.1\external\globalize.culture.ja-JP.js" />
     <Content Include="Scripts\Lib\jquery-ui-1.9.1\external\globalize.js" />
@@ -2980,9 +2798,7 @@
     </Content>
     <Content Include="IbcKeys\ibckey.snk" />
     <Content Include="NumberGame2Section.config" />
-    <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\autocomplete\search.php" />
-    <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content3-slow.php" />
-    <None Include="Scripts\Lib\jquery-ui-1.9.1\demos\tabs\ajax\content4-broken.php" />
+    <Content Include="Fanex.ExternalAccount.UI.ruleset" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />
@@ -3076,6 +2892,11 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -15,13 +15,13 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
     using Fanex.ExternalAccount.DataAccess.Interface.UserControl;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
-    using Fanex.ExternalAccount.Service.Impl.Base;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
+    using Logging.Extensions.Web;
 
     /// <summary>
     /// Menu service class.
     /// </summary>
-    public class MenuService : ServiceBase, IMenuService
+    public class MenuService : IMenuService
     {
         private readonly IMenuDao _menuDao = null;
 
@@ -44,7 +44,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -100,7 +100,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -145,7 +145,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -173,7 +173,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;
@@ -200,7 +200,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
             }
             catch (Exception ex)
             {
-                this.ProcessException(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;

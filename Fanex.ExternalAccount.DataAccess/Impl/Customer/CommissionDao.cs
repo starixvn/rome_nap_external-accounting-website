@@ -7,14 +7,15 @@
 
 namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
 {
+    using System;
     using System.Collections;
     using System.Data;
     using Fanex.Data;
     using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DataAccess.Impl.Base;
     using Fanex.ExternalAccount.DataAccess.Interface.Customer;
-    using Fanex.ExternalAccount.DTO;
     using Fanex.PTEngine.BusinessObjects;
+    using Logging.Extensions.Database;
 
     /// <summary>
     /// TODO: Update summary.
@@ -34,9 +35,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
             {
                 db.AddInParameter("custid", DbType.Int32, requestContext.TargetCustId);
                 db.AddInParameter("userid", DbType.Int32, requestContext.CustId);
-                reader = db.ExecuteReader();
-                reader.Read();
-                commission.ReadFromDataRecord(requestContext, reader);
+                try
+                {
+                    reader = db.ExecuteReader();
+                    reader.Read();
+                    commission.ReadFromDataRecord(requestContext, reader);
+                }
+                catch (Exception ex)
+                {
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
+                }
             }
 
             return commission;

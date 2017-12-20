@@ -194,6 +194,16 @@
                 }
             };
         }
+
+        if (!this.HideBullfighting) {
+            menuItems.bullfighting = {
+                name: "Edit Multiple Bullfighting",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleBullfighting(4, 3);
+                }
+            };
+        }
         
         if (this.AllowDoubleCommMaster) {
             menuItems.doubleComm = {
@@ -375,6 +385,16 @@
                 className: "iconEnableEdit",
                 callback: function () {
                     Fanex.ExtAcc.Customer.ShowEditMultipleLucky3(3, 2);
+                }
+            };
+        }
+
+        if (!this.HideBullfighting) {
+            menuItems.bullfighting = {
+                name: "Edit Multiple Bullfighting",
+                className: "iconEnableEdit",
+                callback: function () {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleBullfighting(3, 2);
                 }
             };
         }
@@ -922,6 +942,39 @@
                              Fanex.ExtAcc.Customer.isSuperEditMember = false;
                              Fanex.ExtAcc.Customer.isMasterEditMember = true;
                              Fanex.ExtAcc.Customer.ShowEditMultipleLucky3(3, 1);
+                         }
+                     }
+                 }
+             };
+         }
+
+         if (!this.HideBullfightingMember) {
+             menuItems.bullfighting = {
+                 name: "Bullfighting",
+                 className: "iconEnableEdit",
+                 items: {
+                     agentBullfighting: {
+                         name: "Edit Multiple Bullfighting",
+                         callback: function () {
+                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                             Fanex.ExtAcc.Customer.ShowEditMultipleBullfighting(2, 1);
+                         }
+                     },
+                     superBullfighting: {
+                         name: "Super Edit Multiple Bullfighting",
+                         callback: function () {
+                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                             Fanex.ExtAcc.Customer.ShowEditMultipleBullfighting(4, 1);
+                         }
+                     },
+                     masterBullfighting: {
+                         name: "Master Edit Multiple Bullfighting",
+                         callback: function () {
+                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                             Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                             Fanex.ExtAcc.Customer.ShowEditMultipleBullfighting(3, 1);
                          }
                      }
                  }
@@ -1802,6 +1855,75 @@ Fanex.ExtAcc.Customer.ShowEditMultipleLucky3 = function (uplineRoleId, targetRol
     }
     else {
         this.ShowEditSingleLucky3(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
+    }
+};
+
+Fanex.ExtAcc.Customer.ShowEditSingleBullfighting = function (custid, uplineRoleId, targetRoleId) {
+    document.getElementById('language').value = "en-US";
+    document.getElementById('productId').value = 30;
+    document.getElementById('customerLevel').value = targetRoleId;
+    document.getElementById('customerId').value = custid;
+    document.getElementById('isMultiple').value = false;
+    document.getElementById('uplineLevel').value = "";
+
+    if (this.CurrentLevel == this.Super) {
+        document.getElementById('uplineLevel').value = "";
+        document.getElementById('IsReadOnly').value = false;
+    }
+    else if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent) {
+        document.getElementById('uplineLevel').value = "";
+        document.getElementById('IsReadOnly').value = false;
+    }
+    else {
+        document.getElementById('uplineLevel').value = uplineRoleId;
+        document.getElementById('IsReadOnly').value = false;
+    }
+
+    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit Bullfighting Setting', 900, 750, false, false, 1);
+    $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+};
+
+Fanex.ExtAcc.Customer.ShowEditMultipleBullfighting = function (uplineRoleId, targetRoleId) {
+    var levelText = this.isSuperEditMember ? 'Super ' : this.isMasterEditMember ? 'Master ' : '';
+
+    if (this.IsMultiple) {
+        var Usernames = '';
+        var CustIds = '';
+        var userNamesArr = this.Names();
+        var custIdsArr = this.Ids()
+
+        var customerlength = userNamesArr.length;
+        for (var i = 0; i < customerlength; i++) {
+            var linkChar = i == customerlength - 1 ? "" : ", ";
+            Usernames += userNamesArr[i] + linkChar;
+            CustIds += custIdsArr[i] + linkChar;
+        }
+
+        document.getElementById('language').value = "en-US";
+        document.getElementById('productId').value = 30;
+        document.getElementById('customerLevel').value = targetRoleId;
+        document.getElementById('isMultiple').value = true;
+        document.getElementById('customerIds').value = CustIds;
+        document.getElementById('customerNames').value = Usernames;
+        document.getElementById('uplineLevel').value = "";
+
+        if (document.getElementById('customerIds').value == "") {
+            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Views/_blank.html'), levelText + 'Edit Multiple Bullfighting Setting', 900, 600, false, false, 1);
+            return;
+        }
+
+        if (this.CurrentLevel == this.Master || this.CurrentLevel == this.Agent || this.CurrentLevel == this.Super) {
+            document.getElementById('uplineLevel').value = "";
+        }
+        else {
+            document.getElementById('uplineLevel').value = uplineRoleId;
+        }
+
+        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple Bullfighting Setting', 900, 750, false, false, 1);
+        $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+    }
+    else {
+        this.ShowEditSingleBullfighting(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId);
     }
 };
 

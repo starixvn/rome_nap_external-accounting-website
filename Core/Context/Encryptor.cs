@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Web.UI;
-using Fanex.ExternalAccount.Utilities;
-using Fanex.Module.Logs.Services;
+using Fanex.Logging.Extensions.Web;
 
 namespace Fanex.ExternalAccount.Core.Context
 {
@@ -29,7 +29,7 @@ namespace Fanex.ExternalAccount.Core.Context
                 }
                 catch (Exception ex)
                 {
-                    Logs.Error(ex);
+                    ExceptionHandler.Handle(ex);
                 }
 
                 return "0000";
@@ -43,7 +43,7 @@ namespace Fanex.ExternalAccount.Core.Context
                 }
                 catch (Exception ex)
                 {
-                    Logs.Error(ex);
+                    ExceptionHandler.Handle(ex);
                 }
             }
         }
@@ -119,7 +119,7 @@ namespace Fanex.ExternalAccount.Core.Context
             }
             catch (Exception ex)
             {
-                ex.Write(Module.Logs.Formater.LogType.Warning);
+                ExceptionHandler.Handle(ex, TraceEventType.Warning);
             }
 
             return "cannot_decrypt_password";
