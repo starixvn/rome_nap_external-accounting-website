@@ -29,20 +29,18 @@
         </div>
     </div>
     <div class="bgTitle titleSearch">
-        <div class="searchBar clearfix">
-            <div class="pull-left text-select">@ViewLang.Select:</div>
-            <div class="status-select"  onclick="Fanex.ExtAcc.Customer.SelectAll('menuActive')">@ViewLang.All</div>
-            <div class="character">
+        <div class="pull-left searchBar">
+            <span class="text-select">@ViewLang.Select:</span>
+            <span class="status-select"  onclick="Fanex.ExtAcc.Customer.SelectAll('menuActive')">@ViewLang.All</span>
+            <span class="character">
                 |
-            </div>
-            <div class="status-select" onclick="Fanex.ExtAcc.Customer.SelectAll('menuInactive')">@ViewLang.None</div>
+            </span>
+            <span class="status-select" onclick="Fanex.ExtAcc.Customer.SelectAll('menuInactive')">@ViewLang.None</span>
         </div>
-        <div>
+        <div class="floatR">
             <div id="breadcrumbs">
             </div>
-            <div class="floatR">
-                <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel"></span>
-            </div>
+            <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel"></span>
         </div>
     </div>
     <div id="customerListGrid">

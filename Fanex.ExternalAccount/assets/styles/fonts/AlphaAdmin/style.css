@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'AlphaAdmin';
-  src:  url('fonts/AlphaAdmin.eot?m0i4on');
-  src:  url('fonts/AlphaAdmin.eot?m0i4on#iefix') format('embedded-opentype'),
-    url('fonts/AlphaAdmin.ttf?m0i4on') format('truetype'),
-    url('fonts/AlphaAdmin.woff?m0i4on') format('woff'),
-    url('fonts/AlphaAdmin.svg?m0i4on#AlphaAdmin') format('svg');
+  src:  url('fonts/AlphaAdmin.eot?byof56');
+  src:  url('fonts/AlphaAdmin.eot?byof56#iefix') format('embedded-opentype'),
+    url('fonts/AlphaAdmin.ttf?byof56') format('truetype'),
+    url('fonts/AlphaAdmin.woff?byof56') format('woff'),
+    url('fonts/AlphaAdmin.svg?byof56#AlphaAdmin') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,14 +24,17 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-skip-next:before {
+.icon-customer:before {
   content: "\e91d";
-}
-.icon-skip-previous:before {
-  content: "\e92d";
 }
 .icon-alert-circle-outline:before {
   content: "\e92c";
+}
+.icon-skip-next:before {
+  content: "\e92e";
+}
+.icon-skip-previous:before {
+  content: "\e92f";
 }
 .icon-excel:before {
   content: "\e92b";

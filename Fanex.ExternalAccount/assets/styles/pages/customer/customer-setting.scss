@@ -1,1 +1,10 @@
 ﻿@import "customer";
+
+#customerList {
+    .bgTitle  {
+        overflow: hidden;
+    }
+    .text-select {
+        display: inline-block;
+    }
+}

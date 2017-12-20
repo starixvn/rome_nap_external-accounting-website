@@ -667,13 +667,13 @@ Fanex.ExtAcc = {
     },
 
     AddPtInfoPage: function () {
-        if ($('.bet-type-detail-icon').length > 0) {
+        if ($('.icon-alert-circle-outline').length > 0) {
             return;
         }
         var headerPt = $('.headerPositionTaking').last();
         var infoDiv = document.createElement('DIV');
         infoDiv.setAttribute('title', 'Click to view PT info');
-        infoDiv.setAttribute('class', 'bet-type-detail-icon');
+        infoDiv.setAttribute('class', 'icon-alert-circle-outline');
         infoDiv.setAttribute('style', 'float: right; margin: 5px; z-index: 999999');
         infoDiv.innerHTML = '&nbsp;';
 

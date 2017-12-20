@@ -139,12 +139,10 @@
 
 
 .status-select {
-    float: left;
     cursor: pointer; 
     font-weight: bold;
 }
-.character {
-    float: left; 
+.character { 
     margin: -1px 5px 0px 5px; 
     color: #C9C9C9;
 }
@@ -156,8 +154,6 @@
     margin: 8px 0 0 3px;
 }
 #customerList #exporttoexcel {
-    position: relative;
-    top: -15px;
     border: none;
 }
 
@@ -219,8 +215,13 @@
 .viewNext
 {
 	float: left;
-	background: url("../../Images/arrow-icn.png") no-repeat center transparent !important;
 	width: 20px;
+    &:before {
+        content: '\e905';
+        font-family: 'AlphaAdmin';
+        font-size: 16px;
+        margin-left: 4px;
+    }
 }
 
 tr.rowSuspended td
