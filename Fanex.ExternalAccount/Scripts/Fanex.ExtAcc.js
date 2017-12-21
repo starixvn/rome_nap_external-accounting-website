@@ -415,7 +415,7 @@ Fanex.ExtAcc = {
 
                 $('.ui-autocomplete').hide();
 
-                $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?id=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=1'));
+                $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?custName=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=1'));
 
                 setTimeout(function () {
                     $('#txtLeftPanelUserName').focus();
@@ -437,7 +437,7 @@ Fanex.ExtAcc = {
 
             $('.ui-autocomplete').hide();
 
-            $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?id=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=1'));
+            $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?custName=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=1'));
         });
 
         $('#txtLeftPanelUserName').keyup(function (e) {
@@ -453,7 +453,7 @@ Fanex.ExtAcc = {
         this.BlockUI();
 
         username = username.formatString();
-        $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?id=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=' + pageIndex));
+        $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?custName=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=' + pageIndex));
     },
 
     ToggleSpliter: function () {

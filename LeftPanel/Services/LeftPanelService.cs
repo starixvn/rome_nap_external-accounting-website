@@ -7,7 +7,7 @@
 
     public interface LeftPanelService
     {
-        CustomerModel GetCustomerInfo(int actorId, string username, string groupName = "ACCDDD", int pageIndex = 1);
+        CustomerModel GetCustomerInfo(int actorId, string username, string groupName = "ACCDDD");
 
         Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit);
 

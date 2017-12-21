@@ -32,55 +32,31 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult Index()
+        public ActionResult Index(string custName = null, string uplineId = "ACCDDD")
         {
-            ViewBag.UserId = CurrentSession.UserId;
+            var userId = CurrentSession.UserId;
+            ViewBag.UserId = userId;
 
-            return View(LeftPanelIndexView);
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult GetData(string custId = null, string uplineId = "ACCDDD", int pageIndex = 1)
-        {
-            ViewBag.UserId = CurrentSession.UserId;
-            var checkCustomerBelongToSpecialSiteResult = CheckCustomerBelongToSpecialSite(custId);
-            if (!IsAdminHasPermissionOnCustomer(checkCustomerBelongToSpecialSiteResult.IsSpecialSite
-                                                || checkCustomerBelongToSpecialSiteResult.IsSpecialHeadline))
+            if(string.IsNullOrWhiteSpace(custName))
             {
-                return Content(
-                    "var model = null; $(\"div[data-ng-controller='NoInfoController']\").html(\"You don\'t have permission to access\")");
+                return View(LeftPanelIndexView);
             }
 
-            var model = _service.GetCustomerInfo(
-                CurrentSession.UserId, 
-                custId, 
-                uplineId,
-                pageIndex);
+            var checkingResult = CheckCustomerBelongToSpecialSite(custName);
+            if (!IsAdminHasPermissionOnCustomer(checkingResult.IsSpecialSite
+                                                || checkingResult.IsSpecialHeadline))
+            {
+                return RedirectToAction("NoPermission", "Shared");
+            }
 
-            model?.BuildCustomerSetting(CurrentSession.UserId, uplineId, custId);
+            var customerInfo = _service.GetCustomerInfo(
+                userId,
+                custName,
+                uplineId);
 
-            var result = "var model = " + JsonConvert.SerializeObject(
-                             model,
-                             Formatting.None,
-                             new JsonSerializerSettings
-                             {
-                                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                                 NullValueHandling = NullValueHandling.Ignore
-                             }) + ";";
+            customerInfo?.BuildCustomerSetting(userId, uplineId, custName);
 
-            return Content(result);
-        }
-
-        [HttpPost]
-        [AntiXSRFFilter]
-        public ActionResult ViewDownline(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
-        {
-            ViewBag.UserId = CurrentSession.UserId;
-
-            var model = _service.GetCustomerInfo(CurrentSession.UserId, id, uplineId, pageIndex);
-
-            return JsonBase(model);
+            return View(LeftPanelIndexView, customerInfo);
         }
 
         [HttpPost]

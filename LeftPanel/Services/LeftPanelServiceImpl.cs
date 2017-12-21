@@ -25,7 +25,7 @@
             this.dataAccess = dataAccess ?? new LeftPanelDaoImpl();
         }
 
-        public CustomerModel GetCustomerInfo(int actorId, string username, string groupName = "ACCDDD", int pageIndex = 1)
+        public CustomerModel GetCustomerInfo(int actorId, string username, string groupName = "ACCDDD")
         {
             var ds = dataAccess.GetCustomerInfo(
                 string.IsNullOrWhiteSpace(username)
