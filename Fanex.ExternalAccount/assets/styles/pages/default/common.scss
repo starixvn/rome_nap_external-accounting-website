@@ -74,6 +74,10 @@
     left: 0;
     bottom: 0;
     width: 100%;
+
+    @media screen and (min-device-width: 768px) and (orientation: portrait) {
+        top: 107px;
+    }
 }
 
 
@@ -126,7 +130,7 @@
     }
      
 
-    @media screen and (min-device-width: 1200px) {
+    @media screen and (min-device-width: 1300px) {
         left: 0;
     }
     
@@ -166,7 +170,7 @@
         background-color: #ddd;         
     }
 
-    @media screen and (min-device-width: 1200px) {
+    @media screen and (min-device-width: 1300px) {
         left: 398px;
     }
 
@@ -306,7 +310,7 @@
         left: 10px; 
     }
 
-    @media screen and (min-device-width: 1200px) {
+    @media screen and (min-device-width: 1300px) {
         left: 408px; 
     }
 

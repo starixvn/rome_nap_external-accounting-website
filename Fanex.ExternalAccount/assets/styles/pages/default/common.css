@@ -1153,6 +1153,9 @@ textarea {
   left: 0;
   bottom: 0;
   width: 100%; }
+  @media screen and (min-device-width: 768px) and (orientation: portrait) {
+    .main-content {
+      top: 107px; } }
 
 /* Customize autocomplete combobox */
 .ui-menu {
@@ -1200,7 +1203,7 @@ textarea {
       border-right: 1px solid #e0e1e4;
       background-color: #fff;
       opacity: 1; } }
-  @media screen and (min-device-width: 1200px) {
+  @media screen and (min-device-width: 1300px) {
     .splitter-panel {
       left: 0; } }
   .splitter-panel.expand-leftpanel {
@@ -1239,7 +1242,7 @@ textarea {
       bottom: 0;
       width: 10px;
       background-color: #ddd; } }
-  @media screen and (min-device-width: 1200px) {
+  @media screen and (min-device-width: 1300px) {
     .splitter-bar {
       left: 398px; } }
   .splitter-bar.collapse-leftpanel {
@@ -1355,7 +1358,7 @@ textarea {
   @media screen and (min-device-width: 768px) {
     .content {
       left: 10px; } }
-  @media screen and (min-device-width: 1200px) {
+  @media screen and (min-device-width: 1300px) {
     .content {
       left: 408px; } }
   .content.expand-content {
