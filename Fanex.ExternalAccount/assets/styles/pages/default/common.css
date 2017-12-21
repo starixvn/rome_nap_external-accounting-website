@@ -707,6 +707,9 @@ textarea {
 
 .filterbox {
   padding: 12px 0; }
+  @media all and (max-device-width: 480px) {
+    .filterbox .label {
+      width: 62px !important; } }
 
 /*********** Customize Calendar Jquery UI ************/
 /*@font-face {
