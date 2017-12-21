@@ -45,11 +45,11 @@
                 Details = Details()
             };
 
-            model.AddProductSetting(table3rdDCS, 21, "Allbet", eFunctions.AllbetBetting, false);
-            model.AddProductSetting(table3rdDCS, 22, "Macau Games", eFunctions.VoidbridgeBetting);
-            model.AddProductSetting(table3rdDCS, 23, "NG2", eFunctions.NG2Betting, getFromRemotingRef: true);
+            model.AddProductSetting(table3rdDCS, 21, "Allbet", false);
+            model.AddProductSetting(table3rdDCS, 22, "Macau Games");
+            model.AddProductSetting(table3rdDCS, 23, "NG2", getFromRemotingRef: true);
             model.AddProductSetting(table3rdDCS, 24, "Fishing World");
-            model.AddProductSetting(table3rdDCS, 28, "Lottery", eFunctions.LotteryBetting);
+            model.AddProductSetting(table3rdDCS, 28, "Lottery");
             model.AddProductSetting(table3rdDCS, 26, "Lucky 3");
         }
 

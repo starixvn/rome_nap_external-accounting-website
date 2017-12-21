@@ -27,9 +27,11 @@
 
         public CustomerModel GetCustomerInfo(int actorId, string username, string groupName = "ACCDDD", int pageIndex = 1)
         {
-
             var ds = dataAccess.GetCustomerInfo(
-                string.IsNullOrWhiteSpace(username) ? string.Empty : username, groupName);
+                string.IsNullOrWhiteSpace(username)
+                    ? string.Empty
+                    : username,
+                groupName);
 
             if (ds == null || ds.Tables.Count <= 0)
             {
@@ -37,17 +39,17 @@
             }
 
             var model = new CustomerModel();
-
             var tableCustomer = ds.Tables[0];
-            var roleId = Utils.ToInt32(tableCustomer.Rows[0]["roleid"]);
+            var customerInfoRow = tableCustomer.Rows[0];
+            var roleId = Utils.ToInt32(customerInfoRow["roleid"]);
 
-            model.HasDownline = Utils.ToBoolean(tableCustomer.Rows[0]["HasDownline"]);
-            model.UplineHasSecurityCode = Utils.ToBoolean(tableCustomer.Rows[0]["UplineHasSecurityCode"]);
+            model.HasDownline = Utils.ToBoolean(customerInfoRow["HasDownline"]);
+            model.UplineHasSecurityCode = Utils.ToBoolean(customerInfoRow["UplineHasSecurityCode"]);
 
             model.BalanceInfo(ds);
             model.PersonalInfo(ds);
             model.LoginInfo(ds);
-            model.CurrencyId = tableCustomer.Rows[0].ToInt32("exchangeid");
+            model.CurrencyId = customerInfoRow.ToInt32("exchangeid");
 
             if (roleId.IsSuper())
             {
@@ -69,8 +71,8 @@
             return model;
         }
 
-        public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit) =>
-            dataAccess.UpdateGivenCredit(id, uplineId, newGivenCredit);
+        public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit) 
+            => dataAccess.UpdateGivenCredit(id, uplineId, newGivenCredit);
 
         public DataTable GetDownlineList(int custid, int pageSize, int pageIndex, out int totalPages)
         {
@@ -86,7 +88,6 @@
 
             return dr.ResultSet.Tables[0];
         }
-        
 
         public OnlineList GetOnlineList(int custId)
         {
@@ -96,10 +97,7 @@
                 model.Onlines.Add(new OnlineInfo
                 (
                     new ObjectInfo { Text = CustomerModelExtensions.CheckVNIP(row.ToString("ip")) },
-                    new ObjectInfo
-                    {
-                        Text = Utils.ToDateTime(row["reload_time"]).ToStringExt()
-                    }
+                    new ObjectInfo { Text = Utils.ToDateTime(row["reload_time"]).ToStringExt() }
                 ));
             }
             return model;
@@ -190,8 +188,7 @@
         public Result EnableHrFixedOdds(int id, bool enable, bool enableDownline) =>
             dataAccess.EnableHRFixedOdds(id, enable, enableDownline);
 
-        public Result
-            UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId) =>
+        public Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId) =>
             dataAccess.UpdateGoldDeluxe(id, enable, enableDownline, custName, userId);
 
         public Result RemoveOtp(int custId) => dataAccess.RemoveOTP(new RemoveOtpCriteria

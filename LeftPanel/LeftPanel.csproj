@@ -208,6 +208,7 @@
     <Compile Include="Controllers\SearchCustomerController.cs" />
     <Compile Include="Controllers\UpdateCustomerController.cs" />
     <Compile Include="Criteria\RemoveOTPCriteria.cs" />
+    <Compile Include="Extensions\CustomerStatusExtensions.cs" />
     <Compile Include="Extensions\DisableSettingExtensions.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\MemberModelExtensions.cs" />

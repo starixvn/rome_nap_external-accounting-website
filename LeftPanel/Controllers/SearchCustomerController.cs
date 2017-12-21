@@ -41,10 +41,10 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult GetData(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
+        public ActionResult GetData(string custId = null, string uplineId = "ACCDDD", int pageIndex = 1)
         {
             ViewBag.UserId = CurrentSession.UserId;
-            var checkCustomerBelongToSpecialSiteResult = CheckCustomerBelongToSpecialSite(id);
+            var checkCustomerBelongToSpecialSiteResult = CheckCustomerBelongToSpecialSite(custId);
             if (!IsAdminHasPermissionOnCustomer(checkCustomerBelongToSpecialSiteResult.IsSpecialSite
                                                 || checkCustomerBelongToSpecialSiteResult.IsSpecialHeadline))
             {
@@ -52,16 +52,13 @@
                     "var model = null; $(\"div[data-ng-controller='NoInfoController']\").html(\"You don\'t have permission to access\")");
             }
 
-            var model = _service.GetCustomerInfo(CurrentSession.UserId, string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId,
+            var model = _service.GetCustomerInfo(
+                CurrentSession.UserId, 
+                custId, 
+                uplineId,
                 pageIndex);
 
-            ////var productStatusInfo = model.Get3rdPartyProducts(
-            ////    CurrentSession.UserId, 
-            ////    uplineId, 
-            ////    id, 
-            ////    model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
-
-            model?.BuildCustomerSetting(CurrentSession.UserId, uplineId, id);
+            model?.BuildCustomerSetting(CurrentSession.UserId, uplineId, custId);
 
             var result = "var model = " + JsonConvert.SerializeObject(
                              model,
