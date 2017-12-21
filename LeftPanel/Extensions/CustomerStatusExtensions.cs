@@ -44,12 +44,12 @@
 
                 if (roleId.IsSuper())
                 {
-                    custData = new SuperService().GetData(userId, custId, null, null, null, groupName);
+                    custData = new SuperService().GetData(userId, custId, groupName: groupName);
                 }
                 else if (roleId.IsMaster())
                 {
                     custData = new MasterService().GetData(userId, srecommend, custId);
-                    upperInfo = new SuperService().GetData(userId, uplineId, null, null, null, groupName);
+                    upperInfo = new SuperService().GetData(userId, uplineId, groupName: groupName);
                 }
                 else if (roleId.IsAgent())
                 {

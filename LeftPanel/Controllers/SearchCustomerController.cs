@@ -391,7 +391,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.EnableGoldDeluxe,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult UpdateGoldDeluxe(int custId, int uplineId, bool enable, bool enableDownline,
+        public ActionResult UpdateGoldDeluxe(int custId, bool enable, bool enableDownline,
             string custName)
         {
             try

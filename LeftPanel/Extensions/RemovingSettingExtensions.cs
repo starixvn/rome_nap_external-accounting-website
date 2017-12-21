@@ -107,7 +107,7 @@
         }
 
         private static void RemoveLucky3Setting(CustomerModel model, CustomerStatus product)
-         => model.RemoveEnableAndEditProductDCS(
+         => model.RemoveProduct(
                             product.RoleId,
                             product.RoleId.IsNotSuper() ? product.UplineStatus.HideLucky3 : product.HideLucky3,
                             product.RoleId.IsNotSuper() ? product.UplineStatus.SyncLucky3 : product.SyncLucky3,
@@ -117,7 +117,7 @@
                             "Lucky3");
 
         private static void RemoveLotterySetting(CustomerModel model, CustomerStatus product)
-        => model.RemoveEnableAndEditProductDCS(
+        => model.RemoveProduct(
                             product.RoleId,
                             product.RoleId.IsNotSuper() ? product.UplineStatus.HideLottery : product.HideLottery,
                             product.RoleId.IsNotSuper() ? product.UplineStatus.SyncLottery : product.SyncLottery,
@@ -127,7 +127,7 @@
                             "Lottery");
 
         private static void RemoveFishingWorldSetting(CustomerModel model, CustomerStatus product)
-        => model.RemoveEnableAndEditProductDCS(
+        => model.RemoveProduct(
                             product.RoleId,
                             product.RoleId.IsNotSuper() ? product.UplineStatus.HideFishingWorld : product.HideFishingWorld,
                             product.RoleId.IsNotSuper() ? product.UplineStatus.SyncFishingWorld : product.SyncFishingWorld,
@@ -137,7 +137,7 @@
                             "FishingWorld");
 
         private static void RemoveNG2Setting(CustomerModel model, CustomerStatus product)
-        => model.RemoveEnableAndEditProductDCS(
+        => model.RemoveProduct(
                             product.RoleId,
                             product.RoleId.IsNotSuper() ? product.UplineStatus.HideNG2 : product.HideNG2,
                             product.RoleId.IsNotSuper() ? product.UplineStatus.SyncNG2 : product.SyncNG2,
@@ -147,7 +147,7 @@
                             "NG2");
 
         private static void RemoveMacauGamesSetting(CustomerModel model, CustomerStatus product)
-        => model.RemoveEnableAndEditProductDCS(
+        => model.RemoveProduct(
                             product.RoleId,
                             product.RoleId.IsNotSuper() ? product.UplineStatus.HideVoidbridge : product.HideVoidbridge,
                             product.RoleId.IsNotSuper() ? product.UplineStatus.SyncVoidbridge : product.SyncVoidbridge,
@@ -158,7 +158,7 @@
                             false);
 
         private static void RemoveAllbetSetting(CustomerModel model, CustomerStatus product)
-        => model.RemoveEnableAndEditProductDCS(
+        => model.RemoveProduct(
                             product.RoleId,
                             product.RoleId.IsNotSuper() ? product.UplineStatus.HideAllbet : product.HideAllbet,
                             product.RoleId.IsNotSuper() ? product.UplineStatus.SyncAllbet : product.SyncAllbet,
@@ -168,7 +168,7 @@
                             "Allbet",
                             false);
 
-        private static CustomerModel RemoveEnableAndEditProductDCS(
+        private static CustomerModel RemoveProduct(
             this CustomerModel model,
             int roleId,
             bool hideUpline,
@@ -179,8 +179,7 @@
             string productName,
             bool isCheckSyncDownlineField = true)
         {
-            if ((roleId.IsNotMember() && hide)
-                || (roleId.IsMember() && hideUpline))
+            if (IsHideProduct(roleId, hideUpline, hide))
             {
                 return model.RemoveProduct(roleId, productName, true);
             }
@@ -196,9 +195,7 @@
                 return model.RemoveProduct(roleId, productName, false);
             }
 
-            if ((!sync && roleId.IsMember())
-                || (!hide && !sync)
-                || (isCheckSyncDownlineField && !syncDownline))
+            if (IsSyncedProduct(roleId, hide, sync, syncDownline, isCheckSyncDownlineField))
             {
                 return model.RemoveProduct(roleId, productName, false);
             }
@@ -206,6 +203,14 @@
             return model;
         }
 
+        private static bool IsSyncedProduct(int roleId, bool hide, bool sync, bool syncDownline, bool isCheckSyncDownlineField)
+            => (!sync && roleId.IsMember())
+                            || (!hide && !sync)
+                            || (isCheckSyncDownlineField && !syncDownline);
+
+        private static bool IsHideProduct(int roleId, bool hideUpline, bool hide)
+            => (roleId.IsNotMember() && hide)
+                            || (roleId.IsMember() && hideUpline);
 
         private static void RemoveCricketSetting(CustomerModel model, CustomerStatus product)
         {
