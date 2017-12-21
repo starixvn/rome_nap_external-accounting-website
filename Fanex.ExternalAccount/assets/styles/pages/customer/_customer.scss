@@ -18,7 +18,17 @@
         font-size: 20px;
     }
 }
-
+.bet-type-detail-icon {
+    background: none !important;
+    &:before {
+        content: '\e92e';
+        font-family: AlphaAdmin;
+        font-size: 16px;
+    }
+    &:hover:before {
+        color: #b50000;
+    }
+}
 
 .customerInfoBlock1, .customerInfoBlock2, .customerInfoBlock3, .customerInfoBlock4,
 .GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, 

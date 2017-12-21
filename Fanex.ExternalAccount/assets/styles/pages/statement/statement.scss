@@ -23,28 +23,26 @@
     color: #996600 !important;
 }
 
+.filterbox {
+    position: relative;
+    .icon-excel {
+        position: absolute;
+        right: 16px;
+    }
+}
 .note-info-message {
     font-family: "AlphaAdmin";
-    display: inline-block;
-    height: 16px;
-    margin: 6px 0 -3px 10px;
-    width: 16px;
-    font-size: 20px;
     color: #4872eb;
+    cursor: pointer;
 
     &:before {
         content: "\e92e";
+        font-size: 18px;
     }
 
     &:hover {
 
     }
-}
-
-.note-info-message:hover
-{
-    background-position: 0 -16px;
-    cursor: pointer;
 }
 
 #StatementUsername {

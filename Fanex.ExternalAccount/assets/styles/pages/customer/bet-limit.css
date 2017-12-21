@@ -11,6 +11,15 @@
     font-family: 'AlphaAdmin' !important;
     font-size: 20px; }
 
+.bet-type-detail-icon {
+  background: none !important; }
+  .bet-type-detail-icon:before {
+    content: '\e92e';
+    font-family: AlphaAdmin;
+    font-size: 16px; }
+  .bet-type-detail-icon:hover:before {
+    color: #b50000; }
+
 .customerInfoBlock1, .customerInfoBlock2, .customerInfoBlock3, .customerInfoBlock4,
 .GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel,
 .BettingLimitItem9, .BettingLimitItem, .BettingLimitItem4, .BettingLimitItem5,

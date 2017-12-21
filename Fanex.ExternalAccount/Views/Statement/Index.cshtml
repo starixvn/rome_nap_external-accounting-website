@@ -20,9 +20,28 @@
         </div>
     </div>
     <div class="search-form filterbox">
-        <div class="searchBar floatL w100">
+        <div class="searchBar floatL">
             <input type="hidden" id="MaxDate" value="@DateTime.Now"/>
-            <div class="wFrom">@ViewLang.From</div>
+            <div class="form-group">
+                <div class="label">@ViewLang.From</div>
+                <input id="dtpFromDate" type="text" readonly="readonly" />
+            </div>
+            <div class="form-group">
+                <div class="label">@ViewLang.To</div>
+                <input id="dtpToDate" type="text" readonly="readonly" />
+            </div>
+            <div class="form-group">
+                <input type="button" value="Submit" id='Submit' class="btn -submit" />
+                <span id="view-guidelines-icon" class="note-info-message" title=""></span>
+            </div>
+            <div class="form-group">
+                <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel"></span>
+            </div>
+
+
+
+
+            @*<div class="wFrom">@ViewLang.From</div>
             <div class="floatL">
                 <input id="dtpFromDate" type="text" readonly="readonly" />
             </div>
@@ -34,7 +53,7 @@
                 <input type="button" value="Submit" id='Submit' class="btn -submit" />
             </div>
             <span id="view-guidelines-icon" class="note-info-message" title=""></span>
-            <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel"></span>
+            <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel"></span>*@
         </div>
     </div>
     <div id="mainGrid">
