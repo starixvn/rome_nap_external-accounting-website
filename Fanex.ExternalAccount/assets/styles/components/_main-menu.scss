@@ -24,7 +24,7 @@
         height: 6px;
         width: 6px;
         margin-top: -7px;
-	    border: 1px solid #949494;
+	    border: 1px solid #cbcbcb;
 	    border-width: 1px 1px 0 0;
         @include transform(rotate(135deg));
     }
@@ -34,7 +34,7 @@
     }
 
     .link {
-        color: #878f9c;
+        color: #cbcbcb;
         width: 100%;
 
         &:hover, &.active {

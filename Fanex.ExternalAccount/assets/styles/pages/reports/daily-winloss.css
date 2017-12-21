@@ -4,8 +4,7 @@
 
 #mainGrid {
   width: 100%;
-  overflow: auto;
-  max-height: 715px; }
+  overflow: auto; }
 
 .frozen-div {
   border-right: 1px solid #999 !important;

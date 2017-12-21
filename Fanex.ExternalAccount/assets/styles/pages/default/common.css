@@ -251,7 +251,7 @@ a {
   height: 6px;
   width: 6px;
   margin-top: -7px;
-  border: 1px solid #949494;
+  border: 1px solid #cbcbcb;
   border-width: 1px 1px 0 0;
   -webkit-transform: rotate(135deg);
   -khtml-transform: rotate(135deg);
@@ -264,7 +264,7 @@ a {
   border-color: #fff; }
 
 .main-menu .link {
-  color: #878f9c;
+  color: #cbcbcb;
   width: 100%; }
   .main-menu .link:hover, .main-menu .link.active {
     color: #fff; }

@@ -35,6 +35,14 @@
     }  
 }
 
+.filter-winloss-detail .user-group  {
+    position: relative;
+    .ui-multiselect-options {
+        position: absolute;
+        top: 0 !important;
+    }
+}
+
 .last-item {
     padding-left: 66px;
 }
@@ -80,7 +88,7 @@
 
 
 .ui-multiselect-options {
-    margin-top: 34px !important;
+    margin-top: 33px !important;
 }
 
 #DateList {
@@ -124,24 +132,58 @@ span.selectedMonth {
 .monPickrWrapParent .monPickrWrap {
     position: relative !important;
     border-radius: 0 !important;
-
+    border: none;
+    background: initial;
+    &:hover {
+        box-shadow: none;
+    }
     .monPickr {
         height: unset;
         padding: 6px 2px;
         border-radius: 0 !important;
-
+        background: #fff;
+        border: 1px solid #7b7c7e;
+        .prev:before, .next:before {
+            font-family: 'AlphaAdmin';
+            font-size: 20px;
+            color: #000;
+        }
+        .prev {
+            &:before {
+                content: '\e932';
+            }
+        }
         .next {
             top: 6px;
-        }
+            right: 6px;
+            left: unset;
+            &:before {
+                content: '\e931';
+            }
+        }   
+        
     }
 }
 
 .selectedDayWrapParent .selectedDayWrap {
     width: 60px;
     border-radius: 0 !important;
-
+    border: 1px solid #7b7c7e;
+    &:hover {
+        box-shadow: none;
+    }
     .dayPickr {
         height: unset;
+        background: #fff;
+        .darr:before {
+            content: '\e925';
+            font-family: 'AlphaAdmin';
+            font-size: 19px;
+            position: relative;
+            top: 5px;
+            right: 2px;
+            color: #000;
+        }
     }
 }
 
