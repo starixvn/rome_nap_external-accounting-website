@@ -589,11 +589,6 @@ Fanex.ExtAcc.WinLossDetail = {
         }
     },
     renderReport: function (data) {
-        //$this.totalRows = 1000;
-        //for (var i = 0; i < 999; i++) {
-        //    $this.dataSource.push($this.dataSource[0]);
-        //}
-
         $this.hideColumnByLevel();
 
         var grandTotal = {

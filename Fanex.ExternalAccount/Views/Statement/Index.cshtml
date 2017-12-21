@@ -1,7 +1,5 @@
 ﻿@using Fanex.ExternalAccount.Utilities
-@using Fanex.ExternalAccount.Controllers.Statement
 @using System.Web.Optimization
-@using Fanex.ExternalAccount.Core.Base;
 @using Fanex.Module.Statement.Resources;
 @using Fanex.Module.Statement.Configurations;
 @using Fanex.ExternalAccount.Service.Impl.Report;
@@ -10,7 +8,7 @@
     var isInternalCustomer = 0;
     var newLayoutDate = string.Format("{0:MM/dd/yyyy}", StatementSection.Instance.NewLayoutDate);
     var balanceUpDay = string.Format("{0:MM/dd/yyyy}", ReportService.BalanceUpDate);
-    var moveBetsDay = string.Format("{0:MM/dd/yyyy}", ReportService.MoveBetsDate); 
+    var moveBetsDay = string.Format("{0:MM/dd/yyyy}", ReportService.MoveBetsDate);
 }
 
 <div>
@@ -21,7 +19,7 @@
     </div>
     <div class="search-form filterbox">
         <div class="searchBar floatL">
-            <input type="hidden" id="MaxDate" value="@DateTime.Now"/>
+            <input type="hidden" id="MaxDate" value="@DateTime.Now" />
             <div class="form-group">
                 <div class="label">@ViewLang.From</div>
                 <input id="dtpFromDate" type="text" readonly="readonly" />
@@ -57,31 +55,56 @@
         </div>
     </div>
     <div id="mainGrid">
-        <div id="jqgrid" class="removeRadius freegrid content-grid">
-        </div>
-        <div id="GridContainer" class="freegrid">
-        </div>
-        </div>       
+        <table id="tbl-report-old" class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="col-110">Date</div>
+                    </th>
+                    <th>
+                        <div class="col-remark">Remark</div>
+                    </th>
+                    <th>
+                        <div class="col-160">Total</div>
+                    </th>
+                    <th>
+                        <div class="col-160">Accumulated Total</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+        </table>
+        <table id="tbl-report-new" class="table">
+            <thead></thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+        </table>
+    </div>
     <div id='msgNoinfo'>
-        There is no data.</div>  
+        There is no data.
+    </div>
 
     <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
     <input type="hidden" id="CustId" value="@Request.QueryString["id"]" />
     <input type="hidden" id="username" value="@Request.QueryString["username"]" />
     @Html.AntiForgeryToken()
 </div>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.draggable.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.linkbutton.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.parser.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.resizable.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.pagination.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js")"></script>
 <script type="text/javascript">
     var domain = '@Url.Content("~/")';
     var isInternalCustomer = @isInternalCustomer;
     var balanceUpDay = '@balanceUpDay';
-    var moveBetsDay = '@moveBetsDay'; 
+    var moveBetsDay = '@moveBetsDay';
     var newLayoutDate = '@newLayoutDate';
     var _username = $('#username').val();
-    var statementResources = {           
+    var statementResources = {
         Invalid_Date_Range: '@Labels.Invalid_Date_Range',
         Date: "@Labels.Date",
         Opening_Balance: "@Labels.Opening_Balance",
@@ -99,12 +122,12 @@
         GrandPrize: '@Labels.GrandPrize'
     };
 </script>
-<script type="text/javascript" src="@Url.Content("~/Areas/Statement/Views/Report/Scripts/StatementReportManager.js")" ></script>
+<script type="text/javascript" src="@Url.Content("~/Areas/Statement/Views/Report/Scripts/StatementReportManager.js")"></script>
 @if (HttpContext.Current.IsDebuggingEnabled)
 {
-    <script src="@Url.Content("~/Scripts/Statement/Fanex.ExtAcc.Statement.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Statement/Fanex.ExtAcc.Statement.js")"></script>
 }
 else
 {
-    <script src="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/Statement/js")" type="text/javascript"></script>
+    <script type="text/javascript" src="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/Statement/js")"></script>
 }

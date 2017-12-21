@@ -1,6 +1,6 @@
 ﻿/// <reference path="../_references.js" />
 if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
-    alert("Fanex.ExtAcc.js module is required!")
+    alert("Fanex.ExtAcc.js module is required!");
 }
 
 Fanex.ExtAcc.Statement = {
@@ -38,20 +38,27 @@ Fanex.ExtAcc.Statement = {
 
         $("#dtpFromDate").datepicker({
             changeYear: true,
-            onClose: function (date) {
-            }, showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', dateFormat: 'M dd, yy'
+            onClose: function (date) { },
+            showOn: 'both',
+            buttonImageOnly: true,
+            buttonImage: resolveClientUrl('Content/Images/calendar.png'),
+            buttonText: '', dateFormat: 'M dd, yy'
         });
+
         $("#dtpFromDate").val($.datepicker.formatDate('M dd, yy', new Date($('#MaxDate').val())));
 
         $("#dtpToDate").datepicker({
             changeYear: true,
-            onClose: function (date) {
-            }, showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', dateFormat: 'M dd, yy'
+            onClose: function (date) { },
+            showOn: 'both',
+            buttonImageOnly: true,
+            buttonImage: resolveClientUrl('Content/Images/calendar.png'),
+            buttonText: '', dateFormat: 'M dd, yy'
         });
         $("#dtpToDate").val($.datepicker.formatDate('M dd, yy', new Date($('#MaxDate').val())));
 
-        $("#dtpFromDate").datepicker("option", "minDate", new Date(newLayoutDate));
-        $("#dtpToDate").datepicker("option", "minDate", new Date(newLayoutDate));
+        // $("#dtpFromDate").datepicker("option", "minDate", new Date(newLayoutDate));
+        // $("#dtpToDate").datepicker("option", "minDate", new Date(newLayoutDate));
 
         $('#ddlGroupName').bind('change', function (event) {
             var args = event.args;
@@ -103,13 +110,6 @@ Fanex.ExtAcc.Statement = {
         $this.groupName = indexes[indexes.length - 1];
         $this.Databind();
 
-        Fanex.ExtAcc.OnResize = function () {
-            try {
-                $("#jqgrid").fanexGrid("resizeGrid");
-            }
-            catch (err) { }
-        };
-
         $("#view-guidelines-icon").click(function () {
             var criteria = {
                 username: _username
@@ -128,75 +128,6 @@ Fanex.ExtAcc.Statement = {
                     false);
             });
         });
-    },
-    RenderUsernameColumn: function (cell) {
-        if (cell == null || cell.Value.Username == 'Grand Total' || $this.viewlevel < 2) {
-            return '<div style="line-height: 22px; text-align: left; padding-left: 3px">' + cell.Value.Username + '</div>';
-        }
-        else {
-            var func = "javascript: Fanex.ExtAcc.Statement.GetDownlineStatement('" + cell.Value.CustId + "')";
-            return html = '<div style="line-height: 22px; text-align: left;"><a style="text-decoration: none;margin:0" href="' + func + '">' + cell.Value.Username + '</a></div>';
-        }
-    },
-    defaultColumns: [
-        { HeaderText: 'Date', Name: 'Date', Width: 110, HeaderAlign: "center", CellAlign: 'center' },
-        { HeaderText: 'Remark', Name: 'Remark', Width: 502, HeaderAlign: "center" },
-        { HeaderText: 'Total', Name: 'TotalAmt', Width: 160, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Accumulated Total', Name: 'AccumulatedTotal', Width: 160, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$', AllowTruncate: false }
-        ],
-    Render: function () {
-        var gridOption = {
-            columns: this.defaultColumns,
-            gridExpandHeight: 120,
-            showPager: true,
-            pagerOption: {
-                itemsPerPageArray: [100, 300, 500],
-                currentPage: 0,
-                totalItem: $this.totalRows,
-                itemsPerPage: 100
-            },
-            showDistinctRow: false,
-            allowTruncate: true
-        };
-
-        //// Assing BodyData
-        var bodyData = [];
-        var accumulatedTotal = 0;
-        var isText = false;
-        var ballanceResult = "OK";
-        for (var i = 0; i < this.totalRows; i++) {
-            isText = false;
-            if (this.dataSource[i].TransType.toUpperCase() == 'BAL' && this.dataSource[i].TransDesc.toUpperCase() != 'ACCUMULATED BALANCE') {
-                isText = true;
-                if (Math.abs(accumulatedTotal - this.dataSource[i].TotalAmt) < 0.00001 || i == 0) {
-                    ballanceResult = "<span class='StatementOK'>OK</span>";
-                }
-                else {
-                    accumulatedTotal = accumulatedTotal - this.dataSource[i].TotalAmt;
-                    ballanceResult = "NOT EQUAL<br/><b>Diff: " + numeral(accumulatedTotal).format('0,0.00') + "</b>";
-                }
-            }
-            else {
-                accumulatedTotal = this.dataSource[i].TotalAmt + accumulatedTotal;
-            }
-
-            bodyData.push({
-                Columns: [
-                { Name: "Date", Value: this.dataSource[i].AccDate },
-                { Name: "Remark", Value: '<b>' + this.dataSource[i].TransType + '<br/> - ' + this.dataSource[i].TransDesc + '</b>' },
-                { Name: "TotalAmt", Value: this.dataSource[i].TotalAmt },
-                { Name: "AccumulatedTotal", Value: isText ? ballanceResult : accumulatedTotal }
-            ]
-            })
-
-            if (isText) {
-                accumulatedTotal = this.dataSource[i].TotalAmt;
-            }
-        }
-
-        gridOption.bodyRows = bodyData;
-        gridOption.pagerOption.totalItem = this.totalRows;
-        return gridOption;
     },
     GetFromDateToDate: function () {
         if ($("#GroupFromToDate").css('display') != 'none') {
@@ -246,8 +177,8 @@ Fanex.ExtAcc.Statement = {
             }
 
             if (statementReportManager.IsUseNewLayout(criteria)) {
-                $('#mainGrid').css('visibility', 'visible');
-                $("#jqgrid").addClass('hidden');
+                $('#mainGrid').removeClass("hide");
+                $("#tbl-report-old").addClass('hide');
                 statementReportManager.getStatementReport(criteria);
                 $('#exporttoexcel').css('display', 'block');
                 return;
@@ -255,9 +186,10 @@ Fanex.ExtAcc.Statement = {
         }
 
         $('#mainGrid').css('visibility', 'hidden');
-        $("#GridContainer").addClass('hidden');
-        $("#jqgrid").addClass('hidden');
+        $("#tbl-report-new").addClass('hide');
+        $("#tbl-report-old").addClass('hide');
         $('#exporttoexcel').css('display', 'none');
+
         var parameterUrl = "?groupname=" + this.groupName
                             + "&custid=" + this.custId
                             + "&fromdate=" + this.fromdate
@@ -288,7 +220,7 @@ Fanex.ExtAcc.Statement = {
                 $('#msgNoinfo').css('display', $this.totalRows < 1 ? 'block' : 'none');
 
                 if ($this.totalRows > 0) {
-                    $("#jqgrid").removeClass('hidden').fanexGrid($this.Render());
+                    $this.renderReport();
                 }
 
                 Fanex.ExtAcc.UnBlockUI();
@@ -296,7 +228,110 @@ Fanex.ExtAcc.Statement = {
             error: function () {
                 Fanex.ExtAcc.UnBlockUI();
             }
-        })
+        });
+    },
+
+    renderReport: function () {
+        var bodyContent = $this.renderBody();
+        var footerContent = $this.renderFooter();
+
+        $("#tbl-report-old tbody").empty().append(bodyContent);
+        $("#tbl-report-old tfoot").empty().append(footerContent);
+        $("#tbl-report-old").removeClass('hide');
+
+        $this.renderPager();
+    },
+    renderBody: function () {
+        var html = '';
+
+        var accumulatedTotal = 0;
+        var balanceResult;
+
+        for (var i = 0; i < this.totalRows; i++) {
+            var row = this.dataSource[i];
+
+            if (row.TransType.toUpperCase() === 'BAL' &&
+                row.TransDesc.toUpperCase() !== 'ACCUMULATED BALANCE') {
+                balanceResult = $this.getBalanceResult(row, accumulatedTotal, i);
+                accumulatedTotal = row.TotalAmt;
+            }
+            else {
+                accumulatedTotal += row.TotalAmt;
+                balanceResult = "";
+            }
+
+            html += '<tr class="hide">\
+                        <td class="align-center">' + row.AccDate + '</td>\
+                        <td>' +
+                            '<b>' +
+                                row.TransType +
+                                '<br/> - ' + row.TransDesc +
+                            '</b>' +
+                        '</td>\
+                        <td class="align-right">' + $this.renderNegativeNumber(row.TotalAmt) + '</td>\
+                        <td class="align-right">' +
+                            (balanceResult !== "" ? balanceResult : $this.renderNegativeNumber(accumulatedTotal)) +
+                        '</td>\
+                     </tr>';
+        }
+
+        return html;
+    },
+    getBalanceResult: function (row, accumulatedTotal, i) {
+        if (Math.abs(accumulatedTotal - row.TotalAmt) < 0.00001 || i === 0) {
+            return "<span class='StatementOK'>OK</span>";
+        }
+
+        return "NOT EQUAL<br/><b>Diff: " + numeral(accumulatedTotal - row.TotalAmt).format('0,0.00') + "</b>";
+    },
+    renderNegativeNumber: function (value) {
+        var html = numeral(value).format('0,0.00');
+
+        return value < 0 ? '<span class="format-negative">' + html + '</span>' : html;
+    },
+    renderFooter: function () {
+        var html = '<tr><td colspan="4"><div id="report-pager"></div></td></tr>';
+
+        return html;
+    },
+    pageSize: 100,
+    pageIndex: 1,
+    bodyRows: null,
+    renderPager: function () {
+        $this.bodyRows = $("#tbl-report-old > tbody > tr");
+
+        $("#report-pager").pagination({
+            pageList: [100, 300, 500],
+            total: $this.totalRows,
+            pageSize: $this.pageSize,
+            pageNumber: $this.pageIndex,
+
+            showRefresh: false,
+            onSelectPage: $this.onSelectPage,
+            beforePageText: "Page",
+            afterPageTex: "of {pages}",
+            displayMsg: "Displaying {from} to {to} of {total} items"
+        });
+
+        $this.showBodyRows();
+    },
+    onSelectPage: function (pageNumber, pageSize) {
+        $this.pageSize = pageSize;
+        $this.pageIndex = pageNumber;
+        $this.showBodyRows();
+    },
+    showBodyRows: function () {
+        if (!$this.totalRows) {
+            return;
+        }
+
+        var startIndex = $this.pageSize * ($this.pageIndex - 1);
+        var endIndex = startIndex + $this.pageSize;
+
+        $this.bodyRows.addClass("hide");
+        for (var i = startIndex; i < endIndex && i < $this.totalRows; i++) {
+            $($this.bodyRows[i]).removeClass("hide");
+        }
     }
 };
 
