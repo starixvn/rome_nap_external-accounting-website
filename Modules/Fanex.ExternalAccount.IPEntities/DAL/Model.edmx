@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="IPDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="IPDBModelStoreContainer">
+          <EntitySet Name="IPTable" EntityType="IPDBModel.Store.IPTable" store:Type="Tables" store:Schema="dbo" store:Name="IPTable">
+            <DefiningQuery>SELECT 
+      [IPTable].[ipKeyFrom] AS [ipKeyFrom], 
+      [IPTable].[ipKeyTo] AS [ipKeyTo], 
+      [IPTable].[ipFrom] AS [ipFrom], 
+      [IPTable].[ipTo] AS [ipTo], 
+      [IPTable].[countrySHORT] AS [countrySHORT], 
+      [IPTable].[countryLONG] AS [countryLONG], 
+      [IPTable].[ipRegion] AS [ipRegion], 
+      [IPTable].[ipCity] AS [ipCity], 
+      [IPTable].[IsModified] AS [IsModified], 
+      [IPTable].[IsException] AS [IsException]
+      FROM [dbo].[IPTable] AS [IPTable]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="IPVN" EntityType="IPDBModel.Store.IPVN" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'IPDB.dbo.IPTable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="IPTable">
+          <Key>
+            <PropertyRef Name="ipKeyFrom" />
+            <PropertyRef Name="ipKeyTo" />
+            <PropertyRef Name="ipFrom" />
+            <PropertyRef Name="ipTo" />
+            <PropertyRef Name="countrySHORT" />
+            <PropertyRef Name="countryLONG" />
+            <PropertyRef Name="ipRegion" />
+            <PropertyRef Name="ipCity" />
+          </Key>
+          <Property Name="ipKeyFrom" Type="tinyint" Nullable="false" />
+          <Property Name="ipKeyTo" Type="tinyint" Nullable="false" />
+          <Property Name="ipFrom" Type="bigint" Nullable="false" />
+          <Property Name="ipTo" Type="bigint" Nullable="false" />
+          <Property Name="countrySHORT" Type="varchar" Nullable="false" MaxLength="2" />
+          <Property Name="countryLONG" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="ipRegion" Type="varchar" Nullable="false" MaxLength="128" />
+          <Property Name="ipCity" Type="varchar" Nullable="false" MaxLength="128" />
+          <Property Name="IsModified" Type="bit" />
+          <Property Name="IsException" Type="bit" />
+        </EntityType>
+        <EntityType Name="IPVN">
+          <Key>
+            <PropertyRef Name="IPFrom" />
+            <PropertyRef Name="IPTo" />
+          </Key>
+          <Property Name="IPFrom" Type="bigint" Nullable="false" />
+          <Property Name="IPTo" Type="bigint" Nullable="false" />
+          <Property Name="isManual" Type="bit" />
+        </EntityType>
+        <Function Name="Acc_GetIPInfo_Full" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IP" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetIPVN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IPDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="IPEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="IPTable" EntityType="IPDBModel.IPTable" />
+          <EntitySet Name="IPVN" EntityType="IPDBModel.IPVN" />
+          <FunctionImport Name="GetIPInfo_Full" EntitySet="IPTable" ReturnType="Collection(IPDBModel.IPTable)">
+          <Parameter Name="IP" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetIPVN" EntitySet="IPVN" ReturnType="Collection(IPDBModel.IPVN)" />
+        </EntityContainer>
+        <EntityType Name="IPTable">
+          <Key>
+            <PropertyRef Name="ipKeyFrom" />
+            <PropertyRef Name="ipKeyTo" />
+            <PropertyRef Name="ipFrom" />
+            <PropertyRef Name="ipTo" />
+            <PropertyRef Name="countrySHORT" />
+            <PropertyRef Name="countryLONG" />
+            <PropertyRef Name="ipRegion" />
+            <PropertyRef Name="ipCity" />
+          </Key>
+          <Property Name="ipKeyFrom" Type="Byte" Nullable="false" />
+          <Property Name="ipKeyTo" Type="Byte" Nullable="false" />
+          <Property Name="ipFrom" Type="Int64" Nullable="false" />
+          <Property Name="ipTo" Type="Int64" Nullable="false" />
+          <Property Name="countrySHORT" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+          <Property Name="countryLONG" Type="String" Nullable="false" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="ipRegion" Type="String" Nullable="false" MaxLength="128" Unicode="false" FixedLength="false" />
+          <Property Name="ipCity" Type="String" Nullable="false" MaxLength="128" Unicode="false" FixedLength="false" />
+          <Property Name="IsModified" Type="Boolean" />
+          <Property Name="IsException" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="IPVN">
+          <Key>
+            <PropertyRef Name="IPFrom" />
+            <PropertyRef Name="IPTo" />
+          </Key>
+          <Property Name="IPFrom" Type="Int64" Nullable="false" />
+          <Property Name="IPTo" Type="Int64" Nullable="false" />
+          <Property Name="isManual" Type="Boolean" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IPDBModelStoreContainer" CdmEntityContainer="IPEntities">
+          <EntitySetMapping Name="IPTable"><EntityTypeMapping TypeName="IPDBModel.IPTable"><MappingFragment StoreEntitySet="IPTable">
+            <ScalarProperty Name="ipKeyFrom" ColumnName="ipKeyFrom" />
+            <ScalarProperty Name="ipKeyTo" ColumnName="ipKeyTo" />
+            <ScalarProperty Name="ipFrom" ColumnName="ipFrom" />
+            <ScalarProperty Name="ipTo" ColumnName="ipTo" />
+            <ScalarProperty Name="countrySHORT" ColumnName="countrySHORT" />
+            <ScalarProperty Name="countryLONG" ColumnName="countryLONG" />
+            <ScalarProperty Name="ipRegion" ColumnName="ipRegion" />
+            <ScalarProperty Name="ipCity" ColumnName="ipCity" />
+            <ScalarProperty Name="IsModified" ColumnName="IsModified" />
+            <ScalarProperty Name="IsException" ColumnName="IsException" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="IPVN"><EntityTypeMapping TypeName="IPDBModel.IPVN"><MappingFragment StoreEntitySet="IPVN">
+            <ScalarProperty Name="IPFrom" ColumnName="IPFrom" />
+            <ScalarProperty Name="IPTo" ColumnName="IPTo" />
+            <ScalarProperty Name="isManual" ColumnName="isManual" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetIPInfo_Full" FunctionName="IPDBModel.Store.Acc_GetIPInfo_Full" />
+          <FunctionImportMapping FunctionImportName="GetIPVN" FunctionName="IPDBModel.Store.GetIPVN" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model">
+        <EntityTypeShape EntityType="IPDBModel.IPTable" Width="1.5" PointX="0.75" PointY="0.75" Height="2.9417936197916665" IsExpanded="true" />
+        <EntityTypeShape EntityType="IPDBModel.IPVN" Width="1.5" PointX="2.75" PointY="0.75" Height="1.5956835937499996" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
