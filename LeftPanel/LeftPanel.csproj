@@ -208,6 +208,7 @@
     <Compile Include="Controllers\SearchCustomerController.cs" />
     <Compile Include="Controllers\UpdateCustomerController.cs" />
     <Compile Include="Criteria\RemoveOTPCriteria.cs" />
+    <Compile Include="Extensions\DisableSettingExtensions.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\MemberModelExtensions.cs" />
     <Compile Include="Extensions\AgentModelExtensions.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="Extensions\CustomerModelExtensions.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Extensions\RemovingSettingExtensions.cs" />
     <Compile Include="Extensions\SuperModelExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -236,7 +238,7 @@
     <Compile Include="ViewModels\OnlineInfo.cs" />
     <Compile Include="ViewModels\OnlineList.cs" />
     <Compile Include="ViewModels\PersonalInfo.cs" />
-    <Compile Include="ViewModels\ProductStatuses.cs" />
+    <Compile Include="ViewModels\CustomerStatus.cs" />
     <Compile Include="ViewModels\Setting.cs" />
     <Compile Include="ViewModels\Status.cs" />
     <Compile Include="ViewModels\MasterAgentUsedCreditItem.cs" />

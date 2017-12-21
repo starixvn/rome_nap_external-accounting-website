@@ -61,7 +61,7 @@
             ////    id, 
             ////    model.PersonalInfo.UplineId == null ? 0 : (int)model.PersonalInfo.UplineId.Value);
 
-            model?.GetProductStatuses(CurrentSession.UserId, uplineId, id);
+            model?.BuildCustomerSetting(CurrentSession.UserId, uplineId, id);
 
             var result = "var model = " + JsonConvert.SerializeObject(
                              model,

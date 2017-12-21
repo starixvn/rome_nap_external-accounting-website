@@ -45,12 +45,12 @@
                 Details = Details()
             };
 
-            model.AddEnableAndDetailProduct(table3rdDCS, 21, "Allbet", eFunctions.AllbetBetting, false);
-            model.AddEnableAndDetailProduct(table3rdDCS, 22, "Macau Games", eFunctions.VoidbridgeBetting);
-            model.AddEnableAndDetailProduct(table3rdDCS, 23, "NG2", eFunctions.NG2Betting, getFromRemotingRef: true);
-            model.AddEnableAndDetailProduct(table3rdDCS, 24, "Fishing World");
-            model.AddEnableAndDetailProduct(table3rdDCS, 28, "Lottery", eFunctions.LotteryBetting);
-            model.AddEnableAndDetailProduct(table3rdDCS, 26, "Lucky 3");
+            model.AddProductSetting(table3rdDCS, 21, "Allbet", eFunctions.AllbetBetting, false);
+            model.AddProductSetting(table3rdDCS, 22, "Macau Games", eFunctions.VoidbridgeBetting);
+            model.AddProductSetting(table3rdDCS, 23, "NG2", eFunctions.NG2Betting, getFromRemotingRef: true);
+            model.AddProductSetting(table3rdDCS, 24, "Fishing World");
+            model.AddProductSetting(table3rdDCS, 28, "Lottery", eFunctions.LotteryBetting);
+            model.AddProductSetting(table3rdDCS, 26, "Lucky 3");
         }
 
         private static List<ObjectInfo> EnableItems(DataRow customerRow, DataTable table3rdDCS)
@@ -108,7 +108,7 @@
                 new ObjectInfo ("Cricket",  "Edit Cricket" )
             };
 
-        public static CustomerModel GetSuperMasterPtsOnMember(this CustomerModel model)
+        public static CustomerModel GetSuperMasterSettingOnMember(this CustomerModel model)
         {
             model.Setting.SuperPts.Clear();
             model.Setting.MasterPts.Clear();
