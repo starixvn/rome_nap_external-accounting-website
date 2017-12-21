@@ -365,20 +365,40 @@ Fanex.ExtAcc = {
         var iconCollapseExpand = $("#collapseExpandOnDesktop");
         var content = $("#contentSplitter");
         var splitterBar = $("#splitterBar");
+
+        var widthDevice = $(window).width();
+        var heightDevice = $(window).height();
+        if (widthDevice >= 768 && widthDevice <= 1200) {
+            iconCollapseExpand.removeClass("icon-chevron-left").addClass("icon-chevron-right");
+            iconCollapseExpand.on("click", function () {
+                if (!iconCollapseExpand.hasClass("active")) {
+                    iconCollapseExpand.removeClass("icon-chevron-right").addClass("icon-chevron-left").addClass("active");
+                    leftSplitter.removeClass("collapse-leftpanel").addClass("expand-leftpanel");
+                    content.addClass("collapse-content");
+                    splitterBar.addClass("expand-leftpanel");                    
+                } else {
+                    iconCollapseExpand.removeClass("icon-chevron-left").addClass("icon-chevron-right").removeClass("active");
+                    leftSplitter.addClass("collapse-leftpanel").removeClass("expand-leftpanel");
+                    content.removeClass("collapse-content");
+                    splitterBar.removeClass("expand-leftpanel");
+                }
+            });
+        } else {
+            iconCollapseExpand.on("click", function () {
+                if (!iconCollapseExpand.hasClass("active")) {
+                    iconCollapseExpand.removeClass("icon-chevron-left").addClass("icon-chevron-right").addClass("active");
+                    leftSplitter.addClass("collapse-leftpanel").removeClass("expand-leftpanel");
+                    content.addClass("expand-content");
+                    splitterBar.addClass("collapse-leftpanel");
+                } else {
+                    iconCollapseExpand.removeClass("icon-chevron-right").addClass("icon-chevron-left").removeClass("active");
+                    leftSplitter.removeClass("collapse-leftpanel").addClass("expand-leftpanel");
+                    content.removeClass("expand-content");
+                    splitterBar.removeClass("collapse-leftpanel");
+                }
+            });
+        }
         
-        iconCollapseExpand.on("click", function () {
-            if(!iconCollapseExpand.hasClass("active")) { 
-                iconCollapseExpand.removeClass("icon-chevron-left").addClass("icon-chevron-right").addClass("active");
-                leftSplitter.addClass("collapse-leftpanel").removeClass("expand-leftpanel");
-                content.addClass("expand-content");
-                splitterBar.addClass("collapse-leftpanel");
-            } else {
-                iconCollapseExpand.removeClass("icon-chevron-right").addClass("icon-chevron-left").removeClass("active");
-                leftSplitter.removeClass("collapse-leftpanel").addClass("expand-leftpanel");
-                content.removeClass("expand-content");
-                splitterBar.removeClass("collapse-leftpanel");
-            }            
-        });
 
         $(window).resize(function () {
             Fanex.ExtAcc.Resize();

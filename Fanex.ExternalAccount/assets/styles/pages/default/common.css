@@ -1194,14 +1194,21 @@ textarea {
   -webkit-overflow-scrolling: touch; }
   @media screen and (min-device-width: 768px) {
     .splitter-panel {
-      left: 0;
+      left: -100%;
       width: 398px;
       padding-top: 16px;
       border-right: 1px solid #e0e1e4;
       background-color: #fff;
       opacity: 1; } }
+  @media screen and (min-device-width: 1200px) {
+    .splitter-panel {
+      left: 0; } }
   .splitter-panel.expand-leftpanel {
     left: 0;
+    width: 398px;
+    padding-top: 16px;
+    border-right: 1px solid #e0e1e4;
+    background-color: #fff;
     opacity: 1;
     -webkit-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
     -khtml-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
@@ -1226,14 +1233,19 @@ textarea {
     .splitter-bar {
       display: block;
       position: absolute;
-      left: 398px;
+      left: 0;
       right: 0;
       top: 0;
       bottom: 0;
       width: 10px;
       background-color: #ddd; } }
+  @media screen and (min-device-width: 1200px) {
+    .splitter-bar {
+      left: 398px; } }
   .splitter-bar.collapse-leftpanel {
     left: 0; }
+  .splitter-bar.expand-leftpanel {
+    left: 398px; }
 
 .icon-collapse-on-desktop {
   position: absolute;
@@ -1342,9 +1354,14 @@ textarea {
   overflow: auto; }
   @media screen and (min-device-width: 768px) {
     .content {
+      left: 10px; } }
+  @media screen and (min-device-width: 1200px) {
+    .content {
       left: 408px; } }
   .content.expand-content {
     left: 10px; }
+  .content.collapse-content {
+    left: 408px; }
 
 /* Title */
 .page-title {
