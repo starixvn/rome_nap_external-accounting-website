@@ -15,7 +15,9 @@
 @import "../../layout/header";
 @import "../../layout/sidebar";
 
-
+body {
+    background-color: #f1f1f2;
+}
 
 .icon-alert-circle-outline {
     font-size: 16px;
@@ -118,44 +120,41 @@
     background-color: #404c64;
     z-index: 1000;
     opacity: 0;
-    -webkit-overflow-scrolling: touch;   
     
     @media screen and (min-device-width: 768px) {
-        left: -100%;
         width: 398px;
+        left: -100%;
         padding-top: 16px;  
         border-right: 1px solid #e0e1e4;  
         background-color: #fff;
         opacity: 1;
-    }
-     
+    }     
 
     @media screen and (min-device-width: 1300px) {
         left: 0;
-    }
-    
+    }    
 
-    &.expand-leftpanel {        
-        left: 0;
+    &.expand-leftpanel {  
+        @include transition(left .2s ease-in .1s, opacity .1s ease-out);         
         width: 398px;
+        left: 0;
         padding-top: 16px;  
         border-right: 1px solid #e0e1e4;  
         background-color: #fff;
         opacity: 1;
-        @include transition(left .2s ease-in .1s, opacity .1s ease-out);
     }
 
     &.expand-leftpanel-mobile {        
-        left: 0;
-        opacity: 1;
         @include transition(left .2s ease-in .1s, opacity .1s ease-out);
+        left: 0;
+        opacity: 1;        
     }
 
 
-    &.collapse-leftpanel {        
+    &.collapse-leftpanel {  
+        @include transition(left .2s ease-in .1s, opacity .2s ease-in .2s);      
         left: -100%;
         opacity: 0;
-        @include transition(left .2s ease-in .1s, opacity .2s ease-in .2s);
     }
 }
 
@@ -167,13 +166,17 @@
 
     @media screen and (min-device-width: 768px) {
         display: block;
-        position: absolute;
+        position: fixed;
         left: 0;
         right: 0;
-        top: 0;
+        top: 60px;
         bottom: 0;
         width: 10px;
-        background-color: #ddd;         
+        background-color: #ddd;       
+        
+        @media screen and (orientation: portrait) {
+            top: 106px;
+        }  
     }
 
     @media screen and (min-device-width: 1300px) {

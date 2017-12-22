@@ -5,7 +5,8 @@
 @import "../../base/scaffolding";
 
 body {
-    color: #fff;
+    background-color: #fff;
+    color: #fff; 
 
     @media screen and (min-device-width: 768px) {
         color: #232428;

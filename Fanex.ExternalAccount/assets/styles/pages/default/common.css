@@ -143,6 +143,7 @@ a {
   padding-right: 10px;
   border: none;
   outline: none;
+  text-indent: 0;
   -webkit-appearance: none; }
   .btn.-reset {
     background-color: #e04d4d;
@@ -756,7 +757,7 @@ textarea {
   margin: 0; }
 
 .header {
-  position: relative;
+  position: fixed;
   float: left;
   width: 100%;
   min-height: 60px;
@@ -866,7 +867,6 @@ textarea {
 
 @media (min-device-width: 678px) {
   .header {
-    position: relative;
     min-height: 60px; }
     .header .group-user {
       float: left;
@@ -1013,6 +1013,9 @@ textarea {
   .sidebar {
     display: none; } }
 
+body {
+  background-color: #f1f1f2; }
+
 .icon-alert-circle-outline {
   font-size: 16px;
   cursor: pointer; }
@@ -1098,12 +1101,11 @@ textarea {
   width: 100%;
   background-color: #404c64;
   z-index: 1000;
-  opacity: 0;
-  -webkit-overflow-scrolling: touch; }
+  opacity: 0; }
   @media screen and (min-device-width: 768px) {
     .splitter-panel {
-      left: -100%;
       width: 398px;
+      left: -100%;
       padding-top: 16px;
       border-right: 1px solid #e0e1e4;
       background-color: #fff;
@@ -1112,36 +1114,36 @@ textarea {
     .splitter-panel {
       left: 0; } }
   .splitter-panel.expand-leftpanel {
-    left: 0;
+    -webkit-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
+    -khtml-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
+    -moz-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
+    -ms-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
+    -o-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
+    transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
     width: 398px;
+    left: 0;
     padding-top: 16px;
     border-right: 1px solid #e0e1e4;
     background-color: #fff;
-    opacity: 1;
-    -webkit-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
-    -khtml-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
-    -moz-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
-    -ms-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
-    -o-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
-    transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out; }
+    opacity: 1; }
   .splitter-panel.expand-leftpanel-mobile {
-    left: 0;
-    opacity: 1;
     -webkit-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
     -khtml-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
     -moz-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
     -ms-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
     -o-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
-    transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out; }
+    transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
+    left: 0;
+    opacity: 1; }
   .splitter-panel.collapse-leftpanel {
-    left: -100%;
-    opacity: 0;
     -webkit-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
     -khtml-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
     -moz-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
     -ms-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
     -o-transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
-    transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s; }
+    transition: left 0.2s ease-in 0.1s, opacity 0.2s ease-in 0.2s;
+    left: -100%;
+    opacity: 0; }
 
 /* Collapse/ expend left-panel */
 .splitter-bar {
@@ -1149,13 +1151,16 @@ textarea {
   @media screen and (min-device-width: 768px) {
     .splitter-bar {
       display: block;
-      position: absolute;
+      position: fixed;
       left: 0;
       right: 0;
-      top: 0;
+      top: 60px;
       bottom: 0;
       width: 10px;
       background-color: #ddd; } }
+  @media screen and (min-device-width: 768px) and (orientation: portrait) {
+    .splitter-bar {
+      top: 106px; } }
   @media screen and (min-device-width: 1300px) {
     .splitter-bar {
       left: 398px; } }

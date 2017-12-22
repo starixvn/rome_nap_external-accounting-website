@@ -7,7 +7,7 @@
 }
 
 .header {
-    position: relative;
+    position: fixed;
     float: left;
     width: 100%;
     min-height: 60px;
@@ -161,7 +161,6 @@
 
 @media (min-device-width: 678px) {    
     .header {
-        position: relative;
         min-height: 60px;
 
         .group-user {
