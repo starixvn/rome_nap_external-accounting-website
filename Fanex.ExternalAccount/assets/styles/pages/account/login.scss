@@ -2,12 +2,20 @@
 @import "../../abstracts/mixins";
 
 body {
+    padding: 0;
+    margin: 0;
+    background-color: $block-bg;
 	font-family: $font-family;
     font-size: $font-size;
-    color: $text-color;
-	background-image: url("../../images/bg-pattern.png");
-    padding: 10% 0 0;
-    margin: 0;
+    color: $text-color; 
+    
+    @media screen and (min-device-width: 768px) {
+        padding-top: 10%;
+    }
+
+    @media screen and (min-device-width: 768px) and (orientation: portrait) {
+        padding-top: 200px;
+    }
 }
 
 * {
@@ -16,13 +24,17 @@ body {
 
 .block-login {
 	margin: auto;
-	width: 350px;
-	min-height: 260px;
-    padding: 24px 24px 38px;
-	border: 1px solid #c7c7c7;
-    background-color: $block-bg;
-	@include border-radius(5px);
-    @include box-shadow-multiple(0px 7px 15px #b9b9b9);
+	width: 100%;	
+    padding: 24px 24px 38px;	
+    background-color: $block-bg;    
+
+    @media screen and (min-device-width: 768px) {
+        @include border-radius(5px);
+        @include box-shadow-multiple(0px 7px 15px #b9b9b9);
+        width: 350px;
+        min-height: 260px;
+        border: 1px solid #c7c7c7;        
+    }
 }
 
 .login-logo {
@@ -139,32 +151,24 @@ body {
 /* Validation */
 
 .hint {
+    @include border-radius(2px);
+    @include box-sizing(content-box); 
     display: none;
     position: absolute;
 	height: auto !important;
-    padding: 12px;
-    white-space: nowrap;
-    border-radius: 2px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
+    padding: 6px 12px;
+    white-space: nowrap;   
     min-width: 150px;
     background-color: #ffc;
-    margin-top: -4px;
     border: 1px solid #c93;
     z-index: 999999;
-    font-size: 13px;
-    @include box-sizing(content-box);    
+    font-size: 13px;       
 }
 
-@media (max-width: 767px) {
-    body {
-        background: $block-bg;
-        padding-top: 0;
-    }
+.hint .hint-pointer:before {
+    top: -14px;
+}
 
-    .block-login {
-        width: 100%;
-        border: none;
-        @include box-shadow-multiple(none);
-    }
+.hint .hint-pointer:after {
+    top: -11px;
 }

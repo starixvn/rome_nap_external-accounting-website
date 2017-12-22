@@ -101,7 +101,7 @@ Fanex.ExtAcc.Account = {
         iconNav.on("click", function () {
             if (iconUserInfo.hasClass('active')) {
                 leftPanel.fadeIn("fast", function () {
-                    leftPanel.removeClass("expand-leftpanel");
+                    leftPanel.removeClass("expand-leftpanel-mobile");
                     iconUserInfo.removeClass("active");
                 });
             }
@@ -124,12 +124,12 @@ Fanex.ExtAcc.Account = {
             }
             
             if (!iconUserInfo.hasClass('active')) {
-                leftPanel.addClass("expand-leftpanel").addClass("show").show("fast");
+                leftPanel.addClass("expand-leftpanel-mobile").addClass("show").show("fast");
                 iconUserInfo.addClass("active");
 
             } else {
                 leftPanel.show("fast", function () {
-                    leftPanel.removeClass("expand-leftpanel");
+                    leftPanel.removeClass("expand-leftpanel-mobile");
                     iconUserInfo.removeClass("active");
                 });
             }

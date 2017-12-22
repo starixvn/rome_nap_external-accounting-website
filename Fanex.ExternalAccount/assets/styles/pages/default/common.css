@@ -773,10 +773,6 @@ textarea {
     margin-left: 20px; }
 
 /* Icons */
-.icon-reset-password {
-  background: url(../../images/sprites.png) no-repeat;
-  display: inline-block; }
-
 .icon-user {
   font-size: 20px;
   color: #fff; }
@@ -789,11 +785,6 @@ textarea {
     position: absolute;
     left: -5px;
     top: -4px; }
-
-.icon-reset-password {
-  background-position: -7px -305px;
-  height: 24px;
-  width: 22px; }
 
 .icon-logout, .icon-lock-reset {
   font-size: 18px;
@@ -885,7 +876,7 @@ textarea {
     .header .main-menu {
       float: left;
       display: inline-block; } }
-    @media screen and (min-device-width: 678px) and (min-device-width: 768px) and (orientation: portrait) {
+    @media screen and (min-device-width: 678px) and (orientation: portrait) {
       .header .main-menu {
         float: none;
         display: block;
@@ -908,8 +899,6 @@ textarea {
     position: relative;
     top: 4px;
     margin-right: 20px; }
-  .info .list .icon-reset-password {
-    top: 12px; }
   .info .list .circle {
     margin-right: 20px;
     padding: 10px;
@@ -1126,6 +1115,15 @@ textarea {
     padding-top: 16px;
     border-right: 1px solid #e0e1e4;
     background-color: #fff;
+    opacity: 1;
+    -webkit-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
+    -khtml-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
+    -moz-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
+    -ms-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
+    -o-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
+    transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out; }
+  .splitter-panel.expand-leftpanel-mobile {
+    left: 0;
     opacity: 1;
     -webkit-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
     -khtml-transition: left 0.2s ease-in 0.1s, opacity 0.1s ease-out;
