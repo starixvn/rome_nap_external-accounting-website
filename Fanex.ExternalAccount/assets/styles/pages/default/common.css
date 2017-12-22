@@ -710,7 +710,8 @@ textarea {
 
 .ui-datepicker td {
   height: 50px;
-  width: 50px; }
+  width: 50px;
+  text-align: center; }
   @media all and (min-device-width: 768px) {
     .ui-datepicker td {
       height: 32px;
@@ -745,6 +746,7 @@ textarea {
     left: 1px; }
     @media all and (min-device-width: 768px) {
       .ui-datepicker-current-day .ui-state-default {
+        display: inline-block;
         height: 25px;
         width: 26px; } }
 

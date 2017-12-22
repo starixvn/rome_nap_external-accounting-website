@@ -1,8 +1,9 @@
 ﻿/* File Created: May 10, 2012 */
 /* The hint to Hide and Show */
 .hint {
-	padding: 6px 12px;
+	padding: 6px 12px !important;
     white-space: nowrap;
+    line-height: 1;
     border-radius: 2px;
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
