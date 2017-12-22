@@ -9,31 +9,34 @@
 <div id="errMsg" style="margin: 5px 0px 30px 0px; display: none;" class="successMsg">
 </div>
 <table id="tblInner" style="width: 100%" class="table">
-    <tr>
-        <th rowspan="2">
-            <input type="hidden" id="UserID" value="@ViewBag.UserID" />@ViewLang.Functions
-        </th>
-        <th colspan="2" style="width: 120px">
-            @ViewLang.UserPermission
-        </th>
-        <th colspan="2" style="width: 120px">
-            @ViewLang.GroupPermission
-        </th>
-    </tr>
-    <tr>
-        <th style="width: 60px">
-            @ViewLang.Read
-        </th>
-        <th style="width: 60px">
-            @ViewLang.Write
-        </th>
-        <th style="width: 60px">
-            @ViewLang.Read
-        </th>
-        <th style="width: 60px">
-            @ViewLang.Write
-        </th>
-    </tr>
+    <thead>
+        <tr>
+            <th rowspan="2">
+                <input type="hidden" id="UserID" value="@ViewBag.UserID" />@ViewLang.Functions
+            </th>
+            <th colspan="2" style="width: 120px">
+                @ViewLang.UserPermission
+            </th>
+            <th colspan="2" style="width: 120px">
+                @ViewLang.GroupPermission
+            </th>
+        </tr>
+        <tr>
+            <th style="width: 60px">
+                @ViewLang.Read
+            </th>
+            <th style="width: 60px">
+                @ViewLang.Write
+            </th>
+            <th style="width: 60px">
+                @ViewLang.Read
+            </th>
+            <th style="width: 60px">
+                @ViewLang.Write
+            </th>
+        </tr>
+    </thead>    
+    
     @foreach (Function fn in funcs)
     {
         var className = "";
