@@ -243,7 +243,7 @@ Fanex.ExtAcc.Menus = {
         });
 
         $('#jqbutton').bind('click', function () {
-            Fanex.ExtAcc.Form.Show(resolveClientUrl("Menu/AddMenu"), $.parseJSON(menuTitles).Create, 400, 460, false);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl("Menu/AddMenu"), $.parseJSON(menuTitles).Create, 400, 500, false);
         });
 
         Fanex.ExtAcc.OnResize = function () {
@@ -278,7 +278,7 @@ Fanex.ExtAcc.Menus = {
             resolveClientUrl('Menu/EditMenu/' + menuId),
             title,
             400,
-            460,
+            500,
             false);
     },
 

@@ -266,7 +266,7 @@ Fanex.ExtAcc.Function = {
             resolveClientUrl('Function/EditFunction/' + funcId),
             title,
             410,
-            460,
+            500,
             false,
             function () {
                 var url = resolveClientUrl("Function/PolicyList/?funcId=" + $('#FuncID').val());
@@ -391,7 +391,7 @@ Fanex.ExtAcc.Function = {
     },
 
     AddNew: function () {
-        Fanex.ExtAcc.Form.Show(resolveClientUrl("Function/AddFunction"), $.parseJSON(menuTitles).CreateFunction, 400, 460, false, function () {
+        Fanex.ExtAcc.Form.Show(resolveClientUrl("Function/AddFunction"), $.parseJSON(menuTitles).CreateFunction, 400, 500, false, function () {
             var url = resolveClientUrl("Function/PolicyList/?funcId=1&addNew=true");
             var itemsChecked = '';
 
