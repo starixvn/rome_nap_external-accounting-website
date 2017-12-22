@@ -1,24 +1,4 @@
-﻿/*@font-face {
-  font-family: 'AlphaAdmin';
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}*/
-/*@font-face {
-  font-family: 'AlphaAdmin';
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}*/
-@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700");
+﻿@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700");
 ::-webkit-scrollbar {
   height: 16px;
   overflow: visible;
@@ -150,16 +130,6 @@ a {
 .text-center {
   text-align: center; }
 
-/*@font-face {
-  font-family: 'AlphaAdmin';
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}*/
 .btn {
   -webkit-border-radius: 2px;
   -khtml-border-radius: 2px;
@@ -172,6 +142,7 @@ a {
   padding-left: 10px;
   padding-right: 10px;
   border: none;
+  outline: none;
   -webkit-appearance: none; }
   .btn.-reset {
     background-color: #e04d4d;
@@ -216,16 +187,6 @@ a {
       background-color: #637187;
       color: #fff; }
 
-/*@font-face {
-  font-family: 'AlphaAdmin';
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}*/
 .main-menu > .menu {
   height: auto;
   -webkit-transition: all 0.2s ease-in 0.1s;
@@ -304,16 +265,6 @@ a {
     min-width: 140px;
     transition: all 0.2s ease-in 0.1s; } }
 
-/*@font-face {
-  font-family: 'AlphaAdmin';
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}*/
 .freegrid .grid-container.container {
   padding: 0; }
 
@@ -332,7 +283,6 @@ a {
 .freegrid .free-top-left table thead th, .freegrid .col_header table thead th {
   background: #6f7d95;
   color: #fff;
-  font-size: 14px;
   font-weight: 400 !important;
   text-align: center; }
 
@@ -355,7 +305,7 @@ a {
   background-color: #eae9ee !important; }
 
 .freegrid td, .freegrid .grid-fixed-table td {
-  font-size: 14px; }
+  font-size: 13px; }
 
 .freegrid .freegrid-even td {
   background-color: #eae9ee; }
@@ -377,16 +327,6 @@ a {
 .freegrid .column-truncate {
   display: block; }
 
-/*@font-face {
-  font-family: 'AlphaAdmin';
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}*/
 .table {
   border: 1px solid #d3d3d3;
   border-collapse: collapse; }
@@ -471,16 +411,6 @@ a {
   font-weight: bold;
   background: #f1f1a6; }
 
-/*@font-face {
-  font-family: 'AlphaAdmin';
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}*/
 .successMsg, .errMsg {
   -webkit-border-radius: 2px;
   -khtml-border-radius: 2px;
@@ -508,16 +438,6 @@ a {
   border: 1px solid #bcba7d;
   color: #7e3d00; }
 
-/*@font-face {
-  font-family: 'AlphaAdmin';
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}*/
 /* 4 corners */
 .ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
   border-bottom-right-radius: 0px !important; }
@@ -601,6 +521,8 @@ a {
   .form-add .form-control {
     margin-left: 10px;
     height: 32px; }
+  .form-add .text-info {
+    margin-left: 10px; }
   .form-add .textarea {
     height: 150px; }
   .form-add .width-100 {
@@ -712,16 +634,6 @@ textarea {
       width: 62px !important; } }
 
 /*********** Customize Calendar Jquery UI ************/
-/*@font-face {
-  font-family: 'AlphaAdmin';
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}*/
 .ui-icon {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: "AlphaAdmin" !important;
@@ -1010,16 +922,6 @@ textarea {
     -o-border-radius: 50%;
     border-radius: 50%; } }
 
-/*@font-face {
-  font-family: 'AlphaAdmin';
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0');
-  src:  url('../fonts/AlphaAdmin/fonts/AlphaAdmin.eot?ov9kl0#iefix') format('embedded-opentype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.ttf?ov9kl0') format('truetype'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.woff?ov9kl0') format('woff'),
-    url('../fonts/AlphaAdmin/fonts/AlphaAdmin.svg?ov9kl0#AlphaAdmin') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}*/
 /* Icons */
 .menu [class^="icon-"] {
   position: relative;
@@ -1387,7 +1289,7 @@ textarea {
   height: 50px;
   line-height: 50px;
   background-color: #fff;
-  font-size: 15px; }
+  font-size: 14px; }
 
 .icon-add {
   -webkit-border-radius: 10px;
@@ -1414,11 +1316,20 @@ textarea {
   .group-name .name {
     color: #4b91be; }
 
-.permItemParent {
-  background: url(../../images/arrow-down-icn.png) no-repeat left center;
-  margin-left: 10px;
+.permItemParent, .itemParentCollapse1 {
   text-indent: 10px;
   font-weight: bold; }
+  .permItemParent:before, .itemParentCollapse1:before {
+    position: relative;
+    top: 3px;
+    font-family: "AlphaAdmin";
+    font-size: 16px; }
+
+.permItemParent:before {
+  content: "\e925"; }
+
+.itemParentCollapse1:before {
+  content: "\e931"; }
 
 .permItemChild {
   margin-left: 30px; }
@@ -1448,8 +1359,13 @@ no-info {
   vertical-align: middle;
   cursor: pointer; }
 
-.icon-delete:before {
-  color: #b81111; }
+.icon-clipboard-text {
+  font-size: 16px; }
+
+.icon-delete {
+  font-size: 16px; }
+  .icon-delete:before {
+    color: #b81111; }
 
 .icon-refresh {
   font-weight: bold;

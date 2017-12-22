@@ -1,26 +1,18 @@
-﻿.itemParent
-{
-	background-image: url(../Images/Content/arrowdown-icn.png);
-	background-repeat: no-repeat;
-	background-position: center;
-	width: 20px;
+﻿.itemParent, .itemParentCollapse2 {
+    font-family: "AlphaAdmin";
+    font-size: 19px;
+    width: 18px;
+    color: #4872eb;
 }
-.itemParentCollapse1
-{
-	background-image: url(../Images/Content/arrowblack-icn.png);
-	background-repeat: no-repeat;
-	background-position: left;
-	margin-left: 10px;
-	font-weight: bold;
-	text-indent: 10px;
+
+.itemParent:before {
+    content: "\e925";
 }
-.itemParentCollapse2
-{
-	background-image: url(../Images/Content/arrowblue-icn.png);
-	background-repeat: no-repeat;
-	background-position: center;
-	width: 20px;
+
+.itemParentCollapse2:before {
+	content: "\e931";
 }
+
 .menuItemParent
 {
 	font-weight: bold;
@@ -37,50 +29,6 @@
 	margin-left: 5px;
 	font-weight: bold;
 }
-/*.menuActive
-{
-	background-image: url(../Images/Content/checkbox.png);
-	background-position: 0 0;
-	background-repeat: no-repeat;
-	width: 15px;
-	height: 15px;
-	text-align: center;
-	vertical-align: middle;
-	cursor: pointer;
-}
-.menuInactive
-{
-	background-image: url(../Images/Content/checkbox.png);
-	background-position: -18px 0;
-	background-repeat: no-repeat;
-	width: 15px;
-	height: 15px;
-	text-align: center;
-	vertical-align: middle;
-	cursor: pointer;
-}*/
-/*.menuDelete
-{
-	background-image: url(../Images/Content/delete-icn.png);
-	background-position: 0 0;
-	background-repeat: no-repeat;
-	width: 15px;
-	height: 15px;
-	text-align: center;
-	vertical-align: middle;
-	cursor: pointer;
-}
-.menuResetPwd
-{
-	background-image: url(../Images/Content/password-icon.png);
-	background-position: 0 0;
-	background-repeat: no-repeat;
-	width: 15px;
-	height: 15px;
-	text-align: center;
-	vertical-align: middle;
-	cursor: pointer;
-}*/
 .button-add
 {
 	background: url(../Images/Content/addnew-btn.png) no-repeat scroll 5px center;

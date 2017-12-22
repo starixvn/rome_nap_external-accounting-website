@@ -311,7 +311,7 @@ Fanex.ExtAcc.User = {
             resolveClientUrl('User/EditUser/' + userId),
             title,
             400,
-            265,
+            300,
             false);
     },
 

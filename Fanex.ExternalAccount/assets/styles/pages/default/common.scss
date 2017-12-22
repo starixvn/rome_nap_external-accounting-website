@@ -364,11 +364,33 @@
     }
 }
 
-.permItemParent {
-	background: url(../../images/arrow-down-icn.png) no-repeat left center;
-	margin-left: 10px;
-	text-indent: 10px;
+
+%icon-collapse-expand-permission {
+    text-indent: 10px;
 	font-weight: bold;
+
+    &:before {
+        position: relative;
+        top: 3px;
+        font-family: "AlphaAdmin";
+        font-size: 16px;
+    }
+}
+
+.permItemParent {
+	@extend %icon-collapse-expand-permission;
+
+    &:before {
+        content: "\e925";
+    }
+}
+
+.itemParentCollapse1 {
+	@extend %icon-collapse-expand-permission;
+
+    &:before {
+        content: "\e931";
+    }
 }
 
 .permItemChild {
@@ -411,11 +433,12 @@ no-info {
 
 .icon-clipboard-text {
     @extend %icon-in-tables;
-	
+    font-size: 16px;
 }
 
 .icon-delete {
     @extend %icon-in-tables;
+    font-size: 16px;
 	&:before{
         color: #b81111;
 	}
