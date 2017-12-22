@@ -531,7 +531,16 @@ textarea {
         width: 365px !important; }
     .header .main-menu {
       float: left;
-      display: inline-block; }
+      display: inline-block; } }
+    @media screen and (min-device-width: 678px) and (min-device-width: 768px) and (orientation: portrait) {
+      .header .main-menu {
+        float: none;
+        display: block;
+        clear: both; }
+        .header .main-menu li:first-child > .link {
+          padding-left: 0; } }
+
+@media (min-device-width: 678px) {
     .header .info {
       float: right; }
     .header .icon-nav, .header .icon-user {

@@ -190,6 +190,17 @@
         .main-menu {
             float: left;
             display: inline-block;
+
+             @media screen and (min-device-width: 768px) and (orientation: portrait) {
+                float: none;
+                display: block;
+                clear: both;
+
+                li:first-child > .link {
+                    padding-left: 0;
+                }
+            }
+            
         }  
 
         .info {
