@@ -49,27 +49,19 @@
 .fixedColumnFooter {
   width: 335px !important; }
 
-.ui-multiselect {
+.filter-winloss-detail .ui-multiselect {
   height: 23px;
   border: 1px solid #bbb;
   border-bottom-left-radius: 3px !important;
   border-bottom-right-radius: 3px !important;
   border-top-left-radius: 3px !important;
   border-top-right-radius: 3px !important; }
-
-.ui-multiselect .ui-state-default {
-  color: #444;
-  border-bottom-left-radius: 3px !important;
-  border-bottom-right-radius: 3px !important;
-  border-top-left-radius: 3px !important;
-  border-top-right-radius: 3px !important; }
-
-.ui-multiselect .ui-state-hover {
-  border: 1px solid #999;
-  border-bottom-left-radius: 3px !important;
-  border-bottom-right-radius: 3px !important;
-  border-top-left-radius: 3px !important;
-  border-top-right-radius: 3px !important; }
+  .filter-winloss-detail .ui-multiselect .ui-state-default {
+    color: #444;
+    border-radius: 3px !important; }
+  .filter-winloss-detail .ui-multiselect .ui-state-hover {
+    border: 1px solid #999;
+    border-radius: 3px !important; }
 
 .ui-multiselect-options {
   margin-top: 33px !important; }

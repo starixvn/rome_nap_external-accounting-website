@@ -410,20 +410,36 @@ a.ui-state-default, a.ui-widget-content a.ui-state-default, a.ui-widget-header a
 	background: none !important;
 }
 
-#groups input, #groupsAdd input
+#groups, #groupsAdd {
+    width: 225px !important;
+    position: relative;
+}
+
+#groups input, #groupsAdd input {
+    border: 1px solid #7b7c7e !important;
+    margin-left: 10px;
+    width: 225px !important;
+}
+
+#groups .ui-icon, #groupsAdd .ui-icon {
+    margin-top: 9px;
+    position: absolute;
+    right: -8px;
+}
+/*#groups input, #groupsAdd input
 {
 	height: 24px !important;
 	padding-top: 0px !important;
 	padding-bottom: 0px !important;
-}
+}*/
 
-#groupsAdd, #groups
+/*#groupsAdd, #groups
 {
 	border-radius: 3px !important;
 	-moz-border-radius: 3px !important;
 	-webkit-border-radius: 3px !important;
 	border-color: #bbb !important;
-}
+}*/
 /*
 .groupChosen
 {
