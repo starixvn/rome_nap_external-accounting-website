@@ -5,25 +5,26 @@
     using System.Data;
     using System.Linq;
     using Core.Context;
+    using Core.Shared;
     using CustomerSetting.Module.Keno.KenoSetting.Configurations;
     using Service.Impl.Customer;
     using Service.Impl.Report;
-    using Shared;
     using Utilities;
     using ViewModels;
 
     public static class CustomerStatusExtensions
     {
         private static readonly List<string> CrossLineSupportedProducts = new List<string>
-            {
-                "PT",
-                "Casino",
-                "LiveCasino",
-                "VirtualSports",
-                "Racing",
-            };
+        {
+            "PT",
+            "Casino",
+            "LiveCasino",
+            "VirtualSports",
+            "Racing"
+        };
 
-        public static CustomerStatus GetCustomerStatus(this CustomerModel model, int userId, string groupName, string username, int uplineId = 0)
+        public static CustomerStatus GetCustomerStatus(this CustomerModel model, int userId, string groupName,
+            string username, int uplineId = 0)
         {
             var report = new ReportService();
             var customerInfo = report.GetCustomerInfo(groupName, 0, username, true);
@@ -68,7 +69,8 @@
             return null;
         }
 
-        private static CustomerStatus GetCustStatus(this CustomerModel model, int roleId, DataTable result, DataTable upperInfo)
+        private static CustomerStatus GetCustStatus(this CustomerModel model, int roleId, DataTable result,
+            DataTable upperInfo)
         {
             var custStatus = new CustomerStatus
             {
@@ -104,9 +106,10 @@
             SetLotteryStatus(custStatus, statusRow);
             SetLucky3Status(custStatus, statusRow);
 
-            model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
-            model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
-            model.Setting.SuperPts = model.Setting.MasterPts = model.Setting.Details.Where(o => CrossLineSupportedProducts.Contains(o.Key)).ToList();
+            model.Setting.MinMaxPts.Add(new ObjectInfo {Key = "MinSB", Value = "Sportsbook"});
+            model.Setting.MinMaxPts.Add(new ObjectInfo {Key = "MinRB", Value = "Racing"});
+            model.Setting.SuperPts = model.Setting.MasterPts =
+                model.Setting.Details.Where(o => CrossLineSupportedProducts.Contains(o.Key)).ToList();
 
             if (roleId.IsNotSuper()
                 && upperInfo.Rows.Count > 0)
@@ -127,20 +130,24 @@
         }
 
         private static void SetNumberGameStatus(CustomerStatus custStatus, DataRow statusRow)
-        => custStatus.DisableNumberGame = statusRow.ToBoolean("disableNumber");
+            => custStatus.DisableNumberGame = statusRow.ToBoolean("disableNumber");
 
         private static void SetColossusBetsStatus(CustomerStatus custStatus, DataRow statusRow)
-        => custStatus.HideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"] == "0" || statusRow.ToBoolean("HideColossusBet");
+            => custStatus.HideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"] == "0" ||
+                                             statusRow.ToBoolean("HideColossusBet");
 
         private static void SetCricketStatus(CustomerStatus custStatus, DataRow statusRow)
-        => custStatus.HideCricket = statusRow.ToBoolean("HideCricket")
-                            || ConfigurationManager.AppSettings["IsShowCricket"] == "0" || !statusRow.ToBoolean("IsIMBC");
+            => custStatus.HideCricket = statusRow.ToBoolean("HideCricket")
+                                        || ConfigurationManager.AppSettings["IsShowCricket"] == "0" ||
+                                        !statusRow.ToBoolean("IsIMBC");
 
         private static void SetCockfightingStatus(CustomerStatus custStatus, DataRow statusRow)
-        => custStatus.HideCockfighting = statusRow.ToBoolean("HideCockfighting") || ConfigurationManager.AppSettings["IsShowCockfighting"] == "0";
+            => custStatus.HideCockfighting = statusRow.ToBoolean("HideCockfighting") ||
+                                             ConfigurationManager.AppSettings["IsShowCockfighting"] == "0";
 
         private static void SetSportsbook2Status(CustomerStatus custStatus, DataRow statusRow)
-        => custStatus.HideSportsbook2 = statusRow.ToBoolean("HideMuayThai") || ConfigurationManager.AppSettings["IsShowSportsbook2"] == "0";
+            => custStatus.HideSportsbook2 = statusRow.ToBoolean("HideMuayThai") ||
+                                            ConfigurationManager.AppSettings["IsShowSportsbook2"] == "0";
 
         private static void SetLiveCasinoStatus(CustomerStatus custStatus, DataRow statusRow)
         {
@@ -154,10 +161,11 @@
             custStatus.DisableCasino = statusRow.ToBoolean("disableCasino");
         }
 
-        private static void SetEsportsStatus(CustomerStatus custStatus, ExternalAccountAuthenticateAttribute athenticationService, DataRow statusRow)
+        private static void SetEsportsStatus(CustomerStatus custStatus,
+            ExternalAccountAuthenticateAttribute athenticationService, DataRow statusRow)
         {
             custStatus.HideEsports = !athenticationService.AllowReadByAuthenticationParam(eFunctions.ShowEnableEsports)
-                || Utils.ToBoolean(ConfigurationManager.AppSettings["HideEsports"]);
+                                     || Utils.ToBoolean(ConfigurationManager.AppSettings["HideEsports"]);
             custStatus.DisableESports = statusRow.ToBoolean("DisableESports");
         }
 
@@ -177,14 +185,14 @@
         private static void SetGoldDeluxeStatus(CustomerStatus custStatus, DataRow statusRow)
         {
             custStatus.HideGoldDeluxe = statusRow.ToBoolean("HideGoldDeluxe")
-                || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
+                                        || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
             custStatus.SyncGoldDeluxeDownlines = statusRow.ToBoolean("SyncedGoldDeluxeDownline");
         }
 
         private static void SetLucky3Status(CustomerStatus custStatus, DataRow statusRow)
         {
             custStatus.HideLucky3 = ConfigurationManager.AppSettings["IsShowLucky3"] == "0"
-                || statusRow.ToBoolean("HideLucky3");
+                                    || statusRow.ToBoolean("HideLucky3");
             custStatus.SyncLucky3 = true;
             custStatus.SyncLucky3Downlines = true;
             custStatus.DisableLucky3 = statusRow.ToBoolean("DisableLucky3");
@@ -193,7 +201,7 @@
         private static void SetLotteryStatus(CustomerStatus custStatus, DataRow statusRow)
         {
             custStatus.HideLottery = ConfigurationManager.AppSettings["IsShowLottery"] == "0"
-                || statusRow.ToBoolean("HideLottery");
+                                     || statusRow.ToBoolean("HideLottery");
             custStatus.SyncLottery = true;
             custStatus.SyncLotteryDownlines = true;
             custStatus.DisableLottery = statusRow.ToBoolean("DisableLottery");
@@ -202,7 +210,7 @@
         private static void SetFishingWorldStatus(CustomerStatus custStatus, DataRow statusRow)
         {
             custStatus.HideFishingWorld = ConfigurationManager.AppSettings["IsShowFishingWorld"] == "0"
-                || statusRow.ToBoolean("HideFishingWorld");
+                                          || statusRow.ToBoolean("HideFishingWorld");
             custStatus.SyncFishingWorld = statusRow.ToBoolean("SyncedFishingWorld");
             custStatus.SyncFishingWorldDownlines = statusRow.ToBoolean("SyncedFishingWorldDownline");
             custStatus.DisableFishingWorld = statusRow.ToBoolean("DisableFishingWorld");
@@ -211,7 +219,7 @@
         private static void SetNG2Status(CustomerStatus custStatus, DataRow statusRow)
         {
             custStatus.HideNG2 = ConfigurationManager.AppSettings["IsShowNG2"] == "0"
-                || statusRow.ToBoolean("HideNG2");
+                                 || statusRow.ToBoolean("HideNG2");
             custStatus.SyncNG2 = statusRow.ToBoolean("SyncedNG2");
             custStatus.DisableNG2 = statusRow.ToBoolean("DisableNG2");
         }
@@ -219,7 +227,7 @@
         private static void SetVoidbridgeStatus(CustomerStatus custStatus, DataRow statusRow)
         {
             custStatus.HideVoidbridge = ConfigurationManager.AppSettings["IsShowVoidbridge"] == "0"
-                || statusRow.ToBoolean("HideVoidBridge");
+                                        || statusRow.ToBoolean("HideVoidBridge");
             custStatus.SyncVoidbridge = statusRow.ToBoolean("SyncedVoidBridge");
             custStatus.SyncVoidbridgeDownlines = statusRow.ToBoolean("SyncedVoidBridgeDownline");
             custStatus.DisableVoidbridge = statusRow.ToBoolean("DisableVoidBridge");
@@ -228,7 +236,7 @@
         private static void SetAllbetStatus(CustomerStatus custStatus, DataRow statusRow)
         {
             custStatus.HideAllbet = ConfigurationManager.AppSettings["IsShowAllbet"] == "0"
-                || statusRow.ToBoolean("HideAllbet");
+                                    || statusRow.ToBoolean("HideAllbet");
             custStatus.SyncAllbet = statusRow.ToBoolean("SyncedAllBet");
             custStatus.SyncAllbetDownlines = statusRow.ToBoolean("SyncedAllBetDownline");
             custStatus.DisableAllbet = statusRow.ToBoolean("DisableAllbet");
@@ -250,7 +258,8 @@
             uplineStatus.DisableLiveCasino = uplineRow.ToBoolean("disableLiveCasino");
             uplineStatus.DisableGoldDeluxe = uplineRow.ToBoolean("DisableGoldDeluxe");
             uplineStatus.HideGoldDeluxe = uplineRow.ToBoolean("HideGoldDeluxe")
-                || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
+                                          || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] ==
+                                          "0";
 
             uplineStatus.DisableColossusBets = uplineRow.ToBoolean("DisableColossusBet");
             uplineStatus.Closed = uplineRow.ToBoolean("closed");

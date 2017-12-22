@@ -12,7 +12,7 @@
     using DTO.Customer;
     using RemotingRef;
     using Service.Impl.UserControl;
-    using Shared;
+    using Core.Shared;
     using Utilities;
     using ViewModels;
 

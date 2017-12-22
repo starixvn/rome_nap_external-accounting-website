@@ -3,7 +3,7 @@
     using System;
     using System.Configuration;
     using CustomerSetting.Module.Keno.KenoSetting.Configurations;
-    using Shared;
+    using Core.Shared;
     using Utilities;
     using ViewModels;
 

@@ -313,7 +313,7 @@
     <Compile Include="Reports\WinLossDetail\ProductsConfiguration.cs" />
     <Compile Include="Reports\WinLossDetail\WinLossDetailHelper.cs" />
     <Compile Include="Shared\GroupService.cs" />
-    <Compile Include="Shared\RoleExtensions.cs" />
+    <Compile Include="Shared\Role.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.ExternalAccount.DataAccess\Fanex.ExternalAccount.DataAccess.csproj">

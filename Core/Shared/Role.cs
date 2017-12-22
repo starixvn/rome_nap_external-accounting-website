@@ -3,7 +3,7 @@
     using System;
     using System.Diagnostics;
     
-    public static class RoleExtensions
+    public static class Role
     {
         public const int Member = 1;
         public const int Agent = 2;
