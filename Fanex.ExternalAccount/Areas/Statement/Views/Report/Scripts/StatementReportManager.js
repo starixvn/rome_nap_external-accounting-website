@@ -233,6 +233,7 @@ var StatementReportManager = function () {
         self.pageSize = pageSize;
         self.pageIndex = pageNumber;
         self.showBodyRows();
+        self.bindGridEvent();
     };
     self.showBodyRows = function () {
         if (!self.totalRows) {
