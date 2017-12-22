@@ -348,9 +348,9 @@ a.ui-state-default, a.ui-widget-content a.ui-state-default, a.ui-widget-header a
 	border-bottom: none;
 	border-right: none;
 }
-.ui-multiselect-options
+#groups + .ui-multiselect-options, #groupsAdd + .ui-multiselect-options
 {
-	top: 106px !important;
+	margin-left: 10px;
 }
 /*#groupNameMenu, #userNameMenu
 {
