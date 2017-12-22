@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections;
+    using System.Data;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -16,12 +17,21 @@
     using LiveCasino.CoreSetting.Services;
     using Module.NG2.Entities;
     using Module.NG2.Services;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
 
     public class CustomerBase : BaseController
     {
         private const string CasinoNo = "01";
+        private const string DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt";
 
         private readonly IReportService _report = new ReportService();
+
+        [NonAction]
+        protected string Customers2Json(DataTable customers)
+        => JsonConvert.SerializeObject(
+            CheckVNIP(customers), Formatting.None,
+            new IsoDateTimeConverter { DateTimeFormat = DateTimeFormat });
 
         [NonAction]
         protected Task<CustomerSetting.Module.Core.Models.Result> AutoInsertLiveCasinoPost(
@@ -160,19 +170,19 @@
 
         protected DcsEntity GetDcsStatuses(int custId, int roleId, int productId)
         {
-            var param = new Hashtable {{"custid", custId}, {"roleid", roleId}};
+            var param = new Hashtable { { "custid", custId }, { "roleid", roleId } };
 
             var ds = DbHelper.ExecuteDataSet("Acc_CustSetting_StatusSettingSelect", param);
 
             if (ds?.Tables.Count <= 0)
             {
-                return new DcsEntity {IsHidden = true};
+                return new DcsEntity { IsHidden = true };
             }
             var cust = ds.Tables[0];
             var product = cust.Select("ProductID = " + productId).FirstOrDefault();
             if (product == null)
             {
-                return new DcsEntity {IsHidden = true};
+                return new DcsEntity { IsHidden = true };
             }
             var isSyncedUpline = product.ToBoolean("IsSyncedUpline");
             var isDisabledUpline = product.ToBoolean("IsDisabledUpline");

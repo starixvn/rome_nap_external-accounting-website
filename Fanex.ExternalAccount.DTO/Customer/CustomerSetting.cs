@@ -12,10 +12,6 @@
 
         public int RecommendId { get; set; }
 
-        public bool SyncCasino { get; set; }
-
-        public bool SyncLiveCasino { get; set; }
-
-        public bool AllowDoubleComm { get; set; }
+        public bool HasSecurityCode { get; set; }
     }
 }

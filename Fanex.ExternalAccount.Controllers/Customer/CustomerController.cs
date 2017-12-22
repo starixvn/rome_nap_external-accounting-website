@@ -8,11 +8,11 @@
     using System.Threading;
     using System.Web;
     using System.Web.Mvc;
-    using Caching;
     using CasinoLibrary.Model.UserException;
     using Common;
     using Core.Base;
     using Core.Context;
+    using Core.Enumerations;
     using CustomerSetting.IP.Utils;
     using CustomerSetting.Security.Authenticate;
     using DTO;
@@ -21,7 +21,6 @@
     using IBCUtils;
     using Module.NG2.Entities;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
     using PTEngine.BusinessObjects;
     using Service.Impl.Customer;
     using Service.Impl.Customer.Casino;
@@ -34,15 +33,12 @@
 
     public class CustomerController : CustomerBase //DevSkim: ignore DS184626
     {
-        private const string DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt";
         private readonly AgentService _agentService = new AgentService();
         private readonly ExternalAccountAuthorization _authorization = new ExternalAccountAuthorization();
-        private readonly ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
         private readonly CustomerService _customerService = new CustomerService();
         private readonly MasterService _masterService = new MasterService();
         private readonly MemberService _memberService = new MemberService();
         private readonly SuperService _superService = new SuperService();
-        private string _cacheName = string.Empty;
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public ActionResult IsValidUsername(string username)
@@ -288,8 +284,8 @@
 
         public ActionResult Settings(int id, int custId, int uplineId, string userName, string groupName)
         {
-            CustomerSetting customerSetting;
-            var result = GetDataResult(groupName, null, null, null, userName, out customerSetting);
+            var customerSetting = GetCustomerSetting(groupName, 0, userName);
+            var result = GetCustomerList(groupName, null, null, null, customerSetting);
 
             ViewBag.CurrentLevel = id;
             ViewBag.UserId = custId;
@@ -322,29 +318,26 @@
             bool? suspended = null,
             string username = null)
         {
-            CustomerSetting customerSetting;
-            var result = GetDataResult(groupName, enabled, closed, suspended, username, out customerSetting);
-
-            SetEditAllBetVisibility(result);
-
-            var ret = JsonConvert.SerializeObject(
-                CheckVNIP(result),
-                Formatting.None,
-                new IsoDateTimeConverter { DateTimeFormat = DateTimeFormat });
-
+            var customerSetting = GetCustomerSetting(groupName, 0, username);
+            var customers = GetCustomerList(groupName, enabled, closed, suspended, customerSetting);
+            SetEditAllBetVisibility(customers);
+            var customers2String = Customers2Json(customers);
+            var syncCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncCasino");
+            var syncLiveCasino= customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncLiveCasino");
+            var allowDoubleComm = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean(customerSetting.RoleId > 2 ? "doubleCommLosing" : "doubleCommLosing1");
             return JsonBase(
                 new
                 {
-                    records = result?.Rows.Count ?? 0,
-                    rows = ret,
+                    records = customers?.Rows.Count ?? 0,
+                    rows = customers2String,
                     customerSetting.RoleId,
-                    customerSetting.SuperRecommendId,
-                    customerSetting.MasterRecommendId,
-                    customerSetting.RecommendId,
+                    srecommend = customerSetting.SuperRecommendId,
+                    mrecommend = customerSetting.MasterRecommendId,
+                    recommend = customerSetting.RecommendId,
                     customerSetting.CustId,
-                    customerSetting.SyncCasino,
-                    customerSetting.SyncLiveCasino,
-                    customerSetting.AllowDoubleComm
+                    syncCasino,
+                    syncLiveCasino,
+                    allowDoubleComm
                 });
         }
 
@@ -357,17 +350,11 @@
             bool? closed = null,
             bool? suspended = null)
         {
-            _cacheName = "CacheList" + groupName + custId + enabled + closed + suspended + Request["username"];
-            var result = _superService.GetData(CurrentSession.UserId, custId: custId, enabled: enabled, closed: closed, suspended: suspended, groupName: groupName);
-            SetCacheList(result);
+            var supers = _superService.GetData(CurrentSession.UserId, custId, enabled, closed, suspended, groupName);
+            SetEditAllBetVisibility(supers);
+            var supers2Json = Customers2Json(supers);
 
-            SetEditAllBetVisibility(result);
-
-            var ret = JsonConvert.SerializeObject(
-                CheckVNIP(result), Formatting.None,
-                new IsoDateTimeConverter { DateTimeFormat = DateTimeFormat });
-
-            return JsonBase(new { total = 1, page = 1, records = result.Rows.Count, rows = ret });
+            return JsonBase(new { records = supers.Rows.Count, rows = supers2Json });
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
@@ -375,46 +362,23 @@
         public ActionResult MasterListPost(int? srecommend = null, int? custId = null, bool? enabled = null,
             bool? closed = null, bool? suspended = null)
         {
-            var result = _masterService.GetData(CurrentSession.UserId, srecommend, custId, enabled, closed, suspended);
-
+            var masters = _masterService.GetData(CurrentSession.UserId, srecommend, custId, enabled, closed, suspended);
             var superId = Utils.ToInt32(srecommend);
-            var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"], superId, null, true);
-            var mrecommend = 0;
-            var recommend = 0;
-            var roleId = 0;
-            var hasSecurityCode = false;
-            var newCustId = custId;
-
-            if (customerInfo != null)
-            {
-                roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
-                superId = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
-                recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
-                newCustId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
-                hasSecurityCode = Utils.ToBoolean(customerInfo.Rows[0]["HasSecurityCode"]);
-            }
-
-            _cacheName = "CacheList" + srecommend + custId + enabled + closed + suspended;
-            SetCacheList(result);
-
-            SetEditAllBetVisibility(result);
-
-            var ret = JsonConvert.SerializeObject(
-                CheckVNIP(result), Formatting.None,
-                new IsoDateTimeConverter { DateTimeFormat = DateTimeFormat });
+            var customerSetting = GetCustomerSetting(Request["groupName"], superId, null);
+            SetEditAllBetVisibility(masters);
+            var master2Json = Customers2Json(masters);
 
             return JsonBase(
                 new
                 {
-                    records = result.Rows.Count,
-                    rows = ret,
-                    roleId,
-                    superId,
-                    mrecommend,
-                    recommend,
-                    newCustId,
-                    hasSecurityCode
+                    records = masters.Rows.Count,
+                    rows = master2Json,
+                    customerSetting.RoleId,
+                    srecommend = customerSetting.SuperRecommendId,
+                    mrecommend = customerSetting.MasterRecommendId,
+                    recommend = customerSetting.RecommendId,
+                    customerSetting.CustId,
+                    customerSetting.HasSecurityCode
                 });
         }
 
@@ -423,46 +387,24 @@
         public ActionResult AgentListPost(int? mrecommend = null, int? custId = null, bool? enabled = null,
             bool? closed = null, bool? suspended = null)
         {
-            var result = _agentService.GetData(CurrentSession.UserId, mrecommend, custId, enabled, closed, suspended);
+            var agents = _agentService.GetData(CurrentSession.UserId, mrecommend, custId, enabled, closed, suspended);
 
             var masterId = Utils.ToInt32(mrecommend);
-            var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"], masterId, null, true);
-            var srecommend = 0;
-            var recommend = 0;
-            var roleId = 0;
-            var hasSecurityCode = false;
-            var newCustId = custId;
-
-            if (customerInfo != null)
-            {
-                roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
-                srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                masterId = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
-                recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
-                newCustId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
-                hasSecurityCode = Utils.ToBoolean(customerInfo.Rows[0]["HasSecurityCode"]);
-            }
-
-            _cacheName = "CacheList" + mrecommend + custId + enabled + closed + suspended;
-            SetCacheList(result);
-
-            SetEditAllBetVisibility(result);
-
-            var ret = JsonConvert.SerializeObject(
-                CheckVNIP(result), Formatting.None,
-                new IsoDateTimeConverter { DateTimeFormat = DateTimeFormat });
+            var customerSetting = GetCustomerSetting(Request["groupName"], masterId, null);
+            SetEditAllBetVisibility(agents);
+            var ret = Customers2Json(agents);
 
             return JsonBase(
                 new
                 {
-                    records = result.Rows.Count,
+                    records = agents.Rows.Count,
                     rows = ret,
-                    roleId,
-                    srecommend,
-                    masterId,
-                    recommend,
-                    newCustId,
-                    hasSecurityCode
+                    customerSetting.RoleId,
+                    SuperRecommend = customerSetting.SuperRecommendId,
+                    MasterRecommend = customerSetting.MasterRecommendId,
+                    Recommend = customerSetting.RecommendId,
+                    customerSetting.CustId,
+                    customerSetting.HasSecurityCode
                 });
         }
 
@@ -471,44 +413,22 @@
         public ActionResult MemberListPost(int? recommend = null, int? custId = null, bool? enabled = null,
             bool? closed = null, bool? suspended = null)
         {
-            var result = _memberService.GetData(CurrentSession.UserId, recommend, custId, enabled, closed, suspended);
-
+            var members = _memberService.GetData(CurrentSession.UserId, recommend, custId, enabled, closed, suspended);
             var agentId = Utils.ToInt32(recommend);
-            var customerInfo = new ReportService().GetCustomerInfo(Request["groupName"], agentId, null, true);
-            var mrecommend = 0;
-            var
-                srecommend = 0;
-            var
-                roleId = 0;
-            if (customerInfo != null)
-            {
-                roleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
-                srecommend = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                mrecommend = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
-                recommend = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
-                custId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
-            }
-
-            _cacheName = "CacheList" + recommend + custId + enabled + closed + suspended;
-            SetCacheList(result);
-
-            SetEditAllBetVisibility(result);
-
-            var ret = JsonConvert.SerializeObject(
-                CheckVNIP(result),
-                Formatting.None,
-                new IsoDateTimeConverter { DateTimeFormat = DateTimeFormat });
+            var customerSetting = GetCustomerSetting(Request["groupName"], agentId, null);
+            SetEditAllBetVisibility(members);
+            var member2Json = Customers2Json(members);
 
             return JsonBase(
                 new
                 {
-                    records = result.Rows.Count,
-                    rows = ret,
-                    roleId,
-                    srecommend,
-                    mrecommend,
-                    recommend,
-                    custId
+                    records = members.Rows.Count,
+                    rows = member2Json,
+                    customerSetting.RoleId,
+                    srecommend = customerSetting.SuperRecommendId,
+                    mrecommend = customerSetting.MasterRecommendId,
+                    recommend = customerSetting.RecommendId,
+                    customerSetting.CustId
                 });
         }
 
@@ -664,20 +584,17 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public void GetExportToExcel(
-            int? currentLevel = null,
             string groupName = "ACCDDD",
-            int? srecommend = null,
-            int? mrecommend = null,
-            int? recommend = null,
-            int? custId = null,
             bool? enabled = null,
             bool? closed = null,
-            bool? suspended = null)
-        {
-            var fileName = "CustomerList";
-
-            SetCache(currentLevel, ref fileName, groupName, srecommend, mrecommend, recommend, custId, enabled, closed,
-                suspended);
+            bool? suspended = null,
+            string username = null)
+        {   
+            var customerSetting = GetCustomerSetting(groupName, 0, username);
+            var userLevel = Enumeration.FromValue<UserLevel>(customerSetting.RoleId);
+            
+            var customers = GetCustomerList(groupName, enabled, closed, suspended, customerSetting);
+            SetEditAllBetVisibility(customers);
 
             var status = string.Empty;
             if (enabled != null || closed != null || suspended != null)
@@ -691,89 +608,70 @@
                             : "Open";
             }
 
-            var result = _cache.Get<DataTable>(_cacheName);
             var builder = new CustomerListPageBuilder(
-                CheckVNIP(result),
+                CheckVNIP(customers),
                 false,
                 status,
-                Convert.ToInt32(currentLevel),
-                result?.Rows.Count > 0
-                && (result.Rows[0].ToBoolean("ismyanmarodds") || currentLevel == 4));
+                Convert.ToInt32(customerSetting.RoleId),
+                customers?.Rows.Count > 0
+                && (customers.Rows[0].ToBoolean("ismyanmarodds") || customerSetting.RoleId == 4));
             var excelStream = builder.Build();
-            fileName = $"{status}{fileName}{DateTime.Now.ToString("yyyyMMdd")}.xls";
+            var fileName = $"{status}{userLevel.DisplayName}List{DateTime.Now.ToString("yyyyMMdd")}.xls";
 
             ExportToExcel(excelStream, fileName);
         }
-
-        private void SetCache(
-            int? currentLevel,
-            ref string fileName,
-            string groupName = "ACCDDD",
-            int? srecommend = null,
-            int? mrecommend = null,
-            int? recommend = null,
-            int? custId = null,
-            bool? enabled = null,
-            bool? closed = null,
-            bool? suspended = null)
-        {
-            var username = Request["username"];
-            var id = string.IsNullOrWhiteSpace(username) ? null : custId;
-            switch (currentLevel)
-            {
-                case 4:
-                    fileName = "SuperList";
-                    _cacheName = "CacheList" + groupName + id + enabled + closed + suspended + username;
-                    if (_cache.Get<DataTable>(_cacheName) == null)
-                    {
-                        SetCacheList(_superService.GetData(CurrentSession.UserId, custId: id, enabled: enabled, closed: closed, suspended: suspended, groupName: groupName));
-                    }
-
-                    break;
-
-                case 3:
-                    fileName = "MasterList";
-                    _cacheName = "CacheList" + groupName + srecommend + id + enabled + closed + suspended + username;
-                    if (_cache.Get<DataTable>(_cacheName) == null)
-                    {
-                        SetCacheList(_masterService.GetData(CurrentSession.UserId, srecommend, id, enabled, closed, suspended));
-                    }
-
-                    break;
-
-                case 2:
-                    fileName = "AgentList";
-                    _cacheName = "CacheList" + groupName + mrecommend + id + enabled + closed + suspended + username;
-                    if (_cache.Get<DataTable>(_cacheName) == null)
-                    {
-                        SetCacheList(_agentService.GetData(CurrentSession.UserId, mrecommend, id, enabled, closed, suspended));
-                    }
-
-                    break;
-
-                default:
-                    fileName = "MemberList";
-                    _cacheName = "CacheList" + groupName + recommend + id + enabled + closed + suspended + username;
-                    if (_cache.Get<DataTable>(_cacheName) == null)
-                    {
-                        SetCacheList(_memberService.GetData(CurrentSession.UserId, recommend, id, enabled, closed, suspended));
-                    }
-
-                    break;
-            }
-        }
-
-        private DataTable GetDataResult(
+        
+        private DataTable GetCustomerList(
             string groupName,
             bool? enabled,
             bool? closed,
             bool? suspended,
-            string username,
-            out CustomerSetting setting)
+            CustomerSetting setting)
         {
-            var customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
-            setting = new CustomerSetting();
             int? id = null;
+            var result = new DataTable();
+
+            switch (setting.RoleId)
+            {
+                case Super:
+                    result = _authorization.IsBelong(groupName, setting.CustId, null, true)
+                        ? _superService.GetData(CurrentSession.UserId, setting.CustId == 0 ? id : setting.CustId,
+                            enabled,
+                            closed, suspended, groupName)
+                        : result;
+                    break;
+
+                case Master:
+                    result = _authorization.IsBelong(groupName, setting.SuperRecommendId, null, true)
+                        ? _masterService.GetData(CurrentSession.UserId, setting.SuperRecommendId, setting.CustId == 0 ? id : setting.CustId,
+                            enabled, closed, suspended)
+                        : result;
+                    break;
+
+                case Agent:
+                    result = _authorization.IsBelong(groupName, setting.MasterRecommendId, null, true)
+                        ? _agentService.GetData(CurrentSession.UserId, setting.MasterRecommendId,
+                            setting.CustId == 0 ? id : setting.CustId,
+                            enabled, closed, suspended)
+                        : result;
+                    break;
+
+                default:
+                    result = _authorization.IsBelong(groupName, setting.RecommendId, null, true)
+                        ? _memberService.GetData(CurrentSession.UserId, setting.RecommendId,
+                            setting.CustId == 0 ? id : setting.CustId,
+                            enabled, closed, suspended)
+                        : result;
+                    break;
+            }
+
+            return result;
+        }
+
+        private CustomerSetting GetCustomerSetting(string groupName, int custId, string username)
+        {
+            var customerInfo = new ReportService().GetCustomerInfo(groupName, custId, username, isGetUplineInfo: true);
+            var setting = new CustomerSetting();
             if (!string.IsNullOrWhiteSpace(Request["roleId"]) && string.IsNullOrWhiteSpace(username))
             {
                 setting.RoleId = Utils.ToInt32(Request["roleId"]);
@@ -790,71 +688,17 @@
                     setting.MasterRecommendId = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
                     setting.RecommendId = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
                     setting.CustId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
-                    setting.SyncCasino = customerInfo.Rows.Count != 0 && customerInfo.Rows[0].ToBoolean("syncCasino");
-                    setting.SyncLiveCasino = customerInfo.Rows.Count != 0 && customerInfo.Rows[0].ToBoolean("syncLiveCasino");
-                    setting.AllowDoubleComm = customerInfo.Rows.Count != 0
-                                      && customerInfo.Rows[0].ToBoolean(setting.RoleId > 2 ? "doubleCommLosing" : "doubleCommLosing1");
-                }
-            }
-            var result = new DataTable();
-            if (customerInfo != null || !string.IsNullOrWhiteSpace(Request["roleId"]))
-            {
-                switch (setting.RoleId)
-                {
-                    case 4:
-                        result = !_authorization.IsBelong(groupName, setting.CustId, null, true)
-                            ? new DataTable()
-                            : _superService.GetData(CurrentSession.UserId, setting.CustId == 0 ? id : setting.CustId, enabled,
-                                closed, suspended, groupName);
-                        _cacheName = "CacheList" + groupName + setting.CustId + enabled + closed + suspended + username;
-                        break;
-
-                    case 3:
-                        result = !_authorization.IsBelong(groupName, setting.SuperRecommendId, null, true)
-                            ? new DataTable()
-                            : _masterService.GetData(CurrentSession.UserId, setting.SuperRecommendId, setting.CustId == 0 ? id : setting.CustId,
-                                enabled, closed, suspended);
-                        _cacheName = "CacheList" + groupName + setting.SuperRecommendId + setting.CustId + enabled + closed + suspended +
-                                     username;
-                        break;
-
-                    case 2:
-                        result = !_authorization.IsBelong(groupName, setting.MasterRecommendId, null, true)
-                            ? new DataTable()
-                            : _agentService.GetData(CurrentSession.UserId, setting.MasterRecommendId, setting.CustId == 0 ? id : setting.CustId,
-                                enabled, closed, suspended);
-                        _cacheName = "CacheList" + groupName + setting.MasterRecommendId + setting.CustId + enabled + closed + suspended +
-                                     username;
-                        break;
-
-                    default:
-                        result = !_authorization.IsBelong(groupName, setting.RecommendId, null, true)
-                            ? new DataTable()
-                            : _memberService.GetData(CurrentSession.UserId, setting.RecommendId, setting.CustId == 0 ? id : setting.CustId,
-                                enabled, closed, suspended);
-                        _cacheName = "CacheList" + groupName + setting.RecommendId + setting.CustId + enabled + closed + suspended +
-                                     username;
-                        break;
+                    setting.HasSecurityCode = Utils.ToBoolean(customerInfo.Rows[0]["HasSecurityCode"]);
                 }
             }
 
-            SetCacheList(result);
-
-            return result;
+            return setting;
         }
 
         private static void SetEditAllBetVisibility(DataTable dataTable)
         {
             dataTable.AsEnumerable().ToList().ForEach(n =>
                 n["DisableAllBet"] = n.Field<bool>("DisableAllBet") && n.Field<bool>("DisableAllBetVIP"));
-        }
-
-        private void SetCacheList(DataTable result)
-        {
-            if (result != null)
-            {
-                _cache.Set(_cacheName, result);
-            }
         }
     }
 }

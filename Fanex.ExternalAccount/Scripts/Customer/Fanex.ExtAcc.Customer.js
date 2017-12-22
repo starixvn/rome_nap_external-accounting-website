@@ -164,7 +164,25 @@
         $('#exporttoexcel').click(function () {
             var data = Fanex.ExtAcc.Customer.GetParams();
 
-            var params = "groupName=" + data.groupName + "&enabled=" + data.enabled + "&closed=" + data.closed + "&suspended=" + data.suspended + "&sRecommend=" + Fanex.ExtAcc.Customer.superId + "&mRecommend=" + Fanex.ExtAcc.Customer.masterId + "&recommend=" + Fanex.ExtAcc.Customer.agentId + "&custId=" + Fanex.ExtAcc.Customer.custId + "&currentLevel=" + Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username
+            var params = "groupName=" +
+                data.groupName +
+                "&enabled=" +
+                data.enabled +
+                "&closed=" +
+                data.closed +
+                "&suspended=" +
+                data.suspended +
+                "&sRecommend=" +
+                Fanex.ExtAcc.Customer.superId +
+                "&mRecommend=" +
+                Fanex.ExtAcc.Customer.masterId +
+                "&recommend=" +
+                Fanex.ExtAcc.Customer.agentId +
+                "&roleId=" +
+                Fanex.ExtAcc.Customer.CurrentLevel +
+                "&username=" +
+                data.username;
+            
             document.location.href = resolveClientUrl("Customer/GetExportToExcel?") + params;
         });
 
