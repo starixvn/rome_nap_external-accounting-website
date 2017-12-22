@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Authentication
 {
     using System;
-using System.Diagnostics;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Helpers;
     using System.Web.Mvc;
@@ -9,14 +9,13 @@ using System.Diagnostics;
     using CaptchaMvc.Controllers;
     using CaptchaMvc.HtmlHelpers;
     using Core.Context;
+    using Core.Shared;
+    using CustomerSetting.Module.Core.Configurations;
     using CustomerSetting.Module.Core.Web;
     using DTO;
     using DTO.UserControl;
-    using Fanex.ExternalAccount.Service.Impl.Login;
-    using Fanex.ExternalAccount.Service.Interface.Login;
-    using Fanex.ExternalAccount.Utilities;
-    using Fanex.ExternalAccount.ViewModel.Account;
-using Fanex.Logging.Extensions.Web;
+    using Module.Logs;
+    using Module.Logs.Services;
     using ONEbook.UM.Filters;
     using Service.Impl.Login;
     using Service.Interface.Login;
@@ -118,7 +117,7 @@ using Fanex.Logging.Extensions.Web;
                 out isInternalAdmin);
 
             return result?.IsSuccess == true
-                ? LoginSuccessful(model, custId, onuserId, isInternalAdmin, result)
+                ? LoginSuccessful(model, custId, onuserId, isInternalAdmin, result.ResultData as Group)
                 : LoginFailed(model.UserName, result);
         }
 
@@ -176,17 +175,21 @@ using Fanex.Logging.Extensions.Web;
             int custId,
             int onuserId,
             bool isIntAcc,
-            Result result)
+            Group group)
         {
             ResetLoginAttempt();
 
+            var canAccessPublicDomain = IsDenyAccessPublicDomain(isIntAcc,group);
+            if (canAccessPublicDomain)
+            {
+                return View(new LoginModel(ViewLang.AccessDenyToPublicDomain));
+            }
+
             FormsAuthentication.SetAuthCookie(model.UserName, false);
 
-            SetUserSession(model, custId, onuserId, isIntAcc, result.ResultData as Group);
+            SetUserSession(model, custId, onuserId, isIntAcc, group);
 
-            return isIntAcc || _currentSession.IsITAdmin
-                ? RedirectToChooseGroupPage()
-                : RedirectToHomePage();
+            return isIntAcc || _currentSession.IsITAdmin ? RedirectToChooseGroupPage() : RedirectToHomePage();
         }
 
         private RedirectResult RedirectToChooseGroupPage() => Redirect("~/Account/ExternalGroup");
@@ -263,6 +266,25 @@ using Fanex.Logging.Extensions.Web;
                 JsonRequestBehavior.AllowGet);
         }
 
+        private bool IsDenyAccessPublicDomain(bool isInternalAdmin,Group currentGroup)
+        {
+            if (GroupService.IsOfficeGroup(currentGroup.GroupName))
+            {
+                var isPublicDomain = Config.PublicDomains.Contains(_currentContext.DomainName);
+                if (isPublicDomain)
+                {
+                    return GroupService.IsITGroup(currentGroup.GroupName)
+                        ? Config.IsDenyITGroupAccessing
+                        : isInternalAdmin
+                            ? Config.IsDenyInternalGroupAccessing
+                            : !GroupService.IsFinanceGroup(currentGroup.GroupName) || Config.IsDenyFinanceGroupAccessing;
+                }
+
+            }
+
+            return false;
+        }
+
         private void ResetLoginAttempt()
         {
             _currentSession.LoginAttempt = 0;
@@ -293,12 +315,12 @@ using Fanex.Logging.Extensions.Web;
                 else
                 {
                     var exceptionLog = new Exception(ViewLang.CannotReadRequestValidationCookie);
-                    ExceptionHandler.Handle(exceptionLog, TraceEventType.Warning);
+                    exceptionLog.Write(Formater.LogType.Warning);
                 }
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex, TraceEventType.Warning);
+                ex.Write(Formater.LogType.Warning);
 
                 return false;
             }
@@ -315,7 +337,7 @@ using Fanex.Logging.Extensions.Web;
             _currentSession.IsInternalAdmin = isInternalAdmin;
             _currentSession.GroupId = group.GroupID;
             _currentSession.CurrencyGroup = group.GroupName;
-            _currentSession.IsITAdmin = group.GroupID == 1;
+            _currentSession.IsITAdmin = GroupService.IsITGroup(group.GroupName);
             _currentSession.FromSystem = 3;
             _currentSession.IsLogin = true;
         }

@@ -7,13 +7,12 @@
 
     public static class Config
     {
-        public static DateTime WinlostDate => HttpContext.Current.IsDebuggingEnabled ?
-            new DateTime(2012, 11, 6).Date :
-            DateTime.Now.AddDays(-1).Date;
+        public static DateTime WinlostDate
+            => HttpContext.Current.IsDebuggingEnabled ? new DateTime(2012, 11, 6).Date : DateTime.Now.AddDays(-1).Date;
 
         public static bool IsTest => Utils.ToBoolean(GetValue("IsTest"));
 
-        public static string LBUrl => GetValue("LBUrl");
+        public static string LbUrl => GetValue("LBUrl");
 
         public static string TimeFrom { get; set; }
 
@@ -67,7 +66,8 @@
         {
             get
             {
-                var ids = GetValue("AdminUsersEditSuperStatus").Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+                var ids = GetValue("AdminUsersEditSuperStatus")
+                    .Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
                 IList<int> adminIds = new List<int>();
 
                 foreach (var id in ids)
@@ -81,9 +81,14 @@
 
         public static int SystemId => Utils.ToInt32(GetValue("SystemId"));
 
-        static string GetValue(string key)
-        {
-            return ConfigurationManager.AppSettings[key];
-        }
+        public static string[] PublicDomains => GetValue("PublicDomains").Split(',');
+
+        public static bool IsDenyITGroupAccessing => Utils.ToBoolean(GetValue("IsDenyITGroupAccessing"));
+
+        public static bool IsDenyInternalGroupAccessing => Utils.ToBoolean(GetValue("IsDenyInternalGroupAccessing"));
+
+        public static bool IsDenyFinanceGroupAccessing => Utils.ToBoolean(GetValue("IsDenyFinanceGroupAccessing"));
+
+        private static string GetValue(string key) => ConfigurationManager.AppSettings[key];
     }
 }

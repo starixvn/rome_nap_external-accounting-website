@@ -70,6 +70,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Internal admins are not allowed to login via public domain of this site. Please login via your office domain..
+        /// </summary>
+        public static string AccessDenyToPublicDomain {
+            get {
+                return ResourceManager.GetString("AccessDenyToPublicDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Activate.
         /// </summary>
         public static string Activate {
