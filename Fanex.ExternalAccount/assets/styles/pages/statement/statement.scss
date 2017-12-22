@@ -20,11 +20,13 @@
 
 .filterbox {
     position: relative;
+
     .icon-excel {
         position: absolute;
         right: 16px;
     }
 }
+
 .note-info-message {
     font-family: "AlphaAdmin";
     color: #4872eb;
@@ -83,8 +85,16 @@
     width: 110px;
 }
 
+.col-120 {
+    width: 120px;
+}
+
 .col-160 {
     width: 160px;
+}
+
+.col-150 {
+    width: 150px;
 }
 
 .col-remark {
@@ -93,4 +103,8 @@
 
 .align-center {
     text-align: center;
+}
+
+#tbl-report-new {
+    visibility: visible;
 }

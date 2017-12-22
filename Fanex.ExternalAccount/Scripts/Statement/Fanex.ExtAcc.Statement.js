@@ -57,8 +57,8 @@ Fanex.ExtAcc.Statement = {
         });
         $("#dtpToDate").val($.datepicker.formatDate('M dd, yy', new Date($('#MaxDate').val())));
 
-        // $("#dtpFromDate").datepicker("option", "minDate", new Date(newLayoutDate));
-        // $("#dtpToDate").datepicker("option", "minDate", new Date(newLayoutDate));
+        $("#dtpFromDate").datepicker("option", "minDate", new Date(newLayoutDate));
+        $("#dtpToDate").datepicker("option", "minDate", new Date(newLayoutDate));
 
         $('#ddlGroupName').bind('change', function (event) {
             var args = event.args;
