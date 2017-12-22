@@ -4,11 +4,11 @@
 @import "../../components/tabs";
 @import "../../base/scaffolding";
 
-body {
-    background-color: #fff;
+body {    
     color: #fff; 
 
     @media screen and (min-device-width: 768px) {
+        background-color: #fff;
         color: #232428;
     }
 }

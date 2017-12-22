@@ -241,10 +241,10 @@ a {
   text-align: center; }
 
 body {
-  background-color: #fff;
   color: #fff; }
   @media screen and (min-device-width: 768px) {
     body {
+      background-color: #fff;
       color: #232428; } }
 
 .left-panel-container {
