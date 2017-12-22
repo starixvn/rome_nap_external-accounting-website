@@ -227,7 +227,6 @@
     <Compile Include="Services\CustomerQueryService.cs" />
     <Compile Include="Services\LeftPanelServiceImpl.cs" />
     <Compile Include="Services\LeftPanelService.cs" />
-    <Compile Include="Shared\Role.cs" />
     <Compile Include="ViewModels\BalanceInfo.cs" />
     <Compile Include="ViewModels\BasicInfo.cs" />
     <Compile Include="ViewModels\CustomerModel.cs" />
@@ -244,7 +243,9 @@
     <Compile Include="ViewModels\Status.cs" />
     <Compile Include="ViewModels\MasterAgentUsedCreditItem.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Shared\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="LeftPanel.ruleset" />

@@ -66,6 +66,8 @@
 
         protected virtual ICurrentSession CurrentSession => _currentSession ?? new CurrentSession();
 
+        public object OfficeGroups { get; private set; }
+
         protected virtual ActionResult JsonBase(object data, JsonSerializerSettings settings = null)
         => this.JsonExt(data, settings ?? new JsonSerializerSettings
         {
@@ -374,8 +376,6 @@
             return list;
         }
 
-        private readonly List<string> CompanyGroup = new List<string> { "Finance", "Internal", "IT" };
-
         protected bool IsHiddenProduct(ProductElementConfiguration product)
         {
             if (product.Hide)
@@ -405,7 +405,7 @@
             foreach (var group in groups)
             {
                 if (groupName.Equals(@group, StringComparison.OrdinalIgnoreCase)
-                    || CompanyGroup.Contains(groupName, StringComparer.OrdinalIgnoreCase))
+                    || Shared.GroupService.OfficeGroups.Contains(groupName, StringComparer.OrdinalIgnoreCase))
                 {
                     return false;
                 }

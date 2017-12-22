@@ -12,7 +12,7 @@
     using Repositories;
     using Security;
     using Service.Impl.Customer.Casino;
-    using Shared;
+    using Fanex.ExternalAccount.Core.Shared;
     using Utilities;
     using ViewModels;
 

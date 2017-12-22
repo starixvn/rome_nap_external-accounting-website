@@ -76,7 +76,7 @@
             model.AddProductSetting(table3rdDCS, 28, "Lottery");
             model.AddProductSetting(table3rdDCS, 26, "Lucky 3");
 
-            model.AddBettingLimitForSuper(userId);
+            AddBettingLimitForSuper(model, userId);
         }
 
         private static List<ObjectInfo> EnableItems(DataRow customerRow, DataTable table3rdDCS)
@@ -153,7 +153,7 @@
             LotteryBetting
         };
 
-        private static CustomerModel AddBettingLimitForSuper(this CustomerModel model, int actorId)
+        private static void AddBettingLimitForSuper(CustomerModel model, int actorId)
         {
             var showBetSetting = BetLimitSettingProductKeys.Any(productKey =>
                  CustomerModelExtensions.IsAuthorized(actorId, productKey, AuthenticateAction.AuthenticationType.Read));
@@ -162,8 +162,6 @@
             {
                 model.Setting.Details.Add(new ObjectInfo("BetSetting", "Edit Betting Limit"));
             }
-
-            return model;
         }
     }
 }

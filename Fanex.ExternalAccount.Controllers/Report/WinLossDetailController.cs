@@ -189,8 +189,8 @@
                     _cache.Get<List<WinLossDetail>>(_cacheList),
                     false,
                     level,
-                    _fromDate.ToString("MMM, dd yyyy"),
-                    _toDate.ToString("MMM, dd yyyy"));
+                    _fromDate,
+                    _toDate);
                 var excelStream = builder.Build(_formatedProducts);
                 if (excelStream != null)
                 {

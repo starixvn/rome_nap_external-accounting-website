@@ -1,9 +1,9 @@
-﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Shared
+﻿namespace Fanex.ExternalAccount.Core.Shared
 {
     using System;
     using System.Diagnostics;
-
-    internal static class Role
+    
+    public static class RoleExtensions
     {
         public const int Member = 1;
         public const int Agent = 2;

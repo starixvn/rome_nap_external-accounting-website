@@ -14,7 +14,7 @@
     using PTRacing.Services;
     using Service.Impl.Customer.Casino;
     using Services;
-    using Shared;
+    using Fanex.ExternalAccount.Core.Shared;
     using Utilities;
     using ViewModels;
     using Result = DTO.Result;

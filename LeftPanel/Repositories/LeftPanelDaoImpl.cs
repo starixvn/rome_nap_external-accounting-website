@@ -13,7 +13,7 @@
     using DTO;
     using Service.Impl.Customer.Casino;
     using Service.Impl.Report;
-    using Shared;
+    using Fanex.ExternalAccount.Core.Shared;
     using Utilities;
     using ViewModels;
 

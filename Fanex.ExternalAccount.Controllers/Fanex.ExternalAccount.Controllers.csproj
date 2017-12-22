@@ -288,17 +288,29 @@
     <Compile Include="Customer\CustomerController.cs" />
     <Compile Include="Customer\SportsbookSettingController.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusController.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="GlobalSuppressions.cs" >
+      <SonarQubeExclude>true</SonarQubeExclude>
+    </Compile>
     <Compile Include="Statement\StatementController.cs" />
-    <Compile Include="UserControl\FunctionController.cs" />
-    <Compile Include="UserControl\GroupController.cs" />
+    <Compile Include="UserControl\FunctionController.cs" >
+    <SonarQubeExclude>true</SonarQubeExclude>
+    </Compile>
+    <Compile Include="UserControl\GroupController.cs" >
+    <SonarQubeExclude>true</SonarQubeExclude>
+    </Compile>
     <Compile Include="Home\HomeController.cs" />
-    <Compile Include="UserControl\MenuController.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControl\MenuController.cs" >
+      <SonarQubeExclude>true</SonarQubeExclude>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" >
+      <SonarQubeExclude>true</SonarQubeExclude>
+    </Compile>
     <Compile Include="Report\WinLossDetailController.cs" />
     <Compile Include="Report\DailyWinlossController.cs" />
     <Compile Include="Shared\SharedController.cs" />
-    <Compile Include="UserControl\UserController.cs" />
+    <Compile Include="UserControl\UserController.cs" >
+      <SonarQubeExclude>true</SonarQubeExclude>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -365,7 +377,7 @@
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
