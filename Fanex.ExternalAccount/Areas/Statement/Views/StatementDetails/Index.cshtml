@@ -8,27 +8,32 @@
     var statementReport = JsonConvert.SerializeObject(Model);
     var transferDetailsCriteria = JsonConvert.SerializeObject(ViewBag.TransferDetailsCriteria);
 }
-<div id="transfer-details-container" class="freegrid">
-</div>
+<table id="transfer-details-container" class="table">
+    <thead></thead>
+    <tbody></tbody>
+    <tfoot></tfoot>
+</table>
 <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
 <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
-@Scripts.Render("~/Scripts/_Libs/FanexGrid/FanexGridScripts")
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Grid.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/Fanex.Pagination.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.draggable.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.linkbutton.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.parser.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.resizable.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.pagination.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Areas/Statement/Views/StatementDetails/Scripts/StatementDetailsManager.js")"></script>
 <script type="text/javascript">
-        window.rootUrl = '@Url.Content("~")';
-        var statementReport= @Html.Raw(statementReport);
-        var transferDetailsCriteria= @Html.Raw(transferDetailsCriteria);
-          var statementResources = {
-              Date: '@Labels.Date',
-              Remark: '@Labels.Remark',
-              Amount: '@Labels.Amount',
-              Symbol_NoData: '@Labels.Symbol_NoData',
-              Total: '@Labels.Total',
-              Symbol_ExchangeRate: '@Labels.Symbol_ExchangeRate',
-              GrandPrize: '@Labels.GrandPrize'
-          };
+    window.rootUrl = '@Url.Content("~")';
+    var statementReport= @Html.Raw(statementReport);
+    var transferDetailsCriteria= @Html.Raw(transferDetailsCriteria);
+    var statementResources = {
+        Date: '@Labels.Date',
+        Remark: '@Labels.Remark',
+        Amount: '@Labels.Amount',
+        Symbol_NoData: '@Labels.Symbol_NoData',
+        Total: '@Labels.Total',
+        Symbol_ExchangeRate: '@Labels.Symbol_ExchangeRate',
+        GrandPrize: '@Labels.GrandPrize'
+    };
 </script>

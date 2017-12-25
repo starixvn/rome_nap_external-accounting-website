@@ -384,22 +384,6 @@ var StatementReportManager = function () {
             });
         }
     };
-    self.viewBetList = function (rowIndex, transactionType) {
-        var statement = self.cachedData.statementReport.StatementList[rowIndex];
-        if (self.eventFunction.viewBetListFunction) {
-            self.eventFunction.viewBetListFunction({
-                title: statementResources.Bet_List,
-                left: 400,
-                top: 100,
-                width: 900,
-                height: 600,
-                custId: self.cachedData.statementReportCriteria.custId,
-                statementDate: statement.StatementDateString,
-                transactionType: transactionType
-            });
-        }
-    };
-
     self.exportStatementReport = function (criteria) {
         var url = domain;
         if (criteria.roleId === self.Enums.RoleId.Member) {
