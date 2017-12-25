@@ -757,7 +757,7 @@ textarea {
   margin: 0; }
 
 .header {
-  position: fixed;
+  position: absolute;
   float: left;
   width: 100%;
   min-height: 60px;
@@ -1451,9 +1451,6 @@ div#contentSplitter > div#msg {
 
 .groupBack {
   float: right; }
-
-#mainGrid {
-  visibility: hidden; }
 
 .usernameInput {
   height: 22px;

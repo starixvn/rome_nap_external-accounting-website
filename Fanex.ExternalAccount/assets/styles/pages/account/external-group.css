@@ -355,7 +355,7 @@ textarea {
   margin: 0; }
 
 .header {
-  position: fixed;
+  position: absolute;
   float: left;
   width: 100%;
   min-height: 60px;
