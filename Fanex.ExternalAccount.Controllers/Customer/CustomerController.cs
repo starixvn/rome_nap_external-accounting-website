@@ -10,9 +10,10 @@
     using System.Web.Mvc;
     using CasinoLibrary.Model.UserException;
     using Common;
+    using Common.Extensions;
     using Core.Base;
     using Core.Context;
-    using Core.Enumerations;
+    using Core.Shared;
     using CustomerSetting.IP.Utils;
     using CustomerSetting.Security.Authenticate;
     using DTO;
@@ -21,6 +22,7 @@
     using IBCUtils;
     using Module.NG2.Entities;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
     using PTEngine.BusinessObjects;
     using Service.Impl.Customer;
     using Service.Impl.Customer.Casino;
@@ -34,6 +36,7 @@
 
     public class CustomerController : CustomerBase //DevSkim: ignore DS184626
     {
+        private const string DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt";
         private readonly AgentService _agentService = new AgentService();
         private readonly AuthorizationHandler _authorization = new AuthorizationHandler();
         private readonly CustomerService _customerService = new CustomerService();
@@ -324,7 +327,7 @@
             SetEditAllBetVisibility(customers);
             var customers2String = Customers2Json(customers);
             var syncCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncCasino");
-            var syncLiveCasino= customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncLiveCasino");
+            var syncLiveCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncLiveCasino");
             var allowDoubleComm = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean(customerSetting.RoleId > 2 ? "doubleCommLosing" : "doubleCommLosing1");
             return JsonBase(
                 new
@@ -590,10 +593,9 @@
             bool? closed = null,
             bool? suspended = null,
             string username = null)
-        {   
+        {
             var customerSetting = GetCustomerSetting(groupName, 0, username);
-            var userLevel = Enumeration.FromValue<UserLevel>(customerSetting.RoleId);
-            
+
             var customers = GetCustomerList(groupName, enabled, closed, suspended, customerSetting);
             SetEditAllBetVisibility(customers);
 
@@ -617,11 +619,11 @@
                 customers?.Rows.Count > 0
                 && (customers.Rows[0].ToBoolean("ismyanmarodds") || customerSetting.RoleId == 4));
             var excelStream = builder.Build();
-            var fileName = $"{status}{userLevel.DisplayName}List{DateTime.Now.ToString("yyyyMMdd")}.xls";
+            var fileName = $"{status}{customerSetting.RoleId.DisplayRoleName()}List{DateTime.Now.ToString("yyyyMMdd")}.xls";
 
             ExportToExcel(excelStream, fileName);
         }
-        
+
         private DataTable GetCustomerList(
             string groupName,
             bool? enabled,
@@ -634,7 +636,7 @@
 
             switch (setting.RoleId)
             {
-                case Super:
+                case Role.Super:
                     result = _authorization.IsBelong(groupName, setting.CustId, null, true)
                         ? _superService.GetData(CurrentSession.UserId, setting.CustId == 0 ? id : setting.CustId,
                             enabled,
@@ -642,14 +644,14 @@
                         : result;
                     break;
 
-                case Master:
+                case Role.Master:
                     result = _authorization.IsBelong(groupName, setting.SuperRecommendId, null, true)
                         ? _masterService.GetData(CurrentSession.UserId, setting.SuperRecommendId, setting.CustId == 0 ? id : setting.CustId,
                             enabled, closed, suspended)
                         : result;
                     break;
 
-                case Agent:
+                case Role.Agent:
                     result = _authorization.IsBelong(groupName, setting.MasterRecommendId, null, true)
                         ? _agentService.GetData(CurrentSession.UserId, setting.MasterRecommendId,
                             setting.CustId == 0 ? id : setting.CustId,
@@ -701,5 +703,10 @@
             dataTable.AsEnumerable().ToList().ForEach(n =>
                 n["DisableAllBet"] = n.Field<bool>("DisableAllBet") && n.Field<bool>("DisableAllBetVIP"));
         }
+
+        private string Customers2Json(DataTable customers)
+            => JsonConvert.SerializeObject(
+                CheckVNIP(customers), Formatting.None,
+                new IsoDateTimeConverter { DateTimeFormat = DateTimeFormat });
     }
 }

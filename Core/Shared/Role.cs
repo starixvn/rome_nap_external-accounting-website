@@ -11,6 +11,10 @@
         public const int Super = 4;
 
         [DebuggerStepThrough]
+        public static string DisplayRoleName(this int role)
+            => role.IsSuper() ? "Super" : role.IsMaster() ? "Master" : role.IsAgent() ? "Agent" : "Member";
+
+        [DebuggerStepThrough]
         public static bool IsMember(this int role)
         {
             EnsureRoleIsInRange(role);

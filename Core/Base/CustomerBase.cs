@@ -25,15 +25,7 @@ namespace Fanex.ExternalAccount.Core.Base
     public class CustomerBase : BaseController
     {
         private const string CasinoNo = "01";
-        private const string DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt";
-
         private readonly IReportService _report = new ReportService();
-
-        [NonAction]
-        protected string Customers2Json(DataTable customers)
-        => JsonConvert.SerializeObject(
-            CheckVNIP(customers), Formatting.None,
-            new IsoDateTimeConverter { DateTimeFormat = DateTimeFormat });
 
         [NonAction]
         protected Task<CustomerSetting.Module.Core.Models.Result> AutoInsertLiveCasinoPost(
@@ -45,7 +37,7 @@ namespace Fanex.ExternalAccount.Core.Base
         {
             return Task.Factory.StartNew(() =>
             {
-                ISettingService livecasinoSettingService = new SettingService();
+                var livecasinoSettingService = new SettingService();
 
                 var customerInfo = livecasinoSettingService.GetCustomerLiveCasinoInfo(custId);
                 var parentInfo = livecasinoSettingService.GetCustomerLiveCasinoInfo(parentId);

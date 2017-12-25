@@ -273,7 +273,7 @@
                 var isPublicDomain = Config.PublicDomains.Contains(_currentContext.DomainName);
                 if (isPublicDomain)
                 {
-                    return GroupService.IsITGroup(currentGroup.GroupName)
+                    return GroupService.IsITGroup(currentGroup.GroupID)
                         ? Config.IsDenyITGroupAccessing
                         : isInternalAdmin
                             ? Config.IsDenyInternalGroupAccessing
@@ -337,7 +337,7 @@
             _currentSession.IsInternalAdmin = isInternalAdmin;
             _currentSession.GroupId = group.GroupID;
             _currentSession.CurrencyGroup = group.GroupName;
-            _currentSession.IsITAdmin = GroupService.IsITGroup(group.GroupName);
+            _currentSession.IsITAdmin = GroupService.IsITGroup(group.GroupID);
             _currentSession.FromSystem = 3;
             _currentSession.IsLogin = true;
         }
