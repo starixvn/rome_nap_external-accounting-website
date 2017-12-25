@@ -32,6 +32,7 @@
     var showFishingWorld = AppSettings.IsShowFishingWorld ? 1 : 0;
     var showLottery = AppSettings.IsShowLottery ? 1 : 0;
     var showLucky3 = AppSettings.IsShowLucky3 ? 1 : 0;
+    var showBullfighting = AppSettings.IsShowBullfighting ? 1 : 0;
     var ng2Text = RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
 }
 <!DOCTYPE html>
@@ -225,6 +226,7 @@
         var showNG2 = @showNG2;
         //var showFishingWorldBetting = true;
         var showNG2Betting = true;
+        var showBullfighting = @showBullfighting;
         var ng2Text = '@ng2Text';
         var showLottery = @showLottery;
         var showLucky3 = @showLucky3;

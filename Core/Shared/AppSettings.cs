@@ -36,6 +36,8 @@
 
         public static bool HideEsports => Utils.ToBoolean(ConfigurationManager.AppSettings["HideEsports"]);
 
+        public static bool IsShowBullfighting => Utils.ToBoolean(ConfigurationManager.AppSettings["IsShowBullfighting"]);
+
         public static bool IsShowProduct(string productName)
             => Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]);
     }
