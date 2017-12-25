@@ -1712,7 +1712,6 @@
     <Content Include="Content\LeftMenu\AccountInfo.css" />
     <Content Include="Content\LeftMenu\styles.css" />
     <Content Include="Content\normalize.css" />
-    <Content Include="Content\Statement\Statement.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
     <Content Include="Images\tick.png" />
