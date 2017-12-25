@@ -4,11 +4,11 @@
     using System.ComponentModel;
     using System.Reflection;
 
-    public class EASDisplayAttribute : DisplayNameAttribute
+    public class EasDisplayAttribute : DisplayNameAttribute
     {
         private readonly PropertyInfo _nameProperty;
 
-        public EASDisplayAttribute(string displayNameKey, Type resourceType)
+        public EasDisplayAttribute(string displayNameKey, Type resourceType)
             : base(displayNameKey)
         {
             if (resourceType != null)

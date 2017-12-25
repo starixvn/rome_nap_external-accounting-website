@@ -6,15 +6,15 @@ namespace Fanex.ExternalAccount.Core.Authorization.ThirdPartyStatus
 {
     public class ProductStatusAuthorization
     {
-        private readonly ExternalAccountAuthenticate _authenticationService;
+        private readonly ExternalAccountAuthenticateAttribute _authenticationService;
 
         public ProductStatusAuthorization() : this(null)
         {
         }
 
-        public ProductStatusAuthorization(ExternalAccountAuthenticate authenticationService)
+        public ProductStatusAuthorization(ExternalAccountAuthenticateAttribute authenticationService)
         {
-            _authenticationService = authenticationService ?? new ExternalAccountAuthenticate();
+            _authenticationService = authenticationService ?? new ExternalAccountAuthenticateAttribute();
         }
 
         public bool HasPermission(AuthenticateAction.AuthenticationType role, int productId)

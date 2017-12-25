@@ -39,14 +39,14 @@
 
         Result EnableESports(int id, bool enable, bool enableDownline);
 
-        Result AutoMasterPT(int id, bool allow, int uplineId);
+        Result AutoMasterPt(int id, bool allow, int uplineId);
 
         Result UpdateSecurityCode(int custId, string code, bool force, int roleId);
 
-        Result EnableHRFixedOdds(int id, bool enable, bool enableDownline);
+        Result EnableHrFixedOdds(int id, bool enable, bool enableDownline);
 
         Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId);
 
-        Result RemoveOTP(int custId);
+        Result RemoveOtp(int custId);
     }
 }

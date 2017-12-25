@@ -1,4 +1,6 @@
-﻿namespace Fanex.ExternalAccount.Core.Base
+﻿using Fanex.Logging.Extensions.Web;
+
+namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
     using System.Collections;
@@ -119,12 +121,12 @@
             }
             catch (ErrorException casinoEx)
             {
-                Logs.CasinoError(casinoEx);
+                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
                 return new CustomerSetting.Module.Core.Models.Result(999, casinoEx.Message);
             }
             catch (Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return new CustomerSetting.Module.Core.Models.Result(999, string.Empty);
@@ -190,7 +192,6 @@
             var isSynced = product.ToBoolean("IsSync");
             var isDisabled = product.ToBoolean("IsDisabled");
             var isDisabledDownline = product.ToBoolean("IsDisabledDownline");
-            var isSyncedDownline = product.ToBoolean("IsSyncedDownline");
             var hasDownline = product.ToBoolean("HasDownline");
 
             return new DcsEntity
@@ -201,8 +202,7 @@
                 HasDownline = hasDownline,
                 IsSynced = isSynced,
                 IsDisabled = isDisabled,
-                IsDisabledDownline = isDisabledDownline,
-                IsSyncedDownline = isSyncedDownline
+                IsDisabledDownline = isDisabledDownline
             };
         }
     }

@@ -15,6 +15,8 @@
     using Fanex.ExternalAccount.Core.Shared;
     using Utilities;
     using ViewModels;
+    using System;
+    using Fanex.Logging.Extensions.Web;
 
     public class LeftPanelServiceImpl : LeftPanelService
     {
@@ -164,7 +166,7 @@
             }
             catch (ErrorException casinoEx)
             {
-                Logs.CasinoError(casinoEx);
+                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
             }
 
             return result;

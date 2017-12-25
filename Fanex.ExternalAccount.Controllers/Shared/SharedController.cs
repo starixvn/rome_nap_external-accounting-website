@@ -107,7 +107,7 @@
                 }
                 catch (Exception ex)
                 {
-                    Logs.Error(ex);
+                    ExceptionHandler.Handle(ex);
                     return RecheckinStatus.Error;
                 }
             }

@@ -138,7 +138,6 @@
                 {"area", string.Empty},
                 {captchaManager.TokenParameterName, keyValuePair.Key}
             });
-        }
 
         private static List<string> GetRegexToHideSensitiveInfo()
         {
@@ -152,5 +151,6 @@
             }
 
             return result;
+        }
     }
 }

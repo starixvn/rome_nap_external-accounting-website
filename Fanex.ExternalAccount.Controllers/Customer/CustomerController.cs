@@ -27,6 +27,7 @@
     using Service.Impl.Report;
     using Utilities;
     using ViewModel.Customer;
+    using Logging.Extensions.Web;
     using Customer = PTEngine.BusinessObjects.Customer;
     using CustomerDTO = Fanex.ExternalAccount.DTO.Customer.Customer;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
@@ -570,11 +571,11 @@
                     }
                     catch (ErrorException casinoEx)
                     {
-                        Logs.CasinoError(casinoEx);
+                        ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
                     }
                     catch (Exception ex)
                     {
-                        Logs.Error(ex);
+                        ExceptionHandler.Handle(ex);
                     }
                 }
             }

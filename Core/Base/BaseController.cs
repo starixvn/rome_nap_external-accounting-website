@@ -1,4 +1,9 @@
-﻿namespace Fanex.ExternalAccount.Core.Base
+﻿using Fanex.CustomerSetting.Module.Casino.Services.Impl;
+using Fanex.CustomerSetting.Module.Core;
+using Fanex.Logging.Extensions.Web;
+using Sunplus.Agent.Utilities;
+
+namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
     using System.Collections.Generic;
@@ -128,7 +133,7 @@
             }
             catch (Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
         }
 
@@ -153,7 +158,7 @@
             }
             catch (Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
         }
 
@@ -171,11 +176,11 @@
             }
             catch (ErrorException casinoEx)
             {
-                Logs.CasinoError(casinoEx);
+                ExceptionHandler.Handle(casinoEx);
             }
             catch (Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
         }
 
@@ -193,11 +198,11 @@
             }
             catch (ErrorException casinoEx)
             {
-                Logs.CasinoError(casinoEx);
+                ExceptionHandler.Handle(casinoEx);
             }
             catch (Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
         }
 
