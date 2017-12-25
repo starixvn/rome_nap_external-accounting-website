@@ -14,6 +14,15 @@ var StatementDetailsManager = function () {
     };
     self.initPage = function () {
         self.renderTransferDetails(statementReport);
+
+        $("#").click(function () {
+            var url = location.protocol +
+                window.rootUrl +
+                'NapStatement/StatementReport/ExportTransferDetails?' +
+                jQuery.param(transferDetailsCriteria);
+
+            $('#frm').attr('src', url);
+        });
     };
     self.renderTransferDetails = function (statementReport) {
         var bodyContent = self.renderBody(statementReport);
