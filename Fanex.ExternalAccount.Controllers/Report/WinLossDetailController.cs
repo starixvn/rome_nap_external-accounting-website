@@ -3,7 +3,6 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
     using Caching;
@@ -11,6 +10,7 @@
     using Core.Context;
     using Core.Reports;
     using Core.Reports.WinLossDetail;
+    using Core.Shared;
     using CustomerSetting.Security.Authenticate;
     using DTO.Report;
     using Excel.Reports.WinLossDetailReport;
@@ -19,8 +19,25 @@
     using Service.Interface.Report;
     using Utilities;
 
+    public class LineIds
+    {
+        public LineIds(int superId, int masterId, int agentId)
+        {
+            SuperId = superId;
+            MasterId = masterId;
+            AgentId = agentId;
+        }
+
+        public int SuperId { get; }
+
+        public int MasterId { get; }
+
+        public int AgentId { get; }
+    }
     public class WinLossDetailController : BaseController
     {
+        private const string MonthDayYearFormat = "MMM, dd yyyy";
+        private const string Seperator = ", ";
         private readonly ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
         private readonly IReportService _reportService = new ReportService();
         private string _cacheList = string.Empty;
@@ -37,7 +54,7 @@
         private ArrayList _sortingOrderList;
         private int _srecommend;
         private DateTime _toDate = DateTime.Today;
-        
+
         private string _username = string.Empty;
         private int _viewlevel = 5;
 
@@ -70,14 +87,14 @@
                     if (!p.Key.Equals("showAll", StringComparison.OrdinalIgnoreCase) && o.Value
                         && o.Key.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
                     {
-                        _formatedProducts += p.Value + ", ";
+                        _formatedProducts += p.Value + Seperator;
                     }
                 });
             });
 
             if (_formatedProducts.Length > 0)
             {
-                _formatedProducts = _formatedProducts.Substring(0, _formatedProducts.Length - 2);
+                _formatedProducts = _formatedProducts.TrimEnd(Seperator.ToCharArray());
             }
 
             foreach (ProductElementConfiguration item in ProductsConfiguration.Instance.ProductCollection)
@@ -94,8 +111,7 @@
             _productIds = string.Join(",", _formatedProductIds);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail, Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult GetData(int viewLevel = 0)
         {
@@ -110,16 +126,27 @@
 
             if (_custId != 0)
             {
-                return GetWinLossDetailDownline();
+                return DrillDownWinLossDetail(
+                    _custId,
+                    _viewlevel,
+                    _fromDate,
+                    _toDate,
+                    _productIds,
+                    _sortingOrderList);
             }
 
-            return GetWinLossDetailSearch();
+            return SearchWinLossDetail(
+                _username,
+                _groupname,
+                _fromDate,
+                _toDate,
+                _productIds,
+                _sortingOrderList);
         }
-
 
         [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public void GetExportToExcelWinLossDetail()
+        public void ExportWinLossDetailToExcel()
         {
             GetRequestPage();
             var subFileName = _fromDate.ToString("yyyyMMdd") + "_" + _toDate.ToString("yyyyMMdd") + ".xls";
@@ -127,27 +154,27 @@
             _cacheList = "CacheList" + _username + _groupname + _custId + _fromDate + _toDate + _products;
             var level = _viewlevel;
 
-            if (_viewlevel == 1)
+            if (_viewlevel == Role.Member)
             {
                 if (!Config.IsCache || _cache.Get<List<WinLossDetailAg>>(_cacheList) == null)
                 {
                     getNew = true;
-                    GetData(2);
+                    GetData(Role.Agent);
                 }
 
-                level = !getNew ? _viewlevel : 1;
+                level = !getNew ? _viewlevel : Role.Member;
                 var builder = new WinLossDetailReportAgBuilder(
                     _cache.Get<List<WinLossDetailAg>>(_cacheList),
                     false,
-                    !getNew ? _viewlevel : 1,
-                    _fromDate.ToString("MMM, dd yyyy"),
-                    _toDate.ToString("MMM, dd yyyy"));
+                    !getNew ? _viewlevel : Role.Member,
+                    _fromDate.ToString(MonthDayYearFormat),
+                    _toDate.ToString(MonthDayYearFormat));
                 var excelStream = builder.Build(_formatedProducts);
                 if (excelStream != null)
                 {
                     ExportToExcel(
                         excelStream,
-                        level == 2 ? "AgentWinLossDetail_" + subFileName : "MemberWinLossDetail_" + subFileName);
+                        level == Role.Agent ? "AgentWinLossDetail_" + subFileName : "MemberWinLossDetail_" + subFileName);
                     excelStream.Dispose();
                 }
             }
@@ -156,22 +183,22 @@
                 if (!Config.IsCache || _cache.Get<List<WinLossDetailMAg>>(_cacheList) == null)
                 {
                     getNew = true;
-                    GetData(3);
+                    GetData(Role.Master);
                 }
 
-                level = !getNew ? _viewlevel : 2;
+                level = !getNew ? _viewlevel : Role.Agent;
                 var builder = new WinLossDetailReportMAgBuilder(
                     _cache.Get<List<WinLossDetailMAg>>(_cacheList),
                     false,
                     level,
-                    _fromDate.ToString("MMM, dd yyyy"),
-                    _toDate.ToString("MMM, dd yyyy"));
+                    _fromDate.ToString(MonthDayYearFormat),
+                    _toDate.ToString(MonthDayYearFormat));
                 var excelStream = builder.Build(_formatedProducts);
                 if (excelStream != null)
                 {
                     ExportToExcel(
                         excelStream,
-                        level == 3 ? "MasterWinLossDetail_" + subFileName : "AgentWinLossDetail_" + subFileName);
+                        level == Role.Master ? "MasterWinLossDetail_" + subFileName : "AgentWinLossDetail_" + subFileName);
                     excelStream.Dispose();
                 }
             }
@@ -180,10 +207,10 @@
                 if (!Config.IsCache || _cache.Get<List<WinLossDetail>>(_cacheList) == null)
                 {
                     getNew = true;
-                    GetData(4);
+                    GetData(Role.Super);
                 }
 
-                level = level == 4 ? level : !getNew ? _viewlevel : 3;
+                level = level == Role.Super ? level : !getNew ? _viewlevel : Role.Master;
 
                 var builder = new WinLossDetailReportBuilder(
                     _cache.Get<List<WinLossDetail>>(_cacheList),
@@ -196,17 +223,17 @@
                 {
                     ExportToExcel(
                         excelStream,
-                        level == 4 ? "SuperWinLossDetail_" + subFileName : "MasterWinLossDetail_" + subFileName);
+                        level == Role.Super ? "SuperWinLossDetail_" + subFileName : "MasterWinLossDetail_" + subFileName);
                     excelStream.Dispose();
                 }
             }
         }
 
-        private bool CheckSearchCustomer()
+        private bool SearchCustomer(string userName, string groupname)
         {
-            if (!string.IsNullOrWhiteSpace(_username))
+            if (!string.IsNullOrWhiteSpace(userName))
             {
-                var custInfo = _reportService.GetCustomerInfo(_groupname, 0, _username, true);
+                var custInfo = _reportService.GetCustomerInfo(groupname, 0, userName, true);
                 if (custInfo == null || custInfo.Rows.Count == 0)
                 {
                     return false;
@@ -221,20 +248,26 @@
 
             return true;
         }
-        
-        private ActionResult GetWinLossDetailSearch()
+
+        private ActionResult SearchWinLossDetail(
+            string username,
+            string groupname,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            ArrayList sortingOrderList)
         {
-            if (!CheckSearchCustomer())
+            if (!SearchCustomer(username, groupname))
             {
                 return JsonBase(
                     new
                     {
-                        viewlevel = 4,
-                        supername = _username,
+                        viewlevel = Role.Super,
+                        supername = username,
                         mastername = string.Empty,
                         agentname = string.Empty,
                         rows = string.Empty,
-                        sortingorderlist = _sortingOrderList,
+                        sortingorderlist = sortingOrderList,
                         tooltips = new
                         {
                             showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
@@ -242,20 +275,20 @@
                     });
             }
 
-            if (_roleId > 3)
+            if (_roleId >= Role.Super)
             {
-                var _listWinLossDetail = _reportService.GetWinLossDetail(
-                    _groupname, _srecommend, _fromDate, _toDate, _productIds);
+                var _listWinLossDetail = _reportService.GetWinLossDetail(groupname, _srecommend, fromDate, toDate, productIds);
+
                 _cache.Set(_cacheList, _listWinLossDetail);
                 return JsonBase(
                     new
                     {
-                        viewlevel = 4,
-                        supername = _username,
+                        viewlevel = Role.Super,
+                        supername = username,
                         mastername = string.Empty,
                         agentname = string.Empty,
                         rows = _listWinLossDetail,
-                        sortingorderlist = _sortingOrderList,
+                        sortingorderlist = sortingOrderList,
                         tooltips = new
                         {
                             showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
@@ -263,22 +296,23 @@
                     },
                     new JsonSerializerSettings());
             }
-            if (_roleId == 3)
+
+            if (_roleId == Role.Master)
             {
                 var _listWinLossDetail = _reportService.GetWinLossDetailSuper(
-                    _srecommend, _mrecommend, _fromDate, _toDate, _productIds);
+                    _srecommend, _mrecommend, fromDate, toDate, productIds);
                 _cache.Set(_cacheList, _listWinLossDetail);
                 return JsonBase(
                     new
                     {
-                        viewlevel = 3,
+                        viewlevel = Role.Master,
                         supername = string.Empty,
-                        mastername = _username,
+                        mastername = username,
                         agentname = string.Empty,
                         srecommend = _srecommend,
                         mrecommend = _mrecommend,
                         rows = _listWinLossDetail,
-                        sortingorderlist = _sortingOrderList,
+                        sortingorderlist = sortingOrderList,
                         tooltips = new
                         {
                             showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
@@ -286,23 +320,23 @@
                     },
                     new JsonSerializerSettings());
             }
-            if (_roleId == 2)
+            if (_roleId == Role.Agent)
             {
                 var _listWinLossDetailMAg = _reportService.GetWinLossDetailMAg(
-                    _mrecommend, _recommend, _fromDate, _toDate, _productIds);
+                    _mrecommend, _recommend, fromDate, toDate, productIds);
                 _cache.Set(_cacheList, _listWinLossDetailMAg);
                 return JsonBase(
                     new
                     {
-                        viewlevel = 2,
+                        viewlevel = Role.Agent,
                         supername = string.Empty,
                         mastername = string.Empty,
-                        agentname = _username,
+                        agentname = username,
                         srecommend = _srecommend,
                         mrecommend = _mrecommend,
                         recommend = _recommend,
                         rows = _listWinLossDetailMAg,
-                        sortingorderlist = _sortingOrderList,
+                        sortingorderlist = sortingOrderList,
                         tooltips = new
                         {
                             showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
@@ -311,12 +345,12 @@
                     new JsonSerializerSettings());
             }
             var _listWinLossDetailAg = _reportService.GetWinLossDetailAg(
-                _recommend, _memberId, _fromDate, _toDate, _productIds);
+                _recommend, _memberId, fromDate, toDate, productIds);
             _cache.Set(_cacheList, _listWinLossDetailAg);
             return JsonBase(
                 new
                 {
-                    viewlevel = 1,
+                    viewlevel = Role.Member,
                     supername = string.Empty,
                     mastername = string.Empty,
                     agentname = string.Empty,
@@ -324,7 +358,7 @@
                     mrecommend = _mrecommend,
                     recommend = _recommend,
                     rows = _listWinLossDetailAg,
-                    sortingorderlist = _sortingOrderList,
+                    sortingorderlist = sortingOrderList,
                     tooltips = new
                     {
                         showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
@@ -333,56 +367,105 @@
                 new JsonSerializerSettings());
         }
 
-        private ActionResult GetWinLossDetailDownline()
+        private ActionResult DrillDownWinLossDetail(
+            int custId,
+            int viewlevel,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            ArrayList sortingOrderList)
         {
-            if (_viewlevel == 4)
+            if (viewlevel == Role.Super)
             {
-                var _listWinLossDetail = _reportService.GetWinLossDetailSuper(_custId, 0, _fromDate, _toDate, _productIds);
-                _cache.Set(_cacheList, _listWinLossDetail);
-                return JsonBase(
-                    new
-                    {
-                        viewlevel = 3,
-                        srecommend = _custId,
-                        rows = _listWinLossDetail,
-                        sortingorderlist = _sortingOrderList,
-                        tooltips = new
-                        {
-                            showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
-                        }
-                    },
-                    new JsonSerializerSettings());
+                return DrillDownSuperWinLossDetail(custId, fromDate, toDate, productIds, viewlevel.DirectDownlineLevel(), sortingOrderList);
             }
-            if (_viewlevel == 3)
+
+            if (viewlevel == Role.Master)
             {
-                var _listWinLossDetailMAg = _reportService.GetWinLossDetailMAg(_custId, 0, _fromDate, _toDate, _productIds);
-                _cache.Set(_cacheList, _listWinLossDetailMAg);
-                return JsonBase(
-                    new
-                    {
-                        viewlevel = 2,
-                        srecommend = _srecommend,
-                        mrecommend = _custId,
-                        rows = _listWinLossDetailMAg,
-                        sortingorderlist = _sortingOrderList,
-                        tooltips = new
-                        {
-                            showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
-                        }
-                    },
-                    new JsonSerializerSettings());
+                return DrillDownMasterWinLossDetail(custId, fromDate, toDate, productIds, viewlevel.DirectDownlineLevel(), sortingOrderList);
             }
-            var _listWinLossDetailAg = _reportService.GetWinLossDetailAg(_custId, 0, _fromDate, _toDate, _productIds);
-            _cache.Set(_cacheList, _listWinLossDetailAg);
+
+            return DrillDownAgentWinLossDetail(custId, fromDate, toDate, productIds, viewlevel.DirectDownlineLevel(), sortingOrderList);
+        }
+
+        private ActionResult DrillDownSuperWinLossDetail(
+            int custId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            int directDownlineLevel,
+            ArrayList sortingOrderList)
+        {
+            var winLossData = _reportService.GetWinLossDetailSuper(custId, 0, fromDate, toDate, productIds);
+
+            _cache.Set(_cacheList, winLossData);
+
             return JsonBase(
                 new
                 {
-                    viewlevel = 1,
+                    viewlevel = directDownlineLevel,
+                    srecommend = custId,
+                    mrecommend = 0,
+                    recommend = 0,
+                    rows = winLossData,
+                    sortingorderlist = sortingOrderList,
+                    tooltips = new
+                    {
+                        showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
+                    }
+                },
+                new JsonSerializerSettings());
+        }
+
+        private ActionResult DrillDownMasterWinLossDetail(
+            int custId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            int directDownlineLevel,
+            ArrayList sortingOrderList)
+        {
+            var winLossData = _reportService.GetWinLossDetailMAg(custId, 0, fromDate, toDate, productIds);
+            _cache.Set(_cacheList, winLossData);
+
+            return JsonBase(
+                new
+                {
+                    viewlevel = directDownlineLevel,
+                    srecommend = _srecommend,
+                    mrecommend = custId,
+                    recommend = 0,
+                    rows = winLossData,
+                    sortingorderlist = sortingOrderList,
+                    tooltips = new
+                    {
+                        showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
+                    }
+                },
+                new JsonSerializerSettings());
+        }
+
+        private ActionResult DrillDownAgentWinLossDetail(
+            int custId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            int directDownlineLevel,
+            ArrayList sortingOrderList)
+        {
+            var winLossData = _reportService.GetWinLossDetailAg(custId, 0, fromDate, toDate, productIds);
+
+            _cache.Set(_cacheList, winLossData);
+
+            return JsonBase(
+                new
+                {
+                    viewlevel = directDownlineLevel,
                     srecommend = _srecommend,
                     mrecommend = _mrecommend,
-                    recommend = _custId,
-                    rows = _listWinLossDetailAg,
-                    sortingorderlist = _sortingOrderList,
+                    recommend = custId,
+                    rows = winLossData,
+                    sortingorderlist = sortingOrderList,
                     tooltips = new
                     {
                         showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)

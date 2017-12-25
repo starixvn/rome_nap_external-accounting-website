@@ -2,7 +2,7 @@
 {
     using System;
     using System.Diagnostics;
-    
+
     public static class Role
     {
         public const int Member = 1;
@@ -47,7 +47,19 @@
             return role == Super;
         }
 
+        [DebuggerStepThrough]
         public static bool IsNotSuper(this int role) => !IsSuper(role);
+
+        [DebuggerStepThrough]
+        public static int DirectDownlineLevel(this int role)
+        {
+            if (role > Member)
+            {
+                return role - 1;
+            }
+
+            throw new InvalidOperationException("Member doest not have downline");
+        }
 
         [DebuggerStepThrough]
         private static void EnsureRoleIsInRange(int role)

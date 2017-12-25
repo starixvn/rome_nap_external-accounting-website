@@ -6,7 +6,7 @@
 
     public interface IFunctionService
     {
-        Result CreateFunction(Function funtion, int custId, string ip, string assignedGroupIDs);
+        Result CreateFunction(Function function, int custId, string ip, string assignedGroupIDs);
 
         Result UpdateFunction(Function function, int custId, string ip, string oldAssignedGroupIDs, string assignedGroupIDs);
 
