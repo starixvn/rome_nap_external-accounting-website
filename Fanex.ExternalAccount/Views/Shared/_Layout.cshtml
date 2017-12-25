@@ -3,48 +3,35 @@
 @using System.Web.Optimization
 @using Fanex.PTEngine
 @using Fanex.ExternalAccount.Module.LeftPanel.Extensions
-@using Fanex.CustomerSetting.Security.Authenticate
-@using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations
+@using Fanex.ExternalAccount.Core.Shared;
 @{
     var isLocal = Request.IsLocal ? 1 : 0;
     var userId = CurrentSession.Instance.UserId;
-    var admins = CustomerModelExtensions.IsAuthorized(userId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host) ? new int[] { CurrentSession.Instance.UserId } : new int[] { };
-    var showBetSetting = CustomerModelExtensions.IsAuthorized(userId, eFunctions.CasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
-        CustomerModelExtensions.IsAuthorized(userId, eFunctions.GoldDeluxeBetting, AuthenticateAction.AuthenticationType.Read) ||
-        CustomerModelExtensions.IsAuthorized(userId, eFunctions.KenoBetting, AuthenticateAction.AuthenticationType.Read) ||
-        CustomerModelExtensions.IsAuthorized(userId, eFunctions.LiveCasinoBetting, AuthenticateAction.AuthenticationType.Read) ||
-        CustomerModelExtensions.IsAuthorized(userId, eFunctions.RacingBetting, AuthenticateAction.AuthenticationType.Read) ||
-        CustomerModelExtensions.IsAuthorized(userId, eFunctions.SportsbookBetting, AuthenticateAction.AuthenticationType.Read) ||
-        CustomerModelExtensions.IsAuthorized(userId, eFunctions.VirtualSportsBetting, AuthenticateAction.AuthenticationType.Read) ||
-        CustomerModelExtensions.IsAuthorized(userId, eFunctions.AllbetBetting, AuthenticateAction.AuthenticationType.Read) ||
-        CustomerModelExtensions.IsAuthorized(userId, eFunctions.VoidbridgeBetting, AuthenticateAction.AuthenticationType.Read) ||
-        CustomerModelExtensions.IsAuthorized(userId, eFunctions.NG2Betting, AuthenticateAction.AuthenticationType.Read) ||
-        CustomerModelExtensions.IsAuthorized(userId, eFunctions.LotteryBetting, AuthenticateAction.AuthenticationType.Read) ||
-        CustomerModelExtensions.IsAuthorized(userId, eFunctions.BullfightingBetting, AuthenticateAction.AuthenticationType.Read) ? 1 : 0;
+    var admins = AuthorizationHandler.Instance.HasOpenSuperPermission(userId) ? new int[] { userId } : new int[] { };
+    var showBetSetting = AuthorizationHandler.Instance.IsVisibleBetSetting(userId) ? 1 : 0;
     var allowAdminEditSuperStatus = Newtonsoft.Json.JsonConvert.SerializeObject(admins, Newtonsoft.Json.Formatting.None, new Newtonsoft.Json.JsonSerializerSettings
     {
         ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
         NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
     });
-    var isUpdateCredit = CustomerModelExtensions.IsAuthorized(userId, eFunctions.UpdateCredit, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
-    var hasClose = CustomerModelExtensions.IsAuthorized(userId, eFunctions.CloseCustomer, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
-    var hasSuspend = CustomerModelExtensions.IsAuthorized(userId, eFunctions.SuspendCustomer, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
-    var allowAutoPT = CustomerModelExtensions.IsAuthorized(userId, eFunctions.AllowAutoMPT, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
-    var hasClearCredit = CustomerModelExtensions.IsAuthorized(userId, eFunctions.ClearCredit, AuthenticateAction.AuthenticationType.Host) ? 1 : 0;
-    var enableKeno = System.Configuration.ConfigurationManager.AppSettings["EnableKeno"] == "true" ? 1 : 0;
-    var showKenoSetting = KenoSection.Instance.ShowSetting == true ? "true" : "false";
-    var showGoldDeluxeSetting = System.Configuration.ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "1" ? 1 : 0;
-    var showColossusBets = System.Configuration.ConfigurationManager.AppSettings["IsShowColossusBets"] == "1" ? 1 : 0;
-    var showSportsbook2 = System.Configuration.ConfigurationManager.AppSettings["IsShowSportsbook2"] == "1" ? 1 : 0;
-    var showCockfighting = System.Configuration.ConfigurationManager.AppSettings["IsShowCockfighting"] == "1" ? 1 : 0;
-    var showCricket = System.Configuration.ConfigurationManager.AppSettings["IsShowCricket"] == "1" ? 1 : 0;
-    var showAllbet = System.Configuration.ConfigurationManager.AppSettings["IsShowAllbet"] == "1" ? 1 : 0;
-    var showVoidbridge = System.Configuration.ConfigurationManager.AppSettings["IsShowMacauGames"] == "1" ? 1 : 0;
-    var showNG2 = System.Configuration.ConfigurationManager.AppSettings["IsShowNG2"] == "1" ? 1 : 0;
-    var showFishingWorld = System.Configuration.ConfigurationManager.AppSettings["IsShowFishingWorld"] == "1" ? 1 : 0;
-    var showLottery = System.Configuration.ConfigurationManager.AppSettings["IsShowLottery"] == "1" ? 1 : 0;
-    var showLucky3 = System.Configuration.ConfigurationManager.AppSettings["IsShowLucky3"] == "1" ? 1 : 0;
-    var showBullfighting = System.Configuration.ConfigurationManager.AppSettings["IsShowBullfighting"] == "1" ? 1 : 0;
+    var isUpdateCredit = AuthorizationHandler.Instance.HasUpdateCreditPermission(userId) ? 1 : 0;
+    var hasClose = AuthorizationHandler.Instance.HasCloseCustomerPermission(userId) ? 1 : 0;
+    var hasSuspend = AuthorizationHandler.Instance.HasSuspendCustomerPermission(userId) ? 1 : 0;
+    var allowAutoPT = AuthorizationHandler.Instance.HasAllowAutoMPTPermission(userId) ? 1 : 0;
+    var hasClearCredit = AuthorizationHandler.Instance.HasClearCreditPermission(userId) ? 1 : 0;
+    var enableKeno = AppSettings.EnableKeno ? 1 : 0;
+    var showKenoSetting = AppSettings.ShowKenoSetting ? "true" : "false";
+    var showGoldDeluxeSetting = AppSettings.IsShowGoldDeluxeSettingForCredit ? 1 : 0;
+    var showColossusBets = AppSettings.IsShowColossusBets ? 1 : 0;
+    var showSportsbook2 = AppSettings.IsShowSportsbook2 ? 1 : 0;
+    var showCockfighting = AppSettings.IsShowCockfighting ? 1 : 0;
+    var showCricket = AppSettings.IsShowCricket ? 1 : 0;
+    var showAllbet = AppSettings.IsShowAllbet ? 1 : 0;
+    var showVoidbridge = AppSettings.IsShowMacauGames ? 1 : 0;
+    var showNG2 = AppSettings.IsShowNG2 ? 1 : 0;
+    var showFishingWorld = AppSettings.IsShowFishingWorld ? 1 : 0;
+    var showLottery = AppSettings.IsShowLottery ? 1 : 0;
+    var showLucky3 = AppSettings.IsShowLucky3 ? 1 : 0;
     var ng2Text = RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
 }
 <!DOCTYPE html>
@@ -114,12 +101,6 @@
                 <div id='accMenuGroup' style="visibility: visible; padding: 10px; float: right; width: 130px;">
                     <select id="ddlGroupName" style="width: 130px; height: 400px;display: none;" >
                     </select>
-                    @*<ul id="groupsMenu" class="sf-menu">
-                        <li id="groupNameMenu">
-                            <a class="groupTextTop" id="selectedGroup" href="#" ignorehref="1">@ViewLang.Group</a>
-                            <ul id="ddlGroupName" class="menuULRight"></ul>
-                        </li>
-                    </ul>*@
                 </div>
                 <div id="grpText" class="groupMenuTop">
                     @ViewLang.Group
@@ -247,7 +228,6 @@
         var ng2Text = '@ng2Text';
         var showLottery = @showLottery;
         var showLucky3 = @showLucky3;
-        var showBullfighting = @showBullfighting;
 
         $(document).ready(function () {
             Fanex.ExtAcc.Customer.ReCheckin();

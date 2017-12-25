@@ -69,9 +69,6 @@
       <HintPath>..\packages\Fanex.CustomerSetting.1.1.0.6\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.2.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.2.10\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.IP">
       <HintPath>..\Dependencies\Fanex.CustomerSetting.IP.dll</HintPath>
     </Reference>
@@ -110,20 +107,8 @@
     <Reference Include="Fanex.LiveCasinoSetting">
       <HintPath>..\Dependencies\Fanex.LiveCasinoSetting.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Logging, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Logging.1.0.4\lib\net40\Fanex.Logging.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.Logging.Extensions, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Logging.Extensions.1.0.5\lib\net40\Fanex.Logging.Extensions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.Logging.Extensions.Database.V59, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Logging.Extensions.Database.V59.1.0.3\lib\net40\Fanex.Logging.Extensions.Database.V59.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.Logging.Extensions.Web, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Logging.Extensions.Web.1.0.5\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
+    <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Module.Logs, Version=2.0.0.3, Culture=neutral, processorArchitecture=MSIL">
@@ -287,6 +272,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authorization\KenoAuthorizationService.cs" />
+    <Compile Include="Authorization\ColossusBetAuthorizationService.cs" />
     <Compile Include="Authorization\DCS\CustomerSettingClientRegistration.cs" />
     <Compile Include="Authorization\DCS\ProductBettingLimitDcsFunction.cs" />
     <Compile Include="Authorization\DCS\ProductSettingDcsFunction.cs" />
@@ -304,6 +291,7 @@
     <Compile Include="Context\CurrentSession.cs" />
     <Compile Include="Context\Encryptor.cs" />
     <Compile Include="Context\ExternalAccountAuthenticateAttribute.cs" />
+    <Compile Include="Context\AuthorizationHandler.cs" />
     <Compile Include="Context\NoCaptchaSectionConfiguration.cs" />
     <Compile Include="Enumerations\Enumeration.cs" />
     <Compile Include="Enumerations\UserLevel.cs" />
@@ -314,6 +302,7 @@
     <Compile Include="Reports\WinLossDetail\ProductElementConfiguration.cs" />
     <Compile Include="Reports\WinLossDetail\ProductsConfiguration.cs" />
     <Compile Include="Reports\WinLossDetail\WinLossDetailHelper.cs" />
+    <Compile Include="Shared\AppSettings.cs" />
     <Compile Include="Shared\GroupService.cs" />
     <Compile Include="Shared\Role.cs" />
   </ItemGroup>
@@ -338,10 +327,6 @@
       <Project>{C8CB1E7B-E68A-4065-AE30-3F8FB371974A}</Project>
       <Name>Fanex.ExternalAccount.ViewModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Modules\Fanex.ExternalAccount.IPEntities\Fanex.ExternalAccount.IPEntities.csproj">
-      <Project>{6570d17c-fef2-4c1c-a1eb-841266df380d}</Project>
-      <Name>Fanex.ExternalAccount.IPEntities</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -350,6 +335,7 @@
     <None Include="Areas\Logs\APILoggerConnectionStrings.pro.config" />
     <None Include="Areas\Logs\APILoggerConnectionStrings.sit.config" />
     <None Include="Areas\Logs\APILoggerConnectionStrings.uat.config" />
+    <None Include="Areas\Logs\LogsConfiguration.config" />
     <None Include="Areas\ONEbook.NG2.API.config" />
     <None Include="Core.ruleset" />
     <None Include="packages.config" />

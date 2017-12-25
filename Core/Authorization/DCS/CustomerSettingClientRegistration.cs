@@ -11,7 +11,7 @@
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
-        private readonly ExternalAccountAuthorization authorization = new ExternalAccountAuthorization();
+        private readonly AuthorizationHandler authorization = new AuthorizationHandler();
 
 
         public override bool VerifyQueryPermission(PermissionContext permissionContext) =>

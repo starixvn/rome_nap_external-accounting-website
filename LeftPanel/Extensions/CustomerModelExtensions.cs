@@ -4,15 +4,12 @@
     using System.Collections.Generic;
     using System.Configuration;
     using System.Data;
-    using System.Linq;
     using Core.Context;
+    using Core.Shared;
     using CustomerSetting.IP.Utils;
     using CustomerSetting.Security.Authenticate;
-    using DTO;
     using DTO.Customer;
     using RemotingRef;
-    using Service.Impl.UserControl;
-    using Core.Shared;
     using Utilities;
     using ViewModels;
 
@@ -20,6 +17,7 @@
     {
         private const string DateTimeFormat = "M/d/yyyy H:mm tt";
         private const string ThisAccountWas = "This account was ";
+        public static readonly AuthorizationHandler AuthorizationHandler = new AuthorizationHandler();
 
         public static string GetOutstandingColumn(int roleId)
         {
@@ -100,44 +98,6 @@
                 default:
                     throw new ArgumentOutOfRangeException(nameof(roleId));
             }
-        }
-
-        public static bool IsAuthorized(int userId, string functionKey, AuthenticateAction.AuthenticationType policy)
-        {
-            var userCache = new CachingService().GetUserCache(userId);
-
-            var menuList = userCache.MenuList;
-            var foundItems = userCache.PolicyList.Where(x => x.FuncKey == functionKey).ToList();
-
-            var hasPerm = menuList.Any(menuItem => !string.IsNullOrWhiteSpace(menuItem.Url));
-
-            if (!hasPerm && foundItems.Any())
-            {
-                return false;
-            }
-
-            if (foundItems.Count <= 0)
-            {
-                return false;
-            }
-
-            var firstItem = foundItems.First();
-
-            if (policy == AuthenticateAction.AuthenticationType.Read)
-            {
-                if (firstItem.Policy == EPolicy.Read || firstItem.Policy == EPolicy.Update ||
-                    firstItem.Policy == EPolicy.Delete
-                    || firstItem.Policy == EPolicy.Create)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return firstItem.Policy != EPolicy.Read;
-            }
-
-            return false;
         }
 
         public static CustomerModel LoginInfo(this CustomerModel model, DataSet ds)
@@ -235,7 +195,7 @@
             };
 
             model.BalanceInfo.IsUpdateCredit
-                = IsAuthorized(CurrentSession.Instance.UserId, eFunctions.UpdateCredit, AuthenticateAction.AuthenticationType.Host);
+                = AuthorizationHandler.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.UpdateCredit, AuthenticateAction.AuthenticationType.Host);
 
             return model;
         }
@@ -268,7 +228,7 @@
         public static string CheckVNIP(string ip)
          => string.IsNullOrWhiteSpace(ip)
             || (IpUtils.IsVnIp(ip)
-                && !IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read))
+                && !AuthorizationHandler.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read))
                     ? string.Empty : ip;
 
         public static CustomerModel AddProductSetting(
@@ -312,7 +272,7 @@
 
         private static bool IsProductVisibledToSite(DataTable table3rdDCS, int productId, string defaultProductName)
          => table3rdDCS.Select("ProductID = " + productId).Length > 0
-                && Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + defaultProductName.Replace(" ", string.Empty)]);
+                && AppSettings.IsShowProduct(defaultProductName);
 
         private static string GetProductName(int productId, string productName, bool getFromRemotingRef)
         => getFromRemotingRef
@@ -342,5 +302,117 @@
                 Text = name,
                 Tooltip = $"Enable {name}"
             });
+
+        public static List<ObjectInfo> Details(int roleId)
+        {
+            return roleId.IsMember()
+                ? new List<ObjectInfo>
+                {
+                    new ObjectInfo ("Info", "Edit Info"),
+                    new ObjectInfo ("PT", "Edit Position Taking"),
+                    new ObjectInfo ("Racing", "Edit Racing"),
+                    new ObjectInfo ("Casino", "Edit Casino"),
+                    new ObjectInfo ("LiveCasino", "Edit Live Casino"),
+                    new ObjectInfo ("VirtualSports", "Edit Virtual Sports"),
+                    new ObjectInfo ("Keno", "Edit Keno"),
+                    new ObjectInfo ("GoldDeluxe", "Edit Gold Deluxe"),
+                    new ObjectInfo ("ColossusBets", "Edit Colossus Bets"),
+                    new ObjectInfo ("Sportsbook2", "Edit Sportsbook 2"),
+                    new ObjectInfo ("Cockfighting", "Edit Cockfighting"),
+                    new ObjectInfo ("Cricket",  "Edit Cricket" )
+                }
+                : new List<ObjectInfo>
+                {
+                    new ObjectInfo("Info", "Edit Info"),
+                    new ObjectInfo("PT", "Edit Position Taking"), // Todo: noted
+                    new ObjectInfo("AddNew", "Add New"), // Todo: noted
+                    new ObjectInfo("Transfer", "Edit Transfer Condition"),
+                    new ObjectInfo("Racing", "Edit Racing"),
+                    new ObjectInfo("Casino", "Edit Casino"),
+                    new ObjectInfo("LiveCasino", "Edit Live Casino"),
+                    new ObjectInfo("VirtualSports", "Edit Virtual Sports"),
+                    new ObjectInfo("Keno", "Edit Keno"),
+                    new ObjectInfo("GoldDeluxe", "Edit Gold Deluxe"),
+                    new ObjectInfo("ColossusBets", "Edit Colossus Bets"),
+                    new ObjectInfo("Sportsbook2", "Edit Sportsbook 2"),
+                    new ObjectInfo("Cockfighting", "Edit Cockfighting"),
+                    new ObjectInfo("Cricket", "Edit Cricket")
+               };
+        }
+
+        public static List<ObjectInfo> EditItems()
+            => new List<ObjectInfo>
+            {
+                new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
+                new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" },
+                new ObjectInfo { Key = "EnableCockfighting", Text = "Enable Cockfighting" }
+            };
+
+        public static List<ObjectInfo> SyncItems(DataRow customerRow, DataTable table3RdDcs)
+     => new List<ObjectInfo>
+     {
+                new ObjectInfo("SyncCasino", customerRow.IsSyncedCasino(), "Casino Synced"),
+                new ObjectInfo("SyncLiveCasino", customerRow.IsSyncedLiveCasino(), "Live Casino Synced"),
+                new ObjectInfo("HideAllbet", table3RdDcs.Get3rdProductStatus(21)),
+                new ObjectInfo("HideVoidbridge", table3RdDcs.Get3rdProductStatus(22)),
+                new ObjectInfo("HideNG2", table3RdDcs.GetNG2ProductStatus()),
+                new ObjectInfo("HideFishingWorld", table3RdDcs.Get3rdProductStatus(24)),
+                new ObjectInfo("HideLottery", table3RdDcs.Get3rdProductStatus(28)),
+                new ObjectInfo("HideLucky3", table3RdDcs.Get3rdProductStatus(26))
+     };
+
+        public static List<ObjectInfo> EnableItems(DataRow customerRow, DataTable table3rdDCS)
+            => new List<ObjectInfo>
+            {
+                new ObjectInfo("Closed", customerRow.Closed(),"Closed"),
+                new ObjectInfo("Suspended",customerRow.Suspended(),"Suspened"),
+                new ObjectInfo("Outright", customerRow.EnableOutright(),"Allow Outright"),
+                new ObjectInfo("EnableCasino",  customerRow.EnableCasino(),"Enable Casino"),
+                new ObjectInfo("EnableNumberGame", customerRow.EnableNumberGame(),"Enable Num Game", "Enable Number Game"),
+                new ObjectInfo("EnableLiveCasino", customerRow.EnableLiveCasino(),"Enable Live Casino"),
+                new ObjectInfo("EnableVirtualSports", table3rdDCS.GetVirtualSportsStatus(),"Virtual Sports"),
+                new ObjectInfo("DoubleComm", customerRow.EnableDoubleComm(),"Double Comm",  "Enable Double Commission"),
+                new ObjectInfo("EnableHRFixedOdds",  customerRow.EnableHorseRacingFixedOdds(),"HR Fixed Odds",  "Enable Horse Racing Fixed Odds"),
+                new ObjectInfo("EnableESports",customerRow.EnableESports(),"E-Sports",  "Enable E-Sports"),
+                new ObjectInfo("EnableColossusBets",  customerRow.EnableColossusBet(),"Colossus Bets", "Enable Colossus Bets" ),
+                new ObjectInfo("EnableGoldDeluxe", customerRow.EnableGoldDeluxe(), "Gold Deluxe")
+            };
+
+        public static void AddDCSProductSettings(CustomerModel model, DataTable table3rdDCS)
+        {
+            model.AddProductSetting(table3rdDCS, 21, "Allbet", false);
+            model.AddProductSetting(table3rdDCS, 22, "Macau Games");
+            model.AddProductSetting(table3rdDCS, 23, "NG2", getFromRemotingRef: true);
+            model.AddProductSetting(table3rdDCS, 24, "Fishing World");
+            model.AddProductSetting(table3rdDCS, 28, "Lottery");
+            model.AddProductSetting(table3rdDCS, 26, "Lucky 3");
+        }
+
+        public static List<ObjectInfo> GetDownlines(DataRow lineRow, int roleId)
+        {
+            if (roleId.IsSuper())
+            {
+                return new List<ObjectInfo>
+                {
+                    new ObjectInfo(lineRow.SuperId().ToString(), lineRow.SuperName(), "Super")
+                };
+            }
+
+            if (roleId.IsMaster())
+            {
+                return new List<ObjectInfo>
+                {
+                    new ObjectInfo(lineRow.SuperId().ToString(), lineRow.SuperName(),  "Super"),
+                    new ObjectInfo(lineRow.MasterId().ToString(), lineRow.MasterName(), "Master")
+                };
+            }
+
+            return new List<ObjectInfo>
+            {
+                new ObjectInfo(lineRow.SuperId().ToString(), lineRow.SuperName(),  "Super"),
+                new ObjectInfo(lineRow.MasterId().ToString(), lineRow.MasterName(),  "Master"),
+                new ObjectInfo(lineRow.AgentId().ToString(), lineRow.AgentName(),  "Agent")
+            };
+        }
     }
 }

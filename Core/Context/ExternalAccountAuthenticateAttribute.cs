@@ -10,7 +10,7 @@
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
     public class ExternalAccountAuthenticateAttribute : AuthorizeAttribute, IAuthenticate
     {
-        private readonly ExternalAccountAuthorization authorization = new ExternalAccountAuthorization();
+        private readonly AuthorizationHandler authorization = new AuthorizationHandler();
 
         public bool IsAjaxRequest { get; set; } = true;
 
@@ -59,7 +59,7 @@
 
         public bool FunctionAuthorization(int userId, string functionKey,
             AuthenticateAction.AuthenticationType authenticateActionType) =>
-            authorization.FunctionAuthorization(userId, functionKey, authenticateActionType, IsAjaxRequest);
+            authorization.IsAuthorized(userId, functionKey, authenticateActionType, IsAjaxRequest);
 
         private void HandleUnauthorizedFunction(AuthorizationContext filterContext)
         {

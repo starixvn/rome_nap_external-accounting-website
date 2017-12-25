@@ -34,7 +34,7 @@
     public class CustomerController : CustomerBase //DevSkim: ignore DS184626
     {
         private readonly AgentService _agentService = new AgentService();
-        private readonly ExternalAccountAuthorization _authorization = new ExternalAccountAuthorization();
+        private readonly AuthorizationHandler _authorization = new AuthorizationHandler();
         private readonly CustomerService _customerService = new CustomerService();
         private readonly MasterService _masterService = new MasterService();
         private readonly MemberService _memberService = new MemberService();

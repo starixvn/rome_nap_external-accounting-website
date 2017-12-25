@@ -13,7 +13,7 @@
 
     public class FilterController : BaseController
     {
-        private readonly ExternalAccountAuthorization authorization = new ExternalAccountAuthorization();
+        private readonly AuthorizationHandler authorization = new AuthorizationHandler();
 
         public ICollection<KeyValuePair<string, bool>> AsCollection()
         {
