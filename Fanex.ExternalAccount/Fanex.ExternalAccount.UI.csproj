@@ -1094,7 +1094,6 @@
     <Content Include="Areas\Statement\StatementSection.config" />
     <Content Include="Areas\Statement\Views\Guideline\MemberGuildeline.cshtml" />
     <Content Include="Areas\Statement\Views\Guideline\SMAGuildeline.cshtml" />
-    <Content Include="Areas\Statement\Views\Guideline\Styles\Guideline.less" />
     <Content Include="Areas\Statement\Views\Report\Index.cshtml" />
     <Content Include="Areas\Statement\Views\Report\Scripts\StatementReportManager.js" />
     <Content Include="Areas\Statement\Views\Report\Styles\Images\information-icon2.png" />

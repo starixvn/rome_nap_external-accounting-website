@@ -424,7 +424,10 @@
 
 .BettingLimitItem2 {
   background-color: #FFF;
-  border-top: 1px solid #CCC; }
+  border-top: 1px solid #CCC;
+  min-width: 114px;
+  height: 26px;
+  line-height: 26px; }
 
 .GroupSetLabel {
   min-width: 46px; }
@@ -452,10 +455,13 @@
   border-top: 1px solid #CCC !important; }
 
 .BettingLimitItem92 {
+  min-width: 80px;
   background-color: #FFF;
   border-left: none;
   border-top: 1px solid #CCC;
-  padding-left: 3px; }
+  padding-left: 3px;
+  height: 26px;
+  line-height: 26px; }
 
 /* START: Base on MemberInfo.css */
 .names {
