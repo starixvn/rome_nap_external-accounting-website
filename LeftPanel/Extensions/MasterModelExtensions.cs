@@ -1,6 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
-    using System.Collections.Generic;
     using System.Data;
     using Core.Shared;
     using ViewModels;
@@ -59,14 +58,16 @@
             model.Setting = new Setting
             {
                 EnableItems = CustomerModelExtensions.EnableItems(customerRow, table3rdDCS),
-                SyncItems = CustomerModelExtensions.SyncItems(customerRow, table3rdDCS),
+                SyncItems = LeftPanelProductIntegration.CreateSyncItems(customerRow, table3rdDCS),
                 EditItems = CustomerModelExtensions.EditItems(),
                 Details = CustomerModelExtensions.Details(Role.Master)
             };
 
             model.Setting.EnableItems.Insert(2, new ObjectInfo("AutoPT", cashRow.EnableAutoMasterPT(), "Allow Auto PT"));
 
-            CustomerModelExtensions.AddDCSProductSettings(model, table3rdDCS);
+            model.AddProductSettings(table3rdDCS);
+
+            model.AddDefaultMinMaxPTSetting();
         }
     }
 }

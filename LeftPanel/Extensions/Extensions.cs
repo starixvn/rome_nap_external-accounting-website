@@ -110,11 +110,13 @@
         private static DataRow GetProductRow(DataTable table3RdDcs, int productId)
             => table3RdDcs.Select($"ProductID = {productId}").FirstOrDefault();
 
-        internal static bool Get3rdProductStatus(this DataTable table3RdDcs, int productId)
+        internal static bool IsHideProduct(this DataTable productTable, int productId)
         {
-            var productRow = GetProductRow(table3RdDcs, productId);
+            var productRow = GetProductRow(productTable, productId);
 
-            return productRow == null || productRow.IsHidden() || productRow.IsSynced();
+            return productRow == null
+                || productRow.IsHidden()
+                || productRow.IsSynced();
         }
 
         internal static bool GetNG2ProductStatus(this DataTable table3RdDcs)
@@ -125,10 +127,24 @@
         }
 
         internal static bool GetVirtualSportsStatus(this DataTable table3rdDCS)
-        {
-            var drowVirtualSports = table3rdDCS.Select("ProductID = 5");
+            => table3rdDCS.IsProductEnabled(5);
 
-            return drowVirtualSports.Length > 0 && !Utils.ToBoolean(drowVirtualSports[0]["isDisabled"]);
+        internal static bool IsProductEnabled(this DataTable productTable, int productId)
+        {
+            var productRow = productTable.Select($"ProductID = {productId}");
+
+            return productRow != null
+                && productRow.Length > 0
+                && !productRow[0].IsDisabled();
+        }
+
+        internal static bool IsProductSynced(this DataTable productTable, int productId)
+        {
+            var productRow = productTable.Select($"ProductID = {productId}");
+
+            return productRow != null
+                && productRow.Length > 0
+                && productRow[0].IsSynced();
         }
     }
 }

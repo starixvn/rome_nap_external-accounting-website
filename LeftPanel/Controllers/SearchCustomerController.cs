@@ -54,7 +54,7 @@
                 custName,
                 uplineId);
 
-            customerInfo?.BuildCustomerSetting(userId, uplineId, custName);
+            customerInfo?.RemoveNotSupportedProduct(userId, uplineId, custName);
 
             return View(LeftPanelIndexView, customerInfo);
         }

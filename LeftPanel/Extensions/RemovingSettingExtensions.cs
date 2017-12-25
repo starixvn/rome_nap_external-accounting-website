@@ -2,8 +2,8 @@
 {
     using System;
     using System.Configuration;
-    using CustomerSetting.Module.Keno.KenoSetting.Configurations;
     using Core.Shared;
+    using CustomerSetting.Module.Keno.KenoSetting.Configurations;
     using Utilities;
     using ViewModels;
 
@@ -85,99 +85,36 @@
             return model;
         }
 
-        public static CustomerModel RemoveProductSetting(this CustomerModel model, CustomerStatus product)
+        public static void RemoveProductSetting(this CustomerModel model, CustomerStatus custStatus)
         {
-            RemoveCasinoSetting(model, product);
-            RemoveLiveCasinoSetting(model, product);
-            RemoveVirtualSportSetting(model, product);
-            RemoveESportsSetting(model, product);
-            RemoveGoldDeluxeSetting(model, product);
-            RemoveColossusBetsSetting(model, product);
-            RemoveSportsbook2Setting(model, product);
-            RemoveCockfightingSetting(model, product);
-            RemoveCricketSetting(model, product);
-            RemoveAllbetSetting(model, product);
-            RemoveMacauGamesSetting(model, product);
-            RemoveNG2Setting(model, product);
-            RemoveFishingWorldSetting(model, product);
-            RemoveLotterySetting(model, product);
-            RemoveLucky3Setting(model, product);
-            RemoveBullfightingSetting(model, product);
+            RemoveCasinoSetting(model, custStatus);
+            RemoveLiveCasinoSetting(model, custStatus);
+            RemoveVirtualSportSetting(model, custStatus);
+            RemoveESportsSetting(model, custStatus);
+            RemoveGoldDeluxeSetting(model, custStatus);
+            RemoveColossusBetsSetting(model, custStatus);
+            RemoveSportsbook2Setting(model, custStatus);
+            RemoveCockfightingSetting(model, custStatus);
+            RemoveCricketSetting(model, custStatus);
 
-            return model;
+            foreach (var statusItem in custStatus.ProductStatusDic)
+            {
+                var productStatus = statusItem.Value;
+                model.RemoveProduct(
+                            custStatus.RoleId,
+                            custStatus.RoleId.IsNotSuper()
+                                ? custStatus.UplineStatus.ProductStatusDic[statusItem.Key].IsHidden
+                                : productStatus.IsHidden,
+                            custStatus.RoleId.IsNotSuper()
+                                ? custStatus.UplineStatus.ProductStatusDic[statusItem.Key].IsSynced
+                                : productStatus.IsSynced,
+                            productStatus.IsHidden,
+                            productStatus.IsSynced,
+                            productStatus.IsSyncedDownlines,
+                            productStatus.ProductKey,
+                            productStatus.CheckSyncedDownlines);
+            }
         }
-
-        private static void RemoveBullfightingSetting(CustomerModel model, CustomerStatus product)
-            => model.RemoveProduct(
-                product.RoleId,
-                product.RoleId.IsNotSuper() ? product.UplineStatus.HideBullfighting : product.HideBullfighting,
-                product.RoleId.IsNotSuper() ? product.UplineStatus.SyncBullfighting : product.SyncBullfighting,
-                product.HideBullfighting,
-                product.SyncBullfighting,
-                product.SyncBullfightingDownlines,
-                "Bullfighting");
-
-        private static void RemoveLucky3Setting(CustomerModel model, CustomerStatus product)
-         => model.RemoveProduct(
-                            product.RoleId,
-                            product.RoleId.IsNotSuper() ? product.UplineStatus.HideLucky3 : product.HideLucky3,
-                            product.RoleId.IsNotSuper() ? product.UplineStatus.SyncLucky3 : product.SyncLucky3,
-                            product.HideLucky3,
-                            product.SyncLucky3,
-                            product.SyncLucky3Downlines,
-                            "Lucky3");
-
-        private static void RemoveLotterySetting(CustomerModel model, CustomerStatus product)
-        => model.RemoveProduct(
-                            product.RoleId,
-                            product.RoleId.IsNotSuper() ? product.UplineStatus.HideLottery : product.HideLottery,
-                            product.RoleId.IsNotSuper() ? product.UplineStatus.SyncLottery : product.SyncLottery,
-                            product.HideLottery,
-                            product.SyncLottery,
-                            product.SyncLotteryDownlines,
-                            "Lottery");
-
-        private static void RemoveFishingWorldSetting(CustomerModel model, CustomerStatus product)
-        => model.RemoveProduct(
-                            product.RoleId,
-                            product.RoleId.IsNotSuper() ? product.UplineStatus.HideFishingWorld : product.HideFishingWorld,
-                            product.RoleId.IsNotSuper() ? product.UplineStatus.SyncFishingWorld : product.SyncFishingWorld,
-                            product.HideFishingWorld,
-                            product.SyncFishingWorld,
-                            product.SyncFishingWorldDownlines,
-                            "FishingWorld");
-
-        private static void RemoveNG2Setting(CustomerModel model, CustomerStatus product)
-        => model.RemoveProduct(
-                            product.RoleId,
-                            product.RoleId.IsNotSuper() ? product.UplineStatus.HideNG2 : product.HideNG2,
-                            product.RoleId.IsNotSuper() ? product.UplineStatus.SyncNG2 : product.SyncNG2,
-                            product.HideNG2,
-                            product.SyncNG2,
-                            true,
-                            "NG2");
-
-        private static void RemoveMacauGamesSetting(CustomerModel model, CustomerStatus product)
-        => model.RemoveProduct(
-                            product.RoleId,
-                            product.RoleId.IsNotSuper() ? product.UplineStatus.HideVoidbridge : product.HideVoidbridge,
-                            product.RoleId.IsNotSuper() ? product.UplineStatus.SyncVoidbridge : product.SyncVoidbridge,
-                            product.HideVoidbridge,
-                            product.SyncVoidbridge,
-                            product.SyncVoidbridgeDownlines,
-                            "MacauGames",
-                            false);
-
-        private static void RemoveAllbetSetting(CustomerModel model, CustomerStatus product)
-        => model.RemoveProduct(
-                            product.RoleId,
-                            product.RoleId.IsNotSuper() ? product.UplineStatus.HideAllbet : product.HideAllbet,
-                            product.RoleId.IsNotSuper() ? product.UplineStatus.SyncAllbet : product.SyncAllbet,
-                            product.HideAllbet,
-                            product.SyncAllbet,
-                            product.SyncAllbetDownlines,
-                            "Allbet",
-                            false);
 
         private static CustomerModel RemoveProduct(
             this CustomerModel model,

@@ -4,12 +4,11 @@
     using System.Data;
     using System.Linq;
     using Core.Shared;
-    using RemotingRef;
     using ViewModels;
 
     public static class MemberModelExtensions
     {
-        private static readonly IList<string> IgnoreOrExcludeProducts = new List<string> { "Info", "ColossusBets" };
+        private static readonly IList<string> CrossLineIgnoreProducts = new List<string> { "Info", "ColossusBets", "AddNew", "Transfer" };
 
         public static CustomerModel MemberInfo(this CustomerModel model, DataSet ds)
         {
@@ -37,12 +36,16 @@
             model.Setting = new Setting
             {
                 EnableItems = CustomerModelExtensions.EnableItems(customerRow, table3rdDCS),
-                SyncItems = CustomerModelExtensions.SyncItems(customerRow, table3rdDCS),
+                SyncItems = LeftPanelProductIntegration.CreateSyncItems(customerRow, table3rdDCS),
                 EditItems = CustomerModelExtensions.EditItems(),
                 Details = CustomerModelExtensions.Details(Role.Member)
             };
 
-            CustomerModelExtensions.AddDCSProductSettings(model, table3rdDCS);
+            model.AddDefaultMinMaxPTSetting();
+
+            model.AddProductSettings(table3rdDCS);
+
+            model.GetSuperMasterSettingOnMember();
         }
 
         public static CustomerModel GetSuperMasterSettingOnMember(this CustomerModel model)
@@ -52,50 +55,27 @@
 
             foreach (var item in model.Setting.Details)
             {
-                if (!IgnoreOrExcludeProducts.Contains(item.Key))
+                if (!CrossLineIgnoreProducts.Contains(item.Key))
                 {
-                    model.Setting.MasterPts.Add(new ObjectInfo(item.Key, item.Value));
+                    model.Setting.MasterPts.Add(new ObjectInfo(item.Key, item.Value.ToString().Replace("Edit ", string.Empty)));
                 }
             }
 
             model.Setting.MasterPts.Add(new ObjectInfo("SBPT", "Sportsbook's PT"));
-
-            model.AddDetailProductForCrossLevel("PT", "Sportsbook");
-            model.AddDetailProductForCrossLevel("Racing", "Racing");
-            model.AddDetailProductForCrossLevel("Casino", "Casino");
-            model.AddDetailProductForCrossLevel("LiveCasino", "Live Casino");
-            model.AddDetailProductForCrossLevel("VirtualSports", "Virtual Sports");
-            model.AddDetailProductForCrossLevel("Keno", "Keno");
-            model.AddDetailProductForCrossLevel("GoldDeluxe", "Gold Deluxe");
-            model.AddDetailProductForCrossLevel("Sportsbook2", "Sportsbook 2");
-            model.AddDetailProductForCrossLevel("Cockfighting", "Cockfighting");
-            model.AddDetailProductForCrossLevel("Cricket", "Cricket");
-            model.AddDetailProductForCrossLevel("Allbet", "Allbet");
-            model.AddDetailProductForCrossLevel("MacauGames", "Macau Games");
-            model.AddDetailProductForCrossLevel("NG2", RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2"));
-            model.AddDetailProductForCrossLevel("FishingWorld", "Fishing World");
-            model.AddDetailProductForCrossLevel("Lottery", "Lottery");
-            model.AddDetailProductForCrossLevel("Lucky3", "Lucky 3");
-
-            return model;
-        }
-
-        private static CustomerModel AddDetailProductForCrossLevel(this CustomerModel model, string productKey, string productName)
-        {
-            var product = model
-                .Setting
-                .MasterPts
-                .Where(p => p.Key.Equals(productKey))
-                .ToList();
-
-            if (product.Count > 0)
-            {
-                product[0].Value = productName;
-            }
+            SetTextForIndirectUplineEditMember(model);
 
             model.Setting.SuperPts = model.Setting.MasterPts;
 
             return model;
+        }
+
+        private static void SetTextForIndirectUplineEditMember(CustomerModel model)
+        {
+            var ptItem = model.Setting.MasterPts.FirstOrDefault(item => item.Key == "PT");
+            if (ptItem != null)
+            {
+                ptItem.Value = "Sportsbook";
+            }
         }
     }
 }

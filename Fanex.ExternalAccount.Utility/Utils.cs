@@ -44,11 +44,11 @@
         public static decimal ToDecimal(this IDataReader obj, string fieldName)
             => ToDecimal(obj[fieldName]);
 
-        public static bool ToBoolean(object value)
+        public static bool ToBoolean(object value, bool defaultValue = false)
         {
             if (IsEmptyData(value))
             {
-                return false;
+                return defaultValue;
             }
 
             if (value.ToString() == "1")
@@ -63,11 +63,11 @@
             return val;
         }
 
-        public static bool ToBoolean(this IDataReader obj, string fieldName)
+        public static bool ToBoolean(this IDataReader obj, string fieldName, bool defaultValue = false)
         {
             if (IsEmptyData(obj[fieldName]))
             {
-                return false;
+                return defaultValue;
             }
 
             bool val;
@@ -77,8 +77,11 @@
             return val;
         }
 
-        public static bool ToBoolean(this DataRow obj, string fieldName)
-            => ToBoolean(obj[fieldName]);
+        public static bool ToBoolean(this DataRow obj, string fieldName, bool defaultValue = false)
+            => ToBoolean(obj.Table.Columns.Contains(fieldName) 
+                ? obj[fieldName]
+                : null, 
+                defaultValue);
 
         public static string ToString(object value)
             => IsEmptyData(value) ? string.Empty : Convert.ToString(value);

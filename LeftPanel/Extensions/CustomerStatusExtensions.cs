@@ -1,8 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
-    using System.Collections.Generic;
     using System.Data;
-    using System.Linq;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Module.Keno.KenoSetting.Configurations;
@@ -13,15 +11,6 @@
 
     public static class CustomerStatusExtensions
     {
-        private static readonly List<string> CrossLineSupportedProducts = new List<string>
-        {
-            "PT",
-            "Casino",
-            "LiveCasino",
-            "VirtualSports",
-            "Racing"
-        };
-
         public static CustomerStatus GetCustomerStatus(this CustomerModel model, int userId, string groupName,
             string username, int uplineId = 0)
         {
@@ -68,7 +57,10 @@
             return null;
         }
 
-        private static CustomerStatus GetCustStatus(this CustomerModel model, int roleId, DataTable result,
+        private static CustomerStatus GetCustStatus(
+            this CustomerModel model,
+            int roleId,
+            DataTable result,
             DataTable upperInfo)
         {
             var custStatus = new CustomerStatus
@@ -98,18 +90,13 @@
             SetCricketStatus(custStatus, statusRow);
             SetColossusBetsStatus(custStatus, statusRow);
             SetGoldDeluxeStatus(custStatus, statusRow);
-            SetAllbetStatus(custStatus, statusRow);
-            SetVoidbridgeStatus(custStatus, statusRow);
-            SetNG2Status(custStatus, statusRow);
-            SetFishingWorldStatus(custStatus, statusRow);
-            SetLotteryStatus(custStatus, statusRow);
-            SetLucky3Status(custStatus, statusRow);
-            SetBullfightingStatus(custStatus, statusRow);
 
-            model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
-            model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
-            model.Setting.SuperPts = model.Setting.MasterPts =
-                model.Setting.Details.Where(o => CrossLineSupportedProducts.Contains(o.Key)).ToList();
+            var productStatusList = LeftPanelProductIntegration.CreateProductStatusList(statusRow);
+
+            foreach (var productStatus in productStatusList)
+            {
+                custStatus.ProductStatusDic.Add(productStatus.ProductId, productStatus);
+            }
 
             if (roleId.IsNotSuper()
                 && upperInfo.Rows.Count > 0)
@@ -188,66 +175,12 @@
             custStatus.SyncGoldDeluxeDownlines = statusRow.ToBoolean("SyncedGoldDeluxeDownline");
         }
 
-        private static void SetLucky3Status(CustomerStatus custStatus, DataRow statusRow)
-        {
-            custStatus.HideLucky3 = !AppSettings.IsShowLucky3 || statusRow.ToBoolean("HideLucky3");
-            custStatus.SyncLucky3 = true;
-            custStatus.SyncLucky3Downlines = true;
-            custStatus.DisableLucky3 = statusRow.ToBoolean("DisableLucky3");
-        }
-
-        private static void SetLotteryStatus(CustomerStatus custStatus, DataRow statusRow)
-        {
-            custStatus.HideLottery = !AppSettings.IsShowLottery || statusRow.ToBoolean("HideLottery");
-            custStatus.SyncLottery = true;
-            custStatus.SyncLotteryDownlines = true;
-            custStatus.DisableLottery = statusRow.ToBoolean("DisableLottery");
-        }
-
-        private static void SetBullfightingStatus(CustomerStatus custStatus, DataRow statusRow)
-        {
-            custStatus.HideBullfighting = !AppSettings.IsShowBullfighting || statusRow.ToBoolean("HideBullfighting");
-            custStatus.SyncBullfighting = true;
-            custStatus.SyncBullfightingDownlines = true;
-            custStatus.DisableBullfighting = statusRow.ToBoolean("DisableBullfighting");
-        }
-
-        private static void SetFishingWorldStatus(CustomerStatus custStatus, DataRow statusRow)
-        {
-            custStatus.HideFishingWorld = !AppSettings.IsShowFishingWorld || statusRow.ToBoolean("HideFishingWorld");
-            custStatus.SyncFishingWorld = statusRow.ToBoolean("SyncedFishingWorld");
-            custStatus.SyncFishingWorldDownlines = statusRow.ToBoolean("SyncedFishingWorldDownline");
-            custStatus.DisableFishingWorld = statusRow.ToBoolean("DisableFishingWorld");
-        }
-
-        private static void SetNG2Status(CustomerStatus custStatus, DataRow statusRow)
-        {
-            custStatus.HideNG2 = !AppSettings.IsShowNG2 || statusRow.ToBoolean("HideNG2");
-            custStatus.SyncNG2 = statusRow.ToBoolean("SyncedNG2");
-            custStatus.DisableNG2 = statusRow.ToBoolean("DisableNG2");
-        }
-
-        private static void SetVoidbridgeStatus(CustomerStatus custStatus, DataRow statusRow)
-        {
-            custStatus.HideVoidbridge = !AppSettings.IsShowVoidbridge || statusRow.ToBoolean("HideVoidBridge");
-            custStatus.SyncVoidbridge = statusRow.ToBoolean("SyncedVoidBridge");
-            custStatus.SyncVoidbridgeDownlines = statusRow.ToBoolean("SyncedVoidBridgeDownline");
-            custStatus.DisableVoidbridge = statusRow.ToBoolean("DisableVoidBridge");
-        }
-
-        private static void SetAllbetStatus(CustomerStatus custStatus, DataRow statusRow)
-        {
-            custStatus.HideAllbet = !AppSettings.IsShowAllbet || statusRow.ToBoolean("HideAllbet");
-            custStatus.SyncAllbet = statusRow.ToBoolean("SyncedAllBet");
-            custStatus.SyncAllbetDownlines = statusRow.ToBoolean("SyncedAllBetDownline");
-            custStatus.DisableAllbet = statusRow.ToBoolean("DisableAllbet");
-        }
-
         private static CustomerStatus GetUplineStatus(int roleId, DataRow uplineRow)
         {
             var uplineStatus = new CustomerStatus();
 
             uplineStatus.RoleId = roleId + 1;
+
             uplineStatus.SyncCasino = uplineRow.ToBoolean("syncCasino");
             uplineStatus.SyncLiveCasino = uplineRow.ToBoolean("syncLiveCasino");
             uplineStatus.DisableTransfer = roleId + 1 != 4 && uplineRow.ToBoolean("disableTransfer");
@@ -268,64 +201,14 @@
             uplineStatus.DisableHRFixedOdds = uplineRow.ToBoolean("disableHRFixedOdds");
             uplineStatus.DisableESports = uplineRow.ToBoolean("DisableESports");
 
-            SetUplineAllBetStatus(uplineStatus, uplineRow);
-            SetUplineVoidbridgeStatus(uplineStatus, uplineRow);
-            SetUplineNG2Status(uplineStatus, uplineRow);
-            SetUplineFishingWorldStatus(uplineStatus, uplineRow);
-            SetUplineLotteryStatus(uplineStatus, uplineRow);
-            SetUplineLucky3Status(uplineStatus, uplineRow);
-            SetUplineBullfightingStatus(uplineStatus, uplineRow);
+            var productStatusList = LeftPanelProductIntegration.CreateProductStatusList(uplineRow);
+
+            foreach (var productStatus in productStatusList)
+            {
+                uplineStatus.ProductStatusDic.Add(productStatus.ProductId, productStatus);
+            }
 
             return uplineStatus;
-        }
-
-        private static void SetUplineLucky3Status(CustomerStatus uplineStatus, DataRow uplineRow)
-        {
-            uplineStatus.DisableLucky3 = uplineRow.ToBoolean("DisableLucky3");
-            uplineStatus.HideLucky3 = uplineRow.ToBoolean("HideLucky3");
-            uplineStatus.SyncLucky3 = true;
-        }
-
-        private static void SetUplineLotteryStatus(CustomerStatus uplineStatus, DataRow uplineRow)
-        {
-            uplineStatus.DisableLottery = uplineRow.ToBoolean("DisableLottery");
-            uplineStatus.HideLottery = uplineRow.ToBoolean("HideLottery");
-            uplineStatus.SyncLottery = true;
-        }
-
-        private static void SetUplineFishingWorldStatus(CustomerStatus uplineStatus, DataRow uplineRow)
-        {
-            uplineStatus.DisableFishingWorld = uplineRow.ToBoolean("DisableFishingWorld");
-            uplineStatus.HideFishingWorld = uplineRow.ToBoolean("HideFishingWorld");
-            uplineStatus.SyncFishingWorld = uplineRow.ToBoolean("SyncedFishingWorld");
-        }
-
-        private static void SetUplineNG2Status(CustomerStatus uplineStatus, DataRow uplineRow)
-        {
-            uplineStatus.DisableNG2 = uplineRow.ToBoolean("DisableNG2");
-            uplineStatus.HideNG2 = uplineRow.ToBoolean("HideNG2");
-            uplineStatus.SyncNG2 = uplineRow.ToBoolean("SyncedNG2");
-        }
-
-        private static void SetUplineVoidbridgeStatus(CustomerStatus uplineStatus, DataRow uplineRow)
-        {
-            uplineStatus.DisableVoidbridge = uplineRow.ToBoolean("DisableVoidBridge");
-            uplineStatus.HideVoidbridge = uplineRow.ToBoolean("HideVoidBridge");
-            uplineStatus.SyncVoidbridge = uplineRow.ToBoolean("SyncedVoidBridge");
-        }
-
-        private static void SetUplineAllBetStatus(CustomerStatus uplineStatus, DataRow uplineRow)
-        {
-            uplineStatus.DisableAllbet = uplineRow.ToBoolean("DisableAllbet");
-            uplineStatus.HideAllbet = uplineRow.ToBoolean("HideAllbet");
-            uplineStatus.SyncAllbet = uplineRow.ToBoolean("SyncedAllBet");
-        }
-
-        private static void SetUplineBullfightingStatus(CustomerStatus uplineStatus, DataRow uplineRow)
-        {
-            uplineStatus.DisableBullfighting = uplineRow.ToBoolean("DisableBullfighting");
-            uplineStatus.HideBullfighting = uplineRow.ToBoolean("HideBullfighting");
-            uplineStatus.SyncBullfighting = true;
         }
     }
 }

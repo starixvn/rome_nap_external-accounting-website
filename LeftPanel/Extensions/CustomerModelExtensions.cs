@@ -2,14 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Data;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.IP.Utils;
     using CustomerSetting.Security.Authenticate;
     using DTO.Customer;
-    using RemotingRef;
+    using Models;
     using Utilities;
     using ViewModels;
 
@@ -187,20 +186,19 @@
                 Currency = new ObjectInfo { Value = Utils.ToString(customerRow["currency"]), Text = "Currency" },
                 Balances = new List<ObjectInfo>
                 {
-                        new ObjectInfo { Value = Utils.ToDecimal(cashRow[GetCashColumn(roleId)]), Text = "Total Cash" },
-                        new ObjectInfo { Value = Utils.ToDecimal(cashRow[GetYesterdayCashColumn(roleId)]), Text = "Yesterday Cash" },
-                        new ObjectInfo { Value = Utils.ToDecimal(cashRow[GetOutstandingColumn(roleId)]), Text = "Outstanding" },
-                        new ObjectInfo { Value = Utils.ToDecimal(customerRow["credit"]), Text = "Given Credit" }
-                    }
+                    new ObjectInfo { Value = Utils.ToDecimal(cashRow[GetCashColumn(roleId)]), Text = "Total Cash" },
+                    new ObjectInfo { Value = Utils.ToDecimal(cashRow[GetYesterdayCashColumn(roleId)]), Text = "Yesterday Cash" },
+                    new ObjectInfo { Value = Utils.ToDecimal(cashRow[GetOutstandingColumn(roleId)]), Text = "Outstanding" },
+                    new ObjectInfo { Value = Utils.ToDecimal(customerRow["credit"]), Text = "Given Credit" }
+                }
             };
 
-            model.BalanceInfo.IsUpdateCredit
-                = AuthorizationHandler.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.UpdateCredit, AuthenticateAction.AuthenticationType.Host);
+            model.BalanceInfo.IsUpdateCredit = AuthorizationHandler.HasUpdateCreditPermission(CurrentSession.Instance.UserId);
 
             return model;
         }
 
-        public static CustomerModel BuildCustomerSetting(this CustomerModel model, int userId, string groupName, string username)
+        public static CustomerModel RemoveNotSupportedProduct(this CustomerModel model, int userId, string groupName, string username)
         {
             var customerStatus = model.GetCustomerStatus(
                 userId,
@@ -210,7 +208,6 @@
                     ? 0
                     : (int)model.PersonalInfo.UplineId.Value);
 
-            model.GetSuperMasterSettingOnMember();
             model.RemoveProductSetting(customerStatus);
 
             if (customerStatus.RoleId.IsSuper())
@@ -234,28 +231,19 @@
         public static CustomerModel AddProductSetting(
             this CustomerModel model,
             DataTable table3rdDCS,
-            int productId,
-            string defaultProductName,
-            bool statusSettingIsCheckbox = true,
-            bool getFromRemotingRef = false)
+            ProductSettingParam settingParams)
         {
-            var productNameNoSpace = defaultProductName.Replace(" ", string.Empty);
-
-            if (IsProductVisibledToSite(table3rdDCS, productId, defaultProductName))
+            if (IsProductVisibledToSite(table3rdDCS, settingParams.ProductId, settingParams.ProductKey))
             {
-                var productDataRow = table3rdDCS.Select($"ProductID = {productId}")[0];
-                var isDisabled = Utils.ToBoolean(productDataRow["isDisabled"]);
-                var productName = GetProductName(productId, defaultProductName, getFromRemotingRef);
+                AddEditSettingLink(model, settingParams.ProductKey, settingParams.ProductName);
 
-                AddEditSettingLink(model, productNameNoSpace, productName);
-
-                if (statusSettingIsCheckbox)
+                if (settingParams.StatusType == StatusType.Checkbox)
                 {
-                    AddEnableCheckboxItem(model, productNameNoSpace, isDisabled, productName);
+                    AddEnableCheckboxItem(model, settingParams.ProductKey, !table3rdDCS.IsProductEnabled(settingParams.ProductId), settingParams.ProductName);
                 }
                 else
                 {
-                    AddEnableLinkItem(model, productNameNoSpace, productName);
+                    AddEnableLinkItem(model, settingParams.ProductKey, settingParams.ProductName);
                 }
             }
 
@@ -263,25 +251,10 @@
         }
 
         private static void AddEditSettingLink(CustomerModel model, string productNameNoSpace, string productName)
-        => model.Setting.Details.Add(
-                                new ObjectInfo
-                                {
-                                    Key = productNameNoSpace,
-                                    Value = $"Edit {productName}"
-                                });
+            => model.Setting.Details.Add(new ObjectInfo { Key = productNameNoSpace, Value = $"Edit {productName}" });
 
         private static bool IsProductVisibledToSite(DataTable table3rdDCS, int productId, string defaultProductName)
-         => table3rdDCS.Select("ProductID = " + productId).Length > 0
-                && AppSettings.IsShowProduct(defaultProductName);
-
-        private static string GetProductName(int productId, string productName, bool getFromRemotingRef)
-        => getFromRemotingRef
-                ? RefData.GetResourceDataByRefIdAndResourceId(
-                        "Product",
-                        productId.ToString(),
-                        "en-US",
-                        productName)
-                : productName;
+            => table3rdDCS.Select($"ProductID = {productId}").Length > 0 && AppSettings.IsShowProduct(defaultProductName);
 
         private static void AddEnableLinkItem(CustomerModel model, string productNameNoSpace, string name)
             => model.Setting.EditItems.Add(new ObjectInfo
@@ -305,39 +278,30 @@
 
         public static List<ObjectInfo> Details(int roleId)
         {
-            return roleId.IsMember()
-                ? new List<ObjectInfo>
-                {
+            var details = new List<ObjectInfo>
+            {
                     new ObjectInfo ("Info", "Edit Info"),
-                    new ObjectInfo ("PT", "Edit Position Taking"),
-                    new ObjectInfo ("Racing", "Edit Racing"),
-                    new ObjectInfo ("Casino", "Edit Casino"),
-                    new ObjectInfo ("LiveCasino", "Edit Live Casino"),
-                    new ObjectInfo ("VirtualSports", "Edit Virtual Sports"),
-                    new ObjectInfo ("Keno", "Edit Keno"),
-                    new ObjectInfo ("GoldDeluxe", "Edit Gold Deluxe"),
-                    new ObjectInfo ("ColossusBets", "Edit Colossus Bets"),
-                    new ObjectInfo ("Sportsbook2", "Edit Sportsbook 2"),
-                    new ObjectInfo ("Cockfighting", "Edit Cockfighting"),
-                    new ObjectInfo ("Cricket",  "Edit Cricket" )
-                }
-                : new List<ObjectInfo>
-                {
-                    new ObjectInfo("Info", "Edit Info"),
-                    new ObjectInfo("PT", "Edit Position Taking"), // Todo: noted
-                    new ObjectInfo("AddNew", "Add New"), // Todo: noted
-                    new ObjectInfo("Transfer", "Edit Transfer Condition"),
-                    new ObjectInfo("Racing", "Edit Racing"),
-                    new ObjectInfo("Casino", "Edit Casino"),
-                    new ObjectInfo("LiveCasino", "Edit Live Casino"),
-                    new ObjectInfo("VirtualSports", "Edit Virtual Sports"),
-                    new ObjectInfo("Keno", "Edit Keno"),
-                    new ObjectInfo("GoldDeluxe", "Edit Gold Deluxe"),
-                    new ObjectInfo("ColossusBets", "Edit Colossus Bets"),
-                    new ObjectInfo("Sportsbook2", "Edit Sportsbook 2"),
-                    new ObjectInfo("Cockfighting", "Edit Cockfighting"),
-                    new ObjectInfo("Cricket", "Edit Cricket")
-               };
+                    new ObjectInfo ("PT", "Edit Position Taking")
+            };
+
+            if (roleId.IsMember())
+            {
+                details.Add(new ObjectInfo("AddNew", "Add New"));
+                details.Add(new ObjectInfo("Transfer", "Edit Transfer Condition"));
+            }
+
+            details.Add(new ObjectInfo("Racing", "Edit Racing"));
+            details.Add(new ObjectInfo("Casino", "Edit Casino"));
+            details.Add(new ObjectInfo("LiveCasino", "Edit Live Casino"));
+            details.Add(new ObjectInfo("VirtualSports", "Edit Virtual Sports"));
+            details.Add(new ObjectInfo("Keno", "Edit Keno"));
+            details.Add(new ObjectInfo("GoldDeluxe", "Edit Gold Deluxe"));
+            details.Add(new ObjectInfo("ColossusBets", "Edit Colossus Bets"));
+            details.Add(new ObjectInfo("Sportsbook2", "Edit Sportsbook 2"));
+            details.Add(new ObjectInfo("Cockfighting", "Edit Cockfighting"));
+            details.Add(new ObjectInfo("Cricket", "Edit Cricket"));
+
+            return details;
         }
 
         public static List<ObjectInfo> EditItems()
@@ -346,20 +310,6 @@
                 new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
                 new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" },
                 new ObjectInfo { Key = "EnableCockfighting", Text = "Enable Cockfighting" }
-            };
-
-        public static List<ObjectInfo> SyncItems(DataRow customerRow, DataTable table3RdDcs)
-            => new List<ObjectInfo>
-            {
-                    new ObjectInfo("SyncCasino", customerRow.IsSyncedCasino(), "Casino Synced"),
-                    new ObjectInfo("SyncLiveCasino", customerRow.IsSyncedLiveCasino(), "Live Casino Synced"),
-                    new ObjectInfo("HideAllbet", table3RdDcs.Get3rdProductStatus(21)),
-                    new ObjectInfo("HideVoidbridge", table3RdDcs.Get3rdProductStatus(22)),
-                    new ObjectInfo("HideNG2", table3RdDcs.GetNG2ProductStatus()),
-                    new ObjectInfo("HideFishingWorld", table3RdDcs.Get3rdProductStatus(24)),
-                    new ObjectInfo("HideLottery", table3RdDcs.Get3rdProductStatus(28)),
-                    new ObjectInfo("HideLucky3", table3RdDcs.Get3rdProductStatus(26)),
-                    new ObjectInfo("HideBullfighting", table3RdDcs.Get3rdProductStatus(30))
             };
 
         public static List<ObjectInfo> EnableItems(DataRow customerRow, DataTable table3rdDCS)
@@ -378,17 +328,6 @@
                 new ObjectInfo("EnableColossusBets",  customerRow.EnableColossusBet(),"Colossus Bets", "Enable Colossus Bets" ),
                 new ObjectInfo("EnableGoldDeluxe", customerRow.EnableGoldDeluxe(), "Gold Deluxe")
             };
-
-        public static void AddDCSProductSettings(CustomerModel model, DataTable table3rdDCS)
-        {
-            model.AddProductSetting(table3rdDCS, 21, "Allbet", false);
-            model.AddProductSetting(table3rdDCS, 22, "Macau Games");
-            model.AddProductSetting(table3rdDCS, 23, "NG2", getFromRemotingRef: true);
-            model.AddProductSetting(table3rdDCS, 24, "Fishing World");
-            model.AddProductSetting(table3rdDCS, 28, "Lottery");
-            model.AddProductSetting(table3rdDCS, 26, "Lucky 3");
-            model.AddProductSetting(table3rdDCS, 30, "Bullfighting");
-        }
 
         public static List<ObjectInfo> GetDownlines(DataRow lineRow, int roleId)
         {
@@ -415,6 +354,20 @@
                 new ObjectInfo(lineRow.MasterId().ToString(), lineRow.MasterName(),  "Master"),
                 new ObjectInfo(lineRow.AgentId().ToString(), lineRow.AgentName(),  "Agent")
             };
+        }
+
+        public static void AddDefaultMinMaxPTSetting(this CustomerModel model)
+        {
+            model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
+            model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
+        }
+
+        public static void AddProductSettings(this CustomerModel model, DataTable productTable)
+        {
+            foreach (var productSettingParam in LeftPanelProductIntegration.ProductSettingParamList)
+            {
+                model.AddProductSetting(productTable, productSettingParam);
+            }
         }
     }
 }

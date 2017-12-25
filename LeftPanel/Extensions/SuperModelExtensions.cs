@@ -1,12 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
-    using System.Collections.Generic;
     using System.Data;
-    using System.Linq;
+    using Core.Context;
     using Core.Shared;
-    using CustomerSetting.Security.Authenticate;
     using ViewModels;
-    using static eFunctions;
 
     public static class SuperModelExtensions
     {
@@ -61,37 +58,21 @@
             model.Setting = new Setting
             {
                 EnableItems = CustomerModelExtensions.EnableItems(customerRow, table3rdDCS),
-                SyncItems = CustomerModelExtensions.SyncItems(customerRow, table3rdDCS),
+                SyncItems = LeftPanelProductIntegration.CreateSyncItems(customerRow, table3rdDCS),
                 EditItems = CustomerModelExtensions.EditItems(),
                 Details = CustomerModelExtensions.Details(Role.Super)
             };
 
-            CustomerModelExtensions.AddDCSProductSettings(model, table3rdDCS);
+            model.AddProductSettings(table3rdDCS);
 
             AddBettingLimitForSuper(model, userId);
-        }
 
-        private static readonly List<string> BetLimitSettingProductKeys = new List<string>
-        {
-            CasinoBetting,
-            GoldDeluxeBetting,
-            KenoBetting,
-            LiveCasinoBetting,
-            RacingBetting,
-            SportsbookBetting,
-            VirtualSportsBetting,
-            AllbetBetting,
-            VoidbridgeBetting,
-            NG2Betting,
-            LotteryBetting
-        };
+            model.AddDefaultMinMaxPTSetting();
+        }
 
         private static void AddBettingLimitForSuper(CustomerModel model, int actorId)
         {
-            var showBetSetting = BetLimitSettingProductKeys.Any(
-                productKey => CustomerModelExtensions.AuthorizationHandler.IsAuthorized(actorId, productKey, AuthenticateAction.AuthenticationType.Read));
-
-            if (showBetSetting)
+            if (AuthorizationHandler.Instance.HasReadPermissionOnFunctions(LeftPanelProductIntegration.VisibleBetSettingPermissions, actorId))
             {
                 model.Setting.Details.Add(new ObjectInfo("BetSetting", "Edit Betting Limit"));
             }

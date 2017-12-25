@@ -56,12 +56,14 @@
             model.Setting = new Setting
             {
                 EnableItems = CustomerModelExtensions.EnableItems(customerRow, table3rdDCS),
-                SyncItems = CustomerModelExtensions.SyncItems(customerRow, table3rdDCS),
+                SyncItems = LeftPanelProductIntegration.CreateSyncItems(customerRow, table3rdDCS),
                 EditItems = CustomerModelExtensions.EditItems(),
                 Details = CustomerModelExtensions.Details(Role.Agent)
             };
 
-            CustomerModelExtensions.AddDCSProductSettings(model, table3rdDCS);
+            model.AddProductSettings(table3rdDCS);
+
+            model.AddDefaultMinMaxPTSetting();
         }
     }
 }

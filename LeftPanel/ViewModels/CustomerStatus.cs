@@ -1,7 +1,15 @@
-﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
+﻿using System.Collections.Generic;
+using Fanex.ExternalAccount.Module.LeftPanel.Models;
+
+namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
     public class CustomerStatus
     {
+        public CustomerStatus()
+        {
+            ProductStatusDic = new Dictionary<int, ProductStatus>();
+        }
+
         public CustomerStatus UplineStatus { get; set; }
 
         public int RoleId { get; set; }
@@ -58,60 +66,62 @@
 
         public bool HideCricket { get; set; }
 
-        public bool DisableAllbet { get; set; }
+        //public bool DisableAllbet { get; set; }
 
-        public bool HideAllbet { get; set; }
+        //public bool HideAllbet { get; set; }
 
-        public bool SyncAllbet { get; set; }
+        //public bool SyncAllbet { get; set; }
 
-        public bool SyncAllbetDownlines { get; set; }
+        //public bool SyncAllbetDownlines { get; set; }
 
-        public bool DisableVoidbridge { get; set; }
+        //public bool DisableVoidbridge { get; set; }
 
-        public bool HideVoidbridge { get; set; }
+        //public bool HideVoidbridge { get; set; }
 
-        public bool SyncVoidbridge { get; set; }
+        //public bool SyncVoidbridge { get; set; }
 
-        public bool SyncVoidbridgeDownlines { get; set; }
+        //public bool SyncVoidbridgeDownlines { get; set; }
 
-        public bool DisableNG2 { get; set; }
+        //public bool DisableNG2 { get; set; }
 
-        public bool HideNG2 { get; set; }
+        //public bool HideNG2 { get; set; }
 
-        public bool SyncNG2 { get; set; }
+        //public bool SyncNG2 { get; set; }
 
-        public bool DisableFishingWorld { get; set; }
+        //public bool DisableFishingWorld { get; set; }
 
-        public bool HideFishingWorld { get; set; }
+        //public bool HideFishingWorld { get; set; }
 
-        public bool SyncFishingWorld { get; set; }
+        //public bool SyncFishingWorld { get; set; }
 
-        public bool SyncFishingWorldDownlines { get; set; }
+        //public bool SyncFishingWorldDownlines { get; set; }
 
         public bool SyncGoldDeluxeDownlines { get; set; }
 
-        public bool DisableLottery { get; set; }
+        //public bool DisableLottery { get; set; }
 
-        public bool HideLottery { get; set; }
+        //public bool HideLottery { get; set; }
 
-        public bool SyncLottery { get; set; }
+        //public bool SyncLottery { get; set; }
 
-        public bool SyncLotteryDownlines { get; set; }
+        //public bool SyncLotteryDownlines { get; set; }
 
-        public bool HideLucky3 { get; set; }
+        //public bool HideLucky3 { get; set; }
 
-        public bool SyncLucky3 { get; set; }
+        //public bool SyncLucky3 { get; set; }
 
-        public bool SyncLucky3Downlines { get; set; }
+        //public bool SyncLucky3Downlines { get; set; }
 
-        public bool DisableLucky3 { get; set; }
+        //public bool DisableLucky3 { get; set; }
 
-        public bool DisableBullfighting { get; set; }
+        //public bool DisableBullfighting { get; set; }
 
-        public bool HideBullfighting { get; set; }
+        //public bool HideBullfighting { get; set; }
 
         public bool SyncBullfighting { get; set; }
 
         public bool SyncBullfightingDownlines { get; set; }
+
+        public Dictionary<int, ProductStatus> ProductStatusDic { get; set; }
     }
 }

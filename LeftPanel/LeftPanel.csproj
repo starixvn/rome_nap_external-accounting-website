@@ -205,9 +205,12 @@
     <Compile Include="Extensions\CustomerModelExtensions.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Extensions\LeftPanelProductIntegration.cs" />
     <Compile Include="Extensions\RemovingSettingExtensions.cs" />
     <Compile Include="Extensions\SuperModelExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Models\ProductSettingParam.cs" />
+    <Compile Include="Models\ProductStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\LeftPanelDaoImpl.cs" />
     <Compile Include="Repositories\LeftPanelDao.cs" />
@@ -231,9 +234,7 @@
     <Compile Include="ViewModels\Status.cs" />
     <Compile Include="ViewModels\MasterAgentUsedCreditItem.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Shared\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <None Include="LeftPanel.ruleset" />

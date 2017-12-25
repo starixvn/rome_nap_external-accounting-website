@@ -128,15 +128,15 @@
         {
             var userCache = _cachingService.GetUserCache(userId);
             var menuList = userCache.MenuList;
-            var functions = userCache.PolicyList.Where(x => x.FuncKey == functionKey).ToList();
+            var functions = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
             var hasPerm = menuList.Any(menuItem => IsAuthorizedUrl(menuItem.Url.Replace("~", string.Empty), requestUrl));
 
-            if (!hasPerm && functions.Any())
+            if (!hasPerm && functions == null)
             {
                 return false;
             }
 
-            if (functions.Count <= 0)
+            if (!functions.Any())
             {
                 return false;
             }
@@ -168,20 +168,6 @@
             => !string.IsNullOrWhiteSpace(menuUrl)
                 && (string.IsNullOrWhiteSpace(requestUrl) || requestUrl.ToLowerInvariant().Contains(menuUrl.ToLowerInvariant()));
 
-        public bool IsVisibleBetSetting(int userId)
-            => IsAuthorized(userId, eFunctions.CasinoBetting, AuthenticateAction.AuthenticationType.Read)
-                    || IsAuthorized(userId, eFunctions.GoldDeluxeBetting, AuthenticateAction.AuthenticationType.Read)
-                    || IsAuthorized(userId, eFunctions.KenoBetting, AuthenticateAction.AuthenticationType.Read)
-                    || IsAuthorized(userId, eFunctions.LiveCasinoBetting, AuthenticateAction.AuthenticationType.Read)
-                    || IsAuthorized(userId, eFunctions.RacingBetting, AuthenticateAction.AuthenticationType.Read)
-                    || IsAuthorized(userId, eFunctions.SportsbookBetting, AuthenticateAction.AuthenticationType.Read)
-                    || IsAuthorized(userId, eFunctions.VirtualSportsBetting, AuthenticateAction.AuthenticationType.Read)
-                    || IsAuthorized(userId, eFunctions.AllbetBetting, AuthenticateAction.AuthenticationType.Read)
-                    || IsAuthorized(userId, eFunctions.VoidbridgeBetting, AuthenticateAction.AuthenticationType.Read)
-                    || IsAuthorized(userId, eFunctions.NG2Betting, AuthenticateAction.AuthenticationType.Read)
-                    || IsAuthorized(userId, eFunctions.LotteryBetting, AuthenticateAction.AuthenticationType.Read)
-                    || IsAuthorized(userId, eFunctions.BullfightingBetting, AuthenticateAction.AuthenticationType.Read);
-
         public bool HasUpdateCreditPermission(int userId)
             => IsAuthorized(userId, eFunctions.UpdateCredit, AuthenticateAction.AuthenticationType.Host);
 
@@ -199,5 +185,8 @@
 
         public bool HasOpenSuperPermission(int userId)
            => IsAuthorized(userId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host);
+
+        public bool HasReadPermissionOnFunctions(IEnumerable<string> functions, int userId)
+            => functions.Any(function => IsAuthorized(userId, function, AuthenticateAction.AuthenticationType.Read));
     }
 }

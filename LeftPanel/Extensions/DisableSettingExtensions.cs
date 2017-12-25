@@ -79,39 +79,12 @@
                 model.DisableStatusSetting("EnableColossusBets");
             }
 
-            if (product.UplineStatus.DisableAllbet)
+            foreach (var uplineProductStatus in product.UplineStatus.ProductStatusDic.Values)
             {
-                model.DisableStatusSetting("EnableAllbet");
-            }
-
-            if (product.UplineStatus.DisableVoidbridge)
-            {
-                model.DisableStatusSetting("EnableMacauGames");
-            }
-
-            if (product.UplineStatus.DisableNG2)
-            {
-                model.DisableStatusSetting("EnableNG2");
-            }
-
-            if (product.UplineStatus.DisableFishingWorld)
-            {
-                model.DisableStatusSetting("EnableFishingWorld");
-            }
-
-            if (product.UplineStatus.DisableLottery)
-            {
-                model.DisableStatusSetting("EnableLottery");
-            }
-
-            if (product.UplineStatus.DisableLucky3)
-            {
-                model.DisableStatusSetting("EnableLucky3");
-            }
-
-            if (product.UplineStatus.DisableBullfighting)
-            {
-                model.DisableStatusSetting("EnableBullfighting");
+                if (uplineProductStatus.IsDisabled)
+                {
+                    model.DisableStatusSetting($"Enable{uplineProductStatus.ProductKey}");
+                }
             }
         }
 
