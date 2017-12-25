@@ -105,7 +105,7 @@ var StatementReportManager = function () {
         self.cachedData.statementReport = rs;
         var headerContent = self.renderHeader_SMA(rs);
         var bodyContent = self.renderBody_SMA(rs);
-        var footerContent = self.renderFooter(rs);
+        var footerContent = self.renderFooter(7);
 
         var tableReport = $("#tbl-report-new");
         tableReport.find("thead").empty().append(headerContent);
@@ -140,6 +140,8 @@ var StatementReportManager = function () {
         self.totalRows = statementListLength;
 
         if (statementListLength === 0) {
+            html = '<tr><td colspan="7" class="no-data">There is no data</td></tr>';
+
             return html;
         }
 
@@ -156,11 +158,7 @@ var StatementReportManager = function () {
 
             var turnOver = statement.Turnover.HasData ? numeral(statement.Turnover.Value).format('0,0.00') : statementResources.Symbol_NoData;
 
-            var winLoss = statement.WinLoss.HasData
-                ? ('<div class="' + (statement.WinLoss.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
-                        numeral(statement.WinLoss.Value).format(self.Constants.Format.Number.TwoDecimal) +
-                    '</div>')
-                : statementResources.Symbol_NoData;
+            var winLoss = self.renderNegativeCell(statement.WinLoss.HasData, dataRowIndex);
             var commission = statement.Commission.HasData
                 ? self.renderNegativeNumber(statement.Commission.Value.toFixed(2))
                 : statementResources.Symbol_NoData;
@@ -201,8 +199,8 @@ var StatementReportManager = function () {
                         statementResources.Symbol_NoData) +
                 '</div>';
     };
-    self.renderFooter = function () {
-        var html = '<tr><td colspan="7"><div id="report-pager"></div></td></tr>';
+    self.renderFooter = function (noColumn) {
+        var html = self.totalRows ? '<tr><td colspan="' + noColumn + '"><div id="report-pager"></div></td></tr>' : '';
 
         return html;
     };
@@ -233,7 +231,6 @@ var StatementReportManager = function () {
         self.pageSize = pageSize;
         self.pageIndex = pageNumber;
         self.showBodyRows();
-        self.bindGridEvent();
     };
     self.showBodyRows = function () {
         if (!self.totalRows) {
@@ -251,25 +248,9 @@ var StatementReportManager = function () {
 
     self.bindGridEvent = function () {
         var reportGrid = $('#tbl-report-new');
-        reportGrid.find(".column-transfer-amount").click(function () {
+        reportGrid.find(".column-transfer-amount").off("click").on("click", function () {
             var rowIndex = parseInt(jQuery(this).attr("data-rowindex"));
             self.viewTransferDetails(rowIndex);
-        });
-        reportGrid.find(".column-void-cancelled").click(function () {
-            var rowIndex = parseInt(jQuery(this).attr("data-rowindex"));
-            self.viewBetList(rowIndex, self.Enums.TransactionType.VoidCancelled);
-        });
-        reportGrid.find(".column-outstanding").click(function () {
-            var rowIndex = parseInt(jQuery(this).attr("data-rowindex"));
-            self.viewBetList(rowIndex, self.Enums.TransactionType.Outstanding);
-        });
-        reportGrid.find(".column-winloss").click(function () {
-            var rowIndex = parseInt(jQuery(this).attr("data-rowindex"));
-            self.viewBetList(rowIndex, self.Enums.TransactionType.WinLoss);
-        });
-        reportGrid.find(".column-grandprize").click(function () {
-            var rowIndex = parseInt(jQuery(this).attr("data-rowindex"));
-            self.viewBetList(rowIndex, self.Enums.TransactionType.GrandPrize);
         });
     };
 
@@ -280,206 +261,106 @@ var StatementReportManager = function () {
     };
     self.renderMemberStatementReport = function (rs) {
         self.cachedData.statementReport = rs;
-        var statementListLength = rs && rs.StatementList ? rs.StatementList.length : 0;
-        var bodyData = [];
-        if (statementListLength) {
-            var previousStatement = null;
-            var dataRowIndex;
-            for (var i = 0; i < statementListLength; i++) {
-                var dataRowIndex = ' data-rowindex="' + i + '"';
-                var statement = rs.StatementList[i];
-                var currentRow = {
-                    Columns: [
-                        {
-                            Name: "ColDate",
-                            Value: statement.StatementDateString
-                        },
-                        {
-                            Name: "ColOpeningBalance",
-                            Value: statement.OpeningBalance.HasData ?
-                                statement.OpeningBalance.Value :
-                                statementResources.Symbol_NoData,
-                            TdClass: previousStatement &&
-                                previousStatement.AccumulatedTotal.Value !== statement.OpeningBalance.Value ?
-                                "note-opening-balance" :
-                                ""
-                        },
-                        {
-                            Name: "ColTurnover",
-                            Value: statement.Turnover.HasData ?
-                                statement.Turnover.Value :
-                                statementResources.Symbol_NoData
-                        },
-                        {
-                            Name: "ColVoid_Cancelled",
-                            Value: statement.VoidCancelled.HasData ?
-                               ('<div class="' + (statement.VoidCancelled.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
-                                    numeral(statement.VoidCancelled.Value).format(self.Constants.Format.Number.TwoDecimal) +
-                                '</div>') :
-                                statementResources.Symbol_NoData
-                        },
-                        {
-                            Name: "ColOutstanding",
-                            Value: statement.Outstanding.HasData ?
-                               ('<div class="' + (statement.Outstanding.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
-                                    numeral(statement.Outstanding.Value).format(self.Constants.Format.Number.TwoDecimal) +
-                                '</div>') :
-                                statementResources.Symbol_NoData
-                        },
-                        {
-                            Name: "ColWinLoss",
-                            Value: statement.WinLoss.HasData ?
-                               ('<div class="' + (statement.WinLoss.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
-                                    numeral(statement.WinLoss.Value).format(self.Constants.Format.Number.TwoDecimal) +
-                                '</div>') :
-                                statementResources.Symbol_NoData
-                        },
-                        {
-                            Name: "ColCommission",
-                            Value: statement.Commission.HasData ?
-                                statement.Commission.Value.toFixed(2) :
-                                statementResources.Symbol_NoData
-                        },
-                        {
-                            Name: "ColGrandPrize",
-                            Value: statement.GrandPrize.HasData ?
-                                 ('<div class="column-grandprize ' + (statement.GrandPrize.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
-                                 numeral(statement.GrandPrize.Value).format(self.Constants.Format.Number.TwoDecimal) +
-                                '</div>') :
-                                statementResources.Symbol_NoData
-                        },
-                        {
-                            Name: "ColTransferAmount",
-                            Value: self.getColumnTransferAmount(statement, i)
-                        },
-                        {
-                            Name: "ColAccumulatedTotal",
-                            Value: statement.AccumulatedTotal.HasData ?
-                                statement.AccumulatedTotal.Value :
-                                statementResources.Symbol_NoData
-                        }]
-                };
+        var headerContent = self.renderHeader_Member(rs);
+        var bodyContent = self.renderBody_Member(rs);
+        var footerContent = self.renderFooter(10);
 
-                bodyData.push(currentRow);
-                previousStatement = statement;
-            }
-        }
+        var tableReport = $("#tbl-report-new");
+        tableReport.find("thead").empty().append(headerContent);
+        tableReport.find("tbody").empty().append(bodyContent);
+        tableReport.find("tfoot").empty().append(footerContent);
+        tableReport.removeClass('hide');
 
-        var headerColumns = [
-            {
-                HeaderText: statementResources.Date,
-                Width: 150,
-                Name: "ColDate",
-                HeaderAlign: "center",
-                CellAlign: "center"
-            },
-            {
-                HeaderText: statementResources.Opening_Balance,
-                Width: 120,
-                Name: "ColOpeningBalance",
-                HeaderAlign: "center",
-                CellAlign: "right",
-                FormatNumber: self.Constants.Format.Number.TwoDecimal,
-                FormatNegative: '$'
-            },
-            {
-                HeaderText: statementResources.Turnover,
-                Width: 120,
-                Name: "ColTurnover",
-                HeaderAlign: "center",
-                CellAlign: "right",
-                FormatNumber: self.Constants.Format.Number.TwoDecimal
-            },
-            {
-                HeaderText: statementResources.Void_Cancelled,
-                Width: 120,
-                Name: "ColVoid_Cancelled",
-                HeaderAlign: "center",
-                CellAlign: "right",
-                FormatNumber: self.Constants.Format.Number.TwoDecimal
-            },
-            {
-                HeaderText: statementResources.Outstanding,
-                Width: 120,
-                Name: "ColOutstanding",
-                HeaderAlign: "center",
-                CellAlign: "right",
-                FormatNumber: self.Constants.Format.Number.TwoDecimal
-            },
-            {
-                HeaderText: statementResources.Win_Loss,
-                Width: 120,
-                Name: "ColWinLoss",
-                HeaderAlign: "center",
-                CellAlign: "right",
-                FormatNumber: self.Constants.Format.Number.TwoDecimal,
-                FormatNegative: '$'
-            },
-            {
-                HeaderText: statementResources.Commission,
-                Width: 120,
-                Name: "ColCommission",
-                HeaderAlign: "center",
-                CellAlign: "right",
-                FormatNumber: self.Constants.Format.Number.TwoDecimal,
-                FormatNegative: '$'
-            },
-            {
-                HeaderText: statementResources.GrandPrize,
-                Width: 120,
-                Name: "ColGrandPrize",
-                HeaderAlign: "center",
-                CellAlign: "right",
-                FormatNumber: self.Constants.Format.Number.TwoDecimal,
-                FormatNegative: '$'
-            },
-            {
-                HeaderText: statementResources.Transfer_Amt,
-                Width: 120,
-                Name: "ColTransferAmount",
-                HeaderAlign: "center",
-                CellAlign: "right"
-            },
-            {
-                HeaderText: statementResources.Accumulated_Total,
-                Width: 120,
-                Name: "ColAccumulatedTotal",
-                HeaderAlign: "center",
-                CellAlign: "right",
-                FormatNumber: self.Constants.Format.Number.TwoDecimal,
-                FormatNegative: '$'
-            }];
+        self.renderPager();
 
-        gridOptions = {
-            columns: headerColumns,
-            bodyRows: bodyData,
-            headerColumnHeight: 24,
-            bodyRowHeight: 25,
-            numberOfFrozenColumn: 0,
-            gridExpandHeight: 100,
-            showHighlightRow: false,
-            showPager: true,
-            customPager: false,
-            pagerOption: {
-                itemsPerPage: 50,
-                maxItemsPerPage: 500,
-                itemsPerPageArray: [10, 50, 100, 500],
-                currentPage: 0,
-                startPerPage: 50,
-                pageStep: 50,
-                afterPagedFunction: function () {
-                    self.bindGridEvent();
-                }
-            }
-        };
-
-        jQuery('#GridContainer').removeClass("hidden").fanexGrid(gridOptions);
         self.bindGridEvent();
         if (self.eventFunction.completeRenderStatementReport) {
             self.eventFunction.completeRenderStatementReport();
         }
     };
+    self.renderHeader_Member = function () {
+        var html = '<tr>\
+                        <th class="col-150">' + statementResources.Date + '</th>\
+                        <th class="col-120">' + statementResources.Opening_Balance + '</th>\
+                        <th class="col-120">' + statementResources.Turnover + '</th>\
+                        <th class="col-120">' + statementResources.Void_Cancelled + '</th>\
+                        <th class="col-120">' + statementResources.Outstanding + '</th>\
+                        <th class="col-120">' + statementResources.Win_Loss + '</th>\
+                        <th class="col-120">' + statementResources.Commission + '</th>\
+                        <th class="col-120">' + statementResources.GrandPrize + '</th>\
+                        <th class="col-120">' + statementResources.Transfer_Amt + '</th>\
+                        <th class="col-120">' + statementResources.Accumulated_Total + '</th>\
+                    </tr>';
 
+        return html;
+    },
+    self.renderBody_Member = function (rs) {
+        var html = '';
+
+        var statementListLength = rs && rs.StatementList ? rs.StatementList.length : 0;
+        self.totalRows = statementListLength;
+
+        if (statementListLength === 0) {
+            html = '<tr><td colspan="10" class="no-data">There is no data</td></tr>';
+
+            return html;
+        }
+
+        var previousStatement = null;
+        for (var i = 0; i < statementListLength; i++) {
+            var dataRowIndex = ' data-rowindex="' + i + '"';
+            var statement = rs.StatementList[i];
+            var isNotedOpeningBalance = previousStatement &&
+                previousStatement.AccumulatedTotal.Value !== statement.OpeningBalance.Value;
+
+            var balance = statement.OpeningBalance.HasData
+                ? self.renderNegativeNumber(statement.OpeningBalance.Value)
+                : statementResources.Symbol_NoData;
+
+            var turnOver = statement.Turnover.HasData ? numeral(statement.Turnover.Value).format('0,0.00') : statementResources.Symbol_NoData;
+            var voidCancelled = self.renderNegativeCell(statement.VoidCancelled.HasData, dataRowIndex);
+            var outstanding = self.renderNegativeCell(statement.Outstanding.HasData, dataRowIndex);
+            var winLoss = self.renderNegativeCell(statement.WinLoss.HasData, dataRowIndex);
+
+            var commission = statement.Commission.HasData
+                ? self.renderNegativeNumber(statement.Commission.Value.toFixed(2))
+                : statementResources.Symbol_NoData;
+            var grandPrize = self.renderNegativeCell(statement.GrandPrize.HasData, dataRowIndex);
+
+            var accumulatedTotal = statement.AccumulatedTotal.HasData
+                ? self.renderNegativeNumber(statement.AccumulatedTotal.Value)
+                : statementResources.Symbol_NoData;
+
+            html += '<tr class="hide">\
+                        <td class="align-center">' + statement.StatementDateString + '</td>\
+                        <td class="align-right' + (isNotedOpeningBalance ? " note-opening-balance" : "") + '">' +
+                            balance +
+                        '</td>\
+                         <td class="align-right">' + turnOver + '</td>\
+                         <td class="align-right">' + voidCancelled + '</td>\
+                         <td class="align-right">' + outstanding + '</td>\
+                         <td class="align-right">' + winLoss + '</td>\
+                         <td class="align-right">' + commission + '</td>\
+                         <td class="align-right">' + grandPrize + '</td>\
+                         <td class="align-right">' + self.getColumnTransferAmount(statement, dataRowIndex) + '</td>\
+                         <td class="align-right">' + accumulatedTotal + '</td>\
+                     </tr>';
+
+            previousStatement = statement;
+        }
+
+        return html;
+    };
+    self.renderNegativeCell = function (value, dataRowIndex) {
+        var result = value.HasData
+            ? ('<div class="' + (value.Value < 0 ? 'format-negative' : '') +
+                '"' + dataRowIndex + '>' +
+                numeral(value.Value).format(self.Constants.Format.Number.TwoDecimal) +
+                '</div>')
+            : statementResources.Symbol_NoData;
+
+        return result;
+    };
     self.viewTransferDetails = function (rowIndex) {
         var statement = self.cachedData.statementReport.StatementList[rowIndex];
         var url = domain + 'NapStatement/StatementReport/TransferDetails';
@@ -491,6 +372,7 @@ var StatementReportManager = function () {
             BalanceUpDate: balanceUpDay,
             SiteName: ''
         };
+
         if (self.eventFunction.openPopup) {
             self.eventFunction.openPopup({
                 url: url + "?" + jQuery.param(criteria),
