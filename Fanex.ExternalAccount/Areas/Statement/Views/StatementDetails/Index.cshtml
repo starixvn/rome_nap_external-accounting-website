@@ -9,7 +9,13 @@
     var transferDetailsCriteria = JsonConvert.SerializeObject(ViewBag.TransferDetailsCriteria);
 }
 <table id="transfer-details-container" class="table">
-    <thead></thead>
+    <thead>
+        <tr>
+            <th><div class="col-150">@Labels.Date</div></th>
+            <th><div class="col-400">@Labels.Remark</div></th>
+            <th><div class="col-150">@Labels.Amount</div></th>
+        </tr>
+    </thead>
     <tbody></tbody>
     <tfoot></tfoot>
 </table>
