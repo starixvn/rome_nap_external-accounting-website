@@ -19,27 +19,75 @@
     using Service.Interface.Report;
     using Utilities;
 
-    public class LineIds
+
+    public class DrillDownRequest
     {
-        public LineIds(int superId, int masterId, int agentId)
+        public DrillDownRequest(
+            int custId,
+            int viewLevel,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            ArrayList sortingOrderList,
+            object toolTipsProducts)
         {
-            SuperId = superId;
-            MasterId = masterId;
-            AgentId = agentId;
+            CustId = custId;
+            ViewLevel = viewLevel;
+            FromDate = fromDate;
+            ToDate = toDate;
+            ProductIds = productIds;
+            SortingOrderList = sortingOrderList;
+            ToolTipsProducts = toolTipsProducts;
+
+            switch (ViewLevel)
+            {
+                case Role.Super:
+                    SuperId = custId;
+                    MasterId = 0;
+                    AgentId = 0;
+                    break;
+                case Role.Master:
+                    SuperId = CheckRequest.GetIntRequest("srecommend", 0);
+                    MasterId = custId;
+                    AgentId = 0;
+                    break;
+                default:
+                    SuperId = CheckRequest.GetIntRequest("srecommend", 0);
+                    MasterId = CheckRequest.GetIntRequest("mrecommend", 0);
+                    AgentId = custId;
+                    break;
+            }
         }
+
+        public int CustId { get; private set; }
 
         public int SuperId { get; }
 
         public int MasterId { get; }
 
         public int AgentId { get; }
+
+        public int ViewLevel { get; private set; }
+        public DateTime FromDate { get; private set; }
+        public DateTime ToDate { get; private set; }
+        public string ProductIds { get; private set; }
+        public ArrayList SortingOrderList { get; private set; }
+        public object ToolTipsProducts { get; private set; }
+
+        public bool IsValid => !ViewLevel.IsMember()
+            && ViewLevel <= Role.Super
+            && (ToDate >= FromDate)
+            && CustId > 0;
+
+        public bool IsNotValid => !IsValid;
     }
+
     public class WinLossDetailController : BaseController
     {
         private const string MonthDayYearFormat = "MMM, dd yyyy";
         private const string Seperator = ", ";
         private readonly ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
-        private readonly IReportService _reportService = new ReportService();
+        private readonly IReportService _reportService;
         private string _cacheList = string.Empty;
         private int _custId;
         private string _formatedProducts = string.Empty;
@@ -57,6 +105,29 @@
 
         private string _username = string.Empty;
         private int _viewlevel = 5;
+
+
+        private readonly Dictionary<int, Func<int, int, DateTime, DateTime, string, object>>
+            DrillDownWinLossDetailFunctions;
+
+        public WinLossDetailController(IReportService reportService, ICache cacheManager)
+        {
+            _reportService = reportService ?? new ReportService();
+            _cache = cacheManager ?? CacheService.CreateInstance(CacheType.MemoryCache);
+
+            DrillDownWinLossDetailFunctions =
+                new Dictionary<int, Func<int, int, DateTime, DateTime, string, object>>
+                {
+                    {Role.Super, _reportService.GetWinLossDetailSuper},
+                    {Role.Master, _reportService.GetWinLossDetailMAg},
+                    {Role.Agent, _reportService.GetWinLossDetailAg}
+                };
+        }
+
+        public WinLossDetailController() : this(null, null)
+        {
+
+        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -120,19 +191,26 @@
             _srecommend = CheckRequest.GetIntRequest("srecommend", 0);
             _mrecommend = CheckRequest.GetIntRequest("mrecommend", 0);
             _recommend = CheckRequest.GetIntRequest("recommend", 0);
+
             _cacheList = "CacheList" + _username + _groupname + _custId + _fromDate + _toDate + _products;
 
             _sortingOrderList = _reportService.GetSortingOrderList(_groupname);
 
             if (_custId != 0)
             {
-                return DrillDownWinLossDetail(
+                var toolTipsProducts = new
+                {
+                    showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
+                };
+
+                return DrillDownWinLossDetail(new DrillDownRequest(
                     _custId,
                     _viewlevel,
                     _fromDate,
                     _toDate,
                     _productIds,
-                    _sortingOrderList);
+                    _sortingOrderList,
+                    toolTipsProducts));
             }
 
             return SearchWinLossDetail(
@@ -277,9 +355,15 @@
 
             if (_roleId >= Role.Super)
             {
-                var _listWinLossDetail = _reportService.GetWinLossDetail(groupname, _srecommend, fromDate, toDate, productIds);
+                var _listWinLossDetail = _reportService.GetWinLossDetail(
+                    groupname,
+                    _srecommend,
+                    fromDate,
+                    toDate,
+                    productIds);
 
                 _cache.Set(_cacheList, _listWinLossDetail);
+
                 return JsonBase(
                     new
                     {
@@ -300,8 +384,14 @@
             if (_roleId == Role.Master)
             {
                 var _listWinLossDetail = _reportService.GetWinLossDetailSuper(
-                    _srecommend, _mrecommend, fromDate, toDate, productIds);
+                    _srecommend,
+                    _mrecommend,
+                    fromDate,
+                    toDate,
+                    productIds);
+
                 _cache.Set(_cacheList, _listWinLossDetail);
+
                 return JsonBase(
                     new
                     {
@@ -323,8 +413,14 @@
             if (_roleId == Role.Agent)
             {
                 var _listWinLossDetailMAg = _reportService.GetWinLossDetailMAg(
-                    _mrecommend, _recommend, fromDate, toDate, productIds);
+                    _mrecommend,
+                    _recommend,
+                    fromDate,
+                    toDate,
+                    productIds);
+
                 _cache.Set(_cacheList, _listWinLossDetailMAg);
+
                 return JsonBase(
                     new
                     {
@@ -345,8 +441,13 @@
                     new JsonSerializerSettings());
             }
             var _listWinLossDetailAg = _reportService.GetWinLossDetailAg(
-                _recommend, _memberId, fromDate, toDate, productIds);
+                _recommend,
+                _memberId,
+                fromDate,
+                toDate,
+                productIds);
             _cache.Set(_cacheList, _listWinLossDetailAg);
+
             return JsonBase(
                 new
                 {
@@ -367,111 +468,36 @@
                 new JsonSerializerSettings());
         }
 
-        private ActionResult DrillDownWinLossDetail(
-            int custId,
-            int viewlevel,
-            DateTime fromDate,
-            DateTime toDate,
-            string productIds,
-            ArrayList sortingOrderList)
+        private ActionResult DrillDownWinLossDetail(DrillDownRequest request)
         {
-            if (viewlevel == Role.Super)
+            if (request.IsNotValid)
             {
-                return DrillDownSuperWinLossDetail(custId, fromDate, toDate, productIds, viewlevel.DirectDownlineLevel(), sortingOrderList);
+                throw new InvalidOperationException(nameof(request.IsValid));
             }
 
-            if (viewlevel == Role.Master)
-            {
-                return DrillDownMasterWinLossDetail(custId, fromDate, toDate, productIds, viewlevel.DirectDownlineLevel(), sortingOrderList);
-            }
+            var getWinLossDetailByLevel = DrillDownWinLossDetailFunctions[request.ViewLevel];
 
-            return DrillDownAgentWinLossDetail(custId, fromDate, toDate, productIds, viewlevel.DirectDownlineLevel(), sortingOrderList);
-        }
+            var winLossData = getWinLossDetailByLevel(
+                request.CustId,
+                0,
+                request.FromDate,
+                request.ToDate,
+                request.ProductIds);
 
-        private ActionResult DrillDownSuperWinLossDetail(
-            int custId,
-            DateTime fromDate,
-            DateTime toDate,
-            string productIds,
-            int directDownlineLevel,
-            ArrayList sortingOrderList)
-        {
-            var winLossData = _reportService.GetWinLossDetailSuper(custId, 0, fromDate, toDate, productIds);
-
+            // TODO: will be removed later
             _cache.Set(_cacheList, winLossData);
 
-            return JsonBase(
+            return Json(
                 new
                 {
-                    viewlevel = directDownlineLevel,
-                    srecommend = custId,
-                    mrecommend = 0,
-                    recommend = 0,
+                    viewlevel = request.ViewLevel.DirectDownlineLevel(),
+                    srecommend = request.SuperId,
+                    mrecommend = request.MasterId,
+                    recommend = request.AgentId,
                     rows = winLossData,
-                    sortingorderlist = sortingOrderList,
-                    tooltips = new
-                    {
-                        showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
-                    }
-                },
-                new JsonSerializerSettings());
-        }
-
-        private ActionResult DrillDownMasterWinLossDetail(
-            int custId,
-            DateTime fromDate,
-            DateTime toDate,
-            string productIds,
-            int directDownlineLevel,
-            ArrayList sortingOrderList)
-        {
-            var winLossData = _reportService.GetWinLossDetailMAg(custId, 0, fromDate, toDate, productIds);
-            _cache.Set(_cacheList, winLossData);
-
-            return JsonBase(
-                new
-                {
-                    viewlevel = directDownlineLevel,
-                    srecommend = _srecommend,
-                    mrecommend = custId,
-                    recommend = 0,
-                    rows = winLossData,
-                    sortingorderlist = sortingOrderList,
-                    tooltips = new
-                    {
-                        showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
-                    }
-                },
-                new JsonSerializerSettings());
-        }
-
-        private ActionResult DrillDownAgentWinLossDetail(
-            int custId,
-            DateTime fromDate,
-            DateTime toDate,
-            string productIds,
-            int directDownlineLevel,
-            ArrayList sortingOrderList)
-        {
-            var winLossData = _reportService.GetWinLossDetailAg(custId, 0, fromDate, toDate, productIds);
-
-            _cache.Set(_cacheList, winLossData);
-
-            return JsonBase(
-                new
-                {
-                    viewlevel = directDownlineLevel,
-                    srecommend = _srecommend,
-                    mrecommend = _mrecommend,
-                    recommend = custId,
-                    rows = winLossData,
-                    sortingorderlist = sortingOrderList,
-                    tooltips = new
-                    {
-                        showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
-                    }
-                },
-                new JsonSerializerSettings());
+                    sortingorderlist = request.SortingOrderList,
+                    tooltips = request.ToolTipsProducts
+                });
         }
     }
 }
