@@ -550,10 +550,11 @@ input.BettingLimitTextBox, input.BettingLimitTextBox9, div.BettingLimitItem2, di
 .BettingLimitLabel, .BettingLimitLabel1 {
   background-color: #fff !important; }
 
-td, TD {
-  white-space: normal;
-  overflow: auto; }
-
+/*td, TD
+{
+    white-space: normal; 
+    overflow: auto;
+}*/
 .PTBoxRightBorder .BetTypeHeader, .PTBoxRightBorder .BetTypeSelect, .PTBoxRightBorder .BetTypeLabel {
   border-right: 1px solid #CCC; }
 

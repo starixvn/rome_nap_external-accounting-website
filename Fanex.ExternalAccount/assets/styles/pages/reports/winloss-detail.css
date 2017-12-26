@@ -6,6 +6,9 @@
   width: 100%;
   overflow: auto; }
 
+#mainGrid::-webkit-scrollbar:horizontal {
+  height: 20px; }
+
 #GroupProducts {
   height: 32px;
   border: 1px solid #7b7c7e;
@@ -112,9 +115,12 @@ span.selectedMonth {
       font-family: 'AlphaAdmin';
       font-size: 20px;
       color: #000; }
-    .monPickrWrapParent .monPickrWrap .monPickr .prev:before {
-      content: '\e932'; }
+    .monPickrWrapParent .monPickrWrap .monPickr .prev {
+      background: none; }
+      .monPickrWrapParent .monPickrWrap .monPickr .prev:before {
+        content: '\e932'; }
     .monPickrWrapParent .monPickrWrap .monPickr .next {
+      background: none;
       top: 6px;
       right: 6px;
       left: unset; }
@@ -130,6 +136,8 @@ span.selectedMonth {
   .selectedDayWrapParent .selectedDayWrap .dayPickr {
     height: unset;
     background: #fff; }
+    .selectedDayWrapParent .selectedDayWrap .dayPickr .darr {
+      background: none; }
     .selectedDayWrapParent .selectedDayWrap .dayPickr .darr:before {
       content: '\e925';
       font-family: 'AlphaAdmin';

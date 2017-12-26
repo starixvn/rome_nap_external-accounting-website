@@ -6,6 +6,9 @@
   width: 100%;
   overflow: auto; }
 
+#mainGrid::-webkit-scrollbar:horizontal {
+  height: 20px; }
+
 .frozen-div {
   border-right: 1px solid #999 !important;
   width: 266px; }

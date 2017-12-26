@@ -209,6 +209,8 @@ body {
 a {
   color: #4872eb;
   text-decoration: none; }
+  a:focus {
+    outline: none; }
 
 .bold {
   font-weight: bold; }

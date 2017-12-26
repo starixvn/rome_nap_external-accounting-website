@@ -142,11 +142,13 @@ span.selectedMonth {
             color: #000;
         }
         .prev {
+            background: none;
             &:before {
                 content: '\e932';
             }
         }
         .next {
+            background: none;
             top: 6px;
             right: 6px;
             left: unset;
@@ -168,6 +170,9 @@ span.selectedMonth {
     .dayPickr {
         height: unset;
         background: #fff;
+        .darr {
+            background: none;
+        }
         .darr:before {
             content: '\e925';
             font-family: 'AlphaAdmin';

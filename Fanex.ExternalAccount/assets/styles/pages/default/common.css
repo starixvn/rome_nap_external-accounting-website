@@ -99,6 +99,8 @@ body {
 a {
   color: #4872eb;
   text-decoration: none; }
+  a:focus {
+    outline: none; }
 
 .bold {
   font-weight: bold; }
@@ -1313,7 +1315,10 @@ body {
 
 .icon-excel {
   font-size: 16px;
-  border: none !important; }
+  border: none !important;
+  color: #42a15c; }
+  .icon-excel:hover {
+    color: #307f46; }
 
 /* Popup grant permission in group management*/
 .group-name {

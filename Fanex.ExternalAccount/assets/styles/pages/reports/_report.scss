@@ -9,3 +9,9 @@
     width: 100%;
     overflow: auto;
 }
+
+#mainGrid {
+    &::-webkit-scrollbar:horizontal {
+        height: 20px;
+    }
+}

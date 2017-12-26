@@ -8,41 +8,48 @@
     var statementReport = JsonConvert.SerializeObject(Model);
     var transferDetailsCriteria = JsonConvert.SerializeObject(ViewBag.TransferDetailsCriteria);
 }
-<div>
-    <span id="exporttoexcel" title="Export Excel" class="icon-excel"></span>
-</div>
-<table id="transfer-details-container" class="table">
-    <thead>
-        <tr>
-            <th><div class="col-150">@Labels.Date</div></th>
-            <th><div class="col-400">@Labels.Remark</div></th>
-            <th><div class="col-150">@Labels.Amount</div></th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-    <tfoot></tfoot>
-</table>
-<iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.draggable.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.linkbutton.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.parser.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.resizable.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.pagination.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Areas/Statement/Views/StatementDetails/Scripts/StatementDetailsManager.js")"></script>
-<script type="text/javascript">
-    window.rootUrl = '@Url.Content("~")';
-    var statementReport= @Html.Raw(statementReport);
-    var transferDetailsCriteria= @Html.Raw(transferDetailsCriteria);
-    var statementResources = {
-        Date: '@Labels.Date',
-        Remark: '@Labels.Remark',
-        Amount: '@Labels.Amount',
-        Symbol_NoData: '@Labels.Symbol_NoData',
-        Total: '@Labels.Total',
-        Symbol_ExchangeRate: '@Labels.Symbol_ExchangeRate',
-        GrandPrize: '@Labels.GrandPrize'
-    };
-</script>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <div>
+            <span id="exporttoexcel" title="Export Excel" class="icon-excel"></span>
+        </div>
+        <table id="transfer-details-container" class="table">
+            <thead>
+                <tr>
+                    <th><div class="col-150">@Labels.Date</div></th>
+                    <th><div class="col-400">@Labels.Remark</div></th>
+                    <th><div class="col-150">@Labels.Amount</div></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+        </table>
+        <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.draggable.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.linkbutton.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.parser.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.resizable.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.pagination.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Areas/Statement/Views/StatementDetails/Scripts/StatementDetailsManager.js")"></script>
+        <script type="text/javascript">
+            window.rootUrl = '@Url.Content("~")';
+            var statementReport= @Html.Raw(statementReport);
+            var transferDetailsCriteria= @Html.Raw(transferDetailsCriteria);
+            var statementResources = {
+                Date: '@Labels.Date',
+                Remark: '@Labels.Remark',
+                Amount: '@Labels.Amount',
+                Symbol_NoData: '@Labels.Symbol_NoData',
+                Total: '@Labels.Total',
+                Symbol_ExchangeRate: '@Labels.Symbol_ExchangeRate',
+                GrandPrize: '@Labels.GrandPrize'
+            };
+        </script>
+    </body>
+</html>
