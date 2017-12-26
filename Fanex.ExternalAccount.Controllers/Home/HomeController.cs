@@ -2,13 +2,13 @@
 {
     using System;
     using System.Web.Mvc;
+    using Core.Context;
     using Fanex.ExternalAccount.Core.Base;
-    using Fanex.ExternalAccount.Utilities;
-using Fanex.Logging.Extensions.Web;
+    using Fanex.Logging.Extensions.Web;
 
     public class HomeController : BaseController
     {
-        [Authorize]
+        [ExternalAccountAuthenticate]
         public ActionResult Index()
         {
             return View();

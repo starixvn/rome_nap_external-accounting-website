@@ -42,6 +42,11 @@
                 FormsAuthentication.RedirectToLoginPage();
             }
 
+            if(string.IsNullOrWhiteSpace(Function))
+            {
+                return;
+            }
+
             if (!FunctionAuthorization(currentSession.UserId, Function, Policy)
                 && !authorization.IsBelong())
             {

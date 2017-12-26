@@ -1,7 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Authentication
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Helpers;
     using System.Web.Mvc;
@@ -10,13 +9,11 @@
     using CaptchaMvc.HtmlHelpers;
     using Core.Context;
     using Core.Shared;
-    using CustomerSetting.Module.Core.Configurations;
     using CustomerSetting.Module.Core.Web;
     using DTO;
     using DTO.UserControl;
     using Module.Logs;
     using Module.Logs.Services;
-    using ONEbook.UM.Filters;
     using Service.Impl.Login;
     using Service.Interface.Login;
     using Utilities;
@@ -179,7 +176,7 @@
         {
             ResetLoginAttempt();
 
-            var canAccessPublicDomain = IsDenyAccessPublicDomain(isIntAcc,group);
+            var canAccessPublicDomain = IsDenyAccessPublicDomain(isIntAcc, group);
             if (canAccessPublicDomain)
             {
                 return View(new LoginModel(ViewLang.AccessDenyToPublicDomain));
@@ -237,8 +234,7 @@
         }
 
         [HttpGet]
-        [CheckUMFilter]
-        [Authorize]
+        [ExternalAccountAuthenticate]
         public ActionResult ExternalGroup()
         {
             if (!_currentSession.IsInternalAdmin)
@@ -251,8 +247,7 @@
             return View();
         }
 
-        [CheckUMFilter]
-        [Authorize]
+        [ExternalAccountAuthenticate]
         public ActionResult ExternalGroupList()
         {
             var result = _userService.GroupList();
@@ -266,7 +261,7 @@
                 JsonRequestBehavior.AllowGet);
         }
 
-        private bool IsDenyAccessPublicDomain(bool isInternalAdmin,Group currentGroup)
+        private bool IsDenyAccessPublicDomain(bool isInternalAdmin, Group currentGroup)
         {
             if (GroupService.IsOfficeGroup(currentGroup.GroupName))
             {
@@ -279,7 +274,6 @@
                             ? Config.IsDenyInternalGroupAccessing
                             : !GroupService.IsFinanceGroup(currentGroup.GroupName) || Config.IsDenyFinanceGroupAccessing;
                 }
-
             }
 
             return false;
