@@ -200,7 +200,7 @@ span.selectedMonth {
     font-family: inherit;
 }
 
-.col-sorter {
+.col-sorter [class*="col-"] {
     position: relative;
     cursor: pointer;
     &:after {
@@ -211,8 +211,8 @@ span.selectedMonth {
         border-right: 4px solid transparent;  
         border-bottom: 4px solid #fff;
         position: absolute;
-        top: 8px;
-        right: 5px;
+        top: 5px;
+        right: 0px;
         cursor: pointer;
     }
     &:before {
@@ -223,24 +223,16 @@ span.selectedMonth {
         border-right: 4px solid transparent;  
         border-top: 4px solid #fff;
         position: absolute;
-        top: 13px;
-        right: 5px;
+        top: 10px;
+        right: 0px;
         cursor: pointer;
-    }
-    &[rowspan="2"] {
-        &:after {
-            top: 22px;
-        }
-        &:before {
-            top: 27px;
-        }
     }
 }
 
-.col-sorter.desc:before {
+.col-sorter.desc [class*="col"]:before {
     border-top: 4px solid #333;
 }
-.col-sorter.asc:after{
+.col-sorter.asc [class*="col"]:after{
     border-bottom: 4px solid #333;
 }
 
