@@ -385,7 +385,7 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
             var hideFishingWorldSettingLink = !showFishingWorld || (cell.Value.HideFishingWorld || !cell.Value.SyncedFishingWorldUpline);
             var hideLotterySettingLink = !showLottery || (cell.Value.HideLottery);
             var hideLucky3SettingLink = !showLucky3 || (cell.Value.HideLucky3);
-            var hideBullfightingSettingLink = !showBullfighting || (cell.Value.HideBullfighting);
+            var hideBullfightingSettingLink = !showBullfighting || (cell.Value.HideBullFighting);
 
             var func = "javascript:Fanex.ExtAcc.Customer.GetMasterList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.SyncLiveCasino + "," + hideKeno + "," + cell.Value.HideVirtualSports + "," + cell.Value.HideGoldDeluxe + "," + cell.Value.HideColossusBet + "," + cell.Value.HideMuayThai + "," + cell.Value.HideCockFighting + "," + cell.Value.HideCricket + "," + hideAllbetSettingLink + "," + hideVoidbridgeSettingLink + "," + hideNG2SettingLink + "," + hideFishingWorldSettingLink + "," + hideLotterySettingLink + "," + hideLucky3SettingLink + "," + hideBullfightingSettingLink + ")";
 
@@ -405,7 +405,7 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
             var hideFishingWorldSettingLink = cell.Value.HideFishingWorld;
             var hideLotterySettingLink = cell.Value.HideLottery;
             var hideLucky3SettingLink = cell.Value.HideLucky3;
-            var hideBullfightingSettingLink = cell.Value.HideBullfighting;
+            var hideBullfightingSettingLink = cell.Value.HideBullFighting;
 
             var showABBetting = cell.Value.SyncedAllBet && !hideAllbetSettingLink && cell.Value.SyncedAllBetDownline;
             var showVBBetting = cell.Value.SyncedVoidBridge && !hideVoidbridgeSettingLink && cell.Value.SyncedVoidBridgeDownline;
