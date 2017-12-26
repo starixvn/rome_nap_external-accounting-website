@@ -4,13 +4,13 @@
     using System.Collections;
     using System.Data;
     using System.Data.Common;
-    using Fanex.Data.DNAide;
-    using Fanex.ExternalAccount.DTO;
+    using Data.DNAide;
+    using DTO;
     using Microsoft.Practices.EnterpriseLibrary.Data;
 
     public class DAOBase
     {
-        private const int DEFAULTTIMEOUT = 600;
+        private const int Defaulttimeout = 600;
 
         public static void AddResultParams(Database db, DbCommand command)
         {
@@ -21,28 +21,14 @@
         public Result GetResultParams(Database db, DbCommand command)
         {
             var errorCode = db.GetParameterValue(command, "ErrCode");
-            errorCode = (errorCode is DBNull) ? string.Empty : Convert.ToString(errorCode);
+            errorCode = errorCode is DBNull ? string.Empty : Convert.ToString(errorCode);
             var errorMessage = db.GetParameterValue(command, "ErrMsg");
-            errorMessage = (errorMessage is DBNull) ? string.Empty : Convert.ToString(errorMessage);
-            var result = new Result((string)errorCode, (string)errorMessage);
+            errorMessage = errorMessage is DBNull ? string.Empty : Convert.ToString(errorMessage);
 
-            return result;
+            return new Result((string)errorCode, (string)errorMessage);
         }
-
-        #region ExecSp To DataSet
 
         public virtual IDataReader ExecDataReader(string name, Hashtable parameters)
-        {
-            string spname = name;
-            return DbHelper.ExecuteReader(spname, parameters, DEFAULTTIMEOUT);
-        }
-
-        public virtual IDataReader ExecDataReader(string name, Hashtable parameters, int timeOut)
-        {
-            IDataReader reader = this.ExecDataReader(name, parameters);
-            return reader != null ? reader : null;
-        }
-
-        #endregion ExecSp To DataSet
+            => DbHelper.ExecuteReader(name, parameters, Defaulttimeout);
     }
 }

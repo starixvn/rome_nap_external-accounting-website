@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Data;
     using DTO.Customer;
+    using DTO.Report;
 
     public interface IReportService
     {

@@ -20,6 +20,6 @@
 
         Result EditGroupPolicy(string oldGroupPolicy, string groupPolicy, int custId, string ip, int groupId);
 
-        Result DeleteGroup(int groupID, int userId);
+        Result DeleteGroup(int groupId, int userId);
     }
 }

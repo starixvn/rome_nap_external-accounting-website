@@ -60,7 +60,7 @@
             }
         }
 
-        public int CustId { get; private set; }
+        public int CustId { get; }
 
         public int SuperId { get; }
 
@@ -68,12 +68,12 @@
 
         public int AgentId { get; }
 
-        public int ViewLevel { get; private set; }
-        public DateTime FromDate { get; private set; }
-        public DateTime ToDate { get; private set; }
-        public string ProductIds { get; private set; }
-        public ArrayList SortingOrderList { get; private set; }
-        public object ToolTipsProducts { get; private set; }
+        public int ViewLevel { get; }
+        public DateTime FromDate { get; }
+        public DateTime ToDate { get; }
+        public string ProductIds { get; }
+        public ArrayList SortingOrderList { get; }
+        public object ToolTipsProducts { get; }
 
         public bool IsValid => !ViewLevel.IsMember()
             && ViewLevel <= Role.Group
@@ -99,7 +99,7 @@
         private string _products = string.Empty;
         private string _groupname = string.Empty;
         private int _custId;
-        private int _roleId = 5;
+        private readonly int DefaultRoleId = 5;
         private int _viewlevel = 5;
 
         private DateTime _fromDate = DateTime.Today;
@@ -135,13 +135,15 @@
             _products = string.Empty;
             _formatedProducts = string.Empty;
             var _formatedProductIds = new List<int>();
-            _productIds = string.Empty;
+
             _username = CheckRequest.GetStringRequest("username", string.Empty);
             _viewlevel = CheckRequest.GetIntRequest("viewlevel", 0);
             _custId = CheckRequest.GetIntRequest("custid", 0);
+
             _groupname = CurrentSession.IsInternalAdmin
                 ? CheckRequest.GetStringRequest("groupname", string.Empty)
                 : CurrentSession.CurrencyGroup;
+
             _fromDate = CheckRequest.GetDateTimeRequest("fromdate", DateTime.Today);
             _toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);
 
@@ -226,7 +228,7 @@
             ArrayList sortingOrderList,
             object toolTipsProducts)
         {
-            var customerInfo = new CustomerInfoSearchResult { RoleId = _roleId };
+            var customerInfo = new CustomerInfoSearchResult { RoleId = DefaultRoleId };
 
             if (!string.IsNullOrWhiteSpace(username))
             {
