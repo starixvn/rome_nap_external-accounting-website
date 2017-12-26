@@ -110,8 +110,8 @@
 
         public bool HideBullfighting { get; set; }
 
-        public bool SyncBullfighting => true;
+        public bool SyncBullfighting { get; set; }
 
-        public bool SyncBullfightingDownlines => true;
+        public bool SyncBullfightingDownlines { get; set; }
     }
 }

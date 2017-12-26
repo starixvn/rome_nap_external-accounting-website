@@ -104,6 +104,7 @@
             SetFishingWorldStatus(custStatus, statusRow);
             SetLotteryStatus(custStatus, statusRow);
             SetLucky3Status(custStatus, statusRow);
+            SetBullfightingStatus(custStatus, statusRow);
 
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinSB", Value = "Sportsbook" });
             model.Setting.MinMaxPts.Add(new ObjectInfo { Key = "MinRB", Value = "Racing" });
@@ -205,10 +206,10 @@
 
         private static void SetBullfightingStatus(CustomerStatus custStatus, DataRow statusRow)
         {
-            custStatus.HideBullfighting = !AppSettings.IsShowLucky3 || statusRow.ToBoolean("HideLucky3");
-            custStatus.SyncLucky3 = true;
-            custStatus.SyncLucky3Downlines = true;
-            custStatus.DisableLucky3 = statusRow.ToBoolean("DisableLucky3");
+            custStatus.HideBullfighting = !AppSettings.IsShowBullfighting || statusRow.ToBoolean("HideBullfighting");
+            custStatus.SyncBullfighting = true;
+            custStatus.SyncBullfightingDownlines = true;
+            custStatus.DisableBullfighting = statusRow.ToBoolean("DisableBullfighting");
         }
 
         private static void SetFishingWorldStatus(CustomerStatus custStatus, DataRow statusRow)
@@ -273,6 +274,7 @@
             SetUplineFishingWorldStatus(uplineStatus, uplineRow);
             SetUplineLotteryStatus(uplineStatus, uplineRow);
             SetUplineLucky3Status(uplineStatus, uplineRow);
+            SetUplineBullfightingStatus(uplineStatus, uplineRow);
 
             return uplineStatus;
         }
@@ -317,6 +319,13 @@
             uplineStatus.DisableAllbet = uplineRow.ToBoolean("DisableAllbet");
             uplineStatus.HideAllbet = uplineRow.ToBoolean("HideAllbet");
             uplineStatus.SyncAllbet = uplineRow.ToBoolean("SyncedAllBet");
+        }
+
+        private static void SetUplineBullfightingStatus(CustomerStatus uplineStatus, DataRow uplineRow)
+        {
+            uplineStatus.DisableBullfighting = uplineRow.ToBoolean("DisableBullfighting");
+            uplineStatus.HideBullfighting = uplineRow.ToBoolean("HideBullfighting");
+            uplineStatus.SyncBullfighting = true;
         }
     }
 }

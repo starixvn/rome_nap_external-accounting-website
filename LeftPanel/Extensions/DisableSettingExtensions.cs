@@ -108,6 +108,11 @@
             {
                 model.DisableStatusSetting("EnableLucky3");
             }
+
+            if (product.UplineStatus.DisableBullfighting)
+            {
+                model.DisableStatusSetting("EnableBullfighting");
+            }
         }
 
         private static CustomerModel DisableStatusSetting(this CustomerModel model, string key)
