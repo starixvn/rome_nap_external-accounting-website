@@ -186,7 +186,7 @@ namespace Fanex.ExternalAccount
         private static List<string> GetRegexToHideSensitiveInfo()
         {
             var result = new List<string>();
-            var sensitiveInfo = new[] { "pass", "pwd", "security" };
+            var sensitiveInfo = new[] { "pass", "pwd", "security", "Password" };
 
             foreach (var info in sensitiveInfo)
             {
