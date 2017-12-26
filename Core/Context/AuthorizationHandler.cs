@@ -1,6 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Core.Context
 {
-    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
@@ -107,12 +106,12 @@
             var request = HttpContext.Current.Request;
             var requestUrl = string.Empty;
 
-            if (!request.RawUrl.Equals("/") 
+            if (!request.RawUrl.Equals("/")
                 && !request
                     .RawUrl
                     .ToLower(CultureInfo.InvariantCulture)
                     .Contains("home/index")
-                && !request.RawUrl.ToLower(CultureInfo.InvariantCulture).Contains("exporttoexcel") 
+                && !request.RawUrl.ToLower(CultureInfo.InvariantCulture).Contains("exporttoexcel")
                 && !isAjaxRequest)
             {
                 requestUrl = request.RawUrl;
@@ -122,8 +121,8 @@
         }
 
         public bool IsAuthorized(
-            int userId, 
-            string functionKey, 
+            int userId,
+            string functionKey,
             AuthenticateAction.AuthenticationType policy,
             string requestUrl = "")
         {
@@ -180,7 +179,8 @@
                     || IsAuthorized(userId, eFunctions.AllbetBetting, AuthenticateAction.AuthenticationType.Read)
                     || IsAuthorized(userId, eFunctions.VoidbridgeBetting, AuthenticateAction.AuthenticationType.Read)
                     || IsAuthorized(userId, eFunctions.NG2Betting, AuthenticateAction.AuthenticationType.Read)
-                    || IsAuthorized(userId, eFunctions.LotteryBetting, AuthenticateAction.AuthenticationType.Read);
+                    || IsAuthorized(userId, eFunctions.LotteryBetting, AuthenticateAction.AuthenticationType.Read)
+                    || IsAuthorized(userId, eFunctions.BullfightingBetting, AuthenticateAction.AuthenticationType.Read);
 
         public bool HasUpdateCreditPermission(int userId)
             => IsAuthorized(userId, eFunctions.UpdateCredit, AuthenticateAction.AuthenticationType.Host);
