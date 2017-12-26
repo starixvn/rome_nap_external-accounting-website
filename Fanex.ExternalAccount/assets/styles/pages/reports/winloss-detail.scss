@@ -193,12 +193,16 @@ span.selectedMonth {
 .tbl-winloss-detail {
     max-height: 625px !important;
 }
-th .col-130 {
-    position: relative;
+
+.col-sorter.desc, 
+.col-sorter.asc {
+    height: unset;
+    font-family: inherit;
 }
+
 .col-sorter {
-    position: absolute;
-    right: 8px;
+    position: relative;
+    cursor: pointer;
     &:after {
         content: '';
         width: 0; 
@@ -207,7 +211,8 @@ th .col-130 {
         border-right: 4px solid transparent;  
         border-bottom: 4px solid #fff;
         position: absolute;
-        top: 6px;
+        top: 8px;
+        right: 5px;
         cursor: pointer;
     }
     &:before {
@@ -218,11 +223,19 @@ th .col-130 {
         border-right: 4px solid transparent;  
         border-top: 4px solid #fff;
         position: absolute;
-        top: 11px;
+        top: 13px;
+        right: 5px;
         cursor: pointer;
     }
+    &[rowspan="2"] {
+        &:after {
+            top: 22px;
+        }
+        &:before {
+            top: 27px;
+        }
+    }
 }
-
 
 .col-sorter.desc:before {
     border-top: 4px solid #333;
@@ -230,5 +243,4 @@ th .col-130 {
 .col-sorter.asc:after{
     border-bottom: 4px solid #333;
 }
-
 
