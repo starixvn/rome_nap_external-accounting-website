@@ -8,8 +8,10 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
     using Base;
     using Common.Extensions;
     using Data;
+    using DTO.Customer;
     using DTO.Report;
     using Interface.Report;
+    using Utilities;
 
     public class ReportDao : DAOBase, IReportDao
     {
@@ -30,6 +32,49 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
 
                 return ds?.Tables.Count > 0 ? ds.Tables[0] : null;
             }
+        }
+
+        public CustomerInfoSearchResult GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
+        {
+            CustomerInfoSearchResult customerInfo = null;
+
+            using (var db = new ObjectDb("EAS_CustomerSelUserInfo"))
+            {
+                if (custId != 0)
+                {
+                    db.AddInParameter("custid", DbType.Int32, custId);
+                }
+
+                db.AddInParameter("groupname", DbType.String, groupname);
+                db.AddInParameter("username", DbType.String, userName);
+                db.AddInParameter("isgetuplineinfo", DbType.Boolean, isGetUplineInfo);
+
+                using (var reader = db.ExecuteReader())
+                {
+                    if (reader?.Read() != true)
+                    {
+                        return customerInfo;
+                    }
+
+                    customerInfo = new CustomerInfoSearchResult
+                    {
+                        CustId = Utils.ToInt32(reader[reader.GetOrdinal("custid")]),
+                        Username = Utils.ToString(reader[reader.GetOrdinal("username")]),
+                        RoleId = Utils.ToInt32(reader[reader.GetOrdinal("roleid")]),
+                        SuperId = Utils.ToInt32(reader[reader.GetOrdinal("srecommend")]),
+                        SuperName = Utils.ToString(reader[reader.GetOrdinal("SuperName")]),
+                        MasterId = Utils.ToInt32(reader[reader.GetOrdinal("mrecommend")]),
+                        MasterName = Utils.ToString(reader[reader.GetOrdinal("MasterName")]),
+                        AgentId = Utils.ToInt32(reader[reader.GetOrdinal("recommend")]),
+                        AgentName = Utils.ToString(reader[reader.GetOrdinal("AgentName")]),
+                        HasSecurityCode = Utils.ToBoolean(reader[reader.GetOrdinal("HasSecurityCode")])
+                    };
+
+                }
+
+            }
+
+            return customerInfo;
         }
 
         public List<SuggestedUserName> EAS_CustomerSelUserSearch(int custId, string username, string groupname)
@@ -472,43 +517,43 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
 
         private static DailyWinLoss CreateWinLossDailyEntity(IDataReader reader, int num)
             => new DailyWinLoss
-        {
-            No = num,
-            CustId = reader.ToInt("custid"),
-            Username = reader.To<string>("username"),
-            TotalTO = reader.ToDouble("totalTO"),
-            ComTO = reader.ToDouble("ComTO"),
-            ComTOPercent = !reader.ToDouble("totalTO").Equals(0)
+            {
+                No = num,
+                CustId = reader.ToInt("custid"),
+                Username = reader.To<string>("username"),
+                TotalTO = reader.ToDouble("totalTO"),
+                ComTO = reader.ToDouble("ComTO"),
+                ComTOPercent = !reader.ToDouble("totalTO").Equals(0)
                 ? reader.ToDouble("ComTO") * 100 / reader.ToDouble("totalTO")
                 : 0,
-            SAgTO = reader.ToDouble("SAgTO"),
-            SAgTOPercent = !reader.ToDouble("totalTO").Equals(0)
+                SAgTO = reader.ToDouble("SAgTO"),
+                SAgTOPercent = !reader.ToDouble("totalTO").Equals(0)
                 ? reader.ToDouble("SAgTO") * 100 / reader.ToDouble("totalTO")
                 : 0,
-            MAgTO = reader.ToDouble("MAgTO"),
-            MAgTOPercent = !reader.ToDouble("totalTO").Equals(0)
+                MAgTO = reader.ToDouble("MAgTO"),
+                MAgTOPercent = !reader.ToDouble("totalTO").Equals(0)
                 ? reader.ToDouble("MAgTO") * 100 / reader.ToDouble("totalTO")
                 : 0,
-            AgTO = reader.ToDouble("AgTO"),
-            AgTOPercent = !reader.ToDouble("totalTO").Equals(0)
+                AgTO = reader.ToDouble("AgTO"),
+                AgTOPercent = !reader.ToDouble("totalTO").Equals(0)
                 ? reader.ToDouble("AgTO") * 100 / reader.ToDouble("totalTO")
                 : 0,
-            ComWinlost = reader.ToDouble("ComWinlost"),
-            ComWinlostPercent = !reader.ToDouble("ComTO").Equals(0)
+                ComWinlost = reader.ToDouble("ComWinlost"),
+                ComWinlostPercent = !reader.ToDouble("ComTO").Equals(0)
                 ? reader.ToDouble("ComWinlost") * 100 / reader.ToDouble("ComTO")
                 : 0,
-            SAgWinlost = reader.ToDouble("SAgWinlost"),
-            SAgWinlostPercent = !reader.ToDouble("SAgTO").Equals(0)
+                SAgWinlost = reader.ToDouble("SAgWinlost"),
+                SAgWinlostPercent = !reader.ToDouble("SAgTO").Equals(0)
                 ? reader.ToDouble("SAgWinlost") * 100 / reader.ToDouble("SAgTO")
                 : 0,
-            MAgWinlost = reader.ToDouble("MAgWinlost"),
-            MAgWinlostPercent = !reader.ToDouble("MAgTO").Equals(0)
+                MAgWinlost = reader.ToDouble("MAgWinlost"),
+                MAgWinlostPercent = !reader.ToDouble("MAgTO").Equals(0)
                 ? reader.ToDouble("MAgWinlost") * 100 / reader.ToDouble("MAgTO")
                 : 0,
-            AgWinlost = reader.ToDouble("AgWinlost"),
-            AgWinlostPercent = !reader.ToDouble("AgTO").Equals(0)
+                AgWinlost = reader.ToDouble("AgWinlost"),
+                AgWinlostPercent = !reader.ToDouble("AgTO").Equals(0)
                 ? reader.ToDouble("AgWinlost") * 100 / reader.ToDouble("AgTO")
                 : 0
-        };
+            };
     }
 }

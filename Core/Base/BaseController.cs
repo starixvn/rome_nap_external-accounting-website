@@ -395,24 +395,23 @@ namespace Fanex.ExternalAccount.Core.Base
 
             var groups = product.ShowForGroups.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (Request?.UrlReferrer == null)
+            if (Request?.UrlReferrer != null)
             {
-                return true;
-            }
+                var requestUrl =
+                    Request?.UrlReferrer.AbsolutePath.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
+                var groupName = requestUrl.Length == 0 || !CurrentSession.IsInternalAdmin
+                    ? CurrentSession.CurrencyGroup
+                    : requestUrl[requestUrl.Length - 1];
 
-            var requestUrl =
-                Request?.UrlReferrer.AbsolutePath.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
-
-            var groupName = requestUrl.Length == 0 || !CurrentSession.IsInternalAdmin
-                ? CurrentSession.CurrencyGroup
-                : requestUrl[requestUrl.Length - 1];
-
-            foreach (var group in groups)
-            {
-                if (groupName.Equals(@group, StringComparison.OrdinalIgnoreCase)
-                    || Shared.GroupService.OfficeGroups.Contains(groupName, StringComparer.OrdinalIgnoreCase))
+                foreach (var group in groups)
                 {
-                    return false;
+                    if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase)
+                        || groupName.Equals("Finance", StringComparison.OrdinalIgnoreCase)
+                        || groupName.Equals("Internal", StringComparison.OrdinalIgnoreCase)
+                        || groupName.Equals("IT", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return false;
+                    }
                 }
             }
 

@@ -4,13 +4,15 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    using Fanex.ExternalAccount.DTO.Report;
+    using DTO.Customer;
 
     public interface IReportDao
     {
         DataTable Age_SelBalanceUpDay();
 
         DataTable EAS_CustomerSelUserInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
+
+        CustomerInfoSearchResult GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
 
         List<SuggestedUserName> EAS_CustomerSelUserSearch(int custId, string username, string groupname);
 

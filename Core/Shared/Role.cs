@@ -9,6 +9,7 @@
         public const int Agent = 2;
         public const int Master = 3;
         public const int Super = 4;
+        public const int Group = 5;
 
         [DebuggerStepThrough]
         public static string DisplayRoleName(this int role)
@@ -57,18 +58,23 @@
         [DebuggerStepThrough]
         public static int DirectDownlineLevel(this int role)
         {
-            if (role > Member)
-            {
-                return role - 1;
-            }
+            EnsureRoleIsInRange(role);
 
-            throw new InvalidOperationException("Member doest not have downline");
+            return role - 1;
+        }
+
+        [DebuggerStepThrough]
+        public static int DirectUplineLevel(this int role)
+        {
+            EnsureRoleIsInRange(role);
+
+            return role + 1;
         }
 
         [DebuggerStepThrough]
         private static void EnsureRoleIsInRange(int role)
         {
-            if (role < 1 || role > 4)
+            if (role < 1 || role > 5)
             {
                 throw new ArgumentOutOfRangeException(nameof(role));
             }

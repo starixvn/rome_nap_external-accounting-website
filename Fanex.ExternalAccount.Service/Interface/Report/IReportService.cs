@@ -4,11 +4,13 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    using Fanex.ExternalAccount.DTO.Report;
+    using DTO.Customer;
 
     public interface IReportService
     {
         DataTable GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
+
+        CustomerInfoSearchResult SearchCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
 
         List<SuggestedUserName> GetSuggestedUserName(int custId, string username, string groupName);
 

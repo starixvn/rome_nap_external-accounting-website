@@ -88,6 +88,9 @@
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sunplus.Accounting.Core">
+      <HintPath>..\Dependencies\Bingo\Sunplus.Accounting.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -105,6 +108,7 @@
     <Compile Include="Customer\Casino\Stakes.cs" />
     <Compile Include="Customer\Commission.cs" />
     <Compile Include="Customer\Casino\CasinoCustomer.cs" />
+    <Compile Include="Customer\CustomerInfo.cs" />
     <Compile Include="Customer\CustomerSetting.cs" />
     <Compile Include="Customer\Customer.cs" />
     <Compile Include="Customer\Casino\GameKindDetail.cs" />
