@@ -107,7 +107,7 @@ span.selectedMonth {
     box-shadow: none; }
   .monPickrWrapParent .monPickrWrap .monPickr {
     height: unset;
-    padding: 6px 2px;
+    padding: 5px 2px;
     border-radius: 0 !important;
     background: #fff;
     border: 1px solid #7b7c7e; }
@@ -130,11 +130,13 @@ span.selectedMonth {
 .selectedDayWrapParent .selectedDayWrap {
   width: 60px;
   border-radius: 0 !important;
-  border: 1px solid #7b7c7e; }
+  border: none; }
   .selectedDayWrapParent .selectedDayWrap:hover {
     box-shadow: none; }
   .selectedDayWrapParent .selectedDayWrap .dayPickr {
-    height: unset;
+    border: 1px solid #7b7c7e;
+    border-radius: 0 !important;
+    height: 30px;
     background: #fff; }
     .selectedDayWrapParent .selectedDayWrap .dayPickr .darr {
       background: none; }

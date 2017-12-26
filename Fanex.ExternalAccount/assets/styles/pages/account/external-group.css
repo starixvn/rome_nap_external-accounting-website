@@ -303,8 +303,8 @@ a {
       background-image: none !important; }
 
 input[type='text'], input[type='password'], input[type='email'] {
-  height: 32px;
-  line-height: 32px;
+  height: 30px;
+  line-height: 30px;
   border: none;
   outline: none;
   padding-left: 8px;
@@ -504,14 +504,9 @@ textarea {
   .info .list .circle {
     margin-right: 20px;
     padding: 10px;
-    background-color: #546587;
     color: #fff;
-    -webkit-border-radius: 50%;
-    -khtml-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
-    border-radius: 50%; } }
+    /*background-color: #546587;
+            @include border-radius(50%);*/ } }
 
 /* Icons */
 .menu [class^="icon-"] {

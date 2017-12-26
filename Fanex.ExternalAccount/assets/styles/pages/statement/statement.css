@@ -13,12 +13,14 @@
 .freegrid .format-negative.column-transfer-amount:hover, .freegrid .format-positive.column-transfer-amount:hover {
   color: #996600 !important; }
 
-.filterbox {
-  position: relative; }
-  .filterbox .icon-excel {
-    position: absolute;
-    right: 16px; }
+/*.filterbox {
+    position: relative;
 
+    .icon-excel {
+        position: absolute;
+        right: 16px;
+    }
+}*/
 .note-info-message {
   font-family: "AlphaAdmin";
   color: #4872eb;

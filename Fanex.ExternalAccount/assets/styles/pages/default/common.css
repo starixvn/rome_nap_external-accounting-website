@@ -340,7 +340,8 @@ a {
   .table > thead > tr > th {
     background-color: #6f7d95;
     color: #fff;
-    text-align: center; }
+    text-align: center;
+    font-weight: normal; }
   .table .col-no {
     width: 40px;
     text-align: right; }
@@ -356,6 +357,16 @@ a {
     width: 130px; }
   .table .col-100 {
     width: 100px; }
+  .table .col-200 {
+    width: 200px; }
+  .table .col-pt {
+    min-width: 100px; }
+    @media all and (min-device-width: 768px) {
+      .table .col-pt {
+        min-width: 130px; } }
+    @media all and (min-device-width: 1280px) {
+      .table .col-pt {
+        min-width: 160px; } }
   .table .row-special th, .table .row-special td {
     background-color: #e1e1e1; }
 
@@ -555,8 +566,8 @@ a {
       background-image: none !important; }
 
 input[type='text'], input[type='password'], input[type='email'] {
-  height: 32px;
-  line-height: 32px;
+  height: 30px;
+  line-height: 30px;
   border: none;
   outline: none;
   padding-left: 8px;
@@ -579,7 +590,7 @@ textarea {
 #userGroup input {
   border-radius: 0 !important;
   border: 1px solid #7b7c7e;
-  height: 32px;
+  height: 30px;
   vertical-align: top;
   padding-left: 3px; }
   @media all and (max-width: 480px) {
@@ -592,7 +603,7 @@ textarea {
   border: none;
   width: 20px !important;
   margin-left: -22px !important;
-  height: 30px;
+  height: 28px;
   margin-top: 1px; }
   #userGroup button:focus, #userGroup button:active {
     outline: none; }
@@ -616,7 +627,7 @@ textarea {
   border: none !important;
   width: 20px !important;
   margin-left: -22px !important;
-  height: 30px;
+  height: 28px;
   margin-top: 1px; }
   .groupCboMenu button:focus, .groupCboMenu button:active {
     outline: none; }
@@ -631,7 +642,7 @@ textarea {
   height: 32px; }
 
 .filterbox {
-  padding: 12px 0; }
+  padding: 8px 0; }
   @media all and (max-device-width: 480px) {
     .filterbox .label {
       width: 62px !important; } }
@@ -680,7 +691,8 @@ textarea {
 .ui-widget-header.ui-datepicker-header {
   background: #fff;
   border: none;
-  padding: 3px 0 16px; }
+  padding: 3px 0 16px;
+  font-weight: normal; }
   .ui-widget-header.ui-datepicker-header .ui-datepicker-title {
     margin: 0;
     color: #666;
@@ -709,7 +721,8 @@ textarea {
     content: '\e906'; }
 
 .ui-datepicker th {
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  font-weight: normal; }
 
 .ui-datepicker td {
   height: 50px;
@@ -906,14 +919,9 @@ textarea {
   .info .list .circle {
     margin-right: 20px;
     padding: 10px;
-    background-color: #546587;
     color: #fff;
-    -webkit-border-radius: 50%;
-    -khtml-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
-    border-radius: 50%; } }
+    /*background-color: #546587;
+            @include border-radius(50%);*/ } }
 
 /* Icons */
 .menu [class^="icon-"] {
@@ -1293,8 +1301,8 @@ body {
   margin: -10px -10px 10px -10px;
   padding-left: 16px;
   padding-right: 16px;
-  height: 50px;
-  line-height: 50px;
+  height: 40px;
+  line-height: 40px;
   background-color: #fff;
   font-size: 14px; }
 
@@ -1464,7 +1472,7 @@ div#contentSplitter > div#msg {
 
 #exporttoexcel {
   float: right;
-  margin: 3px 2px 3px 3px;
+  margin: 6px 2px 3px 3px;
   padding: 3px;
   border: 1px solid #b8b8b8;
   width: 18px;

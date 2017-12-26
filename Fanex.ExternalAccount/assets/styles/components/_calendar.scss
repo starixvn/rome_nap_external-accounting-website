@@ -48,6 +48,7 @@ $font-family: 'Montserrat', sans-serif;
     background: #fff;
     border: none;
     padding: 3px 0 16px;
+    font-weight: normal;
     .ui-datepicker-title {
         margin: 0;
         color: #666;
@@ -89,6 +90,7 @@ $font-family: 'Montserrat', sans-serif;
 
 .ui-datepicker th {
     text-transform: uppercase;
+    font-weight: normal;
 }
 .ui-datepicker td {
     height: 50px;

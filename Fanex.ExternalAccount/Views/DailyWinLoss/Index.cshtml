@@ -25,21 +25,8 @@
             </div>
             <div class="form-group">
                 <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
-            </div>
-            @*<div class="lbl-width-normal">
-                    @ViewLang.Username
-                </div>
-                <div class="floatL">
-                    <input class="usernameInput" type="text" maxlength="50" autocomplete="off" name="txtUserName" id="txtUserName" />
-                </div>
-                <div class="pdCommon">@ViewLang.Date</div>
-                <div class="floatL">
-                    <input id="dtpWinLossDate" type="text" readonly="readonly" />
-                    <input id="BalanceUpDay" type="hidden" value="@Fanex.ExternalAccount.Service.Impl.Report.ReportService.BalanceUpDate"/>
-                </div>
-                <div class="float-padding-left-normal">
-                    <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
-                </div>*@
+                <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel"></span>
+            </div>            
         </div>
         <div class="HideMG">
             <input type="button" value="Hide Margin" id='btnHideMG' style="display: none" />
@@ -60,7 +47,7 @@
                 Super
             </div>
         </div>
-        <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel"></span>
+        
     </div>
     <div id="mainGrid" class="hide">
         <table id="tbl-report" class="table">
@@ -74,23 +61,15 @@
                     <th colspan="4" class="col-win-loss hide">Win/Loss</th>
                 </tr>
                 <tr>
-                    <th class="col-company"><div class="col-130">Company</div></th>
-                    <th class="col-turnover-position-taking-percent"><div class="col-130">%</div></th>
-                    <th class="col-super"><div class="col-130">Super</div></th>
-                    <th class="col-turnover-position-taking-percent"><div class="col-100">%</div></th>
-                    <th class="col-master"><div class="col-130">Master</div></th>
-                    <th class="col-turnover-position-taking-percent"><div class="col-100">%</div></th>
-                    <th class="col-agent"><div class="col-130">Agent</div></th>
-                    <th class="col-turnover-position-taking-percent"><div class="col-100">%</div></th>
+                    <th class="col-company" colspan="2"><div class="col-pt">Company - %</div></th>
+                    <th class="col-super" colspan="2"><div class="col-pt">Super - %</div></th>
+                    <th class="col-master" colspan="2"><div class="col-pt">Master - %</div></th>
+                    <th class="col-agent" colspan="2"><div class="col-pt">Agent - %</div></th>
 
-                    <th class="col-company"><div class="col-130">Company</div></th>
-                    <th class="col-percent"><div class="col-130">%</div></th>
-                    <th class="col-super"><div class="col-130">Super</div></th>
-                    <th class="col-percent"><div class="col-130">%</div></th>
-                    <th class="col-master"><div class="col-130">Master</div></th>
-                    <th class="col-percent"><div class="col-130">%</div></th>
-                    <th class="col-agent"><div class="col-130">Agent</div></th>
-                    <th class="col-percent"><div class="col-130">%</div></th>
+                    <th class="col-company" colspan="2"><div class="col-pt">Company <span>- %</span></div></th>
+                    <th class="col-super" colspan="2"><div class="col-pt">Super <span>- %</span></div></th>
+                    <th class="col-master" colspan="2"><div class="col-pt">Master <span>- %</span></div></th>
+                    <th class="col-agent" colspan="2"><div class="col-pt">Agent <span>- %</span></div></th>
                 </tr>
             </thead>
             <tbody></tbody>

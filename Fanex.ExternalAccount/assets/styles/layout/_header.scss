@@ -221,9 +221,9 @@
         .circle {
             margin-right: 20px;
             padding: 10px;
-            background-color: #546587;
             color: #fff;
-            @include border-radius(50%);
+            /*background-color: #546587;
+            @include border-radius(50%);*/
 
         }
     }

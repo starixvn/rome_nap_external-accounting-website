@@ -77,6 +77,7 @@
         <div class="form-line clearfix last-item">
             <div class="form-group">
                 <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
+                <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel"></span>
             </div>
             <div class="form-group">
                 <div id="GroupViewHistory" class="">
@@ -86,77 +87,9 @@
                     <span id="BackToCurrentReport" class="history arrow"><em>@ViewLang.BackToCurrentReport</em></span>
                 </div>
             </div>
-        </div>
-
-
-
-        @*<div id="GroupFromToDate">
-                <input type="hidden" id="MinDate" value="@DateTime.Now.AddMonths(-3).AddDays((-DateTime.Now.Day) + 1)"/>
-                <input type="hidden" id="MaxDate" value="@DateTime.Now"/>
-                <div class="lbl-width-normal">@ViewLang.Date</div>
-                <div id="userGroup" class="txt-normal">
-                    <select name="DateList" id="DateList">
-                        <option id="0" selected="selected">Today</option>
-                        <option id="1">Yesterday</option>
-                        <option id="2">Current Week</option>
-                        <option id="3">Last Week</option>
-                        <option id="4">Current Month</option>
-                        <option id="5">Last Month</option>
-                        <option id="6">Since Last Month</option>
-                        <option id="7">Date Range</option>
-                    </select>
-                </div>
-                <div class="wFrom">@ViewLang.From</div>
-                <div class="floatL">
-                    <input id="dtpFromDate" type="text" readonly="readonly" />
-                </div>
-                <div class="pdCommon">@ViewLang.To</div>
-                <div class="floatL">
-                    <input id="dtpToDate" type="text" readonly="readonly" />
-                </div>
-            </div>
-            <div id="GroupMonthDay" style="display: none;">
-                <div>
-                    <div class="lbl-width-normal">@ViewLang.Month</div>
-                    <div class="txt-normal">
-                        <div id="monPickr1">
-                        </div>
-                    </div>
-                </div>
-                <div class="wFrom">@ViewLang.From</div>
-                <div class="floatL">
-                    <div id="fromDay1">
-                    </div>
-                </div>
-                <div class="toDate">@ViewLang.To</div>
-                <div class="float-pdL-small">
-                    <div id="toDay1">
-                    </div>
-                </div>
-            </div>
-            <div id="gUserName">
-                <div class="lbl-width-normal">@ViewLang.Username</div>
-                <div class="txt-normal">
-                    <input class="usernameInput" type="text" maxlength="50" autocomplete="off" name="txtUserName" id="txtUserName" />
-                </div>
-                <div class="wFrom">@ViewLang.Products</div>
-                <div class="floatL">
-                    <select name="GroupProducts" id="GroupProducts" multiple="multiple" style="display: none">
-                    </select>
-                </div>
-            </div>
-            <div class="">
-                <div style="margin-left: 86px; float: left">
-                    <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
-                </div>
-                <div id="GroupViewHistory" class="pdCommon">
-                    <div>@ViewLang.NoteViewHistory <span id="ViewHistoryReport" class="history">@ViewLang.ViewHistoryReport</span></div>
-                </div>
-                <div id="GroupBackToCurrent" class="pdCommon" style="display: none">
-                    <span id="BackToCurrentReport" class="history arrow">@ViewLang.BackToCurrentReport</span>
-                </div>
-            </div>*@
+        </div>        
     </div>
+
     <div id="headlineDaily">
         <div id="InfoDate">
             <span id="SelectedLevel">Super</span> Win Loss Detail <span id="DateValueInfo"></span>
@@ -171,8 +104,7 @@
             <div id="tabSuper">
                 Super
             </div>
-        </div>
-        <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel"></span>
+        </div>        
     </div>
     <div id="mainGrid" class="hide tbl-winloss-detail">
         <table id="tbl-report" class="table tablesorter">
