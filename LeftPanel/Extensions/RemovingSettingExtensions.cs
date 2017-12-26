@@ -102,9 +102,20 @@
             RemoveFishingWorldSetting(model, product);
             RemoveLotterySetting(model, product);
             RemoveLucky3Setting(model, product);
+            RemoveBullfightingSetting(model, product);
 
             return model;
         }
+
+        private static void RemoveBullfightingSetting(CustomerModel model, CustomerStatus product)
+            => model.RemoveProduct(
+                product.RoleId,
+                product.RoleId.IsNotSuper() ? product.UplineStatus.HideBullfighting : product.HideBullfighting,
+                product.RoleId.IsNotSuper() ? product.UplineStatus.SyncBullfighting : product.SyncBullfighting,
+                product.HideBullfighting,
+                product.SyncBullfighting,
+                product.SyncBullfightingDownlines,
+                "Bullfighting");
 
         private static void RemoveLucky3Setting(CustomerModel model, CustomerStatus product)
          => model.RemoveProduct(

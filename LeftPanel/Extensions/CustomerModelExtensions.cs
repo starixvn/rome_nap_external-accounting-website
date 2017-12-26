@@ -349,17 +349,18 @@
             };
 
         public static List<ObjectInfo> SyncItems(DataRow customerRow, DataTable table3RdDcs)
-     => new List<ObjectInfo>
-     {
-                new ObjectInfo("SyncCasino", customerRow.IsSyncedCasino(), "Casino Synced"),
-                new ObjectInfo("SyncLiveCasino", customerRow.IsSyncedLiveCasino(), "Live Casino Synced"),
-                new ObjectInfo("HideAllbet", table3RdDcs.Get3rdProductStatus(21)),
-                new ObjectInfo("HideVoidbridge", table3RdDcs.Get3rdProductStatus(22)),
-                new ObjectInfo("HideNG2", table3RdDcs.GetNG2ProductStatus()),
-                new ObjectInfo("HideFishingWorld", table3RdDcs.Get3rdProductStatus(24)),
-                new ObjectInfo("HideLottery", table3RdDcs.Get3rdProductStatus(28)),
-                new ObjectInfo("HideLucky3", table3RdDcs.Get3rdProductStatus(26))
-     };
+            => new List<ObjectInfo>
+            {
+                    new ObjectInfo("SyncCasino", customerRow.IsSyncedCasino(), "Casino Synced"),
+                    new ObjectInfo("SyncLiveCasino", customerRow.IsSyncedLiveCasino(), "Live Casino Synced"),
+                    new ObjectInfo("HideAllbet", table3RdDcs.Get3rdProductStatus(21)),
+                    new ObjectInfo("HideVoidbridge", table3RdDcs.Get3rdProductStatus(22)),
+                    new ObjectInfo("HideNG2", table3RdDcs.GetNG2ProductStatus()),
+                    new ObjectInfo("HideFishingWorld", table3RdDcs.Get3rdProductStatus(24)),
+                    new ObjectInfo("HideLottery", table3RdDcs.Get3rdProductStatus(28)),
+                    new ObjectInfo("HideLucky3", table3RdDcs.Get3rdProductStatus(26)),
+                    new ObjectInfo("HideBullfighting", table3RdDcs.Get3rdProductStatus(30))
+            };
 
         public static List<ObjectInfo> EnableItems(DataRow customerRow, DataTable table3rdDCS)
             => new List<ObjectInfo>
@@ -386,6 +387,7 @@
             model.AddProductSetting(table3rdDCS, 24, "Fishing World");
             model.AddProductSetting(table3rdDCS, 28, "Lottery");
             model.AddProductSetting(table3rdDCS, 26, "Lucky 3");
+            model.AddProductSetting(table3rdDCS, 30, "Bullfighting");
         }
 
         public static List<ObjectInfo> GetDownlines(DataRow lineRow, int roleId)

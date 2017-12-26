@@ -673,7 +673,7 @@
                 Fanex.ExtAcc.Customer.HideNG2 = !rows[0].SyncedNG2;
                 Fanex.ExtAcc.Customer.HideFishingWorld = !rows[0].SyncedFishingWorld;
                 Fanex.ExtAcc.Customer.HideLottery = rows[0].HideLottery;
-                Fanex.ExtAcc.Customer.HideBullfighting = rows[0].HideBullFighting;
+                Fanex.ExtAcc.Customer.HideBullfighting = rows[0].HideBullfighting;
 
                 if (result.roleId == 4) {
                     Fanex.ExtAcc.Customer.GetSuperList(rows[0].custid, result);

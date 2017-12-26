@@ -203,6 +203,14 @@
             custStatus.DisableLottery = statusRow.ToBoolean("DisableLottery");
         }
 
+        private static void SetBullfightingStatus(CustomerStatus custStatus, DataRow statusRow)
+        {
+            custStatus.HideBullfighting = !AppSettings.IsShowLucky3 || statusRow.ToBoolean("HideLucky3");
+            custStatus.SyncLucky3 = true;
+            custStatus.SyncLucky3Downlines = true;
+            custStatus.DisableLucky3 = statusRow.ToBoolean("DisableLucky3");
+        }
+
         private static void SetFishingWorldStatus(CustomerStatus custStatus, DataRow statusRow)
         {
             custStatus.HideFishingWorld = !AppSettings.IsShowFishingWorld || statusRow.ToBoolean("HideFishingWorld");
