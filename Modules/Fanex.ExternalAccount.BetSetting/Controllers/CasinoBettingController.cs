@@ -81,13 +81,13 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
                 var customerUpline = new CasinoCustomer();
 
-                customerUpline.IBCCustID = uplineId;
+                customerUpline.GeneralInfo.IBCCustID = uplineId;
                 CasinoManager.Instance.GetCustSettingCS(ref customerUpline);
 
-                customerModel.IBCCustID = customerModel.CasinoSync ? id : uplineId;
+                customerModel.GeneralInfo.IBCCustID = customerModel.GeneralInfo.CasinoSync ? id : uplineId;
                 CasinoManager.Instance.GetCustSettingCS(ref customerModel);
 
-                customerModel.UplineRoleId = customerUpline.RoleId;
+                customerModel.GeneralInfo.UplineRoleId = customerUpline.GeneralInfo.RoleId;
 
                 model = new CasinoModel
                 {

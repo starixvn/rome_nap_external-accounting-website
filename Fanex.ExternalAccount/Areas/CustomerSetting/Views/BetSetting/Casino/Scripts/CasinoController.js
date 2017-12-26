@@ -15,7 +15,7 @@ Fanex.CustomerSetting.Betting.Casino = function ($scope, $element) {
 
     $scope.Init = function () {
         if ($scope.customerModel)
-            $scope.customerModel.maxTransferCredit = $scope.customerModel.maxTransferCredit.formatNumber();
+            $scope.customerModel.generalInfo.maxTransferCredit = $scope.customerModel.generalInfo.maxTransferCredit.formatNumber();
     };
 };
 
