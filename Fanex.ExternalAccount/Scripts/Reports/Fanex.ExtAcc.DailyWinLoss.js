@@ -260,6 +260,9 @@ Fanex.ExtAcc.DailyWinLoss = {
 
                 if ($this.totalRows > 0) {
                     $this.renderReport();
+                    $("#exporttoexcel").removeClass("hide");
+                } else {
+                    $("#exporttoexcel").addClass("hide");
                 }
 
                 Fanex.ExtAcc.UnBlockUI();
@@ -333,6 +336,7 @@ Fanex.ExtAcc.DailyWinLoss = {
                         <td>' + $this.renderUsernameColumn(row.Username, row.CustId) + '</td>';
         }
 
+        var hideMargin = $this.hidedMargin ? " hide" : "";
         html += '<td class="align-right">' + $this.renderNegativeNumber(row.TotalTO) + '</td>\
                 <td class="align-right">' + $this.renderNegativeNumber(row.ComTO) + '</td>\
                 <td class="align-right">' + $this.renderNegativeNumber(row.ComTOPercent) + '</td>\
@@ -343,13 +347,13 @@ Fanex.ExtAcc.DailyWinLoss = {
                 <td class="align-right">' + $this.renderNegativeNumber(row.AgTO) + '</td>\
                 <td class="align-right">' + $this.renderNegativeNumber(row.AgTOPercent) + '</td>\
                 <td class="align-right">' + $this.renderNegativeNumber(row.ComWinlost) + '</td>\
-                <td class="align-right col-percent">' + $this.renderNegativeNumber(row.ComWinlostPercent) + '</td>\
+                <td class="align-right col-percent' + hideMargin + '">' + $this.renderNegativeNumber(row.ComWinlostPercent) + '</td>\
                 <td class="align-right">' + $this.renderNegativeNumber(row.SAgWinlost) + '</td>\
-                <td class="align-right col-percent">' + $this.renderNegativeNumber(row.SAgWinlostPercent) + '</td>\
+                <td class="align-right col-percent' + hideMargin + '">' + $this.renderNegativeNumber(row.SAgWinlostPercent) + '</td>\
                 <td class="align-right">' + $this.renderNegativeNumber(row.MAgWinlost) + '</td>\
-                <td class="align-right col-percent">' + $this.renderNegativeNumber(row.MAgWinlostPercent) + '</td>\
+                <td class="align-right col-percent' + hideMargin + '">' + $this.renderNegativeNumber(row.MAgWinlostPercent) + '</td>\
                 <td class="align-right">' + $this.renderNegativeNumber(row.AgWinlost) + '</td>\
-                <td class="align-right col-percent">' + $this.renderNegativeNumber(row.AgWinlostPercent) + '</td>\
+                <td class="align-right col-percent' + hideMargin + '">' + $this.renderNegativeNumber(row.AgWinlostPercent) + '</td>\
             </tr>';
 
         return html;
