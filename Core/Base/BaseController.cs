@@ -245,7 +245,12 @@ namespace Fanex.ExternalAccount.Core.Base
                                                 .Replace("~", string.Empty)));
             }
 
-            if (!hasPermissionOnMenu && !userFunctions?.Any() == true)
+            if (!hasPermissionOnMenu && userFunctions == null)
+            {
+                return false;
+            }
+
+            if (!userFunctions.Any())
             {
                 return false;
             }

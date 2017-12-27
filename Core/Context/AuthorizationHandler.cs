@@ -131,8 +131,13 @@
             var userFunctions = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
             var hasPermissionOnMenu = menuList.Any(menuItem => IsAuthorizedUrl(menuItem.Url.Replace("~", string.Empty), requestUrl));
 
-            if (!hasPermissionOnMenu && !userFunctions?.Any() == true)
+            if (!hasPermissionOnMenu && userFunctions == null)
             { 
+                return false;
+            }
+
+            if (!userFunctions.Any())
+            {
                 return false;
             }
 
