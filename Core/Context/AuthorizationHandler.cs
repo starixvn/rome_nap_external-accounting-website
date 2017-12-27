@@ -34,7 +34,7 @@
 
             if (currentSession.IsInternalAdmin)
             {
-                return currentSession.IsInternalAdmin;
+                return true;
             }
 
             var loginService = new LoginService();
@@ -52,7 +52,7 @@
 
             if (currentSession.IsInternalAdmin)
             {
-                return currentSession.IsInternalAdmin;
+                return true;
             }
 
             var loginService = new LoginService();
@@ -128,20 +128,15 @@
         {
             var userCache = _cachingService.GetUserCache(userId);
             var menuList = userCache.MenuList;
-            var functions = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
-            var hasPerm = menuList.Any(menuItem => IsAuthorizedUrl(menuItem.Url.Replace("~", string.Empty), requestUrl));
+            var userFunctions = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
+            var hasPermissionOnMenu = menuList.Any(menuItem => IsAuthorizedUrl(menuItem.Url.Replace("~", string.Empty), requestUrl));
 
-            if (!hasPerm && functions == null)
-            {
+            if (!hasPermissionOnMenu && !userFunctions?.Any() == true)
+            { 
                 return false;
             }
 
-            if (!functions.Any())
-            {
-                return false;
-            }
-
-            return IsAuthorized(policy, functions.First());
+            return IsAuthorized(policy, userFunctions.First());
         }
 
         private static bool IsAuthorized(AuthenticateAction.AuthenticationType policy, Function function)

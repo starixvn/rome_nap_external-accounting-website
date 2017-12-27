@@ -233,25 +233,24 @@ namespace Fanex.ExternalAccount.Core.Base
         {
             var userCache = new CachingService().GetUserCache(userId);
             var menuList = userCache.MenuList;
-            var foundItems = userCache.PolicyList.Where(x => x.FuncKey == functionKey).ToList();
-            var hasPerm = true;
+            var userFunctions = userCache.PolicyList.Where(x => x.FuncKey == functionKey).ToList();
+            var hasPermissionOnMenu = true;
 
             if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower(CultureInfo.InvariantCulture).Contains("home/index")
                 && !request.RawUrl.ToLower(CultureInfo.InvariantCulture).Contains("exporttoexcel") && !request.IsAjaxRequest())
             {
-                hasPerm = menuList.Any(o => !string.IsNullOrWhiteSpace(o.Url)
+                hasPermissionOnMenu = menuList.Any(o => !string.IsNullOrWhiteSpace(o.Url)
                                             && request.RawUrl.ToLower(CultureInfo.InvariantCulture)
                                                 .Contains(o.Url.ToLower(CultureInfo.InvariantCulture)
                                                 .Replace("~", string.Empty)));
             }
 
-            if ((!hasPerm && foundItems.Count > 0)
-                || foundItems.Count == 0)
+            if (!hasPermissionOnMenu && !userFunctions?.Any() == true)
             {
                 return false;
             }
 
-            var firstItem = foundItems.First();
+            var firstItem = userFunctions.First();
 
             if (policy == AuthenticateAction.AuthenticationType.Read)
             {
