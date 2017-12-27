@@ -6,8 +6,8 @@
     using CasinoLibrary.Model.UserException;
     using DTO.Customer;
     using Interface.Customer;
-    using Module.Logs;
-    using Module.Logs.Services;
+    using System.Diagnostics;
+    using Fanex.Logging.Extensions.Web;
     using ThirdPartyProducts.StatusSetting.Enums;
     using ThirdPartyProducts.StatusSetting.Model;
     using ThirdPartyProducts.StatusSetting.Services;
@@ -70,11 +70,11 @@
                 }
                 catch (ErrorException casinoEx)
                 {
-                    casinoEx.WriteCasinoException(Formater.LogType.Warning);
+                    ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Warning);
                 }
                 catch (Exception ex)
                 {
-                    ex.Write(Formater.LogType.Warning);
+                    ExceptionHandler.Handle(ex, TraceEventType.Warning);
                 }
             }
 

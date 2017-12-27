@@ -176,7 +176,7 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             catch (ErrorException casinoEx)
             {
-                ExceptionHandler.Handle(casinoEx);
+                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
             }
             catch (Exception ex)
             {
@@ -198,7 +198,7 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             catch (ErrorException casinoEx)
             {
-                ExceptionHandler.Handle(casinoEx);
+                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
             }
             catch (Exception ex)
             {
