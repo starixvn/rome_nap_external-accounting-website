@@ -14,18 +14,20 @@
     float: right;
 }
 
+.page-title .wlDetail {
+    float: left;
+}
 #btnHideMG {
     font-family: Tahoma;
     background-color: #ececec;
     border: 1px solid #c4c4c4;
     color: #464646;
     cursor: pointer;
-    height: 32px;
+    height: 24px;
     border-radius: 2px;
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
     text-align: center;
-    margin-top: 5px;
     &:hover {
         background-color: #C3C3C3;
     }
@@ -58,9 +60,9 @@
             width: 40px;
         }
 
-        .col-username, .col-total-turnover, .col-company, .col-super, .col-master, .col-agent {
+        /*.col-username, .col-total-turnover, .col-company, .col-super, .col-master, .col-agent {
             width: 130px;
-        }
+        }*/
 
         .col-turnover-position-taking-percent, .col-percent {
             width: 100px;

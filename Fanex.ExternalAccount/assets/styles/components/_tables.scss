@@ -47,14 +47,29 @@
     .col-200 {
         width: 200px;
     }
+    .col-40 {
+        width: 40px;
+    }
+    .col-level {
+        min-width: 60px;
+        @media all and (min-device-width: 1280px) {
+            min-width: 80px;
+        }
+    }
     .col-pt {
-        min-width: 100px;
+        min-width: 40px;
         @media all and (min-device-width: 768px) {
-            min-width: 130px;
+            min-width: 50px;
         }
         @media all and (min-device-width: 1280px) {
-            min-width: 160px;
+            min-width: 80px;
         }
+    }
+    .col-turnover {
+        min-width: 100px;
+    }
+    .col-username {
+        min-width: 75px
     }
     .row-special th, .row-special td {
         background-color: #e1e1e1;

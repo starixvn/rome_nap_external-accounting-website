@@ -9,6 +9,7 @@
         <div class="wlDetail">
             Daily Win Loss
         </div>
+        <span class="icon-filter"></span>
     </div>
     <div class="search-form filterbox">
         <div class="searchBar floatL">
@@ -27,9 +28,6 @@
                 <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
                 <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel hide"></span>
             </div>
-        </div>
-        <div class="HideMG">
-            <input type="button" value="Hide Margin" id='btnHideMG' style="display: none" />
         </div>
     </div>
     <div id="headlineDaily">
@@ -53,23 +51,31 @@
         <table id="tbl-report" class="table">
             <thead>
                 <tr>
-                    <th rowspan="2"><div class="col-no"></div>No</th>
-                    <th class="col-username" rowspan="2"><div class="col-130">Username</div></th>
-                    <th class="col-total-turnover" rowspan="2"><div class="col-130">Total Turnover</div></th>
+                    <th rowspan="2">No</th>
+                    <th class="col-username" rowspan="2"><div class="col-username">Username</div></th>
+                    <th class="col-total-turnover" rowspan="2"><div class="col-turnover">Total Turnover</div></th>
                     <th colspan="8">Turnover & Position Taking</th>
-                    <th colspan="8" class="col-win-loss-margin">Win/Loss & Margin</th>
+                    <th colspan="8" class="col-win-loss-margin">Win/Loss & Margin <input type="button" value="%" id='btnHideMG' /></th>
                     <th colspan="8" class="col-win-loss hide">Win/Loss</th>
                 </tr>
                 <tr>
-                    <th class="col-company" colspan="2"><div class="col-pt">Company - %</div></th>
-                    <th class="col-super" colspan="2"><div class="col-pt">Super - %</div></th>
-                    <th class="col-master" colspan="2"><div class="col-pt">Master - %</div></th>
-                    <th class="col-agent" colspan="2"><div class="col-pt">Agent - %</div></th>
+                    <th class="col-company"><div class="col-level">Company</div></th>
+                    <th class="col-company"><div class="col-40 text-right">%</div></th>
+                    <th class="col-super"><div class="col-level">Super</div></th>
+                    <th class="col-company"><div class="col-40 text-right">%</div></th>
+                    <th class="col-master"><div class="col-level">Master</div></th>
+                    <th class="col-company"><div class="col-40 text-right">%</div></th>
+                    <th class="col-agent"><div class="col-level">Agent</div></th>
+                    <th class="col-company"><div class="col-40 text-right">%</div></th>
 
-                    <th class="col-company col-win-loss-margin" colspan="2"><div class="col-pt">Company <span>- %</span></div></th>
-                    <th class="col-super col-win-loss-margin" colspan="2"><div class="col-pt">Super <span>- %</span></div></th>
-                    <th class="col-master col-win-loss-margin" colspan="2"><div class="col-pt">Master <span>- %</span></div></th>
-                    <th class="col-agent col-win-loss-margin" colspan="2"><div class="col-pt">Agent <span>- %</span></div></th>
+                    <th class="col-company col-win-loss-margin"><div class="col-level">Company</div></th>
+                    <th class="col-company col-win-loss-margin"><div class="col-40 text-right">%</div></th>
+                    <th class="col-super col-win-loss-margin"><div class="col-level">Super</div></th>
+                    <th class="col-company col-win-loss-margin"><div class="col-40 text-right">%</div></th>
+                    <th class="col-master col-win-loss-margin"><div class="col-level">Master</div></th>
+                    <th class="col-company col-win-loss-margin"><div class="col-40 text-right">%</div></th>
+                    <th class="col-agent col-win-loss-margin"><div class="col-level">Agent</div></th>
+                    <th class="col-company col-win-loss-margin"><div class="col-40 text-right">%</div></th>
 
                     <th class="col-company col-win-loss hide"><div class="col-pt">Company</div></th>
                     <th class="col-super col-win-loss hide"><div class="col-pt">Super</div></th>

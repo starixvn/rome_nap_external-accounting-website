@@ -332,7 +332,7 @@ Fanex.ExtAcc.DailyWinLoss = {
                         <td colspan="2" class="align-right">Grand Total</td>';
         } else {
             html = '<tr class="hide">\
-                        <td class="align-right"><div class="col-no">' + rowNo + '</div></td>\
+                        <td class="align-right">' + rowNo + '</td>\
                         <td>' + $this.renderUsernameColumn(row.Username, row.CustId) + '</td>';
         }
 

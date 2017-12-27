@@ -344,6 +344,14 @@ body {
     line-height: 40px;
     background-color: #fff;
     font-size: $font-size + 1;
+    position: relative;
+    .icon-filter {
+        position: absolute;
+        right: 16px;
+        top: 12px;
+        font-size: 16px;
+        cursor: pointer;
+    }
 }
 
 .icon-add {

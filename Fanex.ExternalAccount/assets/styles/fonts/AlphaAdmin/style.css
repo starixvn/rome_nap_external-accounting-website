@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'AlphaAdmin';
-  src:  url('fonts/AlphaAdmin.eot?eroquz');
-  src:  url('fonts/AlphaAdmin.eot?eroquz#iefix') format('embedded-opentype'),
-    url('fonts/AlphaAdmin.ttf?eroquz') format('truetype'),
-    url('fonts/AlphaAdmin.woff?eroquz') format('woff'),
-    url('fonts/AlphaAdmin.svg?eroquz#AlphaAdmin') format('svg');
+  src:  url('fonts/AlphaAdmin.eot?mk4oo0');
+  src:  url('fonts/AlphaAdmin.eot?mk4oo0#iefix') format('embedded-opentype'),
+    url('fonts/AlphaAdmin.ttf?mk4oo0') format('truetype'),
+    url('fonts/AlphaAdmin.woff?mk4oo0') format('woff'),
+    url('fonts/AlphaAdmin.svg?mk4oo0#AlphaAdmin') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-filter:before {
+  content: "\e933";
+}
 .icon-menu-right:before {
   content: "\e931";
 }
