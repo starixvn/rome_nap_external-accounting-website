@@ -21,7 +21,9 @@
         public const int ColossusBets = 15;
 
         public const int AllBet = 21;
-        public const int MacauGames = 22;
+
+        // Real name is Macau Game
+        public const int VoidBridge = 22;
 
         public const int NG2 = 23;
 

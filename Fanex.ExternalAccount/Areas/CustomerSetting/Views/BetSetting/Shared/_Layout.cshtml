@@ -24,11 +24,11 @@
                 cust.Username,
                 0).ProductStatusDic;
 
-    var isShowAllBet = !productStatus[ProductConstants.AllBet].IsDisabled && AuthorizationHandler.Instance.IsAuthorized(userId, LeftPanelProductIntegration.VisibleBetSettingPermissions[ProductConstants.AllBet]);
-    var isShowMacauGames = !productStatus[ProductConstants.MacauGames].IsDisabled && AuthorizationHandler.Instance.IsAuthorized(userId, LeftPanelProductIntegration.VisibleBetSettingPermissions[ProductConstants.MacauGames]);
-    var isShowNG2 = !productStatus[ProductConstants.NG2].IsDisabled && AuthorizationHandler.Instance.IsAuthorized(userId, LeftPanelProductIntegration.VisibleBetSettingPermissions[ProductConstants.NG2]);
-    var isShowLottery = !productStatus[ProductConstants.Lottery].IsDisabled && AuthorizationHandler.Instance.IsAuthorized(userId, LeftPanelProductIntegration.VisibleBetSettingPermissions[ProductConstants.Lottery]);
-    var isShowBullfighting = !productStatus[ProductConstants.BullFighting].IsDisabled && AuthorizationHandler.Instance.IsAuthorized(userId, LeftPanelProductIntegration.VisibleBetSettingPermissions[ProductConstants.BullFighting]);
+    var isShowAllBet = productStatus[ProductConstants.AllBet].IsShow && AuthorizationHandler.Instance.IsAuthorized(userId, LeftPanelProductIntegration.VisibleBetSettingPermissions[ProductConstants.AllBet]);
+    var isShowMacauGames = productStatus[ProductConstants.VoidBridge].IsShow && AuthorizationHandler.Instance.IsAuthorized(userId, LeftPanelProductIntegration.VisibleBetSettingPermissions[ProductConstants.VoidBridge]);
+    var isShowNG2 = productStatus[ProductConstants.NG2].IsShow && AuthorizationHandler.Instance.IsAuthorized(userId, LeftPanelProductIntegration.VisibleBetSettingPermissions[ProductConstants.NG2]);
+    var isShowLottery = productStatus[ProductConstants.Lottery].IsShow && AuthorizationHandler.Instance.IsAuthorized(userId, LeftPanelProductIntegration.VisibleBetSettingPermissions[ProductConstants.Lottery]);
+    var isShowBullfighting = productStatus[ProductConstants.BullFighting].IsShow && AuthorizationHandler.Instance.IsAuthorized(userId, LeftPanelProductIntegration.VisibleBetSettingPermissions[ProductConstants.BullFighting]);
 }
 <!DOCTYPE html>
 <html lang="en">

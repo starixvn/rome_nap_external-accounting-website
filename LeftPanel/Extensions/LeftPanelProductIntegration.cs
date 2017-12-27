@@ -11,7 +11,7 @@
         public static readonly IEnumerable<ProductSettingParam> ProductSettingParamList = new List<ProductSettingParam>
         {
             new ProductSettingParam(ProductConstants.AllBet, "Allbet", StatusType.Link, false),
-            new ProductSettingParam(ProductConstants.MacauGames, "Macau Games", StatusType.Checkbox, false),
+            new ProductSettingParam(ProductConstants.VoidBridge, "Macau Games", StatusType.Checkbox, false),
             new ProductSettingParam(ProductConstants.NG2, "NG2", StatusType.Checkbox, true),
             new ProductSettingParam(ProductConstants.FishingWorld, "Fishing World", StatusType.Checkbox, false),
             new ProductSettingParam(ProductConstants.Lottery, "Lottery", StatusType.Checkbox, false),
@@ -25,7 +25,7 @@
                 new ObjectInfo("SyncCasino", customerRow.IsSyncedCasino(), "Casino Synced"),
                 new ObjectInfo("SyncLiveCasino", customerRow.IsSyncedLiveCasino(), "Live Casino Synced"),
                 new ObjectInfo("HideAllbet", table3RdDcs.IsHideProduct(ProductConstants.AllBet)),
-                new ObjectInfo("HideVoidbridge", table3RdDcs.IsHideProduct(ProductConstants.MacauGames)),
+                new ObjectInfo("HideVoidbridge", table3RdDcs.IsHideProduct(ProductConstants.VoidBridge)),
                 new ObjectInfo("HideNG2", table3RdDcs.IsHideProduct(ProductConstants.NG2)),
                 new ObjectInfo("HideFishingWorld", table3RdDcs.IsHideProduct(ProductConstants.FishingWorld)),
                 new ObjectInfo("HideLottery", table3RdDcs.IsHideProduct(ProductConstants.Lottery)),
@@ -40,7 +40,7 @@
                 new ProductStatus(ProductConstants.Lottery, "Lottery", statusRow),
                 new ProductStatus(ProductConstants.FishingWorld, "FishingWorld", statusRow),
                 new ProductStatus(ProductConstants.NG2, "NG2", statusRow),
-                new ProductStatus(ProductConstants.MacauGames, "VoidBridge", statusRow, false),
+                new ProductStatus(ProductConstants.VoidBridge, "VoidBridge", statusRow, false),
                 new ProductStatus(ProductConstants.AllBet, "Allbet", statusRow, false),
                 new ProductStatus(ProductConstants.BullFighting, "Bullfighting", statusRow)
             };
@@ -49,15 +49,15 @@
         {
             { ProductConstants.RNGCasino, eFunctions.CasinoBetting },
             { ProductConstants.GoldDeluxe,eFunctions.GoldDeluxeBetting },
-            { ProductConstants.Keno,eFunctions.KenoBetting },
-            { ProductConstants.LiveCasino,eFunctions.LiveCasinoBetting },
-            { ProductConstants.Racing,eFunctions.RacingBetting },
-            { ProductConstants.Sportsbook,eFunctions.SportsbookBetting },
-            { ProductConstants.AllBet,eFunctions.AllbetBetting },
-            { ProductConstants.MacauGames,eFunctions.VoidbridgeBetting },
-            { ProductConstants.NG2,eFunctions.NG2Betting },
-            { ProductConstants.Lottery,eFunctions.LotteryBetting },
-            { ProductConstants.BullFighting,eFunctions.BullfightingBetting }
+            { ProductConstants.Keno, eFunctions.KenoBetting },
+            { ProductConstants.LiveCasino, eFunctions.LiveCasinoBetting },
+            { ProductConstants.Racing, eFunctions.RacingBetting },
+            { ProductConstants.Sportsbook, eFunctions.SportsbookBetting },
+            { ProductConstants.AllBet, eFunctions.AllbetBetting },
+            { ProductConstants.VoidBridge, eFunctions.VoidbridgeBetting },
+            { ProductConstants.NG2, eFunctions.NG2Betting },
+            { ProductConstants.Lottery, eFunctions.LotteryBetting },
+            { ProductConstants.BullFighting, eFunctions.BullfightingBetting }
         };
     }
 }

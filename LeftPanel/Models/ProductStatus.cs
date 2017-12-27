@@ -38,6 +38,8 @@
             }
         }
 
+        public bool IsShow => IsSynced && !IsHidden;
+
         public ProductStatus Upline { get; set; }
 
         public bool CheckSyncedDownlines { get; }

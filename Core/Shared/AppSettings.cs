@@ -22,7 +22,7 @@
 
         public static bool IsShowAllbet => ConfigurationManager.AppSettings["IsShowAllbet"] == "1";
 
-        public static bool IsShowMacauGames => ConfigurationManager.AppSettings["IsShowMacauGames"] == "1";
+        public static bool IsShowVoidBridge => ConfigurationManager.AppSettings["IsShowVoidBridge"] == "1";
 
         public static bool IsShowNG2 => ConfigurationManager.AppSettings["IsShowNG2"] == "1";
 
@@ -32,13 +32,18 @@
 
         public static bool IsShowLucky3 => ConfigurationManager.AppSettings["IsShowLucky3"] == "1";
 
-        public static bool IsShowVoidbridge => ConfigurationManager.AppSettings["IsShowVoidbridge"] == "1";
-
         public static bool HideEsports => Utils.ToBoolean(ConfigurationManager.AppSettings["HideEsports"]);
 
         public static bool IsShowBullfighting => Utils.ToBoolean(ConfigurationManager.AppSettings["IsShowBullfighting"]);
 
         public static bool IsShowProduct(string productName)
-            => Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]);
+        {
+            if(productName == "MacauGames")
+            {
+                productName = "VoidBridge";
+            }
+
+            return Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]);
+        }
     }
 }
