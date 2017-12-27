@@ -9,14 +9,12 @@
 
     public class AgentDao : CustomerDao, IAgentDao
     {
-        #region IData Agents
-
         public DataTable GetData(
-            int? userId, 
-            int? recommend = null, 
-            int? custId = null, 
-            bool? enabled = null, 
-            bool? closed = null, 
+            int? userId,
+            int? recommend = null,
+            int? custId = null,
+            bool? enabled = null,
+            bool? closed = null,
             bool? suspended = null)
         {
             var param = new Hashtable
@@ -34,15 +32,13 @@
 
         public Transfer GetTransferOption(int custId)
         {
-            var param = new Hashtable();
-            param.Add("custid", custId);
-            param.Add("transferoption", "00000000");
+            var param = new Hashtable { { "custid", custId }, { "transferoption", "00000000" } };
 
             var result = DbHelper.ExecuteDbResult("Acc_CustomerSelTransferOption", param);
             var transferOption = result.Outputs["transferoption"].ToString();
             if (transferOption.Length > 0)
             {
-                return new Transfer()
+                return new Transfer
                 {
                     Weekly = Convert.ToBoolean(int.Parse(transferOption[7].ToString())),
                     Mon = Convert.ToBoolean(int.Parse(transferOption[1].ToString())),
@@ -56,7 +52,5 @@
 
             return null;
         }
-
-        #endregion IData Agents
     }
 }

@@ -6,20 +6,9 @@
 
     public abstract class CheckRequest
     {
-        DateTime _minReportDate = new DateTime(DateTime.Today.AddMonths(-3).Year, DateTime.Today.AddMonths(-3).Month, 1);
-        DateTime _maxReportDate = DateTime.Today.AddDays(7);
+        protected DateTime MinReportDate { get; set; } = new DateTime(DateTime.Today.AddMonths(-3).Year, DateTime.Today.AddMonths(-3).Month, 1);
 
-        protected DateTime MinReportDate
-        {
-            get { return _minReportDate; }
-            set { _minReportDate = value; }
-        }
-
-        protected DateTime MaxReportDate
-        {
-            get { return _maxReportDate; }
-            set { _maxReportDate = value; }
-        }
+        protected DateTime MaxReportDate { get; set; } = DateTime.Today.AddDays(7);
 
         public static int GetIntRequest(string name, int defaultValue)
         {

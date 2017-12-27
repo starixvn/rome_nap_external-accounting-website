@@ -183,7 +183,7 @@
                 Language = "En"
             };
 
-            var result = new Result();
+            Result result;
 
             switch (currentLevel)
             {

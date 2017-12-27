@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DTO
 {
-    public enum EPolicy : int
+    public enum EPolicy
     {
         Create = 4,
 

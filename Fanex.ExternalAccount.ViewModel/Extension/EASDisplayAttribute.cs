@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Reflection;
 
+    [AttributeUsageAttribute(AttributeTargets.All, AllowMultiple = false)]
     public class EasDisplayAttribute : DisplayNameAttribute
     {
         private readonly PropertyInfo _nameProperty;
@@ -13,7 +14,7 @@
         {
             if (resourceType != null)
             {
-                this._nameProperty = resourceType.GetProperty(base.DisplayName, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                _nameProperty = resourceType.GetProperty(base.DisplayName, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
             }
         }
 
@@ -21,12 +22,12 @@
         {
             get
             {
-                if (this._nameProperty == null)
+                if (_nameProperty == null)
                 {
                     return base.DisplayName;
                 }
 
-                return (string)this._nameProperty.GetValue(this._nameProperty.DeclaringType, null);
+                return (string)_nameProperty.GetValue(_nameProperty.DeclaringType, null);
             }
         }
     }

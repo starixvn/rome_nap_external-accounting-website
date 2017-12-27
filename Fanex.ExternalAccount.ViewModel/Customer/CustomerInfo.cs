@@ -1,16 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.ViewModel.Customer
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     public class CustomerInfo
     {
-        public CustomerInfo() 
-        {
-        }
-
         public int CustomerId { get; set; }
 
         public bool DisableLiveCasino { get; set; }

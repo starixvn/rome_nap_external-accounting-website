@@ -1,15 +1,15 @@
-﻿using Fanex.ExternalAccount.DTO.Customer;
-using System.Collections.Generic;
-using ThirdPartyProducts.StatusSetting.Model;
-
-namespace Fanex.ExternalAccount.Service.Interface.Customer
+﻿namespace Fanex.ExternalAccount.Service.Interface.Customer
 {
+    using System.Collections.Generic;
+    using DTO.Customer;
+    using ThirdPartyProducts.StatusSetting.Model;
+
     public interface IThirdPartyProductStatusService
     {
         ThirdPartyProductStatusViewModel Select(int custId, string custName, int roleId, int productId);
 
         List<ProductStatusResult> Update
-            (int custId,
+        (int custId,
             int subAccId,
             int productId,
             int userId,

@@ -11,6 +11,7 @@
     using Core.Reports;
     using Core.Reports.WinLossDetail;
     using Core.Shared;
+    using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
     using DTO.Customer;
     using DTO.Report;
@@ -27,8 +28,7 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds,
-            ArrayList sortingOrderList,
-            object toolTipsProducts)
+            ArrayList sortingOrderList)
         {
             CustId = custId;
             ViewLevel = viewLevel;
@@ -36,7 +36,6 @@
             ToDate = toDate;
             ProductIds = productIds;
             SortingOrderList = sortingOrderList;
-            ToolTipsProducts = toolTipsProducts;
 
             switch (ViewLevel)
             {
@@ -73,7 +72,6 @@
         public DateTime ToDate { get; }
         public string ProductIds { get; }
         public ArrayList SortingOrderList { get; }
-        public object ToolTipsProducts { get; }
 
         public bool IsValid => !ViewLevel.IsMember()
             && ViewLevel <= Role.Group
@@ -94,21 +92,23 @@
         private readonly Dictionary<int, Func<int, int, DateTime, DateTime, string, object>>
             GetWinLossDetailFunctions;
 
+        private readonly object ToolTipsProducts;
+
         private string _formatedProducts = string.Empty;
         private string _productIds = string.Empty;
         private string _products = string.Empty;
         private string _groupname = string.Empty;
+
         private int _custId;
-        private readonly int DefaultRoleId = 5;
+        private const int DefaultRoleId = 5;
         private int _viewlevel = 5;
 
         private DateTime _fromDate = DateTime.Today;
         private DateTime _toDate = DateTime.Today;
         private string _username = string.Empty;
-
         private string _cacheList = string.Empty;
 
-        public WinLossDetailController(IReportService reportService, ICache cacheManager)
+        public WinLossDetailController(IReportService reportService, ICache cacheManager, ICurrentSession currentSession)
         {
             _reportService = reportService ?? new ReportService();
             _cache = cacheManager ?? CacheService.CreateInstance(CacheType.MemoryCache);
@@ -120,9 +120,14 @@
                     {Role.Master, _reportService.GetWinLossDetailMAg},
                     {Role.Agent, _reportService.GetWinLossDetailAg}
                 };
+
+            ToolTipsProducts = new
+            {
+                showAllbet = WinLossDetailHelper.IsShowProduct("showAB", currentSession ?? CurrentSession)
+            };
         }
 
-        public WinLossDetailController() : this(null, null)
+        public WinLossDetailController() : this(null, null, null)
         {
         }
 
@@ -139,11 +144,9 @@
             _username = CheckRequest.GetStringRequest("username", string.Empty);
             _viewlevel = CheckRequest.GetIntRequest("viewlevel", 0);
             _custId = CheckRequest.GetIntRequest("custid", 0);
-
             _groupname = CurrentSession.IsInternalAdmin
                 ? CheckRequest.GetStringRequest("groupname", string.Empty)
                 : CurrentSession.CurrencyGroup;
-
             _fromDate = CheckRequest.GetDateTimeRequest("fromdate", DateTime.Today);
             _toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);
 
@@ -192,11 +195,6 @@
 
             var sortingOrderList = _reportService.GetSortingOrderList(_groupname);
 
-            var toolTipsProducts = new
-            {
-                showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
-            };
-
             if (_custId != 0)
             {
                 return DrillDownWinLossDetail(new DrillDownRequest(
@@ -205,8 +203,7 @@
                     _fromDate,
                     _toDate,
                     _productIds,
-                    sortingOrderList,
-                    toolTipsProducts));
+                    sortingOrderList));
             }
 
             return SearchWinLossDetail(
@@ -215,8 +212,7 @@
                 _fromDate,
                 _toDate,
                 _productIds,
-                sortingOrderList,
-                toolTipsProducts);
+                sortingOrderList);
         }
 
         private ActionResult SearchWinLossDetail(
@@ -225,10 +221,9 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds,
-            ArrayList sortingOrderList,
-            object toolTipsProducts)
+            ArrayList sortingOrderList)
         {
-            var customerInfo = new CustomerInfoSearchResult { RoleId = DefaultRoleId };
+            var customerInfo = new CustomerInfoSearchResult { RoleId = Role.Super };
 
             if (!string.IsNullOrWhiteSpace(username))
             {
@@ -253,9 +248,9 @@
             }
             else
             {
-                var getWinLossDetailFunction = GetWinLossDetailFunctions[customerInfo.RoleId.DirectUplineLevel()];
+                var getWinLossDetail = GetWinLossDetailFunctions[customerInfo.RoleId.DirectUplineLevel()];
 
-                winLossDetailData = getWinLossDetailFunction(
+                winLossDetailData = getWinLossDetail(
                     customerInfo.GetCustomerUplineId(),
                     customerInfo.CustId,
                     fromDate,
@@ -278,7 +273,7 @@
                     recommend = customerInfo.AgentId,
                     rows = winLossDetailData,
                     sortingorderlist = sortingOrderList,
-                    tooltips = toolTipsProducts
+                    tooltips = ToolTipsProducts
                 });
         }
 
@@ -293,10 +288,7 @@
                     agentname = string.Empty,
                     rows = string.Empty,
                     sortingorderlist = sortingOrderList,
-                    tooltips = new
-                    {
-                        showAllbet = WinLossDetailHelper.IsShowProduct("showAB", CurrentSession)
-                    }
+                    tooltips = ToolTipsProducts
                 });
         }
 
@@ -307,9 +299,9 @@
                 throw new InvalidOperationException(nameof(request.IsValid));
             }
 
-            var getWinLossDetailByLevel = GetWinLossDetailFunctions[request.ViewLevel];
+            var getWinLossDetail = GetWinLossDetailFunctions[request.ViewLevel];
 
-            var winLossData = getWinLossDetailByLevel(
+            var winLossData = getWinLossDetail(
                 request.CustId,
                 0,
                 request.FromDate,
@@ -328,7 +320,7 @@
                     recommend = request.AgentId,
                     rows = winLossData,
                     sortingorderlist = request.SortingOrderList,
-                    tooltips = request.ToolTipsProducts
+                    tooltips = ToolTipsProducts
                 });
         }
 
@@ -337,9 +329,10 @@
         public void ExportWinLossDetailToExcel()
         {
             GetRequestPage();
-            var subFileName = _fromDate.ToString("yyyyMMdd") + "_" + _toDate.ToString("yyyyMMdd") + ".xls";
+            var fromDate = _fromDate;
+            var subFileName = fromDate.ToString("yyyyMMdd") + "_" + _toDate.ToString("yyyyMMdd") + ".xls";
             var getNew = false;
-            _cacheList = "CacheList" + _username + _groupname + _custId + _fromDate + _toDate + _products;
+            _cacheList = "CacheList" + _username + _groupname + _custId + fromDate + _toDate + _products;
             var level = _viewlevel;
 
             if (_viewlevel == Role.Member)
@@ -351,22 +344,26 @@
                 }
 
                 level = !getNew ? _viewlevel : Role.Member;
+
                 var builder = new WinLossDetailReportAgBuilder(
                     _cache.Get<List<WinLossDetailAg>>(_cacheList),
                     false,
                     !getNew ? _viewlevel : Role.Member,
-                    _fromDate.ToString(MonthDayYearFormat),
+                    fromDate.ToString(MonthDayYearFormat),
                     _toDate.ToString(MonthDayYearFormat));
+
                 var excelStream = builder.Build(_formatedProducts);
                 if (excelStream != null)
                 {
                     ExportToExcel(
                         excelStream,
-                        level == Role.Agent ? "AgentWinLossDetail_" + subFileName : "MemberWinLossDetail_" + subFileName);
+                        level == Role.Agent
+                            ? $"AgentWinLossDetail_{subFileName}"
+                            : $"MemberWinLossDetail_{subFileName}");
                     excelStream.Dispose();
                 }
             }
-            else if (_viewlevel == 2)
+            else if (_viewlevel == Role.Agent)
             {
                 if (!Config.IsCache || _cache.Get<List<WinLossDetailMAg>>(_cacheList) == null)
                 {
@@ -379,14 +376,16 @@
                     _cache.Get<List<WinLossDetailMAg>>(_cacheList),
                     false,
                     level,
-                    _fromDate.ToString(MonthDayYearFormat),
+                    fromDate.ToString(MonthDayYearFormat),
                     _toDate.ToString(MonthDayYearFormat));
                 var excelStream = builder.Build(_formatedProducts);
                 if (excelStream != null)
                 {
                     ExportToExcel(
                         excelStream,
-                        level == Role.Master ? "MasterWinLossDetail_" + subFileName : "AgentWinLossDetail_" + subFileName);
+                        level == Role.Master
+                            ? $"MasterWinLossDetail_{subFileName}"
+                            : $"AgentWinLossDetail_{subFileName}");
                     excelStream.Dispose();
                 }
             }
@@ -404,14 +403,16 @@
                     _cache.Get<List<WinLossDetail>>(_cacheList),
                     false,
                     level,
-                    _fromDate,
+                    fromDate,
                     _toDate);
                 var excelStream = builder.Build(_formatedProducts);
                 if (excelStream != null)
                 {
                     ExportToExcel(
                         excelStream,
-                        level == Role.Super ? "SuperWinLossDetail_" + subFileName : "MasterWinLossDetail_" + subFileName);
+                        level == Role.Super
+                            ? $"SuperWinLossDetail_{subFileName}"
+                            : $"MasterWinLossDetail_{subFileName}");
                     excelStream.Dispose();
                 }
             }

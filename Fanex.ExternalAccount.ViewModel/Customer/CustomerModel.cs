@@ -4,9 +4,6 @@
     using Extension;
     using Utilities;
 
-    /// <summary>
-    ///     TODO: Update summary.
-    /// </summary>
     public class CustomerModel
     {
         [Required]

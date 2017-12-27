@@ -1,14 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Linq;
     using System.Text;
-    using System.Web;
     using System.Web.Mvc;
     using Newtonsoft.Json;
-        
+
     public class JsonBase : ActionResult
     {
         public JsonBase()
@@ -17,13 +14,13 @@
 
         public JsonBase(object responseBody)
         {
-            this.ResponseBody = responseBody;
+            ResponseBody = responseBody;
         }
 
         public JsonBase(object responseBody, JsonSerializerSettings settings)
             : this(responseBody)
         {
-            this.Settings = settings;
+            Settings = settings;
         }
 
         public JsonSerializerSettings Settings { get; set; }
@@ -34,43 +31,30 @@
 
         public object ResponseBody { get; set; }
 
-        private Formatting Formatting
-        {
-            get
-            {
-                return Debugger.IsAttached ? Formatting.Indented : Formatting.None;
-            }
-        }
+        private static Formatting Formatting => Debugger.IsAttached ? Formatting.Indented : Formatting.None;
 
         public override void ExecuteResult(ControllerContext context)
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             var response = context.HttpContext.Response;
 
             if (!response.IsRequestBeingRedirected)
             {
-                if (!string.IsNullOrEmpty(this.ContentType))
-                {
-                    response.ContentType = this.ContentType;
-                }
-                else
-                {
-                    response.ContentType = "application/json";
-                }
+                response.ContentType = !string.IsNullOrEmpty(ContentType) ? ContentType : "application/json";
             }
 
-            if (this.ContentEncoding != null)
+            if (ContentEncoding != null)
             {
-                response.ContentEncoding = this.ContentEncoding;
+                response.ContentEncoding = ContentEncoding;
             }
 
-            if (this.ResponseBody != null)
+            if (ResponseBody != null)
             {
-                response.Write(JsonConvert.SerializeObject(this.ResponseBody, this.Formatting, this.Settings));
+                response.Write(JsonConvert.SerializeObject(ResponseBody, Formatting, Settings));
             }
         }
     }

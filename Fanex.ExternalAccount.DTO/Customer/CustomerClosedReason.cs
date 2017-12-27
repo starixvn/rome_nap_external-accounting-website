@@ -4,11 +4,6 @@
 
     public sealed class CustomerClosedReason
     {
-        const byte WrongPasswordOthers = 0; // gray: #ccc7ba
-        const byte ByAdmin = 1; // purple: #b3a2c7
-        const byte ByUpline = 2; // orange: #f79646
-        const byte WrongOTPSC = 3; // blue: #86c5e4
-
         public CustomerClosedReason(object closedReason)
         {
             if (closedReason != null && closedReason != DBNull.Value)
@@ -26,28 +21,33 @@
 
         public string ClosedReason { get; private set; }
 
-        void AssignParameters(byte closedReason)
+        private void AssignParameters(byte closedReason)
         {
+            const byte wrongPasswordOthers = 0; // gray: #ccc7ba
+            const byte byAdmin = 1; // purple: #b3a2c7
+            const byte byUpline = 2; // orange: #f79646
+            const byte wrongOtpsc = 3; // blue: #86c5e4
+
             ClassName = "closed-";
 
             switch (closedReason)
             {
-                case WrongPasswordOthers:
+                case wrongPasswordOthers:
                     ClassName += "wrongPwdOthers";
                     ClosedReason = "This account was closed by failed login or account expired.";
                     break;
 
-                case ByAdmin:
+                case byAdmin:
                     ClassName += "byAdmin";
                     ClosedReason = "This account was closed by admin.";
                     break;
 
-                case ByUpline:
+                case byUpline:
                     ClassName += "byUpline";
                     ClosedReason = "This account was closed by upline.";
                     break;
 
-                case WrongOTPSC:
+                case wrongOtpsc:
                     ClassName += "wrongOTPSC";
                     ClosedReason = "This account was closed by false input of OTP/Security Code.";
                     break;
