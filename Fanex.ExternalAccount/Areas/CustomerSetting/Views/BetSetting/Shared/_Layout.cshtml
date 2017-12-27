@@ -1,4 +1,7 @@
 ﻿@using Fanex.CustomerSetting.Module.Core
+@using Fanex.ExternalAccount.Core.Shared
+@using Fanex.ExternalAccount.Core.Context
+@using Fanex.ExternalAccount.Module.LeftPanel.Extensions
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
 
@@ -14,6 +17,18 @@
         ContractResolver = new CamelCasePropertyNamesContractResolver(),
         NullValueHandling = NullValueHandling.Ignore
     });
+
+    var productStatus = CustomerStatusExtensions.GetCustomerStatus(
+                userId,
+                siteName.ToString(),
+                cust.Username,
+                0).ProductStatusDic;
+
+    var isShowAllBet = !productStatus[ProductConstants.AllBet].IsDisabled && AuthorizationHandler.Instance.IsAuthorized(userId, LeftPanelProductIntegration.VisibleBetSettingPermissions[ProductConstants.AllBet]);
+    var isShowMacauGames = !productStatus[ProductConstants.MacauGames].IsDisabled && AuthorizationHandler.Instance.IsAuthorized(userId, LeftPanelProductIntegration.VisibleBetSettingPermissions[ProductConstants.MacauGames]);
+    var isShowNG2 = !productStatus[ProductConstants.NG2].IsDisabled && AuthorizationHandler.Instance.IsAuthorized(userId, LeftPanelProductIntegration.VisibleBetSettingPermissions[ProductConstants.NG2]);
+    var isShowLottery = !productStatus[ProductConstants.Lottery].IsDisabled && AuthorizationHandler.Instance.IsAuthorized(userId, LeftPanelProductIntegration.VisibleBetSettingPermissions[ProductConstants.Lottery]);
+    var isShowBullfighting = !productStatus[ProductConstants.BullFighting].IsDisabled && AuthorizationHandler.Instance.IsAuthorized(userId, LeftPanelProductIntegration.VisibleBetSettingPermissions[ProductConstants.BullFighting]);
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -36,10 +51,31 @@
             <li id="tab6" onclick="LoadCasino()"><a href="#tabs-6">Casino</a></li>
             <li id="tab7" onclick="LoadKeno()"><a href="#tabs-7">Keno</a></li>
             <li id="tab8" onclick="LoadGoldDeluxe()"><a href="#tabs-8">Gold Deluxe</a></li>
-            <li id="tab9" onclick="LoadAllBet()"><a href="#tabs-9">Allbet</a></li>
-            <li id="tab10" onclick="LoadVoidbridge()"><a href="#tabs-10">Macau Games</a></li>
-            <li id="tab12" onclick="LoadLottery()"><a href="#tabs-12">Lottery</a></li>
-            <li id="tab30" onclick="LoadProduct(30)"><a href="#tabs-30">Bullfighting</a></li>
+            @if (isShowAllBet)
+            {
+                <li id="tab9" onclick="LoadAllBet()"><a href="#tabs-9">Allbet</a></li>
+            }
+            @if (isShowMacauGames)
+            {
+                <li id="tab10" onclick="LoadVoidbridge()"><a href="#tabs-10">Macau Games</a></li>
+            }
+
+            @if (isShowNG2)
+            {
+                <li id="tab11" onclick="LoadNG2()">
+                    <a href="#tabs-11">@RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2")</a>
+                </li>
+            }
+
+            @if (isShowLottery)
+            {
+                <li id="tab12" onclick="LoadLottery()"><a href="#tabs-12">Lottery</a></li>
+            }
+
+            @if (isShowBullfighting)
+            {
+                <li id="tab30" onclick="LoadProduct(30)"><a href="#tabs-30">Bullfighting</a></li>
+            }
         </ul>
         <div id="tabs-1">
             @RenderSection("Sportsbook", false)
@@ -62,24 +98,48 @@
         </div>
         <div id="tabs-8">          
             @RenderSection("GoldDeluxe", false)
-        </div>        
-        <div id="tabs-9">            
-            <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
-            <div><iframe id="allbet" width="100%" height="300px" frameborder="0" src=""></iframe></div>
         </div>
-        <div id="tabs-10">
-            <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
-            <div><iframe id="voidbridge" width="100%" height="400px" frameborder="0" src=""></iframe>
+
+        @if (isShowAllBet)
+        {
+            <div id="tabs-9">
+                <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
+                <div><iframe id="allbet" width="100%" height="300px" frameborder="0" src=""></iframe></div>
             </div>
-        </div>        
-        <div id="tabs-12">
-            <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
-            <div><iframe id="lottery" width="100%" height="400px" frameborder="0" src=""></iframe></div>
-        </div>
-        <div id="tabs-30">
-            <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
-            <div><iframe id="product-30" width="100%" height="400px" frameborder="0" src=""></iframe></div>
-        </div>
+        }
+
+        @if (isShowMacauGames)
+        {
+            <div id="tabs-10">
+                <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
+                <div><iframe id="voidbridge" width="100%" height="400px" frameborder="0" src=""></iframe>
+                </div>
+            </div>
+        }
+
+        @if (isShowNG2)
+        { 
+            <div id="tabs-11">
+                <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>\
+                <div><iframe id="ng2" width="100%" height="400px" frameborder="0" src=""></iframe></div>
+            </div>
+        }
+
+        @if (isShowLottery)
+        {
+            <div id="tabs-12">
+                <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
+                <div><iframe id="lottery" width="100%" height="400px" frameborder="0" src=""></iframe></div>
+            </div>
+        }
+
+        @if (isShowBullfighting)
+        {
+            <div id="tabs-30">
+                <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
+                <div><iframe id="product-30" width="100%" height="400px" frameborder="0" src=""></iframe></div>
+            </div>
+        }
     </div>                        
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
@@ -111,10 +171,8 @@
 
             if (parent.showNG2Betting)
             {
-                $('<li id="tab11" onclick="LoadNG2()"><a href="#tabs-11">@RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2")</a></li>').insertAfter('#tab10');
-                $('<div id="tabs-11">\
-                    <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>\
-                    <div><iframe id="ng2" width="100%" height="400px" frameborder="0" src=""></iframe></div></div>').insertAfter('#tabs-10');
+                $('').insertAfter('#tab10');
+                $('').insertAfter('#tabs-10');
             }
 
             if (!custInfo.syncCasino) {
@@ -131,30 +189,6 @@
             {
                 $('#tab8').remove();
                 $('#tabs-8').remove();
-            }
-
-            if (!parent.showAllbetBetting)
-            {
-                $('#tab9').remove();
-                $('#tabs-9').remove();
-            }
-
-            if (!parent.showVoidbridgeBetting)
-            {
-                $('#tab10').remove();
-                $('#tabs-10').remove();
-            }
-
-            if (!parent.showLotteryBetting)
-            {
-                $('#tab12').remove();
-                $('#tabs-12').remove();
-            }
-
-            if (!parent.showBullfightingBetting)
-            {
-                $('#tab30').remove();
-                $('#tabs-30').remove();
             }
 
             $('#tabs').tabs({ selected: index });

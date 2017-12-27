@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
     using CasinoLibrary.Model.UserException;
@@ -8,15 +9,14 @@
     using Criteria;
     using DTO;
     using Extensions;
+    using Fanex.ExternalAccount.Core.Shared;
+    using Fanex.Logging.Extensions.Web;
     using IBCUtils;
     using Repositories;
     using Security;
     using Service.Impl.Customer.Casino;
-    using Fanex.ExternalAccount.Core.Shared;
     using Utilities;
     using ViewModels;
-    using System;
-    using Fanex.Logging.Extensions.Web;
 
     public class LeftPanelServiceImpl : LeftPanelService
     {
@@ -70,12 +70,10 @@
                 model.MemberInfo(ds);
             }
 
-
-
             return model;
         }
 
-        public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit) 
+        public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
             => dataAccess.UpdateGivenCredit(id, uplineId, newGivenCredit);
 
         public DataTable GetDownlineList(int custid, int pageSize, int pageIndex, out int totalPages)

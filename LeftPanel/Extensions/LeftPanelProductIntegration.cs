@@ -45,20 +45,19 @@
                 new ProductStatus(ProductConstants.BullFighting, "Bullfighting", statusRow)
             };
 
-        public static readonly IEnumerable<string> VisibleBetSettingPermissions = new List<string>
+        public static readonly IDictionary<int, string> VisibleBetSettingPermissions = new Dictionary<int, string>
         {
-            eFunctions.CasinoBetting,
-            eFunctions.GoldDeluxeBetting,
-            eFunctions.KenoBetting,
-            eFunctions.LiveCasinoBetting,
-            eFunctions.RacingBetting,
-            eFunctions.SportsbookBetting,
-            eFunctions.AllbetBetting,
-            eFunctions.VoidbridgeBetting,
-            eFunctions.VoidbridgeBetting,
-            eFunctions.NG2Betting,
-            eFunctions.LotteryBetting,
-            eFunctions.BullfightingBetting
+            { ProductConstants.RNGCasino, eFunctions.CasinoBetting },
+            { ProductConstants.GoldDeluxe,eFunctions.GoldDeluxeBetting },
+            { ProductConstants.Keno,eFunctions.KenoBetting },
+            { ProductConstants.LiveCasino,eFunctions.LiveCasinoBetting },
+            { ProductConstants.Racing,eFunctions.RacingBetting },
+            { ProductConstants.Sportsbook,eFunctions.SportsbookBetting },
+            { ProductConstants.AllBet,eFunctions.AllbetBetting },
+            { ProductConstants.MacauGames,eFunctions.VoidbridgeBetting },
+            { ProductConstants.NG2,eFunctions.NG2Betting },
+            { ProductConstants.Lottery,eFunctions.LotteryBetting },
+            { ProductConstants.BullFighting,eFunctions.BullfightingBetting }
         };
     }
 }

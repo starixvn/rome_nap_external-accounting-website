@@ -123,7 +123,7 @@
         public bool IsAuthorized(
             int userId,
             string functionKey,
-            AuthenticateAction.AuthenticationType policy,
+            AuthenticateAction.AuthenticationType policy = AuthenticateAction.AuthenticationType.Read,
             string requestUrl = "")
         {
             var userCache = _cachingService.GetUserCache(userId);

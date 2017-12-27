@@ -72,7 +72,7 @@
 
         private static void AddBettingLimitForSuper(CustomerModel model, int actorId)
         {
-            if (AuthorizationHandler.Instance.HasReadPermissionOnFunctions(LeftPanelProductIntegration.VisibleBetSettingPermissions, actorId))
+            if (AuthorizationHandler.Instance.HasReadPermissionOnFunctions(LeftPanelProductIntegration.VisibleBetSettingPermissions.Values, actorId))
             {
                 model.Setting.Details.Add(new ObjectInfo("BetSetting", "Edit Betting Limit"));
             }

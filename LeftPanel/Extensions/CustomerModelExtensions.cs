@@ -200,7 +200,7 @@
 
         public static CustomerModel RemoveNotSupportedProduct(this CustomerModel model, int userId, string groupName, string username)
         {
-            var customerStatus = model.GetCustomerStatus(
+            var customerStatus = CustomerStatusExtensions.GetCustomerStatus(
                 userId,
                 groupName,
                 username,

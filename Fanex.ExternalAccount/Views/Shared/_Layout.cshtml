@@ -8,7 +8,7 @@
     var isLocal = Request.IsLocal ? 1 : 0;
     var userId = CurrentSession.Instance.UserId;
     var admins = AuthorizationHandler.Instance.HasOpenSuperPermission(userId) ? new int[] { userId } : new int[] { };
-    var showBetSetting = AuthorizationHandler.Instance.HasReadPermissionOnFunctions(LeftPanelProductIntegration.VisibleBetSettingPermissions, userId) ? 1 : 0;
+    var showBetSetting = AuthorizationHandler.Instance.HasReadPermissionOnFunctions(LeftPanelProductIntegration.VisibleBetSettingPermissions.Values, userId) ? 1 : 0;
     var allowAdminEditSuperStatus = Newtonsoft.Json.JsonConvert.SerializeObject(admins, Newtonsoft.Json.Formatting.None, new Newtonsoft.Json.JsonSerializerSettings
     {
         ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),

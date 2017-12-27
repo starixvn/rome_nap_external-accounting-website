@@ -11,8 +11,7 @@
 
     public static class CustomerStatusExtensions
     {
-        public static CustomerStatus GetCustomerStatus(this CustomerModel model, int userId, string groupName,
-            string username, int uplineId = 0)
+        public static CustomerStatus GetCustomerStatus(int userId, string groupName, string username, int uplineId = 0)
         {
             var report = new ReportService();
             var customerInfo = report.GetCustomerInfo(groupName, 0, username, true);
@@ -51,14 +50,13 @@
                     upperInfo = new AgentService().GetData(userId, mrecommend, uplineId);
                 }
 
-                return model.GetCustStatus(roleId, custData, upperInfo);
+                return GetCustStatus(roleId, custData, upperInfo);
             }
 
             return null;
         }
 
         private static CustomerStatus GetCustStatus(
-            this CustomerModel model,
             int roleId,
             DataTable result,
             DataTable upperInfo)
@@ -91,9 +89,7 @@
             SetColossusBetsStatus(custStatus, statusRow);
             SetGoldDeluxeStatus(custStatus, statusRow);
 
-            var productStatusList = LeftPanelProductIntegration.CreateProductStatusList(statusRow);
-
-            foreach (var productStatus in productStatusList)
+            foreach (var productStatus in LeftPanelProductIntegration.CreateProductStatusList(statusRow))
             {
                 custStatus.ProductStatusDic.Add(productStatus.ProductId, productStatus);
             }
@@ -201,9 +197,7 @@
             uplineStatus.DisableHRFixedOdds = uplineRow.ToBoolean("disableHRFixedOdds");
             uplineStatus.DisableESports = uplineRow.ToBoolean("DisableESports");
 
-            var productStatusList = LeftPanelProductIntegration.CreateProductStatusList(uplineRow);
-
-            foreach (var productStatus in productStatusList)
+            foreach (var productStatus in LeftPanelProductIntegration.CreateProductStatusList(uplineRow))
             {
                 uplineStatus.ProductStatusDic.Add(productStatus.ProductId, productStatus);
             }
