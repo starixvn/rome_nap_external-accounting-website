@@ -2659,6 +2659,7 @@
     <Content Include="Web.staging.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Shared\Unauthorized.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">

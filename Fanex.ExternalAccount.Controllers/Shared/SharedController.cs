@@ -46,6 +46,10 @@
         {
             return this.PartialView();
         }
+        public ActionResult Unauthorized()
+        {
+            return this.PartialView();
+        }
 
         public ActionResult _Menu()
         {
