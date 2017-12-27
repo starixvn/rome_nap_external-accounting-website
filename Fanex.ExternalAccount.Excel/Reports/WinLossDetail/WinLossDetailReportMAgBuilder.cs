@@ -1,19 +1,26 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using DTO.Report;
 
-    public class WinLossDetailReportMAgBuilder
+    public class WinLossDetailReportMAgBuilder : IWinLossDetailReportBuilder
     {
-        public WinLossDetailReportMAgBuilder(List<WinLossDetailMAg> winLossDetailMAg, bool isBold, int roleId,
-            string fromDate, string toDate)
+        private const string MonthDayYearFormat = "MMM, dd yyyy";
+
+        public WinLossDetailReportMAgBuilder(
+            List<WinLossDetailMAg> winLossDetailMAg,
+            int roleId,
+            DateTime fromDate,
+            DateTime toDate,
+            bool isBold = false)
         {
-            FromDate = fromDate;
-            ToDate = toDate;
-            IsBold = isBold;
-            RoleId = roleId;
             Data = winLossDetailMAg;
+            RoleId = roleId;
+            FromDate = fromDate.ToString(MonthDayYearFormat);
+            ToDate = toDate.ToString(MonthDayYearFormat);
+            IsBold = isBold;
         }
 
         public List<WinLossDetailMAg> Data { get; }

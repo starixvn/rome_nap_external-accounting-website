@@ -10,7 +10,6 @@
     {
         private readonly WinLossDetailReportMAgBuilder _builder;
         private const int LastColumnIndex = 13;
-        
 
         public WinLossDetailReportMAg(string filePath, WinLossDetailReportMAgBuilder builder, string products = null)
             : base(filePath, products)
@@ -67,7 +66,7 @@
                 toRowId++;
             }
 
-            WriteTotal(resultSheet,toRowId);
+            WriteTotal(resultSheet, toRowId);
         }
 
         private void WriteTotal(ISheet resultSheet, int toRowIndex)

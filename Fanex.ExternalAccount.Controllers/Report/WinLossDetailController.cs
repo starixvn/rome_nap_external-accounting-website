@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Web.Mvc;
     using Caching;
@@ -83,8 +84,8 @@
 
     public class WinLossDetailController : BaseController
     {
-        private const string MonthDayYearFormat = "MMM, dd yyyy";
         private const string Seperator = ", ";
+        private const string DateFormat = "yyyyMMdd";
 
         private readonly ICache _cache;
         private readonly IReportService _reportService;
@@ -100,7 +101,6 @@
         private string _groupname = string.Empty;
 
         private int _custId;
-        private const int DefaultRoleId = 5;
         private int _viewlevel = 5;
 
         private DateTime _fromDate = DateTime.Today;
@@ -108,7 +108,10 @@
         private string _username = string.Empty;
         private string _cacheList = string.Empty;
 
-        public WinLossDetailController(IReportService reportService, ICache cacheManager, ICurrentSession currentSession)
+        public WinLossDetailController(
+            IReportService reportService,
+            ICache cacheManager,
+            ICurrentSession currentSession)
         {
             _reportService = reportService ?? new ReportService();
             _cache = cacheManager ?? CacheService.CreateInstance(CacheType.MemoryCache);
@@ -330,91 +333,89 @@
         {
             GetRequestPage();
             var fromDate = _fromDate;
-            var subFileName = fromDate.ToString("yyyyMMdd") + "_" + _toDate.ToString("yyyyMMdd") + ".xls";
+            var dateTime = _toDate;
+            var formatedProducts = _formatedProducts;
+
             var getNew = false;
-            _cacheList = "CacheList" + _username + _groupname + _custId + fromDate + _toDate + _products;
+            _cacheList = "CacheList" + _username + _groupname + _custId + fromDate + dateTime + _products;
             var level = _viewlevel;
 
-            if (_viewlevel == Role.Member)
+            string fileName;
+            IWinLossDetailReportBuilder builder;
+
+            switch (_viewlevel)
             {
-                if (!Config.IsCache || _cache.Get<List<WinLossDetailAg>>(_cacheList) == null)
-                {
-                    getNew = true;
-                    GetData(Role.Agent);
-                }
+                case Role.Member:
+                    {
+                        if (!Config.IsCache || _cache.Get<List<WinLossDetailAg>>(_cacheList) == null)
+                        {
+                            getNew = true;
+                            GetData(Role.Agent);
+                        }
 
-                level = !getNew ? _viewlevel : Role.Member;
+                        level = !getNew ? _viewlevel : Role.Member;
 
-                var builder = new WinLossDetailReportAgBuilder(
-                    _cache.Get<List<WinLossDetailAg>>(_cacheList),
-                    false,
-                    !getNew ? _viewlevel : Role.Member,
-                    fromDate.ToString(MonthDayYearFormat),
-                    _toDate.ToString(MonthDayYearFormat));
+                        builder = new WinLossDetailReportAgBuilder(
+                            _cache.Get<List<WinLossDetailAg>>(_cacheList),
+                            level,
+                            fromDate,
+                            dateTime);
 
-                var excelStream = builder.Build(_formatedProducts);
-                if (excelStream != null)
-                {
-                    ExportToExcel(
-                        excelStream,
-                        level == Role.Agent
-                            ? $"AgentWinLossDetail_{subFileName}"
-                            : $"MemberWinLossDetail_{subFileName}");
-                    excelStream.Dispose();
-                }
+                        fileName = level == Role.Agent ? "Agent" : "Member";
+
+                        break;
+                    }
+                case Role.Agent:
+                    {
+                        if (!Config.IsCache || _cache.Get<List<WinLossDetailMAg>>(_cacheList) == null)
+                        {
+                            getNew = true;
+                            GetData(Role.Master);
+                        }
+
+                        level = !getNew ? _viewlevel : Role.Agent;
+
+                        builder = new WinLossDetailReportMAgBuilder(
+                            _cache.Get<List<WinLossDetailMAg>>(_cacheList),
+                            level,
+                            fromDate,
+                            dateTime);
+
+                        fileName = level == Role.Master ? "Master" : "Agent";
+
+                        break;
+                    }
+                default:
+                    {
+                        if (!Config.IsCache || _cache.Get<List<WinLossDetail>>(_cacheList) == null)
+                        {
+                            getNew = true;
+                            GetData(Role.Super);
+                        }
+
+                        level = level == Role.Super ? level : !getNew ? _viewlevel : Role.Master;
+
+                        builder = new WinLossDetailReportBuilder(
+                            _cache.Get<List<WinLossDetail>>(_cacheList),
+                            level,
+                            fromDate,
+                            dateTime);
+
+                        fileName = level == Role.Super ? "Super" : "Master";
+
+                        break;
+                    }
             }
-            else if (_viewlevel == Role.Agent)
+
+            var memoryStream = builder.Build(formatedProducts);
+
+            var exportFileName =
+                $"{fileName}WinLossDetail_{fromDate.ToString(DateFormat)}_{dateTime.ToString(DateFormat)}.xls";
+
+            if (memoryStream != null)
             {
-                if (!Config.IsCache || _cache.Get<List<WinLossDetailMAg>>(_cacheList) == null)
-                {
-                    getNew = true;
-                    GetData(Role.Master);
-                }
-
-                level = !getNew ? _viewlevel : Role.Agent;
-                var builder = new WinLossDetailReportMAgBuilder(
-                    _cache.Get<List<WinLossDetailMAg>>(_cacheList),
-                    false,
-                    level,
-                    fromDate.ToString(MonthDayYearFormat),
-                    _toDate.ToString(MonthDayYearFormat));
-                var excelStream = builder.Build(_formatedProducts);
-                if (excelStream != null)
-                {
-                    ExportToExcel(
-                        excelStream,
-                        level == Role.Master
-                            ? $"MasterWinLossDetail_{subFileName}"
-                            : $"AgentWinLossDetail_{subFileName}");
-                    excelStream.Dispose();
-                }
-            }
-            else
-            {
-                if (!Config.IsCache || _cache.Get<List<WinLossDetail>>(_cacheList) == null)
-                {
-                    getNew = true;
-                    GetData(Role.Super);
-                }
-
-                level = level == Role.Super ? level : !getNew ? _viewlevel : Role.Master;
-
-                var builder = new WinLossDetailReportBuilder(
-                    _cache.Get<List<WinLossDetail>>(_cacheList),
-                    false,
-                    level,
-                    fromDate,
-                    _toDate);
-                var excelStream = builder.Build(_formatedProducts);
-                if (excelStream != null)
-                {
-                    ExportToExcel(
-                        excelStream,
-                        level == Role.Super
-                            ? $"SuperWinLossDetail_{subFileName}"
-                            : $"MasterWinLossDetail_{subFileName}");
-                    excelStream.Dispose();
-                }
+                ExportToExcel(memoryStream, exportFileName);
+                memoryStream.Dispose();
             }
         }
     }

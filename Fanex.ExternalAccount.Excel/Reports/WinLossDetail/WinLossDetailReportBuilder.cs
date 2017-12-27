@@ -5,22 +5,22 @@
     using System.IO;
     using DTO.Report;
 
-    public class WinLossDetailReportBuilder
+    public class WinLossDetailReportBuilder : IWinLossDetailReportBuilder
     {
         private const string MonthDayYearFormat = "MMM, dd yyyy";
 
         public WinLossDetailReportBuilder(
             List<WinLossDetail> winLossDetail,
-            bool isBold,
             int roleId,
             DateTime fromDate,
-            DateTime toDate)
+            DateTime toDate,
+            bool isBold = false)
         {
+            Data = winLossDetail;
+            RoleId = roleId;
             FromDate = fromDate.ToString(MonthDayYearFormat);
             ToDate = toDate.ToString(MonthDayYearFormat);
             IsBold = isBold;
-            RoleId = roleId;
-            Data = winLossDetail;
         }
 
         public List<WinLossDetail> Data { get; }
