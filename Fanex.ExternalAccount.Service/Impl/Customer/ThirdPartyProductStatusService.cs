@@ -71,7 +71,7 @@
                 }
                 catch (ErrorException casinoEx)
                 {
-                    ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Warning);
+                    ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
                 }
                 catch (Exception ex)
                 {

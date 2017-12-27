@@ -33,6 +33,7 @@
     using Customer = PTEngine.BusinessObjects.Customer;
     using CustomerDTO = Fanex.ExternalAccount.DTO.Customer.Customer;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
+    using System.Diagnostics;
 
     public class CustomerController : CustomerBase //DevSkim: ignore DS184626
     {
@@ -574,7 +575,7 @@
                     }
                     catch (ErrorException casinoEx)
                     {
-                        ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
+                        ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
                     }
                     catch (Exception ex)
                     {

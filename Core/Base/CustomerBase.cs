@@ -20,6 +20,7 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using Logging.Extensions.Web;
+    using System.Diagnostics;
 
     public class CustomerBase : BaseController
     {
@@ -112,7 +113,7 @@
             }
             catch (ErrorException casinoEx)
             {
-                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
+                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
                 return new CustomerSetting.Module.Core.Models.Result(999, casinoEx.Message);
             }
             catch (Exception ex)

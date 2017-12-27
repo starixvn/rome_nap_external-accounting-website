@@ -35,6 +35,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using CurrentContext = Context.CurrentContext;
     using CurrentSession = Context.CurrentSession;
     using Result = PTEngine.BusinessObjects.Result;
+    using System.Diagnostics;
 
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class BaseController : Controller
@@ -176,7 +177,7 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             catch (ErrorException casinoEx)
             {
-                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
+                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
             }
             catch (Exception ex)
             {
@@ -198,7 +199,7 @@ namespace Fanex.ExternalAccount.Core.Base
             }
             catch (ErrorException casinoEx)
             {
-                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
+                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
             }
             catch (Exception ex)
             {

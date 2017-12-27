@@ -17,6 +17,7 @@
     using Service.Impl.Customer.Casino;
     using Utilities;
     using ViewModels;
+    using System.Diagnostics;
 
     public class LeftPanelServiceImpl : LeftPanelService
     {
@@ -166,7 +167,7 @@
             }
             catch (ErrorException casinoEx)
             {
-                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx));
+                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
             }
 
             return result;
