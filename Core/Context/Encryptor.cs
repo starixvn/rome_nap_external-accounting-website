@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Text;
     using System.Web;
-    using Module.Logs;
-    using Module.Logs.Services;
+    using Logging.Extensions.Web;
 
     public static class Encryptor
     {
@@ -92,7 +92,7 @@
             }
             catch (Exception ex)
             {
-                ex.Write(Formater.LogType.Warning);
+                ExceptionHandler.Handle(ex, TraceEventType.Warning);
             }
 
             return string.Empty;

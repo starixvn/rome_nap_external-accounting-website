@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Authentication
 {
     using System;
+    using System.Diagnostics;
     using System.Linq;
     using System.Web.Helpers;
     using System.Web.Mvc;
@@ -12,8 +13,7 @@
     using CustomerSetting.Module.Core.Web;
     using DTO;
     using DTO.UserControl;
-    using Module.Logs;
-    using Module.Logs.Services;
+    using Logging.Extensions.Web;
     using Service.Impl.Login;
     using Service.Interface.Login;
     using Utilities;
@@ -209,7 +209,7 @@
             }
             catch (Exception ex)
             {
-                ex.Write(Formater.LogType.Warning);
+                ExceptionHandler.Handle(ex, TraceEventType.Warning);
 
                 return false;
             }
@@ -309,12 +309,12 @@
                 else
                 {
                     var exceptionLog = new Exception(ViewLang.CannotReadRequestValidationCookie);
-                    exceptionLog.Write(Formater.LogType.Warning);
+                    ExceptionHandler.Handle(exceptionLog, TraceEventType.Warning);
                 }
             }
             catch (Exception ex)
             {
-                ex.Write(Formater.LogType.Warning);
+                ExceptionHandler.Handle(ex, TraceEventType.Warning);
 
                 return false;
             }

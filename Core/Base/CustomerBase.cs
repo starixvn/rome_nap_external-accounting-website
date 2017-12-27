@@ -1,6 +1,4 @@
-﻿using Fanex.Logging.Extensions.Web;
-
-namespace Fanex.ExternalAccount.Core.Base
+﻿namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
     using System.Collections;
@@ -21,6 +19,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using Module.NG2.Services;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
+    using Logging.Extensions.Web;
 
     public class CustomerBase : BaseController
     {
