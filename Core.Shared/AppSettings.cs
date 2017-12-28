@@ -9,7 +9,7 @@
 
         public static bool EnableKeno => ConfigurationManager.AppSettings["EnableKeno"] == "true";
 
-        //public static bool ShowKenoSetting => KenoSection.Instance.ShowSetting;
+        public static bool ShowKenoSetting => ConfigurationManager.AppSettings["ShowKenoSetting"] == "true";
 
         public static bool IsShowColossusBets => ConfigurationManager.AppSettings["IsShowColossusBets"] == "1";
 
