@@ -401,21 +401,19 @@ namespace Fanex.ExternalAccount.Core.Base
 
             var groups = product.ShowForGroups.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (Request?.UrlReferrer != null)
-            {
-                var requestUrl =
-                    Request?.UrlReferrer.AbsolutePath.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
-                var groupName = requestUrl.Length == 0 || !CurrentSession.IsInternalAdmin
-                    ? CurrentSession.CurrencyGroup
-                    : requestUrl[requestUrl.Length - 1];
+            var requestUrl = Request != null && Request.UrlReferrer != null
+                ? Request.UrlReferrer.AbsolutePath.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries)
+                : new string[0];
+            var groupName = requestUrl.Length == 0 || !CurrentSession.IsInternalAdmin
+                ? CurrentSession.CurrencyGroup
+                : requestUrl[requestUrl.Length - 1];
 
-                foreach (var group in groups)
+            foreach (var group in groups)
+            {
+                if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase)
+                    || Group.IsOfficeGroup(groupName))
                 {
-                    if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase)
-                        || Group.IsOfficeGroup(groupName))
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
 
