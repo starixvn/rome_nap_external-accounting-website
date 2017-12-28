@@ -31,22 +31,22 @@
         </div>
     </div>
     @*<div id="headlineDaily">
-        <div id="InfoDate">
-            <span id="SelectedLevel">Super</span> Daily Win Loss on <span id="DateValueInfo"></span>
-        </div>
-        <div class="groupBack">
-            <div id="tabAgent">
-                Agent
+            <div id="InfoDate">
+                <span id="SelectedLevel">Super</span> Daily Win Loss on <span id="DateValueInfo"></span>
             </div>
-            <div id="tabMaster">
-                Master
+            <div class="groupBack">
+                <div id="tabAgent">
+                    Agent
+                </div>
+                <div id="tabMaster">
+                    Master
+                </div>
+                <div id="tabSuper">
+                    Super
+                </div>
             </div>
-            <div id="tabSuper">
-                Super
-            </div>
-        </div>
 
-    </div>*@
+        </div>*@
     <div id="mainGrid" class="hide">
         <table id="tbl-report" class="table">
             <thead>
@@ -56,16 +56,16 @@
                             <span id="SelectedLevel">Super</span> Daily Win Loss on <span id="DateValueInfo"></span>
                         </div>
                         @*<div class="groupBack">
-                            <div id="tabAgent">
-                                Agent
-                            </div>
-                            <div id="tabMaster">
-                                Master
-                            </div>
-                            <div id="tabSuper">
-                                Super
-                            </div>
-                        </div>*@
+                                <div id="tabAgent">
+                                    Agent
+                                </div>
+                                <div id="tabMaster">
+                                    Master
+                                </div>
+                                <div id="tabSuper">
+                                    Super
+                                </div>
+                            </div>*@
                     </th>
                 </tr>
                 <tr>
@@ -77,13 +77,22 @@
                         <div class="txt-main">Win/Loss & Margin </div>
                         <div class="btn-margin-section">
                             <label class="switch">
-                                <input type="checkbox" checked>
+                                <input id="btnHideMG" type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                            <div class="txt-margin">Hide margin</div>
+                        </div>
+                    </th>
+                    <th colspan="8" class="col-win-loss hide">
+                        Win/Loss
+                        <div class="btn-margin-section">
+                            <label class="switch">
+                                <input id="btnHideMG" type="checkbox">
                                 <span class="slider round"></span>
                             </label>
                             <div class="txt-margin">Show margin</div>
-                        </div>                        
+                        </div>
                     </th>
-                    <th colspan="8" class="col-win-loss hide">Win/Loss</th>
                 </tr>
                 <tr>
                     <th class="col-company"><div class="col-level">Company</div></th>
