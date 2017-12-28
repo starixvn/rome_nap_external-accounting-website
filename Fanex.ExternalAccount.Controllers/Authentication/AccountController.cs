@@ -263,19 +263,19 @@
 
         private bool IsDenyAccessPublicDomain(bool isInternalAdmin, Group currentGroup)
         {
-            if (!OfficeUserGroup.IsOfficeUserGroup(currentGroup.GroupName))
+            if (currentGroup.IsNotOffice)
             {
                 return false;
             }
 
-            var isPublicDomain = Config.PublicDomains.Contains(_currentContext.DomainName);
+            var isPublicDomain = Config.PublicDomains.Contains(_currentContext.DomainName, StringComparer.InvariantCultureIgnoreCase);
             if (isPublicDomain)
             {
-                return OfficeUserGroup.IsITUserGroup(currentGroup.GroupID)
+                return currentGroup.IsIT
                     ? Config.IsDenyITGroupAccessing
                     : isInternalAdmin
                         ? Config.IsDenyInternalGroupAccessing
-                        : !OfficeUserGroup.IsFinanceUserGroup(currentGroup.GroupName) || Config.IsDenyFinanceGroupAccessing;
+                        : currentGroup.IsNotFinance || Config.IsDenyFinanceGroupAccessing;
             }
 
             return false;
@@ -296,8 +296,8 @@
             try
             {
                 var request = Request;
-
                 var formToken = token;
+
                 if (string.IsNullOrWhiteSpace(formToken))
                 {
                     return false;
@@ -333,7 +333,7 @@
             _currentSession.IsInternalAdmin = isInternalAdmin;
             _currentSession.GroupId = group.GroupID;
             _currentSession.CurrencyGroup = group.GroupName;
-            _currentSession.IsITAdmin = OfficeUserGroup.IsITUserGroup(group.GroupID);
+            _currentSession.IsITAdmin = group.IsIT;
             _currentSession.FromSystem = 3;
             _currentSession.IsLogin = true;
         }

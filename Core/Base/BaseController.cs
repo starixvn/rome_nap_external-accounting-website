@@ -36,6 +36,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using CurrentSession = Context.CurrentSession;
     using Result = PTEngine.BusinessObjects.Result;
     using System.Diagnostics;
+    using DTO.UserControl;
 
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class BaseController : Controller
@@ -411,9 +412,7 @@ namespace Fanex.ExternalAccount.Core.Base
                 foreach (var group in groups)
                 {
                     if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase)
-                        || groupName.Equals("Finance", StringComparison.OrdinalIgnoreCase)
-                        || groupName.Equals("Internal", StringComparison.OrdinalIgnoreCase)
-                        || groupName.Equals("IT", StringComparison.OrdinalIgnoreCase))
+                        || Group.IsOfficeGroup(groupName))
                     {
                         return false;
                     }

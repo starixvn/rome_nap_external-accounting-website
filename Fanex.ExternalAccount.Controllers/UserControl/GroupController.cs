@@ -123,9 +123,7 @@
 
             return JsonBase(result);
         }
-
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
+        
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]

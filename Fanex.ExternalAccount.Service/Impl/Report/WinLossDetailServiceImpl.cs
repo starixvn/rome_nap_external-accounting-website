@@ -4,6 +4,8 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
 {
     using System.Collections;
     using System.Collections.Generic;
+    using Core.Shared;
+    using DTO.Customer;
     using Interface.Report;
     public class WinLossDetailServiceImpl : WinLossDetailService
     {
@@ -43,48 +45,51 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
             return winLossData;
         }
 
-        //public SearchWinLossDetail(
-        //    string username,
-        //    string groupname,
-        //    DateTime fromDate,
-        //    DateTime toDate,
-        //    string productIds)
-        //{
-        //    var sortingOrderList = reportService.GetSortingOrderList(groupname);
-        //    var customerInfo = new CustomerInfoSearchResult { RoleId = Role.Super };
+        public dynamic SearchWinLossDetail(
+            string username,
+            string groupname,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds)
+        {
 
-        //    if (!string.IsNullOrWhiteSpace(username))
-        //    {
-        //        customerInfo = _reportService.SearchCustomerInfo(groupname, 0, username, true);
+            var customerInfo = new CustomerInfoSearchResult { RoleId = Role.Super };
 
-        //        if (customerInfo == null)
-        //        {
-        //            return NoInfoResult(username, sortingOrderList);
-        //        }
-        //    }
+            if (!string.IsNullOrWhiteSpace(username))
+            {
+                customerInfo = reportService.SearchCustomerInfo(groupname, 0, username, true);
 
-        //    object winLossDetailData;
+                if (customerInfo == null)
+                {
+                    //return NoInfoResult(username, sortingOrderList);
+                    return null;
+                }
+            }
 
-        //    if (customerInfo.RoleId >= Role.Super)
-        //    {
-        //        winLossDetailData = reportService.GetWinLossDetail(
-        //            groupname,
-        //            customerInfo.CustId,
-        //            fromDate,
-        //            toDate,
-        //            productIds);
-        //    }
-        //    else
-        //    {
-        //        var getWinLossDetail = GetWinLossDetailFunctions[customerInfo.RoleId.DirectUplineLevel()];
+            object winLossDetailData;
 
-        //        winLossDetailData = getWinLossDetail(
-        //            customerInfo.GetCustomerUplineId(),
-        //            customerInfo.CustId,
-        //            fromDate,
-        //            toDate,
-        //            productIds);
-        //    }
-        //}
+            if (customerInfo.RoleId >= Role.Super)
+            {
+                winLossDetailData = reportService.GetWinLossDetail(
+                    groupname,
+                    customerInfo.CustId,
+                    fromDate,
+                    toDate,
+                    productIds);
+            }
+            else
+            {
+                var getWinLossDetail = GetWinLossDetailFunctions[customerInfo.RoleId.DirectUplineLevel()];
+
+                winLossDetailData = getWinLossDetail(
+                    customerInfo.GetCustomerUplineId(),
+                    customerInfo.CustId,
+                    fromDate,
+                    toDate,
+                    productIds);
+            }
+
+            return winLossDetailData;
+        }
     }
 }

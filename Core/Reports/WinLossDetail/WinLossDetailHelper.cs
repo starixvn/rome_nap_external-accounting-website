@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Web;
     using CustomerSetting.Module.Core.Web;
-    using Fanex.ExternalAccount.Core.Shared;
+    using DTO.UserControl;
 
     public static class WinLossDetailHelper
     {
@@ -42,7 +42,7 @@
             foreach (var group in productConfiguration.ShowGroupList)
             {
                 if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase)
-                    || OfficeUserGroup.IsOfficeUserGroup(groupName)
+                    || Group.IsOfficeGroup(groupName)
                    )
                 {
                     return false;
