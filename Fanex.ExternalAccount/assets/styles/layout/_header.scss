@@ -16,9 +16,13 @@
     transition: all .01s ease-out .2s;
 
     .icon-user {
-        position: absolute;
+        /*position: absolute;
         right: 60px;
-        top: 20px;
+        top: 20px;*/
+        float: left;
+        display: inline-block;
+        line-height: 60px;
+        cursor: pointer;
     }
 
     .icon-nav {
@@ -194,7 +198,7 @@
             float: right;
         }
         
-        .icon-nav, .icon-user {
+        .icon-nav {
             display: none;
         }  
     }    

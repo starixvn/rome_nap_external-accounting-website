@@ -69,3 +69,21 @@
   color: #4F4F4F;
   font-weight: bold; }
 
+.col-win-loss-margin {
+  position: relative;
+  height: 46px; }
+  .col-win-loss-margin .txt-main {
+    display: inline-block; }
+  .col-win-loss-margin .btn-margin-section {
+    display: inline-block;
+    vertical-align: middle;
+    position: absolute;
+    right: 8px;
+    top: 5px; }
+  .col-win-loss-margin .txt-margin {
+    font-size: 11px;
+    color: #b6becb; }
+  .col-win-loss-margin .switch {
+    position: relative;
+    top: 4px; }
+
