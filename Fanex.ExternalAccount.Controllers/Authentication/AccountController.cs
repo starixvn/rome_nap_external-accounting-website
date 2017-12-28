@@ -271,11 +271,11 @@
             var isPublicDomain = Config.PublicDomains.Contains(_currentContext.DomainName);
             if (isPublicDomain)
             {
-                return OfficeUserGroup.IsITGroup(currentGroup.GroupID)
+                return OfficeUserGroup.IsITUserGroup(currentGroup.GroupID)
                     ? Config.IsDenyITGroupAccessing
                     : isInternalAdmin
                         ? Config.IsDenyInternalGroupAccessing
-                        : !OfficeUserGroup.IsFinanceGroup(currentGroup.GroupName) || Config.IsDenyFinanceGroupAccessing;
+                        : !OfficeUserGroup.IsFinanceUserGroup(currentGroup.GroupName) || Config.IsDenyFinanceGroupAccessing;
             }
 
             return false;
@@ -333,7 +333,7 @@
             _currentSession.IsInternalAdmin = isInternalAdmin;
             _currentSession.GroupId = group.GroupID;
             _currentSession.CurrencyGroup = group.GroupName;
-            _currentSession.IsITAdmin = OfficeUserGroup.IsITGroup(group.GroupID);
+            _currentSession.IsITAdmin = OfficeUserGroup.IsITUserGroup(group.GroupID);
             _currentSession.FromSystem = 3;
             _currentSession.IsLogin = true;
         }
