@@ -454,7 +454,6 @@ Fanex.ExtAcc.WinLossDetail = {
                 $('#mainGrid').css('visibility', $this.totalRows < 1 ? 'hidden' : 'visible');
                 $('#headlineDaily').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#headlineDaily').css('visibility', $this.totalRows < 1 ? 'hidden' : 'visible');
-                $('#btnHideMG').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#exporttoexcel').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#msgNoinfo').css('display', $this.totalRows < 1 ? 'block' : 'none');
 

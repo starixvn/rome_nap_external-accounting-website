@@ -193,8 +193,8 @@ span.selectedMonth {
     cursor: pointer; }
 
 .col-sorter.desc [class*="col"]:before {
-  border-top: 4px solid #333; }
+  border-top: 4px solid #82c341; }
 
 .col-sorter.asc [class*="col"]:after {
-  border-bottom: 4px solid #333; }
+  border-bottom: 4px solid #82c341; }
 

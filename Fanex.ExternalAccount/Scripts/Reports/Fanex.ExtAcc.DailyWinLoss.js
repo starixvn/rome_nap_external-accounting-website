@@ -108,16 +108,14 @@ Fanex.ExtAcc.DailyWinLoss = {
             }
         });
 
-        $('#btnHideMG').click(function (e) {
+        $('.toggle-margin').click(function (e) {
             if (!$this.hidedMargin) {
-                $('#btnHideMG').val('Show Margin');
                 $this.hidedMargin = true;
 
                 $(".col-win-loss-margin").addClass("hide");
                 $(".col-percent").addClass("hide");
                 $(".col-win-loss").removeClass("hide");
             } else {
-                $('#btnHideMG').val('Hide Margin');
                 $this.hidedMargin = false;
 
                 $(".col-win-loss").addClass("hide");
@@ -254,7 +252,6 @@ Fanex.ExtAcc.DailyWinLoss = {
                 $('#mainGrid').css('visibility', $this.totalRows < 1 ? 'hidden' : 'visible');
                 $('#mainGrid').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#headlineDaily').css('display', $this.totalRows < 1 ? 'none' : 'block');
-                $('#btnHideMG').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#exporttoexcel').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#msgNoinfo').css('display', $this.totalRows < 1 ? 'block' : 'none');
 

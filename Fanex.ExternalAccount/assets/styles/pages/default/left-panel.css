@@ -87,16 +87,14 @@
   -webkit-transition: .4s;
   transition: .4s; }
 
-input:checked + .slider {
+.toggle-margin-on + .slider {
   background-color: #82c341; }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3; }
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(20px);
-  -ms-transform: translateX(20px);
-  transform: translateX(20px); }
+.toggle-margin-off + .slider {
+  background-color: #c8c8c8; }
+  .toggle-margin-off + .slider:before {
+    right: 1px;
+    left: unset; }
 
 /* Rounded sliders */
 .slider.round {
