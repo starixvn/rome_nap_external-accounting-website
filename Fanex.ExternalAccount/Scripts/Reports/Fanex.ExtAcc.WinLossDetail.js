@@ -460,8 +460,10 @@ Fanex.ExtAcc.WinLossDetail = {
 
                 if ($this.totalRows > 0) {
                     $this.renderReport(data);
+                    $("#exporttoexcel").removeClass("hide");
+                } else {
+                    $("#exporttoexcel").addClass("hide");
                 }
-
 
                 Fanex.ExtAcc.UnBlockUI();
             },
