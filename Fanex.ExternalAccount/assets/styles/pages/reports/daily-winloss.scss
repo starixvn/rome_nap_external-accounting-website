@@ -17,7 +17,7 @@
 .page-title .wlDetail {
     float: left;
 }
-#btnHideMG {
+/*#btnHideMG {
     font-family: Tahoma;
     background-color: #ececec;
     border: 1px solid #c4c4c4;
@@ -31,7 +31,7 @@
     &:hover {
         background-color: #C3C3C3;
     }
-}
+}*/
 
 .jqx-grid-column-header a:link {
     cursor: default !important;
@@ -84,7 +84,7 @@
         }
     }
 }
-.col-win-loss-margin {
+.col-win-loss-margin, .col-win-loss {
     .txt-main {
         display: inline-block;
     }

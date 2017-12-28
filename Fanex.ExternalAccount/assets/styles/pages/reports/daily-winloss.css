@@ -23,20 +23,21 @@
 .page-title .wlDetail {
   float: left; }
 
-#btnHideMG {
-  font-family: Tahoma;
-  background-color: #ececec;
-  border: 1px solid #c4c4c4;
-  color: #464646;
-  cursor: pointer;
-  height: 24px;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  text-align: center; }
-  #btnHideMG:hover {
-    background-color: #C3C3C3; }
-
+/*#btnHideMG {
+    font-family: Tahoma;
+    background-color: #ececec;
+    border: 1px solid #c4c4c4;
+    color: #464646;
+    cursor: pointer;
+    height: 24px;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    text-align: center;
+    &:hover {
+        background-color: #C3C3C3;
+    }
+}*/
 .jqx-grid-column-header a:link {
   cursor: default !important; }
 
@@ -69,19 +70,19 @@
   color: #4F4F4F;
   font-weight: bold; }
 
-.col-win-loss-margin .txt-main {
+.col-win-loss-margin .txt-main, .col-win-loss .txt-main {
   display: inline-block; }
 
-.col-win-loss-margin .btn-margin-section {
+.col-win-loss-margin .btn-margin-section, .col-win-loss .btn-margin-section {
   display: inline-block;
   vertical-align: middle;
   float: right; }
 
-.col-win-loss-margin .txt-margin {
+.col-win-loss-margin .txt-margin, .col-win-loss .txt-margin {
   font-size: 11px;
   color: #b6becb; }
 
-.col-win-loss-margin .switch {
+.col-win-loss-margin .switch, .col-win-loss .switch {
   position: relative;
   top: 3px; }
 
