@@ -42,6 +42,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.BetSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.IPEntities", "Modules\Fanex.ExternalAccount.IPEntities\Fanex.ExternalAccount.IPEntities.csproj", "{6570D17C-FEF2-4C1C-A1EB-841266DF380D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Shared", "Core.Shared\Core.Shared.csproj", "{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -171,6 +173,16 @@ Global
 		{6570D17C-FEF2-4C1C-A1EB-841266DF380D}.Development|Any CPU.Build.0 = Debug|Any CPU
 		{6570D17C-FEF2-4C1C-A1EB-841266DF380D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6570D17C-FEF2-4C1C-A1EB-841266DF380D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}.Debug-Alpha|Any CPU.ActiveCfg = Debug|Any CPU
+		{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}.Debug-Alpha|Any CPU.Build.0 = Debug|Any CPU
+		{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}.Debug-NAP|Any CPU.ActiveCfg = Debug|Any CPU
+		{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}.Debug-NAP|Any CPU.Build.0 = Debug|Any CPU
+		{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -180,7 +192,7 @@ Global
 		{6570D17C-FEF2-4C1C-A1EB-841266DF380D} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\EnterpriseLibrary.Caching.5.0.505.0\lib\NET35
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal

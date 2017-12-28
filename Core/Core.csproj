@@ -305,12 +305,12 @@
     <Compile Include="Reports\WinLossDetail\ProductElementConfiguration.cs" />
     <Compile Include="Reports\WinLossDetail\ProductsConfiguration.cs" />
     <Compile Include="Reports\WinLossDetail\WinLossDetailHelper.cs" />
-    <Compile Include="Shared\AppSettings.cs" />
-    <Compile Include="Shared\ProductConstants.cs" />
-    <Compile Include="Shared\GroupService.cs" />
-    <Compile Include="Shared\Role.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
+      <Project>{05dd3a2f-f9ff-42e1-8d4e-d4f83e51ebf4}</Project>
+      <Name>Core.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.DataAccess\Fanex.ExternalAccount.DataAccess.csproj">
       <Project>{e0a7a640-964e-4ed8-a065-6109bd505107}</Project>
       <Name>Fanex.ExternalAccount.DataAccess</Name>
@@ -357,6 +357,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Logs\APILoggerSpNames.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Shared\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

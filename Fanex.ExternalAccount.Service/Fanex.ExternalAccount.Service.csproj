@@ -184,6 +184,7 @@
     <Compile Include="Impl\Customer\Casino\CasinoManager.cs" />
     <Compile Include="Impl\Customer\CommissionService.cs" />
     <Compile Include="Impl\Customer\ThirdPartyProductStatusService.cs" />
+    <Compile Include="Impl\Report\WinLossDetailServiceImpl.cs" />
     <Compile Include="Impl\Statement\StatementService.cs" />
     <Compile Include="Interface\Customer\ICommissionService.cs" />
     <Compile Include="Interface\Customer\IMemberService.cs" />
@@ -194,7 +195,9 @@
     <Compile Include="Interface\Customer\ISuperService.cs" />
     <Compile Include="Interface\Customer\IThirdPartyProductStatusService.cs" />
     <Compile Include="Interface\Login\ILoginService.cs" />
+    <Compile Include="Interface\Report\DrillDownRequest.cs" />
     <Compile Include="Interface\Report\IReportService.cs" />
+    <Compile Include="Interface\Report\WinLossDetailService.cs" />
     <Compile Include="Interface\Statement\IStatementService.cs" />
     <Compile Include="Interface\UserControl\ICachingService.cs" />
     <Compile Include="Interface\UserControl\IFunctionService.cs" />
@@ -216,6 +219,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
+      <Project>{05dd3a2f-f9ff-42e1-8d4e-d4f83e51ebf4}</Project>
+      <Name>Core.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.DataAccess\Fanex.ExternalAccount.DataAccess.csproj">
       <Project>{E0A7A640-964E-4ED8-A065-6109BD505107}</Project>
       <Name>Fanex.ExternalAccount.DataAccess</Name>

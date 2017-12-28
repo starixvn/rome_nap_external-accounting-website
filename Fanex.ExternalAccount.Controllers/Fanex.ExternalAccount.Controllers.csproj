@@ -301,6 +301,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
+      <Project>{05dd3a2f-f9ff-42e1-8d4e-d4f83e51ebf4}</Project>
+      <Name>Core.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{3521A845-D2BF-4916-B02C-0B0E02F774DB}</Project>
       <Name>Core</Name>

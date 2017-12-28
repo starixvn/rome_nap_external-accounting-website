@@ -13,7 +13,20 @@
 
         [DebuggerStepThrough]
         public static string DisplayRoleName(this int role)
-            => role.IsSuper() ? "Super" : role.IsMaster() ? "Master" : role.IsAgent() ? "Agent" : "Member";
+        {
+            EnsureRoleIsInRange(role);
+            switch (role)
+            {
+                case Super:
+                    return "Super";
+                case Master:
+                    return "Master";
+                case Agent:
+                    return "Agent";
+                default:
+                    return "Member";
+            }
+        }
 
         [DebuggerStepThrough]
         public static bool IsMember(this int role)

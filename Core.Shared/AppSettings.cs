@@ -1,8 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Core.Shared
 {
+    using System;
     using System.Configuration;
-    using CustomerSetting.Module.Keno.KenoSetting.Configurations;
-    using Utilities;
 
     public static class AppSettings
     {
@@ -10,7 +9,7 @@
 
         public static bool EnableKeno => ConfigurationManager.AppSettings["EnableKeno"] == "true";
 
-        public static bool ShowKenoSetting => KenoSection.Instance.ShowSetting;
+        //public static bool ShowKenoSetting => KenoSection.Instance.ShowSetting;
 
         public static bool IsShowColossusBets => ConfigurationManager.AppSettings["IsShowColossusBets"] == "1";
 
@@ -32,18 +31,28 @@
 
         public static bool IsShowLucky3 => ConfigurationManager.AppSettings["IsShowLucky3"] == "1";
 
-        public static bool HideEsports => Utils.ToBoolean(ConfigurationManager.AppSettings["HideEsports"]);
+        public static bool HideEsports => ToBoolean(ConfigurationManager.AppSettings["HideEsports"]);
 
-        public static bool IsShowBullfighting => Utils.ToBoolean(ConfigurationManager.AppSettings["IsShowBullfighting"]);
+        public static bool IsShowBullfighting => ToBoolean(ConfigurationManager.AppSettings["IsShowBullfighting"]);
 
         public static bool IsShowProduct(string productName)
         {
-            if(productName == "MacauGames")
+            if (productName.Equals("MacauGames", StringComparison.CurrentCultureIgnoreCase))
             {
                 productName = "VoidBridge";
             }
 
-            return Utils.ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]);
+            return ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]);
+        }
+
+        private static bool ToBoolean(string value, bool defaultValue = false)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return defaultValue;
+            }
+
+            return value == "1" || value.Equals("true", StringComparison.CurrentCultureIgnoreCase);
         }
     }
 }
