@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
@@ -20,10 +19,14 @@
         private readonly CachingService _cache;
         private readonly IGroupService _groupService;
 
-        public GroupController()
+        public GroupController(CachingService cache, IGroupService groupService)
         {
-            _groupService = _groupService ?? new GroupService();
-            _cache = _cache ?? new CachingService();
+            _groupService = groupService ?? new GroupService();
+            _cache = cache ?? new CachingService();
+        }
+
+        public GroupController() : this(null, null)
+        {
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
@@ -40,21 +43,21 @@
         [AntiXSRFFilter]
         public ActionResult GroupListPost()
         {
-            var result = _groupService.GetListGroup();
+            var result = _groupService.GetListGroup().ToList();
 
             if (!CurrentSession.IsITAdmin && !CurrentSession.IsInternalAdmin)
             {
-                result = result.Where(o => o.GroupName == CurrentSession.CurrencyGroup);
+                result = result.Where(o => o.GroupName == CurrentSession.CurrencyGroup).ToList();
             }
             else
             {
                 if (!CurrentSession.IsITAdmin && CurrentSession.IsInternalAdmin)
                 {
-                    result = result.Where(o => o.GroupID != 1);
+                    result = result.Where(o => o.GroupID != 1).ToList();
                 }
             }
 
-            return JsonBase(new { total = 1, page = 1, records = result.Count(), rows = result },
+            return JsonBase(new {total = 1, page = 1, records = result.Count, rows = result},
                 new JsonSerializerSettings());
         }
 
@@ -86,7 +89,6 @@
         [AntiXSRFFilter]
         public ActionResult Add(string name, string description)
         {
-
             var result = _groupService.CreateGroup(name, description, CurrentSession.CustId, CurrentContext.Ip4Address);
 
             return JsonBase(result);
@@ -123,7 +125,7 @@
 
             return JsonBase(result);
         }
-        
+
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
@@ -132,7 +134,7 @@
             var funcs = new FunctionService().GetAllFunctions().ToList();
             funcs = funcs.Where(f => f.IsTest).ToList();
             var externalGroup = new LoginService().GroupList();
-            var functionList = _groupService.GetAllGroupPolicy(groupId);
+            var functionList = _groupService.GetAllGroupPolicy(groupId).ToList();
 
             var allowFunctions = new List<Function>();
 
@@ -151,7 +153,8 @@
 
             ViewBag.GroupID = groupId;
             ViewBag.GroupName = groupName;
-            var isEditExtGroup = externalGroup.Any(i => i.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase));
+            var isEditExtGroup =
+                externalGroup.Any(i => i.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase));
             if (!isEditExtGroup)
             {
                 isEditExtGroup = groupId != 1 && !groupName.Equals("Finance", StringComparison.OrdinalIgnoreCase)
