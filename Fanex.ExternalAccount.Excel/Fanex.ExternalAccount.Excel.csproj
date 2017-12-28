@@ -79,8 +79,8 @@
     <Compile Include="Reports\DailyWinloss\DailyWinLossReport.cs" />
     <Compile Include="Reports\DailyWinloss\DailyWinLossReportBuilder.cs" />
     <Compile Include="Reports\DailyWinloss\TemplateSettings.cs" />
-    <Compile Include="Reports\WinLossDetail\WinLossDetailReportAgBuilder.cs" />
-    <Compile Include="Reports\WinLossDetail\WinLossDetailReportMAgBuilder.cs" />
+    <Compile Include="Reports\WinLossDetail\MemberWinLossDetailReportBuilder.cs" />
+    <Compile Include="Reports\WinLossDetail\AgentWinLossDetailReportBuilder.cs" />
     <Compile Include="Reports\WinLossDetail\WinLossDetailReportAg.cs" />
     <Compile Include="Reports\WinLossDetail\WinLossDetailReportMAg.cs" />
     <Compile Include="Reports\WinLossDetail\WinLossDetailReport.cs" />

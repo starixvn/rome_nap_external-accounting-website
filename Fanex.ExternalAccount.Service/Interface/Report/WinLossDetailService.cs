@@ -10,5 +10,13 @@
     public interface WinLossDetailService
     {
         dynamic DrillDownWinLossDetail(IDrillDownRequest request);
+
+        dynamic SearchWinLossDetail(
+            CustomerInfoSearchResult customerInfo,
+            string groupname,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds);
+
     }
 }

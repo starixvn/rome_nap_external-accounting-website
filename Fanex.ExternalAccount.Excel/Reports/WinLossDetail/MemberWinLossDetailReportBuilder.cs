@@ -5,11 +5,11 @@
     using System.IO;
     using DTO.Report;
 
-    public class WinLossDetailReportAgBuilder : IWinLossDetailReportBuilder
+    public class MemberWinLossDetailReportBuilder : IWinLossDetailReportBuilder
     {
         private const string MonthDayYearFormat = "MMM, dd yyyy";
 
-        public WinLossDetailReportAgBuilder(
+        public MemberWinLossDetailReportBuilder(
             List<WinLossDetailAg> winLossDetailAg,
             int roleId,
             DateTime fromDate,
@@ -23,7 +23,7 @@
             IsBold = isBold;
         }
 
-        public WinLossDetailReportAgBuilder(
+        public MemberWinLossDetailReportBuilder(
             int roleId,
             DateTime fromDate,
             DateTime toDate,

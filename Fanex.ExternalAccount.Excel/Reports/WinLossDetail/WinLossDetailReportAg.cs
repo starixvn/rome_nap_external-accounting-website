@@ -8,10 +8,10 @@
 
     internal class WinLossDetailReportAg : TemplateReport, IReportBuilder
     {
-        private readonly WinLossDetailReportAgBuilder _builder;
+        private readonly MemberWinLossDetailReportBuilder _builder;
         private const int LastColumnIndex = 10;
 
-        public WinLossDetailReportAg(string filePath, WinLossDetailReportAgBuilder builder, string products = null)
+        public WinLossDetailReportAg(string filePath, MemberWinLossDetailReportBuilder builder, string products = null)
             : base(filePath, products)
         {
             _builder = builder;

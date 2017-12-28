@@ -1,29 +1,39 @@
-﻿using System;
-
-namespace Fanex.ExternalAccount.Service.Impl.Report
+﻿namespace Fanex.ExternalAccount.Service.Impl.Report
 {
-    using System.Collections;
-    using System.Collections.Generic;
+    using System;
+    using Caching;
+    using Common.Extensions;
     using Core.Shared;
     using DTO.Customer;
     using Interface.Report;
+
     public class WinLossDetailServiceImpl : WinLossDetailService
     {
         private readonly IReportService reportService;
-        private readonly Dictionary<int, Func<int, int, DateTime, DateTime, string, object>>
-            GetWinLossDetailFunctions;
+        private readonly ICache cacheManager;
 
-        public WinLossDetailServiceImpl(IReportService reportService)
+        public WinLossDetailServiceImpl(IReportService reportService = null, ICache cacheManager = null)
         {
             this.reportService = reportService ?? new ReportService();
+            this.cacheManager = cacheManager ?? CacheService.CreateInstance();
+        }
 
-            GetWinLossDetailFunctions =
-                new Dictionary<int, Func<int, int, DateTime, DateTime, string, object>>
-                {
-                    {4, this.reportService.GetWinLossDetailSuper},
-                    {3, this.reportService.GetWinLossDetailMAg},
-                    {2, this.reportService.GetWinLossDetailAg}
-                };
+        private Func<int, int, DateTime, DateTime, string, object> GetWinLossDetailFunction(int roleId)
+        {
+            switch (roleId)
+            {
+                case Role.Super:
+                    return reportService.GetMasterWinLossDetail;
+
+                case Role.Master:
+                    return reportService.GetAgentWinLossDetail;
+
+                case Role.Agent:
+                    return reportService.GetMemberWinLossDetail;
+
+                default:
+                    throw new InvalidOperationException(nameof(roleId));
+            }
         }
 
         public dynamic DrillDownWinLossDetail(IDrillDownRequest request)
@@ -33,44 +43,38 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
                 throw new InvalidOperationException(nameof(request.IsValid));
             }
 
-            var getWinLossDetail = GetWinLossDetailFunctions[request.ViewLevel];
+            var getWinLossDetail = GetWinLossDetailFunction(request.ViewLevel);
 
-            var winLossData = getWinLossDetail(
+            var winLossDetailData = getWinLossDetail(
                 request.CustId,
                 0,
                 request.FromDate,
                 request.ToDate,
                 request.ProductIds);
 
-            return winLossData;
+            if (winLossDetailData != null)
+            {
+                var cacheKey = "CacheList" + request.GroupName + request.CustId + request.FromDate + request.ToDate + request.ProductIds;
+
+                cacheManager.Set(cacheKey, winLossDetailData);
+            }
+
+            return winLossDetailData;
         }
 
         public dynamic SearchWinLossDetail(
-            string username,
+            CustomerInfoSearchResult customerInfo,
             string groupname,
             DateTime fromDate,
             DateTime toDate,
-            string productIds)
+            string productIds
+            )
         {
-
-            var customerInfo = new CustomerInfoSearchResult { RoleId = Role.Super };
-
-            if (!string.IsNullOrWhiteSpace(username))
-            {
-                customerInfo = reportService.SearchCustomerInfo(groupname, 0, username, true);
-
-                if (customerInfo == null)
-                {
-                    //return NoInfoResult(username, sortingOrderList);
-                    return null;
-                }
-            }
-
             object winLossDetailData;
 
             if (customerInfo.RoleId >= Role.Super)
             {
-                winLossDetailData = reportService.GetWinLossDetail(
+                winLossDetailData = reportService.GetSuperWinLossDetail(
                     groupname,
                     customerInfo.CustId,
                     fromDate,
@@ -79,14 +83,22 @@ namespace Fanex.ExternalAccount.Service.Impl.Report
             }
             else
             {
-                var getWinLossDetail = GetWinLossDetailFunctions[customerInfo.RoleId.DirectUplineLevel()];
+                var getWinLossDetail = GetWinLossDetailFunction(customerInfo.RoleId.DirectUplineLevel());
 
                 winLossDetailData = getWinLossDetail(
-                    customerInfo.GetCustomerUplineId(),
+                    customerInfo.GetUplineId(),
                     customerInfo.CustId,
                     fromDate,
                     toDate,
                     productIds);
+            }
+
+            if (winLossDetailData != null)
+            {
+                var cacheKey = "CacheList" + customerInfo.Username + groupname + "0" +/* customerInfo.CustId + */fromDate + toDate +
+                               productIds;
+
+                cacheManager.Set(cacheKey, winLossDetailData);
             }
 
             return winLossDetailData;

@@ -18,7 +18,7 @@ namespace Fanex.ExternalAccount.Service.Interface.Report
         DateTime ToDate { get; }
         string ProductIds { get; }
         ArrayList SortingOrderList { get; }
-
+        string GroupName { get; }
         bool IsValid { get; }
 
         bool IsNotValid { get; }

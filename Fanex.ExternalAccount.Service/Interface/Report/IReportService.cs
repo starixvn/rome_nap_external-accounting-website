@@ -23,13 +23,13 @@
 
         List<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId);
 
-        List<WinLossDetail> GetWinLossDetail(string groupname, int custId, DateTime fromDate, DateTime toDate, string productIds);
+        List<WinLossDetail> GetSuperWinLossDetail(string groupname, int custId, DateTime fromDate, DateTime toDate, string productIds);
 
-        List<WinLossDetail> GetWinLossDetailSuper(int custId, int masterId, DateTime fromDate, DateTime toDate, string productIds);
+        List<WinLossDetail> GetMasterWinLossDetail(int custId, int masterId, DateTime fromDate, DateTime toDate, string productIds);
 
-        List<WinLossDetailMAg> GetWinLossDetailMAg(int custId, int agentId, DateTime fromDate, DateTime toDate, string productIds);
+        List<WinLossDetailMAg> GetAgentWinLossDetail(int custId, int agentId, DateTime fromDate, DateTime toDate, string productIds);
 
-        List<WinLossDetailAg> GetWinLossDetailAg(int custId, int memberId, DateTime fromDate, DateTime toDate, string productIds);
+        List<WinLossDetailAg> GetMemberWinLossDetail(int custId, int memberId, DateTime fromDate, DateTime toDate, string productIds);
 
         ArrayList GetSortingOrderList(string groupname);
     }

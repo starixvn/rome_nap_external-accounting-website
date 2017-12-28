@@ -2,6 +2,8 @@
 
 namespace Fanex.ExternalAccount.DTO.Customer
 {
+    using Core.Shared;
+
     public class CustomerInfoSearchResult
     {
         public int CustId { get; set; }
@@ -22,19 +24,19 @@ namespace Fanex.ExternalAccount.DTO.Customer
 
         public string AgentName { get; set; }
 
-        public string MemberName => RoleId == 1 ? Username : string.Empty;
+        public string MemberName => RoleId.IsMember() ? Username : string.Empty;
 
-        public int GetCustomerUplineId()
+        public int GetUplineId()
         {
             switch (RoleId)
             {
-                case 3:
+                case Role.Master:
                     return SuperId;
 
-                case 2:
+                case Role.Agent:
                     return MasterId;
 
-                case 1:
+                case Role.Member:
                     return AgentId;
 
                 default:

@@ -20,7 +20,7 @@
     using Service.Interface.Report;
     using Utilities;
 
-    public class DrillDownRequest
+    public class DrillDownRequest : IDrillDownRequest
     {
         public DrillDownRequest(
             int custId,
@@ -28,7 +28,8 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds,
-            ArrayList sortingOrderList)
+            ArrayList sortingOrderList,
+            string groupName)
         {
             CustId = custId;
             ViewLevel = viewLevel;
@@ -36,6 +37,7 @@
             ToDate = toDate;
             ProductIds = productIds;
             SortingOrderList = sortingOrderList;
+            GroupName = groupName;
 
             switch (ViewLevel)
             {
@@ -73,6 +75,8 @@
         public string ProductIds { get; }
         public ArrayList SortingOrderList { get; }
 
+        public string GroupName { get; }
+
         public bool IsValid => !ViewLevel.IsMember()
             && ViewLevel <= Role.Group
             && (ToDate >= FromDate)
@@ -88,9 +92,7 @@
 
         private readonly ICache _cache;
         private readonly IReportService _reportService;
-
-        private readonly Dictionary<int, Func<int, int, DateTime, DateTime, string, object>>
-            GetWinLossDetailFunctions;
+        private readonly WinLossDetailService winLossDetailService;
 
         private readonly object ToolTipsProducts;
 
@@ -105,7 +107,6 @@
         private DateTime _fromDate = DateTime.Today;
         private DateTime _toDate = DateTime.Today;
         private string _username = string.Empty;
-        private string _cacheList = string.Empty;
 
         public WinLossDetailController(
             IReportService reportService,
@@ -114,14 +115,7 @@
         {
             _reportService = reportService ?? new ReportService();
             _cache = cacheManager ?? CacheService.CreateInstance(CacheType.MemoryCache);
-
-            GetWinLossDetailFunctions =
-                new Dictionary<int, Func<int, int, DateTime, DateTime, string, object>>
-                {
-                    {Role.Super, _reportService.GetWinLossDetailSuper},
-                    {Role.Master, _reportService.GetWinLossDetailMAg},
-                    {Role.Agent, _reportService.GetWinLossDetailAg}
-                };
+            winLossDetailService = new WinLossDetailServiceImpl(_reportService);
 
             ToolTipsProducts = new
             {
@@ -193,8 +187,6 @@
             GetRequestPage();
             _viewlevel = viewLevel != 0 ? viewLevel : _viewlevel;
 
-            _cacheList = "CacheList" + _username + _groupname + _custId + _fromDate + _toDate + _products;
-
             var sortingOrderList = _reportService.GetSortingOrderList(_groupname);
 
             if (_custId != 0)
@@ -205,7 +197,8 @@
                     _fromDate,
                     _toDate,
                     _productIds,
-                    sortingOrderList));
+                    sortingOrderList,
+                    _groupname));
             }
 
             return SearchWinLossDetail(
@@ -237,30 +230,12 @@
                 }
             }
 
-            object winLossDetailData;
-
-            if (customerInfo.RoleId >= Role.Super)
-            {
-                winLossDetailData = _reportService.GetWinLossDetail(
-                    groupname,
-                    customerInfo.CustId,
-                    fromDate,
-                    toDate,
-                    productIds);
-            }
-            else
-            {
-                var getWinLossDetail = GetWinLossDetailFunctions[customerInfo.RoleId.DirectUplineLevel()];
-
-                winLossDetailData = getWinLossDetail(
-                    customerInfo.GetCustomerUplineId(),
-                    customerInfo.CustId,
-                    fromDate,
-                    toDate,
-                    productIds);
-            }
-
-            _cache.Set(_cacheList, winLossDetailData);
+            object winLossDetailData = winLossDetailService.SearchWinLossDetail(
+                customerInfo,
+                groupname,
+                fromDate,
+                toDate,
+                productIds);
 
             return Json(
                 new
@@ -294,24 +269,9 @@
                 });
         }
 
-        private ActionResult DrillDownWinLossDetail(DrillDownRequest request)
+        private ActionResult DrillDownWinLossDetail(IDrillDownRequest request)
         {
-            if (request.IsNotValid)
-            {
-                throw new InvalidOperationException(nameof(request.IsValid));
-            }
-
-            var getWinLossDetail = GetWinLossDetailFunctions[request.ViewLevel];
-
-            var winLossData = getWinLossDetail(
-                request.CustId,
-                0,
-                request.FromDate,
-                request.ToDate,
-                request.ProductIds);
-
-            // TODO: will be removed later
-            _cache.Set(_cacheList, winLossData);
+            var winLossData = winLossDetailService.DrillDownWinLossDetail(request);
 
             return Json(
                 new
@@ -334,73 +294,44 @@
             var fromDate = _fromDate;
             var dateTime = _toDate;
             var formatedProducts = _formatedProducts;
+            var roleId = _viewlevel;
+            var cacheKey = "CacheList" + _username + _groupname + _custId + fromDate + dateTime + _productIds;
 
-            var getNew = false;
-            _cacheList = "CacheList" + _username + _groupname + _custId + fromDate + dateTime + _products;
-            var level = _viewlevel;
-
-            string fileName;
             IWinLossDetailReportBuilder builder;
 
-            switch (_viewlevel)
+
+            switch (roleId)
             {
                 case Role.Member:
-                    {
-                        if (!Config.IsCache || _cache.Get<List<WinLossDetailAg>>(_cacheList) == null)
-                        {
-                            getNew = true;
-                            GetData(Role.Agent);
-                        }
-
-                        level = !getNew ? _viewlevel : Role.Member;
-
-                        builder = new WinLossDetailReportAgBuilder(
-                            _cache.Get<List<WinLossDetailAg>>(_cacheList),
-                            level,
+                {
+                    var winlossDetailData = _cache.Get<List<WinLossDetailAg>>(cacheKey);
+                        builder = new MemberWinLossDetailReportBuilder(
+                            winlossDetailData,
+                            roleId,
                             fromDate,
                             dateTime);
-
-                        fileName = level == Role.Agent ? "Agent" : "Member";
 
                         break;
                     }
                 case Role.Agent:
                     {
-                        if (!Config.IsCache || _cache.Get<List<WinLossDetailMAg>>(_cacheList) == null)
-                        {
-                            getNew = true;
-                            GetData(Role.Master);
-                        }
-
-                        level = !getNew ? _viewlevel : Role.Agent;
-
-                        builder = new WinLossDetailReportMAgBuilder(
-                            _cache.Get<List<WinLossDetailMAg>>(_cacheList),
-                            level,
+                        var winlossDetailData = _cache.Get<List<WinLossDetailMAg>>(cacheKey);
+                        builder = new AgentWinLossDetailReportBuilder(
+                            winlossDetailData,
+                            roleId,
                             fromDate,
                             dateTime);
-
-                        fileName = level == Role.Master ? "Master" : "Agent";
 
                         break;
                     }
                 default:
                     {
-                        if (!Config.IsCache || _cache.Get<List<WinLossDetail>>(_cacheList) == null)
-                        {
-                            getNew = true;
-                            GetData(Role.Super);
-                        }
-
-                        level = level == Role.Super ? level : !getNew ? _viewlevel : Role.Master;
-
+                        var winlossDetailData = _cache.Get<List<WinLossDetail>>(cacheKey);
                         builder = new WinLossDetailReportBuilder(
-                            _cache.Get<List<WinLossDetail>>(_cacheList),
-                            level,
+                            winlossDetailData,
+                            roleId,
                             fromDate,
                             dateTime);
-
-                        fileName = level == Role.Super ? "Super" : "Master";
 
                         break;
                     }
@@ -409,7 +340,7 @@
             var memoryStream = builder.Build(formatedProducts);
 
             var exportFileName =
-                $"{fileName}WinLossDetail_{fromDate.ToString(DateFormat)}_{dateTime.ToString(DateFormat)}.xls";
+                $"{roleId.DisplayRoleName()}WinLossDetail_{fromDate.ToString(DateFormat)}_{dateTime.ToString(DateFormat)}.xls";
 
             if (memoryStream != null)
             {

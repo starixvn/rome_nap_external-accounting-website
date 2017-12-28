@@ -56,7 +56,7 @@
                 ? _reportDao.EAS_Rpt_WinLossDaily_Ag(winlostDate, custId, memberId)
                 : _reportDao.EAS_Rpt_WinLossDaily_Ag14(winlostDate, custId, memberId);
 
-        public List<WinLossDetail> GetWinLossDetail(
+        public List<WinLossDetail> GetSuperWinLossDetail(
             string groupname,
             int custId,
             DateTime fromDate,
@@ -64,7 +64,7 @@
             string productIds)
             => _reportDao.EAS_Rpt_WinLossDetail_Com(groupname, custId, fromDate, toDate, productIds, BalanceUpDate);
 
-        public List<WinLossDetail> GetWinLossDetailSuper(
+        public List<WinLossDetail> GetMasterWinLossDetail(
             int custId,
             int masterId,
             DateTime fromDate,
@@ -72,7 +72,7 @@
             string productIds)
             => _reportDao.EAS_Rpt_WinLossDetail_SAg(custId, masterId, fromDate, toDate, productIds, BalanceUpDate);
 
-        public List<WinLossDetailMAg> GetWinLossDetailMAg(
+        public List<WinLossDetailMAg> GetAgentWinLossDetail(
             int custId,
             int agentId,
             DateTime fromDate,
@@ -80,7 +80,7 @@
             string productIds)
             => _reportDao.EAS_Rpt_WinLossDetail_MAg(custId, agentId, fromDate, toDate, productIds, BalanceUpDate);
 
-        public List<WinLossDetailAg> GetWinLossDetailAg(
+        public List<WinLossDetailAg> GetMemberWinLossDetail(
             int custId,
             int memberId,
             DateTime fromDate,
