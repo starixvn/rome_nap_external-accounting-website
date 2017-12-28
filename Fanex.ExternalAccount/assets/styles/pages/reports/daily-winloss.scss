@@ -85,17 +85,13 @@
     }
 }
 .col-win-loss-margin {
-    position: relative;
-    height: 46px;
     .txt-main {
-        display: inline-block
+        display: inline-block;
     }
     .btn-margin-section {
         display: inline-block;
         vertical-align: middle;
-        position: absolute;
-        right: 8px;
-        top: 5px;
+        float: right;
     }
     .txt-margin {
         font-size: 11px;
@@ -103,6 +99,6 @@
     }
     .switch {
         position: relative;
-        top: 4px;
+        top: 3px;
     }
 }
