@@ -325,7 +325,9 @@
             string username = null)
         {
             var customerSetting = reportService.SearchCustomerInfo(Request["groupName"], 0, username, isGetUplineInfo: true);
-            var customers = GetCustomerList(groupName, enabled, closed, suspended, customerSetting);
+            var customers = customerSetting == null
+                ? new DataTable()
+                : GetCustomerList(groupName, enabled, closed, suspended, customerSetting);
             SetEditAllBetVisibility(customers);
             var customers2String = Customers2Json(customers);
             var syncCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncCasino");
