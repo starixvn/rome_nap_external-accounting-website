@@ -12,7 +12,7 @@
         <span class="icon-filter"></span>
     </div>
     <div class="search-form filterbox">
-        <div class="searchBar floatL">
+        <div class="searchBar">
             <div class="form-group">
                 <label class="label">@ViewLang.Username</label>
                 <input class="" type="text" maxlength="50" autocomplete="off" name="txtUserName" id="txtUserName" />
@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <div id="headlineDaily">
+    @*<div id="headlineDaily">
         <div id="InfoDate">
             <span id="SelectedLevel">Super</span> Daily Win Loss on <span id="DateValueInfo"></span>
         </div>
@@ -46,10 +46,28 @@
             </div>
         </div>
 
-    </div>
+    </div>*@
     <div id="mainGrid" class="hide">
         <table id="tbl-report" class="table">
             <thead>
+                <tr>
+                    <th colspan="19" class="title">
+                        <div id="InfoDate">
+                            <span id="SelectedLevel">Super</span> Daily Win Loss on <span id="DateValueInfo"></span>
+                        </div>
+                        @*<div class="groupBack">
+                            <div id="tabAgent">
+                                Agent
+                            </div>
+                            <div id="tabMaster">
+                                Master
+                            </div>
+                            <div id="tabSuper">
+                                Super
+                            </div>
+                        </div>*@
+                    </th>
+                </tr>
                 <tr>
                     <th rowspan="2">No</th>
                     <th class="col-username" rowspan="2"><div class="col-username">Username</div></th>

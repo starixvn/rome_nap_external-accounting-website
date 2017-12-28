@@ -10,29 +10,34 @@
   height: 20px; }
 
 #GroupProducts {
-  height: 32px;
-  border: 1px solid #7b7c7e;
-  border-radius: 0 !important; }
+  height: unset;
+  border: none;
+  border-radius: 0 !important;
+  position: relative; }
   #GroupProducts input {
-    height: 30px; }
+    height: 30px;
+    border: 1px solid #7b7c7e !important;
+    border-radius: 0 !important; }
   #GroupProducts .ui-icon {
-    margin-top: -22px !important; }
+    margin-top: unset !important;
+    position: absolute;
+    right: 4px;
+    top: 7px; }
+
+.ddl-product {
+  line-height: 0; }
 
 #GroupMonthDay .form-group .user-group {
   width: 60px; }
   #GroupMonthDay .form-group .user-group.dll-month {
     width: 148px; }
 
-.filterbox.filter-winloss-detail .label {
-  width: 60px;
-  /*@media all and (min-width-device: 768px) {
-        &.to-width {
-            width: 20px;
-        }
-    }*/ }
-  .filterbox.filter-winloss-detail .label.to-width {
-    width: 20px; }
-
+/*.filterbox.filter-winloss-detail .label {
+    width: 60px; 
+    &.to-width {
+        width: 20px;
+    }  
+}*/
 .filter-winloss-detail .user-group {
   position: relative; }
   .filter-winloss-detail .user-group .ui-multiselect-options {

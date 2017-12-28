@@ -5,8 +5,8 @@
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
   border-radius: 2px;
-  height: 32px;
-  line-height: 32px;
+  height: 30px;
+  line-height: 30px;
   padding-left: 10px;
   padding-right: 10px;
   border: none;
@@ -218,8 +218,11 @@ a {
 .hide {
   display: none; }
 
+.showcontent {
+  display: block; }
+
 .show {
-  overflow: auto !important; }
+  overflow: auto; }
 
 .pull-left {
   float: left; }

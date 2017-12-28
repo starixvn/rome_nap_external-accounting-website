@@ -5,7 +5,10 @@
 .table {
 	border: 1px solid $table-border-color;
 	border-collapse: collapse;
-
+    background: #fff;
+    .title {
+        background: unset;
+    }
     > thead > tr > th,  > tbody > tr > td, > tfoot > tr > td  {
         min-height: 28px;
         border: 1px solid $table-border-color;
@@ -29,6 +32,10 @@
 
     > tbody > tr:hover  > td {
 	    background-color: $table-td-hover-color;
+    }
+
+    >tfoot > tr > td[colspan] {
+        padding: 0 4px;
     }
 
     .width-60 {
@@ -81,22 +88,24 @@
         float: left;
     }
     .pagination-page-list {
-        height: 28px;
-        width: 60px;
+        height: 20px;
+        width: 50px;
         margin-right: 24px;
     }
     .pagination-num {
-        height: 28px;
-        width: 50px;
+        height: 20px;
+        width: 35px;
         margin: 0 4px;
+        padding: 0 4px;
     }
     .pagination-info {
         float: right;
+        margin-top: 4px;
     }
 
     .l-btn-icon[class*="pagination-"] {
         font-family: 'AlphaAdmin';
-        font-size: 16px;
+        font-size: 15px;
         color: #888;
         &:before {
             position: relative;
@@ -108,8 +117,8 @@
         outline: none;
     }
     .l-btn-icon {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
         display: inline-block;
         border: 1px solid $border-color;
         margin-top: 4px;

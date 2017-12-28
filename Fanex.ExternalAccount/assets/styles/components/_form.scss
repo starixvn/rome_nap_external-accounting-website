@@ -1,14 +1,12 @@
 ﻿.search-form {
-    display: inline-block;
-    width: 100%;
-    padding: 10px 0;
     .form-line {
         margin-bottom: 12px;
     }
     .form-group {
-        float: left;    
+        display: inline-block;   
         line-height: 30px; 
         margin-right: 24px; 
+        vertical-align: middle;
         @media all and (max-width: 480px)   {
             margin-bottom: 8px;
         }

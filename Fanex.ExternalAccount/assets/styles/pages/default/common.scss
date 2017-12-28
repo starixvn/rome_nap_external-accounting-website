@@ -337,7 +337,7 @@ body {
 
 .page-title {   
     border-bottom: 1px solid #e0e1e4;
-    margin: -10px -10px 10px -10px;
+    margin: -10px -10px 0 -10px;
     padding-left: 16px;
     padding-right: 16px;
 	height: 40px;
@@ -784,10 +784,8 @@ div#contentSplitter > div#msg {
 
 #headlineDaily {
     visibility: hidden;
-    background-color: #c7c7c7;
     height: 31px;
-    border-left: 1px solid #c7c7c7;
-    border-right: 1px solid #c7c7c7;
+    border: 1px solid #c7c7c7;
     clear: both;
     min-width: 700px;
     padding-right: 40px;
@@ -804,7 +802,7 @@ div#contentSplitter > div#msg {
 #InfoDate {
     font-weight: normal;
     float: left;
-    padding: 9px 0 0 6px;
+    padding: 2px 0;
     color: #000;
 }
 

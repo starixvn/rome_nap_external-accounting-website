@@ -108,8 +108,11 @@ a {
 .hide {
   display: none; }
 
+.showcontent {
+  display: block; }
+
 .show {
-  overflow: auto !important; }
+  overflow: auto; }
 
 .pull-left {
   float: left; }
@@ -139,8 +142,8 @@ a {
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
   border-radius: 2px;
-  height: 32px;
-  line-height: 32px;
+  height: 30px;
+  line-height: 30px;
   padding-left: 10px;
   padding-right: 10px;
   border: none;
@@ -332,7 +335,10 @@ a {
 
 .table {
   border: 1px solid #d3d3d3;
-  border-collapse: collapse; }
+  border-collapse: collapse;
+  background: #fff; }
+  .table .title {
+    background: unset; }
   .table > thead > tr > th, .table > tbody > tr > td, .table > tfoot > tr > td {
     min-height: 28px;
     border: 1px solid #d3d3d3;
@@ -349,6 +355,8 @@ a {
     background-color: #fff; }
   .table > tbody > tr:hover > td {
     background-color: #f8eb95; }
+  .table > tfoot > tr > td[colspan] {
+    padding: 0 4px; }
   .table .width-60 {
     width: 60px; }
   .table.width-700 {
@@ -385,21 +393,23 @@ a {
   float: left; }
 
 .pagination .pagination-page-list {
-  height: 28px;
-  width: 60px;
+  height: 20px;
+  width: 50px;
   margin-right: 24px; }
 
 .pagination .pagination-num {
-  height: 28px;
-  width: 50px;
-  margin: 0 4px; }
+  height: 20px;
+  width: 35px;
+  margin: 0 4px;
+  padding: 0 4px; }
 
 .pagination .pagination-info {
-  float: right; }
+  float: right;
+  margin-top: 4px; }
 
 .pagination .l-btn-icon[class*="pagination-"] {
   font-family: 'AlphaAdmin';
-  font-size: 16px;
+  font-size: 15px;
   color: #888; }
   .pagination .l-btn-icon[class*="pagination-"]:before {
     position: relative;
@@ -410,8 +420,8 @@ a {
   outline: none; }
 
 .pagination .l-btn-icon {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   display: inline-block;
   border: 1px solid #c4c4c4;
   margin-top: 4px;
@@ -509,30 +519,31 @@ a {
 .ui-dialog-buttonpane .btn.-normal {
   background: #e1e1e1 !important; }
 
-.search-form {
+.search-form .form-line {
+  margin-bottom: 12px; }
+
+.search-form .form-group {
   display: inline-block;
-  width: 100%;
-  padding: 10px 0; }
-  .search-form .form-line {
-    margin-bottom: 12px; }
-  .search-form .form-group {
-    float: left;
-    line-height: 30px;
-    margin-right: 24px; }
-    @media all and (max-width: 480px) {
-      .search-form .form-group {
-        margin-bottom: 8px; } }
-  .search-form .label {
-    float: left;
-    margin-right: 6px;
-    text-align: left; }
-  .search-form .user-group button {
-    background-image: none !important;
-    width: 20px !important;
-    height: 32px;
-    margin-left: -20px !important; }
-  .search-form .user-group button:hover {
-    background-image: none !important; }
+  line-height: 30px;
+  margin-right: 24px;
+  vertical-align: middle; }
+  @media all and (max-width: 480px) {
+    .search-form .form-group {
+      margin-bottom: 8px; } }
+
+.search-form .label {
+  float: left;
+  margin-right: 6px;
+  text-align: left; }
+
+.search-form .user-group button {
+  background-image: none !important;
+  width: 20px !important;
+  height: 32px;
+  margin-left: -20px !important; }
+
+.search-form .user-group button:hover {
+  background-image: none !important; }
 
 .form-add {
   padding-top: 16px; }
@@ -653,7 +664,9 @@ textarea {
   height: 32px; }
 
 .filterbox {
-  padding: 8px 0; }
+  padding: 8px 16px;
+  margin: 0 -10px 10px;
+  background: #fff; }
   @media all and (max-device-width: 480px) {
     .filterbox .label {
       width: 62px !important; } }
@@ -1309,7 +1322,7 @@ body {
 /* Title */
 .page-title {
   border-bottom: 1px solid #e0e1e4;
-  margin: -10px -10px 10px -10px;
+  margin: -10px -10px 0 -10px;
   padding-left: 16px;
   padding-right: 16px;
   height: 40px;
@@ -1647,10 +1660,8 @@ div#contentSplitter > div#msg {
 
 #headlineDaily {
   visibility: hidden;
-  background-color: #c7c7c7;
   height: 31px;
-  border-left: 1px solid #c7c7c7;
-  border-right: 1px solid #c7c7c7;
+  border: 1px solid #c7c7c7;
   clear: both;
   min-width: 700px;
   padding-right: 40px;
@@ -1664,7 +1675,7 @@ div#contentSplitter > div#msg {
 #InfoDate {
   font-weight: normal;
   float: left;
-  padding: 9px 0 0 6px;
+  padding: 2px 0;
   color: #000; }
 
 .btnShowMG {

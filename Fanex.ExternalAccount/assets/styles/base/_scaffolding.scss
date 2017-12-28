@@ -135,11 +135,13 @@ a {
 }
 
 .hide {
-    display: none;
+    display: none ;
 }
-
+.showcontent {
+    display: block;
+}
 .show {
-    overflow: auto !important;
+    overflow: auto;
 }
 .pull-left {
     float: left;
