@@ -10,7 +10,6 @@
     using System.Web.Mvc;
     using CasinoLibrary.Model.UserException;
     using Common;
-    using Common.Extensions;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
@@ -34,6 +33,7 @@
     using CustomerDTO = Fanex.ExternalAccount.DTO.Customer.Customer;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
     using System.Diagnostics;
+    using Service.Interface.Report;
 
     public class CustomerController : CustomerBase //DevSkim: ignore DS184626
     {
@@ -44,6 +44,7 @@
         private readonly MasterService _masterService = new MasterService();
         private readonly MemberService _memberService = new MemberService();
         private readonly SuperService _superService = new SuperService();
+        private readonly IReportService reportService = new ReportService();
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public ActionResult IsValidUsername(string username)
@@ -289,7 +290,7 @@
 
         public ActionResult Settings(int id, int custId, int uplineId, string userName, string groupName)
         {
-            var customerSetting = GetCustomerSetting(groupName, 0, userName);
+            var customerSetting = reportService.SearchCustomerInfo(Request["groupName"], 0, userName, isGetUplineInfo: true);
             var result = GetCustomerList(groupName, null, null, null, customerSetting);
 
             ViewBag.CurrentLevel = id;
@@ -323,7 +324,7 @@
             bool? suspended = null,
             string username = null)
         {
-            var customerSetting = GetCustomerSetting(groupName, 0, username);
+            var customerSetting = reportService.SearchCustomerInfo(Request["groupName"], 0, username, isGetUplineInfo: true);
             var customers = GetCustomerList(groupName, enabled, closed, suspended, customerSetting);
             SetEditAllBetVisibility(customers);
             var customers2String = Customers2Json(customers);
@@ -336,9 +337,9 @@
                     records = customers?.Rows.Count ?? 0,
                     rows = customers2String,
                     customerSetting.RoleId,
-                    srecommend = customerSetting.SuperRecommendId,
-                    mrecommend = customerSetting.MasterRecommendId,
-                    recommend = customerSetting.RecommendId,
+                    srecommend = customerSetting.SuperId,
+                    mrecommend = customerSetting.MasterId,
+                    recommend = customerSetting.AgentId,
                     customerSetting.CustId,
                     syncCasino,
                     syncLiveCasino,
@@ -369,7 +370,7 @@
         {
             var masters = _masterService.GetData(CurrentSession.UserId, srecommend, custId, enabled, closed, suspended);
             var superId = Utils.ToInt32(srecommend);
-            var customerSetting = GetCustomerSetting(Request["groupName"], superId, null);
+            var customerSetting = reportService.SearchCustomerInfo(Request["groupName"], superId, null, isGetUplineInfo: true);
             SetEditAllBetVisibility(masters);
             var master2Json = Customers2Json(masters);
 
@@ -379,9 +380,9 @@
                     records = masters.Rows.Count,
                     rows = master2Json,
                     customerSetting.RoleId,
-                    srecommend = customerSetting.SuperRecommendId,
-                    mrecommend = customerSetting.MasterRecommendId,
-                    recommend = customerSetting.RecommendId,
+                    srecommend = customerSetting.SuperId,
+                    mrecommend = customerSetting.MasterId,
+                    recommend = customerSetting.AgentId,
                     customerSetting.CustId,
                     customerSetting.HasSecurityCode
                 });
@@ -395,7 +396,7 @@
             var agents = _agentService.GetData(CurrentSession.UserId, mrecommend, custId, enabled, closed, suspended);
 
             var masterId = Utils.ToInt32(mrecommend);
-            var customerSetting = GetCustomerSetting(Request["groupName"], masterId, null);
+            var customerSetting = reportService.SearchCustomerInfo(Request["groupName"], masterId, null, isGetUplineInfo: true);
             SetEditAllBetVisibility(agents);
             var ret = Customers2Json(agents);
 
@@ -405,9 +406,9 @@
                     records = agents.Rows.Count,
                     rows = ret,
                     customerSetting.RoleId,
-                    SuperRecommend = customerSetting.SuperRecommendId,
-                    MasterRecommend = customerSetting.MasterRecommendId,
-                    Recommend = customerSetting.RecommendId,
+                    SuperRecommend = customerSetting.SuperId,
+                    MasterRecommend = customerSetting.MasterId,
+                    Recommend = customerSetting.AgentId,
                     customerSetting.CustId,
                     customerSetting.HasSecurityCode
                 });
@@ -420,7 +421,7 @@
         {
             var members = _memberService.GetData(CurrentSession.UserId, recommend, custId, enabled, closed, suspended);
             var agentId = Utils.ToInt32(recommend);
-            var customerSetting = GetCustomerSetting(Request["groupName"], agentId, null);
+            var customerSetting = reportService.SearchCustomerInfo(Request["groupName"], agentId, null, isGetUplineInfo: true);
             SetEditAllBetVisibility(members);
             var member2Json = Customers2Json(members);
 
@@ -430,9 +431,9 @@
                     records = members.Rows.Count,
                     rows = member2Json,
                     customerSetting.RoleId,
-                    srecommend = customerSetting.SuperRecommendId,
-                    mrecommend = customerSetting.MasterRecommendId,
-                    recommend = customerSetting.RecommendId,
+                    srecommend = customerSetting.SuperId,
+                    mrecommend = customerSetting.MasterId,
+                    recommend = customerSetting.AgentId,
                     customerSetting.CustId
                 });
         }
@@ -595,7 +596,7 @@
             bool? suspended = null,
             string username = null)
         {
-            var customerSetting = GetCustomerSetting(groupName, 0, username);
+            var customerSetting = BuildCustomerSetting(username);
 
             var customers = GetCustomerList(groupName, enabled, closed, suspended, customerSetting);
             SetEditAllBetVisibility(customers);
@@ -630,7 +631,7 @@
             bool? enabled,
             bool? closed,
             bool? suspended,
-            CustomerSetting setting)
+            CustomerInfoSearchResult setting)
         {
             int? id = null;
             var result = new DataTable();
@@ -646,23 +647,23 @@
                     break;
 
                 case Role.Master:
-                    result = _authorization.IsBelong(groupName, setting.SuperRecommendId, null, true)
-                        ? _masterService.GetData(CurrentSession.UserId, setting.SuperRecommendId, setting.CustId == 0 ? id : setting.CustId,
+                    result = _authorization.IsBelong(groupName, setting.SuperId, null, true)
+                        ? _masterService.GetData(CurrentSession.UserId, setting.SuperId, setting.CustId == 0 ? id : setting.CustId,
                             enabled, closed, suspended)
                         : result;
                     break;
 
                 case Role.Agent:
-                    result = _authorization.IsBelong(groupName, setting.MasterRecommendId, null, true)
-                        ? _agentService.GetData(CurrentSession.UserId, setting.MasterRecommendId,
+                    result = _authorization.IsBelong(groupName, setting.MasterId, null, true)
+                        ? _agentService.GetData(CurrentSession.UserId, setting.MasterId,
                             setting.CustId == 0 ? id : setting.CustId,
                             enabled, closed, suspended)
                         : result;
                     break;
 
                 default:
-                    result = _authorization.IsBelong(groupName, setting.RecommendId, null, true)
-                        ? _memberService.GetData(CurrentSession.UserId, setting.RecommendId,
+                    result = _authorization.IsBelong(groupName, setting.AgentId, null, true)
+                        ? _memberService.GetData(CurrentSession.UserId, setting.AgentId,
                             setting.CustId == 0 ? id : setting.CustId,
                             enabled, closed, suspended)
                         : result;
@@ -672,32 +673,15 @@
             return result;
         }
 
-        private CustomerSetting GetCustomerSetting(string groupName, int custId, string username)
-        {
-            var customerInfo = new ReportService().GetCustomerInfo(groupName, custId, username, isGetUplineInfo: true);
-            var setting = new CustomerSetting();
-            if (!string.IsNullOrWhiteSpace(Request["roleId"]) && string.IsNullOrWhiteSpace(username))
+        private CustomerInfoSearchResult BuildCustomerSetting(string username)
+            => new CustomerInfoSearchResult
             {
-                setting.RoleId = Utils.ToInt32(Request["roleId"]);
-                setting.SuperRecommendId = Utils.ToInt32(Request["srecommend"]);
-                setting.MasterRecommendId = Utils.ToInt32(Request["mrecommend"]);
-                setting.RecommendId = Utils.ToInt32(Request["recommend"]);
-            }
-            else
-            {
-                if (customerInfo != null)
-                {
-                    setting.RoleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]);
-                    setting.SuperRecommendId = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]);
-                    setting.MasterRecommendId = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]);
-                    setting.RecommendId = Utils.ToInt32(customerInfo.Rows[0]["recommend"]);
-                    setting.CustId = Utils.ToInt32(customerInfo.Rows[0]["custid"]);
-                    setting.HasSecurityCode = Utils.ToBoolean(customerInfo.Rows[0]["HasSecurityCode"]);
-                }
-            }
-
-            return setting;
-        }
+                RoleId = Utils.ToInt32(Request["roleId"]),
+                SuperId = Utils.ToInt32(Request["srecommend"]),
+                MasterId = Utils.ToInt32(Request["mrecommend"]),
+                AgentId = Utils.ToInt32(Request["recommend"]),
+                CustId = string.IsNullOrWhiteSpace(username) ? 0 : Utils.ToInt32(Request["custId"])
+            };
 
         private static void SetEditAllBetVisibility(DataTable dataTable)
         {

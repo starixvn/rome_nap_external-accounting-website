@@ -181,7 +181,9 @@
                 "&roleId=" +
                 Fanex.ExtAcc.Customer.CurrentLevel +
                 "&username=" +
-                data.username;
+                data.username +
+                "&custId=" +
+                Fanex.ExtAcc.Customer.custId;
             
             document.location.href = resolveClientUrl("Customer/GetExportToExcel?") + params;
         });
