@@ -14,14 +14,17 @@
     using Service.Impl.Customer.Casino;
     using Service.Impl.Report;
     using Fanex.ExternalAccount.Core.Shared;
+    using Service.Interface.Report;
     using Utilities;
     using ViewModels;
 
     public class LeftPanelDaoImpl : LeftPanelDao
     {
+        private readonly IReportService reportService = new ReportService();
+
         public DataSet GetCustomerInfo(string username, string groupName = "ACCDDD")
         {
-            var customerInfo = new ReportService().GetCustomerInfo(groupName, 0, username, true);
+            var customerInfo = reportService.GetCustomerInfo(groupName, 0, username, true);
 
             if (customerInfo != null && customerInfo.Rows.Count != 0)
             {

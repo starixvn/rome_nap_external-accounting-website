@@ -9,15 +9,18 @@
     using DTO;
     using DTO.UserControl;
     using Interface.Login;
+    using Interface.UserControl;
     using UserControl;
 
     public class LoginService : ILoginService
     {
         private readonly ILoginDao _loginDao;
+        private readonly IGroupService groupService;
 
-        public LoginService(ILoginDao loginDao = null)
+        public LoginService(ILoginDao loginDao = null, IGroupService groupService = null)
         {
             _loginDao = loginDao ?? new LoginDao();
+            this.groupService = groupService ?? new GroupService();
         }
 
         public Result Login(string username, string password, Request request, out int custId, out int onuserId,
@@ -42,7 +45,7 @@
 
                 isIntAcc = _loginDao.CheckExternalGroup(custId, 11, "ExternalGroup");
 
-                result.ResultData = new GroupService().GetGroupById((int)result.ResultData);
+                result.ResultData = groupService.GetGroupById((int)result.ResultData);
             }
 
             return result;

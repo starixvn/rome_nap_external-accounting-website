@@ -14,6 +14,7 @@
     using RSACryptoPad;
     using Service.Impl.Login;
     using Service.Impl.UserControl;
+    using Service.Interface.Login;
     using Service.Interface.UserControl;
     using Utilities;
 
@@ -22,6 +23,8 @@
         private readonly CachingService _cache = new CachingService();
         private readonly IUserService _userService = new UserService();
         private readonly IGroupService groupService = new GroupService();
+        private readonly ILoginService loginService = new LoginService();
+        private readonly IFunctionService functionService = new FunctionService();
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -88,7 +91,7 @@
             }
             else
             {
-                ViewBag.GroupList = new LoginService().GroupList();
+                ViewBag.GroupList = loginService.GroupList();
             }
 
             return PartialViewBase(model);
@@ -200,7 +203,7 @@
         {
             var model = _userService.GetUserById(id);
 
-            ViewBag.IsInternalAdmin = new LoginService().CheckExternalGroup(id, null, eFunctions.ExternalGroup);
+            ViewBag.IsInternalAdmin = loginService.CheckExternalGroup(id, null, eFunctions.ExternalGroup);
 
             return PartialViewBase(model);
         }
@@ -210,10 +213,10 @@
         [AntiXSRFFilter]
         public ActionResult GrantPermission(int userId, string username, string groupName)
         {
-            var funcs = new FunctionService().GetAllFunctions().ToList();
+            var funcs = functionService.GetAllFunctions().ToList();
             funcs = funcs.Where(f => f.IsTest).ToList();
             var groups = groupService.GetListGroup();
-            var externalGroup = new LoginService().GroupList();
+            var externalGroup = loginService.GroupList();
             var functionList = _userService.GetUserFunction(userId);
             var allowFunctions = new List<Function>();
 
@@ -299,7 +302,7 @@
             if (IsAdminHasPermissionOnCustomer(checkCustomerBelongToSpecialSiteResult.IsSpecialSite))
             {
                 var encryption = new EncryptionThread();
-                var param = string.Join("&", username, CurrentSession.UserId, new LoginService().GetDbTime().Ticks,
+                var param = string.Join("&", username, CurrentSession.UserId, loginService.GetDbTime().Ticks,
                     "NAPEXT");
                 param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
 
@@ -356,7 +359,7 @@
             }
 
             var model = _userService.GetUserById(id);
-            ViewBag.IsInternalAdmin = new LoginService().CheckExternalGroup(id, null, eFunctions.ExternalGroup);
+            ViewBag.IsInternalAdmin = loginService.CheckExternalGroup(id, null, eFunctions.ExternalGroup);
             return PartialViewBase(model);
         }
 

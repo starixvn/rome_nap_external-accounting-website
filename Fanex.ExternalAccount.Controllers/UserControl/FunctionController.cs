@@ -16,6 +16,7 @@
     public class FunctionController : BaseController
     {
         private readonly IFunctionService _funcService = new FunctionService();
+        private readonly IGroupService groupService = new GroupService();
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -82,7 +83,7 @@
             var funcs = _funcService.GetAllFunctions();
             var parent = funcs.Where(o => o.ParentID == 0 && o.FuncKey != eFunctions.ExternalGroup);
             var model = _funcService.GetFunctionPolicy(id);
-            var groups = new GroupService().GetAllGroup();
+            var groups = groupService.GetAllGroup();
             var tmp = string.Empty;
             var groupIds = string.Empty;
             var index = 0;
@@ -140,7 +141,7 @@
             var funcs = _funcService.GetAllFunctions();
             var parent = funcs.Where(o => o.ParentID == 0 && o.FuncKey != eFunctions.ExternalGroup);
             var model = new Function();
-            var groups = new GroupService().GetAllGroup();
+            var groups = groupService.GetAllGroup();
 
             if (!CurrentSession.IsITAdmin && CurrentSession.IsInternalAdmin)
             {
@@ -180,7 +181,6 @@
         [AntiXSRFFilter]
         public ActionResult Add(Function function, string groups)
         {
-
             var result = _funcService.CreateFunction(function, CurrentSession.CustId,
                 CurrentContext.Ip4Address, groups);
 

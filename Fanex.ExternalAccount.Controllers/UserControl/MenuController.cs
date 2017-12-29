@@ -15,9 +15,11 @@
     public class MenuController : BaseController
     {
         private readonly IMenuService _menuService;
+        private readonly ICachingService _cachingService;
 
         public MenuController()
         {
+            _cachingService = new CachingService();
             _menuService = _menuService ?? new MenuService();
         }
 
@@ -140,7 +142,7 @@
             Policy = AuthenticateAction.AuthenticationType.Read)]
         private List<Menu> GetMenus()
         {
-            var menuList = new CachingService().GetUserCache(CurrentSession.UserId).MenuList;
+            var menuList = _cachingService.GetUserCache(CurrentSession.UserId).MenuList;
             var parents = menuList.Where(x => x.ParentId == 0);
             var list = new List<Menu>();
             foreach (var parent in parents)
@@ -155,7 +157,7 @@
             Policy = AuthenticateAction.AuthenticationType.Read)]
         private List<Function> GetFunctions()
         {
-            var menuList = new CachingService().GetUserCache(CurrentSession.UserId).PolicyList;
+            var menuList = _cachingService.GetUserCache(CurrentSession.UserId).PolicyList;
             var parents = menuList.Where(x => x.ParentID == 0);
             var list = new List<Function>();
             foreach (var parent in parents)

@@ -15,6 +15,7 @@
     using ONEbook.UM.Services.Impl;
     using Service.Impl.Login;
     using Service.Interface.Login;
+    using Service.Interface.UserControl;
     using Utilities;
 
     public class SharedController : BaseController
@@ -22,12 +23,14 @@
         private readonly ILoginService _loginService;
         private readonly CurrentSession _currentSession;
         private readonly IMaintenanceService _maintenanceService;
+        private readonly IMenuService menuService;
 
         public SharedController()
         {
             _currentSession = new CurrentSession();
             _loginService = new LoginService();
             _maintenanceService = new MaintenanceService();
+            menuService = new MenuService();
         }
 
         public ActionResult _Layout()
@@ -53,7 +56,6 @@
 
         public ActionResult _Menu()
         {
-            var menuService = new MenuService();
             var menuList = menuService.GetMenusByUserId(CurrentSession.UserId);
             var rootMenuList = menuList.Where(x => x.ParentId == 0);
             var menuDict = new Dictionary<string, MenuItem>();
@@ -102,7 +104,7 @@
             if (onuserId > 0 && User.Identity.IsAuthenticated)
             {
                 try
-                {                    
+                {
                     var isKickOut = _loginService.IsKickedOut(onuserId);
                     if (!isKickOut)
                     {
@@ -128,7 +130,7 @@
 
             if (_maintenanceService.IsUnderMaintenance())
             {
-                UnderMaintenanceTime underMaintenanceTime = _maintenanceService.GetUnderMaintenanceTime();
+                var underMaintenanceTime = _maintenanceService.GetUnderMaintenanceTime();
                 ViewBag.UmFromTime = underMaintenanceTime.From;
                 ViewBag.UmToTime = underMaintenanceTime.To;
                 return PartialView();

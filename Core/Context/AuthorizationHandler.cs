@@ -10,13 +10,18 @@
     using Service.Impl.Login;
     using Service.Impl.Report;
     using Service.Impl.UserControl;
+    using Service.Interface.Login;
+    using Service.Interface.Report;
     using Service.Interface.UserControl;
 
     public class AuthorizationHandler
     {
         public static readonly AuthorizationHandler Instance = new AuthorizationHandler();
         private readonly ICachingService _cachingService = new CachingService();
-
+        private readonly ILoginService loginService = new LoginService();
+        private readonly IReportService reportService = new ReportService();
+        private readonly IUserService userService = new UserService();
+        
         public bool IsBelong()
         {
             var currentContext = new CurrentContext();
@@ -36,17 +41,16 @@
             {
                 return true;
             }
-
-            var loginService = new LoginService();
+            
             var groups = loginService.GroupList();
             var userGroup = groups.Where(o => o.GroupID == currentSession.GroupId).ToList();
             groupname = string.IsNullOrEmpty(groupname) ? userGroup.FirstOrDefault()?.GroupName : groupname;
-            var result = new ReportService().GetCustomerInfo(groupname, custId, userName, isGetUplineInfo);
+            var result = reportService.GetCustomerInfo(groupname, custId, userName, isGetUplineInfo);
 
             return result?.Rows.Count > 0 || custId == 0 && userGroup.Count > 0;
         }
 
-        private static bool IsBelong(string groupname, IEnumerable<int> custIds, string userName, bool isGetUplineInfo)
+        private bool IsBelong(string groupname, IEnumerable<int> custIds, string userName, bool isGetUplineInfo)
         {
             var currentSession = GetCurrentSession();
 
@@ -54,8 +58,7 @@
             {
                 return true;
             }
-
-            var loginService = new LoginService();
+            
             var groups = loginService.GroupList();
             var userGroup = groups.Where(o => o.GroupID == currentSession.GroupId);
             groupname = string.IsNullOrEmpty(groupname) ? userGroup.FirstOrDefault()?.GroupName : groupname;
@@ -67,7 +70,7 @@
 
             foreach (var id in custIds)
             {
-                var result = new ReportService().GetCustomerInfo(groupname, id, userName, isGetUplineInfo);
+                var result = reportService.GetCustomerInfo(groupname, id, userName, isGetUplineInfo);
                 if (result == null || result.Rows.Count <= 0)
                 {
                     return false;
@@ -77,11 +80,10 @@
             return true;
         }
 
-        private static CurrentSession GetCurrentSession()
+        private CurrentSession GetCurrentSession()
         {
             var currentSession = new CurrentSession();
-            var loginService = new LoginService();
-            var userInfo = new UserService().GetUserById(currentSession.UserId);
+            var userInfo = userService.GetUserById(currentSession.UserId);
 
             if (currentSession.GroupId == userInfo.GroupID)
             {

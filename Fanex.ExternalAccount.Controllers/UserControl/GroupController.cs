@@ -12,20 +12,29 @@
     using Newtonsoft.Json;
     using Service.Impl.Login;
     using Service.Impl.UserControl;
+    using Service.Interface.Login;
     using Service.Interface.UserControl;
 
     public class GroupController : BaseController
     {
         private readonly CachingService _cache;
         private readonly IGroupService _groupService;
+        private readonly IFunctionService functionService;
+        private readonly ILoginService loginService;
 
-        public GroupController(CachingService cache, IGroupService groupService)
+        public GroupController(
+            CachingService cache,
+            IGroupService groupService,
+            IFunctionService functionService,
+            ILoginService loginService)
         {
             _groupService = groupService ?? new GroupService();
             _cache = cache ?? new CachingService();
+            this.functionService = functionService ?? new FunctionService();
+            this.loginService = loginService ?? new LoginService();
         }
 
-        public GroupController() : this(null, null)
+        public GroupController() : this(null, null, null, null)
         {
         }
 
@@ -57,7 +66,7 @@
                 }
             }
 
-            return JsonBase(new {total = 1, page = 1, records = result.Count, rows = result},
+            return JsonBase(new { total = 1, page = 1, records = result.Count, rows = result },
                 new JsonSerializerSettings());
         }
 
@@ -131,9 +140,9 @@
         [AntiXSRFFilter]
         public ActionResult GrantPermission(int groupId, string groupName)
         {
-            var funcs = new FunctionService().GetAllFunctions().ToList();
+            var funcs = functionService.GetAllFunctions().ToList();
             funcs = funcs.Where(f => f.IsTest).ToList();
-            var externalGroup = new LoginService().GroupList();
+            var externalGroup = loginService.GroupList();
             var functionList = _groupService.GetAllGroupPolicy(groupId).ToList();
 
             var allowFunctions = new List<Function>();

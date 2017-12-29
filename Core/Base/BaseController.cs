@@ -11,6 +11,7 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
+    using Caching;
     using CasinoLibrary.Model.UserException;
     using CustomerSetting.IP.Utils;
     using CustomerSetting.Module.Core.Criteria;
@@ -28,7 +29,9 @@
     using RemotingRef;
     using Reports.WinLossDetail;
     using Service.Impl.Customer.Casino;
+    using Service.Impl.Report;
     using Service.Impl.UserControl;
+    using Service.Interface.UserControl;
     using Utilities;
     using CurrentContext = Context.CurrentContext;
     using CurrentSession = Context.CurrentSession;
@@ -37,6 +40,8 @@
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class BaseController : Controller
     {
+        private readonly ICachingService _cachingService;
+
         protected const string SiteName = "ExtAcc";
 
         protected const int FromSystem = 3;
@@ -49,6 +54,7 @@
 
         protected BaseController()
         {
+            _cachingService = new CachingService();
             _currentContext = new CurrentContext();
             _currentSession = new CurrentSession();
         }
@@ -220,7 +226,7 @@
         protected bool IsAuthorized(int userId, string functionKey, AuthenticateAction.AuthenticationType policy,
             HttpRequestBase request)
         {
-            var userCache = new CachingService().GetUserCache(userId);
+            var userCache = _cachingService.GetUserCache(userId);
             var menuList = userCache.MenuList;
             var userFunctions = userCache.PolicyList.Where(x => x.FuncKey == functionKey).ToList();
             var hasPermissionOnMenu = true;

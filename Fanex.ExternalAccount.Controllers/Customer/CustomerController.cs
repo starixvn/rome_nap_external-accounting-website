@@ -41,6 +41,7 @@
         private readonly AgentService _agentService = new AgentService();
         private readonly AuthorizationHandler _authorization = new AuthorizationHandler();
         private readonly CustomerService _customerService = new CustomerService();
+        private readonly PTEngine.Services.ICustomerService ptCustomerService = new PTEngine.Services.CustomerService();
         private readonly MasterService _masterService = new MasterService();
         private readonly MemberService _memberService = new MemberService();
         private readonly SuperService _superService = new SuperService();
@@ -81,7 +82,7 @@
                 UserName = parentUsername.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            var customer = new PTEngine.Services.CustomerService().GetCustomerForAddNewMaster(context);
+            var customer = ptCustomerService.GetCustomerForAddNewMaster(context);
             customer.CurrencyId = parentCurrencyId;
 
             return JsonBase(new { context, customer });
@@ -111,7 +112,7 @@
             };
 
             int masterId;
-            var result = new PTEngine.Services.CustomerService().AddNewMaster(customer, requestContext, out masterId);
+            var result = ptCustomerService.AddNewMaster(customer, requestContext, out masterId);
 
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
@@ -158,7 +159,7 @@
                 UserName = parentUsername.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            var customer = new PTEngine.Services.CustomerService().GetCustomerForAddNewAgent(context);
+            var customer = ptCustomerService.GetCustomerForAddNewAgent(context);
             customer.CurrencyId = parentCurrencyId;
 
             return JsonBase(new { context, customer });
@@ -188,7 +189,7 @@
             };
 
             int agentId;
-            var result = new PTEngine.Services.CustomerService().AddNewAgent(customer, requestContext, out agentId);
+            var result = ptCustomerService.AddNewAgent(customer, requestContext, out agentId);
 
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
@@ -235,7 +236,7 @@
                 UserName = parentUsername.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            var customer = new PTEngine.Services.CustomerService().GetCustomerForAddNewMember(context);
+            var customer = ptCustomerService.GetCustomerForAddNewMember(context);
             customer.CurrencyId = parentCurrencyId;
 
             return JsonBase(new { context, customer });
@@ -265,7 +266,7 @@
             };
 
             int memberId;
-            var result = new PTEngine.Services.CustomerService().AddNewMember(customer, requestContext, out memberId);
+            var result = ptCustomerService.AddNewMember(customer, requestContext, out memberId);
 
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {

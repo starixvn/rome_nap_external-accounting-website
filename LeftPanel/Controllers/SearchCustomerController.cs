@@ -29,6 +29,7 @@
         private const string LeftPanelOtpIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/OTP/Index.cshtml";
 
         private readonly LeftPanelService _service = new LeftPanelServiceImpl();
+        private readonly ICustomerService customerService = new CustomerService();
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -37,7 +38,7 @@
             var userId = CurrentSession.UserId;
             ViewBag.UserId = userId;
 
-            if(string.IsNullOrWhiteSpace(custName))
+            if (string.IsNullOrWhiteSpace(custName))
             {
                 return View(LeftPanelIndexView);
             }
@@ -217,8 +218,7 @@
             ViewBag.id = id;
             ViewBag.uplineId = uplineId;
 
-            var bettingLimitService = new CustomerService();
-            var model = bettingLimitService.GetCustomer(new RequestContext
+            var model = customerService.GetCustomer(new RequestContext
             {
                 CustId = uplineId,
                 AgentId = 0,
@@ -276,9 +276,8 @@
                 IP = CurrentContext.Ip4Address
             };
 
-            var bettingLimitService = new CustomerService();
-            var oldSetting = bettingLimitService.GetCustomer(requestContext);
-            var result = bettingLimitService.SaveCustomer(oldSetting, newSetting, requestContext, new Hashtable());
+            var oldSetting = customerService.GetCustomer(requestContext);
+            var result = customerService.SaveCustomer(oldSetting, newSetting, requestContext, new Hashtable());
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage }, settings);
         }
