@@ -132,23 +132,20 @@
                 return model.RemoveProduct(roleId, productName, true);
             }
 
-            if (!syncUpline)
+            if (syncUpline)
             {
-                if (roleId.IsNotSuper()
-                    || (roleId.IsSuper() && hideUpline))
-                {
-                    model.RemoveProductSetting(productName);
-                }
-
-                return model.RemoveProduct(roleId, productName, false);
+                return IsSyncedProduct(roleId, hide, sync, syncDownline, isCheckSyncDownlineField)
+                    ? model.RemoveProduct(roleId, productName, false)
+                    : model;
             }
 
-            if (IsSyncedProduct(roleId, hide, sync, syncDownline, isCheckSyncDownlineField))
+            if (roleId.IsNotSuper()
+                || (roleId.IsSuper() && hideUpline))
             {
-                return model.RemoveProduct(roleId, productName, false);
+                model.RemoveProductSetting(productName);
             }
 
-            return model;
+            return model.RemoveProduct(roleId, productName, false);
         }
 
         private static bool IsSyncedProduct(int roleId, bool hide, bool sync, bool syncDownline, bool isCheckSyncDownlineField)
@@ -223,47 +220,52 @@
 
         private static void RemoveVirtualSportSetting(CustomerModel model, CustomerStatus product)
         {
-            if (product.HideVirtualSports)
+            if (!product.HideVirtualSports)
             {
-                model.RemoveProductStatusSetting("EnableVirtualSports");
+                return;
+            }
+            model.RemoveProductStatusSetting("EnableVirtualSports");
 
-                bool hideVirtualSports = product.RoleId.IsMember()?
-                    product.UplineStatus.HideVirtualSports :
-                    product.HideVirtualSports;
+            bool hideVirtualSports = product.RoleId.IsMember()?
+                product.UplineStatus.HideVirtualSports :
+                product.HideVirtualSports;
 
-                if (hideVirtualSports)
-                {
-                    model.RemoveProductSetting("VirtualSports")
-                        .RemoveCrossLevelProductSetting("VirtualSports");
-                }
+            if (hideVirtualSports)
+            {
+                model.RemoveProductSetting("VirtualSports")
+                    .RemoveCrossLevelProductSetting("VirtualSports");
             }
         }
 
         private static void RemoveLiveCasinoSetting(CustomerModel model, CustomerStatus product)
         {
-            if (!product.SyncLiveCasino)
+            if (product.SyncLiveCasino)
             {
-                model.RemoveProductStatusSetting("EnableLiveCasino");
+                return;
+            }
 
-                if (!product.UplineStatus.SyncLiveCasino)
-                {
-                    model.RemoveProductSetting("LiveCasino")
-                        .RemoveCrossLevelProductSetting("LiveCasino");
-                }
+            model.RemoveProductStatusSetting("EnableLiveCasino");
+
+            if (!product.UplineStatus.SyncLiveCasino)
+            {
+                model.RemoveProductSetting("LiveCasino")
+                    .RemoveCrossLevelProductSetting("LiveCasino");
             }
         }
 
         private static void RemoveCasinoSetting(CustomerModel model, CustomerStatus product)
         {
-            if (!product.SyncCasino)
+            if (product.SyncCasino)
             {
-                model.RemoveProductStatusSetting("EnableCasino");
+                return;
+            }
 
-                if (!product.UplineStatus.SyncCasino)
-                {
-                    model.RemoveProductSetting("Casino")
-                        .RemoveCrossLevelProductSetting("Casino");
-                }
+            model.RemoveProductStatusSetting("EnableCasino");
+
+            if (!product.UplineStatus.SyncCasino)
+            {
+                model.RemoveProductSetting("Casino")
+                    .RemoveCrossLevelProductSetting("Casino");
             }
         }
 

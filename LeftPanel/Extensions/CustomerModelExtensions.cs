@@ -6,7 +6,6 @@
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.IP.Utils;
-    using CustomerSetting.Security.Authenticate;
     using DTO.Customer;
     using Models;
     using Utilities;
@@ -53,24 +52,26 @@
                     new ObjectInfo { Value = Utils.ToDateTime(customerRow["LastChangedSecurityCodeDate"]).ToStringExt(DateTimeFormat), Text = "Security Code" }
                 };
 
-            if (roleId.IsNotMember())
+            if (!roleId.IsNotMember())
             {
-                model.Login.Add(
-                    new ObjectInfo
-                    {
-                        Value = Utils.ToBoolean(customerRow["NicknameLoginOnly"]) ? "Nickname Only" : "Username/Nickname",
-                        Text = "Login Options"
-                    });
-
-                model.Login.Add(
-                  new ObjectInfo
-                  {
-                      Value = Utils.ToDateTime(customerRow["OTPCreateDate"]).ToStringExt(DateTimeFormat),
-                      Text = "OTP"
-                  });
-
-                model.BalanceInfo.Balances.Add(new ObjectInfo { Value = tableCash.Rows[0][GetUsedCreditColumn(roleId)], Text = "Used Credit" });
+                return model;
             }
+
+            model.Login.Add(
+                new ObjectInfo
+                {
+                    Value = Utils.ToBoolean(customerRow["NicknameLoginOnly"]) ? "Nickname Only" : "Username/Nickname",
+                    Text = "Login Options"
+                });
+
+            model.Login.Add(
+                new ObjectInfo
+                {
+                    Value = Utils.ToDateTime(customerRow["OTPCreateDate"]).ToStringExt(DateTimeFormat),
+                    Text = "OTP"
+                });
+
+            model.BalanceInfo.Balances.Add(new ObjectInfo { Value = tableCash.Rows[0][GetUsedCreditColumn(roleId)], Text = "Used Credit" });
 
             return model;
         }
@@ -119,18 +120,26 @@
 
             model.BalanceInfo = new BalanceInfo
             {
-                CurrencyId = new ObjectInfo { Value = Utils.ToInt32(customerRow["exchangeid"]), Text = "Currency Id" },
-                Currency = new ObjectInfo { Value = Utils.ToString(customerRow["currency"]), Text = "Currency" },
+                CurrencyId = new ObjectInfo {Value = Utils.ToInt32(customerRow["exchangeid"]), Text = "Currency Id"},
+                Currency = new ObjectInfo {Value = Utils.ToString(customerRow["currency"]), Text = "Currency"},
                 Balances = new List<ObjectInfo>
                 {
-                    new ObjectInfo { Value = Utils.ToDecimal(cashRow[GetCashColumn(roleId)]), Text = "Total Cash" },
-                    new ObjectInfo { Value = Utils.ToDecimal(cashRow[GetYesterdayCashColumn(roleId)]), Text = "Yesterday Cash" },
-                    new ObjectInfo { Value = Utils.ToDecimal(cashRow[GetOutstandingColumn(roleId)]), Text = "Outstanding" },
-                    new ObjectInfo { Value = Utils.ToDecimal(customerRow["credit"]), Text = "Given Credit" }
-                }
+                    new ObjectInfo {Value = Utils.ToDecimal(cashRow[GetCashColumn(roleId)]), Text = "Total Cash"},
+                    new ObjectInfo
+                    {
+                        Value = Utils.ToDecimal(cashRow[GetYesterdayCashColumn(roleId)]),
+                        Text = "Yesterday Cash"
+                    },
+                    new ObjectInfo
+                    {
+                        Value = Utils.ToDecimal(cashRow[GetOutstandingColumn(roleId)]),
+                        Text = "Outstanding"
+                    },
+                    new ObjectInfo {Value = Utils.ToDecimal(customerRow["credit"]), Text = "Given Credit"}
+                },
+                IsUpdateCredit = AuthorizationHandler.HasUpdateCreditPermission(CurrentSession.Instance.UserId)
             };
 
-            model.BalanceInfo.IsUpdateCredit = AuthorizationHandler.HasUpdateCreditPermission(CurrentSession.Instance.UserId);
 
             return model;
         }
@@ -141,9 +150,7 @@
                 userId,
                 groupName,
                 username,
-                model.PersonalInfo.UplineId == null
-                    ? 0
-                    : (int)model.PersonalInfo.UplineId.Value);
+                (int?) model.PersonalInfo.UplineId?.Value ?? 0);
 
             model.RemoveProductSetting(customerStatus);
 
@@ -162,7 +169,7 @@
         public static string CheckVNIP(string ip)
          => string.IsNullOrWhiteSpace(ip)
             || (IpUtils.IsVnIp(ip)
-                && !AuthorizationHandler.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP, AuthenticateAction.AuthenticationType.Read))
+                && !AuthorizationHandler.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP))
                     ? string.Empty : ip;
 
         public static CustomerModel AddProductSetting(
@@ -170,18 +177,20 @@
             DataTable table3rdDCS,
             ProductSettingParam settingParams)
         {
-            if (IsProductVisibledToSite(table3rdDCS, settingParams.ProductId, settingParams.ProductKey))
+            if (!IsProductVisibledToSite(table3rdDCS, settingParams.ProductId, settingParams.ProductKey))
             {
-                AddEditSettingLink(model, settingParams.ProductKey, settingParams.ProductName);
+                return model;
+            }
 
-                if (settingParams.StatusType == StatusType.Checkbox)
-                {
-                    AddEnableCheckboxItem(model, settingParams.ProductKey, !table3rdDCS.IsProductEnabled(settingParams.ProductId), settingParams.ProductName);
-                }
-                else
-                {
-                    AddEnableLinkItem(model, settingParams.ProductKey, settingParams.ProductName);
-                }
+            AddEditSettingLink(model, settingParams.ProductKey, settingParams.ProductName);
+
+            if (settingParams.StatusType == StatusType.Checkbox)
+            {
+                AddEnableCheckboxItem(model, settingParams.ProductKey, !table3rdDCS.IsProductEnabled(settingParams.ProductId), settingParams.ProductName);
+            }
+            else
+            {
+                AddEnableLinkItem(model, settingParams.ProductKey, settingParams.ProductName);
             }
 
             return model;

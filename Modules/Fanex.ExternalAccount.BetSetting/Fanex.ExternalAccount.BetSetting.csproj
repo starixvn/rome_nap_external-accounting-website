@@ -304,7 +304,6 @@
   <ItemGroup>
     <Compile Include="App_Start\ModuleRegistrator.cs" />
     <Compile Include="Base\BettingControllerBase.cs" />
-    <Compile Include="Controllers\BingoBettingController.cs" />
     <Compile Include="Controllers\CasinoBettingController.cs" />
     <Compile Include="Controllers\GoldDeluxeBettingController.cs" />
     <Compile Include="Controllers\KenoBettingController.cs" />
