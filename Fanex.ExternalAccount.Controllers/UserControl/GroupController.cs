@@ -53,7 +53,7 @@
             {
                 if (!CurrentSession.IsITAdmin && CurrentSession.IsInternalAdmin)
                 {
-                    result = result.Where(o => o.GroupID != 1).ToList();
+                    result = result.Where(o => !Group.IsITGroup(o.GroupID)).ToList();
                 }
             }
 
@@ -154,12 +154,9 @@
             ViewBag.GroupID = groupId;
             ViewBag.GroupName = groupName;
             var isEditExtGroup =
-                externalGroup.Any(i => i.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase));
-            if (!isEditExtGroup)
-            {
-                isEditExtGroup = groupId != 1 && !groupName.Equals("Finance", StringComparison.OrdinalIgnoreCase)
-                                 && !groupName.Equals("Internal", StringComparison.OrdinalIgnoreCase);
-            }
+                externalGroup.Any(i => i.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase))
+                ? externalGroup.Any(i => i.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase))
+                : !Group.IsOfficeGroup(groupName);
 
             if (isEditExtGroup)
             {
@@ -178,7 +175,7 @@
                     && x.FuncKey != eFunctions.Administration && x.FuncKey != eFunctions.SystemConfiguration
                     && x.FuncKey != eFunctions.ExternalGroup);
             }
-            else if (groupId != 1)
+            else if (!Group.IsITGroup(groupId))
             {
                 ViewBag.Function = functionList.Where(x => x.ParentID == 0 && x.FuncKey != eFunctions.ManageFunction
                                                            && x.FuncKey != eFunctions.ManageMenu

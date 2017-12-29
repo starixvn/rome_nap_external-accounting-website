@@ -21,23 +21,24 @@
     {
         private readonly CachingService _cache = new CachingService();
         private readonly IUserService _userService = new UserService();
+        private readonly IGroupService groupService = new GroupService();
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult UserList()
         {
+            var groups = groupService.GetListGroup();
             if (CurrentSession.IsITAdmin)
             {
-                ViewBag.GroupList = new GroupService().GetListGroup();
+                ViewBag.GroupList = groups;
             }
             else if (CurrentSession.IsInternalAdmin)
             {
-                ViewBag.GroupList = new GroupService().GetListGroup().Where(o => o.GroupID != 1);
+                ViewBag.GroupList = groups.Where(o => !Group.IsITGroup(o.GroupID));
             }
             else
             {
-                ViewBag.GroupList = new GroupService().GetListGroup()
-                    .Where(o => o.GroupName == CurrentSession.CurrencyGroup);
+                ViewBag.GroupList = groups.Where(o => o.GroupName == CurrentSession.CurrencyGroup);
             }
 
             return PartialViewBase();
@@ -52,7 +53,7 @@
 
             if (!CurrentSession.IsITAdmin && CurrentSession.IsInternalAdmin)
             {
-                result = result.Where(o => o.GroupID != 1);
+                result = result.Where(o => !Group.IsITGroup(o.GroupID));
             }
             else
             {
@@ -76,13 +77,14 @@
             model.FirstName = HttpUtility.HtmlDecode(model.FirstName);
             model.LastName = HttpUtility.HtmlDecode(model.LastName);
 
+            var groups = groupService.GetListGroup();
             if (CurrentSession.IsITAdmin)
             {
-                ViewBag.GroupList = new GroupService().GetListGroup();
+                ViewBag.GroupList = groups;
             }
             else if (CurrentSession.IsInternalAdmin)
             {
-                ViewBag.GroupList = new GroupService().GetListGroup().Where(o => o.GroupID != 1);
+                ViewBag.GroupList = groups.Where(o => !Group.IsITGroup(o.GroupID));
             }
             else
             {
@@ -109,20 +111,18 @@
         public ActionResult AddUser()
         {
             var model = new User();
-
+            var groups = groupService.GetListGroup();
             if (CurrentSession.IsITAdmin)
             {
-                ViewBag.GroupList = new GroupService().GetListGroup();
+                ViewBag.GroupList = groups;
             }
             else if (CurrentSession.IsInternalAdmin)
             {
-                ViewBag.GroupList = new GroupService().GetListGroup()
-                    .Where(o => o.GroupID != 1);
+                ViewBag.GroupList = groups.Where(o => !Group.IsITGroup(o.GroupID));
             }
             else
             {
-                ViewBag.GroupList = new GroupService().GetListGroup()
-                    .Where(o => o.GroupName == CurrentSession.CurrencyGroup);
+                ViewBag.GroupList = groups.Where(o => o.GroupName == CurrentSession.CurrencyGroup);
             }
 
             return PartialViewBase(model);
@@ -134,20 +134,18 @@
         public ActionResult AddExistUser()
         {
             var model = new User();
-
+            var groups = groupService.GetListGroup();
             if (CurrentSession.IsITAdmin)
             {
-                ViewBag.GroupList = new GroupService().GetListGroup();
+                ViewBag.GroupList = groups;
             }
             else if (CurrentSession.IsInternalAdmin)
             {
-                ViewBag.GroupList = new GroupService().GetListGroup()
-                    .Where(o => o.GroupID != 1);
+                ViewBag.GroupList = groups.Where(o => !Group.IsITGroup(o.GroupID));
             }
             else
             {
-                ViewBag.GroupList = new GroupService().GetListGroup()
-                    .Where(o => o.GroupName == CurrentSession.CurrencyGroup);
+                ViewBag.GroupList = groups.Where(o => o.GroupName == CurrentSession.CurrencyGroup);
             }
 
             return PartialViewBase(model);
@@ -214,7 +212,7 @@
         {
             var funcs = new FunctionService().GetAllFunctions().ToList();
             funcs = funcs.Where(f => f.IsTest).ToList();
-            var groups = new GroupService().GetListGroup();
+            var groups = groupService.GetListGroup();
             var externalGroup = new LoginService().GroupList();
             var functionList = _userService.GetUserFunction(userId);
             var allowFunctions = new List<Function>();
@@ -238,10 +236,10 @@
             ViewBag.UserID = userId;
             ViewBag.Username = username;
 
-            var isExistedGroup =
+            var isExternalGroup =
                 externalGroup.Any(i => i.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase));
 
-            if (isExistedGroup)
+            if (isExternalGroup)
             {
                 ViewBag.UserFunc = functionList.Where(x => x.ParentID == 0 && x.FuncKey != eFunctions.ManageFunction
                                                            && x.FuncKey != eFunctions.ManageGroup
@@ -258,7 +256,12 @@
                     && x.FuncKey != eFunctions.Administration && x.FuncKey != eFunctions.SystemConfiguration
                     && x.FuncKey != eFunctions.ExternalGroup);
             }
-            else if (groupId != 1)
+            else if (Group.IsITGroup(groupId ?? 0))
+            {
+                ViewBag.UserFunc = functionList.Where(x => x.ParentID == 0 && x.FuncKey != eFunctions.ExternalGroup);
+                ViewBag.UserSubFunc = functionList.Where(x => x.ParentID != 0 && x.FuncKey != eFunctions.ExternalGroup);
+            }
+            else
             {
                 ViewBag.UserFunc = functionList.Where(x => x.ParentID == 0 && x.FuncKey != eFunctions.ManageFunction
                                                            && x.FuncKey != eFunctions.ManageMenu
@@ -269,11 +272,6 @@
                     x.ParentID != 0 && x.FuncKey != eFunctions.ManageFunction
                     && x.FuncKey != eFunctions.ManageMenu && x.FuncKey != eFunctions.SystemConfiguration
                     && x.FuncKey != eFunctions.ExternalGroup);
-            }
-            else
-            {
-                ViewBag.UserFunc = functionList.Where(x => x.ParentID == 0 && x.FuncKey != eFunctions.ExternalGroup);
-                ViewBag.UserSubFunc = functionList.Where(x => x.ParentID != 0 && x.FuncKey != eFunctions.ExternalGroup);
             }
 
             return PartialViewBase();

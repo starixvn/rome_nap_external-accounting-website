@@ -92,7 +92,7 @@
                 loginService.CheckExternalGroup(currentSession.UserId, 11, "ExternalGroup");
             currentSession.GroupId = userInfo.GroupID;
             currentSession.CurrencyGroup = userInfo.GroupName;
-            currentSession.IsITAdmin = currentSession.GroupId == 1;
+            currentSession.IsITAdmin = Group.IsITGroup(currentSession.GroupId);
 
             return currentSession;
         }

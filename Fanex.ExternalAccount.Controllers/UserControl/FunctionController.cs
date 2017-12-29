@@ -214,7 +214,7 @@
             {
                 if (funcId == 1 && addNew)
                 {
-                    groups.ForEach(o => o.HasPermission = o.GroupID == 1);
+                    groups.ForEach(o => o.HasPermission = Group.IsITGroup(o.GroupID));
                 }
 
                 var allChecked = groups.TrueForAll(o => o.HasPermission);
