@@ -1,7 +1,7 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using Fanex.PTEngine
 @{
-    var actionName = Utils.ToInt32(Request["roleId"]) != 1 ? "EditCommission" : "EditCommissionMember";
+    var actionName = Role.IsNotMember(Utils.ToInt32(Request["roleId"])) ? "EditCommission" : "EditCommissionMember";
 }
 <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/Customer/PTEngine.css")" rel="stylesheet" type="text/css" />
@@ -248,7 +248,7 @@
 <script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.Commission.js")" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        if (Fanex.ExtAcc.Customer.CurrentLevel == 1) {
+        if (Fanex.ExtAcc.Customer.CurrentLevel == '@Role.Member') {
             $('#tblMasterAgent').remove();
         } else {
             $('#tblMember').remove();

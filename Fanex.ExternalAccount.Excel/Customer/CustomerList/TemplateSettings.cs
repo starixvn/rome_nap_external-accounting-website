@@ -2,6 +2,7 @@
 {
     using System.IO;
     using System.Web;
+    using Core.Shared;
 
     internal class TemplateSettings
     {
@@ -16,9 +17,9 @@
         {
             switch (roleId)
             {
-                case 1:
+                case Role.Member:
                     return Path.Combine(_dir, (isMyanmarOdds ? "MemberListMO.xls" : "MemberList.xls"));
-                case 4:
+                case Role.Super:
                     return Path.Combine(_dir, "SuperList.xls");
                 default:
                     return Path.Combine(_dir, (isMyanmarOdds ? "CustomerListMO.xls" : "CustomerList.xls"));

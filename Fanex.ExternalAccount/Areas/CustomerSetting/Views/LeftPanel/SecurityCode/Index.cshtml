@@ -1,5 +1,5 @@
 ﻿@{
-    var canEditForceChange = (ViewBag.roleId == 4);
+    var canEditForceChange = Role.IsSuper(ViewBag.roleId);
 }
 <link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Styles/LeftPanel.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />

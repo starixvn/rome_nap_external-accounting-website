@@ -17,6 +17,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 {
     using System;
     using System.Web.Mvc;
+    using ExternalAccount.Core.Shared;
     using Fanex.CustomerSetting.Module.BetSetting.Base;
     using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.CustomerSetting.Security.Authenticate;
@@ -65,7 +66,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
         {
             var customer = this.CustomerInfo(id, userId);
 
-            if (customer.RoleId != 4 || !customer.SyncBingo)
+            if (customer.RoleId.IsNotSuper() || !customer.SyncBingo)
             {
                 return this.PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
@@ -124,7 +125,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            if (customer.RoleId != 4 ||  !customer.SyncBingo)
+            if (customer.RoleId.IsNotSuper() ||  !customer.SyncBingo)
             {
                 return this.JsonBase(new { ErrorCode = 1, ErrorMessage = "You're not authorized on this function" }, settings);
             }

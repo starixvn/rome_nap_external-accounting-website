@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Core.Shared;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using Utility;
@@ -103,7 +104,7 @@
 
         private void BuildMainTitle(ISheet resultSheet)
         {
-            var mainTitle = _builder.RoleId == 4 ? "Super" : _builder.RoleId == 3 ? "Master" : string.Empty;
+            var mainTitle = _builder.RoleId.IsSuper() ? "Super" : _builder.RoleId.IsMaster() ? "Master" : string.Empty;
 
             mainTitle += _builder.FromDate.Equals(_builder.ToDate)
                 ? $" Win Loss Detail on {_builder.FromDate}"

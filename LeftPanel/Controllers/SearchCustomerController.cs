@@ -129,7 +129,7 @@
         {
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
 
-            if (casinoCustomer?.RoleId == Super && !close
+            if (casinoCustomer?.RoleId == Role.Super && !close
                 && !IsAuthorized(CurrentSession.UserId, eFunctions.OpenSuper,
                     AuthenticateAction.AuthenticationType.Host, Request))
             {

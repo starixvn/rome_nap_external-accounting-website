@@ -20,6 +20,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using System;
+    using ExternalAccount.Core.Shared;
     using Fanex.CustomerSetting.Security.Configurations;
 
     /// <summary>
@@ -59,7 +60,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
         {
             var customer = this.CustomerInfo(id, userId);
 
-            if (customer.RoleId != 4)
+            if (customer.RoleId.IsNotSuper())
             {
                 return this.PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
@@ -79,7 +80,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
                 TargetCustId = id,
                 AdminId = userId,
                 SubAccId = 0,
-                RoleId = 5,
+                RoleId = Role.Group,
                 CurrencyId = 0,
                 TargetRoleId = customer.RoleId,
                 IsNeutralSite = false,
@@ -114,7 +115,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            if (customer.RoleId != 4)
+            if (customer.RoleId.IsNotSuper())
             {
                 return this.JsonBase(new { ErrorCode = 1, ErrorMessage = "You're not authorized on this function" }, settings);
             }
@@ -129,7 +130,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
                 TargetCustId = id,
                 AdminId = userId,
                 SubAccId = 0,
-                RoleId = 5,
+                RoleId = Role.Group,
                 CurrencyId = 0,
                 TargetRoleId = customer.RoleId,
                 IsNeutralSite = false,

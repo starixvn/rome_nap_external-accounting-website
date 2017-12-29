@@ -20,6 +20,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
     using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using AutoMapper;
+    using ExternalAccount.Core.Shared;
     using Fanex.CustomerSetting.Module.BetSetting.Base;
     using Fanex.CustomerSetting.Module.BetSetting.ViewModels;
     using Fanex.CustomerSetting.Security.Authenticate;
@@ -103,7 +104,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
         {
             Customer customer = this.CustomerInfo(custId, actorId);
 
-            if (customer.RoleId != 4 ||  customer.HideGoldDeluxe)
+            if (customer.RoleId.IsNotSuper() ||  customer.HideGoldDeluxe)
             {
                 return this.PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }

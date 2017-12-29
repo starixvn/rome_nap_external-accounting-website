@@ -34,7 +34,7 @@
         private string _groupname = string.Empty;
 
         private int _custId;
-        private int _viewlevel = 5;
+        private int _viewlevel = Role.Group;
 
         private DateTime _fromDate = DateTime.Today;
         private DateTime _toDate = DateTime.Today;

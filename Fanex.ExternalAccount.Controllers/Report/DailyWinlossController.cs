@@ -6,6 +6,7 @@
     using Caching;
     using Core.Base;
     using Core.Context;
+    using Core.Shared;
     using CustomerSetting.Security.Authenticate;
     using DTO.Report;
     using Excel.Reports.DailyWinLossReport;
@@ -25,10 +26,10 @@
         private int _memberId;
         private int _mrecommend;
         private int _recommend;
-        private int _roleId = 5;
+        private int _roleId = Role.Group;
         private int _srecommend;
         private string _username = string.Empty;
-        private int _viewlevel = 5;
+        private int _viewlevel = Role.Group;
         private DateTime _winlostDate = DateTime.Today;
 
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,
@@ -108,7 +109,7 @@
             {
                 return JsonBase(new
                 {
-                    viewlevel = 4,
+                    viewlevel = Role.Super,
                     supername = _username,
                     mastername = string.Empty,
                     agentname = string.Empty,
@@ -116,14 +117,14 @@
                 });
             }
 
-            if (_roleId > 3)
+            if (_roleId > Role.Master)
             {
                 _listDailyWinLoss = _reportService.GetDailyWinLoss(_winlostDate, _srecommend, _groupname);
                 _cache.Set(_cacheList, _listDailyWinLoss);
                 return JsonBase(
                     new
                     {
-                        viewlevel = 4,
+                        viewlevel = Role.Super,
                         supername = _username,
                         mastername = string.Empty,
                         agentname = string.Empty,
@@ -131,14 +132,14 @@
                     },
                     new JsonSerializerSettings());
             }
-            if (_roleId == 3)
+            if (_roleId.IsMaster())
             {
                 _listDailyWinLoss = _reportService.GetDailyWinLossSuper(_winlostDate, _srecommend, _mrecommend);
                 _cache.Set(_cacheList, _listDailyWinLoss);
                 return JsonBase(
                     new
                     {
-                        viewlevel = 3,
+                        viewlevel = Role.Master,
                         supername = string.Empty,
                         mastername = _username,
                         agentname = string.Empty,
@@ -148,14 +149,14 @@
                     },
                     new JsonSerializerSettings());
             }
-            if (_roleId == 2)
+            if (_roleId.IsAgent())
             {
                 _listDailyWinLoss = _reportService.GetDailyWinLossMaster(_winlostDate, _mrecommend, _recommend);
                 _cache.Set(_cacheList, _listDailyWinLoss);
                 return JsonBase(
                     new
                     {
-                        viewlevel = 2,
+                        viewlevel = Role.Agent,
                         supername = string.Empty,
                         mastername = string.Empty,
                         agentname = _username,
@@ -171,7 +172,7 @@
             return JsonBase(
                 new
                 {
-                    viewlevel = 1,
+                    viewlevel = Role.Member,
                     supername = string.Empty,
                     mastername = string.Empty,
                     agentname = string.Empty,
@@ -185,22 +186,22 @@
 
         private ActionResult GetDailyWinLossDownline()
         {
-            if (_viewlevel == 4)
+            if (_viewlevel == Role.Super)
             {
                 _listDailyWinLoss = _reportService.GetDailyWinLossSuper(_winlostDate, _custId, 0);
                 _cache.Set(_cacheList, _listDailyWinLoss);
                 return JsonBase(
-                    new {viewlevel = 3, srecommend = _custId, rows = _listDailyWinLoss},
+                    new {viewlevel = Role.Master, srecommend = _custId, rows = _listDailyWinLoss},
                     new JsonSerializerSettings());
             }
-            if (_viewlevel == 3)
+            if (_viewlevel == Role.Master)
             {
                 _listDailyWinLoss = _reportService.GetDailyWinLossMaster(_winlostDate, _custId, 0);
                 _cache.Set(_cacheList, _listDailyWinLoss);
                 return JsonBase(
                     new
                     {
-                        viewlevel = 2,
+                        viewlevel = Role.Agent,
                         srecommend = _srecommend,
                         mrecommend = _custId,
                         rows = _listDailyWinLoss
@@ -212,7 +213,7 @@
             return JsonBase(
                 new
                 {
-                    viewlevel = 1,
+                    viewlevel = Role.Member,
                     srecommend = _srecommend,
                     mrecommend = _mrecommend,
                     recommend = _custId,

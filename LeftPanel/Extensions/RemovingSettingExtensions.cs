@@ -227,7 +227,7 @@
             {
                 model.RemoveProductStatusSetting("EnableVirtualSports");
 
-                bool hideVirtualSports = product.RoleId == 1 ?
+                bool hideVirtualSports = product.RoleId.IsMember()?
                     product.UplineStatus.HideVirtualSports :
                     product.HideVirtualSports;
 

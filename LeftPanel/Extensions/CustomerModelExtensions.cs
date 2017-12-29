@@ -18,86 +18,23 @@
         private const string ThisAccountWas = "This account was ";
         public static readonly AuthorizationHandler AuthorizationHandler = new AuthorizationHandler();
 
-        public static string GetOutstandingColumn(int roleId)
-        {
-            switch (roleId)
-            {
-                case Role.Super:
-                    return "superPositionTaking";
-
-                case Role.Master:
-                    return "masterPositionTaking";
-
-                case Role.Agent:
-                    return "agentPositionTaking";
-
-                case Role.Member:
-                    return "outstanding";
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(roleId));
-            }
-        }
+        public static string GetOutstandingColumn(int roleId) => roleId.IsMember() ? "outstanding" : $"{roleId.DisplayRoleName()}PositionTaking";
 
         public static string GetUsedCreditColumn(int roleId)
         {
-            switch (roleId)
+            if (roleId.IsMember())
             {
-                case Role.Super:
-                    return "superUsedCredit";
-
-                case Role.Master:
-                    return "masterUsedCredit";
-
-                case Role.Agent:
-                    return "agentUsedCredit";
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(roleId), "there is no UsedCredit on member level");
+                throw new ArgumentOutOfRangeException(nameof(roleId), "there is no UsedCredit on member level");
             }
+
+            return $"{roleId.DisplayRoleName()}UsedCredit";
         }
 
         public static string GetYesterdayCashColumn(int roleId)
-        {
-            switch (roleId)
-            {
-                case Role.Super:
-                    return "yesterday_superCash";
-
-                case Role.Master:
-                    return "yesterday_masterCash";
-
-                case Role.Agent:
-                    return "yesterday_agentCash";
-
-                case Role.Member:
-                    return "yesterday_cash";
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(roleId));
-            }
-        }
+            => roleId.IsMember() ? "yesterday_cash" : $"yesterday_{roleId.DisplayRoleName()}Cash";
 
         public static string GetCashColumn(int roleId)
-        {
-            switch (roleId)
-            {
-                case Role.Super:
-                    return "superCash";
-
-                case Role.Master:
-                    return "masterCash";
-
-                case Role.Agent:
-                    return "agentCash";
-
-                case Role.Member:
-                    return "cash";
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(roleId));
-            }
-        }
+            => roleId.IsMember() ? "cash" : $"{roleId.DisplayRoleName()}Cash";
 
         public static CustomerModel LoginInfo(this CustomerModel model, DataSet ds)
         {
@@ -107,7 +44,7 @@
 
             model.Login = new List<ObjectInfo>
                 {
-                    new ObjectInfo { Value = roleId != 1 ? Utils.ToString(customerRow["site"]) : Utils.ToString(customerRow["membersite"]), Text = "Site" },
+                    new ObjectInfo { Value = roleId.IsNotMember() ? Utils.ToString(customerRow["site"]) : Utils.ToString(customerRow["membersite"]), Text = "Site" },
                     new ObjectInfo { Value = Utils.ToDateTime(customerRow["createdate"]).ToStringExt(DateTimeFormat), Text = "Created Date" },
                     new ObjectInfo { Value = Utils.ToDateTime(customerRow["lastlogged"]).ToStringExt(DateTimeFormat), Text = "Last Login" },
                     new ObjectInfo { Value = Utils.ToDateTime(tableCash.Rows[0]["lastTxn"]).ToStringExt(DateTimeFormat), Text = "Last Txn", Tooltip = "Last Transaction" },
@@ -116,7 +53,7 @@
                     new ObjectInfo { Value = Utils.ToDateTime(customerRow["LastChangedSecurityCodeDate"]).ToStringExt(DateTimeFormat), Text = "Security Code" }
                 };
 
-            if (roleId != 1)
+            if (roleId.IsNotMember())
             {
                 model.Login.Add(
                     new ObjectInfo
@@ -165,7 +102,7 @@
                 Phone = new ObjectInfo { Value = Utils.ToString(customerRow["phone"]), Text = "Phone" },
                 RoleId = new ObjectInfo { Value = roleId, Text = "Role Id" },
                 UplineRoleId = new ObjectInfo { Value = roleId + 1, Text = "Upline Role Id" },
-                CustList = new ObjectInfo { Key = "CustList", Value = roleId == 4 ? "Master List" : roleId == 3 ? "Agent List" : "Member List" },
+                CustList = new ObjectInfo { Key = "CustList", Value = roleId.IsSuper() ? "Master List" : roleId.IsMaster() ? "Agent List" : "Member List" },
                 Status = new ObjectInfo { Tooltip = !enabled ? status + "disabled" : closed ? status : suspended ? status + "suspended" : string.Empty },
                 BackgroundColor = new ObjectInfo { Value = !enabled ? "disabled" : closed ? closedReason : suspended ? "suspended" : string.Empty },
                 IsInternal = new ObjectInfo { Value = Utils.ToBoolean(customerRow["isinternal"]) }

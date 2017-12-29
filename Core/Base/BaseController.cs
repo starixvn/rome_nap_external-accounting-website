@@ -38,14 +38,6 @@ namespace Fanex.ExternalAccount.Core.Base
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class BaseController : Controller
     {
-        public const int Super = 4;
-
-        public const int Master = 3;
-
-        public const int Agent = 2;
-
-        public const int Member = 1;
-
         protected const string SiteName = "ExtAcc";
 
         protected const int FromSystem = 3;

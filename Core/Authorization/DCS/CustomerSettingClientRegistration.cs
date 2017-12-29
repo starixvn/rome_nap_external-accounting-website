@@ -7,6 +7,7 @@
     using Context;
     using CustomerSetting.Client40;
     using CustomerSetting.Client40.Models;
+    using Shared;
     using Utilities;
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
@@ -30,7 +31,7 @@
             {
                 ActorId = currentSession.UserId,
                 ActorName = currentSession.UserName,
-                ActorLevel = 5,
+                ActorLevel = Role.Group,
                 SubAccountId = 0,
                 Language = CultureInfo.CurrentCulture.Name,
                 Domain = HttpContext.Current.Request.Url.Host,
@@ -96,7 +97,7 @@
             var customerLevelFounded = Regex.Replace(regexMatch.Groups[2].ToString(), @"[^a-zA-Z0-9_.]+",
                 string.Empty, RegexOptions.Compiled);
 
-            return customerLevelFounded.Equals("4");
+            return customerLevelFounded.Equals(Role.Super.ToString());
         }
 
         private static string GetProductName(PermissionContext permissionContext)

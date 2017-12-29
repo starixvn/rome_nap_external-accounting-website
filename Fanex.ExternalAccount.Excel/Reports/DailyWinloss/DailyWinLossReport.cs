@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Core.Shared;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using Utility;
@@ -119,7 +120,7 @@
 
         private void BuildMainTitle(ISheet resultSheet)
         {
-            var mainTitle = $"{(_builder.RoleId == 5 ? "Super" : _builder.RoleId == 4 ? "Master" : _builder.RoleId == 3 ? "Agent" : "Member")} Daily Win Loss on {_builder.WinlostDate}";
+            var mainTitle = $"{(_builder.RoleId == Role.Group ? "Super" : _builder.RoleId.IsSuper() ? "Master" : _builder.RoleId.IsMaster() ? "Agent" : "Member")} Daily Win Loss on {_builder.WinlostDate}";
 
             resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
         }

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Globalization;
+    using Core.Shared;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using Utilities;
@@ -38,9 +39,9 @@
         private void WriteBodyReport(ISheet resultSheet)
         {
             var dtr = _builder.Data.Rows;
-            var totalColumn = _builder.IsMyanmarOdds || _builder.RoleId == 4 ? 16 : 15;
+            var totalColumn = _builder.IsMyanmarOdds || _builder.RoleId.IsSuper() ? 16 : 15;
             var lastColumnIndex = FirstColumnIndex + totalColumn - 1;
-            if (_builder.RoleId != 1)
+            if (_builder.RoleId.IsNotMember())
             {
                 WriteOthersReport(resultSheet, dtr, lastColumnIndex);
             }
@@ -146,7 +147,7 @@
         private List<object> RemoveOddsColumn(List<object> values)
         {
             var newValues = values;
-            if (_builder.RoleId != 4)
+            if (_builder.RoleId.IsNotSuper())
             {
                 newValues.RemoveAt(13);
             }
@@ -187,8 +188,8 @@
 
         private void BuildMainTitle(ISheet resultSheet)
         {
-            var mainTitle = _builder.Status + (_builder.RoleId == 1 ? " Member" :
-                (_builder.RoleId == 2 ? " Agent" : (_builder.RoleId == 3 ? " Master" : " Super"))) + " List";
+            var mainTitle = _builder.Status + (_builder.RoleId.IsMember() ? " Member" :
+                (_builder.RoleId.IsAgent() ? " Agent" : (_builder.RoleId.IsMaster() ? " Master" : " Super"))) + " List";
 
             resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
         }

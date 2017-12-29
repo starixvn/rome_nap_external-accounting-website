@@ -18,6 +18,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using ExternalAccount.Core.Shared;
     using Fanex.CustomerSetting.Module.BetSetting.Base;
     using Fanex.CustomerSetting.Module.BetSetting.ViewModels;
     using Fanex.CustomerSetting.Security.Authenticate;
@@ -65,10 +66,9 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "LiveCasinoBetting")]
         public ActionResult Content(int id, int uplineId, int userId, string siteName)
         {
-            IList<int> groups = GroupConfigurations.AllowBettingGroups;
-            Customer customer = this.CustomerInfo(id, userId);
+            var customer = CustomerInfo(id, userId);
 
-            if (customer.RoleId != 4 ||  !customer.SyncLiveCasino)
+            if (customer.RoleId.IsNotSuper() ||  !customer.SyncLiveCasino)
             {
                 return this.PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
@@ -124,7 +124,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            if (customer.RoleId != 4 ||  !customer.SyncLiveCasino)
+            if (customer.RoleId.IsNotSuper() ||  !customer.SyncLiveCasino)
             {
                 return this.JsonBase(new { ErrorCode = 1, ErrorMessage = "You're not authorized on this function" }, settings);
             }
@@ -167,7 +167,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
         /// <returns><c>true</c> if success, <c>false</c> otherwise.</returns>
         private bool UpdateGameSetting(int id, int userId, List<GameType> gameTypes)
         {
-            InsertAccountRequest insertReq = new InsertAccountRequest { CustId = id, SuperId = id, UserId = userId, RoleId = 4 };
+            InsertAccountRequest insertReq = new InsertAccountRequest { CustId = id, SuperId = id, UserId = userId, RoleId = Role.Super };
             Dictionary<int, Result> resultBettingLimit = this.GameSettingService.UpdateGameSetting(5, gameTypes, insertReq);
 
             bool success = true;
@@ -190,7 +190,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
                 Action = LogActions.UpdateStakeLevel_Super,
                 ErrorCode = success ? string.Empty : "1",
                 ErrorMessage = success ? string.Empty : message,
-                RoleId = 4,
+                RoleId = Role.Super,
                 CustId = id,
                 SignUpIp = Request.UserHostAddress,
                 Language = "en",

@@ -6,9 +6,10 @@
 
     public class Group
     {
-        private const int ITGroupId = 1;
         private const string FinanceGroupName = "Finance";
         private static readonly List<string> OfficeGroups = new List<string> {FinanceGroupName, "Internal", "IT"};
+
+        public const int ITGroupId = 1;
 
         public int GroupID { get; set; }
 

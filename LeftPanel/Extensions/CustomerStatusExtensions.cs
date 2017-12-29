@@ -173,29 +173,28 @@
 
         private static CustomerStatus GetUplineStatus(int roleId, DataRow uplineRow)
         {
-            var uplineStatus = new CustomerStatus();
-
-            uplineStatus.RoleId = roleId + 1;
-
-            uplineStatus.SyncCasino = uplineRow.ToBoolean("syncCasino");
-            uplineStatus.SyncLiveCasino = uplineRow.ToBoolean("syncLiveCasino");
-            uplineStatus.DisableTransfer = roleId + 1 != 4 && uplineRow.ToBoolean("disableTransfer");
-            uplineStatus.AllowDoubleComm = uplineRow.ToBoolean("doubleCommLosing");
-            uplineStatus.DisableVirtualSports = uplineRow.ToBoolean("disableVirtualSports");
-            uplineStatus.AllowOutright = !uplineRow.ToBoolean("disableOutright");
-            uplineStatus.DisableNumberGame = uplineRow.ToBoolean("disableNumber");
-            uplineStatus.DisableCasino = uplineRow.ToBoolean("disableCasino");
-            uplineStatus.DisableLiveCasino = uplineRow.ToBoolean("disableLiveCasino");
-            uplineStatus.DisableGoldDeluxe = uplineRow.ToBoolean("DisableGoldDeluxe");
-            uplineStatus.HideGoldDeluxe = uplineRow.ToBoolean("HideGoldDeluxe")
-                                          || !AppSettings.IsShowGoldDeluxeSettingForCredit;
-
-            uplineStatus.DisableColossusBets = uplineRow.ToBoolean("DisableColossusBet");
-            uplineStatus.Closed = uplineRow.ToBoolean("closed");
-            uplineStatus.Suspended = uplineRow.ToBoolean("suspended");
-            uplineStatus.HideVirtualSports = uplineRow.ToBoolean("hideVirtualSports");
-            uplineStatus.DisableHRFixedOdds = uplineRow.ToBoolean("disableHRFixedOdds");
-            uplineStatus.DisableESports = uplineRow.ToBoolean("DisableESports");
+            var uplineStatus = new CustomerStatus
+            {
+                RoleId = roleId + 1,
+                SyncCasino = uplineRow.ToBoolean("syncCasino"),
+                SyncLiveCasino = uplineRow.ToBoolean("syncLiveCasino"),
+                DisableTransfer = (roleId + 1).IsNotSuper() && uplineRow.ToBoolean("disableTransfer"),
+                AllowDoubleComm = uplineRow.ToBoolean("doubleCommLosing"),
+                DisableVirtualSports = uplineRow.ToBoolean("disableVirtualSports"),
+                AllowOutright = !uplineRow.ToBoolean("disableOutright"),
+                DisableNumberGame = uplineRow.ToBoolean("disableNumber"),
+                DisableCasino = uplineRow.ToBoolean("disableCasino"),
+                DisableLiveCasino = uplineRow.ToBoolean("disableLiveCasino"),
+                DisableGoldDeluxe = uplineRow.ToBoolean("DisableGoldDeluxe"),
+                HideGoldDeluxe = uplineRow.ToBoolean("HideGoldDeluxe")
+                                 || !AppSettings.IsShowGoldDeluxeSettingForCredit,
+                DisableColossusBets = uplineRow.ToBoolean("DisableColossusBet"),
+                Closed = uplineRow.ToBoolean("closed"),
+                Suspended = uplineRow.ToBoolean("suspended"),
+                HideVirtualSports = uplineRow.ToBoolean("hideVirtualSports"),
+                DisableHRFixedOdds = uplineRow.ToBoolean("disableHRFixedOdds"),
+                DisableESports = uplineRow.ToBoolean("DisableESports")
+            };
 
             foreach (var productStatus in LeftPanelProductIntegration.CreateProductStatusList(uplineRow))
             {

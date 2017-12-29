@@ -6,6 +6,7 @@
     using CasinoLibrary.SBAgent;
     using Data.DNAide;
     using DTO.Customer.Casino;
+    using Core.Shared;
     using Utilities;
 
     public class CasinoDao
@@ -66,7 +67,7 @@
             {
                 var dt = customer.GetDefaultMaxTransfer(customerDetail.UpperCustID, customerDetail.Currency, uplineId == 0);
 
-                if (customerDetail.RoleId != 4 && dt != null && dt.Rows.Count > 0)
+                if (customerDetail.RoleId.IsNotSuper() && dt != null && dt.Rows.Count > 0)
                 {
                     customerDetail.MaxTransferCreditLimit = Utils.ToDouble(dt.Rows[0]["MaxLimit"]);
                     customerDetail.MinTransferCreditLimit = Utils.ToDouble(dt.Rows[0]["MinLimit"]);

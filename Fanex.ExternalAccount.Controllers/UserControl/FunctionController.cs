@@ -21,9 +21,7 @@
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult FunctionList()
         {
-            var internalGroupId = 1;
-
-            ViewBag.InternalGroupIDs = internalGroupId;
+            ViewBag.InternalGroupIDs = Group.ITGroupId;
 
             return PartialViewBase();
         }

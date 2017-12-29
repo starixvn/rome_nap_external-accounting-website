@@ -332,7 +332,7 @@
             var customers2String = Customers2Json(customers);
             var syncCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncCasino");
             var syncLiveCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncLiveCasino");
-            var allowDoubleComm = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean(customerSetting.RoleId > 2 ? "doubleCommLosing" : "doubleCommLosing1");
+            var allowDoubleComm = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean(customerSetting.RoleId > Role.Agent ? "doubleCommLosing" : "doubleCommLosing1");
             return JsonBase(
                 new
                 {
@@ -621,7 +621,7 @@
                 status,
                 Convert.ToInt32(customerSetting.RoleId),
                 customers?.Rows.Count > 0
-                && (customers.Rows[0].ToBoolean("ismyanmarodds") || customerSetting.RoleId == 4));
+                && (customers.Rows[0].ToBoolean("ismyanmarodds") || customerSetting.RoleId.IsSuper()));
             var excelStream = builder.Build();
             var fileName = $"{status}{customerSetting.RoleId.DisplayRoleName()}List{DateTime.Now.ToString("yyyyMMdd")}.xls";
 

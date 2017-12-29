@@ -8,7 +8,7 @@
     bool isSync = firstProduct.IsSync;
     int productId = firstProduct.ProductId;
 
-    bool isShowEnableDownlines = Model.RoleId != 1 && isHasDownlines;
+    bool isShowEnableDownlines = Model.RoleId.IsNotMember() && isHasDownlines;
     int sportTypePrevious = 0;
 }
 <!DOCTYPE html>
@@ -59,7 +59,7 @@
                     sportTypePrevious = item.SportType;
                 }
                 <tr>
-                    <td @(Model.RoleId == 1 ? "colspan=\"2\"" : " ")>
+                    <td @(Model.RoleId.IsMember() ? "colspan=\"2\"" : " ")>
                         <input type="checkbox" id="checkEnable_@(item.SportType+"_" + item.BetType)" onchange='enableThirdPartyProductStatus.checkEnable_OnChange(@Html.Raw(Json.Encode(item)))' @(item.IsDisabledUpline ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabled ? Html.Raw("") : Html.Raw("checked ")) />
                         <label for="checkEnable_@(item.SportType+"_" + item.BetType)">@(isUpdateByBettype ? item.BetTypeName : item.ProductName)</label>
                     </td>
