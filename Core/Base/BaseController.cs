@@ -1,6 +1,4 @@
-﻿using Fanex.Logging.Extensions.Web;
-
-namespace Fanex.ExternalAccount.Core.Base
+﻿namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
     using System.Collections.Generic;
@@ -23,6 +21,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using CustomerSetting.Security.Authenticate;
     using DTO;
     using DTO.UserControl;
+    using Logging.Extensions.Web;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using PTEngine.BusinessObjects;
@@ -63,11 +62,11 @@ namespace Fanex.ExternalAccount.Core.Base
         protected virtual ICurrentSession CurrentSession => _currentSession ?? new CurrentSession();
 
         protected virtual ActionResult JsonBase(object data, JsonSerializerSettings settings = null)
-        => this.JsonExt(data, settings ?? new JsonSerializerSettings
-        {
-            NullValueHandling = NullValueHandling.Ignore,
-            ContractResolver = new CamelCasePropertyNamesContractResolver()
-        });
+            => this.JsonExt(data, settings ?? new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            });
 
         protected virtual ActionResult JsonBase2(object data,
             JsonRequestBehavior settings = JsonRequestBehavior.AllowGet) => Json(data, settings);
@@ -93,8 +92,9 @@ namespace Fanex.ExternalAccount.Core.Base
             try
             {
                 var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, 0);
-                if (!casinoCustomer.CasinoSync ||
-                    (!string.IsNullOrWhiteSpace(result.ErrorCode) && Utils.ToInt32(result.ErrorCode) != 0))
+                if (!casinoCustomer.CasinoSync
+                    || !string.IsNullOrWhiteSpace(result.ErrorCode)
+                    && Utils.ToInt32(result.ErrorCode) != 0)
                 {
                     return;
                 }
@@ -225,13 +225,15 @@ namespace Fanex.ExternalAccount.Core.Base
             var userFunctions = userCache.PolicyList.Where(x => x.FuncKey == functionKey).ToList();
             var hasPermissionOnMenu = true;
 
-            if (!request.RawUrl.Equals("/") && !request.RawUrl.ToLower(CultureInfo.InvariantCulture).Contains("home/index")
-                && !request.RawUrl.ToLower(CultureInfo.InvariantCulture).Contains("exporttoexcel") && !request.IsAjaxRequest())
+            if (!request.RawUrl.Equals("/") &&
+                !request.RawUrl.ToLower(CultureInfo.InvariantCulture).Contains("home/index")
+                && !request.RawUrl.ToLower(CultureInfo.InvariantCulture).Contains("exporttoexcel") &&
+                !request.IsAjaxRequest())
             {
                 hasPermissionOnMenu = menuList.Any(o => !string.IsNullOrWhiteSpace(o.Url)
-                                            && request.RawUrl.ToLower(CultureInfo.InvariantCulture)
-                                                .Contains(o.Url.ToLower(CultureInfo.InvariantCulture)
-                                                .Replace("~", string.Empty)));
+                                                        && request.RawUrl.ToLower(CultureInfo.InvariantCulture)
+                                                            .Contains(o.Url.ToLower(CultureInfo.InvariantCulture)
+                                                                .Replace("~", string.Empty)));
             }
 
             if (!hasPermissionOnMenu && userFunctions == null)
@@ -325,7 +327,7 @@ namespace Fanex.ExternalAccount.Core.Base
             }
 
             return permisisonService.CheckCustomerHasSpecialSitePermission(
-                    new CheckCustomerHasSpecialSiteFunctionPermissionCriteria { CustID = CurrentSession.CustId });
+                new CheckCustomerHasSpecialSiteFunctionPermissionCriteria { CustID = CurrentSession.CustId });
         }
 
         protected CheckCustomerBelongToSpecialSiteResult CheckCustomerBelongToSpecialSite(string username)
@@ -354,9 +356,9 @@ namespace Fanex.ExternalAccount.Core.Base
                 {
                     if (!IsHiddenProduct(product)
                         && (!checkCustomerIsInternalAdminResult.IsInternalAdmin
-                            || (checkCustomerIsInternalAdminResult.IsInternalAdmin
+                            || checkCustomerIsInternalAdminResult.IsInternalAdmin
                             && checkCustomerIsInternalAdminResult.IsAllowAccess
-                            && isAuthorized)))
+                            && isAuthorized))
                     {
                         list.Add(new KeyValuePair<string, string>(
                             product.Id,

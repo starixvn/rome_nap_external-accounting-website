@@ -2,25 +2,24 @@
 {
     using System;
     using System.Collections;
-    using System.Data;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using CasinoLibrary.Model.UserException;
     using Data.DNAide;
+    using LiveCasino.CoreSetting.Services;
+    using Logging.Extensions.Web;
+    using Module.NG2.Entities;
+    using Module.NG2.Services;
     using Service.Impl.Customer.Casino;
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Utilities;
     using ViewModel.Customer;
-    using LiveCasino.CoreSetting.Services;
-    using Module.NG2.Entities;
-    using Module.NG2.Services;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using Logging.Extensions.Web;
-    using System.Diagnostics;
+    using Customer = CasinoLibrary.SBAgent.Customer;
+    using Result = CustomerSetting.Module.Core.Models.Result;
 
     public class CustomerBase : BaseController
     {
@@ -28,7 +27,7 @@
         private readonly IReportService _report = new ReportService();
 
         [NonAction]
-        protected Task<CustomerSetting.Module.Core.Models.Result> AutoInsertLiveCasinoPost(
+        protected Task<Result> AutoInsertLiveCasinoPost(
             int custId,
             int parentId,
             int actorId,
@@ -55,15 +54,15 @@
                         ip,
                         "E");
 
-                    return new CustomerSetting.Module.Core.Models.Result(results.Code, results.Message);
+                    return new Result(results.Code, results.Message);
                 }
 
-                return new CustomerSetting.Module.Core.Models.Result(0, string.Empty);
+                return new Result(0, string.Empty);
             });
         }
 
         [NonAction]
-        protected CustomerSetting.Module.Core.Models.Result AutoInsertCasinoPost(int custId, int uplineId)
+        protected Result AutoInsertCasinoPost(int custId, int uplineId)
         {
             try
             {
@@ -71,7 +70,7 @@
 
                 if (custInfo?.UplineCasinoSync == true && !custInfo.CasinoSync)
                 {
-                    var isSuccess = new CasinoLibrary.SBAgent.Customer().AutoInsertAccount(
+                    var isSuccess = new Customer().AutoInsertAccount(
                         CasinoNo,
                         custInfo.IBCCustID,
                         custInfo.UserName,
@@ -101,40 +100,44 @@
 
                     if (isSuccess)
                     {
-                        new CasinoManager().UpdateCSStatus(custId, true, custInfo.CasinoDisabled, CurrentSession.UserId, CurrentContext.Ip4Address, 0, "E");
+                        new CasinoManager().UpdateCSStatus(custId, true, custInfo.CasinoDisabled, CurrentSession.UserId,
+                            CurrentContext.Ip4Address, 0, "E");
                     }
                     else
                     {
-                        new CasinoLibrary.SBAgent.Customer().RemoveAccount(custInfo.UserName, CurrentContext.Ip4Address, CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                        new Customer().RemoveAccount(custInfo.UserName, CurrentContext.Ip4Address,
+                            CurrentSession.UserId, CurrentSession.UserName, FromSystem);
                     }
                 }
 
-                return new CustomerSetting.Module.Core.Models.Result(0, string.Empty);
+                return new Result(0, string.Empty);
             }
             catch (ErrorException casinoEx)
             {
                 ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
-                return new CustomerSetting.Module.Core.Models.Result(999, casinoEx.Message);
+                return new Result(999, casinoEx.Message);
             }
             catch (Exception ex)
             {
                 ExceptionHandler.Handle(ex);
             }
 
-            return new CustomerSetting.Module.Core.Models.Result(999, string.Empty);
+            return new Result(999, string.Empty);
         }
 
-        protected Result AutoInsertNG2Product(int custId, string username, RoleId roleId, int uplineId, SiteId siteId, int currencyId)
+        protected Module.NG2.Entities.Result AutoInsertNG2Product(int custId, string username, RoleId roleId,
+            int uplineId, SiteId siteId, int currencyId)
         {
             var dcsStatuses = GetDcsStatuses(custId, (int)roleId, 23);
 
             if (dcsStatuses.IsSyncedUpline)
             {
                 ING2StatusService service = new NG2StatusService();
-                return service.AutoInsertAccount(custId, username, roleId, uplineId, dcsStatuses.IsDisabledUpline, siteId, currencyId, CurrentSession.UserId, (byte)Config.SystemId);
+                return service.AutoInsertAccount(custId, username, roleId, uplineId, dcsStatuses.IsDisabledUpline,
+                    siteId, currencyId, CurrentSession.UserId, (byte)Config.SystemId);
             }
 
-            return new Result();
+            return new Module.NG2.Entities.Result();
         }
 
         protected CustInfo GetCustomerInfo(int custId, string groupName)
@@ -164,15 +167,21 @@
 
         protected DcsEntity GetDcsStatuses(int custId, int roleId, int productId)
         {
-            var param = new Hashtable { { "custid", custId }, { "roleid", roleId } };
+            var param = new Hashtable
+            {
+                { "custid", custId },
+                { "roleid", roleId }
+            };
 
             var ds = DbHelper.ExecuteDataSet("Acc_CustSetting_StatusSettingSelect", param);
 
-            if (ds?.Tables.Count <= 0)
+            if (ds == null || ds.Tables.Count <= 0)
             {
                 return new DcsEntity { IsHidden = true };
             }
+
             var cust = ds.Tables[0];
+
             var product = cust.Select("ProductID = " + productId).FirstOrDefault();
             if (product == null)
             {

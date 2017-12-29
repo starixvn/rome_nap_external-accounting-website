@@ -10,7 +10,7 @@
     {
         private static string GetGroupName(ICurrentSession currentSession)
         {
-            var requestUrl = HttpContext.Current.Request.UrlReferrer?.AbsolutePath.Split(new[] { "/" },
+            var requestUrl = HttpContext.Current.Request.UrlReferrer?.AbsolutePath.Split(new[] {"/"},
                 StringSplitOptions.RemoveEmptyEntries);
 
             var groupName = requestUrl != null && (requestUrl.Length == 0 || !currentSession.IsInternalAdmin)
@@ -20,7 +20,8 @@
             return groupName;
         }
 
-        public static bool IsHiddenProduct(ProductElementConfiguration productConfiguration, ICurrentSession currentSession)
+        public static bool IsHiddenProduct(ProductElementConfiguration productConfiguration,
+            ICurrentSession currentSession)
         {
             if (productConfiguration.Hide)
             {
@@ -43,7 +44,7 @@
             {
                 if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase)
                     || Group.IsOfficeGroup(groupName)
-                   )
+                )
                 {
                     return false;
                 }

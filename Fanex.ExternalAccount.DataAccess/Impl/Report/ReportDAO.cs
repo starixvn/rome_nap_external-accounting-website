@@ -69,9 +69,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                         AgentName = Utils.ToString(reader[reader.GetOrdinal("AgentName")]),
                         HasSecurityCode = Utils.ToBoolean(reader[reader.GetOrdinal("HasSecurityCode")])
                     };
-
                 }
-
             }
 
             return customerInfo;

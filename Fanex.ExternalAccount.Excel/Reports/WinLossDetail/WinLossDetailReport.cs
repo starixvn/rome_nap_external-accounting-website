@@ -114,6 +114,5 @@
 
             resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
         }
-
     }
 }

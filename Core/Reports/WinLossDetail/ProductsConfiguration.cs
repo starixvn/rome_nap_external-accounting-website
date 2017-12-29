@@ -4,21 +4,10 @@
 
     public class ProductsConfiguration : ConfigurationSection
     {
-        public static ProductsConfiguration Instance
-        {
-            get
-            {
-                return ConfigurationManager.GetSection("report") as ProductsConfiguration;
-            }
-        }
+        public static ProductsConfiguration Instance =>
+            ConfigurationManager.GetSection("report") as ProductsConfiguration;
 
         [ConfigurationProperty("products", IsRequired = true)]
-        public ProductCollectionConfiguration ProductCollection
-        {
-            get
-            {
-                return base["products"] as ProductCollectionConfiguration;
-            }
-        }
+        public ProductCollectionConfiguration ProductCollection => base["products"] as ProductCollectionConfiguration;
     }
 }

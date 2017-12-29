@@ -1,9 +1,9 @@
-﻿using System;
-using Fanex.CustomerSetting.Security.Authenticate;
-using Fanex.ExternalAccount.Core.Context;
-
-namespace Fanex.ExternalAccount.Core.Authorization.ThirdPartyStatus
+﻿namespace Fanex.ExternalAccount.Core.Authorization.ThirdPartyStatus
 {
+    using System;
+    using Context;
+    using CustomerSetting.Security.Authenticate;
+
     public class ProductStatusAuthorization
     {
         private readonly ExternalAccountAuthenticateAttribute _authenticationService;
@@ -20,9 +20,9 @@ namespace Fanex.ExternalAccount.Core.Authorization.ThirdPartyStatus
         public bool HasPermission(AuthenticateAction.AuthenticationType role, int productId)
         {
             var enableFunction = MappingEnableStatus(productId);
-            return role == AuthenticateAction.AuthenticationType.Read ? 
-                _authenticationService.AllowReadByAuthenticationParam(enableFunction) : 
-                _authenticationService.AllowUpdateByAuthenticationParam(enableFunction);
+            return role == AuthenticateAction.AuthenticationType.Read
+                ? _authenticationService.AllowReadByAuthenticationParam(enableFunction)
+                : _authenticationService.AllowUpdateByAuthenticationParam(enableFunction);
         }
 
         private string MappingEnableStatus(int productId)

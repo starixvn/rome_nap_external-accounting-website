@@ -167,8 +167,8 @@
 
         private static bool IsAuthorizedUrl(string menuUrl, string requestUrl)
             => !string.IsNullOrWhiteSpace(menuUrl)
-               && (string.IsNullOrWhiteSpace(requestUrl) ||
-                   requestUrl.ToLowerInvariant().Contains(menuUrl.ToLowerInvariant()));
+               && (string.IsNullOrWhiteSpace(requestUrl) 
+               || requestUrl.ToLowerInvariant().Contains(menuUrl.ToLowerInvariant()));
 
         public bool HasUpdateCreditPermission(int userId)
             => IsAuthorized(userId, eFunctions.UpdateCredit, AuthenticateAction.AuthenticationType.Host);

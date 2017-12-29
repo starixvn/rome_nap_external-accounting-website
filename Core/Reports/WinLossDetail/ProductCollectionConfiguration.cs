@@ -5,20 +5,17 @@
     using System.Linq;
 
     [ConfigurationCollection(typeof(ProductElementConfiguration), AddItemName = "product")]
-    public class ProductCollectionConfiguration : ConfigurationElementCollection, IEnumerable<ProductElementConfiguration>
+    public class ProductCollectionConfiguration : ConfigurationElementCollection,
+        IEnumerable<ProductElementConfiguration>
     {
-        public ProductElementConfiguration this[int index]
-        {
-            get
-            {
-                return BaseGet(index) as ProductElementConfiguration;
-            }
-        }
+        public ProductElementConfiguration this[int index] => BaseGet(index) as ProductElementConfiguration;
 
-        protected override ConfigurationElement CreateNewElement()
-        {
-            return new ProductElementConfiguration();
-        }
+        IEnumerator<ProductElementConfiguration> IEnumerable<ProductElementConfiguration>.GetEnumerator() =>
+            (from i in Enumerable.Range(0, Count)
+                select this[i])
+            .GetEnumerator();
+
+        protected override ConfigurationElement CreateNewElement() => new ProductElementConfiguration();
 
         protected override object GetElementKey(ConfigurationElement element)
         {
@@ -30,12 +27,5 @@
 
             return string.Empty;
         }
-
-        IEnumerator<ProductElementConfiguration> IEnumerable<ProductElementConfiguration>.GetEnumerator()
-        {
-            return (from i in Enumerable.Range(0, this.Count)
-                    select this[i])
-                    .GetEnumerator();
-        }     
     }
 }

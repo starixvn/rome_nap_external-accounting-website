@@ -5,14 +5,14 @@
     public class NoCaptchaSectionConfiguration : ConfigurationSection
     {
         private static NoCaptchaSectionConfiguration _instance;
-        
+
         public static NoCaptchaSectionConfiguration Instance
         {
-            get 
+            get
             {
                 if (_instance == null)
                 {
-                    _instance = (NoCaptchaSectionConfiguration)ConfigurationManager.GetSection("NoCaptchaSection");
+                    _instance = (NoCaptchaSectionConfiguration) ConfigurationManager.GetSection("NoCaptchaSection");
                 }
 
                 return _instance;
@@ -20,21 +20,9 @@
         }
 
         [ConfigurationProperty("allowIPs", IsRequired = false)]
-        public string AllowIPs
-        {
-            get
-            {
-                return (string)base["allowIPs"];
-            }
-        }
+        public string AllowIPs => (string) base["allowIPs"];
 
         [ConfigurationProperty("allowAdmins", IsRequired = false)]
-        public string AllowAdmins
-        {
-            get
-            {
-                return (string)base["allowAdmins"];
-            }
-        }
+        public string AllowAdmins => (string) base["allowAdmins"];
     }
 }

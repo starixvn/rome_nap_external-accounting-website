@@ -18,13 +18,13 @@
 
         public string Function { get; set; }
 
-        public bool AllowRead(string action) 
+        public bool AllowRead(string action)
             => FunctionAuthorization(CurrentSession.Instance.UserId, Function, Policy);
 
-        public bool AllowUpdate(string action) 
+        public bool AllowUpdate(string action)
             => FunctionAuthorization(CurrentSession.Instance.UserId, Function, Policy);
 
-        public bool IsBelong(int custId, string username, string groupName = null, bool getUplineInfo = true) 
+        public bool IsBelong(int custId, string username, string groupName = null, bool getUplineInfo = true)
             => authorization.IsBelong(groupName, custId, username, getUplineInfo);
 
         public override void OnAuthorization(AuthorizationContext filterContext)
@@ -42,7 +42,7 @@
                 FormsAuthentication.RedirectToLoginPage();
             }
 
-            if(string.IsNullOrWhiteSpace(Function))
+            if (string.IsNullOrWhiteSpace(Function))
             {
                 return;
             }

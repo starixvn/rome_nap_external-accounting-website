@@ -128,46 +128,42 @@
             }
         }
 
-        private dynamic SearchWinLossDetailData(string groupname, DateTime fromDate, DateTime toDate, string productIds,
+        private dynamic SearchWinLossDetailData(
+            string groupname,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
             CustomerInfoSearchResult customerInfo)
         {
-            object winLossDetailData;
             if (customerInfo.RoleId >= Role.Super)
             {
-                winLossDetailData = reportService.GetSuperWinLossDetail(
+                return reportService.GetSuperWinLossDetail(
                     groupname,
                     customerInfo.CustId,
                     fromDate,
                     toDate,
                     productIds);
             }
-            else
-            {
-                var getWinLossDetail = GetWinLossDetailFunction(customerInfo.RoleId.DirectUplineLevel());
 
-                winLossDetailData = getWinLossDetail(
-                    customerInfo.GetUplineId(),
-                    customerInfo.CustId,
-                    fromDate,
-                    toDate,
-                    productIds);
-            }
-            return winLossDetailData;
+            var getWinLossDetail = GetWinLossDetailFunction(customerInfo.RoleId.DirectUplineLevel());
+
+            return getWinLossDetail(
+                customerInfo.GetUplineId(),
+                customerInfo.CustId,
+                fromDate,
+                toDate,
+                productIds);
         }
 
-        private dynamic NoInfoResult(string username, ArrayList sortingOrderList, dynamic toolTipsProducts)
+        private dynamic NoInfoResult(string username, ArrayList sortingOrderList, dynamic toolTipsProducts) => new
         {
-            return
-                new
-                {
-                    viewlevel = Role.Super,
-                    supername = username,
-                    mastername = string.Empty,
-                    agentname = string.Empty,
-                    rows = string.Empty,
-                    sortingorderlist = sortingOrderList,
-                    tooltips = toolTipsProducts
-                };
-        }
+            viewlevel = Role.Super,
+            supername = username,
+            mastername = string.Empty,
+            agentname = string.Empty,
+            rows = string.Empty,
+            sortingorderlist = sortingOrderList,
+            tooltips = toolTipsProducts
+        };
     }
 }

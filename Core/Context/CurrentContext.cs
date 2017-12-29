@@ -14,7 +14,9 @@
 
     public class CurrentContext : ICurrentContext
     {
-        private readonly string[] custIdParamNames = {"custId", "customerId", "parentId", "srecommend", "mrecommend", "recommend", "agentId" };
+        private readonly string[] custIdParamNames =
+            {"custId", "customerId", "parentId", "srecommend", "mrecommend", "recommend", "agentId"};
+
         private readonly string[] custIdsNames = {"custIds", "customerIds"};
 
         public static string LoginErrorMessage { get; set; } = string.Empty;
@@ -101,7 +103,8 @@
             {
                 var variables = HttpContext.Current.Request.ServerVariables;
 
-                var protocol = variables["SERVER_PORT_SECURE"] == "1" ? "https://" : "http://"; //DevSkim: ignore DS137138
+                var protocol =
+                    variables["SERVER_PORT_SECURE"] == "1" ? "https://" : "http://"; //DevSkim: ignore DS137138
                 var domain = variables["SERVER_NAME"];
                 var port = variables["SERVER_PORT"];
 
@@ -139,7 +142,7 @@
             {
                 var custId = Converter.ToInt(request[custIdParamName]);
 
-                if(custId > 0)
+                if (custId > 0)
                 {
                     return custId;
                 }

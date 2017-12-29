@@ -5,9 +5,8 @@
 
     public static class ControllerExtentions
     {
-        public static JsonBase JsonExt(this Controller controller, object data, JsonSerializerSettings settings = null)
-        {
-            return new JsonBase(data, settings);
-        }
+        public static JsonBase
+            JsonExt(this Controller controller, object data, JsonSerializerSettings settings = null) =>
+            new JsonBase(data, settings);
     }
 }

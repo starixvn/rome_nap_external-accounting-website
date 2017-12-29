@@ -1,6 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Core.Context
 {
-    using System;
     using System.Collections;
     using System.Globalization;
     using System.Web;
