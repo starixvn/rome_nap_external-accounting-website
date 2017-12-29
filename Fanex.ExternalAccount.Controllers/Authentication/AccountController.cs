@@ -9,7 +9,6 @@
     using CaptchaMvc.Controllers;
     using CaptchaMvc.HtmlHelpers;
     using Core.Context;
-    using Core.Shared;
     using CustomerSetting.Module.Core.Web;
     using DTO;
     using DTO.UserControl;

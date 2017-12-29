@@ -285,24 +285,6 @@
             return table;
         }
 
-        protected virtual string LevelName(int viewlevel)
-        {
-            switch (viewlevel)
-            {
-                case 1:
-                    return "Member";
-
-                case 2:
-                    return "Agent";
-
-                case 3:
-                    return "Master";
-
-                default:
-                    return "Super";
-            }
-        }
-
         protected bool IsAdminHasPermissionOnCustomer(bool isSpecialSiteCustomer)
         {
             var permisisonService = new ServiceBase();

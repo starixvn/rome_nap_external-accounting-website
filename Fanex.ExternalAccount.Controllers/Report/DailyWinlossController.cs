@@ -67,7 +67,7 @@
             if (excelStream != null)
             {
                 ExportToExcel(excelStream,
-                    LevelName(_viewlevel - 1) + "DailyWinLoss_" + _winlostDate.ToString("yyyyMMdd") + ".xls");
+                    (_viewlevel - 1).DisplayRoleName() + "DailyWinLoss_" + _winlostDate.ToString("yyyyMMdd") + ".xls");
                 excelStream.Dispose();
             }
         }
@@ -186,15 +186,15 @@
 
         private ActionResult GetDailyWinLossDownline()
         {
-            if (_viewlevel == Role.Super)
+            if (_viewlevel.IsSuper())
             {
                 _listDailyWinLoss = _reportService.GetDailyWinLossSuper(_winlostDate, _custId, 0);
                 _cache.Set(_cacheList, _listDailyWinLoss);
                 return JsonBase(
-                    new {viewlevel = Role.Master, srecommend = _custId, rows = _listDailyWinLoss},
+                    new { viewlevel = Role.Master, srecommend = _custId, rows = _listDailyWinLoss },
                     new JsonSerializerSettings());
             }
-            if (_viewlevel == Role.Master)
+            if (_viewlevel.IsMaster())
             {
                 _listDailyWinLoss = _reportService.GetDailyWinLossMaster(_winlostDate, _custId, 0);
                 _cache.Set(_cacheList, _listDailyWinLoss);
