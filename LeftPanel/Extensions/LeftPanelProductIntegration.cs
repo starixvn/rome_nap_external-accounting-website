@@ -45,7 +45,7 @@
                 new ProductStatus(ProductConstants.BullFighting, "Bullfighting", statusRow)
             };
 
-        public static readonly IDictionary<int, string> VisibleBetSettingPermissions = new Dictionary<int, string>
+        public static readonly IReadOnlyDictionary<int, string> VisibleBetSettingPermissions = new Dictionary<int, string>
         {
             { ProductConstants.RNGCasino, eFunctions.CasinoBetting },
             { ProductConstants.GoldDeluxe,eFunctions.GoldDeluxeBetting },
