@@ -14,8 +14,8 @@
 
     public class AuthorizationHandler
     {
-        private readonly ICachingService _cachingService = new CachingService();
         public static readonly AuthorizationHandler Instance = new AuthorizationHandler();
+        private readonly ICachingService _cachingService = new CachingService();
 
         public bool IsBelong()
         {
@@ -43,7 +43,7 @@
             groupname = string.IsNullOrEmpty(groupname) ? userGroup.FirstOrDefault()?.GroupName : groupname;
             var result = new ReportService().GetCustomerInfo(groupname, custId, userName, isGetUplineInfo);
 
-            return result?.Rows.Count > 0 || (custId == 0 && userGroup.Count > 0);
+            return result?.Rows.Count > 0 || custId == 0 && userGroup.Count > 0;
         }
 
         private static bool IsBelong(string groupname, IEnumerable<int> custIds, string userName, bool isGetUplineInfo)
@@ -129,10 +129,11 @@
             var userCache = _cachingService.GetUserCache(userId);
             var menuList = userCache.MenuList;
             var userFunctions = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
-            var hasPermissionOnMenu = menuList.Any(menuItem => IsAuthorizedUrl(menuItem.Url.Replace("~", string.Empty), requestUrl));
+            var hasPermissionOnMenu = menuList.Any(menuItem =>
+                IsAuthorizedUrl(menuItem.Url.Replace("~", string.Empty), requestUrl));
 
             if (!hasPermissionOnMenu && userFunctions == null)
-            { 
+            {
                 return false;
             }
 
@@ -166,7 +167,8 @@
 
         private static bool IsAuthorizedUrl(string menuUrl, string requestUrl)
             => !string.IsNullOrWhiteSpace(menuUrl)
-                && (string.IsNullOrWhiteSpace(requestUrl) || requestUrl.ToLowerInvariant().Contains(menuUrl.ToLowerInvariant()));
+               && (string.IsNullOrWhiteSpace(requestUrl) ||
+                   requestUrl.ToLowerInvariant().Contains(menuUrl.ToLowerInvariant()));
 
         public bool HasUpdateCreditPermission(int userId)
             => IsAuthorized(userId, eFunctions.UpdateCredit, AuthenticateAction.AuthenticationType.Host);
@@ -181,12 +183,12 @@
             => IsAuthorized(userId, eFunctions.AllowAutoMPT, AuthenticateAction.AuthenticationType.Host);
 
         public bool HasClearCreditPermission(int userId)
-           => IsAuthorized(userId, eFunctions.ClearCredit, AuthenticateAction.AuthenticationType.Host);
+            => IsAuthorized(userId, eFunctions.ClearCredit, AuthenticateAction.AuthenticationType.Host);
 
         public bool HasOpenSuperPermission(int userId)
-           => IsAuthorized(userId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host);
+            => IsAuthorized(userId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host);
 
         public bool HasReadPermissionOnFunctions(IEnumerable<string> functions, int userId)
-            => functions.Any(function => IsAuthorized(userId, function, AuthenticateAction.AuthenticationType.Read));
+            => functions.Any(function => IsAuthorized(userId, function));
     }
 }

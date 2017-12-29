@@ -5,15 +5,26 @@
     using System.Globalization;
     using System.Web.Mvc;
     using Base;
+    using Context;
     using Newtonsoft.Json;
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Utilities;
-    using Context;
 
     public class FilterController : BaseController
     {
-        private readonly AuthorizationHandler authorization = new AuthorizationHandler();
+        private readonly AuthorizationHandler authorization;
+        private readonly IReportService reportService;
+
+        public FilterController(IReportService reportService, AuthorizationHandler authorization)
+        {
+            this.reportService = reportService ?? new ReportService();
+            this.authorization = authorization ?? new AuthorizationHandler();
+        }
+
+        public FilterController() : this(null, null)
+        {
+        }
 
         public ICollection<KeyValuePair<string, bool>> AsCollection()
         {
@@ -41,7 +52,6 @@
                 return JsonBase(new {username = string.Empty});
             }
 
-            IReportService reportService = new ReportService();
             var users = reportService.GetSuggestedUserName(
                 CurrentSession.CustId,
                 CheckRequest.GetStringRequest("username", string.Empty),

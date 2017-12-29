@@ -1,7 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
@@ -13,7 +12,6 @@
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
-    using DTO.Customer;
     using DTO.Report;
     using Excel.Reports.WinLossDetailReport;
     using Service.Impl.Report;
@@ -26,7 +24,6 @@
         private const string DateFormat = "yyyyMMdd";
 
         private readonly ICache _cache;
-        private readonly IReportService _reportService;
         private readonly WinLossDetailService winLossDetailService;
 
         private readonly object ToolTipsProducts;
@@ -44,14 +41,12 @@
         private string _username = string.Empty;
 
         public WinLossDetailController(
-            IReportService reportService,
             ICache cacheManager,
             ICurrentSession currentSession,
             WinLossDetailService winLossDetailService)
         {
-            _reportService = reportService ?? new ReportService();
             _cache = cacheManager ?? CacheService.CreateInstance(CacheType.MemoryCache);
-            this.winLossDetailService = winLossDetailService ?? new WinLossDetailServiceImpl(_reportService);
+            this.winLossDetailService = winLossDetailService ?? new WinLossDetailServiceImpl();
 
             ToolTipsProducts = new
             {
@@ -59,7 +54,7 @@
             };
         }
 
-        public WinLossDetailController() : this(null, null, null, null)
+        public WinLossDetailController() : this(null, null, null)
         {
         }
 
@@ -123,91 +118,16 @@
         {
             GetRequestPage();
             _viewlevel = viewLevel != 0 ? viewLevel : _viewlevel;
-            var sortingOrderList = _reportService.GetSortingOrderList(_groupname);
-            var isDrillDownAction = _custId != 0;
+            var isSearchAction = _custId == 0;
 
             var viewModel =
-                isDrillDownAction
-                ? DrillDownWinLossDetail(new DrillDownRequest(_custId, _viewlevel, _fromDate, _toDate, _productIds, sortingOrderList, _groupname))
-                : SearchWinLossDetail(_username, _groupname, _fromDate, _toDate, _productIds, sortingOrderList);
+                isSearchAction
+                ? winLossDetailService.SearchWinLossDetail(_username, _groupname, _fromDate, _toDate, _productIds, ToolTipsProducts)
+                : winLossDetailService.DrillDownWinLossDetail(
+                    new DrillDownRequest(_custId, _viewlevel, _fromDate, _toDate, _productIds, _groupname),
+                    ToolTipsProducts);
 
             return Json(viewModel);
-        }
-
-        private dynamic SearchWinLossDetail(
-            string username,
-            string groupname,
-            DateTime fromDate,
-            DateTime toDate,
-            string productIds,
-            ArrayList sortingOrderList)
-        {
-            var customerInfo = new CustomerInfoSearchResult { RoleId = Role.Super };
-
-            if (!string.IsNullOrWhiteSpace(username))
-            {
-                customerInfo = _reportService.SearchCustomerInfo(groupname, 0, username, true);
-
-                if (customerInfo == null)
-                {
-                    return NoInfoResult(username, sortingOrderList);
-                }
-            }
-
-            object winLossDetailData = winLossDetailService.SearchWinLossDetail(
-                customerInfo,
-                groupname,
-                fromDate,
-                toDate,
-                productIds);
-
-            return
-                new
-                {
-                    viewlevel = customerInfo.RoleId,
-                    supername = customerInfo.SuperName,
-                    mastername = customerInfo.MasterName,
-                    agentname = customerInfo.AgentName,
-                    membername = customerInfo.MemberName,
-                    srecommend = customerInfo.SuperId,
-                    mrecommend = customerInfo.MasterId,
-                    recommend = customerInfo.AgentId,
-                    rows = winLossDetailData,
-                    sortingorderlist = sortingOrderList,
-                    tooltips = ToolTipsProducts
-                };
-        }
-
-        private dynamic NoInfoResult(string username, ArrayList sortingOrderList)
-        {
-            return
-                new
-                {
-                    viewlevel = Role.Super,
-                    supername = username,
-                    mastername = string.Empty,
-                    agentname = string.Empty,
-                    rows = string.Empty,
-                    sortingorderlist = sortingOrderList,
-                    tooltips = ToolTipsProducts
-                };
-        }
-
-        private dynamic DrillDownWinLossDetail(IDrillDownRequest request)
-        {
-            var winLossData = winLossDetailService.DrillDownWinLossDetail(request);
-
-            return
-                new
-                {
-                    viewlevel = request.ViewLevel.DirectDownlineLevel(),
-                    srecommend = request.SuperId,
-                    mrecommend = request.MasterId,
-                    recommend = request.AgentId,
-                    rows = winLossData,
-                    sortingorderlist = request.SortingOrderList,
-                    tooltips = ToolTipsProducts
-                };
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
@@ -281,7 +201,6 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds,
-            ArrayList sortingOrderList,
             string groupName)
         {
             CustId = custId;
@@ -289,7 +208,6 @@
             FromDate = fromDate;
             ToDate = toDate;
             ProductIds = productIds;
-            SortingOrderList = sortingOrderList;
             GroupName = groupName;
 
             switch (ViewLevel)
@@ -326,7 +244,6 @@
         public DateTime FromDate { get; }
         public DateTime ToDate { get; }
         public string ProductIds { get; }
-        public ArrayList SortingOrderList { get; }
 
         public string GroupName { get; }
 

@@ -1,7 +1,4 @@
-﻿using Fanex.CustomerSetting.Module.Casino.Services.Impl;
-using Fanex.CustomerSetting.Module.Core;
-using Fanex.Logging.Extensions.Web;
-using Sunplus.Agent.Utilities;
+﻿using Fanex.Logging.Extensions.Web;
 
 namespace Fanex.ExternalAccount.Core.Base
 {
@@ -9,6 +6,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using System.Collections.Generic;
     using System.Configuration;
     using System.Data;
+    using System.Diagnostics;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -24,6 +22,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
     using DTO;
+    using DTO.UserControl;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using PTEngine.BusinessObjects;
@@ -35,8 +34,6 @@ namespace Fanex.ExternalAccount.Core.Base
     using CurrentContext = Context.CurrentContext;
     using CurrentSession = Context.CurrentSession;
     using Result = PTEngine.BusinessObjects.Result;
-    using System.Diagnostics;
-    using DTO.UserControl;
 
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class BaseController : Controller
@@ -72,8 +69,6 @@ namespace Fanex.ExternalAccount.Core.Base
         protected virtual ICurrentContext CurrentContext => _currentContext ?? new CurrentContext();
 
         protected virtual ICurrentSession CurrentSession => _currentSession ?? new CurrentSession();
-
-        public object OfficeGroups { get; private set; }
 
         protected virtual ActionResult JsonBase(object data, JsonSerializerSettings settings = null)
         => this.JsonExt(data, settings ?? new JsonSerializerSettings
@@ -302,10 +297,13 @@ namespace Fanex.ExternalAccount.Core.Base
             {
                 case 1:
                     return "Member";
+
                 case 2:
                     return "Agent";
+
                 case 3:
                     return "Master";
+
                 default:
                     return "Super";
             }

@@ -1,8 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Report
 {
     using System;
+    using System.Collections;
     using Caching;
-    using Common.Extensions;
     using Core.Shared;
     using DTO.Customer;
     using Interface.Report;
@@ -36,13 +36,13 @@
             }
         }
 
-        public dynamic DrillDownWinLossDetail(IDrillDownRequest request)
+        public dynamic DrillDownWinLossDetail(IDrillDownRequest request, dynamic toolTipsProducts)
         {
             if (request.IsNotValid)
             {
                 throw new InvalidOperationException(nameof(request.IsValid));
             }
-
+            var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
             var getWinLossDetail = GetWinLossDetailFunction(request.ViewLevel);
 
             var winLossDetailData = getWinLossDetail(
@@ -59,19 +59,79 @@
                 cacheManager.Set(cacheKey, winLossDetailData);
             }
 
-            return winLossDetailData;
+            return
+                new
+                {
+                    viewlevel = request.ViewLevel.DirectDownlineLevel(),
+                    srecommend = request.SuperId,
+                    mrecommend = request.MasterId,
+                    recommend = request.AgentId,
+                    rows = winLossDetailData,
+                    sortingorderlist = sortingOrderList,
+                    tooltips = toolTipsProducts
+                };
         }
 
         public dynamic SearchWinLossDetail(
-            CustomerInfoSearchResult customerInfo,
+            string username,
             string groupname,
             DateTime fromDate,
             DateTime toDate,
-            string productIds
-            )
+            string productIds,
+            dynamic toolTipsProducts)
+        {
+            var sortingOrderList = reportService.GetSortingOrderList(groupname);
+
+            var customerInfo = new CustomerInfoSearchResult { RoleId = Role.Super };
+
+            if (!string.IsNullOrWhiteSpace(username))
+            {
+                customerInfo = reportService.SearchCustomerInfo(groupname, 0, username, true);
+
+                if (customerInfo == null)
+                {
+                    return NoInfoResult(username, sortingOrderList, toolTipsProducts);
+                }
+            }
+
+            var winLossDetailData = SearchWinLossDetailData(groupname, fromDate, toDate, productIds, customerInfo);
+
+            CacheWinLossDetailSearchResult(groupname, fromDate, toDate, productIds, winLossDetailData, customerInfo);
+
+            return
+                new
+                {
+                    viewlevel = customerInfo.RoleId,
+                    supername = customerInfo.SuperName,
+                    mastername = customerInfo.MasterName,
+                    agentname = customerInfo.AgentName,
+                    membername = customerInfo.MemberName,
+                    srecommend = customerInfo.SuperId,
+                    mrecommend = customerInfo.MasterId,
+                    recommend = customerInfo.AgentId,
+                    rows = winLossDetailData,
+                    sortingorderlist = sortingOrderList,
+                    tooltips = toolTipsProducts
+                };
+        }
+
+        private void CacheWinLossDetailSearchResult(string groupname, DateTime fromDate, DateTime toDate, string productIds,
+            dynamic winLossDetailData, CustomerInfoSearchResult customerInfo)
+        {
+            if (winLossDetailData != null)
+            {
+                var cacheKey = "CacheList" + customerInfo.Username + groupname + "0" + /* customerInfo.CustId + */fromDate +
+                               toDate +
+                               productIds;
+
+                cacheManager.Set(cacheKey, winLossDetailData);
+            }
+        }
+
+        private dynamic SearchWinLossDetailData(string groupname, DateTime fromDate, DateTime toDate, string productIds,
+            CustomerInfoSearchResult customerInfo)
         {
             object winLossDetailData;
-
             if (customerInfo.RoleId >= Role.Super)
             {
                 winLossDetailData = reportService.GetSuperWinLossDetail(
@@ -92,16 +152,22 @@
                     toDate,
                     productIds);
             }
-
-            if (winLossDetailData != null)
-            {
-                var cacheKey = "CacheList" + customerInfo.Username + groupname + "0" +/* customerInfo.CustId + */fromDate + toDate +
-                               productIds;
-
-                cacheManager.Set(cacheKey, winLossDetailData);
-            }
-
             return winLossDetailData;
+        }
+
+        private dynamic NoInfoResult(string username, ArrayList sortingOrderList, dynamic toolTipsProducts)
+        {
+            return
+                new
+                {
+                    viewlevel = Role.Super,
+                    supername = username,
+                    mastername = string.Empty,
+                    agentname = string.Empty,
+                    rows = string.Empty,
+                    sortingorderlist = sortingOrderList,
+                    tooltips = toolTipsProducts
+                };
         }
     }
 }

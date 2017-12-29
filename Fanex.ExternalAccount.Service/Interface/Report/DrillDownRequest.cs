@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections;
-
-namespace Fanex.ExternalAccount.Service.Interface.Report
+﻿namespace Fanex.ExternalAccount.Service.Interface.Report
 {
+    using System;
+
     public interface IDrillDownRequest
     {
         int CustId { get; }
@@ -17,7 +16,6 @@ namespace Fanex.ExternalAccount.Service.Interface.Report
         DateTime FromDate { get; }
         DateTime ToDate { get; }
         string ProductIds { get; }
-        ArrayList SortingOrderList { get; }
         string GroupName { get; }
         bool IsValid { get; }
 
