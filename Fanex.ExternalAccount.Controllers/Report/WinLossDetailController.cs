@@ -60,7 +60,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult Index() => PartialViewBase();
+        public ActionResult Index() => View();
 
         public void GetRequestPage()
         {
