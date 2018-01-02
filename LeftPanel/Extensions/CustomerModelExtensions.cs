@@ -230,7 +230,7 @@
                     new ObjectInfo ("PT", "Edit Position Taking")
             };
 
-            if (roleId.IsMember())
+            if (roleId.IsNotMember())
             {
                 details.Add(new ObjectInfo("AddNew", "Add New"));
                 details.Add(new ObjectInfo("Transfer", "Edit Transfer Condition"));

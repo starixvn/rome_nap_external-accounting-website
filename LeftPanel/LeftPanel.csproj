@@ -201,7 +201,7 @@
     <Compile Include="Extensions\CustomerModelExtensions.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Extensions\LeftPanelProductIntegration.cs" />
+    <Compile Include="LeftPanelProductIntegration.cs" />
     <Compile Include="Extensions\RemovingSettingExtensions.cs" />
     <Compile Include="Extensions\SuperModelExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />

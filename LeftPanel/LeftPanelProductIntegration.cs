@@ -1,10 +1,11 @@
-﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel
 {
     using System.Collections.Generic;
     using System.Data;
     using Core.Shared;
     using Models;
     using ViewModels;
+    using Extensions;
 
     public static class LeftPanelProductIntegration
     {
