@@ -659,8 +659,8 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource) {
     options = {
         columns: this.DataFields,
         bodyRows: bodyRows,
-        gridExpandHeight: 165,
-        numberOfFrozenColumn: 6,
+        autoCalculateGridExpandHeight: true,
+        numberOfFrozenColumn: isMobile.phone ? 3 : 6,
         customizeHeader: true,
         groupHeaderRows: groupHeader,
         highlightFrozenWidth: 2,
