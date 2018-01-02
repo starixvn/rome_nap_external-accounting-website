@@ -188,8 +188,7 @@
 
         private void BuildMainTitle(ISheet resultSheet)
         {
-            var mainTitle = _builder.Status + (_builder.RoleId.IsMember() ? " Member" :
-                (_builder.RoleId.IsAgent() ? " Agent" : (_builder.RoleId.IsMaster() ? " Master" : " Super"))) + " List";
+            var mainTitle = $"{_builder.Status} {_builder.RoleId.DisplayRoleName()} List";
 
             resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
         }

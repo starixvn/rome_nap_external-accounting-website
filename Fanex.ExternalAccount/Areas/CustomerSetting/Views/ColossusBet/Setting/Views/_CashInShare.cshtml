@@ -1,8 +1,9 @@
 ﻿@using Fanex.CustomerSetting.Module.ColossusBetSetting.Resources;
+@using Fanex.ExternalAccount.Core.Shared
 @model Fanex.CustomerSetting.Module.ColossusBetSetting.Entities.ColossusBetModel
 @{
     var cashInShareLabel = string.Empty;
-    switch((int)Model.CustomerInformationPartial.RoleId)
+    switch(Model.CustomerInformationPartial.RoleId)
     {
         case Role.Super: 
             cashInShareLabel = Messages.SuperCashInShare;

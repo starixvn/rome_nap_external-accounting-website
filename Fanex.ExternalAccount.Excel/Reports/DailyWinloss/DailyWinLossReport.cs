@@ -120,7 +120,9 @@
 
         private void BuildMainTitle(ISheet resultSheet)
         {
-            var mainTitle = $"{(_builder.RoleId == Role.Group ? "Super" : _builder.RoleId.IsSuper() ? "Master" : _builder.RoleId.IsMaster() ? "Agent" : "Member")} Daily Win Loss on {_builder.WinlostDate}";
+            var downlineLevel = _builder.RoleId.DirectDownlineLevel();
+            
+            var mainTitle = $"{downlineLevel.DisplayRoleName()} Daily Win Loss on {_builder.WinlostDate}";
 
             resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
         }
