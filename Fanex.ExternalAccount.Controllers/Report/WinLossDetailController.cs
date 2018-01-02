@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Web.Http;
     using System.Web.Mvc;
     using Caching;
     using Core.Base;
@@ -22,30 +23,16 @@
     {
         private const string Seperator = ", ";
         private const string DateFormat = "yyyyMMdd";
-
-        private readonly ICache _cache;
+        private readonly ICache cacheManager;
         private readonly WinLossDetailService winLossDetailService;
-
         private readonly object ToolTipsProducts;
-
-        private string _formatedProducts = string.Empty;
-        private string _productIds = string.Empty;
-        private string _products = string.Empty;
-        private string _groupname = string.Empty;
-
-        private int _custId;
-        private int _viewlevel = Role.Group;
-
-        private DateTime _fromDate = DateTime.Today;
-        private DateTime _toDate = DateTime.Today;
-        private string _username = string.Empty;
 
         public WinLossDetailController(
             ICache cacheManager,
             ICurrentSession currentSession,
             WinLossDetailService winLossDetailService)
         {
-            _cache = cacheManager ?? CacheService.CreateInstance(CacheType.MemoryCache);
+            this.cacheManager = cacheManager ?? CacheService.CreateInstance(CacheType.MemoryCache);
             this.winLossDetailService = winLossDetailService ?? new WinLossDetailServiceImpl();
 
             ToolTipsProducts = new
@@ -62,40 +49,13 @@
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult Index() => View();
 
-        public void GetRequestPage()
+        private string GroupName => CurrentSession.IsInternalAdmin
+            ? CheckRequest.GetStringRequest("groupname", string.Empty)
+            : CurrentSession.CurrencyGroup;
+
+        private static string GetProductIds(ICollection<KeyValuePair<string, bool>> filterParams)
         {
-            _products = string.Empty;
-            _formatedProducts = string.Empty;
-            var _formatedProductIds = new List<int>();
-
-            _username = CheckRequest.GetStringRequest("username", string.Empty);
-            _viewlevel = CheckRequest.GetIntRequest("viewlevel", 0);
-            _custId = CheckRequest.GetIntRequest("custid", 0);
-            _groupname = CurrentSession.IsInternalAdmin
-                ? CheckRequest.GetStringRequest("groupname", string.Empty)
-                : CurrentSession.CurrencyGroup;
-            _fromDate = CheckRequest.GetDateTimeRequest("fromdate", DateTime.Today);
-            _toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);
-
-            var filterParams = new FilterController().AsCollection();
-            var list = GetProductList();
-            filterParams.ToList().ForEach(o =>
-            {
-                _products += o.Key + o.Value;
-                list.ForEach(p =>
-                {
-                    if (!p.Key.Equals("showAll", StringComparison.OrdinalIgnoreCase) && o.Value
-                        && o.Key.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
-                    {
-                        _formatedProducts += p.Value + Seperator;
-                    }
-                });
-            });
-
-            if (_formatedProducts.Length > 0)
-            {
-                _formatedProducts = _formatedProducts.TrimEnd(Seperator.ToCharArray());
-            }
+            var formatedProductIds = new List<int>();
 
             foreach (ProductElementConfiguration item in ProductsConfiguration.Instance.ProductCollection)
             {
@@ -103,28 +63,55 @@
                 {
                     if (item.ProductId != 0 && product.Key.Equals(item.Id, StringComparison.OrdinalIgnoreCase) && product.Value)
                     {
-                        _formatedProductIds.Add(item.ProductId);
+                        formatedProductIds.Add(item.ProductId);
                     }
                 }
             }
 
-            _productIds = string.Join(",", _formatedProductIds);
+            return string.Join(",", formatedProductIds);
+        }
+
+        private string GetProductNames(ICollection<KeyValuePair<string, bool>> filterParams)
+        {
+            var list = GetProductList();
+            var formatedProducts = string.Empty;
+            filterParams.ToList().ForEach(o =>
+            {
+                list.ForEach(p =>
+                {
+                    if (!p.Key.Equals("showAll", StringComparison.OrdinalIgnoreCase) && o.Value
+                        && o.Key.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
+                    {
+                        formatedProducts += p.Value + Seperator;
+                    }
+                });
+            });
+
+            if (formatedProducts.Length > 0)
+            {
+                formatedProducts = formatedProducts.TrimEnd(Seperator.ToCharArray());
+            }
+
+            return formatedProducts;
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
-        public ActionResult GetData(int viewLevel = 0)
+        public ActionResult GetData([FromUri]WinLossDetailRequestParam request)
         {
-            GetRequestPage();
-            _viewlevel = viewLevel != 0 ? viewLevel : _viewlevel;
-            var isSearchAction = _custId == 0;
+            var viewlevel = request.viewlevel;
+            var custId = request.custId;
+            var fromDate = request.fromdate;
+            var username = request.username;
+            var toDate = request.todate;
+            var productIds = GetProductIds(new FilterController().AsCollection());
 
             var viewModel =
-                isSearchAction
-                ? winLossDetailService.SearchWinLossDetail(_username, _groupname, _fromDate, _toDate, _productIds, ToolTipsProducts)
+                request.IsSearch()
+                ? winLossDetailService.SearchWinLossDetail(username, GroupName, fromDate, toDate, productIds, ToolTipsProducts)
                 : winLossDetailService.DrillDownWinLossDetail(
-                    new DrillDownRequest(_custId, _viewlevel, _fromDate, _toDate, _productIds, _groupname),
+                    new DrillDownRequest(custId, viewlevel, fromDate, toDate, productIds, GroupName),
                     ToolTipsProducts);
 
             return Json(viewModel);
@@ -132,25 +119,28 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
           Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public void ExportWinLossDetailToExcel()
+        public void ExportWinLossDetailToExcel([FromUri]WinLossDetailRequestParam request)
         {
-            GetRequestPage();
-            var fromDate = _fromDate;
-            var dateTime = _toDate;
-            var formatedProducts = _formatedProducts;
-            var roleId = _viewlevel;
-            var cacheKey = "CacheList" + _username + _groupname + _custId + fromDate + dateTime + _productIds;
+            var productCollection = new FilterController().AsCollection();
+            var fromDate = request.fromdate;
+            var dateTime = request.todate;
+            var formatedProducts = GetProductNames(productCollection);
+            var viewlevel = request.viewlevel;
+            var productIds = GetProductIds(productCollection);
+            var custId = request.custId;
+
+            var cacheKey = "CacheList" + request.username + GroupName + custId + fromDate + dateTime + productIds;
 
             IWinLossDetailReportBuilder builder;
 
-            switch (roleId)
+            switch (viewlevel)
             {
                 case Role.Member:
                     {
-                        var winlossDetailData = _cache.Get<List<WinLossDetailAg>>(cacheKey);
+                        var winlossDetailData = cacheManager.Get<List<WinLossDetailAg>>(cacheKey);
                         builder = new MemberWinLossDetailReportBuilder(
                             winlossDetailData,
-                            roleId,
+                            viewlevel,
                             fromDate,
                             dateTime);
 
@@ -158,10 +148,10 @@
                     }
                 case Role.Agent:
                     {
-                        var winlossDetailData = _cache.Get<List<WinLossDetailMAg>>(cacheKey);
+                        var winlossDetailData = cacheManager.Get<List<WinLossDetailMAg>>(cacheKey);
                         builder = new AgentWinLossDetailReportBuilder(
                             winlossDetailData,
-                            roleId,
+                            viewlevel,
                             fromDate,
                             dateTime);
 
@@ -169,10 +159,10 @@
                     }
                 default:
                     {
-                        var winlossDetailData = _cache.Get<List<WinLossDetail>>(cacheKey);
+                        var winlossDetailData = cacheManager.Get<List<WinLossDetail>>(cacheKey);
                         builder = new WinLossDetailReportBuilder(
                             winlossDetailData,
-                            roleId,
+                            viewlevel,
                             fromDate,
                             dateTime);
 
@@ -183,7 +173,7 @@
             var memoryStream = builder.Build(formatedProducts);
 
             var exportFileName =
-                $"{roleId.DisplayRoleName()}WinLossDetail_{fromDate.ToString(DateFormat)}_{dateTime.ToString(DateFormat)}.xls";
+                $"{viewlevel.DisplayRoleName()}WinLossDetail_{fromDate.ToString(DateFormat)}_{dateTime.ToString(DateFormat)}.xls";
 
             if (memoryStream != null)
             {
@@ -253,5 +243,28 @@
                                && CustId > 0;
 
         public bool IsNotValid => !IsValid;
+    }
+
+    public class WinLossDetailRequestParam
+    {
+        public string groupName { get; set; }
+
+        public int srecommend { get; set; }
+
+        public int mrecommend { get; set; }
+
+        public int recommend { get; set; }
+
+        public int custId { get; set; }
+
+        public string username { get; set; }
+
+        public DateTime fromdate { get; set; }
+
+        public DateTime todate { get; set; }
+
+        public int viewlevel { get; set; }
+
+        public bool IsSearch() => custId == 0;
     }
 }
