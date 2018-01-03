@@ -363,15 +363,16 @@ Fanex.ExtAcc = {
 
         var leftSplitter = $("#leftSplitter");
         var iconCollapseExpand = $("#collapseExpandOnDesktop");
+        var iconUser = $('#iconUserInfo');
         var content = $("#contentSplitter");
         var splitterBar = $("#splitterBar");
 
         var widthDevice = $(window).width();
 
         if (widthDevice >= 768 && widthDevice <= 1300) {
-            iconCollapseExpand.removeClass("icon-chevron-left").addClass("icon-chevron-right");
-            iconCollapseExpand.on("click", function () {
-                if (!iconCollapseExpand.hasClass("active")) {
+            //iconCollapseExpand.removeClass("icon-chevron-left").addClass("icon-chevron-right");
+            iconUser.on("click", function () {
+                if (!iconUser.hasClass("active")) {
                     iconCollapseExpand.removeClass("icon-chevron-right").addClass("icon-chevron-left").addClass("active");
                     leftSplitter.removeClass("collapse-leftpanel").addClass("expand-leftpanel");
                     content.addClass("collapse-content");
@@ -384,17 +385,15 @@ Fanex.ExtAcc = {
                 }
             });
         } else {
-            iconCollapseExpand.on("click", function () {
-                if (!iconCollapseExpand.hasClass("active")) {
-                    iconCollapseExpand.removeClass("icon-chevron-left").addClass("icon-chevron-right").addClass("active");
-                    leftSplitter.addClass("collapse-leftpanel").removeClass("expand-leftpanel");
-                    content.addClass("expand-content");
-                    splitterBar.addClass("collapse-leftpanel");
+            iconUser.on("click", function () {
+                if (!iconUser.hasClass("active")) {
+                    iconUser.addClass("active");
+                    leftSplitter.addClass("expand-leftpanel").removeClass("collapse-leftpanel");
+                    content.removeClass("expand-content").addClass("collapse-content");
                 } else {
-                    iconCollapseExpand.removeClass("icon-chevron-right").addClass("icon-chevron-left").removeClass("active");
-                    leftSplitter.removeClass("collapse-leftpanel").addClass("expand-leftpanel");
-                    content.removeClass("expand-content");
-                    splitterBar.removeClass("collapse-leftpanel");
+                    iconUser.removeClass("active");
+                    leftSplitter.removeClass("expand-leftpanel").addClass("collapse-leftpanel");
+                    content.removeClass("collapse-content").addClass("expand-content");
                 }
             });
         }

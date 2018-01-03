@@ -118,22 +118,22 @@ Fanex.ExtAcc.Account = {
             }
         });
 
-        iconUserInfo.on("click", function () {
-            if (iconNav.hasClass('active')) {
-                $this.collapseSidebar();
-            }
+        //iconUserInfo.on("click", function () {
+        //    if (iconNav.hasClass('active')) {
+        //        $this.collapseSidebar();
+        //    }
             
-            if (!iconUserInfo.hasClass('active')) {
-                leftPanel.addClass("expand-leftpanel-mobile").addClass("show").show("fast");
-                iconUserInfo.addClass("active");
+        //    if (!iconUserInfo.hasClass('active')) {
+        //        leftPanel.addClass("expand-leftpanel-mobile").addClass("show").show("fast");
+        //        iconUserInfo.addClass("active");
 
-            } else {
-                leftPanel.show("fast", function () {
-                    leftPanel.removeClass("expand-leftpanel-mobile");
-                    iconUserInfo.removeClass("active");
-                });
-            }
-        });
+        //    } else {
+        //        leftPanel.show("fast", function () {
+        //            leftPanel.removeClass("expand-leftpanel-mobile");
+        //            iconUserInfo.removeClass("active");
+        //        });
+        //    }
+        //});
 
         hasMenu.on("click", function () {
             var menu = $(this);

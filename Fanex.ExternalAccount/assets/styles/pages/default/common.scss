@@ -316,20 +316,20 @@ body {
     overflow: auto;
 
     @media screen and (min-device-width: 768px) {
-        left: 10px; 
+        left: 0; 
     }
 
     @media screen and (min-device-width: 1300px) {
-        left: 408px; 
+        left: 398px; 
     }
 
 
     &.expand-content {
-        left: 10px; 
+        left: 0; 
     }
 
     &.collapse-content {
-        left: 408px;
+        left: 398px;
     }
 }
 

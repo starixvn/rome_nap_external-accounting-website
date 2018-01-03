@@ -98,7 +98,7 @@
     <div id="selectedGroupName" style="display: none"></div>
     <div id="container">
         <header id="header" class="header">    
-            <div id="iconUserInfo" class="icon-user"></div>        
+            <div id="iconUserInfo" class="icon-user active"></div>        
             <div id='accMenuGroup' class="group-user">
                 <select id="ddlGroupName"></select>
             </div>
@@ -140,9 +140,9 @@
                     </div>
                     <iframe id="leftFrame" class="iframe"></iframe>
                 </div>
-                <div class="splitter-bar" id="splitterBar">
+                @*<div class="splitter-bar" id="splitterBar">
                     <div class="icon-chevron-left icon-collapse-on-desktop" id="collapseExpandOnDesktop"></div>
-                </div>
+                </div>*@
                 <div class="content" id="contentSplitter">                    
                     @RenderBody()
                 </div>

@@ -16,9 +16,7 @@
     transition: all .01s ease-out .2s;
 
     .icon-user {
-        /*position: absolute;
-        right: 60px;
-        top: 20px;*/
+        margin: 0 16px;
         float: left;
         display: inline-block;
         line-height: 60px;
@@ -97,7 +95,6 @@
 }
 
 .group-user {
-    padding-left: 16px;
 
     .select2-container {
         width: 210px !important;
@@ -170,11 +167,10 @@
         .group-user {
             float: left;
             padding-top: 13px;
-            padding-left: 16px;
 
             .select2-container {
                 top: 0px;
-                width: 365px !important;
+                width: 345px !important;
             }
         }
 
@@ -226,8 +222,6 @@
             margin-right: 20px;
             padding: 10px;
             color: #fff;
-            /*background-color: #546587;
-            @include border-radius(50%);*/
 
         }
     }
