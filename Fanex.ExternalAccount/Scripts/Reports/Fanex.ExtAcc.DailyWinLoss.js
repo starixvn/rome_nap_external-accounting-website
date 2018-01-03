@@ -258,8 +258,10 @@ Fanex.ExtAcc.DailyWinLoss = {
                 if ($this.totalRows > 0) {
                     $this.renderReport();
                     $("#exporttoexcel").removeClass("hide");
+                    $(".groupBack").removeClass("hide");
                 } else {
                     $("#exporttoexcel").addClass("hide");
+                    $(".groupBack").addClass("hide");
                 }
 
                 Fanex.ExtAcc.UnBlockUI();
