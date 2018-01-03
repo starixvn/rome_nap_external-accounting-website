@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Web;
-    using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
@@ -33,11 +32,6 @@
             routes.IgnoreRoute("{*allaspx}", new { allaspx = @".*\.aspx(/.*)?" });
             routes.IgnoreRoute("{*allashx}", new { allashx = @".*\.ashx(/.*)?" });
             routes.IgnoreRoute("{*favicon}", new { favicon = "(.*/)?favicon.ico(/.*)?" });
-
-            routes.MapHttpRoute(
-                "DefaultApi",
-                "api/{controller}/{id}",
-                new { id = RouteParameter.Optional });
 
             routes.MapRoute(
                 "Default",
