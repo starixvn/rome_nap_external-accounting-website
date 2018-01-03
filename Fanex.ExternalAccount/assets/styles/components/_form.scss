@@ -4,7 +4,7 @@
     }
     .form-group {
         display: inline-block;   
-        line-height: 30px; 
+        line-height: 28px; 
         margin-right: 24px; 
         vertical-align: middle;
         @media all and (max-width: 480px)   {
@@ -21,7 +21,7 @@
     .user-group button {
         background-image: none !important;
         width: 20px !important;
-        height: 32px;
+        height: 28px;
         margin-left: -20px !important;
     }
 
@@ -42,12 +42,12 @@
 
     .label {
         text-align: right;
-        line-height: 32px;
+        line-height: 28px;
     }
 
     .form-control {
         margin-left: 10px;    
-        height: 32px;    
+        height: 28px;    
     }
 
     .text-info {
@@ -97,7 +97,7 @@
         button {
             width: 20px !important;
             margin-left: -21px !important;
-            height: 30px;
+            height: 26px;
 
             &:hover {
                 background-image: none !important;

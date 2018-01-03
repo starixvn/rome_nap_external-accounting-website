@@ -104,7 +104,7 @@ input[type='text'], input[type='password'], input[type='email'] {
     padding-left: 8px;
     padding-right: 8px;
     /*width: 120px;*/
-    border: 1px solid #7b7c7e;
+    border: 1px solid #a6a6a6;
     -webkit-appearance: none;
 }
 
@@ -124,7 +124,7 @@ input[type='text'][disabled], input[type='text'] .disabled, input[type='password
 }
 
 textarea {
-    border: 1px solid #7b7c7e;
+    border: 1px solid #a6a6a6;
 }
 
 /* Messages */

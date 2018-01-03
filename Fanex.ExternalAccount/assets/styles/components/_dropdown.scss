@@ -2,8 +2,8 @@
 
 #userGroup input {
     border-radius: 0 !important;
-    border: 1px solid #7b7c7e; 
-    height: 30px;
+    border: 1px solid #a6a6a6; 
+    height: 28px;
     vertical-align: top;
     padding-left: 3px;
     @media all and (max-width: 480px) {
@@ -17,7 +17,7 @@
     border: none;
     width: 20px !important;
     margin-left: -22px !important;
-    height: 28px;
+    height: 26px;
     margin-top: 1px;
     &:focus, &:active {
         outline: none;
@@ -34,8 +34,8 @@
     
 .groupCboMenu input {
     border-radius: 0 !important;
-    border: 1px solid #7b7c7e; 
-    height: 32px;
+    border: 1px solid #a6a6a6; 
+    height: 28px;
     width: 255px;
     vertical-align: top;
     text-indent: 5px;
@@ -47,7 +47,7 @@
     border: none !important;
     width: 20px !important;
     margin-left: -22px !important;
-    height: 28px;
+    height: 26px;
     margin-top: 1px;
      &:focus, &:active {
         outline: none;
@@ -62,6 +62,6 @@
 }
 
 .groupCboMenu select {
-    border: 1px solid #7b7c7e;
-    height: 32px;
+    border: 1px solid #a6a6a6;
+    height: 28px;
 }

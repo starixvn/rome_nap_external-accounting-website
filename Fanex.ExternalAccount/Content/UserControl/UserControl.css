@@ -416,7 +416,7 @@ a.ui-state-default, a.ui-widget-content a.ui-state-default, a.ui-widget-header a
 }
 
 #groups input, #groupsAdd input {
-    border: 1px solid #7b7c7e !important;
+    border: 1px solid #a6a6a6 !important;
     margin-left: 10px;
     width: 225px !important;
 }

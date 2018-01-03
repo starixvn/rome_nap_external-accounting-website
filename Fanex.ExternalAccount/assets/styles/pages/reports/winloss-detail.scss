@@ -8,8 +8,8 @@
     position: relative;
 
     input {
-        height: 30px;
-        border: 1px solid #7b7c7e !important;
+        height: 28px;
+        border: 1px solid #a6a6a6 !important;
         border-radius: 0 !important;
     }
 
@@ -125,9 +125,11 @@
 
 span.selectedMonth {
     margin-right: 15px;
+    font-size: 13px;
 }
 
 .monPickrWrapParent .monPickrWrap {
+    font-family: Arial, sans-serif;
     position: relative !important;
     border-radius: 0 !important;
     border: none;
@@ -140,7 +142,7 @@ span.selectedMonth {
         padding: 5px 2px;
         border-radius: 0 !important;
         background: #fff;
-        border: 1px solid #7b7c7e;
+        border: 1px solid #a6a6a6;
         .prev:before, .next:before {
             font-family: 'AlphaAdmin';
             font-size: 20px;
@@ -154,7 +156,7 @@ span.selectedMonth {
         }
         .next {
             background: none;
-            top: 6px;
+            top: 4px;
             right: 6px;
             left: unset;
             &:before {
@@ -173,10 +175,12 @@ span.selectedMonth {
         box-shadow: none;
     }
     .dayPickr {
-        border: 1px solid #7b7c7e;
+        border: 1px solid #a6a6a6;
         border-radius: 0 !important;
-        height: 30px;
+        height: 28px;
         background: #fff;
+        font-size: 13px;
+        line-height: 25px;
         .darr {
             background: none;
         }
@@ -185,7 +189,7 @@ span.selectedMonth {
             font-family: 'AlphaAdmin';
             font-size: 19px;
             position: relative;
-            top: 5px;
+            top: 3px;
             right: 2px;
             color: #000;
         }

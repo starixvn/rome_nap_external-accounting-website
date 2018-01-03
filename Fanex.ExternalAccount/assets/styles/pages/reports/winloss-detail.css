@@ -1,6 +1,6 @@
 ﻿.filterbox input[type="text"] {
   border-radius: 0 !important;
-  border: 1px solid #7b7c7e; }
+  border: 1px solid #a6a6a6; }
 
 #mainGrid {
   width: 100%;
@@ -15,8 +15,8 @@
   border-radius: 0 !important;
   position: relative; }
   #GroupProducts input {
-    height: 30px;
-    border: 1px solid #7b7c7e !important;
+    height: 28px;
+    border: 1px solid #a6a6a6 !important;
     border-radius: 0 !important; }
   #GroupProducts .ui-icon {
     margin-top: unset !important;
@@ -101,9 +101,11 @@
   background-image: url(/Images/sort.png); }
 
 span.selectedMonth {
-  margin-right: 15px; }
+  margin-right: 15px;
+  font-size: 13px; }
 
 .monPickrWrapParent .monPickrWrap {
+  font-family: Arial, sans-serif;
   position: relative !important;
   border-radius: 0 !important;
   border: none;
@@ -115,7 +117,7 @@ span.selectedMonth {
     padding: 5px 2px;
     border-radius: 0 !important;
     background: #fff;
-    border: 1px solid #7b7c7e; }
+    border: 1px solid #a6a6a6; }
     .monPickrWrapParent .monPickrWrap .monPickr .prev:before, .monPickrWrapParent .monPickrWrap .monPickr .next:before {
       font-family: 'AlphaAdmin';
       font-size: 20px;
@@ -126,7 +128,7 @@ span.selectedMonth {
         content: '\e932'; }
     .monPickrWrapParent .monPickrWrap .monPickr .next {
       background: none;
-      top: 6px;
+      top: 4px;
       right: 6px;
       left: unset; }
       .monPickrWrapParent .monPickrWrap .monPickr .next:before {
@@ -139,10 +141,12 @@ span.selectedMonth {
   .selectedDayWrapParent .selectedDayWrap:hover {
     box-shadow: none; }
   .selectedDayWrapParent .selectedDayWrap .dayPickr {
-    border: 1px solid #7b7c7e;
+    border: 1px solid #a6a6a6;
     border-radius: 0 !important;
-    height: 30px;
-    background: #fff; }
+    height: 28px;
+    background: #fff;
+    font-size: 13px;
+    line-height: 25px; }
     .selectedDayWrapParent .selectedDayWrap .dayPickr .darr {
       background: none; }
     .selectedDayWrapParent .selectedDayWrap .dayPickr .darr:before {
@@ -150,7 +154,7 @@ span.selectedMonth {
       font-family: 'AlphaAdmin';
       font-size: 19px;
       position: relative;
-      top: 5px;
+      top: 3px;
       right: 2px;
       color: #000; }
 

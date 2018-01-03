@@ -17,7 +17,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+.ui-widget {
+    font-family: Arial,sans-serif;
+}
 .ui-datepicker-header .ui-icon {
     background-image: none;
     font-size: 0;

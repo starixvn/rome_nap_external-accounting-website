@@ -141,8 +141,8 @@ a {
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
   border-radius: 2px;
-  height: 30px;
-  line-height: 30px;
+  height: 28px;
+  line-height: 28px;
   padding-left: 10px;
   padding-right: 10px;
   border: none;
@@ -290,7 +290,7 @@ a {
 
 .search-form .form-group {
   display: inline-block;
-  line-height: 30px;
+  line-height: 28px;
   margin-right: 24px;
   vertical-align: middle; }
   @media all and (max-width: 480px) {
@@ -305,7 +305,7 @@ a {
 .search-form .user-group button {
   background-image: none !important;
   width: 20px !important;
-  height: 32px;
+  height: 28px;
   margin-left: -20px !important; }
 
 .search-form .user-group button:hover {
@@ -319,10 +319,10 @@ a {
     margin-bottom: 10px; }
   .form-add .label {
     text-align: right;
-    line-height: 32px; }
+    line-height: 28px; }
   .form-add .form-control {
     margin-left: 10px;
-    height: 32px; }
+    height: 28px; }
   .form-add .text-info {
     margin-left: 10px; }
   .form-add .textarea {
@@ -349,19 +349,19 @@ a {
   .form-add .groupCboMenu button {
     width: 20px !important;
     margin-left: -21px !important;
-    height: 30px; }
+    height: 26px; }
     .form-add .groupCboMenu button:hover {
       background-image: none !important; }
 
 input[type='text'], input[type='password'], input[type='email'] {
-  height: 30px;
-  line-height: 30px;
+  height: 28px;
+  line-height: 28px;
   border: none;
   outline: none;
   padding-left: 8px;
   padding-right: 8px;
   /*width: 120px;*/
-  border: 1px solid #7b7c7e;
+  border: 1px solid #a6a6a6;
   -webkit-appearance: none; }
   @media all and (max-width: 480px) {
     input[type='text'], input[type='password'], input[type='email'] {
@@ -373,7 +373,7 @@ input[type='text'], input[type='password'], input[type='email'] {
     cursor: not-allowed; }
 
 textarea {
-  border: 1px solid #7b7c7e; }
+  border: 1px solid #a6a6a6; }
 
 .successMsg, .errMsg {
   -webkit-border-radius: 2px;

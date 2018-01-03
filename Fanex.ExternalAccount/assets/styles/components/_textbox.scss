@@ -1,12 +1,12 @@
 ﻿input[type='text'], input[type='password'], input[type='email'] {    
-    height: 30px;
-    line-height: 30px;
+    height: 28px;
+    line-height: 28px;
     border: none;
     outline: none;
     padding-left: 8px;
     padding-right: 8px;
     /*width: 120px;*/
-    border: 1px solid #7b7c7e;    
+    border: 1px solid #a6a6a6;    
     -webkit-appearance: none;
     @media all and (max-width: 480px) {
         width: 110px;
@@ -23,5 +23,5 @@
 }
 
 textarea {
-    border: 1px solid #7b7c7e;
+    border: 1px solid #a6a6a6;
 }
