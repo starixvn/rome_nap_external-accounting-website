@@ -29,7 +29,7 @@
         public void SetProductStatus(DataRow dataRow)
         {
             IsDisabled = dataRow.ToBoolean($"Disable{ProductKey}");
-            IsHidden = !AppSettings.IsShowProduct(ProductKey) || dataRow.ToBoolean($"Hide{ProductKey}");
+            IsHidden = !AppSettings.IsShowProduct(ProductId) || dataRow.ToBoolean($"Hide{ProductKey}");
             IsSynced = dataRow.ToBoolean($"Synced{ProductKey}", true);
 
             if (CheckSyncedDownlines)

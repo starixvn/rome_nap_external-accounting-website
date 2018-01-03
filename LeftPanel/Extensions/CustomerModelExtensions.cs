@@ -177,7 +177,7 @@
             DataTable table3rdDCS,
             ProductSettingParam settingParams)
         {
-            if (!IsProductVisibledToSite(table3rdDCS, settingParams.ProductId, settingParams.ProductKey))
+            if (!IsProductVisibledToSite(table3rdDCS, settingParams.ProductId))
             {
                 return model;
             }
@@ -199,8 +199,8 @@
         private static void AddEditSettingLink(CustomerModel model, string productNameNoSpace, string productName)
             => model.Setting.Details.Add(new ObjectInfo { Key = productNameNoSpace, Value = $"Edit {productName}" });
 
-        private static bool IsProductVisibledToSite(DataTable table3rdDCS, int productId, string defaultProductName)
-            => table3rdDCS.Select($"ProductID = {productId}").Length > 0 && AppSettings.IsShowProduct(defaultProductName);
+        private static bool IsProductVisibledToSite(DataTable table3rdDCS, int productId)
+            => table3rdDCS.Select($"ProductID = {productId}").Length > 0 && AppSettings.IsShowProduct(productId);
 
         private static void AddEnableLinkItem(CustomerModel model, string productNameNoSpace, string name)
             => model.Setting.EditItems.Add(new ObjectInfo

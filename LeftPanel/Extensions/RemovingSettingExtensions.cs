@@ -274,7 +274,7 @@
             var hideVS = !Utils.ToBoolean(ConfigurationManager.AppSettings["EnableVirtualSports"]);
             var hideKeno = !KenoSection.Instance.ShowSetting;
             var hideGoldDeluxe = ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"].Equals("0");
-            var hideColossusBets = ConfigurationManager.AppSettings["IsShowColossusBets"].Equals("0");
+            var hideColossusBets = ConfigurationManager.AppSettings["IsShowProduct-15"].Equals("0");
 
             if (hideVS)
             {

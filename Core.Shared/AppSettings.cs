@@ -11,39 +11,31 @@
 
         public static bool ShowKenoSetting => ConfigurationManager.AppSettings["ShowKenoSetting"] == "true";
 
-        public static bool IsShowColossusBets => ConfigurationManager.AppSettings["IsShowColossusBets"] == "1";
+        public static bool IsShowColossusBets => ConfigurationManager.AppSettings["IsShowProduct-15"] == "1";
 
-        public static bool IsShowSportsbook2 => ConfigurationManager.AppSettings["IsShowSportsbook2"] == "1";
+        public static bool IsShowSportsbook2 => ConfigurationManager.AppSettings["IsShowProduct-16"] == "1";
 
-        public static bool IsShowCockfighting => ConfigurationManager.AppSettings["IsShowCockfighting"] == "1";
+        public static bool IsShowCockfighting => ConfigurationManager.AppSettings["IsShowProduct-19"] == "1";
 
-        public static bool IsShowCricket => ConfigurationManager.AppSettings["IsShowCricket"] == "1";
+        public static bool IsShowCricket => ConfigurationManager.AppSettings["IsShowProduct-20"] == "1";
 
-        public static bool IsShowAllbet => ConfigurationManager.AppSettings["IsShowAllbet"] == "1";
+        public static bool IsShowAllbet => ConfigurationManager.AppSettings["IsShowProduct-21"] == "1";
 
-        public static bool IsShowVoidBridge => ConfigurationManager.AppSettings["IsShowVoidBridge"] == "1";
+        public static bool IsShowVoidBridge => ConfigurationManager.AppSettings["IsShowProduct-22"] == "1";
 
-        public static bool IsShowNG2 => ConfigurationManager.AppSettings["IsShowNG2"] == "1";
+        public static bool IsShowNG2 => ConfigurationManager.AppSettings["IsShowProduct-23"] == "1";
 
-        public static bool IsShowFishingWorld => ConfigurationManager.AppSettings["IsShowFishingWorld"] == "1";
+        public static bool IsShowFishingWorld => ConfigurationManager.AppSettings["IsShowProduct-24"] == "1";
 
-        public static bool IsShowLottery => ConfigurationManager.AppSettings["IsShowLottery"] == "1";
+        public static bool IsShowLottery => ConfigurationManager.AppSettings["IsShowProduct-28"] == "1";
 
-        public static bool IsShowLucky3 => ConfigurationManager.AppSettings["IsShowLucky3"] == "1";
+        public static bool IsShowLucky3 => ConfigurationManager.AppSettings["IsShowProduct-26"] == "1";
 
         public static bool HideEsports => ToBoolean(ConfigurationManager.AppSettings["HideEsports"]);
 
-        public static bool IsShowBullfighting => ToBoolean(ConfigurationManager.AppSettings["IsShowBullfighting"]);
+        public static bool IsShowBullfighting => ToBoolean(ConfigurationManager.AppSettings["IsShowProduct-30"]);
 
-        public static bool IsShowProduct(string productName)
-        {
-            if (productName.Equals("MacauGames", StringComparison.CurrentCultureIgnoreCase))
-            {
-                productName = "VoidBridge";
-            }
-
-            return ToBoolean(ConfigurationManager.AppSettings["IsShow" + productName.Replace(" ", string.Empty)]);
-        }
+        public static bool IsShowProduct(int productId) => ToBoolean(ConfigurationManager.AppSettings[$"IsShowProduct-{productId}"]);
 
         private static bool ToBoolean(string value, bool defaultValue = false)
         {

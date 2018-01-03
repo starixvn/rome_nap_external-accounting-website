@@ -10,17 +10,17 @@
     var HideVirtualSports = ViewBag.HideVirtualSports;
     var HideKeno = ViewBag.HideKeno || !KenoSection.Instance.ShowSetting;
     var HideGoldDeluxe = ViewBag.HideGoldDeluxe || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
-    var HideColossusBets = ViewBag.HideColossusBets || ConfigurationManager.AppSettings["IsShowColossusBets"] == "0";
-    var HideSportsbook2 = ViewBag.HideSportsbook2 || ConfigurationManager.AppSettings["IsShowSportsbook2"] == "0";
-    var HideCockfighting = ViewBag.HideCockfighting || ConfigurationManager.AppSettings["IsShowCockfighting"] == "0";
-    var HideCricket = ViewBag.HideCricket || ConfigurationManager.AppSettings["IsShowCricket"] == "0";
-    var HideAllbet = ViewBag.HideAllbet || ConfigurationManager.AppSettings["IsShowAllbet"] == "0";
-    var HideVoidbridge = ViewBag.HideVoidbridge || ConfigurationManager.AppSettings["IsShowVoidbridge"] == "0";
-    var HideNG2 = ViewBag.HideNG2 || ConfigurationManager.AppSettings["IsShowNG2"] == "0";
-    var HideFishingWorld = ViewBag.HideFishingWorld || ConfigurationManager.AppSettings["IsShowFishingWorld"] == "0";
-    var HideLottery = ViewBag.HideLottery || ConfigurationManager.AppSettings["IsShowLottery"] == "0";
-    var HideLucky3 = ViewBag.HideLucky3 || ConfigurationManager.AppSettings["IsShowLucky3"] == "0";
-    var HideBullfighting = ViewBag.HideBullfighting || ConfigurationManager.AppSettings["IsShowBullfighting"] == "0";
+    var HideColossusBets = ViewBag.HideColossusBets || ConfigurationManager.AppSettings["IsShowProduct-15"] == "0";
+    var HideSportsbook2 = ViewBag.HideSportsbook2 || ConfigurationManager.AppSettings["IsShowProduct-16"] == "0";
+    var HideCockfighting = ViewBag.HideCockfighting || ConfigurationManager.AppSettings["IsShowProduct-19"] == "0";
+    var HideCricket = ViewBag.HideCricket || ConfigurationManager.AppSettings["IsShowProduct-20"] == "0";
+    var HideAllbet = ViewBag.HideAllbet || ConfigurationManager.AppSettings["IsShowProduct-21"] == "0";
+    var HideVoidbridge = ViewBag.HideVoidbridge || ConfigurationManager.AppSettings["IsShowProduct-22"] == "0";
+    var HideNG2 = ViewBag.HideNG2 || ConfigurationManager.AppSettings["IsShowProduct-23"] == "0";
+    var HideFishingWorld = ViewBag.HideFishingWorld || ConfigurationManager.AppSettings["IsShowProduct-24"] == "0";
+    var HideLottery = ViewBag.HideLottery || ConfigurationManager.AppSettings["IsShowProduct-28"] == "0";
+    var HideLucky3 = ViewBag.HideLucky3 || ConfigurationManager.AppSettings["IsShowProduct-26"] == "0";
+    var HideBullfighting = ViewBag.HideBullfighting || ConfigurationManager.AppSettings["IsShowProduct-30"] == "0";
     var status = new { syncCasino = SyncCasino, syncLiveCasino = SyncLiveCasino, hideVirtualSports = HideVirtualSports, hideKeno = HideKeno, hideGoldDeluxe = HideGoldDeluxe, hideColossusBets = HideColossusBets, hideSportsbook2 = HideSportsbook2, hideCockfighting = HideCockfighting, hideCricket = HideCricket };
     var statusJSON = JsonConvert.SerializeObject(status, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
 }

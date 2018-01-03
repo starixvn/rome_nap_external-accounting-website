@@ -9,6 +9,7 @@
 
     public static class LeftPanelProductIntegration
     {
+        // Status check box/link, edit setting link
         public static readonly IEnumerable<ProductSettingParam> ProductSettingParamList = new List<ProductSettingParam>
         {
             new ProductSettingParam(ProductConstants.AllBet, "Allbet", StatusType.Link, false),
@@ -34,6 +35,7 @@
                 new ObjectInfo("HideBullfighting", table3RdDcs.IsHideProduct(ProductConstants.BullFighting))
              };
 
+        // Get Product status from data, convert to standard structure
         public static List<ProductStatus> CreateProductStatusList(DataRow statusRow)
             => new List<ProductStatus>
             {
@@ -46,6 +48,7 @@
                 new ProductStatus(ProductConstants.BullFighting, "Bullfighting", statusRow)
             };
 
+        // Show edit bet setting tab for edit super setting
         public static readonly IReadOnlyDictionary<int, string> VisibleBetSettingPermissions = new Dictionary<int, string>
         {
             { ProductConstants.RNGCasino, eFunctions.CasinoBetting },
