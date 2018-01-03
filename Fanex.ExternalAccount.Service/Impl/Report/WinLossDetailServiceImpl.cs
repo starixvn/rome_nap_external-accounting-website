@@ -104,10 +104,9 @@
                 new
                 {
                     viewlevel = customerInfo.RoleId,
-                    supername = customerInfo.SuperName,
-                    mastername = customerInfo.MasterName,
-                    agentname = customerInfo.AgentName,
-                    membername = customerInfo.MemberName,
+                    supername = customerInfo.RoleId >= Role.Super ? customerInfo.SuperName : string.Empty,
+                    mastername = customerInfo.RoleId.IsMaster() ? customerInfo.MasterName : string.Empty,
+                    agentname = customerInfo.RoleId.IsAgent() ? customerInfo.AgentName : string.Empty,
                     srecommend = customerInfo.SuperId,
                     mrecommend = customerInfo.MasterId,
                     recommend = customerInfo.AgentId,
