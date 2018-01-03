@@ -315,6 +315,27 @@ Fanex.ExtAcc.WinLossDetail = {
             var elem = $(this);
             $this.sortTable(elem);
         });
+
+        Fanex.ExtAcc.OnResize = $this.resizeReportGrid;
+        $(".icon-filter").click($this.showHideFilter);
+    },
+
+    resizeReportGrid: function () {
+        try {
+            $("#jqgrid").fanexGrid("resizeGrid");
+        }
+        catch (err) { }
+    },
+    hideFilter: false,
+    showHideFilter: function () {
+        if ($this.hideFilter) {
+            $(".filterbox").removeClass("hide");
+        } else {
+            $(".filterbox").addClass("hide");
+        }
+
+        $this.resizeReportGrid();
+        $this.hideFilter = !$this.hideFilter;
     },
     ToggleTabs: function (statusSAg, statusMAg, statusAg, status) {
         $('#tabSuper').css('display', statusSAg);
@@ -334,6 +355,356 @@ Fanex.ExtAcc.WinLossDetail = {
         }
     },
 
+    RenderUsernameColumn: function (cell) {
+        if (cell == null || cell.Value.Username == 'Grand Total' || $this.viewlevel < 2) {
+            return '<div class="text-truncate" style="line-height: 22px; text-align: left; padding-left: 3px" title="' + cell.Value.Username + '">' + cell.Value.Username + '</div>';
+        }
+
+        var func = "javascript: Fanex.ExtAcc.WinLossDetail.GetDownlineWinLossDetail('" + cell.Value.CustId + "')";
+        return html = '<div style="line-height: 22px; text-align: left;">' +
+                            '<a class="text-truncate" style="text-decoration: none; margin: 0" href="' + func + '" title="' + cell.Value.Username + '">' + cell.Value.Username + '</a>' +
+                        '</div>';
+    },
+    CustomUsernameSortFunction: function (cell1Value, cell2Value, sortDirection) {
+        if (sortDirection == 'ASC') {
+            return cell1Value.Username > cell2Value.Username ? 1 : -1;
+        }
+
+        return cell1Value.Username < cell2Value.Username ? 1 : -1;
+    },
+    defaultColumns: [
+        {
+            HeaderText: 'Username', Name: 'Username', Width: 130, Sort: true, HeaderAlign: 'center',
+            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
+        },
+        { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Net Turnover', Name: 'NetTurnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'GrossComm', Name: 'GrossComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'MemberWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'PlayerComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'MemberTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'AgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'AgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'AgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'MAgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'MAgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'MAgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'SAgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'SAgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'SAgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Company', Name: 'Company', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
+    ],
+    MAgColumns: [
+        {
+            HeaderText: 'Username', Name: 'Username', Width: 130,
+            Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
+        },
+        { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Net Turnover', Name: 'NetTurnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'GrossComm', Name: 'GrossComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'MemberWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'PlayerComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'MemberTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'AgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'AgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'AgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'MAgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'MAgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'MAgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Company', Name: 'Company', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
+    ],
+    AgColumns: [
+        {
+            HeaderText: 'Username', Name: 'Username', Width: 130,
+            Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
+        },
+        { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Net Turnover', Name: 'NetTurnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'GrossComm', Name: 'GrossComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'MemberWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'PlayerComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'MemberTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Win/Loss', Name: 'AgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Comm', Name: 'AgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Total', Name: 'AgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+        { HeaderText: 'Company', Name: 'Company', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
+    ],
+    SAgHeaderColumns: [
+        { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
+        { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
+        { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
+        { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
+        { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
+        { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
+        { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
+        { HeaderText: "Super", Name: "SAgWinlost", MergeColNumber: 3 },
+        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+    ],
+    MAgHeaderColumns: [
+        { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
+        { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
+        { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
+        { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
+        { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
+        { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
+        { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
+        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+    ],
+    AgHeaderColumns: [
+        { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
+        { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
+        { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
+        { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
+        { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
+        { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
+        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+    ],
+    Render: function () {
+        var arrColData = new Array();
+        var arrGroupHeaders = new Array();
+        var arrGroupFooters = new Array();
+
+        if (this.viewlevel == 1) {
+            arrColData = this.AgColumns;
+            arrGroupHeaders = this.AgHeaderColumns;
+            arrGroupFooters = this.AgFooterColumns;
+        } else if (this.viewlevel == 2) {
+            arrColData = this.MAgColumns;
+            arrGroupHeaders = this.MAgHeaderColumns;
+            arrGroupFooters = this.MAgFooterColumns;
+        } else {
+            arrColData = this.defaultColumns;
+            arrGroupHeaders = this.SAgHeaderColumns;
+            arrGroupFooters = this.SAgFooterColumns;
+        }
+
+        var gridOption = {
+            customizeHeader: true,
+            groupHeaderRows: [{ Columns: arrGroupHeaders }],
+            columns: arrColData,
+            numberOfFrozenColumn: 3,
+            showFooter: true,
+            gridExpandHeight: 256,
+            showPager: true,
+            pagerOption: {
+                itemsPerPageArray: [50, 100, 500],
+                currentPage: 0,
+                totalItem: $this.totalRows,
+                itemsPerPage: 50
+            },
+            highlightFrozenWidth: 2,
+            marginRight: 2,
+            bottomBorderWidth: 0,
+            showDistinctRow: false,
+            allowTruncate: true,
+            sortOption:
+            {
+                afterGridSorted: function (rows) {
+                    return $this.customsortfunc(rows);
+                }
+            }
+        };
+
+        // For Summary Footer
+        var sumTurnover = 0;
+        var sumNetTurnover = 0;
+        var sumGrossComm = 0;
+        var sumMemberWinlost = 0;
+        var sumPlayerComm = 0;
+        var sumMemberTotal = 0;
+        var sumAgWinlost = 0;
+        var sumAgComm = 0;
+        var sumAgTotal = 0;
+        var sumMAgWinlost = 0;
+        var sumMAgComm = 0;
+        var sumMAgTotal = 0;
+        var sumSAgWinlost = 0;
+        var sumSAgComm = 0;
+        var sumSAgTotal = 0;
+        var sumCompany = 0;
+
+        //// Assing BodyData
+        $this.InitSort();
+        var bodyData = [];
+        for (var i = 0; i < this.totalRows; i++) {
+            if (this.viewlevel == 1) {
+                bodyData.push({
+                    Columns: [
+                    { Name: "Username", Value: this.dataSource[i] },
+                    { Name: "Turnover", Value: this.dataSource[i].Turnover },
+                    { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
+                    { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
+                    { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
+                    { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
+                    { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
+                    { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
+                    { Name: "AgComm", Value: this.dataSource[i].AgComm },
+                    { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
+                    { Name: "Company", Value: this.dataSource[i].Company }
+                    ]
+                })
+            } else if (this.viewlevel == 2) {
+                bodyData.push({
+                    Columns: [
+                    { Name: "Username", Value: this.dataSource[i] },
+                    { Name: "Turnover", Value: this.dataSource[i].Turnover },
+                    { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
+                    { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
+                    { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
+                    { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
+                    { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
+                    { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
+                    { Name: "AgComm", Value: this.dataSource[i].AgComm },
+                    { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
+                    { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
+                    { Name: "MAgComm", Value: this.dataSource[i].MAgComm },
+                    { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
+                    { Name: "Company", Value: this.dataSource[i].Company }
+                    ]
+                })
+            } else {
+                bodyData.push({
+                    Columns: [
+                    { Name: "Username", Value: this.dataSource[i] },
+                    { Name: "Turnover", Value: this.dataSource[i].Turnover },
+                    { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
+                    { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
+                    { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
+                    { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
+                    { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
+                    { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
+                    { Name: "AgComm", Value: this.dataSource[i].AgComm },
+                    { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
+                    { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
+                    { Name: "MAgComm", Value: this.dataSource[i].MAgComm },
+                    { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
+                    { Name: "SAgWinlost", Value: this.dataSource[i].SAgWinlost },
+                    { Name: "SAgComm", Value: this.dataSource[i].SAgComm },
+                    { Name: "SAgTotal", Value: this.dataSource[i].SAgTotal },
+                    { Name: "Company", Value: this.dataSource[i].Company }
+                    ]
+                })
+            }
+
+            sumTurnover += this.dataSource[i].Turnover;
+            sumNetTurnover += this.dataSource[i].NetTurnover;
+            sumGrossComm += this.dataSource[i].GrossComm;
+            sumMemberWinlost += this.dataSource[i].MemberWinlost;
+            sumPlayerComm += this.dataSource[i].PlayerComm;
+            sumMemberTotal += this.dataSource[i].MemberTotal;
+            sumAgWinlost += this.dataSource[i].AgWinlost;
+            sumAgComm += this.dataSource[i].AgComm;
+            sumAgTotal += this.dataSource[i].AgTotal;
+            if (this.viewlevel > 1) {
+                sumMAgWinlost += this.dataSource[i].MAgWinlost;
+                sumMAgComm += this.dataSource[i].MAgComm;
+                sumMAgTotal += this.dataSource[i].MAgTotal;
+            }
+            if (this.viewlevel > 2) {
+                sumSAgWinlost += this.dataSource[i].SAgWinlost;
+                sumSAgComm += this.dataSource[i].SAgComm;
+                sumSAgTotal += this.dataSource[i].SAgTotal;
+            }
+            sumCompany += this.dataSource[i].Company;
+        }
+
+        gridOption.bodyRows = bodyData;
+        gridOption.pagerOption.totalItem = this.totalRows;
+
+        //// Asign Footer Data
+        var footerData = [];
+        if (this.viewlevel == 1) {
+            footerData.push({
+                Columns: [
+                    { Name: "Username", Value: "Grand Total" },
+                    { Name: "Turnover", Value: sumTurnover },
+                    { Name: "NetTurnover", Value: sumNetTurnover },
+                    { Name: "GrossComm", Value: sumGrossComm },
+                    { Name: "MemberWinlost", Value: sumMemberWinlost },
+                    { Name: "PlayerComm", Value: sumPlayerComm },
+                    { Name: "MemberTotal", Value: sumMemberTotal },
+                    { Name: "AgWinlost", Value: sumAgWinlost },
+                    { Name: "AgComm", Value: sumAgComm },
+                    { Name: "AgTotal", Value: sumAgTotal },
+                    { Name: "Company", Value: sumCompany }
+                ]
+            });
+        } else if (this.viewlevel == 2) {
+            footerData.push({
+                Columns: [
+                    { Name: "Username", Value: "Grand Total" },
+                    { Name: "Turnover", Value: sumTurnover },
+                    { Name: "NetTurnover", Value: sumNetTurnover },
+                    { Name: "GrossComm", Value: sumGrossComm },
+                    { Name: "MemberWinlost", Value: sumMemberWinlost },
+                    { Name: "PlayerComm", Value: sumPlayerComm },
+                    { Name: "MemberTotal", Value: sumMemberTotal },
+                    { Name: "AgWinlost", Value: sumAgWinlost },
+                    { Name: "AgComm", Value: sumAgComm },
+                    { Name: "AgTotal", Value: sumAgTotal },
+                    { Name: "MAgWinlost", Value: sumMAgWinlost },
+                    { Name: "MAgComm", Value: sumMAgComm },
+                    { Name: "MAgTotal", Value: sumMAgTotal },
+                    { Name: "Company", Value: sumCompany }
+                ]
+            });
+        } else {
+            footerData.push({
+                Columns: [
+                    { Name: "Username", Value: "Grand Total" },
+                    { Name: "Turnover", Value: sumTurnover },
+                    { Name: "NetTurnover", Value: sumNetTurnover },
+                    { Name: "GrossComm", Value: sumGrossComm },
+                    { Name: "MemberWinlost", Value: sumMemberWinlost },
+                    { Name: "PlayerComm", Value: sumPlayerComm },
+                    { Name: "MemberTotal", Value: sumMemberTotal },
+                    { Name: "AgWinlost", Value: sumAgWinlost },
+                    { Name: "AgComm", Value: sumAgComm },
+                    { Name: "AgTotal", Value: sumAgTotal },
+                    { Name: "MAgWinlost", Value: sumMAgWinlost },
+                    { Name: "MAgComm", Value: sumMAgComm },
+                    { Name: "MAgTotal", Value: sumMAgTotal },
+                    { Name: "SAgWinlost", Value: sumSAgWinlost },
+                    { Name: "SAgComm", Value: sumSAgComm },
+                    { Name: "SAgTotal", Value: sumSAgTotal },
+                    { Name: "Company", Value: sumCompany }
+                ]
+            });
+        }
+
+        gridOption.footerRows = footerData;
+
+        $("#jqgrid").fanexGrid(gridOption);
+    },
+    customsortfunc: function (rows) {
+        var countFixedSort = $this.fixedsortlist.length;
+        if (countFixedSort > 0) {
+            for (var i = 0; i < countFixedSort; i++) {
+                for (var j = 0; j < rows.length; j++) {
+                    if ($this.fixedsortlist[i] == rows[j].Columns[0].Value.CustId) {
+                        $this.fixedsortdata.push(rows.slice(j, j + 1)[0]);
+                        rows.unshift(rows.splice(j, 1)[0]);
+                        break;
+                    }
+                }
+            }
+        }
+        return rows;
+    },
+    InitSort: function () {
+        var countFixedSort = $this.fixedsortlist.length;
+        if (countFixedSort > 0) {
+            for (var i = 0; i < countFixedSort; i++) {
+                for (var j = 0; j < $this.dataSource.length; j++) {
+                    if ($this.fixedsortlist[i] == $this.dataSource[j].CustId) {
+                        $this.fixedsortdata.push($this.dataSource.slice(j, j + 1)[0]);
+                        $this.dataSource.unshift($this.dataSource.splice(j, 1)[0]);
+                        break;
+                    }
+                }
+            }
+        }
+    },
     ChangeHeadlineTab: function () {
         if (this.viewlevel >= 4) {
             this.srecommend = this.custId;
@@ -458,7 +829,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 $('#msgNoinfo').css('display', $this.totalRows < 1 ? 'block' : 'none');
 
                 if ($this.totalRows > 0) {
-                    $this.renderReport(data);
+                    $this.Render();
                     $("#exporttoexcel").removeClass("hide");
                 } else {
                     $("#exporttoexcel").addClass("hide");
@@ -470,295 +841,6 @@ Fanex.ExtAcc.WinLossDetail = {
                 Fanex.ExtAcc.UnBlockUI();
             }
         });
-    },
-
-    renderFooter: function (grandTotal) {
-        var html = $this.renderRow(grandTotal, true);
-        html += '<tr><td colspan="19"><div id="report-pager"></div></td></tr>';
-
-        return html;
-    },
-    sumValues: function (row, grandTotal) {
-        grandTotal.Turnover += row.Turnover;
-        grandTotal.NetTurnover += row.NetTurnover;
-        grandTotal.GrossComm += row.GrossComm;
-
-        grandTotal.MemberWinlost += row.MemberWinlost;
-        grandTotal.PlayerComm += row.PlayerComm;
-        grandTotal.MemberTotal += row.MemberTotal;
-
-        grandTotal.AgWinlost += row.AgWinlost;
-        grandTotal.AgComm += row.AgComm;
-        grandTotal.AgTotal += row.AgTotal;
-
-        if (this.viewlevel > 1) {
-            grandTotal.MAgWinlost += row.MAgWinlost;
-            grandTotal.MAgComm += row.MAgComm;
-            grandTotal.MAgTotal += row.MAgTotal;
-        }
-
-        if (this.viewlevel > 2) {
-            grandTotal.SAgWinlost += row.SAgWinlost;
-            grandTotal.SAgComm += row.SAgComm;
-            grandTotal.SAgTotal += row.SAgTotal;
-        }
-
-        grandTotal.Company += row.Company;
-    },
-    renderNegativeNumber: function (value) {
-        var html = numeral(value).format('0,0.00');
-
-        return value < 0 ? '<span class="format-negative">' + html + '</span>' : html;
-    },
-    renderUsernameColumn: function (username, custId) {
-        var html;
-
-        if ($this.viewlevel < 2) {
-            html = '<div class="text-truncate" class="col-username" title="' + username + '">' + username + '</div>';
-        }
-        else {
-            var func = "javascript: Fanex.ExtAcc.WinLossDetail.GetDownlineWinLossDetail('" + custId + "')";
-            html = '<div class="col-username">' +
-                        '<a class="text-truncate" style="text-decoration: none; margin: 0" href="' + func + '" title="' + username + '">' + username + '</a>' +
-                    '</div>';
-        }
-
-        return html;
-    },
-    renderRow: function (row, isTotal) {
-        var html;
-        if (isTotal) {
-            html = '<tr class="row-grand-total">\
-                        <td class="align-right">Grand Total</td>';
-        } else {
-            html = '<tr class="hide">\
-                        <td>' + $this.renderUsernameColumn(row.Username, row.CustId) + '</td>';
-        }
-
-        html += '<td class="align-right">' + $this.renderNegativeNumber(row.Turnover) + '</td>';
-        html += '<td class="align-right">' + $this.renderNegativeNumber(row.NetTurnover) + '</td>';
-        html += '<td class="align-right">' + $this.renderNegativeNumber(row.GrossComm) + '</td>';
-
-        html += '<td class="align-right">' + $this.renderNegativeNumber(row.MemberWinlost) + '</td>';
-        html += '<td class="align-right">' + $this.renderNegativeNumber(row.PlayerComm) + '</td>';
-        html += '<td class="align-right">' + $this.renderNegativeNumber(row.MemberTotal) + '</td>';
-
-        html += '<td class="align-right">' + $this.renderNegativeNumber(row.AgWinlost) + '</td>';
-        html += '<td class="align-right">' + $this.renderNegativeNumber(row.AgComm) + '</td>';
-        html += '<td class="align-right">' + $this.renderNegativeNumber(row.AgTotal) + '</td>';
-
-        if ($this.viewlevel >= 2) {
-            html += '<td class="align-right">' + $this.renderNegativeNumber(row.MAgWinlost) + '</td>';
-            html += '<td class="align-right">' + $this.renderNegativeNumber(row.MAgComm) + '</td>';
-            html += '<td class="align-right">' + $this.renderNegativeNumber(row.MAgTotal) + '</td>';
-        }
-
-        if ($this.viewlevel >= 3) {
-            html += '<td class="align-right">' + $this.renderNegativeNumber(row.SAgWinlost) + '</td>';
-            html += '<td class="align-right">' + $this.renderNegativeNumber(row.SAgComm) + '</td>';
-            html += '<td class="align-right">' + $this.renderNegativeNumber(row.SAgTotal) + '</td>';
-        }
-
-        html += '<td class="align-right">' + $this.renderNegativeNumber(row.Company) + '</td>';
-        html += '</tr>';
-
-        return html;
-    },
-    renderBody: function (grandTotal) {
-        var html = '';
-
-        for (var i = 0; i < $this.totalRows; i++) {
-            var row = $this.dataSource[i];
-            html += $this.renderRow(row, false);
-            $this.sumValues(row, grandTotal);
-        }
-
-        return html;
-    },
-    hideColumnByLevel: function () {
-        if (this.viewlevel == 1) {
-            $(".col-master").addClass("hide");
-            $(".col-super").addClass("hide");
-            return;
-        }
-
-        if (this.viewlevel == 2) {
-            $(".col-super").addClass("hide");
-            $(".col-master").removeClass("hide");
-            return;
-        }
-
-        if (this.viewlevel == 3) {
-            $(".col-master").removeClass("hide");
-            $(".col-super").removeClass("hide");
-        }
-    },
-    renderReport: function (data) {
-        $this.hideColumnByLevel();
-
-        var grandTotal = {
-            Turnover: 0,
-            NetTurnover: 0,
-            GrossComm: 0,
-
-            MemberWinlost: 0,
-            PlayerComm: 0,
-            MemberTotal: 0,
-
-            AgWinlost: 0,
-            AgComm: 0,
-            AgTotal: 0,
-
-            MAgWinlost: 0,
-            MAgComm: 0,
-            MAgTotal: 0,
-
-            SAgWinlost: 0,
-            SAgComm: 0,
-            SAgTotal: 0,
-
-            Company: 0
-        };
-        $this.movePriorityInfoToFirst();
-
-        var bodyContent = $this.renderBody(grandTotal);
-        var footerContent = $this.renderFooter(grandTotal);
-
-        $this.sorters.removeClass("desc").removeClass("asc");
-        $("#tbl-report tbody").empty().append(bodyContent);
-        $("#tbl-report tfoot").empty().append(footerContent);
-
-        $this.renderPager();
-        $('#netTurnover').bind('click',
-            function () {
-                var message =
-                    "- For Sportbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
-
-                if (data.tooltips.showAllbet) {
-                    message += "<br/>" +
-                        "<br/>" +
-                        "- For AllBet, Net Turnover is total valid bets that we use to compute commission.";
-                }
-
-                var height = data.tooltips.showAllbet ? 220 : 170;
-                Fanex.ExtAcc.Form.Alert("Net Turnover Information", message, 430, height);
-                return false;
-            });
-    },
-    pageSize: 50,
-    pageIndex: 1,
-    bodyRows: null,
-    renderPager: function () {
-        $this.bodyRows = $("#tbl-report > tbody > tr");
-
-        $("#report-pager").pagination({
-            pageList: [50, 100, 500],
-            total: $this.totalRows,
-            pageSize: $this.pageSize,
-            pageNumber: $this.pageIndex,
-
-            showRefresh: false,
-            onSelectPage: $this.onSelectPage,
-            beforePageText: "Page",
-            afterPageTex: "of {pages}",
-            displayMsg: "Displaying {from} to {to} of {total} items"
-        });
-
-        $this.showBodyRows();
-    },
-    onSelectPage: function (pageNumber, pageSize) {
-        $this.pageSize = pageSize;
-        $this.pageIndex = pageNumber;
-        $this.showBodyRows();
-    },
-    showBodyRows: function () {
-        if (!$this.totalRows) {
-            return;
-        }
-
-        var startIndex = $this.pageSize * ($this.pageIndex - 1);
-        var endIndex = startIndex + $this.pageSize;
-
-        $this.bodyRows.addClass("hide");
-        for (var i = startIndex; i < endIndex && i < $this.totalRows; i++) {
-            $($this.bodyRows[i]).removeClass("hide");
-        }
-    },
-
-    sorters: null,
-    sortTable: function (elem) {
-        var currentDirection = elem.hasClass("desc") ? -1 : 1;
-        $this.updateSortIcon(elem, currentDirection);
-
-        var sortedColumnName = elem.attr("data-sortedname");
-        $this.dataSource.sort(function (a, b) {
-            return $this.sortValues(a[sortedColumnName], b[sortedColumnName], currentDirection);
-        });
-
-        $this.reRenderBody();
-    },
-    updateSortIcon: function (elem, currentDirection) {
-        $this.sorters.removeClass("desc").removeClass("asc");
-        var nextDirection = currentDirection === 1 ? "desc" : "asc";
-        elem.addClass(nextDirection);
-    },
-    movePriorityInfoToFirst: function () {
-        var countFixedSort = $this.fixedsortlist.length;
-        if (countFixedSort === 0) {
-            return;
-        }
-
-        var fixedRows = [];
-        var usedRows = {};
-        var j;
-        var data;
-
-        for (var i = 0; i < countFixedSort; i++) {
-            var fixedSort = $this.fixedsortlist[i];
-
-            for (j = 0; j < $this.dataSource.length; j++) {
-                data = $this.dataSource[j];
-
-                if (fixedSort === data.CustId) {
-                    usedRows[fixedSort] = true;
-                    fixedRows.push(data);
-                }
-            }
-        }
-
-        var canSortRows = [];
-        for (j = 0; j < $this.dataSource.length; j++) {
-            data = $this.dataSource[j];
-
-            if (usedRows[data.CustId]) {
-                continue;
-            }
-
-            canSortRows.push(data);
-        }
-
-        $this.dataSource = fixedRows.concat(canSortRows);
-    },
-    reRenderBody: function () {
-        var html = '';
-
-        for (var i = 0; i < $this.totalRows; i++) {
-            var row = $this.dataSource[i];
-            html += $this.renderRow(row, false);
-        }
-
-        $("#tbl-report > tbody").empty().append(html);
-
-        $this.bodyRows = $("#tbl-report > tbody > tr");
-        $this.showBodyRows();
-    },
-    sortValues: function (aValue, bValue, currentDirection) {
-        if (aValue === bValue) {
-            return 0;
-        }
-
-        var direction = aValue < bValue ? 1 : -1;
-        return direction * currentDirection;
     }
 };
 

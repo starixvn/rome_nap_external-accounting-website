@@ -150,43 +150,44 @@ Fanex.ExtAcc = {
 
         if (!isMenu) {
             var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
-            $.ajax({ url: fullUrl, type: 'post', success: function (result) {
-                $('#contentSplitter').html('');
+            $.ajax({
+                url: fullUrl, type: 'post', success: function (result) {
+                    $('#contentSplitter').html('');
 
-                if (url.indexOf('Customer/CustomerList') == -1 || $(result).text().indexOf('You are not authorized on this function') != -1) {
-                    Fanex.ExtAcc.UnBlockUI();
+                    if (url.indexOf('Customer/CustomerList') == -1 || $(result).text().indexOf('You are not authorized on this function') != -1) {
+                        Fanex.ExtAcc.UnBlockUI();
+                    }
+
+                    if (result.errorCode) {
+                        $('#contentSplitter').html(result.errorMessage.formatErrorMessage());
+                        return;
+                    }
+
+                    $('#contentSplitter').html(result);
+
+                    if (document.getElementById('btnLogin')) {
+                        location.href = resolveClientUrl('Account/Login');
+                        return;
+                    }
+
+                    if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
+                        var interval = setInterval(function () {
+                            if (document.getElementById('btnSearch')) {
+                                clearInterval(interval);
+
+                                Fanex.ExtAcc.Customer.CurrentLevel = 4;
+                                Fanex.ExtAcc.Customer.Init();
+
+                                var timeout = setTimeout(function () {
+                                    clearTimeout(timeout);
+                                    if ($.trim($('#jqgrid').html()) == '' && !Fanex.ExtAcc.Customer.IsLoading && $('#msgNoinfo').css('display') == 'none') {
+                                        $('#btnSearch').click();
+                                    }
+                                }, 2000);
+                            }
+                        }, 100);
+                    }
                 }
-
-                if (result.errorCode) {
-                    $('#contentSplitter').html(result.errorMessage.formatErrorMessage());
-                    return;
-                }
-
-                $('#contentSplitter').html(result);
-
-                if (document.getElementById('btnLogin')) {
-                    location.href = resolveClientUrl('Account/Login');
-                    return;
-                }
-
-                if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
-                    var interval = setInterval(function () {
-                        if (document.getElementById('btnSearch')) {
-                            clearInterval(interval);
-
-                            Fanex.ExtAcc.Customer.CurrentLevel = 4;
-                            Fanex.ExtAcc.Customer.Init();
-
-                            var timeout = setTimeout(function () {
-                                clearTimeout(timeout);
-                                if ($.trim($('#jqgrid').html()) == '' && !Fanex.ExtAcc.Customer.IsLoading && $('#msgNoinfo').css('display') == 'none') {
-                                    $('#btnSearch').click();
-                                }
-                            }, 2000);
-                        }
-                    }, 100);
-                }
-            }
             })
             .error(function (data) {
                 if (typeof console != undefined)
@@ -376,7 +377,7 @@ Fanex.ExtAcc = {
                     iconCollapseExpand.removeClass("icon-chevron-right").addClass("icon-chevron-left").addClass("active");
                     leftSplitter.removeClass("collapse-leftpanel").addClass("expand-leftpanel");
                     content.addClass("collapse-content");
-                    splitterBar.addClass("expand-leftpanel");                    
+                    splitterBar.addClass("expand-leftpanel");
                 } else {
                     iconCollapseExpand.removeClass("icon-chevron-left").addClass("icon-chevron-right").removeClass("active");
                     leftSplitter.addClass("collapse-leftpanel").removeClass("expand-leftpanel");
@@ -397,7 +398,7 @@ Fanex.ExtAcc = {
                 }
             });
         }
-        
+
 
         $(window).resize(function () {
             Fanex.ExtAcc.Resize();
@@ -411,12 +412,12 @@ Fanex.ExtAcc = {
 
                 var module = Fanex.ExtAcc.GetCurrentModule();
                 Fanex.ExtAcc.LoadModule(module);
-        }
-    }, 100);
+            }
+        }, 100);
 
         $('#txtLeftPanelUserName').keypress(function (e) {
             if (typeof e == 'undefined') e = window.event;
-            var key = (typeof e.keyCode == 'undefined') ? e.which: e.keyCode;
+            var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
             if (key == 13) {
                 if (this.SuggestionXHR != null)
                     this.SuggestionXHR.abort();
@@ -427,17 +428,17 @@ Fanex.ExtAcc = {
 
                 $('.ui-autocomplete').hide();
 
-                $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?id=' + (username == '' ? "''" : username) + '&uplineId=' +$('#selectedGroupName').html() + '&pageIndex=1'));
+                $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?id=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=1'));
 
                 setTimeout(function () {
                     $('#txtLeftPanelUserName').focus();
-            }, 100);
+                }, 100);
 
                 return true;
             } else {
                 return true;
-        }
-    });
+            }
+        });
 
         $('#searchPanel').bind('click', function () {
             if (this.SuggestionXHR != null)
@@ -450,13 +451,13 @@ Fanex.ExtAcc = {
             $('.ui-autocomplete').hide();
 
             $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?id=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=1'));
-   });
+        });
 
         $('#txtLeftPanelUserName').keyup(function (e) {
             if ($('#txtLeftPanelUserName').val().length > 1) {
                 Fanex.ExtAcc.InitSuggestion('txtLeftPanelUserName');
-        }
-    });
+            }
+        });
 
         Fanex.ExtAcc.InitSuggestion('txtLeftPanelUserName');
     },
@@ -713,7 +714,7 @@ function setCaret(oField, iCaretPos) {
         oSel.moveEnd('character', iCaretPos - oField.value.length);
         oSel.select();
     }
-    // Firefox support
+        // Firefox support
     else if (oField.selectionStart || oField.selectionStart == '0') {
         oField.selectionStart = iCaretPos;
         oField.selectionEnd = iCaretPos;
@@ -732,7 +733,7 @@ function getCaret(oField) {
         oSel.moveStart('character', -oField.value.length);
         iCaretPos = oSel.text.length;
     }
-    // Firefox support
+        // Firefox support
     else if (oField.selectionStart || oField.selectionStart == '0')
         iCaretPos = oField.selectionStart;
     // Return results
@@ -752,7 +753,7 @@ String.prototype.formatFloat = function () {
     number = Math.floor(number * 100 + 0.50000000001);
     number = Math.floor(number / 100).toString();
 
-    for (var i = 0; i < Math.floor((number.length - (1 + i)) / 3); i++) {
+    for (var i = 0; i < Math.floor((number.length - (1 + i)) / 3) ; i++) {
         number = number.substring(0, number.length - (4 * i + 3)) + ',' + number.substring(number.length - (4 * i + 3));
     }
 
@@ -794,3 +795,18 @@ $(document).ready(function () {
         }
     });
 });
+
+Array.prototype.contains = function (obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+};
+
+
+
+
+

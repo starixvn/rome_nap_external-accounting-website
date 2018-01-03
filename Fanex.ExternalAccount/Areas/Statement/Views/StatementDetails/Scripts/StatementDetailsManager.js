@@ -14,82 +14,103 @@ var StatementDetailsManager = function () {
     };
     self.initPage = function () {
         self.renderTransferDetails(statementReport);
-
-        $("#").click(function () {
-            var url = location.protocol +
-                window.rootUrl +
-                'NapStatement/StatementReport/ExportTransferDetails?' +
-                jQuery.param(transferDetailsCriteria);
-
-            $('#frm').attr('src', url);
-        });
     };
     self.renderTransferDetails = function (statementReport) {
-        var bodyContent = self.renderBody(statementReport);
-        var footerContent = self.renderFooter();
-
-        var tableReport = $("#transfer-details-container");
-        tableReport.find("tbody").empty().append(bodyContent);
-        tableReport.find("tfoot").empty().append(footerContent);
-    };
-
-    self.totalRows = 0;
-    self.renderBody = function (statementReport) {
-        var html = '';
         var statementListLength = statementReport && statementReport.StatementList ?
             statementReport.StatementList.length :
             0;
-        self.totalRows = statementListLength;
+        var bodyData = [];
+        var footerData = [];
+        if (statementListLength) {
+            for (var i = 0; i < statementListLength; i++) {
+                var statement = statementReport.StatementList[i];
+                var remark = statement.TransactionType + "<br>" + statement.Description +
+                    (transferDetailsCriteria.SiteName == "NAP" && statement.ExchangeRate ?
+                        " - " + statementResources.Symbol_ExchangeRate + ":" + statement.ExchangeRate :
+                        '');
 
-        if (statementListLength === 0) {
-            html = '<tr><td colspan="7" class="no-data">There is no data</td></tr>';
+                var currentRow = {
+                    Columns: [{ Name: "ColDate", Value: statement.StatementDateString },
+                        { Name: "ColRemark", Value: remark },
+                        {
+                            Name: "ColAmount",
+                            Value: statement.TransferAmount.HasData ?
+                                statement.TransferAmount.Value :
+                                statementResources.Symbol_NoData
+                        }]
+                };
 
-            return html;
+                bodyData.push(currentRow);
+            }
+
+            var statement = statementReport.Total;
+            footerData.push({
+                Columns: [
+                    {
+                        Name: "ColDate",
+                        Value: statementResources.Total,
+                        MergeColNumber: 2,
+                        CellAlign: 'right'
+                    },
+                    {
+                        Name: "ColAmount",
+                        Value: statement.TransferAmount.HasData ?
+                            statement.TransferAmount.Value :
+                            statementResources.Symbol_NoData
+                    }]
+            });
         }
 
-        for (var i = 0; i < statementListLength; i++) {
-            var statement = statementReport.StatementList[i];
+        var headerColumns = [
+            {
+                HeaderText: statementResources.Date,
+                Width: 150,
+                Name: "ColDate",
+                HeaderAlign: "center",
+                CellAlign: "center"
+            },
+            {
+                HeaderText: statementResources.Remark,
+                Width: 400,
+                Name: "ColRemark",
+                HeaderAlign: "center",
+                CellAlign: "left"
+            },
+            {
+                HeaderText: statementResources.Amount,
+                Width: 150,
+                Name: "ColAmount",
+                HeaderAlign: "center",
+                CellAlign: "right",
+                FormatNumber: self.Constants.Format.Number.TwoDecimal,
+                FormatNegative: '$'
+            }];
 
-            var remark = statement.TransactionType + "<br>" + statement.Description +
-            (transferDetailsCriteria.SiteName == "NAP" && statement.ExchangeRate ?
-                " - " + statementResources.Symbol_ExchangeRate + ":" + statement.ExchangeRate :
-                '');
+        gridOptions = {
+            columns: headerColumns,
+            bodyRows: bodyData,
+            footerRows: footerData,
+            headerColumnHeight: 24,
+            bodyRowHeight: 25,
+            numberOfFrozenColumn: 0,
+            gridExpandHeight: 50,
+            showHighlightRow: false,
+            showPager: false,
+            showTitle: true,
+            titleInfo: {
+                text: "",
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    var url = location.protocol + window.rootUrl + 'NapStatement/StatementReport/ExportTransferDetails?' +
+                        jQuery.param(transferDetailsCriteria);
+                    jQuery('#frm').attr('src', url);
 
-            var amount = statement.TransferAmount.HasData
-                ? self.renderNegativeNumber(statement.TransferAmount.Value)
-                : statementResources.Symbol_NoData;
+                }
+            },
+            showFooter: true
+        };
 
-            html += '<tr>\
-                        <td class="align-center">' + statement.StatementDateString + '</td>\
-                        <td>' + remark + '</td>\
-                         <td class="align-right">' + amount + '</td>\
-                     </tr>';
-        }
-
-        return html;
-    };
-    self.renderNegativeNumber = function (value) {
-        var html = numeral(value).format('0,0.00');
-
-        return value < 0 ? '<span class="format-negative">' + html + '</span>' : html;
-    };
-    self.renderFooter = function () {
-        var html = '';
-        if (self.totalRows === 0) {
-            return html;
-        }
-
-        var statement = statementReport.Total;
-        var amount = statement.TransferAmount.HasData
-            ? self.renderNegativeNumber(statement.TransferAmount.Value)
-            : statementResources.Symbol_NoData;
-
-        html += '<tr>\
-                        <td class="align-right" colspan="2">' + statementResources.Total + '</td>\
-                         <td class="align-right">' + amount + '</td>\
-                     </tr>';
-
-        return html;
+        $('#transfer-details-container').fanexGrid(gridOptions);
     };
 };
 

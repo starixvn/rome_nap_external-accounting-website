@@ -36,31 +36,10 @@
         </div>
     </div>
     <div id="mainGrid">
-        <table id="tbl-report-old" class="table">
-            <thead>
-                <tr>
-                    <th>
-                        <div class="col-110">Date</div>
-                    </th>
-                    <th>
-                        <div class="col-remark">Remark</div>
-                    </th>
-                    <th>
-                        <div class="col-160">Total</div>
-                    </th>
-                    <th>
-                        <div class="col-160">Accumulated Total</div>
-                    </th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-            <tfoot></tfoot>
-        </table>
-        <table id="tbl-report-new" class="table">
-            <thead></thead>
-            <tbody></tbody>
-            <tfoot></tfoot>
-        </table>
+        <div id="jqgrid" class="removeRadius freegrid content-grid">
+        </div>
+        <div id="GridContainer" class="freegrid">
+        </div>
     </div>
     <div id='msgNoinfo'>
         There is no data.
@@ -71,13 +50,8 @@
     <input type="hidden" id="username" value="@Request.QueryString["username"]" />
     @Html.AntiForgeryToken()
 </div>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.draggable.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.linkbutton.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.parser.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.resizable.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/pagination/jquery.pagination.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/moment.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/FanexGrid/numeral.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/Fanex.Grid/moment.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/Fanex.Grid/numeral.js")"></script>
 <script type="text/javascript">
     var domain = '@Url.Content("~/")';
     var isInternalCustomer = @isInternalCustomer;
