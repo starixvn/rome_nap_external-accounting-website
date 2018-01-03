@@ -123,13 +123,14 @@
         {
             var productCollection = new FilterController().AsCollection();
             var fromDate = request.fromdate;
-            var dateTime = request.todate;
+            var toDate = request.todate;
             var formatedProducts = GetProductNames(productCollection);
             var viewlevel = request.viewlevel;
             var productIds = GetProductIds(productCollection);
             var custId = request.custId;
 
-            var cacheKey = "CacheList" + request.username + GroupName + custId + fromDate + dateTime + productIds;
+            var cacheKey = string.Join("-", "wldt", request.username, GroupName, custId, fromDate, toDate, productIds)
+                .ToLowerInvariant();
 
             IWinLossDetailReportBuilder builder;
 
@@ -142,7 +143,7 @@
                             winlossDetailData,
                             viewlevel,
                             fromDate,
-                            dateTime);
+                            toDate);
 
                         break;
                     }
@@ -153,7 +154,7 @@
                             winlossDetailData,
                             viewlevel,
                             fromDate,
-                            dateTime);
+                            toDate);
 
                         break;
                     }
@@ -164,7 +165,7 @@
                             winlossDetailData,
                             viewlevel,
                             fromDate,
-                            dateTime);
+                            toDate);
 
                         break;
                     }
@@ -173,7 +174,7 @@
             var memoryStream = builder.Build(formatedProducts);
 
             var exportFileName =
-                $"{viewlevel.DisplayRoleName()}WinLossDetail_{fromDate.ToString(DateFormat)}_{dateTime.ToString(DateFormat)}.xls";
+                $"{viewlevel.DisplayRoleName()}WinLossDetail_{fromDate.ToString(DateFormat)}_{toDate.ToString(DateFormat)}.xls";
 
             if (memoryStream != null)
             {
@@ -266,5 +267,6 @@
         public int viewlevel { get; set; }
 
         public bool IsSearch() => custId == 0;
+       
     }
 }

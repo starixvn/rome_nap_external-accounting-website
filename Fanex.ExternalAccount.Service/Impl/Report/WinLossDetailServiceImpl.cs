@@ -54,7 +54,9 @@
 
             if (winLossDetailData != null)
             {
-                var cacheKey = "CacheList" + request.GroupName + request.CustId + request.FromDate + request.ToDate + request.ProductIds;
+
+                var cacheKey = string.Join("-", "wldt", request.GroupName, request.CustId, 0, request.FromDate, request.ToDate, request.ProductIds)
+                    .ToLowerInvariant();
 
                 cacheManager.Set(cacheKey, winLossDetailData);
             }
@@ -120,9 +122,8 @@
         {
             if (winLossDetailData != null)
             {
-                var cacheKey = "CacheList" + customerInfo.Username + groupname + "0" + /* customerInfo.CustId + */fromDate +
-                               toDate +
-                               productIds;
+                var cacheKey = string.Join("-", "wldt", customerInfo.Username, groupname, 0, fromDate, toDate, productIds)
+                    .ToLowerInvariant();
 
                 cacheManager.Set(cacheKey, winLossDetailData);
             }
