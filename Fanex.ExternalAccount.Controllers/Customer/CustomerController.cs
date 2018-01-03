@@ -443,8 +443,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public ActionResult ViewIP(string ip)
         {
-            if (IpUtils.IsVnIp(ip) && !IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP,
-                    AuthenticationType.Read, Request))
+            if (IpUtils.IsVnIp(ip) && !AuthorizationHandler.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP))
             {
                 return PartialViewBase("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }

@@ -1,17 +1,16 @@
-﻿namespace Fanex.ExternalAccount.Core.Base
+﻿using Fanex.ExternalAccount.Core.Context;
+
+namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
     using System.Collections.Generic;
     using System.Configuration;
     using System.Data;
     using System.Diagnostics;
-    using System.Globalization;
     using System.IO;
-    using System.Linq;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
-    using Caching;
     using CasinoLibrary.Model.UserException;
     using CustomerSetting.IP.Utils;
     using CustomerSetting.Module.Core.Criteria;
@@ -20,7 +19,6 @@
     using CustomerSetting.Module.Core.Services.Interface;
     using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
-    using DTO;
     using DTO.UserControl;
     using Logging.Extensions.Web;
     using Newtonsoft.Json;
@@ -29,7 +27,6 @@
     using RemotingRef;
     using Reports.WinLossDetail;
     using Service.Impl.Customer.Casino;
-    using Service.Impl.Report;
     using Service.Impl.UserControl;
     using Service.Interface.UserControl;
     using Utilities;
@@ -40,7 +37,6 @@
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class BaseController : Controller
     {
-        private readonly ICachingService _cachingService;
 
         protected const string SiteName = "ExtAcc";
 
@@ -51,10 +47,10 @@
         private readonly ICurrentContext _currentContext;
 
         private readonly ICurrentSession _currentSession;
+        protected readonly AuthorizationHandler AuthorizationHandler = new AuthorizationHandler();
 
         protected BaseController()
         {
-            _cachingService = new CachingService();
             _currentContext = new CurrentContext();
             _currentSession = new CurrentSession();
         }
@@ -107,8 +103,10 @@
 
                 var cust = new CasinoLibrary.SBAgent.Customer();
 
-                if (IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer,
-                    AuthenticateAction.AuthenticationType.Host, Request))
+                if (AuthorizationHandler.IsAuthorized(
+                    CurrentSession.UserId,
+                    eFunctions.CloseCustomer,
+                    AuthenticateAction.AuthenticationType.Host))
                 {
                     cust.UpdateCustClosed(custId, customer.StatusSetting.Closed, CurrentContext.Ip4Address,
                         CurrentSession.UserId, CurrentSession.UserName, FromSystem);
@@ -119,8 +117,10 @@
                     return;
                 }
 
-                if (IsAuthorized(CurrentSession.UserId, eFunctions.SuspendCustomer,
-                    AuthenticateAction.AuthenticationType.Host, Request))
+                if (AuthorizationHandler.IsAuthorized(
+                    CurrentSession.UserId,
+                    eFunctions.SuspendCustomer,
+                    AuthenticateAction.AuthenticationType.Host))
                 {
                     cust.UpdateCustSuspend(custId, customer.StatusSetting.Suspended, CurrentContext.Ip4Address,
                         CurrentSession.UserId, CurrentSession.UserName, FromSystem);
@@ -137,15 +137,19 @@
             var cust = new CasinoLibrary.SBAgent.Customer();
             try
             {
-                if (IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer,
-                    AuthenticateAction.AuthenticationType.Host, Request))
+                if (AuthorizationHandler.IsAuthorized(
+                    CurrentSession.UserId,
+                    eFunctions.CloseCustomer,
+                    AuthenticateAction.AuthenticationType.Host))
                 {
                     cust.UpdateCustClosed(custId, closed, CurrentContext.Ip4Address, CurrentSession.UserId,
                         CurrentSession.UserName, FromSystem);
                 }
 
-                if (IsAuthorized(CurrentSession.UserId, eFunctions.SuspendCustomer,
-                    AuthenticateAction.AuthenticationType.Host, Request))
+                if (AuthorizationHandler.IsAuthorized(
+                    CurrentSession.UserId,
+                    eFunctions.SuspendCustomer,
+                    AuthenticateAction.AuthenticationType.Host))
                 {
                     cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId,
                         CurrentSession.UserName, FromSystem);
@@ -162,8 +166,10 @@
             var cust = new CasinoLibrary.SBAgent.Customer();
             try
             {
-                if (IsAuthorized(CurrentSession.UserId, eFunctions.CloseCustomer,
-                    AuthenticateAction.AuthenticationType.Host, Request))
+                if (AuthorizationHandler.IsAuthorized(
+                    CurrentSession.UserId,
+                    eFunctions.CloseCustomer,
+                    AuthenticateAction.AuthenticationType.Host))
                 {
                     cust.UpdateCustClosed(custId, closed, CurrentContext.Ip4Address, CurrentSession.UserId,
                         CurrentSession.UserName, FromSystem);
@@ -184,8 +190,10 @@
             var cust = new CasinoLibrary.SBAgent.Customer();
             try
             {
-                if (IsAuthorized(CurrentSession.UserId, eFunctions.SuspendCustomer,
-                    AuthenticateAction.AuthenticationType.Host, Request))
+                if (AuthorizationHandler.IsAuthorized(
+                    CurrentSession.UserId,
+                    eFunctions.SuspendCustomer,
+                    AuthenticateAction.AuthenticationType.Host))
                 {
                     cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId,
                         CurrentSession.UserName, FromSystem);
@@ -223,48 +231,6 @@
             };
         }
 
-        protected bool IsAuthorized(int userId, string functionKey, AuthenticateAction.AuthenticationType policy,
-            HttpRequestBase request)
-        {
-            var userCache = _cachingService.GetUserCache(userId);
-            var menuList = userCache.MenuList;
-            var userFunctions = userCache.PolicyList.Where(x => x.FuncKey == functionKey).ToList();
-            var hasPermissionOnMenu = true;
-
-            if (!request.RawUrl.Equals("/") &&
-                !request.RawUrl.ToLower(CultureInfo.InvariantCulture).Contains("home/index")
-                && !request.RawUrl.ToLower(CultureInfo.InvariantCulture).Contains("exporttoexcel") &&
-                !request.IsAjaxRequest())
-            {
-                hasPermissionOnMenu = menuList.Any(o => !string.IsNullOrWhiteSpace(o.Url)
-                                                        && request.RawUrl.ToLower(CultureInfo.InvariantCulture)
-                                                            .Contains(o.Url.ToLower(CultureInfo.InvariantCulture)
-                                                                .Replace("~", string.Empty)));
-            }
-
-            if (!hasPermissionOnMenu && userFunctions == null)
-            {
-                return false;
-            }
-
-            if (!userFunctions.Any())
-            {
-                return false;
-            }
-
-            var firstItem = userFunctions.First();
-
-            if (policy == AuthenticateAction.AuthenticationType.Read)
-            {
-                return firstItem.Policy == EPolicy.Read
-                       || firstItem.Policy == EPolicy.Update
-                       || firstItem.Policy == EPolicy.Delete
-                       || firstItem.Policy == EPolicy.Create;
-            }
-
-            return firstItem.Policy != EPolicy.Read;
-        }
-
         protected DataTable CheckVNIP(DataTable table, string ipFieldName = null)
         {
             var fieldName = string.IsNullOrWhiteSpace(ipFieldName) ? "lastloginip" : ipFieldName;
@@ -281,8 +247,9 @@
                     continue;
                 }
 
-                if (!IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP,
-                    AuthenticateAction.AuthenticationType.Read, Request))
+                if (!AuthorizationHandler.IsAuthorized(
+                    CurrentSession.UserId,
+                    eFunctions.ViewVNIP))
                 {
                     row[fieldName] = string.Empty;
                 }
@@ -331,7 +298,7 @@
             var products = ProductsConfiguration.Instance.ProductCollection;
             IServiceBase permissionService = new ServiceBase();
 
-            var checkCustomerIsInternalAdminResult =
+            var checkIsInternalAdminResult =
                 permissionService.CheckCustomerIsInternalAdmin(
                     new CheckCustomerIsInternalAdminCriteria { CustID = CurrentSession.CustId });
 
@@ -340,32 +307,28 @@
 
             foreach (ProductElementConfiguration product in products)
             {
-                if (product.IsSpecial)
+                if (!IsHiddenProduct(product))
                 {
-                    if (!IsHiddenProduct(product)
-                        && (!checkCustomerIsInternalAdminResult.IsInternalAdmin
-                            || checkCustomerIsInternalAdminResult.IsInternalAdmin
-                            && checkCustomerIsInternalAdminResult.IsAllowAccess
-                            && isAuthorized))
+                    if (product.IsSpecial &&
+                        AdminDoesNotHavePermissionOnSpecialProduct(checkIsInternalAdminResult, isAuthorized))
                     {
-                        list.Add(new KeyValuePair<string, string>(
-                            product.Id,
-                            product.ProductId == 0 ? product.Name : GetProductNameFromRemotingRef(product.ProductId)));
+                        continue;
                     }
-                }
-                else
-                {
-                    if (!IsHiddenProduct(product))
-                    {
-                        list.Add(new KeyValuePair<string, string>(
-                            product.Id,
-                            product.ProductId == 0 ? product.Name : GetProductNameFromRemotingRef(product.ProductId)));
-                    }
+
+                    list.Add(new KeyValuePair<string, string>(
+                        product.Id,
+                        product.ProductId == 0 ? product.Name : GetProductNameFromRemotingRef(product.ProductId)));
                 }
             }
 
             return list;
         }
+
+        private static bool AdminDoesNotHavePermissionOnSpecialProduct(
+            CheckCustomerIsInternalAdminResult checkIsInternalAdminResult,
+            bool isAuthorized)
+            => checkIsInternalAdminResult.IsInternalAdmin
+               && (!checkIsInternalAdminResult.IsAllowAccess || !isAuthorized);
 
         protected bool IsHiddenProduct(ProductElementConfiguration product)
         {

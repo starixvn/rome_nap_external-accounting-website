@@ -694,8 +694,7 @@
 
         private bool IsSpecialSiteCustomer()
         {
-            var hasNG2Permission = IsAuthorized(CurrentSession.UserId, eFunctions.NG2Setting,
-                AuthenticationType.Read, Request);
+            var hasNG2Permission = AuthorizationHandler.IsAuthorized(CurrentSession.UserId, eFunctions.NG2Setting);
             if (!hasNG2Permission)
             {
                 return false;

@@ -131,8 +131,7 @@
             var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
 
             if (casinoCustomer?.RoleId == Role.Super && !close
-                && !IsAuthorized(CurrentSession.UserId, eFunctions.OpenSuper,
-                    AuthenticateAction.AuthenticationType.Host, Request))
+                && !AuthorizationHandler.IsAuthorized(CurrentSession.UserId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host))
             {
                 return JsonBase(new Result(1, ViewLang.DontHavePermission));
             }
