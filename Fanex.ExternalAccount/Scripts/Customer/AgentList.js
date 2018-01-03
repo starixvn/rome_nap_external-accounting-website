@@ -904,7 +904,7 @@ Fanex.ExtAcc.Customer.RenderAgentList = function (dataSource) {
 
     $('#breadcrumbs').empty();
 
-    $('#breadcrumbs').append('<div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
+    $('#breadcrumbs').append('<div class="level-line"></div><div style="float:left">' + linkSuper + '</div><div class="viewNext">&nbsp;</div><div class="level-active">' + linkMaster + '</div>');
 
     $('#breadcrumbs').show();
 

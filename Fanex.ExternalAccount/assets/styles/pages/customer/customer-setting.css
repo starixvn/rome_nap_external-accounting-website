@@ -9,7 +9,9 @@
   text-align: center; }
   [class$="DblComm"]:before {
     font-family: 'AlphaAdmin' !important;
-    font-size: 20px; }
+    font-size: 26px;
+    position: relative;
+    top: 4px; }
 
 .bet-type-detail-icon {
   background: none !important; }
@@ -32,7 +34,8 @@
 
 .allowDblComm:before, .onDblComm {
   content: '\e928';
-  color: #82c341; }
+  color: #82c341;
+  cursor: pointer; }
 
 .disallowDblComm:before, .offDblComm {
   content: '\e927';
@@ -182,10 +185,25 @@
   cursor: pointer !important; }
 
 #breadcrumbs {
+  font-size: 12px;
   font-weight: bold;
   float: left;
-  margin-right: 10px;
-  margin-top: 5px; }
+  margin: 0 10px 0 0; }
+  #breadcrumbs .level-line {
+    float: left;
+    width: 1px;
+    height: 20px;
+    background: #ccc;
+    margin: 0 12px;
+    margin-top: 8px; }
+  #breadcrumbs a {
+    color: #a3c5f0; }
+    #breadcrumbs a:hover {
+      color: #0090ff; }
+  #breadcrumbs .level-active {
+    float: left; }
+  #breadcrumbs .level-active a {
+    color: #0090ff; }
 
 .viewNext {
   float: left;
@@ -194,7 +212,8 @@
     content: '\e905';
     font-family: 'AlphaAdmin';
     font-size: 16px;
-    margin-left: 4px; }
+    margin-left: 4px;
+    color: #a3c5f0; }
 
 tr.rowSuspended td {
   background-color: #f8ded7 !important; }

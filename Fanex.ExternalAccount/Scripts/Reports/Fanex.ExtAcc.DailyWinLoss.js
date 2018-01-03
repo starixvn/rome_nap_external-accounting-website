@@ -164,20 +164,24 @@ Fanex.ExtAcc.DailyWinLoss = {
         if (this.viewlevel >= 4) {
             this.srecommend = this.custId;
             this.ToggleTabs('none', 'none', 'none', 4);
+            $('.level-line').css('display', 'none');
         } else if (this.viewlevel == 3) {
             this.mrecommend = this.custId;
             this.ToggleTabs('block', 'none', 'none', 3);
             $("#tabSuper").attr("class", "tabActiveSuper");
+            $('.level-line').css('display', 'block');
         } else if (this.viewlevel == 2) {
             this.recommend = this.custId;
             this.ToggleTabs('block', 'block', 'none', 2);
             $("#tabSuper").attr("class", "tabDisableSuper");
             $("#tabMaster").attr("class", "tabActive");
+            $('.level-line').css('display', 'block');
         } else {
             this.ToggleTabs('block', 'block', 'block', 1);
             $("#tabSuper").attr("class", "tabDisableSuper");
             $("#tabMaster").attr("class", "tabDisable");
             $("#tabAgent").attr("class", "tabActive");
+            $('.level-line').css('display', 'block');
         };
         $('#headlineDaily').css("visibility", "visible");
         $('#headlineDaily').css("display", "block");

@@ -3412,3 +3412,14 @@ if (typeof (fanexGridLanguage) === 'undefined') {
 //    this.length = from < 0 ? this.length + from : from;
 //    return this.push.apply(this, rest);
 //};
+
+
+Array.prototype.contains = function (obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}

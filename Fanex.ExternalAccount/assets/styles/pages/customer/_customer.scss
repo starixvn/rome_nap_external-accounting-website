@@ -15,7 +15,9 @@
     text-align: center;
     &:before {
         font-family: 'AlphaAdmin' !important;
-        font-size: 20px;
+        font-size: 26px;
+        position: relative;
+        top: 4px;
     }
 }
 .bet-type-detail-icon {
@@ -43,6 +45,7 @@
 .allowDblComm:before, .onDblComm {
     content: '\e928';
     color: #82c341;
+    cursor: pointer;
 }
 
 .disallowDblComm:before, .offDblComm {
@@ -211,15 +214,32 @@
 	cursor: pointer !important;
 }
 
-
-
-
 #breadcrumbs
 {
-	font-weight: bold;
+    font-size: 12px;
+    font-weight: bold;
 	float: left;
-	margin-right: 10px;
-	margin-top: 5px;
+	margin: 0 10px 0 0;
+    .level-line {
+       float: left;
+       width: 1px;
+       height: 20px;
+       background: #ccc;
+       margin: 0 12px;
+       margin-top: 8px;
+   }
+    a {
+        color: #a3c5f0;
+        &:hover {
+            color: #0090ff;
+        }
+    }
+    .level-active {
+        float: left;
+    }
+    .level-active a {
+        color: #0090ff;
+    }
 }
 
 .viewNext
@@ -231,6 +251,7 @@
         font-family: 'AlphaAdmin';
         font-size: 16px;
         margin-left: 4px;
+        color: #a3c5f0;
     }
 }
 

@@ -3,7 +3,12 @@
 @using Fanex.PTEngine
 <div id="customerList">
     <div class="page-title">
-        Customer List
+        <div class="wlDetail">
+            Customer List
+        </div>
+        <div id="breadcrumbs">
+        </div>   
+        <span class="icon-filter"></span>
     </div>
     <div id="searchBar" class="search-form filterbox">
         <div class="searchBar">
@@ -37,10 +42,6 @@
                 |
             </span>
             <span class="status-select" onclick="Fanex.ExtAcc.Customer.SelectAll('menuInactive')">@ViewLang.None</span>
-        </div>
-        <div class="floatR">
-            <div id="breadcrumbs">
-            </div>            
         </div>
     </div>
     <div id="customerListGrid">

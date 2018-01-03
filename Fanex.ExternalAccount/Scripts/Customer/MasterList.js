@@ -898,7 +898,7 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
 
     $('#breadcrumbs').empty();
 
-    $('#breadcrumbs').append('<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList(" + Fanex.ExtAcc.Customer.directSuperId + ")" + '">' + 'Super' + '</a>');
+    $('#breadcrumbs').append('<div class="level-line"></div><div class="level-active"><a  href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList(" + Fanex.ExtAcc.Customer.directSuperId + ")" + '">' + 'Super' + '</a></div>');
 
     $('#breadcrumbs').show();
 

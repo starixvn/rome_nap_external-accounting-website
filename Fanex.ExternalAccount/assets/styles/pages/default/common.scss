@@ -367,7 +367,7 @@ body {
 }
 
 .icon-excel {
-    font-size: 16px;
+    font-size: 20px;
     border: none !important;
     color: #42a15c;
     &:hover {
@@ -584,7 +584,19 @@ div#contentSplitter > div#msg {
 }
 
 .groupBack {
-    float: right;
+   padding: 5px 0 0 0;
+   float: left;
+   font-size: 12px;
+   font-weight: bold;
+   position: relative;
+   .level-line {
+       float: left;
+       width: 1px;
+       height: 20px;
+       background: #ccc;
+       margin: 0 12px;
+       margin-top: 4px;
+   }
 }
 
 
@@ -597,7 +609,7 @@ div#contentSplitter > div#msg {
 
 #exporttoexcel {
     float: right;
-    margin: 6px 2px 3px 3px;
+    margin: 1px 2px 3px 3px;
     padding: 3px;
     border: 1px solid #b8b8b8;
     width: 18px;
@@ -702,76 +714,71 @@ div#contentSplitter > div#msg {
 }
 
 [id^="tab"] {
-    height: 31px;
-    line-height: 29px;
+    line-height: 26px;
     float: left !important;
     &[class^="tabActive"] {
-        line-height: 31px;
+        color: #0090ff;
+        position: relative;
+        top: 2px;
     } 
 }
 
 #tabSuper {
     float: right;
     cursor: pointer;
-    color: #0088cc;
-    font-weight: bold;
+    color: #0090ff;
 }
 
-[class^="tabDisable"]:before {
-    content: '\e905';
+[class^="tabDisable"]:after {
+    content: '\e906';
     font-family: 'AlphaAdmin';
     font-size: 16px;
-    color: #888;
+    color: #a3c5f0;
     position: relative;
     top: 2px;
+    padding: 0 8px;
 }
 
 .tabDisableSuper {
     float: right;
     cursor: pointer;
-    color: #0088cc !important;
-    font-weight: bold;
+    color: #a3c5f0 !important;
+    &:hover {
+        color: #0090ff  !important;
+    }
 }
 
 .tabDisable {
     float: right;
     cursor: pointer;
-    color: #0088cc !important;
-    font-weight: bold;
+    color: #a3c5f0 !important;
 }
 
 .tabDisable:hover {
     float: right;
     cursor: pointer;
-    color: #0088cc !important;
-    font-weight: bold;
+    color: #0090ff !important;
 }
 
 #tabMaster {
     float: right;
     cursor: pointer;
-    color: #0088cc;
-    font-weight: bold;
+    color: #0090ff;
 }
 
     #tabMaster:hover {
         float: right;
         cursor: pointer;
-        color: #0088cc;
-        font-weight: bold;
     }
 
 #tabAgent {
     float: right;
     cursor: pointer;
-    color: #0088cc;
-    font-weight: bold;
+    color: #0090ff;
 }
 
     #tabAgent:hover {
         float: right;
-        color: #0088cc;
-        font-weight: bold;
     }
 
 
