@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="@Url.Content("~/assets/styles/fonts/AlphaAdmin/style.css?v=1")" />
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        
+
         <link href="@Url.Content("~/assets/styles/base/Validators.css")" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/styles/pages/account/login.css")" />
     }
@@ -41,7 +41,7 @@
                     @CurrentContext.LoginErrorMessage
                     @{CurrentContext.LoginErrorMessage = string.Empty;}
                 </div>
-            }
+                        }
             <div class="row">
                 @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @maxlength = 50, @placeholder = "UserName" })
                 <span class="icon-user"></span>
@@ -59,7 +59,7 @@
                     }
                     catch (Exception ex)
                     {
-                        Logs.Error(ex);
+                        Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(ex);
                     }
                 }
             </div>
@@ -67,7 +67,7 @@
                 <button id="btnLogin" class="btnLogin">@ViewLang.LoginTitle</button>
             </div>
 
-            
+
         </div>
         @Html.Hidden("Code", Encryptor.Instance.Code)
                         @Html.AntiForgeryToken()
