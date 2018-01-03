@@ -291,7 +291,7 @@
 
         public ActionResult Settings(int id, int custId, int uplineId, string userName, string groupName)
         {
-            var customerSetting = reportService.SearchCustomerInfo(Request["groupName"], 0, userName, isGetUplineInfo: true);
+            var customerSetting = GetCustomerSetting(groupName, userName);
             var result = GetCustomerList(groupName, null, null, null, customerSetting);
 
             ViewBag.CurrentLevel = id;
@@ -312,6 +312,7 @@
             ViewBag.HideFishingWorld = Utils.ToBoolean(result.Rows[0]["HideFishingWorld"]);
             ViewBag.HideLottery = Utils.ToBoolean(result.Rows[0]["HideLottery"]);
             ViewBag.HideLucky3 = Utils.ToBoolean(result.Rows[0]["HideLucky3"]);
+            ViewBag.HideBullfighting = Utils.ToBoolean(result.Rows[0]["HideBullfighting"]);
 
             return PartialViewBase();
         }
@@ -325,9 +326,7 @@
             bool? suspended = null,
             string username = null)
         {
-            var customerSetting =
-                reportService.SearchCustomerInfo(Request["groupName"], 0, username, isGetUplineInfo: true) ??
-                new CustomerInfoSearchResult();
+            var customerSetting = GetCustomerSetting(Request["groupName"], username);
             var customers = GetCustomerList(groupName, enabled, closed, suspended, customerSetting);
             SetEditAllBetVisibility(customers);
             var customers2String = Customers2Json(customers);
@@ -685,6 +684,24 @@
                 AgentId = Utils.ToInt32(Request["recommend"]),
                 CustId = string.IsNullOrWhiteSpace(username) ? 0 : Utils.ToInt32(Request["custId"])
             };
+
+        private CustomerInfoSearchResult GetCustomerSetting(string groupName, string userName)
+        {
+            var customerInfo = reportService.GetCustomerInfo(groupName, 0, userName, isGetUplineInfo: true);
+            if (customerInfo != null)
+            {
+                return new CustomerInfoSearchResult
+                {
+                    RoleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]),
+                    SuperId = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]),
+                    MasterId = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]),
+                    AgentId = Utils.ToInt32(customerInfo.Rows[0]["recommend"]),
+                    CustId = Utils.ToInt32(customerInfo.Rows[0]["custid"])
+                };
+            }
+
+            return new CustomerInfoSearchResult();
+        }
 
         private static void SetEditAllBetVisibility(DataTable dataTable)
         {
