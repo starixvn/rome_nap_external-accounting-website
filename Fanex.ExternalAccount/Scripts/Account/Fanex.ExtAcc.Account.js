@@ -61,12 +61,6 @@ Fanex.ExtAcc.Account = {
                     Validators.show($('#Password').get(0), 'Not allow HTML TAG');
                     return false;
                 }
-                /*
-                if ($('#Captcha').val().toString().search(/^[<\s\s*>]/) != -1) {
-                $('#Captcha').focus();
-                Validators.show($('#Captcha').get(0), 'Not allow HTML TAG');
-                return false;
-                }*/
 
                 if ($('#UserName').val() == '') {
                     $('#UserName').focus();
@@ -79,12 +73,6 @@ Fanex.ExtAcc.Account = {
                     Validators.show($('#Password').get(0), 'This field is required');
                     return false;
                 }
-                /*
-                if ($('#Captcha').val() == '' || $('#Captcha').val().length < 4) {
-                $('#Captcha').focus();
-                Validators.show($('#Captcha').get(0), 'This field is required');
-                return false;
-                }*/
 
                 $('#Password').val($('#Password').val().ec($('#Code').val()).hc());
             };
@@ -118,22 +106,6 @@ Fanex.ExtAcc.Account = {
             }
         });
 
-        //iconUserInfo.on("click", function () {
-        //    if (iconNav.hasClass('active')) {
-        //        $this.collapseSidebar();
-        //    }
-            
-        //    if (!iconUserInfo.hasClass('active')) {
-        //        leftPanel.addClass("expand-leftpanel-mobile").addClass("show").show("fast");
-        //        iconUserInfo.addClass("active");
-
-        //    } else {
-        //        leftPanel.show("fast", function () {
-        //            leftPanel.removeClass("expand-leftpanel-mobile");
-        //            iconUserInfo.removeClass("active");
-        //        });
-        //    }
-        //});
 
         hasMenu.on("click", function () {
             var menu = $(this);

@@ -234,28 +234,28 @@ Fanex.ExtAcc.DailyWinLoss = {
        },
        { HeaderText: 'Total Turnover', Name: 'TotalTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
        { HeaderText: 'Company', Name: 'ComTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-       { HeaderText: '%', Name: 'ComTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'ComTOPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
        { HeaderText: 'Super', Name: 'SAgTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-       { HeaderText: '%', Name: 'SAgTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'SAgTOPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
        { HeaderText: 'Master', Name: 'MAgTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-       { HeaderText: '%', Name: 'MAgTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'MAgTOPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
        { HeaderText: 'Agent', Name: 'AgTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-       { HeaderText: '%', Name: 'AgTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'AgTOPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
        { HeaderText: 'Company', Name: 'ComWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-       { HeaderText: '%', Name: 'ComWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'ComWinlostPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
        { HeaderText: 'Super', Name: 'SAgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-       { HeaderText: '%', Name: 'SAgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'SAgWinlostPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
        { HeaderText: 'Master', Name: 'MAgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-       { HeaderText: '%', Name: 'MAgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'MAgWinlostPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
        { HeaderText: 'Agent', Name: 'AgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-       { HeaderText: '%', Name: 'AgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
+       { HeaderText: '%', Name: 'AgWinlostPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
     ],
     Render: function () {
-        var winLossMarginHeader = '<div id="HeaderWinlossMargin">Win/Loss & Margin</div>\
+        var winLossMarginHeader = '<div id="HeaderWinlossMargin" class="txt-main">Win/Loss & Margin</div>\
                                    <div class="btn-margin-section">\
                                         <span class="txt-margin">Margin</span>\
                                         <label class="switch toggle-margin">\
-                                            <span class="toggle-margin-off"></span>\
+                                            <span class="toggle-margin-on" id="btn-toogle"></span>\
                                             <span class="slider round"></span>\
                                         </label>\
                                    </div>';
@@ -277,7 +277,7 @@ Fanex.ExtAcc.DailyWinLoss = {
             numberOfFrozenColumn: 3,
             showFooter: true,
             autoCalculateGridExpandHeight: true,
-            autoResizeColumn: true,
+            //autoResizeColumn: true,
             showPager: true,
             pagerOption: {
                 itemsPerPageArray: [50, 100, 500],
@@ -380,16 +380,16 @@ Fanex.ExtAcc.DailyWinLoss = {
     },
     showHideMarginColumns: function () {
         console.log($this.hidedMargin);
-        if (!$this.hidedMargin) {
-            $("#jqgrid").fanexGrid("hideColumns", $this.gridOptions, [12, 14, 16, 18]);
-            $('#HeaderWinlossMargin').html('Win/Loss');
-
-            $this.hidedMargin = true;
-        } else {
+        if ($this.hidedMargin) {
             $("#jqgrid").fanexGrid("showColumns", $this.gridOptions, [12, 14, 16, 18]);
             $('#HeaderWinlossMargin').html('Win/Loss & Margin');
-
+            $('#btn-toogle').removeClass().addClass('toggle-margin-on');
             $this.hidedMargin = false;
+        } else {
+            $("#jqgrid").fanexGrid("hideColumns", $this.gridOptions, [12, 14, 16, 18]);
+            $('#HeaderWinlossMargin').html('Win/Loss');
+            $('#btn-toogle').removeClass().addClass('toggle-margin-off');
+            $this.hidedMargin = true;
         }
 
         $('.toggle-margin').click($this.showHideMarginColumns);

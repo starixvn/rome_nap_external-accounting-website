@@ -70,19 +70,19 @@
   color: #4F4F4F;
   font-weight: bold; }
 
-.col-win-loss-margin .txt-main, .col-win-loss .txt-main {
+.txt-main {
   display: inline-block; }
 
-.col-win-loss-margin .btn-margin-section, .col-win-loss .btn-margin-section {
+.btn-margin-section {
   display: inline-block;
   vertical-align: middle;
   float: right; }
 
-.col-win-loss-margin .txt-margin, .col-win-loss .txt-margin {
+.txt-margin {
   font-size: 11px;
   color: #b6becb; }
 
-.col-win-loss-margin .switch, .col-win-loss .switch {
+.switch {
   position: relative;
   top: 3px; }
 

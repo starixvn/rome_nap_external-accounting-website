@@ -84,21 +84,22 @@
         }
     }
 }
-.col-win-loss-margin, .col-win-loss {
-    .txt-main {
-        display: inline-block;
-    }
-    .btn-margin-section {
-        display: inline-block;
-        vertical-align: middle;
-        float: right;
-    }
-    .txt-margin {
-        font-size: 11px;
-        color: #b6becb;
-    }
-    .switch {
-        position: relative;
-        top: 3px;
-    }
+
+.txt-main {
+    display: inline-block;
 }
+.btn-margin-section {
+    display: inline-block;
+    vertical-align: middle;
+    float: right;
+}
+.txt-margin {
+    font-size: 11px;
+    color: #b6becb;
+}
+.switch {
+    position: relative;
+    top: 3px;
+}
+
+
