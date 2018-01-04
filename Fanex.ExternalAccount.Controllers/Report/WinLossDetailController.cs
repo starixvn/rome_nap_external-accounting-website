@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web.Http;
     using System.Web.Mvc;
     using Caching;
     using Core.Base;
@@ -26,14 +25,17 @@
         private readonly ICache cacheManager;
         private readonly WinLossDetailService winLossDetailService;
         private readonly object ToolTipsProducts;
+        private readonly Func<ICollection<KeyValuePair<string, bool>>> productQueryParamGetter;
 
         public WinLossDetailController(
             ICache cacheManager,
             ICurrentSession currentSession,
-            WinLossDetailService winLossDetailService)
+            WinLossDetailService winLossDetailService,
+            Func<ICollection<KeyValuePair<string, bool>>> productQueryParamGetter)
         {
             this.cacheManager = cacheManager ?? CacheService.CreateInstance(CacheType.MemoryCache);
             this.winLossDetailService = winLossDetailService ?? new WinLossDetailServiceImpl();
+            this.productQueryParamGetter = productQueryParamGetter ?? new FilterController().AsCollection;
 
             ToolTipsProducts = new
             {
@@ -41,7 +43,7 @@
             };
         }
 
-        public WinLossDetailController() : this(null, null, null)
+        public WinLossDetailController() : this(null, null, null, null)
         {
         }
 
@@ -98,14 +100,14 @@
         [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
-        public ActionResult GetData([FromUri]WinLossDetailRequestParam request)
+        public ActionResult GetData(WinLossDetailRequestParam request)
         {
             var viewlevel = request.viewlevel;
             var custId = request.custId;
             var fromDate = request.fromdate;
             var username = request.username;
             var toDate = request.todate;
-            var productIds = GetProductIds(new FilterController().AsCollection());
+            var productIds = GetProductIds(productQueryParamGetter());
 
             var viewModel =
                 request.IsSearch()
@@ -119,18 +121,18 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
           Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public void ExportWinLossDetailToExcel([FromUri]WinLossDetailRequestParam request)
+        public void ExportWinLossDetailToExcel(WinLossDetailRequestParam request)
         {
-            var productCollection = new FilterController().AsCollection();
+            var productCollection = productQueryParamGetter();
             var fromDate = request.fromdate;
             var toDate = request.todate;
             var formatedProducts = GetProductNames(productCollection);
             var viewlevel = request.viewlevel;
             var productIds = GetProductIds(productCollection);
-            var custId = request.custId;
 
-            var cacheKey = string.Join("-", "wldt", request.username, GroupName, custId, fromDate, toDate, productIds)
-                .ToLowerInvariant();
+
+            var cacheKey = GetCacheKey(request, productIds);
+
 
             IWinLossDetailReportBuilder builder;
 
@@ -181,6 +183,15 @@
                 ExportToExcel(memoryStream, exportFileName);
                 memoryStream.Dispose();
             }
+        }
+
+        private string GetCacheKey(WinLossDetailRequestParam request, string productIds)
+        {
+            return (request.custId > 0)
+                ? string.Join(":", GroupName, request.custId, request.fromdate, request.todate, productIds)
+                    .ToLowerInvariant()
+                : string.Join(":", request.username, GroupName, request.fromdate, request.todate, productIds)
+                    .ToLowerInvariant();
         }
     }
 
@@ -267,6 +278,6 @@
         public int viewlevel { get; set; }
 
         public bool IsSearch() => custId == 0;
-       
+
     }
 }
