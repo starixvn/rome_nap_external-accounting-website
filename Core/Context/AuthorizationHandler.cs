@@ -131,10 +131,10 @@
             var userCache = _cachingService.GetUserCache(userId);
             var menuList = userCache.MenuList;
             var userFunctions = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
-            var hasPermissionOnMenu = menuList.Any(menuItem =>
+            var noPermissionOnAnyMenu = !menuList.Any(menuItem =>
                 IsAuthorizedUrl(menuItem.Url.Replace("~", string.Empty), requestUrl));
 
-            if (!hasPermissionOnMenu && userFunctions == null)
+            if (noPermissionOnAnyMenu && !userFunctions.Any())
             {
                 return false;
             }
