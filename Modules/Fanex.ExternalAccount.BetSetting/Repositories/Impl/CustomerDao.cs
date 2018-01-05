@@ -42,15 +42,12 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Repositories.Impl
                             };
                         }
                     }
-
-                    return null;   
                 }                
             }
+
+            return null;
         }
 
-        public int UserGroupId(int custId)
-        {
-            return SessionManager.Get<int>("EASGroupId");
-        }
+        public int UserGroupId(int custId) => SessionManager.Get<int>("EASGroupId");
     }
 }

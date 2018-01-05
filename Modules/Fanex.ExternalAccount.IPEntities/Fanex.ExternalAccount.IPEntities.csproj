@@ -99,11 +99,6 @@
     <Compile Include="Format\ContextIPInfo.cs" />
     <Compile Include="Format\IContextIPInfo.cs" />
     <Compile Include="Format\IPFormat.cs" />
-    <Compile Include="Geographic\GeoIP.cs" />
-    <Compile Include="Geographic\IbcIPService.cs" />
-    <Compile Include="Geographic\IP2LocationService.cs" />
-    <Compile Include="Geographic\GeoIPService.cs" />
-    <Compile Include="Geographic\IGeoIP.cs" />
     <Compile Include="Utils\IpUtils.cs" />
     <Compile Include="DAL\Model.Designer.cs">
       <AutoGen>True</AutoGen>
