@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
     using Caching;
@@ -19,24 +18,21 @@
     using Service.Interface.Report;
     using Utilities;
 
+    [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
+        Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
     public class WinLossDetailController : BaseController
     {
-        private const string Seperator = ", ";
-        private const string DateFormat = "yyyyMMdd";
         private readonly ICache cacheManager;
         private readonly WinLossDetailService winLossDetailService;
-        private readonly object ToolTipsProducts;
-        private readonly Func<ICollection<KeyValuePair<string, bool>>> productQueryParamGetter;
+        private readonly dynamic ToolTipsProducts;
 
         public WinLossDetailController(
             ICache cacheManager,
             ICurrentSession currentSession,
-            WinLossDetailService winLossDetailService,
-            Func<ICollection<KeyValuePair<string, bool>>> productQueryParamGetter)
+            WinLossDetailService winLossDetailService)
         {
             this.cacheManager = cacheManager ?? CacheService.CreateInstance(CacheType.MemoryCache);
             this.winLossDetailService = winLossDetailService ?? new WinLossDetailServiceImpl();
-            this.productQueryParamGetter = productQueryParamGetter ?? new FilterController().AsCollection;
 
             ToolTipsProducts = new
             {
@@ -44,27 +40,123 @@
             };
         }
 
-        public WinLossDetailController() : this(null, null, null, null)
+        public WinLossDetailController() : this(null, null, null)
         {
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
-            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult Index() => View();
 
-        private string GroupName => CurrentSession.IsInternalAdmin
-            ? CheckRequest.GetStringRequest("groupname", string.Empty)
-            : CurrentSession.CurrencyGroup;
-
-        private static string GetProductIds(ICollection<KeyValuePair<string, bool>> filterParams)
+        [AntiXSRFFilter]
+        public ActionResult GetData(WinLossDetailRequest request)
         {
+            var viewModel = request.IsSearch()
+                ? winLossDetailService.SearchWinLossDetail(
+                    new SearchWinLossDetailRequest(request, ToolTipsProducts))
+                : winLossDetailService.DrillDownWinLossDetail(
+                    new DrillDownWinLossDetailRequest(request, ToolTipsProducts));
+
+            return Json(viewModel);
+        }
+
+        public void ExportWinLossDetailToExcel(ExportWinLossDetailRequest request)
+        {
+            IWinLossDetailReportBuilder builder;
+
+            switch (request.viewlevel)
+            {
+                case Role.Member:
+                    {
+                        var winlossDetailData = cacheManager.Get<List<WinLossDetailAg>>(request.GetCacheKey());
+                        builder = new MemberWinLossDetailReportBuilder(
+                            winlossDetailData,
+                            request.viewlevel,
+                            request.fromdate,
+                            request.todate);
+
+                        break;
+                    }
+                case Role.Agent:
+                    {
+                        var winlossDetailData = cacheManager.Get<List<WinLossDetailMAg>>(request.GetCacheKey());
+                        builder = new AgentWinLossDetailReportBuilder(
+                            winlossDetailData,
+                            request.viewlevel,
+                            request.fromdate,
+                            request.todate);
+
+                        break;
+                    }
+                default:
+                    {
+                        var winlossDetailData = cacheManager.Get<List<WinLossDetail>>(request.GetCacheKey());
+                        builder = new WinLossDetailReportBuilder(
+                            winlossDetailData,
+                            request.viewlevel,
+                            request.fromdate,
+                            request.todate);
+
+                        break;
+                    }
+            }
+
+            var formatedProducts = request.GetProductNames(GetProductList());
+            var memoryStream = builder.Build(formatedProducts);
+
+            if (memoryStream != null)
+            {
+                ExportToExcel(memoryStream, request.FileName);
+                memoryStream.Dispose();
+            }
+        }
+    }
+
+    public class WinLossDetailRequest
+    {
+        private readonly Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter;
+        private readonly ICurrentSession currentSession;
+
+        public WinLossDetailRequest() : this(null, null)
+        {
+        }
+
+        public WinLossDetailRequest(
+            Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter,
+            ICurrentSession currentSession)
+        {
+            this.selectedProductQueryGetter = selectedProductQueryGetter ?? new FilterController().AsCollection;
+            this.currentSession = currentSession ?? new Core.Context.CurrentSession();
+        }
+
+        private const string Seperator = ", ";
+        private const string ShowAll = "showAll";
+
+        public string groupName => currentSession.IsInternalAdmin
+            ? CheckRequest.GetStringRequest("groupname", string.Empty)
+            : currentSession.CurrencyGroup;
+
+        public string username { get; set; }
+        public int srecommend { get; set; }
+        public int mrecommend { get; set; }
+        public int recommend { get; set; }
+        public int custId { get; set; }
+        public DateTime fromdate { get; set; }
+        public DateTime todate { get; set; }
+        public int viewlevel { get; set; }
+
+        public bool IsSearch() => custId == 0;
+
+        internal string GetProductIds()
+        {
+            var filterParams = selectedProductQueryGetter();
+
             var formatedProductIds = new List<int>();
 
             foreach (ProductElementConfiguration item in ProductsConfiguration.Instance.ProductCollection)
             {
                 foreach (var product in filterParams)
                 {
-                    if (item.ProductId != 0 && product.Key.Equals(item.Id, StringComparison.OrdinalIgnoreCase) && product.Value)
+                    if (item.ProductId != 0 && product.Key.Equals(item.Id, StringComparison.OrdinalIgnoreCase) &&
+                        product.Value)
                     {
                         formatedProductIds.Add(item.ProductId);
                     }
@@ -74,15 +166,16 @@
             return string.Join(",", formatedProductIds);
         }
 
-        private string GetProductNames(ICollection<KeyValuePair<string, bool>> filterParams)
+        internal string GetProductNames(List<KeyValuePair<string, string>> productList)
         {
-            var list = GetProductList();
+            var filterParams = selectedProductQueryGetter();
             var formatedProducts = string.Empty;
+
             filterParams.ToList().ForEach(o =>
             {
-                list.ForEach(p =>
+                productList.ForEach(p =>
                 {
-                    if (!p.Key.Equals("showAll", StringComparison.OrdinalIgnoreCase) && o.Value
+                    if (!p.Key.Equals(ShowAll, StringComparison.OrdinalIgnoreCase) && o.Value
                         && o.Key.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
                     {
                         formatedProducts += p.Value + Seperator;
@@ -98,155 +191,85 @@
             return formatedProducts;
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
-        public ActionResult GetData(WinLossDetailRequestParam request)
+        public string GetCacheKey()
         {
-            var viewlevel = request.viewlevel;
-            var custId = request.custId;
-            var fromDate = request.fromdate;
-            var username = request.username;
-            var toDate = request.todate;
-            var productIds = GetProductIds(productQueryParamGetter());
+            string querySpecification = IsSearch() ? username : custId.ToString();
 
-            var viewModel =
-                request.IsSearch()
-                ? winLossDetailService.SearchWinLossDetail(username, GroupName, fromDate, toDate, productIds, ToolTipsProducts)
-                : winLossDetailService.DrillDownWinLossDetail(
-                    new DrillDownRequest(custId, viewlevel, fromDate, toDate, productIds, GroupName),
-                    ToolTipsProducts);
-
-            return Json(viewModel);
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
-          Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public void ExportWinLossDetailToExcel(WinLossDetailRequestParam request)
-        {
-            var productCollection = productQueryParamGetter();
-            var fromDate = request.fromdate;
-            var toDate = request.todate;
-            var formatedProducts = GetProductNames(productCollection);
-            var viewlevel = request.viewlevel;
-            var productIds = GetProductIds(productCollection);
-
-            var cacheKey = GetCacheKey(request, productIds);
-
-            IWinLossDetailReportBuilder builder;
-
-            switch (viewlevel)
-            {
-                case Role.Member:
-                    {
-                        var winlossDetailData = cacheManager.Get<List<WinLossDetailAg>>(cacheKey);
-                        builder = new MemberWinLossDetailReportBuilder(
-                            winlossDetailData,
-                            viewlevel,
-                            fromDate,
-                            toDate);
-
-                        break;
-                    }
-                case Role.Agent:
-                    {
-                        var winlossDetailData = cacheManager.Get<List<WinLossDetailMAg>>(cacheKey);
-                        builder = new AgentWinLossDetailReportBuilder(
-                            winlossDetailData,
-                            viewlevel,
-                            fromDate,
-                            toDate);
-
-                        break;
-                    }
-                default:
-                    {
-                        var winlossDetailData = cacheManager.Get<List<WinLossDetail>>(cacheKey);
-                        builder = new WinLossDetailReportBuilder(
-                            winlossDetailData,
-                            viewlevel,
-                            fromDate,
-                            toDate);
-
-                        break;
-                    }
-            }
-
-            var memoryStream = builder.Build(formatedProducts);
-
-            var exportFileName =
-                $"{viewlevel.DisplayRoleName()}WinLossDetail_{fromDate.ToString(DateFormat)}_{toDate.ToString(DateFormat)}.xls";
-
-            if (memoryStream != null)
-            {
-                ExportToExcel(memoryStream, exportFileName);
-                memoryStream.Dispose();
-            }
-        }
-
-        private string GetCacheKey(WinLossDetailRequestParam request, string productIds)
-        {
-            return request.IsSearch()
-                ? string.Join(":", GroupName, request.username, request.fromdate, request.todate, productIds)
-                  .ToLower(CultureInfo.InvariantCulture)
-                : string.Join(":", GroupName, request.custId, request.fromdate, request.todate, productIds)
-                  .ToLower(CultureInfo.InvariantCulture);
+            return string.Join(":", "WinLossDetail", querySpecification, fromdate, todate, GetProductIds()).ToLowerInvariant();
         }
     }
 
-    public class DrillDownRequest : IDrillDownRequest
+    public class SearchWinLossDetailRequest : ISearchWinLossDetailRequest
     {
-        public DrillDownRequest(
-            int custId,
-            int viewLevel,
-            DateTime fromDate,
-            DateTime toDate,
-            string productIds,
-            string groupName)
+        public SearchWinLossDetailRequest(WinLossDetailRequest request, dynamic toolTipsProducts)
         {
-            CustId = custId;
-            ViewLevel = viewLevel;
-            FromDate = fromDate;
-            ToDate = toDate;
-            ProductIds = productIds;
-            GroupName = groupName;
+            GroupName = request.groupName;
+            Username = request.username;
+            FromDate = request.fromdate;
+            ToDate = request.todate;
+            ProductIds = request.GetProductIds();
+            ToolTipsProducts = toolTipsProducts;
+            GetCacheKey = request.GetCacheKey;
+        }
+
+        public string GroupName { get; private set; }
+        public string Username { get; private set; }
+        public DateTime FromDate { get; private set; }
+        public DateTime ToDate { get; private set; }
+        public string ProductIds { get; private set; }
+        public dynamic ToolTipsProducts { get; private set; }
+
+        public Func<string> GetCacheKey { get; }
+    }
+
+    public class DrillDownWinLossDetailRequest : IDrillDownWinLossDetailRequest
+    {
+        public DrillDownWinLossDetailRequest(WinLossDetailRequest request, dynamic toolTipsProducts)
+        {
+            GroupName = request.groupName;
+            CustId = request.custId;
+            FromDate = request.fromdate;
+            ToDate = request.todate;
+            ViewLevel = request.viewlevel;
+            ProductIds = request.GetProductIds();
+            ToolTipsProducts = toolTipsProducts;
+
+            GetCacheKey = request.GetCacheKey;
 
             switch (ViewLevel)
             {
                 case Role.Super:
-                    SuperId = custId;
+                    SuperId = CustId;
                     MasterId = 0;
                     AgentId = 0;
                     break;
 
                 case Role.Master:
                     SuperId = CheckRequest.GetIntRequest("srecommend", 0);
-                    MasterId = custId;
+                    MasterId = CustId;
                     AgentId = 0;
                     break;
 
                 default:
                     SuperId = CheckRequest.GetIntRequest("srecommend", 0);
                     MasterId = CheckRequest.GetIntRequest("mrecommend", 0);
-                    AgentId = custId;
+                    AgentId = CustId;
                     break;
             }
         }
 
-        public int CustId { get; }
-
+        public string GroupName { get; }
         public int SuperId { get; }
-
         public int MasterId { get; }
-
         public int AgentId { get; }
-
+        public int CustId { get; }
         public int ViewLevel { get; }
         public DateTime FromDate { get; }
         public DateTime ToDate { get; }
         public string ProductIds { get; }
+        public dynamic ToolTipsProducts { get; }
 
-        public string GroupName { get; }
+        public Func<string> GetCacheKey { get; }
 
         public bool IsValid => !ViewLevel.IsMember()
                                && ViewLevel <= Role.Group
@@ -256,26 +279,11 @@
         public bool IsNotValid => !IsValid;
     }
 
-    public class WinLossDetailRequestParam
+    public class ExportWinLossDetailRequest : WinLossDetailRequest
     {
-        public string groupName { get; set; }
+        private const string DateFormat = "yyyyMMdd";
 
-        public int srecommend { get; set; }
-
-        public int mrecommend { get; set; }
-
-        public int recommend { get; set; }
-
-        public int custId { get; set; }
-
-        public string username { get; set; }
-
-        public DateTime fromdate { get; set; }
-
-        public DateTime todate { get; set; }
-
-        public int viewlevel { get; set; }
-
-        public bool IsSearch() => custId == 0;
+        public string FileName =>
+            $"{viewlevel.DisplayRoleName()}WinLossDetail_{fromdate.ToString(DateFormat)}_{todate.ToString(DateFormat)}.xls";
     }
 }

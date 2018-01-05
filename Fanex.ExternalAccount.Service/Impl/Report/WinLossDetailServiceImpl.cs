@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections;
-    using System.Globalization;
     using Caching;
     using Core.Shared;
     using DTO.Customer;
@@ -37,7 +36,7 @@
             }
         }
 
-        public dynamic DrillDownWinLossDetail(IDrillDownRequest request, dynamic toolTipsProducts)
+        public dynamic DrillDownWinLossDetail(IDrillDownWinLossDetailRequest request)
         {
             if (request.IsNotValid)
             {
@@ -55,10 +54,7 @@
 
             if (winLossDetailData != null)
             {
-
-                var cacheKey = string.Join(":", request.GroupName, request.CustId, request.FromDate, request.ToDate, request.ProductIds)
-                    .ToLower(CultureInfo.InvariantCulture);
-
+                var cacheKey = request.GetCacheKey();
                 cacheManager.Set(cacheKey, winLossDetailData);
             }
 
@@ -71,35 +67,34 @@
                     recommend = request.AgentId,
                     rows = winLossDetailData,
                     sortingorderlist = sortingOrderList,
-                    tooltips = toolTipsProducts
+                    tooltips = request.ToolTipsProducts
                 };
         }
 
-        public dynamic SearchWinLossDetail(
-            string username,
-            string groupname,
-            DateTime fromDate,
-            DateTime toDate,
-            string productIds,
-            dynamic toolTipsProducts)
+        public dynamic SearchWinLossDetail(ISearchWinLossDetailRequest request)
         {
-            var sortingOrderList = reportService.GetSortingOrderList(groupname);
+            var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
 
             var customerInfo = new CustomerInfoSearchResult { RoleId = Role.Super };
 
-            if (!string.IsNullOrWhiteSpace(username))
+            if (!string.IsNullOrWhiteSpace(request.Username))
             {
-                customerInfo = reportService.SearchCustomerInfo(groupname, 0, username, true);
+                customerInfo = reportService.SearchCustomerInfo(request.GroupName, 0, request.Username, true);
 
                 if (customerInfo == null)
                 {
-                    return NoInfoResult(username, sortingOrderList, toolTipsProducts);
+                    return NoInfoResult(request.Username, sortingOrderList, request.ToolTipsProducts);
                 }
             }
 
-            var winLossDetailData = SearchWinLossDetailData(groupname, fromDate, toDate, productIds, customerInfo);
+            var winLossDetailData = SearchWinLossDetailData(request.GroupName, request.FromDate, request.ToDate, request.ProductIds, customerInfo);
 
-            CacheWinLossDetailSearchResult(groupname, fromDate, toDate, productIds, winLossDetailData, customerInfo);
+            if (winLossDetailData != null)
+            {
+                var cacheKey = request.GetCacheKey();
+
+                cacheManager.Set(cacheKey, winLossDetailData);
+            }
 
             return
                 new
@@ -113,20 +108,8 @@
                     recommend = customerInfo.AgentId,
                     rows = winLossDetailData,
                     sortingorderlist = sortingOrderList,
-                    tooltips = toolTipsProducts
+                    tooltips = request.ToolTipsProducts
                 };
-        }
-
-        private void CacheWinLossDetailSearchResult(string groupname, DateTime fromDate, DateTime toDate, string productIds,
-            dynamic winLossDetailData, CustomerInfoSearchResult customerInfo)
-        {
-            if (winLossDetailData != null)
-            {
-                var cacheKey = string.Join(":", groupname, customerInfo.Username, fromDate, toDate, productIds)
-                    .ToLower(CultureInfo.InvariantCulture);
-
-                cacheManager.Set(cacheKey, winLossDetailData);
-            }
         }
 
         private dynamic SearchWinLossDetailData(
