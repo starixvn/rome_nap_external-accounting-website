@@ -40,7 +40,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
                         var remark = reader.IsDBNull(reader.GetOrdinal("TransDesc"))
                             ? string.Empty
                             : reader["TransDesc"].ToString();
-                        var isAccBal = string.Compare(remark.ToLowerInvariant(), "accumulated balance",
+                        var isAccBal = string.Compare(remark.ToLower(CultureInfo.InvariantCulture), "accumulated balance",
                                            StringComparison.OrdinalIgnoreCase) == 0;
 
                         var entity = new Statement
@@ -61,7 +61,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Statement
 
         private static string GetDate(string transType, bool isAccBal, DateTime accDate, DateTime balanceUpDay)
         {
-            if (string.Compare(transType.ToLowerInvariant(), "bet", StringComparison.OrdinalIgnoreCase) == 0
+            if (string.Compare(transType.ToLower(CultureInfo.InvariantCulture), "bet", StringComparison.OrdinalIgnoreCase) == 0
                 && accDate >= balanceUpDay)
             {
                 return accDate.DayOfWeek + "<br/>" + Utils.FormatDateOptionalTime(accDate);

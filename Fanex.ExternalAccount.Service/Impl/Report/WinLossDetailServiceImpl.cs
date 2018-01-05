@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections;
+    using System.Globalization;
     using Caching;
     using Core.Shared;
     using DTO.Customer;
@@ -56,7 +57,7 @@
             {
 
                 var cacheKey = string.Join(":", request.GroupName, request.CustId, request.FromDate, request.ToDate, request.ProductIds)
-                    .ToLowerInvariant();
+                    .ToLower(CultureInfo.InvariantCulture);
 
                 cacheManager.Set(cacheKey, winLossDetailData);
             }
@@ -121,8 +122,8 @@
         {
             if (winLossDetailData != null)
             {
-                var cacheKey = string.Join(":", customerInfo.Username, groupname, fromDate, toDate, productIds)
-                    .ToLowerInvariant();
+                var cacheKey = string.Join(":", groupname, customerInfo.Username, fromDate, toDate, productIds)
+                    .ToLower(CultureInfo.InvariantCulture);
 
                 cacheManager.Set(cacheKey, winLossDetailData);
             }

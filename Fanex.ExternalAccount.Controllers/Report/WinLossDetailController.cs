@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
     using Caching;
@@ -130,9 +131,7 @@
             var viewlevel = request.viewlevel;
             var productIds = GetProductIds(productCollection);
 
-
             var cacheKey = GetCacheKey(request, productIds);
-
 
             IWinLossDetailReportBuilder builder;
 
@@ -187,11 +186,11 @@
 
         private string GetCacheKey(WinLossDetailRequestParam request, string productIds)
         {
-            return (request.custId > 0)
-                ? string.Join(":", GroupName, request.custId, request.fromdate, request.todate, productIds)
-                    .ToLowerInvariant()
-                : string.Join(":", request.username, GroupName, request.fromdate, request.todate, productIds)
-                    .ToLowerInvariant();
+            return request.IsSearch()
+                ? string.Join(":", GroupName, request.username, request.fromdate, request.todate, productIds)
+                  .ToLower(CultureInfo.InvariantCulture)
+                : string.Join(":", GroupName, request.custId, request.fromdate, request.todate, productIds)
+                  .ToLower(CultureInfo.InvariantCulture);
         }
     }
 
@@ -278,6 +277,5 @@
         public int viewlevel { get; set; }
 
         public bool IsSearch() => custId == 0;
-
     }
 }
