@@ -77,7 +77,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             {
                 return RedirectToAction("Offline", "Account");
             }
-            
+
             if (_currentSession.IsLogin && _currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
             {
                 var group = _currentSession.IsInternalAdmin ? _userService.GroupList().First().GroupName : string.Empty;
@@ -88,7 +88,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             var captcha = new CaptchaResult().GetCaptchaString(4);
             Encryptor.Instance.Code = captcha;
 
-            return PartialView(new Login() { Code = captcha });
+            return PartialView(new Login { Code = captcha });
         }
 
         /// <summary>
@@ -254,7 +254,12 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 return (int)StatusKickedOut.Maintenance;
             }
 
-            var re_CheckIn = Config.Recheckin;
+            var ignoreRecheckinCustomers = Config.IgnoreRecheckinCustomers
+                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            var re_CheckIn = Config.Recheckin &&
+                !ignoreRecheckinCustomers.Any(s => string.Equals(s, _currentSession.UserName, StringComparison.OrdinalIgnoreCase));
+
             var isKickOut = false;
 
             if (!re_CheckIn)

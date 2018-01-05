@@ -171,6 +171,9 @@
             .select2-container {
                 top: 0px;
                 width: 329px !important;
+                @media screen and (orientation: portrait) {
+                    width: 200px !important;
+                }
             }
         }
 
@@ -179,9 +182,9 @@
             display: inline-block;
 
              @media screen and (orientation: portrait) {
-                float: none;
+                /*float: none;
                 display: block;
-                clear: both;
+                clear: both;*/
 
                 li:first-child > .link {
                     padding-left: 0;
@@ -215,6 +218,9 @@
             position: relative;
             top: 4px;
             margin-right: 20px;
+            &:hover {
+                color: #ff9900;
+            }
             
         }
 
@@ -224,5 +230,22 @@
             color: #fff;
 
         }
+    }
+}
+
+
+@media all and (min-device-width: 1024px) {
+    .header {
+        position: relative;
+    }
+    .main-menu {
+        margin-left: 400px !important;
+    }
+    .icon-user, .group-user {
+        position: absolute;
+        
+    }
+    .group-user {
+        left: 52px;
     }
 }

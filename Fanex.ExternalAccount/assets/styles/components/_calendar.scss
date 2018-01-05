@@ -133,3 +133,10 @@ $font-family: 'Montserrat', sans-serif;
         @include border-radius(20px);
     }*/
 }
+
+.ui-datepicker-trigger {
+    //width: 0;
+    &:before {
+        content: '\e935';
+    }
+}

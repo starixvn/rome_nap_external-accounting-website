@@ -1142,6 +1142,7 @@
     <Content Include="assets\styles\images\info.gif" />
     <Content Include="assets\styles\images\info.png" />
     <Content Include="assets\styles\images\loading.gif" />
+    <Content Include="assets\styles\images\lockicon.png" />
     <Content Include="assets\styles\images\pointer.png" />
     <Content Include="assets\styles\images\pointerDown.png" />
     <Content Include="assets\styles\images\sprites.png" />
@@ -1162,7 +1163,7 @@
       <DependentUpon>login.scss</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\account\login.min.css">
-      <DependentUpon>login.scss</DependentUpon>
+      <DependentUpon>login.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\customer\bet-limit.css">
       <DependentUpon>bet-limit.scss</DependentUpon>

@@ -329,8 +329,10 @@ Fanex.ExtAcc.WinLossDetail = {
     hideFilter: false,
     showHideFilter: function () {
         if ($this.hideFilter) {
+            $(".icon-filter").addClass("active");
             $(".filterbox").removeClass("hide");
         } else {
+            $(".icon-filter").removeClass("active");
             $(".filterbox").addClass("hide");
         }
 
@@ -459,7 +461,7 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
         { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
     ],
-    Render: function () {
+    Render: function (dateInfo) {
         var arrColData = new Array();
         var arrGroupHeaders = new Array();
         var arrGroupFooters = new Array();
@@ -478,11 +480,20 @@ Fanex.ExtAcc.WinLossDetail = {
             arrGroupFooters = this.SAgFooterColumns;
         }
 
+        var level = $this.viewlevel == 4 ? "Super" :
+             $this.viewlevel == 3 ? "Master" :
+              $this.viewlevel == 2 ? "Agent" :
+              "Member";
+
         var gridOption = {
             customizeHeader: true,
             groupHeaderRows: [{ Columns: arrGroupHeaders }],
             columns: arrColData,
             numberOfFrozenColumn: 3,
+            showTitle: true,
+            titleInfo: {
+                text: level + " Win Loss Detail " + dateInfo
+            },
             showFooter: true,
             gridExpandHeight: 256,
             showPager: true,
@@ -492,7 +503,6 @@ Fanex.ExtAcc.WinLossDetail = {
                 totalItem: $this.totalRows,
                 itemsPerPage: 50
             },
-            highlightFrozenWidth: 2,
             marginRight: 2,
             bottomBorderWidth: 0,
             showDistinctRow: false,
@@ -759,11 +769,12 @@ Fanex.ExtAcc.WinLossDetail = {
         this.GetFromDateToDate();
         this.groupName = $('#selectedGroupName').html();
 
+        var dateInfo;
         if (this.fromdate == this.todate) {
-            $("#DateValueInfo").html('on ' + this.fromdate);
+            dateInfo = 'on ' + this.fromdate;
         }
         else {
-            $("#DateValueInfo").html('from ' + (new Date(Date.parse(this.fromdate))).toStringFormat('MMM dd, yyyy') + ' to ' + (new Date(Date.parse(this.todate))).toStringFormat('MMM dd, yyyy'));
+            dateInfo = 'from ' + (new Date(Date.parse(this.fromdate))).toStringFormat('MMM dd, yyyy') + ' to ' + (new Date(Date.parse(this.todate))).toStringFormat('MMM dd, yyyy');
         }
 
         $this.getParameterProducts();
@@ -829,13 +840,25 @@ Fanex.ExtAcc.WinLossDetail = {
                 $('#msgNoinfo').css('display', $this.totalRows < 1 ? 'block' : 'none');
 
                 if ($this.totalRows > 0) {
-                    $this.Render();
+                    $this.Render(dateInfo);
                     $("#exporttoexcel").removeClass("hide");
                     $(".groupBack").removeClass("hide");
                 } else {
                     $("#exporttoexcel").addClass("hide");
                     $(".groupBack").addClass("hide");
                 }
+
+                $('#netTurnover').bind('click', function () {
+                    var message = "- For Sportbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
+                    if (data.tooltips.showAllbet) {
+                        var messageGroup = message + "<br/>" + "<br/>" + "- For AllBet, Net Turnover is total valid bets that we use to compute commission.";
+                        Fanex.ExtAcc.Form.Alert("Net Turnover Information", messageGroup, 430, 220);
+                        return false;
+                    }
+
+                    Fanex.ExtAcc.Form.Alert("Net Turnover Information", message, 430, 170);
+                    return false;
+                });
 
                 Fanex.ExtAcc.UnBlockUI();
             },

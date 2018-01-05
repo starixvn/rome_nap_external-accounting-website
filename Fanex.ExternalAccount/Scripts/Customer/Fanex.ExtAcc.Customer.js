@@ -92,6 +92,7 @@
     MessageUnSuspendedMember: 'Are you sure you want to change Suspend status for this customer?',
 
     RecheckinXHR: null,
+    $this: null,
 
     ReCheckin: function () {
         if (this.RecheckinXHR != null)
@@ -191,6 +192,32 @@
         });
 
         Fanex.ExtAcc.InitSuggestion();
+
+        $this = this;
+        $(".icon-filter").click($this.showHideFilter);
+    },
+    hideFilter: false,
+    showHideFilter: function () {
+        if ($this.hideFilter) {
+            $(".icon-filter").addClass("active");
+            $(".filterbox").removeClass("hide");
+        } else {
+            $(".icon-filter").removeClass("active");
+            $(".filterbox").addClass("hide");
+        }
+
+        try {
+            $("#jqgrid").fanexGrid("resizeGrid");
+        }
+        catch (err) { }
+
+        $this.hideFilter = !$this.hideFilter;
+    },
+    resizeReportGrid: function () {
+        try {
+            $("#jqgrid").fanexGrid("resizeGrid");
+        }
+        catch (err) { }
     },
 
     GroupName: function () {
@@ -975,6 +1002,6 @@
             case 0:
             default:
                 return "closed-wrongPwdOthers";
-        }        
+        }
     }
 };

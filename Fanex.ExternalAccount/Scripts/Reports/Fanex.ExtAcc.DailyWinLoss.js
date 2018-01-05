@@ -135,8 +135,10 @@ Fanex.ExtAcc.DailyWinLoss = {
     hideFilter: false,
     showHideFilter: function () {
         if ($this.hideFilter) {
+            $(".icon-filter").addClass("active");
             $(".filterbox").removeClass("hide");
         } else {
+            $(".icon-filter").removeClass("active");
             $(".filterbox").addClass("hide");
         }
 
@@ -260,6 +262,11 @@ Fanex.ExtAcc.DailyWinLoss = {
                                         </label>\
                                    </div>';
 
+        var level = $this.viewlevel == 4 ? "Super" :
+             $this.viewlevel == 3 ? "Master" :
+              $this.viewlevel == 2 ? "Agent" :
+              "Member";
+
         var gridOption = {
             customizeHeader: true,
             groupHeaderRows: [
@@ -275,6 +282,10 @@ Fanex.ExtAcc.DailyWinLoss = {
             ],
             columns: $this.defaultColumns,
             numberOfFrozenColumn: 3,
+            showTitle: true,
+            titleInfo: {
+                text: level + " Daily Win Loss on " + $('#dtpWinLossDate').val()
+            },
             showFooter: true,
             autoCalculateGridExpandHeight: true,
             //autoResizeColumn: true,

@@ -23,7 +23,7 @@
     }
 
     .col_footer table thead th {
-        background: $table-footer-bg !important;
+        //background: $table-footer-bg !important;
         color: $table-footer-color;
         font-weight: bold;
         white-space: nowrap;
@@ -74,5 +74,16 @@
     .column-truncate {
         display: block;
     }
+}
+.grid-title {
+    background: #fff;
+    margin-bottom: 0;
+    border: 1px solid #c5c5c5;
+    border-bottom: none;
+    height: 28px;
+}
+
+.freegrid .border-right-highlight {
+    border-right-width: 1px !important;
 }
 

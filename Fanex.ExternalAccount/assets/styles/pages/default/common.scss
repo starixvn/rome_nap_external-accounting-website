@@ -78,7 +78,7 @@ body {
     width: 100%;
 
     @media screen and (min-device-width: 768px) and (orientation: portrait) {
-        top: 107px;
+        top: 60px;
     }
 }
 
@@ -351,6 +351,15 @@ body {
         top: 12px;
         font-size: 16px;
         cursor: pointer;
+        &:hover {
+            color: #ff9900;
+        }
+        &.active {
+            color: #5faa73;
+            &:hover {
+                color: #ff9900;
+            }
+        }
     }
 }
 
@@ -371,7 +380,7 @@ body {
     border: none !important;
     color: #42a15c;
     &:hover {
-        color: #307f46;
+        color: #ff9900;
     }
 }
 
@@ -1559,10 +1568,19 @@ li:hover {
 }
 
 .ui-multiselect-checkboxes .ui-state-hover {
-    background-color: #999 !important;
+    background-color: #f8eb95 !important;
     background-image: none !important;
     cursor: pointer;
-    color: #fff !important;
+    color: #444 !important;
+    border: none;
+}
+
+.ui-multiselect-checkboxes input[type=checkbox]  {
+    width: unset;
+    margin-right: 6px;
+    &:focus, &:hover {
+        outline: none;
+    }
 }
 
 .ui-datepicker-header .ui-state-hover .ui-icon, .ui-datepicker-header .ui-state-focus .ui-icon {

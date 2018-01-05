@@ -39,6 +39,12 @@
         width: 20px;
     }  
 }*/
+@media all and (max-device-width: 1366px) {
+    .filter-winloss-detail .form-group {
+        margin-bottom: 8px;
+    }
+}
+
 
 .filter-winloss-detail .user-group  {
     position: relative;
@@ -47,6 +53,7 @@
         top: 0 !important;
     }
 }
+
 
 .last-item {
     padding-left: 66px;
@@ -245,5 +252,11 @@ span.selectedMonth {
 }
 .col-sorter.asc [class*="col"]:after{
     border-bottom: 4px solid #82c341;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+    .monPickrDropDown, .dayPickrDropDown {
+        overflow: auto !important;
+    }
 }
 

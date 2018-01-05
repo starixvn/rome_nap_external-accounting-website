@@ -33,7 +33,7 @@
     {
         <div class="block-login">
             <div class="row">
-                <div class="login-logo icon-lock"></div>
+                <div class="login-logo icon-outline-lock"></div>
             </div>
             @if (!string.IsNullOrWhiteSpace(CurrentContext.LoginErrorMessage))
             {
@@ -43,11 +43,11 @@
                 </div>
                         }
             <div class="row">
-                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @maxlength = 50, @placeholder = "UserName" })
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @maxlength = 50, @placeholder = "username" })
                 <span class="icon-user"></span>
             </div>
             <div class="row">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @maxlength = 50, @autocomplete = "off", @placeholder = "Password" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @maxlength = 50, @autocomplete = "off", @placeholder = "password" })
                 <span class="icon-lock"></span>
             </div>
             <div class="row captcha-container" id="captcha" style="display: @showCaptcha">

@@ -55,7 +55,15 @@
 
 .context-menu-item {
     padding: 2px 5px;
+    &.editInfoBg:hover, &.hover {
+        background-color: #f8eb95;
+        color: #1b75bd;
+    }
 }
+.editInfoBg:hover {
+        background-color: #f8eb95 !important;
+        color: #1b75bd;
+    }
 .iconEnableEdit, .iconDisableEdit, .iconUnsyncEdit, .iconViewEdit {
     @include box-sizing(content-box);
 	font-size: 12px;
@@ -81,6 +89,10 @@
     content: '\e923';
 }
 
+.context-menu-list.iconEnableEdit:before {
+    content: unset;
+}
+
 .editMult, .editInfo, .editMaster, .editAgent, .editMember {
     &:before {
         font-family: 'AlphaAdmin' !important;
@@ -96,7 +108,10 @@
     cursor: pointer;
     &:before {
         content: '\e912';
-        color: #6c6c6c;
+        color: #6c6c6c;        
+    }
+    &:hover:before {
+        color: #ff9900;
     }
 }
 .BettingLimitHeaderCopied, .BettingLimitHeaderCopiedActive {
@@ -154,6 +169,9 @@
 .status-select {
     cursor: pointer; 
     font-weight: bold;
+    &:hover {
+        color: #ff9900;
+    }
 }
 .character { 
     margin: -1px 5px 0px 5px; 
@@ -297,10 +315,7 @@ tr.rowTransferCondition
 {
 	background-color: #ececec !important;
 }
-.editInfoBg:hover
-{
-	background-color: #39F !important;
-}
+
 .formatDate
 {
 	font-size: 8px;
@@ -377,4 +392,10 @@ span.spanPT
 .statusInfo
 {
     border: 1px solid #ccc; border-left: none; border-right: none; font-weight: bold; height: 26px; vertical-align: middle; text-align: right
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .context-menu-list.context-menu-root {
+        overflow: unset !important;
+    }
 }

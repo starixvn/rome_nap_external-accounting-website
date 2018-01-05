@@ -92,7 +92,7 @@
                     if ($scope.model.setting.syncItems[i].key == 'HideNG2') {
                         isHideNG2 = $scope.model.setting.syncItems[i].value;
                     }
-                    
+
                     if ($scope.model.setting.syncItems[i].key == 'HideFishingWorld') {
                         isHideFishingWorld = $scope.model.setting.syncItems[i].value;
                     }
@@ -133,7 +133,9 @@
                         isHideCricket = false;
                     }
                 }
-                
+
+                parent.$(".icon-filter").click(parent.Fanex.ExtAcc.Customer.showHideFilter);
+
                 switch (roleId) {
                     case 4:
                         parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting);
@@ -384,7 +386,7 @@
     $scope.Allbet = function () {
         $scope.RenderDCS(21);
     };
-    
+
     $scope.MacauGames = function () {
         $scope.RenderDCS(22);
     };
@@ -443,10 +445,10 @@
     }
 
     $scope.collapseSidebar = function () {
-        
+
         var iconUserInfo = top.$("#iconUserInfo");
         var leftPanel = top.$("#leftSplitter");
-        
+
         leftPanel.fadeIn("fast", function () {
             leftPanel.removeClass("expand-leftpanel");
             iconUserInfo.removeClass("active");

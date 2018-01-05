@@ -142,8 +142,10 @@ Fanex.ExtAcc.Statement = {
     hideFilter: false,
     showHideFilter: function () {
         if ($this.hideFilter) {
+            $(".icon-filter").addClass("active");
             $(".filterbox").removeClass("hide");
         } else {
+            $(".icon-filter").removeClass("active");
             $(".filterbox").addClass("hide");
         }
 

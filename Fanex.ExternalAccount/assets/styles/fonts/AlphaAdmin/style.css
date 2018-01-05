@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'AlphaAdmin';
-  src:  url('fonts/AlphaAdmin.eot?mk4oo0');
-  src:  url('fonts/AlphaAdmin.eot?mk4oo0#iefix') format('embedded-opentype'),
-    url('fonts/AlphaAdmin.ttf?mk4oo0') format('truetype'),
-    url('fonts/AlphaAdmin.woff?mk4oo0') format('woff'),
-    url('fonts/AlphaAdmin.svg?mk4oo0#AlphaAdmin') format('svg');
+  src:  url('fonts/AlphaAdmin.eot?967a5c');
+  src:  url('fonts/AlphaAdmin.eot?967a5c#iefix') format('embedded-opentype'),
+    url('fonts/AlphaAdmin.ttf?967a5c') format('truetype'),
+    url('fonts/AlphaAdmin.woff?967a5c') format('woff'),
+    url('fonts/AlphaAdmin.svg?967a5c#AlphaAdmin') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-calendar:before {
+  content: "\e935";
+}
+.icon-outline-lock:before {
+  content: "\e934";
+}
 .icon-filter:before {
   content: "\e933";
 }
