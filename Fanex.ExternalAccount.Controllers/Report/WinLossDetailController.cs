@@ -112,6 +112,9 @@
 
     public class WinLossDetailRequest
     {
+        private const string Seperator = ", ";
+        private const string ShowAll = "showAll";
+
         private readonly Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter;
         private readonly ICurrentSession currentSession;
 
@@ -126,9 +129,6 @@
             this.selectedProductQueryGetter = selectedProductQueryGetter ?? new FilterController().AsCollection;
             this.currentSession = currentSession ?? new Core.Context.CurrentSession();
         }
-
-        private const string Seperator = ", ";
-        private const string ShowAll = "showAll";
 
         public string groupName => currentSession.IsInternalAdmin
             ? CheckRequest.GetStringRequest("groupname", string.Empty)
