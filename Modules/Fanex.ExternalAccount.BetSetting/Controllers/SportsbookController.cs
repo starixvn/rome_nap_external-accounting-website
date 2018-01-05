@@ -1,15 +1,15 @@
 namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 {
+    using System;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Module.BetSetting.Base;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.PTEngine.BusinessObjects;
-    using Fanex.PTEngine.Services;
+    using ExternalAccount.Core.Shared;
+    using Base;
+    using Security.Authenticate;
+    using Security.Configurations;
+    using PTEngine.BusinessObjects;
+    using PTEngine.Services;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using System;
-    using ExternalAccount.Core.Shared;
-    using Fanex.CustomerSetting.Security.Configurations;
 
     public class SportsbookController : BettingControllerBase
     {
@@ -18,20 +18,20 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             var obj = Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as IAuthenticate;
             if (!obj.IsBelong(id, null, siteName))
             {
-                return this.ActionDenied(this.Request);
+                return ActionDenied(Request);
             }
 
-            return this.PartialView("~/Areas/CustomerSetting/Views/BetSetting/Sportsbook/Index.cshtml");
+            return PartialView("~/Areas/CustomerSetting/Views/BetSetting/Sportsbook/Index.cshtml");
         }
-        
+
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "SportsbookBetting")]
         public ActionResult Content(int id, int uplineId, int userId, string siteName)
         {
-            var customer = this.CustomerInfo(id, userId);
+            var customer = CustomerInfo(id, userId);
 
             if (customer.RoleId.IsNotSuper())
             {
-                return this.PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             ViewBag.Username = customer.Username;
@@ -40,7 +40,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             ViewBag.SyncLiveCasino = customer.SyncLiveCasino;
             ViewBag.HideGoldDeluxe = customer.HideGoldDeluxe;
 
-            var bettingLimitService = this.SportsBookService;
+            var bettingLimitService = SportsBookService;
 
             var currentContext = new RequestContext()
             {
@@ -56,7 +56,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
             var bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
 
-            return this.PartialView("~/Areas/CustomerSetting/Views/BetSetting/Sportsbook/Content.cshtml", bettingLimit);
+            return PartialView("~/Areas/CustomerSetting/Views/BetSetting/Sportsbook/Content.cshtml", bettingLimit);
         }
 
         [HttpPost]
@@ -66,10 +66,10 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             var obj = Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as IAuthenticate;
             if (!obj.IsBelong(id, null, siteName))
             {
-                return this.ActionDenied(this.Request);
+                return ActionDenied(Request);
             }
 
-            var customer = this.CustomerInfo(id, userId);
+            var customer = CustomerInfo(id, userId);
 
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
@@ -77,7 +77,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
             if (customer.RoleId.IsNotSuper())
             {
-                return this.JsonBase(new { ErrorCode = 1, ErrorMessage = "You're not authorized on this function" }, settings);
+                return JsonBase(new { ErrorCode = 1, ErrorMessage = "You're not authorized on this function" }, settings);
             }
 
             var bettingLimit = JsonConvert.DeserializeObject<BettingLimit>(txtCustomerObject, settings);
@@ -93,11 +93,11 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
                 Language = "En"
             };
 
-            var bettingLimitService = this.SportsBookService;
+            var bettingLimitService = SportsBookService;
 
             var result = bettingLimitService.UpdateBetting(bettingLimit, requestContext);
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage }, settings);
+            return JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage }, settings);
         }
     }
 }

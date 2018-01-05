@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Web.Mvc;
+    using Authorization;
     using Base;
-    using Context;
     using Newtonsoft.Json;
     using Service.Impl.Report;
     using Service.Interface.Report;
@@ -13,13 +13,13 @@
 
     public class FilterController : BaseController
     {
-        private readonly AuthorizationHandler authorization;
+        private readonly AuthorizationService authorizationService;
         private readonly IReportService reportService;
 
-        public FilterController(IReportService reportService, AuthorizationHandler authorization)
+        public FilterController(IReportService reportService, AuthorizationService authorizationService)
         {
             this.reportService = reportService ?? new ReportService();
-            this.authorization = authorization ?? new AuthorizationHandler();
+            this.authorizationService = authorizationService ?? new AuthorizationService();
         }
 
         public FilterController() : this(null, null)
@@ -47,9 +47,9 @@
         {
             var groupName = CheckRequest.GetStringRequest("groupname", string.Empty);
 
-            if (string.IsNullOrEmpty(groupName) || !authorization.IsBelong(groupName, 0, null, true))
+            if (string.IsNullOrEmpty(groupName) || !authorizationService.IsBelong(groupName, 0, null, true))
             {
-                return JsonBase(new {username = string.Empty});
+                return JsonBase(new { username = string.Empty });
             }
 
             var users = reportService.GetSuggestedUserName(

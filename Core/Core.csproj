@@ -314,7 +314,7 @@
     <Compile Include="Base\CustomerBase.cs" />
     <Compile Include="Base\DcsEntity.cs" />
     <Compile Include="Base\JsonBase.cs" />
-    <Compile Include="Context\AuthorizationHandler.cs" />
+    <Compile Include="Authorization\AuthorizationService.cs" />
     <Compile Include="Context\CasinoAPILogger.cs" />
     <Compile Include="Context\CurrentContext.cs" />
     <Compile Include="Context\CurrentSession.cs" />

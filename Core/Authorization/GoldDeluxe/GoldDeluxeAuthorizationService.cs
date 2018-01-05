@@ -11,7 +11,7 @@
         private readonly ExternalAccountAuthenticateAttribute _authenticationService =
             new ExternalAccountAuthenticateAttribute();
 
-        private readonly AuthorizationHandler _authorization = new AuthorizationHandler();
+        private readonly AuthorizationService _authorization = new AuthorizationService();
 
         public bool IsAuthorizedRead(AuthorizationContext authorizationContext, int custId) =>
             _authenticationService.AllowReadByAuthenticationParam(eFunctions.UpdateGoldDeluxe)
@@ -48,7 +48,7 @@
                    && _authorization.IsBelong();
         }
 
-        private string GetActionParameterValue(IValueProvider valueProvider, string parameterName) =>
+        private static string GetActionParameterValue(IValueProvider valueProvider, string parameterName) =>
             valueProvider.GetValue(parameterName) != null
                 ? valueProvider.GetValue(parameterName).AttemptedValue
                 : string.Empty;

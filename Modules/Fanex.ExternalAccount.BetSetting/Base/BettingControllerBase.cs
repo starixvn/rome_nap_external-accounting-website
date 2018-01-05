@@ -1,92 +1,44 @@
 namespace Fanex.CustomerSetting.Module.BetSetting.Base
 {
-    using Fanex.CustomerSetting.Module.BetSetting.Services.Impl;
-    using Fanex.CustomerSetting.Module.BetSetting.Services.Interface;
-    using Fanex.CustomerSetting.Module.BetSetting.ViewModels;
-    using Fanex.CustomerSetting.Module.Casino.Services.Impl;
-    using Fanex.CustomerSetting.Module.Core.Web.Controllers;
-    using Fanex.CustomerSetting.Module.Keno.KenoSetting.Services;
-    using Fanex.LiveCasinoSetting.Business;
+    using Services.Impl;
+    using Services.Interface;
+    using ViewModels;
+    using Casino.Services.Impl;
+    using Core.Web.Controllers;
+    using Keno.KenoSetting.Services;
+    using LiveCasinoSetting.Business;
 
     public class BettingControllerBase : BaseController
     {
-        private Fanex.PTEngine.Services.IBettingLimitService _sportsBookService = new Fanex.PTEngine.Services.BettingLimitService();
-        
-        private Fanex.PTRacing.Services.ICustomerService _racingService = new Fanex.PTRacing.Services.CustomerService();
-        
-        private IMemberWinLimitService _memberWinLimitService = new MemberWinLimitService();
-        
-        private IGameSettingService _gameSettingService = new GameSettingService();
+        private readonly PTEngine.Services.IBettingLimitService _sportsBookService = new PTEngine.Services.BettingLimitService();
 
-        private ISettingService _settingService = new SettingService();
+        private readonly PTRacing.Services.ICustomerService _racingService = new PTRacing.Services.CustomerService();
 
-        private ILogWriterService _logService = new LogWriterService();
+        private readonly IMemberWinLimitService _memberWinLimitService = new MemberWinLimitService();
 
-        private IKenoSettingService _kenoService = new KenoSettingService();
+        private readonly IGameSettingService _gameSettingService = new GameSettingService();
 
-        public ILogWriterService LogService
-        {
-            get
-            {
-                return this._logService ?? new LogWriterService();
-            }
-        }
+        private readonly ISettingService _settingService = new SettingService();
 
-        public ISettingService SettingService
-        {
-            get
-            {
-                return this._settingService ?? new SettingService();
-            }
-        }
+        private readonly ILogWriterService _logService = new LogWriterService();
 
-        public Fanex.PTEngine.Services.IBettingLimitService SportsBookService
-        {
-            get
-            {
-                return this._sportsBookService ?? new Fanex.PTEngine.Services.BettingLimitService();
-            }
-        }
+        private readonly IKenoSettingService _kenoService = new KenoSettingService();
 
-        public Fanex.PTRacing.Services.ICustomerService RacingService
-        {
-            get
-            {
-                return this._racingService ?? new Fanex.PTRacing.Services.CustomerService();
-            }
-        }
+        public ILogWriterService LogService => _logService ?? new LogWriterService();
 
-        public CasinoManager CasinoService
-        {
-            get
-            {
-                return CasinoManager.Instance;
-            }
-        }
+        public ISettingService SettingService => _settingService ?? new SettingService();
 
-        public IMemberWinLimitService MemberWinLimitService
-        {
-            get
-            {
-                return this._memberWinLimitService ?? new MemberWinLimitService();
-            }
-        }
+        public PTEngine.Services.IBettingLimitService SportsBookService => _sportsBookService ?? new PTEngine.Services.BettingLimitService();
 
-        public IGameSettingService GameSettingService
-        {
-            get
-            {
-                return this._gameSettingService ?? new GameSettingService();
-            }
-        }
+        public PTRacing.Services.ICustomerService RacingService => _racingService ?? new PTRacing.Services.CustomerService();
 
-        public IKenoSettingService KenoService
-        {
-            get
-            {
-                return this._kenoService ?? new KenoSettingService();
-            }
-        }
+        public CasinoManager CasinoService => CasinoManager.Instance;
+
+        public IMemberWinLimitService MemberWinLimitService => _memberWinLimitService ?? new MemberWinLimitService();
+
+        public IGameSettingService GameSettingService => _gameSettingService ?? new GameSettingService();
+
+        public IKenoSettingService KenoService => _kenoService ?? new KenoSettingService();
 
         public Customer CustomerInfo(int id, int userId)
         {

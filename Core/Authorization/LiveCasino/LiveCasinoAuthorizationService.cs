@@ -11,7 +11,7 @@
         private readonly ExternalAccountAuthenticateAttribute _authenticationService =
             new ExternalAccountAuthenticateAttribute();
 
-        private readonly AuthorizationHandler authorization = new AuthorizationHandler();
+        private readonly AuthorizationService authorization = new AuthorizationService();
 
         public bool
             IsAuthorizedRead(AuthorizationContext authorizationContext, LiveCasinoSettingContext settingContext) =>

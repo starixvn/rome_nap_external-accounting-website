@@ -5,10 +5,10 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
     using System.Linq;
     using System.Web.Mvc;
     using ExternalAccount.Core.Shared;
-    using Fanex.CustomerSetting.Module.BetSetting.Base;
-    using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.CustomerSetting.Security.Configurations;
+    using Base;
+    using Keno.KenoSetting.Configurations;
+    using Security.Authenticate;
+    using Security.Configurations;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -19,20 +19,20 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             var obj = Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as IAuthenticate;
             if (!obj.IsBelong(id, null, siteName))
             {
-                return this.ActionDenied(this.Request);
+                return ActionDenied(Request);
             }
 
-            return this.PartialView("~/Areas/CustomerSetting/Views/BetSetting/Keno/Index.cshtml");
+            return PartialView("~/Areas/CustomerSetting/Views/BetSetting/Keno/Index.cshtml");
         }
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "KenoBetting")]
         public ActionResult Content(int id, int uplineId, int userId, string siteName)
         {
-            var customer = this.CustomerInfo(id, userId);
+            var customer = CustomerInfo(id, userId);
 
             if (customer.RoleId.IsNotSuper())
             {
-                return this.PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             ViewBag.Username = customer.Username;
@@ -41,7 +41,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             ViewBag.SyncLiveCasino = customer.SyncLiveCasino;
             ViewBag.HideGoldDeluxe = customer.HideGoldDeluxe;
 
-            var model = this.KenoService.GetSuperSetting(new Keno.KenoSetting.ViewModels.CustomerInformationViewModel
+            var model = KenoService.GetSuperSetting(new Keno.KenoSetting.ViewModels.CustomerInformationViewModel
             {
                 CustId = id,
                 SubAccId = 0,
@@ -50,10 +50,10 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
             model.ToList().ForEach(item =>
             {
-                item.BetTypeName = Fanex.CustomerSetting.Module.Core.Services.Impl.CacheRef.GetBettype(item.BetTypeId);
+                item.BetTypeName = Core.Services.Impl.CacheRef.GetBettype(item.BetTypeId);
             });
 
-            return this.PartialView("~/Areas/CustomerSetting/Views/BetSetting/Keno/Content.cshtml", model);
+            return PartialView("~/Areas/CustomerSetting/Views/BetSetting/Keno/Content.cshtml", model);
         }
 
         [HttpPost]
@@ -63,10 +63,10 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             var obj = Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as IAuthenticate;
             if (!obj.IsBelong(id, null, siteName))
             {
-                return this.ActionDenied(this.Request);
+                return ActionDenied(Request);
             }
-            
-            var customer = this.CustomerInfo(id, userId);
+
+            var customer = CustomerInfo(id, userId);
 
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
@@ -74,7 +74,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
             if (customer.RoleId.IsNotSuper())
             {
-                return this.JsonBase(new { ErrorCode = 1, ErrorMessage = "You're not authorized on this function" }, settings);
+                return JsonBase(new { ErrorCode = 1, ErrorMessage = "You're not authorized on this function" }, settings);
             }
 
             var newSetting = JsonConvert.DeserializeObject<List<Keno.KenoSetting.Entities.BetSetting>>(txtCustomerObject, settings);
@@ -82,10 +82,10 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
             foreach (var item in newSetting)
             {
-                result.Add(this.KenoService.UpdateBetSettingSuper(item, id, userId));    
+                result.Add(KenoService.UpdateBetSettingSuper(item, id, userId));
             }
-            
-            return this.JsonBase(result, settings);
+
+            return JsonBase(result, settings);
         }
     }
 }

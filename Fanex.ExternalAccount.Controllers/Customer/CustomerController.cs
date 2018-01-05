@@ -34,12 +34,13 @@
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
     using System.Diagnostics;
     using Service.Interface.Report;
+    using Core.Authorization;
 
     public class CustomerController : CustomerBase //DevSkim: ignore DS184626
     {
         private const string DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt";
         private readonly AgentService _agentService = new AgentService();
-        private readonly AuthorizationHandler _authorization = new AuthorizationHandler();
+        private readonly AuthorizationService _authorization = new AuthorizationService();
         private readonly CustomerService _customerService = new CustomerService();
         private readonly PTEngine.Services.ICustomerService ptCustomerService = new PTEngine.Services.CustomerService();
         private readonly MasterService _masterService = new MasterService();
@@ -443,7 +444,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public ActionResult ViewIP(string ip)
         {
-            if (IpUtils.IsVnIp(ip) && !AuthorizationHandler.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP))
+            if (IpUtils.IsVnIp(ip) && !AuthorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP))
             {
                 return PartialViewBase("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }

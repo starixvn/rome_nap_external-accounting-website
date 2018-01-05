@@ -1,9 +1,10 @@
-﻿namespace Fanex.ExternalAccount.Core.Context
+﻿namespace Fanex.ExternalAccount.Core.Authorization
 {
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Web;
+    using Context;
     using CustomerSetting.Security.Authenticate;
     using DTO;
     using DTO.UserControl;
@@ -14,14 +15,31 @@
     using Service.Interface.Report;
     using Service.Interface.UserControl;
 
-    public class AuthorizationHandler
+    public class AuthorizationService
     {
-        public static readonly AuthorizationHandler Instance = new AuthorizationHandler();
-        private readonly ICachingService _cachingService = new CachingService();
-        private readonly ILoginService loginService = new LoginService();
-        private readonly IReportService reportService = new ReportService();
-        private readonly IUserService userService = new UserService();
-        
+        public static readonly AuthorizationService Instance = new AuthorizationService();
+
+        private readonly ICachingService cachingService;
+        private readonly ILoginService loginService;
+        private readonly IReportService reportService;
+        private readonly IUserService userService;
+
+        public AuthorizationService() : this(null, null, null, null)
+        {
+        }
+
+        public AuthorizationService(
+            ICachingService cachingService,
+            ILoginService loginService,
+            IReportService reportService,
+            IUserService userService)
+        {
+            this.cachingService = cachingService ?? new CachingService();
+            this.loginService = loginService ?? new LoginService();
+            this.reportService = reportService ?? new ReportService();
+            this.userService = userService ?? new UserService();
+    }
+
         public bool IsBelong()
         {
             var currentContext = new CurrentContext();
@@ -41,11 +59,13 @@
             {
                 return true;
             }
-            
+
             var groups = loginService.GroupList();
             var userGroup = groups.Where(o => o.GroupID == currentSession.GroupId).ToList();
-            groupname = string.IsNullOrEmpty(groupname) ? userGroup.FirstOrDefault()?.GroupName : groupname;
-            var result = reportService.GetCustomerInfo(groupname, custId, userName, isGetUplineInfo);
+
+            var defaultGroupName = string.IsNullOrEmpty(groupname) ? userGroup.FirstOrDefault()?.GroupName : groupname;
+
+            var result = reportService.GetCustomerInfo(defaultGroupName, custId, userName, isGetUplineInfo);
 
             return result?.Rows.Count > 0 || custId == 0 && userGroup.Count > 0;
         }
@@ -58,19 +78,20 @@
             {
                 return true;
             }
-            
-            var groups = loginService.GroupList();
-            var userGroup = groups.Where(o => o.GroupID == currentSession.GroupId);
-            groupname = string.IsNullOrEmpty(groupname) ? userGroup.FirstOrDefault()?.GroupName : groupname;
 
-            if (groupname == null)
+            var groups = loginService.GroupList();
+            var userGroup = groups.Where(o => o.GroupID == currentSession.GroupId).ToList();
+
+            var defaultGroupName = string.IsNullOrEmpty(groupname) ? userGroup.FirstOrDefault()?.GroupName : groupname;
+
+            if (defaultGroupName == null)
             {
                 return true;
             }
 
             foreach (var id in custIds)
             {
-                var result = reportService.GetCustomerInfo(groupname, id, userName, isGetUplineInfo);
+                var result = reportService.GetCustomerInfo(defaultGroupName, id, userName, isGetUplineInfo);
                 if (result == null || result.Rows.Count <= 0)
                 {
                     return false;
@@ -90,8 +111,10 @@
                 return currentSession;
             }
 
+            // TODO: what does 11 mean?
             currentSession.IsInternalAdmin =
                 loginService.CheckExternalGroup(currentSession.UserId, 11, "ExternalGroup");
+
             currentSession.GroupId = userInfo.GroupID;
             currentSession.CurrencyGroup = userInfo.GroupName;
             currentSession.IsITAdmin = Group.IsITGroup(currentSession.GroupId);
@@ -128,23 +151,23 @@
             AuthenticateAction.AuthenticationType policy = AuthenticateAction.AuthenticationType.Read,
             string requestUrl = "")
         {
-            var userCache = _cachingService.GetUserCache(userId);
+            var userCache = cachingService.GetUserCache(userId);
             var menuList = userCache.MenuList;
-            var userFunctions = userCache.PolicyList.Where(x => x.FuncKey == functionKey);
+            var userFunctions = userCache.PolicyList.Where(x => x.FuncKey == functionKey).ToList();
             var noPermissionOnAnyMenu = !menuList.Any(menuItem =>
                 IsAuthorizedUrl(menuItem.Url.Replace("~", string.Empty), requestUrl));
 
-            if (noPermissionOnAnyMenu && !userFunctions.Any())
+            if (noPermissionOnAnyMenu && userFunctions.Count == 0)
             {
                 return false;
             }
 
-            if (!userFunctions.Any())
+            if (userFunctions.Count == 0)
             {
                 return false;
             }
 
-            return IsAuthorized(policy, userFunctions.First());
+            return IsAuthorized(policy, userFunctions[0]);
         }
 
         private static bool IsAuthorized(AuthenticateAction.AuthenticationType policy, Function function)
@@ -169,7 +192,7 @@
 
         private static bool IsAuthorizedUrl(string menuUrl, string requestUrl)
             => !string.IsNullOrWhiteSpace(menuUrl)
-               && (string.IsNullOrWhiteSpace(requestUrl) 
+               && (string.IsNullOrWhiteSpace(requestUrl)
                || requestUrl.ToLower(CultureInfo.InvariantCulture).Contains(menuUrl.ToLower(CultureInfo.InvariantCulture)));
 
         public bool HasUpdateCreditPermission(int userId)

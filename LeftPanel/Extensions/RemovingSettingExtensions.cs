@@ -148,7 +148,12 @@
             return model.RemoveProduct(roleId, productName, false);
         }
 
-        private static bool IsSyncedProduct(int roleId, bool hide, bool sync, bool syncDownline, bool isCheckSyncDownlineField)
+        private static bool IsSyncedProduct(
+            int roleId,
+            bool hide,
+            bool sync,
+            bool syncDownline,
+            bool isCheckSyncDownlineField)
             => (!sync && roleId.IsMember())
                             || (!hide && !sync)
                             || (isCheckSyncDownlineField && !syncDownline);

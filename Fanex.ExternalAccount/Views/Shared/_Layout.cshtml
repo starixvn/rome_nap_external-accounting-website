@@ -1,24 +1,25 @@
 @using Fanex.ExternalAccount.Core.Context;
 @using Fanex.ExternalAccount.Utilities
 @using System.Web.Optimization
+@using Fanex.ExternalAccount.Core.Authorization
 @using Fanex.PTEngine
 @using Fanex.ExternalAccount.Module.LeftPanel
 
 @{
     var isLocal = Request.IsLocal ? 1 : 0;
     var userId = CurrentSession.Instance.UserId;
-    var admins = AuthorizationHandler.Instance.HasOpenSuperPermission(userId) ? new int[] { userId } : new int[] { };
-    var showBetSetting = AuthorizationHandler.Instance.HasReadPermissionOnFunctions(LeftPanelProductIntegration.VisibleBetSettingPermissions.Values, userId) ? 1 : 0;
+    var admins = AuthorizationService.Instance.HasOpenSuperPermission(userId) ? new int[] { userId } : new int[] { };
+    var showBetSetting = AuthorizationService.Instance.HasReadPermissionOnFunctions(LeftPanelProductIntegration.VisibleBetSettingPermissions.Values, userId) ? 1 : 0;
     var allowAdminEditSuperStatus = Newtonsoft.Json.JsonConvert.SerializeObject(admins, Newtonsoft.Json.Formatting.None, new Newtonsoft.Json.JsonSerializerSettings
     {
         ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
         NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
     });
-    var isUpdateCredit = AuthorizationHandler.Instance.HasUpdateCreditPermission(userId) ? 1 : 0;
-    var hasClose = AuthorizationHandler.Instance.HasCloseCustomerPermission(userId) ? 1 : 0;
-    var hasSuspend = AuthorizationHandler.Instance.HasSuspendCustomerPermission(userId) ? 1 : 0;
-    var allowAutoPT = AuthorizationHandler.Instance.HasAllowAutoMPTPermission(userId) ? 1 : 0;
-    var hasClearCredit = AuthorizationHandler.Instance.HasClearCreditPermission(userId) ? 1 : 0;
+    var isUpdateCredit = AuthorizationService.Instance.HasUpdateCreditPermission(userId) ? 1 : 0;
+    var hasClose = AuthorizationService.Instance.HasCloseCustomerPermission(userId) ? 1 : 0;
+    var hasSuspend = AuthorizationService.Instance.HasSuspendCustomerPermission(userId) ? 1 : 0;
+    var allowAutoPT = AuthorizationService.Instance.HasAllowAutoMPTPermission(userId) ? 1 : 0;
+    var hasClearCredit = AuthorizationService.Instance.HasClearCreditPermission(userId) ? 1 : 0;
     var enableKeno = AppSettings.EnableKeno ? 1 : 0;
     var showKenoSetting = AppSettings.ShowKenoSetting ? "true" : "false";
     var showGoldDeluxeSetting = AppSettings.IsShowGoldDeluxeSettingForCredit ? 1 : 0;
@@ -100,8 +101,7 @@
                     </ul>
                 </div>
                 <div id='accMenuGroup' style="visibility: visible; padding: 10px; float: right; width: 130px;">
-                    <select id="ddlGroupName" style="width: 130px; height: 400px;display: none;" >
-                    </select>
+                    <select id="ddlGroupName" style="width: 130px; height: 400px;display: none;"></select>
                 </div>
                 <div id="grpText" class="groupMenuTop">
                     @ViewLang.Group

@@ -1,6 +1,6 @@
 namespace Fanex.CustomerSetting.Module.BetSetting.Services.Interface
 {
-    using Fanex.CustomerSetting.Module.BetSetting.ViewModels;
+    using ViewModels;
 
     public interface ICustomerService
     {

@@ -1,7 +1,7 @@
 namespace Fanex.CustomerSetting.Module.BetSetting.ViewModels
 {
-    using Fanex.CustomerSetting.Module.Casino.Entities;
-    using Fanex.CustomerSetting.Module.Casino.ViewModels;
+    using Casino.Entities;
+    using Casino.ViewModels;
 
     public class CasinoModel
     {

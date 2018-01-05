@@ -4,14 +4,14 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
     using System.Collections.Generic;
     using System.Web.Mvc;
     using ExternalAccount.Core.Shared;
-    using Fanex.CustomerSetting.Module.BetSetting.Base;
-    using Fanex.CustomerSetting.Module.BetSetting.ViewModels;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.CustomerSetting.Security.Configurations;
-    using Fanex.LiveCasinoSetting;
-    using Fanex.LiveCasinoSetting.Model;
-    using Fanex.LiveCasinoSetting.Model.Log;
-    using Fanex.LiveCasinoSetting.Request;
+    using Base;
+    using ViewModels;
+    using Security.Authenticate;
+    using Security.Configurations;
+    using LiveCasinoSetting;
+    using LiveCasinoSetting.Model;
+    using LiveCasinoSetting.Model.Log;
+    using LiveCasinoSetting.Request;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using RemotingRef;
@@ -23,10 +23,10 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             var obj = Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as IAuthenticate;
             if (!obj.IsBelong(id, null, siteName))
             {
-                return this.ActionDenied(this.Request);
+                return ActionDenied(Request);
             }
 
-            return this.View("~/Areas/CustomerSetting/Views/BetSetting/LiveCasino/Index.cshtml");
+            return View("~/Areas/CustomerSetting/Views/BetSetting/LiveCasino/Index.cshtml");
         }
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "LiveCasinoBetting")]
@@ -34,9 +34,9 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
         {
             var customer = CustomerInfo(id, userId);
 
-            if (customer.RoleId.IsNotSuper() ||  !customer.SyncLiveCasino)
+            if (customer.RoleId.IsNotSuper() || !customer.SyncLiveCasino)
             {
-                return this.PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             ViewBag.Username = customer.Username;
@@ -44,10 +44,10 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             ViewBag.SyncBingo = customer.SyncBingo;
             ViewBag.SyncLiveCasino = customer.SyncLiveCasino;
             ViewBag.HideGoldDeluxe = customer.HideGoldDeluxe;
-            
-            IMemberWinLimit winLimit = this.MemberWinLimitService.GetMemberWinLimit(id);
-            List<GameType> bettingLimit = this.GameSettingService.GetByCustomerId(id);
-            CustomerInfo customerInfo = this.SettingService.GetCustomerInfo(id);
+
+            IMemberWinLimit winLimit = MemberWinLimitService.GetMemberWinLimit(id);
+            List<GameType> bettingLimit = GameSettingService.GetByCustomerId(id);
+            CustomerInfo customerInfo = SettingService.GetCustomerInfo(id);
 
             winLimit.IsDailyAutoReset = customerInfo.Limit.IsDailyAutoReset;
             winLimit.MaxWinLimit = customerInfo.Limit.MaxWinLimit;
@@ -57,7 +57,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
                 item.Name = RefData.GetBetTypeName(item.BetTypeId.ToString(), "en");
             });
 
-            return this.View(
+            return View(
                 "~/Areas/CustomerSetting/Views/BetSetting/LiveCasino/Content.cshtml",
                 new LiveCasinoModel
                 {
@@ -73,53 +73,53 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             var obj = Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as IAuthenticate;
             if (!obj.IsBelong(id, null, siteName))
             {
-                return this.ActionDenied(this.Request);
+                return ActionDenied(Request);
             }
 
-            Customer customer = this.CustomerInfo(id, userId);
+            Customer customer = CustomerInfo(id, userId);
             JsonSerializerSettings settings = new JsonSerializerSettings();
 
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            if (customer.RoleId.IsNotSuper() ||  !customer.SyncLiveCasino)
+            if (customer.RoleId.IsNotSuper() || !customer.SyncLiveCasino)
             {
-                return this.JsonBase(new { ErrorCode = 1, ErrorMessage = "You're not authorized on this function" }, settings);
+                return JsonBase(new { ErrorCode = 1, ErrorMessage = "You're not authorized on this function" }, settings);
             }
 
-            IRequestContext request = new Fanex.LiveCasinoSetting.Request.RequestContext
+            IRequestContext request = new RequestContext
             {
                 CustId = id,
                 IsEditSuper = true,
                 Language = "En",
                 SignUpIp = Request.UserHostAddress,
-                UplineId = uplineId, 
+                UplineId = uplineId,
                 UserId = userId
             };
 
             LiveCasinoModel model = JsonConvert.DeserializeObject<LiveCasinoModel>(txtCustomerObject);
-            Result resultWinLimit = this.MemberWinLimitService.UpdateMemberWinLimit(model.MemberWinLimit, request);  
-          
+            Result resultWinLimit = MemberWinLimitService.UpdateMemberWinLimit(model.MemberWinLimit, request);
+
             bool success = true;
-            string message = string.Empty;       
-     
+            string message = string.Empty;
+
             if (model.BettingLimits != null && model.BettingLimits.Count > 0)
             {
-                success = this.UpdateGameSetting(id, userId, model.BettingLimits);
+                success = UpdateGameSetting(id, userId, model.BettingLimits);
             }
 
             if (!success)
             {
-                return this.JsonBase(new { ErrorCode = "1", ErrorMessage = string.Join("<br />", resultWinLimit.ErrorMessage, message) }, settings);
+                return JsonBase(new { ErrorCode = "1", ErrorMessage = string.Join("<br />", resultWinLimit.ErrorMessage, message) }, settings);
             }
 
-            return this.JsonBase(resultWinLimit, settings);
+            return JsonBase(resultWinLimit, settings);
         }
 
         private bool UpdateGameSetting(int id, int userId, List<GameType> gameTypes)
         {
             InsertAccountRequest insertReq = new InsertAccountRequest { CustId = id, SuperId = id, UserId = userId, RoleId = Role.Super };
-            Dictionary<int, Result> resultBettingLimit = this.GameSettingService.UpdateGameSetting(5, gameTypes, insertReq);
+            Dictionary<int, Result> resultBettingLimit = GameSettingService.UpdateGameSetting(5, gameTypes, insertReq);
 
             bool success = true;
             string message = string.Empty;
@@ -135,8 +135,8 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
                 }
             }
 
-            List<GameType> oldSetting = this.GameSettingService.GetByCustomerId(id);
-            this.LogService.WriteLog(new LogUpdateStakeLevel(oldSetting, gameTypes, resultBettingLimit)
+            List<GameType> oldSetting = GameSettingService.GetByCustomerId(id);
+            LogService.WriteLog(new LogUpdateStakeLevel(oldSetting, gameTypes, resultBettingLimit)
             {
                 Action = LogActions.UpdateStakeLevel_Super,
                 ErrorCode = success ? string.Empty : "1",

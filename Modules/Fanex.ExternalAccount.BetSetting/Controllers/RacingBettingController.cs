@@ -4,11 +4,11 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
     using System.Collections;
     using System.Web.Mvc;
     using ExternalAccount.Core.Shared;
-    using Fanex.CustomerSetting.Module.BetSetting.Base;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.CustomerSetting.Security.Configurations;
-    using Fanex.PTRacing.BusinessObjects;
-    using Fanex.PTRacing.Services;
+    using Base;
+    using Security.Authenticate;
+    using Security.Configurations;
+    using PTRacing.BusinessObjects;
+    using PTRacing.Services;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -19,20 +19,20 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             var obj = Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as IAuthenticate;
             if (!obj.IsBelong(id, null, siteName))
             {
-                return this.ActionDenied(this.Request);
+                return ActionDenied(Request);
             }
 
-            return this.View("~/Areas/CustomerSetting/Views/BetSetting/Racing/Index.cshtml");
+            return View("~/Areas/CustomerSetting/Views/BetSetting/Racing/Index.cshtml");
         }
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "RacingBetting")]
         public ActionResult Content(int id, int uplineId, int userId, string siteName)
         {
-            var customer = this.CustomerInfo(id, userId);
+            var customer = CustomerInfo(id, userId);
 
             if (customer.RoleId.IsNotSuper())
             {
-                return this.PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             ViewBag.Username = customer.Username;
@@ -41,7 +41,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             ViewBag.SyncLiveCasino = customer.SyncLiveCasino;
             ViewBag.HideGoldDeluxe = customer.HideGoldDeluxe;
 
-            var bettingLimitService = this.RacingService;
+            var bettingLimitService = RacingService;
             var model = bettingLimitService.GetCustomer(new RequestContext
             {
                 CustId = uplineId,
@@ -58,7 +58,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
                 IP = HttpContext.Request.UserHostAddress
             });
 
-            return this.View("~/Areas/CustomerSetting/Views/BetSetting/Racing/Content.cshtml", model);
+            return View("~/Areas/CustomerSetting/Views/BetSetting/Racing/Content.cshtml", model);
         }
 
         [HttpPost]
@@ -68,10 +68,10 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             var obj = Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as IAuthenticate;
             if (!obj.IsBelong(id, null, siteName))
             {
-                return this.ActionDenied(this.Request);
+                return ActionDenied(Request);
             }
 
-            var customer = this.CustomerInfo(id, userId);
+            var customer = CustomerInfo(id, userId);
 
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
@@ -79,7 +79,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
             if (customer.RoleId.IsNotSuper())
             {
-                return this.JsonBase(new { ErrorCode = 1, ErrorMessage = "You're not authorized on this function" }, settings);
+                return JsonBase(new { ErrorCode = 1, ErrorMessage = "You're not authorized on this function" }, settings);
             }
 
             var newSetting = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
@@ -100,11 +100,11 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
                 IP = HttpContext.Request.UserHostAddress
             };
 
-            var bettingLimitService = this.RacingService;
+            var bettingLimitService = RacingService;
             var oldSetting = bettingLimitService.GetCustomer(requestContext);
             var result = bettingLimitService.SaveCustomer(oldSetting, newSetting, requestContext, new Hashtable());
 
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage }, settings);
+            return JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage }, settings);
         }
     }
 }

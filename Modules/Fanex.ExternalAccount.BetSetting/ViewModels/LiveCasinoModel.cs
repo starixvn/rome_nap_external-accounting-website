@@ -1,7 +1,7 @@
 namespace Fanex.CustomerSetting.Module.BetSetting.ViewModels
 {
     using System.Collections.Generic;
-    using Fanex.LiveCasinoSetting.Model;
+    using LiveCasinoSetting.Model;
 
     public class LiveCasinoModel
     {

@@ -1,6 +1,4 @@
-﻿using Fanex.ExternalAccount.Core.Context;
-
-namespace Fanex.ExternalAccount.Core.Base
+﻿namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
     using System.Collections.Generic;
@@ -11,6 +9,7 @@ namespace Fanex.ExternalAccount.Core.Base
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
+    using Authorization;
     using CasinoLibrary.Model.UserException;
     using CustomerSetting.IP.Utils;
     using CustomerSetting.Module.Core.Criteria;
@@ -27,8 +26,6 @@ namespace Fanex.ExternalAccount.Core.Base
     using RemotingRef;
     using Reports.WinLossDetail;
     using Service.Impl.Customer.Casino;
-    using Service.Impl.UserControl;
-    using Service.Interface.UserControl;
     using Utilities;
     using CurrentContext = Context.CurrentContext;
     using CurrentSession = Context.CurrentSession;
@@ -37,7 +34,6 @@ namespace Fanex.ExternalAccount.Core.Base
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class BaseController : Controller
     {
-
         protected const string SiteName = "ExtAcc";
 
         protected const int FromSystem = 3;
@@ -47,7 +43,7 @@ namespace Fanex.ExternalAccount.Core.Base
         private readonly ICurrentContext _currentContext;
 
         private readonly ICurrentSession _currentSession;
-        protected readonly AuthorizationHandler AuthorizationHandler = new AuthorizationHandler();
+        protected readonly AuthorizationService AuthorizationService = new AuthorizationService();
 
         protected BaseController()
         {
@@ -103,7 +99,7 @@ namespace Fanex.ExternalAccount.Core.Base
 
                 var cust = new CasinoLibrary.SBAgent.Customer();
 
-                if (AuthorizationHandler.IsAuthorized(
+                if (AuthorizationService.IsAuthorized(
                     CurrentSession.UserId,
                     eFunctions.CloseCustomer,
                     AuthenticateAction.AuthenticationType.Host))
@@ -117,7 +113,7 @@ namespace Fanex.ExternalAccount.Core.Base
                     return;
                 }
 
-                if (AuthorizationHandler.IsAuthorized(
+                if (AuthorizationService.IsAuthorized(
                     CurrentSession.UserId,
                     eFunctions.SuspendCustomer,
                     AuthenticateAction.AuthenticationType.Host))
@@ -137,7 +133,7 @@ namespace Fanex.ExternalAccount.Core.Base
             var cust = new CasinoLibrary.SBAgent.Customer();
             try
             {
-                if (AuthorizationHandler.IsAuthorized(
+                if (AuthorizationService.IsAuthorized(
                     CurrentSession.UserId,
                     eFunctions.CloseCustomer,
                     AuthenticateAction.AuthenticationType.Host))
@@ -146,7 +142,7 @@ namespace Fanex.ExternalAccount.Core.Base
                         CurrentSession.UserName, FromSystem);
                 }
 
-                if (AuthorizationHandler.IsAuthorized(
+                if (AuthorizationService.IsAuthorized(
                     CurrentSession.UserId,
                     eFunctions.SuspendCustomer,
                     AuthenticateAction.AuthenticationType.Host))
@@ -166,7 +162,7 @@ namespace Fanex.ExternalAccount.Core.Base
             var cust = new CasinoLibrary.SBAgent.Customer();
             try
             {
-                if (AuthorizationHandler.IsAuthorized(
+                if (AuthorizationService.IsAuthorized(
                     CurrentSession.UserId,
                     eFunctions.CloseCustomer,
                     AuthenticateAction.AuthenticationType.Host))
@@ -190,7 +186,7 @@ namespace Fanex.ExternalAccount.Core.Base
             var cust = new CasinoLibrary.SBAgent.Customer();
             try
             {
-                if (AuthorizationHandler.IsAuthorized(
+                if (AuthorizationService.IsAuthorized(
                     CurrentSession.UserId,
                     eFunctions.SuspendCustomer,
                     AuthenticateAction.AuthenticationType.Host))
@@ -247,7 +243,7 @@ namespace Fanex.ExternalAccount.Core.Base
                     continue;
                 }
 
-                if (!AuthorizationHandler.IsAuthorized(
+                if (!AuthorizationService.IsAuthorized(
                     CurrentSession.UserId,
                     eFunctions.ViewVNIP))
                 {

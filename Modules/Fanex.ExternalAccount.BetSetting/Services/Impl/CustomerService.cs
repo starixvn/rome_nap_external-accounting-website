@@ -1,9 +1,9 @@
 namespace Fanex.CustomerSetting.Module.BetSetting.Services.Impl
 {
-    using Fanex.CustomerSetting.Module.BetSetting.Repositories.Impl;
-    using Fanex.CustomerSetting.Module.BetSetting.Repositories.Interface;
-    using Fanex.CustomerSetting.Module.BetSetting.Services.Interface;
-    using Fanex.CustomerSetting.Module.BetSetting.ViewModels;
+    using Repositories.Impl;
+    using Repositories.Interface;
+    using Interface;
+    using ViewModels;
 
     public class CustomerService : ICustomerService
     {
@@ -13,7 +13,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Services.Impl
 
             return dao.UserInfo(custId);
         }
-        
+
         public int UserGroupId(int custId)
         {
             ICustomerDao dao = new CustomerDao();

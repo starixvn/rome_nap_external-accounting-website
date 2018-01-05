@@ -25,7 +25,7 @@
                 : _authenticationService.AllowUpdateByAuthenticationParam(enableFunction);
         }
 
-        private string MappingEnableStatus(int productId)
+        private static string MappingEnableStatus(int productId)
         {
             var enumName = Enum.GetName(typeof(EnableStatusProductFunction), productId);
 

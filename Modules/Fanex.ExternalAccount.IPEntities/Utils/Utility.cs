@@ -3,10 +3,9 @@ namespace Fanex.CustomerSetting.IP.Utils
     using System;
     using System.Configuration;
     using System.Data.EntityClient;
-    using System.Linq;
     using Fanex.Caching;
     using Fanex.Common;
-    
+
     public static class Utility
     {
         public static string GetEFConnectionString()
@@ -20,7 +19,7 @@ namespace Fanex.CustomerSetting.IP.Utils
                 var pwd = string.Empty;
                 var pwdPhrase = string.Empty;
 
-                for (int i = 0; i < pwds.Count(); i++)
+                for (int i = 0; i < pwds.Length; i++)
                 {
                     if (pwds[i].Contains("password"))
                     {

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using Core.Authorization;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.IP.Utils;
@@ -15,7 +16,7 @@
     {
         private const string DateTimeFormat = "M/d/yyyy H:mm tt";
         private const string ThisAccountWas = "This account was ";
-        public static readonly AuthorizationHandler AuthorizationHandler = new AuthorizationHandler();
+        public static readonly AuthorizationService AuthorizationService = new AuthorizationService();
 
         public static string GetOutstandingColumn(int roleId) => roleId.IsMember() ? "outstanding" : $"{roleId.DisplayRoleName()}PositionTaking";
 
@@ -137,7 +138,7 @@
                     },
                     new ObjectInfo {Value = Utils.ToDecimal(customerRow["credit"]), Text = "Given Credit"}
                 },
-                IsUpdateCredit = AuthorizationHandler.HasUpdateCreditPermission(CurrentSession.Instance.UserId)
+                IsUpdateCredit = AuthorizationService.HasUpdateCreditPermission(CurrentSession.Instance.UserId)
             };
 
 
@@ -169,7 +170,7 @@
         public static string CheckVNIP(string ip)
          => string.IsNullOrWhiteSpace(ip)
             || (IpUtils.IsVnIp(ip)
-                && !AuthorizationHandler.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP))
+                && !AuthorizationService.IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP))
                     ? string.Empty : ip;
 
         public static CustomerModel AddProductSetting(

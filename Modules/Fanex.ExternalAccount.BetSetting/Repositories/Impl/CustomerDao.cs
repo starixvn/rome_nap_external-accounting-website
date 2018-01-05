@@ -2,11 +2,11 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Repositories.Impl
 {
     using System.Collections;
     using System.Configuration;
-    using Fanex.Common.Extensions;
-    using Fanex.CustomerSetting.Module.BetSetting.Repositories.Interface;
-    using Fanex.CustomerSetting.Module.BetSetting.ViewModels;
-    using Fanex.CustomerSetting.Module.Core.Web;
-    using Fanex.Data;
+    using Common.Extensions;
+    using Interface;
+    using ViewModels;
+    using Core.Web;
+    using Data;
 
     public class CustomerDao : ICustomerDao
     {
@@ -42,7 +42,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Repositories.Impl
                             };
                         }
                     }
-                }                
+                }
             }
 
             return null;

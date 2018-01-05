@@ -15,7 +15,7 @@ namespace Fanex.CustomerSetting.IP.Utils
 
         public const string IpVnKey = "Fanex.CustomerSetting.IP.IpVnKey";
 
-        private static List<IPVN> ipVNList = null;
+        private static List<IPVN> ipVNList;
 
         public static bool IsVnIp(string ip)
         {
@@ -43,7 +43,7 @@ namespace Fanex.CustomerSetting.IP.Utils
         {
             using (IPEntities entities = new IPEntities(Utility.GetEFConnectionString()))
             {
-                List<IPTable> list = entities.GetIPInfo_Full(ip).ToList<IPTable>();
+                List<IPTable> list = entities.GetIPInfo_Full(ip).ToList();
                 if ((list != null) && (list.Count > 0))
                 {
                     return list[0];
@@ -58,7 +58,7 @@ namespace Fanex.CustomerSetting.IP.Utils
             double num = 0.0;
             if (IsValidIp(ip))
             {
-                string[] strArray = ip.Split(new char[] { '.' });
+                string[] strArray = ip.Split('.');
                 num = (((double.Parse(strArray[0]) * 16777216.0) + (double.Parse(strArray[1]) * 65536.0)) +
                     (double.Parse(strArray[2]) * 256.0)) + double.Parse(strArray[3]);
             }
@@ -70,14 +70,14 @@ namespace Fanex.CustomerSetting.IP.Utils
         {
             ICache cache = CacheService.CreateInstance(CacheType.MemoryCache);
             List<IPVN> objA = cache.Get<List<IPVN>>("Fanex.CustomerSetting.IP.IpVnKey");
-            if (object.ReferenceEquals(objA, null))
+            if (ReferenceEquals(objA, null))
             {
                 using (IPEntities entities = new IPEntities(Utility.GetEFConnectionString()))
                 {
-                    objA = (from s in entities.GetIPVN() select s).ToList<IPVN>();
+                    objA = (from s in entities.GetIPVN() select s).ToList();
                     if (objA.Count > 0)
                     {
-                        cache.Set<List<IPVN>>("Fanex.CustomerSetting.IP.IpVnKey", objA, TimeSpan.FromHours(1.0));
+                        cache.Set("Fanex.CustomerSetting.IP.IpVnKey", objA, TimeSpan.FromHours(1.0));
                     }
                 }
             }
@@ -93,8 +93,7 @@ namespace Fanex.CustomerSetting.IP.Utils
                 return false;
             }
 
-            Regex regex = new Regex(@"(?<First>2[0-4]\d|25[0-5]|[01]?\d\d?)\.(?<Second>2[0-4]\d|25[0-5]|[01]?\d\d?)\." +
-                @"(?<Third>2[0-4]\d|25[0-5]|[01]?\d\d?)\.(?<Fourth>2[0-4]\d|25[0-5]|[01]?\d\d?)");
+            Regex regex = new Regex(@"(?<First>2[0-4]\d|25[0-5]|[01]?\d\d?)\.(?<Second>2[0-4]\d|25[0-5]|[01]?\d\d?)\.(?<Third>2[0-4]\d|25[0-5]|[01]?\d\d?)\.(?<Fourth>2[0-4]\d|25[0-5]|[01]?\d\d?)");
             return regex.IsMatch(ip, 0);
         }
     }

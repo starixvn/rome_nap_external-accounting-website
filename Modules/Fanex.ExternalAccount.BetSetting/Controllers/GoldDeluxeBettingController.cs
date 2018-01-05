@@ -2,24 +2,20 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using AutoMapper;
+    using Base;
     using ExternalAccount.Core.Shared;
-    using Fanex.CustomerSetting.Module.BetSetting.Base;
-    using Fanex.CustomerSetting.Module.BetSetting.ViewModels;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.CustomerSetting.Security.Configurations;
-    using Fanex.GoldDeluxe.CoreSetting.CommandResult;
-    using Fanex.GoldDeluxe.CoreSetting.Enumerations;
-    using Fanex.GoldDeluxe.CoreSetting.ParameterObjects;
-    using Fanex.GoldDeluxe.CoreSetting.Services;
-    using Fanex.GoldDeluxe.CoreSetting.ViewModels;
-    using Fanex.GoldDeluxe.CoreSetting.Web.Filters;
+    using GoldDeluxe.CoreSetting.CommandResult;
+    using GoldDeluxe.CoreSetting.Enumerations;
+    using GoldDeluxe.CoreSetting.ParameterObjects;
+    using GoldDeluxe.CoreSetting.Services;
+    using GoldDeluxe.CoreSetting.ViewModels;
+    using Security.Authenticate;
+    using Security.Configurations;
 
     public class GoldDeluxeBettingController : BettingControllerBase
     {
-        private const string EditGameSettingPagePath = "~/Areas/GoldDeluxeSetting/Views/EditSetting/EditGameSetting.cshtml";
         private readonly ISettingService _settingService;
 
         public GoldDeluxeBettingController()
@@ -34,23 +30,25 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
         public ActionResult Index(int id, int uplineId, int userId, string siteName)
         {
-            var obj = Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as IAuthenticate;
+            var obj =
+                Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as
+                    IAuthenticate;
             if (!obj.IsBelong(id, null, siteName))
             {
-                return this.ActionDenied(this.Request);
+                return ActionDenied(Request);
             }
 
-            return this.View("~/Areas/CustomerSetting/Views/BetSetting/GoldDeluxe/Index.cshtml");
+            return View("~/Areas/CustomerSetting/Views/BetSetting/GoldDeluxe/Index.cshtml");
         }
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "GoldDeluxeBetting")]
         public ActionResult UpdateGameSetting(EditSettingViewModel model)
         {
-            Customer customer = this.CustomerInfo(model.CustId, model.ActorId);
+            var customer = CustomerInfo(model.CustId, model.ActorId);
 
             if (model.Level != CustomerLevel.Super || customer.HideGoldDeluxe)
             {
-                return this.JsonBase(new { ErrorCode = 1, ErrorMessage = "You're not authorized on this function" });
+                return JsonBase(new { ErrorCode = 1, ErrorMessage = "You're not authorized on this function" });
             }
 
             var param = Mapper.Map<EditSettingViewModel, UpdateGameSettingParameters>(model);
@@ -66,7 +64,6 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
         }
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "GoldDeluxeBetting")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed.")]
         public ActionResult Content(int custId,
             int upLineId,
             int level,
@@ -76,11 +73,11 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             string language = "E",
             FormType formType = FormType.ReadOnly)
         {
-            Customer customer = this.CustomerInfo(custId, actorId);
+            var customer = CustomerInfo(custId, actorId);
 
-            if (customer.RoleId.IsNotSuper() ||  customer.HideGoldDeluxe)
+            if (customer.RoleId.IsNotSuper() || customer.HideGoldDeluxe)
             {
-                return this.PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             ViewBag.Username = customer.Username;
@@ -104,7 +101,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             var param = Mapper.Map<EditSettingViewModel, GetSettingParameters>(model);
             model.Setting = _settingService.GetSetting(param);
 
-            return this.PartialView("~/Areas/CustomerSetting/Views/BetSetting/GoldDeluxe/Content.cshtml", model);
+            return PartialView("~/Areas/CustomerSetting/Views/BetSetting/GoldDeluxe/Content.cshtml", model);
         }
     }
 }

@@ -4,13 +4,14 @@
     using System.Text;
     using System.Web.Mvc;
     using System.Web.Security;
+    using Authorization;
     using CustomerSetting.Security.Authenticate;
     using Utilities;
 
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
     public class ExternalAccountAuthenticateAttribute : AuthorizeAttribute, IAuthenticate
     {
-        private readonly AuthorizationHandler authorization = new AuthorizationHandler();
+        private readonly AuthorizationService authorization = new AuthorizationService();
 
         public bool IsAjaxRequest { get; set; } = true;
 

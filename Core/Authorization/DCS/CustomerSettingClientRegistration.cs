@@ -12,7 +12,7 @@
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
-        private readonly AuthorizationHandler authorization = new AuthorizationHandler();
+        private readonly AuthorizationService authorization = new AuthorizationService();
 
 
         public override bool VerifyQueryPermission(PermissionContext permissionContext) =>
