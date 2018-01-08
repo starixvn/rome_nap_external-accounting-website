@@ -139,9 +139,11 @@ body {
         width: 398px;
         left: 0;
         padding-top: 16px;  
-        border-right: 1px solid #e0e1e4;  
-        background-color: #fff;
+        border-right: 1px solid #e0e1e4;          
         opacity: 1;
+         @media screen and (min-device-width: 768px) { 
+             background-color: #fff;
+         }
     }
 
     &.expand-leftpanel-mobile {        

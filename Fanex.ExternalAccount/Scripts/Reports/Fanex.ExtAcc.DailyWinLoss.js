@@ -281,7 +281,8 @@ Fanex.ExtAcc.DailyWinLoss = {
                     }
             ],
             columns: $this.defaultColumns,
-            numberOfFrozenColumn: 3,
+            numberOfFrozenColumn: isMobile.phone ? 2 : 3,
+            autoCalculateGridExpandHeight: true,
             showTitle: true,
             titleInfo: {
                 text: level + " Daily Win Loss on " + $('#dtpWinLossDate').val()

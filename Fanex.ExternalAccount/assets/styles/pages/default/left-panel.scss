@@ -19,6 +19,12 @@ body {
 
     a {
         color: #60a0ff;
+        &.icon-home {
+            color: #fff;
+            @media screen and (min-device-width: 767px) { 
+                color: #000;
+            }
+        }
 
         @media screen and (min-device-width: 767px) {
             color: $link-color;     
