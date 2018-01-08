@@ -31,7 +31,7 @@ Fanex.ExtAcc.Account = {
                 case 404:
                 case 500:
                     //if (!isLocal)
-                        //location.href = resolveClientUrl('Shared/Error');
+                    //location.href = resolveClientUrl('Shared/Error');
                     break;
                 default:
                     break;
@@ -97,8 +97,8 @@ Fanex.ExtAcc.Account = {
             if (!iconNav.hasClass('active')) {
                 sidebar.addClass("expand-sidebar").show("fast");
                 iconNav.addClass("active");
-                
-            } else { 
+
+            } else {
                 sidebar.show("fast", function () {
                     sidebar.removeClass("expand-sidebar");
                     iconNav.removeClass("active");
@@ -111,7 +111,7 @@ Fanex.ExtAcc.Account = {
             var menu = $(this);
             var submenu = $(this).siblings('.submenu');
 
-            if (!menu.hasClass('active')) { 
+            if (!menu.hasClass('active')) {
                 $(".submenu").slideUp('fast');
                 hasMenu.removeClass("active");
 
@@ -133,7 +133,8 @@ Fanex.ExtAcc.Account = {
 
         sidebar.fadeIn("fast", function () {
             sidebar.removeClass("expand-sidebar");
-            iconNav.removeClass("active"); 
+            iconNav.removeClass("active");
+            $("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
         });
     },
     GetValidateImage: function () {

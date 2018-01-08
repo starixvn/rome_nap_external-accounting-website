@@ -39,6 +39,7 @@
         leftPanel.fadeIn("fast", function () {
             leftPanel.removeClass("expand-leftpanel");
             iconUserInfo.removeClass("active");
+            top.$("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
         });
     };
 };
