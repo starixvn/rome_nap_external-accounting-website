@@ -250,7 +250,7 @@ Fanex.ExtAcc.User = {
                 Fanex.ExtAcc.User.options = {
                     columns: Fanex.ExtAcc.User.DataFields,
                     bodyRows: bodyRows,
-                    gridExpandHeight: 130,
+                    autoCalculateGridExpandHeight: true,
                     marginRight: 2,
                     showDistinctRow: false,
                     allowTruncate: true

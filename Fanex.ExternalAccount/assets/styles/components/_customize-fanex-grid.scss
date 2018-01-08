@@ -111,17 +111,33 @@
         line-height: 20px;
     }
     a:hover {
+        color: #fff;
+        background: #ff9900;
+
+    }
+    a.prev, a.next,  span.prev,  span.next {
+        font-size: 0;
         font-weight: normal;
-        color: #ff9900;
-        border: 1px solid #ccc;
-        background: #fff;
     }
     .current.prev, .current.next {
         background: #fff;
+        font-size: 0;
+        color: #616161;
+        font-weight: normal;
 
     }
-    a.next, a.prev {
+    .next, .prev {
         font-size: 0;
+        &:before {
+            font-size: 16px;
+            font-family: 'AlphaAdmin';
+        }
+    }
+    .next:before {
+        content: '\e906';
+    }
+    .prev:before {
+        content: '\e905';
     }
 }
 

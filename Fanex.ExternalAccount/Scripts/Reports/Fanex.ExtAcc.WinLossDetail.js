@@ -489,7 +489,10 @@ Fanex.ExtAcc.WinLossDetail = {
             customizeHeader: true,
             groupHeaderRows: [{ Columns: arrGroupHeaders }],
             columns: arrColData,
-            numberOfFrozenColumn: 3,
+            numberOfFrozenColumn: isMobile.phone ? 1 : 3,
+            autoCalculateGridExpandHeight: true,
+            fullHeight: !isMobile.phone,
+            gridHeight: isMobile.phone ? 400 : 0,
             showTitle: true,
             titleInfo: {
                 text: level + " Win Loss Detail " + dateInfo

@@ -170,7 +170,7 @@ Fanex.ExtAcc.Statement = {
     Render: function () {
         var gridOption = {
             columns: this.defaultColumns,
-            gridExpandHeight: 120,
+            autoCalculateGridExpandHeight: true,
             showPager: true,
             pagerOption: {
                 itemsPerPageArray: [100, 300, 500],

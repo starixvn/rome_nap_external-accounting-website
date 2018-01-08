@@ -1165,11 +1165,89 @@
     <Content Include="assets\styles\pages\account\login.min.css">
       <DependentUpon>login.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\customer\bet-limit.css">
+      <DependentUpon>bet-limit.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\bet-limit.min.css">
+      <DependentUpon>bet-limit.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\casino.css">
+      <DependentUpon>casino.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\casino.min.css">
+      <DependentUpon>casino.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\customer-setting.css">
+      <DependentUpon>customer-setting.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\customer-setting.min.css">
+      <DependentUpon>customer-setting.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\keno-setting.css">
+      <DependentUpon>keno-setting.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\keno-setting.min.css">
+      <DependentUpon>keno-setting.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\live-casino.css">
+      <DependentUpon>live-casino.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\live-casino.min.css">
+      <DependentUpon>live-casino.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\pt-engine.css">
+      <DependentUpon>pt-engine.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\pt-engine.min.css">
+      <DependentUpon>pt-engine.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\racing-setting.css">
+      <DependentUpon>racing-setting.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\racing-setting.min.css">
+      <DependentUpon>racing-setting.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\virtual-sport.css">
+      <DependentUpon>virtual-sport.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\virtual-sport.min.css">
+      <DependentUpon>virtual-sport.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\pages\default\common.css">
       <DependentUpon>common.scss</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\default\common.min.css">
       <DependentUpon>common.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\default\left-panel.css">
+      <DependentUpon>left-panel.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\default\left-panel.min.css">
+      <DependentUpon>left-panel.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\daily-winloss.css">
+      <DependentUpon>daily-winloss.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\daily-winloss.min.css">
+      <DependentUpon>daily-winloss.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\winloss-detail.css">
+      <DependentUpon>winloss-detail.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\winloss-detail.min.css">
+      <DependentUpon>winloss-detail.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\statement\guideline.css">
+      <DependentUpon>guideline.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\statement\guideline.min.css">
+      <DependentUpon>guideline.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\statement\statement.css">
+      <DependentUpon>statement.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\statement\statement.min.css">
+      <DependentUpon>statement.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\vendors\bootstrap.scss" />
     <Content Include="bootstrap\arrows-ffffff.png" />
@@ -2890,6 +2968,7 @@
     <Content Include="assets\styles\pages\customer\pt-engine.scss" />
     <Content Include="assets\styles\pages\statement\guideline.scss" />
     <Content Include="assets\styles\pages\statement\statement.scss" />
+    <Content Include="assets\styles\pages\reports\winloss-detail.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
