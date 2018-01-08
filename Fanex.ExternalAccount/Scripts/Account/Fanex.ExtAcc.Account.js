@@ -105,8 +105,7 @@ Fanex.ExtAcc.Account = {
                 });
             }
         });
-
-
+        
         hasMenu.on("click", function () {
             var menu = $(this);
             var submenu = $(this).siblings('.submenu');
@@ -125,6 +124,11 @@ Fanex.ExtAcc.Account = {
         });
 
         $(".submenu .link").on("click", this.collapseSidebar);
+
+        var widthDevice = $(window).width();
+        if (isMobile.phone || (widthDevice >= 768 && widthDevice <= 1300)) {
+            iconUserInfo.removeClass('active');
+        }
 
     },
     collapseSidebar: function () {
