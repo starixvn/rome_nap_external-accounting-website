@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
     using System.Data;
+    using Core.Authorization;
     using Core.Context;
     using Core.Shared;
     using ViewModels;
