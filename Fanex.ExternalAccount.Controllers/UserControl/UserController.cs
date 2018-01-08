@@ -372,7 +372,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                 url = Url.Content("~") + "Shared/NoPermission";
             }
 
-            return this.JsonBase(new { errorCode = 0, url = url });
+            return Redirect(url);
         }
 
         private string GetInternalLoginUrl(AlphaSiteCode siteCode)

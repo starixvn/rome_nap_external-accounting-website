@@ -20,7 +20,7 @@
     <title>Left panel</title>
     @*<link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />*@
     <link href="@Url.Content("~/assets/styles/fonts/AlphaAdmin/style.css?v=1")" rel="stylesheet" />
-    <link href="@Url.Content("~/assets/styles/pages/default/left-panel.css")" rel="stylesheet"/>
+    <link href="@Url.Content("~/assets/styles/pages/default/left-panel.css")" rel="stylesheet" />
 </head>
 <body>
     <div id="ng-app" data-ng-app="leftPanelApp" class="hide left-panel-container">
@@ -30,7 +30,7 @@
                 <div class="row" data-ng-repeat="person in personalInfo.downlines">
                     <div class="pull-left width-90">{{person.text}}</div>
                     <div class="pull-left detail bold" data-ng-click="ViewUser('{{person.value}}')">{{person.value}}</div>
-                    <span class="icon-home" data-ng-click="Login('{{person.value}}')"></span>
+                    <a class="floatRight home" href="~/User/InternalLogin/?username={{person.value}}" target="_blank"></a>
                 </div>
             </div>
             <div id="customerInfo" class="customer-info" data-ng-controller="PersonalInfoController" data-ng-hide="{{model==null}}">
@@ -74,7 +74,7 @@
             <div id="viewInfo" class="view-info" data-ng-controller="ViewInfoController" data-ng-hide="{{model==null}}">
                 <div id="btnCustList" data-ng-hide="{{personalInfo.roleId.value == 1}}" class="btn -list" data-ng-click="GetCustomerList(); collapseSidebar();">{{personalInfo.custList.value}}</div>
                 <div id="btnStatement" class="btn -green" data-ng-click="GetStatementList({{personalInfo.custId.value}}); collapseSidebar();">Statement</div>
-                <div id="btnBalance"data-ng-hide="{{personalInfo.roleId.value != 2}}" class="btn -special" data-ng-click="GetBalance({{personalInfo.custId.value}}); collapseSidebar();">Balance</div>
+                <div id="btnBalance" data-ng-hide="{{personalInfo.roleId.value != 2}}" class="btn -special" data-ng-click="GetBalance({{personalInfo.custId.value}}); collapseSidebar();">Balance</div>
             </div>
             <div id="balanceInfo" class="balance-info" data-ng-controller="BalanceDownlineInfoController" data-ng-hide="{{model==null}}">
                 <ul class="tabs nav-tabs">
