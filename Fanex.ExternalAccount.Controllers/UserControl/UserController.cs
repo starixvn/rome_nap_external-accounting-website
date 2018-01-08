@@ -350,7 +350,6 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [HttpPost]
         public ActionResult InternalLogin(string username)
         {
             var url = string.Empty;

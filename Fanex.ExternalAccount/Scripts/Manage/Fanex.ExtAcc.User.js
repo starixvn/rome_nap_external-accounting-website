@@ -160,7 +160,8 @@ Fanex.ExtAcc.User = {
             { HeaderText: 'Group Name', Name: 'GroupName', Width: 115 },
             { HeaderText: 'Creator', Name: 'Creator', Width: 120 },
             { HeaderText: 'Created Date', Name: 'CreatedDate', CellAlign: 'center', Width: 160 },
-            { HeaderText: 'Permission', Name: 'Permission', CellAlign: 'center', Width: 75,
+            {
+                HeaderText: 'Permission', Name: 'Permission', CellAlign: 'center', Width: 75,
                 CustomCellRender: function (cell) {
                     var userId = cell.Value.UserID;
                     var username = cell.Value.Username;
@@ -170,7 +171,8 @@ Fanex.ExtAcc.User = {
                     return '<div class="icon-clipboard-text" onclick="' + onclick + '"></div>';
                 }
             },
-            { HeaderText: 'Active', Name: 'Enabled', CellAlign: 'center', Width: 50,
+            {
+                HeaderText: 'Active', Name: 'Enabled', CellAlign: 'center', Width: 50,
                 CustomCellRender: function (cell) {
                     var style = cell.Value.Enabled == true ? "menuActive" : "menuInactive";
                     var userId = cell.Value.UserID;
@@ -180,7 +182,8 @@ Fanex.ExtAcc.User = {
                     return '<div id="' + userId + '" class="' + style + '" onclick="' + onclick + '"></div>';
                 }
             },
-            { HeaderText: 'Password', Name: 'ResetPwd', CellAlign: 'center', Width: 70,
+            {
+                HeaderText: 'Password', Name: 'ResetPwd', CellAlign: 'center', Width: 70,
                 CustomCellRender: function (cell) {
                     var style = "icon-refresh";
                     var userId = cell.Value.UserID;
@@ -210,13 +213,8 @@ Fanex.ExtAcc.User = {
             Fanex.ExtAcc.Form.Show(resolveClientUrl("User/AddExistUser"), $.parseJSON(menuTitles).CreateExistUser, 400, 200, false);
         });
 
-        Fanex.ExtAcc.OnResize = function () {
-            try {
-                $('#jqgrid').fanexGrid('resizeGrid');
-            }
-            catch (err) {
-            }
-        }
+        Fanex.ExtAcc.OnResize = $this.resizeReportGrid;
+        $(".icon-filter").click($this.showHideFilter);
     },
 
     RenderGrid: function (params) {
@@ -245,7 +243,7 @@ Fanex.ExtAcc.User = {
                         { Name: 'Permission', Value: rows[i] },
                         { Name: 'Enabled', Value: rows[i] },
                         { Name: 'ResetPwd', Value: rows[i] }
-                    ]
+                        ]
                     });
                 }
 
@@ -563,7 +561,7 @@ Fanex.ExtAcc.User = {
             Validators.show($('#confirmPwd').get(0), 'This field is required');
             return false;
         }
-        
+
         if ($('#confirmPwd').val() !== $('#Password').val()) {
             $('#confirmPwd').focus();
             Validators.show($('#confirmPwd').get(0), 'Confirm password is not matched');
@@ -635,5 +633,25 @@ Fanex.ExtAcc.User = {
         if (this.dataTexts) {
             this.RenderGrid(params);
         }
+    },
+
+    resizeReportGrid: function () {
+        try {
+            $("#jqgrid").fanexGrid("resizeGrid");
+        }
+        catch (err) { }
+    },
+    hideFilter: false,
+    showHideFilter: function () {
+        if ($this.hideFilter) {
+            $(".icon-filter").addClass("active");
+            $(".filterbox").removeClass("hide");
+        } else {
+            $(".icon-filter").removeClass("active");
+            $(".filterbox").addClass("hide");
+        }
+
+        $this.resizeReportGrid();
+        $this.hideFilter = !$this.hideFilter;
     }
 };
