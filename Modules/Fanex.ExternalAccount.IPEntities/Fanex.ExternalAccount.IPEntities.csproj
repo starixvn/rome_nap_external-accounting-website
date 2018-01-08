@@ -97,7 +97,7 @@
   <ItemGroup>
     <Compile Include="DAL\IPTable.cs" >
       <SonarQubeExclude>true</SonarQubeExclude>
-    </Compile>
+    </Compile> 
     <Compile Include="Format\ContextIPInfo.cs" >
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
