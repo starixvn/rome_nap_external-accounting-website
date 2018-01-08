@@ -4,16 +4,8 @@
     "inputFile": "assets/styles/pages/account/login.scss"
   },
   {
-    "outputFile": "assets/styles/vendors-extensions/bootstrap-ex.css",
-    "inputFile": "assets/styles/vendors-extensions/bootstrap-ex.scss"
-  },
-  {
     "outputFile": "assets/styles/pages/account/external-group.css",
     "inputFile": "assets/styles/pages/account/external-group.scss"
-  },
-  {
-    "outputFile": "assets/styles/base/roboto-fonts.css",
-    "inputFile": "assets/styles/base/roboto-fonts.scss"
   },
   {
     "outputFile": "assets/styles/pages/default/common.css",

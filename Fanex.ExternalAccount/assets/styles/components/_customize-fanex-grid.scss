@@ -116,5 +116,12 @@
         border: 1px solid #ccc;
         background: #fff;
     }
+    .current.prev, .current.next {
+        background: #fff;
+
+    }
+    a.next, a.prev {
+        font-size: 0;
+    }
 }
 
