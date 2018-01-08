@@ -103,7 +103,7 @@
     </Compile>
     <Compile Include="Format\IContextIPInfo.cs" >
      <SonarQubeExclude>true</SonarQubeExclude>
-    </Compile>
+    </Compile> 
     <Compile Include="Format\IPFormat.cs" >
       <SonarQubeExclude>true</SonarQubeExclude>
       </Compile>
