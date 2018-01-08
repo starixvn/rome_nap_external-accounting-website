@@ -89,8 +89,26 @@
 
 
 #pagination {
+    font-size: 12px;
     .numberlist {
         border: none;
+        ul li.sep {
+            background: none;
+            .current {
+                background: #6f7d95;
+                color: #fff;
+                font-weight: normal;
+            }
+        }
+    }
+    a, span {
+        padding: 2px 6px;
+    }
+    a:hover {
+        font-weight: normal;
+        color: #ff9900;
+        border: 1px solid #ccc;
+        background: #fff;
     }
 }
 
