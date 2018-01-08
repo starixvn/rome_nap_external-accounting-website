@@ -294,22 +294,54 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\ModuleRegistrator.cs" />
-    <Compile Include="Base\BettingControllerBase.cs" />
-    <Compile Include="Controllers\CasinoBettingController.cs" />
-    <Compile Include="Controllers\GoldDeluxeBettingController.cs" />
-    <Compile Include="Controllers\KenoBettingController.cs" />
-    <Compile Include="Controllers\LiveCasinoBettingController.cs" />
-    <Compile Include="Controllers\RacingBettingController.cs" />
-    <Compile Include="Controllers\SportsbookController.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\Impl\CustomerDao.cs" />
-    <Compile Include="Repositories\Interface\ICustomerDao.cs" />
-    <Compile Include="Services\Impl\CustomerService.cs" />
-    <Compile Include="Services\Interface\ICustomerService.cs" />
-    <Compile Include="ViewModels\CasinoModel.cs" />
-    <Compile Include="ViewModels\Customer.cs" />
-    <Compile Include="ViewModels\LiveCasinoModel.cs" />
+    <Compile Include="App_Start\ModuleRegistrator.cs" >
+		<SonarQubeExclude>true</SonarQubeExclude>
+	</Compile>
+    <Compile Include="Base\BettingControllerBase.cs" >
+		<SonarQubeExclude>true</SonarQubeExclude>
+	</Compile>
+    <Compile Include="Controllers\CasinoBettingController.cs" >
+		<SonarQubeExclude>true</SonarQubeExclude>
+	</Compile>
+    <Compile Include="Controllers\GoldDeluxeBettingController.cs" >
+		<SonarQubeExclude>true</SonarQubeExclude>
+	</Compile>
+    <Compile Include="Controllers\KenoBettingController.cs" >
+		<SonarQubeExclude>true</SonarQubeExclude>
+	</Compile>
+    <Compile Include="Controllers\LiveCasinoBettingController.cs" >
+		<SonarQubeExclude>true</SonarQubeExclude>
+	</Compile>
+    <Compile Include="Controllers\RacingBettingController.cs" >
+		<SonarQubeExclude>true</SonarQubeExclude>
+	</Compile>
+    <Compile Include="Controllers\SportsbookController.cs" >
+		<SonarQubeExclude>true</SonarQubeExclude>
+	</Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" >
+		<SonarQubeExclude>true</SonarQubeExclude>
+	</Compile>
+    <Compile Include="Repositories\Impl\CustomerDao.cs" >
+		<SonarQubeExclude>true</SonarQubeExclude>
+	</Compile>
+    <Compile Include="Repositories\Interface\ICustomerDao.cs" >
+		<SonarQubeExclude>true</SonarQubeExclude>
+	</Compile>
+    <Compile Include="Services\Impl\CustomerService.cs" >
+		<SonarQubeExclude>true</SonarQubeExclude>
+	</Compile>
+    <Compile Include="Services\Interface\ICustomerService.cs" >
+		<SonarQubeExclude>true</SonarQubeExclude>
+	</Compile>
+    <Compile Include="ViewModels\CasinoModel.cs" >
+		<SonarQubeExclude>true</SonarQubeExclude>
+	</Compile>
+    <Compile Include="ViewModels\Customer.cs" >
+		<SonarQubeExclude>true</SonarQubeExclude>
+	</Compile>
+    <Compile Include="ViewModels\LiveCasinoModel.cs" >
+		<SonarQubeExclude>true</SonarQubeExclude>
+	</Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Criteria\" />
