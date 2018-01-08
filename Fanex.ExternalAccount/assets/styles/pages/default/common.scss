@@ -363,6 +363,12 @@ body {
     }
 }
 
+.filter-user .icon-filter {
+    position: unset;
+    right: unset;
+    margin-right: 8px;
+}
+
 .icon-add {
     @include border-radius(10px);
     width: 16px;
