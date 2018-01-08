@@ -28,16 +28,8 @@
     "inputFile": "assets/styles/pages/reports/daily-winloss.scss"
   },
   {
-    "outputFile": "assets/styles/pages/reports/report.css",
-    "inputFile": "assets/styles/pages/reports/report.scss"
-  },
-  {
     "outputFile": "assets/styles/pages/default/left-panel.css",
     "inputFile": "assets/styles/pages/default/left-panel.scss"
-  },
-  {
-    "outputFile": "assets/styles/pages/customer/customer.css",
-    "inputFile": "assets/styles/pages/customer/customer.scss"
   },
   {
     "outputFile": "assets/styles/pages/customer/keno-setting.css",
@@ -78,9 +70,5 @@
   {
     "outputFile": "assets/styles/pages/statement/guideline.css",
     "inputFile": "assets/styles/pages/statement/guideline.scss"
-  },
-  {
-    "outputFile": "Scripts/_Libs/tablesorter/tablesorter.css",
-    "inputFile": "Scripts/_Libs/tablesorter/tablesorter.scss"
   }
 ]

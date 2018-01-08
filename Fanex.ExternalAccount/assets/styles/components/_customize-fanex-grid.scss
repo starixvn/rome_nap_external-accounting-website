@@ -92,6 +92,7 @@
     font-size: 12px;
     .numberlist {
         border: none;
+        margin-top: 3px;
         ul li.sep {
             background: none;
             .current {
@@ -102,7 +103,12 @@
         }
     }
     a, span {
-        padding: 2px 6px;
+        padding: 0;
+        width: 20px;
+        height: 20px;
+        box-sizing: border-box;
+        text-align: center;
+        line-height: 20px;
     }
     a:hover {
         font-weight: normal;
