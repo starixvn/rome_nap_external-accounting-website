@@ -19,7 +19,7 @@
         public FilterController(IReportService reportService, AuthorizationService authorizationService)
         {
             this.reportService = reportService ?? new ReportService();
-            this.authorizationService = authorizationService ?? new AuthorizationService();
+            this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
         }
 
         public FilterController() : this(null, null)

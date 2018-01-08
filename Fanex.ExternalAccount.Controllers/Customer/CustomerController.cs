@@ -40,7 +40,7 @@
     {
         private const string DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt";
         private readonly AgentService _agentService = new AgentService();
-        private readonly AuthorizationService _authorization = new AuthorizationService();
+        private readonly AuthorizationService _authorization = new AuthorizationServiceImpl();
         private readonly CustomerService _customerService = new CustomerService();
         private readonly PTEngine.Services.ICustomerService ptCustomerService = new PTEngine.Services.CustomerService();
         private readonly MasterService _masterService = new MasterService();

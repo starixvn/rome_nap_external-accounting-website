@@ -43,7 +43,7 @@
         private readonly ICurrentContext _currentContext;
 
         private readonly ICurrentSession _currentSession;
-        protected readonly AuthorizationService AuthorizationService = new AuthorizationService();
+        protected readonly AuthorizationService AuthorizationService = new AuthorizationServiceImpl();
 
         protected BaseController()
         {

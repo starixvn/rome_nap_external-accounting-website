@@ -1,6 +1,7 @@
 ﻿@using Fanex.CustomerSetting.Module.Core
 @using Fanex.ExternalAccount.Core.Shared
 @using Fanex.ExternalAccount.Module.LeftPanel.Extensions
+@using Fanex.ExternalAccount.Module.LeftPanel.Services
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
 
@@ -17,7 +18,7 @@
         NullValueHandling = NullValueHandling.Ignore
     });
 
-    var productStatus = CustomerStatusExtensions.GetCustomerStatus(
+    var productStatus = new CustomerStatusServiceImpl().GetCustomerStatus(
                 userId,
                 siteName.ToString(),
                 cust.Username,

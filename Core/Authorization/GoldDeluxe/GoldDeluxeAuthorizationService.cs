@@ -11,7 +11,7 @@
         private readonly ExternalAccountAuthenticateAttribute _authenticationService =
             new ExternalAccountAuthenticateAttribute();
 
-        private readonly AuthorizationService _authorization = new AuthorizationService();
+        private readonly AuthorizationService _authorization = new AuthorizationServiceImpl();
 
         public bool IsAuthorizedRead(AuthorizationContext authorizationContext, int custId) =>
             _authenticationService.AllowReadByAuthenticationParam(eFunctions.UpdateGoldDeluxe)

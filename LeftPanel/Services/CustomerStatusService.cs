@@ -1,28 +1,57 @@
-﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services
 {
     using System.Data;
-    using Core.Context;
     using Core.Shared;
     using CustomerSetting.Module.Keno.KenoSetting.Configurations;
-    using Service.Impl.Customer;
+    using Fanex.ExternalAccount.Core.Authorization;
+    using Fanex.ExternalAccount.Service.Impl.Customer;
+    using Fanex.ExternalAccount.Service.Interface.Customer;
     using Service.Impl.Report;
+    using Service.Interface.Report;
     using Utilities;
     using ViewModels;
 
-    public static class CustomerStatusExtensions
+    public interface CustomerStatusService
     {
-        public static CustomerStatus GetCustomerStatus(int userId, string groupName, string username, int uplineId = 0)
+        CustomerStatus GetCustomerStatus(int userId, string groupName, string username, int uplineId = 0);
+    }
+
+    public class CustomerStatusServiceImpl : CustomerStatusService
+    {
+        private readonly IReportService reportService;
+        private readonly ISuperService superService;
+        private readonly IMasterService masterService;
+        private readonly IAgentService agentService;
+        private readonly IMemberService memberService;
+        private readonly AuthorizationService authorizationService;
+
+        public CustomerStatusServiceImpl(
+            IReportService reportService = null,
+            ISuperService superService = null,
+            IMasterService masterService = null,
+            IAgentService agentService = null,
+            IMemberService memberService = null,
+            AuthorizationService authorizationHandler = null)
         {
-            var report = new ReportService();
-            var customerInfo = report.GetCustomerInfo(groupName, 0, username, true);
+            this.reportService = reportService ?? new ReportService();
+            this.superService = superService ?? new SuperService();
+            this.masterService = masterService ?? new MasterService();
+            this.agentService = agentService ?? new AgentService();
+            this.memberService = memberService ?? new MemberService();
+            this.authorizationService = authorizationHandler ?? new AuthorizationServiceImpl();
+        }
+
+        public CustomerStatus GetCustomerStatus(int userId, string groupName, string username, int uplineId = 0)
+        {
+            var customerInfo = reportService.GetCustomerInfo(groupName, 0, username, true);
 
             if (customerInfo != null)
             {
                 var infoRow = customerInfo.Rows[0];
-                DataTable custData = null;
+                DataTable custData;
 
                 var upperInfo = uplineId != 0
-                    ? report.GetCustomerInfo(groupName, uplineId, null, true)
+                    ? reportService.GetCustomerInfo(groupName, uplineId, null, true)
                     : null;
                 var roleId = Utils.ToInt32(infoRow["roleid"]);
                 var srecommend = Utils.ToInt32(infoRow["srecommend"]);
@@ -32,31 +61,32 @@
 
                 if (roleId.IsSuper())
                 {
-                    custData = new SuperService().GetData(userId, custId, groupName: groupName);
+                    custData = superService.GetData(userId, custId, groupName: groupName);
                 }
                 else if (roleId.IsMaster())
                 {
-                    custData = new MasterService().GetData(userId, srecommend, custId);
-                    upperInfo = new SuperService().GetData(userId, uplineId, groupName: groupName);
+                    custData = masterService.GetData(userId, srecommend, custId);
+                    upperInfo = superService.GetData(userId, uplineId, groupName: groupName);
                 }
                 else if (roleId.IsAgent())
                 {
-                    custData = new AgentService().GetData(userId, mrecommend, custId);
-                    upperInfo = new MasterService().GetData(userId, srecommend, uplineId);
+                    custData = agentService.GetData(userId, mrecommend, custId);
+                    upperInfo = masterService.GetData(userId, srecommend, uplineId);
                 }
                 else
                 {
-                    custData = new MemberService().GetData(userId, recommend, custId);
-                    upperInfo = new AgentService().GetData(userId, mrecommend, uplineId);
+                    custData = memberService.GetData(userId, recommend, custId);
+                    upperInfo = agentService.GetData(userId, mrecommend, uplineId);
                 }
 
-                return GetCustStatus(roleId, custData, upperInfo);
+                return GetCustStatus(userId, roleId, custData, upperInfo);
             }
 
             return null;
         }
 
-        private static CustomerStatus GetCustStatus(
+        private CustomerStatus GetCustStatus(
+            int userId,
             int roleId,
             DataTable result,
             DataTable upperInfo)
@@ -72,7 +102,6 @@
                 return custStatus;
             }
 
-            var athenticationService = new ExternalAccountAuthenticateAttribute();
             var statusRow = result.Rows[0];
 
             SetNonProductStatus(roleId, custStatus, statusRow);
@@ -82,7 +111,7 @@
             SetLiveCasinoStatus(custStatus, statusRow);
             SetVirtualSportsStatus(custStatus, statusRow);
             SetKenoStatus(custStatus, statusRow);
-            SetEsportsStatus(custStatus, athenticationService, statusRow);
+            SetEsportsStatus(custStatus, userId, statusRow);
             SetSportsbook2Status(custStatus, statusRow);
             SetCockfightingStatus(custStatus, statusRow);
             SetCricketStatus(custStatus, statusRow);
@@ -144,10 +173,12 @@
             custStatus.DisableCasino = statusRow.ToBoolean("disableCasino");
         }
 
-        private static void SetEsportsStatus(CustomerStatus custStatus,
-            ExternalAccountAuthenticateAttribute athenticationService, DataRow statusRow)
+        private void SetEsportsStatus(
+            CustomerStatus custStatus,
+            int userId,
+            DataRow statusRow)
         {
-            custStatus.HideEsports = !athenticationService.AllowReadByAuthenticationParam(eFunctions.ShowEnableEsports)
+            custStatus.HideEsports = !authorizationService.IsAuthorized(userId, eFunctions.ShowEnableEsports)
                                      || AppSettings.HideEsports;
             custStatus.DisableESports = statusRow.ToBoolean("DisableESports");
         }

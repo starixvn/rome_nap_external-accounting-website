@@ -8,13 +8,13 @@
     using Core.Context;
     using CustomerSetting.Security.Authenticate;
     using Extensions;
+    using Fanex.ExternalAccount.Core.Shared;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using PTRacing.BusinessObjects;
     using PTRacing.Services;
     using Service.Impl.Customer.Casino;
     using Services;
-    using Fanex.ExternalAccount.Core.Shared;
     using Utilities;
     using ViewModels;
     using Result = DTO.Result;
@@ -28,8 +28,9 @@
         private const string LeftpanelBalanceIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/Balance/Index.cshtml";
         private const string LeftPanelOtpIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/OTP/Index.cshtml";
 
-        private readonly LeftPanelService _service = new LeftPanelServiceImpl();
+        private readonly CustomerQueryService _service = new CustomerQueryServiceImpl();
         private readonly ICustomerService customerService = new CustomerService();
+        private readonly CustomerCommandService customerCommandService = new CustomerCommandServiceImpl();
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -50,12 +51,10 @@
                 return RedirectToAction("NoPermission", "Shared");
             }
 
-            var customerInfo = _service.GetCustomerInfo(
+            var customerInfo = _service.SearchCustomer(
                 userId,
                 custName,
                 uplineId);
-
-            customerInfo?.RemoveNotSupportedProduct(userId, uplineId, custName);
 
             return View(LeftPanelIndexView, customerInfo);
         }
@@ -65,7 +64,7 @@
         [AntiXSRFFilter]
         public ActionResult UpdateGivenCreditPost(int custId, int uplineId, decimal newGivenCredit)
         {
-            var model = _service.UpdateGivenCredit(custId, uplineId, newGivenCredit);
+            var model = customerCommandService.UpdateGivenCredit(custId, uplineId, newGivenCredit);
 
             return JsonBase(model);
         }
@@ -101,7 +100,7 @@
         [AntiXSRFFilter]
         public ActionResult ResetMemberCredit(int agentId, bool closedOnly)
         {
-            var result = _service.ResetMemberCredit(CurrentSession.UserId, agentId, closedOnly);
+            var result = customerCommandService.ResetMemberCredit(CurrentSession.UserId, agentId, closedOnly);
             return JsonBase(result);
         }
 
@@ -110,7 +109,7 @@
         [AntiXSRFFilter]
         public ActionResult UpdateClearBalance(int custId, string custIds, bool isCheckedAll)
         {
-            var result = _service.CustomerInsertClearBalance(custId, custIds, isCheckedAll, CurrentContext.Ip4Address);
+            var result = customerCommandService.CustomerInsertClearBalance(custId, custIds, isCheckedAll, CurrentContext.Ip4Address);
             return JsonBase(result);
         }
 
@@ -119,7 +118,7 @@
         public ActionResult SelectClearBalance(int custId)
         {
             ViewBag.CustId = custId;
-            var result = _service.CustomerSelectClearBalance(custId);
+            var result = customerCommandService.CustomerSelectClearBalance(custId);
             return PartialViewBase(result, LeftpanelBalanceIndexView);
         }
 
@@ -141,7 +140,7 @@
                 UpdateCasinoClosed(custId, close);
             }
 
-            return JsonBase(_service.CloseCutomer(custId, close, clearCredit, custName));
+            return JsonBase(customerCommandService.CloseCutomer(custId, close, clearCredit, custName));
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer,
@@ -156,20 +155,20 @@
                 UpdateCasinoSuspended(custId, suspend);
             }
 
-            return JsonBase(_service.SuspendCustomer(custId, suspend));
+            return JsonBase(customerCommandService.SuspendCustomer(custId, suspend));
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.AllowOutright,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateOutright(int custId, bool allow) =>
-            JsonBase(_service.AllowOutright(custId, allow));
+            JsonBase(customerCommandService.AllowOutright(custId, allow));
 
         [ExternalAccountAuthenticate(Function = eFunctions.AllowAutoMPT,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateAutoMPT(int custId, bool allow, int uplineId) =>
-            JsonBase(_service.AutoMasterPt(custId, allow, uplineId));
+            JsonBase(customerCommandService.AutoMasterPt(custId, allow, uplineId));
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableCasino,
             Policy = AuthenticateAction.AuthenticationType.Host)]
@@ -179,7 +178,7 @@
             try
             {
                 var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-                return JsonBase(_service.EnableCasino(custId, enable, enableDownline, casinoCustomer.CasinoSync,
+                return JsonBase(customerCommandService.EnableCasino(custId, enable, enableDownline, casinoCustomer.CasinoSync,
                     custName));
             }
             catch (Exception ex)
@@ -197,19 +196,19 @@
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateESports(int custId, bool enable, bool enableDownline)
-            => JsonBase(_service.EnableESports(custId, enable, enableDownline));
+            => JsonBase(customerCommandService.EnableESports(custId, enable, enableDownline));
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableNumberGame,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateNumberGame(int custId, bool enable, bool enableDownline) =>
-            JsonBase(_service.EnableNumberGame(custId, enable, enableDownline));
+            JsonBase(customerCommandService.EnableNumberGame(custId, enable, enableDownline));
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableLiveCasino,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateLiveCasino(int custId, bool enable, bool enableDownline) =>
-            JsonBase(_service.EnableLiveCasino(custId, enable, enableDownline));
+            JsonBase(customerCommandService.EnableLiveCasino(custId, enable, enableDownline));
 
         public ActionResult GetRacingData(int id, int uplineId, int roleId)
         {
@@ -298,7 +297,7 @@
         [AntiXSRFFilter]
         public ActionResult UpdateSecurityCode(int custId, string code, bool force, int roleId = 2)
         {
-            var result = _service.UpdateSecurityCode(custId, code, force, roleId);
+            var result = customerCommandService.UpdateSecurityCode(custId, code, force, roleId);
 
             return JsonBase(result);
         }
@@ -309,7 +308,7 @@
         [AntiXSRFFilter]
         public ActionResult UpdateHRFixedOdds(int id, bool enable, bool enableDownline)
         {
-            var result = _service.EnableHrFixedOdds(id, enable, enableDownline);
+            var result = customerCommandService.EnableHrFixedOdds(id, enable, enableDownline);
 
             return JsonBase(result);
         }
@@ -370,7 +369,7 @@
         {
             try
             {
-                return JsonBase(_service.UpdateGoldDeluxe(custId, enable, enableDownline, custName,
+                return JsonBase(customerCommandService.UpdateGoldDeluxe(custId, enable, enableDownline, custName,
                     CurrentSession.CustId));
             }
             catch (Exception ex)
@@ -392,7 +391,7 @@
         [AntiXSRFFilter]
         public ActionResult RemoveOTP(int custId)
         {
-            var result = _service.RemoveOtp(custId);
+            var result = customerCommandService.RemoveOtp(custId);
             return JsonBase(result);
         }
     }

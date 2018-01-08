@@ -7,7 +7,7 @@
 
     public class KenoAuthorizationService : IKenoAuthorizationService
     {
-        private readonly AuthorizationService authorization = new AuthorizationService();
+        private readonly AuthorizationService authorization = new AuthorizationServiceImpl();
 
         public bool IsAuthorizedRead(AuthorizationContext authorizationContext) => authorization.IsBelong();
 

@@ -1,8 +1,4 @@
-﻿using System.Configuration;
-using System.Web.Configuration;
-using System.Web.Security;
-
-namespace Fanex.ExternalAccount
+﻿namespace Fanex.ExternalAccount
 {
     using System;
     using System.Collections.Generic;
@@ -22,6 +18,10 @@ namespace Fanex.ExternalAccount
     using ONEbook.UM.Filters;
     using Sunplus.Libraries.APILogger;
     using Utilities;
+    using System.Configuration;
+    using System.Web.Configuration;
+    using System.Web.Security;
+
 
     public class MvcApplication : HttpApplication
     {
@@ -82,7 +82,7 @@ namespace Fanex.ExternalAccount
 
         protected void Application_Start()
         {
-            SetDynamicAuthenticationCookieName();
+            //SetDynamicAuthenticationCookieName();
 
             AreaRegistration.RegisterAllAreas();
             CustomerSettingRegistration.Init();

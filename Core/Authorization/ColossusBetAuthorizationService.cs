@@ -7,7 +7,7 @@
 
     public class ColossusBetAuthorizationService : IColossusBetAuthorizationService
     {
-        private readonly AuthorizationService authorization = new AuthorizationService();
+        private readonly AuthorizationService authorization = new AuthorizationServiceImpl();
 
         public bool IsAuthorizedRead(AuthorizationContext authorizationContext) => authorization.IsBelong();
 

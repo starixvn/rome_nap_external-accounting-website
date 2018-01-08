@@ -6,22 +6,11 @@
     
     public class ModuleRegistrator : AppAreaRegistrator 
     {
-        protected string ControllerName
-        {
-            get
-            {
-                return "LeftPanel";
-            }
-        }
+        protected static string ControllerName => "LeftPanel";
 
-        protected string ControllerNameSpace
-        {
-            get
-            {
-                var controllerNameSpace = Assembly.GetExecutingAssembly().GetName().Name + ".Controllers";
-                return controllerNameSpace;
-            }
-        }
+#pragma warning disable S3902 // "Assembly.GetExecutingAssembly" should not be called
+        protected static string ControllerNameSpace => Assembly.GetExecutingAssembly().GetName().Name + ".Controllers";
+#pragma warning restore S3902 // "Assembly.GetExecutingAssembly" should not be called
 
         public override void RegisterArea(AreaRegistrationContext context)
         {

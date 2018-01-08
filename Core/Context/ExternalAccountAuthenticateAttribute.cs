@@ -11,7 +11,7 @@
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
     public class ExternalAccountAuthenticateAttribute : AuthorizeAttribute, IAuthenticate
     {
-        private readonly AuthorizationService authorization = new AuthorizationService();
+        private readonly AuthorizationService authorization = new AuthorizationServiceImpl();
 
         public bool IsAjaxRequest { get; set; } = true;
 

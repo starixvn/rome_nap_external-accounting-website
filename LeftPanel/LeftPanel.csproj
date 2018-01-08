@@ -193,28 +193,23 @@
     <Compile Include="Controllers\SearchCustomerController.cs" />
     <Compile Include="Controllers\UpdateCustomerController.cs" />
     <Compile Include="Criteria\RemoveOTPCriteria.cs" />
-    <Compile Include="Extensions\CustomerStatusExtensions.cs" />
-    <Compile Include="Extensions\DisableSettingExtensions.cs" />
     <Compile Include="Extensions\Extensions.cs" />
-    <Compile Include="Extensions\MemberModelExtensions.cs" />
-    <Compile Include="Extensions\AgentModelExtensions.cs" />
-    <Compile Include="Extensions\MasterModelExtensions.cs" />
-    <Compile Include="Extensions\CustomerModelExtensions.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
     <Compile Include="LeftPanelProductIntegration.cs" />
-    <Compile Include="Extensions\RemovingSettingExtensions.cs" />
-    <Compile Include="Extensions\SuperModelExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\ProductSettingParam.cs" />
     <Compile Include="Models\ProductStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\LeftPanelDaoImpl.cs" />
     <Compile Include="Repositories\LeftPanelDao.cs" />
+    <Compile Include="Services\Customers\AgentQueryServiceImpl.cs" />
     <Compile Include="Services\CustomerCommandService.cs" />
-    <Compile Include="Services\CustomerQueryService.cs" />
-    <Compile Include="Services\LeftPanelServiceImpl.cs" />
-    <Compile Include="Services\LeftPanelService.cs" />
+    <Compile Include="Services\Customers\CustomerInfoQueryService.cs" />
+    <Compile Include="Services\Customers\MasterQueryServiceImpl.cs" />
+    <Compile Include="Services\Customers\MemberQueryServiceImpl.cs" />
+    <Compile Include="Services\Customers\CustomerQueryServiceFactory.cs" />
+    <Compile Include="Services\Customers\SuperQueryServiceImpl.cs" />
+    <Compile Include="Services\CustomerQueryServiceImpl.cs" />
+    <Compile Include="Services\CustomerStatusService.cs" />
     <Compile Include="ViewModels\BalanceInfo.cs" />
     <Compile Include="ViewModels\BasicInfo.cs" />
     <Compile Include="ViewModels\CustomerModel.cs" />
