@@ -155,8 +155,8 @@
             {
                 foreach (var product in filterParams)
                 {
-                    if (item.ProductId != 0 && product.Key.Equals(item.Id, StringComparison.OrdinalIgnoreCase) &&
-                        product.Value)
+                    if (item.ProductId != 0 && product.Key.Equals(item.Id, StringComparison.OrdinalIgnoreCase)
+                        && product.Value)
                     {
                         formatedProductIds.Add(item.ProductId);
                     }
@@ -212,12 +212,12 @@
             GetCacheKey = request.GetCacheKey;
         }
 
-        public string GroupName { get; private set; }
-        public string Username { get; private set; }
-        public DateTime FromDate { get; private set; }
-        public DateTime ToDate { get; private set; }
-        public string ProductIds { get; private set; }
-        public dynamic ToolTipsProducts { get; private set; }
+        public string GroupName { get; }
+        public string Username { get; }
+        public DateTime FromDate { get; }
+        public DateTime ToDate { get; }
+        public string ProductIds { get; }
+        public dynamic ToolTipsProducts { get; }
 
         public Func<string> GetCacheKey { get; }
     }
