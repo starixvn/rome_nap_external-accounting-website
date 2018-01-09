@@ -352,6 +352,10 @@ a.ui-state-default, a.ui-widget-content a.ui-state-default, a.ui-widget-header a
 {
 	margin-left: 10px;
 }
+
+.ui-multiselect-options {
+     top: 150px !important; 
+}
 /*#groupNameMenu, #userNameMenu
 {
 	background-color: #262626;

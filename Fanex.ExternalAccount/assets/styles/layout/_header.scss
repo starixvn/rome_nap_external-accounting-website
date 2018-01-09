@@ -21,6 +21,10 @@
         display: inline-block;
         line-height: 60px;
         cursor: pointer;
+         @media screen and (min-device-width: 1280px) { 
+             margin-left: 0;
+             left: 16px;
+         }
     }
 
     .icon-nav {

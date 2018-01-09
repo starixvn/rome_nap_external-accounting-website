@@ -262,7 +262,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 $this.srecommend = $("#txtUserName").val() == '' ? 0 : $this.srecommend;
                 //$("#txtUserName").val('');
                 $this.username = '';
-                $this.ToggleTabs('none', 'none', 'none', 4);
+                $this.ToggleTabs('none', 'none', 'none', 'none', 4);
                 $this.Databind();
             }
         });
@@ -277,7 +277,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 $this.custId = $this.srecommend;
                 //$("#txtUserName").val('');
                 $this.username = '';
-                $this.ToggleTabs('block', 'none', 'none', 3);
+                $this.ToggleTabs('block', 'block', 'none', 'none', 3);
                 $this.Databind();
             }
         });
@@ -292,7 +292,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 $this.custId = $this.mrecommend;
                 //$("#txtUserName").val('');
                 $this.username = '';
-                $this.ToggleTabs('block', 'block', 'none', 2);
+                $this.ToggleTabs('block', 'block', 'block', 'none', 2);
                 $this.Databind();
             }
         });
@@ -339,10 +339,11 @@ Fanex.ExtAcc.WinLossDetail = {
         $this.resizeReportGrid();
         $this.hideFilter = !$this.hideFilter;
     },
-    ToggleTabs: function (statusSAg, statusMAg, statusAg, status) {
+    ToggleTabs: function (levelLine, statusSAg, statusMAg, statusAg, status) {
         $('#tabSuper').css('display', statusSAg);
         $('#tabMaster').css('display', statusMAg);
         $('#tabAgent').css('display', statusAg);
+        $('#levelLine').css('display', levelLine);
         if (status == 1) {
             $('#SelectedLevel').html('Member');
         }
@@ -721,18 +722,18 @@ Fanex.ExtAcc.WinLossDetail = {
     ChangeHeadlineTab: function () {
         if (this.viewlevel >= 4) {
             this.srecommend = this.custId;
-            this.ToggleTabs('none', 'none', 'none', 4);
+            this.ToggleTabs('none', 'none', 'none', 'none', 4);
         } else if (this.viewlevel == 3) {
             this.mrecommend = this.custId;
-            this.ToggleTabs('block', 'none', 'none', 3);
+            this.ToggleTabs('block', 'block', 'none', 'none', 3);
             $("#tabSuper").attr("class", "tabActiveSuper");
         } else if (this.viewlevel == 2) {
             this.recommend = this.custId;
-            this.ToggleTabs('block', 'block', 'none', 2);
+            this.ToggleTabs('block', 'block', 'block', 'none', 2);
             $("#tabSuper").attr("class", "tabDisableSuper");
             $("#tabMaster").attr("class", "tabActive");
         } else {
-            this.ToggleTabs('block', 'block', 'block', 1);
+            this.ToggleTabs('block', 'block', 'block', 'block', 1);
             $("#tabSuper").attr("class", "tabDisableSuper");
             $("#tabMaster").attr("class", "tabDisable");
             $("#tabAgent").attr("class", "tabActive");
