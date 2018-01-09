@@ -317,27 +317,27 @@ body {
     background-color: #f1f1f2;
     overflow: auto;
 
-    /*@media screen and (min-device-width: 768px) {
+    @media screen and (min-device-width: 768px) {
         left: 0; 
     }
 
     @media screen and (min-device-width: 1300px) {
         left: 398px; 
-    }*/
+    }
 
 
     &.expand-content {
-        //left: 0; 
-        @media screen and (min-device-width: 768px) {
+        left: 0; 
+        /*@media screen and (min-device-width: 768px) {
             left: 0; 
-        }
+        }*/
     }
 
     &.collapse-content {
-        //left: 398px;
-         @media screen and (min-device-width: 1300px) {
+        left: 398px;
+         /*@media screen and (min-device-width: 1300px) {
             left: 398px; 
-        }
+        }*/
     }
 }
 
