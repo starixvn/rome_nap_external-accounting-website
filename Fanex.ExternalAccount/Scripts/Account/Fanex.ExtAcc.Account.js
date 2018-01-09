@@ -139,6 +139,7 @@ Fanex.ExtAcc.Account = {
             sidebar.removeClass("expand-sidebar");
             iconNav.removeClass("active");
             $("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
+            $("#leftSplitter").removeClass("expand-content").addClass("collapse-content");
         });
     },
     GetValidateImage: function () {

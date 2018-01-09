@@ -36,10 +36,18 @@
         var iconUserInfo = top.$("#iconUserInfo");
         var leftPanel = top.$("#leftSplitter");
 
-        leftPanel.fadeIn("fast", function () {
-            leftPanel.removeClass("expand-leftpanel");
-            iconUserInfo.removeClass("active");
+        if (top.isMobile.phone) {
             top.$("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
-        });
+            top.$("#leftSplitter").removeClass("expand-leftpanel").addClass("collapse-leftpanel");
+        }
+        else {
+            top.$("#contentSplitter").addClass("collapse-content");
+        }
+        //leftPanel.fadeIn("fast", function () {
+        //    leftPanel.removeClass("expand-leftpanel");
+        //    iconUserInfo.removeClass("active");
+        //    top.$("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
+        //    top.$("#leftSplitter").removeClass("expand-content").addClass("collapse-content");
+        //});
     };
 };

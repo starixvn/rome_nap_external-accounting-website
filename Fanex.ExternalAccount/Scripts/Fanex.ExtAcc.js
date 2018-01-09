@@ -371,17 +371,16 @@ Fanex.ExtAcc = {
         var widthDevice = $(window).width();
 
         if (widthDevice >= 768 && widthDevice <= 1300) {
-            //iconCollapseExpand.removeClass("icon-chevron-left").addClass("icon-chevron-right");
             iconUser.on("click", function () {
                 if (!iconUser.hasClass("active")) {                  
                     leftSplitter.removeClass("collapse-leftpanel").addClass("expand-leftpanel");
                     content.addClass("collapse-content");
-                    splitterBar.addClass("expand-leftpanel");
+                    //splitterBar.addClass("expand-leftpanel");
                     iconUser.addClass("active");
                 } else {
                     leftSplitter.addClass("collapse-leftpanel").removeClass("expand-leftpanel");
                     content.removeClass("collapse-content");
-                    splitterBar.removeClass("expand-leftpanel");
+                    //splitterBar.removeClass("expand-leftpanel");
                     iconUser.removeClass("active");
                 }
             });
