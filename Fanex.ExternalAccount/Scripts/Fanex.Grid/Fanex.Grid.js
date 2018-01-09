@@ -507,8 +507,11 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
             if (!options.autoCalculateGridExpandHeight) {
                 return options.gridExpandHeight;
             }
+
+            var titleHeight = options.showTitle ? 17 : 0;
+            var pagerHeight = options.showPager ? 25 : 0;
             
-            return this.$grid.offset().top - (options.showTitle ? -17 : 0);
+            return this.$grid.offset().top + titleHeight + pagerHeight;
         },
         RenderTitle: function () {
             var me = this;

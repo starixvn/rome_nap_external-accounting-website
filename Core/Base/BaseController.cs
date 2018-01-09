@@ -145,12 +145,12 @@ namespace Fanex.ExternalAccount.Core.Base
         /// <returns>ActionResult object.</returns>
         protected virtual ActionResult ViewBase(string viewName = null, object model = null)
         {
-            if (!Response.IsRequestBeingRedirected)
-            {
-                Response.AppendHeader("Content-Encoding", "gzip");
-            }
+            //if (!Response.IsRequestBeingRedirected)
+            //{
+            //    Response.AppendHeader("Content-Encoding", "gzip");
+            //}
 
-            Response.Filter = new System.IO.Compression.GZipStream(Response.Filter, System.IO.Compression.CompressionMode.Compress);
+            //Response.Filter = new System.IO.Compression.GZipStream(Response.Filter, System.IO.Compression.CompressionMode.Compress);
 
             return string.IsNullOrWhiteSpace(viewName) ? this.View(model) : this.View(viewName, model);
         }

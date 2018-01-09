@@ -1,5 +1,4 @@
 ﻿@using Fanex.ExternalAccount.Utilities
-@using System.Web.Optimization
 @using Fanex.Module.Statement.Resources;
 @using Fanex.Module.Statement.Configurations;
 @using Fanex.ExternalAccount.Service.Impl.Report;
@@ -78,12 +77,5 @@
         GrandPrize: '@Labels.GrandPrize'
     };
 </script>
-<script type="text/javascript" src="@Url.Content("~/Areas/Statement/Views/Report/Scripts/StatementReportManager.js")"></script>
-@if (HttpContext.Current.IsDebuggingEnabled)
-{
-    <script type="text/javascript" src="@Url.Content("~/Scripts/Statement/Fanex.ExtAcc.Statement.js")"></script>
-}
-else
-{
-    <script type="text/javascript" src="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/Statement/js")"></script>
-}
+
+@StaticResources.RenderScripts("assets/bundles/statement/index")

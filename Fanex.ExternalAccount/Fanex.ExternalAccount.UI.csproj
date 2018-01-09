@@ -404,9 +404,8 @@
       <Private>True</Private>
       <HintPath>..\packages\AspNetWebPages.Core.2.0.20126.16343\lib\net40\System.Web.WebPages.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\AspNetWebPages.Core.2.0.20126.16343\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    <Reference Include="System.Web.WebPages.Deployment">
+      <HintPath>..\Dependencies\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -1102,6 +1101,38 @@
     <Content Include="Areas\Statement\Views\StatementDetails\Scripts\StatementDetailsManager.js" />
     <Content Include="Areas\Statement\Views\StatementDetails\Styles\StatementDetails.css" />
     <Content Include="Areas\Statement\Views\Web.config" />
+    <Content Include="assets\bundles\choosegroup\choosegroup.css" />
+    <Content Include="assets\bundles\choosegroup\choosegroup.js" />
+    <Content Include="assets\bundles\choosegroup\choosegroup.min.css">
+      <DependentUpon>choosegroup.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\choosegroup\choosegroup.min.js">
+      <DependentUpon>choosegroup.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\common.css" />
+    <Content Include="assets\bundles\common.js" />
+    <Content Include="assets\bundles\common.min.css">
+      <DependentUpon>common.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\common.min.js">
+      <DependentUpon>common.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\login\login.css" />
+    <Content Include="assets\bundles\login\login.js" />
+    <Content Include="assets\bundles\login\login.min.css">
+      <DependentUpon>login.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\login\login.min.js">
+      <DependentUpon>login.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\statement\index.js" />
+    <Content Include="assets\bundles\statement\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\winlossdetail\index.js" />
+    <Content Include="assets\bundles\winlossdetail\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\js\libs\bootstrap\affix.js" />
     <Content Include="assets\js\libs\bootstrap\alert.js" />
     <Content Include="assets\js\libs\bootstrap\bootstrap.js" />
@@ -1561,6 +1592,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\StaticResources.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2969,6 +3001,7 @@
     <Content Include="assets\styles\pages\statement\guideline.scss" />
     <Content Include="assets\styles\pages\statement\statement.scss" />
     <Content Include="assets\styles\pages\reports\winloss-detail.scss" />
+    <Content Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

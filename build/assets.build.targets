@@ -5,10 +5,14 @@
          InitialTargets="MyTargets">
   <UsingTask AssemblyFile="..\tools\WebCompiler\WebCompiler.exe" TaskName="WebCompiler.CompilerBuildTask"/>
   <UsingTask AssemblyFile="..\tools\WebCompiler\WebCompiler.exe" TaskName="WebCompiler.CompilerCleanTask"/>
+  <UsingTask AssemblyFile="..\tools\BundlerMinifier\BundlerMinifier.exe" TaskName="BundlerMinifier.BundlerBuildTask"/>
+  <UsingTask AssemblyFile="..\tools\BundlerMinifier\BundlerMinifier.exe" TaskName="BundlerMinifier.BundlerCleanTask"/>
 
   <Target Name="MyTargets">
     <WebCompiler.CompilerCleanTask FileName="$(MSBuildProjectDirectory)\..\Fanex.ExternalAccount\compilerconfig.json" />
     <WebCompiler.CompilerBuildTask FileName="$(MSBuildProjectDirectory)\..\Fanex.ExternalAccount\compilerconfig.json" />
+	<BundlerMinifier.BundlerCleanTask FileName="$(MSBuildProjectDirectory)\..\Fanex.ExternalAccount\bundleconfig.json" />
+	<BundlerMinifier.BundlerBuildTask FileName="$(MSBuildProjectDirectory)\..\Fanex.ExternalAccount\bundleconfig.json" />
   </Target>
   
 </Project>
