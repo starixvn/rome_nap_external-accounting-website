@@ -199,14 +199,13 @@
     <Compile Include="Models\ProductSettingParam.cs" />
     <Compile Include="Models\ProductStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\LeftPanelDaoImpl.cs" />
-    <Compile Include="Repositories\LeftPanelDao.cs" />
+    <Compile Include="DataAccesses\CustomerDataAccessesImpl.cs" />
+    <Compile Include="DataAccesses\CustomerDataAccesses.cs" />
     <Compile Include="Services\Customers\AgentQueryServiceImpl.cs" />
     <Compile Include="Services\CustomerCommandService.cs" />
     <Compile Include="Services\Customers\CustomerInfoQueryService.cs" />
     <Compile Include="Services\Customers\MasterQueryServiceImpl.cs" />
     <Compile Include="Services\Customers\MemberQueryServiceImpl.cs" />
-    <Compile Include="Services\Customers\CustomerQueryServiceFactory.cs" />
     <Compile Include="Services\Customers\SuperQueryServiceImpl.cs" />
     <Compile Include="Services\CustomerQueryServiceImpl.cs" />
     <Compile Include="Services\CustomerStatusService.cs" />

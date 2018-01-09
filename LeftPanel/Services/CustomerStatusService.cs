@@ -31,14 +31,14 @@
             IMasterService masterService = null,
             IAgentService agentService = null,
             IMemberService memberService = null,
-            AuthorizationService authorizationHandler = null)
+            AuthorizationService authorizationService = null)
         {
             this.reportService = reportService ?? new ReportService();
             this.superService = superService ?? new SuperService();
             this.masterService = masterService ?? new MasterService();
             this.agentService = agentService ?? new AgentService();
             this.memberService = memberService ?? new MemberService();
-            this.authorizationService = authorizationHandler ?? new AuthorizationServiceImpl();
+            this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
         }
 
         public CustomerStatus GetCustomerStatus(int userId, string groupName, string username, int uplineId = 0)
@@ -59,24 +59,26 @@
                 var recommend = Utils.ToInt32(infoRow["recommend"]);
                 var custId = Utils.ToInt32(infoRow["custid"]);
 
-                if (roleId.IsSuper())
+                switch (roleId)
                 {
-                    custData = superService.GetData(userId, custId, groupName: groupName);
-                }
-                else if (roleId.IsMaster())
-                {
-                    custData = masterService.GetData(userId, srecommend, custId);
-                    upperInfo = superService.GetData(userId, uplineId, groupName: groupName);
-                }
-                else if (roleId.IsAgent())
-                {
-                    custData = agentService.GetData(userId, mrecommend, custId);
-                    upperInfo = masterService.GetData(userId, srecommend, uplineId);
-                }
-                else
-                {
-                    custData = memberService.GetData(userId, recommend, custId);
-                    upperInfo = agentService.GetData(userId, mrecommend, uplineId);
+                    case Role.Super:
+                        custData = superService.GetData(userId, custId, groupName: groupName);
+                        break;
+
+                    case Role.Master:
+                        custData = masterService.GetData(userId, srecommend, custId);
+                        upperInfo = superService.GetData(userId, uplineId, groupName: groupName);
+                        break;
+
+                    case Role.Agent:
+                        custData = agentService.GetData(userId, mrecommend, custId);
+                        upperInfo = masterService.GetData(userId, srecommend, uplineId);
+                        break;
+
+                    default:
+                        custData = memberService.GetData(userId, recommend, custId);
+                        upperInfo = agentService.GetData(userId, mrecommend, uplineId);
+                        break;
                 }
 
                 return GetCustStatus(userId, roleId, custData, upperInfo);

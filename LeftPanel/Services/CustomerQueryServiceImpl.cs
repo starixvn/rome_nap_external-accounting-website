@@ -1,10 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
     using Core.Authorization;
     using Customers;
-    using Repositories;
+    using Fanex.ExternalAccount.Core.Shared;
+    using Fanex.ExternalAccount.Module.LeftPanel.DataAccesses;
     using Utilities;
     using ViewModels;
 
@@ -23,18 +25,27 @@
 
     public class CustomerQueryServiceImpl : CustomerQueryService
     {
-        private readonly LeftPanelDao dataAccess;
-        private readonly CustomerQueryServiceFactory queryServiceFactory;
+        private readonly CustomerDataAccesses dataAccess;
         private readonly AuthorizationService authorizationService;
+        private readonly IReadOnlyDictionary<int, CustomerInfoQueryService> queryServices;
+
+        private static readonly IReadOnlyDictionary<int, CustomerInfoQueryService> queryServiceFactory =
+            new Dictionary<int, CustomerInfoQueryService>
+            {
+                [Role.Super] = new SuperInfoQueryServiceImpl(),
+                [Role.Master] = new MasterInfoQueryServiceImpl(),
+                [Role.Agent] = new AgentInfoQueryServiceImpl(),
+                [Role.Member] = new MemberInfoQueryServiceImpl()
+            };
 
         public CustomerQueryServiceImpl(
-            LeftPanelDao dataAccess = null,
-            CustomerQueryServiceFactory queryServiceFactory = null,
-            AuthorizationService authorizationService = null)
+            CustomerDataAccesses dataAccess = null,
+            AuthorizationService authorizationService = null,
+            IReadOnlyDictionary<int, CustomerInfoQueryService> queryServices = null)
         {
-            this.dataAccess = dataAccess ?? new LeftPanelDaoImpl();
-            this.queryServiceFactory = queryServiceFactory ?? new CustomerQueryServiceFactoryImpl();
+            this.dataAccess = dataAccess ?? new CustomerDataAccessesImpl();
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
+            this.queryServices = queryServices ?? queryServiceFactory;
         }
 
         public CustomerModel SearchCustomer(int actorId, string custName, string groupName = "ACCDDD")
@@ -53,9 +64,12 @@
 
             var roleId = Utils.ToInt32(customerInfo.Tables[0].Rows[0]["roleid"]);
 
-            return queryServiceFactory
-                .CreateQueryService(roleId)
-                .GetCustomer(actorId, custName, groupName, customerInfo);
+            if (!queryServices.ContainsKey(roleId))
+            {
+                throw new ArgumentOutOfRangeException($"RoleId {roleId} is out of range");
+            }
+
+            return queryServices[roleId].GetCustomer(actorId, custName, groupName, customerInfo);
         }
 
         public OnlineList GetOnlineList(int custId)

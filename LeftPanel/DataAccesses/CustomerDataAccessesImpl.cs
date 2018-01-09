@@ -1,4 +1,4 @@
-﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.DataAccesses
 {
     using System;
     using System.Collections;
@@ -18,7 +18,7 @@
     using Utilities;
     using ViewModels;
 
-    public class LeftPanelDaoImpl : LeftPanelDao
+    public class CustomerDataAccessesImpl : CustomerDataAccesses
     {
         private readonly IReportService reportService = new ReportService();
 

@@ -139,22 +139,6 @@
                 {captchaManager.TokenParameterName, keyValuePair.Key}
             });
 
-        private static void SetDynamicAuthenticationCookieName()
-        {
-            // determine unique cookie name per application
-            string cookieName = $"AUTH_{Guid.NewGuid().ToString()}";
-            // This will enforce that FormsAuthentication class is loaded from configuration settings for the application.
-            FormsAuthentication.Initialize();
-
-            // The new cookie name whatever you need can go here, I needed some value from my application setting to be prefixed so I used it.
-            //string newCookieName = string.Format("{0}.ASPXAUTH", ConfigurationManager.AppSettings["SomeSettingThatIsUniquetoSite"]);
-
-            // Modifying underlying baking field that points to FormsAuthentication.FormsCookieName         
-            Type type = typeof(FormsAuthentication);
-            System.Reflection.FieldInfo field = type.GetField("_FormsName", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-            field.SetValue(null, cookieName);
-        }
-
         private static List<string> GetRegexToHideSensitiveInfo()
         {
             var result = new List<string>();
@@ -168,5 +152,7 @@
 
             return result;
         }
+
+
     }
 }

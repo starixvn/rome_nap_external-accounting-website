@@ -11,7 +11,7 @@
     using DTO;
     using IBCUtils;
     using Logging.Extensions.Web;
-    using Repositories;
+    using DataAccesses;
     using Security;
     using Service.Impl.Customer.Casino;
 
@@ -52,11 +52,11 @@
 
     public class CustomerCommandServiceImpl : CustomerCommandService
     {
-        private readonly LeftPanelDao dataAccess;
+        private readonly CustomerDataAccesses dataAccess;
 
-        public CustomerCommandServiceImpl(LeftPanelDao dataAccess = null)
+        public CustomerCommandServiceImpl(CustomerDataAccesses dataAccess = null)
         {
-            this.dataAccess = dataAccess ?? new LeftPanelDaoImpl();
+            this.dataAccess = dataAccess ?? new CustomerDataAccessesImpl();
         }
 
         public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)

@@ -1,4 +1,4 @@
-﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Repositories
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.DataAccesses
 {
     using System.Collections.Generic;
     using System.Data;
@@ -7,7 +7,7 @@
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
 
-    public interface LeftPanelDao
+    public interface CustomerDataAccesses
     {
         DataSet GetCustomerInfo(string username, string groupName = "ACCDDD");
 

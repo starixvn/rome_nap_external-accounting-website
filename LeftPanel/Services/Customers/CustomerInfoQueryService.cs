@@ -582,13 +582,12 @@
                 ? customerStatus.UplineStatus.ProductStatusDic[settingParams.ProductId].IsHidden
                 : hide;
             var isUplineDisabled = customerStatus.RoleId.IsNotSuper()
-                && customerStatus.UplineStatus.ProductStatusDic[settingParams.ProductId].IsDisabled;
-
+                                    && customerStatus.UplineStatus.ProductStatusDic[settingParams.ProductId].IsDisabled;
             var syncUpline = customerStatus.RoleId.IsNotSuper()
                 ? customerStatus.UplineStatus.ProductStatusDic[settingParams.ProductId].IsSynced
                 : sync;
 
-            if (IsHideProduct(customerStatus.RoleId, hideUpline, hide))
+            if (IsHiddenProduct(customerStatus.RoleId, hideUpline, hide))
             {
                 return setting;
             }
@@ -599,21 +598,23 @@
                     GetEditSettingLink(settingParams.ProductKey, settingParams.ProductName));
             }
 
-            if (syncUpline)
+            if (!syncUpline)
             {
-                if (sync
-                    || roleId.IsNotMember()
-                    || !isCheckSyncDownlines
-                    || isSyncDownlines)
-                {
-                    AddEditStatusItem(setting, productStatusTable, settingParams, isUplineDisabled);
-                }
+                return setting;
+            }
+
+            if (sync
+                || roleId.IsNotMember()
+                || !isCheckSyncDownlines
+                || isSyncDownlines)
+            {
+                AddEditStatusItem(setting, productStatusTable, settingParams, isUplineDisabled);
             }
 
             return setting;
         }
 
-        private static bool IsHideProduct(int roleId, bool hideUpline, bool hide)
+        private static bool IsHiddenProduct(int roleId, bool hideUpline, bool hide)
             => (roleId.IsNotMember() && hide)
                || (roleId.IsMember() && hideUpline);
 
