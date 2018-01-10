@@ -374,7 +374,7 @@ Fanex.ExtAcc = {
 
         if (widthDevice >= 768 && widthDevice <= 1300) {
             iconUser.on("click", function () {
-                if (!iconUser.hasClass("active")) {                  
+                if (!iconUser.hasClass("active")) {
                     leftSplitter.removeClass("collapse-leftpanel").addClass("expand-leftpanel");
                     content.addClass("collapse-content");
                     //splitterBar.addClass("expand-leftpanel");
@@ -591,7 +591,7 @@ Fanex.ExtAcc = {
 
     TogglejqRows: function (parentId, fncIds) {
         for (var i = 0; i < fncIds.length; i++) {
-            var item = $(document).find('[highlightatt=highlight-att-main-' + fncIds[i] + '-' + fncIds[i] + ']');
+            var item = $(document).find('[highlightatt=highlight-att-main-' + fncIds[i] + '-' + fncIds[i] + '-body]');
 
             if (item.css('display') == 'none') {
                 item.css('display', 'table-row');
