@@ -93,7 +93,12 @@ var StatementDetailsManager = function () {
             headerColumnHeight: 24,
             bodyRowHeight: 25,
             numberOfFrozenColumn: 0,
-            gridExpandHeight: 50,
+
+            gridExpandHeight: 200,
+            autoCalculateGridExpandHeight: true,
+            fullHeight: false,
+            gridHeight: 550,
+
             showHighlightRow: false,
             showPager: false,
             showTitle: true,
