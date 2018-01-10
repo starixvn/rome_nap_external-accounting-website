@@ -20,6 +20,7 @@
         color: $table-header-color;
         font-weight: 400 !important;
         text-align: center;
+        font-size: 13px;
     }
 
     .col_footer table thead th {
@@ -27,6 +28,7 @@
         color: $table-footer-color;
         font-weight: bold;
         white-space: nowrap;
+        font-size: 13px;
     }
 
     tr.highlight-row:hover td {
