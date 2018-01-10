@@ -106,7 +106,7 @@
                 db.AddInParameter("ParentId", DbType.Int32, menu.ParentId);
                 db.AddInParameter("DisplayOrder", DbType.Int32, menu.DisplayOrder);
 
-                db.AddInParameter("MenuName", DbType.String, menu.FuncName);
+                db.AddInParameter("MenuName", DbType.String, menu.MenuName);
                 db.AddInParameter("MenuDesc", DbType.String, menu.MenuDesc);
                 db.AddInParameter("ParentName", DbType.String, menu.ParentName);
                 db.AddInParameter("URL", DbType.String, menu.Url);

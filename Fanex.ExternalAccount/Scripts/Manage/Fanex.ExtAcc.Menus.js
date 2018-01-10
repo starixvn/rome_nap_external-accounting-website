@@ -142,15 +142,15 @@ Fanex.ExtAcc.Menus = {
             {
                 HeaderText: 'Menu Item', Name: 'MenuName', Width: 160,
                 CustomCellRender: function (cell) {
-                    var menuId = cell.Value.MenuID;
-                    var isParent = cell.Value.ParentID == 0;
+                    var menuId = cell.Value.MenuId;
+                    var isParent = cell.Value.ParentId == 0;
                     var hasChild = false;
 
                     if ($this.DataSource.rows[index + 1]) {
-                        hasChild = $this.DataSource.rows[index + 1].ParentID != 0;
+                        hasChild = $this.DataSource.rows[index + 1].ParentId != 0;
                     }
 
-                    var func = "javascript:Fanex.ExtAcc.Menus.ShowEdit(" + cell.Value.MenuID + ", '" + titles.Edit + "')";
+                    var func = "javascript:Fanex.ExtAcc.Menus.ShowEdit(" + cell.Value.MenuId + ", '" + titles.Edit + "')";
                     var style = isParent && !hasChild ? "menuItemParentOnly" : (!isParent ? "menuItemChild" : "menuItemParent");
                     var div = '';
 
@@ -159,7 +159,7 @@ Fanex.ExtAcc.Menus = {
                         var length = $this.DataSource.rows.length;
 
                         for (var i = 0; i < length; i++) {
-                            if ($this.DataSource.rows[i].ParentID == menuId) {
+                            if ($this.DataSource.rows[i].ParentId == menuId) {
                                 ids.push(i);
                             }
                         }
@@ -181,7 +181,7 @@ Fanex.ExtAcc.Menus = {
             { HeaderText: 'Active', Name: 'IsActive', CellAlign: 'center', Width: 50,
                 CustomCellRender: function (cell) {
                     var style = cell.Value.IsActive == true ? "menuActive" : "menuInactive";
-                    var menuId = cell.Value.MenuID;
+                    var menuId = cell.Value.MenuId;
                     var menuName = cell.Value.MenuName;
                     var onclick = "javascript:Fanex.ExtAcc.Menus.ShowActivate(" + menuId + ", '" + menuName + "')";
 
@@ -191,7 +191,7 @@ Fanex.ExtAcc.Menus = {
             { HeaderText: 'Delete', Name: 'Delete', CellAlign: 'center', Width: 50,
                 CustomCellRender: function (cell) {
                     var style = "menuDelete";
-                    var menuId = cell.Value.MenuID;
+                    var menuId = cell.Value.MenuId;
                     var menuName = cell.Value.MenuName;
                     var onclick = "javascript:Fanex.ExtAcc.Menus.ShowDelete(" + menuId + ", '" + menuName + "')";
 
