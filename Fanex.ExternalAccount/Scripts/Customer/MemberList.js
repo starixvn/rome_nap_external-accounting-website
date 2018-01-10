@@ -829,8 +829,8 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
     options = {
         columns: this.DataFields,
         bodyRows: bodyRows,
-        gridExpandHeight: 165,
-        autoCalculateGridExpandHeight: true,
+        gridExpandHeight: 240,
+        //autoCalculateGridExpandHeight: true,
         numberOfFrozenColumn: isMobile.phone ? 3 : 6,
         customizeHeader: true,
         groupHeaderRows: groupHeader,
@@ -847,7 +847,7 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
                 Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
             }
         },
-        marginRight: 2,
+        //marginRight: 2,
         showDistinctRow: false,
         allowTruncate: true
     };

@@ -450,6 +450,7 @@
         if (top.isMobile.phone) {
             top.$("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
             top.$("#leftSplitter").removeClass("expand-leftpanel").addClass("collapse-leftpanel");
+            iconUserInfo.removeClass("active");
         }
         else {
             top.$("#contentSplitter").addClass("collapse-content");
