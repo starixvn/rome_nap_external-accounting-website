@@ -288,7 +288,6 @@ Fanex.ExtAcc.DailyWinLoss = {
                 text: level + " Daily Win Loss on " + $('#dtpWinLossDate').val()
             },
             showFooter: true,
-            autoCalculateGridExpandHeight: true,
             //autoResizeColumn: true,
             showPager: true,
             pagerOption: {
