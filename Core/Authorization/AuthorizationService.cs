@@ -81,7 +81,7 @@ namespace Fanex.ExternalAccount.Core.Authorization
 
         public bool IsBelong(string groupName, int custId, string userName, bool isGetUplineInfo)
         {
-            var currentSession = GetCurrentSession();
+            var currentSession = new CurrentSession();
 
             if (currentSession.IsInternalAdmin)
             {
@@ -100,7 +100,7 @@ namespace Fanex.ExternalAccount.Core.Authorization
 
         private bool IsBelong(string groupName, IEnumerable<int> custIds, string userName, bool isGetUplineInfo)
         {
-            var currentSession = GetCurrentSession();
+            var currentSession = new CurrentSession();
 
             if (currentSession.IsInternalAdmin)
             {
@@ -127,27 +127,6 @@ namespace Fanex.ExternalAccount.Core.Authorization
             }
 
             return true;
-        }
-
-        private CurrentSession GetCurrentSession()
-        {
-            var currentSession = new CurrentSession();
-            var userInfo = userService.GetUserById(currentSession.UserId);
-
-            if (currentSession.GroupId == userInfo.GroupID)
-            {
-                return currentSession;
-            }
-
-            // TODO: what does 11 mean?
-            currentSession.IsInternalAdmin =
-                loginService.CheckExternalGroup(currentSession.UserId, 11, "ExternalGroup");
-
-            currentSession.GroupId = userInfo.GroupID;
-            currentSession.CurrencyGroup = userInfo.GroupName;
-            currentSession.IsITAdmin = Group.IsITGroup(currentSession.GroupId);
-
-            return currentSession;
         }
 
         public bool IsAuthorized(
