@@ -77,8 +77,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.1.1.0.6\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.1.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.ExtNAP.2.0.1.14\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.1.15, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.ExtNAP.2.0.1.15-CleanCode-01\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ColossusBets">

@@ -116,8 +116,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.NAP.2.0.2.3-RemoveFanexModuleLogs\lib\net40\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.1.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.ExtNAP.2.0.1.14\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.1.15, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.ExtNAP.2.0.1.15-CleanCode-01\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ColossusBets, Version=2.0.1.1, Culture=neutral, processorArchitecture=MSIL">
