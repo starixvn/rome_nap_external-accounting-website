@@ -697,11 +697,5 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource) {
 
     $('#breadcrumbs').empty();
 
-    Fanex.ExtAcc.OnResize = function () {
-        try {
-            $("#jqgrid").fanexGrid("resizeGrid");
-        } catch (err) { }
-    }
-
     this.IsLoading = false;
 };
