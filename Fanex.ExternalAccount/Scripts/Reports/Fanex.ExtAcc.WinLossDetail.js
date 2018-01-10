@@ -507,7 +507,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 totalItem: $this.totalRows,
                 itemsPerPage: 50
             },
-            marginRight: 2,
+            marginRight: 10,
             bottomBorderWidth: 0,
             showDistinctRow: false,
             allowTruncate: true,

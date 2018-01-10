@@ -230,7 +230,7 @@ Fanex.ExtAcc.Menus = {
             options = {
                 columns: $this.DataFields,
                 bodyRows: bodyRows,
-                gridExpandHeight: 100,
+                gridExpandHeight: 110,
                 marginRight: 2,
                 showDistinctRow: false,
                 allowTruncate: true

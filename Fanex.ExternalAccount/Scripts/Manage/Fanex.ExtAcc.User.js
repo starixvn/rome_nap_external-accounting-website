@@ -246,12 +246,20 @@ Fanex.ExtAcc.User = {
                         ]
                     });
                 }
-
+                var widthDevice = $(window).width();
+                var heightExpand = 0;
+                if (widthDevice < 480) {
+                    heightExpand = 280;
+                }
+                else {
+                    heightExpand = 250;
+                }
                 Fanex.ExtAcc.User.options = {
                     columns: Fanex.ExtAcc.User.DataFields,
                     bodyRows: bodyRows,
-                    autoCalculateGridExpandHeight: true,
-                    marginRight: 2,
+                    //autoCalculateGridExpandHeight: true,
+                    gridExpandHeight: heightExpand,
+                    marginRight: 10,
                     showDistinctRow: false,
                     allowTruncate: true
                 };

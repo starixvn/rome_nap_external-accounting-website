@@ -204,8 +204,8 @@ Fanex.ExtAcc.Group = {
             options = {
                 columns: $this.DataFields,
                 bodyRows: bodyRows,
-                gridExpandHeight: 120,
-                marginRight: 0,
+                //autoCalculateGridExpandHeight: true,
+                gridExpandHeight: 130,
                 showDistinctRow: false,
                 allowTruncate: true
             };
