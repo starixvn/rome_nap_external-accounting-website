@@ -367,6 +367,8 @@ Fanex.ExtAcc = {
         var iconUser = $('#iconUserInfo');
         var content = $("#contentSplitter");
         var splitterBar = $("#splitterBar");
+        var iconNav = $("#iconNav");
+        var sidebar = $("#sidebar");
 
         var widthDevice = $(window).width();
 
@@ -395,6 +397,10 @@ Fanex.ExtAcc = {
                     leftSplitter.removeClass("expand-leftpanel").addClass("collapse-leftpanel");
                     content.removeClass("collapse-content").addClass("expand-content");
                 }
+
+                iconNav.removeClass('active');
+                sidebar.removeClass('expand-sidebar').addClass('collapse-sidebar');
+
             });
         }
 

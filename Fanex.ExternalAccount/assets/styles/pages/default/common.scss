@@ -136,13 +136,14 @@ body {
 
     &.expand-leftpanel {  
         @include transition(left .2s ease-in .1s, opacity .1s ease-out);         
-        width: 398px;
+        width: 100%;
         left: 0;
-        padding-top: 16px;  
-        border-right: 1px solid #e0e1e4;          
+        padding-top: 16px;            
         opacity: 1;
          @media screen and (min-device-width: 768px) { 
              background-color: #fff;
+             width: 398px;             
+            border-right: 1px solid #e0e1e4;
          }
     }
 

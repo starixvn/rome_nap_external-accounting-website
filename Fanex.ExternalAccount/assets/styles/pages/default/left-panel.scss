@@ -16,6 +16,10 @@ body {
 .left-panel-container {
     width: 100%;
     padding: 16px;
+    @media screen and (max-device-width: 767px) {
+        overflow: auto;
+        height: 100vh;
+    }
 
     a {
         color: #60a0ff;

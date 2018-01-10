@@ -88,10 +88,13 @@ Fanex.ExtAcc.Account = {
 
         iconNav.on("click", function () {
             if (iconUserInfo.hasClass('active')) {
-                leftPanel.fadeIn("fast", function () {
-                    leftPanel.removeClass("expand-leftpanel-mobile");
-                    iconUserInfo.removeClass("active");
-                });
+                //leftPanel.fadeIn("fast", function () {
+                //    leftPanel.removeClass("expand-leftpanel");
+                //    iconUserInfo.removeClass("active");
+                //});
+                leftPanel.removeClass("expand-leftpanel");
+                iconUserInfo.removeClass("active");
+                sidebar.addClass("expand-sidebar").show("fast");
             }
 
             if (!iconNav.hasClass('active')) {
