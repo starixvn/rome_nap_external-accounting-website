@@ -138,19 +138,13 @@ Fanex.ExtAcc.Account = {
         var iconNav = $("#iconNav");
         var sidebar = $("#sidebar");
 
-        //sidebar.fadeIn("fast", function () {
-        //    sidebar.removeClass("expand-sidebar");
-        //    iconNav.removeClass("active");
-        //    $("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
-        //    $("#leftSplitter").removeClass("expand-content").addClass("collapse-content");
-        //});
-
-        if (top.isMobile.phone) {
+        var widthDevice = top.$(top.window).width();
+        if (widthDevice <= 768) {
             top.$("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
             top.$("#sidebar").removeClass("expand-sidebar").addClass("collapse-sidebar");
+            top.$("#leftSplitter").removeClass("expand-leftpanel").addClass("collapse-leftpanel");
             iconNav.removeClass("active");
-        }
-        else {
+            top.$("#iconUserInfo").removeClass("active");
         }
     },
     GetValidateImage: function () {
