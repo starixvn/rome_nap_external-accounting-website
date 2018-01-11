@@ -372,7 +372,7 @@ Fanex.ExtAcc = {
 
         var widthDevice = $(window).width();
 
-        if (widthDevice >= 768 && widthDevice <= 1300) {
+        if (widthDevice >= 768 && widthDevice <= 1600) {
             iconUser.on("click", function () {
                 if (!iconUser.hasClass("active")) {
                     leftSplitter.removeClass("collapse-leftpanel").addClass("expand-leftpanel");

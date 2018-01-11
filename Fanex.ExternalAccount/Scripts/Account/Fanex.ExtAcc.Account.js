@@ -129,7 +129,7 @@ Fanex.ExtAcc.Account = {
         $(".submenu .link").on("click", this.collapseSidebar);
 
         var widthDevice = $(window).width();
-        if (isMobile.phone || (widthDevice >= 768 && widthDevice <= 1300)) {
+        if (isMobile.phone || (widthDevice >= 768 && widthDevice <= 1600)) {
             iconUserInfo.removeClass('active');
         }
 
@@ -149,6 +149,8 @@ Fanex.ExtAcc.Account = {
             top.$("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
             top.$("#sidebar").removeClass("expand-sidebar").addClass("collapse-sidebar");
             iconNav.removeClass("active");
+        }
+        else {
         }
     },
     GetValidateImage: function () {
