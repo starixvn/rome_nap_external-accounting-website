@@ -148,6 +148,7 @@ Fanex.ExtAcc.Account = {
         if (top.isMobile.phone) {
             top.$("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
             top.$("#sidebar").removeClass("expand-sidebar").addClass("collapse-sidebar");
+            iconNav.removeClass("active");
         }
     },
     GetValidateImage: function () {
