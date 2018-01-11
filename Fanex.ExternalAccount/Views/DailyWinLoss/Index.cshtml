@@ -9,7 +9,7 @@
         <div class="wlDetail">
             Daily Win Loss
         </div>
-        <div class="groupBack  hide">   
+        <div class="groupBack  hide">
             <div class="level-line"></div>
             <div id="tabSuper">
                 Super
@@ -50,11 +50,5 @@
     </div>
     @Html.AntiForgeryToken()
 </div>
-@if (HttpContext.Current.IsDebuggingEnabled)
-{
-    <script src="@Url.Content("~/Scripts/Reports/Fanex.ExtAcc.DailyWinLoss.js")" type="text/javascript"></script>
-}
-else
-{
-    <script src="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/dailywinloss/js")" type="text/javascript"></script>
-}
+
+@StaticResources.RenderScripts("~/assets/bundles/dailywinloss/index")

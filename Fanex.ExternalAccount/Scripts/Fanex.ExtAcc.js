@@ -801,6 +801,28 @@ $(document).ready(function () {
     });
 });
 
+
+function isValid(obj) {
+    if (typeof obj != "undefined" && obj != null) {
+        return true;
+    }
+    return false;
+}
+
+function clone(obj) {
+    var target = {};
+    for (var i in obj) {
+        if (obj.hasOwnProperty(i)) {
+            target[i] = obj[i];
+        }
+    }
+    return target;
+}
+
+Array.prototype.clone = function () {
+    return this.slice(0);
+};
+
 Array.prototype.contains = function (obj) {
     var i = this.length;
     while (i--) {
@@ -809,9 +831,4 @@ Array.prototype.contains = function (obj) {
         }
     }
     return false;
-};
-
-
-
-
-
+}

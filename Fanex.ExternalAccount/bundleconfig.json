@@ -113,6 +113,12 @@
     ]
   },
   {
+    "outputFileName": "assets/bundles/dailywinloss/index.js",
+    "inputFiles": [
+      "Scripts/Reports/Fanex.ExtAcc.DailyWinLoss.js"
+    ]
+  },
+  {
     "outputFileName": "assets/bundles/statement/index.js",
     "inputFiles": [
       "Scripts/isMobile.min.js",
