@@ -656,20 +656,10 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource) {
     currentPage = (rows.length <= Fanex.ExtAcc.Customer.ItemsPerPage || (parseInt(rows.length / Fanex.ExtAcc.Customer.ItemsPerPage) < Fanex.ExtAcc.Customer.CurrentPage)) ? 0 : Fanex.ExtAcc.Customer.CurrentPage;
     Fanex.ExtAcc.Customer.CurrentPage = currentPage;
 
-    var widthDevice = $(window).width();
-    var heightExpand = 0;
-    if (widthDevice < 480) {
-        heightExpand = 290;
-    }
-    else {
-        heightExpand = 200;
-    }
-
     options = {
         columns: this.DataFields,
         bodyRows: bodyRows,
-        //autoCalculateGridExpandHeight: true,
-        gridExpandHeight: heightExpand,
+        autoCalculateGridExpandHeight: true,
         numberOfFrozenColumn: isMobile.phone ? 3 : 6,
         customizeHeader: true,
         groupHeaderRows: groupHeader,
@@ -686,7 +676,7 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource) {
                 Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
             }
         },
-        marginRight: 12,
+        marginRight: 6,
         showDistinctRow: false,
         allowTruncate: true
     };

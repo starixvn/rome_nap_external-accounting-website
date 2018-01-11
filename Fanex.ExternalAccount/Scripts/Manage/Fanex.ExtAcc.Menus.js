@@ -226,18 +226,11 @@ Fanex.ExtAcc.Menus = {
                     ]
                 });
             }
-            var widthDevice = $(window).width();
-            var heightExpand = 0;
-            if (widthDevice < 480) {
-                heightExpand = 140;
-            }
-            else {
-                heightExpand = 180;
-            }
+
             options = {
                 columns: $this.DataFields,
                 bodyRows: bodyRows,
-                gridExpandHeight: heightExpand,
+                gridExpandHeight: 110,
                 marginRight: 2,
                 showDistinctRow: false,
                 allowTruncate: true
