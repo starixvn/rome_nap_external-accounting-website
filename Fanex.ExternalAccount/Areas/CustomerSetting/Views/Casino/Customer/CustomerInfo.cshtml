@@ -78,7 +78,7 @@
             <td style="width: 30%" class="noneBorderLeft tdTitleRight">@NGCasinoLang.lblMaximumWin</td>
             <td style="width: 20%">
                 <div>
-                    <select id="maxWinLimit" style="width: 80px !important" data-ng-model="CustomerModel.memberWinLimit.maximumWin" data-ng-options="opt.key for opt in CustomerModel.memberWinLimit.maximumWinLimits track by opt.value"></select>&nbsp;@NGCasinoLang.lblOnGivenCredit
+                    <select id="maxWinLimit" style="width: 80px !important" data-ng-model="CustomerModel.memberWinLimit.maximumWin" data-ng-options="opt.Key for opt in CustomerModel.memberWinLimit.maximumWinLimits track by opt.value"></select>&nbsp;@NGCasinoLang.lblOnGivenCredit
                 </div>
             </td>
             <td class="noneBorderRight" rowspan="{{CustomerModel.roleId != 1 ? 3 : 4}}"><div><label><input type="checkbox" data-ng-disabled="CustomerModel.memberWinLimit.isDailyAutoResetUpline == false && CustomerModel.roleId != 4" data-ng-model="CustomerModel.memberWinLimit.isDailyAutoReset" />@NGCasinoLang.lblDailyAutoResetLimit</label></div></td>
