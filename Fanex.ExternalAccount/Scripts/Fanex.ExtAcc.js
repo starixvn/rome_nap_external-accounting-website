@@ -189,13 +189,14 @@ Fanex.ExtAcc = {
             }
             })
             .error(function (data) {
-                if (typeof console != undefined)
-                    console.log(data.responseText);
+                //if (typeof console != undefined)
+                //    console.log(data.responseText);
 
                 Fanex.ExtAcc.UnBlockUI();
                 if (data.errorCode) {
                     $('#contentSplitter').html(data.errorMessage.formatErrorMessage());
-                    return;
+                } else {
+                    $('#contentSplitter').html(data.responseText).show();
                 }
             })
             .done(function (data) {
