@@ -887,7 +887,7 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
                 Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
             }
         },
-        marginRight: 2,
+        marginRight: 10,
         showDistinctRow: false,
         allowTruncate: true
     };

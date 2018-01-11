@@ -297,7 +297,7 @@ Fanex.ExtAcc.DailyWinLoss = {
                 itemsPerPage: 50
             },
             highlightFrozenWidth: 2,
-            marginRight: 2,
+            marginRight: 10,
             bottomBorderWidth: 0,
             showDistinctRow: false,
             allowTruncate: true,

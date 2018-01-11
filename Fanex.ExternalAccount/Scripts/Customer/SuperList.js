@@ -237,7 +237,7 @@
             }
         }
     }
-    
+
     if (!this.hideLucky3) {
         items.lucky3 = {
             name: "Lucky 3",
@@ -413,7 +413,7 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
             //var showFWBetting = cell.Value.SyncedFishingWorld && !hideFishingWorldSettingLink && cell.Value.SyncedFishingWorldDownline;
             var showLotteryBetting = !hideLotterySettingLink;
             var showBullfightingBetting = !hideBullfightingSettingLink;
-            
+
             var func = "javascript:Fanex.ExtAcc.Customer.ShowEditSuper(" + cell.Value.custid + ", '" + escape(cell.Value.username) + "', " + (cell.Value.HideGoldDeluxe) + ", " + (cell.Value.HideMuayThai) + ", " + (cell.Value.HideCockFighting) + ", " + cell.Value.HideColossusBet + ", " + (cell.Value.HideCricket) + ", " + (hideAllbetSettingLink) + ", " + showABBetting + ", " + (hideVoidbridgeSettingLink) + ", " + showVBBetting + "," + hideNG2SettingLink + "," + showNG2Betting + "," + hideFishingWorldSettingLink + "," + showLotteryBetting + "," + hideLotterySettingLink + "," + hideLucky3SettingLink + "," + showBullfightingBetting + "," + hideBullfightingSettingLink + ")";
 
             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editInfo"></div>';
@@ -676,7 +676,7 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource) {
                 Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
             }
         },
-        marginRight: 6,
+        marginRight: 10,
         showDistinctRow: false,
         allowTruncate: true
     };

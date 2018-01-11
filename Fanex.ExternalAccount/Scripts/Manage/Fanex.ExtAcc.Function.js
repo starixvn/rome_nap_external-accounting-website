@@ -227,7 +227,7 @@ Fanex.ExtAcc.Function = {
                 columns: $this.DataFields,
                 bodyRows: bodyRows,
                 autoCalculateGridExpandHeight: true,
-                marginRight: 2,
+                marginRight: 10,
                 showDistinctRow: false,
                 allowTruncate: true
             };
