@@ -225,7 +225,7 @@ var StatementReportManager = function () {
             headerColumnHeight: 24,
             bodyRowHeight: 25,
             numberOfFrozenColumn: 0,
-            gridExpandHeight: 100,
+            autoCalculateGridExpandHeight: true,
             showHighlightRow: false,
             showPager: true,
             customPager: false,

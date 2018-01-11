@@ -388,7 +388,7 @@
             }
         };
     }
-    
+
     if (has3rdParty)
         itemsMaster.separator2 = "-----";
     itemsMaster.editInfo = {
@@ -731,7 +731,7 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
     if (rows.length > 0) {
         this.hasSecurityCode = rows[0].UplineHasSecurityCode || rows[0].HasSecurityCode;
     }
-    
+
     Fanex.ExtAcc.Customer.HideAllbet = len > 0 ? (parentItem.HideAllBetUpline || !parentItem.SyncedAllBetUpline) : Fanex.ExtAcc.Customer.HideAllbet;
     Fanex.ExtAcc.Customer.HideVoidbridge = len > 0 ? (parentItem.HideVoidBridgeUpline || !parentItem.SyncedVoidBridgeUpline) : Fanex.ExtAcc.Customer.HideVoidbridge;
     Fanex.ExtAcc.Customer.HideNG2 = len > 0 ? (parentItem.HideNG2Upline || !parentItem.SyncedNG2Upline) : Fanex.ExtAcc.Customer.HideNG2;
@@ -870,7 +870,6 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
     options = {
         columns: this.DataFields,
         bodyRows: bodyRows,
-        gridExpandHeight: 165,
         autoCalculateGridExpandHeight: true,
         numberOfFrozenColumn: isMobile.phone ? 3 : 6,
         customizeHeader: true,

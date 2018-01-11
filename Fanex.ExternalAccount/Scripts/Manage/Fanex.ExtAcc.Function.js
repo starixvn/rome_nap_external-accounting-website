@@ -179,7 +179,8 @@ Fanex.ExtAcc.Function = {
             { HeaderText: 'Description', Name: 'FuncDesc', Width: 245, AllowTruncate: true },
             { HeaderText: 'Order', Name: 'DisplayOrder', Width: 50, CellAlign: 'center' },
             { HeaderText: 'Modified Date', Name: 'ModifiedDate', Width: 160 },
-            { HeaderText: 'Is Test', Name: 'IsTest', Width: 50, CellAlign: 'center',
+            {
+                HeaderText: 'Is Test', Name: 'IsTest', Width: 50, CellAlign: 'center',
                 CustomCellRender: function (cell) {
                     var style = cell.Value.IsTest == true ? "menuActive" : "menuInactive";
                     var funcId = cell.Value.FuncID;
@@ -225,7 +226,7 @@ Fanex.ExtAcc.Function = {
             options = {
                 columns: $this.DataFields,
                 bodyRows: bodyRows,
-                gridExpandHeight: heightExpand,
+                autoCalculateGridExpandHeight: true,
                 marginRight: 2,
                 showDistinctRow: false,
                 allowTruncate: true

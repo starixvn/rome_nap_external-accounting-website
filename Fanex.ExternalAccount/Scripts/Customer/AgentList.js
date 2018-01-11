@@ -876,7 +876,6 @@ Fanex.ExtAcc.Customer.RenderAgentList = function (dataSource) {
     options = {
         columns: this.DataFields,
         bodyRows: bodyRows,
-        gridExpandHeight: 165,
         autoCalculateGridExpandHeight: true,
         numberOfFrozenColumn: isMobile.phone ? 3 : 6,
         customizeHeader: true,

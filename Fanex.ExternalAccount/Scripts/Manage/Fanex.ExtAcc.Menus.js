@@ -178,7 +178,8 @@ Fanex.ExtAcc.Menus = {
             { HeaderText: 'Function', Name: 'FuncName', Width: 150 },
             { HeaderText: 'Order', Name: 'DisplayOrder', Width: 50, CellAlign: 'center' },
             { HeaderText: 'Last Modified', Name: 'ModifiedDate', Width: 160 },
-            { HeaderText: 'Active', Name: 'IsActive', CellAlign: 'center', Width: 50,
+            {
+                HeaderText: 'Active', Name: 'IsActive', CellAlign: 'center', Width: 50,
                 CustomCellRender: function (cell) {
                     var style = cell.Value.IsActive == true ? "menuActive" : "menuInactive";
                     var menuId = cell.Value.MenuID;
@@ -188,7 +189,8 @@ Fanex.ExtAcc.Menus = {
                     return '<div id="menu-' + menuId + '" class="' + style + '" onclick="' + onclick + '"></div>';
                 }
             },
-            { HeaderText: 'Delete', Name: 'Delete', CellAlign: 'center', Width: 50,
+            {
+                HeaderText: 'Delete', Name: 'Delete', CellAlign: 'center', Width: 50,
                 CustomCellRender: function (cell) {
                     var style = "icon-delete";
                     var menuId = cell.Value.MenuID;
@@ -230,7 +232,7 @@ Fanex.ExtAcc.Menus = {
             options = {
                 columns: $this.DataFields,
                 bodyRows: bodyRows,
-                gridExpandHeight: 160,
+                autoCalculateGridExpandHeight: true,
                 marginRight: 2,
                 showDistinctRow: false,
                 allowTruncate: true

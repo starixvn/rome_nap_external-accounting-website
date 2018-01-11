@@ -94,7 +94,6 @@ var StatementDetailsManager = function () {
             bodyRowHeight: 25,
             numberOfFrozenColumn: 0,
 
-            gridExpandHeight: 200,
             autoCalculateGridExpandHeight: true,
             fullHeight: false,
             gridHeight: 550,

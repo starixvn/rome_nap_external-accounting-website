@@ -360,7 +360,7 @@
             }
         };
     }
-        
+
     if (has3rdParty)
         itemsMember.separator5 = "-----";
     itemsMember.editInfo = {
@@ -510,14 +510,14 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
             var hideLotterySettingLink = cell.Value.HideLotteryUpline;
             var hideLucky3SettingLink = cell.Value.HideLucky3Upline;
             var hideBullfightingSettingLink = cell.Value.HideBullFightingUpline;
-            
+
             Fanex.ExtAcc.Customer.HideAllbetMember = hideAllbetSettingLink;
             Fanex.ExtAcc.Customer.HideVoidbridgeMember = hideVoidbridgeSettingLink;
             Fanex.ExtAcc.Customer.HideNG2Member = hideNG2SettingLink;
             Fanex.ExtAcc.Customer.HideFishingWorldMember = hideFishingWorldSettingLink;
             Fanex.ExtAcc.Customer.HideLotteryMember = hideLotterySettingLink;
             Fanex.ExtAcc.Customer.HideBullfightingMember = hideBullfightingSettingLink;
-            
+
             var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMember(" + cell.Value.custid + ", '" + title + "'," + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + agentSyncCasino + ", " + agentSyncLiveCasino + "," + hideKeno + ", " + cell.Value.DisableKeno + "," + hideGoldDeluxe + ", " + cell.Value.DisableGoldDeluxe + "," + hideColossusBets + ", " + cell.Value.DisableColossusBet + "," + hideSportsbook2 + ", " + cell.Value.DisableMuayThai + "," + hideCockfighting + ", " + cell.Value.DisableCockFighting + "," + hideCricket + ", " + cell.Value.DisableCricket + "," + hideAllbetSettingLink + ", " + cell.Value.DisableAllBet + "," + hideVoidbridgeSettingLink + ", " + cell.Value.DisableVoidBridge + "," + hideNG2SettingLink + "," + cell.Value.DisableNG2 + "," + cell.Value.SyncedNG2 + "," + hideFishingWorldSettingLink + "," + cell.Value.DisableFishingWorld + "," + hideLotterySettingLink + "," + cell.Value.DisableLottery + "," + hideLucky3SettingLink + "," + cell.Value.DisableLucky3 + "," + hideBullfightingSettingLink + "," + cell.Value.DisableBullFighting + ")";
 
             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editMember"></div>';
@@ -829,8 +829,7 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
     options = {
         columns: this.DataFields,
         bodyRows: bodyRows,
-        gridExpandHeight: 240,
-        //autoCalculateGridExpandHeight: true,
+        autoCalculateGridExpandHeight: true,
         numberOfFrozenColumn: isMobile.phone ? 3 : 6,
         customizeHeader: true,
         groupHeaderRows: groupHeader,
