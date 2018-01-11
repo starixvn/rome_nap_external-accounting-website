@@ -247,7 +247,8 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
         minHeight: 120,
         minWidth: 300,
         fullWidth: true,
-        autoCalculateGridExpandHeight: false
+        autoCalculateGridExpandHeight: false,
+        numOfPaddingForGridExpandHeight: 10
     };
 
     var Fanex = Fanex || {};
@@ -491,8 +492,7 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
                 fullHeight: options.fullHeight,
                 fullWidth: options.fullWidth,
                 autoCalculateGridExpandHeight: options.autoCalculateGridExpandHeight,
-                showTitle: options.showTitle,
-                showPager: options.showPager
+                numOfPaddingForGridExpandHeight: options.numOfPaddingForGridExpandHeight
             };
             me.InitGridScroller(options.showPager && (options.bodyRows.length > 0));
             me.RenderGridScroller(me.gridOptions);
@@ -510,9 +510,7 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
                 return options.gridExpandHeight;
             }
 
-            var titleHeight = options.showTitle ? 17 : 0;
-            var pagerHeight = options.showPager ? 10 : 0;
-            var expandHeight = this.$grid.offset().top + titleHeight + pagerHeight;
+            var expandHeight = this.$grid.offset().top + options.numOfPaddingForGridExpandHeight;
 
             return expandHeight;
         },
@@ -1894,7 +1892,6 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
                     }
 
                     var opt = $.extend({}, {}, Fanex.Grid.List[options.tblContentId].gridOptions);
-
                     opt.manualCopyHeader = true;
                     me.RenderGridFrames(opt);
                 });
@@ -3419,14 +3416,3 @@ if (typeof (fanexGridLanguage) === 'undefined') {
 //    this.length = from < 0 ? this.length + from : from;
 //    return this.push.apply(this, rest);
 //};
-
-
-Array.prototype.contains = function (obj) {
-    var i = this.length;
-    while (i--) {
-        if (this[i] === obj) {
-            return true;
-        }
-    }
-    return false;
-}
