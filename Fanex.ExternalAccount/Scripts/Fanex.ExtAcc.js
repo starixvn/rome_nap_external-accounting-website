@@ -385,6 +385,7 @@ Fanex.ExtAcc = {
                     //splitterBar.removeClass("expand-leftpanel");
                     iconUser.removeClass("active");
                 }
+                $(window).resize();
             });
         } else {
             iconUser.on("click", function () {
@@ -400,7 +401,7 @@ Fanex.ExtAcc = {
 
                 iconNav.removeClass('active');
                 sidebar.removeClass('expand-sidebar').addClass('collapse-sidebar');
-
+                $(window).resize();
             });
         }
 

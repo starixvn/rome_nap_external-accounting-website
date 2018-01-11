@@ -32,7 +32,7 @@
     }
 
     tr.highlight-row:hover td {
-        background-color: $table-td-hover-color;
+        background-color: $table-td-hover-color !important;
     }
 
     .mousehoverbeyond td {
