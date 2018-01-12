@@ -253,3 +253,16 @@
         left: 52px;
     }
 }
+
+.main-menu {
+    .show-submenu {
+        display: block;
+        visibility: visible;
+    }
+
+    .hide-submenu {
+        display: none;
+        visibility: hidden;
+    }
+}
+
