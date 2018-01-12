@@ -1117,6 +1117,10 @@
     <Content Include="assets\bundles\common.min.js">
       <DependentUpon>common.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\dailywinloss\index.js" />
+    <Content Include="assets\bundles\dailywinloss\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\login\login.css" />
     <Content Include="assets\bundles\login\login.js" />
     <Content Include="assets\bundles\login\login.min.css">
