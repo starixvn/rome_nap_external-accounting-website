@@ -253,11 +253,12 @@ Fanex.ExtAcc.DailyWinLoss = {
        { HeaderText: '%', Name: 'AgWinlostPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
     ],
     Render: function () {
-        var winLossMarginHeader = '<div id="HeaderWinlossMargin" class="txt-main">Win/Loss & Margin</div>\
+        var winLossMarginHeader = '<div id="HeaderWinlossMargin" class="txt-main">' +
+                                        ($this.hidedMargin ? 'Win/Loss' : 'Win/Loss & Margin') + '</div>\
                                    <div class="btn-margin-section">\
                                         <span class="txt-margin">Margin</span>\
                                         <label class="switch toggle-margin">\
-                                            <span class="toggle-margin-on" id="btn-toogle"></span>\
+                                            <span class="toggle-margin-' + ($this.hidedMargin ? 'off' : 'on') + '" id="btn-toogle"></span>\
                                             <span class="slider round"></span>\
                                         </label>\
                                    </div>';
@@ -390,7 +391,6 @@ Fanex.ExtAcc.DailyWinLoss = {
         $('.toggle-margin').click($this.showHideMarginColumns);
     },
     showHideMarginColumns: function () {
-        console.log($this.hidedMargin);
         if ($this.hidedMargin) {
             $("#jqgrid").fanexGrid("showColumns", $this.gridOptions, [12, 14, 16, 18]);
             $('#HeaderWinlossMargin').html('Win/Loss & Margin');
