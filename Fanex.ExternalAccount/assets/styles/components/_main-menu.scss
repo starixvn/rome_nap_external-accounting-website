@@ -79,24 +79,27 @@
         .submenu {
             display: none;
             position: absolute;
-            top: 0;
+            top: 60px;
             left: 0;
             padding-left: 26px;
             background-color: #3b475f;            
-            opacity: 0;
+            opacity: 1;
             z-index: 10000;
 
             > .menu > .link {
                 padding-left: 0;
             }
         }
-
-        .menu:hover .submenu {
-            display: block;
-            opacity: 1;
-            top: 60px;
-            min-width: 140px;
-            transition: all 0.2s ease-in 0.1s;
-        }
+        
     }  
+}
+
+@media (min-width: 1025px) {  
+    .menu:hover .submenu {
+        display: block !important;
+        //opacity: 1;
+        top: 60px;
+        min-width: 140px;
+        transition: all 0.2s ease-in 0.1s;
+    }
 }

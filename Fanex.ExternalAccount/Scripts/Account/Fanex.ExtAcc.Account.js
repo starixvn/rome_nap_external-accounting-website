@@ -82,7 +82,6 @@ Fanex.ExtAcc.Account = {
         var iconNav = $("#iconNav");
         var iconUserInfo = $("#iconUserInfo");
         var sidebar = $("#sidebar");
-        var hasMenu = $("#sidebar .menu .hasChild");
         var leftPanel = $("#leftSplitter");
         var $this = this;
 
@@ -108,25 +107,37 @@ Fanex.ExtAcc.Account = {
                 });
             }
         });
-        
+
+        var hasMenu =isMobile.tablet ? 
+            $(".main-menu .menu .hasChild") :
+            $("#sidebar .menu .hasChild");
         hasMenu.on("click", function () {
             var menu = $(this);
             var submenu = $(this).siblings('.submenu');
 
-            if (!menu.hasClass('active')) {
+            if (menu.hasClass('active')) {
+
+                submenu.slideUp("fast", function () {
+                    menu.removeClass("active");
+                });
+               
+            } else {
                 $(".submenu").slideUp('fast');
                 hasMenu.removeClass("active");
 
                 menu.addClass("active");
                 submenu.slideDown("fast");
-            } else {
-                submenu.slideUp("fast", function () {
-                    menu.removeClass("active");
-                });
             }
         });
 
-        $(".submenu .link").on("click", this.collapseSidebar);
+        $(".submenu .link").on("click", function () {
+            if (isMobile.tablet) {
+                var submenu = $(this).parent().parent();
+                submenu.slideUp("fast");
+                submenu.siblings(".hasChild").removeClass("active");
+            }
+            $this.collapseSidebar();
+        }); 
 
         var widthDevice = $(window).width();
         if (isMobile.phone || (widthDevice >= 768 && widthDevice <= 1600)) {
