@@ -126,6 +126,11 @@
             ExceptionHandler.Handle(Server.GetLastError());
         }
 
+        protected void Application_BeginRequest()
+        {
+            Context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        }
+
         private static string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair) =>
             urlHelper.Action("Refresh", "DefaultCaptcha", new { area = string.Empty });
 
