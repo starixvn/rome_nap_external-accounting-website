@@ -2402,6 +2402,24 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
                 }
             });
 
+            var touchMoveEventHandler = function (e) {
+                var touch = e.originalEvent.touches[0];
+                var pageX = touch.pageX;
+                if (me.preTouchX == 0) {
+                    me.preTouchX = touch.pageX;
+                } else {
+                    var touchLength = (pageX - me.preTouchX);
+                    var left = me.preLeft - touchLength;
+                    xscrollbar.prop("scrollLeft", left);
+                    me.preTouchX = pageX;
+                }
+            };
+
+            var touchEndEventHandler = function (e) {
+                me.preTouchX = 0;
+                me.preTouchY = 0;
+            };
+
             container
                 .unbind('scroll.' + me.gridId)
                 .bind('scroll.' + me.gridId, function () {
@@ -2572,25 +2590,10 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
                     }
                 }
                 })
-            .unbind('touchmove.' + me.gridId)
-                .bind('touchmove.' + me.gridId, function (e) {
-                    var touch = e.originalEvent.touches[0];
-                    var pageX = touch.pageX;
-                    if (me.preTouchX == 0) {
-                        me.preTouchX = touch.pageX;
-                    }
-                    else {
-                        var touchLength = (pageX - me.preTouchX);
-                        var left = me.preLeft - touchLength;
-                        xscrollbar.prop("scrollLeft", left);
-                        me.preTouchX = pageX;
-                    }
-                })
-            .unbind('touchend.' + me.gridId)
-            .bind('touchend.' + me.gridId, function (e) {
-                me.preTouchX = 0;
-                me.preTouchY = 0;
-            });
+                .unbind('touchmove.' + me.gridId)
+                .bind('touchmove.' + me.gridId, touchMoveEventHandler)
+                .unbind('touchend.' + me.gridId)
+                .bind('touchend.' + me.gridId, touchEndEventHandler);
 
             rowheader
                 .unbind('scroll.' + me.gridId)
@@ -2745,7 +2748,7 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
                     container.prop("scrollLeft", left);
                     me.preLeft = left;
                 }
-            });
+                });
 
             if (isOnSmartPhoneBrowser) {
                 me.colHeaderContainer.scroll(function () {
@@ -2756,7 +2759,11 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
                         xscrollbar.prop("scrollLeft", left);
                         me.preLeft = left;
                     }
-                });
+                }).unbind('touchmove.' + me.gridId)
+                    .bind('touchmove.' + me.gridId, touchMoveEventHandler)
+                    .unbind('touchend.' + me.gridId)
+                    .bind('touchend.' + me.gridId, touchEndEventHandler);
+
                 me.colFooterContainer.scroll(function () {
                     var left = me.colFooterContainer.scrollLeft();
                     if (me.preLeft !== left) {
@@ -2765,7 +2772,10 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
                         xscrollbar.prop("scrollLeft", left);
                         me.preLeft = left;
                     }
-                });
+                }).unbind('touchmove.' + me.gridId)
+                    .bind('touchmove.' + me.gridId, touchMoveEventHandler)
+                    .unbind('touchend.' + me.gridId)
+                    .bind('touchend.' + me.gridId, touchEndEventHandler);
             }
         }
     };
