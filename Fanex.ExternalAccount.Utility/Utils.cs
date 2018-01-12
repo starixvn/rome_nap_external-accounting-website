@@ -2,11 +2,19 @@
 {
     using System;
     using System.Data;
+    using System.Net;
     using System.Web;
     using System.Web.Optimization;
 
     public static class Utils
     {
+        public static bool IsValidIpAddress(string ip)
+        {
+            IPAddress address;
+
+            return IPAddress.TryParse(ip, out address) && !ip.Equals("::1", StringComparison.OrdinalIgnoreCase);
+        }
+
         public static string FormatDateOptionalTime(object dt)
         {
             if (Convert.IsDBNull(dt) || dt == null)

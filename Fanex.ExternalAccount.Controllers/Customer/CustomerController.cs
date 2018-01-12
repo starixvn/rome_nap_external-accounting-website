@@ -444,15 +444,14 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public ActionResult ViewIP(string ip)
         {
-            if (IpUtils.IsVnIp(ip) && !AuthorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP))
+            var ipInfo = new IPInfo { Flag = "-.gif", IP = ip };
+            if (Utils.IsValidIpAddress(ip))
             {
-                return PartialViewBase("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
-            }
+                if (IpUtils.IsVnIp(ip) && !AuthorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP))
+                {
+                    return PartialViewBase("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                }
 
-            IPAddress address;
-            var ipInfo = new IPInfo { Flag = "-.gif" };
-            if (IPAddress.TryParse(ip, out address))
-            {
                 var info = IpUtils.LocationFromIP(ip);
                 ipInfo = new IPInfo
                 {
@@ -712,6 +711,6 @@
         private string Customers2Json(DataTable customers)
             => JsonConvert.SerializeObject(
                 CheckVNIP(customers), Formatting.None,
-                new IsoDateTimeConverter { DateTimeFormat = DateTimeFormat });
+                new IsoDateTimeConverter { DateTimeFormat = DateTimeFormat });        
     }
 }
