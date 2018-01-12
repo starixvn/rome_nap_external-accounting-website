@@ -244,13 +244,13 @@ Fanex.ExtAcc.DailyWinLoss = {
        { HeaderText: 'Agent', Name: 'AgTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
        { HeaderText: '%', Name: 'AgTOPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
        { HeaderText: 'Company', Name: 'ComWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-       { HeaderText: '%', Name: 'ComWinlostPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'ComWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
        { HeaderText: 'Super', Name: 'SAgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-       { HeaderText: '%', Name: 'SAgWinlostPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'SAgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
        { HeaderText: 'Master', Name: 'MAgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-       { HeaderText: '%', Name: 'MAgWinlostPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'MAgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
        { HeaderText: 'Agent', Name: 'AgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-       { HeaderText: '%', Name: 'AgWinlostPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
+       { HeaderText: '%', Name: 'AgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
     ],
     Render: function () {
         var winLossMarginHeader = '<div id="HeaderWinlossMargin" class="txt-main">' +
