@@ -167,6 +167,7 @@
         $scope.ResetGlobalValue();
 
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMultiplePT' + "?roleId=" + $scope.model.personalInfo.roleId.value + "&custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
+        $scope.collapseSidebar();
     };
 
     $scope.Info = function () {
@@ -181,6 +182,7 @@
 
     $scope.Transfer = function () {
         parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditTransferCondition/?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), parent.titles[1] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 600, 250, false, false, 1);
+        
     };
 
     $scope.Casino = function () {
@@ -210,6 +212,8 @@
         if (url != '') {
             parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupname=' + parent.$('#selectedGroupName').html());
         }
+
+        $scope.collapseSidebar();
     };
 
     $scope.LiveCasino = function () {
@@ -244,6 +248,8 @@
         if (url != '') {
             parent.Fanex.ExtAcc.LoadMainIFrame(url + "&actorId=" + parent.userId + "&actorUsername=" + parent.username + "&groupName=" + parent.$('#selectedGroupName').html(), null, null, null, true);
         }
+
+        $scope.collapseSidebar();
     };
 
     $scope.BetSetting = function () {
@@ -281,10 +287,12 @@
         if (url !== '') {
             parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupName=' + parent.$('#selectedGroupName').html());
         }
+        $scope.collapseSidebar();
     };
 
     $scope.VirtualSports = function () {
         $scope.RenderDCS(5);
+        $scope.collapseSidebar();
     };
 
     $scope.Keno = function () {
@@ -314,6 +322,8 @@
         if (url !== '') {
             parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupName=' + parent.$('#selectedGroupName').html());
         }
+
+        $scope.collapseSidebar();
     };
 
     $scope.GoldDeluxe = function () {
@@ -341,6 +351,8 @@
         }
 
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url), null, null, null, true);
+
+        $scope.collapseSidebar();
     };
 
     $scope.ColossusBets = function () {
@@ -368,14 +380,18 @@
         }
 
         parent.Fanex.ExtAcc.LoadMainIFrame(url);
+
+        $scope.collapseSidebar();
     };
 
     $scope.Sportsbook2 = function () {
         $scope.RenderDCS(16);
+        $scope.collapseSidebar();
     };
 
     $scope.Cockfighting = function () {
         $scope.RenderDCS(19);
+        $scope.collapseSidebar();
     };
 
     $scope.Cricket = function () {
@@ -385,30 +401,37 @@
 
     $scope.Allbet = function () {
         $scope.RenderDCS(21);
+        $scope.collapseSidebar();
     };
 
     $scope.MacauGames = function () {
         $scope.RenderDCS(22);
+        $scope.collapseSidebar();
     };
 
     $scope.NG2 = function () {
         $scope.RenderDCS(23);
+        $scope.collapseSidebar();
     };
 
     $scope.FishingWorld = function () {
         $scope.RenderDCS(24);
+        $scope.collapseSidebar();
     };
 
     $scope.Lottery = function () {
         $scope.RenderDCS(28);
+        $scope.collapseSidebar();
     };
 
     $scope.Lucky3 = function () {
         $scope.RenderDCS(26);
+        $scope.collapseSidebar();
     };
 
     $scope.Bullfighting = function () {
         $scope.RenderDCS(30);
+        $scope.collapseSidebar();
     };
 
     $scope.RenderDCS = function (productId) {

@@ -6,7 +6,8 @@
 
 body {    
     color: #fff; 
-
+    overflow: auto;
+    background-color: #404c64;
     @media screen and (min-device-width: 768px) {
         background-color: #fff;
         color: #232428;

@@ -111,6 +111,7 @@ Fanex.ExtAcc = {
     AutoInsertCompleted: false,
     AutoInsertCount: 0,
     SuggestionXHR: null,
+    shouldReloadLeftPanel: false,
 
     DecodeHtml: function (str) {
         return $("<div/>").html(str).text();
@@ -374,37 +375,45 @@ Fanex.ExtAcc = {
 
         if (widthDevice >= 768 && widthDevice <= 1600) {
             iconUser.on("click", function () {
-                if (!iconUser.hasClass("active")) {
-                    leftSplitter.removeClass("collapse-leftpanel").addClass("expand-leftpanel");
-                    content.addClass("collapse-content");
-                    //splitterBar.addClass("expand-leftpanel");
-                    iconUser.addClass("active");
-                } else {
+                if (iconUser.hasClass("active")) {
                     leftSplitter.addClass("collapse-leftpanel").removeClass("expand-leftpanel");
                     content.removeClass("collapse-content");
-                    //splitterBar.removeClass("expand-leftpanel");
-                    iconUser.removeClass("active");
+                    iconUser.removeClass("active");                    
+                } else {
+                    leftSplitter.removeClass("collapse-leftpanel").addClass("expand-leftpanel");
+                    content.addClass("collapse-content");
+                    iconUser.addClass("active");
                 }
                 $(window).resize();
             });
         } else {
+            $(window).bind('orientationchange', function (e) {
+                if (widthDevice < 768) {
+                    $this.shouldReloadLeftPanel = true;
+                }
+            });
             iconUser.on("click", function () {
-                if (!iconUser.hasClass("active")) {
-                    iconUser.addClass("active");
-                    leftSplitter.addClass("expand-leftpanel").removeClass("collapse-leftpanel");
-                    content.removeClass("expand-content").addClass("collapse-content");
-                } else {
+                if (iconUser.hasClass("active")) {    
                     iconUser.removeClass("active");
                     leftSplitter.removeClass("expand-leftpanel").addClass("collapse-leftpanel");
                     content.removeClass("collapse-content").addClass("expand-content");
+                } else {
+                    iconUser.addClass("active");
+                    leftSplitter.removeClass("collapse-leftpanel").addClass("expand-leftpanel");
+                    content.removeClass("expand-content").addClass("collapse-content");
+                    if ($this.shouldReloadLeftPanel) {
+                        document.getElementById('leftFrame').contentDocument.location.reload(false);
+                    }
+                  
                 }
+                $this.shouldReloadLeftPanel = false;
 
                 iconNav.removeClass('active');
                 sidebar.removeClass('expand-sidebar').addClass('collapse-sidebar');
                 $(window).resize();
             });
         }
-
+            
 
         $(window).resize(function () {
             Fanex.ExtAcc.Resize();

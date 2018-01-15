@@ -146,6 +146,7 @@
             parent.Fanex.ExtAcc.BlockUI();
             parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl(actionName), null, null, null, true);
         }
+        $scope.collapseSidebar();
     };
 
     $scope.DoubleComm = function (allow, id) {
@@ -746,6 +747,7 @@
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
         parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = $scope.model.personalInfo.uplineId.value;
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMinPT' + "?custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
+        $scope.collapseSidebar();
     };
 
     $scope.MinRB = function () {
@@ -762,6 +764,7 @@
             var url = 'CustomerSetting/Racebook/RacingSetting/' + typeUrl + '?id=' + $scope.model.personalInfo.custId.value + '&roleId=' + roleId;
             parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url + '&groupName=' + parent.$('#selectedGroupName').html()));
         }
+        $scope.collapseSidebar();
     };
 
     $scope.SuperPT = function () {
