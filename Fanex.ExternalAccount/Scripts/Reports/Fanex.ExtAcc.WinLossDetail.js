@@ -369,7 +369,7 @@ Fanex.ExtAcc.WinLossDetail = {
                         '</div>';
     },
     CustomUsernameSortFunction: function (cell1Value, cell2Value, sortDirection) {
-        if (sortDirection == 'ASC') {
+        if (sortDirection == 'asc') {
             return cell1Value.Username > cell2Value.Username ? 1 : -1;
         }
 
