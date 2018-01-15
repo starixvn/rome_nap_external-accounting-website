@@ -1,14 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Customer
 {
+    using CasinoLibrary.Model.UserException;
+    using DTO.Customer;
+    using Fanex.Logging.Extensions.Web;
+    using Interface.Customer;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    using CasinoLibrary.Model.UserException;
-    using DTO.Customer;
-    using Interface.Customer;
-    using System.Diagnostics;
-    using Fanex.Logging.Extensions.Web;
     using ThirdPartyProducts.StatusSetting.Enums;
     using ThirdPartyProducts.StatusSetting.Model;
     using ThirdPartyProducts.StatusSetting.Services;

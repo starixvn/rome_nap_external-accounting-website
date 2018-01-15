@@ -39,7 +39,7 @@
 
         private static void SetTextForIndirectUplineEditMember(Setting setting)
         {
-            var ptItem = setting.MasterPts.FirstOrDefault(item => item.Key == "PT");
+            var ptItem = setting.MasterPts.Find(item => item.Key == "PT");
             if (ptItem != null)
             {
                 ptItem.Value = "Sportsbook";

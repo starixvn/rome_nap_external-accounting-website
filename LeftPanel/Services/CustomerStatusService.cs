@@ -3,9 +3,9 @@
     using System.Data;
     using Core.Shared;
     using CustomerSetting.Module.Keno.KenoSetting.Configurations;
-    using Fanex.ExternalAccount.Core.Authorization;
-    using Fanex.ExternalAccount.Service.Impl.Customer;
-    using Fanex.ExternalAccount.Service.Interface.Customer;
+    using Core.Authorization;
+    using Service.Impl.Customer;
+    using Service.Interface.Customer;
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Utilities;
@@ -156,12 +156,12 @@
                                         || !statusRow.ToBoolean("IsIMBC");
 
         private static void SetCockfightingStatus(CustomerStatus custStatus, DataRow statusRow)
-            => custStatus.HideCockfighting = statusRow.ToBoolean("HideCockfighting") ||
-                                             !AppSettings.IsShowCockfighting;
+            => custStatus.HideCockfighting = statusRow.ToBoolean("HideCockfighting")
+                                        || !AppSettings.IsShowCockfighting;
 
         private static void SetSportsbook2Status(CustomerStatus custStatus, DataRow statusRow)
-            => custStatus.HideSportsbook2 = statusRow.ToBoolean("HideMuayThai") ||
-                                            !AppSettings.IsShowSportsbook2;
+            => custStatus.HideSportsbook2 = statusRow.ToBoolean("HideMuayThai")
+                                        || !AppSettings.IsShowSportsbook2;
 
         private static void SetLiveCasinoStatus(CustomerStatus custStatus, DataRow statusRow)
         {

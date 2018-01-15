@@ -6,13 +6,13 @@
     {
         public Setting()
         {
-            this.EnableItems = new List<ObjectInfo>();
-            this.SyncItems = new List<ObjectInfo>();
-            this.EditItems = new List<ObjectInfo>();
-            this.Details = new List<ObjectInfo>();
-            this.MinMaxPts = new List<ObjectInfo>();
-            this.SuperPts = new List<ObjectInfo>();
-            this.MasterPts = new List<ObjectInfo>();
+            EnableItems = new List<ObjectInfo>();
+            SyncItems = new List<ObjectInfo>();
+            EditItems = new List<ObjectInfo>();
+            Details = new List<ObjectInfo>();
+            MinMaxPts = new List<ObjectInfo>();
+            SuperPts = new List<ObjectInfo>();
+            MasterPts = new List<ObjectInfo>();
         }
 
         public List<ObjectInfo> EnableItems { get; set; }

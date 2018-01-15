@@ -1,13 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Customers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
     using Core.Authorization;
     using Core.Shared;
     using DTO.Customer;
     using Extensions;
     using Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
     using Utilities;
     using ViewModels;
 
@@ -50,7 +50,7 @@
                 PersonalInfo = GetPersonalInfo(custInfoRow, lineRow),
                 Login = GetLoginInfo(cashRow, custInfoRow)
             };
-            
+
             var customerStatus = customerStatusService.GetCustomerStatus(
                 actorId,
                 groupName,
@@ -127,16 +127,16 @@
             if (roleId.IsNotMember())
             {
                 loginInfos.Add(new ObjectInfo
-                    {
-                        Value = Utils.ToBoolean(customerRow["NicknameLoginOnly"]) ? "Nickname Only" : "Username/Nickname",
-                        Text = "Login Options"
-                    });
+                {
+                    Value = Utils.ToBoolean(customerRow["NicknameLoginOnly"]) ? "Nickname Only" : "Username/Nickname",
+                    Text = "Login Options"
+                });
 
                 loginInfos.Add(new ObjectInfo
-                    {
-                        Value = Utils.ToDateTime(customerRow["OTPCreateDate"]).ToStringExt(DateTimeFormat),
-                        Text = "OTP"
-                    });
+                {
+                    Value = Utils.ToDateTime(customerRow["OTPCreateDate"]).ToStringExt(DateTimeFormat),
+                    Text = "OTP"
+                });
             }
 
             return loginInfos;
@@ -245,11 +245,12 @@
             DataTable productStatusTable,
             CustomerStatus customerStatus)
         {
-            var enableItems = new List<ObjectInfo>();
-
-            enableItems.Add(ClosedStatus(customerRow, customerStatus));
-            enableItems.Add(SuspendedStatus(customerRow, customerStatus));
-            enableItems.Add(OutrightStatus(customerRow, customerStatus));
+            var enableItems = new List<ObjectInfo>
+            {
+                ClosedStatus(customerRow, customerStatus),
+                SuspendedStatus(customerRow, customerStatus),
+                OutrightStatus(customerRow, customerStatus)
+            };
 
             AddCasinoStatus(customerRow, customerStatus, enableItems);
             AddNumberGameStatus(customerRow, customerStatus, enableItems);
@@ -264,7 +265,7 @@
             return enableItems;
         }
 
-        private static void AddGoldDeluxeStatus(DataRow customerRow, CustomerStatus customerStatus, List<ObjectInfo> enableItems)
+        private static void AddGoldDeluxeStatus(DataRow customerRow, CustomerStatus customerStatus, ICollection<ObjectInfo> enableItems)
         {
             if (customerStatus.HideGoldDeluxe)
             {
@@ -283,7 +284,7 @@
             enableItems.Add(goldDeluxeStatus);
         }
 
-        private static void AddColossusBetsStatus(DataRow customerRow, CustomerStatus customerStatus, List<ObjectInfo> enableItems)
+        private static void AddColossusBetsStatus(DataRow customerRow, CustomerStatus customerStatus, ICollection<ObjectInfo> enableItems)
         {
             if (customerStatus.HideColossusBets)
             {
@@ -303,7 +304,7 @@
             enableItems.Add(colossusBetsStatus);
         }
 
-        private static void AddVirtualSportsStatus(DataRow customerRow, CustomerStatus customerStatus, List<ObjectInfo> enableItems)
+        private static void AddVirtualSportsStatus(DataRow customerRow, CustomerStatus customerStatus, ICollection<ObjectInfo> enableItems)
         {
             if (customerStatus.HideVirtualSports)
             {
@@ -321,10 +322,10 @@
             enableItems.Add(eSportsStatus);
         }
 
-        private static void AddHRFixedOddsStatus(DataRow customerRow, CustomerStatus customerStatus, List<ObjectInfo> enableItems)
+        private static void AddHRFixedOddsStatus(DataRow customerRow, CustomerStatus customerStatus, ICollection<ObjectInfo> enableItems)
         {
             var hrFixedOddsStatus = new ObjectInfo(
-                "EnableHRFixedOdds", 
+                "EnableHRFixedOdds",
                 customerRow.EnableHorseRacingFixedOdds(),
                 "HR Fixed Odds",
                 "Enable Horse Racing Fixed Odds");
@@ -338,7 +339,10 @@
             enableItems.Add(hrFixedOddsStatus);
         }
 
-        private static void AddDoubleCommStatus(DataRow customerRow, CustomerStatus customerStatus, List<ObjectInfo> enableItems)
+        private static void AddDoubleCommStatus(
+            DataRow customerRow,
+            CustomerStatus customerStatus,
+            ICollection<ObjectInfo> enableItems)
         {
             var doubleCommStatus = new ObjectInfo("DoubleComm", customerRow.EnableDoubleComm(), "Double Comm",
                 "Enable Double Commission");
@@ -353,7 +357,7 @@
         }
 
         private static void AddVirtualSportsStatus(DataTable productStatusTable, CustomerStatus customerStatus,
-            List<ObjectInfo> enableItems)
+            ICollection<ObjectInfo> enableItems)
         {
             if (customerStatus.HideVirtualSports)
             {
@@ -372,7 +376,10 @@
             enableItems.Add(virtualSportsStatus);
         }
 
-        private static void AddLiveCasinoStatus(DataRow customerRow, CustomerStatus customerStatus, List<ObjectInfo> enableItems)
+        private static void AddLiveCasinoStatus(
+            DataRow customerRow,
+            CustomerStatus customerStatus,
+            ICollection<ObjectInfo> enableItems)
         {
             if (!customerStatus.SyncLiveCasino)
             {
@@ -391,7 +398,7 @@
             enableItems.Add(liveCasinoStatus);
         }
 
-        private static void AddNumberGameStatus(DataRow customerRow, CustomerStatus customerStatus, List<ObjectInfo> enableItems)
+        private static void AddNumberGameStatus(DataRow customerRow, CustomerStatus customerStatus, ICollection<ObjectInfo> enableItems)
         {
             var numberGameStatus = new ObjectInfo("EnableNumberGame", customerRow.EnableNumberGame(), "Enable Num Game",
                 "Enable Number Game");
@@ -404,7 +411,7 @@
             enableItems.Add(numberGameStatus);
         }
 
-        private static void AddCasinoStatus(DataRow customerRow, CustomerStatus customerStatus, List<ObjectInfo> enableItems)
+        private static void AddCasinoStatus(DataRow customerRow, CustomerStatus customerStatus, ICollection<ObjectInfo> enableItems)
         {
             if (!customerStatus.SyncCasino)
             {
@@ -486,7 +493,7 @@
             return details;
         }
 
-        private static void AddCricketEditLink(CustomerStatus customerStatus, List<ObjectInfo> details)
+        private static void AddCricketEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
         {
             if (!customerStatus.HideCricket)
             {
@@ -494,7 +501,7 @@
             }
         }
 
-        private static void AddCockfightingEditLink(CustomerStatus customerStatus, List<ObjectInfo> details)
+        private static void AddCockfightingEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
         {
             if (!customerStatus.HideCockfighting)
             {
@@ -502,7 +509,7 @@
             }
         }
 
-        private static void AddSportsbook2EditLink(CustomerStatus customerStatus, List<ObjectInfo> details)
+        private static void AddSportsbook2EditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
         {
             if (!customerStatus.DisableSportsbook2)
             {
@@ -510,7 +517,7 @@
             }
         }
 
-        private static void AddColossusBetsEditLink(CustomerStatus customerStatus, List<ObjectInfo> details)
+        private static void AddColossusBetsEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
         {
             if (!customerStatus.HideColossusBets)
             {
@@ -518,7 +525,7 @@
             }
         }
 
-        private static void AddGoldDeluxeEditLink(CustomerStatus customerStatus, List<ObjectInfo> details)
+        private static void AddGoldDeluxeEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
         {
             if (!customerStatus.UplineStatus.HideGoldDeluxe)
             {
@@ -526,7 +533,7 @@
             }
         }
 
-        private static void AddLiveCasinoEditLink(CustomerStatus customerStatus, List<ObjectInfo> details)
+        private static void AddLiveCasinoEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
         {
             if (customerStatus.UplineStatus.SyncLiveCasino)
             {
@@ -534,7 +541,7 @@
             }
         }
 
-        private static void AddCasinoEditLink(CustomerStatus customerStatus, List<ObjectInfo> details)
+        private static void AddCasinoEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
         {
             if (customerStatus.UplineStatus.SyncCasino)
             {
@@ -542,7 +549,7 @@
             }
         }
 
-        private static void AddVirtualSportsEditLink(CustomerStatus customerStatus, List<ObjectInfo> details)
+        private static void AddVirtualSportsEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
         {
             var hideVirtualSports = customerStatus.RoleId.IsMember()
                 ? customerStatus.UplineStatus.HideVirtualSports

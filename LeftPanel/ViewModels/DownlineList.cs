@@ -6,9 +6,9 @@
     {
         public DownlineList()
         {
-            this.Downlines = new List<ObjectInfo>();
-            this.Pages = new List<ObjectInfo>();
-            this.CurrentPage = 1;
+            Downlines = new List<ObjectInfo>();
+            Pages = new List<ObjectInfo>();
+            CurrentPage = 1;
         }
 
         public List<ObjectInfo> Downlines { get; set; }

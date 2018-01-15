@@ -1,27 +1,23 @@
 ﻿namespace Fanex.ExternalAccount
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Optimization;
-    using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
     using CasinoLibrary.SBAgent;
     using Core.Context;
     using CustomerSetting.Client40;
     using Data.Configuration;
+    using GoldDeluxe.CoreSetting.Mappings;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
-    using GoldDeluxe.CoreSetting.Mappings;
     using ONEbook.UM.Filters;
     using Sunplus.Libraries.APILogger;
+    using System;
+    using System.Collections.Generic;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Optimization;
+    using System.Web.Routing;
     using Utilities;
-    using System.Configuration;
-    using System.Web.Configuration;
-    using System.Web.Security;
-
 
     public class MvcApplication : HttpApplication
     {
@@ -82,8 +78,6 @@
 
         protected void Application_Start()
         {
-            //SetDynamicAuthenticationCookieName();
-
             AreaRegistration.RegisterAllAreas();
             CustomerSettingRegistration.Init();
 
@@ -157,7 +151,5 @@
 
             return result;
         }
-
-
     }
 }

@@ -6,8 +6,8 @@
     {
         public BalanceInfo()
         {
-            this.Balances = new List<ObjectInfo>();
-            this.Statuses = new List<Status>();
+            Balances = new List<ObjectInfo>();
+            Statuses = new List<Status>();
         }
 
         public ObjectInfo CurrencyId { get; set; }

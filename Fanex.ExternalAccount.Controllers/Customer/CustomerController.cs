@@ -1,15 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
-    using System;
-    using System.Data;
-    using System.Globalization;
-    using System.Linq;
-    using System.Net;
-    using System.Threading;
-    using System.Web;
-    using System.Web.Mvc;
     using CasinoLibrary.Model.UserException;
     using Common;
+    using Core.Authorization;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
@@ -19,6 +12,7 @@
     using DTO.Customer;
     using Excel.Customer.CustomerListPage;
     using IBCUtils;
+    using Logging.Extensions.Web;
     using Module.NG2.Entities;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -26,15 +20,20 @@
     using Service.Impl.Customer;
     using Service.Impl.Customer.Casino;
     using Service.Impl.Report;
+    using Service.Interface.Report;
+    using System;
+    using System.Data;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading;
+    using System.Web;
+    using System.Web.Mvc;
     using Utilities;
     using ViewModel.Customer;
-    using Logging.Extensions.Web;
+    using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
     using Customer = PTEngine.BusinessObjects.Customer;
     using CustomerDTO = Fanex.ExternalAccount.DTO.Customer.Customer;
-    using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
-    using System.Diagnostics;
-    using Service.Interface.Report;
-    using Core.Authorization;
 
     public class CustomerController : CustomerBase //DevSkim: ignore DS184626
     {
@@ -711,6 +710,6 @@
         private string Customers2Json(DataTable customers)
             => JsonConvert.SerializeObject(
                 CheckVNIP(customers), Formatting.None,
-                new IsoDateTimeConverter { DateTimeFormat = DateTimeFormat });        
+                new IsoDateTimeConverter { DateTimeFormat = DateTimeFormat });
     }
 }

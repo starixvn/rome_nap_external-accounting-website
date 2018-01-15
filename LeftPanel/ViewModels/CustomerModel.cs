@@ -6,12 +6,12 @@
     {
         public CustomerModel()
         {
-            this.BalanceInfo = new BalanceInfo();
-            this.DownlineList = new DownlineList();
-            this.Login = new List<ObjectInfo>();
-            this.OnlineList = new OnlineList();
-            this.PersonalInfo = new PersonalInfo();
-            this.Setting = new Setting();
+            BalanceInfo = new BalanceInfo();
+            DownlineList = new DownlineList();
+            Login = new List<ObjectInfo>();
+            OnlineList = new OnlineList();
+            PersonalInfo = new PersonalInfo();
+            Setting = new Setting();
         }
 
         public PersonalInfo PersonalInfo { get; set; }

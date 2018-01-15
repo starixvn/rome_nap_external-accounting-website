@@ -50,7 +50,6 @@ namespace Fanex.ExternalAccount.Core.Authorization
         private readonly ICachingService cachingService;
         private readonly ILoginService loginService;
         private readonly IReportService reportService;
-        private readonly IUserService userService;
 
         public AuthorizationServiceImpl() : this(null, null, null, null)
         {

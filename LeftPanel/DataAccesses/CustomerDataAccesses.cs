@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using System.Data;
     using Criteria;
-    using Fanex.Data.DNAide;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
+    using Data.DNAide;
+    using DTO;
+    using ViewModels;
 
     public interface CustomerDataAccesses
     {

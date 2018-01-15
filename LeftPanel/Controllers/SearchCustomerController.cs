@@ -8,7 +8,7 @@
     using Core.Context;
     using CustomerSetting.Security.Authenticate;
     using Extensions;
-    using Fanex.ExternalAccount.Core.Shared;
+    using Core.Shared;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using PTRacing.BusinessObjects;

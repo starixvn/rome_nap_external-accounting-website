@@ -17,7 +17,7 @@
         {
             get
             {
-                if (this.MasterAgentUsedCreditItems == null || this.MasterAgentUsedCreditItems.Count == 0)
+                if (MasterAgentUsedCreditItems == null || MasterAgentUsedCreditItems.Count == 0)
                 {
                     return new MasterAgentUsedCreditItem();
                 }
@@ -25,7 +25,7 @@
                 decimal givenCredit = 0m;
                 decimal usedCredit = 0m;
 
-                foreach (var item in this.MasterAgentUsedCreditItems)
+                foreach (var item in MasterAgentUsedCreditItems)
                 {
                     givenCredit += item.GivenCredit;
                     usedCredit += item.UsedCredit;

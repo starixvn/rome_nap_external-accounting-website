@@ -4,9 +4,9 @@
     using System.Collections.Generic;
     using System.Data;
     using Core.Authorization;
+    using Core.Shared;
     using Customers;
-    using Fanex.ExternalAccount.Core.Shared;
-    using Fanex.ExternalAccount.Module.LeftPanel.DataAccesses;
+    using DataAccesses;
     using Utilities;
     using ViewModels;
 
@@ -25,10 +25,6 @@
 
     public class CustomerQueryServiceImpl : CustomerQueryService
     {
-        private readonly CustomerDataAccesses dataAccess;
-        private readonly AuthorizationService authorizationService;
-        private readonly IReadOnlyDictionary<int, CustomerInfoQueryService> queryServices;
-
         private static readonly IReadOnlyDictionary<int, CustomerInfoQueryService> queryServiceFactory =
             new Dictionary<int, CustomerInfoQueryService>
             {
@@ -37,6 +33,10 @@
                 [Role.Agent] = new AgentInfoQueryServiceImpl(),
                 [Role.Member] = new MemberInfoQueryServiceImpl()
             };
+
+        private readonly AuthorizationService authorizationService;
+        private readonly CustomerDataAccesses dataAccess;
+        private readonly IReadOnlyDictionary<int, CustomerInfoQueryService> queryServices;
 
         public CustomerQueryServiceImpl(
             CustomerDataAccesses dataAccess = null,
@@ -81,8 +81,8 @@
                 var onlineIp = row.ToString("ip");
                 model.Onlines.Add(new OnlineInfo
                 (
-                    new ObjectInfo { Text = authorizationService.CanViewVNIP(onlineIp) ? onlineIp : string.Empty },
-                    new ObjectInfo { Text = Utils.ToDateTime(row["reload_time"]).ToStringExt() }
+                    new ObjectInfo {Text = authorizationService.CanViewVNIP(onlineIp) ? onlineIp : string.Empty},
+                    new ObjectInfo {Text = Utils.ToDateTime(row["reload_time"]).ToStringExt()}
                 ));
             }
 

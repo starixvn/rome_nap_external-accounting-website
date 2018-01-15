@@ -6,7 +6,7 @@
     {
         public OnlineList()
         {
-            this.Onlines = new List<OnlineInfo>();
+            Onlines = new List<OnlineInfo>();
         }
 
         public List<OnlineInfo> Onlines { get; set; }

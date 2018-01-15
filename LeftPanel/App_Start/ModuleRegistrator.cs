@@ -1,10 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.App_Start
 {
+    using CustomerSetting.Module.Core.Web.App_Start;
     using System.Reflection;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Module.Core.Web.App_Start;
-    
-    public class ModuleRegistrator : AppAreaRegistrator 
+
+    public class ModuleRegistrator : AppAreaRegistrator
     {
         protected static string ControllerName => "LeftPanel";
 
@@ -19,6 +19,6 @@
                 AreaName + "/" + ControllerName + "/{controller}/{action}/{id}/{uplineId}/{pageIndex}",
                 new { action = "Index", id = UrlParameter.Optional, uplineId = UrlParameter.Optional, pageIndex = UrlParameter.Optional },
                 new[] { ControllerNameSpace });
-        }       
+        }
     }
 }
