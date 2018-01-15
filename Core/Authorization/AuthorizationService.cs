@@ -51,21 +51,19 @@ namespace Fanex.ExternalAccount.Core.Authorization
         private readonly ILoginService loginService;
         private readonly IReportService reportService;
 
-        public AuthorizationServiceImpl() : this(null, null, null, null)
+        public AuthorizationServiceImpl() : this(null, null, null)
         {
         }
 
         public AuthorizationServiceImpl(
             ICachingService cachingService,
             ILoginService loginService,
-            IReportService reportService,
-            IUserService userService)
+            IReportService reportService)
         {
             this.cachingService = cachingService ?? new CachingService();
             this.loginService = loginService ?? new LoginService();
             this.reportService = reportService ?? new ReportService();
-            this.userService = userService ?? new UserService();
-    }
+        }
 
         public bool IsBelong()
         {
