@@ -8,7 +8,7 @@
             Fanex.ExtAcc.BlockUI();
 
             $.ajax({
-                url: resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/ResetMemberCredit'),
+                url: resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/ResetMemberCredit'),
                 type: 'post',
                 data: {
                     agentId: agentId,
@@ -65,7 +65,7 @@ function ResetAllAccountCredit(agentId) {
         false,
         function () {
             $.ajax({
-                url: resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/ResetMemberCredit'),
+                url: resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/ResetMemberCredit'),
                 type: 'post',
                 data: {
                     agentId: agentId,

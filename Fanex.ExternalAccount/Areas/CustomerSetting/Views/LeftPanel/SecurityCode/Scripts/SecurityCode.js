@@ -27,7 +27,7 @@
     Fanex.CustomerSetting.Core.BlockUI();
 
     $.ajax({
-        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateSecurityCode'),
+        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateSecurityCode'),
         type: 'post',
         data: {
             custId: custId,

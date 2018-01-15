@@ -9,7 +9,9 @@
     int customerId = Request["custId"] != null ? Converter.ToInt(Request["custId"]) : 0;
     string customerName = Request["username"] != null ? Converter.ToString2(Request["username"]) : string.Empty;
 }
-
+@{ 
+    Layout = null;
+}
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/OTP/Styles/OTP.css")" rel="stylesheet" type="text/css" />
 <div class="content">

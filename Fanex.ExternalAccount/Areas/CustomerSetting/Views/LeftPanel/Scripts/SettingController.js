@@ -233,7 +233,7 @@
                     parent.Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
-                        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateCloseCutomer'),
+                        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateCloseCutomer'),
                         dataType: 'json',
                         type: 'post',
                         data: {
@@ -296,7 +296,7 @@
                         parent.Fanex.ExtAcc.BlockUI();
 
                         $.ajax({
-                            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateCloseCutomer'),
+                            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateCloseCutomer'),
                             dataType: 'json',
                             type: 'post',
                             data: {
@@ -380,7 +380,7 @@
                     parent.Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
-                        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateSuspendCutomer'),
+                        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateSuspendCutomer'),
                         dataType: 'json',
                         type: 'post',
                         data: {
@@ -441,7 +441,7 @@
             parent.Fanex.ExtAcc.BlockUI();
 
             $.ajax({
-                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateOutright'),
+                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateOutright'),
                 dataType: 'json',
                 type: 'post',
                 data: {
@@ -499,7 +499,7 @@
                 parent.Fanex.ExtAcc.BlockUI();
 
                 $.ajax({
-                    url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateAutoMPT'),
+                    url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateAutoMPT'),
                     dataType: 'json',
                     type: 'post',
                     data: {

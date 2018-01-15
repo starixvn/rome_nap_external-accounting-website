@@ -43,7 +43,7 @@ function Update() {
             function () {
                 Fanex.ExtAcc.BlockUI();
                 $.ajax({
-                    url: resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateClearBalance'),
+                    url: resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateClearBalance'),
                     data: {
                         custId: custId,
                         custIds: custIds,

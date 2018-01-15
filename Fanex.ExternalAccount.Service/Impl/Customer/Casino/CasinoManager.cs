@@ -3,7 +3,50 @@ using Fanex.ExternalAccount.DTO.Customer.Casino;
 
 namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
 {
-    public class CasinoManager
+    public interface ICasinoManager
+    {
+        bool UpdateCSStatus(
+            int custid,
+            bool syncCS,
+            bool disabledCS,
+            int userId,
+            string ip,
+            int subAccId,
+            string lang);
+
+#pragma warning disable S107 // Methods should not have too many parameters
+        bool UpdateCSStatus(
+            int custid,
+            bool syncCS,
+            bool disabledCS,
+            bool isUpdDownline,
+            int userId,
+            string ip,
+            int subAccId,
+            string lang,
+            string username,
+            string subUsername);
+#pragma warning restore S107 // Methods should not have too many parameters
+
+#pragma warning disable S107 // Methods should not have too many parameters
+        bool UpdateCSStatus(
+            int custid,
+            bool syncCS,
+            bool disabledCS,
+            bool isUpdDownline,
+            int userId,
+            string ip,
+            int subAccId,
+            string lang,
+            string username,
+            string subUsername,
+            out string errMsg);
+#pragma warning restore S107 // Methods should not have too many parameters
+
+        CasinoCustomer GetCustInfoIBC(int custid, int uplineId);
+    }
+
+    public class CasinoManager : ICasinoManager
     {
         private static readonly CasinoManager instance = new CasinoManager();
         private readonly CasinoDao casinoDao = new CasinoDao();

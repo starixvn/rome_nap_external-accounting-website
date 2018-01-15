@@ -258,7 +258,7 @@
             AddVirtualSportsStatus(productStatusTable, customerStatus, enableItems);
             AddDoubleCommStatus(customerRow, customerStatus, enableItems);
             AddHRFixedOddsStatus(customerRow, customerStatus, enableItems);
-            AddVirtualSportsStatus(customerRow, customerStatus, enableItems);
+            AddESportsStatus(customerRow, customerStatus, enableItems);
             AddColossusBetsStatus(customerRow, customerStatus, enableItems);
             AddGoldDeluxeStatus(customerRow, customerStatus, enableItems);
 
@@ -304,9 +304,9 @@
             enableItems.Add(colossusBetsStatus);
         }
 
-        private static void AddVirtualSportsStatus(DataRow customerRow, CustomerStatus customerStatus, ICollection<ObjectInfo> enableItems)
+        private static void AddESportsStatus(DataRow customerRow, CustomerStatus customerStatus, List<ObjectInfo> enableItems)
         {
-            if (customerStatus.HideVirtualSports)
+            if (customerStatus.HideEsports)
             {
                 return;
             }
@@ -483,7 +483,7 @@
             AddCasinoEditLink(customerStatus, details);
             AddLiveCasinoEditLink(customerStatus, details);
             AddVirtualSportsEditLink(customerStatus, details);
-            details.Add(new ObjectInfo("Keno", "Edit Keno"));
+            AddKenoEditLink(details);
             AddGoldDeluxeEditLink(customerStatus, details);
             AddColossusBetsEditLink(customerStatus, details);
             AddSportsbook2EditLink(customerStatus, details);
@@ -506,6 +506,14 @@
             if (!customerStatus.HideCockfighting)
             {
                 details.Add(new ObjectInfo("Cockfighting", "Edit Cockfighting"));
+            }
+        }
+
+        private static void AddKenoEditLink(List<ObjectInfo> details)
+        {
+            if (AppSettings.EnableKeno)
+            {
+                details.Add(new ObjectInfo("Keno", "Edit Keno"));
             }
         }
 

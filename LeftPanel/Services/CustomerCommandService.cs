@@ -14,6 +14,10 @@
     using DataAccesses;
     using Security;
     using Service.Impl.Customer.Casino;
+    using Core.Authorization;
+    using CustomerSetting.Security.Authenticate;
+    using Utilities;
+    using CustomerSetting.Module.Core.Web;
 
     public interface CustomerCommandService
     {
@@ -25,7 +29,7 @@
 
         DataTable CustomerSelectClearBalance(int custId);
 
-        Result CloseCutomer(int custId, bool close, bool clearCredit, string custName);
+        Result CloseCutomer(int custId, int uplineId, ICurrentSession currentSession, ICurrentContext currentContext, bool close, bool clearCredit, string custName);
 
         Result SuspendCustomer(int custId, bool suspend);
 
@@ -39,7 +43,7 @@
 
         Result EnableESports(int id, bool enable, bool enableDownline);
 
-        Result AutoMasterPt(int id, bool allow, int uplineId);
+        Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress);
 
         Result UpdateSecurityCode(int custId, string code, bool force, int roleId);
 
@@ -47,16 +51,24 @@
 
         Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId);
 
-        Result RemoveOtp(int custId);
+        Result RemoveOtp(int custId, int userId, string ip4Address);
     }
 
     public class CustomerCommandServiceImpl : CustomerCommandService
     {
+        private const int FromSystem = 3;
         private readonly CustomerDataAccesses dataAccess;
+        private readonly ICasinoManager casinoManager;
+        private readonly AuthorizationService authorizationService;
 
-        public CustomerCommandServiceImpl(CustomerDataAccesses dataAccess = null)
+        public CustomerCommandServiceImpl(
+            CustomerDataAccesses dataAccess = null,
+            ICasinoManager casinoManager = null,
+            AuthorizationService authorizationService = null)
         {
             this.dataAccess = dataAccess ?? new CustomerDataAccessesImpl();
+            this.casinoManager = casinoManager ?? new CasinoManager();
+            this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
         }
 
         public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
@@ -70,8 +82,53 @@
 
         public DataTable CustomerSelectClearBalance(int custId) => dataAccess.CustomerSelectClearBalance(custId);
 
-        public Result CloseCutomer(int custId, bool close, bool clearCredit, string custName)
-            => dataAccess.CloseCutomer(custId, close, clearCredit, custName);
+        public Result CloseCutomer(int custId, int uplineId, ICurrentSession currentSession, ICurrentContext currentContext, bool close, bool clearCredit, string custName)
+        {
+            var casinoCustomer = casinoManager.GetCustInfoIBC(custId, uplineId);
+
+            if (casinoCustomer?.RoleId == Role.Super
+                && !close
+                && !authorizationService.IsAuthorized(currentSession.UserId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host))
+            {
+                return new Result(1, ViewLang.DontHavePermission);
+            }
+
+            if (casinoCustomer?.CasinoSync == true)
+            {
+                UpdateCasinoClosed(custId, close, currentSession, currentContext);
+            }
+
+            return dataAccess.CloseCutomer(custId, close, clearCredit, custName);
+        }
+
+        protected void UpdateCasinoClosed(int custId, bool closed, ICurrentSession currentSession, ICurrentContext currentContext)
+        {
+            var cust = new Customer();
+            try
+            {
+                if (authorizationService.IsAuthorized(
+                    currentSession.UserId,
+                    eFunctions.CloseCustomer,
+                    AuthenticateAction.AuthenticationType.Host))
+                {
+                    cust.UpdateCustClosed(
+                        custId, 
+                        closed,
+                        currentContext.Ip4Address, 
+                        currentSession.UserId,
+                        currentSession.UserName, 
+                        FromSystem);
+                }
+            }
+            catch (ErrorException casinoEx)
+            {
+                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
+        }
 
         public Result SuspendCustomer(int custId, bool suspend)
             => dataAccess.SuspendCustomer(custId, suspend);
@@ -91,12 +148,10 @@
         public Result EnableESports(int id, bool enable, bool enableDownline) =>
             dataAccess.EnableESports(id, enable, enableDownline);
 
-        public Result AutoMasterPt(int id, bool allow, int uplineId)
+        public Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress)
         {
-            var result = dataAccess.AutoMasterPT(id, allow);
-
-            var casinoManager = new CasinoManager();
-            var custInfo = casinoManager.GetCustInfoIBC(id, uplineId);
+            var result = dataAccess.AutoMasterPT(custId, allow);
+            var custInfo = casinoManager.GetCustInfoIBC(custId, uplineId);
 
             if (!custInfo.CasinoSync)
             {
@@ -108,11 +163,11 @@
             try
             {
                 casinoSync.UpdateMasterDisableAutoMPT(
-                    id,
+                    custId,
                     allow,
-                    CurrentContext.Instance.Ip4Address,
-                    CurrentSession.Instance.UserId,
-                    CurrentSession.Instance.UserName,
+                    ipAddress,
+                    userId,
+                    username,
                     3);
             }
             catch (ErrorException casinoEx)
@@ -138,17 +193,18 @@
             return dataAccess.ResetSecurityCode(custId, hashCode, force || roleId.IsNotSuper());
         }
 
-        public Result EnableHrFixedOdds(int id, bool enable, bool enableDownline) =>
-            dataAccess.EnableHRFixedOdds(id, enable, enableDownline);
+        public Result EnableHrFixedOdds(int id, bool enable, bool enableDownline) 
+            => dataAccess.EnableHRFixedOdds(id, enable, enableDownline);
 
-        public Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId) =>
-            dataAccess.UpdateGoldDeluxe(id, enable, enableDownline, custName, userId);
+        public Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId) 
+            => dataAccess.UpdateGoldDeluxe(id, enable, enableDownline, custName, userId);
 
-        public Result RemoveOtp(int custId) => dataAccess.RemoveOTP(new RemoveOtpCriteria
-        {
-            Custid = custId,
-            Userid = CurrentSession.Instance.UserId,
-            IP = CurrentContext.Instance.Ip4Address
-        });
+        public Result RemoveOtp(int custId, int userId, string ip4Address) 
+            => dataAccess.RemoveOTP(new RemoveOtpCriteria
+            {
+                Custid = custId,
+                Userid = userId,
+                IP = ip4Address
+            });
     }
 }

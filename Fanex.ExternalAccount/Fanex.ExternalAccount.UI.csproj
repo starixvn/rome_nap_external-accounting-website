@@ -20,7 +20,7 @@
     </SccLocalPath>
     <SccProvider>
     </SccProvider>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <FileUpgradeFlags>
@@ -764,9 +764,6 @@
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Views\Super\EditSuper.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Balance\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Balance\Scripts\BalanceController.js" />
-    <Content Include="Areas\CustomerSetting\Views\LeftPanel\EnableRacing\Index.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\LeftPanel\EnableRacing\Scripts\RacingStatusController.js" />
-    <Content Include="Areas\CustomerSetting\Views\LeftPanel\EnableRacing\Styles\EnableRacing.css" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\active-icn.png" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\arrow-down-icn.png" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\images\arrow-up-icn.png" />

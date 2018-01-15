@@ -40,7 +40,7 @@
 
         protected const string UAT = "UAT";
         protected const string PRO = "LIVE";
-        private readonly ICurrentContext _currentContext;
+        private readonly CurrentContext _currentContext;
 
         private readonly ICurrentSession _currentSession;
         protected readonly AuthorizationService AuthorizationService = new AuthorizationServiceImpl();
@@ -55,7 +55,7 @@
 
         protected bool IncludeAllFunctions => Environment.Equals(UAT, StringComparison.OrdinalIgnoreCase);
 
-        protected virtual ICurrentContext CurrentContext => _currentContext ?? new CurrentContext();
+        protected virtual CurrentContext CurrentContext => _currentContext ?? new CurrentContext();
 
         protected virtual ICurrentSession CurrentSession => _currentSession ?? new CurrentSession();
 

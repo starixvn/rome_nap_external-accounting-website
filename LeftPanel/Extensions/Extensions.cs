@@ -131,20 +131,18 @@
 
         internal static bool IsProductEnabled(this DataTable productTable, int productId)
         {
-            var productRow = productTable.Select($"ProductID = {productId}");
+            var productRows = productTable.Select($"ProductID = {productId}");
 
-            return productRow != null
-                && productRow.Length > 0
-                && !productRow[0].IsDisabled();
+            return productRows.Length > 0
+                && !productRows[0].IsDisabled();
         }
 
         internal static bool IsProductSynced(this DataTable productTable, int productId)
         {
-            var productRow = productTable.Select($"ProductID = {productId}");
+            var productRows = productTable.Select($"ProductID = {productId}");
 
-            return productRow != null
-                && productRow.Length > 0
-                && productRow[0].IsSynced();
+            return productRows.Length > 0
+                && productRows[0].IsSynced();
         }
     }
 }

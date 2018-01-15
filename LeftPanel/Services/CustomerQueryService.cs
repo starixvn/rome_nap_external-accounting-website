@@ -16,7 +16,7 @@
 
         OnlineList GetOnlineList(int custId);
 
-        DataTable GetDownlineList(int custid, int pageSize, int pageIndex, out int totalPages);
+        DownlineList GetDownlineList(int custid, int pageSize, int pageIndex);
 
         IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId);
 
@@ -89,9 +89,9 @@
             return model;
         }
 
-        public DataTable GetDownlineList(int custid, int pageSize, int pageIndex, out int totalPages)
+        public DownlineList GetDownlineList(int custid, int pageSize, int pageIndex)
         {
-            totalPages = 1;
+            var totalPages = 1;
             var dr = dataAccess.GetDownlineList(custid, pageSize, pageIndex);
 
             if (dr?.ResultSet == null || dr.ResultSet.Tables.Count <= 0)
@@ -100,8 +100,47 @@
             }
 
             totalPages = Utils.ToInt32(dr.Outputs["totalpages"]);
+            var downlines = dr.ResultSet.Tables[0];
+            var model = new DownlineList();
 
-            return dr.ResultSet.Tables[0];
+            if (downlines?.Rows.Count <= 0)
+            {
+                return model;
+            }
+
+            AdDownlines(downlines, model);
+
+            model.CurrentPage = pageIndex;
+
+            AddPageItems(totalPages, model);
+
+            return model;
+        }
+
+        private static void AddPageItems(int totalPages, DownlineList model)
+        {
+            if (totalPages > 1)
+            {
+                for (var i = 1; i <= totalPages; i++)
+                {
+                    model.Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
+                }
+            }
+            else
+            {
+                model.Pages.Add(new ObjectInfo { Value = 1, Text = "1" });
+            }
+        }
+
+        private static void AdDownlines(DataTable downlines, DownlineList model)
+        {
+            if (downlines?.Rows != null)
+            {
+                foreach (DataRow item in downlines?.Rows)
+                {
+                    model.Downlines.Add(new ObjectInfo { Text = item["username"].ToString() });
+                }
+            }
         }
 
         public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId) =>
