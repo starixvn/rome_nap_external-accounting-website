@@ -146,21 +146,21 @@
             => custStatus.DisableNumberGame = statusRow.ToBoolean("disableNumber");
 
         private static void SetColossusBetsStatus(CustomerStatus custStatus, DataRow statusRow)
-            => custStatus.HideColossusBets = !AppSettings.IsShowColossusBets
+            => custStatus.HideColossusBets = !ProductSettings.IsShowColossusBets
                                             || statusRow.ToBoolean("HideColossusBet");
 
         private static void SetCricketStatus(CustomerStatus custStatus, DataRow statusRow)
             => custStatus.HideCricket = statusRow.ToBoolean("HideCricket")
-                                        || !AppSettings.IsShowCricket
+                                        || !ProductSettings.IsShowCricket
                                         || !statusRow.ToBoolean("IsIMBC");
 
         private static void SetCockfightingStatus(CustomerStatus custStatus, DataRow statusRow)
             => custStatus.HideCockfighting = statusRow.ToBoolean("HideCockfighting")
-                                        || !AppSettings.IsShowCockfighting;
+                                        || !ProductSettings.IsShowCockfighting;
 
         private static void SetSportsbook2Status(CustomerStatus custStatus, DataRow statusRow)
             => custStatus.HideSportsbook2 = statusRow.ToBoolean("HideMuayThai")
-                                        || !AppSettings.IsShowSportsbook2;
+                                        || !ProductSettings.IsShowSportsbook2;
 
         private static void SetLiveCasinoStatus(CustomerStatus custStatus, DataRow statusRow)
         {
@@ -180,7 +180,7 @@
             DataRow statusRow)
         {
             custStatus.HideEsports = !authorizationService.IsAuthorized(userId, eFunctions.ShowEnableEsports)
-                                     || AppSettings.HideEsports;
+                                     || ProductSettings.HideEsports;
             custStatus.DisableESports = statusRow.ToBoolean("DisableESports");
         }
 
@@ -199,7 +199,7 @@
 
         private static void SetGoldDeluxeStatus(CustomerStatus custStatus, DataRow statusRow)
         {
-            custStatus.HideGoldDeluxe = statusRow.ToBoolean("HideGoldDeluxe") || !AppSettings.IsShowGoldDeluxeSettingForCredit;
+            custStatus.HideGoldDeluxe = statusRow.ToBoolean("HideGoldDeluxe") || !ProductSettings.IsShowGoldDeluxeSettingForCredit;
             custStatus.SyncGoldDeluxeDownlines = statusRow.ToBoolean("SyncedGoldDeluxeDownline");
         }
 
@@ -219,7 +219,7 @@
                 DisableLiveCasino = uplineRow.ToBoolean("disableLiveCasino"),
                 DisableGoldDeluxe = uplineRow.ToBoolean("DisableGoldDeluxe"),
                 HideGoldDeluxe = uplineRow.ToBoolean("HideGoldDeluxe")
-                                 || !AppSettings.IsShowGoldDeluxeSettingForCredit,
+                                 || !ProductSettings.IsShowGoldDeluxeSettingForCredit,
                 DisableColossusBets = uplineRow.ToBoolean("DisableColossusBet"),
                 Closed = uplineRow.ToBoolean("closed"),
                 Suspended = uplineRow.ToBoolean("suspended"),

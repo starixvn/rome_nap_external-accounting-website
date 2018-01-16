@@ -513,7 +513,7 @@
 
         private static void AddKenoEditLink(List<ObjectInfo> details)
         {
-            if (AppSettings.EnableKeno)
+            if (ProductSettings.EnableKeno)
             {
                 details.Add(new ObjectInfo("Keno", "Edit Keno"));
             }
@@ -677,7 +677,7 @@
             => new ObjectInfo { Key = productNameNoSpace, Value = $"Edit {productName}" };
 
         internal static bool IsProductVisibledToSite(DataTable productStatusTable, int productId)
-            => productStatusTable.Select($"ProductID = {productId}").Length > 0 && AppSettings.IsShowProduct(productId);
+            => productStatusTable.Select($"ProductID = {productId}").Length > 0 && ProductSettings.IsShowProduct(productId);
 
         internal static ObjectInfo CreateEnableLinkItem(string productNameNoSpace, string name)
             => new ObjectInfo

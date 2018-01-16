@@ -18,6 +18,7 @@
     using System.Web.Optimization;
     using System.Web.Routing;
     using Utilities;
+    using global::Core.Shared;
 
     public class MvcApplication : HttpApplication
     {
@@ -122,7 +123,10 @@
 
         protected void Application_BeginRequest()
         {
-            Context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            if (AppSettings.IsUAT)
+            {
+                Context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            }
         }
 
         private static string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair) =>
