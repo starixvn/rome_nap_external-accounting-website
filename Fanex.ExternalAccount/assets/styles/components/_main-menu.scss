@@ -57,7 +57,7 @@
     }
 }
 
-@media (min-width: 678px) {  
+@media (min-device-width: 678px) {  
     .main-menu {
         > .menu {
             float: left;
@@ -94,7 +94,7 @@
     }  
 }
 
-@media (min-width: 1280px) {  
+@media (min-device-width: 1024px) {  
     .menu:hover .submenu {
         display: block !important;
         //opacity: 1;

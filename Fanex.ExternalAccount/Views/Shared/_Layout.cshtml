@@ -93,9 +93,9 @@
         <div class="sidebar" id="sidebar">
             <div class="profile">
                 <div class="picture">
-                    <span class="text">S</span>
+                    <span class="text">@CurrentSession.Instance.UserName.FirstOrDefault()</span>
                 </div>
-                <span class="username">sa</span>
+                <span class="username">@CurrentSession.Instance.UserName</span>
                 <div class="list-action">
                     <button class="btn -reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')">Reset Password</button>
                     <button class="btn -logout" onclick="Fanex.ExtAcc.Account.Logout()">Log Out</button>

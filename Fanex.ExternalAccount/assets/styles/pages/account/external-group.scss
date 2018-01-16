@@ -13,6 +13,11 @@
     float: left;
     padding-left: 16px;
     padding-right: 16px;
+    &.groupext-section {
+        margin-top: 60px;
+        overflow: auto;
+        height: 100vh;
+    }
 }
 
 .col {

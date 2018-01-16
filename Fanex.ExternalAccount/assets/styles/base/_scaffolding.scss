@@ -98,7 +98,7 @@ body {
     font-family: $font-family;
 
     @media screen and (max-device-width: 767px) {
-        overflow: auto;
+        overflow: hidden;
     }
 }
 
