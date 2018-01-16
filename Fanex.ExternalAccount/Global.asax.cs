@@ -25,6 +25,8 @@ namespace Fanex.ExternalAccount
     using Logging.Extensions.Web;
     using Service.Impl.Login;
     using Fanex.ExternalAccount.UI.Helpers;
+    using System.Web;
+    using System.Configuration;
 
     /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
      visit http://go.microsoft.com/?LinkId=9394801*/
@@ -135,6 +137,14 @@ namespace Fanex.ExternalAccount
         protected void Application_Error(object sender, EventArgs e)
         {
             ExceptionHandler.Handle(Server.GetLastError());
+        }
+
+        protected void Application_BeginRequest()
+        {
+            if (ConfigurationManager.AppSettings["Environment"] == "UAT")
+            {
+                Context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            }
         }
 
         protected void Application_AcquireRequestState(object sender, EventArgs e)
