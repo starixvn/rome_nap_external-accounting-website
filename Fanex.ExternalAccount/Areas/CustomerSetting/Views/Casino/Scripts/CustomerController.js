@@ -101,7 +101,7 @@ function CustomerController($scope, $element) {
         $.ajax({
             url: toUrl('CasinoCustomer/ResetMaxTransfer'),
             data: {
-                id: $scope.CustomerModel.ibcCustID,
+                id: $scope.CustomerModel.iBCCustID,
                 groupName: parent.$('#selectedGroupName').html()
             }
         }).success(function (result) {
@@ -142,7 +142,7 @@ function CustomerController($scope, $element) {
         $.ajax({
             url: toUrl('CasinoCustomer/GetCurrentWinLimit'),
             data: {
-                id: $scope.CustomerModel.ibcCustID,
+                id: $scope.CustomerModel.iBCCustID,
                 groupName: parent.$('#selectedGroupName').html()
             }
         }).success(function (result) {
