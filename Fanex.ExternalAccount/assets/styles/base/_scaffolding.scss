@@ -86,6 +86,10 @@
   clear: both;
 }
 
+html {
+    -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */
+}
+
 body {
     margin: 0;
     padding: 0;
