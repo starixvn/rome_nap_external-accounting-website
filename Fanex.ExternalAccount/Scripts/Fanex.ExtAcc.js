@@ -445,9 +445,15 @@ Fanex.ExtAcc = {
 
                 $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?id=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=1'));
 
-                setTimeout(function () {
-                    $('#txtLeftPanelUserName').focus();
-                }, 100);
+                var widthDevice = $(window).width();
+                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                    $('#txtLeftPanelUserName').blur();
+                }
+                else {
+                    setTimeout(function () {
+                        $('#txtLeftPanelUserName').focus();
+                    }, 100);
+                }
 
                 return true;
             } else {

@@ -234,18 +234,19 @@ body {
         background-color: #657082;
         outline: none;
         color: #fff;
+        font-style: italic;
         
         &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-          color: #fff;
+          color: rgba(#fff, 0.6);
         }
         &::-moz-placeholder { /* Firefox 19+ */
-          color: #fff;
+          color: rgba(#fff, 0.6);
         }
         &:-ms-input-placeholder { /* IE 10+ */
-          color: #fff;
+          color: rgba(#fff, 0.6);
         }
         &:-moz-placeholder { /* Firefox 18- */
-          color: #fff;
+          color: rgba(#fff, 0.6);
         }
 
         @media screen and (min-device-width: 768px) {
@@ -254,16 +255,16 @@ body {
              color: $text-color;
 
             &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-              color: $text-color;
+              color: rgba($text-color, 0.6);
             }
             &::-moz-placeholder { /* Firefox 19+ */
-              color: $text-color;
+              color: rgba($text-color, 0.6);
             }
             &:-ms-input-placeholder { /* IE 10+ */
-              color: $text-color;
+              color: rgba($text-color, 0.6);
             }
             &:-moz-placeholder { /* Firefox 18- */
-              color: $text-color;
+              color: rgba($text-color, 0.6);
             }
         }          
     }
