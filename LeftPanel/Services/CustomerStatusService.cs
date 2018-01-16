@@ -49,10 +49,8 @@
             {
                 var infoRow = customerInfo.Rows[0];
                 DataTable custData;
+                DataTable upperInfo = null;
 
-                var upperInfo = uplineId != 0
-                    ? reportService.GetCustomerInfo(groupName, uplineId, null, true)
-                    : null;
                 var roleId = Utils.ToInt32(infoRow["roleid"]);
                 var srecommend = Utils.ToInt32(infoRow["srecommend"]);
                 var mrecommend = Utils.ToInt32(infoRow["mrecommend"]);
@@ -126,6 +124,7 @@
             }
 
             if (roleId.IsNotSuper()
+                && upperInfo != null
                 && upperInfo.Rows.Count > 0)
             {
                 custStatus.UplineStatus = GetUplineStatus(roleId, upperInfo.Rows[0]);

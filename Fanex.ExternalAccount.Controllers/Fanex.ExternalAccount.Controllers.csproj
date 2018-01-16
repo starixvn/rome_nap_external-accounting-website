@@ -297,6 +297,7 @@
     <Compile Include="GlobalSuppressions.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
+    <Compile Include="GlobalSuppressions2.cs" />
     <Compile Include="Statement\StatementController.cs" />
     <Compile Include="UserControl\FunctionController.cs">
       <SonarQubeExclude>true</SonarQubeExclude>

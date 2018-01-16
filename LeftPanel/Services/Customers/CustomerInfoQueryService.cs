@@ -55,7 +55,9 @@
                 actorId,
                 groupName,
                 custName,
-                (int?)customerModel.PersonalInfo.UplineId?.Value ?? 0);
+                roleId.IsSuper() 
+                ? 0
+                : (int)customerModel.PersonalInfo.UplineId.Value);
 
             customerModel.Setting = GetCustomerSetting(roleId, custInfoTable, productStatusTable, customerStatus);
 

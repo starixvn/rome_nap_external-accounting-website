@@ -92,7 +92,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult SuperAddNewMasterPost(int custId, int parentId, string txtCustomerObject)
+        public ActionResult SuperAddNewMasterPost(int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
 
@@ -169,7 +169,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult MasterAddNewAgentPost(int custId, int parentId, string txtCustomerObject)
+        public ActionResult MasterAddNewAgentPost(int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
 
@@ -246,7 +246,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult AgentAddNewMemberPost(int custId, int parentId, string txtCustomerObject)
+        public ActionResult AgentAddNewMemberPost(int parentId, string txtCustomerObject)
         {
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
 
@@ -626,7 +626,9 @@
             ExportToExcel(excelStream, fileName);
         }
 
+#pragma warning disable S1541 // Methods and properties should not be too complex
         private DataTable GetCustomerList(
+#pragma warning restore S1541 // Methods and properties should not be too complex
             string groupName,
             bool? enabled,
             bool? closed,
