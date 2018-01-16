@@ -161,7 +161,7 @@ namespace Fanex.ExternalAccount
                         userService.Logout(CurrentSession.Instance.OnUserId, CurrentSession.Instance.UserName);
                         Session.Abandon();
 
-                        Response.RedirectPermanent("~/Account/Login");
+                        Response.Redirect("~/Account/Login");
                     }
                 }
             }
