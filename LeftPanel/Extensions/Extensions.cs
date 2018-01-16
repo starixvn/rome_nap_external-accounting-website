@@ -2,6 +2,7 @@
 {
     using System.Data;
     using System.Linq;
+    using Core.Shared;
     using Utilities;
 
     internal static class Extensions
@@ -116,18 +117,18 @@
 
             return productRow == null
                 || productRow.IsHidden()
-                || productRow.IsSynced();
+                || !productRow.IsSynced();
         }
 
         internal static bool GetNG2ProductStatus(this DataTable table3RdDcs)
         {
-            var productRow = GetProductRow(table3RdDcs, 23);
+            var productRow = GetProductRow(table3RdDcs, ProductConstants.NG2);
 
-            return productRow == null || !Utils.ToBoolean(productRow["IsSync"]);
+            return productRow == null || !productRow.IsSynced();
         }
 
         internal static bool GetVirtualSportsStatus(this DataTable table3rdDCS)
-            => table3rdDCS.IsProductEnabled(5);
+            => table3rdDCS.IsProductEnabled(ProductConstants.VirtualSports);
 
         internal static bool IsProductEnabled(this DataTable productTable, int productId)
         {
