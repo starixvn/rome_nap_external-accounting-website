@@ -138,7 +138,6 @@
             },
             error: function (xhr, status, e) {
                 Fanex.ExtAcc.Account.RecheckinXHR = null;
-                Fanex.ExtAcc.HandleError();
             }
         });
     },
@@ -456,9 +455,6 @@
                             Fanex.ExtAcc.UnBlockUI();
                             Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 300, 150, 'alert');
                         }
-                    })
-                    .error(function (xhr) {
-                        Fanex.ExtAcc.HandleError();
                     });
             });
         }
@@ -695,10 +691,7 @@
                 $('#exporttoexcel').css('display', 'none');
 
                 Fanex.ExtAcc.UnBlockUI();
-            }})
-        .error(function () {
-            Fanex.ExtAcc.HandleError();
-        });
+            }});
     },
 
     AppendInputToForm: function (id, name, value, targetForm) {

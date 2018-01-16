@@ -520,9 +520,6 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
         })
         .success(function (result) {
             Fanex.ExtAcc.Customer.RenderSuperList(result);
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     }
 };

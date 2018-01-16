@@ -294,9 +294,6 @@ Fanex.ExtAcc.User = {
                 }
 
                 Fanex.ExtAcc.UnBlockUI();
-            })
-            .error(function () {
-                Fanex.ExtAcc.HandleError();
             });
         }
         catch (e) {
@@ -424,9 +421,6 @@ Fanex.ExtAcc.User = {
                     Fanex.ExtAcc.User.Search();
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -466,9 +460,6 @@ Fanex.ExtAcc.User = {
                     Fanex.ExtAcc.User.Search();
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -504,9 +495,6 @@ Fanex.ExtAcc.User = {
                     Fanex.ExtAcc.User.Search();
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -530,9 +518,6 @@ Fanex.ExtAcc.User = {
                     Fanex.ExtAcc.User.Search();
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -582,9 +567,6 @@ Fanex.ExtAcc.User = {
             else {
                 Fanex.ExtAcc.Form.Close(false);
             }
-        })
-        .error(function (data) {            
-            Fanex.ExtAcc.HandleError();
         });
     },
 

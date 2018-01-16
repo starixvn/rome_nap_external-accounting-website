@@ -23,7 +23,7 @@
         private readonly CustomerCommandService customerCommandService = new CustomerCommandServiceImpl();
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
-            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult Index(string custName = null, string uplineId = "ACCDDD")
         {
             var userId = CurrentSession.UserId;
@@ -49,7 +49,7 @@
             return View(LeftPanelIndexView, customerInfo);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult UsedCreditPage(int custId, int roleId)
         {
             ViewBag.CustId = custId;
@@ -79,7 +79,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance,
-            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SelectClearBalance(int custId)
         {
             ViewBag.CustId = custId;
@@ -110,7 +110,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode,
-            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult GetSecurityCode(int custId, int roleId, string username)
         {
             ViewBag.custId = custId;
@@ -132,7 +132,7 @@
 
         [HttpGet]
         [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP,
-            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult RemoveOTP(int custId, string username) =>
             View(LeftPanelOtpIndexView, new { CustId = custId, Username = username });
     }

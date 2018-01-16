@@ -196,9 +196,6 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(result.errorMessage.formatErrorMessage());
                         }
-                    })
-                    .error(function (xhr, status, err) {
-                        Fanex.ExtAcc.HandleError();
                     });
                 }
             }
@@ -206,9 +203,6 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
             ko.applyBindings(new CustomerModel(customer));
 
             Fanex.ExtAcc.UnBlockUI();
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 

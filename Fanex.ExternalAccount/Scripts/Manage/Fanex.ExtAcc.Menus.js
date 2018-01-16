@@ -237,9 +237,6 @@ Fanex.ExtAcc.Menus = {
             };
 
             $this.RenderGrid(options);
-        })
-        .error(function (xhr) {
-            Fanex.ExtAcc.HandleError();
         });
 
         $('#jqbutton').bind('click', function () {
@@ -377,9 +374,6 @@ Fanex.ExtAcc.Menus = {
                     window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html())
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -444,9 +438,6 @@ Fanex.ExtAcc.Menus = {
                     window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html())
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -467,9 +458,6 @@ Fanex.ExtAcc.Menus = {
                     window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html())
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -490,9 +478,6 @@ Fanex.ExtAcc.Menus = {
                     window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html())
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            Fanex.ExtAcc.HandleError();
         });
     }
 }

@@ -397,9 +397,6 @@ Fanex.Customer = {
                     else {
                         document.getElementById(msgId).className = 'errorWarning';
                     }
-                })
-                .error(function () {
-                    Fanex.ExtAcc.HandleError();
                 });
             }
         }

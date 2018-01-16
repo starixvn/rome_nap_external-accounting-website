@@ -87,7 +87,7 @@
             parent.Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (result) {
-            parent.Fanex.ExtAcc.HandleError();
+            parent.Fanex.ExtAcc.UnBlockUI();
         });
     };
 };

@@ -32,17 +32,11 @@
                         Fanex.ExtAcc.UnBlockUI();
 
                         $('#contentSplitter').html(view);
-                    })
-                    .error(function (data) {
-                        Fanex.ExtAcc.HandleError();
                     });
                 }
                 else {
                     Fanex.ExtAcc.Form.Alert('Reset Member Credit Error', result.errorMessage.formatErrorMessage(), 400, 150, 'alertClosedCredit');
                 }
-            })
-            .error(function (data) {
-                Fanex.ExtAcc.HandleError();
             });
         },
         null,
@@ -81,17 +75,11 @@ function ResetAllAccountCredit(agentId) {
                         Fanex.ExtAcc.UnBlockUI();
 
                         $('#contentSplitter').html(view);
-                    })
-                    .error(function (data) {
-                        Fanex.ExtAcc.HandleError();
                     });
                 }
                 else {
                     Fanex.ExtAcc.Form.Alert('Reset Member Credit Error', result.errorMessage.formatErrorMessage(), 400, 150, 'alertAllCredit');
                 }
-            })
-            .error(function (data) {
-                Fanex.ExtAcc.HandleError();
             });
         },
         null,

@@ -660,9 +660,6 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
                 Fanex.ExtAcc.Customer.DataFields.splice(18, 1);
             }
             Fanex.ExtAcc.Customer.RenderMemberList(result);
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     }
 };

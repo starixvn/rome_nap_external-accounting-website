@@ -30,7 +30,7 @@
             parent.$('#contentSplitter').html(result);
         })
         .error(function (result) {
-            parent.Fanex.ExtAcc.HandleError();
+            parent.Fanex.ExtAcc.UnBlockUI();
         });
     };
 };

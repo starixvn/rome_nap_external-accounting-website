@@ -233,9 +233,6 @@ Fanex.ExtAcc.UserPolicy = {
                         Fanex.ExtAcc.UnBlockUI();
                     }, 2000);
                 }
-            },
-            error: function (xhr, status, err) {
-                Fanex.ExtAcc.HandleError();
             }
         });
     }

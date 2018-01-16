@@ -225,9 +225,6 @@ Fanex.ExtAcc.Function = {
             };
 
             $this.RenderGrid(options);
-        })
-        .error(function (xhr) {
-            Fanex.ExtAcc.HandleError();
         });
 
         $('#jqbutton').bind('click', function () {
@@ -549,9 +546,6 @@ Fanex.ExtAcc.Function = {
                     Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Function/FunctionList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -621,9 +615,6 @@ Fanex.ExtAcc.Function = {
                     Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Function/FunctionList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -644,9 +635,6 @@ Fanex.ExtAcc.Function = {
                     Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Function/FunctionList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -660,9 +648,6 @@ Fanex.ExtAcc.Function = {
             else {
                 Fanex.ExtAcc.Form.Close(true);
             }
-        })
-        .error(function (data) {
-            Fanex.ExtAcc.HandleError();
         });
     }
 }

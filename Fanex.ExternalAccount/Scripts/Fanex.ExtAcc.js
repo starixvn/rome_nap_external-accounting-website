@@ -150,43 +150,45 @@ Fanex.ExtAcc = {
 
         if (!isMenu) {
             var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
-            $.ajax({ url: fullUrl, type: 'post', success: function (result) {
-                $('#contentSplitter').html('');
+            $.ajax({
+                url: fullUrl, type: 'post', success: function (result) {
+                    $('#contentSplitter').html('');
 
-                if (url.indexOf('Customer/CustomerList') == -1 || $(result).text().indexOf('You are not authorized on this function') != -1) {
+                    //if (url.indexOf('Customer/CustomerList') == -1 || $(result).text().indexOf('You are not authorized on this function') != -1) {
                     Fanex.ExtAcc.UnBlockUI();
+                    //}
+
+                    if (result.errorCode) {
+                        $('#contentSplitter').html(result.errorMessage.formatErrorMessage());
+                        return;
+                    }
+
+                    $('#contentSplitter').html(result);
+
+                    if (document.getElementById('btnLogin')) {
+                        location.href = resolveClientUrl('Account/Login');
+                        return;
+                    }
+
+                    //if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
+                    if (!isLeftPanelClick) {
+                        var interval = setInterval(function () {
+                            if (document.getElementById('btnSearch')) {
+                                clearInterval(interval);
+
+                                Fanex.ExtAcc.Customer.CurrentLevel = 4;
+                                Fanex.ExtAcc.Customer.Init();
+
+                                var timeout = setTimeout(function () {
+                                    clearTimeout(timeout);
+                                    if ($.trim($('#jqgrid').html()) == '' && !Fanex.ExtAcc.Customer.IsLoading && $('#msgNoinfo').css('display') == 'none') {
+                                        $('#btnSearch').click();
+                                    }
+                                }, 2000);
+                            }
+                        }, 100);
+                    }
                 }
-
-                if (result.errorCode) {
-                    $('#contentSplitter').html(result.errorMessage.formatErrorMessage());
-                    return;
-                }
-
-                $('#contentSplitter').html(result);
-
-                if (document.getElementById('btnLogin')) {
-                    location.href = resolveClientUrl('Account/Login');
-                    return;
-                }
-
-                if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
-                    var interval = setInterval(function () {
-                        if (document.getElementById('btnSearch')) {
-                            clearInterval(interval);
-
-                            Fanex.ExtAcc.Customer.CurrentLevel = 4;
-                            Fanex.ExtAcc.Customer.Init();
-
-                            var timeout = setTimeout(function () {
-                                clearTimeout(timeout);
-                                if ($.trim($('#jqgrid').html()) == '' && !Fanex.ExtAcc.Customer.IsLoading && $('#msgNoinfo').css('display') == 'none') {
-                                    $('#btnSearch').click();
-                                }
-                            }, 2000);
-                        }
-                    }, 100);
-                }
-            }
             })
             .error(function (data) {
                 //if (typeof console != undefined)
@@ -343,9 +345,8 @@ Fanex.ExtAcc = {
 
             Fanex.ExtAcc.SuggestionXHR = null;
         })
-        .error(function (err) {
+        .error(function (xhr, status, err) {
             Fanex.ExtAcc.SuggestionXHR = null;
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -641,12 +642,7 @@ Fanex.ExtAcc = {
     CheckConstraintAgentCredits: function (agentCredit) {
         var value = Fanex.ExtAcc.ReplaceAll(agentCredit.value, ',', '');
         $('#maxCreditMember').text(Fanex.ExtAcc.FormatNumber(value));
-    },
-
-    HandleError: function(){
-        Fanex.ExtAcc.UnBlockUI();
-        location.href = resolveClientUrl('Shared/Error');
-    },
+    },    
 
     FormatErrorMessage: function (username, obj) {
         var msgs = obj;
@@ -704,7 +700,7 @@ function setCaret(oField, iCaretPos) {
         oSel.moveEnd('character', iCaretPos - oField.value.length);
         oSel.select();
     }
-    // Firefox support
+        // Firefox support
     else if (oField.selectionStart || oField.selectionStart == '0') {
         oField.selectionStart = iCaretPos;
         oField.selectionEnd = iCaretPos;
@@ -723,7 +719,7 @@ function getCaret(oField) {
         oSel.moveStart('character', -oField.value.length);
         iCaretPos = oSel.text.length;
     }
-    // Firefox support
+        // Firefox support
     else if (oField.selectionStart || oField.selectionStart == '0')
         iCaretPos = oField.selectionStart;
     // Return results
@@ -743,7 +739,7 @@ String.prototype.formatFloat = function () {
     number = Math.floor(number * 100 + 0.50000000001);
     number = Math.floor(number / 100).toString();
 
-    for (var i = 0; i < Math.floor((number.length - (1 + i)) / 3); i++) {
+    for (var i = 0; i < Math.floor((number.length - (1 + i)) / 3) ; i++) {
         number = number.substring(0, number.length - (4 * i + 3)) + ',' + number.substring(number.length - (4 * i + 3));
     }
 
@@ -783,7 +779,13 @@ $(document).ready(function () {
                 xhr.setRequestHeader("__RequestVerificationToken", antiXSRFToken[0].value);
             }
         },
+        error: function(){
+            Fanex.ExtAcc.UnBlockUI();
+        },
         statusCode: {
+            500: function () {
+                location.href = resolveClientUrl('Shared/Error');
+            },
             401: function (error, callback) {
                 if (JSON && error.responseText) {
                     var errorResult = JSON.parse(error.responseText);

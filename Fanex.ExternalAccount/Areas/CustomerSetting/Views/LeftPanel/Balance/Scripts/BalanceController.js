@@ -63,9 +63,6 @@ function Update() {
                             .success(function (result) {
                                 Fanex.ExtAcc.UnBlockUI();
                                 $('#contentSplitter').html(result);
-                            })
-                            .error(function (result) {
-                                Fanex.ExtAcc.HandleError();
                             });
                         }, 2000);
                     }
@@ -74,8 +71,6 @@ function Update() {
 
                         Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 410, 150, 'errorTransfer');
                     }
-                }).error(function (data) {
-                    Fanex.ExtAcc.HandleError();
                 });
             },
             null,

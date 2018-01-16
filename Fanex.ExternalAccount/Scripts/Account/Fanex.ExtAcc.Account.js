@@ -94,9 +94,6 @@ Fanex.ExtAcc.Account = {
             cache: false,
             success: function (data) {
                 location.href = resolveClientUrl('Home/Index/?index=' + selectedIndex);
-            },
-            error: function (xhr, status, e) {
-                Fanex.ExtAcc.HandleError();
             }
         });
     },

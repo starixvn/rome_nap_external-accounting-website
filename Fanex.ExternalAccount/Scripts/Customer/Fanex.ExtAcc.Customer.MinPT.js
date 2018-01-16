@@ -179,9 +179,6 @@ Fanex.ExtAcc.Customer.MinPT = {
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(result.errorMessage.formatErrorMessage());
                         }
-                    })
-                    .error(function (xhr, status, err) {
-                        Fanex.ExtAcc.HandleError();
                     });
                 }
             }
@@ -189,9 +186,6 @@ Fanex.ExtAcc.Customer.MinPT = {
             ko.applyBindings(new CustomerModel());
 
             Fanex.ExtAcc.UnBlockUI();
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     }
 }

@@ -430,9 +430,6 @@ Fanex.ExtAcc.DailyWinLoss = {
                 }
 
                 Fanex.ExtAcc.UnBlockUI();
-            },
-            error: function () {
-                Fanex.ExtAcc.HandleError();
             }
         })
     }

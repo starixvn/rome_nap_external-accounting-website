@@ -299,9 +299,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 clearTimeout(timeout);
                 Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -479,9 +476,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 clearTimeout(timeout);
                 Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -670,9 +664,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 clearTimeout(timeout);
                 Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -831,9 +822,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 clearTimeout(timeout);
                 Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -935,9 +923,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 clearTimeout(timeout);
                 Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -1048,9 +1033,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 clearTimeout(timeout);
                 Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -1445,9 +1427,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     }
                 }
             }
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -1596,9 +1575,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     }
                 }
             }
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -1747,9 +1723,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     }
                 }
             }
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -1905,9 +1878,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     }
                 }
             }
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     }
 };

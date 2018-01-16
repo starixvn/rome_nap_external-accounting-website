@@ -144,8 +144,6 @@ Fanex.ExtAcc.Customer.Settings = {
             $('#tabs-1').css('display', 'block');
             $('#tabs-1').html(result);
             Fanex.ExtAcc.UnBlockUI();
-        }).error(function (data) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 

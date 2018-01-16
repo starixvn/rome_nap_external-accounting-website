@@ -89,9 +89,6 @@ Fanex.ExtAcc.Customer.BetSetting = {
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(result.errorMessage.formatErrorMessage());
                         }
-                    })
-                    .error(function (xhr, status, err) {
-                        Fanex.ExtAcc.HandleError();
                     });
                 }
             }
@@ -99,9 +96,6 @@ Fanex.ExtAcc.Customer.BetSetting = {
             ko.applyBindings(new BetSettingModel());
 
             Fanex.ExtAcc.UnBlockUI();
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -178,9 +172,6 @@ Fanex.ExtAcc.Customer.BetSetting = {
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(result.errorMessage.formatErrorMessage());
                         }
-                    })
-                    .error(function (xhr, status, err) {
-                        Fanex.ExtAcc.HandleError();
                     });
                 }
             }
@@ -188,9 +179,6 @@ Fanex.ExtAcc.Customer.BetSetting = {
             ko.applyBindings(new BetSettingModel());
 
             Fanex.ExtAcc.UnBlockUI();
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     },
     GetMemberBetSetting: function () {
@@ -265,9 +253,6 @@ Fanex.ExtAcc.Customer.BetSetting = {
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(result.errorMessage.formatErrorMessage());
                         }
-                    })
-                    .error(function (xhr, status, err) {
-                        Fanex.ExtAcc.HandleError();
                     });
                 }
             }
@@ -275,9 +260,6 @@ Fanex.ExtAcc.Customer.BetSetting = {
             ko.applyBindings(new BetSettingModel());
 
             Fanex.ExtAcc.UnBlockUI();
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.HandleError();
         });
     }
 }

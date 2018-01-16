@@ -35,7 +35,7 @@
             parent.$('#contentSplitter').html(result);
         })
         .error(function (data) {
-            parent.Fanex.ExtAcc.HandleError();
+            parent.Fanex.ExtAcc.UnBlockUI();
         })
     };
 
@@ -73,7 +73,7 @@
                 }
             })
             .error(function (data) {
-                parent.Fanex.ExtAcc.HandleError();
+                parent.Fanex.ExtAcc.UnBlockUI();
             });
         }
     };
