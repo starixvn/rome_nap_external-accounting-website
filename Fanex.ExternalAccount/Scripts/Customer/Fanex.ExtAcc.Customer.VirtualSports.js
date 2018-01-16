@@ -354,7 +354,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
                 }
             },
             error: function () {
-                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.HandleError();
             }
         });
     },

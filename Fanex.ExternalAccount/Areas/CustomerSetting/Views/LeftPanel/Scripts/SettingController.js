@@ -55,9 +55,7 @@
             parent.Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (result) {
-            if (typeof console != 'undefined') {
-                console.log(result);
-            }
+            parent.Fanex.ExtAcc.HandleError();
         })
     };
 

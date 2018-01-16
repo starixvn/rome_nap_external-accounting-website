@@ -145,10 +145,7 @@ Fanex.ExtAcc.Customer.Settings = {
             $('#tabs-1').html(result);
             Fanex.ExtAcc.UnBlockUI();
         }).error(function (data) {
-            if (typeof console != 'undefined') {
-                console.log(data.responseText);
-            }
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     },
 

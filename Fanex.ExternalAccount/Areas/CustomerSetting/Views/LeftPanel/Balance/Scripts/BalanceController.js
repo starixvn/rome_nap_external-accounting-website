@@ -65,10 +65,7 @@ function Update() {
                                 $('#contentSplitter').html(result);
                             })
                             .error(function (result) {
-                                Fanex.ExtAcc.UnBlockUI();
-                                if (typeof console != 'undefined') {
-                                    console.log(result);
-                                }
+                                Fanex.ExtAcc.HandleError();
                             });
                         }, 2000);
                     }
@@ -78,10 +75,7 @@ function Update() {
                         Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 410, 150, 'errorTransfer');
                     }
                 }).error(function (data) {
-                    Fanex.ExtAcc.UnBlockUI();
-
-                    if (typeof console != undefined)
-                        console.log(data);
+                    Fanex.ExtAcc.HandleError();
                 });
             },
             null,

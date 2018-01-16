@@ -137,9 +137,8 @@
                 Fanex.ExtAcc.Account.RecheckinXHR = null;
             },
             error: function (xhr, status, e) {
-                if (typeof console != 'undefined') console.log(e);
-
                 Fanex.ExtAcc.Account.RecheckinXHR = null;
+                Fanex.ExtAcc.HandleError();
             }
         });
     },
@@ -184,7 +183,7 @@
                 data.username +
                 "&custId=" +
                 Fanex.ExtAcc.Customer.custId;
-            
+
             document.location.href = resolveClientUrl("Customer/GetExportToExcel?") + params;
         });
 
@@ -459,9 +458,7 @@
                         }
                     })
                     .error(function (xhr) {
-                        if (typeof console != 'undefined') {
-                            console.log(xhr);
-                        }
+                        Fanex.ExtAcc.HandleError();
                     });
             });
         }
@@ -698,7 +695,9 @@
                 $('#exporttoexcel').css('display', 'none');
 
                 Fanex.ExtAcc.UnBlockUI();
-            }
+            }})
+        .error(function () {
+            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -995,6 +994,6 @@
             case 0:
             default:
                 return "closed-wrongPwdOthers";
-        }        
+        }
     }
 };

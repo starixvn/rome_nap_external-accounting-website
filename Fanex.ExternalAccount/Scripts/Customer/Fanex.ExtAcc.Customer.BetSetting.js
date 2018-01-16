@@ -91,7 +91,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                         }
                     })
                     .error(function (xhr, status, err) {
-                        Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.HandleError();
                     });
                 }
             }
@@ -101,7 +101,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
             Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -180,7 +180,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                         }
                     })
                     .error(function (xhr, status, err) {
-                        Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.HandleError();
                     });
                 }
             }
@@ -190,7 +190,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
             Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     },
     GetMemberBetSetting: function () {
@@ -267,7 +267,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                         }
                     })
                     .error(function (xhr, status, err) {
-                        Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.HandleError();
                     });
                 }
             }
@@ -277,7 +277,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
             Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     }
 }

@@ -213,7 +213,7 @@ Fanex.ExtAcc.Group = {
             $this.RenderGrid(options);
         })
         .error(function (xhr) {
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
 
         $('#jqbutton').bind('click', function () {
@@ -336,7 +336,7 @@ Fanex.ExtAcc.Group = {
             }
         })
         .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
+            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -384,7 +384,7 @@ Fanex.ExtAcc.Group = {
             }
         })
         .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
+            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -399,7 +399,7 @@ Fanex.ExtAcc.Group = {
             }
         })
         .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
+            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -424,7 +424,7 @@ Fanex.ExtAcc.Group = {
             }
         })
         .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
+            Fanex.ExtAcc.HandleError();
         });
     },
 

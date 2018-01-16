@@ -245,7 +245,7 @@ Fanex.ExtAcc.User = {
                         { Name: 'Permission', Value: rows[i] },
                         { Name: 'Enabled', Value: rows[i] },
                         { Name: 'ResetPwd', Value: rows[i] }
-                    ]
+                        ]
                     });
                 }
 
@@ -294,6 +294,9 @@ Fanex.ExtAcc.User = {
                 }
 
                 Fanex.ExtAcc.UnBlockUI();
+            })
+            .error(function () {
+                Fanex.ExtAcc.HandleError();
             });
         }
         catch (e) {
@@ -423,9 +426,7 @@ Fanex.ExtAcc.User = {
             }
         })
         .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
-
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -467,9 +468,7 @@ Fanex.ExtAcc.User = {
             }
         })
         .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
-
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -507,9 +506,7 @@ Fanex.ExtAcc.User = {
             }
         })
         .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
-
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -535,7 +532,7 @@ Fanex.ExtAcc.User = {
             }
         })
         .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
+            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -586,8 +583,8 @@ Fanex.ExtAcc.User = {
                 Fanex.ExtAcc.Form.Close(false);
             }
         })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
+        .error(function (data) {            
+            Fanex.ExtAcc.HandleError();
         });
     },
 

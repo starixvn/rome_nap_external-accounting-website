@@ -198,7 +198,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                         }
                     })
                     .error(function (xhr, status, err) {
-                        Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.HandleError();
                     });
                 }
             }
@@ -208,7 +208,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
             Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     },
 

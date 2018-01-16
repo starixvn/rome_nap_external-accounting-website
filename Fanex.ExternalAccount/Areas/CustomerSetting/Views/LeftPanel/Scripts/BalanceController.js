@@ -35,11 +35,7 @@
             parent.$('#contentSplitter').html(result);
         })
         .error(function (data) {
-            parent.Fanex.ExtAcc.UnBlockUI();
-
-            if (typeof console != 'undefined') {
-                console.log(data);
-            }
+            parent.Fanex.ExtAcc.HandleError();
         })
     };
 
@@ -77,11 +73,7 @@
                 }
             })
             .error(function (data) {
-                parent.Fanex.ExtAcc.UnBlockUI();
-
-                if (typeof console != 'undefined') {
-                    console.log(data);
-                }
+                parent.Fanex.ExtAcc.HandleError();
             });
         }
     };

@@ -181,7 +181,7 @@ Fanex.ExtAcc.Customer.MinPT = {
                         }
                     })
                     .error(function (xhr, status, err) {
-                        Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.HandleError();
                     });
                 }
             }
@@ -191,7 +191,7 @@ Fanex.ExtAcc.Customer.MinPT = {
             Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     }
 }

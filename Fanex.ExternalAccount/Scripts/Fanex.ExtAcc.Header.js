@@ -107,7 +107,7 @@ Fanex.ExtAcc.Header = {
                     });
                 },
                 error: function (xhr, status, data) {
-                    if (typeof console != 'undefined') console.log(data);
+                    Fanex.ExtAcc.HandleError();
                 }
             });
         }

@@ -662,7 +662,7 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
             Fanex.ExtAcc.Customer.RenderMemberList(result);
         })
         .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     }
 };

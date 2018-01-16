@@ -34,11 +34,7 @@
                         $('#contentSplitter').html(view);
                     })
                     .error(function (data) {
-                        Fanex.ExtAcc.UnBlockUI();
-
-                        if (typeof console != 'undefined') {
-                            console.log(data);
-                        }
+                        Fanex.ExtAcc.HandleError();
                     });
                 }
                 else {
@@ -46,11 +42,7 @@
                 }
             })
             .error(function (data) {
-                Fanex.ExtAcc.UnBlockUI();
-
-                if (typeof console != 'undefined') {
-                    console.log(data);
-                }
+                Fanex.ExtAcc.HandleError();
             });
         },
         null,
@@ -91,11 +83,7 @@ function ResetAllAccountCredit(agentId) {
                         $('#contentSplitter').html(view);
                     })
                     .error(function (data) {
-                        Fanex.ExtAcc.UnBlockUI();
-
-                        if (typeof console != 'undefined') {
-                            console.log(data);
-                        }
+                        Fanex.ExtAcc.HandleError();
                     });
                 }
                 else {
@@ -103,11 +91,7 @@ function ResetAllAccountCredit(agentId) {
                 }
             })
             .error(function (data) {
-                Fanex.ExtAcc.UnBlockUI();
-
-                if (typeof console != 'undefined') {
-                    console.log(data);
-                }
+                Fanex.ExtAcc.HandleError();
             });
         },
         null,

@@ -199,7 +199,7 @@ Fanex.ExtAcc.Customer.MasterAddNewAgent = {
                         }
                     })
                     .error(function (xhr, status, err) {
-                        Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.HandleError();
                     });
                 }
             }
@@ -209,7 +209,7 @@ Fanex.ExtAcc.Customer.MasterAddNewAgent = {
             Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     },
 

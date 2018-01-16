@@ -120,7 +120,7 @@ Fanex.ExtAcc.Customer.Commission = {
             Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -185,7 +185,7 @@ Fanex.ExtAcc.Customer.Commission = {
             }
         })
         .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     }
 }

@@ -344,11 +344,8 @@ Fanex.ExtAcc = {
             Fanex.ExtAcc.SuggestionXHR = null;
         })
         .error(function (err) {
-            if (typeof console != 'undefined' && err.statusText && err.statusText != "abort") {
-                console.log(err);
-            }
-
             Fanex.ExtAcc.SuggestionXHR = null;
+            Fanex.ExtAcc.HandleError();
         });
     },
 
@@ -644,6 +641,11 @@ Fanex.ExtAcc = {
     CheckConstraintAgentCredits: function (agentCredit) {
         var value = Fanex.ExtAcc.ReplaceAll(agentCredit.value, ',', '');
         $('#maxCreditMember').text(Fanex.ExtAcc.FormatNumber(value));
+    },
+
+    HandleError: function(){
+        Fanex.ExtAcc.UnBlockUI();
+        location.href = resolveClientUrl('Shared/Error');
     },
 
     FormatErrorMessage: function (username, obj) {

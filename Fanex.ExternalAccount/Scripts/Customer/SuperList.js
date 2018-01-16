@@ -522,7 +522,7 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
             Fanex.ExtAcc.Customer.RenderSuperList(result);
         })
         .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     }
 };

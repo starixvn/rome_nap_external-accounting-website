@@ -708,7 +708,7 @@ Fanex.ExtAcc.Customer.GetMasterList = function (
             Fanex.ExtAcc.Customer.RenderMasterList(result);
         })
         .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     }
 };

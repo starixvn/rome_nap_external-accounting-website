@@ -146,6 +146,9 @@ Fanex.ExtAcc.WinLossDetail = {
                 $("#GroupProducts").html(productList);
                 $this.InitProductsList();
                 $("#GroupProducts :input").width($("#GroupProducts").width() - 21);
+            },
+            error: function () {
+                Fanex.ExtAcc.HandleError();
             }
         })
     },
@@ -811,7 +814,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 Fanex.ExtAcc.UnBlockUI();
             },
             error: function () {
-                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.HandleError();
             }
         });
     }

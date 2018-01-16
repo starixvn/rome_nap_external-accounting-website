@@ -198,7 +198,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                         }
                     })
                     .error(function (xhr, status, err) {
-                        Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.HandleError();
                     });
                 }
             }
@@ -208,7 +208,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
             Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     },
 

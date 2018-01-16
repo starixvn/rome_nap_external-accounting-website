@@ -711,7 +711,7 @@ Fanex.ExtAcc.Customer.GetAgentList = function (
             Fanex.ExtAcc.Customer.RenderAgentList(result);
         })
         .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.HandleError();
         });
     }
 };

@@ -294,7 +294,7 @@ Fanex.ExtAcc.Statement = {
                 Fanex.ExtAcc.UnBlockUI();
             },
             error: function () {
-                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.HandleError();
             }
         })
     }

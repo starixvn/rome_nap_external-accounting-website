@@ -40,8 +40,6 @@
 
         public ActionResult Error()
         {
-            ExceptionHandler.Handle(Server.GetLastError());
-
             return this.PartialView();
         }
 
