@@ -209,6 +209,7 @@
     <Compile Include="Services\Customers\SuperQueryServiceImpl.cs" />
     <Compile Include="Services\CustomerQueryService.cs" />
     <Compile Include="Services\CustomerStatusService.cs" />
+    <Compile Include="Services\ProductService.cs" />
     <Compile Include="ViewModels\BalanceInfo.cs" />
     <Compile Include="ViewModels\BasicInfo.cs" />
     <Compile Include="ViewModels\CustomerModel.cs" />
