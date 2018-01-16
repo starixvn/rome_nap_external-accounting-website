@@ -543,7 +543,8 @@
 
         private static void AddLiveCasinoEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
         {
-            if (customerStatus.UplineStatus.SyncLiveCasino)
+            if (customerStatus.UplineStatus.SyncLiveCasino
+                || customerStatus.RoleId.IsSuper())
             {
                 details.Add(new ObjectInfo("LiveCasino", "Edit Live Casino"));
             }
@@ -551,7 +552,8 @@
 
         private static void AddCasinoEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
         {
-            if (customerStatus.UplineStatus.SyncCasino)
+            if (customerStatus.UplineStatus.SyncCasino
+                || customerStatus.RoleId.IsSuper())
             {
                 details.Add(new ObjectInfo("Casino", "Edit Casino"));
             }
