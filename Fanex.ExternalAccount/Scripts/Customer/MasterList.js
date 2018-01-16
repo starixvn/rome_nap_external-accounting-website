@@ -872,6 +872,7 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
         bodyRows: bodyRows,
         autoCalculateGridExpandHeight: true,
         numberOfFrozenColumn: isMobile.phone ? 3 : 6,
+        bodyRowHeight: isMobile.phone ? 28 : 25,
         customizeHeader: true,
         groupHeaderRows: groupHeader,
         highlightFrozenWidth: 2,
