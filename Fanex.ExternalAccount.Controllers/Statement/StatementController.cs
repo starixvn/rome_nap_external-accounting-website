@@ -6,6 +6,7 @@
     using Caching;
     using Core.Base;
     using Core.Context;
+    using Core.Shared;
     using CustomerSetting.Security.Authenticate;
     using DTO.Statement;
     using Excel.Statement.StatementPage;

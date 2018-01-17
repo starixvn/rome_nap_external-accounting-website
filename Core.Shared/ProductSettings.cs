@@ -1,8 +1,7 @@
-﻿using System.Collections.Specialized;
-
-namespace Fanex.ExternalAccount.Core.Shared
+﻿namespace Fanex.ExternalAccount.Core.Shared
 {
     using System;
+    using System.Collections.Specialized;
     using System.Configuration;
 
     public static class ProductSettings
@@ -37,6 +36,8 @@ namespace Fanex.ExternalAccount.Core.Shared
 
         public static bool IsShowBullfighting => ToBoolean(Configs["IsShowProduct-30"]);
 
+        internal static NameValueCollection Configs { get; set; } = ConfigurationManager.AppSettings;
+
         public static bool IsShowProduct(int productId) => ToBoolean(Configs[$"IsShowProduct-{productId}"]);
 
         private static bool ToBoolean(string value, bool defaultValue = false)
@@ -48,7 +49,5 @@ namespace Fanex.ExternalAccount.Core.Shared
 
             return value == "1" || value.Equals("true", StringComparison.CurrentCultureIgnoreCase);
         }
-
-        internal static NameValueCollection Configs { get; set; } = ConfigurationManager.AppSettings;
     }
 }

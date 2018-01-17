@@ -1,15 +1,16 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services
 {
     using System.Data;
+    using Core.Authorization;
     using Core.Shared;
     using CustomerSetting.Module.Keno.KenoSetting.Configurations;
-    using Core.Authorization;
     using Service.Impl.Customer;
-    using Service.Interface.Customer;
     using Service.Impl.Report;
+    using Service.Interface.Customer;
     using Service.Interface.Report;
     using Utilities;
     using ViewModels;
+    using static Core.Shared.ProductConstants;
 
     public interface CustomerStatusService
     {
@@ -199,7 +200,8 @@
 
         private static void SetGoldDeluxeStatus(CustomerStatus custStatus, DataRow statusRow)
         {
-            custStatus.HideGoldDeluxe = statusRow.ToBoolean("HideGoldDeluxe") || !ProductSettings.IsShowGoldDeluxeSettingForCredit;
+            custStatus.HideGoldDeluxe = statusRow.ToBoolean("HideGoldDeluxe")
+                || !ProductSettings.IsShowProduct(GoldDeluxe);
             custStatus.SyncGoldDeluxeDownlines = statusRow.ToBoolean("SyncedGoldDeluxeDownline");
         }
 

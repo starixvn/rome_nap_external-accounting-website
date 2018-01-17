@@ -7,6 +7,7 @@
     using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
+    using Core.Shared;
     using CustomerSetting.Security.Authenticate;
     using DTO.UserControl;
     using Newtonsoft.Json;
