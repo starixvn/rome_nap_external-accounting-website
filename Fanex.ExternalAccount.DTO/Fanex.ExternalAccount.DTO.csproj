@@ -116,11 +116,6 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Statement\Statement.cs" />
     <Compile Include="RecheckinStatus.cs" />
-    <Compile Include="Functions.generated.cs">
-      <DependentUpon>Functions.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="GroupCurrency.cs" />
     <Compile Include="ePolicy.cs" />
     <Compile Include="Report\DailyWinLoss.cs" />
@@ -141,10 +136,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Fanex.ExternalAccount.DTO.ruleset" />
-    <None Include="Functions.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Functions.generated.cs</LastGenOutput>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -139,7 +139,7 @@
                 productIds);
         }
 
-        private dynamic NoInfoResult(string username, ArrayList sortingOrderList, dynamic toolTipsProducts) => new
+        private static dynamic NoInfoResult(string username, ArrayList sortingOrderList, dynamic toolTipsProducts) => new
         {
             viewlevel = Role.Super,
             supername = username,

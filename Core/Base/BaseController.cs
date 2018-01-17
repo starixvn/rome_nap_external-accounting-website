@@ -26,6 +26,7 @@
     using RemotingRef;
     using Reports.WinLossDetail;
     using Service.Impl.Customer.Casino;
+    using Shared;
     using Utilities;
     using CurrentContext = Context.CurrentContext;
     using CurrentSession = Context.CurrentSession;
@@ -305,8 +306,8 @@
             {
                 if (!IsHiddenProduct(product))
                 {
-                    if (product.IsSpecial &&
-                        AdminDoesNotHavePermissionOnSpecialProduct(checkIsInternalAdminResult, isAuthorized))
+                    if (product.IsSpecial
+                        && AdminDoesNotHavePermissionOnSpecialProduct(checkIsInternalAdminResult, isAuthorized))
                     {
                         continue;
                     }

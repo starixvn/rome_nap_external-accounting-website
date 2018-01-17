@@ -5,19 +5,18 @@
     using System.Diagnostics;
     using CasinoLibrary.Model.UserException;
     using CasinoLibrary.SBAgent;
-    using Core.Context;
+    using Core.Authorization;
     using Core.Shared;
     using Criteria;
+    using CustomerSetting.Module.Core.Web;
+    using CustomerSetting.Security.Authenticate;
+    using DataAccesses;
     using DTO;
     using IBCUtils;
     using Logging.Extensions.Web;
-    using DataAccesses;
     using Security;
     using Service.Impl.Customer.Casino;
-    using Core.Authorization;
-    using CustomerSetting.Security.Authenticate;
     using Utilities;
-    using CustomerSetting.Module.Core.Web;
 
     public interface CustomerCommandService
     {
@@ -56,7 +55,9 @@
 
     public class CustomerCommandServiceImpl : CustomerCommandService
     {
-        private const int FromSystem = 3;
+        private const int AlphaAdminSystem = 3;
+        private const string Salt = "1qaw3+{:P)";
+
         private readonly CustomerDataAccesses dataAccess;
         private readonly ICasinoManager casinoManager;
         private readonly AuthorizationService authorizationService;
@@ -112,12 +113,12 @@
                     AuthenticateAction.AuthenticationType.Host))
                 {
                     cust.UpdateCustClosed(
-                        custId, 
+                        custId,
                         closed,
-                        currentContext.Ip4Address, 
+                        currentContext.Ip4Address,
                         currentSession.UserId,
-                        currentSession.UserName, 
-                        FromSystem);
+                        currentSession.UserName,
+                        AlphaAdminSystem);
                 }
             }
             catch (ErrorException casinoEx)
@@ -139,14 +140,14 @@
         public Result EnableCasino(int id, bool enable, bool enableDownline, bool sync, string custName)
             => dataAccess.EnableCasino(id, enable, enableDownline, sync, custName);
 
-        public Result EnableLiveCasino(int id, bool enable, bool enableDownline) =>
-            dataAccess.EnableLiveCasino(id, enable, enableDownline);
+        public Result EnableLiveCasino(int id, bool enable, bool enableDownline)
+            => dataAccess.EnableLiveCasino(id, enable, enableDownline);
 
-        public Result EnableNumberGame(int id, bool enable, bool enableDownline) =>
-            dataAccess.EnableNumberGame(id, enable, enableDownline);
+        public Result EnableNumberGame(int id, bool enable, bool enableDownline)
+            => dataAccess.EnableNumberGame(id, enable, enableDownline);
 
-        public Result EnableESports(int id, bool enable, bool enableDownline) =>
-            dataAccess.EnableESports(id, enable, enableDownline);
+        public Result EnableESports(int id, bool enable, bool enableDownline)
+            => dataAccess.EnableESports(id, enable, enableDownline);
 
         public Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress)
         {
@@ -168,7 +169,7 @@
                     ipAddress,
                     userId,
                     username,
-                    3);
+                    AlphaAdminSystem);
             }
             catch (ErrorException casinoEx)
             {
@@ -187,19 +188,19 @@
                 return dataAccess.ResetSecurityCode(custId, hashCode, force || roleId.IsNotSuper());
             }
 
-            var md5 = Cryptography.ComputeHash("MD5", custId.ToString(), "1qaw3+{:P)"); //DevSkim: ignore DS126858
+            var md5 = Cryptography.ComputeHash("MD5", custId.ToString(), Salt); //DevSkim: ignore DS126858
             hashCode = Cryptography.ComputeHash("SHA1", code, md5); //DevSkim: ignore DS126858
 
             return dataAccess.ResetSecurityCode(custId, hashCode, force || roleId.IsNotSuper());
         }
 
-        public Result EnableHrFixedOdds(int id, bool enable, bool enableDownline) 
+        public Result EnableHrFixedOdds(int id, bool enable, bool enableDownline)
             => dataAccess.EnableHRFixedOdds(id, enable, enableDownline);
 
-        public Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId) 
+        public Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId)
             => dataAccess.UpdateGoldDeluxe(id, enable, enableDownline, custName, userId);
 
-        public Result RemoveOtp(int custId, int userId, string ip4Address) 
+        public Result RemoveOtp(int custId, int userId, string ip4Address)
             => dataAccess.RemoveOTP(new RemoveOtpCriteria
             {
                 Custid = custId,

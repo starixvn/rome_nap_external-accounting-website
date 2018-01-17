@@ -2,14 +2,10 @@
 {
     public enum EPolicy
     {
-        Create = 4,
-
+        None = 0,
         Read = 1,
-
         Update = 2,
-
-        Delete = 8,
-
-        None = 0
+        Create = 4,
+        Delete = 8
     }
 }

@@ -5,6 +5,7 @@
     using Context;
     using Fanex.GoldDeluxe.CoreSetting.Enumerations;
     using Fanex.GoldDeluxe.CoreSetting.Services;
+    using Shared;
 
     public class GoldDeluxeAuthorizationService : IGoldDeluxeAuthorizationService
     {

@@ -5,6 +5,7 @@
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Services;
+    using Shared;
 
     public class LiveCasinoAuthorizationService : ILiveCasinoAuthorizationService
     {

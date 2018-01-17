@@ -17,6 +17,7 @@ namespace Fanex.ExternalAccount.Core.Authorization
     using Service.Interface.Login;
     using Service.Interface.Report;
     using Service.Interface.UserControl;
+    using Shared;
 
     public interface AuthorizationService
     {
