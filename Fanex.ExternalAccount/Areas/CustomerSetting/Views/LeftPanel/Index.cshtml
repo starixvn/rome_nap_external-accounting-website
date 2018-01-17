@@ -30,7 +30,7 @@
                 <div class="row" data-ng-repeat="person in personalInfo.downlines">
                     <div class="pull-left width-90">{{person.text}}</div>
                     <div class="pull-left detail bold" data-ng-click="ViewUser('{{person.value}}')">{{person.value}}</div>
-                 
+
                     <a class="floatRight icon-home" href="~/User/InternalLogin/?username={{person.value}}" target="_blank"></a>
                 </div>
             </div>
@@ -275,6 +275,7 @@
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery-ui-1.9.1.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Fanex.ExtAcc.Utils.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/BalanceController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/BalanceDownlineInfoController.js")" type="text/javascript"></script>

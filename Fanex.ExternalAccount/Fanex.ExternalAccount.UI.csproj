@@ -1806,6 +1806,7 @@
     <Content Include="Scripts\Fanex.Grid\ThirdParties\Moment\moment.min.js" />
     <Content Include="Scripts\Fanex.Grid\ThirdParties\Numeral\languages.min.js" />
     <Content Include="Scripts\Fanex.Grid\ThirdParties\Numeral\numeral.min.js" />
+    <Content Include="Scripts\Fanex.ExtAcc.Utils.js" />
     <Content Include="Scripts\isMobile.min.js" />
     <Content Include="Scripts\_Libs\jQuery\classList.js" />
     <Content Include="Scripts\_Libs\jQuery\Core\jquery.js" />

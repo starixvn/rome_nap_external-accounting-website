@@ -67,7 +67,8 @@
       "Scripts/Customer/MemberList.js",
       "Scripts/Customer/EditMultiple.js",
       "Scripts/isMobile.min.js",
-      "Scripts/knockout.min-2.0.js"
+      "Scripts/knockout.min-2.0.js",
+      "Scripts/Fanex.ExtAcc.Utils.js"
     ]
   },
   {

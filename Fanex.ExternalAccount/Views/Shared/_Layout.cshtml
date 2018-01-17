@@ -60,7 +60,7 @@
     <link href='https://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet' type='text/css' />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
     <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" />
-    
+
     @StaticResources.RenderStyles("~/assets/bundles/common")
 
     @RenderSection("StyleSheet", false)
@@ -80,7 +80,7 @@
                 <ul class="list" id="userNameMenu">
                     <li><span class="circle">@CurrentSession.Instance.UserName</span></li>
                     <li><span class="icon-lock-reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')" title="Reset Password"></span></li>
-                    <li><span class="icon-logout" onclick="Fanex.ExtAcc.Account.Logout()" title="Log out"></span></li>                    
+                    <li><span class="icon-logout" onclick="Fanex.ExtAcc.Account.Logout()" title="Log out"></span></li>
                 </ul>
             </div>
             <!-- For mobile -->
@@ -121,10 +121,10 @@
     </div>
     <div id="footer">
     </div>
-    
+
     @StaticResources.RenderScripts("~/assets/bundles/common")
 
-<script type="text/javascript">
+    <script type="text/javascript">
         function resolveClientUrl(relativeUrl) {
             return '@Url.Content("~/")' + relativeUrl;
         }
@@ -171,6 +171,7 @@
         $(document).ready(function () {
             Fanex.ExtAcc.Customer.ReCheckin();
             setInterval(Fanex.ExtAcc.Customer.ReCheckin, 10000);
+            disablePulldownAndReleaseRefresh();
         });
 
         var titles = ['@ViewLang.EditPersonalInfo', '@ViewLang.editTransferCondition', '@ViewLang.confirmTransCondition', '@ViewLang.choonseDaily', '@ViewLang.chooseOneDay'];
