@@ -784,7 +784,7 @@ $(document).ready(function () {
         },
         statusCode: {
             500: function () {
-                location.href = resolveClientUrl('Shared/Error');
+                Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Shared/Error'));
             },
             401: function (error, callback) {
                 if (JSON && error.responseText) {
