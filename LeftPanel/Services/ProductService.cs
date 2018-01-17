@@ -505,10 +505,10 @@
         }
 
         internal static ObjectInfo GetEditSettingLink(string productNameNoSpace, string productName)
-            => new ObjectInfo {Key = productNameNoSpace, Value = $"Edit {productName}"};
+            => new ObjectInfo { Key = productNameNoSpace, Value = $"Edit {productName}" };
 
         internal static bool IsProductVisibledToSite(DataTable productStatusTable, int productId)
-            => productStatusTable.Select($"ProductID = {productId}").Length > 0 
+            => productStatusTable.Select($"ProductID = {productId}").Length > 0
             && ProductSettings.IsShowProduct(productId);
 
         internal static ObjectInfo CreateEnableLinkItem(string productNameNoSpace, string name)

@@ -39,7 +39,7 @@
             };
 
         // Get Product status from data, convert to standard structure
-        public static List<ProductStatus> GetCustomerProductStatus(DataRow statusRow)
+        public static List<ProductStatus> TransformToProductStatus(DataRow statusRow)
             => new List<ProductStatus>
             {
                 new ProductStatus(ProductConstants.Lucky3, "Lucky3", statusRow),

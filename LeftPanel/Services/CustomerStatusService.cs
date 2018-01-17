@@ -119,7 +119,7 @@
             SetColossusBetsStatus(custStatus, statusRow);
             SetGoldDeluxeStatus(custStatus, statusRow);
 
-            foreach (var productStatus in LeftPanelProductIntegration.GetCustomerProductStatus(statusRow))
+            foreach (var productStatus in LeftPanelProductIntegration.TransformToProductStatus(statusRow))
             {
                 custStatus.ProductStatusDic.Add(productStatus.ProductId, productStatus);
             }
@@ -230,7 +230,7 @@
                 DisableESports = uplineRow.ToBoolean("DisableESports")
             };
 
-            foreach (var productStatus in LeftPanelProductIntegration.GetCustomerProductStatus(uplineRow))
+            foreach (var productStatus in LeftPanelProductIntegration.TransformToProductStatus(uplineRow))
             {
                 uplineStatus.ProductStatusDic.Add(productStatus.ProductId, productStatus);
             }

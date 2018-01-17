@@ -74,24 +74,23 @@
 
         public OnlineList GetOnlineList(int custId)
         {
-            var model = new OnlineList();
+            var onlineList = new OnlineList();
 
             foreach (DataRow row in dataAccess.GetOnlineList(custId))
             {
                 var onlineIp = row.ToString("ip");
-                model.Onlines.Add(new OnlineInfo
+                onlineList.Onlines.Add(new OnlineInfo
                 (
                     new ObjectInfo {Text = authorizationService.CanViewVNIP(onlineIp) ? onlineIp : string.Empty},
                     new ObjectInfo {Text = Utils.ToDateTime(row["reload_time"]).ToStringExt()}
                 ));
             }
 
-            return model;
+            return onlineList;
         }
 
         public DownlineList GetDownlineList(int custid, int pageSize, int pageIndex)
         {
-            var totalPages = 1;
             var dr = dataAccess.GetDownlineList(custid, pageSize, pageIndex);
 
             if (dr?.ResultSet == null || dr.ResultSet.Tables.Count <= 0)
@@ -99,7 +98,7 @@
                 return null;
             }
 
-            totalPages = Utils.ToInt32(dr.Outputs["totalpages"]);
+            var totalPages = Utils.ToInt32(dr.Outputs["totalpages"]);
             var downlines = dr.ResultSet.Tables[0];
             var model = new DownlineList();
 

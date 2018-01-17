@@ -54,7 +54,7 @@
                 custName,
                 roleId.IsSuper()
                     ? 0
-                    : (int) customerModel.PersonalInfo.UplineId.Value,
+                    : (int)customerModel.PersonalInfo.UplineId.Value,
                 groupName,
                 customerInfoDataset);
 
@@ -69,8 +69,8 @@
 
             var balanceInfo = new BalanceInfo
             {
-                CurrencyId = new ObjectInfo {Value = Utils.ToInt32(customerRow["exchangeid"]), Text = "Currency Id"},
-                Currency = new ObjectInfo {Value = Utils.ToString(customerRow["currency"]), Text = "Currency"},
+                CurrencyId = new ObjectInfo { Value = Utils.ToInt32(customerRow["exchangeid"]), Text = "Currency Id" },
+                Currency = new ObjectInfo { Value = Utils.ToString(customerRow["currency"]), Text = "Currency" },
                 Balances = new List<ObjectInfo>
                 {
                     new ObjectInfo {Value = Utils.ToDecimal(cashRow[GetCashColumn(roleId)]), Text = "Total Cash"},
@@ -203,22 +203,22 @@
 
             var personalInfo = new PersonalInfo
             {
-                CustId = new ObjectInfo {Value = Utils.ToInt32(customerRow["custid"]), Text = "Cust Id"},
-                Fax = new ObjectInfo {Value = Utils.ToString(customerRow["fax"]), Text = "Fax"},
-                Mobile = new ObjectInfo {Value = Utils.ToString(customerRow["mobilephone"]), Text = "Mobile"},
+                CustId = new ObjectInfo { Value = Utils.ToInt32(customerRow["custid"]), Text = "Cust Id" },
+                Fax = new ObjectInfo { Value = Utils.ToString(customerRow["fax"]), Text = "Fax" },
+                Mobile = new ObjectInfo { Value = Utils.ToString(customerRow["mobilephone"]), Text = "Mobile" },
                 Name = new ObjectInfo
                 {
                     Value = Utils.ToString(customerRow["firstname"]) + " " + Utils.ToString(customerRow["lastname"]),
                     Text = "Name"
                 },
-                Nickname = new ObjectInfo {Value = Utils.ToString(customerRow["username2"]), Text = "Nickname"},
-                Phone = new ObjectInfo {Value = Utils.ToString(customerRow["phone"]), Text = "Phone"},
-                RoleId = new ObjectInfo {Value = roleId, Text = "Role Id"},
-                UplineRoleId = new ObjectInfo {Value = roleId + 1, Text = "Upline Role Id"},
+                Nickname = new ObjectInfo { Value = Utils.ToString(customerRow["username2"]), Text = "Nickname" },
+                Phone = new ObjectInfo { Value = Utils.ToString(customerRow["phone"]), Text = "Phone" },
+                RoleId = new ObjectInfo { Value = roleId, Text = "Role Id" },
+                UplineRoleId = new ObjectInfo { Value = roleId.DirectUplineLevel(), Text = "Upline Role Id" },
                 CustList = new ObjectInfo
                 {
                     Key = "CustList",
-                    Value = roleId.IsSuper() ? "Master List" : roleId.IsMaster() ? "Agent List" : "Member List"
+                    Value = $"{roleId.DirectDownlineLevel().DisplayRoleName()} List"
                 },
                 Status = new ObjectInfo
                 {
@@ -234,7 +234,7 @@
                 {
                     Value = !enabled ? "disabled" : closed ? closedReason : suspended ? "suspended" : string.Empty
                 },
-                IsInternal = new ObjectInfo {Value = Utils.ToBoolean(customerRow["isinternal"])}
+                IsInternal = new ObjectInfo { Value = Utils.ToBoolean(customerRow["isinternal"]) }
             };
 
             SetLineInfo(personalInfo, lineRow);
@@ -244,29 +244,24 @@
 
         internal static List<ObjectInfo> GetDownlines(DataRow lineRow, int roleId)
         {
+            var downLines = new List<ObjectInfo>
+            {
+                new ObjectInfo(lineRow.SuperId().ToString(), lineRow.SuperName(), "Super")
+            };
+
             if (roleId.IsSuper())
             {
-                return new List<ObjectInfo>
-                {
-                    new ObjectInfo(lineRow.SuperId().ToString(), lineRow.SuperName(), "Super")
-                };
+                return downLines;
             }
 
-            if (roleId.IsMaster())
+            downLines.Add(new ObjectInfo(lineRow.MasterId().ToString(), lineRow.MasterName(), roleId.DisplayRoleName()));
+
+            if (roleId.IsNotMaster())
             {
-                return new List<ObjectInfo>
-                {
-                    new ObjectInfo(lineRow.SuperId().ToString(), lineRow.SuperName(), "Super"),
-                    new ObjectInfo(lineRow.MasterId().ToString(), lineRow.MasterName(), "Master")
-                };
+                downLines.Add(new ObjectInfo(lineRow.AgentId().ToString(), lineRow.AgentName(), roleId.DisplayRoleName()));
             }
 
-            return new List<ObjectInfo>
-            {
-                new ObjectInfo(lineRow.SuperId().ToString(), lineRow.SuperName(), "Super"),
-                new ObjectInfo(lineRow.MasterId().ToString(), lineRow.MasterName(), "Master"),
-                new ObjectInfo(lineRow.AgentId().ToString(), lineRow.AgentName(), "Agent")
-            };
+            return downLines;
         }
 
         internal abstract void SetLineInfo(PersonalInfo personalInfo, DataRow lineRow);
