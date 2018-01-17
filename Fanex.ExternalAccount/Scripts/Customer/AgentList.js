@@ -878,6 +878,8 @@ Fanex.ExtAcc.Customer.RenderAgentList = function (dataSource) {
         bodyRows: bodyRows,
         autoCalculateGridExpandHeight: true,
         numberOfFrozenColumn: isMobile.phone ? 3 : 6,
+        fullHeight: !isMobile.phone,
+        gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
         bodyRowHeight: isMobile.phone ? 28 : 25,
         customizeHeader: true,
         groupHeaderRows: groupHeader,
@@ -894,7 +896,7 @@ Fanex.ExtAcc.Customer.RenderAgentList = function (dataSource) {
                 Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
             }
         },
-        marginRight: 10,
+        marginRight: 12,
         showDistinctRow: false,
         allowTruncate: true
     };
@@ -909,6 +911,7 @@ Fanex.ExtAcc.Customer.RenderAgentList = function (dataSource) {
 
     $('#breadcrumbs').show();
 
+    $("#jqgrid").fanexGrid("resizeGrid");
     Fanex.ExtAcc.OnResize = function () {
         try {
             $("#jqgrid").fanexGrid("resizeGrid");

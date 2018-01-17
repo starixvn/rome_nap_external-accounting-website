@@ -848,3 +848,34 @@ Array.prototype.contains = function (obj) {
     }
     return false;
 }
+
+
+function workaroundForGridOnPhone()
+{
+    if (isMobile.phone) {
+        // TODO: this is workaround for android browsers, header auto transparent when scrolling
+
+        if (isMobile.android.device) {
+            $('#jqgrid .grid-container')
+                .unbind('scroll.workaround.grid')
+                .bind('scroll.workaround.grid',
+                function () {
+                    var firstHeaderColumn = $("#jqgrid .row-headers-background table tr th div.table-cell").first();
+                    var firstHeaderColumnTop = $("#jqgrid .free-top-left table tr th div.table-cell").first();
+                    if (firstHeaderColumn && firstHeaderColumnTop) {
+                        var currentWidth = firstHeaderColumnTop.width();
+                        firstHeaderColumn.width(currentWidth + 1).width(currentWidth - 1);
+                    }
+                });
+        }
+
+        $(window)
+            .unbind('orientationchange.grid')
+            .bind('orientationchange.grid',
+            function (event) {
+                setTimeout(function () {
+                    $('#jqgrid').fanexGrid("resizeHeight", $(window).height() - 70);
+                }, 300);
+            });
+    }
+}

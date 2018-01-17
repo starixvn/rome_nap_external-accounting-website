@@ -283,6 +283,8 @@ Fanex.ExtAcc.DailyWinLoss = {
             ],
             columns: $this.defaultColumns,
             numberOfFrozenColumn: isMobile.phone ? 2 : 3,
+            fullHeight: !isMobile.phone,
+            gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
             autoCalculateGridExpandHeight: true,
             showTitle: true,
             titleInfo: {
@@ -389,6 +391,8 @@ Fanex.ExtAcc.DailyWinLoss = {
 
         $("#jqgrid").fanexGrid(gridOption);
         $('.toggle-margin').click($this.showHideMarginColumns);
+
+        workaroundForGridOnPhone();
     },
     showHideMarginColumns: function () {
         if ($this.hidedMargin) {

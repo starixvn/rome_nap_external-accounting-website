@@ -873,6 +873,8 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
         autoCalculateGridExpandHeight: true,
         numberOfFrozenColumn: isMobile.phone ? 3 : 6,
         bodyRowHeight: isMobile.phone ? 28 : 25,
+        fullHeight: !isMobile.phone,
+        gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
         customizeHeader: true,
         groupHeaderRows: groupHeader,
         highlightFrozenWidth: 2,
@@ -888,7 +890,7 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
                 Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
             }
         },
-        marginRight: 10,
+        marginRight: 12,
         showDistinctRow: false,
         allowTruncate: true
     };
@@ -897,11 +899,10 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
 
     $('#customerListGrid').css('visibility', 'visible');
 
-    $('#breadcrumbs').empty();
-
-    $('#breadcrumbs').append('<div class="level-line"></div><div class="level-active"><a  href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList(" + Fanex.ExtAcc.Customer.directSuperId + ")" + '">' + 'Super' + '</a></div>');
-
-    $('#breadcrumbs').show();
+    $('#breadcrumbs')
+        .empty()
+        .append('<div class="level-line"></div><div class="level-active"><a  href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList(" + Fanex.ExtAcc.Customer.directSuperId + ")" + '">' + 'Super' + '</a></div>')
+        .show();
 
     Fanex.ExtAcc.OnResize = function () {
         try {

@@ -493,7 +493,7 @@ Fanex.ExtAcc.WinLossDetail = {
             numberOfFrozenColumn: isMobile.phone ? 1 : 3,
             autoCalculateGridExpandHeight: true,
             fullHeight: !isMobile.phone,
-            gridHeight: isMobile.phone ? 400 : 0,
+            gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
             showTitle: true,
             titleInfo: {
                 text: level + " Win Loss Detail " + dateInfo
@@ -689,6 +689,8 @@ Fanex.ExtAcc.WinLossDetail = {
         gridOption.footerRows = footerData;
 
         $("#jqgrid").fanexGrid(gridOption);
+
+        workaroundForGridOnPhone();
     },
     customsortfunc: function (rows) {
         var countFixedSort = $this.fixedsortlist.length;

@@ -618,6 +618,8 @@
 
                 // Init Grid jqgrid
                 $('#jqgrid').fanexGrid(options);
+
+                workaroundForGridOnPhone();
             }
 
             $('#editMult').attr('style', 'cursor: default !important');
