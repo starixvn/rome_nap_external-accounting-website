@@ -17,6 +17,17 @@
     border-top-left-radius: 0px !important;
 }
 
+.ui-dialog {
+    @media all and (max-device-width: 768px) {        
+        max-width: 100% !important;
+        max-height: 100% !important;
+        .ui-dialog-content {
+            width: 100% !important;
+        }
+    }
+    
+}
+
 .ui-dialog .ui-dialog-titlebar {
     background: $popup-header-bg;
 	color: $popup-header-color;

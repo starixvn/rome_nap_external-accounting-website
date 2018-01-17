@@ -10,17 +10,22 @@
     position: absolute;
     float: left;
     width: 100%;
-    min-height: 60px;
+    min-height: 40px;
     background-color: #3b475f;
     height: auto;
     transition: all .01s ease-out .2s;
-
+    @media screen and (min-device-width: 768px) {
+        min-height: 60px;
+    }
     .icon-user {
         margin: 0 16px;
         float: left;
         display: inline-block;
-        line-height: 60px;
+        line-height: 40px;
         cursor: pointer;
+        @media screen and (min-device-width: 768px) { 
+            line-height: 60px;
+        }
          @media screen and (min-device-width: 1280px) { 
              margin-left: 0;
              left: 16px;
@@ -30,7 +35,10 @@
     .icon-nav {
         position: absolute;    
         right: 16px;
-        top: 23px;
+        top: 13px;
+        @media screen and (min-device-width: 768px) { 
+            top: 23px;
+        }
     }
 
     .main-menu {
@@ -102,12 +110,18 @@
 
     .select2-container {
         width: 210px !important;
-        top: 14px;
+        top: 5px;
+         @media screen and (min-device-width: 768px) { 
+            top: 14px;
+        }
     }
 
     .select2-container .select2-selection--single {
-        height: 34px;
+        height: 30px;
         @include border-radius(2px);
+        @media screen and (min-device-width: 768px) { 
+            height: 34px;
+        }
     }
 
     .select2-container--default .select2-selection--single .select2-selection__arrow b {

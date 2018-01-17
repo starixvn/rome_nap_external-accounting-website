@@ -601,11 +601,13 @@
     };
 
     $scope.EnableRacing = function () {
-        $scope.EnableThirdpartyProduct(2, "Racing", 400, 350);
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 200 : 350;
+        $scope.EnableThirdpartyProduct(2, "Racing", 400, height);
     };
 
     $scope.EnableKeno = function () {
-        $scope.EnableThirdpartyProduct(8, "Keno", 400, 400);
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 200 : 400;
+        $scope.EnableThirdpartyProduct(8, "Keno", 400, height);
     };
 
     $scope.EnableColossusBets = function (enable, id) {

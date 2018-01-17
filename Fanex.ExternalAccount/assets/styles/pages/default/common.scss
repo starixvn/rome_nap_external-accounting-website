@@ -72,12 +72,15 @@ body {
 
 .main-content {
     position: absolute;
-    top: 60px;
+    top: 40px;
     left: 0;
     bottom: 0;
     width: 100%;
 
-    @media screen and (min-device-width: 768px) and (orientation: portrait) {
+    /*@media screen and (min-device-width: 768px) and (orientation: portrait) {
+        top: 60px;
+    }*/
+    @media screen and (min-device-width: 768px) {
         top: 60px;
     }
 }

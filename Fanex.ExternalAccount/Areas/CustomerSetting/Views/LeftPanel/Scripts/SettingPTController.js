@@ -177,7 +177,11 @@
             'custId=' + $scope.model.personalInfo.custId.value +
             "&groupName=" + parent.$('#selectedGroupName').html());
         var title = parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
-        parent.Fanex.ExtAcc.Form.Show(url, title, 500, 560, false);
+
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches? 280 : 560;
+
+        parent.Fanex.ExtAcc.Form.Show(url, title, 500, height, false);
+        
     };
 
     $scope.Transfer = function () {
