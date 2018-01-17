@@ -32,8 +32,8 @@
 
         internal override void SetLineInfo(PersonalInfo personalInfo, DataRow lineRow)
         {
-            personalInfo.UplineId = new ObjectInfo { Value = lineRow.SuperId(), Text = "Super ID" };
-            personalInfo.CurrentLevel = new ObjectInfo { Value = lineRow.MasterName(), Text = "Master" };
+            personalInfo.UplineId = new ObjectInfo {Value = lineRow.SuperId(), Text = "Super ID"};
+            personalInfo.CurrentLevel = new ObjectInfo {Value = lineRow.MasterName(), Text = "Master"};
             personalInfo.Downlines = GetDownlines(lineRow, Role.Master);
         }
 

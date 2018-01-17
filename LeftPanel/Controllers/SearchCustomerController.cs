@@ -4,23 +4,29 @@
     using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
-    using CustomerSetting.Security.Authenticate;
     using Core.Shared;
+    using CustomerSetting.Security.Authenticate;
     using Service.Impl.Customer.Casino;
     using Services;
     using ViewModels;
 
     public class SearchCustomerController : BaseController
     {
-        private const string MasterAgentCreditViewl = "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MasterAgentCredit.cshtml";
-        private const string MemberCreditView = "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MemberCredit.cshtml";
-        private const string SecurityCodeIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/SecurityCode/Index.cshtml";
+        private const string MasterAgentCreditViewl =
+            "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MasterAgentCredit.cshtml";
+
+        private const string MemberCreditView =
+            "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MemberCredit.cshtml";
+
+        private const string SecurityCodeIndexView =
+            "~/Areas/CustomerSetting/Views/LeftPanel/SecurityCode/Index.cshtml";
+
         private const string LeftPanelIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml";
         private const string LeftpanelBalanceIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/Balance/Index.cshtml";
         private const string LeftPanelOtpIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/OTP/Index.cshtml";
+        private readonly CustomerCommandService customerCommandService = new CustomerCommandServiceImpl();
 
         private readonly CustomerQueryService customerQueryService = new CustomerQueryServiceImpl();
-        private readonly CustomerCommandService customerCommandService = new CustomerCommandServiceImpl();
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
             Policy = AuthenticateAction.AuthenticationType.Read)]
@@ -49,7 +55,8 @@
             return View(LeftPanelIndexView, customerInfo);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult UsedCreditPage(int custId, int roleId)
         {
             ViewBag.CustId = custId;
@@ -95,7 +102,8 @@
             try
             {
                 var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-                return JsonBase(customerCommandService.EnableCasino(custId, enable, enableDownline, casinoCustomer.CasinoSync,
+                return JsonBase(customerCommandService.EnableCasino(custId, enable, enableDownline,
+                    casinoCustomer.CasinoSync,
                     custName));
             }
             catch (Exception ex)
@@ -134,6 +142,6 @@
         [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult RemoveOTP(int custId, string username) =>
-            View(LeftPanelOtpIndexView, new { CustId = custId, Username = username });
+            View(LeftPanelOtpIndexView, new {CustId = custId, Username = username});
     }
 }

@@ -6,6 +6,7 @@
     using System.Data;
     using System.Web;
     using Core.Context;
+    using Core.Shared;
     using Criteria;
     using CustomerSetting.Security.Authenticate;
     using Data;
@@ -13,7 +14,6 @@
     using DTO;
     using Service.Impl.Customer.Casino;
     using Service.Impl.Report;
-    using Core.Shared;
     using Service.Interface.Report;
     using Utilities;
     using ViewModels;

@@ -9,22 +9,22 @@
 
         public IEnumerable<MemberUsedCreditItem> ActiveMemberUsedCreditItems
             => MemberUsedCreditItems?.Count > 0
-            ? MemberUsedCreditItems.Where(o => !o.IsClosed)
-            : null;
+                ? MemberUsedCreditItems.Where(o => !o.IsClosed)
+                : null;
 
         public IEnumerable<MemberUsedCreditItem> InactiveMemberUsedCreditItems
             => MemberUsedCreditItems?.Count > 0
-            ? MemberUsedCreditItems.Where(o => o.IsClosed)
-            : null;
+                ? MemberUsedCreditItems.Where(o => o.IsClosed)
+                : null;
 
         public decimal TotalActiveMemberUsedCredit
             => MemberUsedCreditItems == null || MemberUsedCreditItems.Count == 0
-            ? 0m
-            : MemberUsedCreditItems.Where(x => !x.IsClosed).Sum(o => o.Amount);
+                ? 0m
+                : MemberUsedCreditItems.Where(x => !x.IsClosed).Sum(o => o.Amount);
 
         public decimal TotalInactiveMemberUsedCredit
             => MemberUsedCreditItems == null || MemberUsedCreditItems.Count == 0
-            ? 0m
-            : MemberUsedCreditItems.Where(x => x.IsClosed).Sum(o => o.Amount);
+                ? 0m
+                : MemberUsedCreditItems.Where(x => x.IsClosed).Sum(o => o.Amount);
     }
 }

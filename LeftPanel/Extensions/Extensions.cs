@@ -51,7 +51,8 @@
 
         internal static bool EnableDoubleComm(this DataRow dataRow) => Utils.ToBoolean(dataRow["doubleCommLosing"]);
 
-        internal static bool EnableHorseRacingFixedOdds(this DataRow dataRow) => !Utils.ToBoolean(dataRow["DisableHRFixedOdds"]);
+        internal static bool EnableHorseRacingFixedOdds(this DataRow dataRow) =>
+            !Utils.ToBoolean(dataRow["DisableHRFixedOdds"]);
 
         internal static bool DisableESports(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableESports"]);
 
@@ -116,8 +117,8 @@
             var productRow = GetProductRow(productTable, productId);
 
             return productRow == null
-                || productRow.IsHidden()
-                || !productRow.IsSynced();
+                   || productRow.IsHidden()
+                   || !productRow.IsSynced();
         }
 
         internal static bool GetNG2ProductStatus(this DataTable table3RdDcs)
@@ -135,7 +136,7 @@
             var productRows = productTable.Select($"ProductID = {productId}");
 
             return productRows.Length > 0
-                && !productRows[0].IsDisabled();
+                   && !productRows[0].IsDisabled();
         }
 
         internal static bool IsProductSynced(this DataTable productTable, int productId)
@@ -143,7 +144,7 @@
             var productRows = productTable.Select($"ProductID = {productId}");
 
             return productRows.Length > 0
-                && productRows[0].IsSynced();
+                   && productRows[0].IsSynced();
         }
     }
 }

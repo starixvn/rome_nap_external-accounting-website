@@ -11,7 +11,8 @@
 
     public interface ProductService
     {
-        Setting GetProductSetting(int actorId, string custName, int uplineId, string groupName, DataSet customerInfoDataset);
+        Setting GetProductSetting(int actorId, string custName, int uplineId, string groupName,
+            DataSet customerInfoDataset);
     }
 
     public class ProductServiceImpl : ProductService
@@ -23,7 +24,8 @@
             this.customerStatusService = customerStatusService ?? new CustomerStatusServiceImpl();
         }
 
-        public Setting GetProductSetting(int actorId, string custName, int uplineId, string groupName, DataSet customerInfoDataset)
+        public Setting GetProductSetting(int actorId, string custName, int uplineId, string groupName,
+            DataSet customerInfoDataset)
         {
             var custInfoTable = customerInfoDataset.Tables[0];
             var productStatusTable = customerInfoDataset.Tables[4];
@@ -38,7 +40,8 @@
             return GetCustomerSetting(roleId, custInfoTable, productStatusTable, customerStatus);
         }
 
-        internal Setting GetCustomerSetting(int role, DataTable custTable, DataTable productStatusTable, CustomerStatus customerStatus)
+        internal Setting GetCustomerSetting(int role, DataTable custTable, DataTable productStatusTable,
+            CustomerStatus customerStatus)
         {
             var customerRow = custTable.Rows[0];
 
@@ -50,8 +53,8 @@
                 Details = Details(role, customerStatus),
                 MinMaxPts = new List<ObjectInfo>
                 {
-                    new ObjectInfo { Key = "MinSB", Value = "Sportsbook" },
-                    new ObjectInfo { Key = "MinRB", Value = "Racing" }
+                    new ObjectInfo {Key = "MinSB", Value = "Sportsbook"},
+                    new ObjectInfo {Key = "MinRB", Value = "Racing"}
                 }
             };
 
@@ -88,7 +91,8 @@
             return enableItems;
         }
 
-        private static void AddGoldDeluxeStatus(DataRow customerRow, CustomerStatus customerStatus, ICollection<ObjectInfo> enableItems)
+        private static void AddGoldDeluxeStatus(DataRow customerRow, CustomerStatus customerStatus,
+            ICollection<ObjectInfo> enableItems)
         {
             if (customerStatus.HideGoldDeluxe)
             {
@@ -107,7 +111,8 @@
             enableItems.Add(goldDeluxeStatus);
         }
 
-        private static void AddColossusBetsStatus(DataRow customerRow, CustomerStatus customerStatus, ICollection<ObjectInfo> enableItems)
+        private static void AddColossusBetsStatus(DataRow customerRow, CustomerStatus customerStatus,
+            ICollection<ObjectInfo> enableItems)
         {
             if (customerStatus.HideColossusBets)
             {
@@ -127,14 +132,16 @@
             enableItems.Add(colossusBetsStatus);
         }
 
-        private static void AddESportsStatus(DataRow customerRow, CustomerStatus customerStatus, List<ObjectInfo> enableItems)
+        private static void AddESportsStatus(DataRow customerRow, CustomerStatus customerStatus,
+            List<ObjectInfo> enableItems)
         {
             if (customerStatus.HideEsports)
             {
                 return;
             }
 
-            var eSportsStatus = new ObjectInfo("EnableESports", customerRow.EnableESports(), "E-Sports", "Enable E-Sports");
+            var eSportsStatus =
+                new ObjectInfo("EnableESports", customerRow.EnableESports(), "E-Sports", "Enable E-Sports");
 
             if (customerStatus.RoleId.IsNotSuper()
                 && customerStatus.UplineStatus.DisableESports)
@@ -145,7 +152,8 @@
             enableItems.Add(eSportsStatus);
         }
 
-        private static void AddHRFixedOddsStatus(DataRow customerRow, CustomerStatus customerStatus, ICollection<ObjectInfo> enableItems)
+        private static void AddHRFixedOddsStatus(DataRow customerRow, CustomerStatus customerStatus,
+            ICollection<ObjectInfo> enableItems)
         {
             var hrFixedOddsStatus = new ObjectInfo(
                 "EnableHRFixedOdds",
@@ -221,7 +229,8 @@
             enableItems.Add(liveCasinoStatus);
         }
 
-        private static void AddNumberGameStatus(DataRow customerRow, CustomerStatus customerStatus, ICollection<ObjectInfo> enableItems)
+        private static void AddNumberGameStatus(DataRow customerRow, CustomerStatus customerStatus,
+            ICollection<ObjectInfo> enableItems)
         {
             var numberGameStatus = new ObjectInfo("EnableNumberGame", customerRow.EnableNumberGame(), "Enable Num Game",
                 "Enable Number Game");
@@ -234,7 +243,8 @@
             enableItems.Add(numberGameStatus);
         }
 
-        private static void AddCasinoStatus(DataRow customerRow, CustomerStatus customerStatus, ICollection<ObjectInfo> enableItems)
+        private static void AddCasinoStatus(DataRow customerRow, CustomerStatus customerStatus,
+            ICollection<ObjectInfo> enableItems)
         {
             if (!customerStatus.SyncCasino)
             {
@@ -291,8 +301,8 @@
         {
             var details = new List<ObjectInfo>
             {
-                new ObjectInfo ("Info", "Edit Info"),
-                new ObjectInfo ("PT", "Edit Position Taking")
+                new ObjectInfo("Info", "Edit Info"),
+                new ObjectInfo("PT", "Edit Position Taking")
             };
 
             if (roleId.IsNotMember())
@@ -397,9 +407,9 @@
         internal static List<ObjectInfo> EditItems()
             => new List<ObjectInfo>
             {
-                new ObjectInfo { Key = "EnableRacing", Text = "Enable Racing" },
-                new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" },
-                new ObjectInfo { Key = "EnableCockfighting", Text = "Enable Cockfighting" }
+                new ObjectInfo {Key = "EnableRacing", Text = "Enable Racing"},
+                new ObjectInfo {Key = "EnableKeno", Text = "Enable Keno"},
+                new ObjectInfo {Key = "EnableCockfighting", Text = "Enable Cockfighting"}
             };
 
         internal static Setting AddProductSetting(
@@ -422,7 +432,7 @@
                 ? customerStatus.UplineStatus.ProductStatusDic[settingParams.ProductId].IsHidden
                 : hide;
             var isUplineDisabled = customerStatus.RoleId.IsNotSuper()
-                                    && customerStatus.UplineStatus.ProductStatusDic[settingParams.ProductId].IsDisabled;
+                                   && customerStatus.UplineStatus.ProductStatusDic[settingParams.ProductId].IsDisabled;
             var syncUpline = customerStatus.RoleId.IsNotSuper()
                 ? customerStatus.UplineStatus.ProductStatusDic[settingParams.ProductId].IsSynced
                 : sync;
@@ -455,8 +465,8 @@
         }
 
         private static bool IsHiddenProduct(int roleId, bool hideUpline, bool hide)
-            => (roleId.IsNotMember() && hide)
-               || (roleId.IsMember() && hideUpline);
+            => roleId.IsNotMember() && hide
+               || roleId.IsMember() && hideUpline;
 
         private static void AddEditStatusItem(
             Setting setting,
@@ -495,10 +505,11 @@
         }
 
         internal static ObjectInfo GetEditSettingLink(string productNameNoSpace, string productName)
-            => new ObjectInfo { Key = productNameNoSpace, Value = $"Edit {productName}" };
+            => new ObjectInfo {Key = productNameNoSpace, Value = $"Edit {productName}"};
 
         internal static bool IsProductVisibledToSite(DataTable productStatusTable, int productId)
-            => productStatusTable.Select($"ProductID = {productId}").Length > 0 && ProductSettings.IsShowProduct(productId);
+            => productStatusTable.Select($"ProductID = {productId}").Length > 0 
+            && ProductSettings.IsShowProduct(productId);
 
         internal static ObjectInfo CreateEnableLinkItem(string productNameNoSpace, string name)
             => new ObjectInfo

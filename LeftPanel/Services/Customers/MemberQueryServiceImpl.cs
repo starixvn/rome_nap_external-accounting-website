@@ -2,19 +2,19 @@
 {
     using System.Collections.Generic;
     using System.Data;
-    using System.Linq;
     using Core.Shared;
     using Extensions;
     using ViewModels;
 
     public class MemberInfoQueryServiceImpl : CustomerInfoQueryBaseService
     {
-        private static readonly IList<string> CrossLineIgnoreProducts = new List<string> { "Info", "ColossusBets", "AddNew", "Transfer" };
+        private static readonly IList<string> CrossLineIgnoreProducts =
+            new List<string> {"Info", "ColossusBets", "AddNew", "Transfer"};
 
         internal override void SetLineInfo(PersonalInfo personalInfo, DataRow lineRow)
         {
-            personalInfo.UplineId = new ObjectInfo { Value = lineRow.AgentId(), Text = "Agent ID" };
-            personalInfo.CurrentLevel = new ObjectInfo { Value = lineRow.MemberName(), Text = "Member" };
+            personalInfo.UplineId = new ObjectInfo {Value = lineRow.AgentId(), Text = "Agent ID"};
+            personalInfo.CurrentLevel = new ObjectInfo {Value = lineRow.MemberName(), Text = "Member"};
             personalInfo.Downlines = GetDownlines(lineRow, Role.Member);
         }
 
@@ -27,7 +27,8 @@
             {
                 if (!CrossLineIgnoreProducts.Contains(item.Key))
                 {
-                    setting.MasterPts.Add(new ObjectInfo(item.Key, item.Value.ToString().Replace("Edit ", string.Empty)));
+                    setting.MasterPts.Add(
+                        new ObjectInfo(item.Key, item.Value.ToString().Replace("Edit ", string.Empty)));
                 }
             }
 

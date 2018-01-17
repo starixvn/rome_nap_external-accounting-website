@@ -21,6 +21,23 @@
             new ProductSettingParam(ProductConstants.BullFighting, "Bullfighting", StatusType.Checkbox, false)
         };
 
+        public static readonly IReadOnlyDictionary<int, string> VisibleBetSettingPermissions =
+            new Dictionary<int, string>
+            {
+                // Show edit bet setting tab for edit super setting
+                {ProductConstants.RNGCasino, eFunctions.CasinoBetting},
+                {ProductConstants.GoldDeluxe, eFunctions.GoldDeluxeBetting},
+                {ProductConstants.Keno, eFunctions.KenoBetting},
+                {ProductConstants.LiveCasino, eFunctions.LiveCasinoBetting},
+                {ProductConstants.Racing, eFunctions.RacingBetting},
+                {ProductConstants.Sportsbook, eFunctions.SportsbookBetting},
+                {ProductConstants.AllBet, eFunctions.AllbetBetting},
+                {ProductConstants.VoidBridge, eFunctions.VoidbridgeBetting},
+                {ProductConstants.NG2, eFunctions.NG2Betting},
+                {ProductConstants.Lottery, eFunctions.LotteryBetting},
+                {ProductConstants.BullFighting, eFunctions.BullfightingBetting}
+            };
+
         // Get Product status from data, convert to standard structure
         public static List<ProductStatus> GetCustomerProductStatus(DataRow statusRow)
             => new List<ProductStatus>
@@ -29,14 +46,14 @@
                 new ProductStatus(ProductConstants.Lottery, "Lottery", statusRow),
                 new ProductStatus(ProductConstants.FishingWorld, "FishingWorld", statusRow),
                 new ProductStatus(ProductConstants.NG2, "NG2", statusRow),
-                new ProductStatus(ProductConstants.VoidBridge, "VoidBridge", statusRow, checkSyncedDownlines: false),
-                new ProductStatus(ProductConstants.AllBet, "Allbet", statusRow, checkSyncedDownlines: false),
+                new ProductStatus(ProductConstants.VoidBridge, "VoidBridge", statusRow, false),
+                new ProductStatus(ProductConstants.AllBet, "Allbet", statusRow, false),
                 new ProductStatus(ProductConstants.BullFighting, "Bullfighting", statusRow)
             };
 
         public static List<ObjectInfo> CreateSyncItems(DataRow customerRow, DataTable table3RdDcs)
-             => new List<ObjectInfo>
-             {
+            => new List<ObjectInfo>
+            {
                 new ObjectInfo("SyncCasino", customerRow.IsSyncedCasino(), "Casino Synced"),
                 new ObjectInfo("SyncLiveCasino", customerRow.IsSyncedLiveCasino(), "Live Casino Synced"),
                 new ObjectInfo("HideAllbet", table3RdDcs.IsHideProduct(ProductConstants.AllBet)),
@@ -46,22 +63,6 @@
                 new ObjectInfo("HideLottery", table3RdDcs.IsHideProduct(ProductConstants.Lottery)),
                 new ObjectInfo("HideLucky3", table3RdDcs.IsHideProduct(ProductConstants.Lucky3)),
                 new ObjectInfo("HideBullfighting", table3RdDcs.IsHideProduct(ProductConstants.BullFighting))
-             };
-
-        public static readonly IReadOnlyDictionary<int, string> VisibleBetSettingPermissions = new Dictionary<int, string>
-        {
-            // Show edit bet setting tab for edit super setting
-            { ProductConstants.RNGCasino, eFunctions.CasinoBetting },
-            { ProductConstants.GoldDeluxe,eFunctions.GoldDeluxeBetting },
-            { ProductConstants.Keno, eFunctions.KenoBetting },
-            { ProductConstants.LiveCasino, eFunctions.LiveCasinoBetting },
-            { ProductConstants.Racing, eFunctions.RacingBetting },
-            { ProductConstants.Sportsbook, eFunctions.SportsbookBetting },
-            { ProductConstants.AllBet, eFunctions.AllbetBetting },
-            { ProductConstants.VoidBridge, eFunctions.VoidbridgeBetting },
-            { ProductConstants.NG2, eFunctions.NG2Betting },
-            { ProductConstants.Lottery, eFunctions.LotteryBetting },
-            { ProductConstants.BullFighting, eFunctions.BullfightingBetting }
-        };
+            };
     }
 }

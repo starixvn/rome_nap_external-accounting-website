@@ -19,12 +19,12 @@
 
     public class CustomerStatusServiceImpl : CustomerStatusService
     {
+        private readonly IAgentService agentService;
+        private readonly AuthorizationService authorizationService;
+        private readonly IMasterService masterService;
+        private readonly IMemberService memberService;
         private readonly IReportService reportService;
         private readonly ISuperService superService;
-        private readonly IMasterService masterService;
-        private readonly IAgentService agentService;
-        private readonly IMemberService memberService;
-        private readonly AuthorizationService authorizationService;
 
         public CustomerStatusServiceImpl(
             IReportService reportService = null,
@@ -148,7 +148,7 @@
 
         private static void SetColossusBetsStatus(CustomerStatus custStatus, DataRow statusRow)
             => custStatus.HideColossusBets = !ProductSettings.IsShowColossusBets
-                                            || statusRow.ToBoolean("HideColossusBet");
+                                             || statusRow.ToBoolean("HideColossusBet");
 
         private static void SetCricketStatus(CustomerStatus custStatus, DataRow statusRow)
             => custStatus.HideCricket = statusRow.ToBoolean("HideCricket")
@@ -157,11 +157,11 @@
 
         private static void SetCockfightingStatus(CustomerStatus custStatus, DataRow statusRow)
             => custStatus.HideCockfighting = statusRow.ToBoolean("HideCockfighting")
-                                        || !ProductSettings.IsShowCockfighting;
+                                             || !ProductSettings.IsShowCockfighting;
 
         private static void SetSportsbook2Status(CustomerStatus custStatus, DataRow statusRow)
             => custStatus.HideSportsbook2 = statusRow.ToBoolean("HideMuayThai")
-                                        || !ProductSettings.IsShowSportsbook2;
+                                            || !ProductSettings.IsShowSportsbook2;
 
         private static void SetLiveCasinoStatus(CustomerStatus custStatus, DataRow statusRow)
         {
@@ -201,7 +201,7 @@
         private static void SetGoldDeluxeStatus(CustomerStatus custStatus, DataRow statusRow)
         {
             custStatus.HideGoldDeluxe = statusRow.ToBoolean("HideGoldDeluxe")
-                || !ProductSettings.IsShowProduct(GoldDeluxe);
+                                        || !ProductSettings.IsShowProduct(GoldDeluxe);
             custStatus.SyncGoldDeluxeDownlines = statusRow.ToBoolean("SyncedGoldDeluxeDownline");
         }
 

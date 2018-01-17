@@ -117,18 +117,24 @@
             return model;
         }
 
+        public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId) =>
+            dataAccess.MasterAgentUsedCreditItems(custId, roleId);
+
+        public IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId) =>
+            dataAccess.MemberUsedCreditItems(custId);
+
         private static void AddPageItems(int totalPages, DownlineList model)
         {
             if (totalPages > 1)
             {
                 for (var i = 1; i <= totalPages; i++)
                 {
-                    model.Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
+                    model.Pages.Add(new ObjectInfo {Value = i, Text = i.ToString()});
                 }
             }
             else
             {
-                model.Pages.Add(new ObjectInfo { Value = 1, Text = "1" });
+                model.Pages.Add(new ObjectInfo {Value = 1, Text = "1"});
             }
         }
 
@@ -138,15 +144,9 @@
             {
                 foreach (DataRow item in downlines?.Rows)
                 {
-                    model.Downlines.Add(new ObjectInfo { Text = item["username"].ToString() });
+                    model.Downlines.Add(new ObjectInfo {Text = item["username"].ToString()});
                 }
             }
         }
-
-        public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId) =>
-            dataAccess.MasterAgentUsedCreditItems(custId, roleId);
-
-        public IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId) =>
-            dataAccess.MemberUsedCreditItems(custId);
     }
 }

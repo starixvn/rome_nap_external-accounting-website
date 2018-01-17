@@ -35,12 +35,13 @@
         internal override void SetLineInfo(PersonalInfo personalInfo, DataRow lineRow)
         {
             personalInfo.Downlines = GetDownlines(lineRow, Role.Super);
-            personalInfo.CurrentLevel = new ObjectInfo { Value = lineRow.SuperName(), Text = "Super" };
+            personalInfo.CurrentLevel = new ObjectInfo {Value = lineRow.SuperName(), Text = "Super"};
         }
 
         internal override void SetCustomSettingByLevel(Setting setting, int userId, DataSet dataSet)
         {
-            if (authorizationHandler.HasReadPermissionOnFunctions(LeftPanelProductIntegration.VisibleBetSettingPermissions.Values, userId))
+            if (authorizationService.HasReadPermissionOnFunctions(
+                LeftPanelProductIntegration.VisibleBetSettingPermissions.Values, userId))
             {
                 setting.Details.Add(new ObjectInfo("BetSetting", "Edit Betting Limit"));
             }

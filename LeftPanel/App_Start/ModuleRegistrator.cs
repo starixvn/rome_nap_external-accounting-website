@@ -1,8 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.App_Start
 {
-    using CustomerSetting.Module.Core.Web.App_Start;
     using System.Reflection;
     using System.Web.Mvc;
+    using CustomerSetting.Module.Core.Web.App_Start;
 
     public class ModuleRegistrator : AppAreaRegistrator
     {
@@ -17,8 +17,14 @@
             context.MapRoute(
                 AreaName + "_" + ControllerName,
                 AreaName + "/" + ControllerName + "/{controller}/{action}/{id}/{uplineId}/{pageIndex}",
-                new { action = "Index", id = UrlParameter.Optional, uplineId = UrlParameter.Optional, pageIndex = UrlParameter.Optional },
-                new[] { ControllerNameSpace });
+                new
+                {
+                    action = "Index",
+                    id = UrlParameter.Optional,
+                    uplineId = UrlParameter.Optional,
+                    pageIndex = UrlParameter.Optional
+                },
+                new[] {ControllerNameSpace});
         }
     }
 }

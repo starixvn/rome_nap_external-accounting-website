@@ -1,17 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     public class MasterAgentUsedCreditModel
     {
-        public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems
-        {
-            get;
-            set;
-        }
+        public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems { get; set; }
 
         public MasterAgentUsedCreditItem Total
         {
@@ -22,8 +15,8 @@
                     return new MasterAgentUsedCreditItem();
                 }
 
-                decimal givenCredit = 0m;
-                decimal usedCredit = 0m;
+                var givenCredit = 0m;
+                var usedCredit = 0m;
 
                 foreach (var item in MasterAgentUsedCreditItems)
                 {

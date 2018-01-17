@@ -26,6 +26,12 @@
 
         public bool IsSyncedDownlines { get; set; }
 
+        public bool IsShow => IsSynced && !IsHidden;
+
+        public ProductStatus Upline { get; set; }
+
+        public bool CheckSyncedDownlines { get; }
+
         public void SetProductStatus(DataRow dataRow)
         {
             IsDisabled = dataRow.ToBoolean($"Disable{ProductKey}");
@@ -37,11 +43,5 @@
                 IsSyncedDownlines = dataRow.ToBoolean($"Synced{ProductKey}Downline", true);
             }
         }
-
-        public bool IsShow => IsSynced && !IsHidden;
-
-        public ProductStatus Upline { get; set; }
-
-        public bool CheckSyncedDownlines { get; }
     }
 }

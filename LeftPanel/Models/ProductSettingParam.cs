@@ -10,15 +10,16 @@
 
     public class ProductSettingParam
     {
-        public ProductSettingParam(int productId, string productName, StatusType statusType, bool isGetNameFromRemotingRef)
+        public ProductSettingParam(int productId, string productName, StatusType statusType,
+            bool isGetNameFromRemotingRef)
         {
             ProductKey = string.IsNullOrWhiteSpace(productName)
-                          ? string.Empty
-                          : productName.Replace(" ", string.Empty);
+                ? string.Empty
+                : productName.Replace(" ", string.Empty);
             ProductId = productId;
             ProductName = isGetNameFromRemotingRef
-                        ? RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en-US", productName)
-                        : productName;
+                ? RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en-US", productName)
+                : productName;
             StatusType = statusType;
         }
 

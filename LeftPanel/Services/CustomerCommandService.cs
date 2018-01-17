@@ -28,7 +28,8 @@
 
         DataTable CustomerSelectClearBalance(int custId);
 
-        Result CloseCutomer(int custId, int uplineId, ICurrentSession currentSession, ICurrentContext currentContext, bool close, bool clearCredit, string custName);
+        Result CloseCutomer(int custId, int uplineId, ICurrentSession currentSession, ICurrentContext currentContext,
+            bool close, bool clearCredit, string custName);
 
         Result SuspendCustomer(int custId, bool suspend);
 
@@ -57,10 +58,10 @@
     {
         private const int AlphaAdminSystem = 3;
         private const string Salt = "1qaw3+{:P)";
+        private readonly AuthorizationService authorizationService;
+        private readonly ICasinoManager casinoManager;
 
         private readonly CustomerDataAccesses dataAccess;
-        private readonly ICasinoManager casinoManager;
-        private readonly AuthorizationService authorizationService;
 
         public CustomerCommandServiceImpl(
             CustomerDataAccesses dataAccess = null,
@@ -73,7 +74,7 @@
         }
 
         public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
-           => dataAccess.UpdateGivenCredit(id, uplineId, newGivenCredit);
+            => dataAccess.UpdateGivenCredit(id, uplineId, newGivenCredit);
 
         public Result ResetMemberCredit(int custId, int agentId, bool closedOnly) =>
             dataAccess.ResetMemberCredit(custId, agentId, closedOnly);
@@ -83,13 +84,15 @@
 
         public DataTable CustomerSelectClearBalance(int custId) => dataAccess.CustomerSelectClearBalance(custId);
 
-        public Result CloseCutomer(int custId, int uplineId, ICurrentSession currentSession, ICurrentContext currentContext, bool close, bool clearCredit, string custName)
+        public Result CloseCutomer(int custId, int uplineId, ICurrentSession currentSession,
+            ICurrentContext currentContext, bool close, bool clearCredit, string custName)
         {
             var casinoCustomer = casinoManager.GetCustInfoIBC(custId, uplineId);
 
             if (casinoCustomer?.RoleId == Role.Super
                 && !close
-                && !authorizationService.IsAuthorized(currentSession.UserId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host))
+                && !authorizationService.IsAuthorized(currentSession.UserId, eFunctions.OpenSuper,
+                    AuthenticateAction.AuthenticationType.Host))
             {
                 return new Result(1, ViewLang.DontHavePermission);
             }
@@ -100,35 +103,6 @@
             }
 
             return dataAccess.CloseCutomer(custId, close, clearCredit, custName);
-        }
-
-        protected void UpdateCasinoClosed(int custId, bool closed, ICurrentSession currentSession, ICurrentContext currentContext)
-        {
-            var cust = new Customer();
-            try
-            {
-                if (authorizationService.IsAuthorized(
-                    currentSession.UserId,
-                    eFunctions.CloseCustomer,
-                    AuthenticateAction.AuthenticationType.Host))
-                {
-                    cust.UpdateCustClosed(
-                        custId,
-                        closed,
-                        currentContext.Ip4Address,
-                        currentSession.UserId,
-                        currentSession.UserName,
-                        AlphaAdminSystem);
-                }
-            }
-            catch (ErrorException casinoEx)
-            {
-                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
         }
 
         public Result SuspendCustomer(int custId, bool suspend)
@@ -207,5 +181,35 @@
                 Userid = userId,
                 IP = ip4Address
             });
+
+        protected void UpdateCasinoClosed(int custId, bool closed, ICurrentSession currentSession,
+            ICurrentContext currentContext)
+        {
+            var cust = new Customer();
+            try
+            {
+                if (authorizationService.IsAuthorized(
+                    currentSession.UserId,
+                    eFunctions.CloseCustomer,
+                    AuthenticateAction.AuthenticationType.Host))
+                {
+                    cust.UpdateCustClosed(
+                        custId,
+                        closed,
+                        currentContext.Ip4Address,
+                        currentSession.UserId,
+                        currentSession.UserName,
+                        AlphaAdminSystem);
+                }
+            }
+            catch (ErrorException casinoEx)
+            {
+                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
+        }
     }
 }

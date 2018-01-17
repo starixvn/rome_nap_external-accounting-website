@@ -13,20 +13,24 @@
         private readonly CustomerCommandService customerCommandService = new CustomerCommandServiceImpl();
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.UpdateCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.UpdateCredit,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateGivenCreditPost(int custId, int uplineId, decimal newGivenCredit)
             => JsonBase(customerCommandService.UpdateGivenCredit(custId, uplineId, newGivenCredit));
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult ResetMemberCredit(int agentId, bool closedOnly)
             => JsonBase(customerCommandService.ResetMemberCredit(CurrentSession.UserId, agentId, closedOnly));
 
-        [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateClearBalance(int custId, string custIds, bool isCheckedAll)
-            => JsonBase(customerCommandService.CustomerInsertClearBalance(custId, custIds, isCheckedAll, CurrentContext.Ip4Address));
+            => JsonBase(customerCommandService.CustomerInsertClearBalance(custId, custIds, isCheckedAll,
+                CurrentContext.Ip4Address));
 
         [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer,
             Policy = AuthenticateAction.AuthenticationType.Host)]
@@ -67,7 +71,8 @@
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateAutoMPT(int custId, bool allow, int uplineId)
-            => JsonBase(customerCommandService.AutoMasterPt(custId, allow, uplineId, CurrentSession.UserId, CurrentSession.UserName, CurrentContext.Ip4Address));
+            => JsonBase(customerCommandService.AutoMasterPt(custId, allow, uplineId, CurrentSession.UserId,
+                CurrentSession.UserName, CurrentContext.Ip4Address));
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode,
@@ -77,7 +82,8 @@
             => JsonBase(customerCommandService.UpdateSecurityCode(custId, code, force, roleId));
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult RemoveOTP(int custId)
             => JsonBase(customerCommandService.RemoveOtp(custId, CurrentSession.UserId, CurrentContext.Ip4Address));
