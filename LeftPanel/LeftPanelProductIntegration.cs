@@ -56,13 +56,13 @@
             {
                 new ObjectInfo("SyncCasino", customerRow.IsSyncedCasino(), "Casino Synced"),
                 new ObjectInfo("SyncLiveCasino", customerRow.IsSyncedLiveCasino(), "Live Casino Synced"),
-                new ObjectInfo("HideAllbet", table3RdDcs.IsHideProduct(ProductConstants.AllBet)),
-                new ObjectInfo("HideVoidbridge", table3RdDcs.IsHideProduct(ProductConstants.VoidBridge)),
-                new ObjectInfo("HideNG2", table3RdDcs.IsHideProduct(ProductConstants.NG2)),
-                new ObjectInfo("HideFishingWorld", table3RdDcs.IsHideProduct(ProductConstants.FishingWorld)),
-                new ObjectInfo("HideLottery", table3RdDcs.IsHideProduct(ProductConstants.Lottery)),
-                new ObjectInfo("HideLucky3", table3RdDcs.IsHideProduct(ProductConstants.Lucky3)),
-                new ObjectInfo("HideBullfighting", table3RdDcs.IsHideProduct(ProductConstants.BullFighting))
+                new ObjectInfo("HideAllbet", table3RdDcs.IsHiddenProduct(ProductConstants.AllBet)),
+                new ObjectInfo("HideVoidbridge", table3RdDcs.IsHiddenProduct(ProductConstants.VoidBridge)),
+                new ObjectInfo("HideNG2", table3RdDcs.IsHiddenProduct(ProductConstants.NG2)),
+                new ObjectInfo("HideFishingWorld", table3RdDcs.IsHiddenProduct(ProductConstants.FishingWorld)),
+                new ObjectInfo("HideLottery", table3RdDcs.IsHiddenProduct(ProductConstants.Lottery)),
+                new ObjectInfo("HideLucky3", table3RdDcs.IsHiddenProduct(ProductConstants.Lucky3)),
+                new ObjectInfo("HideBullfighting", table3RdDcs.IsHiddenProduct(ProductConstants.BullFighting))
             };
     }
 }

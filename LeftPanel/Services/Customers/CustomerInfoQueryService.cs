@@ -12,7 +12,7 @@
 
     public interface CustomerInfoQueryService
     {
-        CustomerModel GetCustomer(int actorId, string custName, string groupName, DataSet customerInfoDataset);
+        CustomerModel GetCustomerModel(int actorId, string custName, string groupName, DataSet customerInfoDataset);
     }
 
     public abstract class CustomerInfoQueryBaseService : CustomerInfoQueryService
@@ -31,20 +31,20 @@
             this.productService = productService ?? new ProductServiceImpl();
         }
 
-        public CustomerModel GetCustomer(int actorId, string custName, string groupName, DataSet customerInfoDataset)
+        public CustomerModel GetCustomerModel(int actorId, string custName, string groupName, DataSet customerInfoDataset)
         {
-            var custInfoTable = customerInfoDataset.Tables[0];
-            var custInfoRow = custInfoTable.Rows[0];
+            var custInfoRow = customerInfoDataset.Tables[0].Rows[0];
             var cashRow = customerInfoDataset.Tables[2].Rows[0];
             var lineRow = customerInfoDataset.Tables[1].Rows[0];
-            var roleId = Utils.ToInt32(custInfoRow["roleid"]);
+            var roleId = custInfoRow.RoleId();
+            var isUpdateCredit = authorizationService.HasUpdateCreditPermission(actorId);
 
             var customerModel = new CustomerModel
             {
                 HasDownline = Utils.ToBoolean(custInfoRow["HasDownline"]),
                 UplineHasSecurityCode = Utils.ToBoolean(custInfoRow["UplineHasSecurityCode"]),
                 CurrencyId = custInfoRow.ToInt32("exchangeid"),
-                BalanceInfo = GetBalanceInfo(actorId, custInfoRow, cashRow),
+                BalanceInfo = GetBalanceInfo(isUpdateCredit, custInfoRow, cashRow),
                 PersonalInfo = GetPersonalInfo(custInfoRow, lineRow),
                 Login = GetLoginInfo(cashRow, custInfoRow)
             };
@@ -58,12 +58,12 @@
                 groupName,
                 customerInfoDataset);
 
-            SetCustomSettingByLevel(customerModel.Setting, actorId, customerInfoDataset);
+            SetCustomSetting(customerModel.Setting, actorId, customerInfoDataset);
 
             return customerModel;
         }
 
-        internal virtual BalanceInfo GetBalanceInfo(int userId, DataRow customerRow, DataRow cashRow)
+        internal BalanceInfo GetBalanceInfo(bool isUpdateCredit, DataRow customerRow, DataRow cashRow)
         {
             var roleId = Utils.ToInt32(customerRow["roleid"]);
 
@@ -73,7 +73,7 @@
                 Currency = new ObjectInfo { Value = Utils.ToString(customerRow["currency"]), Text = "Currency" },
                 Balances = new List<ObjectInfo>
                 {
-                    new ObjectInfo {Value = Utils.ToDecimal(cashRow[GetCashColumn(roleId)]), Text = "Total Cash"},
+                    new ObjectInfo { Value = Utils.ToDecimal(cashRow[GetCashColumn(roleId)]), Text = "Total Cash"},
                     new ObjectInfo
                     {
                         Value = Utils.ToDecimal(cashRow[GetYesterdayCashColumn(roleId)]),
@@ -86,7 +86,7 @@
                     },
                     new ObjectInfo {Value = Utils.ToDecimal(customerRow["credit"]), Text = "Given Credit"}
                 },
-                IsUpdateCredit = authorizationService.HasUpdateCreditPermission(userId)
+                IsUpdateCredit = isUpdateCredit
             };
 
             if (roleId.IsNotMember())
@@ -95,6 +95,24 @@
                 {
                     Value = cashRow[GetUsedCreditColumn(roleId)],
                     Text = "Used Credit"
+                });
+
+                balanceInfo.Balances.Add(new ObjectInfo
+                {
+                    Value = cashRow.TotalBalance(roleId),
+                    Text = "Total Balance"
+                });
+
+                balanceInfo.Balances.Add(new ObjectInfo
+                {
+                    Value = cashRow.TotalYesterdayCash(roleId),
+                    Text = "Yesterday Balance"
+                });
+
+                balanceInfo.Balances.Add(new ObjectInfo
+                {
+                    Value = cashRow.CustomerOutstanding(),
+                    Text = $"{roleId.DirectDownlineLevel().DisplayRoleName()} Outstanding"
                 });
             }
 
@@ -187,7 +205,7 @@
 
         internal virtual PersonalInfo GetPersonalInfo(DataRow customerRow, DataRow lineRow)
         {
-            var roleId = Utils.ToInt32(customerRow["roleid"]);
+            var role = Utils.ToInt32(customerRow["roleid"]);
             var enabled = customerRow.ToBoolean("enabled");
             var closed = customerRow.ToBoolean("closed");
             var suspended = customerRow.ToBoolean("suspended");
@@ -213,12 +231,12 @@
                 },
                 Nickname = new ObjectInfo { Value = Utils.ToString(customerRow["username2"]), Text = "Nickname" },
                 Phone = new ObjectInfo { Value = Utils.ToString(customerRow["phone"]), Text = "Phone" },
-                RoleId = new ObjectInfo { Value = roleId, Text = "Role Id" },
-                UplineRoleId = new ObjectInfo { Value = roleId.DirectUplineLevel(), Text = "Upline Role Id" },
+                RoleId = new ObjectInfo { Value = role, Text = "Role Id" },
+                UplineRoleId = new ObjectInfo { Value = role.DirectUplineLevel(), Text = "Upline Role Id" },
                 CustList = new ObjectInfo
                 {
                     Key = "CustList",
-                    Value = $"{roleId.DirectDownlineLevel().DisplayRoleName()} List"
+                    Value = $"{role.DirectDownlineLevel().DisplayRoleName()} List"
                 },
                 Status = new ObjectInfo
                 {
@@ -237,7 +255,7 @@
                 IsInternal = new ObjectInfo { Value = Utils.ToBoolean(customerRow["isinternal"]) }
             };
 
-            SetLineInfo(personalInfo, lineRow);
+            SetLineInfo(role, personalInfo, lineRow);
 
             return personalInfo;
         }
@@ -264,12 +282,33 @@
             return downLines;
         }
 
-        internal abstract void SetLineInfo(PersonalInfo personalInfo, DataRow lineRow);
+        internal static void SetLineInfo(int role, PersonalInfo personalInfo, DataRow lineRow)
+        {
+            personalInfo.CurrentLevel = new ObjectInfo
+            {
+                Value = lineRow.CustomerName(role),
+                Text = role.DisplayRoleName()
+            };
+
+            personalInfo.Downlines = GetDownlines(lineRow, role);
+
+            if (role.IsNotSuper())
+            {
+                personalInfo.UplineId = new ObjectInfo
+                {
+                    Value = lineRow.CustomerId(role.DirectUplineLevel()),
+                    Text = $"{role.DirectUplineLevel().DisplayRoleName()} ID"
+                };
+            }
+        }
 
         /// <summary>
         ///     this method should be overrided by each customer query service
         /// </summary>
-        internal virtual void SetCustomSettingByLevel(Setting setting, int userId, DataSet dataSet)
+        /// <param name="setting"></param>
+        /// <param name="userId"></param>
+        /// <param name="dataSet"></param>
+        internal virtual void SetCustomSetting(Setting setting, int userId, DataSet dataSet)
         {
         }
     }

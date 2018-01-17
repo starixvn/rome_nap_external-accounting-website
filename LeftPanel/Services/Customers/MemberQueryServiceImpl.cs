@@ -2,23 +2,14 @@
 {
     using System.Collections.Generic;
     using System.Data;
-    using Core.Shared;
-    using Extensions;
     using ViewModels;
 
     public class MemberInfoQueryServiceImpl : CustomerInfoQueryBaseService
     {
         private static readonly IList<string> CrossLineIgnoreProducts =
-            new List<string> {"Info", "ColossusBets", "AddNew", "Transfer"};
+            new List<string> { "Info", "ColossusBets", "AddNew", "Transfer" };
 
-        internal override void SetLineInfo(PersonalInfo personalInfo, DataRow lineRow)
-        {
-            personalInfo.UplineId = new ObjectInfo {Value = lineRow.AgentId(), Text = "Agent ID"};
-            personalInfo.CurrentLevel = new ObjectInfo {Value = lineRow.MemberName(), Text = "Member"};
-            personalInfo.Downlines = GetDownlines(lineRow, Role.Member);
-        }
-
-        internal override void SetCustomSettingByLevel(Setting setting, int userId, DataSet dataSet)
+        internal override void SetCustomSetting(Setting setting, int userId, DataSet dataSet)
         {
             setting.SuperPts.Clear();
             setting.MasterPts.Clear();

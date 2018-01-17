@@ -25,7 +25,7 @@
 
     public class CustomerQueryServiceImpl : CustomerQueryService
     {
-        private static readonly IReadOnlyDictionary<int, CustomerInfoQueryService> queryServiceFactory =
+        private static readonly IReadOnlyDictionary<int, CustomerInfoQueryService> queryServiceInstances =
             new Dictionary<int, CustomerInfoQueryService>
             {
                 [Role.Super] = new SuperInfoQueryServiceImpl(),
@@ -45,31 +45,32 @@
         {
             this.dataAccess = dataAccess ?? new CustomerDataAccessesImpl();
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
-            this.queryServices = queryServices ?? queryServiceFactory;
+            this.queryServices = queryServices ?? queryServiceInstances;
         }
 
         public CustomerModel SearchCustomer(int actorId, string custName, string groupName = "ACCDDD")
         {
-            var customerInfo = dataAccess.GetCustomerInfo(
+            var customerInfoDataSet = dataAccess.GetCustomerInfo(
                 string.IsNullOrWhiteSpace(custName)
                     ? string.Empty
                     : custName,
                 groupName);
 
-            if (customerInfo == null
-                || customerInfo.Tables.Count <= 0)
+            if (customerInfoDataSet == null || customerInfoDataSet.Tables.Count <= 0)
             {
                 return null;
             }
 
-            var roleId = Utils.ToInt32(customerInfo.Tables[0].Rows[0]["roleid"]);
+            var roleId = Utils.ToInt32(customerInfoDataSet.Tables[0].Rows[0]["roleid"]);
 
             if (!queryServices.ContainsKey(roleId))
             {
-                throw new ArgumentOutOfRangeException($"RoleId {roleId} is out of range");
+                throw new ArgumentException($"RoleId {roleId} is out of range");
             }
 
-            return queryServices[roleId].GetCustomer(actorId, custName, groupName, customerInfo);
+            // TODO: queryService instance just need to call SetCustomSetting
+
+            return queryServices[roleId].GetCustomerModel(actorId, custName, groupName, customerInfoDataSet);
         }
 
         public OnlineList GetOnlineList(int custId)
@@ -139,12 +140,14 @@
 
         private static void AdDownlines(DataTable downlines, DownlineList model)
         {
-            if (downlines?.Rows != null)
+            if (downlines?.Rows == null)
             {
-                foreach (DataRow item in downlines?.Rows)
-                {
-                    model.Downlines.Add(new ObjectInfo {Text = item["username"].ToString()});
-                }
+                return;
+            }
+
+            foreach (DataRow item in downlines?.Rows)
+            {
+                model.Downlines.Add(new ObjectInfo {Text = item["username"].ToString()});
             }
         }
     }

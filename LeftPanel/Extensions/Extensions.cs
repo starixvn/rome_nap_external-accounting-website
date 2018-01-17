@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
+    using System;
     using System.Data;
     using System.Linq;
     using Core.Shared;
@@ -7,30 +8,6 @@
 
     internal static class Extensions
     {
-        internal static int SuperId(this DataRow dataRow) => Utils.ToInt32(dataRow["superID"]);
-
-        internal static int MasterId(this DataRow dataRow) => Utils.ToInt32(dataRow["masterID"]);
-
-        internal static int AgentId(this DataRow dataRow) => Utils.ToInt32(dataRow["agentID"]);
-
-        internal static string SuperName(this DataRow dataRow) => Utils.ToString(dataRow["superName"]);
-
-        internal static string MasterName(this DataRow dataRow) => Utils.ToString(dataRow["masterName"]);
-
-        internal static string AgentName(this DataRow dataRow) => Utils.ToString(dataRow["agentName"]);
-
-        internal static string MemberName(this DataRow dataRow) => Utils.ToString(dataRow["memberName"]);
-
-        internal static bool Closed(this DataRow dataRow) => Utils.ToBoolean(dataRow["closed"]);
-
-        internal static bool Suspended(this DataRow dataRow) => Utils.ToBoolean(dataRow["suspended"]);
-
-        internal static bool IsHidden(this DataRow dataRow) => Utils.ToBoolean(dataRow["IsHidden"]);
-
-        internal static bool IsSynced(this DataRow dataRow) => Utils.ToBoolean(dataRow["IsSync"]);
-
-        internal static bool IsDisabled(this DataRow dataRow) => Utils.ToBoolean(dataRow["isDisabled"]);
-
         internal static bool DisableOutright(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableOutright"]);
 
         internal static bool EnableOutright(this DataRow dataRow) => !DisableOutright(dataRow);
@@ -76,6 +53,27 @@
 
         internal static decimal CustomerCash(this DataRow dataRow) => Utils.ToDecimal(dataRow["customerCash"]);
 
+        internal static decimal Cash(this DataRow dataRow, int role)
+        {
+            switch (role)
+            {
+                case Role.Super:
+                    return dataRow.SuperCash();
+
+                case Role.Master:
+                    return dataRow.MasterCash();
+
+                case Role.Agent:
+                    return dataRow.AgentCash();
+
+                case Role.Member:
+                    return dataRow.CustomerCash();
+
+                default:
+                    throw new ArgumentException(nameof(role));
+            }
+        }
+
         internal static decimal TotalAgentBalance(this DataRow dataRow)
             => dataRow.CustomerCash() + dataRow.AgentCash();
 
@@ -84,6 +82,24 @@
 
         internal static decimal TotalSuperBalance(this DataRow dataRow)
             => dataRow.TotalMasterBalance() + dataRow.SuperCash();
+
+        internal static decimal TotalBalance(this DataRow dataRow, int role)
+        {
+            switch (role)
+            {
+                case Role.Super:
+                    return dataRow.TotalSuperBalance();
+
+                case Role.Master:
+                    return dataRow.TotalMasterBalance();
+
+                case Role.Agent:
+                    return dataRow.TotalAgentBalance();
+
+                default:
+                    throw new ArgumentException(nameof(role));
+            }
+        }
 
         internal static decimal SuperYesterdayCash(this DataRow dataRow)
             => Utils.ToDecimal(dataRow["yesterday_superCash"]);
@@ -97,6 +113,27 @@
         internal static decimal CustomerYesterdayCash(this DataRow dataRow)
             => Utils.ToDecimal(dataRow["yesterday_customerCash"]);
 
+        internal static decimal YesterdayCash(this DataRow dataRow, int role)
+        {
+            switch (role)
+            {
+                case Role.Super:
+                    return dataRow.SuperYesterdayCash();
+
+                case Role.Master:
+                    return dataRow.MasterYesterdayCash();
+
+                case Role.Agent:
+                    return dataRow.AgentYesterdayCash();
+
+                case Role.Member:
+                    return dataRow.CustomerYesterdayCash();
+
+                default:
+                    throw new ArgumentException(nameof(role));
+            }
+        }
+
         internal static decimal TotalAgentYesterdayCash(this DataRow dataRow)
             => dataRow.AgentYesterdayCash() + dataRow.CustomerYesterdayCash();
 
@@ -106,26 +143,44 @@
         internal static decimal TotalSuperYesterdayCash(this DataRow dataRow)
             => dataRow.TotalMasterYesterdayCash() + dataRow.SuperYesterdayCash();
 
+        internal static decimal TotalYesterdayCash(this DataRow dataRow, int role)
+        {
+            switch (role)
+            {
+                case Role.Super:
+                    return dataRow.TotalSuperYesterdayCash();
+
+                case Role.Master:
+                    return dataRow.TotalMasterYesterdayCash();
+
+                case Role.Agent:
+                    return dataRow.TotalAgentYesterdayCash();
+
+                default:
+                    throw new ArgumentException(nameof(role));
+            }
+        }
+
         internal static decimal CustomerOutstanding(this DataRow dataRow)
             => Utils.ToDecimal(dataRow["customerOutstanding"]);
 
         private static DataRow GetProductRow(DataTable table3RdDcs, int productId)
             => table3RdDcs.Select($"ProductID = {productId}").FirstOrDefault();
 
-        internal static bool IsHideProduct(this DataTable productTable, int productId)
+        internal static bool IsHiddenProduct(this DataTable productTable, int productId)
         {
             var productRow = GetProductRow(productTable, productId);
 
             return productRow == null
                    || productRow.IsHidden()
-                   || !productRow.IsSynced();
+                   || !productRow.IsSync();
         }
 
         internal static bool GetNG2ProductStatus(this DataTable table3RdDcs)
         {
             var productRow = GetProductRow(table3RdDcs, ProductConstants.NG2);
 
-            return productRow == null || !productRow.IsSynced();
+            return productRow == null || !productRow.IsSync();
         }
 
         internal static bool GetVirtualSportsStatus(this DataTable table3rdDCS)
@@ -144,7 +199,7 @@
             var productRows = productTable.Select($"ProductID = {productId}");
 
             return productRows.Length > 0
-                   && productRows[0].IsSynced();
+                   && productRows[0].IsSync();
         }
     }
 }
