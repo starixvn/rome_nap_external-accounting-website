@@ -190,6 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\ModuleRegistrator.cs" />
+    <Compile Include="Controllers\CustomerProfileController.cs" />
     <Compile Include="Controllers\SearchCustomerController.cs" />
     <Compile Include="Controllers\UpdateCustomerController.cs" />
     <Compile Include="Criteria\RemoveOTPCriteria.cs" />
