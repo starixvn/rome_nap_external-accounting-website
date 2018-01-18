@@ -203,34 +203,34 @@
             return loginInfos;
         }
 
-        internal virtual PersonalInfo GetPersonalInfo(DataRow customerRow, DataRow lineRow)
+        internal virtual PersonalInfo GetPersonalInfo(DataRow customerInfoRow, DataRow lineRow)
         {
-            var role = Utils.ToInt32(customerRow["roleid"]);
-            var enabled = customerRow.ToBoolean("enabled");
-            var closed = customerRow.ToBoolean("closed");
-            var suspended = customerRow.ToBoolean("suspended");
+            var role = customerInfoRow.RoleId();
+            var enabled = customerInfoRow.Enabled();
+            var closed = customerInfoRow.Closed();
+            var suspended = customerInfoRow.Suspended();
             var status = ThisAccountWas;
             var closedReason = string.Empty;
 
             if (closed)
             {
-                var customerClosedReason = new CustomerClosedReason(customerRow["closedreason"]);
+                var customerClosedReason = new CustomerClosedReason(customerInfoRow["closedreason"]);
                 closedReason = customerClosedReason.ClassName;
                 status = customerClosedReason.ClosedReason;
             }
 
             var personalInfo = new PersonalInfo
             {
-                CustId = new ObjectInfo { Value = Utils.ToInt32(customerRow["custid"]), Text = "Cust Id" },
-                Fax = new ObjectInfo { Value = Utils.ToString(customerRow["fax"]), Text = "Fax" },
-                Mobile = new ObjectInfo { Value = Utils.ToString(customerRow["mobilephone"]), Text = "Mobile" },
+                CustId = new ObjectInfo { Value = Utils.ToInt32(customerInfoRow["custid"]), Text = "Cust Id" },
+                Fax = new ObjectInfo { Value = Utils.ToString(customerInfoRow["fax"]), Text = "Fax" },
+                Mobile = new ObjectInfo { Value = Utils.ToString(customerInfoRow["mobilephone"]), Text = "Mobile" },
                 Name = new ObjectInfo
                 {
-                    Value = Utils.ToString(customerRow["firstname"]) + " " + Utils.ToString(customerRow["lastname"]),
+                    Value = Utils.ToString(customerInfoRow["firstname"]) + " " + Utils.ToString(customerInfoRow["lastname"]),
                     Text = "Name"
                 },
-                Nickname = new ObjectInfo { Value = Utils.ToString(customerRow["username2"]), Text = "Nickname" },
-                Phone = new ObjectInfo { Value = Utils.ToString(customerRow["phone"]), Text = "Phone" },
+                Nickname = new ObjectInfo { Value = Utils.ToString(customerInfoRow["username2"]), Text = "Nickname" },
+                Phone = new ObjectInfo { Value = Utils.ToString(customerInfoRow["phone"]), Text = "Phone" },
                 RoleId = new ObjectInfo { Value = role, Text = "Role Id" },
                 UplineRoleId = new ObjectInfo { Value = role.DirectUplineLevel(), Text = "Upline Role Id" },
                 CustList = new ObjectInfo
@@ -252,7 +252,7 @@
                 {
                     Value = !enabled ? "disabled" : closed ? closedReason : suspended ? "suspended" : string.Empty
                 },
-                IsInternal = new ObjectInfo { Value = Utils.ToBoolean(customerRow["isinternal"]) }
+                IsInternal = new ObjectInfo { Value = Utils.ToBoolean(customerInfoRow["isinternal"]) }
             };
 
             SetLineInfo(role, personalInfo, lineRow);
@@ -264,7 +264,7 @@
         {
             var downLines = new List<ObjectInfo>
             {
-                new ObjectInfo(lineRow.SuperId().ToString(), lineRow.SuperName(), "Super")
+                new ObjectInfo(lineRow.CustomerId(Role.Super).ToString(), lineRow.CustomerName(Role.Super), Role.Super.DisplayRoleName())
             };
 
             if (roleId.IsSuper())
@@ -272,11 +272,11 @@
                 return downLines;
             }
 
-            downLines.Add(new ObjectInfo(lineRow.MasterId().ToString(), lineRow.MasterName(), roleId.DisplayRoleName()));
+            downLines.Add(new ObjectInfo(lineRow.CustomerId(Role.Master).ToString(), lineRow.CustomerName(Role.Master), roleId.DisplayRoleName()));
 
             if (roleId.IsNotMaster())
             {
-                downLines.Add(new ObjectInfo(lineRow.AgentId().ToString(), lineRow.AgentName(), roleId.DisplayRoleName()));
+                downLines.Add(new ObjectInfo(lineRow.CustomerId(Role.Agent).ToString(), lineRow.CustomerName(Role.Agent), roleId.DisplayRoleName()));
             }
 
             return downLines;

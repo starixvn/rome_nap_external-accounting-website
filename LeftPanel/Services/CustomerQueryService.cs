@@ -82,8 +82,8 @@
                 var onlineIp = row.ToString("ip");
                 onlineList.Onlines.Add(new OnlineInfo
                 (
-                    new ObjectInfo {Text = authorizationService.CanViewVNIP(onlineIp) ? onlineIp : string.Empty},
-                    new ObjectInfo {Text = Utils.ToDateTime(row["reload_time"]).ToStringExt()}
+                    new ObjectInfo { Text = authorizationService.CanViewVNIP(onlineIp) ? onlineIp : string.Empty },
+                    new ObjectInfo { Text = Utils.ToDateTime(row["reload_time"]).ToStringExt() }
                 ));
             }
 
@@ -108,7 +108,7 @@
                 return model;
             }
 
-            AdDownlines(downlines, model);
+            AddDownlines(downlines, model);
 
             model.CurrentPage = pageIndex;
 
@@ -129,16 +129,16 @@
             {
                 for (var i = 1; i <= totalPages; i++)
                 {
-                    model.Pages.Add(new ObjectInfo {Value = i, Text = i.ToString()});
+                    model.Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
                 }
             }
             else
             {
-                model.Pages.Add(new ObjectInfo {Value = 1, Text = "1"});
+                model.Pages.Add(new ObjectInfo { Value = 1, Text = "1" });
             }
         }
 
-        private static void AdDownlines(DataTable downlines, DownlineList model)
+        private static void AddDownlines(DataTable downlines, DownlineList model)
         {
             if (downlines?.Rows == null)
             {
@@ -147,7 +147,7 @@
 
             foreach (DataRow item in downlines?.Rows)
             {
-                model.Downlines.Add(new ObjectInfo {Text = item["username"].ToString()});
+                model.Downlines.Add(new ObjectInfo { Text = item["username"].ToString() });
             }
         }
     }

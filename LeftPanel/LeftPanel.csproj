@@ -193,8 +193,10 @@
     <Compile Include="Controllers\SearchCustomerController.cs" />
     <Compile Include="Controllers\UpdateCustomerController.cs" />
     <Compile Include="Criteria\RemoveOTPCriteria.cs" />
-    <Compile Include="Extensions\CustomerInfoRowExtension.cs" />
-    <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Extensions\CashDataRowExtensions.cs" />
+    <Compile Include="Extensions\CustomerInfoDataRowExtensions.cs" />
+    <Compile Include="Extensions\ProductDataRowExtensions.cs" />
+    <Compile Include="Extensions\LineInfoDataRowExtensions.cs" />
     <Compile Include="LeftPanelProductIntegration.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\ProductSettingParam.cs" />
