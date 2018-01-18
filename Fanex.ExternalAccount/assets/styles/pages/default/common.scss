@@ -31,18 +31,17 @@ body {
     line-height: initial;
 }
 
-.successWarning,  .errorWarning{    
-    font-size: 12px;
+.successWarning,  .errorWarning{  
     font-family: 'AlphaAdmin';
     font-weight: bold;
 }
-.successWarning:after {
+.successWarning:before {
     content: '\e936';
     color: #5faa73;
 }
-.errorWarning:after {      
-        content: '\e91f';
-        color: #ef2547;
+.errorWarning:before {      
+    content: '\e91f';
+    color: #ef2547;
 }
 
 
@@ -138,13 +137,13 @@ body {
     &.expand-leftpanel {  
         @include transition(left .2s ease-in .1s, opacity .1s ease-out);         
         width: 100%;
-        left: 0;
-        padding-top: 16px;            
+        left: 0;            
         opacity: 1;
          @media screen and (min-device-width: 768px) { 
              background-color: #fff;
              width: 398px;             
-            border-right: 1px solid #e0e1e4;
+            border-right: 1px solid #e0e1e4;            
+            padding-top: 16px;
          }
     }
 
@@ -276,9 +275,11 @@ body {
         right: 26px;
         top: 21px;     
         cursor: pointer;
-        color: #444;  
+        color: rgba(#fff, 0.6);  
         font-size: 20px;
-
+        @media screen and (min-device-width: 768px)  {
+            color: #444;
+        }
         &:hover {
             color: #5faa73;
         }
