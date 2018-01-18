@@ -537,7 +537,8 @@ var StatementReportManager = function () {
         }
 
         url += jQuery.param(criteria);
-        jQuery('#frm').attr('src', url);
+
+        document.location.href = url;
     };
 };
 var statementReportManager = new StatementReportManager();

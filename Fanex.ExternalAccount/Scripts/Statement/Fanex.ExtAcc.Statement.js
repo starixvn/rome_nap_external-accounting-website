@@ -77,8 +77,8 @@ Fanex.ExtAcc.Statement = {
 
         $('#exporttoexcel').click(function () {
             var criteria = {
-                fromDate: moment(new Date($this.fromdate)).format("MM DD, YYYY"),
-                toDate: moment(new Date($this.todate)).format("MM DD, YYYY"),
+                fromDate: $this.fromdate,
+                toDate: $this.todate,
                 custId: 0,
                 roleId: 0,
                 username: _username
@@ -92,6 +92,9 @@ Fanex.ExtAcc.Statement = {
 
                 if (statementReportManager.IsUseNewLayout(criteria)) {
                     statementReportCriteria = criteria;
+                    statementReportCriteria.fromDate = moment(new Date($this.fromdate)).format("MM DD, YYYY");
+                    statementReportCriteria.toDate = moment(new Date($this.todate)).format("MM DD, YYYY");
+
                     var url = domain + 'NapStatement/StatementReport/GetCustomerInfo';
                     statementReportManager.callAjax(url, criteria, function (rs) {
                         statementReportCriteria.custId = rs.CustomerId;
@@ -263,6 +266,7 @@ Fanex.ExtAcc.Statement = {
             },
             function (options) {
             });
+
         if (!isInternalCustomer) {
             if (!statementReportManager.checkCriteria(criteria)) {
                 Fanex.ExtAcc.UnBlockUI();
