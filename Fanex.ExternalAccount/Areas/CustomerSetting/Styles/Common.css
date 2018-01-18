@@ -99,8 +99,8 @@ input[type=text]
 	background: #6f7d95 !important;
     color: #fff !important;
 	cursor: pointer;
-	width: 80px;
-	height: 30px;
+	min-width: 64px;
+	height: 28px;
 	border: none !important;
 	border-radius: 2px !important;
 	-moz-border-radius: 2px !important;

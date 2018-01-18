@@ -29,6 +29,7 @@ body {
 
 .ui-button .ui-button-text {
     line-height: initial;
+    padding: 0;
 }
 
 .successWarning,  .errorWarning{  
@@ -54,6 +55,10 @@ body {
 .float-padding-left-normal {
     float: left;
     padding-left: 25px;
+}
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    font-family: Arial, sans-serif;
 }
 
 
@@ -572,10 +577,6 @@ no-info {
 	height: 30px;
 	margin-top: 10px;
 }
-
-
-
-
 
 
 

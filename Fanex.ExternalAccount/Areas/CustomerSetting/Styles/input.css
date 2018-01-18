@@ -40,17 +40,17 @@
 }
 .buttonPopup, .ui-button, button[type=button]
 {
-	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAeCAIAAABi9+OQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEdJREFUeNpMi0EOgEAMAgn+3q/5Dd9gNlkFl9qDh6YMYbb9OHmNyXk/NEwLhE0lG4u/H8bKcnP1qn28YrWXLm5t/9c9/AowAL0JSAVSVq3tAAAAAElFTkSuQmCC) repeat-x scroll 5px center !important;
+	background: #6f7d95 !important;
 	color: #fff !important;
 	cursor: pointer;
 	font: Verdana,Arial,sans-serif;
     font-size: 12px;
-	width: 80px;
-	height: 30px;
+	min-width: 64px;
+	height: 28px;
 	border: none !important;
-	border-radius: 3px !important;
-	-moz-border-radius: 3px !important;
-	-webkit-border-radius: 3px !important;
+	border-radius: 2px !important;
+	-moz-border-radius: 2px !important;
+	-webkit-border-radius: 2px !important;
 	padding-bottom: 2px;
 	margin-top: 5px;
 	text-indent: 0 !important;
