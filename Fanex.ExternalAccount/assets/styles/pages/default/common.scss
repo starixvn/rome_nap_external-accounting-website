@@ -31,20 +31,18 @@ body {
     line-height: initial;
 }
 
-.successWarning {
-    background-image: url("../images/tick.png");
-    padding-left: 5px;
-    background-repeat: no-repeat;
-    letter-spacing: 10px;
+.successWarning,  .errorWarning{    
     font-size: 12px;
+    font-family: 'AlphaAdmin';
+    font-weight: bold;
 }
-
-.errorWarning {
-    background-image: url("../images/x5.gif");
-    padding-left: 5px;
-    background-repeat: no-repeat;
-    letter-spacing: 10px;
-    font-size: 12px;
+.successWarning:after {
+    content: '\e936';
+    color: #5faa73;
+}
+.errorWarning:after {      
+        content: '\e91f';
+        color: #ef2547;
 }
 
 

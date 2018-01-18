@@ -178,7 +178,7 @@
             "&groupName=" + parent.$('#selectedGroupName').html());
         var title = parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
 
-        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 280 : 560;
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 280 : 360;
         var width = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 400 : 500;
 
         parent.Fanex.ExtAcc.Form.Show(url, title, width, height, false);
