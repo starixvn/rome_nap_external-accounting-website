@@ -26,8 +26,6 @@
 
         Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip);
 
-        DataTable CustomerSelectClearBalance(int custId);
-
         Result CloseCutomer(int custId, int uplineId, ICurrentSession currentSession, ICurrentContext currentContext,
             bool close, bool clearCredit, string custName);
 
@@ -81,8 +79,6 @@
 
         public Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip)
             => dataAccess.CustomerInsertClearBalance(custId, custIds, isCheckedAll, ip);
-
-        public DataTable CustomerSelectClearBalance(int custId) => dataAccess.CustomerSelectClearBalance(custId);
 
         public Result CloseCutomer(int custId, int uplineId, ICurrentSession currentSession,
             ICurrentContext currentContext, bool close, bool clearCredit, string custName)

@@ -1,12 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 {
-    using System;
     using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
+    using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
-    using Service.Impl.Customer.Casino;
     using Services;
     using ViewModels;
 
@@ -24,9 +23,20 @@
         private const string LeftPanelIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml";
         private const string LeftpanelBalanceIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/Balance/Index.cshtml";
         private const string LeftPanelOtpIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/OTP/Index.cshtml";
-        private readonly CustomerCommandService customerCommandService = new CustomerCommandServiceImpl();
 
-        private readonly CustomerQueryService customerQueryService = new CustomerQueryServiceImpl();
+        private readonly CustomerQueryService customerQueryService;
+
+        public SearchCustomerController() : this(new CustomerQueryServiceImpl(), null, null)
+        {
+        }
+
+        internal SearchCustomerController(
+            CustomerQueryService customerQueryService, 
+            ICurrentSession currentSession, 
+            ICurrentContext currentContext) : base(currentSession, currentContext)
+        {
+            this.customerQueryService = customerQueryService;
+        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
             Policy = AuthenticateAction.AuthenticationType.Read)]
@@ -90,31 +100,8 @@
         public ActionResult SelectClearBalance(int custId)
         {
             ViewBag.CustId = custId;
-            var result = customerCommandService.CustomerSelectClearBalance(custId);
+            var result = customerQueryService.CustomerSelectClearBalance(custId);
             return View(LeftpanelBalanceIndexView, result);
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.EnableCasino,
-            Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateCasino(int custId, int uplineId, bool enable, bool enableDownline, string custName)
-        {
-            try
-            {
-                var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-                return JsonBase(customerCommandService.EnableCasino(custId, enable, enableDownline,
-                    casinoCustomer.CasinoSync,
-                    custName));
-            }
-            catch (Exception ex)
-            {
-                return JsonBase(new
-                {
-                    IsSuccess = ex.Message.Contains("Not casino"),
-                    ErrorCode = 1,
-                    ErrorMessage = ex.Message
-                });
-            }
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode,
@@ -142,6 +129,6 @@
         [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult RemoveOTP(int custId, string username) =>
-            View(LeftPanelOtpIndexView, new {CustId = custId, Username = username});
+            View(LeftPanelOtpIndexView, new { CustId = custId, Username = username });
     }
 }

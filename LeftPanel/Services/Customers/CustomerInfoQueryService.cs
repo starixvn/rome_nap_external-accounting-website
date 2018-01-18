@@ -15,7 +15,7 @@
         CustomerModel GetCustomerModel(int actorId, string custName, string groupName, DataSet customerInfoDataset);
     }
 
-    public abstract class CustomerInfoQueryBaseService : CustomerInfoQueryService
+    public class CustomerInfoQueryBaseService : CustomerInfoQueryService
     {
         private const string DateTimeFormat = "M/d/yyyy H:mm tt";
         private const string ThisAccountWas = "This account was ";

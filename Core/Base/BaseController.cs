@@ -41,24 +41,30 @@
 
         protected const string UAT = "UAT";
         protected const string PRO = "LIVE";
-        private readonly CurrentContext _currentContext;
+        private readonly ICurrentContext currentContext;
 
-        private readonly ICurrentSession _currentSession;
+        private readonly ICurrentSession currentSession;
         protected readonly AuthorizationService AuthorizationService = new AuthorizationServiceImpl();
 
-        protected BaseController()
+
+        protected BaseController() : this(new CurrentSession(), new CurrentContext())
         {
-            _currentContext = new CurrentContext();
-            _currentSession = new CurrentSession();
+
+        }
+
+        protected BaseController(ICurrentSession currentSession, ICurrentContext currentContext)
+        {
+            this.currentContext = currentContext;
+            this.currentSession = currentSession;
         }
 
         protected static string Environment => Utils.ToString(ConfigurationManager.AppSettings["Environment"]);
 
         protected bool IncludeAllFunctions => Environment.Equals(UAT, StringComparison.OrdinalIgnoreCase);
 
-        protected virtual CurrentContext CurrentContext => _currentContext ?? new CurrentContext();
+        protected virtual ICurrentContext CurrentContext => currentContext ?? new CurrentContext();
 
-        protected virtual ICurrentSession CurrentSession => _currentSession ?? new CurrentSession();
+        protected virtual ICurrentSession CurrentSession => currentSession ?? new CurrentSession();
 
         protected virtual ActionResult JsonBase(object data, JsonSerializerSettings settings = null)
             => this.JsonExt(data, settings ?? new JsonSerializerSettings

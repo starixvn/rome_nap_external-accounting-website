@@ -4,13 +4,26 @@
     using Core.Base;
     using Core.Context;
     using Core.Shared;
+    using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
     using Service.Impl.Customer.Casino;
     using Services;
 
     public class UpdateCustomerController : BaseController
     {
-        private readonly CustomerCommandService customerCommandService = new CustomerCommandServiceImpl();
+        private readonly CustomerCommandService customerCommandService;
+
+        public UpdateCustomerController() : this(new CustomerCommandServiceImpl(), null, null)
+        {
+        }
+
+        internal UpdateCustomerController(
+            CustomerCommandService customerCommandService,
+            ICurrentSession currentSession,
+            ICurrentContext currentContext) : base(currentSession, currentContext)
+        {
+            this.customerCommandService = customerCommandService;
+        }
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateCredit,

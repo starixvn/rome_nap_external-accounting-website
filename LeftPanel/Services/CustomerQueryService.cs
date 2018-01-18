@@ -21,6 +21,8 @@
         IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId);
 
         IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId);
+
+        DataTable CustomerSelectClearBalance(int custId);
     }
 
     public class CustomerQueryServiceImpl : CustomerQueryService
@@ -150,5 +152,7 @@
                 model.Downlines.Add(new ObjectInfo { Text = item["username"].ToString() });
             }
         }
+
+        public DataTable CustomerSelectClearBalance(int custId) => dataAccess.CustomerSelectClearBalance(custId);
     }
 }
