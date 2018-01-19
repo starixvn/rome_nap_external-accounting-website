@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class DownlineList : BasicInfo
+    public class DownlineList
     {
         public DownlineList()
         {
@@ -10,6 +10,14 @@
             Pages = new List<ObjectInfo>();
             CurrentPage = 1;
         }
+
+        public ObjectInfo CustId { get; set; }
+
+        public ObjectInfo UplineId { get; set; }
+
+        public ObjectInfo RoleId { get; set; }
+
+        public ObjectInfo UplineRoleId { get; set; }
 
         public List<ObjectInfo> Downlines { get; set; }
 

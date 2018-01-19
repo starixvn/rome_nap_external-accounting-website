@@ -1,24 +1,25 @@
 ﻿namespace Fanex.ExternalAccount
 {
-    using CaptchaMvc.Infrastructure;
-    using CaptchaMvc.Interface;
-    using CasinoLibrary.SBAgent;
-    using Core.Context;
-    using CustomerSetting.Client40;
-    using Data.Configuration;
-    using GoldDeluxe.CoreSetting.Mappings;
-    using Logging.Extensions.Database;
-    using Logging.Extensions.Web;
-    using ONEbook.UM.Filters;
-    using Sunplus.Libraries.APILogger;
     using System;
     using System.Collections.Generic;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
-    using Utilities;
+    using CaptchaMvc.Infrastructure;
+    using CaptchaMvc.Interface;
+    using CasinoLibrary.SBAgent;
+    using Core.Context;
+    using CustomerSetting.Client40;
+    using Data.Configuration;
     using global::Core.Shared;
+    using GoldDeluxe.CoreSetting.Mappings;
+    using Logging.Extensions.Database;
+    using Logging.Extensions.Web;
+    using Module.LeftPanel.ViewModels;
+    using ONEbook.UM.Filters;
+    using Sunplus.Libraries.APILogger;
+    using Utilities;
 
     public class MvcApplication : HttpApplication
     {
@@ -92,7 +93,7 @@
             var manager = new APILogManager(logger);
             const string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
             manager.Register(typeof(Customer), pattern);
-            manager.Register(typeof(BasicInfo), pattern);
+            manager.Register(typeof(DownlineList), pattern);
 
             BundleTable.Bundles.EnableCommonBundle();
             BundleTable.Bundles.EnableLoginBundle();

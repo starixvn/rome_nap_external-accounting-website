@@ -5,7 +5,6 @@
     using System.Data;
     using Core.Authorization;
     using Core.Shared;
-    using DTO.Customer;
     using Extensions;
     using Utilities;
     using ViewModels;
@@ -17,9 +16,6 @@
 
     public class CustomerInfoQueryBaseService : CustomerInfoQueryService
     {
-        private const string DateTimeFormat = "M/d/yyyy H:mm tt";
-        private const string ThisAccountWas = "This account was ";
-
         protected readonly AuthorizationService authorizationService;
         protected readonly ProductService productService;
 
@@ -41,22 +37,18 @@
 
             var customerModel = new CustomerModel
             {
-                HasDownline = Utils.ToBoolean(custInfoRow["HasDownline"]),
-                UplineHasSecurityCode = Utils.ToBoolean(custInfoRow["UplineHasSecurityCode"]),
-                CurrencyId = custInfoRow.ToInt32("exchangeid"),
+                HasDownline = custInfoRow.HasDownline(),
+                UplineHasSecurityCode = custInfoRow.UplineHasSecurityCode(),
+                CurrencyId = custInfoRow.CurrencyId(),
                 BalanceInfo = GetBalanceInfo(isUpdateCredit, custInfoRow, cashRow),
                 PersonalInfo = GetPersonalInfo(custInfoRow, lineRow),
                 Login = GetLoginInfo(cashRow, custInfoRow)
             };
 
-            customerModel.Setting = productService.GetProductSetting(
-                actorId,
-                custName,
-                roleId.IsSuper()
-                    ? 0
-                    : (int)customerModel.PersonalInfo.UplineId.Value,
-                groupName,
-                customerInfoDataset);
+            var uplineId = roleId.IsSuper() ? 0 : (int)customerModel.PersonalInfo.UplineId.Value;
+
+            customerModel.Setting =
+                productService.GetProductSetting(actorId, custName, uplineId, groupName, customerInfoDataset);
 
             SetCustomSetting(customerModel.Setting, actorId, customerInfoDataset);
 
@@ -65,55 +57,31 @@
 
         internal BalanceInfo GetBalanceInfo(bool isUpdateCredit, DataRow customerRow, DataRow cashRow)
         {
-            var roleId = Utils.ToInt32(customerRow["roleid"]);
+            var roleId = customerRow.RoleId();
 
             var balanceInfo = new BalanceInfo
             {
-                CurrencyId = new ObjectInfo { Value = Utils.ToInt32(customerRow["exchangeid"]), Text = "Currency Id" },
-                Currency = new ObjectInfo { Value = Utils.ToString(customerRow["currency"]), Text = "Currency" },
+                CurrencyId = ObjectInfo.CreateInstance("Currency Id", customerRow.CurrencyId()),
+                Currency = ObjectInfo.CreateInstance("Currency", customerRow.Currency()),
                 Balances = new List<ObjectInfo>
                 {
-                    new ObjectInfo { Value = Utils.ToDecimal(cashRow[GetCashColumn(roleId)]), Text = "Total Cash"},
-                    new ObjectInfo
-                    {
-                        Value = Utils.ToDecimal(cashRow[GetYesterdayCashColumn(roleId)]),
-                        Text = "Yesterday Cash"
-                    },
-                    new ObjectInfo
-                    {
-                        Value = Utils.ToDecimal(cashRow[GetOutstandingColumn(roleId)]),
-                        Text = "Outstanding"
-                    },
-                    new ObjectInfo {Value = Utils.ToDecimal(customerRow["credit"]), Text = "Given Credit"}
+                    ObjectInfo.CreateInstance("Total Cash", Utils.ToDecimal(cashRow[GetCashColumn(roleId)])),
+                    ObjectInfo.CreateInstance("Yesterday Cash", Utils.ToDecimal(cashRow[GetYesterdayCashColumn(roleId)])),
+                    ObjectInfo.CreateInstance("Outstanding", Utils.ToDecimal(cashRow[GetOutstandingColumn(roleId)])),
+                    ObjectInfo.CreateInstance("Given Credit", customerRow.Credit())
                 },
                 IsUpdateCredit = isUpdateCredit
             };
 
             if (roleId.IsNotMember())
             {
-                balanceInfo.Balances.Add(new ObjectInfo
-                {
-                    Value = cashRow[GetUsedCreditColumn(roleId)],
-                    Text = "Used Credit"
-                });
+                balanceInfo.Balances.Add(ObjectInfo.CreateInstance("Used Credit", cashRow[GetUsedCreditColumn(roleId)]));
+                balanceInfo.Balances.Add(ObjectInfo.CreateInstance("Total Balance", cashRow.TotalBalance(roleId)));
+                balanceInfo.Balances.Add(ObjectInfo.CreateInstance("Yesterday Balance", cashRow.TotalYesterdayCash(roleId)));
 
-                balanceInfo.Balances.Add(new ObjectInfo
-                {
-                    Value = cashRow.TotalBalance(roleId),
-                    Text = "Total Balance"
-                });
-
-                balanceInfo.Balances.Add(new ObjectInfo
-                {
-                    Value = cashRow.TotalYesterdayCash(roleId),
-                    Text = "Yesterday Balance"
-                });
-
-                balanceInfo.Balances.Add(new ObjectInfo
-                {
-                    Value = cashRow.CustomerOutstanding(),
-                    Text = $"{roleId.DirectDownlineLevel().DisplayRoleName()} Outstanding"
-                });
+                balanceInfo.Balances.Add(ObjectInfo.CreateInstance(
+                    $"{roleId.DirectDownlineLevel().DisplayRoleName()} Outstanding",
+                    cashRow.CustomerOutstanding()));
             }
 
             return balanceInfo;
@@ -143,61 +111,29 @@
             var roleId = Utils.ToInt32(customerRow["roleid"]);
             var lastLoginIp = customerRow.ToString("lastloginip");
 
+            var site = roleId.IsNotMember() ? Utils.ToString(customerRow["site"]) : Utils.ToString(customerRow["membersite"]);
+            var ip = authorizationService.CanViewVNIP(lastLoginIp) ? lastLoginIp : string.Empty;
+
             var loginInfos = new List<ObjectInfo>
             {
+                ObjectInfo.CreateInstance("Site", site),
+                ObjectInfo.CreateInstance("Created Date", customerRow.CreateDate()),
+                ObjectInfo.CreateInstance("Last Login", customerRow.LastLogged()),
                 new ObjectInfo
                 {
-                    Value = roleId.IsNotMember()
-                        ? Utils.ToString(customerRow["site"])
-                        : Utils.ToString(customerRow["membersite"]),
-                    Text = "Site"
-                },
-                new ObjectInfo
-                {
-                    Value = Utils.ToDateTime(customerRow["createdate"]).ToStringExt(DateTimeFormat),
-                    Text = "Created Date"
-                },
-                new ObjectInfo
-                {
-                    Value = Utils.ToDateTime(customerRow["lastlogged"]).ToStringExt(DateTimeFormat),
-                    Text = "Last Login"
-                },
-                new ObjectInfo
-                {
-                    Value = Utils.ToDateTime(cashRow["lastTxn"]).ToStringExt(DateTimeFormat),
+                    Value =  cashRow.LastTxn(),
                     Text = "Last Txn",
                     Tooltip = "Last Transaction"
                 },
-                new ObjectInfo
-                {
-                    Value = Utils.ToDateTime(customerRow["pwdexpiry"]).ToStringExt(DateTimeFormat),
-                    Text = "Password"
-                },
-                new ObjectInfo
-                {
-                    Value = authorizationService.CanViewVNIP(lastLoginIp) ? lastLoginIp : string.Empty,
-                    Text = "Last Login IP"
-                },
-                new ObjectInfo
-                {
-                    Value = Utils.ToDateTime(customerRow["LastChangedSecurityCodeDate"]).ToStringExt(DateTimeFormat),
-                    Text = "Security Code"
-                }
-            };
+                ObjectInfo.CreateInstance("Password", customerRow.ExpiredPasswordDay()),
+                ObjectInfo.CreateInstance("Last Login IP", ip),
+                ObjectInfo.CreateInstance("Security Code", customerRow.LastChangedSecurityCodeDate())
+           };
 
             if (roleId.IsNotMember())
             {
-                loginInfos.Add(new ObjectInfo
-                {
-                    Value = Utils.ToBoolean(customerRow["NicknameLoginOnly"]) ? "Nickname Only" : "Username/Nickname",
-                    Text = "Login Options"
-                });
-
-                loginInfos.Add(new ObjectInfo
-                {
-                    Value = Utils.ToDateTime(customerRow["OTPCreateDate"]).ToStringExt(DateTimeFormat),
-                    Text = "OTP"
-                });
+                loginInfos.Add(ObjectInfo.CreateInstance("Login Options", customerRow.LoginOptions()));
+                loginInfos.Add(ObjectInfo.CreateInstance("OTP", customerRow.OTPCreateDate()));
             }
 
             return loginInfos;
@@ -209,50 +145,25 @@
             var enabled = customerInfoRow.Enabled();
             var closed = customerInfoRow.Closed();
             var suspended = customerInfoRow.Suspended();
-            var status = ThisAccountWas;
-            var closedReason = string.Empty;
-
-            if (closed)
-            {
-                var customerClosedReason = new CustomerClosedReason(customerInfoRow["closedreason"]);
-                closedReason = customerClosedReason.ClassName;
-                status = customerClosedReason.ClosedReason;
-            }
 
             var personalInfo = new PersonalInfo
             {
-                CustId = new ObjectInfo { Value = Utils.ToInt32(customerInfoRow["custid"]), Text = "Cust Id" },
-                Fax = new ObjectInfo { Value = Utils.ToString(customerInfoRow["fax"]), Text = "Fax" },
-                Mobile = new ObjectInfo { Value = Utils.ToString(customerInfoRow["mobilephone"]), Text = "Mobile" },
-                Name = new ObjectInfo
-                {
-                    Value = Utils.ToString(customerInfoRow["firstname"]) + " " + Utils.ToString(customerInfoRow["lastname"]),
-                    Text = "Name"
-                },
-                Nickname = new ObjectInfo { Value = Utils.ToString(customerInfoRow["username2"]), Text = "Nickname" },
-                Phone = new ObjectInfo { Value = Utils.ToString(customerInfoRow["phone"]), Text = "Phone" },
-                RoleId = new ObjectInfo { Value = role, Text = "Role Id" },
-                UplineRoleId = new ObjectInfo { Value = role.DirectUplineLevel(), Text = "Upline Role Id" },
+                CustId = ObjectInfo.CreateInstance("Cust Id", customerInfoRow.CustId()),
+                Fax = ObjectInfo.CreateInstance("Fax", customerInfoRow.Fax()),
+                Mobile = ObjectInfo.CreateInstance("Mobile", customerInfoRow.MobilePhone()),
+                Name = ObjectInfo.CreateInstance("Name", customerInfoRow.Name()),
+                Nickname = ObjectInfo.CreateInstance("Nickname", customerInfoRow.Nickname()),
+                Phone = ObjectInfo.CreateInstance("Phone", customerInfoRow.Phone()),
+                RoleId = ObjectInfo.CreateInstance("Role Id", role),
+                UplineRoleId = ObjectInfo.CreateInstance("Upline Role Id", role.DirectUplineLevel()),
                 CustList = new ObjectInfo
                 {
                     Key = "CustList",
                     Value = $"{role.DirectDownlineLevel().DisplayRoleName()} List"
                 },
-                Status = new ObjectInfo
-                {
-                    Tooltip = !enabled
-                        ? status + "disabled"
-                        : closed
-                            ? status
-                            : suspended
-                                ? status + "suspended"
-                                : string.Empty
-                },
-                BackgroundColor = new ObjectInfo
-                {
-                    Value = !enabled ? "disabled" : closed ? closedReason : suspended ? "suspended" : string.Empty
-                },
-                IsInternal = new ObjectInfo { Value = Utils.ToBoolean(customerInfoRow["isinternal"]) }
+                Status = new ObjectInfo { Tooltip = customerInfoRow.StatusTooltip(enabled, closed, suspended) },
+                BackgroundColor = new ObjectInfo { Value = customerInfoRow.StatusBackground(enabled, closed, suspended) },
+                IsInternal = new ObjectInfo { Value = customerInfoRow.IsInternal() }
             };
 
             SetLineInfo(role, personalInfo, lineRow);
@@ -284,30 +195,21 @@
 
         internal static void SetLineInfo(int role, PersonalInfo personalInfo, DataRow lineRow)
         {
-            personalInfo.CurrentLevel = new ObjectInfo
-            {
-                Value = lineRow.CustomerName(role),
-                Text = role.DisplayRoleName()
-            };
+            personalInfo.CurrentLevel = ObjectInfo.CreateInstance(text: role.DisplayRoleName(), value: lineRow.CustomerName(role));
 
             personalInfo.Downlines = GetDownlines(lineRow, role);
 
             if (role.IsNotSuper())
             {
-                personalInfo.UplineId = new ObjectInfo
-                {
-                    Value = lineRow.CustomerId(role.DirectUplineLevel()),
-                    Text = $"{role.DirectUplineLevel().DisplayRoleName()} ID"
-                };
+                personalInfo.UplineId = ObjectInfo.CreateInstance(
+                    text: $"{role.DirectUplineLevel().DisplayRoleName()} ID",
+                    value: lineRow.CustomerId(role.DirectUplineLevel()));
             }
         }
 
         /// <summary>
         ///     this method should be overrided by each customer query service
         /// </summary>
-        /// <param name="setting"></param>
-        /// <param name="userId"></param>
-        /// <param name="dataSet"></param>
         internal virtual void SetCustomSetting(Setting setting, int userId, DataSet dataSet)
         {
         }
