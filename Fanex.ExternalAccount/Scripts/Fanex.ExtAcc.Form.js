@@ -90,8 +90,11 @@ Fanex.ExtAcc.Form = {
         Fanex.ExtAcc.BlockUI();
 
         var id = popupId ? popupId : 'windowPopup';
+        var mainDiv = document.createElement("div");
         var Frame = document.createElement("iframe");
         var margin = '30px';
+
+        mainDiv.setAttribute('style', 'width: ' + width + 'px; height: ' + height + 'px');
 
         if (marginRight) {
             margin = marginRight + 'px';
@@ -108,7 +111,8 @@ Fanex.ExtAcc.Form = {
         var $self = this;
         var data = null;
 
-        document.body.appendChild(Frame);
+        mainDiv.appendChild(Frame);
+        document.body.appendChild(mainDiv);
         $('#' + id).dialog({
             title: title,
             height: height,
@@ -123,7 +127,7 @@ Fanex.ExtAcc.Form = {
             }
         });
 
-        Frame.setAttribute('style', 'display: block; border: none; font-size: 12px; z-index: 999999; margin-right: ' + margin + '; height: ' + height + 'px; width: ' + (width - 10) + 'px');
+        Frame.setAttribute('style', 'display: block; border: none; font-size: 12px; z-index: 999999; margin-right: ' + margin + '; height: 100%; width: 100%');
 
         if (callBack && typeof callBack === 'function') {
             callBack();
