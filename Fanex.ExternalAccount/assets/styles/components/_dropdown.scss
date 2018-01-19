@@ -66,3 +66,11 @@
     height: 28px;
 }
 
+@media all and (min-width-device: 768px) {
+    #groups, #groupsAdd {
+        width: 225px !important;
+        input {
+            width: 225px;
+        }
+    }
+}

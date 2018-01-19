@@ -62,29 +62,7 @@
 {
 	background-color: #d4e3eb;
 }
-/*.buttonPopup, .ui-button, button[type=button]
-{
-	background: url(../Images/Content/btn-bgsubmit-original.png) repeat-x scroll 5px center !important;
-	color: #fff !important;
-	cursor: pointer;
-	width: 80px;
-	height: 30px;
-	border: none !important;
-	border-radius: 3px !important;
-	-moz-border-radius: 3px !important;
-	-webkit-border-radius: 3px !important;
-	padding-bottom: 2px;
-	margin-top: 5px;
-	text-indent: 0 !important;
-	margin-bottom: 3px;
-}
-.buttonPopup:hover, .ui-button:hover
-{
-	background: url(../Images/Content/btn-bgsubmit-hover.png) repeat-x scroll 5px center !important;
-	color: #fff !important;
-	border: none !important;
-	cursor: pointer;
-}*/
+
 .jqx-window-header
 {
 	background: url(../Images/Content/bg-popuptittle.png) repeat-x scroll 5px center;
@@ -415,14 +393,14 @@ a.ui-state-default, a.ui-widget-content a.ui-state-default, a.ui-widget-header a
 }
 
 #groups, #groupsAdd {
-    width: 225px !important;
+    width: 180px !important;
     position: relative;
 }
 
 #groups input, #groupsAdd input {
     border: 1px solid #a6a6a6 !important;
     margin-left: 10px;
-    width: 225px !important;
+    width: 180px !important;
 }
 
 #groups .ui-icon, #groupsAdd .ui-icon {

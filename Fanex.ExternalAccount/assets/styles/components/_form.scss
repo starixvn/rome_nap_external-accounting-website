@@ -72,7 +72,10 @@
     }
 
     .width-250 {
-        width: 225px;
+        width: 180px;
+        @media all and (min-device-width: 768px) {
+            width: 225px;
+        }
     }
 
     .width-320 {
@@ -100,10 +103,13 @@
 
     .groupCboMenu {
         input {
-            width: 225px;
+            width: 180px;
             margin-left: 10px;
             vertical-align: top;
-            text-indent: 5px;        
+            text-indent: 5px; 
+            @media all and (min-device-width: 768px) {
+                width: 225px;
+            }       
         }
 
         button {

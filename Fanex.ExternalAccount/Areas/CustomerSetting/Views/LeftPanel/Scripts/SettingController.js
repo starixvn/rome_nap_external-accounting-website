@@ -7,6 +7,10 @@
         $scope.model = null;
     }
 
+    $scope.landscapeHeight;
+    $scope.portraitHeight;
+    $scope.shouldCalculatePopupHeight;
+
     $scope.GetOnline = function (custId) {
         if (model.onlineLoaded) return;
 
@@ -120,6 +124,24 @@
                     }
                 }
             }
+
+            $(window).bind('orientationchange', function (e) {
+                if (!$scope.shouldCalculatePopupHeight) {
+                    return;
+                }
+
+                var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+                    $scope.portraitHeight  :
+                    $scope.landscapeHeight;  
+                $('.ui-widget-content').css('height', height + '!important');
+                if (/Android/i.test(navigator.userAgent)) {
+                    //alert(1);
+                    document.getElementById('windowPopup').contentDocument.location.reload(true);
+                }
+
+
+            });
+
         }
     };
 
@@ -600,9 +622,18 @@
         }, 1, null);
     };
 
+    $scope.getPopupHeight = function () {
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 
+             $scope.landscapeHeight : 
+             $scope.portraitHeight;
+
+        return height;
+    }
     $scope.EnableRacing = function () {
-        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 200 : 350;
-        $scope.EnableThirdpartyProduct(2, "Racing", 400, height);
+        $scope.landscapeHeight = 200;
+        $scope.portraitHeight = 350;
+        $scope.shouldCalculatePopupHeight = true;
+        $scope.EnableThirdpartyProduct(2, "Racing", 400, $scope.getPopupHeight());
     };
 
     $scope.EnableKeno = function () {

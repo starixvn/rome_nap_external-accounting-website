@@ -45,12 +45,12 @@
 .allowDblComm, .disallowDblComm {    
     cursor: pointer;
 }
-.allowDblComm:before, .onDblComm {
+.allowDblComm:before, .onDblComm:before{
     content: '\e928';
     color: #82c341;
 }
 
-.disallowDblComm:before, .offDblComm {
+.disallowDblComm:before, .offDblComm:before {
     content: '\e927';
     color: #666;
 }
