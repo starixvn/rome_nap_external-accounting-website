@@ -93,14 +93,12 @@ Fanex.ExtAcc.Form = {
         var mainDiv = document.createElement("div");
         var Frame = document.createElement("iframe");
         var margin = '30px';
-
-        mainDiv.setAttribute('style', 'width: ' + width + 'px; height: ' + height + 'px');
-
+        mainDiv.setAttribute('id', id);
+        
         if (marginRight) {
             margin = marginRight + 'px';
         }
-
-        Frame.setAttribute('id', id);
+                
         Frame.setAttribute('frameBorder', "0");
         Frame.setAttribute('name', id);
 
@@ -127,6 +125,8 @@ Fanex.ExtAcc.Form = {
             }
         });
 
+        $('#' + id).css('width', width + 'px');
+        $('#' + id).css('height', height + 'px');
         Frame.setAttribute('style', 'display: block; border: none; font-size: 12px; z-index: 999999; margin-right: ' + margin + '; height: 100%; width: 100%');
 
         if (callBack && typeof callBack === 'function') {
