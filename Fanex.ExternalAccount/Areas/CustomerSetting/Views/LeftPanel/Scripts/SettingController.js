@@ -126,20 +126,14 @@
             }
 
             $(window).bind('orientationchange', function (e) {
-                if (!$scope.shouldCalculatePopupHeight) {
+                if (!$scope.shouldCalculatePopupHeight || (!isMobile.phone && /webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
                     return;
                 }
-
-                var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
-                    $scope.portraitHeight  :
-                    $scope.landscapeHeight;  
-                $('.ui-widget-content').css('height', height + '!important');
-                if (/Android/i.test(navigator.userAgent)) {
-                    //alert(1);
-                    document.getElementById('windowPopup').contentDocument.location.reload(true);
-                }
-
-
+               
+                var height = $scope.getPopupHeight() + 34;
+                var dialog = top.$('.ui-dialog');
+                dialog.height(height + 'px');
+                //top.document.getElementById('windowPopup').contentDocument.location.reload(false);
             });
 
         }
@@ -630,10 +624,20 @@
         return height;
     }
     $scope.EnableRacing = function () {
-        $scope.landscapeHeight = 200;
+        $scope.landscapeHeight = 250;
         $scope.portraitHeight = 350;
         $scope.shouldCalculatePopupHeight = true;
         $scope.EnableThirdpartyProduct(2, "Racing", 400, $scope.getPopupHeight());
+
+        //$(window).bind('orientationchange', function (e) {
+        //    if (!$scope.shouldCalculatePopupHeight || !isMobile.phone) {
+        //        return;
+        //    }
+
+        //    var height = $scope.getPopupHeight();
+        //    //top.$('.ui-dialog').height(height + 'px');
+        //    $scope.EnableThirdpartyProduct(2, "Racing", 400, height);
+        //});
     };
 
     $scope.EnableKeno = function () {

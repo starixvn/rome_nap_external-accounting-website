@@ -18,22 +18,39 @@
 }
 
 .ui-dialog {
+    padding: 0;
+    -webkit-overflow-scrolling: touch;
+    //overflow: auto;
     @media all and (max-device-width: 768px) {        
         max-width: 100% !important;
         max-height: 100% !important;
         .ui-dialog-content {
             width: 100% !important;
+            height: 100% !important;
         }
+    }
+    .ui-dialog-content {
+        padding: 6px 16px;
+        -webkit-overflow-scrolling: touch;
+
+    }
+    .ui-dialog-buttonpane {
+        padding: 6px 16px;
+        margin-top: 8px;
+        height: 40px;
+        box-sizing: content-box;
     }
     
 }
 
 .ui-dialog .ui-dialog-titlebar {
+    border: none;
     background: $popup-header-bg;
 	color: $popup-header-color;
 	text-indent: 5px;
-    padding: 5px 5px;
+    padding: 5px;
     font-weight: normal;
+    height: 34px;
     .ui-icon {
         background: none !important;
         font-size: 0;
@@ -68,4 +85,8 @@
     .btn.-normal {
         background: $btn-normal-bg !important;
     }
+}
+
+iframe.ui-dialog-content  body {
+    overflow: auto;
 }
