@@ -159,7 +159,7 @@
                 CustList = new ObjectInfo
                 {
                     Key = "CustList",
-                    Value = $"{role.DirectDownlineLevel().DisplayRoleName()} List"
+                    Value = $"{(role.IsNotMember() ? role.DirectDownlineLevel().DisplayRoleName() : string.Empty)} List"
                 },
                 Status = new ObjectInfo { Tooltip = customerInfoRow.StatusTooltip(enabled, closed, suspended) },
                 BackgroundColor = new ObjectInfo { Value = customerInfoRow.StatusBackground(enabled, closed, suspended) },
