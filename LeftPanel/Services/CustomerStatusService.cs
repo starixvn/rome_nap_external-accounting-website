@@ -4,6 +4,7 @@
     using Core.Authorization;
     using Core.Shared;
     using CustomerSetting.Module.Keno.KenoSetting.Configurations;
+    using DataAccesses;
     using Service.Impl.Customer;
     using Service.Impl.Report;
     using Service.Interface.Customer;
@@ -23,18 +24,18 @@
         private readonly AuthorizationService authorizationService;
         private readonly IMasterService masterService;
         private readonly IMemberService memberService;
-        private readonly IReportService reportService;
+        private readonly CustomerDataAccess dataAccess;
         private readonly ISuperService superService;
 
         public CustomerStatusServiceImpl(
-            IReportService reportService = null,
+            CustomerDataAccess dataAccess = null,
             ISuperService superService = null,
             IMasterService masterService = null,
             IAgentService agentService = null,
             IMemberService memberService = null,
             AuthorizationService authorizationService = null)
         {
-            this.reportService = reportService ?? new ReportService();
+            this.dataAccess = dataAccess ?? new CustomerDataAccessImpl();
             this.superService = superService ?? new SuperService();
             this.masterService = masterService ?? new MasterService();
             this.agentService = agentService ?? new AgentService();
@@ -44,7 +45,7 @@
 
         public CustomerStatus GetCustomerStatus(int userId, string groupName, string username, int uplineId = 0)
         {
-            var customerInfo = reportService.GetCustomerInfo(groupName, 0, username, true);
+            var customerInfo = dataAccess.EAS_CustomerSelUserInfo(groupName, 0, username, true);
 
             if (customerInfo != null)
             {

@@ -59,14 +59,14 @@
         private readonly AuthorizationService authorizationService;
         private readonly ICasinoManager casinoManager;
 
-        private readonly CustomerDataAccesses dataAccess;
+        private readonly CustomerDataAccess dataAccess;
 
         public CustomerCommandServiceImpl(
-            CustomerDataAccesses dataAccess = null,
+            CustomerDataAccess dataAccess = null,
             ICasinoManager casinoManager = null,
             AuthorizationService authorizationService = null)
         {
-            this.dataAccess = dataAccess ?? new CustomerDataAccessesImpl();
+            this.dataAccess = dataAccess ?? new CustomerDataAccessImpl();
             this.casinoManager = casinoManager ?? new CasinoManager();
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
         }

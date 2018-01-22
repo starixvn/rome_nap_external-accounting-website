@@ -18,7 +18,7 @@
     using Utilities;
     using ViewModels;
 
-    public class CustomerDataAccessesImpl : CustomerDataAccesses
+    public class CustomerDataAccessImpl : CustomerDataAccess
     {
         private readonly IReportService reportService = new ReportService();
 
@@ -500,8 +500,6 @@
             return items;
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit,
-            Policy = AuthenticateAction.AuthenticationType.Host)]
         private static Result ClearCredit(int userId, string username = null)
         {
             using (var objDb = new ObjectDb("Acc_CustomerUpdClearCredit", 600))
@@ -521,6 +519,25 @@
                 objDb.ExecuteNonQuery();
 
                 return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
+            }
+        }
+
+        public DataTable EAS_CustomerSelUserInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
+        {
+            using (var db = new ObjectDb("EAS_CustomerSelUserInfo"))
+            {
+                if (custId != 0)
+                {
+                    db.AddInParameter("custid", DbType.Int32, custId);
+                }
+
+                db.AddInParameter("groupname", DbType.String, groupname);
+                db.AddInParameter("username", DbType.String, userName);
+                db.AddInParameter("isgetuplineinfo", DbType.Boolean, isGetUplineInfo);
+
+                var ds = db.ExecuteDataSet();
+
+                return ds?.Tables.Count > 0 ? ds.Tables[0] : null;
             }
         }
     }

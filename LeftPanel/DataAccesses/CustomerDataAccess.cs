@@ -7,9 +7,11 @@
     using DTO;
     using ViewModels;
 
-    public interface CustomerDataAccesses
+    public interface CustomerDataAccess
     {
         DataSet GetCustomerInfo(string username, string groupName = "ACCDDD");
+
+        DataTable EAS_CustomerSelUserInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
 
         Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit);
 

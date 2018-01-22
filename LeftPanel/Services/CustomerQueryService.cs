@@ -28,15 +28,15 @@
     public class CustomerQueryServiceImpl : CustomerQueryService
     {
         private readonly AuthorizationService authorizationService;
-        private readonly CustomerDataAccesses dataAccess;
+        private readonly CustomerDataAccess dataAccess;
         private readonly CustomerInfoQueryService customerInfoQueryService;
 
         public CustomerQueryServiceImpl(
-            CustomerDataAccesses dataAccess = null,
+            CustomerDataAccess dataAccess = null,
             AuthorizationService authorizationService = null,
             CustomerInfoQueryService customerInfoQueryService = null)
         {
-            this.dataAccess = dataAccess ?? new CustomerDataAccessesImpl();
+            this.dataAccess = dataAccess ?? new CustomerDataAccessImpl();
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
             this.customerInfoQueryService = customerInfoQueryService ?? new CustomerInfoQueryServiceImpl();
         }
