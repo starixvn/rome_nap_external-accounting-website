@@ -501,6 +501,8 @@ var StatementReportManager = function () {
             BalanceUpDate: balanceUpDay,
             SiteName: ''
         };
+        var heightPopup = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+             250 : 600;
         if (self.eventFunction.openPopup) {
             self.eventFunction.openPopup({
                 url: url + "?" + jQuery.param(criteria),
@@ -508,7 +510,7 @@ var StatementReportManager = function () {
                 left: 400,
                 top: 100,
                 width: 800,
-                height: 600
+                height: heightPopup
             });
         }
     };
