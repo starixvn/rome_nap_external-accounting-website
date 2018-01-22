@@ -675,7 +675,7 @@
 
     $scope.EnableNG2 = function (enable, id) {
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(23, "NG2", 400, 150);
+        $scope.EnableThirdpartyProduct(23, parent.ng2Text, 400, 150);
     };
 
     $scope.EnableLottery = function (enable, id) {
