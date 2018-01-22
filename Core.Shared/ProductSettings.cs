@@ -6,35 +6,35 @@
 
     public static class ProductSettings
     {
-        public static bool IsShowGoldDeluxeSettingForCredit => Configs["IsShowGoldDeluxeSettingForCredit"] == "1";
+        public static bool IsShowGoldDeluxe => IsShowProduct(ProductConstants.GoldDeluxe);
 
-        public static bool EnableKeno => Configs["EnableKeno"] == "true";
+        public static bool IsShowKeno => IsShowProduct(ProductConstants.Keno);
 
         public static bool ShowKenoSetting => Configs["ShowKenoSetting"] == "true";
 
-        public static bool IsShowColossusBets => Configs["IsShowProduct-15"] == "1";
+        public static bool IsShowColossusBets => IsShowProduct(ProductConstants.ColossusBets);
 
-        public static bool IsShowSportsbook2 => Configs["IsShowProduct-16"] == "1";
+        public static bool IsShowSportsbook2 => IsShowProduct(ProductConstants.Sportsbook2);
 
-        public static bool IsShowCockfighting => Configs["IsShowProduct-19"] == "1";
+        public static bool IsShowCockfighting => IsShowProduct(ProductConstants.CockFighting);
 
-        public static bool IsShowCricket => Configs["IsShowProduct-20"] == "1";
+        public static bool IsShowCricket => IsShowProduct(ProductConstants.Cricket);
 
-        public static bool IsShowAllbet => Configs["IsShowProduct-21"] == "1";
+        public static bool IsShowAllbet => IsShowProduct(ProductConstants.AllBet);
 
-        public static bool IsShowVoidBridge => Configs["IsShowProduct-22"] == "1";
+        public static bool IsShowVoidBridge => IsShowProduct(ProductConstants.VoidBridge);
 
-        public static bool IsShowNG2 => Configs["IsShowProduct-23"] == "1";
+        public static bool IsShowNG2 => IsShowProduct(ProductConstants.NG2);
 
-        public static bool IsShowFishingWorld => Configs["IsShowProduct-24"] == "1";
+        public static bool IsShowFishingWorld => IsShowProduct(ProductConstants.FishingWorld);
 
-        public static bool IsShowLottery => Configs["IsShowProduct-28"] == "1";
+        public static bool IsShowLottery => IsShowProduct(ProductConstants.Lottery);
 
-        public static bool IsShowLucky3 => Configs["IsShowProduct-26"] == "1";
+        public static bool IsShowLucky3 => IsShowProduct(ProductConstants.Lucky3);
 
         public static bool HideEsports => ToBoolean(Configs["HideEsports"]);
 
-        public static bool IsShowBullfighting => ToBoolean(Configs["IsShowProduct-30"]);
+        public static bool IsShowBullfighting => IsShowProduct(ProductConstants.BullFighting);
 
         internal static NameValueCollection Configs { get; set; } = ConfigurationManager.AppSettings;
 

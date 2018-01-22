@@ -9,22 +9,22 @@
     using Utilities;
     using ViewModels;
 
-    public interface ProductService
+    public interface SettingService
     {
-        Setting GetProductSetting(int actorId, string custName, int uplineId, string groupName,
+        Setting GetSetting(int actorId, string custName, int uplineId, string groupName,
             DataSet customerInfoDataset);
     }
 
-    public class ProductServiceImpl : ProductService
+    public class SettingServiceImpl : SettingService
     {
         private readonly CustomerStatusService customerStatusService;
 
-        public ProductServiceImpl(CustomerStatusService customerStatusService = null)
+        public SettingServiceImpl(CustomerStatusService customerStatusService = null)
         {
             this.customerStatusService = customerStatusService ?? new CustomerStatusServiceImpl();
         }
 
-        public Setting GetProductSetting(int actorId, string custName, int uplineId, string groupName,
+        public virtual Setting GetSetting(int actorId, string custName, int uplineId, string groupName,
             DataSet customerInfoDataset)
         {
             var custInfoTable = customerInfoDataset.Tables[0];
@@ -344,7 +344,7 @@
 
         private static void AddKenoEditLink(List<ObjectInfo> details)
         {
-            if (ProductSettings.EnableKeno)
+            if (ProductSettings.IsShowKeno)
             {
                 details.Add(new ObjectInfo("Keno", "Edit Keno"));
             }

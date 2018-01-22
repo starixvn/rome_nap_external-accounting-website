@@ -20,9 +20,9 @@
     var hasSuspend = AuthorizationServiceImpl.Instance.HasSuspendCustomerPermission(userId) ? 1 : 0;
     var allowAutoPT = AuthorizationServiceImpl.Instance.HasAllowAutoMPTPermission(userId) ? 1 : 0;
     var hasClearCredit = AuthorizationServiceImpl.Instance.HasClearCreditPermission(userId) ? 1 : 0;
-    var enableKeno = ProductSettings.EnableKeno ? 1 : 0;
+    var enableKeno = ProductSettings.IsShowKeno ? 1 : 0;
     var showKenoSetting = ProductSettings.ShowKenoSetting ? "true" : "false";
-    var showGoldDeluxeSetting = ProductSettings.IsShowGoldDeluxeSettingForCredit ? 1 : 0;
+    var showGoldDeluxeSetting = ProductSettings.IsShowGoldDeluxe ? 1 : 0;
     var showColossusBets = ProductSettings.IsShowColossusBets ? 1 : 0;
     var showSportsbook2 = ProductSettings.IsShowSportsbook2 ? 1 : 0;
     var showCockfighting = ProductSettings.IsShowCockfighting ? 1 : 0;

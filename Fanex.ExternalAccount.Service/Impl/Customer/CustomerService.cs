@@ -8,21 +8,26 @@
 
     public class CustomerService : ICustomerService
     {
-        private readonly ICustomerDao _dao = new CustomerDao();
+        private readonly ICustomerDao dataAccess;
+
+        public CustomerService(ICustomerDao dataAccess = null)
+        {
+            this.dataAccess = dataAccess ?? new CustomerDao();
+        }
 
         public bool IsValidUsername(string userName, int uplineId)
-            => _dao.IsValidUsername(userName, uplineId);
+            => dataAccess.IsValidUsername(userName, uplineId);
 
-        public Customer UserInfo(int custId) => _dao.UserInfo(custId);
+        public Customer UserInfo(int custId) => dataAccess.UserInfo(custId);
 
         public Result EditUserInfo(Customer customer, string ip, int userId, int subAccId, string language)
-            => _dao.EditUserInfo(customer, ip, userId, subAccId, language);
+            => dataAccess.EditUserInfo(customer, ip, userId, subAccId, language);
 
 
         public Result ResetPassword(int custId, string password, Request request)
-            => _dao.ResetPassword(custId, password, request);
+            => dataAccess.ResetPassword(custId, password, request);
 
         public Result ConfigDoubleComm(int custId, bool allow, Request request)
-            => _dao.ConfigDoubleComm(custId, allow, request);
+            => dataAccess.ConfigDoubleComm(custId, allow, request);
     }
 }

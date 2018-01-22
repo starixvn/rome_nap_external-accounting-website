@@ -7,6 +7,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Repositories.Impl
     using ViewModels;
     using Core.Web;
     using Data;
+    using ExternalAccount.Core.Shared;
 
     public class CustomerDao : ICustomerDao
     {
@@ -37,7 +38,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Repositories.Impl
                                 SyncBingo = reader.ToBool("syncBingo"),
                                 SyncCasino = reader.ToBool("syncCasino"),
                                 SyncLiveCasino = reader.ToBool("syncLiveCasino"),
-                                HideGoldDeluxe = reader.ToBool("HideGoldDeluxe") || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0",
+                                HideGoldDeluxe = reader.ToBool("HideGoldDeluxe") || !ProductSettings.IsShowGoldDeluxe,
                                 CurrencyName = reader.ToString("currencyName")
                             };
                         }

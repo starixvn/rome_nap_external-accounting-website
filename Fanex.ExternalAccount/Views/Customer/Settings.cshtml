@@ -3,13 +3,14 @@
 @using Newtonsoft.Json.Serialization
 @using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations
 @using System.Configuration
+@using Core.Shared
 
 @{
     var SyncCasino = ViewBag.SyncCasino;
     var SyncLiveCasino = ViewBag.SyncLiveCasino;
     var HideVirtualSports = ViewBag.HideVirtualSports;
     var HideKeno = ViewBag.HideKeno || !KenoSection.Instance.ShowSetting;
-    var HideGoldDeluxe = ViewBag.HideGoldDeluxe || ConfigurationManager.AppSettings["IsShowGoldDeluxeSettingForCredit"] == "0";
+    var HideGoldDeluxe = ViewBag.HideGoldDeluxe || !ProductSettings.IsShowGoldDeluxe;
     var HideColossusBets = ViewBag.HideColossusBets || ConfigurationManager.AppSettings["IsShowProduct-15"] == "0";
     var HideSportsbook2 = ViewBag.HideSportsbook2 || ConfigurationManager.AppSettings["IsShowProduct-16"] == "0";
     var HideCockfighting = ViewBag.HideCockfighting || ConfigurationManager.AppSettings["IsShowProduct-19"] == "0";

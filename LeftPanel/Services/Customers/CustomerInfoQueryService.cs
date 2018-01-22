@@ -14,17 +14,26 @@
         CustomerModel GetCustomerModel(int actorId, string custName, string groupName, DataSet customerInfoDataset);
     }
 
-    public class CustomerInfoQueryBaseService : CustomerInfoQueryService
+    public class CustomerInfoQueryServiceImpl : CustomerInfoQueryService
     {
-        protected readonly AuthorizationService authorizationService;
-        protected readonly ProductService productService;
+        private static readonly IReadOnlyDictionary<int, SettingService> settingServiceInstances =
+            new Dictionary<int, SettingService>
+            {
+                [Role.Super] = new SuperSettingServiceImpl(),
+                [Role.Master] = new MasterSettingServiceImpl(),
+                [Role.Agent] = new SettingServiceImpl(),
+                [Role.Member] = new MemberSettingServiceImpl()
+            };
 
-        protected CustomerInfoQueryBaseService(
+        protected readonly AuthorizationService authorizationService;
+        protected readonly IReadOnlyDictionary<int, SettingService> settingServices;
+
+        public CustomerInfoQueryServiceImpl(
             AuthorizationService authorizationService = null,
-            ProductService productService = null)
+            IReadOnlyDictionary<int, SettingService> settingServices = null)
         {
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
-            this.productService = productService ?? new ProductServiceImpl();
+            this.settingServices = settingServices ?? settingServiceInstances;
         }
 
         public CustomerModel GetCustomerModel(int actorId, string custName, string groupName, DataSet customerInfoDataset)
@@ -47,10 +56,13 @@
 
             var uplineId = roleId.IsSuper() ? 0 : (int)customerModel.PersonalInfo.UplineId.Value;
 
-            customerModel.Setting =
-                productService.GetProductSetting(actorId, custName, uplineId, groupName, customerInfoDataset);
+            if (!settingServices.ContainsKey(roleId))
+            {
+                throw new ArgumentException($"RoleId {roleId} is out of range");
+            }
 
-            SetCustomSetting(customerModel.Setting, actorId, customerInfoDataset);
+            customerModel.Setting =
+                settingServices[roleId].GetSetting(actorId, custName, uplineId, groupName, customerInfoDataset);
 
             return customerModel;
         }
@@ -171,7 +183,7 @@
             return personalInfo;
         }
 
-        internal static List<ObjectInfo> GetDownlines(DataRow lineRow, int roleId)
+        internal static List<ObjectInfo> GetLines(DataRow lineRow, int roleId)
         {
             var downLines = new List<ObjectInfo>
             {
@@ -183,11 +195,11 @@
                 return downLines;
             }
 
-            downLines.Add(new ObjectInfo(lineRow.CustomerId(Role.Master).ToString(), lineRow.CustomerName(Role.Master), roleId.DisplayRoleName()));
+            downLines.Add(new ObjectInfo(lineRow.CustomerId(Role.Master).ToString(), lineRow.CustomerName(Role.Master), Role.Master.DisplayRoleName()));
 
             if (roleId.IsNotMaster())
             {
-                downLines.Add(new ObjectInfo(lineRow.CustomerId(Role.Agent).ToString(), lineRow.CustomerName(Role.Agent), roleId.DisplayRoleName()));
+                downLines.Add(new ObjectInfo(lineRow.CustomerId(Role.Agent).ToString(), lineRow.CustomerName(Role.Agent), Role.Agent.DisplayRoleName()));
             }
 
             return downLines;
@@ -197,7 +209,7 @@
         {
             personalInfo.CurrentLevel = ObjectInfo.CreateInstance(text: role.DisplayRoleName(), value: lineRow.CustomerName(role));
 
-            personalInfo.Downlines = GetDownlines(lineRow, role);
+            personalInfo.Downlines = GetLines(lineRow, role);
 
             if (role.IsNotSuper())
             {
@@ -205,13 +217,6 @@
                     text: $"{role.DirectUplineLevel().DisplayRoleName()} ID",
                     value: lineRow.CustomerId(role.DirectUplineLevel()));
             }
-        }
-
-        /// <summary>
-        ///     this method should be overrided by each customer query service
-        /// </summary>
-        internal virtual void SetCustomSetting(Setting setting, int userId, DataSet dataSet)
-        {
         }
     }
 }

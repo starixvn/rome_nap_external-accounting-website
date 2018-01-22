@@ -27,27 +27,18 @@
 
     public class CustomerQueryServiceImpl : CustomerQueryService
     {
-        private static readonly IReadOnlyDictionary<int, CustomerInfoQueryService> queryServiceInstances =
-            new Dictionary<int, CustomerInfoQueryService>
-            {
-                [Role.Super] = new SuperInfoQueryServiceImpl(),
-                [Role.Master] = new MasterInfoQueryServiceImpl(),
-                [Role.Agent] = new AgentInfoQueryServiceImpl(),
-                [Role.Member] = new MemberInfoQueryServiceImpl()
-            };
-
         private readonly AuthorizationService authorizationService;
         private readonly CustomerDataAccesses dataAccess;
-        private readonly IReadOnlyDictionary<int, CustomerInfoQueryService> queryServices;
+        private readonly CustomerInfoQueryService customerInfoQueryService;
 
         public CustomerQueryServiceImpl(
             CustomerDataAccesses dataAccess = null,
             AuthorizationService authorizationService = null,
-            IReadOnlyDictionary<int, CustomerInfoQueryService> queryServices = null)
+            CustomerInfoQueryService customerInfoQueryService = null)
         {
             this.dataAccess = dataAccess ?? new CustomerDataAccessesImpl();
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
-            this.queryServices = queryServices ?? queryServiceInstances;
+            this.customerInfoQueryService = customerInfoQueryService ?? new CustomerInfoQueryServiceImpl();
         }
 
         public CustomerModel SearchCustomer(int actorId, string custName, string groupName = "ACCDDD")
@@ -63,16 +54,7 @@
                 return null;
             }
 
-            var roleId = Utils.ToInt32(customerInfoDataSet.Tables[0].Rows[0]["roleid"]);
-
-            if (!queryServices.ContainsKey(roleId))
-            {
-                throw new ArgumentException($"RoleId {roleId} is out of range");
-            }
-
-            // TODO: queryService instance just need to call SetCustomSetting
-
-            return queryServices[roleId].GetCustomerModel(actorId, custName, groupName, customerInfoDataSet);
+            return customerInfoQueryService.GetCustomerModel(actorId, custName, groupName, customerInfoDataSet);
         }
 
         public OnlineList GetOnlineList(int custId)

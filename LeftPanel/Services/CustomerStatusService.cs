@@ -221,7 +221,7 @@
                 DisableLiveCasino = uplineRow.ToBoolean("disableLiveCasino"),
                 DisableGoldDeluxe = uplineRow.ToBoolean("DisableGoldDeluxe"),
                 HideGoldDeluxe = uplineRow.ToBoolean("HideGoldDeluxe")
-                                 || !ProductSettings.IsShowGoldDeluxeSettingForCredit,
+                                 || !ProductSettings.IsShowGoldDeluxe,
                 DisableColossusBets = uplineRow.ToBoolean("DisableColossusBet"),
                 Closed = uplineRow.ToBoolean("closed"),
                 Suspended = uplineRow.ToBoolean("suspended"),
