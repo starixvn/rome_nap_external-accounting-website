@@ -394,13 +394,17 @@ a.ui-state-default, a.ui-widget-content a.ui-state-default, a.ui-widget-header a
 
 #groups, #groupsAdd {
     width: 180px !important;
-    position: relative;
+    position: relative;    
 }
 
 #groups input, #groupsAdd input {
     border: 1px solid #a6a6a6 !important;
     margin-left: 10px;
     width: 180px !important;
+    height: 28px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #groups .ui-icon, #groupsAdd .ui-icon {

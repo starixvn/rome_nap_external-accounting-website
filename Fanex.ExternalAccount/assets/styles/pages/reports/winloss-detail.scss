@@ -11,12 +11,17 @@
         height: 28px;
         border: 1px solid #a6a6a6 !important;
         border-radius: 0 !important;
+        text-align: left;
+        padding: 3px 8px 3px 6px;
+        width: 100% !important;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .ui-icon {
         margin-top: unset !important;
         position: absolute;
-        right: 4px;
+        right: 2px;
         top: 7px;
     }
 }

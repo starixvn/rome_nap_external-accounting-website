@@ -66,6 +66,19 @@
     height: 28px;
 }
 
+.ui-multiselect-checkboxes {
+    label input[type="checkbox"] {
+        position: relative;
+        top: -1px;
+    }
+
+    label {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border: none;
+    }
+}
+
 @media all and (min-width-device: 768px) {
     #groups, #groupsAdd {
         width: 225px !important;
@@ -74,3 +87,4 @@
         }
     }
 }
+
