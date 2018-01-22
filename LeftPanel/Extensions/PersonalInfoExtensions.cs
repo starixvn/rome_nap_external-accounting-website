@@ -25,6 +25,30 @@
 
         internal static CustomerClosedReason CustomerClosedReason(this DataRow dataRow) => new CustomerClosedReason(dataRow["closedreason"]);
 
+        internal static bool HasDownline(this DataRow dataRow) => Utils.ToBoolean(dataRow["HasDownline"]);
+
+        internal static bool UplineHasSecurityCode(this DataRow dataRow) => Utils.ToBoolean(dataRow["UplineHasSecurityCode"]);
+
+        internal static int CurrencyId(this DataRow dataRow) => Utils.ToInt32(dataRow["exchangeid"]);
+
+        internal static int Currency(this DataRow dataRow) => Utils.ToInt32(dataRow["currency"]);
+
+        internal static string CreateDate(this DataRow dataRow) => Utils.ToDateTime(dataRow["createdate"]).ToStringExt(DateTimeFormat);
+
+        internal static string LastLogged(this DataRow dataRow) => Utils.ToDateTime(dataRow["lastlogged"]).ToStringExt(DateTimeFormat);
+
+        internal static string LastTxn(this DataRow dataRow) => Utils.ToDateTime(dataRow["lastTxn"]).ToStringExt(DateTimeFormat);
+
+        internal static string ExpiredPasswordDay(this DataRow dataRow) => Utils.ToDateTime(dataRow["pwdexpiry"]).ToStringExt(DateTimeFormat);
+
+        internal static string LastChangedSecurityCodeDate(this DataRow dataRow) => Utils.ToDateTime(dataRow["LastChangedSecurityCodeDate"]).ToStringExt(DateTimeFormat);
+
+        internal static string LoginOptions(this DataRow dataRow) => Utils.ToBoolean(dataRow["NicknameLoginOnly"]) ? "Nickname Only" : "Username/Nickname";
+
+        internal static string OTPCreateDate(this DataRow dataRow) => Utils.ToDateTime(dataRow["OTPCreateDate"]).ToStringExt(DateTimeFormat);
+
+        internal static decimal Credit(this DataRow dataRow) => Utils.ToDecimal(dataRow["credit"]);
+
         internal static string StatusTooltip(this DataRow dataRow, bool enabled, bool closed, bool suspended)
         {
             var status = ThisAccountWas;
@@ -65,30 +89,5 @@
 
             return !enabled ? "disabled" : closed ? closedReason : suspended ? "suspended" : string.Empty;
         }
-
-        internal static bool HasDownline(this DataRow dataRow) => Utils.ToBoolean(dataRow["HasDownline"]);
-
-        internal static bool UplineHasSecurityCode(this DataRow dataRow) => Utils.ToBoolean(dataRow["UplineHasSecurityCode"]);
-
-        internal static int CurrencyId(this DataRow dataRow) => Utils.ToInt32(dataRow["exchangeid"]);
-
-        internal static int Currency(this DataRow dataRow) => Utils.ToInt32(dataRow["currency"]);
-
-        internal static string CreateDate(this DataRow dataRow) => Utils.ToDateTime(dataRow["createdate"]).ToStringExt(DateTimeFormat);
-
-        internal static string LastLogged(this DataRow dataRow) => Utils.ToDateTime(dataRow["lastlogged"]).ToStringExt(DateTimeFormat);
-
-        internal static string LastTxn(this DataRow dataRow) => Utils.ToDateTime(dataRow["lastTxn"]).ToStringExt(DateTimeFormat);
-
-        internal static string ExpiredPasswordDay(this DataRow dataRow) => Utils.ToDateTime(dataRow["pwdexpiry"]).ToStringExt(DateTimeFormat);
-
-        internal static string LastChangedSecurityCodeDate(this DataRow dataRow) => Utils.ToDateTime(dataRow["LastChangedSecurityCodeDate"]).ToStringExt(DateTimeFormat);
-
-        internal static string LoginOptions(this DataRow dataRow) => Utils.ToBoolean(dataRow["NicknameLoginOnly"]) ? "Nickname Only" : "Username/Nickname";
-
-        internal static string OTPCreateDate(this DataRow dataRow) => Utils.ToDateTime(dataRow["OTPCreateDate"]).ToStringExt(DateTimeFormat);
-
-        internal static decimal Credit(this DataRow dataRow) => Utils.ToDecimal(dataRow["credit"]);
-
     }
 }
