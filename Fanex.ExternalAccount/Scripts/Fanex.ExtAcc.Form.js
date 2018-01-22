@@ -169,6 +169,7 @@ Fanex.ExtAcc.Form = {
         $('#' + id).dialog({ height: height, width: width, minWidth: 300, minHeight: 150,
             title: title,
             resizable: false,
+            draggable: true,
             modal: true,
             buttons: [
             {
@@ -236,6 +237,7 @@ Fanex.ExtAcc.Form = {
         $('#' + id).dialog({ height: height, width: width, minWidth: 300, minHeight: 150,
             title: title,
             resizable: false,
+            draggable: true,
             modal: true,
             buttons: [
             {
