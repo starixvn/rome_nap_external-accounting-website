@@ -166,3 +166,18 @@ body {
 .hint .hint-pointer:after {
     top: -11px;
 }
+
+.old-version {
+    text-align: center;
+    margin-top: 0;
+    a {
+        color: #4872eb;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    @media all and (min-device-width: 768px) {
+        margin-top: 24px; 
+    }
+}

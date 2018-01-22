@@ -126,8 +126,8 @@ Fanex.ExtAcc.Form = {
         });
 
         $('#' + id).css('width', width + 'px');
-        $('#' + id).css('height', height + 'px');
-        Frame.setAttribute('style', 'display: block; border: none; font-size: 12px; z-index: 999999; margin-right: ' + margin + '; height: 100%; width: 100%');
+        $('#' + id).css('height', (height - 34) + 'px');
+        Frame.setAttribute('style', 'display: block; border: none; font-size: 12px; z-index: 999999; margin-right: ' + margin + '; height: 100%; width: 100%; padding: 0 0 0 16px');
 
         if (callBack && typeof callBack === 'function') {
             callBack();

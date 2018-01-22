@@ -18,22 +18,19 @@
 }
 
 .ui-dialog {
-    padding: 0;
-    -webkit-overflow-scrolling: touch;
-    //overflow: auto;
+    padding: 0;    
     @media all and (max-device-width: 768px) {        
         max-width: 100% !important;
         max-height: 100% !important;
         .ui-dialog-content {
             width: 100% !important;
-            height: 100% !important;
         }
     }
     .ui-dialog-content {
-        padding: 6px 16px;
-        -webkit-overflow-scrolling: touch;
-
+        padding: 0;
+        -webkit-overflow-scrolling: touch; 
     }
+
     .ui-dialog-buttonpane {
         padding: 6px 16px;
         margin-top: 8px;

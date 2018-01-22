@@ -53,12 +53,14 @@
             <div class="row">
                 <button id="btnLogin" class="btnLogin">@ViewLang.LoginTitle</button>
             </div>
+           
 
 
         </div>
         @Html.Hidden("Code", Encryptor.Instance.Code)
                         @Html.AntiForgeryToken()
                         }
+    <div class="old-version"><a href="#">Go to old version</a></div>
 
     <script type="text/javascript">
         function resolveClientUrl(relativeUrl) {
