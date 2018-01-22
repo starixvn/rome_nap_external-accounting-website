@@ -18,5 +18,13 @@
         internal static bool IsSync(this DataRow dataRow) => Utils.ToBoolean(dataRow["IsSync"]);
 
         internal static bool IsDisabled(this DataRow dataRow) => Utils.ToBoolean(dataRow["isDisabled"]);
+
+        internal static string Username(this DataRow dataRow) => dataRow["username"].ToString();
+
+        internal static int SRecommend(this DataRow dataRow) => Utils.ToInt32(dataRow["srecommend"]);
+
+        internal static int MRecommend(this DataRow dataRow) => Utils.ToInt32(dataRow["mrecommend"]);
+
+        internal static int Recommend(this DataRow dataRow) => Utils.ToInt32(dataRow["recommend"]);
     }
 }

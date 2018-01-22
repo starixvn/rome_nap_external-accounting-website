@@ -6,7 +6,6 @@
     using Core.Shared;
     using Extensions;
     using Models;
-    using Utilities;
     using ViewModels;
 
     public interface SettingService
@@ -29,7 +28,7 @@
         {
             var custInfoTable = customerInfoDataset.Tables[0];
             var productStatusTable = customerInfoDataset.Tables[4];
-            var roleId = Utils.ToInt32(custInfoTable.Rows[0]["roleid"]);
+            var roleId = custInfoTable.Rows[0].RoleId();
 
             var customerStatus = customerStatusService.GetCustomerStatus(
                 actorId,

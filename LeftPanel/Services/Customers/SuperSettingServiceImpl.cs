@@ -15,7 +15,11 @@
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
         }
 
-        public override Setting GetSetting(int actorId, string custName, int uplineId, string groupName,
+        public override Setting GetSetting(
+            int actorId,
+            string custName,
+            int uplineId,
+            string groupName,
             DataSet customerInfoDataset)
         {
             var setting = base.GetSetting(actorId, custName, uplineId, groupName, customerInfoDataset);

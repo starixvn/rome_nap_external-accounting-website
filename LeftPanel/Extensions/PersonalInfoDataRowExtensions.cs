@@ -4,7 +4,7 @@
     using DTO.Customer;
     using Utilities;
 
-    public static class PersonalInfoExtensions
+    public static class PersonalInfoDataRowExtensions
     {
         private const string ThisAccountWas = "This account was ";
         private const string DateTimeFormat = "M/d/yyyy H:mm tt";

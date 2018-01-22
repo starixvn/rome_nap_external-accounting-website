@@ -5,10 +5,9 @@
     using Core.Shared;
     using CustomerSetting.Module.Keno.KenoSetting.Configurations;
     using DataAccesses;
+    using Extensions;
     using Service.Impl.Customer;
-    using Service.Impl.Report;
     using Service.Interface.Customer;
-    using Service.Interface.Report;
     using Utilities;
     using ViewModels;
     using static Core.Shared.ProductConstants;
@@ -47,44 +46,44 @@
         {
             var customerInfo = dataAccess.EAS_CustomerSelUserInfo(groupName, 0, username, true);
 
-            if (customerInfo != null)
+            if (customerInfo == null)
             {
-                var infoRow = customerInfo.Rows[0];
-                DataTable custData;
-                DataTable upperInfo = null;
-
-                var roleId = Utils.ToInt32(infoRow["roleid"]);
-                var srecommend = Utils.ToInt32(infoRow["srecommend"]);
-                var mrecommend = Utils.ToInt32(infoRow["mrecommend"]);
-                var recommend = Utils.ToInt32(infoRow["recommend"]);
-                var custId = Utils.ToInt32(infoRow["custid"]);
-
-                switch (roleId)
-                {
-                    case Role.Super:
-                        custData = superService.GetData(userId, custId, groupName: groupName);
-                        break;
-
-                    case Role.Master:
-                        custData = masterService.GetData(userId, srecommend, custId);
-                        upperInfo = superService.GetData(userId, uplineId, groupName: groupName);
-                        break;
-
-                    case Role.Agent:
-                        custData = agentService.GetData(userId, mrecommend, custId);
-                        upperInfo = masterService.GetData(userId, srecommend, uplineId);
-                        break;
-
-                    default:
-                        custData = memberService.GetData(userId, recommend, custId);
-                        upperInfo = agentService.GetData(userId, mrecommend, uplineId);
-                        break;
-                }
-
-                return GetCustStatus(userId, roleId, custData, upperInfo);
+                return null;
             }
 
-            return null;
+            var infoRow = customerInfo.Rows[0];
+            DataTable custData;
+            DataTable upperInfo = null;
+
+            var roleId = infoRow.RoleId();
+            var srecommend = infoRow.SRecommend();
+            var mrecommend = infoRow.MRecommend();
+            var recommend = infoRow.Recommend();
+            var custId = infoRow.CustId();
+
+            switch (roleId)
+            {
+                case Role.Super:
+                    custData = superService.GetData(userId, custId, groupName: groupName);
+                    break;
+
+                case Role.Master:
+                    custData = masterService.GetData(userId, srecommend, custId);
+                    upperInfo = superService.GetData(userId, uplineId, groupName: groupName);
+                    break;
+
+                case Role.Agent:
+                    custData = agentService.GetData(userId, mrecommend, custId);
+                    upperInfo = masterService.GetData(userId, srecommend, uplineId);
+                    break;
+
+                default:
+                    custData = memberService.GetData(userId, recommend, custId);
+                    upperInfo = agentService.GetData(userId, mrecommend, uplineId);
+                    break;
+            }
+
+            return GetCustStatus(userId, roleId, custData, upperInfo);
         }
 
         private CustomerStatus GetCustStatus(

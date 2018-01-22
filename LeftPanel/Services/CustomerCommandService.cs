@@ -1,7 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services
 {
     using System;
-    using System.Data;
     using System.Diagnostics;
     using CasinoLibrary.Model.UserException;
     using CasinoLibrary.SBAgent;

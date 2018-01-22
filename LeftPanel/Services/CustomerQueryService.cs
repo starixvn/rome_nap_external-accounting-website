@@ -1,12 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services
 {
-    using System;
     using System.Collections.Generic;
     using System.Data;
     using Core.Authorization;
-    using Core.Shared;
     using Customers;
     using DataAccesses;
+    using Extensions;
     using Utilities;
     using ViewModels;
 
@@ -67,7 +66,7 @@
                 onlineList.Onlines.Add(new OnlineInfo
                 (
                     new ObjectInfo { Text = authorizationService.CanViewVNIP(onlineIp) ? onlineIp : string.Empty },
-                    new ObjectInfo { Text = Utils.ToDateTime(row["reload_time"]).ToStringExt() }
+                    new ObjectInfo { Text = row.ReloadTime() }
                 ));
             }
 
@@ -83,7 +82,6 @@
                 return null;
             }
 
-            var totalPages = Utils.ToInt32(dr.Outputs["totalpages"]);
             var downlines = dr.ResultSet.Tables[0];
             var model = new DownlineList();
 
@@ -96,6 +94,7 @@
 
             model.CurrentPage = pageIndex;
 
+            var totalPages = Utils.ToInt32(dr.Outputs["totalpages"]);
             AddPageItems(totalPages, model);
 
             return model;
@@ -129,9 +128,9 @@
                 return;
             }
 
-            foreach (DataRow item in downlines?.Rows)
+            foreach (DataRow item in downlines.Rows)
             {
-                model.Downlines.Add(new ObjectInfo { Text = item["username"].ToString() });
+                model.Downlines.Add(new ObjectInfo { Text = item.Username() });
             }
         }
 
