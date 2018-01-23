@@ -20,7 +20,7 @@ function disablePulldownAndReleaseRefresh() {
             // first overscrolling touchmove.
             maybePreventPullToRefresh = false;
             if (touchYDelta > 0) {
-                e.preventDefault();
+                e.stopPropagation();
                 return;
             }
         }
