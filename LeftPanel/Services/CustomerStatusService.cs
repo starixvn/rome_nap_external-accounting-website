@@ -8,7 +8,6 @@
     using Extensions;
     using Service.Impl.Customer;
     using Service.Interface.Customer;
-    using Utilities;
     using ViewModels;
     using static Core.Shared.ProductConstants;
 
@@ -136,43 +135,40 @@
 
         private static void SetNonProductStatus(int roleId, CustomerStatus custStatus, DataRow statusRow)
         {
-            custStatus.Closed = statusRow.ToBoolean("closed");
-            custStatus.Suspended = statusRow.ToBoolean("suspended");
-            custStatus.DisableTransfer = roleId.IsNotSuper() && statusRow.ToBoolean("disableTransfer");
-            custStatus.AllowDoubleComm = statusRow.ToBoolean("doubleCommLosing");
-            custStatus.AllowOutright = !statusRow.ToBoolean("disableOutright");
+            custStatus.Closed = statusRow.Closed();
+            custStatus.Suspended = statusRow.Suspended();
+            custStatus.DisableTransfer = roleId.IsNotSuper() && statusRow.DisableTransfer();
+            custStatus.AllowDoubleComm = statusRow.EnableDoubleComm();
+            custStatus.AllowOutright = !statusRow.DisableOutright();
         }
 
         private static void SetNumberGameStatus(CustomerStatus custStatus, DataRow statusRow)
-            => custStatus.DisableNumberGame = statusRow.ToBoolean("disableNumber");
+            => custStatus.DisableNumberGame = statusRow.DisableNumberGame();
 
         private static void SetColossusBetsStatus(CustomerStatus custStatus, DataRow statusRow)
-            => custStatus.HideColossusBets = !ProductSettings.IsShowColossusBets
-                                             || statusRow.ToBoolean("HideColossusBet");
+            => custStatus.HideColossusBets = !ProductSettings.IsShowColossusBets || statusRow.HideColossusBet();
 
         private static void SetCricketStatus(CustomerStatus custStatus, DataRow statusRow)
-            => custStatus.HideCricket = statusRow.ToBoolean("HideCricket")
+            => custStatus.HideCricket = statusRow.HideCricket()
                                         || !ProductSettings.IsShowCricket
-                                        || !statusRow.ToBoolean("IsIMBC");
+                                        || !statusRow.IsIMBC();
 
         private static void SetCockfightingStatus(CustomerStatus custStatus, DataRow statusRow)
-            => custStatus.HideCockfighting = statusRow.ToBoolean("HideCockfighting")
-                                             || !ProductSettings.IsShowCockfighting;
+            => custStatus.HideCockfighting = statusRow.HideCockfighting() || !ProductSettings.IsShowCockfighting;
 
         private static void SetSportsbook2Status(CustomerStatus custStatus, DataRow statusRow)
-            => custStatus.HideSportsbook2 = statusRow.ToBoolean("HideMuayThai")
-                                            || !ProductSettings.IsShowSportsbook2;
+            => custStatus.HideSportsbook2 = statusRow.HideMuayThai() || !ProductSettings.IsShowSportsbook2;
 
         private static void SetLiveCasinoStatus(CustomerStatus custStatus, DataRow statusRow)
         {
-            custStatus.SyncLiveCasino = statusRow.ToBoolean("syncLiveCasino");
-            custStatus.DisableLiveCasino = statusRow.ToBoolean("disableLiveCasino");
+            custStatus.SyncLiveCasino = statusRow.SyncLiveCasino();
+            custStatus.DisableLiveCasino = statusRow.DisableLiveCasino();
         }
 
         private static void SetCasinoStatus(CustomerStatus custStatus, DataRow statusRow)
         {
-            custStatus.SyncCasino = statusRow.ToBoolean("syncCasino");
-            custStatus.DisableCasino = statusRow.ToBoolean("disableCasino");
+            custStatus.SyncCasino = statusRow.SyncCasino();
+            custStatus.DisableCasino = statusRow.DisableCasino();
         }
 
         private void SetEsportsStatus(
@@ -182,27 +178,26 @@
         {
             custStatus.HideEsports = !authorizationService.IsAuthorized(userId, eFunctions.ShowEnableEsports)
                                      || ProductSettings.HideEsports;
-            custStatus.DisableESports = statusRow.ToBoolean("DisableESports");
+            custStatus.DisableESports = statusRow.DisableESports();
         }
 
         private static void SetVirtualSportsStatus(CustomerStatus custStatus, DataRow statusRow)
         {
-            custStatus.HideVirtualSports = statusRow.ToBoolean("hideVirtualSports");
-            custStatus.DisableVirtualSports = statusRow.ToBoolean("disableVirtualSports");
-            custStatus.DisableHRFixedOdds = statusRow.ToBoolean("disableHRFixedOdds");
+            custStatus.HideVirtualSports = statusRow.HideVirtualSports();
+            custStatus.DisableVirtualSports = statusRow.DisableVirtualSports();
+            custStatus.DisableHRFixedOdds = statusRow.DisableHRFixedOdds();
         }
 
         private static void SetKenoStatus(CustomerStatus custStatus, DataRow statusRow)
         {
-            custStatus.HideKeno = statusRow.ToBoolean("HideKeno") || !KenoSection.Instance.ShowSetting;
-            custStatus.DisableKeno = statusRow.ToBoolean("DisableKeno");
+            custStatus.HideKeno = statusRow.HideKeno() || !KenoSection.Instance.ShowSetting;
+            custStatus.DisableKeno = statusRow.DisableKeno();
         }
 
         private static void SetGoldDeluxeStatus(CustomerStatus custStatus, DataRow statusRow)
         {
-            custStatus.HideGoldDeluxe = statusRow.ToBoolean("HideGoldDeluxe")
-                                        || !ProductSettings.IsShowProduct(GoldDeluxe);
-            custStatus.SyncGoldDeluxeDownlines = statusRow.ToBoolean("SyncedGoldDeluxeDownline");
+            custStatus.HideGoldDeluxe = statusRow.HideGoldDeluxe() || !ProductSettings.IsShowProduct(GoldDeluxe);
+            custStatus.SyncGoldDeluxeDownlines = statusRow.SyncedGoldDeluxeDownline();
         }
 
         private static CustomerStatus GetUplineStatus(int roleId, DataRow uplineRow)
@@ -210,24 +205,23 @@
             var uplineStatus = new CustomerStatus
             {
                 RoleId = roleId + 1,
-                SyncCasino = uplineRow.ToBoolean("syncCasino"),
-                SyncLiveCasino = uplineRow.ToBoolean("syncLiveCasino"),
-                DisableTransfer = (roleId + 1).IsNotSuper() && uplineRow.ToBoolean("disableTransfer"),
-                AllowDoubleComm = uplineRow.ToBoolean("doubleCommLosing"),
-                DisableVirtualSports = uplineRow.ToBoolean("disableVirtualSports"),
-                AllowOutright = !uplineRow.ToBoolean("disableOutright"),
-                DisableNumberGame = uplineRow.ToBoolean("disableNumber"),
-                DisableCasino = uplineRow.ToBoolean("disableCasino"),
-                DisableLiveCasino = uplineRow.ToBoolean("disableLiveCasino"),
-                DisableGoldDeluxe = uplineRow.ToBoolean("DisableGoldDeluxe"),
-                HideGoldDeluxe = uplineRow.ToBoolean("HideGoldDeluxe")
-                                 || !ProductSettings.IsShowGoldDeluxe,
-                DisableColossusBets = uplineRow.ToBoolean("DisableColossusBet"),
-                Closed = uplineRow.ToBoolean("closed"),
-                Suspended = uplineRow.ToBoolean("suspended"),
-                HideVirtualSports = uplineRow.ToBoolean("hideVirtualSports"),
-                DisableHRFixedOdds = uplineRow.ToBoolean("disableHRFixedOdds"),
-                DisableESports = uplineRow.ToBoolean("DisableESports")
+                SyncCasino = uplineRow.SyncCasino(),
+                SyncLiveCasino = uplineRow.SyncLiveCasino(),
+                DisableTransfer = (roleId + 1).IsNotSuper() && uplineRow.DisableTransfer(),
+                AllowDoubleComm = uplineRow.EnableDoubleComm(),
+                DisableVirtualSports = uplineRow.DisableVirtualSports(),
+                AllowOutright = !uplineRow.DisableOutright(),
+                DisableNumberGame = uplineRow.DisableNumberGame(),
+                DisableCasino = uplineRow.DisableCasino(),
+                DisableLiveCasino = uplineRow.DisableLiveCasino(),
+                DisableGoldDeluxe = uplineRow.DisableGoldDeluxe(),
+                HideGoldDeluxe = uplineRow.HideGoldDeluxe() || !ProductSettings.IsShowGoldDeluxe,
+                DisableColossusBets = uplineRow.DisableColossusBet(),
+                Closed = uplineRow.Closed(),
+                Suspended = uplineRow.Suspended(),
+                HideVirtualSports = uplineRow.HideVirtualSports(),
+                DisableHRFixedOdds = uplineRow.DisableHRFixedOdds(),
+                DisableESports = uplineRow.DisableESports()
             };
 
             foreach (var productStatus in LeftPanelProductIntegration.TransformToProductStatus(uplineRow))

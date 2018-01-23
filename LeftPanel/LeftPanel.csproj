@@ -199,6 +199,7 @@
     <Compile Include="Extensions\PersonalInfoDataRowExtensions.cs" />
     <Compile Include="Extensions\ProductDataRowExtensions.cs" />
     <Compile Include="Extensions\LineInfoDataRowExtensions.cs" />
+    <Compile Include="Extensions\UsedCreditItemDataReaderExtensions.cs" />
     <Compile Include="LeftPanelProductIntegration.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\ProductSettingParam.cs" />

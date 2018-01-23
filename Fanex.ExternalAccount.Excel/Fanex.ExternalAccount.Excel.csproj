@@ -65,6 +65,7 @@
     <Compile Include="Customer\CustomerList\CustomerListPage.cs" />
     <Compile Include="Customer\CustomerList\CustomerListPageBuilder.cs" />
     <Compile Include="Customer\CustomerList\TemplateSettings.cs" />
+    <Compile Include="Extensions\CustomerInfoDataRowExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IReportBuilder.cs" />
     <Compile Include="Reports\WinLossDetail\IWinLossDetailReportBuilder.cs" />

@@ -26,5 +26,9 @@
         internal static int MRecommend(this DataRow dataRow) => Utils.ToInt32(dataRow["mrecommend"]);
 
         internal static int Recommend(this DataRow dataRow) => Utils.ToInt32(dataRow["recommend"]);
+
+        internal static string Site(this DataRow dataRow) => Utils.ToString(dataRow["site"]);
+
+        internal static string MemberSite(this DataRow dataRow) => Utils.ToString(dataRow["membersite"]);
     }
 }

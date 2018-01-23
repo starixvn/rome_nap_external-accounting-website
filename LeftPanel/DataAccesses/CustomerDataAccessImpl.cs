@@ -8,10 +8,10 @@
     using Core.Context;
     using Core.Shared;
     using Criteria;
-    using CustomerSetting.Security.Authenticate;
     using Data;
     using Data.DNAide;
     using DTO;
+    using Extensions;
     using Service.Impl.Customer.Casino;
     using Service.Impl.Report;
     using Service.Interface.Report;
@@ -28,7 +28,7 @@
 
             if (customerInfo != null && customerInfo.Rows.Count != 0)
             {
-                var param = new Hashtable {{"username", username}};
+                var param = new Hashtable { { "username", username } };
 
                 return DbHelper.ExecuteDataSet("Acc_CustomerSelAllInfo", param);
             }
@@ -73,7 +73,7 @@
 
         public DataRowCollection GetOnlineList(int custid)
         {
-            var param = new Hashtable {{"custid", custid}};
+            var param = new Hashtable { { "custid", custid } };
             var rs = DbHelper.ExecuteDbResult("Acc_CustomerSelOnline", param);
 
             return rs.ResultSet.Tables[0].Rows;
@@ -101,14 +101,7 @@
                 {
                     while (reader.Read())
                     {
-                        items.Add(new MemberUsedCreditItem
-                        {
-                            Username = reader.ToString("username"),
-                            FirstName = reader.ToString("firstname"),
-                            LastName = reader.ToString("lastname"),
-                            Amount = reader.ToDecimal("credit"),
-                            IsClosed = reader.ToBoolean("closed")
-                        });
+                        items.Add(new MemberUsedCreditItem(reader));
                     }
                 }
             }
@@ -173,7 +166,7 @@
         {
             using (var db = new ObjectDb("Acc_CustomerSelClearBalance"))
             {
-                var param = new Hashtable {{"custid", custId}};
+                var param = new Hashtable { { "custid", custId } };
                 var result = db.ExecuteDataSet(param);
 
                 return result?.Tables?[0];
@@ -267,7 +260,7 @@
                 CurrentSession.Instance.UserName,
                 string.Empty);
 
-            return new Result(result ? 0 : 1, result ? string.Empty : "Update casino status failed");
+            return result ? new Result(0, string.Empty) : new Result(1, "Update casino status failed");
         }
 
         public Result EnableNumberGame(int id, bool enable, bool enableDownline)
@@ -403,7 +396,7 @@
                 var errorCode = Utils.ToString(db.GetParameterValue("errcode"));
                 var errorMessage = Utils.ToString(db.GetParameterValue("errmsg"));
 
-                return new Result {ErrorCode = errorCode, ErrorMessage = errorMessage};
+                return new Result { ErrorCode = errorCode, ErrorMessage = errorMessage };
             }
         }
 
@@ -464,9 +457,9 @@
                     {
                         items.Add(new MasterAgentUsedCreditItem
                         {
-                            Username = reader.ToString("mastername"),
-                            GivenCredit = reader.ToDecimal("givencredit"),
-                            UsedCredit = reader.ToDecimal("usedcredit")
+                            Username = reader.MasterName(),
+                            GivenCredit = reader.GivenCredit(),
+                            UsedCredit = reader.UsedCredit()
                         });
                     }
                 }
@@ -489,9 +482,9 @@
                     {
                         items.Add(new MasterAgentUsedCreditItem
                         {
-                            Username = reader.ToString("agentname"),
-                            GivenCredit = reader.ToDecimal("givencredit"),
-                            UsedCredit = reader.ToDecimal("usedcredit")
+                            Username = reader.AgentName(),
+                            GivenCredit = reader.GivenCredit(),
+                            UsedCredit = reader.UsedCredit()
                         });
                     }
                 }

@@ -5,6 +5,7 @@
     using System.Data;
     using System.Globalization;
     using Core.Shared;
+    using Extensions;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using Utilities;
@@ -69,35 +70,29 @@
                 var values = new List<object>
                 {
                     id,
-                    items["username"].ToString(),
+                    items.Username(),
                     custStatus,
-                    Utils.ToBoolean(items["DoubleCommLosing"]) ? "ON" : "OFF",
-                    items["nickname"].ToString(),
-                    items["firstname"].ToString(),
-                    items["lastname"].ToString(),
-                    items["ugroup"].ToString(),
-                    Utils.ToDouble(items["discount"]),
-                    Utils.ToDouble(items["discount1x2"]),
-                    Utils.ToDouble(items["discountcs"]),
-                    Utils.ToDouble(items["discountnumber"]),
-                    Utils.ToDouble(items["playerdiscount"]),
-                    Utils.ToDouble(items["playerdiscount1x2"]),
-                    Utils.ToDouble(items["playerdiscountcs"]),
-                    Utils.ToDouble(items["playerdiscountnumber"]),
+                    items.DoubleCommLosing() ? "ON" : "OFF",
+                    items.NickName(),
+                    items.FirstName(),
+                    items.LastName(),
+                    items.UserGroup(),
+                    items.Discount(),
+                    items.Discount1x2(),
+                    items.DiscountCasino(),
+                    items.DiscountNumberGame(),
+                    items.PlayerDiscount(),
+                    items.PlayerDiscount1x2(),
+                    items.PlayerDiscountCasino(),
+                    items.PlayerDiscountNumberGame(),
                     $"{items["createdate"]:MM/dd/yyyy HH:mm:ss tt}",
-                    items["lastloginip"].ToString()
+                    items.LastLoginIP()
                 };
 
                 if (isMyanmarOdds)
                 {
-                    values.Insert(12,
-                        Utils.ToBoolean(items["ismyanmarodds"])
-                            ? Utils.ToDouble(items["discountmyanmarodds"]).ToString(CultureInfo.InvariantCulture)
-                            : "N/A");
-                    values.Insert(17,
-                        Utils.ToBoolean(items["ismyanmarodds"])
-                            ? Utils.ToDouble(items["playerdiscountmyanmarodds"]).ToString(CultureInfo.InvariantCulture)
-                            : "N/A");
+                    values.Insert(12, items.IsMyanmarOdds() ? items.DiscountMyanmarOdds() : "N/A");
+                    values.Insert(17, items.IsMyanmarOdds() ? items.PlayerDiscountMyanmarOdds() : "N/A");
                 }
 
                 resultSheet.GetRow(rowId).WriteCells(FirstColumnIndex, values);
@@ -120,12 +115,12 @@
                 var values = new List<object>
                 {
                     id,
-                    items["username"].ToString(),
+                    items.Username(),
                     custStatus,
-                    Utils.ToBoolean(items["DoubleCommLosing"]) ? "ALLOWED" : "DISALLOWED",
-                    items["firstname"].ToString(),
-                    items["lastname"].ToString(),
-                    Utils.ToDouble(items["groupa"]),
+                    items.DoubleCommLosing() ? "ALLOWED" : "DISALLOWED",
+                    items.FirstName(),
+                    items.LastName(),
+                    items.GroupA(),
                     Utils.ToDouble(items["groupb"]),
                     Utils.ToDouble(items["groupc"]),
                     Utils.ToDouble(items["groupd"]),

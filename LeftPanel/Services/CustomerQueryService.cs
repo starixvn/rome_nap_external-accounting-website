@@ -62,7 +62,7 @@
 
             foreach (DataRow row in dataAccess.GetOnlineList(custId))
             {
-                var onlineIp = row.ToString("ip");
+                var onlineIp = row.IP();
                 onlineList.Onlines.Add(new OnlineInfo
                 (
                     new ObjectInfo { Text = authorizationService.CanViewVNIP(onlineIp) ? onlineIp : string.Empty },

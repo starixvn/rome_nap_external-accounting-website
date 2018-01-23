@@ -120,10 +120,10 @@
 
         internal List<ObjectInfo> GetLoginInfo(DataRow cashRow, DataRow customerRow)
         {
-            var roleId = Utils.ToInt32(customerRow["roleid"]);
-            var lastLoginIp = customerRow.ToString("lastloginip");
+            var roleId = customerRow.RoleId();
+            var lastLoginIp = customerRow.LastLogInIP();
 
-            var site = roleId.IsNotMember() ? Utils.ToString(customerRow["site"]) : Utils.ToString(customerRow["membersite"]);
+            var site = roleId.IsNotMember() ? customerRow.Site() : customerRow.MemberSite();
             var ip = authorizationService.CanViewVNIP(lastLoginIp) ? lastLoginIp : string.Empty;
 
             var loginInfos = new List<ObjectInfo>
