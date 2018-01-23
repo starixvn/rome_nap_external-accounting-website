@@ -61,7 +61,10 @@
             callback: function () {
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditMultiplePT' + '/?roleId=4&groupName=' + $('#selectedGroupName').html() + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 900, 700, false, false, 1);
+                Fanex.ExtAcc.Form.Show(
+                    resolveClientUrl('SportsbookSetting/EditMultiplePT' + '/?roleId=4&groupName=' + $('#selectedGroupName').html() + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                    900, 700, false, function () { Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup");}, 1);
+                
             }
         },
         separator0: "-----",
@@ -71,6 +74,7 @@
             callback: function (key, opt) {
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Super?id=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + $('#selectedGroupName').html()), 'Edit Racing Setting <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 1050, 620, false, null, 1);
+                Fanex.ExtAcc.Customer.AddPaddingContent('#windowPopup iframe').addClass('add-padding');
             }
         },
         separator1: "-----",
@@ -80,6 +84,7 @@
             callback: function () {
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Super/EditSuper?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=0&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 1064, 700, false, null, 1);
+                Fanex.ExtAcc.Customer.AddPaddingContent('#windowPopup iframe').addClass('add-padding');
             }
         },
         liveCasino: {
@@ -89,6 +94,7 @@
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 url = "LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&customerId=" + Fanex.ExtAcc.Customer.UserId + "&customerLevel=4&formType=2" + "&actorId=" + parent.userId + "&actorUsername=" + parent.username + parent.$('#selectedGroupName').html();
                 Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
+                Fanex.ExtAcc.Customer.AddPaddingContent('#windowPopup iframe').addClass('add-padding');
             }
         },
         virtualSport: {
@@ -98,6 +104,7 @@
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Customer.ShowEditSingleVirtualSports(Fanex.ExtAcc.Customer.UserId, 5, 4);
+                Fanex.ExtAcc.Customer.AddPaddingContent('#windowPopup iframe').addClass('add-padding');
             }
         }
     }
@@ -110,6 +117,7 @@
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditSuper?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Keno Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 880, 700, false, false, 1);
+                Fanex.ExtAcc.Customer.AddPaddingContent('#windowPopup iframe').addClass('add-padding');
             }
         }
     }
@@ -123,6 +131,7 @@
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=0&uplineId=0&formType=2&level=4" + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + parent.$('#selectedGroupName').html();
                 Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Gold Deluxe Setting <font color="#6dcff6">' + title + '</font>', 900, 400, false, false, 1);
+                Fanex.ExtAcc.Customer.AddPaddingContent('#windowPopup iframe').addClass('add-padding');
             }
         }
     }
@@ -137,6 +146,7 @@
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 url = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&isMultipleEdit=0&userId=" + parent.userId + "&roleId=4&groupName=" + parent.$('#selectedGroupName').html();
                 Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Colossus Bets Setting <font color="#6dcff6">' + title + '</font>', 900, 400, false, false, 1);
+                Fanex.ExtAcc.Customer.AddPaddingContent('#windowPopup iframe').addClass('add-padding');
             }
         }
     }
@@ -150,7 +160,9 @@
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Customer.ShowEditSingleSportsbook2(Fanex.ExtAcc.Customer.UserId, 5, 4);
+                Fanex.ExtAcc.Customer.AddPaddingContent('#windowPopup iframe').addClass('add-padding');
             }
+
         }
     }
 
@@ -162,6 +174,7 @@
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Customer.ShowEditSingleCockfighting(Fanex.ExtAcc.Customer.UserId, 5, 4);
+                Fanex.ExtAcc.Customer.AddPaddingContent('#windowPopup iframe').addClass('add-padding');
             }
         }
     }
@@ -174,6 +187,7 @@
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Customer.ShowEditSingleCricket(Fanex.ExtAcc.Customer.UserId, 5, 4);
+                Fanex.ExtAcc.Customer.AddPaddingContent('#windowPopup iframe').addClass('add-padding');
             }
         }
     }
@@ -186,6 +200,7 @@
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Customer.ShowEditSingleAllbet(Fanex.ExtAcc.Customer.UserId, 5, 4);
+                Fanex.ExtAcc.Customer.AddPaddingContent('#windowPopup iframe').addClass('add-padding');
             }
         }
     }
@@ -198,6 +213,7 @@
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Customer.ShowEditSingleVoidbridge(Fanex.ExtAcc.Customer.UserId, 5, 4);
+                Fanex.ExtAcc.Customer.AddPaddingContent('#windowPopup iframe').addClass('add-padding');
             }
         }
     }
@@ -222,6 +238,7 @@
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Customer.ShowEditSingleFishingWorld(Fanex.ExtAcc.Customer.UserId, 5, 4);
+                Fanex.ExtAcc.Customer.AddPaddingContent('#windowPopup iframe').addClass('add-padding');
             }
         }
     }
@@ -234,6 +251,7 @@
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Customer.ShowEditSingleLottery(Fanex.ExtAcc.Customer.UserId, 5, 4);
+                Fanex.ExtAcc.Customer.AddPaddingContent('#windowPopup iframe').addClass('add-padding');
             }
         }
     }
@@ -246,6 +264,7 @@
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Customer.ShowEditSingleLucky3(Fanex.ExtAcc.Customer.UserId, 5, 4);
+                Fanex.ExtAcc.Customer.AddPaddingContent('#windowPopup iframe').addClass('add-padding');
             }
         }
     }
@@ -258,6 +277,7 @@
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Customer.ShowEditSingleBullfighting(Fanex.ExtAcc.Customer.UserId, 5, 4);
+                Fanex.ExtAcc.Customer.AddPaddingContent('#windowPopup iframe').addClass('add-padding');
             }
         }
     }

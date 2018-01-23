@@ -28,12 +28,15 @@
     }
     .ui-dialog-content {
         padding: 0;
-        -webkit-overflow-scrolling: touch; 
+        -webkit-overflow-scrolling: touch;        
+    }
+    .add-padding {
+        padding: 4px 0 4px 16px;
     }
 
     .ui-dialog-buttonpane {
         padding: 6px 16px;
-        margin-top: 8px;
+        margin-top: 0;
         height: 40px;
         box-sizing: content-box;
     }

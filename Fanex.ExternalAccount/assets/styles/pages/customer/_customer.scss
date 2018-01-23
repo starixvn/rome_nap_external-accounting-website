@@ -42,7 +42,7 @@
 .BettingLimitHeaderCopiedActive, .BetTypeHeaderActive {
     box-sizing: content-box;
 }
-.allowDblComm, .disallowDblComm {    
+.allowDblComm, .disallowDblComm, .onDblComm, .offDblComm {    
     cursor: pointer;
 }
 .allowDblComm:before, .onDblComm:before{

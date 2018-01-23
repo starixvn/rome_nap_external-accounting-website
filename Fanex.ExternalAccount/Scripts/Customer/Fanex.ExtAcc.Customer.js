@@ -1014,5 +1014,9 @@
             default:
                 return "closed-wrongPwdOthers";
         }
+    },
+
+    AddPaddingContent: function (elementSelector) {
+        top.$(elementSelector).addClass("add-padding");
     }
 };
