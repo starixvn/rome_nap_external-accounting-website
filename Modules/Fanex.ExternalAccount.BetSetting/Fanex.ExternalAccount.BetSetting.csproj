@@ -300,6 +300,7 @@
     <Compile Include="Base\BettingControllerBase.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
+    <Compile Include="BetSettingProductIntegration.cs" />
     <Compile Include="Controllers\CasinoBettingController.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
@@ -333,6 +334,7 @@
     <Compile Include="Services\Interface\ICustomerService.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
+    <Compile Include="ViewModels\BetSettingTab.cs" />
     <Compile Include="ViewModels\CasinoModel.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
@@ -361,6 +363,18 @@
     <ProjectReference Include="..\..\Core.Shared\Core.Shared.csproj">
       <Project>{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}</Project>
       <Name>Core.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Core.csproj">
+      <Project>{3521a845-d2bf-4916-b02c-0b0e02f774db}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Fanex.ExternalAccount.Service\Fanex.ExternalAccount.Service.csproj">
+      <Project>{d172255e-6b0a-4602-b22c-8a4baba84d07}</Project>
+      <Name>Fanex.ExternalAccount.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LeftPanel\LeftPanel.csproj">
+      <Project>{6ed9bed7-1bce-4991-b425-740db8c56bbd}</Project>
+      <Name>LeftPanel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,10 +1,7 @@
 ﻿@using Fanex.CustomerSetting.Module.Core
-@using Fanex.ExternalAccount.Core.Shared
-@using Fanex.ExternalAccount.Module.LeftPanel.Extensions
-@using Fanex.ExternalAccount.Module.LeftPanel.Services
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
-
+@using Fanex.CustomerSetting.Module.BetSetting;
 @{
     var id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]);
     var uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]);
@@ -18,17 +15,7 @@
         NullValueHandling = NullValueHandling.Ignore
     });
 
-    var productStatus = new CustomerStatusServiceImpl().GetCustomerStatus(
-                userId,
-                siteName.ToString(),
-                cust.Username,
-                0).ProductStatusDic;
-
-    var isShowAllBet = productStatus[ProductConstants.AllBet].IsShow;
-    var isShowMacauGames = productStatus[ProductConstants.VoidBridge].IsShow;
-    var isShowNG2 = productStatus[ProductConstants.NG2].IsShow;
-    var isShowLottery = productStatus[ProductConstants.Lottery].IsShow;
-    var isShowBullfighting = productStatus[ProductConstants.BullFighting].IsShow;
+    var visibleTabs = BetSettingProductIntegration.GetVisibledBetSettingTabs(userId, siteName.ToString(), cust.Username);
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -51,96 +38,48 @@
             <li id="tab6" onclick="LoadCasino()"><a href="#tabs-6">Casino</a></li>
             <li id="tab7" onclick="LoadKeno()"><a href="#tabs-7">Keno</a></li>
             <li id="tab8" onclick="LoadGoldDeluxe()"><a href="#tabs-8">Gold Deluxe</a></li>
-            @if (isShowAllBet)
-            {
-                <li id="tab9" onclick="LoadAllBet()"><a href="#tabs-9">Allbet</a></li>
-            }
-            @if (isShowMacauGames)
-            {
-                <li id="tab10" onclick="LoadVoidbridge()"><a href="#tabs-10">Macau Games</a></li>
-            }
 
-            @if (isShowNG2)
+            @foreach (var tab in visibleTabs)
             {
-                <li id="tab11" onclick="LoadNG2()">
-                    <a href="#tabs-11">@RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2")</a>
+                <li id="tab@(tab.ProductId)" 
+                    onclick="LoadProduct(@(tab.ProductId))">
+                    <a href="#tabs-@(tab.ProductId)">@(tab.ProductName)</a>
                 </li>
             }
-
-            @if (isShowLottery)
-            {
-                <li id="tab12" onclick="LoadLottery()"><a href="#tabs-12">Lottery</a></li>
-            }
-
-            @if (isShowBullfighting)
-            {
-                <li id="tab30" onclick="LoadProduct(30)"><a href="#tabs-30">Bullfighting</a></li>
-            }
         </ul>
-        <div id="tabs-1">
+        <div id = "tabs-1" >
             @RenderSection("Sportsbook", false)
         </div>
         <div id="tabs-2">
             @RenderSection("Racing", false)
         </div>
-        <div id="tabs-3">
+        <div id = "tabs-3" >
             <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
-            <div><iframe id="virtualsports" width="100%" height="450px" frameborder="0" src=""></iframe></div>
+            <div><iframe id = "virtualsports" width="100%" height="450px" frameborder="0" src=""></iframe></div>
         </div>
-        <div id="tabs-4">          
+        <div id = "tabs-4" >
             @RenderSection("LiveCasino", false)
-        </div>                              
-        <div id="tabs-6">          
+        </div>
+        <div id="tabs-6">
             @RenderSection("Casino", false)
         </div>
-        <div id="tabs-7">          
+        <div id = "tabs-7" >
             @RenderSection("Keno", false)
         </div>
-        <div id="tabs-8">          
+        <div id="tabs-8">
             @RenderSection("GoldDeluxe", false)
         </div>
 
-        @if (isShowAllBet)
+        @foreach (var tab in visibleTabs)
         {
-            <div id="tabs-9">
-                <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
-                <div><iframe id="allbet" width="100%" height="300px" frameborder="0" src=""></iframe></div>
-            </div>
-        }
-
-        @if (isShowMacauGames)
-        {
-            <div id="tabs-10">
-                <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
-                <div><iframe id="voidbridge" width="100%" height="400px" frameborder="0" src=""></iframe>
+            <div id="tabs-@(tab.ProductId)">
+                <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">
+                    Update Bet Setting: @cust.Username
                 </div>
+                <div><iframe id="product-@(tab.ProductId)" width="100%" height="400px" frameborder="0" src=""></iframe></div>
             </div>
         }
-
-        @if (isShowNG2)
-        { 
-            <div id="tabs-11">
-                <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>\
-                <div><iframe id="ng2" width="100%" height="400px" frameborder="0" src=""></iframe></div>
-            </div>
-        }
-
-        @if (isShowLottery)
-        {
-            <div id="tabs-12">
-                <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
-                <div><iframe id="lottery" width="100%" height="400px" frameborder="0" src=""></iframe></div>
-            </div>
-        }
-
-        @if (isShowBullfighting)
-        {
-            <div id="tabs-30">
-                <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
-                <div><iframe id="product-30" width="100%" height="400px" frameborder="0" src=""></iframe></div>
-            </div>
-        }
-    </div>                        
+</div>                        
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery-ui-1.9.1.min.js")" type="text/javascript"></script>
