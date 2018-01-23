@@ -101,15 +101,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Customer\Casino\CasinoObject.cs" />
-    <Compile Include="Customer\Casino\Stakes.cs" />
     <Compile Include="Customer\Commission.cs" />
     <Compile Include="Customer\Casino\CasinoCustomer.cs" />
     <Compile Include="Customer\CustomerInfo.cs" />
     <Compile Include="Customer\Customer.cs" />
-    <Compile Include="Customer\Casino\GameKindDetail.cs" />
-    <Compile Include="Customer\Casino\GameTypeDetail.cs" />
-    <Compile Include="Customer\Casino\StakeLevelDetail.cs" />
     <Compile Include="Customer\CustomerClosedReason.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusViewModel.cs" />
     <Compile Include="Customer\Transfer.cs" />
@@ -142,15 +137,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\Google.Protobuf.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.CSharp.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
       <Project>{05dd3a2f-f9ff-42e1-8d4e-d4f83e51ebf4}</Project>
       <Name>Core.Shared</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
