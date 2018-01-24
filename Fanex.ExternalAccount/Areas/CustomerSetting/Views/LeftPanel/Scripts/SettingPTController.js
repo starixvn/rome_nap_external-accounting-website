@@ -25,7 +25,13 @@
                     + "&enabled=" + data.enabled + "&closed=" + data.closed + "&suspended=" + data.suspended
                     + "&sRecommend=" + parent.Fanex.ExtAcc.Customer.superId + "&mRecommend=" + parent.Fanex.ExtAcc.Customer.masterId + "&recommend=" + parent.Fanex.ExtAcc.Customer.agentId + "&custId=" + parent.Fanex.ExtAcc.Customer.custId
                     + "&currentLevel=" + parent.Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username;
-                    parent.document.location.href = parent.resolveClientUrl("Customer/GetExportToExcel?") + params;
+
+                    var url = parent.resolveClientUrl("Customer/GetExportToExcel?") + params;
+                    if (top.isMobile.phone || top.isMobile.tablet) {
+                        window.open(url);
+                    } else {
+                        parent.document.location.href = url;
+                    }
                 });
 
                 parent.$('#txtUserName').keypress(function (e) {
@@ -183,12 +189,12 @@
 
         parent.Fanex.ExtAcc.Form.Show(url, title, 500, height, false);
 
-        
+
     };
 
     $scope.Transfer = function () {
         parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditTransferCondition/?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), parent.titles[1] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 600, 250, false, false, 1);
-        
+
     };
 
     $scope.Casino = function () {
