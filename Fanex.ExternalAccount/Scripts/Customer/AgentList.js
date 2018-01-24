@@ -699,6 +699,7 @@ Fanex.ExtAcc.Customer.GetAgentList = function (
             type: 'post'
         })
         .success(function (result) {
+            debugger;
             if (!(result.records > 0 && eval(result.rows)[0].IsMyanmarOdds)) {
                 Fanex.ExtAcc.Customer.DataFields.splice(15, 1);
             }
@@ -911,7 +912,6 @@ Fanex.ExtAcc.Customer.RenderAgentList = function (dataSource) {
 
     $('#breadcrumbs').show();
 
-    $("#jqgrid").fanexGrid("resizeGrid");
     Fanex.ExtAcc.OnResize = function () {
         try {
             $("#jqgrid").fanexGrid("resizeGrid");
