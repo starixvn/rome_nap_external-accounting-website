@@ -113,7 +113,7 @@
                                 if (tag.tagName == "IFRAME") {
                                     Fanex.ExtAcc.Form.Close();
                                 } else {
-                                    $('#windowPopup').html('You have logged in from another session or your login session has expired!'); // Prevent opening popup if any
+                                    $('#windowPopup').html('<div style="padding:8px 16px">You have logged in from another session or your login session has expired!<div>'); // Prevent opening popup if any
                                 }
                             }
 
