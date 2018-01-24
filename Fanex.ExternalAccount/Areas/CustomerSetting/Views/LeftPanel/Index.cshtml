@@ -161,11 +161,11 @@
                     <li data-ng-click="GetOnline({{model.personalInfo.custId.value}})"><a href="#tab-4">Online List</a></li>
                 </ul>
                 <div id="tab-1" class="tab-content setting-tab">
-                    <div class="width-50per edit-item" data-ng-repeat="editItem in setting.editItems">
+                    <div class="edit-item" data-ng-repeat="editItem in setting.editItems">
                         <div data-ng-hide="{{editItem.isHide }}" class="settingEdit"
                              title="{{editItem.tooltip}}" data-ng-click="{{editItem.key}}()"><span class="icon-link"></span>{{editItem.text}}</div>
                     </div>
-                    <div class="width-50per enabled-item" data-ng-repeat="enableItem in setting.enableItems">
+                    <div class="enabled-item" data-ng-repeat="enableItem in setting.enableItems">
                         <div data-ng-click="{{enableItem.key}}({{enableItem.value}}, '{{enableItem.key}}')" class="setting-enable-item">
                             <div data-ng-hide="{{enableItem.isHide}}" class="pull-left">
                                 <input title="{{enableItem.tooltip}}" data-ng-disabled="{{enableItem.disabled}}"

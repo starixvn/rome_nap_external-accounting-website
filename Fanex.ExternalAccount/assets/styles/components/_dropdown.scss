@@ -58,12 +58,15 @@
 }
 
 .groupCboMenu button:hover {
-    background-image: none !important;
+    //background-image: none !important;
 }
 
 .groupCboMenu select {
     border: 1px solid #a6a6a6;
     height: 28px;
+    option:focus, option:active, option:hover {
+        color: #000;
+    }
 }
 
 .ui-multiselect-checkboxes {
@@ -87,4 +90,24 @@
         }
     }
 }
+
+
+        ::selection, select:focus::-ms-value {
+            background-color: gray;
+            color: orange;
+        }
+
+
+        /*
+Option control color
+*/
+        option:checked {
+            background-color: greenyellow;
+            color: greenyellow;
+        }
+
+            option:checked:hover, select:focus option:checked:hover {
+                background-color: darkgoldenrod;
+                color: darkgoldenrod;
+            }
 

@@ -64,12 +64,11 @@
         }
     }
     .ui-dialog-titlebar-close {
-        right: 8px;
         margin: unset;
         padding: unset;
         top: unset;
-        height: unset;
-        width: unset;
+        height: 30px;
+        width: 30px;
         &.ui-state-hover {
             background: unset;
             border: none;

@@ -25,10 +25,11 @@ body {
 .block-login {
 	margin: auto;
 	width: 100%;	
-    padding: 24px 48px;	
+    padding: 24px 48px 0;	
     background-color: $block-bg;    
 
     @media screen and (min-device-width: 768px) {
+        padding: 24px 48px;	
         @include box-shadow-multiple(0px 7px 15px #b9b9b9);
         width: 468px;
         min-height: 260px;
