@@ -109,6 +109,7 @@
     <Compile Include="Customer\ThirdPartyProductStatusViewModel.cs" />
     <Compile Include="Customer\Transfer.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Products\ProductStatusDto.cs" />
     <Compile Include="Statement\Statement.cs" />
     <Compile Include="RecheckinStatus.cs" />
     <Compile Include="GroupCurrency.cs" />

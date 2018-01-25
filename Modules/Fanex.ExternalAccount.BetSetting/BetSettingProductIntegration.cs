@@ -26,9 +26,8 @@
         {
             var customerStatus = customerStatusService.GetCustomerStatus(
                 userId,
-                siteName.ToString(),
-                custName,
-                0).ProductStatusDic;
+                siteName,
+                custName).ProductStatusDic;
             var visibleProductTabs = new List<Product>();
 
             foreach (var productTab in BetSettingTabProductConfigs)

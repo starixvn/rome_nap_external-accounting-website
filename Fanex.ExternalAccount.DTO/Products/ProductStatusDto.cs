@@ -1,4 +1,4 @@
-﻿namespace Fanex.ExternalAccount.Core.Shared
+﻿namespace Fanex.ExternalAccount.DTO.Products
 {
     public class ProductStatusDto
     {

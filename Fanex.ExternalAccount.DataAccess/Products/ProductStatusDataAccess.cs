@@ -3,8 +3,8 @@
     using System.Collections;
     using System.Collections.Generic;
     using Data;
+    using DTO.Products;
     using Fanex.ExternalAccount.Utilities;
-    using Core.Shared;
 
     public interface ProductStatusDataAccess
     {

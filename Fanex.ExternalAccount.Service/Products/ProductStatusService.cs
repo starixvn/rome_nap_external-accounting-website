@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using DataAccess.Products;
-    using Core.Shared;
+    using DTO.Products;
 
     public interface ProductStatusService
     {
