@@ -14,6 +14,11 @@ body {
     }
 }
 
+.true {
+    color: Red;
+    cursor: default !important;
+}
+
 .edit-item, .enabled-item {
     display: inline-block;
     line-height: normal;
