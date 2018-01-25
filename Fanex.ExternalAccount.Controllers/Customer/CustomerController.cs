@@ -1,5 +1,15 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading;
+    using System.Web;
+    using System.Web.Mvc;
     using CasinoLibrary.Model.UserException;
     using Common;
     using Core.Authorization;
@@ -21,14 +31,6 @@
     using Service.Impl.Customer.Casino;
     using Service.Impl.Report;
     using Service.Interface.Report;
-    using System;
-    using System.Data;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Linq;
-    using System.Threading;
-    using System.Web;
-    using System.Web.Mvc;
     using Utilities;
     using ViewModel.Customer;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
@@ -119,8 +121,7 @@
                 UpdateCasinoStatus(masterId, result, customer);
                 Thread.Sleep(3000);
                 AutoInsertNG2Product(masterId, customer.UserName, RoleId.Master, parentId, SiteId.NAP,
-                    customer.CurrencyId);
-
+                        customer.CurrencyId);
                 var autoInsertLiveCasinoTask = AutoInsertLiveCasinoPost(masterId, parentId, CurrentSession.UserId,
                     CurrentSession.UserName, requestContext.IP);
 
@@ -300,21 +301,34 @@
             ViewBag.SyncCasino = (bool)result.Rows[0]["SyncCasino"];
             ViewBag.SyncLiveCasino = (bool)result.Rows[0]["SyncLiveCasino"];
             ViewBag.HideVirtualSports = (bool)result.Rows[0]["HideVirtualSports"];
-            ViewBag.HideKeno = (bool)result.Rows[0]["HideKeno"];
-            ViewBag.HideGoldDeluxe = (bool)result.Rows[0]["HideGoldDeluxe"];
-            ViewBag.HideColossusBets = (bool)result.Rows[0]["HideColossusBet"];
-            ViewBag.HideSportsbook2 = Converter.ToBool(result.Rows[0]["HideMuayThai"]);
-            ViewBag.HideCockfighting = Converter.ToBool(result.Rows[0]["HideCockfighting"]);
-            ViewBag.HideCricket = Converter.ToBool(result.Rows[0]["HideCricket"]);
-            ViewBag.HideAllbet = Utils.ToBoolean(result.Rows[0]["HideAllBet"]);
-            ViewBag.HideVoidbridge = Utils.ToBoolean(result.Rows[0]["HideVoidBridge"]);
-            ViewBag.HideNG2 = !GetDcsStatuses(custId, id, 23).IsSyncedUpline;
-            ViewBag.HideFishingWorld = Utils.ToBoolean(result.Rows[0]["HideFishingWorld"]);
-            ViewBag.HideLottery = Utils.ToBoolean(result.Rows[0]["HideLottery"]);
-            ViewBag.HideLucky3 = Utils.ToBoolean(result.Rows[0]["HideLucky3"]);
-            ViewBag.HideBullfighting = Utils.ToBoolean(result.Rows[0]["HideBullfighting"]);
+            ViewBag.HideKeno = (bool)result.Rows[0]["HideKeno"] || !ProductSettings.ShowKenoSetting;
+            ViewBag.HideGoldDeluxe = (bool)result.Rows[0]["HideGoldDeluxe"] || !ProductSettings.IsShowGoldDeluxe;
+            ViewBag.HideColossusBets = (bool)result.Rows[0]["HideColossusBet"] || !ProductSettings.IsShowColossusBets;
+            ViewBag.HideSportsbook2 = Converter.ToBool(result.Rows[0]["HideMuayThai"]) || !ProductSettings.IsShowSportsbook2;
+            ViewBag.HideCockfighting = Converter.ToBool(result.Rows[0]["HideCockfighting"]) || !ProductSettings.IsShowCockfighting;
+            ViewBag.HideCricket = Converter.ToBool(result.Rows[0]["HideCricket"]) || !ProductSettings.IsShowCricket;
+            var visibledProducts = GetVisibledProducts(id, custId);
 
-            return PartialViewBase();
+            return PartialViewBase(visibledProducts);
+        }
+
+        private List<Product> GetVisibledProducts(int id, int custId)
+        {
+            var visibledProducts = new List<Product>();
+            var productStatusList = productStatusService.GetProductStatusList(custId, id);
+
+            foreach (var product in ProductSettings.Products.Values)
+            {
+                var productStatus = productStatusList.FirstOrDefault(p => p.ProductId == product.Id);
+                if (productStatus != null
+                    && !productStatus.IsHidden
+                    && ProductSettings.IsShowProduct(product.Id))
+                {
+                    visibledProducts.Add(product);
+                }
+            }
+
+            return visibledProducts;
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
@@ -627,6 +641,7 @@
         }
 
 #pragma warning disable S1541 // Methods and properties should not be too complex
+
         private DataTable GetCustomerList(
 #pragma warning restore S1541 // Methods and properties should not be too complex
             string groupName,

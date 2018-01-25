@@ -315,7 +315,6 @@
     <Compile Include="Base\BaseController.cs" />
     <Compile Include="Base\ControllerExtentions.cs" />
     <Compile Include="Base\CustomerBase.cs" />
-    <Compile Include="Base\DcsEntity.cs" />
     <Compile Include="Base\JsonBase.cs" />
     <Compile Include="Authorization\AuthorizationService.cs" />
     <Compile Include="Context\CasinoAPILogger.cs" />
@@ -379,9 +378,7 @@
   <ItemGroup>
     <Content Include="Areas\Logs\APILoggerSpNames.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Shared\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\Google.Protobuf.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.CSharp.dll" />

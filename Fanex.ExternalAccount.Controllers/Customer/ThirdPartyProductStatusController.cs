@@ -63,7 +63,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
             }
 
             JavaScriptSerializer js = new JavaScriptSerializer();
-            var productStatusModel = js.Deserialize<List<ProductStatus>>(productStatus);
+            var productStatusModel = js.Deserialize<List<ThirdPartyProducts.StatusSetting.Model.ProductStatus>>(productStatus);
             var result = thirdPartyProductStatusService.Update(
                 custId,
                 0,

@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Core.Shared
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Configuration;
 
@@ -49,5 +50,16 @@
 
             return value == "1" || value.Equals("true", StringComparison.CurrentCultureIgnoreCase);
         }
+
+        public static readonly IReadOnlyDictionary<int, Product> Products = new Dictionary<int, Product>
+        {
+            [ProductConstants.AllBet] = new Product(ProductConstants.AllBet, "Allbet"),
+            [ProductConstants.VoidBridge] = new Product(ProductConstants.VoidBridge, "Macau Games"),
+            [ProductConstants.NG2] = new Product(ProductConstants.NG2, "NG2", true),
+            [ProductConstants.FishingWorld] = new Product(ProductConstants.FishingWorld, "Fishing World"),
+            [ProductConstants.Lottery] = new Product(ProductConstants.Lottery, "Lottery"),
+            [ProductConstants.Lucky3] = new Product(ProductConstants.Lucky3, "Lucky 3"),
+            [ProductConstants.BullFighting] = new Product(ProductConstants.BullFighting, "Bullfighting")
+        };
     }
 }

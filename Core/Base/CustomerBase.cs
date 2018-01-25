@@ -2,12 +2,15 @@
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
     using System.Diagnostics;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using CasinoLibrary.Model.UserException;
+    using Data;
     using Data.DNAide;
     using LiveCasino.CoreSetting.Services;
     using Logging.Extensions.Web;
@@ -16,6 +19,7 @@
     using Service.Impl.Customer.Casino;
     using Service.Impl.Report;
     using Service.Interface.Report;
+    using Service.Products;
     using Utilities;
     using ViewModel.Customer;
     using Customer = CasinoLibrary.SBAgent.Customer;
@@ -25,6 +29,7 @@
     {
         private const string CasinoNo = "01";
         private readonly IReportService _report = new ReportService();
+        protected readonly ProductStatusService productStatusService = new ProductStatusServiceImpl();
 
         [NonAction]
         protected Task<Result> AutoInsertLiveCasinoPost(
@@ -128,7 +133,7 @@
         protected Module.NG2.Entities.Result AutoInsertNG2Product(int custId, string username, RoleId roleId,
             int uplineId, SiteId siteId, int currencyId)
         {
-            var dcsStatuses = GetDcsStatuses(custId, (int)roleId, 23);
+            var dcsStatuses = productStatusService.GetProductStatus(custId, (int)roleId, 23);
 
             if (dcsStatuses.IsSyncedUpline)
             {
@@ -162,48 +167,6 @@
                 CustId = (int)item["custid"],
                 Username = (string)item["username"],
                 RoleId = Utils.ToInt32(item["roleid"])
-            };
-        }
-
-        protected DcsEntity GetDcsStatuses(int custId, int roleId, int productId)
-        {
-            var param = new Hashtable
-            {
-                { "custid", custId },
-                { "roleid", roleId }
-            };
-
-            var ds = DbHelper.ExecuteDataSet("Acc_CustSetting_StatusSettingSelect", param);
-
-            if (ds == null || ds.Tables.Count <= 0)
-            {
-                return new DcsEntity { IsHidden = true };
-            }
-
-            var cust = ds.Tables[0];
-
-            var product = cust.Select("ProductID = " + productId).FirstOrDefault();
-            if (product == null)
-            {
-                return new DcsEntity { IsHidden = true };
-            }
-            var isSyncedUpline = product.ToBoolean("IsSyncedUpline");
-            var isDisabledUpline = product.ToBoolean("IsDisabledUpline");
-            var isHidden = product.ToBoolean("IsHidden");
-            var isSynced = product.ToBoolean("IsSync");
-            var isDisabled = product.ToBoolean("IsDisabled");
-            var isDisabledDownline = product.ToBoolean("IsDisabledDownline");
-            var hasDownline = product.ToBoolean("HasDownline");
-
-            return new DcsEntity
-            {
-                IsDisabledUpline = isDisabledUpline,
-                IsSyncedUpline = isSyncedUpline,
-                IsHidden = isHidden,
-                HasDownline = hasDownline,
-                IsSynced = isSynced,
-                IsDisabled = isDisabled,
-                IsDisabledDownline = isDisabledDownline
             };
         }
     }

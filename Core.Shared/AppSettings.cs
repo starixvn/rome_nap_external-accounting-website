@@ -1,4 +1,4 @@
-﻿namespace Core.Shared
+﻿namespace Fanex.ExternalAccount.Core.Shared
 {
     using System.Collections.Specialized;
     using System.Configuration;

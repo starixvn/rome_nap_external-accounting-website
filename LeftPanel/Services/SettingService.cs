@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using Core.Shared;
     using Extensions;
+    using Core.Shared;
     using Models;
     using ViewModels;
 
@@ -47,7 +47,7 @@
             var setting = new Setting
             {
                 EnableItems = EnableItems(customerRow, productStatusTable, customerStatus),
-                SyncItems = LeftPanelProductIntegration.CreateSyncItems(customerRow, productStatusTable),
+                SyncItems = LeftPanelProductIntegration.CreateSyncAndHiddenItems(customerRow, productStatusTable),
                 EditItems = EditItems(),
                 Details = Details(role, customerStatus),
                 MinMaxPts = new List<ObjectInfo>
@@ -411,29 +411,31 @@
                 new ObjectInfo {Key = "EnableCockfighting", Text = "Enable Cockfighting"}
             };
 
+#pragma warning disable S1541 // Methods and properties should not be too complex
         internal static Setting AddProductSetting(
+#pragma warning restore S1541 // Methods and properties should not be too complex
             Setting setting,
             DataTable productStatusTable,
-            ProductSettingParam settingParams,
+            ProductSettingElement productElement,
             CustomerStatus customerStatus)
         {
-            if (!IsProductVisibledToSite(productStatusTable, settingParams.ProductId))
+            if (!IsProductVisibledToSite(productStatusTable, productElement.Id))
             {
                 return setting;
             }
 
             var roleId = customerStatus.RoleId;
-            var hide = customerStatus.ProductStatusDic[settingParams.ProductId].IsHidden;
-            var sync = customerStatus.ProductStatusDic[settingParams.ProductId].IsSynced;
-            var isSyncDownlines = customerStatus.ProductStatusDic[settingParams.ProductId].IsSyncedDownlines;
-            var isCheckSyncDownlines = customerStatus.ProductStatusDic[settingParams.ProductId].CheckSyncedDownlines;
+            var hide = customerStatus.ProductStatusDic[productElement.Id].IsHidden;
+            var sync = customerStatus.ProductStatusDic[productElement.Id].IsSynced;
+            var isSyncDownlines = customerStatus.ProductStatusDic[productElement.Id].IsSyncedDownlines;
+            var isCheckSyncDownlines = customerStatus.ProductStatusDic[productElement.Id].CheckSyncedDownlines;
             var hideUpline = customerStatus.RoleId.IsNotSuper()
-                ? customerStatus.UplineStatus.ProductStatusDic[settingParams.ProductId].IsHidden
+                ? customerStatus.UplineStatus.ProductStatusDic[productElement.Id].IsHidden
                 : hide;
             var isUplineDisabled = customerStatus.RoleId.IsNotSuper()
-                                   && customerStatus.UplineStatus.ProductStatusDic[settingParams.ProductId].IsDisabled;
+                                   && customerStatus.UplineStatus.ProductStatusDic[productElement.Id].IsDisabled;
             var syncUpline = customerStatus.RoleId.IsNotSuper()
-                ? customerStatus.UplineStatus.ProductStatusDic[settingParams.ProductId].IsSynced
+                ? customerStatus.UplineStatus.ProductStatusDic[productElement.Id].IsSynced
                 : sync;
 
             if (IsHiddenProduct(customerStatus.RoleId, hideUpline, hide))
@@ -444,7 +446,7 @@
             if (syncUpline || roleId.IsSuper())
             {
                 setting.Details.Add(
-                    GetEditSettingLink(settingParams.ProductKey, settingParams.ProductName));
+                    GetEditSettingLink(productElement.Key, productElement.Name));
             }
 
             if (!syncUpline)
@@ -457,7 +459,7 @@
                 || !isCheckSyncDownlines
                 || isSyncDownlines)
             {
-                AddEditStatusItem(setting, productStatusTable, settingParams, isUplineDisabled);
+                AddEditStatusItem(setting, productStatusTable, productElement, isUplineDisabled);
             }
 
             return setting;
@@ -470,13 +472,13 @@
         private static void AddEditStatusItem(
             Setting setting,
             DataTable productStatusTable,
-            ProductSettingParam settingParams,
+            ProductSettingElement settingParams,
             bool isUplineDisabled)
         {
             if (settingParams.StatusType == StatusType.Checkbox)
             {
-                var enableItem = CreateEnableCheckboxItem(settingParams.ProductKey,
-                    !productStatusTable.IsProductEnabled(settingParams.ProductId), settingParams.ProductName);
+                var enableItem = CreateEnableCheckboxItem(settingParams.Key,
+                    !productStatusTable.IsProductEnabled(settingParams.Id), settingParams.Name);
 
                 if (isUplineDisabled)
                 {
@@ -487,7 +489,7 @@
             }
             else
             {
-                setting.EditItems.Add(CreateEnableLinkItem(settingParams.ProductKey, settingParams.ProductName));
+                setting.EditItems.Add(CreateEnableLinkItem(settingParams.Key, settingParams.Name));
             }
         }
 

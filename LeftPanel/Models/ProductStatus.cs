@@ -6,10 +6,10 @@
 
     public class ProductStatus
     {
-        public ProductStatus(int productId, string productKey, DataRow dataRow, bool checkSyncedDownlines = true)
+        public ProductStatus(Product product, DataRow dataRow, bool checkSyncedDownlines = true)
         {
-            ProductId = productId;
-            ProductKey = productKey;
+            ProductId = product.Id;
+            ProductKey = product.Key;
             CheckSyncedDownlines = checkSyncedDownlines;
             SetProductStatus(dataRow);
         }

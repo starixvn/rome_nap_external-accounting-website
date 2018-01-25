@@ -334,7 +334,6 @@
     <Compile Include="Services\Interface\ICustomerService.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
-    <Compile Include="ViewModels\BetSettingTab.cs" />
     <Compile Include="ViewModels\CasinoModel.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>

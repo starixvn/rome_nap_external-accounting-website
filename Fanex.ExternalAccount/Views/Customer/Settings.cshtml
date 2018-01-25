@@ -1,28 +1,28 @@
 ﻿@using Fanex.PTEngine
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
-@using Fanex.CustomerSetting.Module.Keno.KenoSetting.Configurations
-@using System.Configuration
-@using Core.Shared
-
+@model List<Product>
 @{
     var SyncCasino = ViewBag.SyncCasino;
     var SyncLiveCasino = ViewBag.SyncLiveCasino;
     var HideVirtualSports = ViewBag.HideVirtualSports;
-    var HideKeno = ViewBag.HideKeno || !KenoSection.Instance.ShowSetting;
-    var HideGoldDeluxe = ViewBag.HideGoldDeluxe || !ProductSettings.IsShowGoldDeluxe;
-    var HideColossusBets = ViewBag.HideColossusBets || ConfigurationManager.AppSettings["IsShowProduct-15"] == "0";
-    var HideSportsbook2 = ViewBag.HideSportsbook2 || ConfigurationManager.AppSettings["IsShowProduct-16"] == "0";
-    var HideCockfighting = ViewBag.HideCockfighting || ConfigurationManager.AppSettings["IsShowProduct-19"] == "0";
-    var HideCricket = ViewBag.HideCricket || ConfigurationManager.AppSettings["IsShowProduct-20"] == "0";
-    var HideAllbet = ViewBag.HideAllbet || ConfigurationManager.AppSettings["IsShowProduct-21"] == "0";
-    var HideVoidbridge = ViewBag.HideVoidbridge || ConfigurationManager.AppSettings["IsShowProduct-22"] == "0";
-    var HideNG2 = ViewBag.HideNG2 || ConfigurationManager.AppSettings["IsShowProduct-23"] == "0";
-    var HideFishingWorld = ViewBag.HideFishingWorld || ConfigurationManager.AppSettings["IsShowProduct-24"] == "0";
-    var HideLottery = ViewBag.HideLottery || ConfigurationManager.AppSettings["IsShowProduct-28"] == "0";
-    var HideLucky3 = ViewBag.HideLucky3 || ConfigurationManager.AppSettings["IsShowProduct-26"] == "0";
-    var HideBullfighting = ViewBag.HideBullfighting || ConfigurationManager.AppSettings["IsShowProduct-30"] == "0";
-    var status = new { syncCasino = SyncCasino, syncLiveCasino = SyncLiveCasino, hideVirtualSports = HideVirtualSports, hideKeno = HideKeno, hideGoldDeluxe = HideGoldDeluxe, hideColossusBets = HideColossusBets, hideSportsbook2 = HideSportsbook2, hideCockfighting = HideCockfighting, hideCricket = HideCricket };
+    var HideKeno = ViewBag.HideKeno;
+    var HideGoldDeluxe = ViewBag.HideGoldDeluxe;
+    var HideColossusBets = ViewBag.HideColossusBets;
+    var HideSportsbook2 = ViewBag.HideSportsbook2;
+    var HideCockfighting = ViewBag.HideCockfighting;
+    var HideCricket = ViewBag.HideCricket;
+    var status = new {
+        syncCasino = SyncCasino,
+        syncLiveCasino = SyncLiveCasino,
+        hideVirtualSports = HideVirtualSports,
+        hideKeno = HideKeno,
+        hideGoldDeluxe = HideGoldDeluxe,
+        hideColossusBets = HideColossusBets,
+        hideSportsbook2 = HideSportsbook2,
+        hideCockfighting = HideCockfighting,
+        hideCricket = HideCricket
+    };
     var statusJSON = JsonConvert.SerializeObject(status, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
 }
 <link href="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
@@ -44,36 +44,14 @@
         <li id="tab12"><a href="#tabs-12">Sportsbook 2</a></li>
         <li id="tab13"><a href="#tabs-13">Cockfighting</a></li>
         <li id="tab14"><a href="#tabs-14">Cricket</a></li>
-        @if(!HideAllbet)
-        {
-            <li id="tab15"><a href="#tabs-15">Allbet</a></li>
-        }
 
-        @if (!HideVoidbridge)
+        @foreach (var product in Model)
         {
-            <li id="tab16"><a href="#tabs-16">Macau Games</a></li>
-        }
-
-        @if (!HideNG2)
-        {
-            <li id="tab17"><a href="#tabs-17">@RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2")</a></li>
-        }
-        
-        @if (!HideFishingWorld)
-        {
-            <li id="tab18"><a href="#tabs-18">Fishing World</a></li>
-        }
-        @if (!HideLottery)
-        {
-            <li id="tab19"><a href="#tabs-19">Lottery</a></li>
-        }
-        @if (!HideLucky3)
-        {
-            <li id="tab20"><a href="#tabs-20">Lucky 3</a></li>
-        }
-        @if (!HideBullfighting)
-        {
-            <li id="tab30"><a href="#tabs-30">Bullfighting</a></li>
+            <li id="tab@(product.Id)" class="dynamic-setting-tab" data-product-id="@(product.Id)">
+                <a href="#tabs-@(product.Id)">
+                    @(product.Name)
+                </a>
+            </li>
         }
     </ul>
     <div id="tabs-1" class="divTab">
@@ -132,54 +110,13 @@
         </div>
     }
 
-    @if (!HideAllbet)
+    @foreach (var product in Model)
     {
-        <div id="tabs-15" class="divTab" style="padding: 0px">
-            <iframe id="allbetFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
+        <div id="tabs-@(product.Id)" class="divTab" data-product-id="@(product.Id)" style="padding: 0px">
+            <iframe id="Frame_@(product.Id)" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
         </div>
     }
 
-    @if (!HideVoidbridge)
-    {
-        <div id="tabs-16" class="divTab" style="padding: 0px">
-            <iframe id="voidbridgeFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-        </div>
-    }
-
-    @if (!HideNG2)
-    {
-        <div id="tabs-17" class="divTab" style="padding: 0px">
-            <iframe id="ng2Frame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-        </div>
-    }
-    
-    @if (!HideFishingWorld)
-    {
-        <div id="tabs-18" class="divTab" style="padding: 0px">
-            <iframe id="fishingWorldFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-        </div>
-    }
-
-    @if (!HideLottery)
-    {
-        <div id="tabs-19" class="divTab" style="padding: 0px">
-            <iframe id="lotteryFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-        </div>
-    }
-
-    @if (!HideLucky3)
-    {
-        <div id="tabs-20" class="divTab" style="padding: 0px">
-            <iframe id="lucky3Frame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-        </div>
-    }
-
-    @if (!HideBullfighting)
-    {
-        <div id="tabs-30" class="divTab" style="padding: 0px">
-            <iframe id="bullfightingFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-        </div>
-    }
 </div>
 <script type="text/javascript">
     if (typeof Fanex == 'undefined') {

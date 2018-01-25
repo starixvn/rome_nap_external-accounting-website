@@ -12,7 +12,7 @@
     using Core.Context;
     using CustomerSetting.Client40;
     using Data.Configuration;
-    using global::Core.Shared;
+    using Core.Shared;
     using GoldDeluxe.CoreSetting.Mappings;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;

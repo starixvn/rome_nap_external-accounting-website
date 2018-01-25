@@ -7,8 +7,8 @@
     <ProjectGuid>{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Core.Shared</RootNamespace>
-    <AssemblyName>Core.Shared</AssemblyName>
+    <RootNamespace>Fanex.ExternalAccount.Core.Shared</RootNamespace>
+    <AssemblyName>Fanex.ExternalAccount.Core.Shared</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,6 +32,18 @@
     <CodeAnalysisRuleSet>Core.Shared.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RemotingRef.1.0.0.13\lib\net40\RemotingRef.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -45,8 +57,10 @@
   <ItemGroup>
     <Compile Include="AppSettings.cs" />
     <Compile Include="eFunctions.cs" />
+    <Compile Include="Product.cs" />
     <Compile Include="ProductSettings.cs" />
     <Compile Include="ProductConstants.cs" />
+    <Compile Include="ProductStatusDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs" />
   </ItemGroup>

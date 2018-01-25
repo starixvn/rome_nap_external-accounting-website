@@ -11,35 +11,35 @@
 
     public static class BetSettingProductIntegration
     {
-        private static readonly IReadOnlyList<BetSettingTab> BetSettingTabConfigs = new List<BetSettingTab>
+        private static readonly IReadOnlyList<Product> BetSettingTabProductConfigs = new List<Product>
         {
-            new BetSettingTab(ProductConstants.AllBet, "Allbet"),
-            new BetSettingTab(ProductConstants.VoidBridge, "Macau Games"),
-            new BetSettingTab(ProductConstants.NG2, "NG2", true),
-            new BetSettingTab(ProductConstants.Lottery, "Lottery"),
-            new BetSettingTab(ProductConstants.BullFighting, "Bullfighting")
+            ProductSettings.Products[ProductConstants.AllBet],
+            ProductSettings.Products[ProductConstants.VoidBridge],
+            ProductSettings.Products[ProductConstants.NG2],
+            ProductSettings.Products[ProductConstants.Lottery],
+            ProductSettings.Products[ProductConstants.BullFighting]
         };
 
         private static CustomerStatusService customerStatusService = new CustomerStatusServiceImpl();
 
-        public static IList<BetSettingTab> GetVisibledBetSettingTabs(int userId, string siteName, string custName)
+        public static IList<Product> GetVisibledBetSettingTabs(int userId, string siteName, string custName)
         {
             var customerStatus = customerStatusService.GetCustomerStatus(
                 userId,
                 siteName.ToString(),
                 custName,
                 0).ProductStatusDic;
-            var visibleTabs = new List<BetSettingTab>();
+            var visibleProductTabs = new List<Product>();
 
-            foreach (var bettingTab in BetSettingTabConfigs)
+            foreach (var productTab in BetSettingTabProductConfigs)
             {
-                if(customerStatus[bettingTab.ProductId].IsShow)
+                if(customerStatus[productTab.Id].IsShow)
                 {
-                    visibleTabs.Add(bettingTab);
+                    visibleProductTabs.Add(productTab);
                 }
             }
 
-            return visibleTabs;
+            return visibleProductTabs;
         }
     }
 }

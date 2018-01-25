@@ -41,9 +41,9 @@
 
             @foreach (var tab in visibleTabs)
             {
-                <li id="tab@(tab.ProductId)" 
-                    onclick="LoadProduct(@(tab.ProductId))">
-                    <a href="#tabs-@(tab.ProductId)">@(tab.ProductName)</a>
+                <li id="tab@(tab.Id)" 
+                    onclick="LoadProduct(@(tab.Id))">
+                    <a href="#tabs-@(tab.Id)">@(tab.Name)</a>
                 </li>
             }
         </ul>
@@ -72,11 +72,11 @@
 
         @foreach (var tab in visibleTabs)
         {
-            <div id="tabs-@(tab.ProductId)">
+            <div id="tabs-@(tab.Id)">
                 <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">
                     Update Bet Setting: @cust.Username
                 </div>
-                <div><iframe id="product-@(tab.ProductId)" width="100%" height="400px" frameborder="0" src=""></iframe></div>
+                <div><iframe id="product-@(tab.Id)" width="100%" height="400px" frameborder="0" src=""></iframe></div>
             </div>
         }
 </div>                        

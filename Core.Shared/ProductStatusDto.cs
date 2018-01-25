@@ -1,12 +1,18 @@
-﻿namespace Fanex.ExternalAccount.Core.Base
+﻿namespace Fanex.ExternalAccount.Core.Shared
 {
-    public class DcsEntity
+    public class ProductStatusDto
     {
+        public int ProductId { get; set; }
+
+        public string ProductName { get; set; }
+
         public bool IsSyncedUpline { get; set; }
 
         public bool IsDisabledUpline { get; set; }
 
         public bool IsHidden { get; set; }
+
+        public bool IsHiddenUpline { get; set; }
 
         public bool IsDisabled { get; set; }
 

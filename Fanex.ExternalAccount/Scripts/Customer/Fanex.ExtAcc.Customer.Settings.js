@@ -103,33 +103,11 @@ Fanex.ExtAcc.Customer.Settings = {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.RenderDCS(20, "#cricketFrame", "#tabs-14");
         });
-        $('#tab15').bind('click', function () {
+
+        $('.dynamic-setting-tab').bind('click', function () {
+            var productId = $(this).attr('data-product-id');
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(21, "#allbetFrame", "#tabs-15");
-        });
-        $('#tab16').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(22, "#voidbridgeFrame", "#tabs-16");
-        });
-        $('#tab17').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(23, "#ng2Frame", "#tabs-17");
-        });
-        $('#tab18').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(24, "#fishingWorldFrame", "#tabs-18");
-        });
-        $('#tab19').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(28, "#lotteryFrame", "#tabs-19");
-        });
-        $('#tab20').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(26, "#lucky3Frame", "#tabs-20");
-        });
-        $('#tab30').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(30, "#bullfightingFrame", "#tabs-30");
+            Fanex.ExtAcc.Customer.Settings.RenderDCS(productId, "#Frame_" + productId, "#tabs-" + productId);
         });
     },
 
