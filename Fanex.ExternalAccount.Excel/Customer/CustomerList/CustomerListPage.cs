@@ -1,14 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
 {
-    using System;
     using System.Collections.Generic;
     using System.Data;
-    using System.Globalization;
     using Core.Shared;
     using Extensions;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
-    using Utilities;
     using Utility;
 
     internal class CustomerListPage : TemplateReport, IReportBuilder
@@ -85,7 +82,7 @@
                     items.PlayerDiscount1x2(),
                     items.PlayerDiscountCasino(),
                     items.PlayerDiscountNumberGame(),
-                    $"{items["createdate"]:MM/dd/yyyy HH:mm:ss tt}",
+                    items.CreateDate(),
                     items.LastLoginIP()
                 };
 
@@ -121,15 +118,15 @@
                     items.FirstName(),
                     items.LastName(),
                     items.GroupA(),
-                    Utils.ToDouble(items["groupb"]),
-                    Utils.ToDouble(items["groupc"]),
-                    Utils.ToDouble(items["groupd"]),
-                    Utils.ToDouble(items["discount1x2"]),
-                    Utils.ToDouble(items["discountcs"]),
-                    Utils.ToDouble(items["discountnumber"]),
-                    Utils.ToBoolean(items["ismyanmarodds"]) ? Utils.ToDouble(items["discountmyanmarodds"]).ToString(CultureInfo.InvariantCulture) : "N/A",
-                    $"{items["createdate"]:MM/dd/yyyy HH:mm:ss tt}",
-                    items["lastloginip"].ToString()
+                    items.GroupB(),
+                    items.GroupC(),
+                    items.GroupD(),
+                    items.Discount1x2(),
+                    items.DiscountCasino(),
+                    items.DiscountNumberGame(),
+                    items.IsMyanmarOdds() ? items.DiscountMyanmarOdds() : "N/A",
+                    items.CreateDate(),
+                    items.LastLoginIP()
                 };
 
                 values = RemoveOddsColumn(values);
@@ -156,16 +153,14 @@
             int lastColumnIndex,
             DataRow items)
         {
-            var custStatus = !Utils.ToBoolean(items["enabled"])
-                ? "disabled"
-                : Utils.ToBoolean(items["closed"])
-                    ? "closed"
-                    : Utils.ToBoolean(items["suspended"])
-                        ? "suspended"
-                        : "open";
+            var custStatus = !items.Enabled() ? "disabled"
+                : items.Closed() ? "closed"
+                : items.Suspended() ? "suspended"
+                : "open";
+
             var rowIdFromStatus = new Dictionary<string, int> { { "open", 1 }, { "suspended", 3 }, { "disabled", 7 } };
             var rowIdFromCloseStatus = new Dictionary<byte, int> { { 1, 11 }, { 2, 13 }, { 3, 15 } };
-            var closedReason = Convert.ToByte(items["closedreason"]);
+            var closedReason = items.Closedreason();
 
             var fromRowId = 5;
             if (rowIdFromStatus.ContainsKey(custStatus))

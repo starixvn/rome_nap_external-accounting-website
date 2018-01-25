@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Extensions
 {
+    using System;
     using System.Data;
     using System.Globalization;
     using Utilities;
@@ -42,6 +43,22 @@
 
         internal static string PlayerDiscountMyanmarOdds(this DataRow dataRow) => Utils.ToDouble(dataRow["playerdiscountmyanmarodds"]).ToString(CultureInfo.InvariantCulture);
 
+        internal static string CreateDate(this DataRow dataRow) => $"{dataRow["createdate"]:MM/dd/yyyy HH:mm:ss tt}";
+
         internal static double GroupA(this DataRow dataRow) => Utils.ToDouble(dataRow["groupa"]);
+
+        internal static double GroupB(this DataRow dataRow) => Utils.ToDouble(dataRow["groupb"]);
+
+        internal static double GroupC(this DataRow dataRow) => Utils.ToDouble(dataRow["groupc"]);
+
+        internal static double GroupD(this DataRow dataRow) => Utils.ToDouble(dataRow["groupd"]);
+
+        internal static bool Enabled(this DataRow dataRow) => Utils.ToBoolean(dataRow["enabled"]);
+
+        internal static bool Closed(this DataRow dataRow) => Utils.ToBoolean(dataRow["closed"]);
+
+        internal static bool Suspended(this DataRow dataRow) => Utils.ToBoolean(dataRow["suspended"]);
+
+        internal static byte Closedreason(this DataRow dataRow) => Convert.ToByte(dataRow["closedreason"]);
     }
 }
