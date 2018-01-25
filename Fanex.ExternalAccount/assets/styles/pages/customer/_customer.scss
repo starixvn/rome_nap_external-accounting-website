@@ -322,6 +322,12 @@ tr.rowTransferCondition
 {
 	font-size: 8px;
 }
+#tabs {
+    width: 100%;
+}
+.ui-tabs {
+    padding: 0;
+}
 .tabs
 {
     background-image: none !important; 
@@ -332,6 +338,7 @@ tr.rowTransferCondition
 {
     border:none;
     padding-left: 0 !important;
+    width: 100%;
 }
 .btnPTDown
 {
