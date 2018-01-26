@@ -480,15 +480,13 @@
     }
 
     $scope.collapseSidebar = function () {
-        var iconUserInfo = top.$("#iconUserInfo");
-        var leftPanel = top.$("#leftSplitter");
         var widthDevice = top.$(top.window).width();
         if (widthDevice <= 768) {
             top.$("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
             top.$("#sidebar").removeClass("expand-sidebar").addClass("collapse-sidebar");
             top.$("#leftSplitter").removeClass("expand-leftpanel").addClass("collapse-leftpanel");
             top.$("#iconNav").removeClass("active");
-            iconUserInfo.removeClass("active");
+            top.$("#iconUserInfo").removeClass("active");
         }
         else {
             top.$("#contentSplitter").addClass("collapse-content");

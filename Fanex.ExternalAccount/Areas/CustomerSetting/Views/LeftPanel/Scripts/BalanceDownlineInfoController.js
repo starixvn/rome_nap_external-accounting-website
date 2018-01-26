@@ -27,7 +27,8 @@
         if (antiXSRFToken.length > 0) {
             token = antiXSRFToken[0].value;
         }
-        $http({ url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetDownlineList?custId=' + custId + '&pageIndex=1'),
+        $http({
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetDownlineList?custId=' + custId + '&pageIndex=1'),
             method: 'post',
             headers: { "X-Requested-With": "XMLHttpRequest", "__RequestVerificationToken": token }
         })
@@ -68,7 +69,7 @@
                 $('#downlines').scrollTop(0);
             }
 
-            $('#downlines').css('height', (pages.length > 1 ? '240px' : '240px'));
+            $('#downlines').css('height', '240px');
 
             if (pages && pages.length > 1) {
                 var timeout = setTimeout(function () {

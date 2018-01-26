@@ -13,7 +13,7 @@
     }
 
     $scope.Init = function () {
-        $('#downlines').css('height', ($scope.pages.length > 1 ? '240px' : '240px'));
+        $('#downlines').css('height', '240px');
 
         if ($scope.pages && $scope.pages.length > 1) {
             for (var i = 1; i <= $scope.pages.length; i++) {

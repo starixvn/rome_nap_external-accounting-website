@@ -35,16 +35,12 @@ Fanex.ExtAcc.WinLossDetail = {
             $('#GroupBackToCurrent').css('display', 'block');
             $('.from-to-date').css('display', 'none');
             $('.group-month-day').css('display', 'inline-block');
-            //$('.from-to-date').removeClass("showcontent").addClass("hide");
-            //$('.group-month-day').removeClass("hide").addClass('showcontent');
         }
         else {
             $('#GroupViewHistory').css('display', 'block');
             $('#GroupBackToCurrent').css('display', 'none');
             $('.from-to-date').css('display', 'inline-block');
             $('.group-month-day').css('display', 'none');
-            //$('.from-to-date').removeClass("hide").addClass("showcontent");
-            //$('.group-month-day').removeClass("showcontent").addClass("hide");
         }
     },
     CallSubmit: function () {
@@ -761,7 +757,7 @@ Fanex.ExtAcc.WinLossDetail = {
         this.viewlevel = 4;
     },
     GetFromDateToDate: function () {
-        if ($("#GroupFromToDate").css('display') != 'none') {
+        if ($(".from-to-date").css('display') != 'none') {
             this.fromdate = $('#dtpFromDate').val();
             this.todate = $('#dtpToDate').val();
         }
