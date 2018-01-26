@@ -80,8 +80,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
             Fanex.PTEngine.PT_SetSelect($("#groupA")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
             Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
             Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
-            Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);
-            Fanex.PTEngine.PT_SetSelect($("#discountHRFixedOdds")[0], 0, commission.discountHRFixedOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountHRFixedOdds);
+            Fanex.PTEngine.PT_SetSelect($("#discountNumber")[0], 0, commission.discountNumberMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountNumber);            
 
             if (customer.commissionSetting.isMyanmarOdds) {
                 Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
@@ -162,9 +161,6 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                     customer.phone = customer.phone.escapeHtml().encodeHtml();
                     customer.mobilePhone = customer.mobilePhone.escapeHtml().encodeHtml();
                     customer.fax = customer.fax.escapeHtml().encodeHtml();
-
-                    // HotFix #71569: HR Fixed odds Commission isnot affected when add new Master/Agent
-                    customer.commissionSetting.discountHRFixedOdds = $('#discountHRFixedOdds').val();
 
                     if (ptGrid) {
                         customer.ptSetting = ptGrid.Save();

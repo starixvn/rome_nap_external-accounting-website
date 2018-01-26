@@ -23,8 +23,7 @@ language.goldDeluxe['zh-TW'] = {
 	lblClose : "關閉",
 	lblCurrentWinLimit : "當前贏額上限",
 	lblCustomerInformation : "會員資料",
-	lblDailyAutoResetLimit : "每日限額自動重設. (GMT+8中午12時正)",
-	lblEditMultipleLiveCasino : "修改多重真人荷官",
+	lblDailyAutoResetLimit : "每日限額自動重設. (GMT+8中午12時正)",	
 	lblEnable : "啟用",
 	lblFax : "傳真",
 	lblFirstName : "名",
@@ -69,8 +68,6 @@ language.goldDeluxe['zh-TW'] = {
 	UnauthorizeMsg : "您沒有使用此功能的權限",
 	UpdatedUnsuccessfully : "更新不成功",
 	UpdatedWinLimitSuccessfully : "最高赢取倍数: 修改成功",
-	UpdateLiveCasinoStatusSuccess : "狀態: 修改成功",
-	UpdateLiveCasinoStatusUnSuccess : "修改失敗，因為上線的娛樂廳狀態以被禁止",
 	UpdateSuccessfully : "修改成功",
 	WarningUncheckAllStakeLevelMsg : "移除所有投注組合將影響與應用到所有的下線",
 	WarningUplineUncheckAllStakeLevelMsg : "沒有任何投註限額，因為上線沒有設置投註限額，所以影響到下線的設置。因此, 投註限額將默認設置為上線的最低投註限額"

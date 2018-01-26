@@ -121,13 +121,8 @@
                 UpdateCasinoStatus(masterId, result, customer);
                 Thread.Sleep(3000);
                 AutoInsertNG2Product(masterId, customer.UserName, RoleId.Master, parentId, SiteId.NAP,
-                        customer.CurrencyId);
-                var autoInsertLiveCasinoTask = AutoInsertLiveCasinoPost(masterId, parentId, CurrentSession.UserId,
-                    CurrentSession.UserName, requestContext.IP);
-
+                    customer.CurrencyId);
                 AutoInsertCasinoPost(masterId, parentId);
-
-                autoInsertLiveCasinoTask.Wait();
             }
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = masterId });
@@ -199,12 +194,7 @@
                 AutoInsertNG2Product(agentId, customer.UserName, RoleId.Agent, parentId, SiteId.NAP,
                     customer.CurrencyId);
 
-                var autoInsertLiveCasinoTask = AutoInsertLiveCasinoPost(agentId, parentId, CurrentSession.UserId,
-                    CurrentSession.UserName, requestContext.IP);
-
                 AutoInsertCasinoPost(agentId, parentId);
-
-                autoInsertLiveCasinoTask.Wait();
             }
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = agentId });
@@ -276,12 +266,7 @@
                 AutoInsertNG2Product(memberId, customer.UserName, RoleId.Member, parentId, SiteId.NAP,
                     customer.CurrencyId);
 
-                var autoInsertLiveCasinoTask = AutoInsertLiveCasinoPost(memberId, parentId, CurrentSession.UserId,
-                    CurrentSession.UserName, requestContext.IP);
-
                 AutoInsertCasinoPost(memberId, parentId);
-
-                autoInsertLiveCasinoTask.Wait();
             }
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = memberId });
@@ -298,14 +283,12 @@
             ViewBag.CurrentLevel = id;
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
-            ViewBag.SyncCasino = (bool)result.Rows[0]["SyncCasino"];
-            ViewBag.SyncLiveCasino = (bool)result.Rows[0]["SyncLiveCasino"];
+            ViewBag.SyncCasino = (bool)result.Rows[0]["SyncCasino"];            
             ViewBag.HideVirtualSports = (bool)result.Rows[0]["HideVirtualSports"];
             ViewBag.HideKeno = (bool)result.Rows[0]["HideKeno"] || !ProductSettings.ShowKenoSetting;
             ViewBag.HideGoldDeluxe = (bool)result.Rows[0]["HideGoldDeluxe"] || !ProductSettings.IsShowGoldDeluxe;
             ViewBag.HideColossusBets = (bool)result.Rows[0]["HideColossusBet"] || !ProductSettings.IsShowColossusBets;
-            ViewBag.HideSportsbook2 = Converter.ToBool(result.Rows[0]["HideMuayThai"]) || !ProductSettings.IsShowSportsbook2;
-            ViewBag.HideCockfighting = Converter.ToBool(result.Rows[0]["HideCockfighting"]) || !ProductSettings.IsShowCockfighting;
+            ViewBag.HideSportsbook2 = Converter.ToBool(result.Rows[0]["HideMuayThai"]);            
             ViewBag.HideCricket = Converter.ToBool(result.Rows[0]["HideCricket"]) || !ProductSettings.IsShowCricket;
             var visibledProducts = GetVisibledProducts(id, custId);
 
@@ -345,8 +328,7 @@
             var customers = GetCustomerList(groupName, enabled, closed, suspended, lineInfo);
             SetEditAllBetVisibility(customers);
             var customers2String = Customers2Json(customers);
-            var syncCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncCasino");
-            var syncLiveCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncLiveCasino");
+            var syncCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncCasino");            
             var allowDoubleComm = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean(lineInfo.RoleId > Role.Agent ? "doubleCommLosing" : "doubleCommLosing1");
             return JsonBase(
                 new
@@ -359,7 +341,6 @@
                     recommend = lineInfo.AgentId,
                     lineInfo.CustId,
                     syncCasino,
-                    syncLiveCasino,
                     allowDoubleComm
                 });
         }

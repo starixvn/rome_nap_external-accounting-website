@@ -22,11 +22,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.ViewModels
 
         public int GroupId { get; set; }
 
-        public bool SyncCasino { get; set; }
-
-        public bool SyncBingo { get; set; }
-
-        public bool SyncLiveCasino { get; set; }
+        public bool SyncCasino { get; set; }  
 
         public bool HideGoldDeluxe { get; set; }
 

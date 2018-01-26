@@ -55,11 +55,11 @@
             <td colspan="3" style="border: none">
                 <table class="tableInfo" border="0" cellpadding="0" cellspacing="0">
                     <tr data-ng-repeat="gameKind in gameKinds">
-                        <td class="widthBingoTitle noneBorderTop bold">{{gameKind.gameGroupName}}</td>
+                        <td class="widthGameTypeTitle noneBorderTop bold">{{gameKind.gameGroupName}}</td>
                         <td class="noneBorderTop" style="border: none">
                             <table class="tableInfo" border="0" cellpadding="0" cellspacing="0">
                                 <tr data-ng-repeat="gameType in gameKind.gameTypes">
-                                    <td class="widthBingoTitle noneBorderLeft noneBorderTop">{{gameType.gameTypeName}}</td>
+                                    <td class="widthGameTypeTitle noneBorderLeft noneBorderTop">{{gameType.gameTypeName}}</td>
                                     <td class="noneBorderLeft noneBorderTop">
                                         <div class="floatLeft">                                              
                                             <div class="floatLeft">Betting Limit:&nbsp;</div>
@@ -97,7 +97,6 @@
     var userId = parseInt('@userId');
     var siteName = '@siteName';
     var syncCasino = '@ViewBag.SyncCasino';
-    var syncLiveCasino = '@ViewBag.SyncLiveCasino';
 
     function toUrl(relativeUrl) {
         return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
@@ -106,11 +105,7 @@
     $(document).ready(function () {
         if (syncCasino == 'False') {
             $('#tab6').remove();
-        }
-
-        if (syncLiveCasino == 'False') {
-            $('#tab4').remove();
-        }
+        }       
 
         $('#tab6').addClass('ui-tabs-active ui-state-active');
         $('#tab1').removeClass('ui-tabs-active ui-state-active');

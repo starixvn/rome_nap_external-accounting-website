@@ -80,17 +80,12 @@
                 }
             }
 
-            var syncCasino = true;
-            var syncLiveCasino = true;
+            var syncCasino = true;            
 
             for (var j = 0; j < $scope.setting.syncItems.length; j++) {
                 if (!$scope.setting.syncItems[j].value && $scope.setting.syncItems[j].key == 'SyncCasino') {
                     syncCasino = false;
-                }
-
-                if (!$scope.setting.syncItems[j].value && $scope.setting.syncItems[j].key == 'SyncLiveCasino') {
-                    syncLiveCasino = false;
-                }
+                }                
             }
 
             for (var i = 0; i < $scope.setting.enableItems.length; i++) {
@@ -102,9 +97,7 @@
 
                 if ($scope.setting.enableItems[i].key == 'EnableCasino')
                     $scope.setting.enableItems[i].isHide = !syncCasino;
-
-                if ($scope.setting.enableItems[i].key == 'EnableLiveCasino')
-                    $scope.setting.enableItems[i].isHide = !syncLiveCasino;
+                
             }
 
             for (var i = 0; i < $scope.setting.masterPts.length; i++) {
@@ -626,22 +619,9 @@
             document.getElementById(id).checked = enable;
         }, 1, null);
     };
-
-    $scope.EnableLiveCasino = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
+    
 
         $scope.shouldCalculatePopupHeight = false;
-        var url_SELECT = 'customersetting/enablestatus/productstatus?';
-        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
-        '&userid=' + parent.userId + '&productid=livecasino&level=' + $scope.model.personalInfo.roleId.value +
-        '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
-        var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Live Casino: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 180, false, function () {
-            document.getElementById(id).checked = enable;
-        }, 1, null);
-    };
 
     $scope.EnableVirtualSports = function (enable, id, disabled) {
         if (disabled) {
@@ -667,23 +647,9 @@
         parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'eSports: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 180, false, function () {
             document.getElementById(id).checked = enable;
         }, 1, null);
-    };
-
-    $scope.EnableHRFixedOdds = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
+    };   
 
         $scope.shouldCalculatePopupHeight = false;
-        var url_SELECT = 'customersetting/enablestatus/productstatus?';
-        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
-        '&userid=' + parent.userId + '&productid=hrfixedodds&level=' + $scope.model.personalInfo.roleId.value +
-        '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
-        var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'HR Fixed Odds: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 180, false, function () {
-            document.getElementById(id).checked = enable;
-        }, 1, null);
-    };
 
     $scope.getPopupHeight = function () {
         var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
@@ -692,16 +658,8 @@
 
         return height;
     }
-    $scope.EnableRacing = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
 
-        $scope.landscapeHeight = 250;
-        $scope.portraitHeight = 400;
-        $scope.shouldCalculatePopupHeight = true;
-        $scope.EnableThirdpartyProduct(2, "Racing", 400, $scope.getPopupHeight());
-    };
+
 
     $scope.EnableKeno = function (enable, id, disabled) {
         if (disabled) {
@@ -741,16 +699,10 @@
         $scope.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(12, "Gold Deluxe", 400, 180);
-    };
+    };   
 
-    $scope.EnableCockfighting = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
         
         $scope.shouldCalculatePopupHeight = false;
-        $scope.EnableDCS(19, 'Cockfighting');
-    };
 
     $scope.EnableAllbet = function (enable, id, disabled) {
         if (disabled) {
@@ -904,24 +856,8 @@
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMinPT' + "?custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
         $scope.collapseSidebar();
     };
-
-    $scope.MinRB = function () {
-        var typeUrl = '';
-        var roleId = $scope.model.personalInfo.roleId.value;
-        if (roleId === 3) { // master
-            typeUrl = 'MasterMinMaxPT';
-        }
-        else if (roleId === 2) { // agent
-            typeUrl = 'AgentMinMaxPT';
-        }
-
-        if (typeUrl !== '') {
-            var url = 'CustomerSetting/Racebook/RacingSetting/' + typeUrl + '?id=' + $scope.model.personalInfo.custId.value + '&roleId=' + roleId;
-            parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url + '&groupName=' + parent.$('#selectedGroupName').html()));
-        }
+    
         $scope.collapseSidebar();
-    };
-
     $scope.SuperPT = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
         var masterId = $scope.model.personalInfo.downlines[1].key;
@@ -940,21 +876,6 @@
         $scope.ResetGlobalValueAtSuperOnMember();
         var superId = $scope.model.personalInfo.downlines[0].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberBySuper?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId + '&groupname=' + parent.$('#selectedGroupName').html()));
-    };
-
-    $scope.SuperRacing = function () {
-        $scope.ResetGlobalValueAtSuperOnMember();
-        var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/supereditmember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId + '&groupName=' + parent.$('#selectedGroupName').html()));
-    };
-
-    $scope.SuperLiveCasino = function () {
-        var superId = $scope.model.personalInfo.downlines[0].key;
-        $scope.ResetGlobalValueAtSuperOnMember();
-        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Customer.superId = superId;
-        var url = "LiveCasinoSetting/Setting/EditSetting?uplineId=" + superId + "&parentId=" + $scope.model.personalInfo.uplineId.value + "&uplineLevel=4&customerId=" + $scope.model.personalInfo.custId.value + "&customerLevel=1";
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url + "&actorId=" + parent.userId + "&actorUsername=" + parent.username + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.SuperVirtualSports = function () {
@@ -995,13 +916,7 @@
         $scope.ResetGlobalValueAtMasterOnMember();
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberByMaster?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupname=' + parent.$('#selectedGroupName').html()));
-    };
-
-    $scope.MasterRacing = function () {
-        $scope.ResetGlobalValueAtMasterOnMember();
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/mastereditmember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupName=' + parent.$('#selectedGroupName').html()));
-    };
+    };    
 
     $scope.MasterVirtualSports = function () {
         $scope.RenderMasterOnMemberDCS(5);
@@ -1011,16 +926,7 @@
         $scope.ResetGlobalValueAtMasterOnMember();
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value + "&userId=" + parent.userId));
-    };
-
-    $scope.MasterLiveCasino = function () {
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        $scope.ResetGlobalValueAtMasterOnMember();
-        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Customer.masterId = masterId;
-        var url = "LiveCasinoSetting/Setting/EditSetting?uplineId=" + masterId + "&parentId=" + $scope.model.personalInfo.uplineId.value + "&uplineLevel=3&customerId=" + $scope.model.personalInfo.custId.value + "&customerLevel=1";
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url + "&actorId=" + parent.userId + "&actorUsername=" + parent.username + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
-    };
+    };   
 
     $scope.MasterGoldDeluxe = function () {
         var masterId = $scope.model.personalInfo.downlines[1].key;
@@ -1064,10 +970,6 @@
         $scope.RenderSupeOnMemberDCS(16);
     };
 
-    $scope.SuperCockfighting = function () {
-        $scope.RenderSupeOnMemberDCS(19);
-    };
-
     $scope.SuperCricket = function () {
         $scope.RenderSupeOnMemberDCS(20);
     };
@@ -1107,11 +1009,7 @@
 
     $scope.MasterSportsbook2 = function () {
         $scope.RenderMasterOnMemberDCS(16);
-    };
-
-    $scope.MasterCockfighting = function () {
-        $scope.RenderMasterOnMemberDCS(19);
-    };
+    };    
 
     $scope.MasterCricket = function () {
         $scope.RenderMasterOnMemberDCS(20);

@@ -96,10 +96,6 @@
       <HintPath>..\packages\Fanex.Data.0.5.404.59\lib\net40\Fanex.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.LiveCasinoSetting, Version=1.0.423.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.LiveCasinoSetting.1.0.0\lib\net40\Fanex.LiveCasinoSetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.Logging, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Logging.1.0.4\lib\net40\Fanex.Logging.dll</HintPath>
       <Private>True</Private>

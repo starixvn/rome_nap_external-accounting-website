@@ -31,10 +31,10 @@
         Result SuspendCustomer(int custId, bool suspend);
 
         Result AllowOutright(int custId, bool allow);
-
+        
         Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress);
 
-        Result UpdateSecurityCode(int custId, string code, bool force, int roleId);
+        Result UpdateSecurityCode(int custId, string code, bool force, int roleId);        
 
         Result RemoveOtp(int custId, int userId, string ip4Address);
     }
@@ -94,6 +94,7 @@
         public Result AllowOutright(int custId, bool allow)
             => customerDataAccess.AllowOutright(custId, allow);
 
+        
         public Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress)
         {
             var result = customerDataAccess.AutoMasterPT(custId, allow);
@@ -138,7 +139,7 @@
 
             return customerDataAccess.ResetSecurityCode(custId, hashCode, force || roleId.IsNotSuper());
         }
-
+        
         public Result RemoveOtp(int custId, int userId, string ip4Address)
             => customerDataAccess.RemoveOTP(new RemoveOtpCriteria
             {

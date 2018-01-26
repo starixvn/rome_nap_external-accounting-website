@@ -47,8 +47,7 @@
             customerDetail.AIBCCustID = Utils.ToInt32(row["agentid"]);
             customerDetail.GivenCredit = Utils.ToDecimal(row["credit"]).Format();
             customerDetail.CasinoSync = Utils.ToBoolean(row["synccasino"]);
-            customerDetail.CasinoDisabled = Utils.ToBoolean(row["disablecasino"]);
-            customerDetail.LiveCasinoSync = Utils.ToBoolean(row["synclivecasino"]);
+            customerDetail.CasinoDisabled = Utils.ToBoolean(row["disablecasino"]);            
             customerDetail.CasinoDisabled = Utils.ToBoolean(row["disablecasino"]);
             customerDetail.IBCCustID = Utils.ToInt32(row["custid"]);
             customerDetail.UserPwd = Utils.ToString(row["userpwd"]);

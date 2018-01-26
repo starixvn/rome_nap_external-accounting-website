@@ -3,7 +3,6 @@
     public enum ProductBettingLimitDcsFunction
     {
         Sportsbook2Betting = 16,
-        CockfightingBetting = 19,
         CricketBetting = 20,
         AllbetBetting = 21,
         VoidbridgeBetting = 22,

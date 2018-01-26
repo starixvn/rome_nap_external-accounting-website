@@ -109,14 +109,6 @@
       <HintPath>..\packages\Fanex.GoldDeluxe.CoreSetting.NAP.1.0.0.9\lib\net40\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.2.2.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.LiveCasino.CoreSetting.NAP.1.2.2.6\lib\net40\Fanex.LiveCasino.CoreSetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.LiveCasinoSetting, Version=1.0.423.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.LiveCasinoSetting.1.0.0\lib\net40\Fanex.LiveCasinoSetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.Logging, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Logging.1.0.4\lib\net40\Fanex.Logging.dll</HintPath>
       <Private>True</Private>
@@ -313,7 +305,6 @@
     <Compile Include="Authorization\DCS\ProductSettingDcsFunction.cs" />
     <Compile Include="Authorization\GoldDeluxe\GoldDeluxeAuthorizationService.cs" />
     <Compile Include="Authorization\KenoCheckBelongingService.cs" />
-    <Compile Include="Authorization\LiveCasino\LiveCasinoAuthorizationService.cs" />
     <Compile Include="Authorization\ThirdPartyStatus\EnableStatusProduct.cs" />
     <Compile Include="Authorization\ThirdPartyStatus\ProductStatusAuthorization.cs" />
     <Compile Include="Base\BaseController.cs" />

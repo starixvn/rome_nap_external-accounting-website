@@ -98,8 +98,7 @@
     var uplineId = parseInt('@uplineId');
     var userId = parseInt('@userId');
     var siteName = '@siteName';
-    var syncCasino = '@ViewBag.SyncCasino';
-    var syncLiveCasino = '@ViewBag.SyncLiveCasino';
+    var syncCasino = '@ViewBag.SyncCasino';    
 
     function toUrl(relativeUrl) {
         return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
@@ -108,10 +107,6 @@
     $(document).ready(function () {
         if (syncCasino == 'False') {
             $('#tab6').remove();
-        }
-
-        if (syncLiveCasino == 'False') {
-            $('#tab4').remove();
         }
 
         $('#tab2').removeClass('ui-tabs-active');

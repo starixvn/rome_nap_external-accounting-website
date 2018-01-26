@@ -112,7 +112,7 @@
     <span class="loading-icon"></span>
 </div>
 @Html.Hidden("UpdateGameSettingUrl", Url.Content("~/CustomerSetting/BetSetting/GoldDeluxeBetting/UpdateGameSetting"))
-@Html.Hidden("LiveCasinoRoot", Url.Content("~/"))
+
 @Scripts.Render("~/areasjs/golddeluxe/core")
 <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/gold-deluxe-lang.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.js")"></script>
@@ -140,8 +140,7 @@
     var uplineId = parseInt('@uplineId');
     var userId = parseInt('@userId');
     var siteName = '@siteName';
-    var syncCasino = '@ViewBag.SyncCasino';
-    var syncLiveCasino = '@ViewBag.SyncLiveCasino';
+    var syncCasino = '@ViewBag.SyncCasino';    
 
     function toUrl(relativeUrl) {
         return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
@@ -151,11 +150,7 @@
         if (syncCasino == 'False') {
             $('#tab6').remove();
         }
-
-        if (syncLiveCasino == 'False') {
-            $('#tab4').remove();
-        }
-
+        
         $('#tab8').addClass('ui-tabs-active ui-state-active');
         $('#tab1').removeClass('ui-tabs-active ui-state-active');
         $('#tab2').removeClass('ui-tabs-active ui-state-active');

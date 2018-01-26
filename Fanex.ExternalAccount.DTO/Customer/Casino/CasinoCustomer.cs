@@ -22,11 +22,7 @@
 
         public bool CasinoDisabled { get; set; }
 
-        public bool CasinoSync { get; set; }
-
-        public bool LiveCasinoDisabled { get; set; }
-
-        public bool LiveCasinoSync { get; set; }
+        public bool CasinoSync { get; set; }        
 
         public int Currency { get; set; }
 

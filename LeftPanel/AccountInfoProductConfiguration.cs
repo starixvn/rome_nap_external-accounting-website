@@ -28,9 +28,7 @@
                 // Show edit bet setting tab for edit super setting
                 {ProductConstants.RNGCasino, eFunctions.CasinoBetting},
                 {ProductConstants.GoldDeluxe, eFunctions.GoldDeluxeBetting},
-                {ProductConstants.Keno, eFunctions.KenoBetting},
-                {ProductConstants.LiveCasino, eFunctions.LiveCasinoBetting},
-                {ProductConstants.Racing, eFunctions.RacingBetting},
+                {ProductConstants.Keno, eFunctions.KenoBetting},                                
                 {ProductConstants.Sportsbook, eFunctions.SportsbookBetting},
                 {ProductConstants.AllBet, eFunctions.AllbetBetting},
                 {ProductConstants.VoidBridge, eFunctions.VoidbridgeBetting},
@@ -55,8 +53,7 @@
         public static List<ObjectInfo> CreateSyncAndHiddenItems(DataRow customerRow, DataTable table3RdDcs)
             => new List<ObjectInfo>
             {
-                new ObjectInfo("SyncCasino", customerRow.IsSyncedCasino(), "Casino Synced"),
-                new ObjectInfo("SyncLiveCasino", customerRow.IsSyncedLiveCasino(), "Live Casino Synced"),
+                new ObjectInfo("SyncCasino", customerRow.IsSyncedCasino(), "Casino Synced"),                
                 new ObjectInfo("HideAllbet", table3RdDcs.IsHiddenProduct(ProductConstants.AllBet)),
                 new ObjectInfo("HideVoidbridge", table3RdDcs.IsHiddenProduct(ProductConstants.VoidBridge)),
                 new ObjectInfo("HideNG2", table3RdDcs.IsHiddenProduct(ProductConstants.NG2)),

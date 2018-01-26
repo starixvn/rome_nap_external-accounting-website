@@ -4,23 +4,20 @@
 @model List<Product>
 @{
     var SyncCasino = ViewBag.SyncCasino;
-    var SyncLiveCasino = ViewBag.SyncLiveCasino;
     var HideVirtualSports = ViewBag.HideVirtualSports;
     var HideKeno = ViewBag.HideKeno;
     var HideGoldDeluxe = ViewBag.HideGoldDeluxe;
     var HideColossusBets = ViewBag.HideColossusBets;
     var HideSportsbook2 = ViewBag.HideSportsbook2;
-    var HideCockfighting = ViewBag.HideCockfighting;
+    
     var HideCricket = ViewBag.HideCricket;
     var status = new {
         syncCasino = SyncCasino,
-        syncLiveCasino = SyncLiveCasino,
         hideVirtualSports = HideVirtualSports,
         hideKeno = HideKeno,
         hideGoldDeluxe = HideGoldDeluxe,
         hideColossusBets = HideColossusBets,
         hideSportsbook2 = HideSportsbook2,
-        hideCockfighting = HideCockfighting,
         hideCricket = HideCricket
     };
     var statusJSON = JsonConvert.SerializeObject(status, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
@@ -29,20 +26,16 @@
 <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/assets/styles/pages/customer/pt-engine.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/assets/styles/pages/customer/customer-setting.css")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/assets/styles/pages/customer/live-casino.css")" rel="stylesheet" type="text/css" />
+
 <div id="tabs" style="border:none">
     <ul class="tabs">
-        <li id="tab1"><a href="#tabs-1">Sportsbook's Min PT</a></li>
-        <li id="tab2"><a href="#tabs-2">Racing</a></li>
-        <li id="tab3"><a href="#tabs-3">Racing's Min PT</a></li>
-        <li id="tab4"><a href="#tabs-4">Casino</a></li>
-        <li id="tab7"><a href="#tabs-7">Live Casino</a></li>
+        <li id="tab1"><a href="#tabs-1">Sportsbook's Min PT</a></li>                
+        <li id="tab4"><a href="#tabs-4">Casino</a></li>        
         <li id="tab8"><a href="#tabs-8">Virtual Sports</a></li>
         <li id="tab9"><a href="#tabs-9">Keno</a></li>
         <li id="tab10"><a href="#tabs-10">Gold Deluxe</a></li>
         <li id="tab11"><a href="#tabs-11">Colossus Bets</a></li>
         <li id="tab12"><a href="#tabs-12">Sportsbook 2</a></li>
-        <li id="tab13"><a href="#tabs-13">Cockfighting</a></li>
         <li id="tab14"><a href="#tabs-14">Cricket</a></li>
 
         @foreach (var product in Model)
@@ -56,18 +49,10 @@
     </ul>
     <div id="tabs-1" class="divTab">
     </div>
-    <div id="tabs-2" class="divTab" style="padding: 0px">
-        <iframe id="racingFrame" height="100%" width="100%" frameborder="0" style="margin:0;padding:0;overflow:auto;"></iframe>
-    </div>
-    <div id="tabs-3" class="divTab" style="padding: 0px">
-        <iframe id="minMaxracingFrame" height="100%" width="100%" frameborder="0" style="margin:0;padding:0;overflow:auto;"></iframe>
-    </div>
     <div id="tabs-4" class="divTab" style="padding: 0px">
         <iframe id="casinoFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
     </div>
-    <div id="tabs-7" class="divTab">
-        <iframe id="livecasinoFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-    </div>
+   
     <div id="tabs-8" class="divTab">
         <iframe id="virtualSportsFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
     </div>
@@ -94,14 +79,7 @@
         <div id="tabs-12" class="divTab" style="padding: 0px">
             <iframe id="sportsbook2Frame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
         </div>
-    }
-
-    @if (!HideCockfighting)
-    {
-        <div id="tabs-13" class="divTab" style="padding: 0px">
-            <iframe id="cockFightingFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-        </div>
-    }
+    }    
 
     @if (!HideCricket)
     {
@@ -141,13 +119,11 @@
     Fanex.ExtAcc.Customer.Member = @Role.Member;
     Fanex.ExtAcc.Customer.superId = Fanex.ExtAcc.Customer.masterId = Fanex.ExtAcc.Customer.agentId = '@ViewBag.UplineId';
     Fanex.ExtAcc.Customer.SyncCasino = custStatus.syncCasino;
-    Fanex.ExtAcc.Customer.SyncLiveCasino = custStatus.syncLiveCasino;
     Fanex.ExtAcc.Customer.HideVirtualSports = custStatus.hideVirtualSports;
     Fanex.ExtAcc.Customer.HideKeno = custStatus.hideKeno;
     Fanex.ExtAcc.Customer.HideGoldDeluxe = custStatus.hideGoldDeluxe;
     Fanex.ExtAcc.Customer.HideColossusBets = custStatus.hideColossusBets;
     Fanex.ExtAcc.Customer.HideSportsbook2 = custStatus.hideSportsbook2;
-    Fanex.ExtAcc.Customer.HideCockfighting = custStatus.hideCockfighting;
     Fanex.ExtAcc.Customer.HideCricket = custStatus.hideCricket;
     Fanex.ExtAcc.Customer.isSuperEditAgent = Fanex.ExtAcc.Customer.isSuperEditMember = Fanex.ExtAcc.Customer.isMasterEditMember = false;
     Fanex.ExtAcc.Customer.CurrentLevel = parseInt(Fanex.ExtAcc.Customer.CurrentLevel);

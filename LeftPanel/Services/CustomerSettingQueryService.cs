@@ -79,11 +79,9 @@
             };
 
             AddCasinoStatus(customerRow, customerStatus, enableItems);
-            AddNumberGameStatus(customerRow, customerStatus, enableItems);
-            AddLiveCasinoStatus(customerRow, customerStatus, enableItems);
+            AddNumberGameStatus(customerRow, customerStatus, enableItems);            
             AddVirtualSportsStatus(productStatusTable, customerStatus, enableItems);
-            AddDoubleCommStatus(customerRow, customerStatus, enableItems);
-            AddHRFixedOddsStatus(customerRow, customerStatus, enableItems);
+            AddDoubleCommStatus(customerRow, customerStatus, enableItems);            
             AddESportsStatus(customerRow, customerStatus, enableItems);
             AddColossusBetsStatus(customerRow, customerStatus, enableItems);
             AddGoldDeluxeStatus(customerRow, customerStatus, enableItems);
@@ -154,24 +152,6 @@
             enableItems.Add(eSportsStatus);
         }
 
-        private static void AddHRFixedOddsStatus(DataRow customerRow, CustomerStatus customerStatus,
-            ICollection<ObjectInfo> enableItems)
-        {
-            var hrFixedOddsStatus = new ObjectInfo(
-                "EnableHRFixedOdds",
-                customerRow.EnableHorseRacingFixedOdds(),
-                "HR Fixed Odds",
-                "Enable Horse Racing Fixed Odds");
-
-            if (customerStatus.RoleId.IsNotSuper()
-                && customerStatus.UplineStatus.DisableHRFixedOdds)
-            {
-                hrFixedOddsStatus = DisableStatus(hrFixedOddsStatus);
-            }
-
-            enableItems.Add(hrFixedOddsStatus);
-        }
-
         private static void AddDoubleCommStatus(
             DataRow customerRow,
             CustomerStatus customerStatus,
@@ -207,28 +187,6 @@
             }
 
             enableItems.Add(virtualSportsStatus);
-        }
-
-        private static void AddLiveCasinoStatus(
-            DataRow customerRow,
-            CustomerStatus customerStatus,
-            ICollection<ObjectInfo> enableItems)
-        {
-            if (!customerStatus.SyncLiveCasino)
-            {
-                return;
-            }
-
-            var liveCasinoStatus = new ObjectInfo("EnableLiveCasino", customerRow.EnableLiveCasino(),
-                "Enable Live Casino");
-
-            if (customerStatus.RoleId.IsNotSuper()
-                && customerStatus.UplineStatus.DisableLiveCasino)
-            {
-                liveCasinoStatus = DisableStatus(liveCasinoStatus);
-            }
-
-            enableItems.Add(liveCasinoStatus);
         }
 
         private static void AddNumberGameStatus(DataRow customerRow, CustomerStatus customerStatus,
@@ -311,18 +269,14 @@
             {
                 details.Add(new ObjectInfo("AddNew", "Add New"));
                 details.Add(new ObjectInfo("Transfer", "Transfer Condition"));
-            }
-
-            details.Add(new ObjectInfo("Racing", "Racing"));
+            }            
 
             AddCasinoEditLink(customerStatus, details);
-            AddLiveCasinoEditLink(customerStatus, details);
             AddVirtualSportsEditLink(customerStatus, details);
             AddKenoEditLink(details);
             AddGoldDeluxeEditLink(customerStatus, details);
             AddColossusBetsEditLink(customerStatus, details);
             AddSportsbook2EditLink(customerStatus, details);
-            AddCockfightingEditLink(customerStatus, details);
             AddCricketEditLink(customerStatus, details);
 
             return details;
@@ -335,15 +289,7 @@
                 details.Add(new ObjectInfo("Cricket", "Cricket"));
             }
         }
-
-        private static void AddCockfightingEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
-        {
-            if (!customerStatus.HideCockfighting)
-            {
-                details.Add(new ObjectInfo("Cockfighting", "Cockfighting"));
-            }
-        }
-
+       
         private static void AddKenoEditLink(List<ObjectInfo> details)
         {
             if (ProductSettings.IsShowKeno)
@@ -376,15 +322,6 @@
             }
         }
 
-        private static void AddLiveCasinoEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
-        {
-            if (customerStatus.UplineStatus.SyncLiveCasino
-                || customerStatus.RoleId.IsSuper())
-            {
-                details.Add(new ObjectInfo("LiveCasino", "Live Casino"));
-            }
-        }
-
         private static void AddCasinoEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
         {
             if (customerStatus.UplineStatus.SyncCasino
@@ -407,24 +344,10 @@
         }
 
         internal static List<ObjectInfo> EditItems(CustomerStatus customerStatus)
-        {
-            var editItems = new List<ObjectInfo>
-            {
-                new ObjectInfo {Key = "EnableRacing", Text = "Enable Racing"}
+	=> new List<ObjectInfo>
+            {                
+                new ObjectInfo {Key = "EnableKeno", Text = "Enable Keno"}
             };
-
-            if (!customerStatus.HideKeno)
-            {
-                editItems.Add(new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" });
-            }
-
-            if(!customerStatus.HideCockfighting)
-            {
-                editItems.Add(new ObjectInfo { Key = "EnableCockfighting", Text = "Enable Cockfighting" });
-            }
-
-            return editItems;
-        }
 
 #pragma warning disable S1541 // Methods and properties should not be too complex
         internal static Setting AddProductSetting(

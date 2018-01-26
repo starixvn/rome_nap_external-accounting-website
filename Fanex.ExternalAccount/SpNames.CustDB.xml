@@ -137,8 +137,7 @@
     <Setting Key="Acc_CustomerUpdRBStatus" SpName="Acc_CustomerUpdRBStatus" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_GetCSStatus" SpName="Age_GetCSStatus" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdDisableHRFixedOdds" SpName="Acc_CustomerUpdDisableHRFixedOdds" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />    
     <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Customer List">
@@ -190,48 +189,7 @@
     <Setting Key="Age_CustomerUpdAgentComm" SpName="Age_CustomerUpdAgentComm" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerUpdUserComm" SpName="Age_CustomerUpdUserComm" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
-  <Function Name="Live Casino - Get PT Setting">
-    <Setting Key="Acc_CustomerSelInfoLiveCS" SpName="Acc_CustomerSelInfoLiveCS" DbName="DBCUST.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerSelEditSuperLiveCS" SpName="Acc_CustomerSelEditSuperLiveCS" DbName="DBCUST.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerSelEditMasterLiveCS" SpName="Acc_CustomerSelEditMasterLiveCS" DbName="DBCUST.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerSelEditAgentLiveCS" SpName="Acc_CustomerSelEditAgentLiveCS" DbName="DBCUST.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerSelEditMemberLiveCS" SpName="Acc_CustomerSelEditMemberLiveCS" DbName="DBCUST.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerSelSEditCustomerLiveCS" SpName="Acc_CustomerSelSEditCustomerLiveCS" DbName="DBCUST.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerSelMEditCustomerLiveCS" SpName="Acc_CustomerSelMEditCustomerLiveCS" DbName="DBCUST.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerSelWinLimitLiveCS" SpName="Acc_CustomerSelWinLimitLiveCS" DbName="DBTXN.bodb02.bodbExtAccNet" />
-  </Function>
-  <Function Name="Live Casino - Update PT Setting">
-    <Setting Key="Acc_CustomerUpdSuperLiveCS_All" SpName="Acc_CustomerUpdSuperLiveCS_All" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerUpdMasterLiveCS_All" SpName="Acc_CustomerUpdMasterLiveCS_All" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerUpdAgentLiveCS_All" SpName="Acc_CustomerUpdAgentLiveCS_All" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerUpdMemberLiveCS_All" SpName="Acc_CustomerUpdMemberLiveCS_All" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerUpdMemberLiveCS_MAg" SpName="Acc_CustomerUpdMemberLiveCS_MAg" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerUpdMemberLiveCS_SAg" SpName="Acc_CustomerUpdMemberLiveCS_SAg" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerUpdSyncLiveCS_Cust" SpName="Acc_CustomerUpdSyncLiveCS_Cust" DbName="DBCust.CustDB.bodbExtAccNet" />
-	  <Setting Key="Acc_CustomerUpdSyncLiveCS" SpName="Acc_CustomerUpdSyncLiveCS_Cust" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerUpdDisableLiveCS" SpName="Acc_CustomerUpdDisableLiveCS" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerUpdLiveCS_WinLimit" SpName="Acc_CustomerUpdLiveCS_WinLimit" DbName="DBCust.CustDB.bodbExtAccNet" />
-  </Function>
-  <Function Name="Live Casino - Stake Level Setting">
-    <Setting Key="TP_Admin_StakeLevel_GetGameTypeStakeLevel" SpName="TP_Admin_StakeLevel_GetGameTypeStakeLevel" DbName="LV_BackupDB" Plain="1">
-      <Mapping DataField="GameTypeID" ObjectProperty="Id" />
-      <Mapping DataField="IBCBetTypeID" ObjectProperty="BetTypeId" />
-      <Mapping DataField="StakeLevelID" ObjectProperty="Id" />
-      <Mapping DataField="StakeLevelName" ObjectProperty="Range" />
-    </Setting>
-    <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevelMulti" SpName="TP_Admin_StakeLevel_GetCustStakeLevelMulti" DbName="LV_BackupDB" Plain="1">
-      <Mapping DataField="GameTypeID" ObjectProperty="Id" />
-      <Mapping DataField="IBCBetTypeID" ObjectProperty="BetTypeId" />
-      <Mapping DataField="StakeLevelID" ObjectProperty="Id" />
-      <Mapping DataField="StakeLevelName" ObjectProperty="Range" />
-    </Setting>
-    <Setting Key="TP_Admin_StakeLevel_GetCustStakeLevel" SpName="TP_Admin_StakeLevel_GetCustStakeLevel" DbName="LV_BackupDB" Plain="1" />
-    <Setting Key="TP_User_CustGameType_UpdStakeLevel" SpName="TP_User_CustGameType_UpdStakeLevel" DbName="LV_BackupDB" Plain="1" />
-    <Setting Key="TP_User_Customer_AutoInsertAccount" SpName="TP_User_Customer_AutoInsertAccount" DbName="LV_BackupDB" Plain="1" />
-    <Setting Key="TP_User_Customer_ManualInsertAccount" SpName="TP_User_Customer_ManualInsertAccount" DbName="LV_BackupDB" Plain="1" />
-    <Setting Key="TP_User_Customer_AutoInsertAccountFromExisting" SpName="TP_User_Customer_AutoInsertAccountFromExisting" DbName="LV_BackupDB" Plain="1" />
-    <Setting Key="WriteLog_UserLog_RunSP" SpName="WriteLog_UserLog_RunSP" DbName="dblog" IgnoreImport="true" />
-  </Function>
+  
   <Function Name="PTVirtualSports - Setting">
     <Setting Key="Acc_CustomerSelEditMasterVS" SpName="Acc_CustomerSelEditMasterVS" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelEditAgentVS" SpName="Acc_CustomerSelEditAgentVS" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
@@ -249,23 +207,7 @@
     <Setting Key="Acc_CustomerUpdMaxPerMatchVS180_1201" SpName="Acc_CustomerUpdMaxPerMatchVS180_1201" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableVS" SpName="Acc_CustomerUpdDisableVS" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
-  <Function Name="Racing Setting">
-    <Setting Key="Acc_CustomerSelHRMaster_All" SpName="Acc_CustomerSelHRMaster_All" DbName="DBCUST.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerSelHRAgent_All" SpName="Acc_CustomerSelHRAgent_All" DbName="DBCUST.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerSelHRMember_All" SpName="Acc_CustomerSelHRMember_All" DbName="DBCUST.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerSelHREditMember_SAg" SpName="Acc_CustomerSelHREditMember_SAg" DbName="DBCUST.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerSelHREditMember_MAg" SpName="Acc_CustomerSelHREditMember_MAg" DbName="DBCUST.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerUpdMasterHR_All" SpName="Acc_CustomerUpdMasterHR_All" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerUpdAgentHR_All" SpName="Acc_CustomerUpdAgentHR_All" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerUpdMemberHR_All" SpName="Acc_CustomerUpdMemberHR_All" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerUpdMemberHR_SAg" SpName="Acc_CustomerUpdMemberHR_SAg" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerUpdMemberHR_MAg" SpName="Acc_CustomerUpdMemberHR_MAg" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_RacingBetSettingSel" SpName="Acc_RacingBetSettingSel" DbName="DBCUST.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_RacingBetSettingUpd" SpName="Acc_RacingBetSettingUpd" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="GetMasterMinMax" SpName="Acc_CustomerSelHRComEditOverride_MAg" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="GetAgentMinMax" SpName="Acc_CustomerSelHRComEditOverride_Ag" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="UpdateMinMaxPt" SpName="Acc_CustOverrideUpdHR" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-  </Function>
+  
   <Function Name="Casino">
     <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="dblog" IgnoreImport="true" />
   </Function>
@@ -300,10 +242,7 @@
       <Setting Key="Acc_CustomerWinlimitUpd" SpName="Acc_CustomerWinlimitUpd" DbName="DBCust.CustDB.bodbExtAccNet" />
     </Function>
   </Functions>
-  <Function Name="Racing Setting">
-    <Setting Key="Acc_CustomerSelHRStatus" SpName="Acc_CustomerSelHRStatus_andy" DbName="DBAGE.bodb02.bodbExtAccNet" />
-    <Setting Key="Acc_CustomerUpdHRStatus" SpName="Acc_CustomerUpdHRStatus_andy" DbName="DBCust.CustDB.bodbExtAccNet" />
-  </Function>
+  
   <Function Name="Colossus Bet Setting">
     <Function Name="Get Setting">
       <Setting Key="Acc_CustomerSelEditSuperColossusBet" SpName="Acc_CustomerSelEditSuperColossusBet" DbName="DBCUST.CustDB.bodbExtAccNet" />

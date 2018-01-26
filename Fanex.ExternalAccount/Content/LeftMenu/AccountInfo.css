@@ -871,25 +871,7 @@ select.commission
 	margin-right: 2px;
 	cursor: pointer;
 }
-.tblRacingPopUp
-{
-	border-collapse: collapse;
-	border: solild 0 black;
-	width: 100%;
-}
 
-.tblRacingPopUp tr
-{
-	border: solid 1px #999;
-}
-
-.tblRacingPopUp tr th
-{
-	background: url(../../_GlobalResources/Images/bg_boxTop.jpg) repeat-x scroll 0 -30px #999999;
-	text-align: center;
-	line-height: 18px;
-	color: #333;
-}
 
 #tbl_custsettings
 {

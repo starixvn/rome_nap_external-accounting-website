@@ -183,9 +183,6 @@
   <data name="agentposition" xml:space="preserve">
     <value>Agent Position</value>
   </data>
-  <data name="agentRealTimeBingoWinloss" xml:space="preserve">
-    <value>Agent Real Time Bingo Winloss</value>
-  </data>
   <data name="agentRealTimeWinloss" xml:space="preserve">
     <value>Agent Real Time Casino Winloss</value>
   </data>
@@ -427,12 +424,6 @@
   </data>
   <data name="Billiard" xml:space="preserve">
     <value>Billiard</value>
-  </data>
-  <data name="bingo" xml:space="preserve">
-    <value>Bingo</value>
-  </data>
-  <data name="bingoPositionTaking" xml:space="preserve">
-    <value>Bingo Position Taking (%)</value>
   </data>
   <data name="bonusFreeSpin" xml:space="preserve">
     <value>Bonus Free Spin</value>
@@ -733,17 +724,11 @@
   <data name="editcustinfo" xml:space="preserve">
     <value>Edit Customer Information</value>
   </data>
-  <data name="editmultbingo" xml:space="preserve">
-    <value>Edit Multiple Bingo PT</value>
-  </data>
   <data name="editmultcs" xml:space="preserve">
     <value>Edit Multiple Casino PT</value>
   </data>
   <data name="editmultfinance" xml:space="preserve">
     <value>Edit Multiple Finance's PT</value>
-  </data>
-  <data name="editmulthr" xml:space="preserve">
-    <value>Edit Multiple Racing PT</value>
   </data>
   <data name="editmultsportbook" xml:space="preserve">
     <value>Edit Multiple Sportsbook's PT</value>
@@ -831,12 +816,6 @@
   </data>
   <data name="filterfi" xml:space="preserve">
     <value>Filtered data for Financial product are only available from june 15th 2009</value>
-  </data>
-  <data name="filterhr" xml:space="preserve">
-    <value>Filtered data for Horse Racing product are only available from june 15th 2009</value>
-  </data>
-  <data name="filterhrandfi" xml:space="preserve">
-    <value>Filtered data for Horse Racing and Financial product are only available from june 15th 2009</value>
   </data>
   <data name="fiminpt" xml:space="preserve">
     <value>Finance's Min PT</value>
@@ -1027,23 +1006,8 @@
   <data name="homeaway" xml:space="preserve">
     <value>Home/Away</value>
   </data>
-  <data name="Horse" xml:space="preserve">
-    <value>Racing</value>
-  </data>
-  <data name="horseRacing" xml:space="preserve">
-    <value>Racing</value>
-  </data>
-  <data name="horseracingComm" xml:space="preserve">
-    <value>Racing Commission</value>
-  </data>
   <data name="HotLevel" xml:space="preserve">
     <value>Hot Level</value>
-  </data>
-  <data name="hr" xml:space="preserve">
-    <value>Racing</value>
-  </data>
-  <data name="hrminpt" xml:space="preserve">
-    <value>Racing's Min PT</value>
   </data>
   <data name="ht" xml:space="preserve">
     <value>HT</value>
@@ -1308,12 +1272,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="lblAlertDisableCSMember" xml:space="preserve">
     <value>Are you sure you want to disable Casino on this customer?</value>
   </data>
-  <data name="lblAlertDisableHR" xml:space="preserve">
-    <value>WARNING!!! \n\n Are you sure you want to disable Horse Racing on this customer and all downlines?</value>
-  </data>
-  <data name="lblAlertDisableHRMember" xml:space="preserve">
-    <value>WARNING!!! \n\n Are you sure you want to disable Horse Racing on this customer?</value>
-  </data>
   <data name="lblAlertDisableSATote" xml:space="preserve">
     <value>WARNING!!! \n\n Are you sure you want to disable SA Tote on this customer and all downlines?</value>
   </data>
@@ -1340,12 +1298,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="lblAlertEnableFIMember" xml:space="preserve">
     <value>Are you sure you want to enable Finance on this customer?</value>
-  </data>
-  <data name="lblAlertEnableHR" xml:space="preserve">
-    <value>Are you sure you want to enable Horse Racing on this customer?</value>
-  </data>
-  <data name="lblAlertEnableHRDownline" xml:space="preserve">
-    <value>Do you want to enable Horse Racing on this all customer's downlines?</value>
   </data>
   <data name="lblAlertEnableSATote" xml:space="preserve">
     <value>Are you sure you want to enable SA Tote on this customer?</value>
@@ -1425,9 +1377,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="lblBettingLimit" xml:space="preserve">
     <value>Betting Limit</value>
   </data>
-  <data name="lblBingoTraditionalHandHistory" xml:space="preserve">
-    <value>Bingo Traditional Hand History</value>
-  </data>
   <data name="lblBold" xml:space="preserve">
     <value>Bold</value>
   </data>
@@ -1487,9 +1436,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="lblCommPTSuper" xml:space="preserve">
     <value>Super Commission</value>
-  </data>
-  <data name="lblcommssionhorseracing" xml:space="preserve">
-    <value>Racing Commission</value>
   </data>
   <data name="lblCompanyTotal" xml:space="preserve">
     <value>Company Total</value>
@@ -1587,9 +1533,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="lblDeadball" xml:space="preserve">
     <value>Dead Ball</value>
   </data>
-  <data name="lblDisabledHR" xml:space="preserve">
-    <value>Disabled Horse Racing</value>
-  </data>
   <data name="lblDraw" xml:space="preserve">
     <value>Draw</value>
   </data>
@@ -1610,9 +1553,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="lbleditfi" xml:space="preserve">
     <value>Edit Finance</value>
-  </data>
-  <data name="lbledithr" xml:space="preserve">
-    <value>Edit Racing</value>
   </data>
   <data name="lblEditInfo" xml:space="preserve">
     <value>Edit Info</value>
@@ -1704,9 +1644,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="lblHANDICAPTOTAL" xml:space="preserve">
     <value>Handicap Total</value>
   </data>
-  <data name="lblHorseName" xml:space="preserve">
-    <value>Racing</value>
-  </data>
   <data name="lblHorseNo" xml:space="preserve">
     <value>Runner No</value>
   </data>
@@ -1718,9 +1655,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="lblHRFOComm" xml:space="preserve">
     <value>HR Fodds</value>
-  </data>
-  <data name="lblHrFOdds" xml:space="preserve">
-    <value>Horse Racing (FOdds)</value>
   </data>
   <data name="lblHROthersComm" xml:space="preserve">
     <value>HR SA</value>
@@ -1736,9 +1670,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="lblInformation" xml:space="preserve">
     <value>INFORMATION</value>
-  </data>
-  <data name="lblInvalidCurrencyHR" xml:space="preserve">
-    <value>This customer is not allowed to bet on the Horse Racing.</value>
   </data>
   <data name="lblLive" xml:space="preserve">
     <value>Live!</value>
@@ -2014,9 +1945,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="lblRace" xml:space="preserve">
     <value>Race </value>
   </data>
-  <data name="lblRealTimeBingoWinloss" xml:space="preserve">
-    <value>Real Time Bingo Win Loss</value>
-  </data>
   <data name="lblRealTimeCSWinloss" xml:space="preserve">
     <value>Real Time Casino Win Loss</value>
   </data>
@@ -2049,11 +1977,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="lblSorryThere" xml:space="preserve">
     <value>Sorry, there is no detail information for  Reference No </value>
-  </data>
-  <data name="lblSportsbookandHorseRacing" xml:space="preserve">
-    <value>Sportsbook/Horse Racing</value>
-    <comment>Label</comment>
-  </data>
+  </data>  
   <data name="lblStartBalance" xml:space="preserve">
     <value>Start Balance</value>
   </data>
@@ -2102,12 +2026,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="lblTotalBalance" xml:space="preserve">
     <value>Total Balance</value>
   </data>
-  <data name="lblTotalBGOutstanding" xml:space="preserve">
-    <value>Total Bingo Outstanding</value>
-  </data>
-  <data name="lblTotalBGTransfer" xml:space="preserve">
-    <value>Total Bingo Transfer</value>
-  </data>
   <data name="lblTotalCash" xml:space="preserve">
     <value>Total Cash</value>
   </data>
@@ -2131,9 +2049,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="lblUKMeetingHR" xml:space="preserve">
     <value>UK Meeting</value>
-  </data>
-  <data name="lblUpdatedSuccessfullHR" xml:space="preserve">
-    <value>Horse Racing Setting was updated successfully.</value>
   </data>
   <data name="lblUsedGivenCredit" xml:space="preserve">
     <value>Used Given Credit</value>
@@ -2255,9 +2170,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="masterposition" xml:space="preserve">
     <value>Master Position</value>
   </data>
-  <data name="masterRealTimeBingoWinloss" xml:space="preserve">
-    <value>Master Real Time Bingo Winloss</value>
-  </data>
   <data name="masterRealTimeWinloss" xml:space="preserve">
     <value>Master Real Time Casino Winloss</value>
   </data>
@@ -2320,9 +2232,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="memberoutstanding" xml:space="preserve">
     <value>Member Outstanding</value>
-  </data>
-  <data name="memberRealTimeBingoWinloss" xml:space="preserve">
-    <value>Member Real Time Bingo Winloss</value>
   </data>
   <data name="memberRealTimeWinloss" xml:space="preserve">
     <value>Member Real Time Casino Winloss</value>
@@ -2611,12 +2520,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="P2" xml:space="preserve">
     <value>2P</value>
   </data>
-  <data name="P2P" xml:space="preserve">
-    <value>P2P</value>
-  </data>
-  <data name="p2pGame" xml:space="preserve">
-    <value>P2P Games</value>
-  </data>
   <data name="P3" xml:space="preserve">
     <value>3P</value>
   </data>
@@ -2706,9 +2609,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="quickSelect" xml:space="preserve">
     <value>Quick Select</value>
-  </data>
-  <data name="Racebook" xml:space="preserve">
-    <value>Racing</value>
   </data>
   <data name="refno" xml:space="preserve">
     <value>Ref No</value>
@@ -2898,7 +2798,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
     <value>Sport Consolidated Report</value>
   </data>
   <data name="SportHorseNumberGame" xml:space="preserve">
-    <value>Sportsbook - Racing - Number Game</value>
+    <value>Sportsbook - Number Game</value>
   </data>
   <data name="sportwinlossanalysisreport" xml:space="preserve">
     <value>Sport Winloss Analysis</value>
@@ -3463,9 +3363,6 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="privateGames" xml:space="preserve">
     <value>Private Games</value>
   </data>
-  <data name="editP2P" xml:space="preserve">
-    <value>Edit P2P</value>
-  </data>
   <data name="lblOverEven" xml:space="preserve">
     <value>Over Even</value>
   </data>
@@ -3484,9 +3381,6 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   </data>
   <data name="combination" xml:space="preserve">
     <value>Combination</value>
-  </data>
-  <data name="editmultp2p" xml:space="preserve">
-    <value>Edit Multiple P2P</value>
   </data>
   <data name="lblSystemParlay" xml:space="preserve">
     <value>System Parlay</value>
@@ -3557,20 +3451,8 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="plsChooseMatch" xml:space="preserve">
     <value>Please choose a match!</value>
   </data>
-  <data name="lblTotalP2PTransfer" xml:space="preserve">
-    <value>P2P Transfer</value>
-  </data>
-  <data name="lblTotalP2POutstanding" xml:space="preserve">
-    <value>P2P Outstanding</value>
-  </data>
   <data name="lblTotalCSTransferOutstanding" xml:space="preserve">
     <value>Total Casino Transfer|Outstanding</value>
-  </data>
-  <data name="lblTotalBGTransferOutstanding" xml:space="preserve">
-    <value>Total Bingo Transfer|Outstanding</value>
-  </data>
-  <data name="lblTotalP2PTransferOutstanding" xml:space="preserve">
-    <value>Total P2P Transfer|Outstanding</value>
   </data>
   <data name="at" xml:space="preserve">
     <value>at</value>
@@ -3635,9 +3517,6 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="searchExistingMember" xml:space="preserve">
     <value>Search Existing Member</value>
   </data>
-  <data name="LiveCasino" xml:space="preserve">
-    <value>Live Casino</value>
-  </data>
   <data name="PositionTakingCommission" xml:space="preserve">
     <value>Position Taking/Commission</value>
   </data>
@@ -3650,12 +3529,6 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="SavePositionTakingCommission" xml:space="preserve">
     <value>Save Position Taking/Commission</value>
   </data>
-  <data name="EditLiveCasino" xml:space="preserve">
-    <value>Edit Live Casino</value>
-  </data>
-  <data name="EditLiveCasinoMultiple" xml:space="preserve">
-    <value>Edit Multiple Live Casino</value>
-  </data>
   <data name="gameTypeAndTableNumber" xml:space="preserve">
     <value>Game Type - Table Number</value>
   </data>
@@ -3667,9 +3540,6 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   </data>
   <data name="proceedWithThisSetting" xml:space="preserve">
     <value>Proceed with this setting</value>
-  </data>
-  <data name="hrminpt1" xml:space="preserve">
-    <value>Racing's Min PT</value>
   </data>
   <data name="wannaSetMinPT" xml:space="preserve">
     <value>Wanna set a minimum Position Taking on downline? Try these settings now!</value>
@@ -3736,12 +3606,6 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   </data>
   <data name="updateFailed" xml:space="preserve">
     <value>Updated unsuccessfully</value>
-  </data>
-  <data name="confirmEnableLiveCasino" xml:space="preserve">
-    <value>Enable Live Casino?</value>
-  </data>
-  <data name="confirmDisableLiveCasino" xml:space="preserve">
-    <value>Disable Live Casino?</value>
   </data>
   <data name="leastOneDayTransfer" xml:space="preserve">
     <value>Please select at least one day for transferring</value>

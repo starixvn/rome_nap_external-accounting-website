@@ -24,8 +24,7 @@
     <div id="mainContainer" class="main-content">
         @RenderBody()
     </div>
-    @Html.AntiForgeryToken()
-    @Html.Hidden("LiveCasinoRoot", Url.Content("~/"))
+    @Html.AntiForgeryToken()    
     @Scripts.Render("~/areasjs/golddeluxe/core")
     @if (GoldDeluxeSettings.Settings.System == SystemType.Accounting)
     {

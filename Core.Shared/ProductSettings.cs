@@ -27,9 +27,7 @@
 
         public static bool IsShowColossusBets => IsShowProduct(ProductConstants.ColossusBets);
 
-        public static bool IsShowSportsbook2 => IsShowProduct(ProductConstants.Sportsbook2);
-
-        public static bool IsShowCockfighting => IsShowProduct(ProductConstants.CockFighting);
+        public static bool IsShowSportsbook2 => IsShowProduct(ProductConstants.Sportsbook2);        
 
         public static bool IsShowCricket => IsShowProduct(ProductConstants.Cricket);
 

@@ -113,13 +113,11 @@
             SetNonProductStatus(roleId, custStatus, statusRow);
 
             SetNumberGameStatus(custStatus, statusRow);
-            SetCasinoStatus(custStatus, statusRow);
-            SetLiveCasinoStatus(custStatus, statusRow);
+            SetCasinoStatus(custStatus, statusRow);            
             SetVirtualSportsStatus(custStatus, statusRow);
             SetKenoStatus(custStatus, statusRow);
             SetEsportsStatus(custStatus, userId, statusRow);
             SetSportsbook2Status(custStatus, statusRow);
-            SetCockfightingStatus(custStatus, statusRow);
             SetCricketStatus(custStatus, statusRow);
             SetColossusBetsStatus(custStatus, statusRow);
             SetGoldDeluxeStatus(custStatus, statusRow);
@@ -158,18 +156,9 @@
             => custStatus.HideCricket = statusRow.HideCricket()
                                         || !ProductSettings.IsShowCricket
                                         || !statusRow.IsIMBC();
-
-        private static void SetCockfightingStatus(CustomerStatus custStatus, DataRow statusRow)
-            => custStatus.HideCockfighting = statusRow.HideCockfighting() || !ProductSettings.IsShowCockfighting;
-
+      
         private static void SetSportsbook2Status(CustomerStatus custStatus, DataRow statusRow)
             => custStatus.HideSportsbook2 = statusRow.HideMuayThai() || !ProductSettings.IsShowSportsbook2;
-
-        private static void SetLiveCasinoStatus(CustomerStatus custStatus, DataRow statusRow)
-        {
-            custStatus.SyncLiveCasino = statusRow.SyncLiveCasino();
-            custStatus.DisableLiveCasino = statusRow.DisableLiveCasino();
-        }
 
         private static void SetCasinoStatus(CustomerStatus custStatus, DataRow statusRow)
         {
@@ -190,8 +179,7 @@
         private static void SetVirtualSportsStatus(CustomerStatus custStatus, DataRow statusRow)
         {
             custStatus.HideVirtualSports = statusRow.HideVirtualSports();
-            custStatus.DisableVirtualSports = statusRow.DisableVirtualSports();
-            custStatus.DisableHRFixedOdds = statusRow.DisableHRFixedOdds();
+            custStatus.DisableVirtualSports = statusRow.DisableVirtualSports();            
         }
 
         private static void SetKenoStatus(CustomerStatus custStatus, DataRow statusRow)
@@ -212,21 +200,18 @@
             {
                 RoleId = roleId + 1,
                 SyncCasino = uplineRow.SyncCasino(),
-                SyncLiveCasino = uplineRow.SyncLiveCasino(),
                 DisableTransfer = (roleId + 1).IsNotSuper() && uplineRow.DisableTransfer(),
                 AllowDoubleComm = uplineRow.EnableDoubleComm(),
                 DisableVirtualSports = uplineRow.DisableVirtualSports(),
                 AllowOutright = !uplineRow.DisableOutright(),
                 DisableNumberGame = uplineRow.DisableNumberGame(),
                 DisableCasino = uplineRow.DisableCasino(),
-                DisableLiveCasino = uplineRow.DisableLiveCasino(),
                 DisableGoldDeluxe = uplineRow.DisableGoldDeluxe(),
                 HideGoldDeluxe = uplineRow.HideGoldDeluxe() || !ProductSettings.IsShowGoldDeluxe,
                 DisableColossusBets = uplineRow.DisableColossusBet(),
                 Closed = uplineRow.Closed(),
                 Suspended = uplineRow.Suspended(),
-                HideVirtualSports = uplineRow.HideVirtualSports(),
-                DisableHRFixedOdds = uplineRow.DisableHRFixedOdds(),
+                HideVirtualSports = uplineRow.HideVirtualSports(),                
                 DisableESports = uplineRow.DisableESports()
             };
 

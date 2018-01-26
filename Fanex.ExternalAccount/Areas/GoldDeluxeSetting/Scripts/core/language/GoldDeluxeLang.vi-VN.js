@@ -18,8 +18,7 @@ language.goldDeluxe['vi-VN'] = {
 	lblClose : "Khóa",
 	lblCurrentWinLimit : "Giới hạn thắng cược lớn nhất tại thời điểm hiện tại",
 	lblCustomerInformation : "Thông tin thành viên",
-	lblDailyAutoResetLimit : "Tự động reset giới hạn chuyển khoản  mỗi ngày (12 trưa GMT+8)",
-	lblEditMultipleLiveCasino : "Tùy chỉnh đồng loạt cho Live Casino",
+	lblDailyAutoResetLimit : "Tự động reset giới hạn chuyển khoản  mỗi ngày (12 trưa GMT+8)",	
 	lblEnable : "Cho phép",
 	lblFax : "Fax",
 	lblFirstName : "Tên",
@@ -64,8 +63,6 @@ language.goldDeluxe['vi-VN'] = {
 	UnauthorizeMsg : "Bạn không được cho phép sử dụng chức năng này",
 	UpdatedUnsuccessfully : "Câp nhật không thành công",
 	UpdatedWinLimitSuccessfully : "Tiền thắng cược lớn nhất: Câp nhật thành công",
-	UpdateLiveCasinoStatusSuccess : "Trạng thái: Câp nhật thành công",
-	UpdateLiveCasinoStatusUnSuccess : "Quá trình câp nhật không thành công bởi vì Live Casino đã bị khóa bởi cấp trên",
 	UpdateSuccessfully : "Câp nhật thành công",
 	WarningUncheckAllStakeLevelMsg : "Không chọn bất kỳ cấp độ đặt cược sẽ ành hưởng đến tất cả những thành viên cấp dưới"
 };

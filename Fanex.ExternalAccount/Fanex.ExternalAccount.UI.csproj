@@ -139,10 +139,6 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoSetting.ExtNAP.1.0.0.1-SecurityInOct-03\lib\net40\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Racebook, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Racing.NAP.1.0.0.3\lib\net40\Fanex.CustomerSetting.Module.Racebook.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Racebook.Resources">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Racebook.RacebookResources.1.0.0.0\lib\net40\Fanex.CustomerSetting.Module.Racebook.Resources.dll</HintPath>
     </Reference>
@@ -164,14 +160,6 @@
     </Reference>
     <Reference Include="Fanex.HttpModule.NG2.UM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.HttpModule.NG2.UM.1.0.0.1\lib\net40\Fanex.HttpModule.NG2.UM.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.LiveCasino.CoreSetting, Version=1.2.2.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.LiveCasino.CoreSetting.NAP.1.2.2.6\lib\net40\Fanex.LiveCasino.CoreSetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.LiveCasinoSetting, Version=1.0.423.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.LiveCasinoSetting.1.0.0\lib\net40\Fanex.LiveCasinoSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Logging, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
@@ -210,10 +198,6 @@
       <HintPath>..\packages\Fanex.PTEngine.1.0.4.5\lib\net40\Fanex.PTEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.PTRacing, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTRacing.1.0.0.5\lib\net40\Fanex.PTRacing.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.PTSetting.BettypeReference, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTSetting.BettypeReference.1.0.0.1\lib\net40\Fanex.PTSetting.BettypeReference.dll</HintPath>
       <Private>True</Private>
@@ -244,10 +228,6 @@
     </Reference>
     <Reference Include="Ionic.Zip, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.9.1.5\lib\net40\Ionic.Zip.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="LiveCasinoLibrary, Version=1.0.0.18, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiveCasinoLibrary.1.0.0.18\lib\net40\LiveCasinoLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.9.0, Culture=neutral, PublicKeyToken=b32731d11ce58905">
@@ -476,14 +456,6 @@
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Keno\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Keno\Scripts\KenoController.js" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Keno\Styles\Keno.css" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\LiveCasino\Content.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\LiveCasino\Index.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\LiveCasino\Scripts\LiveCasinoController.js" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\LiveCasino\Styles\LiveCasino.css" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Racing\Content.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Racing\Index.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Racing\Scripts\RacingController.js" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Racing\Styles\Racing.css" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Scripts\BetSetting.js" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Shared\_Layout.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Content.cshtml" />
@@ -613,7 +585,6 @@
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Update.png" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Readme.txt" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Scripts\EnableStatus.js" />
-    <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Templates\SPs.txt" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Scripts\EnableStatus.js" />
     <Content Include="Areas\CustomerSetting\Views\EnableThirdPartyProductStatus\Scripts\EnableThirdPartyProductStatus.js" />
     <Content Include="Areas\CustomerSetting\Views\EnableThirdPartyProductStatus\Styles\EnableThirdPartyProductStatus.css" />
@@ -795,131 +766,6 @@
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\UsedCredit\MasterAgentCredit.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\UsedCredit\MemberCredit.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\UsedCredit\Scripts\MasterAgentUsedCreditController.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\common.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\CommonPT.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\BlockUI.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\Functions.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\jquery.blockUI.1.33.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\jquery.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\jquery.tmpl.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\json2.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\knockout-2.0.0.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\tip_balloon.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\tip_balloon2.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\tip_balloon\b.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\tip_balloon\background.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\tip_balloon\l.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\tip_balloon\lb.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\tip_balloon\lt.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\tip_balloon\r.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\tip_balloon\rb.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\tip_balloon\rt.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\tip_balloon\stemb.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\tip_balloon\stemt.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\tip_balloon\t.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\tip_centerwindow.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\tip_followscroll.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Libs\ToolTip\wz_tooltip\wz_tooltip.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\AgentMinMaxPT.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\BettingCommSetting.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\MasterMinMaxPT.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\MinMaxPTRacingSetting.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\RacingHelper.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Scripts\Setting\RacingSetting.js" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Setting\Agent.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Setting\AgentMinMaxPT.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Setting\Master.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Setting\MasterEditMember.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Setting\MasterMinMaxPT.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Setting\Member.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Setting\RacingSetting.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Setting\Super.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Setting\SuperEditMember.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Shared\_Layout.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Shared\_LayoutMinMaxPT.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\common.css" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\accessDenied.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\back.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\bg_banner.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\bg_head_tb.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\bg_menu.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\down.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\down_up.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\icn_user.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\in.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\left_right.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\logo.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\L_main_btn.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\out.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\right_left.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\R_main_btn.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\up.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Banner\up_down.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\bg_checkbox.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\btUpdateL.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\btUpdateR.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\bgred1_btn.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\bgred_btn.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\bg_btn.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\check.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\checked-icon.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\check_hover.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\icn_date.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\uncheck.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\uncheck_hover.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\unverify-icon.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\calendar1.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\close.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\C_content_tab.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\dec1.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\dec1_disable.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\dec2.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\dec2_disable.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\dec3.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\dec3_disable.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\dec4.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\dec4_disable.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\email.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\emsg_1_1.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\emsg_1_2.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\emsg_1_3.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\emsg_2_1.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\emsg_2_2.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\emsg_3_1.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\emsg_3_2.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\emsg_3_3.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\excel.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\folder.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\help.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\icn_add.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\icn_del.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\icn_edit.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\icn_top.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\icn_view.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\ico1.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\ico_clear.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\ico_login1.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\ico_login2.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\ico_warning.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\loading51.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\L_content_tab.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\opened_folder.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\ptL.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\ptR.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\ptRp.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\ptR_down.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\refresh_icon.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\R_content_tab.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Save.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\sorting_asc.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\sorting_bg.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\sorting_desc.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\sucess.gif" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\undo.png" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\input.css" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\minmaxpt.css" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\RacingSetting.css" />
-    <Content Include="Areas\CustomerSetting\Views\Racebook\Styles\table.css" />
     <Content Include="Areas\CustomerSetting\Views\SecurityCode\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Security\AccessDenied.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\Shared\_Layout.cshtml" />
@@ -997,72 +843,6 @@
     <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-super.htm" />
     <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\PtAndCom\master-edit-member.htm" />
     <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\PtAndCom\super-edit-member.htm" />
-    <Content Include="Areas\LiveCasinoSetting\Content\bootstrap.css" />
-    <Content Include="Areas\LiveCasinoSetting\Content\bootstrap.css.map" />
-    <Content Include="Areas\LiveCasinoSetting\Content\fanex-live-casino-setting-override.css" />
-    <Content Include="Areas\LiveCasinoSetting\Content\fanex-live-casino-setting.css" />
-    <Content Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\agency-button-left.gif" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\agency-button.gif" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\agency-title-header.jpg" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\btn-update-setting.jpg" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\center-header.png" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\cross.png" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\error-icon.gif" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\ext-acc-btn-hover.png" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\ext-acc-btn.png" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\header-popup-background.jpg" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\infoMsg.gif" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\left-header.png" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\loader3.gif" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\popup-background.jpg" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\right-header.png" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\save.png" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\Success.gif" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\tick.png" />
-    <Content Include="Areas\LiveCasinoSetting\Content\Images\warning.png" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\core\fanex-live-casino-setting.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.en-US.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.ja-JP.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.ko-KR.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.th-TH.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.vi-VN.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.zh-CN.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\core\language\LiveCasinoLang.zh-TW.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\core\live-casino-lang.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular-sanitize.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\angular.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\bootstrap.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery-1.11.1.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\jquery.blockUI.js" />
-    <Content Include="Areas\LiveCasinoSetting\Scripts\libs\numeral.js" />
-    <Content Include="Areas\LiveCasinoSetting\Views\Common\NoInformation.cshtml" />
-    <Content Include="Areas\LiveCasinoSetting\Views\Common\UnAuthorized.cshtml" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\EditSettingMultiple.cshtml" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\EditSettingSingle.cshtml" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-game-setting-controller.js" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-info-controller.js" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-setting-controller.js" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\cust-win-limit-controller.js" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\controllers\pt-and-com-setting-controller.js" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\directives\pt-and-com-setting-directive.js" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-game-setting-service.js" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-setting-service.js" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\cust-win-limit-service.js" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\services\pt-and-com-setting-service.js" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\agent-edit-member.htm" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-agent.htm" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-master.htm" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-super.htm" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\master-edit-member.htm" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\templates\PtAndCom\super-edit-member.htm" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\GameSetting.cshtml" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\MemberWinLimit.cshtml" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\Setting\PTAndCom.cshtml" />
-    <Content Include="Areas\LiveCasinoSetting\Views\EditSetting\_EditSetting.cshtml" />
-    <Content Include="Areas\LiveCasinoSetting\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\LiveCasinoSetting\Views\Web.config" />
     <Content Include="Areas\NG2\Styles\Images\icon_warning.gif" />
     <Content Include="Areas\NG2\Styles\um.css" />
     <Content Include="Areas\NG2\UM.aspx" />
@@ -2191,9 +1971,6 @@
     <Content Include="PTEngine\PTGrid.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="PTEngine\PTRacingGrid.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Scripts\Assets\css\1200.css" />
     <Content Include="Scripts\Assets\css\1200.min.css" />
     <Content Include="Scripts\Assets\css\1560.css" />
@@ -2575,8 +2352,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Common\Views\Shared\Styles\" />
-    <Folder Include="Areas\LiveCasinoSetting\Scripts\libs\core\language\" />
-    <Folder Include="Areas\LiveCasinoSetting\Views\EditSetting\Scripts\actions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />
@@ -2640,7 +2415,6 @@
     </None>
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\OTP\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\EnableThirdPartyProductStatus\Index.cshtml" />
-    <None Include="Areas\CustomerSetting\Views\Racebook\Styles\Images\Buttons\AntiXss.msi" />
     <None Include="Areas\GoldDeluxeSetting\Content\bootstrap.css.map" />
     <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
@@ -2655,9 +2429,6 @@
     <Content Include="Areas\GoldDeluxeSetting\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\GoldDeluxeSetting\Views\Web.config" />
     <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Setting\MemberWinLimit.cshtml" />
-    <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.eot" />
-    <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
-    <None Include="Areas\LiveCasinoSetting\Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Areas\Reports\WinlossDetail\Products.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2892,15 +2663,9 @@
     <Content Include="Views\Group\GrantPermission.cshtml" />
     <Content Include="ExcelTemplates\Statement\Statement.xls" />
     <Content Include="PTEngine\BettingLimitMappingSection.config" />
-    <Content Include="PTEngine\PTMappingSection.config" />
     <Content Include="IbcKeys\ibckeydec.snk" />
     <Content Include="IbcKeys\ibcpkey.snk" />
     <Content Include="IbcKeys\Web.config" />
-    <Content Include="PTEngine\PTRacingMappingSection.config" />
-    <Content Include="PTEngine\RacingBettingCommSettingMappingSection.config" />
-    <Content Include="PTEngine\RacingSection.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Web.kbt67.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2920,6 +2685,7 @@
     <Content Include="assets\styles\abstracts\_variables.scss" />
     <Content Include="assets\styles\abstracts\_mixins.scss" />
     <Content Include="Content\Images\um.svg" />
+    <Content Include="PTEngine\PTMappingSection.config" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />
