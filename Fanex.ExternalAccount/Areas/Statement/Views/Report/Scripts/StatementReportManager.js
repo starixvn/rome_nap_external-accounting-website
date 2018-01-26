@@ -540,7 +540,7 @@ var StatementReportManager = function () {
 
         url += jQuery.param(criteria);
 
-        document.location.href = url;
+        return url;
     };
 };
 var statementReportManager = new StatementReportManager();

@@ -92,20 +92,49 @@ Fanex.ExtAcc.Statement = {
 
                 if (statementReportManager.IsUseNewLayout(criteria)) {
                     statementReportCriteria = criteria;
-                    statementReportCriteria.fromDate = moment(new Date($this.fromdate)).format("MM DD, YYYY");
-                    statementReportCriteria.toDate = moment(new Date($this.todate)).format("MM DD, YYYY");
+                    statementReportCriteria.fromDate = moment(new Date($this.fromdate)).format("MM/DD/YYYY");
+                    statementReportCriteria.toDate = moment(new Date($this.todate)).format("MM/DD/YYYY");
 
                     var url = domain + 'NapStatement/StatementReport/GetCustomerInfo';
-                    statementReportManager.callAjax(url, criteria, function (rs) {
-                        statementReportCriteria.custId = rs.CustomerId;
-                        statementReportCriteria.roleId = rs.RoleId;
-                        statementReportManager.exportStatementReport(statementReportCriteria);
+
+                    var success = false;
+                    var result;
+
+                    jQuery.ajax({
+                        type: "POST",
+                        url: url,
+                        data: jQuery.param(criteria),
+                        responseType: "json",
+                        async: false,
+                        success: function (rs) {
+                            success = true;
+                            result = rs;
+                        },
+                        error: function (jqXhr, event, ajaxSettings) {
+                            if (jqXhr.status && jqXhr.status == 500) {
+                                var r = jQuery.parseJSON(jqXhr.responseText);
+                                alert(r.Message);
+                            }
+
+                            if (statementReportManager.eventFunction.unblockUI) {
+                                statementReportManager.eventFunction.unblockUI();
+                            }
+                        }
                     });
+
+                    if (success) {
+                        statementReportCriteria.custId = result.CustomerId;
+                        statementReportCriteria.roleId = result.RoleId;
+                        var url = statementReportManager.exportStatementReport(statementReportCriteria);
+                        top.exportExcel(url, document);
+                    }
+
                     return;
                 }
             }
 
-            var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
+            var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate +
+                '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
 
             top.exportExcel(resolveClientUrl("Statement/GetExportToExcel?") + params, document);
         });

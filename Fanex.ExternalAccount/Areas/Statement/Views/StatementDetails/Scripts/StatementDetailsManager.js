@@ -108,7 +108,7 @@ var StatementDetailsManager = function () {
                     var url = location.protocol + window.rootUrl + 'NapStatement/StatementReport/ExportTransferDetails?' +
                         jQuery.param(transferDetailsCriteria);
 
-                    document.location.href = url;
+                    top.exportExcel(url, document);
                 }
             },
             showFooter: true
