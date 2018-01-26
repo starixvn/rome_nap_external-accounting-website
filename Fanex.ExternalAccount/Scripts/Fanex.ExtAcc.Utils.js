@@ -29,3 +29,11 @@ function disablePulldownAndReleaseRefresh() {
     document.addEventListener('touchstart', touchstartHandler, { passive: false });
     document.addEventListener('touchmove', touchmoveHandler, { passive: false });
 }
+
+function exportExcel(url, currentWindow) {
+    if (top.isMobile.phone || top.isMobile.tablet) {
+        window.open(url);
+    } else {
+        currentWindow.location.href = url;
+    }
+}

@@ -168,7 +168,7 @@
 
             var params = "groupName=" + data.groupName + "&enabled=" + data.enabled + "&closed=" + data.closed + "&suspended=" + data.suspended + "&sRecommend=" + Fanex.ExtAcc.Customer.superId + "&mRecommend=" + Fanex.ExtAcc.Customer.masterId + "&recommend=" + Fanex.ExtAcc.Customer.agentId + "&custId=" + Fanex.ExtAcc.Customer.custId + "&currentLevel=" + Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username
 
-            $this.exportExcel(resolveClientUrl("Customer/GetExportToExcel?") + params);
+            top.exportExcel(resolveClientUrl("Customer/GetExportToExcel?") + params, document);
         });
 
         $('#txtUserName').keypress(function (e) {
@@ -219,14 +219,6 @@
             $("#jqgrid").fanexGrid("resizeGrid");
         }
         catch (err) { }
-    },
-
-    exportExcel: function (url) {
-        if (top.isMobile.phone || top.isMobile.tablet) {
-            window.open(url);
-        } else {
-            document.location.href = url;
-        }
     },
 
     GroupName: function () {

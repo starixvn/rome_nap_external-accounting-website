@@ -56,7 +56,8 @@ Fanex.ExtAcc.DailyWinLoss = {
 
         $('#exporttoexcel').click(function () {
             var params = "date=" + $this.date + "&viewlevel=" + ($this.viewlevel + 1) + '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
-            document.location.href = resolveClientUrl("DailyWinLoss/GetExportToExcel?") + params;
+            var url = resolveClientUrl("DailyWinLoss/GetExportToExcel?") + params;
+            top.exportExcel(url, document);
         });
 
         $('#tabSuper').click(function (e) {

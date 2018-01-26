@@ -27,11 +27,7 @@
                     + "&currentLevel=" + parent.Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username;
 
                     var url = parent.resolveClientUrl("Customer/GetExportToExcel?") + params;
-                    if (top.isMobile.phone || top.isMobile.tablet) {
-                        window.open(url);
-                    } else {
-                        parent.document.location.href = url;
-                    }
+                    top.exportExcel(url, document);
                 });
 
                 parent.$('#txtUserName').keypress(function (e) {

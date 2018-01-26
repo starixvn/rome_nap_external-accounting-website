@@ -106,7 +106,8 @@ Fanex.ExtAcc.Statement = {
             }
 
             var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
-            document.location.href = resolveClientUrl("Statement/GetExportToExcel?") + params;
+
+            top.exportExcel(resolveClientUrl("Statement/GetExportToExcel?") + params, document);
         });
 
         var indexes = location.href.split('/');
