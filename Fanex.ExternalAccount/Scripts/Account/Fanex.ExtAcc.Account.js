@@ -50,29 +50,37 @@ Fanex.ExtAcc.Account = {
         if (document.forms.length > 0) {
             $('#UserName').focus();
             document.forms[0].onsubmit = function () {
+                var errorMessage = "";
+                var errorField;
+
                 if ($('#UserName').val().toString().search(/^[<\s\s*>]/) != -1) {
-                    $('#UserName').focus();
-                    Validators.show($('#UserName').get(0), 'Not allow HTML TAG');
-                    return false;
+                    errorField = $('#UserName');
+                    errorMessage = 'Username is not allow HTML TAG';
                 }
 
                 if ($('#Password').val().toString().search(/^[<\s\s*>]/) != -1) {
-                    $('#Password').focus();
-                    Validators.show($('#Password').get(0), 'Not allow HTML TAG');
-                    return false;
+                    errorField = $('#Password');
+                    errorMessage = 'Password is not allow HTML TAG';
                 }
 
                 if ($('#UserName').val() == '') {
-                    $('#UserName').focus();
-                    Validators.show($('#UserName').get(0), 'This field is required');
-                    return false;
+                    errorField = $('#UserName');
+                    errorMessage = 'Username is required';
                 }
 
                 if ($('#Password').val() == '') {
-                    $('#Password').focus();
-                    Validators.show($('#Password').get(0), 'This field is required');
+                    errorField = $('#Password');
+                    errorMessage = 'Password is required';
+                }
+
+                if (errorMessage !== "") {
+                    $("#err-message").html(errorMessage).removeClass("hide");
+                    errorField.addClass("invalid-field").focus();
                     return false;
                 }
+
+                $("#err-message").addClass("hide");
+                $(".invalid-field").removeClass("invalid-field");
 
                 $('#Password').val($('#Password').val().ec($('#Code').val()).hc());
             };
@@ -108,7 +116,7 @@ Fanex.ExtAcc.Account = {
             }
         });
 
-        var hasMenu =isMobile.tablet ? 
+        var hasMenu = isMobile.tablet ?
             $(".main-menu .menu .hasChild") :
             $("#sidebar .menu .hasChild");
         hasMenu.on("click", function () {
@@ -119,7 +127,7 @@ Fanex.ExtAcc.Account = {
 
                 submenu.removeClass('show-submenu').addClass('hide-submenu');
                 menu.removeClass("active");
-               
+
             } else {
                 $(".submenu").removeClass('show-submenu').addClass('hide-submenu');
                 hasMenu.removeClass("active");
@@ -143,7 +151,7 @@ Fanex.ExtAcc.Account = {
             }
 
             $this.collapseSidebar();
-        }); 
+        });
 
         var widthDevice = $(window).width();
         if (isMobile.phone || (widthDevice >= 768 && widthDevice <= 1600)) {

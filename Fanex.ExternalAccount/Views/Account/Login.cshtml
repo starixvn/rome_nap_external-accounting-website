@@ -5,6 +5,8 @@
 @{
     ViewBag.Title = ViewLang.LoginTitle;
     var showCaptcha = ViewBag.ShowCaptcha == string.Empty ? string.Empty : "none";
+    var errorMessage = CurrentContext.LoginErrorMessage;
+    CurrentContext.LoginErrorMessage = string.Empty;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -22,13 +24,9 @@
             <div class="row">
                 <div class="login-logo icon-outline-lock"></div>
             </div>
-            @if (!string.IsNullOrWhiteSpace(CurrentContext.LoginErrorMessage))
-            {
-                <div class="row errMsg">
-                    @CurrentContext.LoginErrorMessage
-                    @{CurrentContext.LoginErrorMessage = string.Empty;}
-                </div>
-                        }
+            <div id="err-message" class="row errMsg @(!string.IsNullOrWhiteSpace(errorMessage) ? "" :"hide")">
+                @errorMessage
+            </div>
             <div class="row">
                 @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @maxlength = 50, @placeholder = "username" })
                 <span class="icon-user"></span>
@@ -55,8 +53,8 @@
             </div>
         </div>
         @Html.Hidden("Code", Encryptor.Instance.Code)
-                        @Html.AntiForgeryToken()
-                        }
+        @Html.AntiForgeryToken()
+    }
     <div class="old-version"><a href="/old/account/login">Switch to previous version</a></div>
 
     <script type="text/javascript">
