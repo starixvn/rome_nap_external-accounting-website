@@ -13,7 +13,7 @@
 
         DataTable EAS_CustomerSelUserInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
 
-        CustomerInfoSearchResult GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
+        LineInfo GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
 
         List<SuggestedUserName> EAS_CustomerSelUserSearch(int custId, string username, string groupname);
 

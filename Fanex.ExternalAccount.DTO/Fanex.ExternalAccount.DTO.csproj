@@ -103,7 +103,7 @@
   <ItemGroup>
     <Compile Include="Customer\Commission.cs" />
     <Compile Include="Customer\Casino\CasinoCustomer.cs" />
-    <Compile Include="Customer\CustomerInfo.cs" />
+    <Compile Include="Customer\LineInfo.cs" />
     <Compile Include="Customer\Customer.cs" />
     <Compile Include="Customer\CustomerClosedReason.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusViewModel.cs" />

@@ -34,9 +34,9 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             }
         }
 
-        public CustomerInfoSearchResult GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
+        public LineInfo GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
         {
-            CustomerInfoSearchResult customerInfo = null;
+            LineInfo customerInfo = null;
 
             using (var db = new ObjectDb("EAS_CustomerSelUserInfo"))
             {
@@ -56,7 +56,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                         return customerInfo;
                     }
 
-                    customerInfo = new CustomerInfoSearchResult
+                    customerInfo = new LineInfo
                     {
                         CustId = Utils.ToInt32(reader[reader.GetOrdinal("custid")]),
                         Username = Utils.ToString(reader[reader.GetOrdinal("username")]),

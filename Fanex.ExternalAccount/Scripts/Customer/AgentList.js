@@ -551,7 +551,24 @@ Fanex.ExtAcc.Customer.GetAgentList = function (
             var hideLucky3SettingLink = cell.Value.HideLucky3Upline;
             var hideBullfightingSettingLink = cell.Value.HideBullFightingUpline;
 
-            var func = "javascript:Fanex.ExtAcc.Customer.GetMemberList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.SyncLiveCasino + "," + cell.Value.HideKeno + "," + cell.Value.HideVirtualSports + "," + cell.Value.HideGoldDeluxe + "," + cell.Value.HideColossusBet + "," + cell.Value.HideMuayThai + "," + cell.Value.HideCockFighting + "," + cell.Value.HideCricket + "," + hideAllbetSettingLink + "," + hideVoidbridgeSettingLink + "," + hideNG2SettingLink + "," + hideFishingWorldSettingLink + "," + hideLotterySettingLink + "," + hideLucky3SettingLink + "," + hideBullfightingSettingLink + ")";
+            var func = "javascript:Fanex.ExtAcc.Customer.GetMemberList(" + custId + ", "
+                + cell.Value.DoubleCommLosing + ", null, null, "
+                + cell.Value.synccasino + ", "
+                + cell.Value.SyncLiveCasino + ","
+                + cell.Value.HideKeno + ","
+                + cell.Value.HideVirtualSports + ","
+                + cell.Value.HideGoldDeluxe + ","
+                + cell.Value.HideColossusBet + ","
+                + cell.Value.HideMuayThai + ","
+                + cell.Value.HideCockFighting + ","
+                + cell.Value.HideCricket + ","
+                + hideAllbetSettingLink + ","
+                + hideVoidbridgeSettingLink + ","
+                + hideNG2SettingLink + ","
+                + hideFishingWorldSettingLink + ","
+                + hideLotterySettingLink + ","
+                + hideLucky3SettingLink + ","
+                + hideBullfightingSettingLink + ")";
 
             var len = cell.Value.username.length;
             var title = len >= 15 ? ' title="' + cell.Value.username + '"' : '';

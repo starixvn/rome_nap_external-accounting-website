@@ -20,5 +20,7 @@
         public string Name { get; protected set; }
 
         public string Key { get; protected set; }
+
+        public bool IsShow => ProductSettings.IsShowProduct(Id);
     }
 }

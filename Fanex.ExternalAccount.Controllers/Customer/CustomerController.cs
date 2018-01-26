@@ -292,7 +292,7 @@
 
         public ActionResult Settings(int id, int custId, int uplineId, string userName, string groupName)
         {
-            var customerSetting = GetCustomerSetting(groupName, userName);
+            var customerSetting = GetLineInfo(groupName, userName);
             var result = GetCustomerList(groupName, null, null, null, customerSetting);
 
             ViewBag.CurrentLevel = id;
@@ -340,23 +340,23 @@
             bool? suspended = null,
             string username = null)
         {
-            var customerSetting = GetCustomerSetting(Request["groupName"], username);
-            var customers = GetCustomerList(groupName, enabled, closed, suspended, customerSetting);
+            var lineInfo = GetLineInfo(Request["groupName"], username);
+            var customers = GetCustomerList(groupName, enabled, closed, suspended, lineInfo);
             SetEditAllBetVisibility(customers);
             var customers2String = Customers2Json(customers);
             var syncCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncCasino");
             var syncLiveCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncLiveCasino");
-            var allowDoubleComm = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean(customerSetting.RoleId > Role.Agent ? "doubleCommLosing" : "doubleCommLosing1");
+            var allowDoubleComm = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean(lineInfo.RoleId > Role.Agent ? "doubleCommLosing" : "doubleCommLosing1");
             return JsonBase(
                 new
                 {
                     records = customers?.Rows.Count ?? 0,
                     rows = customers2String,
-                    customerSetting.RoleId,
-                    srecommend = customerSetting.SuperId,
-                    mrecommend = customerSetting.MasterId,
-                    recommend = customerSetting.AgentId,
-                    customerSetting.CustId,
+                    lineInfo.RoleId,
+                    srecommend = lineInfo.SuperId,
+                    mrecommend = lineInfo.MasterId,
+                    recommend = lineInfo.AgentId,
+                    lineInfo.CustId,
                     syncCasino,
                     syncLiveCasino,
                     allowDoubleComm
@@ -648,40 +648,40 @@
             bool? enabled,
             bool? closed,
             bool? suspended,
-            CustomerInfoSearchResult setting)
+            LineInfo lineInfo)
         {
             int? id = null;
             var result = new DataTable();
 
-            switch (setting.RoleId)
+            switch (lineInfo.RoleId)
             {
                 case Role.Super:
-                    result = _authorization.IsBelong(groupName, setting.CustId, null, true)
-                        ? _superService.GetData(CurrentSession.UserId, setting.CustId == 0 ? id : setting.CustId,
+                    result = _authorization.IsBelong(groupName, lineInfo.CustId, null, true)
+                        ? _superService.GetData(CurrentSession.UserId, lineInfo.CustId == 0 ? id : lineInfo.CustId,
                             enabled,
                             closed, suspended, groupName)
                         : result;
                     break;
 
                 case Role.Master:
-                    result = _authorization.IsBelong(groupName, setting.SuperId, null, true)
-                        ? _masterService.GetData(CurrentSession.UserId, setting.SuperId, setting.CustId == 0 ? id : setting.CustId,
+                    result = _authorization.IsBelong(groupName, lineInfo.SuperId, null, true)
+                        ? _masterService.GetData(CurrentSession.UserId, lineInfo.SuperId, lineInfo.CustId == 0 ? id : lineInfo.CustId,
                             enabled, closed, suspended)
                         : result;
                     break;
 
                 case Role.Agent:
-                    result = _authorization.IsBelong(groupName, setting.MasterId, null, true)
-                        ? _agentService.GetData(CurrentSession.UserId, setting.MasterId,
-                            setting.CustId == 0 ? id : setting.CustId,
+                    result = _authorization.IsBelong(groupName, lineInfo.MasterId, null, true)
+                        ? _agentService.GetData(CurrentSession.UserId, lineInfo.MasterId,
+                            lineInfo.CustId == 0 ? id : lineInfo.CustId,
                             enabled, closed, suspended)
                         : result;
                     break;
 
                 default:
-                    result = _authorization.IsBelong(groupName, setting.AgentId, null, true)
-                        ? _memberService.GetData(CurrentSession.UserId, setting.AgentId,
-                            setting.CustId == 0 ? id : setting.CustId,
+                    result = _authorization.IsBelong(groupName, lineInfo.AgentId, null, true)
+                        ? _memberService.GetData(CurrentSession.UserId, lineInfo.AgentId,
+                            lineInfo.CustId == 0 ? id : lineInfo.CustId,
                             enabled, closed, suspended)
                         : result;
                     break;
@@ -690,8 +690,8 @@
             return result;
         }
 
-        private CustomerInfoSearchResult BuildCustomerSetting(string username)
-            => new CustomerInfoSearchResult
+        private LineInfo BuildCustomerSetting(string username)
+            => new LineInfo
             {
                 RoleId = Utils.ToInt32(Request["roleId"]),
                 SuperId = Utils.ToInt32(Request["srecommend"]),
@@ -700,12 +700,12 @@
                 CustId = string.IsNullOrWhiteSpace(username) ? 0 : Utils.ToInt32(Request["custId"])
             };
 
-        private CustomerInfoSearchResult GetCustomerSetting(string groupName, string userName)
+        private LineInfo GetLineInfo(string groupName, string userName)
         {
             var customerInfo = reportService.GetCustomerInfo(groupName, 0, userName, isGetUplineInfo: true);
             if (customerInfo != null)
             {
-                return new CustomerInfoSearchResult
+                return new LineInfo
                 {
                     RoleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]),
                     SuperId = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]),
@@ -715,7 +715,7 @@
                 };
             }
 
-            return new CustomerInfoSearchResult();
+            return new LineInfo();
         }
 
         private static void SetEditAllBetVisibility(DataTable dataTable)

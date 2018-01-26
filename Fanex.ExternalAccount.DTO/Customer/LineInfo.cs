@@ -3,7 +3,7 @@
     using System;
     using Core.Shared;
 
-    public class CustomerInfoSearchResult
+    public class LineInfo
     {
         public int CustId { get; set; }
 

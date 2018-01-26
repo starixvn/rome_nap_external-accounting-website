@@ -30,7 +30,7 @@
         public DataTable GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
             => _reportDao.EAS_CustomerSelUserInfo(groupname, custId, userName, isGetUplineInfo);
 
-        public CustomerInfoSearchResult SearchCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
+        public LineInfo SearchCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
             => _reportDao.GetCustomerInfo(groupname, custId, userName, isGetUplineInfo);
 
         public List<SuggestedUserName> GetSuggestedUserName(int custId, string username, string groupName)

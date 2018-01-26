@@ -13,18 +13,14 @@
     using DTO;
     using Extensions;
     using Service.Impl.Customer.Casino;
-    using Service.Impl.Report;
-    using Service.Interface.Report;
     using Utilities;
     using ViewModels;
 
     public class CustomerDataAccessImpl : CustomerDataAccess
     {
-        private readonly IReportService reportService = new ReportService();
-
         public DataSet GetCustomerInfo(string username, string groupName = "ACCDDD")
         {
-            var customerInfo = reportService.GetCustomerInfo(groupName, 0, username, true);
+            var customerInfo = EAS_CustomerSelUserInfo(groupName, 0, username, true);
 
             if (customerInfo != null && customerInfo.Rows.Count != 0)
             {

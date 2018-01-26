@@ -75,7 +75,7 @@
         {
             var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
 
-            var customerInfo = new CustomerInfoSearchResult { RoleId = Role.Super };
+            var customerInfo = new LineInfo { RoleId = Role.Super };
 
             if (!string.IsNullOrWhiteSpace(request.Username))
             {
@@ -117,7 +117,7 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds,
-            CustomerInfoSearchResult customerInfo)
+            LineInfo customerInfo)
         {
             if (customerInfo.RoleId >= Role.Super)
             {
