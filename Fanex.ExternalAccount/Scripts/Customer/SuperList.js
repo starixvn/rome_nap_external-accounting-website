@@ -299,7 +299,12 @@
         className: "iconEnableEdit editInfoBg",
         callback: function (key, opt) {
             Fanex.ExtAcc.Customer.IsMultiple = false;
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 400, false);
+            Fanex.ExtAcc.Form.Show(
+                resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                415,
+                400,
+                false,
+                function () { Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup"); });
         }
     };
 
@@ -321,7 +326,8 @@
                 'Reset security code: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                 650,
                 500,
-                false);
+                false,
+                function () { Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup iframe") });
         }
     };
 
@@ -330,7 +336,13 @@
         className: "iconEnableEdit editInfoBg",
         callback: function (key, opt) {
             Fanex.ExtAcc.Customer.IsMultiple = false;
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 600, 250, false, false, 1);
+            Fanex.ExtAcc.Form.Show(
+                resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                600,
+                250,
+                false,
+                function () { Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup") },
+                1);
         }
     };
 

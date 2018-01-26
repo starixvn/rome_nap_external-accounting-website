@@ -51,6 +51,7 @@
     padding: 5px;
     font-weight: normal;
     height: 34px;
+    position: relative;
     .ui-icon {
         background: none !important;
         font-size: 0;
@@ -61,6 +62,9 @@
             content: '\e909';
             color: #fff;
             font-size: 16px;
+            width: 30px;
+            height: 30px;
+            display: inline-block;
         }
     }
     .ui-dialog-titlebar-close {

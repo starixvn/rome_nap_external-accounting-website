@@ -32,11 +32,11 @@ Fanex.ExtAcc.Form = {
 
         Form.setAttribute('id', id);
         Form.setAttribute('style', 'display: block; border: none; font-size: 12px; z-index: 999999; margin-right: ' + margin);
-        DivContent.setAttribute('style', 'height: ' + (height - 34) + 'px');
+        DivContent.setAttribute('style', 'height: ' + (height - 42) + 'px');
 
         var divFrame = document.createElement("div");
 
-        divFrame.setAttribute('style', 'height: ' + (height - 34) + 'px; margin-left: 5px; margin-right: ' + margin);
+        divFrame.setAttribute('style', 'height: ' + (height - 42) + 'px; margin-left: 5px; margin-right: ' + margin);
         divFrame.setAttribute('id', 'frame');
 
         DivContent.appendChild(divFrame);
@@ -74,12 +74,11 @@ Fanex.ExtAcc.Form = {
                 autoOpen: true,
                 position: { my: "center", at: "center", of: window },
                 close: function () {
-                    $self.Close(reloadOnClose);
+                   $self.Close(reloadOnClose);
                 }
             });
 
             $('div#' + id).css('height', (height - 34) + 'px');
-            //$('div#' + id + '> div').addClass('sub-content-popup');
             if (callBack && typeof callBack === 'function') {
                 callBack();
             }
@@ -122,6 +121,7 @@ Fanex.ExtAcc.Form = {
             position: { my: "center", at: "center", of: window },
             close: function () {
                 $self.Close(reloadOnClose, null, id);
+                
             }
         });
 

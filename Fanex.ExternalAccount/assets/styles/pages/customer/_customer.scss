@@ -11,6 +11,7 @@
   font-style: normal;
 }
 
+
 [class$="DblComm"] {
     text-align: center;
     &:before {
@@ -190,6 +191,15 @@
     border: none;
 }
 
+
+
+.transfer-condition {
+    width: 100%;
+    padding: 10px 16px 0 0;
+    .tbl-transfer {
+        width: 100%;
+    }
+}
 
 #product
 {

@@ -9,7 +9,12 @@
 
     $scope.ResetPassword = function (custId, title) {
         var roleId = model.personalInfo.roleId.value;
-        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>', 415, (roleId != 1 ? 400 : 400), false);
+        parent.Fanex.ExtAcc.Form.Show(
+            parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>',
+            415,
+            (roleId != 1 ? 400 : 400),
+            false,
+            function () { top.$("#windowPopup").addClass("add-padding"); });
     };
 
     $scope.ShowIp = function (ip) {
@@ -23,7 +28,8 @@
             'Reset security code: <font color="#6dcff6">' + username + '</font>',
             650,
             500,
-            false);
+            false,
+            function () { top.$("#windowPopup").addClass("add-padding"); });
     };
 
     $scope.RemoveOTP = function (custId, username) {

@@ -403,6 +403,7 @@
         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ViewIP?ip=' + ip), 'IP Information', 450, 230, false,
             function () {
                 Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup");
             },
             2);
     },

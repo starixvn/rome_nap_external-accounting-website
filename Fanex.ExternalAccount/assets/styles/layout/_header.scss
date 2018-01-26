@@ -17,19 +17,19 @@
     @media screen and (min-device-width: 768px) {
         min-height: 60px;
     }
-    .icon-user {
-        margin: 0 16px;
+    .icon-account-settings {
+        border-right: 1px solid #2f394c;
+        padding: 0 16px;
         float: left;
         display: inline-block;
-        line-height: 40px;
         cursor: pointer;
+        position: relative;
+        top: 6px;
         @media screen and (min-device-width: 768px) { 
-            line-height: 60px;
+            position: relative;
+            top: 16px;
         }
-         @media screen and (min-device-width: 1280px) { 
-             margin-left: 0;
-             left: 16px;
-         }
+         
     }
 
     .icon-nav {
@@ -40,16 +40,12 @@
             top: 23px;
         }
     }
-
-    .main-menu {
-        margin-left: 20px;
-    }
 }
 
 /* Icons */
 
-.icon-user {    
-    font-size: 20px;
+.icon-account-settings {    
+    font-size: 24px;
     color: #fff;
 
     &.active {
@@ -58,11 +54,17 @@
 
     &:after {
         content: "";
-        width: 30px;
-        height: 30px;
-        position: absolute;
-        left: -5px;
-        top: -4px;
+        width: 1px;
+        background: #626c7f;
+        height: 25px;
+        display: inline-block;
+        position: relative;
+        right: -16px;
+        top: 1px;
+    }
+    &:before {
+        position: relative;
+        top: -1px;
     }
 }
 
@@ -107,7 +109,8 @@
 }
 
 .group-user {
-
+    padding: 0 13px;    
+    float: left;
     .select2-container {
         width: 210px !important;
         top: 5px;
@@ -183,12 +186,11 @@
         min-height: 60px;
 
         .group-user {
-            float: left;
             padding-top: 13px;
 
             .select2-container {
                 top: 0px;
-                width: 329px !important;
+                width: 306px !important;
                 @media screen and (orientation: portrait) {
                     width: 200px !important;
                 }
@@ -198,16 +200,6 @@
         .main-menu {
             float: left;
             display: inline-block;
-
-             @media screen and (orientation: portrait) {
-                /*float: none;
-                display: block;
-                clear: both;*/
-
-                li:first-child > .link {
-                    padding-left: 0;
-                }
-            }
             
         }  
 
@@ -251,22 +243,6 @@
     }
 }
 
-
-@media all and (min-device-width: 1024px) {
-    /*.header {
-        position: relative;
-    }*/
-    .main-menu {
-        margin-left: 400px !important;
-    }
-    .icon-user, .group-user {
-        position: absolute;
-        
-    }
-    .group-user {
-        left: 52px;
-    }
-}
 
 .main-menu {
     .show-submenu {
