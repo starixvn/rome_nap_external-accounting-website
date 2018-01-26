@@ -20,7 +20,7 @@
     </SccLocalPath>
     <SccProvider>
     </SccProvider>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <FileUpgradeFlags>
@@ -1401,6 +1401,7 @@
     <Content Include="Content\Customer\PTEngine.css" />
     <Content Include="Content\Customer\Customer.css" />
     <Content Include="Content\Customer\VirtualSports.css" />
+    <Content Include="Content\fonts\AlphaAdmin\style.css" />
     <Content Include="Content\Images\ajax-loader.png" />
     <Content Include="Content\Images\balance.png" />
     <Content Include="Content\Images\bg-top.png" />
@@ -1545,6 +1546,7 @@
     <Content Include="Content\Images\ui-icons_454545_256x240.png" />
     <Content Include="Content\Images\ui-icons_888888_256x240.png" />
     <Content Include="Content\Images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\Images\um.png" />
     <Content Include="Content\Images\user.png" />
     <Content Include="Content\Images\warning.png" />
     <Content Include="Content\LeftMenu\AccountInfo.css" />
@@ -1554,6 +1556,7 @@
     <Content Include="Content\Reports\DailyWinLoss.css" />
     <Content Include="Content\Reports\WinLossDetail.css" />
     <Content Include="Content\Statement\Statement.css" />
+    <Content Include="Content\um.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
     <Content Include="Images\tick.png" />
@@ -2518,6 +2521,18 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\ONEbook.NG2.API.config" />
+    <Content Include="Content\fonts\AlphaAdmin\fonts\AlphaAdmin.eot" />
+    <Content Include="Content\fonts\AlphaAdmin\fonts\AlphaAdmin.svg" />
+    <Content Include="Content\fonts\AlphaAdmin\fonts\AlphaAdmin.ttf" />
+    <Content Include="Content\fonts\AlphaAdmin\fonts\AlphaAdmin.woff" />
+    <Content Include="Content\fonts\roboto\Roboto-Medium.eot" />
+    <Content Include="Content\fonts\roboto\Roboto-Medium.ttf" />
+    <Content Include="Content\fonts\roboto\Roboto-Medium.woff" />
+    <Content Include="Content\fonts\roboto\Roboto-Medium.woff2" />
+    <Content Include="Content\fonts\roboto\Roboto-Regular.eot" />
+    <Content Include="Content\fonts\roboto\Roboto-Regular.ttf" />
+    <Content Include="Content\fonts\roboto\Roboto-Regular.woff" />
+    <Content Include="Content\fonts\roboto\Roboto-Regular.woff2" />
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
@@ -2576,6 +2591,7 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\Images\um.svg" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />
