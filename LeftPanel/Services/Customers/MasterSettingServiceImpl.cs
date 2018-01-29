@@ -4,7 +4,7 @@
     using Extensions;
     using ViewModels;
 
-    public class MasterSettingServiceImpl : SettingServiceImpl
+    public class MasterSettingServiceImpl : CustomerSettingServiceImpl
     {
         public override Setting GetSetting(
             int actorId,

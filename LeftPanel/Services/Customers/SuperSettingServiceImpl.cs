@@ -4,13 +4,13 @@
     using Core.Authorization;
     using ViewModels;
 
-    public class SuperSettingServiceImpl : SettingServiceImpl
+    public class SuperSettingServiceImpl : CustomerSettingServiceImpl
     {
         private readonly AuthorizationService authorizationService;
 
         public SuperSettingServiceImpl(
             AuthorizationService authorizationService = null,
-            CustomerStatusService customerStatusService = null) : base(customerStatusService)
+            CustomerStatusQueryService customerStatusService = null) : base(customerStatusService)
         {
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
         }

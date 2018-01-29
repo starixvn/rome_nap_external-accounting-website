@@ -8,19 +8,18 @@
     using Models;
     using ViewModels;
 
-    public interface SettingService
+    public interface CustomerSettingQueryService
     {
-        Setting GetSetting(int actorId, string custName, int uplineId, string groupName,
-            DataSet customerInfoDataset);
+        Setting GetSetting(int actorId, string custName, int uplineId, string groupName, DataSet customerInfoDataset);
     }
 
-    public class SettingServiceImpl : SettingService
+    public class CustomerSettingServiceImpl : CustomerSettingQueryService
     {
-        private readonly CustomerStatusService customerStatusService;
+        private readonly CustomerStatusQueryService customerStatusQueryService;
 
-        public SettingServiceImpl(CustomerStatusService customerStatusService = null)
+        public CustomerSettingServiceImpl(CustomerStatusQueryService customerStatusService = null)
         {
-            this.customerStatusService = customerStatusService ?? new CustomerStatusServiceImpl();
+            this.customerStatusQueryService = customerStatusService ?? new CustomerStatusServiceImpl();
         }
 
         public virtual Setting GetSetting(int actorId, string custName, int uplineId, string groupName,
@@ -30,7 +29,7 @@
             var productStatusTable = customerInfoDataset.Tables[4];
             var roleId = custInfoTable.Rows[0].RoleId();
 
-            var customerStatus = customerStatusService.GetCustomerStatus(
+            var customerStatus = customerStatusQueryService.GetCustomerStatus(
                 actorId,
                 groupName,
                 custName,

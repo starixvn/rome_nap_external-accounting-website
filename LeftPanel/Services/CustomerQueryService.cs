@@ -27,22 +27,22 @@
     public class CustomerQueryServiceImpl : CustomerQueryService
     {
         private readonly AuthorizationService authorizationService;
-        private readonly CustomerDataAccess dataAccess;
+        private readonly CustomerDataAccess customerDataAccess;
         private readonly CustomerInfoQueryService customerInfoQueryService;
 
         public CustomerQueryServiceImpl(
-            CustomerDataAccess dataAccess = null,
+            CustomerDataAccess customerDataAccess = null,
             AuthorizationService authorizationService = null,
             CustomerInfoQueryService customerInfoQueryService = null)
         {
-            this.dataAccess = dataAccess ?? new CustomerDataAccessImpl();
+            this.customerDataAccess = customerDataAccess ?? new CustomerDataAccessImpl();
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
             this.customerInfoQueryService = customerInfoQueryService ?? new CustomerInfoQueryServiceImpl();
         }
 
         public CustomerModel SearchCustomer(int actorId, string custName, string groupName = "ACCDDD")
         {
-            var customerInfoDataSet = dataAccess.GetCustomerInfo(
+            var customerInfoDataSet = customerDataAccess.GetCustomerInfo(
                 string.IsNullOrWhiteSpace(custName)
                     ? string.Empty
                     : custName,
@@ -60,7 +60,7 @@
         {
             var onlineList = new OnlineList();
 
-            foreach (DataRow row in dataAccess.GetOnlineList(custId))
+            foreach (DataRow row in customerDataAccess.GetOnlineList(custId))
             {
                 var onlineIp = row.IP();
                 onlineList.Onlines.Add(new OnlineInfo
@@ -75,7 +75,7 @@
 
         public DownlineList GetDownlineList(int custid, int pageSize, int pageIndex)
         {
-            var dr = dataAccess.GetDownlineList(custid, pageSize, pageIndex);
+            var dr = customerDataAccess.GetDownlineList(custid, pageSize, pageIndex);
 
             if (dr?.ResultSet == null || dr.ResultSet.Tables.Count <= 0)
             {
@@ -90,50 +90,23 @@
                 return model;
             }
 
-            AddDownlines(downlines, model);
+            DownlineList.AddDownlines(downlines, model);
 
             model.CurrentPage = pageIndex;
 
             var totalPages = Utils.ToInt32(dr.Outputs["totalpages"]);
-            AddPageItems(totalPages, model);
+            DownlineList.AddPageItems(totalPages, model);
 
             return model;
         }
 
-        public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId) =>
-            dataAccess.MasterAgentUsedCreditItems(custId, roleId);
+        public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId)
+            => customerDataAccess.MasterAgentUsedCreditItems(custId, roleId);
 
-        public IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId) =>
-            dataAccess.MemberUsedCreditItems(custId);
+        public IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId)
+            => customerDataAccess.MemberUsedCreditItems(custId);
 
-        private static void AddPageItems(int totalPages, DownlineList model)
-        {
-            if (totalPages > 1)
-            {
-                for (var i = 1; i <= totalPages; i++)
-                {
-                    model.Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
-                }
-            }
-            else
-            {
-                model.Pages.Add(new ObjectInfo { Value = 1, Text = "1" });
-            }
-        }
-
-        private static void AddDownlines(DataTable downlines, DownlineList model)
-        {
-            if (downlines?.Rows == null)
-            {
-                return;
-            }
-
-            foreach (DataRow item in downlines.Rows)
-            {
-                model.Downlines.Add(new ObjectInfo { Text = item.Username() });
-            }
-        }
-
-        public DataTable CustomerSelectClearBalance(int custId) => dataAccess.CustomerSelectClearBalance(custId);
+        public DataTable CustomerSelectClearBalance(int custId)
+            => customerDataAccess.CustomerSelectClearBalance(custId);
     }
 }

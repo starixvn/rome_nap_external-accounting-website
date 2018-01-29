@@ -20,7 +20,7 @@
             ProductSettings.Products[ProductConstants.BullFighting]
         };
 
-        private static CustomerStatusService customerStatusService = new CustomerStatusServiceImpl();
+        private static CustomerStatusQueryService customerStatusService = new CustomerStatusServiceImpl();
 
         public static IList<Product> GetVisibledBetSettingTabs(int userId, string siteName, string custName)
         {

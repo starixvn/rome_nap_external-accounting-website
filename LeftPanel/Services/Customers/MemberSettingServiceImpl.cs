@@ -4,7 +4,7 @@
     using System.Data;
     using ViewModels;
 
-    public class MemberSettingServiceImpl : SettingServiceImpl
+    public class MemberSettingServiceImpl : CustomerSettingServiceImpl
     {
         private static readonly IList<string> IgnoredSettingsWhenEditMember =
             new List<string> { "Info", "ColossusBets", "AddNew", "Transfer" };

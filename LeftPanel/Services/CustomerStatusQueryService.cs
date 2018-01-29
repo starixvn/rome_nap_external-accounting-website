@@ -11,12 +11,12 @@
     using ViewModels;
     using static Core.Shared.ProductConstants;
 
-    public interface CustomerStatusService
+    public interface CustomerStatusQueryService
     {
         CustomerStatus GetCustomerStatus(int userId, string groupName, string username, int uplineId = 0);
     }
 
-    public class CustomerStatusServiceImpl : CustomerStatusService
+    public class CustomerStatusServiceImpl : CustomerStatusQueryService
     {
         private readonly IAgentService agentService;
         private readonly AuthorizationService authorizationService;

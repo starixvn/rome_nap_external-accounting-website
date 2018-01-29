@@ -16,21 +16,21 @@
 
     public class CustomerInfoQueryServiceImpl : CustomerInfoQueryService
     {
-        private static readonly IReadOnlyDictionary<int, SettingService> settingServiceInstances =
-            new Dictionary<int, SettingService>
+        private static readonly IReadOnlyDictionary<int, CustomerSettingQueryService> settingServiceInstances =
+            new Dictionary<int, CustomerSettingQueryService>
             {
                 [Role.Super] = new SuperSettingServiceImpl(),
                 [Role.Master] = new MasterSettingServiceImpl(),
-                [Role.Agent] = new SettingServiceImpl(),
+                [Role.Agent] = new CustomerSettingServiceImpl(),
                 [Role.Member] = new MemberSettingServiceImpl()
             };
 
         protected readonly AuthorizationService authorizationService;
-        protected readonly IReadOnlyDictionary<int, SettingService> settingServices;
+        protected readonly IReadOnlyDictionary<int, CustomerSettingQueryService> settingServices;
 
         public CustomerInfoQueryServiceImpl(
             AuthorizationService authorizationService = null,
-            IReadOnlyDictionary<int, SettingService> settingServices = null)
+            IReadOnlyDictionary<int, CustomerSettingQueryService> settingServices = null)
         {
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
             this.settingServices = settingServices ?? settingServiceInstances;
