@@ -120,6 +120,7 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.2.4\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
       <Private>True</Private>
     </Reference>
+
     <Reference Include="Fanex.CustomerSetting.Module.ColossusBetSetting, Version=2.0.1.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBetSetting.2.0.1.4-UpgradeNewtonjson4502\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
       <Private>True</Private>
@@ -151,8 +152,8 @@
       <HintPath>..\packages\Fanex.Data.DbSettingProviderExtension.1.0.0.1\lib\net40\Fanex.Data.DbSettingProviderExtension.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.GoldDeluxe.CoreSetting, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.GoldDeluxe.CoreSetting.NAP.1.0.0.9\lib\net40\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
+    <Reference Include="Fanex.GoldDeluxe.CoreSetting, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.GoldDeluxe.Setting.1.0.0.10-NewChangeOnProductStatus\lib\net40\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.HttpModule.NG2.UM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

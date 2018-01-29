@@ -83,14 +83,6 @@
                     </td>
                     <td class="left info-value">
                         <input type="checkbox" data-ng-model="enableGoldDeluxe" data-ng-disabled="disableCheckBoxGoldDeluxe || $parent.isReadOnly" ng-change="updateDownlineStatus()" />
-                        @if (Model.Level != CustomerLevel.Member
-                                            && Model.Setting.HasDownline)
-                        {
-                            <label>
-                                <input type="checkbox" data-ng-model="enableDownline" data-ng-disabled="disableCheckBoxDownline || $parent.isReadOnly" />
-                                @GoldDeluxeLang.lblDownline
-                            </label>
-                        }
                     </td>
                 }
             </tr>

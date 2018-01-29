@@ -44,13 +44,6 @@
                                data-ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled; CustomerModel.casinoEnabledDownline = CustomerModel.casinoEnabled == CustomerModel.originalCasinoEnabled ? CustomerModel.originalEnabledDownline : CustomerModel.casinoEnabled ? CustomerModel.casinoEnabledDownline : false; CustomerModel.casinoDisabledDownline = !CustomerModel.casinoEnabledDownline;"
                                data-ng-disabled="CustomerModel.uplineDisabledCasino" />
                         <label for="chkEnable">Enable</label>
-                        <input type="checkbox" id="chkEnableDownline" style="margin-top: 5px;"
-                               data-ng-init="CustomerModel.originalEnabledDownline = !CustomerModel.casinoDisabledDownline; CustomerModel.casinoEnabledDownline = !CustomerModel.casinoDisabledDownline && CustomerModel.hasDownline"
-                               data-ng-model="CustomerModel.casinoEnabledDownline"
-                               data-ng-change="CustomerModel.casinoDisabledDownline = !CustomerModel.casinoEnabledDownline"
-                               data-ng-disabled="!CustomerModel.casinoEnabled || CustomerModel.originalEnabledDownline"
-                               data-ng-hide="!CustomerModel.hasDownline" />
-                        <label for="chkEnableDownline" data-ng-hide="!CustomerModel.hasDownline">Enable Downline</label>
                     </div>
                 </td>
             </tr>
