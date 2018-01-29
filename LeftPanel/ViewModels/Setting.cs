@@ -4,26 +4,34 @@
 
     public class Setting
     {
-        public Setting()
+        public Setting(
+            List<ObjectInfo> enableItems,
+            List<ObjectInfo> syncItems,
+            List<ObjectInfo> editItems,
+            List<ObjectInfo> details)
         {
-            EnableItems = new List<ObjectInfo>();
-            SyncItems = new List<ObjectInfo>();
-            EditItems = new List<ObjectInfo>();
-            Details = new List<ObjectInfo>();
-            MinMaxPts = new List<ObjectInfo>();
+            EnableItems = enableItems;
+            SyncItems = syncItems;
+            EditItems = editItems;
+            Details = details;
+            MinMaxPts = new List<ObjectInfo>
+            {
+                new ObjectInfo {Key = "MinSB", Value = "Sportsbook"},
+                new ObjectInfo {Key = "MinRB", Value = "Racing"}
+            };
             SuperPts = new List<ObjectInfo>();
             MasterPts = new List<ObjectInfo>();
         }
 
-        public List<ObjectInfo> EnableItems { get; set; }
+        public List<ObjectInfo> EnableItems { get; }
 
-        public List<ObjectInfo> SyncItems { get; set; }
+        public List<ObjectInfo> SyncItems { get; }
 
-        public List<ObjectInfo> EditItems { get; set; }
+        public List<ObjectInfo> EditItems { get; }
 
-        public List<ObjectInfo> Details { get; set; }
+        public List<ObjectInfo> Details { get; }
 
-        public List<ObjectInfo> MinMaxPts { get; set; }
+        public List<ObjectInfo> MinMaxPts { get; }
 
         public List<ObjectInfo> SuperPts { get; set; }
 

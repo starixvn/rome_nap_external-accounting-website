@@ -57,21 +57,7 @@
         }
 
         public OnlineList GetOnlineList(int custId)
-        {
-            var onlineList = new OnlineList();
-
-            foreach (DataRow row in customerDataAccess.GetOnlineList(custId))
-            {
-                var onlineIp = row.IP();
-                onlineList.Onlines.Add(new OnlineInfo
-                (
-                    new ObjectInfo { Text = authorizationService.CanViewVNIP(onlineIp) ? onlineIp : string.Empty },
-                    new ObjectInfo { Text = row.ReloadTime() }
-                ));
-            }
-
-            return onlineList;
-        }
+            => new OnlineList(customerDataAccess.GetOnlineList(custId), authorizationService.CanViewVNIP);
 
         public DownlineList GetDownlineList(int custid, int pageSize, int pageIndex)
         {

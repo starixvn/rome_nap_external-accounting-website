@@ -10,7 +10,7 @@
     var isLocal = Request.IsLocal ? 1 : 0;
     var userId = CurrentSession.Instance.UserId;
     var admins = AuthorizationServiceImpl.Instance.HasOpenSuperPermission(userId) ? new int[] { userId } : new int[] { };
-    var showBetSetting = AuthorizationServiceImpl.Instance.HasReadPermissionOnFunctions(LeftPanelProductIntegration.VisibleBetSettingPermissions.Values, userId) ? 1 : 0;
+    var showBetSetting = AuthorizationServiceImpl.Instance.HasReadPermissionOnFunctions(AccountInfoProductConfiguration.VisibleBetSettingPermissions.Values, userId) ? 1 : 0;
     var allowAdminEditSuperStatus = JsonConvert.SerializeObject(admins, Formatting.None, new JsonSerializerSettings
     {
         ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
@@ -36,7 +36,7 @@
     var showLucky3 = ProductSettings.IsShowLucky3 ? 1 : 0;
     var showBullfighting = ProductSettings.IsShowBullfighting ? 1 : 0;
     var ng2Text = RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
-    var products = JsonConvert.SerializeObject(ProductSettings.Products.Values);
+    var products = JsonConvert.SerializeObject(ProductSettings.SiteProducts.Values);
 }
 <!DOCTYPE html>
 <html lang="en">

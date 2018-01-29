@@ -317,7 +317,7 @@
             var visibledProducts = new List<Product>();
             var productStatusList = productStatusService.GetProductStatusList(custId, id);
 
-            foreach (var product in ProductSettings.Products.Values)
+            foreach (var product in ProductSettings.SiteProducts.Values)
             {
                 var productStatus = productStatusList.FirstOrDefault(p => p.ProductId == product.Id);
                 if (productStatus != null

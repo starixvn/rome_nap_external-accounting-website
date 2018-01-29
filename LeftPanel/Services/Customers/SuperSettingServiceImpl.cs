@@ -25,7 +25,7 @@
             var setting = base.GetSetting(actorId, custName, uplineId, groupName, customerInfoDataset);
 
             if (authorizationService.HasReadPermissionOnFunctions(
-                LeftPanelProductIntegration.VisibleBetSettingPermissions.Values, actorId))
+                AccountInfoProductConfiguration.VisibleBetSettingPermissions.Values, actorId))
             {
                 setting.Details.Add(new ObjectInfo("BetSetting", "Edit Betting Limit"));
             }

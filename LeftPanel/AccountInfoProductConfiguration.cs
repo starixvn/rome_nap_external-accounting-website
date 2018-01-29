@@ -7,19 +7,20 @@
     using Models;
     using ViewModels;
 
-    public static class LeftPanelProductIntegration
+    public static class AccountInfoProductConfiguration
     {
         // Status check box/link, edit setting link
-        public static readonly IEnumerable<ProductSettingElement> ProductSettingParamList = new List<ProductSettingElement>
-        {
-            new ProductSettingElement(ProductSettings.Products[ProductConstants.AllBet], StatusType.Link),
-            new ProductSettingElement(ProductSettings.Products[ProductConstants.VoidBridge], StatusType.Checkbox),
-            new ProductSettingElement(ProductSettings.Products[ProductConstants.NG2], StatusType.Checkbox),
-            new ProductSettingElement(ProductSettings.Products[ProductConstants.FishingWorld], StatusType.Checkbox),
-            new ProductSettingElement(ProductSettings.Products[ProductConstants.Lottery], StatusType.Checkbox),
-            new ProductSettingElement(ProductSettings.Products[ProductConstants.Lucky3], StatusType.Checkbox),
-            new ProductSettingElement(ProductSettings.Products[ProductConstants.BullFighting], StatusType.Checkbox)
-        };
+        public static readonly IEnumerable<ProductSettingElement> ProductSettingParamList
+            = new List<ProductSettingElement>
+            {
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.AllBet], StatusType.Link),
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.VoidBridge], StatusType.Checkbox),
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.NG2], StatusType.Checkbox),
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.FishingWorld], StatusType.Checkbox),
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Lottery], StatusType.Checkbox),
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Lucky3], StatusType.Checkbox),
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.BullFighting], StatusType.Checkbox)
+            };
 
         public static readonly IReadOnlyDictionary<int, string> VisibleBetSettingPermissions =
             new Dictionary<int, string>
@@ -42,13 +43,13 @@
         public static List<ProductStatus> TransformToProductStatus(DataRow statusRow)
             => new List<ProductStatus>
             {
-                new ProductStatus(ProductSettings.Products[ProductConstants.Lucky3], statusRow),
-                new ProductStatus(ProductSettings.Products[ProductConstants.Lottery], statusRow),
-                new ProductStatus(ProductSettings.Products[ProductConstants.FishingWorld], statusRow),
-                new ProductStatus(ProductSettings.Products[ProductConstants.NG2], statusRow),
-                new ProductStatus(ProductSettings.Products[ProductConstants.VoidBridge], statusRow, false),
-                new ProductStatus(ProductSettings.Products[ProductConstants.AllBet], statusRow, false),
-                new ProductStatus(ProductSettings.Products[ProductConstants.BullFighting], statusRow)
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Lucky3], statusRow),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Lottery], statusRow),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.FishingWorld], statusRow),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.NG2], statusRow),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.VoidBridge], statusRow, false),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.AllBet], statusRow, false),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.BullFighting], statusRow)
             };
 
         public static List<ObjectInfo> CreateSyncAndHiddenItems(DataRow customerRow, DataTable table3RdDcs)

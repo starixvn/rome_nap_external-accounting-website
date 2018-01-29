@@ -52,6 +52,7 @@
 
         public bool Visibled { get; set; } = true;
 
-        public static ObjectInfo CreateInstance(string text, object value) => new ObjectInfo { Value = value, Text = text };
+        public static ObjectInfo CreateInstance(string text, object value)
+            => new ObjectInfo { Value = value, Text = text };
     }
 }

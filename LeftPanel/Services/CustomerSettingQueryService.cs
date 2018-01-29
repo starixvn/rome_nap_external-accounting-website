@@ -19,7 +19,7 @@
 
         public CustomerSettingServiceImpl(CustomerStatusQueryService customerStatusService = null)
         {
-            this.customerStatusQueryService = customerStatusService ?? new CustomerStatusServiceImpl();
+            customerStatusQueryService = customerStatusService ?? new CustomerStatusServiceImpl();
         }
 
         public virtual Setting GetSetting(int actorId, string custName, int uplineId, string groupName,
@@ -38,25 +38,20 @@
             return GetCustomerSetting(roleId, custInfoTable, productStatusTable, customerStatus);
         }
 
-        internal Setting GetCustomerSetting(int role, DataTable custTable, DataTable productStatusTable,
+        internal static Setting GetCustomerSetting(int role, DataTable custTable, DataTable productStatusTable,
             CustomerStatus customerStatus)
         {
             var customerRow = custTable.Rows[0];
 
             var setting = new Setting
-            {
-                EnableItems = EnableItems(customerRow, productStatusTable, customerStatus),
-                SyncItems = LeftPanelProductIntegration.CreateSyncAndHiddenItems(customerRow, productStatusTable),
-                EditItems = EditItems(),
-                Details = Details(role, customerStatus),
-                MinMaxPts = new List<ObjectInfo>
-                {
-                    new ObjectInfo {Key = "MinSB", Value = "Sportsbook"},
-                    new ObjectInfo {Key = "MinRB", Value = "Racing"}
-                }
-            };
+            (
+                EnableItems(customerRow, productStatusTable, customerStatus),
+                AccountInfoProductConfiguration.CreateSyncAndHiddenItems(customerRow, productStatusTable),
+                EditItems(),
+                Details(role, customerStatus)
+            );
 
-            foreach (var productSettingParam in LeftPanelProductIntegration.ProductSettingParamList)
+            foreach (var productSettingParam in AccountInfoProductConfiguration.ProductSettingParamList)
             {
                 setting = AddProductSetting(setting, productStatusTable, productSettingParam, customerStatus);
             }
@@ -89,7 +84,9 @@
             return enableItems;
         }
 
-        private static void AddGoldDeluxeStatus(DataRow customerRow, CustomerStatus customerStatus,
+        private static void AddGoldDeluxeStatus(
+            DataRow customerRow,
+            CustomerStatus customerStatus,
             ICollection<ObjectInfo> enableItems)
         {
             if (customerStatus.HideGoldDeluxe)

@@ -1,13 +1,17 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
+    using System;
+    using System.Data;
+    using Extensions;
     using Newtonsoft.Json;
 
     public class OnlineInfo
     {
-        public OnlineInfo(ObjectInfo ip, ObjectInfo loginTime)
+        public OnlineInfo(DataRow dataRow, Func<string, bool> canViewVNIP)
         {
-            IP = ip;
-            LoginTime = loginTime;
+            var onlineIp = dataRow.IP();
+            IP = new ObjectInfo { Text = canViewVNIP(onlineIp) ? onlineIp : string.Empty };
+            LoginTime = new ObjectInfo { Text = dataRow.ReloadTime() };
         }
 
         [JsonProperty(PropertyName = "iP")]

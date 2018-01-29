@@ -13,11 +13,11 @@
     {
         private static readonly IReadOnlyList<Product> BetSettingTabProductConfigs = new List<Product>
         {
-            ProductSettings.Products[ProductConstants.AllBet],
-            ProductSettings.Products[ProductConstants.VoidBridge],
-            ProductSettings.Products[ProductConstants.NG2],
-            ProductSettings.Products[ProductConstants.Lottery],
-            ProductSettings.Products[ProductConstants.BullFighting]
+            ProductSettings.SiteProducts[ProductConstants.AllBet],
+            ProductSettings.SiteProducts[ProductConstants.VoidBridge],
+            ProductSettings.SiteProducts[ProductConstants.NG2],
+            ProductSettings.SiteProducts[ProductConstants.Lottery],
+            ProductSettings.SiteProducts[ProductConstants.BullFighting]
         };
 
         private static CustomerStatusQueryService customerStatusService = new CustomerStatusServiceImpl();

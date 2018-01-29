@@ -200,7 +200,7 @@
     <Compile Include="Extensions\ProductDataRowExtensions.cs" />
     <Compile Include="Extensions\LineInfoDataRowExtensions.cs" />
     <Compile Include="Extensions\UsedCreditItemDataReaderExtensions.cs" />
-    <Compile Include="LeftPanelProductIntegration.cs" />
+    <Compile Include="AccountInfoProductConfiguration.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\ProductSettingElement.cs" />
     <Compile Include="Models\ProductStatus.cs" />
@@ -227,7 +227,6 @@
     <Compile Include="ViewModels\PersonalInfo.cs" />
     <Compile Include="ViewModels\CustomerStatus.cs" />
     <Compile Include="ViewModels\Setting.cs" />
-    <Compile Include="ViewModels\Status.cs" />
     <Compile Include="ViewModels\MasterAgentUsedCreditItem.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -14,14 +14,14 @@
             IsClosed = reader.IsClosed();
         }
 
-        public string Username { get; set; }
+        public string Username { get; }
 
-        public string FirstName { get; set; }
+        public string FirstName { get; }
 
-        public string LastName { get; set; }
+        public string LastName { get; }
 
-        public decimal Amount { get; set; }
+        public decimal Amount { get; }
 
-        public bool IsClosed { get; set; }
+        public bool IsClosed { get; }
     }
 }
