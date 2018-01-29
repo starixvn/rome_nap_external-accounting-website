@@ -27,7 +27,3 @@
     <input ng-disabled="(statusCopyAll.isCopiedAll && $index != 0) || !betSetting.upline.isEnabled " type="checkbox"
         ng-model="betSetting.isEnabled" />
 </td>
-<td ng-if="roleId > 1" class="formatCol c" ng-class="{'betTypeInactive': statusCopyAll.isCopiedAll && $index != 0}">
-    <input ng-disabled="(statusCopyAll.isCopiedAll  && $index != 0) || isDownlinechkDisabled"
-        type="checkbox" ng-model="betSetting.isDownlinesEnabled" />
-</td>
