@@ -35,21 +35,9 @@
 
         Result AllowOutright(int custId, bool allow);
 
-        Result EnableCasino(int id, bool enable, bool enableDownline, bool sync, string custName);
-
-        Result EnableNumberGame(int id, bool enable, bool enableDownline);
-
-        Result EnableLiveCasino(int id, bool enable, bool enableDownline);
-
-        Result EnableESports(int id, bool enable, bool enableDownline);
-
         Result AutoMasterPT(int id, bool allow);
 
         Result ResetSecurityCode(int id, string code, bool force);
-
-        Result EnableHRFixedOdds(int id, bool enable, bool enableDownline);
-
-        Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId);
 
         Result RemoveOTP(RemoveOtpCriteria criteria);
     }

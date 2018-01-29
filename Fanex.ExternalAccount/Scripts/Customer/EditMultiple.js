@@ -1138,91 +1138,91 @@ Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe = function (uplineId, uplineRol
 };
 
 Fanex.ExtAcc.Customer.ShowEditSingleSportsbook2 = function (custid, uplineRoleId, targetRoleId) {
-    this.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 16, 'Sportsbook 2');
+    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 16, 'Sportsbook 2');
 };
 
 Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2 = function (uplineRoleId, targetRoleId) {
-    this.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 16, 'Sportsbook 2');
+    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 16, 'Sportsbook 2');
 };
 
 Fanex.ExtAcc.Customer.ShowEditSingleCockfighting = function (custid, uplineRoleId, targetRoleId) {
-    this.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 19, 'Cockfighting');
+    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 19, 'Cockfighting');
 };
 
 Fanex.ExtAcc.Customer.ShowEditMultipleCockfighting = function (uplineRoleId, targetRoleId) {
-    this.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 19, 'Cockfighting');
+    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 19, 'Cockfighting');
 };
 
 Fanex.ExtAcc.Customer.ShowEditSingleCricket = function (custid, uplineRoleId, targetRoleId) {
-    this.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 20, 'Cricket');
+    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 20, 'Cricket');
 };
 
 Fanex.ExtAcc.Customer.ShowEditMultipleCricket = function (uplineRoleId, targetRoleId) {
-    this.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 20, 'Cricket');
+    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 20, 'Cricket');
 };
 
 Fanex.ExtAcc.Customer.ShowEditSingleAllbet = function (custid, uplineRoleId, targetRoleId) {
-    this.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 21, 'Allbet');
+    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 21, 'Allbet');
 };
 
 Fanex.ExtAcc.Customer.ShowEditMultipleAllbet = function (uplineRoleId, targetRoleId) {
-    this.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 21, 'Allbet');
+    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 21, 'Allbet');
 };
 
 Fanex.ExtAcc.Customer.ShowEditSingleVoidbridge = function (custid, uplineRoleId, targetRoleId) {
-    this.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 22, 'Macau Games');
+    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 22, 'Macau Games');
 };
 
 Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge = function (uplineRoleId, targetRoleId) {
-    this.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 22, 'Macau Games');
+    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 22, 'Macau Games');
 };
 
 Fanex.ExtAcc.Customer.ShowEditSingleFishingWorld = function (custid, uplineRoleId, targetRoleId) {
-    this.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 24, 'Fishing World');
+    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 24, 'Fishing World');
 };
 
 Fanex.ExtAcc.Customer.ShowEditMultipleFishingWorld = function (uplineRoleId, targetRoleId) {
-    this.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 24, 'Fishing World');
+    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 24, 'Fishing World');
 };
 
 Fanex.ExtAcc.Customer.ShowEditSingleNG2 = function (custid, uplineRoleId, targetRoleId) {
-    this.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 23, ng2Text);
+    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 23, ng2Text);
 };
 
 Fanex.ExtAcc.Customer.ShowEditMultipleNG2 = function (uplineRoleId, targetRoleId) {
-    this.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 23, ng2Text);
+    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 23, ng2Text);
 };
 
 Fanex.ExtAcc.Customer.ShowEditSingleVirtualSports = function (custid, uplineRoleId, targetRoleId) {
-    this.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 5, 'Virtual Sports');
+    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 5, 'Virtual Sports');
 };
 
 Fanex.ExtAcc.Customer.ShowEditMultipleVirtualSports = function (uplineRoleId, targetRoleId) {
-    this.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 5, 'Virtual Sports');
+    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 5, 'Virtual Sports');
 };
 
 Fanex.ExtAcc.Customer.ShowEditSingleLottery = function (custid, uplineRoleId, targetRoleId) {
-    this.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 28, 'Lottery');
+    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 28, 'Lottery');
 };
 
 Fanex.ExtAcc.Customer.ShowEditMultipleLottery = function (uplineRoleId, targetRoleId) {
-    this.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 28, 'Lottery');
+    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 28, 'Lottery');
 };
 
 Fanex.ExtAcc.Customer.ShowEditSingleLucky3 = function (custid, uplineRoleId, targetRoleId) {
-    this.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 26, 'Lucky 3');
+    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 26, 'Lucky 3');
 };
 
 Fanex.ExtAcc.Customer.ShowEditMultipleLucky3 = function (uplineRoleId, targetRoleId) {
-    this.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 26, 'Lucky 3');
+    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 26, 'Lucky 3');
 };
 
 Fanex.ExtAcc.Customer.ShowEditSingleBullfighting = function (custid, uplineRoleId, targetRoleId) {
-    this.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 30, 'Bullfighting');
+    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 30, 'Bullfighting');
 };
 
 Fanex.ExtAcc.Customer.ShowEditMultipleBullfighting = function (uplineRoleId, targetRoleId) {
-    this.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 30, 'Bullfighting');
+    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 30, 'Bullfighting');
 };
 
 Fanex.ExtAcc.Customer.ShowEditProductForSingleCust = function (custid, uplineRoleId, targetRoleId, productId, productName) {
@@ -1290,7 +1290,7 @@ Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts = function (uplineRoleId, 
         $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
     }
     else {
-        this.ShowEditProductForSingleCust(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId, productId, productName);
+        Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId, productId, productName);
     }
 };
 

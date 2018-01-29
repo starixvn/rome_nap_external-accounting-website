@@ -32,21 +32,9 @@
 
         Result AllowOutright(int custId, bool allow);
 
-        Result EnableCasino(int id, bool enable, bool enableDownline, bool sync, string custName);
-
-        Result EnableNumberGame(int id, bool enable, bool enableDownline);
-
-        Result EnableLiveCasino(int id, bool enable, bool enableDownline);
-
-        Result EnableESports(int id, bool enable, bool enableDownline);
-
         Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress);
 
         Result UpdateSecurityCode(int custId, string code, bool force, int roleId);
-
-        Result EnableHrFixedOdds(int id, bool enable, bool enableDownline);
-
-        Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId);
 
         Result RemoveOtp(int custId, int userId, string ip4Address);
     }
@@ -106,18 +94,6 @@
         public Result AllowOutright(int custId, bool allow)
             => customerDataAccess.AllowOutright(custId, allow);
 
-        public Result EnableCasino(int id, bool enable, bool enableDownline, bool sync, string custName)
-            => customerDataAccess.EnableCasino(id, enable, enableDownline, sync, custName);
-
-        public Result EnableLiveCasino(int id, bool enable, bool enableDownline)
-            => customerDataAccess.EnableLiveCasino(id, enable, enableDownline);
-
-        public Result EnableNumberGame(int id, bool enable, bool enableDownline)
-            => customerDataAccess.EnableNumberGame(id, enable, enableDownline);
-
-        public Result EnableESports(int id, bool enable, bool enableDownline)
-            => customerDataAccess.EnableESports(id, enable, enableDownline);
-
         public Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress)
         {
             var result = customerDataAccess.AutoMasterPT(custId, allow);
@@ -162,12 +138,6 @@
 
             return customerDataAccess.ResetSecurityCode(custId, hashCode, force || roleId.IsNotSuper());
         }
-
-        public Result EnableHrFixedOdds(int id, bool enable, bool enableDownline)
-            => customerDataAccess.EnableHRFixedOdds(id, enable, enableDownline);
-
-        public Result UpdateGoldDeluxe(int id, bool enable, bool enableDownline, string custName, int userId)
-            => customerDataAccess.UpdateGoldDeluxe(id, enable, enableDownline, custName, userId);
 
         public Result RemoveOtp(int custId, int userId, string ip4Address)
             => customerDataAccess.RemoveOTP(new RemoveOtpCriteria

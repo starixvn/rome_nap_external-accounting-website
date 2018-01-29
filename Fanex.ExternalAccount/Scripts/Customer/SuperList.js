@@ -90,17 +90,10 @@
                 url = "LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&customerId=" + Fanex.ExtAcc.Customer.UserId + "&customerLevel=4&formType=2" + "&actorId=" + parent.userId + "&actorUsername=" + parent.username + parent.$('#selectedGroupName').html();
                 Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
             }
-        },
-        virtualSport: {
-            name: "Virtual Sports",
-            className: "iconViewEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleVirtualSports(Fanex.ExtAcc.Customer.UserId, 5, 4);
-            }
         }
     }
+
+    addEditProductSuperContextMenuItem('virtualSport', 'Virtual Sports', Fanex.ExtAcc.Customer.ShowEditSingleVirtualSports);
 
     if (showKenoSetting == 'true') {
         items.keno = {
@@ -143,121 +136,53 @@
 
 
     if (!this.HideSportsbook2) {
-        items.sportsbook2 = {
-            name: "Sportsbook 2",
-            className: "iconViewEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleSportsbook2(Fanex.ExtAcc.Customer.UserId, 5, 4);
-            }
-        }
+        addEditProductSuperContextMenuItem('sportsbook2', 'Sportsbook 2', Fanex.ExtAcc.Customer.ShowEditSingleSportsbook2);
     }
 
     if (!this.HideCockfighting) {
-        items.cockFighting = {
-            name: "Cockfighting",
-            className: "iconViewEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleCockfighting(Fanex.ExtAcc.Customer.UserId, 5, 4);
-            }
-        }
+        addEditProductSuperContextMenuItem('cockFighting', 'Cockfighting', Fanex.ExtAcc.Customer.ShowEditSingleCockfighting);
     }
 
     if (!this.HideCricket) {
-        items.cricket = {
-            name: "Cricket",
-            className: "iconViewEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleCricket(Fanex.ExtAcc.Customer.UserId, 5, 4);
-            }
-        }
+        addEditProductSuperContextMenuItem('cricket', 'Cricket', Fanex.ExtAcc.Customer.ShowEditSingleCricket);
     }
 
     if (!this.HideAllbet) {
-        items.allbet = {
-            name: "Allbet",
-            className: "iconViewEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleAllbet(Fanex.ExtAcc.Customer.UserId, 5, 4);
-            }
-        }
+        addEditProductSuperContextMenuItem('allbet', 'Allbet', Fanex.ExtAcc.Customer.ShowEditSingleAllbet);
     }
 
     if (!this.HideVoidbridge) {
-        items.voidbridge = {
-            name: "Macau Games",
-            className: "iconViewEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleVoidbridge(Fanex.ExtAcc.Customer.UserId, 5, 4);
-            }
-        }
+        addEditProductSuperContextMenuItem('voidbridge', 'Macau Games', Fanex.ExtAcc.Customer.ShowEditSingleVoidbridge);
     }
 
     if (!this.HideNG2) {
-        items.ng2 = {
-            name: ng2Text,
-            className: "iconViewEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleNG2(Fanex.ExtAcc.Customer.UserId, 5, 4);
-            }
-        }
+        addEditProductSuperContextMenuItem('ng2', ng2Text, Fanex.ExtAcc.Customer.ShowEditSingleNG2);
     }
 
     if (!this.HideFishingWorld) {
-        items.fishingWorld = {
-            name: "Fishing World",
-            className: "iconViewEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleFishingWorld(Fanex.ExtAcc.Customer.UserId, 5, 4);
-            }
-        }
+        addEditProductSuperContextMenuItem('fishingWorld', 'Fishing World', Fanex.ExtAcc.Customer.ShowEditSingleFishingWorld);
     }
 
     if (!this.HideLottery) {
-        items.lottery = {
-            name: "Lottery",
-            className: "iconViewEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleLottery(Fanex.ExtAcc.Customer.UserId, 5, 4);
-            }
-        }
+        addEditProductSuperContextMenuItem('lottery', 'Lottery', Fanex.ExtAcc.Customer.ShowEditSingleLottery);
     }
     
     if (!this.hideLucky3) {
-        items.lucky3 = {
-            name: "Lucky 3",
-            className: "iconViewEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleLucky3(Fanex.ExtAcc.Customer.UserId, 5, 4);
-            }
-        }
+        addEditProductSuperContextMenuItem('lucky3', 'Lucky 3', Fanex.ExtAcc.Customer.ShowEditSingleLucky3);
     }
 
     if (!this.HideBullfighting) {
-        items.bullfighting = {
-            name: "Bullfighting",
+        addEditProductSuperContextMenuItem('bullfighting', 'Bullfighting', Fanex.ExtAcc.Customer.ShowEditSingleBullfighting);
+    }
+
+    function addEditProductSuperContextMenuItem(menuId, menuName, showEditPopUpFunc) {
+        items[menuId] = {
+            name: menuName,
             className: "iconViewEdit",
             callback: function () {
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleBullfighting(Fanex.ExtAcc.Customer.UserId, 5, 4);
+                showEditPopUpFunc(Fanex.ExtAcc.Customer.UserId, 5, 4);
             }
         }
     }

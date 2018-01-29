@@ -105,39 +105,18 @@
     var has3rdParty = false;
     if (agentSyncCasino) {
         has3rdParty = true;
-        if (syncCasino) {
-            if (disableCasino) {
-                itemsMember.casino = {
-                    name: "Casino",
-                    className: "iconDisableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.UserId = custId;
-                        Fanex.ExtAcc.Customer.IsMultiple = false;
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Member/EditMember?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.agentId + '&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1064, 700, false, null, 1);
-                    }
-                };
-            } else {
-                itemsMember.casino = {
-                    name: "Casino",
-                    className: "iconEnableEdit",
-                    callback: function () {
-                        Fanex.ExtAcc.Customer.UserId = custId;
-                        Fanex.ExtAcc.Customer.IsMultiple = false;
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Member/EditMember?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.agentId + '&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1064, 700, false, null, 1);
-                    }
-                };
+
+        itemsMember.casino = {
+            name: "Casino",
+            className: syncCasino
+                ? (disableCasino ? "iconDisableEdit" : "iconEnableEdit")
+                : "iconUnsyncEdit",
+            callback: function () {
+                Fanex.ExtAcc.Customer.UserId = custId;
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Member/EditMember?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.agentId + '&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1064, 700, false, null, 1);
             }
-        } else {
-            itemsMember.casino = {
-                name: "Casino",
-                className: "iconUnsyncEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.UserId = custId;
-                    Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Member/EditMember?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.agentId + '&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1064, 700, false, null, 1);
-                }
-            };
-        }
+        };
     }
 
     if (agentSyncLiveCasino) {
@@ -156,51 +135,20 @@
 
     if (!hideVirtualSport) {
         has3rdParty = true;
-        if (disableVirtualSport) {
-            itemsMember.virtualSport = {
-                name: "Virtual Sports",
-                className: "iconDisableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.UserId = custId;
-                    Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Customer.ShowEditSingleVirtualSports(custId, 2, 1);
-                }
-            };
-        } else {
-            itemsMember.virtualSport = {
-                name: "Virtual Sports",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.UserId = custId;
-                    Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Customer.ShowEditSingleVirtualSports(custId, 2, 1);
-                }
-            };
-        }
+
+        addEditProductMemberContextMenuItem('virtualSport', 'Virtual Sports', disableVirtualSport, Fanex.ExtAcc.Customer.ShowEditSingleVirtualSports);
     }
 
     if (!isHideKeno) {
         has3rdParty = true;
-        if (disableKeno) {
-            itemsMember.keno = {
-                name: "Keno",
-                className: "iconDisableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.UserId = custId;
-                    Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, null, 1);
-                }
-            };
-        }
-        else {
-            itemsMember.keno = {
-                name: "Keno",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.UserId = custId;
-                    Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, null, 1);
-                }
+
+        itemsMember.keno = {
+            name: "Keno",
+            className: disableKeno ? "iconDisableEdit" : "iconEnableEdit",
+            callback: function () {
+                Fanex.ExtAcc.Customer.UserId = custId;
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, null, 1);
             }
         };
     }
@@ -236,134 +184,48 @@
     }
 
     if (!this.HideSportsbook2) {
-        itemsMember.sportsbook2 = {
-            name: "Sportsbook 2",
-            className: disableSportsbook2 == true ? "iconDisableEdit" : "iconEnableEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleSportsbook2(custId, 2, 1);
-            }
-        }
+        addEditProductMemberContextMenuItem('sportsbook2', 'Sportsbook 2', disableSportsbook2, Fanex.ExtAcc.Customer.ShowEditSingleSportsbook2);
     }
 
     if (!this.HideCockfighting) {
-        itemsMember.cockFighting = {
-            name: "Cockfighting",
-            className: disableCockfighting == true ? "iconDisableEdit" : "iconEnableEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleCockfighting(custId, 2, 1);
-            }
-        }
+        addEditProductMemberContextMenuItem('cockFighting', 'Cockfighting', disableCockfighting, Fanex.ExtAcc.Customer.ShowEditSingleCockfighting);
     }
 
     if (!this.HideCricket) {
-        itemsMember.cricket = {
-            name: "Cricket",
-            className: disableCricket == true ? "iconDisableEdit" : "iconEnableEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleCricket(custId, 2, 1);
-            }
-        }
+        addEditProductMemberContextMenuItem('cricket', 'Cricket', disableCricket, Fanex.ExtAcc.Customer.ShowEditSingleCricket);
     }
 
     if (!isHideAllbet) {
-        itemsMember.allbet = {
-            name: "Allbet",
-            className: disableAllbet == true ? "iconDisableEdit" : "iconEnableEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleAllbet(custId, 2, 1);
-            }
-        }
+        addEditProductMemberContextMenuItem('allbet', 'Allbet', disableAllbet, Fanex.ExtAcc.Customer.ShowEditSingleAllbet);
     }
 
     if (!isHideVoidbridge) {
-        itemsMember.voidbridge = {
-            name: "Macau Games",
-            className: disableVoidbridge == true ? "iconDisableEdit" : "iconEnableEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleVoidbridge(custId, 2, 1);
-            }
-        }
+        addEditProductMemberContextMenuItem('voidbridge', 'Macau Games', disableVoidbridge, Fanex.ExtAcc.Customer.ShowEditSingleVoidbridge);
     }
 
     if (!isHideNG2) {
-        itemsMember.ng2 = {
-            name: ng2Text,
-            className: !syncNG2 ? "iconUnsyncEdit" : (disableNG2 == true ? "iconDisableEdit" : "iconEnableEdit"),
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleNG2(custId, 2, 1);
-            }
-        }
+        addEditProductMemberContextMenuItem('ng2', ng2Text, disableNG2, Fanex.ExtAcc.Customer.ShowEditSingleNG2, syncNG2);
     }
 
     if (!isHideFishingWorld) {
-        itemsMember.fishingWorld = {
-            name: "Fishing World",
-            className: disableFishingWorld === true ? "iconDisableEdit" : "iconEnableEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleFishingWorld(custId, 2, 1);
-            }
-        };
+        addEditProductMemberContextMenuItem('fishingWorld', 'Fishing World', disableFishingWorld, Fanex.ExtAcc.Customer.ShowEditSingleFishingWorld);
     }
 
     if (!isHideLottery) {
-        itemsMember.lottery = {
-            name: "Lottery",
-            className: disableLottery === true ? "iconDisableEdit" : "iconEnableEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleLottery(custId, 2, 1);
-            }
-        };
+        addEditProductMemberContextMenuItem('lottery', 'Lottery', disableLottery, Fanex.ExtAcc.Customer.ShowEditSingleLottery);
     }
 
     if (!isHideLucky3) {
-        itemsMember.lucky3 = {
-            name: "Lucky 3",
-            className: disableLucky3 === true ? "iconDisableEdit" : "iconEnableEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleLucky3(custId, 2, 1);
-            }
-        };
+        addEditProductMemberContextMenuItem('lucky3', 'Lucky 3', disableLucky3, Fanex.ExtAcc.Customer.ShowEditSingleLucky3);
     }
 
     if (!isHideBullfighting) {
-        itemsMember.bullfighting = {
-            name: "Bullfighting",
-            className: disableBullfighting === true ? "iconDisableEdit" : "iconEnableEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Customer.ShowEditSingleBullfighting(custId, 2, 1);
-            }
-        };
+        addEditProductMemberContextMenuItem('bullfighting', 'Bullfighting', disableBullfighting, Fanex.ExtAcc.Customer.ShowEditSingleBullfighting);
     }
         
     if (has3rdParty)
         itemsMember.separator5 = "-----";
-    itemsMember.editInfo = {
+        itemsMember.editInfo = {
         name: "Edit Info",
         className: "iconEnableEdit editInfoBg",
         callback: function (key, opt) {
@@ -371,7 +233,8 @@
             Fanex.ExtAcc.Customer.IsMultiple = false;
             Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 500, 460, false);
         }
-    };
+        };
+
     itemsMember.changePassword = {
         name: "Reset Password",
         className: "iconEnableEdit editInfoBg",
@@ -381,6 +244,21 @@
             Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 350, false);
         }
     };
+
+    function addEditProductMemberContextMenuItem(menuId, menuName, isDisabled, showEditPopUpFunc, isSynced)
+    {
+        isSynced = typeof (isSynced) == 'undefined' ? true : isSynced;
+
+        itemsMember[menuId] = {
+            name: menuName,
+            className: !isSynced ? "iconUnsyncEdit" : (isDisabled ? "iconDisableEdit" : "iconEnableEdit"),
+            callback: function () {
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsFullInfo = true;
+                showEditPopUpFunc(custId, 2, 1);
+            }
+        };
+    }
 
     if ($.contextMenu) $.contextMenu('destroy');
     $.contextMenu({
