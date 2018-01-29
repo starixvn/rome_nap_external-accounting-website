@@ -20,7 +20,7 @@
     </SccLocalPath>
     <SccProvider>
     </SccProvider>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <FileUpgradeFlags>
@@ -120,12 +120,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.2.4\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.ColossusBets, Version=2.0.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.ExtNAP.2.0.1.4\lib\net40\Fanex.CustomerSetting.Module.ColossusBets.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ColossusBetSetting, Version=2.0.1.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBets.ExtNAP.2.0.1.4\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBetSetting.2.0.1.4-UpgradeNewtonjson4501\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.3.1, Culture=neutral, processorArchitecture=MSIL">
