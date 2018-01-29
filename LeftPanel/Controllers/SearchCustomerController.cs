@@ -31,8 +31,8 @@
         }
 
         internal SearchCustomerController(
-            CustomerQueryService customerQueryService, 
-            ICurrentSession currentSession, 
+            CustomerQueryService customerQueryService,
+            ICurrentSession currentSession,
             ICurrentContext currentContext) : base(currentSession, currentContext)
         {
             this.customerQueryService = customerQueryService;

@@ -20,6 +20,7 @@
             BalanceInfo = new BalanceInfo(isUpdateCredit, custInfoRow, cashRow);
             PersonalInfo = new PersonalInfo(custInfoRow, lineRow);
             Login = GetLoginInfo(cashRow, custInfoRow, canViewVNIP);
+            DownlineList = new DownlineList();
         }
 
         public PersonalInfo PersonalInfo { get; set; }

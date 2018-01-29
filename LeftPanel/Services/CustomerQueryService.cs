@@ -5,8 +5,6 @@
     using Core.Authorization;
     using Customers;
     using DataAccesses;
-    using Extensions;
-    using Utilities;
     using ViewModels;
 
     public interface CustomerQueryService
@@ -60,31 +58,7 @@
             => new OnlineList(customerDataAccess.GetOnlineList(custId), authorizationService.CanViewVNIP);
 
         public DownlineList GetDownlineList(int custid, int pageSize, int pageIndex)
-        {
-            var dr = customerDataAccess.GetDownlineList(custid, pageSize, pageIndex);
-
-            if (dr?.ResultSet == null || dr.ResultSet.Tables.Count <= 0)
-            {
-                return null;
-            }
-
-            var downlines = dr.ResultSet.Tables[0];
-            var model = new DownlineList();
-
-            if (downlines?.Rows.Count <= 0)
-            {
-                return model;
-            }
-
-            DownlineList.AddDownlines(downlines, model);
-
-            model.CurrentPage = pageIndex;
-
-            var totalPages = Utils.ToInt32(dr.Outputs["totalpages"]);
-            DownlineList.AddPageItems(totalPages, model);
-
-            return model;
-        }
+            => new DownlineList(customerDataAccess.GetDownlineList(custid, pageSize, pageIndex), pageIndex);
 
         public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId)
             => customerDataAccess.MasterAgentUsedCreditItems(custId, roleId);

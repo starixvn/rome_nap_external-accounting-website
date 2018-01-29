@@ -61,8 +61,6 @@
 
         public List<ObjectInfo> Balances { get; }
 
-        //public List<Status> Statuses { get; }
-
         public bool IsUpdateCredit { get; }
     }
 }

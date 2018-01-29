@@ -2,7 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Data;
+    using Data.DNAide;
     using Extensions;
+    using Utilities;
 
     public class DownlineList
     {
@@ -11,6 +13,27 @@
             Downlines = new List<ObjectInfo>();
             Pages = new List<ObjectInfo>();
             CurrentPage = 1;
+        }
+
+        public DownlineList(DbResult dbResult, int pageIndex)
+        {
+            Downlines = new List<ObjectInfo>();
+            Pages = new List<ObjectInfo>();
+
+            if (dbResult?.ResultSet == null || dbResult.ResultSet.Tables.Count <= 0)
+            {
+                return;
+            }
+
+            var downlines = dbResult.ResultSet.Tables[0];
+            var totalPages = Utils.ToInt32(dbResult.Outputs["totalpages"]);
+
+            if (downlines?.Rows.Count > 0)
+            {
+                AddDownlines(downlines);
+                CurrentPage = pageIndex;
+                AddPageItems(totalPages);
+            }
         }
 
         public ObjectInfo CustId { get; set; }
@@ -27,22 +50,22 @@
 
         public int CurrentPage { get; set; }
 
-        internal static void AddPageItems(int totalPages, DownlineList model)
+        internal void AddPageItems(int totalPages)
         {
             if (totalPages > 1)
             {
                 for (var i = 1; i <= totalPages; i++)
                 {
-                    model.Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
+                    Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
                 }
             }
             else
             {
-                model.Pages.Add(new ObjectInfo { Value = 1, Text = "1" });
+                Pages.Add(new ObjectInfo { Value = 1, Text = "1" });
             }
         }
 
-        internal static void AddDownlines(DataTable downlines, DownlineList model)
+        internal void AddDownlines(DataTable downlines)
         {
             if (downlines?.Rows == null)
             {
@@ -51,7 +74,7 @@
 
             foreach (DataRow item in downlines.Rows)
             {
-                model.Downlines.Add(new ObjectInfo { Text = item.Username() });
+                Downlines.Add(new ObjectInfo { Text = item.Username() });
             }
         }
     }
