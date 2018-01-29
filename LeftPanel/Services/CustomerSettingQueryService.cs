@@ -471,13 +471,13 @@
         private static void AddEditStatusItem(
             Setting setting,
             DataTable productStatusTable,
-            ProductSettingElement settingParams,
+            ProductSettingElement productSettingElement,
             bool isUplineDisabled)
         {
-            if (settingParams.StatusType == StatusType.Checkbox)
+            if (productSettingElement.StatusType == StatusType.Checkbox)
             {
-                var enableItem = CreateEnableCheckboxItem(settingParams.Key,
-                    !productStatusTable.IsProductEnabled(settingParams.Id), settingParams.Name);
+                var enableItem = CreateEnableCheckboxItem(productSettingElement.Key,
+                    !productStatusTable.IsProductEnabled(productSettingElement.Id), productSettingElement.Name);
 
                 if (isUplineDisabled)
                 {
@@ -488,7 +488,7 @@
             }
             else
             {
-                setting.EditItems.Add(CreateEnableLinkItem(settingParams.Key, settingParams.Name));
+                setting.EditItems.Add(CreateEnableLinkItem(productSettingElement.Key, productSettingElement.Name));
             }
         }
 
