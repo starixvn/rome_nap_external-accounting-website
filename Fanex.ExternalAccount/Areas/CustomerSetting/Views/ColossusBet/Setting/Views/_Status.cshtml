@@ -18,11 +18,6 @@
             <div style="display: inline-block; padding-left: 30px;">
                 <input ng-disabled="!statusPartial.Upline.IsEnabled" type="checkbox" ng-model="statusPartial.IsEnabled" />
                 @Messages.Enable
-                @if (Model.CustomerInformationPartial.RoleId != Role.Member && Model.StatusPartial.IsHasDownlines)
-                {
-                    <input ng-disabled="IsDownlinechkDisabled" type="checkbox" ng-model="statusPartial.IsDownlinesEnabled" />
-                    @Messages.EnableDownlines
-                }
             </div>
         </td>
     </tr>
