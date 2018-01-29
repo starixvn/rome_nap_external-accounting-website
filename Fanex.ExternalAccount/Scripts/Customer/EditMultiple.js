@@ -398,6 +398,8 @@
                 }
             };
         }
+
+
         
         if (this.AllowDoubleCommAgent) {
             menuItems.doubleComm = {
@@ -542,36 +544,7 @@
         }
 
         if (!this.HideVirtualSports) {
-            menuItems.virtualSport = {
-                name: "Virtual Sports",
-                className: "iconEnableEdit",
-                items: {
-                    agentVS: {
-                        name: "Edit Multiple Virtual Sports",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleVirtualSports(2, 1);
-                        }
-                    },
-                    superVS: {
-                        name: "Super Edit Multiple Virtual Sports",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleVirtualSports(4, 1);
-                        }
-                    },
-                    masterVS: {
-                        name: "Master Edit Multiple Virtual Sports",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleVirtualSports(3, 1);
-                        }
-                    }
-                }
-            };
+            addUplineEditMemberMenuItems(5, 'Virtual Sports');
         }
 
         if (!this.HideKeno) {
@@ -652,334 +625,82 @@
         }
 
         if (!this.HideSportsbook2) {
-            menuItems.sportsbook2 = {
-                name: "Sportsbook 2",
-                className: "iconEnableEdit",
-                items: {
-                    agentSB2: {
-                        name: "Edit Multiple Sportsbook 2",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(2, 1);
-                        }
-                    },
-                    superSB2: {
-                        name: "Super Edit Multiple Sportsbook 2",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(4, 1);
-                        }
-                    },
-                    masterSB2: {
-                        name: "Master Edit Multiple Sportsbook 2",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(3, 1);
-                        }
-                    }
-                }
-            };
+            addUplineEditMemberMenuItems(16, 'Sportsbook 2');
         }
 
         if (!this.HideCockfighting) {
-            menuItems.cockFighting = {
-                name: "Cockfighting",
-                className: "iconEnableEdit",
-                items: {
-                    agentCF: {
-                        name: "Edit Multiple Cockfighting",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleCockfighting(2, 1);
-                        }
-                    },
-                    superCF: {
-                        name: "Super Edit Multiple Cockfighting",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleCockfighting(4, 1);
-                        }
-                    },
-                    masterCF: {
-                        name: "Master Edit Multiple Cockfighting",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleCockfighting(3, 1);
-                        }
-                    }
-                }
-            };
+            addUplineEditMemberMenuItems(19, 'Cockfighting');
         }
 
         if (!this.HideCricket) {
-            menuItems.cricket = {
-                name: "Cricket",
-                className: "iconEnableEdit",
-                items: {
-                    agentCK: {
-                        name: "Edit Multiple Cricket",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleCricket(2, 1);
-                        }
-                    },
-                    superCK: {
-                        name: "Super Edit Multiple Cricket",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleCricket(4, 1);
-                        }
-                    },
-                    masterCK: {
-                        name: "Master Edit Multiple Cricket",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleCricket(3, 1);
-                        }
-                    }
-                }
-            };
+            addUplineEditMemberMenuItems(20, 'Cricket');
         }
 
         if (!this.HideAllbetMember) {
-            menuItems.allbet = {
-                name: "Allbet",
-                className: "iconEnableEdit",
-                items: {
-                    agentAB: {
-                        name: "Edit Multiple Allbet",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleAllbet(2, 1);
-                        }
-                    },
-                    superAB: {
-                        name: "Super Edit Multiple Allbet",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleAllbet(4, 1);
-                        }
-                    },
-                    masterAB: {
-                        name: "Master Edit Multiple Allbet",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleAllbet(3, 1);
-                        }
-                    }
-                }
-            };
+            addUplineEditMemberMenuItems(21, 'Allbet');
         }
 
         if (!this.HideVoidbridgeMember) {
-            menuItems.voidbridge = {
-                name: "Macau Games",
-                className: "iconEnableEdit",
-                items: {
-                    agentVB: {
-                        name: "Edit Multiple Macau Games",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge(2, 1);
-                        }
-                    },
-                    superVB: {
-                        name: "Super Edit Multiple Macau Games",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge(4, 1);
-                        }
-                    },
-                    masterVB: {
-                        name: "Master Edit Multiple Macau Games",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge(3, 1);
-                        }
-                    }
-                }
-            };
+            addUplineEditMemberMenuItems(22, 'Macau Games');
         }
 
         if (!this.HideNG2Member) {
-            menuItems.ng2 = {
-                name: ng2Text,
-                className: "iconEnableEdit",
-                items: {
-                    agentNG2: {
-                        name: "Edit Multiple " + ng2Text,
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleNG2(2, 1);
-                        }
-                    },
-                    superNG2: {
-                        name: "Super Edit Multiple " + ng2Text,
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleNG2(4, 1);
-                        }
-                    },
-                    masterNG2: {
-                        name: "Master Edit Multiple " + ng2Text,
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleNG2(3, 1);
-                        }
-                    }
-                }
-            };
+            addUplineEditMemberMenuItems(23, ng2Text);
         }
 
         if (!this.HideFishingWorldMember) {
-            menuItems.fishingWorld = {
-                name: "Fishing World",
-                className: "iconEnableEdit",
-                items: {
-                    agentFW: {
-                        name: "Edit Multiple Fishing World",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleFishingWorld(2, 1);
-                        }
-                    },
-                    superFW: {
-                        name: "Super Edit Multiple Fishing World",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleFishingWorld(4, 1);
-                        }
-                    },
-                    masterFW: {
-                        name: "Master Edit Multiple Fishing World",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleFishingWorld(3, 1);
-                        }
-                    }
-                }
-            };
+            addUplineEditMemberMenuItems(24, 'Fishing World');
          }
 
-         if (!this.HideLotteryMember) {
-             menuItems.lottery = {
-                 name: "Lottery",
-                 className: "iconEnableEdit",
-                 items: {
-                     agentLottery: {
-                         name: "Edit Multiple Lottery",
-                         callback: function () {
-                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                             Fanex.ExtAcc.Customer.ShowEditMultipleLottery(2, 1);
-                         }
-                     },
-                     superLottery: {
-                         name: "Super Edit Multiple Lottery",
-                         callback: function () {
-                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                             Fanex.ExtAcc.Customer.ShowEditMultipleLottery(4, 1);
-                         }
-                     },
-                     masterLottery: {
-                         name: "Master Edit Multiple Lottery",
-                         callback: function () {
-                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                             Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                             Fanex.ExtAcc.Customer.ShowEditMultipleLottery(3, 1);
-                         }
-                     }
-                 }
-             };
-         }
+        if (!this.HideLotteryMember) {
+            addUplineEditMemberMenuItems(28, 'Lottery');
+        }
 
          if (!this.HideLucky3) {
-             menuItems.lucky3 = {
-                 name: "Lucky 3",
-                 className: "iconEnableEdit",
-                 items: {
-                     agentLucky3: {
-                         name: "Edit Multiple Lucky 3",
-                         callback: function () {
-                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                             Fanex.ExtAcc.Customer.ShowEditMultipleLucky3(2, 1);
-                         }
-                     },
-                     superLucky3: {
-                         name: "Super Edit Multiple Lucky 3",
-                         callback: function () {
-                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                             Fanex.ExtAcc.Customer.ShowEditMultipleLucky3(4, 1);
-                         }
-                     },
-                     masterLucky3: {
-                         name: "Master Edit Multiple Lucky 3",
-                         callback: function () {
-                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                             Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                             Fanex.ExtAcc.Customer.ShowEditMultipleLucky3(3, 1);
-                         }
-                     }
-                 }
-             };
+             addUplineEditMemberMenuItems(26, 'Lucky 3');
          }
 
          if (!this.HideBullfightingMember) {
-             menuItems.bullfighting = {
-                 name: "Bullfighting",
+             addUplineEditMemberMenuItems(30, 'Bullfighting');
+         }
+
+         function addUplineEditMemberMenuItems(productId, productName) {
+             var productKey = 'product_' + productId;
+             menuItems[productKey] = {
+                 name: productName,
                  className: "iconEnableEdit",
-                 items: {
-                     agentBullfighting: {
-                         name: "Edit Multiple Bullfighting",
-                         callback: function () {
-                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                             Fanex.ExtAcc.Customer.ShowEditMultipleBullfighting(2, 1);
-                         }
-                     },
-                     superBullfighting: {
-                         name: "Super Edit Multiple Bullfighting",
-                         callback: function () {
-                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                             Fanex.ExtAcc.Customer.ShowEditMultipleBullfighting(4, 1);
-                         }
-                     },
-                     masterBullfighting: {
-                         name: "Master Edit Multiple Bullfighting",
-                         callback: function () {
-                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                             Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                             Fanex.ExtAcc.Customer.ShowEditMultipleBullfighting(3, 1);
-                         }
-                     }
+                 items: {}
+             };
+
+             menuItems[productKey].items['agent_' + productKey] = {
+                 name: 'Edit Multiple ' + productName,
+                 callback: function () {
+                     Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                     Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                     Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(2, 1, productId, productName);
                  }
              };
+
+             menuItems[productKey].items['super_' + productKey] = {
+                 name: 'Super Edit Multiple ' + productName,
+                 callback: function () {
+                     Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                     Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                     Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(4, 1, productId, productName);
+                 }
+             };
+
+             menuItems[productKey].items['master_' + productKey] = {
+                 name: 'Master Edit Multiple ' + productName,
+                 callback: function () {
+                     Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                     Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                     Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(3, 1, productId, productName);
+                 }
+             };
+
          }
+
       
         if (this.AllowDoubleComm) {
             menuItems.doubleComm = {

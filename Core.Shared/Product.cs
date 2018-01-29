@@ -9,12 +9,15 @@
         public Product(
             int productId,
             string productName,
-            bool isGetNameFromRemotingRef = false)
+            bool isGetNameFromRemotingRef = false,
+            string substituteProductKey = null)
         {
             Id = productId;
             Key = string.IsNullOrWhiteSpace(productName)
                 ? string.Empty
-                : productName.Replace(" ", string.Empty);
+                : string.IsNullOrWhiteSpace(substituteProductKey) 
+                    ? productName.Replace(" ", string.Empty) 
+                    : substituteProductKey;
             Name = isGetNameFromRemotingRef
                 ? RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en-US", productName)
                 : productName;

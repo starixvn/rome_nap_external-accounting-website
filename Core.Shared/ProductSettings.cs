@@ -62,5 +62,6 @@
 
             return value == "1" || value.Equals("true", StringComparison.CurrentCultureIgnoreCase);
         }
+            
     }
 }
