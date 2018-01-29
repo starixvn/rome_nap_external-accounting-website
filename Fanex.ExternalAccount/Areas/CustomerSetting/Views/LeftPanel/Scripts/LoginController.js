@@ -22,12 +22,13 @@
     };
 
     $scope.ResetSecurityCode = function (id, roleId, username) {
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 250 : 500;
         var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?id=' + id + '&roleId=' + roleId + '&username=' + username + '&groupName=' + parent.$('#selectedGroupName').html());
         parent.Fanex.ExtAcc.Form.ShowFrame(
             url,
             'Reset security code: <font color="#6dcff6">' + username + '</font>',
             650,
-            500,
+            height,
             false,
             function () { top.$("#windowPopup").addClass("add-padding"); });
     };

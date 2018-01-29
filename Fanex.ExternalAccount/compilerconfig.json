@@ -62,5 +62,9 @@
   {
     "outputFile": "assets/styles/pages/statement/guideline.css",
     "inputFile": "assets/styles/pages/statement/guideline.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/account/security-code.css",
+    "inputFile": "assets/styles/pages/account/security-code.scss"
   }
 ]

@@ -44,6 +44,7 @@
 #reportNote ul {
     margin: 0;
     padding: 10px;
+    -webkit-text-size-adjust: 100%;
 }
 
 .checkbox {
