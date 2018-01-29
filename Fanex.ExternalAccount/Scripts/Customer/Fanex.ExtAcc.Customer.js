@@ -344,36 +344,30 @@
     },
 
     ResetPwd: function (isMember) {
+        var errorMessage = "";
+        var errorField;
+
         if (!Validators.validateInput($('#Password').val())) {
-            $('#Password').focus();
-            Validators.show($('#Password').get(0), 'This field is required');
+            errorField = $('#Password');
+            errorMessage = 'Password is required';
+        } else if (!this.validatePassword($('#Password').val(), isMember)) {
+            errorField = $('#Password');
+            errorMessage = 'Your password does not meet the minimum security requirement';
+        } else if (!Validators.validateInput($('#confirmPwd').val())) {
+            errorField = $('#confirmPwd');
+            errorMessage = 'Confirm password is required';
+        } else if ($('#confirmPwd').val() !== $('#Password').val()) {
+            errorField = $('#confirmPwd');
+            errorMessage = 'Confirm password is not matched';
+        }
+
+        if (errorMessage !== "") {
+            $("#err-message").html(errorMessage).removeClass("hide");
+            errorField.addClass("invalid-field").focus();
             return false;
         }
 
-        if (!this.validatePassword($('#Password').val(), isMember)) {
-            $('#Password').focus();
-            Validators.show($('#Password').get(0), 'Your password does not meet the minimum security requirement');
-            return false;
-        }
-
-        if (!Validators.validateInput($('#confirmPwd').val())) {
-            $('#confirmPwd').focus();
-            Validators.show($('#confirmPwd').get(0), 'This field is required');
-            return false;
-        }
-
-        if (!this.validatePassword($('#confirmPwd').val(), isMember)) {
-            $('#Password').focus();
-            Validators.show($('#confirmPwd').get(0), 'Your password does not meet the minimum security requirement');
-            return false;
-        }
-
-        if ($('#confirmPwd').val() !== $('#Password').val()) {
-            $('#confirmPwd').focus();
-            Validators.show($('#confirmPwd').get(0), 'Confirm password is not matched');
-            return false;
-        }
-
+        $("#err-message").addClass("hide");
         Fanex.ExtAcc.BlockUI();
 
         $.ajax({
@@ -383,8 +377,7 @@
         })
             .done(function (data) {
                 if (!data.isSuccess) {
-                    $('#errMsg').css('display', 'block');
-                    $('#errMsg').html(data.errorMessage.formatErrorMessage());
+                    $('#err-message').html(data.errorMessage.formatErrorMessage()).removeClass('hide');
                 } else {
                     Fanex.ExtAcc.Form.Close(false);
                 }
