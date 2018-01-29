@@ -88,12 +88,10 @@
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.2.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.2.4\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.2.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.2.11-UpgradeNewtonjson4503\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.3.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.3.1\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
