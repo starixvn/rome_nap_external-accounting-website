@@ -4,8 +4,8 @@
     var parentUsername = Request["username"] ?? Request["groupname"];
 }
 <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/Customer/PTEngine.css")" rel="stylesheet" type="text/css" />
-<div class="bgTitle titleForm">
+<link href="@Url.Content("~/assets/styles/pages/customer/pt-engine.css")" rel="stylesheet" type="text/css" />
+<div class="page-title">
     <div class="wlDetail">
         Add New Member
     </div>
@@ -14,7 +14,7 @@
     <div id="errMsg" style="display: none; width: 811px" class="successMsg">
     </div>
     <div class="blockBtn">
-        <input id="btnSubmit" class="buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
+        <input id="btnSubmit" class="btn -submit buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
     </div>
     <div class="customerInfo clear">
         <div class="headerTab">
@@ -30,7 +30,7 @@
                 </select>
                 <select id="selectedThree" name="selectedThree">
                 </select>
-                <span id="msgIcon">&nbsp;&nbsp;&nbsp;</span>
+                <span id="msgIcon"></span>
             </div>
             <div class="customerInfoBlock3 bdt0">
                 @ViewLang.Password</div>
@@ -128,7 +128,7 @@
         </div>
     </div>
     <div class="blockBtn">
-        <input id="btnSubmitFooter" class="buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
+        <input id="btnSubmitFooter" class="btn -submit buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
     </div>
     <input type="hidden" id="parentId" value="@Request["custId"]" />
     <input type="hidden" id="parentUsername" value="@parentUsername" />

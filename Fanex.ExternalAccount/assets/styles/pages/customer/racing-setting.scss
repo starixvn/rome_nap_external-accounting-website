@@ -1,0 +1,11 @@
+﻿@import "customer";
+
+.PTBetTypeCopiedActive, .PTBetTypeCopied {
+    background: none !important;
+}
+
+.BetTypeHeader2, .BetTypeHeaderActive, .PTSportCopied, .PTSportCopiedActive, .btnCopyAll, .btnUnCopyAll {
+    &:before {
+        right: 28px;
+    }
+}

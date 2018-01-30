@@ -92,6 +92,7 @@
     MessageUnSuspendedMember: 'Are you sure you want to change Suspend status for this customer?',
 
     RecheckinXHR: null,
+    $this: null,
 
     ReCheckin: function () {
         if (this.RecheckinXHR != null)
@@ -112,7 +113,7 @@
                                 if (tag.tagName == "IFRAME") {
                                     Fanex.ExtAcc.Form.Close();
                                 } else {
-                                    $('#windowPopup').html('You have logged in from another session or your login session has expired!'); // Prevent opening popup if any
+                                    $('#windowPopup').html('<div style="padding:8px 16px">You have logged in from another session or your login session has expired!<div>'); // Prevent opening popup if any
                                 }
                             }
 
@@ -159,12 +160,15 @@
             }
         }, 100);
 
+        $this = this;
         $('#exporttoexcel').click(function () {
             var data = Fanex.ExtAcc.Customer.GetParams();
 
             var params = "groupName=" +
                 data.groupName +
                 "&enabled=" +
+
+            
                 data.enabled +
                 "&closed=" +
                 data.closed +
@@ -182,8 +186,8 @@
                 data.username +
                 "&custId=" +
                 Fanex.ExtAcc.Customer.custId;
+             top.exportExcel(resolveClientUrl("Customer/GetExportToExcel?") + params, document);
 
-            document.location.href = resolveClientUrl("Customer/GetExportToExcel?") + params;
         });
 
         $('#txtUserName').keypress(function (e) {
@@ -209,6 +213,31 @@
         });
 
         Fanex.ExtAcc.InitSuggestion();
+
+        $(".icon-filter").click($this.showHideFilter);
+    },
+    hideFilter: false,
+    showHideFilter: function () {
+        if ($this.hideFilter) {
+            $(".icon-filter").addClass("active");
+            $(".filterbox").removeClass("hide");
+        } else {
+            $(".icon-filter").removeClass("active");
+            $(".filterbox").addClass("hide");
+        }
+
+        try {
+            $("#jqgrid").fanexGrid("resizeGrid");
+        }
+        catch (err) { }
+
+        $this.hideFilter = !$this.hideFilter;
+    },
+    resizeReportGrid: function () {
+        try {
+            $("#jqgrid").fanexGrid("resizeGrid");
+        }
+        catch (err) { }
     },
 
     GroupName: function () {
@@ -334,36 +363,30 @@
     },
 
     ResetPwd: function (isMember) {
+        var errorMessage = "";
+        var errorField;
+
         if (!Validators.validateInput($('#Password').val())) {
-            $('#Password').focus();
-            Validators.show($('#Password').get(0), 'This field is required');
+            errorField = $('#Password');
+            errorMessage = 'Password is required';
+        } else if (!this.validatePassword($('#Password').val(), isMember)) {
+            errorField = $('#Password');
+            errorMessage = 'Your password does not meet the minimum security requirement';
+        } else if (!Validators.validateInput($('#confirmPwd').val())) {
+            errorField = $('#confirmPwd');
+            errorMessage = 'Confirm password is required';
+        } else if ($('#confirmPwd').val() !== $('#Password').val()) {
+            errorField = $('#confirmPwd');
+            errorMessage = 'Confirm password is not matched';
+        }
+
+        if (errorMessage !== "") {
+            $("#err-message").html(errorMessage).removeClass("hide");
+            errorField.addClass("invalid-field").focus();
             return false;
         }
 
-        if (!this.validatePassword($('#Password').val(), isMember)) {
-            $('#Password').focus();
-            Validators.show($('#Password').get(0), 'Your password does not meet the minimum security requirement');
-            return false;
-        }
-
-        if (!Validators.validateInput($('#confirmPwd').val())) {
-            $('#confirmPwd').focus();
-            Validators.show($('#confirmPwd').get(0), 'This field is required');
-            return false;
-        }
-
-        if (!this.validatePassword($('#confirmPwd').val(), isMember)) {
-            $('#Password').focus();
-            Validators.show($('#confirmPwd').get(0), 'Your password does not meet the minimum security requirement');
-            return false;
-        }
-
-        if ($('#confirmPwd').val() !== $('#Password').val()) {
-            $('#confirmPwd').focus();
-            Validators.show($('#confirmPwd').get(0), 'Confirm password is not matched');
-            return false;
-        }
-
+        $("#err-message").addClass("hide");
         Fanex.ExtAcc.BlockUI();
 
         $.ajax({
@@ -373,8 +396,7 @@
         })
             .done(function (data) {
                 if (!data.isSuccess) {
-                    $('#errMsg').css('display', 'block');
-                    $('#errMsg').html(data.errorMessage.formatErrorMessage());
+                    $('#err-message').html(data.errorMessage.formatErrorMessage()).removeClass('hide');
                 } else {
                     Fanex.ExtAcc.Form.Close(false);
                 }
@@ -393,6 +415,7 @@
         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ViewIP?ip=' + ip), 'IP Information', 450, 230, false,
             function () {
                 Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup");
             },
             2);
     },
@@ -604,6 +627,8 @@
 
                 // Init Grid jqgrid
                 $('#jqgrid').fanexGrid(options);
+
+                workaroundForGridOnPhone();
             }
 
             $('#editMult').attr('style', 'cursor: default !important');
@@ -988,5 +1013,9 @@
             default:
                 return "closed-wrongPwdOthers";
         }
+    },
+
+    AddPaddingContent: function (elementSelector) {
+        top.$(elementSelector).addClass("add-padding");
     }
 };

@@ -5,28 +5,27 @@
     var funcs = ((IEnumerable<Function>)ViewBag.Function).ToList();
     var subFuncs = ((IEnumerable<Function>)ViewBag.subFunction).ToList();
 }
-<div style="height: 25px; font-weight: bold;">@ViewLang.GroupName: <font color="#4b91be">@ViewBag.GroupName</font></div>
-<div id="errMsg" style="margin: 5px 0 30px 0; display: none;" class="successMsg">
-</div>
-<table id="tblInner" width="100%">
-    <tr>
-        <th rowspan="2">
-            <input id="GroupID" type="hidden" value="@ViewBag.GroupID" />@ViewLang.Functions
-        </th>
-        <th colspan="2">
-            @ViewLang.GroupPermission
-        </th>
-    </tr>
-    <tr>
-        <th style="width: 60px;">
-            @ViewLang.Read
-        </th>
-        <th style="width: 60px;">
-            @ViewLang.Write
-        </th>
-    </tr>
-    @foreach (var fn in funcs)
-    {
+
+<div class="group-name">@ViewLang.GroupName: <span class="name">@ViewBag.GroupName</span></div>
+<div id="errMsg" class="successMsg hide"></div>
+<table id="tblInner" class="table w100">
+    <thead>
+        <tr>
+            <th rowspan="2"><input id="GroupID" type="hidden" value="@ViewBag.GroupID" />@ViewLang.Functions</throwspan="2">
+            <th colspan="2">@ViewLang.GroupPermission</th>
+        </tr>
+        <tr>
+            <th class="width-60">
+                @ViewLang.Read
+            </th>
+            <th class="width-60">
+                @ViewLang.Write
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Function fn in funcs)
+        {
         var className = subFuncs.Count(o => o.ParentID == fn.FuncID) > 0 ? "permItemParent" : "permItemParentOnly";
 
         string activeR;
@@ -43,34 +42,34 @@
         else
         {
             if (fn.GroupPolicy == EPolicy.Read)
-            {
-                activeR = "permActive";
-                activeW = "permInactive";
-                val = "1";
+                {
+                    activeR = "permActive";
+                    activeW = "permInactive";
+                    val = "1";
+                }
+                else
+                {
+                    activeR = activeW = "permInactive";
+                }
             }
-            else
-            {
-                activeR = activeW = "permInactive";
-            }
-        }
 
-        <tr title="@fn.FuncDesc.DecodeHtml()">
-            <td>
-                <div id="parent-@fn.FuncID" class="@className" style="cursor: pointer" expand="true" onclick="Fanex.ExtAcc.ToggleRows(@fn.FuncID)">@fn.FuncName</div>
-            </td>
-            <td>
-                <div id="r-@fn.FuncID" class="@activeR" parent="r-@fn.FuncID" permission="1" onclick="Fanex.ExtAcc.GroupPolicy.GrantPermissionsRead(this);">
-                </div>
-            </td>
-            <td>
-                <div id="w-@fn.FuncID" class="@activeW" parent="w-@fn.FuncID" val="@val" permission="2" onclick="Fanex.ExtAcc.GroupPolicy.GrantPermissionsWrite(this);">
-                </div>
-            </td>
-        </tr>
+            <tr title="@fn.FuncDesc.DecodeHtml()">
+                <td>
+                    <div id="parent-@fn.FuncID" class="@className pointer" expand="true" onclick="Fanex.ExtAcc.ToggleRows(@fn.FuncID)">@fn.FuncName</div>
+                </td>
+                <td>
+                    <div id="r-@fn.FuncID" class="@activeR" parent="r-@fn.FuncID" permission="1" onclick="Fanex.ExtAcc.GroupPolicy.GrantPermissionsRead(this);">
+                    </div>
+                </td>
+                <td>
+                    <div id="w-@fn.FuncID" class="@activeW" parent="w-@fn.FuncID" val="@val" permission="2" onclick="Fanex.ExtAcc.GroupPolicy.GrantPermissionsWrite(this);">
+                    </div>
+                </td>
+            </tr>
         foreach (var subfn in subFuncs)
-        {
-            if (fn.FuncID == subfn.ParentID)
             {
+                if (fn.FuncID == subfn.ParentID)
+                {
 
                 string subactiveR;
                 string subactiveW;
@@ -90,12 +89,12 @@
                         subactiveR = "permActive";
                         subactiveW = "permInactive";
                         subval = "1";
-                    }
-                    else
-                    {
+                        }
+                        else
+                        {
                         subactiveR = subactiveW = "permInactive";
+                        }
                     }
-                }
                 <tr parentid="@subfn.ParentID" title="@subfn.FuncDesc.DecodeHtml()">
                     <td>
                         <span class="permItemChild">@subfn.FuncName</span>
@@ -109,11 +108,13 @@
                         </div>
                     </td>
                 </tr>
+                }
             }
         }
-    }
+    </tbody>
+    
 </table>
-<div style="float: right; margin: 5px 0px 30px 0px">
-    <input class="buttonPopup" type="button" value="Submit" onclick="Fanex.ExtAcc.GroupPolicy.SaveGroupPolicy()" />
+<div class="pull-right mrg-top-10">
+    <input class="btn -submit" type="button" value="Submit" onclick="Fanex.ExtAcc.GroupPolicy.SaveGroupPolicy()" />
 </div>
 <script src="@Url.Content("~/Scripts/Manage/Fanex.ExtAcc.GroupPolicy.js")" type="text/javascript"></script>

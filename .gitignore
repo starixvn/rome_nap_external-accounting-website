@@ -33,3 +33,6 @@ packages/*
 Fanex.ExternalAccount.Controllers/Fanex.ExternalAccount.Controllers.csproj.user
 
 _Chutzpah
+*.css
+
+*/assets/bundles/**

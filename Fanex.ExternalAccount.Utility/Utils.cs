@@ -178,78 +178,10 @@
         public static string EncodeHtml(this DataRow obj, string fieldName)
             => HttpUtility.HtmlEncode(obj.ToString(fieldName));
 
-        public static void EnableLoginBundle(this BundleCollection bundles)
-            => EnableBundle(
-                bundles,
-                "~/bootstrap/login/css",
-                "~/bootstrap/login/js",
-                Config.CssLogin,
-                Config.JsLogin);
-
-        public static void EnableCommonBundle(this BundleCollection bundles)
-            => EnableBundle(
-                bundles,
-                "~/bootstrap/css",
-                "~/bootstrap/js",
-                Config.CssFiles,
-                Config.JsFiles);
-
-        public static void EnableExternalGroupBundle(this BundleCollection bundles)
-            => EnableBundle(
-                bundles,
-                "~/bootstrap/externalgroup/css",
-                "~/bootstrap/externalgroup/js",
-                Config.CssExtGroup,
-                Config.JsExtGroup);
-
-        public static void EnableDailyWinLossBundle(this BundleCollection bundles)
-            => EnableBundle(
-                bundles,
-                "~/bootstrap/dailywinloss/css",
-                "~/bootstrap/dailywinloss/js",
-                Config.CssDailyWinLoss,
-                Config.JsDailyWinLoss);
-
-        public static void EnableWinLossDetailBundle(this BundleCollection bundles)
-            => EnableBundle(
-                bundles,
-                "~/bootstrap/winlossdetail/css",
-                "~/bootstrap/winlossdetail/js",
-                Config.CssWinLossDetail,
-                Config.JsWinLossDetail);
-
-        public static void EnableStatementBundle(this BundleCollection bundles)
-            => EnableBundle(
-                bundles,
-                "~/bootstrap/Statement/css",
-                "~/bootstrap/Statement/js",
-                Config.CssStatement,
-                Config.JsStatement);
-
         public static string ToStringExt(this DateTime date, string format = "MM/dd/yyyy HH:mm:ss tt")
             => date.Equals(DateTime.MinValue) ? string.Empty : date.ToString(format);
-
         private static bool IsEmptyData(object value) =>
             value == null || value == DBNull.Value || value.ToString()?.Length == 0;
-
-        private static void EnableBundle(
-            this BundleCollection bundles,
-            string cssBundle,
-            string javascriptBundle,
-            string cssConfig,
-            string javascriptConfig)
-        {
-            var bootstrapCss = new Bundle(cssBundle, new CssMinify());
-            var bootstrapJs = new Bundle(javascriptBundle, new JsMinify());
-
-            var css = cssConfig.Split(';');
-            var javascript = javascriptConfig.Split(';');
-
-            bootstrapCss.Include(css);
-            bundles.Add(bootstrapCss);
-
-            bootstrapJs.Include(javascript);
-            bundles.Add(bootstrapJs);
-        }
+        
     }
 }

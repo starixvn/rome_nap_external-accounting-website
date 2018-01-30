@@ -407,8 +407,8 @@ Fanex.PTRacing.BettingCommSetting = function (source) {
                         var divBettingCommSportCopy = document.createElement("DIV");
                         divBettingCommSportCopy.className = 'divBettingCommSportCopy';
 
-                        var buttonCopyBettingComm = document.createElement("INPUT");
-                        buttonCopyBettingComm.type = "button";
+                        var buttonCopyBettingComm = document.createElement("span");
+                        //buttonCopyBettingComm.type = "button";
                         buttonCopyBettingComm.title = Language.COPY_ALL_BETTING_LIMIT_FROM.Format(Language.HORSE_RACING_UI_IRISH_TOTE);
                         buttonCopyBettingComm.id = "btnCopyBettingComm";
                         buttonCopyBettingComm.className = "bettingCommSportCopied";

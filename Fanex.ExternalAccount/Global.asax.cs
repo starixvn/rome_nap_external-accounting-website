@@ -20,6 +20,9 @@
     using ONEbook.UM.Filters;
     using Sunplus.Libraries.APILogger;
     using Utilities;
+    using Fanex.ExternalAccount.UI.Helpers;
+    using System.Web;
+    using System.Configuration;
 
     public class MvcApplication : HttpApplication
     {
@@ -88,19 +91,13 @@
             RegisterRoutes(RouteTable.Routes);
             DbSettingProviderManager.Current.Start();
             AutoMapperConfiguration.Configure();
+            StaticResources.Init();
 
             var logger = new CasinoAPILogger();
             var manager = new APILogManager(logger);
             const string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
             manager.Register(typeof(Customer), pattern);
             manager.Register(typeof(DownlineList), pattern);
-
-            BundleTable.Bundles.EnableCommonBundle();
-            BundleTable.Bundles.EnableLoginBundle();
-            BundleTable.Bundles.EnableExternalGroupBundle();
-            BundleTable.Bundles.EnableDailyWinLossBundle();
-            BundleTable.Bundles.EnableStatementBundle();
-            BundleTable.Bundles.EnableWinLossDetailBundle();
 
             var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
             defaultCaptchaManager.ImageUrlFactory =

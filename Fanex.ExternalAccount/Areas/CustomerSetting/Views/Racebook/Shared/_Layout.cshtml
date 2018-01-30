@@ -7,6 +7,7 @@
     <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTRacing.UI.Core.css")" rel="stylesheet" type="text/css" />
     @Styles.Render("~/bundles/racingstyle")
     <link href="@Url.Content("~/Areas/CustomerSetting/Styles/input.css")" rel="stylesheet" type="text/css" />    
+    <link href="@Url.Content("~/assets/styles/pages/customer/racing-setting.css")" rel="stylesheet" type="text/css" />
 </head>
     <body>
         <div class="maincontent" style="width: 1012px;">
@@ -14,7 +15,7 @@
             <div id="arrowUpDown" class="collapse display-none"></div>
             <div id="names" style="display: none;" class="names"></div>            
             <div class="floatL display-none">
-                <input type="button" onclick="return customerPTRacingSetting.updateCustomerSettings();" value="Submit" class="buttonPopup btnTop" id="buttonPopup" />
+                <input type="button" onclick="return customerPTRacingSetting.updateCustomerSettings();" value="Submit" class="btn -submit buttonPopup btnTop" id="buttonPopup" />
             </div>
             <div class="bg_table" style="width: 1012px;">
                 <div id="divCustInfo">
@@ -22,7 +23,7 @@
                 @Html.Partial("~/Areas/CustomerSetting/Views/Racebook/Setting/RacingSetting.cshtml")
             </div>
             <div class="floatL display-none">
-                <input type="button" onclick="return customerPTRacingSetting.updateCustomerSettings();" value="Submit" class="buttonPopup btnTop" id="buttonPopup" />
+                <input type="button" onclick="return customerPTRacingSetting.updateCustomerSettings();" value="Submit" class="btn -submit buttonPopup btnTop" id="buttonPopup" />
             </div>
         </div>
         @RenderBody()

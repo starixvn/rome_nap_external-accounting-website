@@ -34,7 +34,7 @@
 				    minLength: 0
 				})
 				.addClass("ui-widget ui-widget-content ui-corner-left");
-            $("<button>▾</button>")
+            $("<button type='button'>▾</button>")
 			.attr("tabIndex", -1)
 			.attr("title", "Show All Items")
 			.insertAfter(input)

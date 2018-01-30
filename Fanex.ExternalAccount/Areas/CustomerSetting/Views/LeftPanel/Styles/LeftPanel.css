@@ -395,12 +395,15 @@ input {
 .closed-wrongPwdOthers {
     background-color: #ccc7ba;
 }
+
 .closed-byAdmin {
     background-color: #b3a2c7;
 }
+
 .closed-byUpline {
     background-color: #f79646;
 }
+
 .closed-wrongOTPSC {
     background-color: #86c5e4;
 }

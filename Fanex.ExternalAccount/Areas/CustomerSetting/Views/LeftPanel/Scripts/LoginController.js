@@ -9,7 +9,12 @@
 
     $scope.ResetPassword = function (custId, title) {
         var roleId = model.personalInfo.roleId.value;
-        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>', 415, (roleId != 1 ? 400 : 350));
+        parent.Fanex.ExtAcc.Form.Show(
+            parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>',
+            415,
+            (roleId != 1 ? 400 : 400),
+            false,
+            function () { top.$("#windowPopup").addClass("add-padding"); });
     };
 
     $scope.ShowIp = function (ip) {
@@ -18,16 +23,32 @@
 
     $scope.ResetSecurityCode = function (id, roleId, username) {
         var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?custId=' + id + '&roleId=' + roleId + '&username=' + username + '&groupName=' + parent.$('#selectedGroupName').html());
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 250 : 500;
         parent.Fanex.ExtAcc.Form.ShowFrame(
             url,
             'Reset security code: <font color="#6dcff6">' + username + '</font>',
             650,
-            500,
-            false);
+            height,
+            false,
+            function () { top.$("#windowPopup").addClass("add-padding"); });
     };
 
     $scope.RemoveOTP = function (custId, username) {
         var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/RemoveOTP?custId=' + custId + '&username=' + username + '&groupName=' + parent.$('#selectedGroupName').html());
         parent.Fanex.ExtAcc.LoadMainIFrame(url);
+    };
+
+    $scope.collapseSidebar = function () {
+        var widthDevice = top.$(top.window).width();
+        if (widthDevice <= 768) {
+            top.$("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
+            top.$("#sidebar").removeClass("expand-sidebar").addClass("collapse-sidebar");
+            top.$("#leftSplitter").removeClass("expand-leftpanel").addClass("collapse-leftpanel");
+            top.$("#iconNav").removeClass("active");
+            top.$("#iconUserInfo").removeClass("active");
+        }
+        else {
+            top.$("#contentSplitter").addClass("collapse-content");
+        }
     };
 };

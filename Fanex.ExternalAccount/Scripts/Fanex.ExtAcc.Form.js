@@ -24,7 +24,7 @@ Fanex.ExtAcc.Form = {
         var Form = document.createElement("div");
         var DivContent = document.createElement("div");
 
-        var margin = '30px';
+        var margin = '0';
 
         if (marginRight) {
             margin = marginRight + 'px';
@@ -32,12 +32,11 @@ Fanex.ExtAcc.Form = {
 
         Form.setAttribute('id', id);
         Form.setAttribute('style', 'display: block; border: none; font-size: 12px; z-index: 999999; margin-right: ' + margin);
-
-        DivContent.setAttribute('style', 'height: ' + (height - 80) + 'px');
+        DivContent.setAttribute('style', 'height: ' + (height - 42) + 'px');
 
         var divFrame = document.createElement("div");
 
-        divFrame.setAttribute('style', 'height: ' + (height - 80) + 'px; margin-left: 5px; margin-right: ' + margin);
+        divFrame.setAttribute('style', 'height: ' + (height - 42) + 'px; margin-left: 5px; margin-right: ' + margin);
         divFrame.setAttribute('id', 'frame');
 
         DivContent.appendChild(divFrame);
@@ -67,18 +66,19 @@ Fanex.ExtAcc.Form = {
             //document.body.appendChild(Form);
             $('#' + id).dialog({
                 title: title,
-                height: height,
                 width: width,
+                height: height,
                 resizable: false,
                 draggable: true,
                 modal: true,
                 autoOpen: true,
                 position: { my: "center", at: "center", of: window },
                 close: function () {
-                    $self.Close(reloadOnClose);
+                   $self.Close(reloadOnClose);
                 }
             });
 
+            $('div#' + id).css('height', (height - 34) + 'px');
             if (callBack && typeof callBack === 'function') {
                 callBack();
             }
@@ -89,14 +89,15 @@ Fanex.ExtAcc.Form = {
         Fanex.ExtAcc.BlockUI();
 
         var id = popupId ? popupId : 'windowPopup';
+        var mainDiv = document.createElement("div");
         var Frame = document.createElement("iframe");
         var margin = '30px';
-
+        mainDiv.setAttribute('id', id);
+        
         if (marginRight) {
             margin = marginRight + 'px';
         }
-
-        Frame.setAttribute('id', id);
+                
         Frame.setAttribute('frameBorder', "0");
         Frame.setAttribute('name', id);
 
@@ -107,7 +108,8 @@ Fanex.ExtAcc.Form = {
         var $self = this;
         var data = null;
 
-        document.body.appendChild(Frame);
+        mainDiv.appendChild(Frame);
+        document.body.appendChild(mainDiv);
         $('#' + id).dialog({
             title: title,
             height: height,
@@ -119,10 +121,13 @@ Fanex.ExtAcc.Form = {
             position: { my: "center", at: "center", of: window },
             close: function () {
                 $self.Close(reloadOnClose, null, id);
+                
             }
         });
 
-        Frame.setAttribute('style', 'display: block; border: none; font-size: 12px; z-index: 999999; margin-right: ' + margin + '; height: ' + height + 'px; width: ' + (width - 10) + 'px');
+        $('#' + id).css('width', width + 'px');
+        $('#' + id).css('height', (height - 34) + 'px');
+        Frame.setAttribute('style', 'display: block; border: none; font-size: 12px; z-index: 999999; margin-right: ' + margin + '; height: 100%; width: 100%;');
 
         if (callBack && typeof callBack === 'function') {
             callBack();
@@ -140,12 +145,12 @@ Fanex.ExtAcc.Form = {
         var id = popupId ? popupId : 'windowPopup';
 
         Form.setAttribute('id', id);
-        Form.setAttribute('style', 'display: none; border: none; font-size: 12px; z-index: 999999');
+        Form.setAttribute('style', 'display: none; border: none; font-size: 12px; z-index: 999999');        
 
-        DivContent.setAttribute('style', 'height: ' + (height - 125) + 'px');
+        DivContent.setAttribute('style', 'height: ' + (height - 86) + 'px');
 
         var divFrame = document.createElement("div");
-        divFrame.setAttribute('style', 'height: ' + (height - 125) + 'px; margin: 2px 5px; line-height: 18px');
+        divFrame.setAttribute('style', 'height: ' + (height - 102) + 'px; line-height: 18px; padding: 8px 16px;');
 
         var frame = document.createElement("span");
         frame.innerHTML = message;
@@ -164,10 +169,12 @@ Fanex.ExtAcc.Form = {
         $('#' + id).dialog({ height: height, width: width, minWidth: 300, minHeight: 150,
             title: title,
             resizable: false,
+            draggable: true,
             modal: true,
             buttons: [
             {
                 text: isSubmit ? "Submit" : "Yes",
+                'class': "btn -submit",
                 click: function () {
                     if (okClickEvent && typeof okClickEvent === 'function') {
                         okClickEvent();
@@ -179,6 +186,7 @@ Fanex.ExtAcc.Form = {
             },
             {
                 text: isCancel ? "Cancel" : "No",
+                'class': "btn -normal",
                 click: function () {
                     if (cancelClickEvent && typeof cancelClickEvent === 'function') {
                         cancelClickEvent();
@@ -195,6 +203,8 @@ Fanex.ExtAcc.Form = {
                 }
             }
         });
+
+        $('div#' + id).css('height', (height - 86) + 'px');
     },
 
     Alert: function (title, message, width, height, popupId, okClick) {
@@ -204,11 +214,11 @@ Fanex.ExtAcc.Form = {
 
         Form.setAttribute('id', id);
         Form.setAttribute('style', 'display: none; border: none; font-size: 12px; z-index: 999999');
-
-        DivContent.setAttribute('style', 'height: ' + (height - 125) + 'px');
+        
+        DivContent.setAttribute('style', 'height: ' + (height - 86) + 'px');
 
         var divFrame = document.createElement("div");
-        divFrame.setAttribute('style', 'height: ' + (height - 125) + 'px; margin: 2px 5px;line-height: 18px');
+        divFrame.setAttribute('style', 'height: ' + (height - 86) + 'px;line-height: 18px; padding: 8px 16px;');
 
         var frame = document.createElement("span");
         frame.innerHTML = message;
@@ -227,10 +237,12 @@ Fanex.ExtAcc.Form = {
         $('#' + id).dialog({ height: height, width: width, minWidth: 300, minHeight: 150,
             title: title,
             resizable: false,
+            draggable: true,
             modal: true,
             buttons: [
             {
                 text: "OK",
+                'class': "btn -submit",
                 click: function () {
                     $self.Close(null, null, id);
                     if (typeof okClick == 'function') {
@@ -245,6 +257,8 @@ Fanex.ExtAcc.Form = {
                 }
             }
         });
+
+        $('div#' + id).css('height', (height - 86) + 'px');
     },
 
     Close: function (reload, delay, popupId, callBack) {

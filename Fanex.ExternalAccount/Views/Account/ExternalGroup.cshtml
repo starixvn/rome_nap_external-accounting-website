@@ -1,6 +1,5 @@
 ﻿@using Fanex.ExternalAccount.Utilities;
 @using Fanex.ExternalAccount.Core.Context;
-@using System.Web.Optimization;
 @{ 
     Layout = null;
 }
@@ -8,92 +7,73 @@
 <html lang="en">
 <head>
     <title>Select Group</title>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=9" />
-    <link href='https://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet' type='text/css' />
-    <link href="@Url.Content("~/Content/normalize.css")" rel="stylesheet" type="text/css" />
-    @if (HttpContext.Current.IsDebuggingEnabled)
-    {
-        <link href="@Url.Content("~/Content/Account/Login.css")" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Main.css")" />
-        <link href="@Url.Content("~/Content/UserControl/UserControl.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Content/Validators.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Scripts/superfish/superfish.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
-    }
-    else
-    {
-        <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/externalgroup/css")" rel="stylesheet" type="text/css" />
-    }
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    @StaticResources.RenderStyles("~/assets/bundles/choosegroup/choosegroup")
 </head>
 <body class="main">
-    <div id="header">
-        <div>
-            <div style="float: left;" class="logo">
-                &nbsp;</div>
-        </div>
+    <header id="header" class="header">
         @if (CurrentSession.Instance.IsLogin)
         {
-            <div id="rightMenu" style="position: absolute; right: 0px;">
-                <div class="accMenu">
-                    <ul id='accMenu' class="sf-menu">
-                        <li id="userNameMenu"><a class="logoutTextTop" href="#" ignorehref="1">@CurrentSession.Instance.UserName</a>
-                            <ul id="dllUsername" class="menuULRight">
-                                <li class="divUL">
-                                    <div class="sf-menu divLI" onclick="Fanex.ExtAcc.Account.Logout()">@ViewLang.Logout</div>
-                                </li>
-                                <li class="divUL">
-                                    <div class="sf-menu divLI" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')">@ViewLang.ResetPassword</div>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+            <div class="info" id="accMenu">
+                <ul class="list" id="userNameMenu">
+                    <li><span class="circle">@CurrentSession.Instance.UserName</span></li>
+                    <li><span class="icon-lock-reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')" title="Reset Password"></span></li>
+                    <li><span class="icon-logout" onclick="Fanex.ExtAcc.Account.Logout()" title="Log out"></span></li>
+                </ul>
             </div>
         }
+
+        <!-- For mobile -->
+        <div id="iconNav" class="icon-nav">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    <div class="sidebar" id="sidebar">
+        <div class="profile">
+            <div class="picture">
+                <span class="text">@CurrentSession.Instance.UserName.FirstOrDefault()</span>
+            </div>
+            <span class="username">@CurrentSession.Instance.UserName</span>
+            <div class="list-action">
+                <button class="btn -reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')">Reset Password</button>
+                <button class="btn -logout" onclick="Fanex.ExtAcc.Account.Logout()">Log Out</button>
+            </div>
+        </div>
     </div>
-    <div class="selectGroup">
-        @ViewLang.SelectExternalGroup
-    </div>
-    <div class="groupChosen">
-        @{
-            var tmp = ViewBag.GroupList as System.Collections.Generic.List<Fanex.ExternalAccount.DTO.UserControl.Group>;
-            var index = 0;
+    <div class="container-fluid groupext-section">
+        <div class="selectGroup">
+            @ViewLang.SelectExternalGroup
+        </div>
+        <div class="groupChosen">
+            @{
+                var tmp = ViewBag.GroupList as System.Collections.Generic.List<Fanex.ExternalAccount.DTO.UserControl.Group>;
+                var index = 0;
 
-            foreach (var item in tmp)
-            {
-                var url = Url.Content("~/Home/Index/" + @item.GroupName);
+                foreach (var item in tmp)
+                {
+                    var url = Url.Content("~/Home/Index/" + @item.GroupName);
 
-            <a href="@url" class="currencyGroup">
-                <div style="margin-top: 30px">@item.GroupName</div>
-            </a>
-
-                index++;
+                    <div class="col">
+                        <a href="@url" class="currencyGroup">
+                            @item.GroupName
+                        </a>
+                    </div>
+                    index++;
+                }
             }
-        }
+        </div>
     </div>
-    @if (HttpContext.Current.IsDebuggingEnabled)
-    {
-        <script src="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.3.min.js")" type="text/javascript"></script>
-        <script src="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/ui/jquery-ui.js")" type="text/javascript"></script>
-        <script src="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/ui/jquery.ui.core.js")" type="text/javascript"></script>
-        <script src="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/ui/jquery.ui.widget.js")" type="text/javascript"></script>
-        <script src="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/ui/jquery.ui.dialog.js")" type="text/javascript"></script>
-        <script src="@Url.Content("~/Scripts/Account/Fanex.ExtAcc.Account.js")" type="text/javascript"></script>
-        <script src="@Url.Content("~/Scripts/Validators.js")" type="text/javascript"></script>
-        <script src="@Url.Content("~/Scripts/Fanex.ExtAcc.Form.js")" type="text/javascript"></script>
-        <script src="@Url.Content("~/Scripts/Manage/Fanex.ExtAcc.User.js")" type="text/javascript"></script>
-        <script src="@Url.Content("~/Scripts/superfish/superfish.js")" type="text/javascript"></script>
-    }
-    else
-    {
-        <script src="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/externalgroup/js")" type="text/javascript"></script>
-    }
+
+    @StaticResources.RenderScripts("~/assets/bundles/choosegroup/choosegroup")
+
     <script type="text/javascript">
         $(document).ready(function () {
             Fanex.ExtAcc.IsInternalAdmin = '@CurrentSession.Instance.IsInternalAdmin';
-
-            $('#accMenu').superfish();
-            $('#accMenu').css('visibility', 'visible');
 
             $('#dllUsername').bind('click', function (event) {
                 $('#dllUsername').hide();

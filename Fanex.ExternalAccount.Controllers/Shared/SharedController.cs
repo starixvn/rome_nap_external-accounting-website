@@ -20,6 +20,7 @@
 
     public class SharedController : BaseController
     {
+        private static readonly string[] ignoreRecheckinCustomers = Config.IgnoreRecheckinCustomers.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
         private readonly ILoginService _loginService;
         private readonly CurrentSession _currentSession;
         private readonly IMaintenanceService _maintenanceService;
@@ -93,7 +94,8 @@
 
         private RecheckinStatus GetRecheckinStatus()
         {
-            if (!Config.IsEnabledRecheckin)
+            if (!Config.IsEnabledRecheckin
+                || ignoreRecheckinCustomers.Any(s => string.Equals(s, _currentSession.UserName, StringComparison.OrdinalIgnoreCase)))
             {
                 return RecheckinStatus.Continue;
             }

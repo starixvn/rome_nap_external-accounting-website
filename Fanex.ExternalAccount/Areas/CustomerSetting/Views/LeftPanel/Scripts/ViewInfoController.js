@@ -32,5 +32,5 @@
         .error(function (result) {
             parent.Fanex.ExtAcc.UnBlockUI();
         });
-    };
+    };    
 };

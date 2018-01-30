@@ -1,9 +1,9 @@
 ﻿<td class="formatCol l betSetting">
     <span ng-bind="betSetting.betTypeName"></span>
     <div style="display: inline-block; float: right;" ng-switch="$index == 0">
-        <input ng-model="betSettingCopyAll.isCopiedAll" ng-switch-when="true" ng-click="copyAllBetSetting(!betSettingCopyAll.isCopiedAll, betSetting.betTypeId)"
+        <span ng-model="betSettingCopyAll.isCopiedAll" ng-switch-when="true" ng-click="copyAllBetSetting(!betSettingCopyAll.isCopiedAll, betSetting.betTypeId)"
             ng-class="{'btnCopyAll' : betSettingCopyAll.isCopiedAll, 'btnUnCopyAll' : !betSettingCopyAll.isCopiedAll}"
-            type="button" title="Copy all below bet setting from Australia Acttab"/>
+             title="Copy all below bet setting from Australia Acttab "></span>
     </div>
 </td>
 <td class="formatCol " ng-class="{'betTypeInactive': betSettingCopyAll.isCopiedAll && $index != 0}">
@@ -21,7 +21,7 @@
     <input max-per-match-input ng-model="betSetting.maxPerMatch" class="r col50percent"
         type="text" title="" />
     <span ng-switch="roleId < 4" ng-model="betSetting.upline.maxPerMatch"
-        bet-setting-constrain="2"></span>
+        bet-setting-constrain="2"></span>    
 </td>
 <td class="formatCol c" ng-class="{'betTypeInactive': statusCopyAll.isCopiedAll && $index != 0}">
     <input ng-disabled="(statusCopyAll.isCopiedAll && $index != 0) || !betSetting.upline.isEnabled " type="checkbox"

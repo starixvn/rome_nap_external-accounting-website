@@ -1,83 +1,72 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using Fanex.ExternalAccount.DTO.Customer
 @model Customer
-<div>
-    <table width="100%" border="0" cellpadding="2">
-        <tr>
-            <td colspan="4">
-                <div id="errMsg" style="display: none;" class="successMsg">
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: right">
-                @Html.HiddenFor(m => m.CustId) @Html.LabelFor(m => m.FirstName, ViewLang.Firstname, new { @class = "divMargin" })
-            </td>
-            <td>
-                @Html.TextBoxFor(m => m.FirstName, new { @class = "edit-customer-control" })
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: right">
-                @Html.LabelFor(m => m.LastName, ViewLang.Lastname, new { @class = "divMargin" })
-            </td>
-            <td>
-                @Html.TextBoxFor(m => m.LastName, new { @class = "edit-customer-control" })
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: right">
-                @Html.LabelFor(m => m.HomePhone, ViewLang.Phone, new { @class = "divMargin" })
-            </td>
-            <td>
-                @Html.TextBoxFor(m => m.HomePhone, new { @class = "edit-customer-control" })
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: right">
-                @Html.LabelFor(m => m.MobilePhone, ViewLang.MobilePhone, new { @class = "divMargin" })
-            </td>
-            <td>
-                @Html.TextBoxFor(m => m.MobilePhone, new { @class = "edit-customer-control" })
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: right">
-                @Html.LabelFor(m => m.Email, ViewLang.Email, new { @class = "divMargin" })
-            </td>
-            <td>
-                @Html.TextBoxFor(m => m.Email, new { @class = "edit-customer-control" })
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: right">
-                @Html.LabelFor(m => m.Fax, ViewLang.Fax, new { @class = "divMargin" })
-            </td>
-            <td>
-                @Html.TextBoxFor(m => m.Fax, new { @class = "edit-customer-control" })
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: right; vertical-align: top;">
-                @Html.LabelFor(m => m.Remark, ViewLang.Remark, new { @class = "divMargin" })
-            </td>
-            <td>
-                @Html.TextAreaFor(m => m.Remark, new { @class = "customer-remark", @maxlength = "300" })
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" style="padding-right: 0">
-                <div style="float: right; padding-right: 3px;">
-                    <input class="buttonPopup" type="button" value="Reset" onclick="Fanex.ExtAcc.Customer.ResetInfo()" />
-                </div>
-                <div style="float: right; padding-right: 10px;">
-                    <input class="buttonPopup" type="button" value="Update" onclick="Fanex.ExtAcc.Customer.EditInfo()" />
-                </div>
-            </td>
-        </tr>
-    </table>
+
+<form class="form-add">
+    <div id="errMsg" class="successMsg hide"> </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.HiddenFor(m => m.CustId) @Html.LabelFor(m => m.FirstName, ViewLang.Firstname, new { @class = "label" })
+        </div>
+        <div class="pull-left">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control width-info" })
+        </div>
+    </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.LabelFor(m => m.LastName, ViewLang.Lastname, new { @class = "label" })
+        </div>
+        <div class="pull-left">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control width-info" })
+        </div>
+    </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.LabelFor(m => m.HomePhone, ViewLang.Phone, new { @class = "label" })
+        </div>
+        <div class="pull-left">
+            @Html.TextBoxFor(m => m.HomePhone, new { @class = "form-control width-info" })
+        </div>
+    </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.LabelFor(m => m.MobilePhone, ViewLang.MobilePhone, new { @class = "label" })
+        </div>
+        <div class="pull-left">
+            @Html.TextBoxFor(m => m.MobilePhone, new { @class = "form-control width-info" })
+        </div>
+    </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.LabelFor(m => m.Email, ViewLang.Email, new { @class = "label" })
+        </div>
+        <div class="pull-left">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control width-info" })
+        </div>
+    </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.LabelFor(m => m.Fax, ViewLang.Fax, new { @class = "label" })
+        </div>
+        <div class="pull-left">
+            @Html.TextBoxFor(m => m.Fax, new { @class = "form-control width-info" })
+        </div>
+    </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.LabelFor(m => m.Remark, ViewLang.Remark, new { @class = "label" })
+        </div>
+        <div class="pull-left">
+            @Html.TextAreaFor(m => m.Remark, new { @class = "form-control width-info textarea", @maxlength = "300" })
+        </div>
+    </div>
+    <div class="group form-action">
+        <input class="btn -submit buttonPopup" type="button" value="Update" onclick="Fanex.ExtAcc.Customer.EditInfo()" />
+        <input class="btn -submit buttonPopup" type="button" value="Reset" onclick="Fanex.ExtAcc.Customer.ResetInfo()" />
+    </div>
     @Html.AntiForgeryToken()
-</div>
+</form>
+
 <script type="text/javascript">
     Fanex.ExtAcc.Customer.FirstName = $('#FirstName').val();
     Fanex.ExtAcc.Customer.LastName = $('#LastName').val();

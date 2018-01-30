@@ -4,9 +4,9 @@
 @{
     var custId = ViewBag.CustId;
 }
-<link href="@Url.Content("~/Content/Customer/Customer.css")" rel="stylesheet" type="text/css" />
-<div style="padding-top: 10px;">
-    <table width="100%" border="0" cellpadding="2">
+<link href="@Url.Content("~/assets/styles/pages/customer/customer-setting.css")" rel="stylesheet" type="text/css" />
+<div class="transfer-condition">
+    <table border="0" cellpadding="2" class="tbl-transfer" >
         <tr>
             <td colspan="8" style="padding-top: 10px;">
                 <div id="errMsg" style="display: none;" class="successMsg">
@@ -52,7 +52,7 @@
         <tr>
             <td colspan="8">
                 <div style="float: right; padding-top: 10px; padding-right: 0px; margin-right: 0px">
-                    <input class="buttonPopup" type="button" value="Submit" onclick="Fanex.ExtAcc.Customer.TransferCondition.EditTransferCondition()" />
+                    <input class="btn -submit buttonPopup" type="button" value="Submit" onclick="Fanex.ExtAcc.Customer.TransferCondition.EditTransferCondition()" />
                 </div>
             </td>
         </tr>

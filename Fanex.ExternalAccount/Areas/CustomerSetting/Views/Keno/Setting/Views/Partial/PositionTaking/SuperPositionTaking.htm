@@ -1,8 +1,8 @@
 ﻿<td class="formatCol l betSetting">
     <span ng-bind="positionTaking.betTypeName"></span>
     <div style="display: inline-block; float: right;" ng-switch="index == 0">
-        <input ng-class="{'btnCopyAll' : $parent.$parent.isCopyAll, 'btnUnCopyAll' : !$parent.$parent.isCopyAll}" ng-switch-when="true" ng-model="$parent.$parent.isCopyAll"
-            ng-click="$parent.$parent.copyAll(!$parent.$parent.isCopyAll, positionTaking.betTypeId)" type="button" /></div>
+        <span ng-class="{'btnCopyAll' : $parent.$parent.isCopyAll, 'btnUnCopyAll' : !$parent.$parent.isCopyAll}" ng-switch-when="true" ng-model="$parent.$parent.isCopyAll"
+            ng-click="$parent.$parent.copyAll(!$parent.$parent.isCopyAll, positionTaking.betTypeId)"></span></div>
 </td>
 <td class="formatCol c ">
     <select ie-select-fix = "{{fixIECount}}" ng-disabled="$parent.$parent.isCopyAll && index != 0"  class="col60" ng-model="positionTaking.s4" ng-options="value for value in maxPTRange">

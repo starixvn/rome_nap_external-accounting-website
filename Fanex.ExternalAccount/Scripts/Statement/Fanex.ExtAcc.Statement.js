@@ -1,6 +1,6 @@
 ﻿/// <reference path="../_references.js" />
 if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
-    alert("Fanex.ExtAcc.js module is required!")
+    alert("Fanex.ExtAcc.js module is required!");
 }
 
 Fanex.ExtAcc.Statement = {
@@ -38,15 +38,22 @@ Fanex.ExtAcc.Statement = {
 
         $("#dtpFromDate").datepicker({
             changeYear: true,
-            onClose: function (date) {
-            }, showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', dateFormat: 'M dd, yy'
+            onClose: function (date) { },
+            showOn: 'both',
+            buttonImageOnly: true,
+            buttonImage: resolveClientUrl('Content/Images/calendar.png'),
+            buttonText: '', dateFormat: 'M dd, yy'
         });
+
         $("#dtpFromDate").val($.datepicker.formatDate('M dd, yy', new Date($('#MaxDate').val())));
 
         $("#dtpToDate").datepicker({
             changeYear: true,
-            onClose: function (date) {
-            }, showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', dateFormat: 'M dd, yy'
+            onClose: function (date) { },
+            showOn: 'both',
+            buttonImageOnly: true,
+            buttonImage: resolveClientUrl('Content/Images/calendar.png'),
+            buttonText: '', dateFormat: 'M dd, yy'
         });
         $("#dtpToDate").val($.datepicker.formatDate('M dd, yy', new Date($('#MaxDate').val())));
 
@@ -70,8 +77,8 @@ Fanex.ExtAcc.Statement = {
 
         $('#exporttoexcel').click(function () {
             var criteria = {
-                fromDate: moment(new Date($this.fromdate)).format("MM DD, YYYY"),
-                toDate: moment(new Date($this.todate)).format("MM DD, YYYY"),
+                fromDate: $this.fromdate,
+                toDate: $this.todate,
                 custId: 0,
                 roleId: 0,
                 username: _username
@@ -85,30 +92,56 @@ Fanex.ExtAcc.Statement = {
 
                 if (statementReportManager.IsUseNewLayout(criteria)) {
                     statementReportCriteria = criteria;
+                    statementReportCriteria.fromDate = moment(new Date($this.fromdate)).format("MM/DD/YYYY");
+                    statementReportCriteria.toDate = moment(new Date($this.todate)).format("MM/DD/YYYY");
+
                     var url = domain + 'NapStatement/StatementReport/GetCustomerInfo';
-                    statementReportManager.callAjax(url, criteria, function (rs) {
-                        statementReportCriteria.custId = rs.CustomerId;
-                        statementReportCriteria.roleId = rs.RoleId;
-                        statementReportManager.exportStatementReport(statementReportCriteria);
+
+                    var success = false;
+                    var result;
+
+                    jQuery.ajax({
+                        type: "POST",
+                        url: url,
+                        data: jQuery.param(criteria),
+                        responseType: "json",
+                        async: false,
+                        success: function (rs) {
+                            success = true;
+                            result = rs;
+                        },
+                        error: function (jqXhr, event, ajaxSettings) {
+                            if (jqXhr.status && jqXhr.status == 500) {
+                                var r = jQuery.parseJSON(jqXhr.responseText);
+                                alert(r.Message);
+                            }
+
+                            if (statementReportManager.eventFunction.unblockUI) {
+                                statementReportManager.eventFunction.unblockUI();
+                            }
+                        }
                     });
+
+                    if (success) {
+                        statementReportCriteria.custId = result.CustomerId;
+                        statementReportCriteria.roleId = result.RoleId;
+                        var url = statementReportManager.exportStatementReport(statementReportCriteria);
+                        top.exportExcel(url, document);
+                    }
+
                     return;
                 }
             }
 
-            var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
-            document.location.href = resolveClientUrl("Statement/GetExportToExcel?") + params;
+            var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate +
+                '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
+
+            top.exportExcel(resolveClientUrl("Statement/GetExportToExcel?") + params, document);
         });
 
         var indexes = location.href.split('/');
         $this.groupName = indexes[indexes.length - 1];
         $this.Databind();
-
-        Fanex.ExtAcc.OnResize = function () {
-            try {
-                $("#jqgrid").fanexGrid("resizeGrid");
-            }
-            catch (err) { }
-        };
 
         $("#view-guidelines-icon").click(function () {
             var criteria = {
@@ -128,26 +161,49 @@ Fanex.ExtAcc.Statement = {
                     false);
             });
         });
+
+        Fanex.ExtAcc.OnResize = $this.resizeReportGrid;
+        $(".icon-filter").click($this.showHideFilter);
     },
+
+    resizeReportGrid: function () {
+        try {
+            $("#jqgrid").fanexGrid("resizeGrid");
+        }
+        catch (err) { }
+    },
+    hideFilter: false,
+    showHideFilter: function () {
+        if ($this.hideFilter) {
+            $(".icon-filter").addClass("active");
+            $(".filterbox").removeClass("hide");
+        } else {
+            $(".icon-filter").removeClass("active");
+            $(".filterbox").addClass("hide");
+        }
+
+        $this.resizeReportGrid();
+        $this.hideFilter = !$this.hideFilter;
+    },
+
     RenderUsernameColumn: function (cell) {
         if (cell == null || cell.Value.Username == 'Grand Total' || $this.viewlevel < 2) {
             return '<div style="line-height: 22px; text-align: left; padding-left: 3px">' + cell.Value.Username + '</div>';
         }
-        else {
-            var func = "javascript: Fanex.ExtAcc.Statement.GetDownlineStatement('" + cell.Value.CustId + "')";
-            return html = '<div style="line-height: 22px; text-align: left;"><a style="text-decoration: none;margin:0" href="' + func + '">' + cell.Value.Username + '</a></div>';
-        }
+
+        var func = "javascript: Fanex.ExtAcc.Statement.GetDownlineStatement('" + cell.Value.CustId + "')";
+        return html = '<div style="line-height: 22px; text-align: left;"><a style="text-decoration: none;margin:0" href="' + func + '">' + cell.Value.Username + '</a></div>';
     },
     defaultColumns: [
         { HeaderText: 'Date', Name: 'Date', Width: 110, HeaderAlign: "center", CellAlign: 'center' },
         { HeaderText: 'Remark', Name: 'Remark', Width: 502, HeaderAlign: "center" },
         { HeaderText: 'Total', Name: 'TotalAmt', Width: 160, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Accumulated Total', Name: 'AccumulatedTotal', Width: 160, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$', AllowTruncate: false }
-        ],
+    ],
     Render: function () {
         var gridOption = {
             columns: this.defaultColumns,
-            gridExpandHeight: 120,
+            autoCalculateGridExpandHeight: true,
             showPager: true,
             pagerOption: {
                 itemsPerPageArray: [100, 300, 500],
@@ -186,7 +242,7 @@ Fanex.ExtAcc.Statement = {
                 { Name: "Remark", Value: '<b>' + this.dataSource[i].TransType + '<br/> - ' + this.dataSource[i].TransDesc + '</b>' },
                 { Name: "TotalAmt", Value: this.dataSource[i].TotalAmt },
                 { Name: "AccumulatedTotal", Value: isText ? ballanceResult : accumulatedTotal }
-            ]
+                ]
             })
 
             if (isText) {
@@ -196,7 +252,8 @@ Fanex.ExtAcc.Statement = {
 
         gridOption.bodyRows = bodyData;
         gridOption.pagerOption.totalItem = this.totalRows;
-        return gridOption;
+
+        $("#jqgrid").removeClass('hidden').fanexGrid(gridOption);
     },
     GetFromDateToDate: function () {
         if ($("#GroupFromToDate").css('display') != 'none') {
@@ -239,6 +296,7 @@ Fanex.ExtAcc.Statement = {
             },
             function (options) {
             });
+
         if (!isInternalCustomer) {
             if (!statementReportManager.checkCriteria(criteria)) {
                 Fanex.ExtAcc.UnBlockUI();
@@ -246,8 +304,8 @@ Fanex.ExtAcc.Statement = {
             }
 
             if (statementReportManager.IsUseNewLayout(criteria)) {
-                $('#mainGrid').css('visibility', 'visible');
-                $("#jqgrid").addClass('hidden');
+                $('#mainGrid').removeClass("hide");
+                $("#tbl-report-old").addClass('hide');
                 statementReportManager.getStatementReport(criteria);
                 $('#exporttoexcel').css('display', 'block');
                 return;
@@ -255,9 +313,10 @@ Fanex.ExtAcc.Statement = {
         }
 
         $('#mainGrid').css('visibility', 'hidden');
-        $("#GridContainer").addClass('hidden');
-        $("#jqgrid").addClass('hidden');
+        $("#tbl-report-new").addClass('hide');
+        $("#tbl-report-old").addClass('hide');
         $('#exporttoexcel').css('display', 'none');
+
         var parameterUrl = "?groupname=" + this.groupName
                             + "&custid=" + this.custId
                             + "&fromdate=" + this.fromdate
@@ -288,12 +347,12 @@ Fanex.ExtAcc.Statement = {
                 $('#msgNoinfo').css('display', $this.totalRows < 1 ? 'block' : 'none');
 
                 if ($this.totalRows > 0) {
-                    $("#jqgrid").removeClass('hidden').fanexGrid($this.Render());
+                    $this.Render();
                 }
 
                 Fanex.ExtAcc.UnBlockUI();
             }
-        })
+        });
     }
 };
 

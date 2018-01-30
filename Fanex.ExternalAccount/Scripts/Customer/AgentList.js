@@ -311,7 +311,7 @@
         callback: function (key, opt) {
             Fanex.ExtAcc.Customer.UserId = custId;
             Fanex.ExtAcc.Customer.IsMultiple = false;
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 500, 460, false);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 500, 580, false);
         }
     };
     itemsAgent.changePassword = {
@@ -320,7 +320,13 @@
         callback: function (key, opt) {
             Fanex.ExtAcc.Customer.UserId = custId;
             Fanex.ExtAcc.Customer.IsMultiple = false;
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 400, false);
+            Fanex.ExtAcc.Form.Show(
+                resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                415,
+                400,
+                false, 
+                function () { Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup");});
+            
         }
     };
 
@@ -343,7 +349,8 @@
                     'Reset security code: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                     650,
                     500,
-                    false);
+                    false,
+                    function () { Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup iframe") });
             }
         };
     }
@@ -355,7 +362,13 @@
             callback: function (key, opt) {
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 600, 250, false, false, 1);
+                Fanex.ExtAcc.Form.Show(
+                    resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                    600,
+                    250,
+                    false,
+                    function () { Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup") },
+                    1);
             }
         };
     }
@@ -797,8 +810,11 @@ Fanex.ExtAcc.Customer.RenderAgentList = function (dataSource) {
     options = {
         columns: this.DataFields,
         bodyRows: bodyRows,
-        gridExpandHeight: 165,
-        numberOfFrozenColumn: 6,
+        autoCalculateGridExpandHeight: true,
+        numberOfFrozenColumn: isMobile.phone ? 3 : 6,
+        fullHeight: !isMobile.phone,
+        gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
+        bodyRowHeight: isMobile.phone ? 28 : 25,
         customizeHeader: true,
         groupHeaderRows: groupHeader,
         highlightFrozenWidth: 2,
@@ -814,7 +830,7 @@ Fanex.ExtAcc.Customer.RenderAgentList = function (dataSource) {
                 Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
             }
         },
-        marginRight: 2,
+        marginRight: 12,
         showDistinctRow: false,
         allowTruncate: true
     };
@@ -825,7 +841,7 @@ Fanex.ExtAcc.Customer.RenderAgentList = function (dataSource) {
 
     $('#breadcrumbs').empty();
 
-    $('#breadcrumbs').append('<div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkSuper + '</div>');
+    $('#breadcrumbs').append('<div class="level-line"></div><div style="float:left">' + linkSuper + '</div><div class="viewNext">&nbsp;</div><div class="level-active">' + linkMaster + '</div>');
 
     $('#breadcrumbs').show();
 

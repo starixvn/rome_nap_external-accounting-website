@@ -622,7 +622,7 @@ $.widget("ui.dialog", {
 		// reset wrapper sizing
 		// determine the height of all the non-content elements
 		nonContentHeight = this.uiDialog.css({
-				height: "auto",
+				height: options.height,
 				width: options.width
 			})
 			.outerHeight();

@@ -178,7 +178,8 @@ Fanex.ExtAcc.Menus = {
             { HeaderText: 'Function', Name: 'FuncName', Width: 150 },
             { HeaderText: 'Order', Name: 'DisplayOrder', Width: 50, CellAlign: 'center' },
             { HeaderText: 'Last Modified', Name: 'ModifiedDate', Width: 160 },
-            { HeaderText: 'Active', Name: 'IsActive', CellAlign: 'center', Width: 50,
+            {
+                HeaderText: 'Active', Name: 'IsActive', CellAlign: 'center', Width: 50,
                 CustomCellRender: function (cell) {
                     var style = cell.Value.IsActive == true ? "menuActive" : "menuInactive";
                     var menuId = cell.Value.MenuId;
@@ -188,9 +189,10 @@ Fanex.ExtAcc.Menus = {
                     return '<div id="menu-' + menuId + '" class="' + style + '" onclick="' + onclick + '"></div>';
                 }
             },
-            { HeaderText: 'Delete', Name: 'Delete', CellAlign: 'center', Width: 50,
+            {
+                HeaderText: 'Delete', Name: 'Delete', CellAlign: 'center', Width: 50,
                 CustomCellRender: function (cell) {
-                    var style = "menuDelete";
+                    var style = "icon-delete";
                     var menuId = cell.Value.MenuId;
                     var menuName = cell.Value.MenuName;
                     var onclick = "javascript:Fanex.ExtAcc.Menus.ShowDelete(" + menuId + ", '" + menuName + "')";
@@ -230,8 +232,8 @@ Fanex.ExtAcc.Menus = {
             options = {
                 columns: $this.DataFields,
                 bodyRows: bodyRows,
-                gridExpandHeight: 100,
-                marginRight: 2,
+                autoCalculateGridExpandHeight: true,
+                marginRight: 10,
                 showDistinctRow: false,
                 allowTruncate: true
             };
@@ -240,7 +242,7 @@ Fanex.ExtAcc.Menus = {
         });
 
         $('#jqbutton').bind('click', function () {
-            Fanex.ExtAcc.Form.Show(resolveClientUrl("Menu/AddMenu"), $.parseJSON(menuTitles).Create, 400, 460, false);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl("Menu/AddMenu"), $.parseJSON(menuTitles).Create, 400, 500, false);
         });
 
         Fanex.ExtAcc.OnResize = function () {
@@ -275,7 +277,7 @@ Fanex.ExtAcc.Menus = {
             resolveClientUrl('Menu/EditMenu/' + menuId),
             title,
             400,
-            460,
+            500,
             false);
     },
 
@@ -455,7 +457,7 @@ Fanex.ExtAcc.Menus = {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.Form.Close();
-                    window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html())
+                    window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html());
                 }, 2000);
             }
         });
@@ -475,7 +477,7 @@ Fanex.ExtAcc.Menus = {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.Form.Close();
-                    window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html())
+                    window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html());
                 }, 2000);
             }
         });

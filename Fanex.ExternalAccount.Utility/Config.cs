@@ -88,6 +88,13 @@
         public static bool IsDenyInternalGroupAccessing => Utils.ToBoolean(GetValue("IsDenyInternalGroupAccessing"));
 
         public static bool IsDenyFinanceGroupAccessing => Utils.ToBoolean(GetValue("IsDenyFinanceGroupAccessing"));
+        public static string IgnoreRecheckinCustomers
+        {
+            get
+            {
+                return GetValue("IgnoreRecheckinCustomers");
+            }
+        }
 
         private static string GetValue(string key) => ConfigurationManager.AppSettings[key];
     }
