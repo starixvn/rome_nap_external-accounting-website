@@ -21,7 +21,10 @@ Fanex.ExtAcc.Form = {
             Fanex.ExtAcc.BlockUI();
 
         var id = popupId ? popupId : 'windowPopup';
-        var Form = document.createElement("div");
+        var Form = document.getElementById(id) == null 
+            ? document.createElement("div")
+            : document.getElementById(id);
+        Form.innerHTML = '';
         var DivContent = document.createElement("div");
 
         var margin = '0';
