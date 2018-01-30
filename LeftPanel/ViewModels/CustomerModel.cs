@@ -21,6 +21,7 @@
             PersonalInfo = new PersonalInfo(custInfoRow, lineRow);
             Login = GetLoginInfo(cashRow, custInfoRow, canViewVNIP);
             DownlineList = new DownlineList();
+            OnlineList = new OnlineList();
         }
 
         public PersonalInfo PersonalInfo { get; set; }

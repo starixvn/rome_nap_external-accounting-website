@@ -3,13 +3,16 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using Extensions;
 
     public class OnlineList
     {
-        public OnlineList(DataRowCollection dataRows, Func<string, bool> canViewVNIP)
+        public OnlineList()
         {
             Onlines = new List<OnlineInfo>();
+        }
+
+        public OnlineList(DataRowCollection dataRows, Func<string, bool> canViewVNIP) : this()
+        {
             foreach (DataRow dataRow in dataRows)
             {
                 Onlines.Add(new OnlineInfo(dataRow, canViewVNIP));
