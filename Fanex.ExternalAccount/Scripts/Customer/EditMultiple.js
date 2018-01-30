@@ -9,7 +9,7 @@
     var ret = this.IdsAndNames();
     var info = this.CustomerInfo();
     // this.HideGoldDeluxe = showGoldDeluxeSetting == 0;
- 
+
     if (this.CurrentLevel == this.Super) {
         menuItems = {
             doubleComm: {
@@ -204,7 +204,7 @@
                 }
             };
         }
-        
+
         if (this.AllowDoubleCommMaster) {
             menuItems.doubleComm = {
                 name: "Edit Multiple Double Comm",
@@ -400,7 +400,7 @@
         }
 
 
-        
+
         if (this.AllowDoubleCommAgent) {
             menuItems.doubleComm = {
                 name: "Edit Multiple Double Comm",
@@ -543,6 +543,43 @@
             };
         }
 
+        function addUplineEditMemberMenuItems(productId, productName) {
+            var productKey = 'product_' + productId;
+            menuItems[productKey] = {
+                name: productName,
+                className: "iconEnableEdit",
+                items: {}
+            };
+
+            menuItems[productKey].items['agent_' + productKey] = {
+                name: 'Edit Multiple ' + productName,
+                callback: function () {
+                    Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                    Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(2, 1, productId, productName);
+                }
+            };
+
+            menuItems[productKey].items['super_' + productKey] = {
+                name: 'Super Edit Multiple ' + productName,
+                callback: function () {
+                    Fanex.ExtAcc.Customer.isSuperEditMember = true;
+                    Fanex.ExtAcc.Customer.isMasterEditMember = false;
+                    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(4, 1, productId, productName);
+                }
+            };
+
+            menuItems[productKey].items['master_' + productKey] = {
+                name: 'Master Edit Multiple ' + productName,
+                callback: function () {
+                    Fanex.ExtAcc.Customer.isSuperEditMember = false;
+                    Fanex.ExtAcc.Customer.isMasterEditMember = true;
+                    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(3, 1, productId, productName);
+                }
+            };
+
+        }
+
         if (!this.HideVirtualSports) {
             addUplineEditMemberMenuItems(5, 'Virtual Sports');
         }
@@ -650,58 +687,20 @@
 
         if (!this.HideFishingWorldMember) {
             addUplineEditMemberMenuItems(24, 'Fishing World');
-         }
+        }
 
         if (!this.HideLotteryMember) {
             addUplineEditMemberMenuItems(28, 'Lottery');
         }
 
-         if (!this.HideLucky3) {
-             addUplineEditMemberMenuItems(26, 'Lucky 3');
-         }
+        if (!this.HideLucky3) {
+            addUplineEditMemberMenuItems(26, 'Lucky 3');
+        }
 
-         if (!this.HideBullfightingMember) {
-             addUplineEditMemberMenuItems(30, 'Bullfighting');
-         }
+        if (!this.HideBullfightingMember) {
+            addUplineEditMemberMenuItems(30, 'Bullfighting');
+        }
 
-         function addUplineEditMemberMenuItems(productId, productName) {
-             var productKey = 'product_' + productId;
-             menuItems[productKey] = {
-                 name: productName,
-                 className: "iconEnableEdit",
-                 items: {}
-             };
-
-             menuItems[productKey].items['agent_' + productKey] = {
-                 name: 'Edit Multiple ' + productName,
-                 callback: function () {
-                     Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                     Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                     Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(2, 1, productId, productName);
-                 }
-             };
-
-             menuItems[productKey].items['super_' + productKey] = {
-                 name: 'Super Edit Multiple ' + productName,
-                 callback: function () {
-                     Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                     Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                     Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(4, 1, productId, productName);
-                 }
-             };
-
-             menuItems[productKey].items['master_' + productKey] = {
-                 name: 'Master Edit Multiple ' + productName,
-                 callback: function () {
-                     Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                     Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                     Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(3, 1, productId, productName);
-                 }
-             };
-
-         }
-
-      
         if (this.AllowDoubleComm) {
             menuItems.doubleComm = {
                 name: "Edit Multiple Double Comm",

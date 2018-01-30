@@ -93,6 +93,18 @@
         }
     }
 
+    function addEditProductSuperContextMenuItem(menuId, menuName, showEditPopUpFunc) {
+        items[menuId] = {
+            name: menuName,
+            className: "iconViewEdit",
+            callback: function () {
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsFullInfo = true;
+                showEditPopUpFunc(Fanex.ExtAcc.Customer.UserId, 5, 4);
+            }
+        }
+    }
+
     addEditProductSuperContextMenuItem('virtualSport', 'Virtual Sports', Fanex.ExtAcc.Customer.ShowEditSingleVirtualSports);
 
     if (showKenoSetting == 'true') {
@@ -173,18 +185,6 @@
 
     if (!this.HideBullfighting) {
         addEditProductSuperContextMenuItem('bullfighting', 'Bullfighting', Fanex.ExtAcc.Customer.ShowEditSingleBullfighting);
-    }
-
-    function addEditProductSuperContextMenuItem(menuId, menuName, showEditPopUpFunc) {
-        items[menuId] = {
-            name: menuName,
-            className: "iconViewEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                showEditPopUpFunc(Fanex.ExtAcc.Customer.UserId, 5, 4);
-            }
-        }
     }
 
     items.separator4 = "-----";

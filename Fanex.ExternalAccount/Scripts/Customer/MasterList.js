@@ -174,6 +174,20 @@
 
     var ret = this.CustomerInfo();
 
+    function addEditProductMasterContextMenuItem(menuId, menuName, isDisabled, showEditPopUpFunc, isSynced) {
+        isSynced = typeof (isSynced) == 'undefined' ? true : isSynced;
+
+        itemsMaster[menuId] = {
+            name: menuName,
+            className: !isSynced ? "iconUnsyncEdit" : (isDisabled == true ? "iconDisableEdit" : "iconEnableEdit"),
+            callback: function () {
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsFullInfo = true;
+                showEditPopUpFunc(custId, 4, 3);
+            }
+        };
+    }
+
     if (!hideVirtualSport) {
         has3rdParty = true;
         addEditProductMasterContextMenuItem('virtualSport', 'Virtual Sports', disableVirtualSport, Fanex.ExtAcc.Customer.ShowEditSingleVirtualSports);
@@ -269,20 +283,6 @@
     if (!isHideBullfighting) {
         has3rdParty = true;
         addEditProductMasterContextMenuItem('bullfighting', 'Bullfighting', disableBullfighting, Fanex.ExtAcc.Customer.ShowEditSingleBullfighting);
-    }
-
-    function addEditProductMasterContextMenuItem(menuId, menuName, isDisabled, showEditPopUpFunc, isSynced) {
-        isSynced = typeof (isSynced) == 'undefined' ? true : isSynced;
-
-        itemsMaster[menuId] = {
-            name: menuName,
-            className: !isSynced ? "iconUnsyncEdit" : (isDisabled == true ? "iconDisableEdit" : "iconEnableEdit"),
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                showEditPopUpFunc(custId, 4, 3);
-            }
-        };
     }
     
     if (has3rdParty)

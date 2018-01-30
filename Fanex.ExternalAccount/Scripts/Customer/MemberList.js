@@ -133,6 +133,20 @@
         };
     }
 
+    function addEditProductMemberContextMenuItem(menuId, menuName, isDisabled, showEditPopUpFunc, isSynced) {
+        isSynced = typeof (isSynced) == 'undefined' ? true : isSynced;
+
+        itemsMember[menuId] = {
+            name: menuName,
+            className: !isSynced ? "iconUnsyncEdit" : (isDisabled ? "iconDisableEdit" : "iconEnableEdit"),
+            callback: function () {
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Customer.IsFullInfo = true;
+                showEditPopUpFunc(custId, 2, 1);
+            }
+        };
+    }
+
     if (!hideVirtualSport) {
         has3rdParty = true;
 
@@ -244,21 +258,6 @@
             Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 350, false);
         }
     };
-
-    function addEditProductMemberContextMenuItem(menuId, menuName, isDisabled, showEditPopUpFunc, isSynced)
-    {
-        isSynced = typeof (isSynced) == 'undefined' ? true : isSynced;
-
-        itemsMember[menuId] = {
-            name: menuName,
-            className: !isSynced ? "iconUnsyncEdit" : (isDisabled ? "iconDisableEdit" : "iconEnableEdit"),
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                showEditPopUpFunc(custId, 2, 1);
-            }
-        };
-    }
 
     if ($.contextMenu) $.contextMenu('destroy');
     $.contextMenu({
