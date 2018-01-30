@@ -59,7 +59,6 @@ Fanex.encodeHtml = function (str) {
 
 String.prototype.formatErrorMessage = function () {
     var msg = this;
-
     var indexOfStartParenthesis = msg.indexOf('(');
     var indexOfEndParenthesis = msg.indexOf(')');
     var orgMsg = msg.substring(indexOfStartParenthesis, indexOfEndParenthesis + 1);
@@ -78,14 +77,14 @@ String.prototype.formatErrorMessage = function () {
         username = preMsg.substring(0, preMsg.indexOf(':'));
     }
 
-    var formatMsg = '<div id="msg" style="color:#ff5411">' + preMsg + orgMsg + subMsg + '</div>';
+    var formatMsg = '<div id="msg">' + preMsg + orgMsg + subMsg + '</div>';
 
     var msg = '';
     if (!hasUsername) {
-        msg = orgMsg + subMsg.indexOf(':') > 0 ? ('<div style="float: left; color: Blue; font-weight: bold">' + subMsg.substring(0, subMsg.indexOf(':')) + ':</div><br /><div id="msg" style="color:#ff5411">' + subMsg.substring(subMsg.indexOf(':') + 1) + '</div>') : ('<div id="msg" style="color:#ff5411">' + subMsg + '</div>');
+        msg = orgMsg + subMsg.indexOf(':') > 0 ? ('<div class="username">' + subMsg.substring(0, subMsg.indexOf(':')) + ':</div><div id="msg">' + subMsg.substring(subMsg.indexOf(':') + 1) + '</div>') : ('<div id="msg">' + subMsg + '</div>');
     }
     else {
-        msg = '<div style="float: left; color: Blue; font-weight: bold">' + username + ':</div><br /><div id="msg" style="color:#ff5411">' + preMsg.substring(preMsg.indexOf(':') + 1, preMsg.length) + orgMsg + subMsg + '</div>';
+        msg = '<div class="username">' + username + ':</div><div id="msg">' + preMsg.substring(preMsg.indexOf(':') + 1, preMsg.length) + orgMsg + subMsg + '</div>';
     }
 
     $('#errMsg').addClass('errMsg');
