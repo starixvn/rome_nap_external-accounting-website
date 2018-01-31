@@ -1809,10 +1809,10 @@
     <Content Include="Scripts\Fanex.Grid\Language\Fanex.Gird.Lang.zh-CN.js" />
     <Content Include="Scripts\Fanex.Grid\Language\Fanex.Gird.Lang.zh-TW.js" />
     <Content Include="Scripts\Fanex.Grid\numeral.js" />
+    <Content Include="Scripts\Fanex.ExtAcc.Utils.js" />
     <Content Include="Scripts\Fanex.Grid\ThirdParties\Moment\moment.min.js" />
     <Content Include="Scripts\Fanex.Grid\ThirdParties\Numeral\languages.min.js" />
     <Content Include="Scripts\Fanex.Grid\ThirdParties\Numeral\numeral.min.js" />
-    <Content Include="Scripts\Fanex.ExtAcc.Utils.js" />
     <Content Include="Scripts\isMobile.min.js" />
     <Content Include="Scripts\jquery.ui.touch-punch.js" />
     <Content Include="Scripts\_Libs\jQuery\classList.js" />

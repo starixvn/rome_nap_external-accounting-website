@@ -848,6 +848,13 @@ Array.prototype.contains = function (obj) {
     return false;
 }
 
+function setPagerOptionOnMobile(gridOption)
+{
+    if (isMobile.phone && gridOption.pagerOption != null) {
+        gridOption.pagerOption.numDisplayEntries = 2;
+        gridOption.pagerOption.numEdgeEntries = 1;
+    }
+}
 
 function workaroundForGridOnPhone()
 {

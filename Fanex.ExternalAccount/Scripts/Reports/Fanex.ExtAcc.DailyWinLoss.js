@@ -309,6 +309,11 @@ Fanex.ExtAcc.DailyWinLoss = {
             showColumnsShowHide: !$this.hidedMargin
         };
 
+        if (isMobile.phone) {
+            gridOption.pagerOption.numDisplayEntries = 2;
+            gridOption.pagerOption.numEdgeEntries = 1;
+        }
+
         // For Summary Footer
         this.SumTotalTO = 0;
         this.SumComTO = 0;
@@ -388,6 +393,9 @@ Fanex.ExtAcc.DailyWinLoss = {
             ]
         });
         gridOption.footerRows = footerData;
+
+        setPagerOptionOnMobile(gridOption);
+
         $this.gridOptions = gridOption;
 
         $("#jqgrid").fanexGrid(gridOption);

@@ -610,6 +610,7 @@
 
                 $('#exporttoexcel').show();
 
+                setPagerOptionOnMobile(options);
                 // Init Grid jqgrid
                 $('#jqgrid').fanexGrid(options);
 

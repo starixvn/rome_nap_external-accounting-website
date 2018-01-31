@@ -252,7 +252,7 @@ Fanex.ExtAcc.Statement = {
 
         gridOption.bodyRows = bodyData;
         gridOption.pagerOption.totalItem = this.totalRows;
-
+        setPagerOptionOnMobile(gridOption);
         $("#jqgrid").removeClass('hidden').fanexGrid(gridOption);
     },
     GetFromDateToDate: function () {

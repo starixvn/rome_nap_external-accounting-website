@@ -25,6 +25,7 @@
 //          + 07/28/2016: Support collapse/expand on footer
 //          + 08/04/2016: Use bottomBorderWidth to calculate top for footer
 //          + 08/01/2018: Support Smartphone Friendly
+//          + 31/01/2018: Support Smartphone Friendly for pager
 // </copyright>
 // --------------------------------------------------------------------------
 /*jshint maxdepth:false, maxstatements:false, strict:false*/
@@ -199,7 +200,9 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
             startPerPage: 100,
             pageStep: 50,
             afterPagedFunction: null,
-            showDetail: true
+            showDetail: true,
+            numDisplayEntries: 5,
+            numEdgeEntries: 3
         },
         showTree: false,
         gridExpandHeight: 150,
@@ -1499,6 +1502,8 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
                 pagerOption.totalItem = options.pagerOption.totalItem;
                 pagerOption.itemsPerPageArray = options.pagerOption.itemsPerPageArray;
                 pagerOption.showDetail = options.pagerOption.showDetail;
+                pagerOption.numDisplayEntries = options.pagerOption.numDisplayEntries;
+                pagerOption.numEdgeEntries = options.pagerOption.numEdgeEntries;
 
                 this.$grid.find('#pagination').fanexPagination(pagerOption.totalItem, pagerOption);
             }
@@ -3414,7 +3419,7 @@ if (typeof (fanexGridLanguage) === 'undefined') {
         noData: 'There is no data',
         pageSize: 'Page size',
         goToPage: 'Go To Page',
-        pagingText: 'Displaying <b>{0}</b> to <b>{1}</b> of <b>{2}</b> item(s)'
+        pagingText: '<span class="pager-detail-text">Displaying <b>{0}</b> to <b>{1}</b> of </span><b>{2}</b> item(s)'
     };
 
     var fanexGridCurrentLanguage = fanexGridLanguage['en-US'];
