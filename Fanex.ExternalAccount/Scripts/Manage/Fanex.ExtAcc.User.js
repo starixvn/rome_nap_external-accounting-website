@@ -538,36 +538,30 @@ Fanex.ExtAcc.User = {
     },
 
     ResetPwd: function (isOwner) {
+        var errorMessage = "";
+        var errorField;
+
         if ($('#Password').val().toString().search(/^[<\s\s*>]/) != -1) {
-            $('#Password').focus();
-            Validators.show($('#Password').get(0), 'Not allow HTML TAG');
+            errorField = $('#Password');
+            errorMessage = 'Password does not allow HTML TAG';
+        } else if (!Validators.validateInput($('#Password').val())) {
+            errorField = $('#Password');
+            errorMessage = 'Password is required';
+        } else if (!Validators.validateInput($('#confirmPwd').val())) {
+            errorField = $('#confirmPwd');
+            errorMessage = 'Confirm Password is required';
+        } else if ($('#confirmPwd').val() !== $('#Password').val()) {
+            errorField = $('#confirmPwd');
+            errorMessage = 'Confirm password is not matched';
+        }
+
+        if (errorMessage !== "") {
+            $("#err-message").html(errorMessage).removeClass("hide");
+            errorField.addClass("invalid-field").focus();
             return false;
         }
 
-        if ($('#confirmPwd').val().toString().search(/^[<\s\s*>]/) != -1) {
-            $('#confirmPwd').focus();
-            Validators.show($('#confirmPwd').get(0), 'Not allow HTML TAG');
-            return false;
-        }
-
-        if (!Validators.validateInput($('#Password').val())) {
-            $('#Password').focus();
-            Validators.showDown($('#Password').get(0), 'This field is required', 0, 10, 41, -10, 15);
-            return false;
-        }
-
-        if (!Validators.validateInput($('#confirmPwd').val())) {
-            $('#confirmPwd').focus();
-            Validators.show($('#confirmPwd').get(0), 'This field is required');
-            return false;
-        }
-
-        if ($('#confirmPwd').val() !== $('#Password').val()) {
-            $('#confirmPwd').focus();
-            Validators.show($('#confirmPwd').get(0), 'Confirm password is not matched');
-            return false;
-        }
-
+        $("#err-message").addClass("hide");
         var params = new Object();
         params.userId = $('#UserID').val();
         params.pwd = $('#Password').val();
@@ -575,10 +569,7 @@ Fanex.ExtAcc.User = {
         $.ajax({ url: resolveClientUrl('User/' + (isOwner ? 'ResetPwdOwner' : 'ResetPwd')), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.isSuccess) {
-                console.log($('#errMsg'));
-                $('table tr td div#errMsg').css('display', 'block');
-                $('table tr td div#errMsg').html(data.errorMessage.formatErrorMessage());
-
+                $("#err-message").html(data.errorMessage.formatErrorMessage()).removeClass("hide");
             }
             else {
                 Fanex.ExtAcc.Form.Close(false);

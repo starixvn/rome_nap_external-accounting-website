@@ -55,10 +55,10 @@ Fanex.ExtAcc.Account = {
 
                 if ($('#UserName').val().toString().search(/^[<\s\s*>]/) != -1) {
                     errorField = $('#UserName');
-                    errorMessage = 'Username is not allow HTML TAG';
+                    errorMessage = 'Username does not allow HTML TAG';
                 } else if ($('#Password').val().toString().search(/^[<\s\s*>]/) != -1) {
                     errorField = $('#Password');
-                    errorMessage = 'Password is not allow HTML TAG';
+                    errorMessage = 'Password does not allow HTML TAG';
                 } else if ($('#UserName').val() == '') {
                     errorField = $('#UserName');
                     errorMessage = 'Username is required';
