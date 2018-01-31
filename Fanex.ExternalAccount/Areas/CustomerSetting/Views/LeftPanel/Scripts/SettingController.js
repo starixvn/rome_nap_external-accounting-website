@@ -564,7 +564,7 @@
 
     $scope.EnableCasino = function (enable, id) {
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(6, "Casino", 400, 150);
+        $scope.EnableThirdpartyProduct(6, "Casino", 400, 180);
     };
 
     $scope.EnableNumberGame = function (enable, id) {
@@ -573,7 +573,7 @@
         '&userid=' + parent.userId + '&productid=numbergame&level=' + $scope.model.personalInfo.roleId.value +
         '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Number Game: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Number Game: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 180, false, function () {
             document.getElementById(id).checked = enable;
         }, 1, null);
     };
@@ -584,14 +584,14 @@
         '&userid=' + parent.userId + '&productid=livecasino&level=' + $scope.model.personalInfo.roleId.value +
         '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Live Casino: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Live Casino: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 180, false, function () {
             document.getElementById(id).checked = enable;
         }, 1, null);
     };
 
     $scope.EnableVirtualSports = function (enable, id) {
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(5, "Virtual Sports", 400, 150);
+        $scope.EnableThirdpartyProduct(5, "Virtual Sports", 400, 180);
     };
 
     $scope.EnableESports = function (enable, id) {
@@ -600,7 +600,7 @@
         '&userid=' + parent.userId + '&productid=esports&level=' + $scope.model.personalInfo.roleId.value +
         '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'eSports: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'eSports: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 180, false, function () {
             document.getElementById(id).checked = enable;
         }, 1, null);
     };
@@ -611,7 +611,7 @@
         '&userid=' + parent.userId + '&productid=hrfixedodds&level=' + $scope.model.personalInfo.roleId.value +
         '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'HR Fixed Odds: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 150, false, function () {
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'HR Fixed Odds: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 180, false, function () {
             document.getElementById(id).checked = enable;
         }, 1, null);
     };
@@ -625,19 +625,9 @@
     }
     $scope.EnableRacing = function () {
         $scope.landscapeHeight = 250;
-        $scope.portraitHeight = 350;
+        $scope.portraitHeight = 400;
         $scope.shouldCalculatePopupHeight = true;
         $scope.EnableThirdpartyProduct(2, "Racing", 400, $scope.getPopupHeight());
-
-        //$(window).bind('orientationchange', function (e) {
-        //    if (!$scope.shouldCalculatePopupHeight || !isMobile.phone) {
-        //        return;
-        //    }
-
-        //    var height = $scope.getPopupHeight();
-        //    //top.$('.ui-dialog').height(height + 'px');
-        //    $scope.EnableThirdpartyProduct(2, "Racing", 400, height);
-        //});
     };
 
     $scope.EnableKeno = function () {
@@ -647,17 +637,17 @@
 
     $scope.EnableColossusBets = function (enable, id) {
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(15, "Colossus Bets", 400, 150);
+        $scope.EnableThirdpartyProduct(15, "Colossus Bets", 400, 180);
     };
 
     $scope.EnableFishingWorld = function (enable, id) {
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(24, "Fishing World", 400, 150);
+        $scope.EnableThirdpartyProduct(24, "Fishing World", 400, 180);
     };
 
     $scope.EnableGoldDeluxe = function (enable, id) {
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(12, "Gold Deluxe", 400, 150);
+        $scope.EnableThirdpartyProduct(12, "Gold Deluxe", 400, 180);
     };
 
     $scope.EnableCockfighting = function () {
@@ -665,32 +655,32 @@
     };
 
     $scope.EnableAllbet = function () {
-        $scope.EnableThirdpartyProduct(21, "Allbet", 400, 180);
+        $scope.EnableThirdpartyProduct(21, "Allbet", 400, 200);
     };
 
     $scope.EnableMacauGames = function (enable, id) {
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(22, "Macau Games", 400, 150);
+        $scope.EnableThirdpartyProduct(22, "Macau Games", 400, 180);
     };
 
     $scope.EnableNG2 = function (enable, id) {
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(23, parent.ng2Text, 400, 150);
+        $scope.EnableThirdpartyProduct(23, parent.ng2Text, 400, 180);
     };
 
     $scope.EnableLottery = function (enable, id) {
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(28, "Lottery", 400, 150);
+        $scope.EnableThirdpartyProduct(28, "Lottery", 400, 180);
     };
 
     $scope.EnableLucky3 = function (enable, id) {
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(26, "Lucky 3", 400, 150);
+        $scope.EnableThirdpartyProduct(26, "Lucky 3", 400, 180);
     };
 
     $scope.EnableBullfighting = function (enable, id) {
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(30, "Bullfighting", 400, 150);
+        $scope.EnableThirdpartyProduct(30, "Bullfighting", 400, 180);
     };
 
     $scope.EnableDCS = function (productId, productName, enable, id, productText, width, height) {
@@ -700,7 +690,7 @@
             '&enable=' + enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
         var name = productText || productName;
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Update ' + name + ' Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', (width ? width : 400), (height ? height : 150), false, function () {
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Update ' + name + ' Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', (width ? width : 400), (height ? height : 180), false, function () {
             try {
                 document.getElementById(id).checked = enable;
             } catch (e) {

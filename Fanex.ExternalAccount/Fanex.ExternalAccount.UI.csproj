@@ -1200,6 +1200,12 @@
     <Content Include="assets\styles\pages\account\login.min.css">
       <DependentUpon>login.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\account\security-code.css">
+      <DependentUpon>security-code.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\account\security-code.min.css">
+      <DependentUpon>security-code.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\pages\customer\bet-limit.css">
       <DependentUpon>bet-limit.scss</DependentUpon>
     </Content>
@@ -2809,6 +2815,7 @@
     <Content Include="assets\styles\pages\statement\statement.scss" />
     <Content Include="assets\styles\pages\reports\winloss-detail.scss" />
     <Content Include="bundleconfig.json" />
+    <Content Include="assets\styles\pages\account\security-code.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

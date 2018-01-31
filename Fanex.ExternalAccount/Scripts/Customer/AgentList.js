@@ -417,8 +417,7 @@
                 resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                 415,
                 400,
-                false, 
-                function () { Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup");});
+                false, false);
             
         }
     };
@@ -442,8 +441,7 @@
                     'Reset security code: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                     650,
                     500,
-                    false,
-                    function () { Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup iframe") });
+                    false, false);
             }
         };
     }
@@ -459,8 +457,7 @@
                     resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                     600,
                     250,
-                    false,
-                    function () { Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup") },
+                    false, false,
                     1);
             }
         };

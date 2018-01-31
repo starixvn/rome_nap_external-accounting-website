@@ -275,7 +275,7 @@ Fanex.ExtAcc.Group = {
             525,
             false,
             null,
-            3,
+            0,
             null,
             params);
     },

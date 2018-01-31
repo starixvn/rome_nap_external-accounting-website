@@ -27,7 +27,7 @@
         }
     }
     .ui-dialog-content {
-        padding: 0;
+        padding: 8px;
         -webkit-overflow-scrolling: touch;        
     }
     .add-padding {
@@ -68,13 +68,15 @@
         }
     }
     .ui-dialog-titlebar-close {
+        background: transparent;
+        border: none;
         margin: unset;
         padding: unset;
         top: unset;
         height: 30px;
         width: 30px;
         &.ui-state-hover {
-            background: unset;
+            background: transparent;
             border: none;
         }
     }
