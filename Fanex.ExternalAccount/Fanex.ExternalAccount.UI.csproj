@@ -1175,6 +1175,12 @@
     <Content Include="assets\styles\pages\account\login.min.css">
       <DependentUpon>login.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\account\security-code.css">
+      <DependentUpon>security-code.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\account\security-code.min.css">
+      <DependentUpon>security-code.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\pages\customer\bet-limit.css">
       <DependentUpon>bet-limit.scss</DependentUpon>
     </Content>
@@ -1782,10 +1788,10 @@
     <Content Include="Scripts\Fanex.Grid\Language\Fanex.Gird.Lang.zh-CN.js" />
     <Content Include="Scripts\Fanex.Grid\Language\Fanex.Gird.Lang.zh-TW.js" />
     <Content Include="Scripts\Fanex.Grid\numeral.js" />
+    <Content Include="Scripts\Fanex.ExtAcc.Utils.js" />
     <Content Include="Scripts\Fanex.Grid\ThirdParties\Moment\moment.min.js" />
     <Content Include="Scripts\Fanex.Grid\ThirdParties\Numeral\languages.min.js" />
     <Content Include="Scripts\Fanex.Grid\ThirdParties\Numeral\numeral.min.js" />
-    <Content Include="Scripts\Fanex.ExtAcc.Utils.js" />
     <Content Include="Scripts\isMobile.min.js" />
     <Content Include="Scripts\jquery.ui.touch-punch.js" />
     <Content Include="Scripts\_Libs\jQuery\classList.js" />
@@ -2800,6 +2806,7 @@
     <Content Include="assets\styles\pages\statement\statement.scss" />
     <Content Include="assets\styles\pages\reports\winloss-detail.scss" />
     <Content Include="bundleconfig.json" />
+    <Content Include="assets\styles\pages\account\security-code.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

@@ -670,6 +670,8 @@ Fanex.ExtAcc.WinLossDetail = {
 
         gridOption.footerRows = footerData;
 
+        setPagerOptionOnMobile(gridOption);
+
         $("#jqgrid").fanexGrid(gridOption);
 
         workaroundForGridOnPhone();

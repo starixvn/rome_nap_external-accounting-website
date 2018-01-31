@@ -7,14 +7,25 @@
         $scope.model = null;
     }
 
+
+    $scope.getPopupHeight = function () {
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+             $scope.landscapeHeight :
+             $scope.portraitHeight;
+
+        return height;
+    };
+
     $scope.ResetPassword = function (custId, title) {
+        $scope.landscapeHeight = 260;
+        $scope.portraitHeight = 400;
         var roleId = model.personalInfo.roleId.value;
         parent.Fanex.ExtAcc.Form.Show(
             parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>',
             415,
-            (roleId != 1 ? 400 : 400),
+            $scope.getPopupHeight(),
             false,
-            function () { top.$("#windowPopup").addClass("add-padding"); });
+            false);
     };
 
     $scope.ShowIp = function (ip) {
@@ -30,7 +41,7 @@
             650,
             height,
             false,
-            function () { top.$("#windowPopup").addClass("add-padding"); });
+            false);
     };
 
     $scope.RemoveOTP = function (custId, username) {

@@ -260,7 +260,7 @@
                 415,
                 400,
                 false,
-                function () { Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup"); });
+                false);
         }
     };
 

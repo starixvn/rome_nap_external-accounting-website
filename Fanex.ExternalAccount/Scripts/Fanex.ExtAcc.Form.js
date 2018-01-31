@@ -21,7 +21,10 @@ Fanex.ExtAcc.Form = {
             Fanex.ExtAcc.BlockUI();
 
         var id = popupId ? popupId : 'windowPopup';
-        var Form = document.createElement("div");
+        var Form = document.getElementById(id) == null 
+            ? document.createElement("div")
+            : document.getElementById(id);
+        Form.innerHTML = '';
         var DivContent = document.createElement("div");
 
         var margin = '0';
@@ -32,11 +35,11 @@ Fanex.ExtAcc.Form = {
 
         Form.setAttribute('id', id);
         Form.setAttribute('style', 'display: block; border: none; font-size: 12px; z-index: 999999; margin-right: ' + margin);
-        DivContent.setAttribute('style', 'height: ' + (height - 42) + 'px');
+        DivContent.setAttribute('style', 'height: ' + (height - 50) + 'px');
 
         var divFrame = document.createElement("div");
 
-        divFrame.setAttribute('style', 'height: ' + (height - 42) + 'px; margin-left: 5px; margin-right: ' + margin);
+        divFrame.setAttribute('style', 'height: ' + (height - 50) + 'px; margin-left: 5px; margin-right: ' + margin);
         divFrame.setAttribute('id', 'frame');
 
         DivContent.appendChild(divFrame);
@@ -147,10 +150,10 @@ Fanex.ExtAcc.Form = {
         Form.setAttribute('id', id);
         Form.setAttribute('style', 'display: none; border: none; font-size: 12px; z-index: 999999');        
 
-        DivContent.setAttribute('style', 'height: ' + (height - 86) + 'px');
+        DivContent.setAttribute('style', 'height: ' + (height - 102) + 'px');
 
         var divFrame = document.createElement("div");
-        divFrame.setAttribute('style', 'height: ' + (height - 102) + 'px; line-height: 18px; padding: 8px 16px;');
+        divFrame.setAttribute('style', 'height: ' + (height - 102) + 'px; line-height: 18px;');
 
         var frame = document.createElement("span");
         frame.innerHTML = message;
@@ -215,10 +218,10 @@ Fanex.ExtAcc.Form = {
         Form.setAttribute('id', id);
         Form.setAttribute('style', 'display: none; border: none; font-size: 12px; z-index: 999999');
         
-        DivContent.setAttribute('style', 'height: ' + (height - 86) + 'px');
+        DivContent.setAttribute('style', 'height: ' + (height - 102) + 'px');
 
         var divFrame = document.createElement("div");
-        divFrame.setAttribute('style', 'height: ' + (height - 86) + 'px;line-height: 18px; padding: 8px 16px;');
+        divFrame.setAttribute('style', 'height: ' + (height - 102) + 'px;line-height: 18px;');
 
         var frame = document.createElement("span");
         frame.innerHTML = message;

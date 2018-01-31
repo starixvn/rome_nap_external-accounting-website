@@ -172,6 +172,29 @@
         $scope.collapseSidebar();
     };
 
+    $scope.Init = function () {
+        //$(window).bind('orientationchange', function (e) {
+        //    var calculatePopupheight = $scope.shouldCalculatePopupHeight && isMobile.phone;
+        //    if (!calculatePopupheight) {
+        //        return;
+        //    }
+
+        //    var height;
+        //    var isLandscape = window.matchMedia("(orientation: landscape)").matches;
+        //    if (isMobile.android.phone) {
+        //        height = isLandscape ? $scope.portraitHeight : $scope.landscapeHeight;
+        //    }
+        //    else {
+        //        height = isLandscape ? $scope.landscapeHeight : $scope.portraitHeight;
+        //    }
+
+        //    var dialog = top.$('.ui-dialog');
+        //    dialog.height((height + 34) + 'px');
+
+        //    top.$("#windowPopup").css("height", height + "px");
+        //});
+    };
+
     $scope.Info = function () {
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
 
@@ -180,12 +203,18 @@
             "&groupName=" + parent.$('#selectedGroupName').html());
         var title = parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
 
-        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 280 : 500;
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 280 : 550;
         var width = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 400 : 500;
 
         parent.Fanex.ExtAcc.Form.Show(url, title, 500, height, false);
+    };
 
+    $scope.getPopupHeight = function () {
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+             $scope.landscapeHeight :
+             $scope.portraitHeight;
 
+        return height;
     };
 
     $scope.Transfer = function () {

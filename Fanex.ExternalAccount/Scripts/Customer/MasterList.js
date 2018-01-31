@@ -307,7 +307,7 @@
                 415,
                 400,
                 false, 
-                function () { Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup"); });
+                false);
         }
     };
 
@@ -331,7 +331,7 @@
                     650,
                     500,
                     false,
-                    function () { Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup iframe") });
+                    false);
             }
         };
     }
@@ -348,7 +348,7 @@
                     600,
                     250,
                     false,
-                    function () { Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup") },
+                    false,
                     1);
             }
         };

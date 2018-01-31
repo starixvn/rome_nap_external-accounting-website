@@ -12,6 +12,7 @@
 
 <form class="form-add">
     <div id="errMsg" class="successMsg hide"> </div>
+    <div id="err-message" class="row errMsg hide"></div>
     <div class="group">
         <div class="pull-left width-140 text-right">
             <label for="securityCode" class="label">Security Code</label>
@@ -33,8 +34,8 @@
             <label for="forceChange" class="label">Force change</label>
         </div>
         <div class="pull-left width-250">
-            <input id="forceChange" type="checkbox" 
-                   checked="checked" @(canEditForceChange ? string.Empty : "disabled")  class="checkbox"  />
+            <input id="forceChange" type="checkbox"
+                   checked="checked" @(canEditForceChange ? string.Empty : "disabled") class="checkbox" />
         </div>
     </div>
     <div class="group form-action with-label-150">

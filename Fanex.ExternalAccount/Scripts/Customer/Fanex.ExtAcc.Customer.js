@@ -113,7 +113,7 @@
                                 if (tag.tagName == "IFRAME") {
                                     Fanex.ExtAcc.Form.Close();
                                 } else {
-                                    $('#windowPopup').html('<div style="padding:8px 16px">You have logged in from another session or your login session has expired!<div>'); // Prevent opening popup if any
+                                    $('#windowPopup').html('<div>You have logged in from another session or your login session has expired!<div>'); // Prevent opening popup if any
                                 }
                             }
 
@@ -415,7 +415,6 @@
         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ViewIP?ip=' + ip), 'IP Information', 450, 230, false,
             function () {
                 Fanex.ExtAcc.UnBlockUI();
-                Fanex.ExtAcc.Customer.AddPaddingContent("#windowPopup");
             },
             2);
     },
@@ -625,6 +624,7 @@
 
                 $('#exporttoexcel').show();
 
+                setPagerOptionOnMobile(options);
                 // Init Grid jqgrid
                 $('#jqgrid').fanexGrid(options);
 
@@ -1013,9 +1013,6 @@
             default:
                 return "closed-wrongPwdOthers";
         }
-    },
-
-    AddPaddingContent: function (elementSelector) {
-        top.$(elementSelector).addClass("add-padding");
     }
+
 };

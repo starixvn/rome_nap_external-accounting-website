@@ -1,29 +1,30 @@
 ﻿function Update() {
+    $('#errMsg').hide();
+
+    var errorMessage = "";
+    var errorField;
+
     if (!Validators.validateInput($('#securityCode').val())) {
-        Validators.show($('#securityCode').get(0), "Sorry, security code can't be empty", 50, undefined, 3000, 27);
+        errorMessage = "Sorry, security code can't be empty";
+        errorField = $('#securityCode');
+    } else if (!IsSecurityCode($('#securityCode').val())) {
+        errorMessage = "Sorry, security code is incorrect format";
+        errorField = $('#securityCode');
+    } else if (!Validators.validateInput($('#securityCodeConfirm').val())) {
+        errorMessage = "Sorry, confirm security code can't be empty";
+        errorField = $('#securityCodeConfirm');
+    } else if ($('#securityCode').val() != $('#securityCodeConfirm').val()) {
+        errorMessage = "Sorry, confirm security code doesn't match with security code";
+        errorField = $('#securityCodeConfirm');
+    }
+
+    if (errorMessage !== "") {
+        $("#err-message").html(errorMessage).removeClass("hide");
+        errorField.addClass("invalid-field").focus();
         return;
     }
 
-    if (!IsSecurityCode($('#securityCode').val())) {
-        Validators.show($('#securityCode').get(0), "Sorry, security code is incorrect format", 50, undefined, 3000, 27);
-        return;
-    }
-
-    if (!Validators.validateInput($('#securityCodeConfirm').val())) {
-        Validators.show($('#securityCodeConfirm').get(0), "Sorry, confirm security code can't be empty", 50, undefined, 3000, 27);
-        return;
-    }
-
-    if (!IsSecurityCode($('#securityCodeConfirm').val())) {
-        Validators.show($('#securityCodeConfirm').get(0), "Sorry, confirm security code is incorrect format", 50, undefined, 3000, 27);
-        return;
-    }
-
-    if ($('#securityCode').val() != $('#securityCodeConfirm').val()) {
-        Validators.show($('#securityCodeConfirm').get(0), "Sorry, confirm security code doesn't match with security code", 50, undefined, 3000, 27);
-        return;
-    }
-
+    $("#err-message").addClass("hide");
     Fanex.CustomerSetting.Core.BlockUI();
 
     $.ajax({
