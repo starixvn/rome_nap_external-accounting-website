@@ -341,7 +341,7 @@ Fanex.ExtAcc.User = {
             resolveClientUrl('User/' + (isOwner ? 'ResetPasswordOwner' : 'ResetPassword') + '/' + userId),
             title + ': <font color="#6dcff6">' + username + '</font>',
             415,
-            250,
+            280,
             false
             );
     },
