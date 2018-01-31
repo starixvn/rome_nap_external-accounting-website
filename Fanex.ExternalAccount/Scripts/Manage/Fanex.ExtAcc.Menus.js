@@ -245,7 +245,7 @@ Fanex.ExtAcc.Menus = {
         });
 
         $('#jqbutton').bind('click', function () {
-            Fanex.ExtAcc.Form.Show(resolveClientUrl("Menu/AddMenu"), $.parseJSON(menuTitles).Create, 400, 500, false);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl("Menu/AddMenu"), $.parseJSON(menuTitles).Create, 400, Fanex.ExtAcc.Menus.GetPopupHeight(300, 500), false);
         });
 
         Fanex.ExtAcc.OnResize = function () {
@@ -255,6 +255,14 @@ Fanex.ExtAcc.Menus = {
             catch (err) {
             }
         }
+    },
+
+    GetPopupHeight: function (landscapeHeight, portraitHeight) {
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+            landscapeHeight :
+             portraitHeight;
+
+        return height;
     },
 
     RenderGrid: function (options) {
@@ -280,7 +288,7 @@ Fanex.ExtAcc.Menus = {
             resolveClientUrl('Menu/EditMenu/' + menuId),
             title,
             400,
-            500,
+            Fanex.ExtAcc.Menus.GetPopupHeight(300, 500),
             false);
     },
 

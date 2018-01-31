@@ -148,7 +148,7 @@ Fanex.ExtAcc.Form = {
         var id = popupId ? popupId : 'windowPopup';
 
         Form.setAttribute('id', id);
-        Form.setAttribute('style', 'display: none; border: none; font-size: 12px; z-index: 999999');        
+        Form.setAttribute('style', 'display: none; border: none; font-size: 13px; z-index: 999999');        
 
         DivContent.setAttribute('style', 'height: ' + (height - 102) + 'px');
 

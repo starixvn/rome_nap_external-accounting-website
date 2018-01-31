@@ -82,10 +82,16 @@
 .ui-dialog-buttonpane {
     .btn.-submit {
         background: $btn-submit-bg !important;
+        &:hover {
+            background: darken($btn-submit-bg, 5%) !important;
+        }
     }
 
     .btn.-normal {
         background: $btn-normal-bg !important;
+        &:hover {
+            background: darken($btn-normal-bg, 5%) !important;
+        }
     }
 }
 

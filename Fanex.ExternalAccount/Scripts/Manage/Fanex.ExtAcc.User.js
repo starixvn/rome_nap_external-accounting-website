@@ -206,7 +206,7 @@ Fanex.ExtAcc.User = {
         $this.Search($this.IsFirstLoad);
 
         $('#jqbuttonAddUser').bind('click', function () {
-            Fanex.ExtAcc.Form.Show(resolveClientUrl("User/AddUser"), $.parseJSON(menuTitles).CreateUser, 400, 340, false);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl("User/AddUser"), $.parseJSON(menuTitles).CreateUser, 400, Fanex.ExtAcc.User.GetPopupHeight(300, 340), false);
         });
 
         $('#jqbuttonAddExistUser').bind('click', function () {
@@ -215,6 +215,14 @@ Fanex.ExtAcc.User = {
 
         Fanex.ExtAcc.OnResize = $this.resizeReportGrid;
         $(".icon-filter").click($this.showHideFilter);
+    },
+
+    GetPopupHeight: function (landscapeHeight, portraitHeight) {
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+            landscapeHeight :
+             portraitHeight;
+
+        return height;
     },
 
     RenderGrid: function (params) {
@@ -359,7 +367,7 @@ Fanex.ExtAcc.User = {
             resolveClientUrl('User/GrantPermission'),
             'Grant Permission',
             520,
-            525,
+            Fanex.ExtAcc.User.GetPopupHeight(260, 525),
             false,
             null,
             0,
