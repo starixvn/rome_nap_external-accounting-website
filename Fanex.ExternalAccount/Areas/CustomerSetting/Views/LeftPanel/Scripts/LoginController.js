@@ -41,7 +41,7 @@
             650,
             height,
             false,
-            function () { top.$("#windowPopup").addClass("add-padding"); });
+            false);
     };
 
     $scope.RemoveOTP = function (custId, username) {

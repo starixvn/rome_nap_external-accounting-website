@@ -233,6 +233,14 @@ Fanex.ExtAcc.Group = {
         }
     },
 
+    GetPopupHeight: function (landscapeHeight, portraitHeight) {
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+             landscapeHeight :
+             portraitHeight;
+
+        return height;
+    },
+
     RenderGrid: function (options) {
         try {
             // Init Grid jqgrid
@@ -272,7 +280,7 @@ Fanex.ExtAcc.Group = {
             resolveClientUrl('Group/GrantPermission'),
             'Grant Permission',
             400,
-            525,
+            Fanex.ExtAcc.Group.GetPopupHeight(260, 525),
             false,
             null,
             0,
