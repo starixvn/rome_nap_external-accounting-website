@@ -41,7 +41,7 @@
                         <input type="checkbox" id="chkEnable" style="margin-top: 5px"
                                data-ng-init="CustomerModel.originalCasinoEnabled = !CustomerModel.casinoDisabled; CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && (CustomerModel.casinoSync || !CustomerModel.uplineDisabledCasino)"
                                data-ng-model="CustomerModel.casinoEnabled"
-                               data-ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled; CustomerModel.casinoEnabledDownline = CustomerModel.casinoEnabled == CustomerModel.originalCasinoEnabled ? CustomerModel.originalEnabledDownline : CustomerModel.casinoEnabled ? CustomerModel.casinoEnabledDownline : false; CustomerModel.casinoDisabledDownline = !CustomerModel.casinoEnabledDownline;"
+                               data-ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled;"
                                data-ng-disabled="CustomerModel.uplineDisabledCasino" />
                         <label for="chkEnable">Enable</label>
                     </div>
