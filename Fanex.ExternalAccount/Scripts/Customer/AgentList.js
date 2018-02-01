@@ -404,7 +404,11 @@
         callback: function (key, opt) {
             Fanex.ExtAcc.Customer.UserId = custId;
             Fanex.ExtAcc.Customer.IsMultiple = false;
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 500, 580, false);
+            Fanex.ExtAcc.Form.Show(
+                resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                500,
+                Fanex.ExtAcc.Customer.GetPopupHeight(300, 580),
+                false);
         }
     };
     itemsAgent.changePassword = {
@@ -416,7 +420,7 @@
             Fanex.ExtAcc.Form.Show(
                 resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                 415,
-                400,
+                Fanex.ExtAcc.Customer.GetPopupHeight(330, 400),
                 false, false);
             
         }
@@ -440,7 +444,7 @@
                     resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?' + $.param(params)),
                     'Reset security code: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                     650,
-                    500,
+                    Fanex.ExtAcc.Customer.GetPopupHeight(300, 500),
                     false, false);
             }
         };
