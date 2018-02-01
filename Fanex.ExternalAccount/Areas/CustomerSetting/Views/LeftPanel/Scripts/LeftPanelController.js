@@ -11,6 +11,13 @@ angular.element(document.getElementById('ng-app')).ready(function () {
     parent.Fanex.ExtAcc.UnBlockUI();
     $('#ng-app').show();
     $('#txtLeftPanelUserName').focus();
+
+    $(".setting-enable-item").each(function () {
+        var checkbox = $(this);
+        if (checkbox.css("display") == "none") {
+            checkbox.remove();
+        }
+    });
 });
 
 Array.prototype.contains = function (item) {
