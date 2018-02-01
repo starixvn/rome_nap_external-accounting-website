@@ -32,6 +32,9 @@ body {
 }
 .enabled-item {
     width: 168px;
+    [disabled] {
+        color: #838282;
+    }
 }
 
 .left-panel-container {
@@ -274,6 +277,9 @@ body {
         border: 1px solid #232428;
         cursor: pointer;
         background: #fff;
+        &[disabled] {
+            border: 1px solid #838282;
+        }
     }
 
     input[type="checkbox"]:checked:before {
