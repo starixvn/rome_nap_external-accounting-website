@@ -61,14 +61,19 @@
             };
         }
 
-        if (!this.HideVirtualSports) {
-            menuItems.virtualSport = {
-                name: "Edit Multiple Virtual Sports",
+        function addSuperEditMultipleMastersMenuItem(productId, productName) {
+            var productKey = 'product_super_master_' + productId;
+            menuItems[productKey] = {
+                name: "Edit Multiple " + productName,
                 className: "iconEnableEdit",
                 callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleVirtualSports(4, 3);
+                    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(4, 3, productId, productName);
                 }
             };
+        }
+
+        if (!this.HideVirtualSports) {
+            addSuperEditMultipleMastersMenuItem(5, 'Virtual Sports');
         }
 
         if (!this.HideKeno) {
@@ -106,103 +111,43 @@
         }
 
         if (!this.HideSportsbook2) {
-            menuItems.sportsbook2 = {
-                name: "Edit Multiple Sportsbook 2",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(4, 3);
-                }
-            };
+            addSuperEditMultipleMastersMenuItem(16, 'Sportsbook 2');
         }
 
         if (!this.HideCockfighting) {
-            menuItems.cockFighting = {
-                name: "Edit Multiple Cockfighting",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleCockfighting(4, 3);
-                }
-            };
+            addSuperEditMultipleMastersMenuItem(19, 'Cockfighting');
         }
 
         if (!this.HideCricket) {
-            menuItems.cricket = {
-                name: "Edit Multiple Cricket",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleCricket(4, 3);
-                }
-            };
+            addSuperEditMultipleMastersMenuItem(20, 'Cricket');
         }
 
         if (!this.HideAllbet) {
-            menuItems.allbet = {
-                name: "Edit Multiple Allbet",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleAllbet(4, 3);
-                }
-            };
+            addSuperEditMultipleMastersMenuItem(21, 'Allbet');
         }
 
         if (!this.HideVoidbridge) {
-            menuItems.voidbridge = {
-                name: "Edit Multiple Macau Games",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge(4, 3);
-                }
-            };
+            addSuperEditMultipleMastersMenuItem(22, 'Macau Games');
         }
 
         if (!this.HideNG2) {
-            menuItems.ng2 = {
-                name: "Edit Multiple " + ng2Text,
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleNG2(4, 3);
-                }
-            };
+            addSuperEditMultipleMastersMenuItem(23, ng2Text);
         }
 
         if (!this.HideFishingWorld) {
-            menuItems.fishingWorld = {
-                name: "Edit Multiple Fishing World",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleFishingWorld(4, 3);
-                }
-            };
+            addSuperEditMultipleMastersMenuItem(24, 'Fishing World');
         }
 
         if (!this.HideLottery) {
-            menuItems.lottery = {
-                name: "Edit Multiple Lottery",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleLottery(4, 3);
-                }
-            };
+            addSuperEditMultipleMastersMenuItem(28, 'Lottery');
         }
 
         if (!this.HideLucky3) {
-            menuItems.lucky3 = {
-                name: "Edit Multiple Lucky 3",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleLucky3(4, 3);
-                }
-            };
+            addSuperEditMultipleMastersMenuItem(26, 'Lucky 3');
         }
 
         if (!this.HideBullfighting) {
-            menuItems.bullfighting = {
-                name: "Edit Multiple Bullfighting",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleBullfighting(4, 3);
-                }
-            };
+            addSuperEditMultipleMastersMenuItem(30, 'Bullfighting');
         }
 
         if (this.AllowDoubleCommMaster) {
@@ -255,14 +200,19 @@
             };
         }
 
-        if (!this.HideVirtualSports) {
-            menuItems.virtualSport = {
-                name: "Edit Multiple Virtual Sports",
+        function addMasterEditMultipleAgentsMenuItem(productId, productName) {
+            var productKey = 'product_master_agent_' + productId;
+            menuItems[productKey] = {
+                name: "Edit Multiple " + productName,
                 className: "iconEnableEdit",
                 callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleVirtualSports(3, 2);
+                    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(3, 2, productId, productName);
                 }
             };
+        }
+
+        if (!this.HideVirtualSports) {
+            addMasterEditMultipleAgentsMenuItem(5, 'Virtual Sports');
         }
 
         if (!this.HideKeno) {
@@ -300,106 +250,44 @@
         }
 
         if (!this.HideSportsbook2) {
-            menuItems.sportsbook2 = {
-                name: "Edit Multiple Sportsbook 2",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2(3, 2);
-                }
-            };
+            addMasterEditMultipleAgentsMenuItem(16, 'Sportsbook 2');
         }
 
         if (!this.HideCockfighting) {
-            menuItems.cockFighting = {
-                name: "Edit Multiple Cockfighting",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleCockfighting(3, 2);
-                }
-            };
+            addMasterEditMultipleAgentsMenuItem(19, 'Cockfighting');
         }
 
         if (!this.HideCricket) {
-            menuItems.cricket = {
-                name: "Edit Multiple Cricket",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleCricket(3, 2);
-                }
-            };
+            addMasterEditMultipleAgentsMenuItem(20, 'Cricket');
         }
 
         if (!this.HideAllbet) {
-            menuItems.allbet = {
-                name: "Edit Multiple Allbet",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleAllbet(3, 2);
-                }
-            };
+            addMasterEditMultipleAgentsMenuItem(21, 'Allbet');
         }
 
         if (!this.HideVoidbridge) {
-            menuItems.voidbridge = {
-                name: "Edit Multiple Macau Games",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge(3, 2);
-                }
-            };
+            addMasterEditMultipleAgentsMenuItem(22, 'Macau Games');
         }
 
         if (!this.HideNG2) {
-            menuItems.ng2 = {
-                name: "Edit Multiple " + ng2Text,
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleNG2(3, 2);
-                }
-            };
+            addMasterEditMultipleAgentsMenuItem(23, ng2Text);
         }
 
         if (!this.HideFishingWorld) {
-            menuItems.fishingWorld = {
-                name: "Edit Multiple Fishing World",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleFishingWorld(3, 2);
-                }
-            };
+            addMasterEditMultipleAgentsMenuItem(24, 'Fishing World');
         }
 
         if (!this.HideLottery) {
-            menuItems.lottery = {
-                name: "Edit Multiple Lottery",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleLottery(3, 2);
-                }
-            };
+            addMasterEditMultipleAgentsMenuItem(28, 'Lottery');
         }
 
         if (!this.HideLucky3) {
-            menuItems.lucky3 = {
-                name: "Edit Multiple Lucky 3",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleLucky3(3, 2);
-                }
-            };
+            addMasterEditMultipleAgentsMenuItem(26, 'Lucky 3');
         }
 
         if (!this.HideBullfighting) {
-            menuItems.bullfighting = {
-                name: "Edit Multiple Bullfighting",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleBullfighting(3, 2);
-                }
-            };
+            addMasterEditMultipleAgentsMenuItem(30, 'Bullfighting');
         }
-
-
 
         if (this.AllowDoubleCommAgent) {
             menuItems.doubleComm = {
