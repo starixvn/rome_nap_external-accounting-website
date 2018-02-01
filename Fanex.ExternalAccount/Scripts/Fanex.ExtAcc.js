@@ -144,9 +144,9 @@ Fanex.ExtAcc = {
     LoadMainFrame: function (url, id, isLeftPanelClick, isMenu, dontNeedGroupName) {
         this.BlockUI();
         $('#contentSplitter').hide();
-        //if (typeof id != 'undefined') {
-        //    $('#' + id).hide();
-        //}
+        if (typeof id != 'undefined') {
+            $('#' + id).hide();
+        }
 
         if (!isMenu) {
             var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
@@ -154,9 +154,9 @@ Fanex.ExtAcc = {
                 url: fullUrl, type: 'post', success: function (result) {
                     $('#contentSplitter').html('');
 
-                    //if (url.indexOf('Customer/CustomerList') == -1 || $(result).text().indexOf('You are not authorized on this function') != -1) {
+                    if (url.indexOf('Customer/CustomerList') == -1 || $(result).text().indexOf('You are not authorized on this function') != -1) {
                         Fanex.ExtAcc.UnBlockUI();
-                    //}
+                    }
 
                     if (result.errorCode) {
                         $('#contentSplitter').html(result.errorMessage.formatErrorMessage());
@@ -170,8 +170,7 @@ Fanex.ExtAcc = {
                         return;
                     }
 
-                    //if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
-                    if (!isLeftPanelClick) {
+                    if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
                         var interval = setInterval(function () {
                             if (document.getElementById('btnSearch')) {
                                 clearInterval(interval);
