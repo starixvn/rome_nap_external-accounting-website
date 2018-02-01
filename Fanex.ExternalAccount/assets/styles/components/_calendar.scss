@@ -33,12 +33,8 @@ $font-family: 'Montserrat', sans-serif;
 #ui-datepicker-div {
     font-family: $font-family;
     color: #808080;
-    width: 375px;
-    font-size: 16px;
-    @media all and (min-device-width: 768px) {
-        width: 260px;
-        font-size: 13px;
-    }
+    width: 260px;
+    font-size: 13px;
 }
 .ui-widget-content.ui-datepicker {
     @include box-shadow(0, 0, 3px, #ccc);
@@ -95,14 +91,9 @@ $font-family: 'Montserrat', sans-serif;
     font-weight: normal;
 }
 .ui-datepicker td {
-    height: 50px;
-    width: 50px;
     text-align: center;
-
-    @media all and (min-device-width: 768px) {
-        height: 32px;
-        width: 28px;
-    }
+    height: 32px;
+    width: 28px;
 }
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
     border: none;
@@ -116,26 +107,19 @@ $font-family: 'Montserrat', sans-serif;
     background: #5faa73;    
     .ui-state-default {
         color: #fff;
-        width: 44px;
-        height: 28px;
         background: #5faa73 !important;
         border-radius: 50%;
         line-height: 20px;
         position: relative;
         left: 1px;
-        @media all and (min-device-width: 768px) {
-            display: inline-block;
-            height: 25px;
-            width: 26px;
-        }
+        display: inline-block;
+        height: 25px;
+        width: 26px;
     }
-    /*@media all and (min-device-width: 768px) {
-        @include border-radius(20px);
-    }*/
+
 }
 
 .ui-datepicker-trigger {
-    //width: 0;
     &:before {
         content: '\e935';
     }
