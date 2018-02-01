@@ -33,11 +33,11 @@
         <ul class="tabs">
             <li id="tab1" onclick="LoadSB()"><a href="#tabs-1">Sportsbook</a></li>
             <li id="tab2" onclick="LoadRacing()"><a href="#tabs-2">Racing</a></li>
-            <li id="tab3" onclick="LoadVirtualSports()"><a href="#tabs-3">Virtual Sports</a></li>
+            <li id="tab5" onclick="LoadProduct(5)"><a href="#tabs-5">Virtual Sports</a></li>
             <li id="tab4" onclick="LoadLiveCasino()"><a href="#tabs-4">Live Casino</a></li>
             <li id="tab6" onclick="LoadCasino()"><a href="#tabs-6">Casino</a></li>
-            <li id="tab7" onclick="LoadKeno()"><a href="#tabs-7">Keno</a></li>
-            <li id="tab8" onclick="LoadGoldDeluxe()"><a href="#tabs-8">Gold Deluxe</a></li>
+            <li id="tab8" onclick="LoadKeno()"><a href="#tabs-8">Keno</a></li>
+            <li id="tab12" onclick="LoadGoldDeluxe()"><a href="#tabs-12">Gold Deluxe</a></li>
 
             @foreach (var tab in visibleTabs)
             {
@@ -53,9 +53,9 @@
         <div id="tabs-2">
             @RenderSection("Racing", false)
         </div>
-        <div id = "tabs-3" >
+        <div id = "tabs-5" >
             <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
-            <div><iframe id = "virtualsports" width="100%" height="450px" frameborder="0" src=""></iframe></div>
+            <div><iframe id = "product-5" width="100%" height="450px" frameborder="0" src=""></iframe></div>
         </div>
         <div id = "tabs-4" >
             @RenderSection("LiveCasino", false)
@@ -63,10 +63,10 @@
         <div id="tabs-6">
             @RenderSection("Casino", false)
         </div>
-        <div id = "tabs-7" >
+        <div id = "tabs-8" >
             @RenderSection("Keno", false)
         </div>
-        <div id="tabs-8">
+        <div id="tabs-12">
             @RenderSection("GoldDeluxe", false)
         </div>
 
@@ -126,8 +126,8 @@
 
             if (custInfo.hideGoldDeluxe)
             {
-                $('#tab8').remove();
-                $('#tabs-8').remove();
+                $('#tab12').remove();
+                $('#tabs-12').remove();
             }
 
             $('#tabs').tabs({ selected: index });
