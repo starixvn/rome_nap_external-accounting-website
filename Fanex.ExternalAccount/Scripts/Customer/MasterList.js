@@ -388,7 +388,7 @@
             }
         };
     }
-    
+
     if (has3rdParty)
         itemsMaster.separator2 = "-----";
     itemsMaster.editInfo = {
@@ -397,7 +397,11 @@
         callback: function (key, opt) {
             Fanex.ExtAcc.Customer.UserId = custId;
             Fanex.ExtAcc.Customer.IsMultiple = false;
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 500, 460, false);
+            Fanex.ExtAcc.Form.Show(
+                resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                500,
+                Fanex.ExtAcc.Customer.GetPopupHeight(300, 580),
+                false);
         }
     };
     itemsMaster.changePassword = {
@@ -406,7 +410,12 @@
         callback: function (key, opt) {
             Fanex.ExtAcc.Customer.UserId = custId;
             Fanex.ExtAcc.Customer.IsMultiple = false;
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 415, 400, false);
+            Fanex.ExtAcc.Form.Show(
+                resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                415,
+                Fanex.ExtAcc.Customer.GetPopupHeight(330, 400),
+                false, 
+                false);
         }
     };
 
@@ -428,7 +437,8 @@
                     resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?' + $.param(params)),
                     'Reset security code: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                     650,
-                    500,
+                    Fanex.ExtAcc.Customer.GetPopupHeight(300, 500),
+                    false,
                     false);
             }
         };
@@ -441,7 +451,13 @@
             callback: function (key, opt) {
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 600, 250, false, false, 1);
+                Fanex.ExtAcc.Form.Show(
+                    resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                    600,
+                    250,
+                    false,
+                    false,
+                    1);
             }
         };
     }
@@ -731,7 +747,7 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
     if (rows.length > 0) {
         this.hasSecurityCode = rows[0].UplineHasSecurityCode || rows[0].HasSecurityCode;
     }
-    
+
     Fanex.ExtAcc.Customer.HideAllbet = len > 0 ? (parentItem.HideAllBetUpline || !parentItem.SyncedAllBetUpline) : Fanex.ExtAcc.Customer.HideAllbet;
     Fanex.ExtAcc.Customer.HideVoidbridge = len > 0 ? (parentItem.HideVoidBridgeUpline || !parentItem.SyncedVoidBridgeUpline) : Fanex.ExtAcc.Customer.HideVoidbridge;
     Fanex.ExtAcc.Customer.HideNG2 = len > 0 ? (parentItem.HideNG2Upline || !parentItem.SyncedNG2Upline) : Fanex.ExtAcc.Customer.HideNG2;
@@ -870,8 +886,11 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
     options = {
         columns: this.DataFields,
         bodyRows: bodyRows,
-        gridExpandHeight: 165,
-        numberOfFrozenColumn: 6,
+        autoCalculateGridExpandHeight: true,
+        numberOfFrozenColumn: isMobile.phone ? 3 : 6,
+        bodyRowHeight: isMobile.phone ? 28 : 25,
+        fullHeight: !isMobile.phone,
+        gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
         customizeHeader: true,
         groupHeaderRows: groupHeader,
         highlightFrozenWidth: 2,
@@ -887,7 +906,7 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
                 Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
             }
         },
-        marginRight: 2,
+        marginRight: 12,
         showDistinctRow: false,
         allowTruncate: true
     };
@@ -896,11 +915,10 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
 
     $('#customerListGrid').css('visibility', 'visible');
 
-    $('#breadcrumbs').empty();
-
-    $('#breadcrumbs').append('<a href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList(" + Fanex.ExtAcc.Customer.directSuperId + ")" + '">' + 'Super' + '</a>');
-
-    $('#breadcrumbs').show();
+    $('#breadcrumbs')
+        .empty()
+        .append('<div class="level-line"></div><div class="level-active"><a  href="' + "javascript:Fanex.ExtAcc.Customer.GetSuperList(" + Fanex.ExtAcc.Customer.directSuperId + ")" + '">' + 'Super' + '</a></div>')
+        .show();
 
     Fanex.ExtAcc.OnResize = function () {
         try {

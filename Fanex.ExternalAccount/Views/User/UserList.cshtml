@@ -1,28 +1,29 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using Fanex.ExternalAccount.DTO.UserControl
 <link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />
-<div id='jqWidget' style="background-color: #fff">
-    <div class="bgTitle titleForm">
-        <div style="float: left; margin: 5px; vertical-align: middle;">
+<div id='jqWidget'>
+    <div class="page-title">
+        <div class="pull-left">
             User Management
         </div>
-        <div style="float: right; margin: 2px">
-            <input type="button" id="jqbuttonAddUser" value="Add New User" class="button-add" />
-            <input type="button" id="jqbuttonAddExistUser" value="Add Existing User" class="button-add" />
+        <div class="pull-right">
+            <button id="jqbuttonAddUser" class="btn -add"><span class="icon-add"></span> Add New User</button>
+            <button id="jqbuttonAddExistUser" class="btn -add"><span class="icon-add"></span> Add Existing User</button>                     
         </div>
+        <div class="pull-right filter-user"><span class="icon-filter active"></span></div>  
     </div>
-    <div class="bgTitle titleSearch">
-        <div class="searchBar">
-            <div style="float: left; margin-right: 5px; margin-top: 5px">
+    <div class="search-form filterbox">
+        <div class="form-group">
+            <label class="label">
                 @ViewLang.Username
-            </div>
-            <div style="float: left">
-                <input id="Usernames" type="text" class="usernameInput" />
-            </div>
-            <div style="float: left; margin-left: 20px; margin-top: 5px">
+            </label>
+            <input id="Usernames" type="text" class="usernameInput" />
+        </div>
+        <div class="form-group">
+            <label class="label">
                 @ViewLang.Group
-            </div>
-            <div id="userGroup" style="float: left; margin-left: 5px">
+            </label>
+            <div id="userGroup" class="user-group pull-left">
                 <select id="GroupIDs" class="usernameInput group">
                     @{
                         var CurrentSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
@@ -37,29 +38,23 @@
                     }
                 </select>
             </div>
-            <div style="float: left; margin-left: 10px;">
-                <input id="btnSearch" type="button" value="Submit" onclick="Fanex.ExtAcc.User.Search()" />
-            </div>
+            
         </div>
-        <div style="float: right; margin: 8px;">
-            <div style="float: left; font-weight: bold">
-                Active User:&nbsp;
-            </div>
-            <div style="float: left; font-weight: bold" id="activeUsers">
-            </div>
-            <div style="float: left; margin: 0px 10px 0px 10px; color: #C9C9C9">
-                |</div>
-            <div style="float: left; font-weight: bold">
-                Inactive User:&nbsp;
-            </div>
-            <div style="float: left; font-weight: bold" id="inActiveUsers">
-            </div>
+        <div class="form-group">
+            <input id="btnSearch" class="btn -submit" type="button" value="Submit" onclick="Fanex.ExtAcc.User.Search()" />
         </div>
     </div>
-    <div id="mainGrid" style="margin: 0px 3px 0px 3px">
-        <div style="position: absolute" id="jqgrid" class="removeRadius freegrid content-grid">
+    <div class="statistic bold">
+        <span>Active User:</span>
+        <span id="activeUsers"></span>
+        <span>|</span>
+        <span>Inactive User:</span>
+        <span id="inActiveUsers"></span>
+    </div>
+    <div id="mainGrid">
+        <div id="jqgrid" class="removeRadius freegrid content-grid">
         </div>    
-        <div id="msgNoinfo">
+        <div id="msgNoinfo" class="no-info">
             There is no data.</div>
     </div>
     @Html.AntiForgeryToken()

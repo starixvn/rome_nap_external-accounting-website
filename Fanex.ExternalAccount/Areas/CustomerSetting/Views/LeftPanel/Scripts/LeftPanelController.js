@@ -68,7 +68,7 @@ function GetDownline(custId, pageIndex) {
             $('#downlines').scrollTop(0);
         }
 
-        $('#downlines').css('height', (pages.length > 1 ? '178px' : '208px'));
+        $('#downlines').css('height', '240px');
 
         if (pages && pages.length > 1) {
             var timeout = setTimeout(function () {

@@ -56,7 +56,8 @@ Fanex.ExtAcc.DailyWinLoss = {
 
         $('#exporttoexcel').click(function () {
             var params = "date=" + $this.date + "&viewlevel=" + ($this.viewlevel + 1) + '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
-            document.location.href = resolveClientUrl("DailyWinLoss/GetExportToExcel?") + params;
+            var url = resolveClientUrl("DailyWinLoss/GetExportToExcel?") + params;
+            top.exportExcel(url, document);
         });
 
         $('#tabSuper').click(function (e) {
@@ -108,22 +109,7 @@ Fanex.ExtAcc.DailyWinLoss = {
             }
         });
 
-        $('#btnHideMG').click(function (e) {
-            if (!$this.hidedMargin) {
-                $('#btnHideMG').val('Show Margin');
-                $this.hidedMargin = true;
-                $("#jqgrid").fanexGrid("hideColumns", $this.gridOptions, [12, 14, 16, 18]);
-                $('#HeaderWinlossMargin').html('Win/Loss');
-            } else {
-                $('#btnHideMG').val('Hide Margin');
-                $this.hidedMargin = false;
-                $("#jqgrid").fanexGrid("showColumns", $this.gridOptions, [12, 14, 16, 18]);
-                $('#HeaderWinlossMargin').html('Win/Loss & Margin');
-            }
-        });
-
         $this.groupName = $('#selectedGroupName').html();
-        var source = [];
 
         $('#txtUserName').keypress(function (e) {
             if (typeof e == 'undefined') e = window.event;
@@ -142,12 +128,23 @@ Fanex.ExtAcc.DailyWinLoss = {
             }
         });
 
-        Fanex.ExtAcc.OnResize = function () {
-            try {
-                $("#jqgrid").fanexGrid("resizeGrid");
-            }
-            catch (err) { }
-        };
+        $(".icon-filter").click($this.showHideFilter);
+
+        Fanex.ExtAcc.OnResize = $this.resizeReportGrid;
+    },
+
+    hideFilter: false,
+    showHideFilter: function () {
+        if ($this.hideFilter) {
+            $(".icon-filter").addClass("active");
+            $(".filterbox").removeClass("hide");
+        } else {
+            $(".icon-filter").removeClass("active");
+            $(".filterbox").addClass("hide");
+        }
+
+        $this.resizeReportGrid();
+        $this.hideFilter = !$this.hideFilter;
     },
     ToggleTabs: function (statusSAg, statusMAg, statusAg, status) {
         $('#tabSuper').css('display', statusSAg);
@@ -170,27 +167,30 @@ Fanex.ExtAcc.DailyWinLoss = {
         if (this.viewlevel >= 4) {
             this.srecommend = this.custId;
             this.ToggleTabs('none', 'none', 'none', 4);
+            $('.level-line').css('display', 'none');
         } else if (this.viewlevel == 3) {
             this.mrecommend = this.custId;
             this.ToggleTabs('block', 'none', 'none', 3);
             $("#tabSuper").attr("class", "tabActiveSuper");
+            $('.level-line').css('display', 'block');
         } else if (this.viewlevel == 2) {
             this.recommend = this.custId;
             this.ToggleTabs('block', 'block', 'none', 2);
             $("#tabSuper").attr("class", "tabDisableSuper");
             $("#tabMaster").attr("class", "tabActive");
+            $('.level-line').css('display', 'block');
         } else {
             this.ToggleTabs('block', 'block', 'block', 1);
             $("#tabSuper").attr("class", "tabDisableSuper");
             $("#tabMaster").attr("class", "tabDisable");
             $("#tabAgent").attr("class", "tabActive");
+            $('.level-line').css('display', 'block');
         };
         $('#headlineDaily').css("visibility", "visible");
         $('#headlineDaily').css("display", "block");
     },
     GetDownlineDailyWinLoss: function (custId) {
         this.custId = custId;
-        //$("#txtUserName").val('');
         this.username = '';
         this.Databind();
     },
@@ -199,55 +199,76 @@ Fanex.ExtAcc.DailyWinLoss = {
         this.mrecommend = 0;
         this.recommend = 0;
         this.custId = 0;
-        this.username == '';
+        this.username = '';
         this.viewlevel = 4;
+    },
+
+    resizeReportGrid: function () {
+        try {
+            $("#jqgrid").fanexGrid("resizeGrid");
+        }
+        catch (err) { }
     },
     CalculatePercentGrandTotal: function (value1, value2) {
         value1 = String(value1).replace(/,/g, '');
         value2 = String(value2).replace(/,/g, '');
-        if (value2 != 0 && value2 != '0.00') {
-            return numeral(parseFloat(value1) / parseFloat(value2) * 100).format('0,0.00');
-        }
-        else {
+
+        if (value2 == 0 || value2 == '0.00') {
             return '0.00';
         }
+
+        return numeral(parseFloat(value1) / parseFloat(value2) * 100).format('0,0.00');
     },
     RenderUsernameColumn: function (cell) {
         if (cell == null || cell.Value.Username == 'Grand Total' || $this.viewlevel < 2) {
             return '<div class="text-truncate" style="line-height: 22px; text-align: left; padding-left: 3px" title="' + cell.Value.Username + '">' + cell.Value.Username + '</div>';
         }
-        else {
-            var func = "javascript: Fanex.ExtAcc.DailyWinLoss.GetDownlineDailyWinLoss('" + cell.Value.CustId + "')";
-            return html = '<div style="line-height: 22px; text-align: left;">' +
-                                '<a class="text-truncate" style="text-decoration: none; margin: 0" href="' + func + '" title="' + cell.Value.Username  + '">' + cell.Value.Username + '</a>' +
-                           '</div>';
-        }
+
+        var func = "javascript: Fanex.ExtAcc.DailyWinLoss.GetDownlineDailyWinLoss('" + cell.Value.CustId + "')";
+        return html = '<div style="line-height: 22px; text-align: left;">' +
+            '<a class="text-truncate" style="text-decoration: none; margin: 0" href="' + func + '" title="' + cell.Value.Username + '">' + cell.Value.Username + '</a>' +
+            '</div>';
     },
     defaultColumns: [
-        { HeaderText: 'No.', Name: 'No', Width: 40, HeaderAlign: 'center', CellAlign: 'right' },
-        {
-            HeaderText: 'Username', Name: 'Username', Width: 130, HeaderAlign: 'center',
-            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }
-        },
-        { HeaderText: 'Total Turnover', Name: 'TotalTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Company', Name: 'ComTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'ComTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Super', Name: 'SAgTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'SAgTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Master', Name: 'MAgTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'MAgTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Agent', Name: 'AgTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'AgTOPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Company', Name: 'ComWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'ComWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Super', Name: 'SAgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'SAgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Master', Name: 'MAgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'MAgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Agent', Name: 'AgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: '%', Name: 'AgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
+       { HeaderText: 'No.', Name: 'No', Width: 40, HeaderAlign: 'center', CellAlign: 'right' },
+       {
+           HeaderText: 'Username', Name: 'Username', Width: 130, HeaderAlign: 'center',
+           CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }
+       },
+       { HeaderText: 'Total Turnover', Name: 'TotalTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: 'Company', Name: 'ComTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'ComTOPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: 'Super', Name: 'SAgTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'SAgTOPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: 'Master', Name: 'MAgTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'MAgTOPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: 'Agent', Name: 'AgTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'AgTOPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: 'Company', Name: 'ComWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'ComWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: 'Super', Name: 'SAgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'SAgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: 'Master', Name: 'MAgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'MAgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: 'Agent', Name: 'AgWinlost', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
+       { HeaderText: '%', Name: 'AgWinlostPercent', Width: 100, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
     ],
     Render: function () {
+        var winLossMarginHeader = '<div id="HeaderWinlossMargin" class="txt-main">' +
+                                        ($this.hidedMargin ? 'Win/Loss' : 'Win/Loss & Margin') + '</div>\
+                                   <div class="btn-margin-section">\
+                                        <span class="txt-margin">Margin</span>\
+                                        <label class="switch toggle-margin">\
+                                            <span class="toggle-margin-' + ($this.hidedMargin ? 'off' : 'on') + '" id="btn-toogle"></span>\
+                                            <span class="slider round"></span>\
+                                        </label>\
+                                   </div>';
+
+        var level = $this.viewlevel == 4 ? "Super" :
+             $this.viewlevel == 3 ? "Master" :
+              $this.viewlevel == 2 ? "Agent" :
+              "Member";
+
         var gridOption = {
             customizeHeader: true,
             groupHeaderRows: [
@@ -257,15 +278,21 @@ Fanex.ExtAcc.DailyWinLoss = {
                                 { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
                                 { HeaderText: "Total Turnover", Name: "TotalTO", MergeRowNumber: 2 },
                                 { HeaderText: "Turnover & Position Taking", Name: "ComTO", MergeColNumber: 8 },
-                                { HeaderText: '<div id="HeaderWinlossMargin">Win/Loss & Margin</div>', Name: "ComWinlost", MergeColNumber: 8 }
-                            ]
+                                { HeaderText: winLossMarginHeader, Name: "ComWinlost", MergeColNumber: 8 }
+                        ]
                     }
             ],
             columns: $this.defaultColumns,
-            numberOfFrozenColumn: 3,
+            numberOfFrozenColumn: isMobile.phone ? 2 : 3,
+            fullHeight: !isMobile.phone,
+            gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
+            autoCalculateGridExpandHeight: true,
+            showTitle: true,
+            titleInfo: {
+                text: level + " Daily Win Loss on " + $('#dtpWinLossDate').val()
+            },
             showFooter: true,
-            gridExpandHeight: 175,
-            autoResizeColumn: true,
+            //autoResizeColumn: true,
             showPager: true,
             pagerOption: {
                 itemsPerPageArray: [50, 100, 500],
@@ -274,13 +301,18 @@ Fanex.ExtAcc.DailyWinLoss = {
                 itemsPerPage: 50
             },
             highlightFrozenWidth: 2,
-            marginRight: 2,
+            marginRight: 10,
             bottomBorderWidth: 0,
             showDistinctRow: false,
             allowTruncate: true,
             columnsNeedHide: [12, 14, 16, 18],
             showColumnsShowHide: !$this.hidedMargin
         };
+
+        if (isMobile.phone) {
+            gridOption.pagerOption.numDisplayEntries = 2;
+            gridOption.pagerOption.numEdgeEntries = 1;
+        }
 
         // For Summary Footer
         this.SumTotalTO = 0;
@@ -333,7 +365,7 @@ Fanex.ExtAcc.DailyWinLoss = {
 
         gridOption.bodyRows = bodyData;
         gridOption.pagerOption.totalItem = this.totalRows;
-                
+
         //// Asign Footer Data
         var footerData = [];
         footerData.push(
@@ -361,7 +393,30 @@ Fanex.ExtAcc.DailyWinLoss = {
             ]
         });
         gridOption.footerRows = footerData;
-        return gridOption;
+
+        setPagerOptionOnMobile(gridOption);
+
+        $this.gridOptions = gridOption;
+
+        $("#jqgrid").fanexGrid(gridOption);
+        $('.toggle-margin').click($this.showHideMarginColumns);
+
+        workaroundForGridOnPhone();
+    },
+    showHideMarginColumns: function () {
+        if ($this.hidedMargin) {
+            $("#jqgrid").fanexGrid("showColumns", $this.gridOptions, [12, 14, 16, 18]);
+            $('#HeaderWinlossMargin').html('Win/Loss & Margin');
+            $('#btn-toogle').removeClass().addClass('toggle-margin-on');
+            $this.hidedMargin = false;
+        } else {
+            $("#jqgrid").fanexGrid("hideColumns", $this.gridOptions, [12, 14, 16, 18]);
+            $('#HeaderWinlossMargin').html('Win/Loss');
+            $('#btn-toogle').removeClass().addClass('toggle-margin-off');
+            $this.hidedMargin = true;
+        }
+
+        $('.toggle-margin').click($this.showHideMarginColumns);
     },
     Databind: function () {
         if ($("#txtUserName").val() != '') {
@@ -420,13 +475,16 @@ Fanex.ExtAcc.DailyWinLoss = {
                 $('#mainGrid').css('visibility', $this.totalRows < 1 ? 'hidden' : 'visible');
                 $('#mainGrid').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#headlineDaily').css('display', $this.totalRows < 1 ? 'none' : 'block');
-                $('#btnHideMG').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#exporttoexcel').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#msgNoinfo').css('display', $this.totalRows < 1 ? 'block' : 'none');
 
                 if ($this.totalRows > 0) {
-                    $this.gridOptions = $this.Render();
-                    $("#jqgrid").fanexGrid($this.gridOptions);
+                    $this.Render();
+                    $("#exporttoexcel").removeClass("hide");
+                    $(".groupBack").removeClass("hide");
+                } else {
+                    $("#exporttoexcel").addClass("hide");
+                    $(".groupBack").addClass("hide");
                 }
 
                 Fanex.ExtAcc.UnBlockUI();
@@ -434,7 +492,7 @@ Fanex.ExtAcc.DailyWinLoss = {
             error: function () {
                 Fanex.ExtAcc.UnBlockUI();
             }
-        })
+        });
     }
 };
 

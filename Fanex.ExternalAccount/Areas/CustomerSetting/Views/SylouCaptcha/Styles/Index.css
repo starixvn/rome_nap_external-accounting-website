@@ -1,32 +1,4 @@
-﻿@font-face {
-    font-family: Roboto;
-    src: url(../../../../../../App_Themes/Fonts/Roboto/Roboto-Regular.ttf);
-}
-
-@font-face {
-    font-family: "Roboto Light";
-    src: url(../../../../../../App_Themes/Fonts/Roboto/Roboto-Light.ttf);
-}
-
-@font-face {
-    font-family: "Roboto Bold";
-    src: url(../../../../../../App_Themes/Fonts/Roboto/Roboto-Bold.ttf);
-}
-
-@font-face {
-    font-family: "Roboto Medium";
-    src: url(../../../../../../App_Themes/Fonts/Roboto/Roboto-Medium.ttf);
-}
-
-
-body
-{
-    margin: 0px;
-    padding: 0px;
-}
-
-#popup
-{
+﻿#popup {
     background: url("Images/pbg.jpg") repeat-x scroll 0 0 transparent;
     border: 1px solid #FFFFFF;
     border-radius: 5px 5px 5px 5px;
@@ -39,8 +11,7 @@ body
     margin-left: 30%;
 }
 
-.ptitle
-{
+.ptitle {
     background: url("Images/ptitlebg.jpg") repeat-x scroll 0 0 transparent;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -56,23 +27,20 @@ body
     width: 365px;
 }
 
-.atticon
-{
+.atticon {
     background: url("Images/atticon.png") no-repeat scroll 0 0 transparent;
     float: left;
     height: 16px;
     width: 16px;
 }
 
-.pcon
-{
+.pcon {
     font-family: "Roboto",Verdana,Geneva,sans-serif;
     font-size: 11px;
     padding: 10px 30px 30px;
 }
 
-.pbutton
-{
+.pbutton {
     background: url("Images/bt_bg.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
     float: right;
@@ -92,71 +60,68 @@ body
     background: url("Images/sprite.gif") no-repeat scroll 0 -63px transparent;
     height: 9px;
     width: 318px;
-    background-color: none;
+    
 }
 .recaptchatable .recaptcha_r2_c1 {
     background: url("Images/sprite.gif") no-repeat scroll -18px 0 transparent;
     height: 57px;
     width: 9px;
-    background-color: none;
+    
 }
 .recaptchatable .recaptcha_r2_c2 {
     background: url("Images/sprite.gif") no-repeat scroll -27px 0 transparent;
     height: 57px;
     width: 9px;
-    background-color: none;
+    
 }
 .recaptchatable .recaptcha_r3_c1 {
     background: url("Images/sprite.gif") no-repeat scroll 0 0 transparent;
     height: 63px;
     width: 9px;
-    background-color: none;
+    
 }
 .recaptchatable .recaptcha_r3_c2 {
     background: url("Images/sprite.gif") no-repeat scroll -14px -57px #DBDBDB;
     height: 6px;
     width: 300px;
-    background-color: none;
+    
 }
 .recaptchatable .recaptcha_r3_c3 {
     background: url("Images/sprite.gif") no-repeat scroll -9px 0 transparent;
     height: 63px;
     width: 9px;
-    background-color: none;
+    
 }
 .recaptchatable .recaptcha_r4_c1 {
     background: url("Images/sprite.gif") no-repeat scroll -43px 0 transparent;
     height: 49px;
     width: 171px;
-    background-color: none;
+    
 }
 .recaptchatable .recaptcha_r4_c2 {
     background: url("Images/sprite.gif") no-repeat scroll -36px 0 transparent;
     height: 57px;
     width: 7px;
-    background-color: none;
+    
 }
 .recaptchatable .recaptcha_r4_c4 {
     background: url("Images/sprite.gif") no-repeat scroll -214px 0 transparent;
     height: 57px;
     width: 97px;
-    background-color: none;
+    
 }
 .recaptchatable .recaptcha_r7_c1 {
     background: url("Images/sprite.gif") no-repeat scroll -43px -49px transparent;
     height: 8px;
     width: 171px;
-    background-color: none;
+    
     
 }
 .recaptchatable .recaptcha_r8_c1 {
     background: url("Images/sprite.gif") no-repeat scroll -43px -49px transparent;
     height: 8px;
     width: 25px;
-    background-color: none;
-     <!--[if IE]>
-    background: url("Images/sprite.gif") no-repeat scroll -43px -51px transparent;
-    <![endif]-->
+    
 }
 .recaptchatable .recaptcha_image_cell center img {
     height: 57px;
@@ -268,20 +233,20 @@ body
     background: url("Images/sprite.gif") no-repeat scroll -31px -39px transparent;
     height: 16px;
     width: 25px;
-    background-color: none;
+    
 }
 .recaptchatable .recaptcha_r7_c1_ie {
     background: url("Images/sprite.gif") no-repeat scroll -43px -52px transparent;
     height: 8px;
     width: 171px;
-    background-color: none;
+    
     
 }
 .recaptchatable .recaptcha_r8_c1_ie {
     background: url("Images/sprite.gif") no-repeat scroll -43px -52px transparent;
     height: 8px;
     width: 25px;
-    background-color: none;
+    
 }
 
 .recaptcha_response_field_label

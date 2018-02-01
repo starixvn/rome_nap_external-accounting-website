@@ -24,6 +24,9 @@ namespace Fanex.ExternalAccount
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
     using Service.Impl.Login;
+    using Fanex.ExternalAccount.UI.Helpers;
+    using System.Web;
+    using System.Configuration;
 
     /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
      visit http://go.microsoft.com/?LinkId=9394801*/
@@ -90,19 +93,13 @@ namespace Fanex.ExternalAccount
             RegisterRoutes(RouteTable.Routes);
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();            
             AutoMapperConfiguration.Configure();
-          
+            StaticResources.Init();
+
             var logger = new CasinoAPILogger();
             var manager = new Sunplus.Libraries.APILogger.APILogManager(logger);
             string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
             manager.Register(typeof(CasinoLibrary.SBAgent.Customer), pattern);
             manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
-
-            BundleTable.Bundles.EnableCommonBundle();
-            BundleTable.Bundles.EnableLoginBundle();
-            BundleTable.Bundles.EnableExternalGroupBundle();
-            BundleTable.Bundles.EnableDailyWinLossBundle();
-            BundleTable.Bundles.EnableStatementBundle();
-            BundleTable.Bundles.EnableWinLossDetailBundle(); 
 
             var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
             defaultCaptchaManager.ImageUrlFactory = (helper, pair) => ImageUrlFactory(defaultCaptchaManager, helper, pair);
@@ -142,6 +139,14 @@ namespace Fanex.ExternalAccount
             ExceptionHandler.Handle(Server.GetLastError());
         }
 
+        protected void Application_BeginRequest()
+        {
+            if (ConfigurationManager.AppSettings["Environment"] == "UAT")
+            {
+                Context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            }
+        }
+
         protected void Application_AcquireRequestState(object sender, EventArgs e)
         {
             try
@@ -156,7 +161,7 @@ namespace Fanex.ExternalAccount
                         userService.Logout(CurrentSession.Instance.OnUserId, CurrentSession.Instance.UserName);
                         Session.Abandon();
 
-                        Response.RedirectPermanent("~/Account/Login");
+                        Response.Redirect("~/Account/Login");
                     }
                 }
             }

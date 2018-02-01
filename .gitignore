@@ -31,3 +31,6 @@ Fanex.ExternalAccount/Fanex.ExternalAccount.UI.Publish.xml
 .vs/*
 packages/*
 Fanex.ExternalAccount.Controllers/Fanex.ExternalAccount.Controllers.csproj.user
+*.css
+
+*/assets/bundles/**

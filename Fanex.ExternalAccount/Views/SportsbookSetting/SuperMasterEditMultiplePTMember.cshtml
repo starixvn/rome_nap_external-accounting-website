@@ -1,9 +1,9 @@
 ﻿@using Fanex.PTEngine
-<link href="@Url.Content("~/Content/Customer/Customer.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Scripts/ContextMenu/jquery.contextMenu.css")" rel="stylesheet" type="text/css" />
 <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
-<link href="@Url.Content("~/Content/Customer/PTEngine.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/assets/styles/pages/customer/pt-engine.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/assets/styles/pages/customer/customer-setting.css")" rel="stylesheet" type="text/css" />
 <div style="width: 852px; margin: 2px 0 0 2px">
 <div id="errMsg" style="display: none;" class="successMsg">
 </div>
@@ -12,7 +12,7 @@
 <div id="names" style="display: none;" class="names">
 </div>
 <div class="floatR">
-    <input class="buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
+    <input class="btn -submit buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
 </div>
 <div id="statusHeader" class="headerPositionTaking" style="border-top: 1px solid #CCC">
     Status</div>
@@ -41,7 +41,7 @@
     </div>
 </div>
 <div class="floatR">
-    <input class="buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
+    <input class="btn -submit buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
 </div>
     @Html.AntiForgeryToken()
 </div>

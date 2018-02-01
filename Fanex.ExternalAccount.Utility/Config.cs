@@ -252,6 +252,14 @@ namespace Fanex.ExternalAccount.Utilities
             }
         }
 
+        public static string IgnoreRecheckinCustomers
+        {
+            get
+            {
+                return GetValue("IgnoreRecheckinCustomers");
+            }
+        }
+
         private static string GetValue(string key)
         {
             return ConfigurationManager.AppSettings[key];

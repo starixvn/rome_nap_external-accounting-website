@@ -160,17 +160,19 @@ Fanex.ExtAcc.User = {
             { HeaderText: 'Group Name', Name: 'GroupName', Width: 115 },
             { HeaderText: 'Creator', Name: 'Creator', Width: 120 },
             { HeaderText: 'Created Date', Name: 'CreatedDate', CellAlign: 'center', Width: 160 },
-            { HeaderText: 'Permission', Name: 'Permission', CellAlign: 'center', Width: 75,
+            {
+                HeaderText: 'Permission', Name: 'Permission', CellAlign: 'center', Width: 75,
                 CustomCellRender: function (cell) {
                     var userId = cell.Value.UserID;
                     var username = cell.Value.Username;
                     var groupName = cell.Value.GroupName;
                     var onclick = "javascript:Fanex.ExtAcc.User.ShowPermission(" + userId + ",'" + username + "','" + groupName + "')";
 
-                    return '<div class="edit" onclick="' + onclick + '"></div>';
+                    return '<div class="icon-clipboard-text" onclick="' + onclick + '"></div>';
                 }
             },
-            { HeaderText: 'Active', Name: 'Enabled', CellAlign: 'center', Width: 50,
+            {
+                HeaderText: 'Active', Name: 'Enabled', CellAlign: 'center', Width: 50,
                 CustomCellRender: function (cell) {
                     var style = cell.Value.Enabled == true ? "menuActive" : "menuInactive";
                     var userId = cell.Value.UserID;
@@ -180,9 +182,10 @@ Fanex.ExtAcc.User = {
                     return '<div id="' + userId + '" class="' + style + '" onclick="' + onclick + '"></div>';
                 }
             },
-            { HeaderText: 'Password', Name: 'ResetPwd', CellAlign: 'center', Width: 70,
+            {
+                HeaderText: 'Password', Name: 'ResetPwd', CellAlign: 'center', Width: 70,
                 CustomCellRender: function (cell) {
-                    var style = "menuResetPwd";
+                    var style = "icon-refresh";
                     var userId = cell.Value.UserID;
                     var onclick = "javascript:Fanex.ExtAcc.User.ShowResetPwd(" + userId + ", false, '" + cell.Value.Username + "')";
 
@@ -203,20 +206,23 @@ Fanex.ExtAcc.User = {
         $this.Search($this.IsFirstLoad);
 
         $('#jqbuttonAddUser').bind('click', function () {
-            Fanex.ExtAcc.Form.Show(resolveClientUrl("User/AddUser"), $.parseJSON(menuTitles).CreateUser, 400, 300, false);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl("User/AddUser"), $.parseJSON(menuTitles).CreateUser, 400, Fanex.ExtAcc.User.GetPopupHeight(300, 340), false);
         });
 
         $('#jqbuttonAddExistUser').bind('click', function () {
             Fanex.ExtAcc.Form.Show(resolveClientUrl("User/AddExistUser"), $.parseJSON(menuTitles).CreateExistUser, 400, 200, false);
         });
 
-        Fanex.ExtAcc.OnResize = function () {
-            try {
-                $('#jqgrid').fanexGrid('resizeGrid');
-            }
-            catch (err) {
-            }
-        }
+        Fanex.ExtAcc.OnResize = $this.resizeReportGrid;
+        $(".icon-filter").click($this.showHideFilter);
+    },
+
+    GetPopupHeight: function (landscapeHeight, portraitHeight) {
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+            landscapeHeight :
+             portraitHeight;
+
+        return height;
     },
 
     RenderGrid: function (params) {
@@ -245,15 +251,15 @@ Fanex.ExtAcc.User = {
                         { Name: 'Permission', Value: rows[i] },
                         { Name: 'Enabled', Value: rows[i] },
                         { Name: 'ResetPwd', Value: rows[i] }
-                    ]
+                        ]
                     });
                 }
 
                 Fanex.ExtAcc.User.options = {
                     columns: Fanex.ExtAcc.User.DataFields,
                     bodyRows: bodyRows,
-                    gridExpandHeight: 130,
-                    marginRight: 2,
+                    autoCalculateGridExpandHeight: true,
+                    marginRight: 10,
                     showDistinctRow: false,
                     allowTruncate: true
                 };
@@ -311,7 +317,7 @@ Fanex.ExtAcc.User = {
             resolveClientUrl('User/EditUser/' + userId),
             title,
             400,
-            265,
+            300,
             false);
     },
 
@@ -343,7 +349,7 @@ Fanex.ExtAcc.User = {
             resolveClientUrl('User/' + (isOwner ? 'ResetPasswordOwner' : 'ResetPassword') + '/' + userId),
             title + ': <font color="#6dcff6">' + username + '</font>',
             415,
-            190,
+            280,
             false
             );
     },
@@ -361,10 +367,10 @@ Fanex.ExtAcc.User = {
             resolveClientUrl('User/GrantPermission'),
             'Grant Permission',
             520,
-            525,
+            Fanex.ExtAcc.User.GetPopupHeight(260, 525),
             false,
             null,
-            3,
+            0,
             null,
             params);
     },
@@ -372,7 +378,7 @@ Fanex.ExtAcc.User = {
     Add: function () {
         if (!Validators.validateInput($('#Username').val())) {
             $('#Username').focus();
-            Validators.showDown($('#Username').get(0), 'This field is required', 0, 10, 41, -10, 15);
+            Validators.showDown($('#Username').get(0), 'This field is required', 0, 10, 41, -10, 32);
             return false;
         }
 
@@ -432,7 +438,7 @@ Fanex.ExtAcc.User = {
     AddExist: function () {
         if (!Validators.validateInput($('#Username').val())) {
             $('#Username').focus();
-            Validators.showDown($('#Username').get(0), 'This field is required', 0, 10, 41, -10, 15);
+            Validators.showDown($('#Username').get(0), 'This field is required', 0, 10, 41, -10, 32);
             return false;
         }
 
@@ -540,36 +546,30 @@ Fanex.ExtAcc.User = {
     },
 
     ResetPwd: function (isOwner) {
+        var errorMessage = "";
+        var errorField;
+
         if ($('#Password').val().toString().search(/^[<\s\s*>]/) != -1) {
-            $('#Password').focus();
-            Validators.show($('#Password').get(0), 'Not allow HTML TAG');
+            errorField = $('#Password');
+            errorMessage = 'Password does not allow HTML TAG';
+        } else if (!Validators.validateInput($('#Password').val())) {
+            errorField = $('#Password');
+            errorMessage = 'Password is required';
+        } else if (!Validators.validateInput($('#confirmPwd').val())) {
+            errorField = $('#confirmPwd');
+            errorMessage = 'Confirm Password is required';
+        } else if ($('#confirmPwd').val() !== $('#Password').val()) {
+            errorField = $('#confirmPwd');
+            errorMessage = 'Confirm password is not matched';
+        }
+
+        if (errorMessage !== "") {
+            $("#err-message").html(errorMessage).removeClass("hide");
+            errorField.addClass("invalid-field").focus();
             return false;
         }
 
-        if ($('#confirmPwd').val().toString().search(/^[<\s\s*>]/) != -1) {
-            $('#confirmPwd').focus();
-            Validators.show($('#confirmPwd').get(0), 'Not allow HTML TAG');
-            return false;
-        }
-
-        if (!Validators.validateInput($('#Password').val())) {
-            $('#Password').focus();
-            Validators.showDown($('#Password').get(0), 'This field is required', 0, 10, 41, -10, 15);
-            return false;
-        }
-
-        if (!Validators.validateInput($('#confirmPwd').val())) {
-            $('#confirmPwd').focus();
-            Validators.show($('#confirmPwd').get(0), 'This field is required');
-            return false;
-        }
-        
-        if ($('#confirmPwd').val() !== $('#Password').val()) {
-            $('#confirmPwd').focus();
-            Validators.show($('#confirmPwd').get(0), 'Confirm password is not matched');
-            return false;
-        }
-
+        $("#err-message").addClass("hide");
         var params = new Object();
         params.userId = $('#UserID').val();
         params.pwd = $('#Password').val();
@@ -577,10 +577,7 @@ Fanex.ExtAcc.User = {
         $.ajax({ url: resolveClientUrl('User/' + (isOwner ? 'ResetPwdOwner' : 'ResetPwd')), data: params, type: 'POST' })
         .done(function (data) {
             if (!data.isSuccess) {
-                console.log($('#errMsg'));
-                $('table tr td div#errMsg').css('display', 'block');
-                $('table tr td div#errMsg').html(data.errorMessage.formatErrorMessage());
-
+                $("#err-message").html(data.errorMessage.formatErrorMessage()).removeClass("hide");
             }
             else {
                 Fanex.ExtAcc.Form.Close(false);
@@ -635,5 +632,25 @@ Fanex.ExtAcc.User = {
         if (this.dataTexts) {
             this.RenderGrid(params);
         }
+    },
+
+    resizeReportGrid: function () {
+        try {
+            $("#jqgrid").fanexGrid("resizeGrid");
+        }
+        catch (err) { }
+    },
+    hideFilter: false,
+    showHideFilter: function () {
+        if ($this.hideFilter) {
+            $(".icon-filter").addClass("active");
+            $(".filterbox").removeClass("hide");
+        } else {
+            $(".icon-filter").removeClass("active");
+            $(".filterbox").addClass("hide");
+        }
+
+        $this.resizeReportGrid();
+        $this.hideFilter = !$this.hideFilter;
     }
 };

@@ -27,7 +27,8 @@
         if (antiXSRFToken.length > 0) {
             token = antiXSRFToken[0].value;
         }
-        $http({ url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetDownlineList?custId=' + custId + '&pageIndex=1'),
+        $http({
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetDownlineList?custId=' + custId + '&pageIndex=1'),
             method: 'post',
             headers: { "X-Requested-With": "XMLHttpRequest", "__RequestVerificationToken": token }
         })
@@ -50,9 +51,7 @@
             }
 
             for (var i = 0; i < length; i++) {
-                var item = '<div class="downlineTitle percent50">' +
-                                '<a class="detail2" href="javascript:;" onclick="parent.Fanex.ExtAcc.ViewUser(\'' + users[i].text + '\', 1)">' + users[i].text + '</a>' +
-                            '</div>';
+                var item = '<a class="detail2 downlineTitle percent50" href="javascript:;" onclick="parent.Fanex.ExtAcc.ViewUser(\'' + users[i].text + '\', 1)">' + users[i].text + '</a>';
                 $('#downlines').append(item);
             }
 
@@ -70,7 +69,7 @@
                 $('#downlines').scrollTop(0);
             }
 
-            $('#downlines').css('height', (pages.length > 1 ? '178px' : '208px'));
+            $('#downlines').css('height', '240px');
 
             if (pages && pages.length > 1) {
                 var timeout = setTimeout(function () {

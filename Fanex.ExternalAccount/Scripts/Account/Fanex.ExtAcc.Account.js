@@ -31,7 +31,7 @@ Fanex.ExtAcc.Account = {
                 case 404:
                 case 500:
                     //if (!isLocal)
-                        //location.href = resolveClientUrl('Shared/Error');
+                    //location.href = resolveClientUrl('Shared/Error');
                     break;
                 default:
                     break;
@@ -40,14 +40,6 @@ Fanex.ExtAcc.Account = {
     },
 
     Init: function () {
-        $(window).resize(function () {
-            $('.groupChosen').height($(window).height() - 120);
-        });
-
-        $(document).resize(function () {
-            $('.groupChosen').height($(window).height() - 120);
-        });
-
         var interval = setInterval(function () {
             clearInterval(interval);
             Fanex.ExtAcc.Account.ResetLoginAttempt();
@@ -58,47 +50,112 @@ Fanex.ExtAcc.Account = {
         if (document.forms.length > 0) {
             $('#UserName').focus();
             document.forms[0].onsubmit = function () {
+                var errorMessage = "";
+                var errorField;
+
                 if ($('#UserName').val().toString().search(/^[<\s\s*>]/) != -1) {
-                    $('#UserName').focus();
-                    Validators.show($('#UserName').get(0), 'Not allow HTML TAG');
+                    errorField = $('#UserName');
+                    errorMessage = 'Username does not allow HTML TAG';
+                } else if ($('#Password').val().toString().search(/^[<\s\s*>]/) != -1) {
+                    errorField = $('#Password');
+                    errorMessage = 'Password does not allow HTML TAG';
+                } else if ($('#UserName').val() == '') {
+                    errorField = $('#UserName');
+                    errorMessage = 'Username is required';
+                } else if ($('#Password').val() == '') {
+                    errorField = $('#Password');
+                    errorMessage = 'Password is required';
+                }
+
+                if (errorMessage !== "") {
+                    $("#err-message").html(errorMessage).removeClass("hide");
+                    errorField.addClass("invalid-field").focus();
                     return false;
                 }
 
-                if ($('#Password').val().toString().search(/^[<\s\s*>]/) != -1) {
-                    $('#Password').focus();
-                    Validators.show($('#Password').get(0), 'Not allow HTML TAG');
-                    return false;
-                }
-                /*
-                if ($('#Captcha').val().toString().search(/^[<\s\s*>]/) != -1) {
-                $('#Captcha').focus();
-                Validators.show($('#Captcha').get(0), 'Not allow HTML TAG');
-                return false;
-                }*/
-
-                if ($('#UserName').val() == '') {
-                    $('#UserName').focus();
-                    Validators.show($('#UserName').get(0), 'This field is required');
-                    return false;
-                }
-
-                if ($('#Password').val() == '') {
-                    $('#Password').focus();
-                    Validators.show($('#Password').get(0), 'This field is required');
-                    return false;
-                }
-                /*
-                if ($('#Captcha').val() == '' || $('#Captcha').val().length < 4) {
-                $('#Captcha').focus();
-                Validators.show($('#Captcha').get(0), 'This field is required');
-                return false;
-                }*/
+                $("#err-message").addClass("hide");
+                $(".invalid-field").removeClass("invalid-field");
 
                 $('#Password').val($('#Password').val().ec($('#Code').val()).hc());
             };
         }
-    },
 
+        // Collapse/ expand header navigation
+        var iconNav = $("#iconNav");
+        var iconUserInfo = $("#iconUserInfo");
+        var sidebar = $("#sidebar");
+        var leftPanel = $("#leftSplitter");
+        var $this = this;
+
+        iconNav.on("click", function () {
+            if (iconUserInfo.hasClass('active')) {
+                leftPanel.removeClass("expand-leftpanel");
+                iconUserInfo.removeClass("active");
+                sidebar.addClass("expand-sidebar").show("fast");
+            }
+
+            if (!iconNav.hasClass('active')) {
+                sidebar.addClass("expand-sidebar").show("fast");
+                iconNav.addClass("active");
+
+            } else {
+                sidebar.show("fast", function () {
+                    sidebar.removeClass("expand-sidebar");
+                    iconNav.removeClass("active");
+                });
+            }
+        });
+
+        var hasMenu = isMobile.tablet ?
+            $(".main-menu .menu .hasChild") :
+            $("#sidebar .menu .hasChild");
+        hasMenu.on("click", function () {
+            var menu = $(this);
+            var submenu = $(this).siblings('.submenu');
+
+            if (menu.hasClass('active')) {
+
+                submenu.removeClass('show-submenu').addClass('hide-submenu');
+                menu.removeClass("active");
+
+            } else {
+                $(".submenu").removeClass('show-submenu').addClass('hide-submenu');
+                hasMenu.removeClass("active");
+
+                menu.addClass("active");
+                submenu.removeClass('hide-submenu').addClass('show-submenu');
+            }
+        });
+
+        $(".submenu .link").on("click", function () {
+            if (isMobile.tablet) {
+                var submenu = $(this).parent().parent();
+                submenu.removeClass('show-submenu').addClass('hide-submenu');
+                submenu.siblings(".hasChild").removeClass("active");
+            }
+
+            $this.collapseSidebar();
+        });
+
+        var widthDevice = $(window).width();
+        if (isMobile.phone || (widthDevice >= 768 && widthDevice <= 1600)) {
+            iconUserInfo.removeClass('active');
+        }
+
+    },
+    collapseSidebar: function () {
+        var iconNav = $("#iconNav");
+        var sidebar = $("#sidebar");
+
+        var widthDevice = top.$(top.window).width();
+        if (widthDevice <= 768) {
+            top.$("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
+            top.$("#sidebar").removeClass("expand-sidebar").addClass("collapse-sidebar");
+            top.$("#leftSplitter").removeClass("expand-leftpanel").addClass("collapse-leftpanel");
+            iconNav.removeClass("active");
+            top.$("#iconUserInfo").removeClass("active");
+        }
+    },
     GetValidateImage: function () {
         $("#imgCode").attr("src", resolveClientUrl('Images/Loading.gif'));
 
@@ -182,6 +239,5 @@ String.prototype.hc = function () {
 };
 
 $(document).ready(function () {
-    $('.groupChosen').height($(window).height() - 120);
     Fanex.ExtAcc.Account.Init();
 });

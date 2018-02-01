@@ -179,7 +179,8 @@ Fanex.ExtAcc.Function = {
             { HeaderText: 'Description', Name: 'FuncDesc', Width: 245, AllowTruncate: true },
             { HeaderText: 'Order', Name: 'DisplayOrder', Width: 50, CellAlign: 'center' },
             { HeaderText: 'Modified Date', Name: 'ModifiedDate', Width: 160 },
-            { HeaderText: 'Is Test', Name: 'IsTest', Width: 50, CellAlign: 'center',
+            {
+                HeaderText: 'Is Test', Name: 'IsTest', Width: 50, CellAlign: 'center',
                 CustomCellRender: function (cell) {
                     var style = cell.Value.IsTest == true ? "menuActive" : "menuInactive";
                     var funcId = cell.Value.FuncID;
@@ -214,12 +215,19 @@ Fanex.ExtAcc.Function = {
                     ]
                 });
             }
-
+            var widthDevice = $(window).width();
+            var heightExpand = 0;
+            if (widthDevice < 480) {
+                heightExpand = 140;
+            }
+            else {
+                heightExpand = 180;
+            }
             options = {
                 columns: $this.DataFields,
                 bodyRows: bodyRows,
-                gridExpandHeight: 100,
-                marginRight: 2,
+                autoCalculateGridExpandHeight: true,
+                marginRight: 10,
                 showDistinctRow: false,
                 allowTruncate: true
             };
@@ -237,10 +245,19 @@ Fanex.ExtAcc.Function = {
         Fanex.ExtAcc.OnResize = function () {
             try {
                 $("#jqgrid").fanexGrid("resizeGrid");
+                //$("#jqgrid").fanexGrid("resizeHeight", 160);
             }
             catch (err) {
             }
         }
+    },
+
+    GetPopupHeight: function (landscapeHeight, portraitHeight) {
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+            landscapeHeight :
+             portraitHeight;
+
+        return height;
     },
 
     RenderGrid: function (options) {
@@ -266,7 +283,7 @@ Fanex.ExtAcc.Function = {
             resolveClientUrl('Function/EditFunction/' + funcId),
             title,
             410,
-            460,
+            Fanex.ExtAcc.Function.GetPopupHeight(300, 500),
             false,
             function () {
                 var url = resolveClientUrl("Function/PolicyList/?funcId=" + $('#FuncID').val());
@@ -391,89 +408,94 @@ Fanex.ExtAcc.Function = {
     },
 
     AddNew: function () {
-        Fanex.ExtAcc.Form.Show(resolveClientUrl("Function/AddFunction"), $.parseJSON(menuTitles).CreateFunction, 400, 460, false, function () {
-            var url = resolveClientUrl("Function/PolicyList/?funcId=1&addNew=true");
-            var itemsChecked = '';
+        Fanex.ExtAcc.Form.Show(
+            resolveClientUrl("Function/AddFunction"), $.parseJSON(menuTitles).CreateFunction,
+            400,
+            Fanex.ExtAcc.Function.GetPopupHeight(280, 500),
+            false,
+            function () {
+                var url = resolveClientUrl("Function/PolicyList/?funcId=1&addNew=true");
+                var itemsChecked = '';
 
-            $.ajax(url).success(function (result) {
-                var groups = '';
+                $.ajax(url).success(function (result) {
+                    var groups = '';
 
-                $.each(result, function (i) {
-                    groups += '<option value="' + result[i].GroupID + '"' + (result[i].HasPermission ? ' selected="selected">' : '>') + result[i].GroupName + '</option>';
-                });
+                    $.each(result, function (i) {
+                        groups += '<option value="' + result[i].GroupID + '"' + (result[i].HasPermission ? ' selected="selected">' : '>') + result[i].GroupName + '</option>';
+                    });
 
-                $('#groupsAdd').html(groups);
+                    $('#groupsAdd').html(groups);
 
-                $(".groupCboMenu input").val($("#ParentID")[0].options[0].text);
+                    $(".groupCboMenu input").val($("#ParentID")[0].options[0].text);
 
-                $('#groupsAdd').css('display', 'block');
-                $("#groupsAdd").multiSelect({
-                    minWidth: 255,
-                    showHeader: false,
-                    onCheck: function () {
-                        if (this.value == '-1') {
-                            var ids = $(".ui-multiselect-checkboxes :input");
-                            for (var i = 0; i < ids.length; i++) {
-                                ids[i].checked = this.checked;
+                    $('#groupsAdd').css('display', 'block');
+                    $("#groupsAdd").multiSelect({
+                        minWidth: 255,
+                        showHeader: false,
+                        onCheck: function () {
+                            if (this.value == '-1') {
+                                var ids = $(".ui-multiselect-checkboxes :input");
+                                for (var i = 0; i < ids.length; i++) {
+                                    ids[i].checked = this.checked;
+                                }
+                            }
+                            else {
+                                if (!this.checked) {
+                                    $('#ui-multiselect-groupsAdd-option-0')[0].checked = false;
+                                }
+                            }
+                        },
+                        noneSelectedText: function () {
+                            $("#groupsAdd").attr("title", "");
+                            return '';
+                        },
+                        selectedText: function (numChecked, numTotal, checkedItems) {
+                            var tmp = '';
+                            var itemsChecked = '';
+
+                            if (checkedItems[0].value != '-1') {
+                                numChecked++;
+                            }
+
+                            if (numChecked != numTotal) {
+                                var mainTitle = '';
+                                $.each(checkedItems, function (i) {
+                                    mainTitle += checkedItems[i].title + ', ';
+
+                                    itemsChecked += checkedItems[i].value + ',';
+
+                                    if (itemsChecked.indexOf(',') != -1) {
+                                        tmp = itemsChecked.substr(0, itemsChecked.length - 1);
+                                    }
+                                });
+
+                                mainTitle = mainTitle.substring(0, mainTitle.length - 2);
+                                $("#groupsAdd").attr("title", mainTitle);
+                                $('#newGroups').val(tmp.replace('-1,', ''));
+
+                                return mainTitle;
+                            }
+                            else {
+                                $('#ui-multiselect-groupsAdd-option-0')[0].checked = true;
+                                $("#groupsAdd").attr("title", "All");
+
+                                $.each(checkedItems, function (i) {
+                                    itemsChecked += checkedItems[i].value + ',';
+
+                                    if (itemsChecked.indexOf(',') != -1) {
+                                        tmp = itemsChecked.substr(0, itemsChecked.length - 1);
+                                    }
+                                });
+                                $('#newGroups').val(tmp.replace('-1,', ''));
+
+                                return 'All';
                             }
                         }
-                        else {
-                            if (!this.checked) {
-                                $('#ui-multiselect-groupsAdd-option-0')[0].checked = false;
-                            }
-                        }
-                    },
-                    noneSelectedText: function () {
-                        $("#groupsAdd").attr("title", "");
-                        return '';
-                    },
-                    selectedText: function (numChecked, numTotal, checkedItems) {
-                        var tmp = '';
-                        var itemsChecked = '';
+                    });
 
-                        if (checkedItems[0].value != '-1') {
-                            numChecked++;
-                        }
-
-                        if (numChecked != numTotal) {
-                            var mainTitle = '';
-                            $.each(checkedItems, function (i) {
-                                mainTitle += checkedItems[i].title + ', ';
-
-                                itemsChecked += checkedItems[i].value + ',';
-
-                                if (itemsChecked.indexOf(',') != -1) {
-                                    tmp = itemsChecked.substr(0, itemsChecked.length - 1);
-                                }
-                            });
-
-                            mainTitle = mainTitle.substring(0, mainTitle.length - 2);
-                            $("#groupsAdd").attr("title", mainTitle);
-                            $('#newGroups').val(tmp.replace('-1,', ''));
-
-                            return mainTitle;
-                        }
-                        else {
-                            $('#ui-multiselect-groupsAdd-option-0')[0].checked = true;
-                            $("#groupsAdd").attr("title", "All");
-
-                            $.each(checkedItems, function (i) {
-                                itemsChecked += checkedItems[i].value + ',';
-
-                                if (itemsChecked.indexOf(',') != -1) {
-                                    tmp = itemsChecked.substr(0, itemsChecked.length - 1);
-                                }
-                            });
-                            $('#newGroups').val(tmp.replace('-1,', ''));
-
-                            return 'All';
-                        }
-                    }
+                    $('#groupsAdd input').css('width', '235px');
                 });
-
-                $('#groupsAdd input').css('width', '235px');
             });
-        });
     },
 
     Add: function () {

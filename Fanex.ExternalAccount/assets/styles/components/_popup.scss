@@ -1,0 +1,100 @@
+﻿@import "../abstracts/variables";
+
+/* 4 corners */
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+    border-bottom-right-radius: 0px !important;
+}
+
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
+    border-bottom-left-radius: 0px !important;
+}
+
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+    border-top-right-radius: 0px !important;
+}
+
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
+    border-top-left-radius: 0px !important;
+}
+
+.ui-dialog {
+    padding: 0;    
+    @media all and (max-device-width: 768px) {        
+        max-width: 100% !important;
+        max-height: 100% !important;
+        .ui-dialog-content {
+            width: 100% !important;
+        }
+    }
+    .ui-dialog-content {
+        padding: 8px;
+        -webkit-overflow-scrolling: touch;        
+    }
+
+    .ui-dialog-buttonpane {
+        padding: 6px 16px;
+        margin-top: 0;
+        height: 40px;
+        box-sizing: content-box;
+    }
+    
+}
+
+.ui-dialog .ui-dialog-titlebar {
+    border: none;
+    background: $popup-header-bg;
+	color: $popup-header-color;
+	text-indent: 5px;
+    padding: 5px;
+    font-weight: normal;
+    height: 34px;
+    position: relative;
+    .ui-icon {
+        background: none !important;
+        font-size: 0;
+        text-indent: unset;
+        overflow: unset;
+        &:before {
+            font-family: 'AlphaAdmin' !important;
+            content: '\e909';
+            color: #fff;
+            font-size: 16px;
+            width: 30px;
+            height: 30px;
+            display: inline-block;
+        }
+    }
+    .ui-dialog-titlebar-close {
+        background: transparent;
+        border: none;
+        margin: unset;
+        padding: unset;
+        top: unset;
+        height: 30px;
+        width: 30px;
+        &.ui-state-hover {
+            background: transparent;
+            border: none;
+        }
+    }
+}
+
+.ui-dialog-buttonpane {
+    .btn.-submit {
+        background: $btn-submit-bg !important;
+        &:hover {
+            background: darken($btn-submit-bg, 5%) !important;
+        }
+    }
+
+    .btn.-normal {
+        background: $btn-normal-bg !important;
+        &:hover {
+            background: darken($btn-normal-bg, 5%) !important;
+        }
+    }
+}
+
+iframe.ui-dialog-content  body {
+    overflow: auto;
+}

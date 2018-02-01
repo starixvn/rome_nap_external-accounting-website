@@ -36,15 +36,17 @@
     }
 
     $scope.TooglePersonalInfo = function () {
-        if ($('#personalInfo').hasClass('userDown')) {
-            $('#personalInfo').removeClass('userDown');
-            $('#personalInfo').addClass('userUp');
-            $('#customerInfo').height(25);
+        if ($('#personalInfo').hasClass('icon-collapse')) {
+            $('#personalInfo').removeClass('icon-collapse');
+            $('#personalInfo').addClass('icon-expand');
+            //$('#customerInfo').height(25);
+            $('#UserInfoContainer').slideUp("fast");
         }
         else {
-            $('#personalInfo').addClass('userDown');
-            $('#personalInfo').removeClass('userUp');
-            $('#customerInfo').height(140);
+            $('#personalInfo').addClass('icon-collapse');
+            $('#personalInfo').removeClass('icon-expand');
+            //$('#customerInfo').height(140);
+            $('#UserInfoContainer').slideDown("fast");
         }
     };
 

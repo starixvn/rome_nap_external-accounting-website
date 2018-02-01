@@ -1,124 +1,67 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using Fanex.ExternalAccount.Core.Context;
-@using System.Web.Optimization
 @using CaptchaMvc.HtmlHelpers
 @model Fanex.ExternalAccount.ViewModel.Account.Login
 @{
     ViewBag.Title = ViewLang.LoginTitle;
-    var showCaptcha = ViewBag.ShowCaptcha == string.Empty ? string.Empty : "none"; 
+    var showCaptcha = ViewBag.ShowCaptcha == string.Empty ? string.Empty : "none";
+    var errorMessage = CurrentContext.LoginErrorMessage;
+    CurrentContext.LoginErrorMessage = string.Empty;
 }
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>@ViewBag.Title</title>
-    @if (HttpContext.Current.IsDebuggingEnabled)
-    {
-        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Account/Login.css")" />
-        <link href="@Url.Content("~/Content/Validators.css")" rel="stylesheet" type="text/css" />
-    }
-    else
-    {
-        <link href="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/login/css")" rel="stylesheet" type="text/css" />
-    }
-    <link href="@Url.Content("~/Areas/CustomerSetting/Views/SylouCaptcha/Styles/Index.css")"
-                                    rel="stylesheet" type="text/css" /></head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @StaticResources.RenderStyles("~/assets/bundles/login/login")
+</head>
 <body>
     @using (Html.BeginForm())
     {
-        <center style="margin-top: 100px">
-            <div class="loginRegion">
-                <table border="0" width="350px" style="height: 260px" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td colspan="2">
-                            <div style="height: 64px">
-                                <div class="loginHeader">
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding-left: 20px; width: 80px">
-                            @Html.LabelFor(m => m.UserName, ViewLang.Username, new { @class = "label" })
-                        </td>
-                        <td style="width: 270px">
-                            @Html.TextBoxFor(m => m.UserName, new { @class = "username text bgLoginControl", @maxlength = 50 })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding-left: 20px;">
-                            @Html.LabelFor(m => m.Password, ViewLang.Password, new { @class = "label" })
-                        </td>
-                        <td>
-                            @Html.PasswordFor(m => m.Password, new { @class = "password bgLoginControl", @maxlength = 50, @autocomplete = "off" })
-                        </td>
-                    </tr>
-                    <tr id="captcha" style="display: @showCaptcha">
-                        <td>
-                        </td>
-                        <td>
-                             @if (ViewBag.ShowCaptcha == string.Empty)
-                             {
-                                 try
-                                 {
-                                    @Html.Captcha(5, "~/Areas/CustomerSetting/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)
-                                 }
-                                 catch (Exception ex)
-                                 {
-                                     Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(ex);
-                                 }
-                             }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <button id="btnLogin" class="btnLogin">@ViewLang.LoginTitle</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <span class="bestView">@ViewLang.BestViewIn
-                                <img class="browser" alt="" src="@Url.Content("~/Images/Login/IE-icn.png")" />
-                                IE8+
-                                <img class="browser" alt="" src="@Url.Content("~/Images/Login/Firefox-icn.png")" />
-                                FF4+</span>
-                        </td>
-                    </tr>
-                </table>
-                @if (!string.IsNullOrWhiteSpace(CurrentContext.LoginErrorMessage))
+        <div class="block-login">
+            <div class="row">
+                <div class="login-logo icon-outline-lock"></div>
+            </div>
+            <div id="err-message" class="row errMsg @(!string.IsNullOrWhiteSpace(errorMessage) ? "" :"hide")">
+                @errorMessage
+            </div>
+            <div class="row">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @maxlength = 50, @placeholder = "Username" })
+                <span class="icon-user"></span>
+            </div>
+            <div class="row">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @maxlength = 50, @autocomplete = "off", @placeholder = "Password" })
+                <span class="icon-lock"></span>
+            </div>
+            <div class="row captcha-container" id="captcha" style="display: @showCaptcha">
+                @if (ViewBag.ShowCaptcha == string.Empty)
                 {
-                    <table style="margin-top: 50px" border="0" width="350px" cellpadding="0" cellspacing="0">
-                        <tr>
-                            <td class="errMsg">
-                                @CurrentContext.LoginErrorMessage
-                                @{CurrentContext.LoginErrorMessage = string.Empty;}
-                            </td>
-                        </tr>
-                    </table>
+                    try
+                    {
+                        @Html.Captcha(5, "~/Areas/CustomerSetting/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)
+                    }
+                    catch (Exception ex)
+                    {
+                        Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(ex);
+                    }
                 }
             </div>
-        </center>
+            <div class="row">
+                <button id="btnLogin" class="btnLogin">@ViewLang.LoginTitle</button>
+            </div>
+        </div>
         @Html.Hidden("Code", Encryptor.Instance.Code)
         @Html.AntiForgeryToken()
     }
+    <div class="old-version"><a href="/old/account/login">Switch to previous version</a></div>
 
-    <script type="text/javascript">        
+    <script type="text/javascript">
         function resolveClientUrl(relativeUrl) {
             return '@Url.Content("~/")' + relativeUrl;
         }
     </script>
-    @if (HttpContext.Current.IsDebuggingEnabled)
-    {
-        <script src="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.3.min.js")" type="text/javascript"></script>
-        <script src="@Url.Content("~/Scripts/Validators.js")" type="text/javascript"></script>
-        <script type="text/javascript" src="@Url.Content("~/Scripts/Account/Fanex.ExtAcc.Account.js")"></script>
-    }
-    else
-    {
-        <script type="text/javascript" src="@BundleTable.Bundles.ResolveBundleUrl("~/bootstrap/login/js")"></script>
-    }
+    @StaticResources.RenderScripts("~/assets/bundles/login/login")
 </body>
 </html>

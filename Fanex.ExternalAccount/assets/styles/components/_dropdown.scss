@@ -1,0 +1,96 @@
+﻿@import "../abstracts/_mixins.scss";
+
+#userGroup input {
+    border-radius: 0 !important;
+    border: 1px solid #a6a6a6; 
+    height: 28px;
+    vertical-align: top;
+    padding-left: 3px;
+    @media all and (max-width: 480px) {
+        width: 115px;
+    }
+}
+
+#userGroup button {
+    background: #fff;
+    background-image: none !important;
+    border: none;
+    width: 20px !important;
+    margin-left: -22px !important;
+    height: 26px;
+    margin-top: 1px;
+    &:focus, &:active {
+        outline: none;
+    }
+    .ui-icon {
+        margin-top: -8px !important;
+    }
+}
+
+#userGroup button:hover {
+    background-image: none !important;
+}
+
+    
+.groupCboMenu input {
+    border-radius: 0 !important;
+    border: 1px solid #a6a6a6; 
+    height: 28px;
+    width: 255px;
+    vertical-align: top;
+    text-indent: 5px;
+}
+
+.groupCboMenu button {
+    background: #fff !important;
+    background-image: none !important;
+    border: none !important;
+    width: 20px !important;
+    margin-left: -22px !important;
+    height: 26px;
+    margin-top: 1px;
+     &:focus, &:active {
+        outline: none;
+    }
+    .ui-icon {
+        margin-top: -8px !important;
+    }
+}
+
+.groupCboMenu button:hover {
+    //background-image: none !important;
+}
+
+.groupCboMenu select {
+    border: 1px solid #a6a6a6;
+    height: 28px;
+    option:focus, option:active, option:hover {
+        color: #000;
+    }
+}
+
+.ui-multiselect-checkboxes {
+    label input[type="checkbox"] {
+        position: relative;
+        top: -1px;
+    }
+
+    label {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border: none;
+    }
+}
+
+@media all and (min-width-device: 768px) {
+    #groups, #groupsAdd {
+        width: 225px !important;
+        input {
+            width: 225px;
+        }
+    }
+}
+
+
+
+

@@ -350,7 +350,6 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             return this.JsonBase(result);
         }
 
-        [HttpPost]
         public ActionResult InternalLogin(string username)
         {
             var url = string.Empty;
@@ -372,7 +371,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                 url = Url.Content("~") + "Shared/NoPermission";
             }
 
-            return this.JsonBase(new { errorCode = 0, url = url });
+            return Redirect(url);
         }
 
         private string GetInternalLoginUrl(AlphaSiteCode siteCode)

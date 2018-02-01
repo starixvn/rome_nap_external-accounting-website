@@ -33,14 +33,14 @@ Fanex.ExtAcc.WinLossDetail = {
         if (showType == 1) {
             $('#GroupViewHistory').css('display', 'none');
             $('#GroupBackToCurrent').css('display', 'block');
-            $('#GroupFromToDate').css('display', 'none');
-            $('#GroupMonthDay').css('display', 'block');
+            $('.from-to-date').css('display', 'none');
+            $('.group-month-day').css('display', 'inline-block');
         }
         else {
             $('#GroupViewHistory').css('display', 'block');
             $('#GroupBackToCurrent').css('display', 'none');
-            $('#GroupFromToDate').css('display', 'block');
-            $('#GroupMonthDay').css('display', 'none');
+            $('.from-to-date').css('display', 'inline-block');
+            $('.group-month-day').css('display', 'none');
         }
     },
     CallSubmit: function () {
@@ -236,7 +236,9 @@ Fanex.ExtAcc.WinLossDetail = {
             Fanex.ExtAcc.WinLossDetail.getParameterProducts();
             var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + "&viewlevel=" + $this.viewlevel +
             '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + Fanex.ExtAcc.WinLossDetail.username;
-            document.location.href = resolveClientUrl("WinLossDetail/GetExportToExcelWinLossDetail?") + params + Fanex.ExtAcc.WinLossDetail.parameterProducts;
+            var url = resolveClientUrl("WinLossDetail/GetExportToExcelWinLossDetail?") + params + Fanex.ExtAcc.WinLossDetail.parameterProducts;
+
+            top.exportExcel(url, document);
         });
 
         $('#ViewHistoryReport').click(function () {
@@ -258,7 +260,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 $this.srecommend = $("#txtUserName").val() == '' ? 0 : $this.srecommend;
                 //$("#txtUserName").val('');
                 $this.username = '';
-                $this.ToggleTabs('none', 'none', 'none', 4);
+                $this.ToggleTabs('none', 'none', 'none', 'none', 4);
                 $this.Databind();
             }
         });
@@ -273,7 +275,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 $this.custId = $this.srecommend;
                 //$("#txtUserName").val('');
                 $this.username = '';
-                $this.ToggleTabs('block', 'none', 'none', 3);
+                $this.ToggleTabs('block', 'block', 'none', 'none', 3);
                 $this.Databind();
             }
         });
@@ -288,7 +290,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 $this.custId = $this.mrecommend;
                 //$("#txtUserName").val('');
                 $this.username = '';
-                $this.ToggleTabs('block', 'block', 'none', 2);
+                $this.ToggleTabs('block', 'block', 'block', 'none', 2);
                 $this.Databind();
             }
         });
@@ -306,17 +308,40 @@ Fanex.ExtAcc.WinLossDetail = {
             }
         });
 
-        Fanex.ExtAcc.OnResize = function () {
-            try {
-                $("#jqgrid").fanexGrid("resizeGrid");
-            }
-            catch (err) { }
-        };
+        $this.sorters = $(".col-sorter");
+        $this.sorters.click(function () {
+            var elem = $(this);
+            $this.sortTable(elem);
+        });
+
+        Fanex.ExtAcc.OnResize = $this.resizeReportGrid;
+        $(".icon-filter").click($this.showHideFilter);
     },
-    ToggleTabs: function (statusSAg, statusMAg, statusAg, status) {
+
+    resizeReportGrid: function () {
+        try {
+            $("#jqgrid").fanexGrid("resizeGrid");
+        }
+        catch (err) { }
+    },
+    hideFilter: false,
+    showHideFilter: function () {
+        if ($this.hideFilter) {
+            $(".icon-filter").addClass("active");
+            $(".filterbox").removeClass("hide");
+        } else {
+            $(".icon-filter").removeClass("active");
+            $(".filterbox").addClass("hide");
+        }
+
+        $this.resizeReportGrid();
+        $this.hideFilter = !$this.hideFilter;
+    },
+    ToggleTabs: function (levelLine, statusSAg, statusMAg, statusAg, status) {
         $('#tabSuper').css('display', statusSAg);
         $('#tabMaster').css('display', statusMAg);
         $('#tabAgent').css('display', statusAg);
+        $('#levelLine').css('display', levelLine);
         if (status == 1) {
             $('#SelectedLevel').html('Member');
         }
@@ -330,24 +355,23 @@ Fanex.ExtAcc.WinLossDetail = {
             $('#SelectedLevel').html('Super');
         }
     },
+
     RenderUsernameColumn: function (cell) {
         if (cell == null || cell.Value.Username == 'Grand Total' || $this.viewlevel < 2) {
             return '<div class="text-truncate" style="line-height: 22px; text-align: left; padding-left: 3px" title="' + cell.Value.Username + '">' + cell.Value.Username + '</div>';
         }
-        else {
-            var func = "javascript: Fanex.ExtAcc.WinLossDetail.GetDownlineWinLossDetail('" + cell.Value.CustId + "')";
-            return html = '<div style="line-height: 22px; text-align: left;">' +
-                                '<a class="text-truncate" style="text-decoration: none; margin: 0" href="' + func + '" title="' + cell.Value.Username + '">' + cell.Value.Username + '</a>' +
-                            '</div>';
-        }
+
+        var func = "javascript: Fanex.ExtAcc.WinLossDetail.GetDownlineWinLossDetail('" + cell.Value.CustId + "')";
+        return html = '<div style="line-height: 22px; text-align: left;">' +
+                            '<a class="text-truncate" style="text-decoration: none; margin: 0" href="' + func + '" title="' + cell.Value.Username + '">' + cell.Value.Username + '</a>' +
+                        '</div>';
     },
     CustomUsernameSortFunction: function (cell1Value, cell2Value, sortDirection) {
-        if (sortDirection == 'ASC') {
+        if (sortDirection == 'asc') {
             return cell1Value.Username > cell2Value.Username ? 1 : -1;
         }
-        else {
-            return cell1Value.Username < cell2Value.Username ? 1 : -1;
-        }
+
+        return cell1Value.Username < cell2Value.Username ? 1 : -1;
     },
     defaultColumns: [
         {
@@ -436,7 +460,7 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
         { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
     ],
-    Render: function () {
+    Render: function (dateInfo) {
         var arrColData = new Array();
         var arrGroupHeaders = new Array();
         var arrGroupFooters = new Array();
@@ -455,11 +479,23 @@ Fanex.ExtAcc.WinLossDetail = {
             arrGroupFooters = this.SAgFooterColumns;
         }
 
+        var level = $this.viewlevel == 4 ? "Super" :
+             $this.viewlevel == 3 ? "Master" :
+              $this.viewlevel == 2 ? "Agent" :
+              "Member";
+
         var gridOption = {
             customizeHeader: true,
             groupHeaderRows: [{ Columns: arrGroupHeaders }],
             columns: arrColData,
-            numberOfFrozenColumn: 3,
+            numberOfFrozenColumn: isMobile.phone ? 1 : 3,
+            autoCalculateGridExpandHeight: true,
+            fullHeight: !isMobile.phone,
+            gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
+            showTitle: true,
+            titleInfo: {
+                text: level + " Win Loss Detail " + dateInfo
+            },
             showFooter: true,
             gridExpandHeight: 256,
             showPager: true,
@@ -469,8 +505,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 totalItem: $this.totalRows,
                 itemsPerPage: 50
             },
-            highlightFrozenWidth: 2,
-            marginRight: 2,
+            marginRight: 10,
             bottomBorderWidth: 0,
             showDistinctRow: false,
             allowTruncate: true,
@@ -479,7 +514,8 @@ Fanex.ExtAcc.WinLossDetail = {
                 afterGridSorted: function (rows) {
                     return $this.customsortfunc(rows);
                 }
-            }
+            },
+            numOfPaddingForGridExpandHeight: 40
         };
 
         // For Summary Footer
@@ -651,7 +687,11 @@ Fanex.ExtAcc.WinLossDetail = {
 
         gridOption.footerRows = footerData;
 
-        return gridOption;
+        setPagerOptionOnMobile(gridOption);
+
+        $("#jqgrid").fanexGrid(gridOption);
+
+        workaroundForGridOnPhone();
     },
     customsortfunc: function (rows) {
         var countFixedSort = $this.fixedsortlist.length;
@@ -685,18 +725,18 @@ Fanex.ExtAcc.WinLossDetail = {
     ChangeHeadlineTab: function () {
         if (this.viewlevel >= 4) {
             this.srecommend = this.custId;
-            this.ToggleTabs('none', 'none', 'none', 4);
+            this.ToggleTabs('none', 'none', 'none', 'none', 4);
         } else if (this.viewlevel == 3) {
             this.mrecommend = this.custId;
-            this.ToggleTabs('block', 'none', 'none', 3);
+            this.ToggleTabs('block', 'block', 'none', 'none', 3);
             $("#tabSuper").attr("class", "tabActiveSuper");
         } else if (this.viewlevel == 2) {
             this.recommend = this.custId;
-            this.ToggleTabs('block', 'block', 'none', 2);
+            this.ToggleTabs('block', 'block', 'block', 'none', 2);
             $("#tabSuper").attr("class", "tabDisableSuper");
             $("#tabMaster").attr("class", "tabActive");
         } else {
-            this.ToggleTabs('block', 'block', 'block', 1);
+            this.ToggleTabs('block', 'block', 'block', 'block', 1);
             $("#tabSuper").attr("class", "tabDisableSuper");
             $("#tabMaster").attr("class", "tabDisable");
             $("#tabAgent").attr("class", "tabActive");
@@ -718,11 +758,11 @@ Fanex.ExtAcc.WinLossDetail = {
         this.mrecommend = 0;
         this.recommend = 0;
         this.custId = 0;
-        this.username == '';
+        this.username = '';
         this.viewlevel = 4;
     },
     GetFromDateToDate: function () {
-        if ($("#GroupFromToDate").css('display') != 'none') {
+        if ($(".from-to-date").css('display') != 'none') {
             this.fromdate = $('#dtpFromDate').val();
             this.todate = $('#dtpToDate').val();
         }
@@ -736,11 +776,12 @@ Fanex.ExtAcc.WinLossDetail = {
         this.GetFromDateToDate();
         this.groupName = $('#selectedGroupName').html();
 
+        var dateInfo;
         if (this.fromdate == this.todate) {
-            $("#DateValueInfo").html('on ' + this.fromdate);
+            dateInfo = 'on ' + this.fromdate;
         }
         else {
-            $("#DateValueInfo").html('from ' + (new Date(Date.parse(this.fromdate))).toStringFormat('MMM dd, yyyy') + ' to ' + (new Date(Date.parse(this.todate))).toStringFormat('MMM dd, yyyy'));
+            dateInfo = 'from ' + (new Date(Date.parse(this.fromdate))).toStringFormat('MMM dd, yyyy') + ' to ' + (new Date(Date.parse(this.todate))).toStringFormat('MMM dd, yyyy');
         }
 
         $this.getParameterProducts();
@@ -800,15 +841,18 @@ Fanex.ExtAcc.WinLossDetail = {
 
                 $('#mainGrid').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#mainGrid').css('visibility', $this.totalRows < 1 ? 'hidden' : 'visible');
-                $('#jqgrid').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#headlineDaily').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#headlineDaily').css('visibility', $this.totalRows < 1 ? 'hidden' : 'visible');
-                $('#btnHideMG').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#exporttoexcel').css('display', $this.totalRows < 1 ? 'none' : 'block');
                 $('#msgNoinfo').css('display', $this.totalRows < 1 ? 'block' : 'none');
 
                 if ($this.totalRows > 0) {
-                    $("#jqgrid").fanexGrid($this.Render());
+                    $this.Render(dateInfo);
+                    $("#exporttoexcel").removeClass("hide");
+                    $(".groupBack").removeClass("hide");
+                } else {
+                    $("#exporttoexcel").addClass("hide");
+                    $(".groupBack").addClass("hide");
                 }
 
                 $('#netTurnover').bind('click', function () {
@@ -828,7 +872,7 @@ Fanex.ExtAcc.WinLossDetail = {
             error: function () {
                 Fanex.ExtAcc.UnBlockUI();
             }
-        })
+        });
     }
 };
 

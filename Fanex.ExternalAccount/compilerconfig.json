@@ -1,0 +1,70 @@
+﻿[
+  {
+    "outputFile": "assets/styles/pages/account/login.css",
+    "inputFile": "assets/styles/pages/account/login.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/account/external-group.css",
+    "inputFile": "assets/styles/pages/account/external-group.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/default/common.css",
+    "inputFile": "assets/styles/pages/default/common.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/reports/winloss-detail.css",
+    "inputFile": "assets/styles/pages/reports/winloss-detail.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/reports/daily-winloss.css",
+    "inputFile": "assets/styles/pages/reports/daily-winloss.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/default/left-panel.css",
+    "inputFile": "assets/styles/pages/default/left-panel.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/keno-setting.css",
+    "inputFile": "assets/styles/pages/customer/keno-setting.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/customer-setting.css",
+    "inputFile": "assets/styles/pages/customer/customer-setting.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/racing-setting.css",
+    "inputFile": "assets/styles/pages/customer/racing-setting.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/bet-limit.css",
+    "inputFile": "assets/styles/pages/customer/bet-limit.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/pt-engine.css",
+    "inputFile": "assets/styles/pages/customer/pt-engine.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/live-casino.css",
+    "inputFile": "assets/styles/pages/customer/live-casino.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/virtual-sport.css",
+    "inputFile": "assets/styles/pages/customer/virtual-sport.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/casino.css",
+    "inputFile": "assets/styles/pages/customer/casino.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/statement/statement.css",
+    "inputFile": "assets/styles/pages/statement/statement.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/statement/guideline.css",
+    "inputFile": "assets/styles/pages/statement/guideline.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/account/security-code.css",
+    "inputFile": "assets/styles/pages/account/security-code.scss"
+  }
+]

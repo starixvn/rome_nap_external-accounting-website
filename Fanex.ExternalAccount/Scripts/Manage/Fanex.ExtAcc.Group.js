@@ -136,14 +136,16 @@ Fanex.ExtAcc.Group = {
         var titles = $.parseJSON(menuTitles);
         $this.URL = resolveClientUrl("Group/GroupListPost");
         $this.DataFields = [
-                    { HeaderText: 'Group Name', Name: 'GroupName', Width: 195,
+                    {
+                        HeaderText: 'Group Name', Name: 'GroupName', Width: 195,
                         CustomCellRender: function (cell) {
                             var func = "javascript:Fanex.ExtAcc.Group.ShowEdit(" + cell.Value.GroupID + ", '" + titles.EditGroup + "')";
 
                             return '<div class="edit2"><a href="' + func + '">' + cell.Value.GroupName + '</a></div>';
                         }
                     },
-                    { HeaderText: 'No. of Users', Name: 'NoUsers', Width: 100, CellAlign: 'center',
+                    {
+                        HeaderText: 'No. of Users', Name: 'NoUsers', Width: 100, CellAlign: 'center',
                         CustomCellRender: function (cell) {
                             var groupId = cell.Value.GroupID;
                             var onclick = "javascript:Fanex.ExtAcc.Group.SearchUser(" + groupId + ")";
@@ -154,18 +156,20 @@ Fanex.ExtAcc.Group = {
                     { HeaderText: 'Description', Name: 'Description', Width: 220 },
                     { HeaderText: 'Creator', Name: 'Creator', Width: 120, CellAlign: 'center' },
                     { HeaderText: 'Created Date', Name: 'CreatedDate', Width: 160, CellAlign: 'center' },
-                    { HeaderText: 'Permission', Name: 'Permission', Width: 75, CellAlign: 'center',
+                    {
+                        HeaderText: 'Permission', Name: 'Permission', Width: 75, CellAlign: 'center',
                         CustomCellRender: function (cell) {
                             var groupId = cell.Value.GroupID;
                             var groupName = cell.Value.GroupName;
                             var onclick = "javascript:Fanex.ExtAcc.Group.ShowPermission(" + groupId + ", '" + groupName + "')";
 
-                            return '<div id="' + groupId + '" class="edit" onclick="' + onclick + '"></div>';
+                            return '<div id="' + groupId + '" class="icon-clipboard-text" onclick="' + onclick + '"></div>';
                         }
                     },
-                    { HeaderText: 'Delete', Name: 'Delete', Width: 50, CellAlign: 'center',
+                    {
+                        HeaderText: 'Delete', Name: 'Delete', Width: 50, CellAlign: 'center',
                         CustomCellRender: function (cell) {
-                            var style = "menuDelete";
+                            var style = "icon-delete";
                             var groupId = cell.Value.GroupID;
                             var groupName = cell.Value.GroupName;
                             var onclick = "javascript:Fanex.ExtAcc.Group.ShowDelete(" + groupId + ", '" + groupName + "')";
@@ -173,7 +177,7 @@ Fanex.ExtAcc.Group = {
                             return '<div id="' + groupId + '" class="' + style + '" onclick="' + onclick + '"></div>';
                         }
                     }
-                ];
+        ];
 
         $.ajax({
             url: $this.URL,
@@ -204,8 +208,8 @@ Fanex.ExtAcc.Group = {
             options = {
                 columns: $this.DataFields,
                 bodyRows: bodyRows,
-                gridExpandHeight: 100,
-                marginRight: 2,
+                autoCalculateGridExpandHeight: true,
+                marginRight: 10,
                 showDistinctRow: false,
                 allowTruncate: true
             };
@@ -217,7 +221,7 @@ Fanex.ExtAcc.Group = {
         });
 
         $('#jqbutton').bind('click', function () {
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Group/AddGroup'), 'Add New Group', 400, 330, false);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Group/AddGroup'), 'Add New Group', 400, Fanex.ExtAcc.Group.GetPopupHeight(300, 330), false);
         });
 
         Fanex.ExtAcc.OnResize = function () {
@@ -227,6 +231,14 @@ Fanex.ExtAcc.Group = {
             catch (err) {
             }
         }
+    },
+
+    GetPopupHeight: function (landscapeHeight, portraitHeight) {
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+             landscapeHeight :
+             portraitHeight;
+
+        return height;
     },
 
     RenderGrid: function (options) {
@@ -252,7 +264,7 @@ Fanex.ExtAcc.Group = {
             resolveClientUrl('Group/EditGroup/' + groupId),
             title,
             400,
-            330,
+            Fanex.ExtAcc.Group.GetPopupHeight(300, 330),
             false);
     },
 
@@ -268,10 +280,10 @@ Fanex.ExtAcc.Group = {
             resolveClientUrl('Group/GrantPermission'),
             'Grant Permission',
             400,
-            525,
+            Fanex.ExtAcc.Group.GetPopupHeight(260, 525),
             false,
             null,
-            3,
+            0,
             null,
             params);
     },

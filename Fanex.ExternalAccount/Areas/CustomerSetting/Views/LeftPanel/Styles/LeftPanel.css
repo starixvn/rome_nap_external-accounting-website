@@ -93,7 +93,7 @@ div {
 }
 
 .true {
-    color: Red;
+    color: #ff2a26;
     background: none !important;
     cursor: default !important;
 }
@@ -239,6 +239,7 @@ div {
     width: 16px;
     cursor: pointer;
     margin-top: 4px;
+    height: 16px;
 }
 
 .expanded {
@@ -394,12 +395,15 @@ input {
 .closed-wrongPwdOthers {
     background-color: #ccc7ba;
 }
+
 .closed-byAdmin {
     background-color: #b3a2c7;
 }
+
 .closed-byUpline {
     background-color: #f79646;
 }
+
 .closed-wrongOTPSC {
     background-color: #86c5e4;
 }

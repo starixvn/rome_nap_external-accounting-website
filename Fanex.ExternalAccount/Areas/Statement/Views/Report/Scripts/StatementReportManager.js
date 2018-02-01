@@ -225,7 +225,7 @@ var StatementReportManager = function () {
             headerColumnHeight: 24,
             bodyRowHeight: 25,
             numberOfFrozenColumn: 0,
-            gridExpandHeight: 100,
+            autoCalculateGridExpandHeight: true,
             showHighlightRow: false,
             showPager: true,
             customPager: false,
@@ -443,7 +443,7 @@ var StatementReportManager = function () {
             headerColumnHeight: 24,
             bodyRowHeight: 25,
             numberOfFrozenColumn: 0,
-            gridExpandHeight: 100,
+            autoCalculateGridExpandHeight: true,
             showHighlightRow: false,
             showPager: true,
             customPager: false,
@@ -501,6 +501,8 @@ var StatementReportManager = function () {
             BalanceUpDate: balanceUpDay,
             SiteName: ''
         };
+        var heightPopup = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+             250 : 600;
         if (self.eventFunction.openPopup) {
             self.eventFunction.openPopup({
                 url: url + "?" + jQuery.param(criteria),
@@ -508,7 +510,7 @@ var StatementReportManager = function () {
                 left: 400,
                 top: 100,
                 width: 800,
-                height: 600
+                height: heightPopup
             });
         }
     };
@@ -537,7 +539,8 @@ var StatementReportManager = function () {
         }
 
         url += jQuery.param(criteria);
-        jQuery('#frm').attr('src', url);
+
+        return url;
     };
 };
 var statementReportManager = new StatementReportManager();

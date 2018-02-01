@@ -25,7 +25,9 @@
                     + "&enabled=" + data.enabled + "&closed=" + data.closed + "&suspended=" + data.suspended
                     + "&sRecommend=" + parent.Fanex.ExtAcc.Customer.superId + "&mRecommend=" + parent.Fanex.ExtAcc.Customer.masterId + "&recommend=" + parent.Fanex.ExtAcc.Customer.agentId + "&custId=" + parent.Fanex.ExtAcc.Customer.custId
                     + "&currentLevel=" + parent.Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username;
-                    parent.document.location.href = parent.resolveClientUrl("Customer/GetExportToExcel?") + params;
+
+                    var url = parent.resolveClientUrl("Customer/GetExportToExcel?") + params;
+                    top.exportExcel(url, document);
                 });
 
                 parent.$('#txtUserName').keypress(function (e) {
@@ -92,7 +94,7 @@
                     if ($scope.model.setting.syncItems[i].key == 'HideNG2') {
                         isHideNG2 = $scope.model.setting.syncItems[i].value;
                     }
-                    
+
                     if ($scope.model.setting.syncItems[i].key == 'HideFishingWorld') {
                         isHideFishingWorld = $scope.model.setting.syncItems[i].value;
                     }
@@ -133,7 +135,9 @@
                         isHideCricket = false;
                     }
                 }
-                
+
+                parent.$(".icon-filter").click(parent.Fanex.ExtAcc.Customer.showHideFilter);
+
                 switch (roleId) {
                     case 4:
                         parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting);
@@ -165,6 +169,30 @@
         $scope.ResetGlobalValue();
 
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMultiplePT' + "?roleId=" + $scope.model.personalInfo.roleId.value + "&custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
+        $scope.collapseSidebar();
+    };
+
+    $scope.Init = function () {
+        //$(window).bind('orientationchange', function (e) {
+        //    var calculatePopupheight = $scope.shouldCalculatePopupHeight && isMobile.phone;
+        //    if (!calculatePopupheight) {
+        //        return;
+        //    }
+
+        //    var height;
+        //    var isLandscape = window.matchMedia("(orientation: landscape)").matches;
+        //    if (isMobile.android.phone) {
+        //        height = isLandscape ? $scope.portraitHeight : $scope.landscapeHeight;
+        //    }
+        //    else {
+        //        height = isLandscape ? $scope.landscapeHeight : $scope.portraitHeight;
+        //    }
+
+        //    var dialog = top.$('.ui-dialog');
+        //    dialog.height((height + 34) + 'px');
+
+        //    top.$("#windowPopup").css("height", height + "px");
+        //});
     };
 
     $scope.Info = function () {
@@ -174,11 +202,24 @@
             'custId=' + $scope.model.personalInfo.custId.value +
             "&groupName=" + parent.$('#selectedGroupName').html());
         var title = parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
-        parent.Fanex.ExtAcc.Form.Show(url, title, 500, 460, false);
+
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 280 : 550;
+        var width = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 400 : 500;
+
+        parent.Fanex.ExtAcc.Form.Show(url, title, 500, height, false);
+    };
+
+    $scope.getPopupHeight = function () {
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+             $scope.landscapeHeight :
+             $scope.portraitHeight;
+
+        return height;
     };
 
     $scope.Transfer = function () {
         parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditTransferCondition/?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), parent.titles[1] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 600, 250, false, false, 1);
+
     };
 
     $scope.Casino = function () {
@@ -208,6 +249,8 @@
         if (url != '') {
             parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupname=' + parent.$('#selectedGroupName').html());
         }
+
+        $scope.collapseSidebar();
     };
 
     $scope.LiveCasino = function () {
@@ -242,6 +285,8 @@
         if (url != '') {
             parent.Fanex.ExtAcc.LoadMainIFrame(url + "&actorId=" + parent.userId + "&actorUsername=" + parent.username + "&groupName=" + parent.$('#selectedGroupName').html(), null, null, null, true);
         }
+
+        $scope.collapseSidebar();
     };
 
     $scope.BetSetting = function () {
@@ -279,10 +324,12 @@
         if (url !== '') {
             parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupName=' + parent.$('#selectedGroupName').html());
         }
+        $scope.collapseSidebar();
     };
 
     $scope.VirtualSports = function () {
         $scope.RenderDCS(5);
+        $scope.collapseSidebar();
     };
 
     $scope.Keno = function () {
@@ -312,6 +359,8 @@
         if (url !== '') {
             parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupName=' + parent.$('#selectedGroupName').html());
         }
+
+        $scope.collapseSidebar();
     };
 
     $scope.GoldDeluxe = function () {
@@ -339,6 +388,8 @@
         }
 
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url), null, null, null, true);
+
+        $scope.collapseSidebar();
     };
 
     $scope.ColossusBets = function () {
@@ -366,14 +417,18 @@
         }
 
         parent.Fanex.ExtAcc.LoadMainIFrame(url);
+
+        $scope.collapseSidebar();
     };
 
     $scope.Sportsbook2 = function () {
         $scope.RenderDCS(16);
+        $scope.collapseSidebar();
     };
 
     $scope.Cockfighting = function () {
         $scope.RenderDCS(19);
+        $scope.collapseSidebar();
     };
 
     $scope.Cricket = function () {
@@ -383,30 +438,37 @@
 
     $scope.Allbet = function () {
         $scope.RenderDCS(21);
+        $scope.collapseSidebar();
     };
-    
+
     $scope.MacauGames = function () {
         $scope.RenderDCS(22);
+        $scope.collapseSidebar();
     };
 
     $scope.NG2 = function () {
         $scope.RenderDCS(23);
+        $scope.collapseSidebar();
     };
 
     $scope.FishingWorld = function () {
         $scope.RenderDCS(24);
+        $scope.collapseSidebar();
     };
 
     $scope.Lottery = function () {
         $scope.RenderDCS(28);
+        $scope.collapseSidebar();
     };
 
     $scope.Lucky3 = function () {
         $scope.RenderDCS(26);
+        $scope.collapseSidebar();
     };
 
     $scope.Bullfighting = function () {
         $scope.RenderDCS(30);
+        $scope.collapseSidebar();
     };
 
     $scope.RenderDCS = function (productId) {
@@ -440,5 +502,19 @@
         parent.Fanex.ExtAcc.Customer.IsMultiple = false;
         parent.Fanex.ExtAcc.Customer.isSuperEditMember = false;
         parent.Fanex.ExtAcc.Customer.isMasterEditMember = false;
+    }
+
+    $scope.collapseSidebar = function () {
+        var widthDevice = top.$(top.window).width();
+        if (widthDevice <= 768) {
+            top.$("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
+            top.$("#sidebar").removeClass("expand-sidebar").addClass("collapse-sidebar");
+            top.$("#leftSplitter").removeClass("expand-leftpanel").addClass("collapse-leftpanel");
+            top.$("#iconNav").removeClass("active");
+            top.$("#iconUserInfo").removeClass("active");
+        }
+        else {
+            top.$("#contentSplitter").addClass("collapse-content");
+        }
     }
 };
