@@ -471,6 +471,12 @@ Fanex.ExtAcc = {
             $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?custName=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=1'));
         });
 
+        $('#leftFrame')
+            .off('load.leftFrame')
+            .on('load.leftFrame', function () {
+                Fanex.ExtAcc.UnBlockUI();
+            });
+
         $('#txtLeftPanelUserName').keyup(function (e) {
             if ($('#txtLeftPanelUserName').val().length > 1) {
                 Fanex.ExtAcc.InitSuggestion('txtLeftPanelUserName');

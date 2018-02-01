@@ -54,7 +54,7 @@
             if (!IsAdminHasPermissionOnCustomer(checkingResult.IsSpecialSite
                                                 || checkingResult.IsSpecialHeadline))
             {
-                return RedirectToAction("NoPermission", "Shared");
+                return Redirect("~/Shared/NoPermission");
             }
 
             var customerInfo = customerQueryService.SearchCustomer(
