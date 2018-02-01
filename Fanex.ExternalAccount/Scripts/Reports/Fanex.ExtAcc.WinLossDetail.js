@@ -206,6 +206,8 @@ Fanex.ExtAcc.WinLossDetail = {
         });
         $("#dtpToDate").val($.datepicker.formatDate("M dd, yy", new Date($("#MaxDate").val())));
 
+        $(".ui-datepicker").draggable();
+
         $this.initMonthlyCalendar();
 
         $("#ddlGroupName").bind("change", function (event) {

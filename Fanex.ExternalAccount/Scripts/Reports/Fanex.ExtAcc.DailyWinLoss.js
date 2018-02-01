@@ -49,6 +49,7 @@ Fanex.ExtAcc.DailyWinLoss = {
 
         $('#dtpWinLossDate').datepicker({ showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', beforeShow: $this.SetRange, dateFormat: 'M dd, yy' });
         $("#dtpWinLossDate").val($.datepicker.formatDate('M dd, yy', new Date()));
+        $(".ui-datepicker").draggable();
 
         $('#Submit').click(function (e) {
             $this.CallSubmit();
