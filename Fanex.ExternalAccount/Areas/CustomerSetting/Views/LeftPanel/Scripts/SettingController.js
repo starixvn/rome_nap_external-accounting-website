@@ -129,7 +129,7 @@
                 if (!$scope.shouldCalculatePopupHeight || (!isMobile.phone && /webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
                     return;
                 }
-               
+
                 var height = $scope.getPopupHeight() + 34;
                 var dialog = top.$('.ui-dialog');
                 dialog.height(height + 'px');
@@ -165,7 +165,11 @@
         $scope.collapseSidebar();
     };
 
-    $scope.DoubleComm = function (allow, id) {
+    $scope.DoubleComm = function (allow, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         var roleId = $scope.model.personalInfo.roleId.value;
         var msgMember = allow ? "Are you sure you want to turn OFF Double Commission feature for Sportsbook's Losing tickets on this customer?" : "Are you sure you want to turn ON Double Commission feature for Sportsbook's Losing tickets on this customer?";
         var msg = allow ?
@@ -228,7 +232,11 @@
         });
     };
 
-    $scope.Closed = function (close, id) {
+    $scope.Closed = function (close, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         var allowAdmins = eval(parent.allowAdminEditSuperStatus);
         if ($scope.model.personalInfo.roleId.value == 4 && !allowAdmins.contains(parseInt(parent.userId)) && close) {
             return;
@@ -373,7 +381,11 @@
         }
     };
 
-    $scope.Suspended = function (suspend, id) {
+    $scope.Suspended = function (suspend, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         var message = '';
         var title = '';
         var roleId = $scope.model.personalInfo.roleId.value;
@@ -443,7 +455,11 @@
                 });
     };
 
-    $scope.Outright = function (allow, id) {
+    $scope.Outright = function (allow, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         var roleId = $scope.model.personalInfo.roleId.value;
         var title = '';
         var subtitle = roleId == 1 ? 'Warning, this member can\'t place Outright bet!' : 'Warning, all members under this agent can\'t place Outright bet!';
@@ -503,7 +519,11 @@
         });
     };
 
-    $scope.AutoPT = function (allow, id) {
+    $scope.AutoPT = function (allow, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         var message = 'Are you sure you want to change Auto Master PT status for this customer?';
         var title = allow ? ('Disallow Auto Master PT: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>') : ('Allow Auto Master PT: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>');
 
@@ -562,12 +582,20 @@
             });
     };
 
-    $scope.EnableCasino = function (enable, id) {
+    $scope.EnableCasino = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(6, "Casino", 400, 180);
     };
 
-    $scope.EnableNumberGame = function (enable, id) {
+    $scope.EnableNumberGame = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
         '&userid=' + parent.userId + '&productid=numbergame&level=' + $scope.model.personalInfo.roleId.value +
@@ -578,7 +606,11 @@
         }, 1, null);
     };
 
-    $scope.EnableLiveCasino = function (enable, id) {
+    $scope.EnableLiveCasino = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
         '&userid=' + parent.userId + '&productid=livecasino&level=' + $scope.model.personalInfo.roleId.value +
@@ -589,12 +621,20 @@
         }, 1, null);
     };
 
-    $scope.EnableVirtualSports = function (enable, id) {
+    $scope.EnableVirtualSports = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(5, "Virtual Sports", 400, 180);
     };
 
-    $scope.EnableESports = function (enable, id) {
+    $scope.EnableESports = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
         '&userid=' + parent.userId + '&productid=esports&level=' + $scope.model.personalInfo.roleId.value +
@@ -605,7 +645,11 @@
         }, 1, null);
     };
 
-    $scope.EnableHRFixedOdds = function (enable, id) {
+    $scope.EnableHRFixedOdds = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
         '&userid=' + parent.userId + '&productid=hrfixedodds&level=' + $scope.model.personalInfo.roleId.value +
@@ -617,68 +661,116 @@
     };
 
     $scope.getPopupHeight = function () {
-        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 
-             $scope.landscapeHeight : 
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+             $scope.landscapeHeight :
              $scope.portraitHeight;
 
         return height;
     }
-    $scope.EnableRacing = function () {
+    $scope.EnableRacing = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         $scope.landscapeHeight = 250;
         $scope.portraitHeight = 400;
         $scope.shouldCalculatePopupHeight = true;
         $scope.EnableThirdpartyProduct(2, "Racing", 400, $scope.getPopupHeight());
     };
 
-    $scope.EnableKeno = function () {
+    $scope.EnableKeno = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 200 : 400;
         $scope.EnableThirdpartyProduct(8, "Keno", 400, height);
     };
 
-    $scope.EnableColossusBets = function (enable, id) {
+    $scope.EnableColossusBets = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(15, "Colossus Bets", 400, 180);
     };
 
-    $scope.EnableFishingWorld = function (enable, id) {
+    $scope.EnableFishingWorld = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(24, "Fishing World", 400, 180);
     };
 
-    $scope.EnableGoldDeluxe = function (enable, id) {
+    $scope.EnableGoldDeluxe = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(12, "Gold Deluxe", 400, 180);
     };
 
-    $scope.EnableCockfighting = function () {
+    $scope.EnableCockfighting = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         $scope.EnableDCS(19, 'Cockfighting');
     };
 
-    $scope.EnableAllbet = function () {
+    $scope.EnableAllbet = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         $scope.EnableThirdpartyProduct(21, "Allbet", 400, 200);
     };
 
-    $scope.EnableMacauGames = function (enable, id) {
+    $scope.EnableMacauGames = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(22, "Macau Games", 400, 180);
     };
 
-    $scope.EnableNG2 = function (enable, id) {
+    $scope.EnableNG2 = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(23, parent.ng2Text, 400, 180);
     };
 
-    $scope.EnableLottery = function (enable, id) {
+    $scope.EnableLottery = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(28, "Lottery", 400, 180);
     };
 
-    $scope.EnableLucky3 = function (enable, id) {
+    $scope.EnableLucky3 = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(26, "Lucky 3", 400, 180);
     };
 
-    $scope.EnableBullfighting = function (enable, id) {
+    $scope.EnableBullfighting = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(30, "Bullfighting", 400, 180);
     };

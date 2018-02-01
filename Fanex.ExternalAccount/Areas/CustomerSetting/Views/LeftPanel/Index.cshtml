@@ -166,19 +166,13 @@
                              title="{{editItem.tooltip}}" data-ng-click="{{editItem.key}}()"><span class="icon-link"></span>{{editItem.text}}</div>
                     </div>
                     <div class="enabled-item" data-ng-repeat="enableItem in setting.enableItems">
-                        <div class="setting-enable-item" disabled data-ng-show="{{ enableItem.disabled }}">
+                        <div data-ng-click="{{enableItem.key}}({{enableItem.value}}, '{{enableItem.key}}',{{enableItem.disabled}})"
+                             class="setting-enable-item" data-ng-disabled="{{enableItem.disabled}}">
                             <div data-ng-hide="{{enableItem.isHide}}" class="pull-left">
-                                <input title="{{enableItem.tooltip}}" id="{{enableItem.key}}" type="checkbox" data-ng-model="enableItem.value" disabled />
+                                <input title="{{enableItem.tooltip}}" id="{{enableItem.key}}" type="checkbox" data-ng-model="enableItem.value" data-ng-disabled="{{enableItem.disabled}}" />
                             </div>
                             <div data-ng-hide="{{enableItem.isHide}}" class="pull-left" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
-                        </div>  
-                        
-                        <div data-ng-click="{{enableItem.key}}({{enableItem.value}}, '{{enableItem.key}}')" class="setting-enable-item"  data-ng-show="{{ !enableItem.disabled }}">
-                            <div data-ng-hide="{{enableItem.isHide}}" class="pull-left">
-                                <input title="{{enableItem.tooltip}}" id="{{enableItem.key}}" type="checkbox" data-ng-model="enableItem.value" />
-                            </div>
-                            <div data-ng-hide="{{enableItem.isHide}}" class="pull-left" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
-                        </div>   
+                        </div>
                     </div>
                 </div>
                 <div class="tab-content detail-tab" id="tab-2" data-ng-controller="SettingController" data-ng-init="Init()">
