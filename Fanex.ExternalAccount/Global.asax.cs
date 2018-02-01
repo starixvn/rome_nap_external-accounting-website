@@ -4,25 +4,21 @@
     using System.Collections.Generic;
     using System.Web;
     using System.Web.Mvc;
-    using System.Web.Optimization;
     using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
     using CasinoLibrary.SBAgent;
     using Core.Context;
+    using Core.Shared;
     using CustomerSetting.Client40;
     using Data.Configuration;
-    using Core.Shared;
+    using Fanex.ExternalAccount.UI.Helpers;
     using GoldDeluxe.CoreSetting.Mappings;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
     using Module.LeftPanel.ViewModels;
     using ONEbook.UM.Filters;
     using Sunplus.Libraries.APILogger;
-    using Utilities;
-    using Fanex.ExternalAccount.UI.Helpers;
-    using System.Web;
-    using System.Configuration;
 
     public class MvcApplication : HttpApplication
     {
