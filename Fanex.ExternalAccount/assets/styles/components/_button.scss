@@ -42,7 +42,7 @@
         color: $btn-normal-color;
 
         &:hover {
-            background-color: $btn-normal-bg-hover;
+            background-color: $btn-normal-bg-hover !important;
             color: $btn-normal-color-hover;
         }
     }
@@ -52,7 +52,7 @@
         color: $btn-submit-color;
 
         &:hover {
-            background-color: $btn-submit-bg-hover;
+            background-color: $btn-submit-bg-hover !important;
             color: $btn-submit-color-hover;
         }
     }

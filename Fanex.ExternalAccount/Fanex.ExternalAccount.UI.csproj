@@ -1701,8 +1701,6 @@
     <Content Include="Content\Images\info.gif" />
     <Content Include="Content\Images\info.png" />
     <Content Include="Content\Images\lastGoal.gif" />
-    <Content Include="Content\Images\Loading.gif" />
-    <Content Include="Content\Images\loading1.gif" />
     <Content Include="Content\Images\login-logo.png" />
     <Content Include="Content\Images\Login\warning-icn.png" />
     <Content Include="Content\Images\member.png" />

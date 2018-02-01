@@ -498,7 +498,8 @@ Fanex.ExtAcc.WinLossDetail = {
                 afterGridSorted: function (rows) {
                     return $this.customsortfunc(rows);
                 }
-            }
+            },
+            numOfPaddingForGridExpandHeight: 40
         };
 
         // For Summary Footer

@@ -92,22 +92,5 @@
 }
 
 
-        ::selection, select:focus::-ms-value {
-            background-color: gray;
-            color: orange;
-        }
 
-
-        /*
-Option control color
-*/
-        option:checked {
-            background-color: greenyellow;
-            color: greenyellow;
-        }
-
-            option:checked:hover, select:focus option:checked:hover {
-                background-color: darkgoldenrod;
-                color: darkgoldenrod;
-            }
 

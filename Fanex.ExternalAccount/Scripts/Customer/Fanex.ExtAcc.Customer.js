@@ -1013,6 +1013,14 @@
             default:
                 return "closed-wrongPwdOthers";
         }
+    },
+
+    GetPopupHeight: function (landscapeHeight, portraitHeight) {
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+            landscapeHeight :
+             portraitHeight;
+
+        return height;
     }
 
 };
