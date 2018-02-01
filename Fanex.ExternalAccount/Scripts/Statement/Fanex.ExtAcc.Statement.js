@@ -57,6 +57,8 @@ Fanex.ExtAcc.Statement = {
         });
         $("#dtpToDate").val($.datepicker.formatDate('M dd, yy', new Date($('#MaxDate').val())));
 
+        $(".ui-datepicker").draggable();
+
         $("#dtpFromDate").datepicker("option", "minDate", new Date(newLayoutDate));
         $("#dtpToDate").datepicker("option", "minDate", new Date(newLayoutDate));
 
