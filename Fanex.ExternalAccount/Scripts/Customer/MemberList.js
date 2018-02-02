@@ -86,7 +86,7 @@
             callback: function (key, opt) {
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditCommissionMemberDetail?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Commission ' + '<font color="#6dcff6">' + title + '</font>', 871, 350, false, false, 1);
+                Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditCommissionMemberDetail?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Commission ' + '<font color="#6dcff6">' + title + '</font>', 876, 350, false, false, 1);
             }
         },
         separator: "-----",
