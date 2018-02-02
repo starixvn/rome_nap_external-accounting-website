@@ -16,10 +16,17 @@
     public class CustomerSettingServiceImpl : CustomerSettingQueryService
     {
         private readonly CustomerStatusQueryService customerStatusQueryService;
+        private readonly IEnumerable<ProductSettingElement> productSettingElements;
+        private readonly Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator;
 
-        public CustomerSettingServiceImpl(CustomerStatusQueryService customerStatusService = null)
+        public CustomerSettingServiceImpl(
+            CustomerStatusQueryService customerStatusQueryService = null,
+            IEnumerable<ProductSettingElement> productSettingElements = null,
+            Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null)
         {
-            customerStatusQueryService = customerStatusService ?? new CustomerStatusServiceImpl();
+            this.customerStatusQueryService = customerStatusQueryService ?? new CustomerStatusServiceImpl();
+            this.productSettingElements = productSettingElements ?? AccountInfoProductConfiguration.ProductSettingParamList;
+            this.hiddenAndSyncItemsCreator = hiddenAndSyncItemsCreator ?? AccountInfoProductConfiguration.CreateSyncAndHiddenItems;
         }
 
         public virtual Setting GetSetting(int actorId, string custName, int uplineId, string groupName,
@@ -38,7 +45,7 @@
             return GetCustomerSetting(roleId, custInfoTable, productStatusTable, customerStatus);
         }
 
-        internal static Setting GetCustomerSetting(int role, DataTable custTable, DataTable productStatusTable,
+        internal Setting GetCustomerSetting(int role, DataTable custTable, DataTable productStatusTable,
             CustomerStatus customerStatus)
         {
             var customerRow = custTable.Rows[0];
@@ -46,12 +53,12 @@
             var setting = new Setting
             (
                 EnableItems(customerRow, productStatusTable, customerStatus),
-                AccountInfoProductConfiguration.CreateSyncAndHiddenItems(customerRow, productStatusTable),
+                hiddenAndSyncItemsCreator(customerRow, productStatusTable),
                 EditItems(),
                 Details(role, customerStatus)
             );
 
-            foreach (var productSettingParam in AccountInfoProductConfiguration.ProductSettingParamList)
+            foreach (var productSettingParam in productSettingElements)
             {
                 setting = AddProductSetting(setting, productStatusTable, productSettingParam, customerStatus);
             }
