@@ -312,10 +312,10 @@
             return PartialViewBase(visibledProducts);
         }
 
-        private List<Product> GetVisibledProducts(int id, int custId)
+        private List<Product> GetVisibledProducts(int roleId, int custId)
         {
             var visibledProducts = new List<Product>();
-            var productStatusList = productStatusService.GetProductStatusList(custId, id);
+            var productStatusList = productStatusService.GetProductStatusList(custId, roleId);
 
             foreach (var product in ProductSettings.SiteProducts.Values)
             {

@@ -728,7 +728,7 @@
         $scope.EnableThirdpartyProduct(21, "Allbet", 400, 200);
     };
 
-    $scope.EnableMacauGames = function (enable, id, disabled) {
+    $scope.EnableVoidBridge = function (enable, id, disabled) {
         if (disabled) {
             return;
         }
@@ -1038,7 +1038,7 @@
         $scope.RenderSupeOnMemberDCS(21);
     };
 
-    $scope.SuperMacauGames = function () {
+    $scope.SuperVoidBridge = function () {
         $scope.RenderSupeOnMemberDCS(22);
     };
 
@@ -1083,7 +1083,7 @@
         $scope.RenderMasterOnMemberDCS(21);
     };
 
-    $scope.MasterMacauGames = function () {
+    $scope.MasterVoidBridge = function () {
         $scope.RenderMasterOnMemberDCS(22);
     };
 

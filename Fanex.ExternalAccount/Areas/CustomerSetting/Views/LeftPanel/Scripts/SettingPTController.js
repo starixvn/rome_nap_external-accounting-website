@@ -441,7 +441,7 @@
         $scope.collapseSidebar();
     };
 
-    $scope.MacauGames = function () {
+    $scope.VoidBridge = function () {
         $scope.RenderDCS(22);
         $scope.collapseSidebar();
     };

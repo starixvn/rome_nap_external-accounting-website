@@ -11,7 +11,7 @@
             = new Dictionary<int, Product>
             {
                 [ProductConstants.AllBet] = new Product(ProductConstants.AllBet, "Allbet"),
-                [ProductConstants.VoidBridge] = new Product(ProductConstants.VoidBridge, "Macau Games"),
+                [ProductConstants.VoidBridge] = new Product(ProductConstants.VoidBridge, "Macau Games", substituteProductKey: "VoidBridge"),
                 [ProductConstants.NG2] = new Product(ProductConstants.NG2, "NG2", true),
                 [ProductConstants.FishingWorld] = new Product(ProductConstants.FishingWorld, "Fishing World"),
                 [ProductConstants.Lottery] = new Product(ProductConstants.Lottery, "Lottery"),
