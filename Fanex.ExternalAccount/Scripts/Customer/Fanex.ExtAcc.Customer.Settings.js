@@ -15,7 +15,7 @@ Fanex.ExtAcc.Customer.Settings = {
     Member: 1,
     CurrentLevel: parseInt(Fanex.ExtAcc.Customer.CurrentLevel),
 
-    Init: function () {        
+    Init: function () {
         Fanex.ExtAcc.Customer.UserId = this.UserId;
         Fanex.ExtAcc.Customer.IsMultiple = false;
         $('#tabs').tabs();
@@ -155,7 +155,8 @@ Fanex.ExtAcc.Customer.Settings = {
         var url = resolveClientUrl('CustomerSetting/Racebook/RacingSetting/' + action + '?id=' + this.UserId + '&uplineid=' + uplineId + '&groupName=' + $('#selectedGroupName').html());
         $('#tabs-2').height($('#leftFrame').height() - 10);
         $('#tabs-2').css('display', 'block');
-        $('#racingFrame').attr('src', url);
+
+        Fanex.ExtAcc.Customer.Settings.LoadProductSetting('#racingFrame', url);
     },
 
     GetRacingMinPT: function () {
@@ -175,7 +176,8 @@ Fanex.ExtAcc.Customer.Settings = {
             var url = resolveClientUrl('CustomerSetting/Racebook/RacingSetting/' + typeUrl + '?id=' + custId + '&roleId=' + roleId + '&groupName=' + $('#selectedGroupName').html());
             $('#tabs-3').height($('#leftFrame').height() - 10);
             $('#tabs-3').css('display', 'block');
-            $('#minMaxracingFrame').attr('src', url);
+
+            Fanex.ExtAcc.Customer.Settings.LoadProductSetting('#minMaxracingFrame', url);
         }
     },
 
@@ -206,7 +208,8 @@ Fanex.ExtAcc.Customer.Settings = {
 
         $('#tabs-4').height($('#leftFrame').height() - 10);
         $('#tabs-4').css('display', 'block');
-        $('#casinoFrame').attr('src', url);
+
+        Fanex.ExtAcc.Customer.Settings.LoadProductSetting('#casinoFrame', url);
     },
 
     GetKenoSetting: function () {
@@ -236,7 +239,7 @@ Fanex.ExtAcc.Customer.Settings = {
 
         $('#tabs-9').height($('#leftFrame').height() - 10);
         $('#tabs-9').css('display', 'block');
-        $('#kenoFrame').attr('src', url);
+        Fanex.ExtAcc.Customer.Settings.LoadProductSetting('#kenoFrame', url);
     },
 
     GetLiveCasinoSetting: function () {
@@ -258,7 +261,8 @@ Fanex.ExtAcc.Customer.Settings = {
 
         $('#tabs-7').height($('#leftFrame').height() - 10);
         $('#tabs-7').css('display', 'block');
-        $('#livecasinoFrame').attr('src', url);
+
+        Fanex.ExtAcc.Customer.Settings.LoadProductSetting('#livecasinoFrame', url);
     },
 
     GetGoldDeluxeSetting: function () {
@@ -278,10 +282,10 @@ Fanex.ExtAcc.Customer.Settings = {
         }
 
 
-        var url = resolveClientUrl(url  + "&actorId=" + parent.userId + "&custId=" + this.UserId + "&groupName=" + $('#selectedGroupName').html());
+        var url = resolveClientUrl(url + "&actorId=" + parent.userId + "&custId=" + this.UserId + "&groupName=" + $('#selectedGroupName').html());
         $('#tabs-10').height($('#leftFrame').height() - 10);
         $('#tabs-10').css('display', 'block');
-        $('#goldDeluxeFrame').attr('src', url);
+        Fanex.ExtAcc.Customer.Settings.LoadProductSetting('#goldDeluxeFrame', url);
     },
 
     GetColossusBetsSetting: function () {
@@ -304,7 +308,7 @@ Fanex.ExtAcc.Customer.Settings = {
         var url = resolveClientUrl(url);
         $('#tabs-11').height($('#leftFrame').height() - 10);
         $('#tabs-11').css('display', 'block');
-        $('#colossusBetsFrame').attr('src', url);
+        Fanex.ExtAcc.Customer.Settings.LoadProductSetting('#colossusBetsFrame', url);
     },
 
     RenderDCS: function (productId, frameId, tabId) {
@@ -325,7 +329,7 @@ Fanex.ExtAcc.Customer.Settings = {
 
         $(tabId).height($('#leftFrame').height() - 10);
         $(tabId).css('display', 'block');
-        $(frameId).attr('src', resolveClientUrl(url));
+        Fanex.ExtAcc.Customer.Settings.LoadProductSetting(frameId, resolveClientUrl(url));
     },
 
     EmptyAllTabs: function () {
@@ -334,6 +338,15 @@ Fanex.ExtAcc.Customer.Settings = {
 
         $('#tabs-1').css('display', 'none');
         // $('#tabs-7').css('display', 'none');
+    },
+
+    LoadProductSetting: function (frameId, url) {
+        var iframe = $(frameId);
+        Fanex.ExtAcc.BlockUI();
+        iframe.attr('src', url);
+        iframe.load(function () {
+            Fanex.ExtAcc.UnBlockUI();
+        });
     }
 };
 
