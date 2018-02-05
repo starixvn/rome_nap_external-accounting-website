@@ -58,12 +58,12 @@
             var param = new Hashtable
             {
                 {"custid", customer.CustId},
-                {"firstname", customer.FirstName},
-                {"lastname", customer.LastName},
-                {"phone", customer.HomePhone},
-                {"mobilephone", customer.MobilePhone},
-                {"email", customer.Email},
-                {"fax", customer.Fax},
+                {"firstname", customer.FirstName??string.Empty},
+                {"lastname", customer.LastName??string.Empty},
+                {"phone", customer.HomePhone??string.Empty},
+                {"mobilephone", customer.MobilePhone??string.Empty},
+                {"email", customer.Email??string.Empty},
+                {"fax", customer.Fax??string.Empty},
                 {"discasino", 0},
                 {"ip", ip},
                 {"userid", userId},

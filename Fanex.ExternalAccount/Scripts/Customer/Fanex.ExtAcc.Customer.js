@@ -61,7 +61,6 @@
     Closed: false,
     Suspended: false,
     TransferCondition: false,
-    IsLoading: false,
 
     URL: '',
     MultipleDblCommError: '',
@@ -147,11 +146,7 @@
         if (this.RecheckinXHR == null && document.URL.toLowerCase().indexOf("account/login") != -1) {
             setInterval(this.ReCheckin, 10000);
         }
-
-        if (this.IsLoading)
-            return;
-
-        this.IsLoading = true;
+       
         //Prevent loading group name
         var timeout = setInterval(function () {
             if ($.trim($('#selectedGroupName').html()) != '') {

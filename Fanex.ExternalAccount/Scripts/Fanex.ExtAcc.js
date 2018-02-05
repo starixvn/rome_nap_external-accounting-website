@@ -816,7 +816,8 @@ $(document).ready(function () {
         },
         statusCode: {
             500: function () {
-                Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Shared/Error'));
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Shared/Error'));                
             },
             401: function (error, callback) {
                 if (JSON && error.responseText) {
