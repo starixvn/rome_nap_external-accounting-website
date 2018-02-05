@@ -12,7 +12,8 @@
 
     <div class="group">
         <div class="pull-left width-100 text-right">
-            @Html.HiddenFor(m => m.FuncID) @Html.LabelFor(m => m.FuncName, ViewLang.Name, new { @class = "divMargin" })
+            @Html.HiddenFor(m => m.FuncID)
+            @Html.LabelFor(m => m.FuncName, ViewLang.Name, new { @class = "divMargin" })
         </div>
         <div class="pull-left width-250">
             @Html.TextBoxFor(m => m.FuncName, new { @class = "form-control width-250" })
@@ -20,10 +21,10 @@
     </div>
     <div class="group">
         <div class="pull-left width-100 text-right">
-            @Html.HiddenFor(m => m.FuncID) @Html.LabelFor(m => m.FuncName, ViewLang.Name, new { @class = "label" })
+            @Html.LabelFor(m => m.FuncKey, ViewLang.Key, new { @class = "divMargin" })
         </div>
         <div class="pull-left">
-            @Html.TextBoxFor(m => m.FuncName, new { @class = "form-control width-250" })
+            @Html.TextBoxFor(m => m.FuncKey, new { @class = "form-control width-250" })
         </div>
     </div>
     <div class="group">
@@ -52,7 +53,7 @@
         <div class="pull-left width-100 text-right">
             @Html.LabelFor(m => m.DisplayOrder, ViewLang.Order, new { @class = "label" })
         </div>
-        <div class="pull-left">            
+        <div class="pull-left">
             @Html.TextBoxFor(m => m.DisplayOrder, new { @class = "form-control order", @maxlength = "3", @onpaste = "return false;", @onkeypress = "return Fanex.ExtAcc.CheckNumber(event, this)", @onkeyup = "return Fanex.ExtAcc.CheckNumber(event, this)" })
         </div>
     </div>
