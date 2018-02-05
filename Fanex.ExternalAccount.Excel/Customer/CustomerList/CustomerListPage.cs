@@ -160,7 +160,7 @@
 
             var rowIdFromStatus = new Dictionary<string, int> { { "open", 1 }, { "suspended", 3 }, { "disabled", 7 } };
             var rowIdFromCloseStatus = new Dictionary<byte, int> { { 1, 11 }, { 2, 13 }, { 3, 15 } };
-            var closedReason = items.Closedreason();
+            var closedReason = items.ClosedReason();
 
             var fromRowId = 5;
             if (rowIdFromStatus.ContainsKey(custStatus))

@@ -59,6 +59,6 @@
 
         internal static bool Suspended(this DataRow dataRow) => Utils.ToBoolean(dataRow["suspended"]);
 
-        internal static byte Closedreason(this DataRow dataRow) => Convert.ToByte(dataRow["closedreason"]);
+        internal static byte ClosedReason(this DataRow dataRow) => Convert.ToByte(dataRow["closedreason"]);
     }
 }

@@ -195,7 +195,7 @@
     <Compile Include="Criteria\RemoveOTPCriteria.cs" />
     <Compile Include="Extensions\CashDataRowExtensions.cs" />
     <Compile Include="Extensions\CustomerInfoDataRowExtensions.cs" />
-    <Compile Include="Extensions\OnlineInfoDataRowExtensions.cs" />
+    <Compile Include="Extensions\OnlineInfoDataRowExtensions2.cs" />
     <Compile Include="Extensions\PersonalInfoDataRowExtensions.cs" />
     <Compile Include="Extensions\ProductDataRowExtensions.cs" />
     <Compile Include="Extensions\LineInfoDataRowExtensions.cs" />
