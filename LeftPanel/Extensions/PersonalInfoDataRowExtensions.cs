@@ -31,7 +31,7 @@
 
         internal static int CurrencyId(this DataRow dataRow) => Utils.ToInt32(dataRow["exchangeid"]);
 
-        internal static int Currency(this DataRow dataRow) => Utils.ToInt32(dataRow["currency"]);
+        internal static string Currency(this DataRow dataRow) => Utils.ToString(dataRow["currency"]);
 
         internal static string CreateDate(this DataRow dataRow) => Utils.ToDateTime(dataRow["createdate"]).ToStringExt(DateTimeFormat);
 

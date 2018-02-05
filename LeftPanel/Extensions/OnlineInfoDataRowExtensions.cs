@@ -3,7 +3,7 @@
     using System.Data;
     using Utilities;
 
-    public static class OnlineInfoDataRowExtensions2
+    public static class OnlineInfoDataRowExtensions
     {
         internal static string ReloadTime(this DataRow dataRow) => Utils.ToDateTime(dataRow["reload_time"]).ToStringExt();
 
