@@ -132,13 +132,8 @@ Fanex.ExtAcc = {
         iframe.setAttribute('width', ($('#contentSplitter').width() - 5) + 'px');
         iframe.setAttribute('height', ($('#contentSplitter').height() - 5) + 'px');
         iframe.setAttribute('style', 'overflow: auto');
-
+        iframe.setAttribute('onload', 'Fanex.ExtAcc.UnBlockUI()');
         $('#contentSplitter').append(iframe);
-
-        var timeout = setTimeout(function () {
-            clearTimeout(timeout);
-            Fanex.ExtAcc.UnBlockUI();
-        }, 2000);
     },
 
     LoadMainFrame: function (url, id, isLeftPanelClick, isMenu, dontNeedGroupName) {

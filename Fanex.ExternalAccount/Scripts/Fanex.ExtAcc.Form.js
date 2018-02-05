@@ -131,15 +131,10 @@ Fanex.ExtAcc.Form = {
         $('#' + id).css('width', width + 'px');
         $('#' + id).css('height', (height - 34) + 'px');
         Frame.setAttribute('style', 'display: block; border: none; font-size: 12px; z-index: 999999; margin-right: ' + margin + '; height: 100%; width: 100%;');
-
+        Frame.setAttribute('onload', 'Fanex.ExtAcc.UnBlockUI()');
         if (callBack && typeof callBack === 'function') {
             callBack();
         }
-
-        var timeout = setTimeout(function () {
-            clearTimeout(timeout);
-            Fanex.ExtAcc.UnBlockUI();
-        }, 1000);
     },
 
     ConfirmBox: function (title, message, width, height, reloadOnClose, okClickEvent, cancelClickEvent, popupId, isCancel, closeClick, isSubmit) {
