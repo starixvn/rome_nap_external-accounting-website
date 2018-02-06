@@ -191,7 +191,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Module.NG2, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.NG2.NAP.1.0.1.5-logging\lib\net40\Fanex.Module.NG2.dll</HintPath>
+      <HintPath>..\packages\Fanex.Module.NG2.NAP.1.0.1.5-logging-03\lib\net40\Fanex.Module.NG2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Module.Statement, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -3007,12 +3007,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58481</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost:58482/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
