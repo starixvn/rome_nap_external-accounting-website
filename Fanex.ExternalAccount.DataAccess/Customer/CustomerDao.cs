@@ -69,7 +69,7 @@
                 {"userid", userId},
                 {"subaccid", subAccId},
                 {"language", language},
-                {"remark", customer.Remark},
+                {"remark", customer.Remark??string.Empty},
                 {"errorcode", 0},
                 {"errormsg", string.Empty}
             };
