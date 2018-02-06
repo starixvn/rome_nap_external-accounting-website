@@ -54,7 +54,7 @@
             (
                 EnableItems(customerRow, productStatusTable, customerStatus),
                 hiddenAndSyncItemsCreator(customerRow, productStatusTable),
-                EditItems(),
+                EditItems(customerStatus),
                 Details(role, customerStatus)
             );
 
@@ -406,13 +406,25 @@
             }
         }
 
-        internal static List<ObjectInfo> EditItems()
-            => new List<ObjectInfo>
+        internal static List<ObjectInfo> EditItems(CustomerStatus customerStatus)
+        {
+            var editItems = new List<ObjectInfo>
             {
-                new ObjectInfo {Key = "EnableRacing", Text = "Enable Racing"},
-                new ObjectInfo {Key = "EnableKeno", Text = "Enable Keno"},
-                new ObjectInfo {Key = "EnableCockfighting", Text = "Enable Cockfighting"}
+                new ObjectInfo {Key = "EnableRacing", Text = "Enable Racing"}
             };
+
+            if (!customerStatus.HideKeno)
+            {
+                editItems.Add(new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" });
+            }
+
+            if(!customerStatus.HideCockfighting)
+            {
+                editItems.Add(new ObjectInfo { Key = "EnableCockfighting", Text = "Enable Cockfighting" });
+            }
+
+            return editItems;
+        }
 
 #pragma warning disable S1541 // Methods and properties should not be too complex
         internal static Setting AddProductSetting(
