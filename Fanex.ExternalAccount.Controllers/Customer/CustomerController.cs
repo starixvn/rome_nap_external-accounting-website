@@ -322,6 +322,7 @@
                 var productStatus = productStatusList.FirstOrDefault(p => p.ProductId == product.Id);
                 if (productStatus != null
                     && !productStatus.IsHidden
+                    && productStatus.IsSyncedUpline
                     && ProductSettings.IsShowProduct(product.Id))
                 {
                     visibledProducts.Add(product);
