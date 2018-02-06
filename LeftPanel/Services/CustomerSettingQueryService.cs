@@ -452,18 +452,18 @@
                     GetEditSettingLink(productElement.Key, productElement.Name));
             }
 
-            if (!syncUpline)
+#pragma warning disable S1067 // Expressions should not be too complex
+            // Ricky: this code i cannot refactor because of the complexity
+            if (!syncUpline
+                || (!sync && roleId.IsMember()) 
+                || (!hide && !sync) 
+                || (isCheckSyncDownlines && !isSyncDownlines))
+#pragma warning restore S1067 // Expressions should not be too complex
             {
                 return setting;
             }
 
-            if (sync
-                || roleId.IsNotMember()
-                || !isCheckSyncDownlines
-                || isSyncDownlines)
-            {
-                AddEditStatusItem(setting, productStatusTable, productElement, isUplineDisabled);
-            }
+            AddEditStatusItem(setting, productStatusTable, productElement, isUplineDisabled);
 
             return setting;
         }
