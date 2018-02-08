@@ -8,10 +8,6 @@
 <head>
   <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Styles/keno-setting.less"
-        rel="stylesheet" type="text/css" />
-    <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Styles/External/theme-color.less"
-        rel="stylesheet" type="text/css" />
     <link href="~/assets/styles/pages/customer/keno-setting.css"
           rel="stylesheet" type="text/css" />
             <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/dialog/ngDialog.css" rel="stylesheet"
@@ -51,7 +47,7 @@
         @if (Role.IsNotSuper(Model.CustomerInformation.RoleId))
         {
         <input ng-class-name="btnUpdate" check-disable-element ng-model="isUpdatedKeno" ng-click="updated(false)"  value="Submit" 
-            type="button" class="btnUpdate b" />
+            type="button" class="btnUpdate" />
         }
     </div>
 </div>

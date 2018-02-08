@@ -79,13 +79,26 @@
 }
 
 .btn {
-    background: url(Images/btn-bgsubmit-original.png) repeat-x scroll 5px center;
-    cursor: pointer;
-    font-family: Verdana,Arial,sans-serif;
-    font-size: 12px;
-    width: 80px;
-    height: 30px;
-    margin-top: 5px;
+    border-radius: 2px;
+    height: 28px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 13px !important;
+    min-width: 64px;
+    border: none;
+    outline: none;
+    text-indent: 0;
+    -webkit-appearance: none;  
+    font-weight: normal;
+}
+
+.btn--update {
+    background-color: #6f7d95;
+        color: #fff;        
+}
+.btn--update:hover {
+    background-color: #637187;
+    color: #fff;
 }
 
 .btn--update {

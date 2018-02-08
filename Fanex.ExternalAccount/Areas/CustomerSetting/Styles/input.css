@@ -59,11 +59,10 @@
 }
 .buttonPopup:hover, .ui-button:hover
 {
-	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAeCAIAAABi9+OQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADpJREFUeNpidu3ZxcTIwMDEyMgIxUhsJgjNBBJjAtEQMSaYOJhmgtDI8jBz4Pph5gHFGIAkIyNAgAEA2vwCK9PMD8cAAAAASUVORK5CYII=) repeat-x scroll 5px center !important;
+	background: #637187 !important;
 	color: #fff !important;
-	border: none !important;
-	cursor: pointer;
 }
+
 .successMsg
 {
     background-color: #ffedc1;

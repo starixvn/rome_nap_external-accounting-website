@@ -11,16 +11,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title</title>
     @RenderSection("css", false)
-    @if (LiveCasinoSettings.Settings.SystemId == (int)SystemType.Accounting)
-    {
-        <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/LiveCasinoSetting/content/bootstrap.css")" />
-        <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/LiveCasinoSetting/content/fanex-live-casino-setting.css")" />
-        <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/LiveCasinoSetting/content/fanex-live-casino-setting-override.css")" />
-    }
-    else
-    {
-        @Styles.Render("~/areas/LiveCasinoSetting/content/bundlecss")
-    }
+
+    <link href="~/assets/styles/vendors/bootstrap.css" rel="stylesheet" />
+    <link href="~/assets/styles/pages/customer/livecasino-setting.css" rel="stylesheet" />
+
     <script type="text/javascript">
         var currentLaguageKey = '@(currentLangaugeKey)';
     </script>

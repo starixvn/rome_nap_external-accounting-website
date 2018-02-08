@@ -11,16 +11,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title</title>
     @RenderSection("css", false)
-    @if (GoldDeluxeSettings.Settings.System == SystemType.Accounting)
-    {
-        <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/GoldDeluxeSetting/content/bootstrap.css")" />
-        <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/GoldDeluxeSetting/content/fanex-gold-deluxe-setting.css")?v=1" />
-        <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/GoldDeluxeSetting/content/fanex-gold-deluxe-setting-override.css")" />
-    }
-    else
-    {
-        @Styles.Render("~/areas/GoldDeluxeSetting/content/bundlecss")
-    }
+
+    <link href="~/assets/styles/vendors/bootstrap.css" rel="stylesheet" />
+    <link href="~/assets/styles/pages/customer/gold-deluxe-setting.css" rel="stylesheet" />
+
     <script type="text/javascript">
         var currentLaguageKey = '@(currentLangaugeKey)';
     </script>

@@ -1203,6 +1203,12 @@
     <Content Include="assets\styles\pages\customer\customer-setting.min.css">
       <DependentUpon>customer-setting.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\customer\gold-deluxe-setting.css">
+      <DependentUpon>gold-deluxe-setting.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\gold-deluxe-setting.min.css">
+      <DependentUpon>gold-deluxe-setting.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\pages\customer\keno-setting.css">
       <DependentUpon>keno-setting.scss</DependentUpon>
     </Content>
@@ -1214,6 +1220,12 @@
     </Content>
     <Content Include="assets\styles\pages\customer\live-casino.min.css">
       <DependentUpon>live-casino.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\livecasino-setting.css">
+      <DependentUpon>livecasino-setting.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\livecasino-setting.min.css">
+      <DependentUpon>livecasino-setting.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\customer\pt-engine.css">
       <DependentUpon>pt-engine.scss</DependentUpon>
@@ -1268,6 +1280,12 @@
     </Content>
     <Content Include="assets\styles\pages\statement\statement.min.css">
       <DependentUpon>statement.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\vendors\bootstrap.css">
+      <DependentUpon>bootstrap.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\vendors\bootstrap.min.css">
+      <DependentUpon>bootstrap.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\vendors\bootstrap.scss" />
     <Content Include="bootstrap\arrows-ffffff.png" />
@@ -2813,7 +2831,10 @@
     <Content Include="assets\styles\pages\account\security-code.scss" />
     <Content Include="assets\bundles\common.min.js.map">
       <DependentUpon>common.min.js</DependentUpon>
-    </Content>
+      </Content>
+    <Content Include="assets\styles\pages\customer\livecasino-setting.scss" />
+    <Content Include="assets\styles\pages\customer\gold-deluxe-setting.scss" />
+    
     <Content Include="assets\bundles\login\login.min.js.map">
       <DependentUpon>login.min.js</DependentUpon>
     </Content>
