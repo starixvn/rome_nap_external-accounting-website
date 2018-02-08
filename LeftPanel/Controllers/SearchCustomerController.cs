@@ -39,7 +39,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
+            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult Index(string custName = null, string uplineId = "ACCDDD")
         {
             var userId = CurrentSession.UserId;

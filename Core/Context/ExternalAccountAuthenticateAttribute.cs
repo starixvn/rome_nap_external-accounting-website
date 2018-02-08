@@ -1,7 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Core.Context
 {
     using System;
-    using System.Text;
     using System.Web.Mvc;
     using System.Web.Security;
     using Authorization;
@@ -79,11 +78,7 @@
                         errorCode = "1",
                         errorMessage = ViewLang.DontHavePermission
                     },
-                    ContentEncoding = Encoding.UTF8,
-                    ContentType = "application/json",
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                    MaxJsonLength = int.MaxValue,
-                    RecursionLimit = int.MaxValue
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
             }
             else
