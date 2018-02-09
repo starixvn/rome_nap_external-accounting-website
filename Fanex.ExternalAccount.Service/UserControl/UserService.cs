@@ -1,7 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.UserControl
 {
     using System.Collections.Generic;
+    using DataAccess.Impl.Login;
     using DataAccess.Impl.UserControl;
+    using DataAccess.Interface.Login;
     using DataAccess.Interface.UserControl;
     using DTO;
     using DTO.UserControl;
@@ -37,6 +39,6 @@
             => _userDao.GetUserFunction(userId);
 
         public Result UpdateUserPolicy(int adminId, int userId, string oldPolicy, string policy, string ip)
-            => _userDao.UpdateUserPolicy(adminId, userId, oldPolicy, policy, ip);
+            => _userDao.UpdateUserPolicy(adminId, userId, oldPolicy, policy, ip);        
     }
 }

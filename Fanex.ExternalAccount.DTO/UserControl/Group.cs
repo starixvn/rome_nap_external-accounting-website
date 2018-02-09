@@ -5,9 +5,8 @@
     using System.Linq;
 
     public class Group
-    {
-        private const string FinanceGroupName = "Finance";
-        private static readonly List<string> OfficeGroups = new List<string> {FinanceGroupName, "Internal", "IT"};
+    {        
+        private static readonly List<string> OfficeGroups = new List<string> { "Finance", "Internal", "IT" };
 
         public const int ITGroupId = 1;
 
@@ -23,24 +22,11 @@
 
         public string Creator { get; set; }
 
-        public bool IsOffice => IsOfficeGroup(GroupName);
-
-        public bool IsNotOffice => !IsOffice;
-
         public bool IsIT => IsITGroup(GroupID);
-
-        public bool IsNotIT => !IsIT;
-
-        public bool IsFinance => IsFinanceGroup(GroupName);
-
-        public bool IsNotFinance => !IsFinance;
 
         public static bool IsOfficeGroup(string groupName)
             => OfficeGroups.Any(officeGroup => officeGroup.Equals(groupName, StringComparison.OrdinalIgnoreCase));
 
-        public static bool IsITGroup(int groupId) => ITGroupId == groupId;
-
-        public static bool IsFinanceGroup(string groupName)
-            => FinanceGroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase);
+        public static bool IsITGroup(int groupId) => ITGroupId == groupId;   
     }
 }

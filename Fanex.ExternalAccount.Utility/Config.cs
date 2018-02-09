@@ -83,11 +83,12 @@
 
         public static string[] PublicDomains => GetValue("PublicDomains").Split(',');
 
-        public static bool IsDenyITGroupAccessing => Utils.ToBoolean(GetValue("IsDenyITGroupAccessing"));
+        public static string[] GroupsDenyAccessPublicDomains => GetValue("GroupsDenyAccessPublicDomains").Split(',');
 
-        public static bool IsDenyInternalGroupAccessing => Utils.ToBoolean(GetValue("IsDenyInternalGroupAccessing"));
+        public static bool ExternalGroupFunctionDenyAccessPublicDomains => Utils.ToBoolean(GetValue("ExternalGroupFunctionDenyAccessPublicDomains"));
 
-        public static bool IsDenyFinanceGroupAccessing => Utils.ToBoolean(GetValue("IsDenyFinanceGroupAccessing"));
+        public static string[] UsersDenyAccessPublicDomains => GetValue("UsersDenyAccessPublicDomains").Split(',');
+
         public static string IgnoreRecheckinCustomers
         {
             get

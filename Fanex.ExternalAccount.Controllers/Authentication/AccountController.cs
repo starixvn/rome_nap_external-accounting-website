@@ -175,7 +175,7 @@
         {
             ResetLoginAttempt();
 
-            var canAccessPublicDomain = IsDenyAccessPublicDomain(isIntAcc, group);
+            var canAccessPublicDomain = IsDenyAccessPublicDomain(isIntAcc, group, model.UserName);
             if (canAccessPublicDomain)
             {
                 return View(new LoginModel(ViewLang.AccessDenyToPublicDomain));
@@ -260,21 +260,14 @@
                 JsonRequestBehavior.AllowGet);
         }
 
-        private bool IsDenyAccessPublicDomain(bool isInternalAdmin, Group currentGroup)
+        private bool IsDenyAccessPublicDomain(bool isInternalAdmin, Group currentGroup, string userName)
         {
-            if (currentGroup.IsNotOffice)
-            {
-                return false;
-            }
-
             var isPublicDomain = Config.PublicDomains.Contains(_currentContext.DomainName, StringComparer.InvariantCultureIgnoreCase);
             if (isPublicDomain)
             {
-                return currentGroup.IsIT
-                    ? Config.IsDenyITGroupAccessing
-                    : isInternalAdmin
-                        ? Config.IsDenyInternalGroupAccessing
-                        : currentGroup.IsNotFinance || Config.IsDenyFinanceGroupAccessing;
+                return Config.GroupsDenyAccessPublicDomains.Contains(currentGroup.GroupName)
+                    || Config.UsersDenyAccessPublicDomains.Any(i => userName.StartsWith(i))
+                    || (isInternalAdmin && Config.ExternalGroupFunctionDenyAccessPublicDomains);
             }
 
             return false;
