@@ -6,7 +6,7 @@
 
     public class Group
     {        
-        private static readonly List<string> OfficeGroups = new List<string> { "Finance", "Internal", "IT" };
+        private static readonly List<string> OfficeGroups = new List<string> { "Finance", "IT" };
 
         public const int ITGroupId = 1;
 

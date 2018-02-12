@@ -266,7 +266,7 @@
             if (isPublicDomain)
             {
                 return Config.GroupsDenyAccessPublicDomains.Contains(currentGroup.GroupName)
-                    || Config.UsersDenyAccessPublicDomains.Any(i => userName.StartsWith(i))
+                    || Config.UsersDenyAccessPublicDomains.Any(i => userName.StartsWith(i, StringComparison.InvariantCultureIgnoreCase))
                     || (isInternalAdmin && Config.ExternalGroupFunctionDenyAccessPublicDomains);
             }
 
