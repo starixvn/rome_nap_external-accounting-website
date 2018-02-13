@@ -446,10 +446,9 @@ Fanex.ExtAcc = {
                     }, 100);
                 }
 
-                return true;
-            } else {
-                return true;
-            }
+            } 
+
+            return true;
         });
 
         $('#searchPanel').bind('click', function () {
@@ -477,7 +476,7 @@ Fanex.ExtAcc = {
             }
         });
 
-        Fanex.ExtAcc.InitSuggestion('txtLeftPanelUserName');
+        //Fanex.ExtAcc.InitSuggestion('txtLeftPanelUserName');
     },
 
     ViewUser: function (username, pageIndex) {

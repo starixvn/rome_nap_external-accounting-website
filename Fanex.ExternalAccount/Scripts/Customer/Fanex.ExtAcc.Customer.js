@@ -92,6 +92,7 @@
 
     RecheckinXHR: null,
     $this: null,
+    IsLoading: false,
 
     ReCheckin: function () {
         if (this.RecheckinXHR != null)
@@ -146,6 +147,11 @@
         if (this.RecheckinXHR == null && document.URL.toLowerCase().indexOf("account/login") != -1) {
             setInterval(this.ReCheckin, 10000);
         }
+
+        if (this.IsLoading)
+            return;
+
+        this.IsLoading = true;
        
         //Prevent loading group name
         var timeout = setInterval(function () {

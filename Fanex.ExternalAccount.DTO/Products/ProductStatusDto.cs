@@ -4,8 +4,6 @@
     {
         public int ProductId { get; set; }
 
-        public string ProductName { get; set; }
-
         public bool IsSyncedUpline { get; set; }
 
         public bool IsDisabledUpline { get; set; }

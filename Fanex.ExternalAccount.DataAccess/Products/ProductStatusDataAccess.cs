@@ -32,7 +32,6 @@
                     productStatusList.Add(new ProductStatusDto
                     {
                         ProductId = reader.ToInt32("ProductID"),
-                        ProductName = reader.ToString("ProductName"),
                         IsDisabledUpline = reader.ToBoolean("IsDisabledUpline"),
                         IsSyncedUpline = reader.ToBoolean("IsSyncedUpline"),
                         IsHidden = reader.ToBoolean("IsHidden"),
