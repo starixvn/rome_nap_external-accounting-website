@@ -124,18 +124,36 @@
             }
 
             $(window).bind('orientationchange', function (e) {
-                if (!$scope.shouldCalculatePopupHeight || (!isMobile.phone && /webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
+                var calculatePopupheight = $scope.shouldCalculatePopupHeight && isMobile.phone;
+                if (!calculatePopupheight) {
                     return;
                 }
 
-                var height = $scope.getPopupHeight() + 34;
+                var height;
+                var isLandscape = window.matchMedia("(orientation: landscape)").matches;
+                if (isMobile.android.phone) {
+                    height = isLandscape ? $scope.portraitHeight : $scope.landscapeHeight;
+                }
+                else {
+                    height = isLandscape ? $scope.landscapeHeight : $scope.portraitHeight;
+                }
+
                 var dialog = top.$('.ui-dialog');
-                dialog.height(height + 'px');
-                //top.document.getElementById('windowPopup').contentDocument.location.reload(false);
+                dialog.height((height + 34) + 'px');
+
+                top.$("#windowPopup").css("height", height + "px");
             });
 
         }
     };
+
+    $scope.getPopupHeight = function () {
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+             $scope.landscapeHeight :
+             $scope.portraitHeight;
+
+        return height;
+    }
 
     $scope.AddNew = function () {
         var roleId = $scope.model.personalInfo.roleId.value;
@@ -235,6 +253,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         var allowAdmins = eval(parent.allowAdminEditSuperStatus);
         if ($scope.model.personalInfo.roleId.value == 4 && !allowAdmins.contains(parseInt(parent.userId)) && close) {
             return;
@@ -384,6 +403,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         var message = '';
         var title = '';
         var roleId = $scope.model.personalInfo.roleId.value;
@@ -458,6 +478,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         var roleId = $scope.model.personalInfo.roleId.value;
         var title = '';
         var subtitle = roleId == 1 ? 'Warning, this member can\'t place Outright bet!' : 'Warning, all members under this agent can\'t place Outright bet!';
@@ -522,6 +543,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         var message = 'Are you sure you want to change Auto Master PT status for this customer?';
         var title = allow ? ('Disallow Auto Master PT: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>') : ('Allow Auto Master PT: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>');
 
@@ -584,7 +606,7 @@
         if (disabled) {
             return;
         }
-
+        $scope.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(6, "Casino", 400, 180);
     };
@@ -594,6 +616,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
         '&userid=' + parent.userId + '&productid=numbergame&level=' + $scope.model.personalInfo.roleId.value +
@@ -609,6 +632,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
         '&userid=' + parent.userId + '&productid=livecasino&level=' + $scope.model.personalInfo.roleId.value +
@@ -624,6 +648,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(5, "Virtual Sports", 400, 180);
     };
@@ -633,6 +658,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
         '&userid=' + parent.userId + '&productid=esports&level=' + $scope.model.personalInfo.roleId.value +
@@ -648,6 +674,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
         '&userid=' + parent.userId + '&productid=hrfixedodds&level=' + $scope.model.personalInfo.roleId.value +
@@ -681,15 +708,17 @@
             return;
         }
 
-        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 200 : 400;
-        $scope.EnableThirdpartyProduct(8, "Keno", 400, height);
+        $scope.landscapeHeight = 250;
+        $scope.portraitHeight = 400;
+        $scope.shouldCalculatePopupHeight = true;
+        $scope.EnableThirdpartyProduct(8, "Keno", 400, $scope.getPopupHeight());
     };
 
     $scope.EnableColossusBets = function (enable, id, disabled) {
         if (disabled) {
             return;
         }
-
+        $scope.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(15, "Colossus Bets", 400, 180);
     };
@@ -699,6 +728,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(24, "Fishing World", 400, 180);
     };
@@ -708,6 +738,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(12, "Gold Deluxe", 400, 180);
     };
@@ -716,7 +747,8 @@
         if (disabled) {
             return;
         }
-
+        
+        $scope.shouldCalculatePopupHeight = false;
         $scope.EnableDCS(19, 'Cockfighting');
     };
 
@@ -725,6 +757,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         $scope.EnableThirdpartyProduct(21, "Allbet", 400, 200);
     };
 
@@ -733,6 +766,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(22, "Macau Games", 400, 180);
     };
@@ -742,6 +776,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(23, parent.ng2Text, 400, 180);
     };
@@ -751,6 +786,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(28, "Lottery", 400, 180);
     };
@@ -760,6 +796,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(26, "Lucky 3", 400, 180);
     };
@@ -769,6 +806,7 @@
             return;
         }
 
+        $scope.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(30, "Bullfighting", 400, 180);
     };

@@ -1197,6 +1197,8 @@
     <Content Include="assets\styles\pages\customer\casino.min.css">
       <DependentUpon>casino.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\customer\colossusbet-setting.css" />
+    <Content Include="assets\styles\pages\customer\colossusbet-setting.min.css" />
     <Content Include="assets\styles\pages\customer\customer-setting.css">
       <DependentUpon>customer-setting.scss</DependentUpon>
     </Content>
@@ -2837,7 +2839,11 @@
     
     <Content Include="assets\bundles\login\login.min.js.map">
       <DependentUpon>login.min.js</DependentUpon>
-    </Content>
+      </Content>
+    <Content Include="assets\styles\pages\customer\colossusbet-setting.scss" />
+    <Content Include="assets\styles\pages\customer\_common.scss" />
+    <Content Include="assets\styles\pages\customer\_theme-color.scss" />
+    
     <Content Include="assets\bundles\choosegroup\choosegroup.min.js.map">
       <DependentUpon>choosegroup.min.js</DependentUpon>
     </Content>

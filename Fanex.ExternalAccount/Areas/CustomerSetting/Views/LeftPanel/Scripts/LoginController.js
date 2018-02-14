@@ -7,6 +7,26 @@
         $scope.model = null;
     }
 
+    $(window).bind('orientationchange', function (e) {
+        var calculatePopupheight = $scope.shouldCalculatePopupHeight && isMobile.phone;
+        if (!calculatePopupheight) {
+            return;
+        }
+
+        var height;
+        var isLandscape = window.matchMedia("(orientation: landscape)").matches;
+        if (isMobile.android.phone) {
+            height = isLandscape ? $scope.portraitHeight : $scope.landscapeHeight;
+        }
+        else {
+            height = isLandscape ? $scope.landscapeHeight : $scope.portraitHeight;
+        }
+
+        var dialog = top.$('.ui-dialog');
+        dialog.height((height + 34) + 'px');
+
+        top.$("#windowPopup").css("height", height + "px");
+    });
 
     $scope.getPopupHeight = function () {
         var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
@@ -17,8 +37,9 @@
     };
 
     $scope.ResetPassword = function (custId, title) {
-        $scope.landscapeHeight = 260;
+        $scope.landscapeHeight = 240;
         $scope.portraitHeight = 400;
+        $scope.shouldCalculatePopupHeight = true;
         var roleId = model.personalInfo.roleId.value;
         parent.Fanex.ExtAcc.Form.Show(
             parent.resolveClientUrl('Customer/ResetPassword/?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()), 'Reset Password: <font color=\'#6dcff6\'>' + title + '</font>',
@@ -29,17 +50,20 @@
     };
 
     $scope.ShowIp = function (ip) {
+        $scope.shouldCalculatePopupHeight = false;
         parent.Fanex.ExtAcc.Customer.ShowIpInfo(ip);
     };
 
     $scope.ResetSecurityCode = function (id, roleId, username) {
         var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?custId=' + id + '&roleId=' + roleId + '&username=' + username + '&groupName=' + parent.$('#selectedGroupName').html());
-        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 250 : 500;
+        $scope.landscapeHeight = 240;
+        $scope.portraitHeight = 450;
+        $scope.shouldCalculatePopupHeight = true;
         parent.Fanex.ExtAcc.Form.ShowFrame(
             url,
             'Reset security code: <font color="#6dcff6">' + username + '</font>',
             650,
-            height,
+            $scope.getPopupHeight(),
             false,
             false);
     };

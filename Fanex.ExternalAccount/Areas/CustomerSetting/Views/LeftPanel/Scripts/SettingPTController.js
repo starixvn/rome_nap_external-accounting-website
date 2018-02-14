@@ -1,6 +1,10 @@
 ﻿function LeftPanelController($scope, $element) {
     $scope.model = model;
 
+    $scope.landscapeHeight;
+    $scope.portraitHeight;
+    $scope.shouldCalculatePopupHeight;
+
     $scope.GetCustomerList = function () {
         var roleId = $scope.model.personalInfo.roleId.value;
         var custId = $scope.model.personalInfo.custId.value;
@@ -173,40 +177,27 @@
     };
 
     $scope.Init = function () {
-        //$(window).bind('orientationchange', function (e) {
-        //    var calculatePopupheight = $scope.shouldCalculatePopupHeight && isMobile.phone;
-        //    if (!calculatePopupheight) {
-        //        return;
-        //    }
+        $(window).bind('orientationchange', function (e) {
+            var calculatePopupheight = $scope.shouldCalculatePopupHeight && isMobile.phone;
+            if (!calculatePopupheight) {
+                return;
+            }
 
-        //    var height;
-        //    var isLandscape = window.matchMedia("(orientation: landscape)").matches;
-        //    if (isMobile.android.phone) {
-        //        height = isLandscape ? $scope.portraitHeight : $scope.landscapeHeight;
-        //    }
-        //    else {
-        //        height = isLandscape ? $scope.landscapeHeight : $scope.portraitHeight;
-        //    }
+            var height;
+            var isLandscape = window.matchMedia("(orientation: landscape)").matches;
+            if (isMobile.android.phone) {
+                height = isLandscape ? $scope.portraitHeight : $scope.landscapeHeight;
+            }
+            else {
+                height = isLandscape ? $scope.landscapeHeight : $scope.portraitHeight;
+            }
 
-        //    var dialog = top.$('.ui-dialog');
-        //    dialog.height((height + 34) + 'px');
+            var dialog = top.$('.ui-dialog');
+            dialog.height((height + 34) + 'px');
 
-        //    top.$("#windowPopup").css("height", height + "px");
-        //});
-    };
-
-    $scope.Info = function () {
-        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-
-        var url = parent.resolveClientUrl('Customer/EditInfo/?' +
-            'custId=' + $scope.model.personalInfo.custId.value +
-            "&groupName=" + parent.$('#selectedGroupName').html());
-        var title = parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
-
-        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 280 : 550;
-        var width = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 400 : 500;
-
-        parent.Fanex.ExtAcc.Form.Show(url, title, 500, height, false);
+            top.$("#windowPopup").css("height", height + "px");
+            alert(height);
+        });
     };
 
     $scope.getPopupHeight = function () {
@@ -217,7 +208,22 @@
         return height;
     };
 
+    $scope.Info = function () {
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+
+        var url = parent.resolveClientUrl('Customer/EditInfo/?' +
+            'custId=' + $scope.model.personalInfo.custId.value +
+            "&groupName=" + parent.$('#selectedGroupName').html());
+        var title = parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
+
+        $scope.landscapeHeight = 280;
+        $scope.portraitHeight = 500;
+        $scope.shouldCalculatePopupHeight = true;
+        parent.Fanex.ExtAcc.Form.Show(url, title, 500, $scope.getPopupHeight(), false);
+    };    
+
     $scope.Transfer = function () {
+        $scope.shouldCalculatePopupHeight = false;
         parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditTransferCondition/?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), parent.titles[1] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 600, 250, false, false, 1);
 
     };

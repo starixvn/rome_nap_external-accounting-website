@@ -129,6 +129,10 @@ Fanex.ExtAcc.User = {
     $this: null,
     options: null,
 
+    landscapeHeight: 260,
+    portraitHeight: 330,
+    shouldCalculatePopupHeight: true,
+
     Init: function () {
         //$('#mainGrid').css('visibility', 'hidden');
         $this = this;
@@ -206,15 +210,39 @@ Fanex.ExtAcc.User = {
         $this.Search($this.IsFirstLoad);
 
         $('#jqbuttonAddUser').bind('click', function () {
-            Fanex.ExtAcc.Form.Show(resolveClientUrl("User/AddUser"), $.parseJSON(menuTitles).CreateUser, 400, Fanex.ExtAcc.User.GetPopupHeight(300, 340), false);
+            Fanex.ExtAcc.User.shouldCalculatePopupHeight = false;
+            Fanex.ExtAcc.Form.Show(resolveClientUrl("User/AddUser"), $.parseJSON(menuTitles).CreateUser, 400, 300, false);
         });
 
         $('#jqbuttonAddExistUser').bind('click', function () {
+            Fanex.ExtAcc.User.shouldCalculatePopupHeight = false;
             Fanex.ExtAcc.Form.Show(resolveClientUrl("User/AddExistUser"), $.parseJSON(menuTitles).CreateExistUser, 400, 200, false);
         });
 
         Fanex.ExtAcc.OnResize = $this.resizeReportGrid;
         $(".icon-filter").click($this.showHideFilter);
+
+        $(window).bind('orientationchange', function (e) {
+            //alert(1);
+            var calculatePopupheight = Fanex.ExtAcc.User.shouldCalculatePopupHeight && isMobile.phone;
+            if (!calculatePopupheight) {
+                return;
+            }
+
+            var height;
+            var isLandscape = window.matchMedia("(orientation: landscape)").matches;
+            if (isMobile.android.phone) {
+                height = isLandscape ? Fanex.ExtAcc.User.portraitHeight : Fanex.ExtAcc.User.landscapeHeight;
+            }
+            else {
+                height = isLandscape ? Fanex.ExtAcc.User.landscapeHeight : Fanex.ExtAcc.User.portraitHeight;
+            }
+
+            var dialog = top.$('.ui-dialog');
+            dialog.height((height + 34) + 'px');
+
+            top.$("#windowPopup").css("height", height + "px");
+        });
     },
 
     GetPopupHeight: function (landscapeHeight, portraitHeight) {
@@ -312,12 +340,13 @@ Fanex.ExtAcc.User = {
     },
 
     ShowEdit: function (userId, title) {
+        Fanex.ExtAcc.User.shouldCalculatePopupHeight = false;
         Fanex.ExtAcc.User.UserId = userId;
         Fanex.ExtAcc.Form.Show(
             resolveClientUrl('User/EditUser/' + userId),
             title,
             400,
-            300,
+            280,
             false);
     },
 
@@ -328,6 +357,8 @@ Fanex.ExtAcc.User = {
         title = $('#' + userId).attr('class') == 'menuActive' ? 'Deactivate User' : 'Activate User';
 
         Fanex.ExtAcc.User.UserId = userId;
+        Fanex.ExtAcc.User.shouldCalculatePopupHeight = false;
+
         Fanex.ExtAcc.Form.ConfirmBox(
             title,
             'Are you sure to ' + title.toLowerCase() + ' <font color="#4b91be">' + userName + '</font> ?',
@@ -341,6 +372,7 @@ Fanex.ExtAcc.User = {
 
     ShowResetPwd: function (userId, isOwner, username) {
         Fanex.ExtAcc.User.UserId = userId;
+        Fanex.ExtAcc.User.shouldCalculatePopupHeight = false;
 
         var titles = $.parseJSON(menuTitles);
         var title = titles.ResetPwd;
@@ -349,7 +381,7 @@ Fanex.ExtAcc.User = {
             resolveClientUrl('User/' + (isOwner ? 'ResetPasswordOwner' : 'ResetPassword') + '/' + userId),
             title + ': <font color="#6dcff6">' + username + '</font>',
             415,
-            280,
+            210,
             false
             );
     },
@@ -362,12 +394,14 @@ Fanex.ExtAcc.User = {
         params.userId = userId;
         params.username = username;
         params.groupName = groupName;
+        Fanex.ExtAcc.User.portraitHeight = 500;
+        Fanex.ExtAcc.User.shouldCalculatePopupHeight = true;
 
         Fanex.ExtAcc.Form.Show(
             resolveClientUrl('User/GrantPermission'),
             'Grant Permission',
             520,
-            Fanex.ExtAcc.User.GetPopupHeight(260, 525),
+            Fanex.ExtAcc.User.GetPopupHeight(Fanex.ExtAcc.User.landscapeHeight, Fanex.ExtAcc.User.portraitHeight),
             false,
             null,
             0,
