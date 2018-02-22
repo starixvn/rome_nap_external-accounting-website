@@ -54,7 +54,7 @@
         {
             var isValidUser = _customerService.IsValidUsername(username.Trim(), CurrentSession.CustId);
 
-            return JsonBase(new { isValidUser });
+            return Json(isValidUser, JsonRequestBehavior.AllowGet);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
