@@ -30,6 +30,7 @@ using Fanex.Logging.Extensions.Web;
 using ONEbook.UM.Models;
 using ONEbook.UM.Services;
 using ONEbook.UM.Services.Impl;
+using UAParser;
 
 namespace Fanex.ExternalAccount.Controllers.Authentication
 {
@@ -56,6 +57,8 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             _maintenanceService = new MaintenanceService();
             _nocaptcha = NoCaptchaSectionConfiguration.Instance;
         }
+
+
 
         /// <summary>
         /// Gets login page.
@@ -137,21 +140,14 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             {
                 FormsAuthentication.SetAuthCookie(model.UserName, false);
                 Core.Context.CurrentContext.LoginErrorMessage = string.Empty;
+                
                 int custId = 0, onuserId = 0;
                 bool isIntAcc = true;
 
                 var result = _userService.Login(
                     model.UserName,
                     password,
-                    new Request()
-                    {
-                        Browser = Request.Browser.Browser,
-                        CountryCode = _currentContext.CountryCode,
-                        DomainName = _currentContext.DomainName,
-                        IP = _currentContext.Ip4Address,
-                        NetSessionId = _currentSession.NetSessionId,
-                        Platform = Request.Browser.Platform
-                    },
+                    GetRequestInfo(),
                     out custId,
                     out onuserId,
                     out isIntAcc);
@@ -481,6 +477,28 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             _currentSession.CurrencyGroup = group.GroupName;
             _currentSession.IsITAdmin = group.GroupID == 1;
             _currentSession.FromSystem = 3;
+        }
+
+        private Request GetRequestInfo()
+        {
+            var userAgent = Request.UserAgent ?? string.Empty;
+            var userAgentParser = Parser.GetDefault();
+            var clientInfo = userAgentParser.Parse(userAgent);
+            var clientUserAgent = clientInfo.UserAgent;
+
+            var browser = $"{clientUserAgent.Family} {clientUserAgent.Major}.{clientUserAgent.Minor}.{clientUserAgent.Patch ?? "0"}";
+            var operateSystem = $"{clientInfo.OS.Family} {clientInfo.OS.Major ?? "0"}.{clientInfo.OS.Minor ?? "0"}.{clientInfo.OS.Patch ?? "0"}";
+            var device = $"{clientInfo.Device.Family}, IsCrawler: {clientInfo.Device.IsSpider}";
+
+            return new Request
+            {
+                Browser = browser,
+                CountryCode = _currentContext.CountryCode,
+                DomainName = _currentContext.DomainName,
+                IP = _currentContext.Ip4Address,
+                NetSessionId = _currentSession.NetSessionId,
+                Platform = $"{operateSystem}, Device: {device}"
+            };
         }
     }
 }

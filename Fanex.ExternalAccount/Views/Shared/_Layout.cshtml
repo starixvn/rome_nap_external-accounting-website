@@ -56,9 +56,6 @@
     <meta name="copyright" content="Licensed under GPL and MIT." />
     <meta name="description" content="Adapt.js serves CSS based on screen width." />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <link href='https://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css' />
-    <link href='https://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet' type='text/css' />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
     <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" />
 
     @StaticResources.RenderStyles("~/assets/bundles/common")
@@ -176,8 +173,8 @@
 
         var titles = ['@ViewLang.EditPersonalInfo', '@ViewLang.editTransferCondition', '@ViewLang.confirmTransCondition', '@ViewLang.choonseDaily', '@ViewLang.chooseOneDay'];
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
     @RenderSection("Scripts", false)
 
+    @Fanex.ExternalAccount.Core.Helpers.GoogleAnalyticHepler.Render()
 </body>
 </html>
