@@ -32,21 +32,21 @@
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control", @maxlength = 50, @autocomplete = "off", @placeholder = "Password" })
                 <span class="icon-lock"></span>
             </div>
-            
-                    @if (Model.IsVisibleCaptcha)
+
+            @if (Model.IsVisibleCaptcha)
+            {
+                <div class="row captcha-container" id="captcha">
+                    @try
                     {
-                        <div class="row captcha-container" id="captcha">
-                            @try
-                            {
-                                @Html.Captcha(5, "~/Areas/CustomerSetting/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)
-                            }
-                            catch (Exception ex)
-                            {
-                                Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(ex);
-                            }
-                        </div>
+                        @Html.Captcha(5, "~/Areas/CustomerSetting/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)
                     }
-            
+                    catch (Exception ex)
+                    {
+                        Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(ex);
+                    }
+                </div>
+            }
+
             <div class="row">
                 <button id="btnLogin" class="btnLogin">@ViewLang.LoginTitle</button>
             </div>
@@ -54,7 +54,7 @@
         @Html.Hidden("Code", Model.Code)
         @Html.AntiForgeryToken()
     }
-    <div class="old-version"><a href="/old/account/login">Switch to previous version</a></div>
+    <div class="old-version"><a href="/extnap-old/account/login">Switch to previous version</a></div>
 
     <script type="text/javascript">
         function resolveClientUrl(relativeUrl) {
