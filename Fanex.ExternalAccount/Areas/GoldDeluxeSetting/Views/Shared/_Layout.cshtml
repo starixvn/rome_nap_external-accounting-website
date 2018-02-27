@@ -25,6 +25,7 @@
         @RenderBody()
     </div>
     @Html.AntiForgeryToken()    
+    @Html.Hidden("GoldDeluxeRoot", Url.Content("~/"))
     @Scripts.Render("~/areasjs/golddeluxe/core")
     @if (GoldDeluxeSettings.Settings.System == SystemType.Accounting)
     {

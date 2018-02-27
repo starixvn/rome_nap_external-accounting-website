@@ -201,13 +201,13 @@
                     <div id="superPT" style="display: none">
                         <div class="edit-item" data-ng-repeat="item in setting.superPts">
                             <div data-ng-hide="item.isHide || !item.visibled" class="settingEdit"
-                                 data-ng-click="{{item.key}}(); collapseSidebar();"><span class="icon-bullet"></span><span class="product-name">{{item.value}}</span></div>
+                                 data-ng-click="Super{{item.key}}(); collapseSidebar();"><span class="icon-bullet"></span><span class="product-name">{{item.value}}</span></div>
                         </div>
                     </div>
                     <div id="masterPT" style="display: none">
                         <div class="edit-item" data-ng-repeat="item in setting.masterPts">
                             <div data-ng-hide="item.isHide || !item.visibled" class="settingEdit"
-                                 data-ng-click="{{item.key}}(); collapseSidebar();"><span class="icon-bullet"></span><span class="product-name">{{item.value}}</span></div>
+                                 data-ng-click="Master{{item.key}}(); collapseSidebar();"><span class="icon-bullet"></span><span class="product-name">{{item.value}}</span></div>
                         </div>
                     </div>
                 </div>

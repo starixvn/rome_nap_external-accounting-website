@@ -115,7 +115,7 @@ fanex.goldDeluxeSetting.errorResult = {
 };
 
 
-fanex.goldDeluxeSetting.rootUrl = '/';
+fanex.goldDeluxeSetting.rootUrl = document.getElementById('GoldDeluxeRoot') ? document.getElementById('GoldDeluxeRoot').value : '/';
 
 
 fanex.goldDeluxeSetting.config([ '$httpProvider', function ($httpProvider) {

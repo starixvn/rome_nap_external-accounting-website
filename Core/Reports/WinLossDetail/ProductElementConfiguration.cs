@@ -20,6 +20,9 @@
         [ConfigurationProperty("isspecial", IsRequired = false, DefaultValue = false)]
         public bool IsSpecial => (bool) base["isspecial"];
 
+        [ConfigurationProperty("isHideInactiveProduct", IsRequired = false, DefaultValue = false)]
+        public bool IsHideInactiveProduct => (bool)base["isHideInactiveProduct"];
+
         [ConfigurationProperty("showForGroups", IsRequired = false, DefaultValue = "*")]
         public string ShowForGroups => (string) base["showForGroups"];
 
