@@ -302,6 +302,7 @@
     <Compile Include="Context\ExternalAccountAuthenticate.cs" />
     <Compile Include="Context\NoCaptchaSectionConfiguration.cs" />
     <Compile Include="Helpers\GoogleAnalyticHepler.cs" />
+    <Compile Include="Helpers\TrackJSHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\FilterController.cs" />
     <Compile Include="Reports\WinLossDetail\ProductCollectionConfiguration.cs" />
