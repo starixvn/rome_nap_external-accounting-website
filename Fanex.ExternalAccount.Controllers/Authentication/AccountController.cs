@@ -147,7 +147,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 var result = _userService.Login(
                     model.UserName,
                     password,
-                    GetRequestInfo(),
+                    GetRequestInfo(model.BrowserSize),
                     out custId,
                     out onuserId,
                     out isIntAcc);
@@ -479,14 +479,14 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             _currentSession.FromSystem = 3;
         }
 
-        private Request GetRequestInfo()
+        private Request GetRequestInfo(string browserSize)
         {
             var userAgent = Request.UserAgent ?? string.Empty;
             var userAgentParser = Parser.GetDefault();
             var clientInfo = userAgentParser.Parse(userAgent);
             var clientUserAgent = clientInfo.UserAgent;
 
-            var browser = $"{clientUserAgent.Family} {clientUserAgent.Major}.{clientUserAgent.Minor}.{clientUserAgent.Patch ?? "0"}";
+            var browser = $"{clientUserAgent.Family} {clientUserAgent.Major}.{clientUserAgent.Minor}.{clientUserAgent.Patch ?? "0"}, {browserSize}";
             var operateSystem = $"{clientInfo.OS.Family} {clientInfo.OS.Major ?? "0"}.{clientInfo.OS.Minor ?? "0"}.{clientInfo.OS.Patch ?? "0"}";
             var device = $"{clientInfo.Device.Family}, IsCrawler: {clientInfo.Device.IsSpider}";
 

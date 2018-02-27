@@ -1,10 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Core.Helpers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Configuration;
-    using System.Linq;
-    using System.Text;
     using System.Web;
     using Context;
 
@@ -24,7 +20,10 @@
             }
 
             return new HtmlString(@"<!-- BEGIN TRACKJS -->
-                                    <script type='text/javascript'>window._trackJs = { token: '"+ TrackJSToken + "', userId: '"+ CurrentSession.Instance.UserName + @"' };</script>
+                                    <script type='text/javascript'>window._trackJs = { token: '"
+                                    + TrackJSToken
+                                    + "', application: 'EXT-NAP', userId: '"
+                                    + CurrentSession.Instance.UserName + @"' };</script>
                                     <script type='text/javascript' src='" + TrackJSUrl + @"'></script>
                                 <!-- END TRACKJS -->");
         }

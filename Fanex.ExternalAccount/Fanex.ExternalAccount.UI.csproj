@@ -2953,6 +2953,10 @@
       <Project>{016F274C-1F76-450B-B80D-E7FB59BE6A2B}</Project>
       <Name>Fanex.ExternalAccount.Utilities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.ViewModel\Fanex.ExternalAccount.ViewModel.csproj">
+      <Project>{c8cb1e7b-e68a-4065-ae30-3f8fb371974a}</Project>
+      <Name>Fanex.ExternalAccount.ViewModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LeftPanel\LeftPanel.csproj">
       <Project>{6ED9BED7-1BCE-4991-B425-740DB8C56BBD}</Project>
       <Name>LeftPanel</Name>
