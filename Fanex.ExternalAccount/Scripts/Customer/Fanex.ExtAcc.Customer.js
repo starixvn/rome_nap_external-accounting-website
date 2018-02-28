@@ -62,6 +62,10 @@
     Suspended: false,
     TransferCondition: false,
 
+    landscapeHeight: 260,
+    portraitHeight: 500,
+    shouldCalculatePopupHeight: true,
+
     URL: '',
     MultipleDblCommError: '',
     Usernames: '',
@@ -216,6 +220,27 @@
         Fanex.ExtAcc.InitSuggestion();
 
         $(".icon-filter").click($this.showHideFilter);
+
+        $(window).bind('orientationchange', function (e) {
+            var calculatePopupheight = Fanex.ExtAcc.Customer.shouldCalculatePopupHeight && isMobile.phone;
+            if (!calculatePopupheight) {
+                return;
+            }
+
+            var height;
+            var isLandscape = window.matchMedia("(orientation: landscape)").matches;
+            if (isMobile.android.phone) {
+                height = isLandscape ? Fanex.ExtAcc.Customer.portraitHeight : Fanex.ExtAcc.Customer.landscapeHeight;
+            }
+            else {
+                height = isLandscape ? Fanex.ExtAcc.Customer.landscapeHeight : Fanex.ExtAcc.Customer.portraitHeight;
+            }
+
+            var dialog = top.$('.ui-dialog');
+            dialog.height((height + 34) + 'px');
+
+            top.$("#windowPopup").css("height", height + "px");
+        });
     },
     hideFilter: false,
     showHideFilter: function () {

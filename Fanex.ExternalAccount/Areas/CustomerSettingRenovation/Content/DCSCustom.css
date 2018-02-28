@@ -3,6 +3,7 @@
     border-color: #999;
     background-color: #e6e9f0;
     margin: 2px 20px 2px 2px;
+    min-width: 568px;
 }
 
 .block__header {
