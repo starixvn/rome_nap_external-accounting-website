@@ -1184,6 +1184,7 @@
     <Content Include="assets\styles\images\lockicon.png" />
     <Content Include="assets\styles\images\pointer.png" />
     <Content Include="assets\styles\images\pointerDown.png" />
+    <Content Include="assets\styles\images\sample_test_network_speed.jpg" />
     <Content Include="assets\styles\images\sprites.png" />
     <Content Include="assets\styles\images\Success.gif" />
     <Content Include="assets\styles\images\tick.png" />
@@ -2923,6 +2924,7 @@
     <Content Include="Web.staging.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Home\NWSpeed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">

@@ -64,5 +64,16 @@ namespace Fanex.ExternalAccount.Controllers.Home
 
             return ViewBase();
         }
+
+        public ActionResult NWSpeed()
+        {
+            if (CurrentSession.IsLogin
+                && User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Login", "Account");
+        }
     }
 }
