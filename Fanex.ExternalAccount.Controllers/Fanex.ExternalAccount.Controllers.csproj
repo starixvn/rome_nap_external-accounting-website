@@ -276,6 +276,7 @@
     <Compile Include="Customer\SportsbookSettingController.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusController.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Home\NetworkSpeedController.cs" />
     <Compile Include="Statement\StatementController.cs" />
     <Compile Include="UserControl\FunctionController.cs" />
     <Compile Include="UserControl\GroupController.cs" />

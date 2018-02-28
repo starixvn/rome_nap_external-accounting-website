@@ -20,6 +20,7 @@ using System.Web.Security;
 using CaptchaMvc.HtmlHelpers;
 using Fanex.CustomerSetting.Module.Core.Web;
 using Fanex.ExternalAccount.Core.Context;
+using Fanex.ExternalAccount.Core.Helpers;
 using Fanex.ExternalAccount.DTO;
 using Fanex.ExternalAccount.DTO.UserControl;
 using Fanex.ExternalAccount.Service.Impl.Login;
@@ -147,7 +148,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
                 var result = _userService.Login(
                     model.UserName,
                     password,
-                    GetRequestInfo(model.BrowserSize),
+                    RequestHelper.GetRequestInfo(model.BrowserSize),
                     out custId,
                     out onuserId,
                     out isIntAcc);
@@ -477,28 +478,6 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             _currentSession.CurrencyGroup = group.GroupName;
             _currentSession.IsITAdmin = group.GroupID == 1;
             _currentSession.FromSystem = 3;
-        }
-
-        private Request GetRequestInfo(string browserSize)
-        {
-            var userAgent = Request.UserAgent ?? string.Empty;
-            var userAgentParser = Parser.GetDefault();
-            var clientInfo = userAgentParser.Parse(userAgent);
-            var clientUserAgent = clientInfo.UserAgent;
-
-            var browser = $"{clientUserAgent.Family} {clientUserAgent.Major}.{clientUserAgent.Minor}.{clientUserAgent.Patch ?? "0"}, {browserSize}";
-            var operateSystem = $"{clientInfo.OS.Family} {clientInfo.OS.Major ?? "0"}.{clientInfo.OS.Minor ?? "0"}.{clientInfo.OS.Patch ?? "0"}";
-            var device = $"{clientInfo.Device.Family}, IsCrawler: {clientInfo.Device.IsSpider}";
-
-            return new Request
-            {
-                Browser = browser,
-                CountryCode = _currentContext.CountryCode,
-                DomainName = _currentContext.DomainName,
-                IP = _currentContext.Ip4Address,
-                NetSessionId = _currentSession.NetSessionId,
-                Platform = $"{operateSystem}, Device: {device}"
-            };
         }
     }
 }

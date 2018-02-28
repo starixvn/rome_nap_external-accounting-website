@@ -2924,7 +2924,7 @@
     <Content Include="Web.staging.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Home\NWSpeed.cshtml" />
+    <Content Include="Views\NetworkSpeed\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
