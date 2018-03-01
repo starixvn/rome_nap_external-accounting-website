@@ -188,7 +188,7 @@
                     </div>
                     <div class="edit-item" data-ng-repeat="item in setting.details">
                         <div data-ng-hide="item.isHide || !item.visibled" class="settingEdit" 
-                             data-ng-click="{{item.key}}()" >{{item.value}}</div>
+                             data-ng-click="{{item.key}}()" ><span class="icon-bullet"></span><span class="product-name">{{item.value}}</span></div>
                     </div>                    
                     <ul id="minMax" class="list-link" style="display: none">
                         <li class="detail" data-ng-repeat="minMaxPt in setting.minMaxPts">

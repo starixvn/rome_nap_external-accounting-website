@@ -361,6 +361,18 @@ body {
 /* Detail tab */
 
 .detail-tab {
+    .settingEdit {
+        .product-name {
+            text-decoration: underline;
+        }
+        .icon-bullet:before {
+            content: '\2022';
+            margin-right: 8px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+    }
+
     .subTab-parent {
         display: inline-block;
         width: 100%;        
