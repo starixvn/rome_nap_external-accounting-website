@@ -31,7 +31,7 @@
             if (authorizationService.HasReadPermissionOnFunctions(
                 visibleBetSettingPermissions.Values, actorId))
             {
-                setting.Details.Add(new ObjectInfo("BetSetting", "Edit Betting Limit"));
+                setting.Details.Add(new ObjectInfo("BetSetting", "Betting Limit"));
             }
 
             return setting;

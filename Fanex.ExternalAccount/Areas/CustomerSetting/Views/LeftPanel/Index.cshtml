@@ -186,11 +186,10 @@
                         <div data-ng-click="ViewSubTab('sub-master-pt')" id="sub-master-pt" class="subTab"
                              data-ng-hide="model.personalInfo.roleId.value != 1">Master PT</div>
                     </div>
-                    <ul id="edit" class="list-link">
-                        <li class="detail" data-ng-repeat="item in setting.details">
-                            <a data-ng-hide="item.isHide || !item.visibled" data-ng-click="{{item.key}}();" href="javascript:;">{{item.value}}</a>
-                        </li>
-                    </ul>
+                    <div class="edit-item" data-ng-repeat="item in setting.details">
+                        <div data-ng-hide="item.isHide || !item.visibled" class="settingEdit" 
+                             data-ng-click="{{item.key}}()" >{{item.value}}</div>
+                    </div>                    
                     <ul id="minMax" class="list-link" style="display: none">
                         <li class="detail" data-ng-repeat="minMaxPt in setting.minMaxPts">
                             <a data-ng-hide="minMaxPt.isHide || !minMaxPt.visibled" data-ng-click="{{minMaxPt.key}}(); collapseSidebar();" href="javascript:;">{{minMaxPt.value}}</a>

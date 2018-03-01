@@ -303,17 +303,17 @@
         {
             var details = new List<ObjectInfo>
             {
-                new ObjectInfo("Info", "Edit Info"),
-                new ObjectInfo("PT", "Edit Position Taking")
+                new ObjectInfo("Info", "Info"),
+                new ObjectInfo("PT", "Position Taking")
             };
 
             if (roleId.IsNotMember())
             {
                 details.Add(new ObjectInfo("AddNew", "Add New"));
-                details.Add(new ObjectInfo("Transfer", "Edit Transfer Condition"));
+                details.Add(new ObjectInfo("Transfer", "Transfer Condition"));
             }
 
-            details.Add(new ObjectInfo("Racing", "Edit Racing"));
+            details.Add(new ObjectInfo("Racing", "Racing"));
 
             AddCasinoEditLink(customerStatus, details);
             AddLiveCasinoEditLink(customerStatus, details);
@@ -332,7 +332,7 @@
         {
             if (!customerStatus.HideCricket)
             {
-                details.Add(new ObjectInfo("Cricket", "Edit Cricket"));
+                details.Add(new ObjectInfo("Cricket", "Cricket"));
             }
         }
 
@@ -340,7 +340,7 @@
         {
             if (!customerStatus.HideCockfighting)
             {
-                details.Add(new ObjectInfo("Cockfighting", "Edit Cockfighting"));
+                details.Add(new ObjectInfo("Cockfighting", "Cockfighting"));
             }
         }
 
@@ -348,7 +348,7 @@
         {
             if (ProductSettings.IsShowKeno)
             {
-                details.Add(new ObjectInfo("Keno", "Edit Keno"));
+                details.Add(new ObjectInfo("Keno", "Keno"));
             }
         }
 
@@ -356,7 +356,7 @@
         {
             if (!customerStatus.DisableSportsbook2)
             {
-                details.Add(new ObjectInfo("Sportsbook2", "Edit Sportsbook 2"));
+                details.Add(new ObjectInfo("Sportsbook2", "Sportsbook 2"));
             }
         }
 
@@ -364,7 +364,7 @@
         {
             if (!customerStatus.HideColossusBets)
             {
-                details.Add(new ObjectInfo("ColossusBets", "Edit Colossus Bets"));
+                details.Add(new ObjectInfo("ColossusBets", "Colossus Bets"));
             }
         }
 
@@ -372,7 +372,7 @@
         {
             if (!customerStatus.UplineStatus.HideGoldDeluxe)
             {
-                details.Add(new ObjectInfo("GoldDeluxe", "Edit Gold Deluxe"));
+                details.Add(new ObjectInfo("GoldDeluxe", "Gold Deluxe"));
             }
         }
 
@@ -381,7 +381,7 @@
             if (customerStatus.UplineStatus.SyncLiveCasino
                 || customerStatus.RoleId.IsSuper())
             {
-                details.Add(new ObjectInfo("LiveCasino", "Edit Live Casino"));
+                details.Add(new ObjectInfo("LiveCasino", "Live Casino"));
             }
         }
 
@@ -390,7 +390,7 @@
             if (customerStatus.UplineStatus.SyncCasino
                 || customerStatus.RoleId.IsSuper())
             {
-                details.Add(new ObjectInfo("Casino", "Edit Casino"));
+                details.Add(new ObjectInfo("Casino", "Casino"));
             }
         }
 
@@ -402,7 +402,7 @@
 
             if (!hideVirtualSports)
             {
-                details.Add(new ObjectInfo("VirtualSports", "Edit Virtual Sports"));
+                details.Add(new ObjectInfo("VirtualSports", "Virtual Sports"));
             }
         }
 
@@ -521,7 +521,7 @@
         }
 
         internal static ObjectInfo GetEditSettingLink(string productNameNoSpace, string productName)
-            => new ObjectInfo { Key = productNameNoSpace, Value = $"Edit {productName}" };
+            => new ObjectInfo { Key = productNameNoSpace, Value = $"{productName}" };
 
         internal static bool IsProductVisibledToSite(DataTable productStatusTable, int productId)
             => productStatusTable.Select($"ProductID = {productId}").Length > 0
