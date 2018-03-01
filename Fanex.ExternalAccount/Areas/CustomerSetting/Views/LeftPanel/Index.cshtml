@@ -186,25 +186,30 @@
                         <div data-ng-click="ViewSubTab('sub-master-pt')" id="sub-master-pt" class="subTab"
                              data-ng-hide="model.personalInfo.roleId.value != 1">Master PT</div>
                     </div>
-                    <div class="edit-item" data-ng-repeat="item in setting.details">
-                        <div data-ng-hide="item.isHide || !item.visibled" class="settingEdit" 
-                             data-ng-click="{{item.key}}()" ><span class="icon-bullet"></span><span class="product-name">{{item.value}}</span></div>
-                    </div>                    
-                    <ul id="minMax" class="list-link" style="display: none">
-                        <li class="detail" data-ng-repeat="minMaxPt in setting.minMaxPts">
-                            <a data-ng-hide="minMaxPt.isHide || !minMaxPt.visibled" data-ng-click="{{minMaxPt.key}}(); collapseSidebar();" href="javascript:;">{{minMaxPt.value}}</a>
-                        </li>
-                    </ul>
-                    <ul id="superPT" class="list-link" style="display: none">
-                        <li class="detail" data-ng-repeat="superPt in setting.superPts">
-                            <a data-ng-hide="superPt.isHide || !superPt.visibled" data-ng-click="Super{{superPt.key}}(); collapseSidebar();" href="javascript:;">{{superPt.value}}</a>
-                        </li>
-                    </ul>
-                    <ul id="masterPT" class="list-link" style="display: none">
-                        <li class="detail" data-ng-repeat="masterPt in setting.masterPts">
-                            <a data-ng-hide="masterPt.isHide || !masterPt.visibled" data-ng-click="Master{{masterPt.key}}(); collapseSidebar();" href="javascript:;">{{masterPt.value}}</a>
-                        </li>
-                    </ul>
+                    <div  id="edit" >
+                        <div class="edit-item" data-ng-repeat="item in setting.details">
+                            <div data-ng-hide="item.isHide || !item.visibled" class="settingEdit"
+                                 data-ng-click="{{item.key}}();"><span class="icon-bullet"></span><span class="product-name">{{item.value}}</span></div>
+                        </div>  
+                    </div>
+                    <div id="minMax" style="display: none">
+                        <div class="edit-item" data-ng-repeat="item in setting.minMaxPts">
+                            <div data-ng-hide="item.isHide || !item.visibled" class="settingEdit"
+                                 data-ng-click="{{item.key}}(); collapseSidebar();"><span class="icon-bullet"></span><span class="product-name">{{item.value}}</span></div>
+                        </div>
+                    </div> 
+                    <div id="superPT" style="display: none">
+                        <div class="edit-item" data-ng-repeat="item in setting.superPts">
+                            <div data-ng-hide="item.isHide || !item.visibled" class="settingEdit"
+                                 data-ng-click="{{item.key}}(); collapseSidebar();"><span class="icon-bullet"></span><span class="product-name">{{item.value}}</span></div>
+                        </div>
+                    </div>
+                    <div id="masterPT" style="display: none">
+                        <div class="edit-item" data-ng-repeat="item in setting.masterPts">
+                            <div data-ng-hide="item.isHide || !item.visibled" class="settingEdit"
+                                 data-ng-click="{{item.key}}(); collapseSidebar();"><span class="icon-bullet"></span><span class="product-name">{{item.value}}</span></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="tab-content login-tab" id="tab-3" data-ng-controller="LoginController" data-ng-init="length = loginInfo.length">
                     <div class="row">
