@@ -1155,6 +1155,7 @@
     <Content Include="assets\styles\images\lockicon.png" />
     <Content Include="assets\styles\images\pointer.png" />
     <Content Include="assets\styles\images\pointerDown.png" />
+    <Content Include="assets\styles\images\sample_test_network_speed.jpg" />
     <Content Include="assets\styles\images\sprites.png" />
     <Content Include="assets\styles\images\Success.gif" />
     <Content Include="assets\styles\images\tick.png" />
@@ -1792,6 +1793,8 @@
     <Content Include="Scripts\Fanex.Grid\ThirdParties\Numeral\numeral.min.js" />
     <Content Include="Scripts\isMobile.min.js" />
     <Content Include="Scripts\jquery.ui.touch-punch.js" />
+    <Content Include="Scripts\MultiSelect\select2.css" />
+    <Content Include="Scripts\MultiSelect\select2.js" />
     <Content Include="Scripts\_Libs\jQuery\classList.js" />
     <Content Include="Scripts\_Libs\jQuery\Core\jquery.js" />
     <Content Include="Scripts\_Libs\jQuery\Countdown\jquery.countdown.css" />
@@ -2910,6 +2913,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Shared\Unauthorized.cshtml" />
+    <Content Include="Views\NetworkSpeed\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
@@ -2943,6 +2947,10 @@
     <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
       <Project>{016F274C-1F76-450B-B80D-E7FB59BE6A2B}</Project>
       <Name>Fanex.ExternalAccount.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.ViewModel\Fanex.ExternalAccount.ViewModel.csproj">
+      <Project>{c8cb1e7b-e68a-4065-ae30-3f8fb371974a}</Project>
+      <Name>Fanex.ExternalAccount.ViewModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.ViewModel\Fanex.ExternalAccount.ViewModel.csproj">
       <Project>{c8cb1e7b-e68a-4065-ae30-3f8fb371974a}</Project>

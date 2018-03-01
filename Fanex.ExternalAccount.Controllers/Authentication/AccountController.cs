@@ -11,6 +11,7 @@
     using Core.Context;
     using CustomerSetting.Module.Core.Web;
     using DTO;
+using Fanex.ExternalAccount.Core.Helpers;
     using DTO.UserControl;
     using Logging.Extensions.Web;
     using Service.Impl.Login;
@@ -19,6 +20,7 @@
     using ViewModel.Account;
     using CurrentContext = Core.Context.CurrentContext;
     using CurrentSession = Core.Context.CurrentSession;
+using UAParser;
 
     public class AccountController : DefaultCaptchaController
     {
@@ -34,6 +36,8 @@
             _userService = new LoginService();
             _nocaptcha = NoCaptchaSectionConfiguration.Instance;
         }
+
+
 
         [HttpGet]
         public ActionResult Login()
@@ -99,15 +103,7 @@
             var result = _userService.Login(
                 model.UserName,
                 rawPassword,
-                new Request
-                {
-                    Browser = Request.Browser.Browser,
-                    CountryCode = _currentContext.CountryCode,
-                    DomainName = _currentContext.DomainName,
-                    IP = _currentContext.Ip4Address,
-                    NetSessionId = _currentSession.NetSessionId,
-                    Platform = Request.Browser.Platform
-                },
+                    RequestHelper.GetRequestInfo(model.BrowserSize),
                 out custId,
                 out onuserId,
                 out isInternalAdmin);

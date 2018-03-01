@@ -43,5 +43,6 @@
         @Scripts.Render("~/bundles/racingsetting")
         <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
         @RenderSection("scripts", required: false)
+        @Fanex.ExternalAccount.Core.Helpers.GoogleAnalyticHepler.Render()
     </body>
 </html>

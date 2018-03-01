@@ -33,6 +33,7 @@ Fanex.ExtAcc.Account = {
 
         if (document.forms.length > 0) {
             $('#UserName').focus();
+            $('#BrowserSize').val(Fanex.ExtAcc.Account.GetBrowserSize());
             document.forms[0].onsubmit = function () {
                 var errorMessage = "";
                 var errorField;
@@ -169,6 +170,17 @@ Fanex.ExtAcc.Account = {
 
     Logout: function () {
         location.href = resolveClientUrl("Account/LogOff");
+    },
+
+    GetBrowserSize: function () {
+        var w = window,
+        d = document,
+        e = d.documentElement,
+        g = d.getElementsByTagName('body')[0],
+        x = w.innerWidth || e.clientWidth || g.clientWidth,
+        y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+        return x + 'x' + y;
     }
 }
 

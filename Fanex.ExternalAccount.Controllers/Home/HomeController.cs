@@ -1,6 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Home
 {
     using System;
+using System.Collections.Generic;
+using System.Configuration;
     using System.Web.Mvc;
     using Core.Context;
     using Fanex.ExternalAccount.Core.Base;
@@ -20,5 +22,9 @@
 
             return View();
         }
+
+        
+
+        //private void LogUserNWSpeed()
     }
 }

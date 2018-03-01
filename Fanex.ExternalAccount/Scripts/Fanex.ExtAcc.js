@@ -477,8 +477,22 @@ Fanex.ExtAcc = {
         });
 
         //Fanex.ExtAcc.InitSuggestion('txtLeftPanelUserName');
-    },
 
+        setTimeout(Fanex.ExtAcc.CalculateUserConnectionSpeed, 8000);
+    },
+    CalculateUserConnectionSpeed: function () {
+        var iframe = document.getElementById('connection-speed');
+
+        if (typeof (iframe) == 'undefined'
+            || iframe == null)
+        {
+            iframe = document.createElement('iframe');
+            iframe.id = 'connection-speed';
+            iframe.style.display = 'none';
+            iframe.src = resolveClientUrl("NetworkSpeed/Index");
+            document.body.appendChild(iframe);
+        }
+    },
     ViewUser: function (username, pageIndex) {
         this.BlockUI();
 

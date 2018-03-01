@@ -26,6 +26,8 @@ namespace Fanex.ExternalAccount.ViewModel.Account
 
         public string Code { get; set; }
 
+        public string BrowserSize { get; set; }
+
         public string __RequestVerificationToken { get; set; }
 
         public bool IsVisibleCaptcha => LoginAttempt >= ThresholdFailToShowingCaptcha;

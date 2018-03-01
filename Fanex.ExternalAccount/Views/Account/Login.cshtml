@@ -17,6 +17,7 @@
 <body>
     @using (Html.BeginForm())
     {
+        @Html.HiddenFor(m => m.BrowserSize)
         <div class="block-login">
             <div class="row">
                 <div class="login-logo icon-outline-lock"></div>
