@@ -16,6 +16,9 @@
             : ConfigurationManager.AppSettings["TrackConnectionSpeedGroupIds"]
                 .Split(',')
                 .Select(groupIdString => Converter.ToInt(groupIdString));
+        private readonly IEnumerable<string> IngoredCalculatingNWSpeedAdminNames = string.IsNullOrEmpty(ConfigurationManager.AppSettings["IngoredCalculatingNWSpeedAdminNames"])
+            ? Enumerable.Empty<string>()
+            : ConfigurationManager.AppSettings["IngoredCalculatingNWSpeedAdminNames"].Split(',');
 
         private const string LoggedNWSpeedAdminName = "starix";
         private const int ITGroupId = 1;
@@ -48,12 +51,19 @@
 
         private bool IsNeedToCalculateUserConnectionSpeed()
         {
+            var adminUsername = CurrentSession.UserName;
             foreach (var groupId in CalculatingNWSpeedGroupIds)
             {
                 if (groupId > 0 && CurrentSession.GroupId == groupId)
                 {
                     if (groupId == ITGroupId
-                        && !CurrentSession.UserName.StartsWith(LoggedNWSpeedAdminName, StringComparison.InvariantCultureIgnoreCase))
+                        && !adminUsername.StartsWith(LoggedNWSpeedAdminName, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    if(IngoredCalculatingNWSpeedAdminNames
+                        .Any(adminName => string.Compare(adminName, adminUsername, StringComparison.OrdinalIgnoreCase) == 0))
                     {
                         continue;
                     }
