@@ -11,6 +11,8 @@
 // </history>
 
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using Fanex.CustomerSetting.Security.Authenticate;
@@ -30,7 +32,7 @@ namespace Fanex.ExternalAccount.Controllers.Home
     public class HomeController : BaseController
     {
         private IMaintenanceService _maintenanceService = new MaintenanceService();
-        
+
         /// <summary>
         /// Home page.
         /// </summary>
@@ -64,5 +66,9 @@ namespace Fanex.ExternalAccount.Controllers.Home
 
             return ViewBase();
         }
+
+        
+
+        //private void LogUserNWSpeed()
     }
 }

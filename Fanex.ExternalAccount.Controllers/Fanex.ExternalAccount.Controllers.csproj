@@ -264,6 +264,10 @@
       <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.1.8\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="UAParser, Version=2.1.0.0, Culture=neutral, PublicKeyToken=f7377bf021646069, processorArchitecture=MSIL">
+      <HintPath>..\packages\UAParser.2.1.0.0\lib\net40-Client\UAParser.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\AccountController.cs" />
@@ -272,6 +276,7 @@
     <Compile Include="Customer\SportsbookSettingController.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusController.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Home\NetworkSpeedController.cs" />
     <Compile Include="Statement\StatementController.cs" />
     <Compile Include="UserControl\FunctionController.cs" />
     <Compile Include="UserControl\GroupController.cs" />

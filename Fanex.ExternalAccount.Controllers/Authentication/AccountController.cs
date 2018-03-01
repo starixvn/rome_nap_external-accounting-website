@@ -20,6 +20,7 @@ using System.Web.Security;
 using CaptchaMvc.HtmlHelpers;
 using Fanex.CustomerSetting.Module.Core.Web;
 using Fanex.ExternalAccount.Core.Context;
+using Fanex.ExternalAccount.Core.Helpers;
 using Fanex.ExternalAccount.DTO;
 using Fanex.ExternalAccount.DTO.UserControl;
 using Fanex.ExternalAccount.Service.Impl.Login;
@@ -30,6 +31,7 @@ using Fanex.Logging.Extensions.Web;
 using ONEbook.UM.Models;
 using ONEbook.UM.Services;
 using ONEbook.UM.Services.Impl;
+using UAParser;
 
 namespace Fanex.ExternalAccount.Controllers.Authentication
 {
@@ -56,6 +58,8 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             _maintenanceService = new MaintenanceService();
             _nocaptcha = NoCaptchaSectionConfiguration.Instance;
         }
+
+
 
         /// <summary>
         /// Gets login page.
@@ -137,21 +141,14 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             {
                 FormsAuthentication.SetAuthCookie(model.UserName, false);
                 Core.Context.CurrentContext.LoginErrorMessage = string.Empty;
+                
                 int custId = 0, onuserId = 0;
                 bool isIntAcc = true;
 
                 var result = _userService.Login(
                     model.UserName,
                     password,
-                    new Request()
-                    {
-                        Browser = Request.Browser.Browser,
-                        CountryCode = _currentContext.CountryCode,
-                        DomainName = _currentContext.DomainName,
-                        IP = _currentContext.Ip4Address,
-                        NetSessionId = _currentSession.NetSessionId,
-                        Platform = Request.Browser.Platform
-                    },
+                    RequestHelper.GetRequestInfo(model.BrowserSize),
                     out custId,
                     out onuserId,
                     out isIntAcc);
