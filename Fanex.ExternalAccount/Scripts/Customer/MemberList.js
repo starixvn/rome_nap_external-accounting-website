@@ -120,15 +120,6 @@
     var has3rdParty = false;
     if (agentSyncCasino) {
         has3rdParty = true;
-
-                        Fanex.ExtAcc.Form.ShowFrame(
-                            resolveClientUrl('CustomerSetting/Casino/Member/EditMember?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.agentId + '&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>',
-                            1064,
-                            Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, null, 1);
-                        Fanex.ExtAcc.Form.ShowFrame(
-                            resolveClientUrl('CustomerSetting/Casino/Member/EditMember?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.agentId + '&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>',
-                            1064,
-                            Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, null, 1);
         itemsMember.casino = {
             name: "Casino",
             className: syncCasino

@@ -264,18 +264,11 @@
 
     if (!isHideKeno) {
         has3rdParty = true;
-                    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
-                    Fanex.ExtAcc.Form.ShowFrame(
-                        resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>',
-                        900,
-                        Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
-                        false,
-                        null, 1);
         itemsMaster.keno = {
             name: "Keno",
             className: disableKeno ? "iconDisableEdit" : "iconEnableEdit",
             callback: function () {
-                    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
+                Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                     Fanex.ExtAcc.Form.ShowFrame(
@@ -383,19 +376,20 @@
 
     if (has3rdParty)
         itemsMaster.separator2 = "-----";
-    itemsMaster.editInfo = {
-        name: "Edit Info",
-        className: "iconEnableEdit editInfoBg",
-        callback: function (key, opt) {
-            Fanex.ExtAcc.Customer.UserId = custId;
-            Fanex.ExtAcc.Customer.IsMultiple = false;
-            Fanex.ExtAcc.Form.Show(
-                resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
-                500,
-                Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
-                false);
+        itemsMaster.editInfo = {
+            name: "Edit Info",
+            className: "iconEnableEdit editInfoBg",
+            callback: function (key, opt) {
+                Fanex.ExtAcc.Customer.UserId = custId;
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Form.Show(
+                    resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                    500,
+                    Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                    false);
         }
-    };
+        };
+
     itemsMaster.changePassword = {
         name: "Reset Password",
         className: "iconEnableEdit editInfoBg",

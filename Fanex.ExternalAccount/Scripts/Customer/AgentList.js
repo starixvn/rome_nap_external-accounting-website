@@ -230,7 +230,6 @@
         itemsAgent[menuId] = {
             name: menuName,
             className: !isSynced ? "iconUnsyncEdit" : (isDisabled == true ? "iconDisableEdit" : "iconEnableEdit"),
-                    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
             callback: function () {
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
