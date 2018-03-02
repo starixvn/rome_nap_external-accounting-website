@@ -2808,6 +2808,24 @@
     <Content Include="assets\styles\pages\reports\winloss-detail.scss" />
     <Content Include="bundleconfig.json" />
     <Content Include="assets\styles\pages\account\security-code.scss" />
+    <Content Include="assets\bundles\common.min.js.map">
+      <DependentUpon>common.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\login\login.min.js.map">
+      <DependentUpon>login.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\choosegroup\choosegroup.min.js.map">
+      <DependentUpon>choosegroup.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\winlossdetail\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\dailywinloss\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\statement\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -3015,11 +3033,12 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>false</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58481</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl></IISUrl>
+          <IISUrl>
+          </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

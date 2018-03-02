@@ -6,7 +6,8 @@
       "Scripts/Validators.js",
       "Scripts/Account/Fanex.ExtAcc.Account.js",
       "Scripts/isMobile.min.js"
-    ]
+    ],
+    "sourceMap": true
   },
   {
     "outputFileName": "assets/bundles/login/login.css",
@@ -16,7 +17,8 @@
       "assets/styles/base/Validators.css",
       "assets/styles/pages/account/login.css",
       "Areas/CustomerSetting/Views/SylouCaptcha/Styles/Index.css"
-    ]
+    ],
+    "sourceMap": true
   },
   {
     "outputFileName": "assets/bundles/common.css",
@@ -39,7 +41,8 @@
       "assets/styles/pages/reports/daily-winloss.css",
       "assets/styles/pages/reports/winloss-detail.css",
       "assets/styles/pages/customer/pt-engine.css"
-    ]
+    ],
+    "sourceMap": true
   },
   {
     "outputFileName": "assets/bundles/common.js",
@@ -73,7 +76,8 @@
       "Scripts/isMobile.min.js",
       "Scripts/knockout.min-2.0.js",
       "Scripts/Fanex.ExtAcc.Utils.js"
-    ]
+    ],
+    "sourceMap": true
   },
   {
     "outputFileName": "assets/bundles/choosegroup/choosegroup.css",
@@ -82,7 +86,8 @@
       "assets/styles/base/Validators.css",
       "Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css",
       "assets/styles/pages/account/external-group.css"
-    ]
+    ],
+    "sourceMap": true
   },
   {
     "outputFileName": "assets/bundles/choosegroup/choosegroup.js",
@@ -102,7 +107,8 @@
       "Scripts/Fanex.ExtAcc.Form.js",
       "Scripts/Manage/Fanex.ExtAcc.User.js"
 
-    ]
+    ],
+    "sourceMap": true
   },
   {
     "outputFileName": "assets/bundles/winlossdetail/index.js",
@@ -110,13 +116,15 @@
       "Scripts/monthPicker/monPickr-0.0.1.js",
       "Scripts/Combobox/Combobox.js",
       "Scripts/Reports/Fanex.ExtAcc.WinLossDetail.js"
-    ]
+    ],
+    "sourceMap": true
   },
   {
     "outputFileName": "assets/bundles/dailywinloss/index.js",
     "inputFiles": [
       "Scripts/Reports/Fanex.ExtAcc.DailyWinLoss.js"
-    ]
+    ],
+    "sourceMap": true
   },
   {
     "outputFileName": "assets/bundles/statement/index.js",
@@ -124,7 +132,8 @@
       "Scripts/isMobile.min.js",
       "Areas/Statement/Views/Report/Scripts/StatementReportManager.js",
       "Scripts/Statement/Fanex.ExtAcc.Statement.js"
-    ]
+    ],
+    "sourceMap": true
   }
 
 ]
