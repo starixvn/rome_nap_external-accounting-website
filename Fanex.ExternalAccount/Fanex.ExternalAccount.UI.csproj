@@ -1152,6 +1152,8 @@
     <Content Include="assets\styles\images\info.gif" />
     <Content Include="assets\styles\images\info.png" />
     <Content Include="assets\styles\images\loading.gif" />
+    <Content Include="assets\styles\images\loading1.gif" />
+    <Content Include="assets\styles\images\loading2.gif" />
     <Content Include="assets\styles\images\lockicon.png" />
     <Content Include="assets\styles\images\pointer.png" />
     <Content Include="assets\styles\images\pointerDown.png" />
