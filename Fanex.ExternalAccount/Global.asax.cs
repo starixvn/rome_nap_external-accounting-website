@@ -117,10 +117,7 @@
 
         protected void Application_BeginRequest()
         {
-            if (AppSettings.IsUAT)
-            {
-                Context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            }
+            Context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
         }
 
         private static string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair) =>
