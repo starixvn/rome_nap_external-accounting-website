@@ -55,7 +55,15 @@ body {
         }
 
         @media screen and (min-device-width: 767px) {
-            color: $link-color;     
+            color: $link-color; 
+        }
+
+        &:hover {
+            color: #7aacf7;
+
+            @media screen and (min-device-width: 767px) {
+                color: $link-color-hover; 
+            }
         }
     }
     
@@ -345,7 +353,10 @@ body {
     color: #60a0ff;
 
     @media screen and (min-device-width: 767px) {
-        color: $link-color;     
+        color: $link-color;  
+        &:hover {
+            color: $link-color-hover;
+        }   
     }
 }
 .setting-enable-item {
