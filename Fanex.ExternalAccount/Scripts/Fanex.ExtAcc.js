@@ -246,7 +246,7 @@ Fanex.ExtAcc = {
             $('#windowPopup').scrollTop(0);
             $('#contentSplitter').scrollTop(0);
             $.blockUI({
-                message: '<img src="' + resolveClientUrl('Assets/styles/Images/Loading1.gif') + '" />',
+                message: '<img src="' + resolveClientUrl('Assets/styles/Images/loading3.gif') + '" />',
                 onBlock: function () {
                     Fanex.ExtAcc.BlockedUI = true;
                 },
