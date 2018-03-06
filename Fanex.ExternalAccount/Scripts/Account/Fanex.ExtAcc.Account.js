@@ -142,7 +142,7 @@ Fanex.ExtAcc.Account = {
         }
     },
     GetValidateImage: function () {
-        $("#imgCode").attr("src", resolveClientUrl('Assets/styles/Images/loading3.gif'));
+        $("#imgCode").attr("src", resolveClientUrl('Assets/styles/Images/loading.gif'));
 
         var timeout = setTimeout(function () {
             clearTimeout(timeout);
