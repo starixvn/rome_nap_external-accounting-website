@@ -192,6 +192,10 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.0-beta08\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTEngine.1.0.4.5\lib\net40\Fanex.PTEngine.dll</HintPath>
       <Private>True</Private>
@@ -305,8 +309,8 @@
       <HintPath>..\packages\RabbitMQ.Client.3.5.6\lib\net40\RabbitMQ.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RemotingRef, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RemotingRef.1.0.0.15\lib\net40\RemotingRef.dll</HintPath>
+    <Reference Include="RemotingRef">
+      <HintPath>..\packages\RemotingRef.2.0.0.13\lib\net40\RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp">
@@ -374,10 +378,6 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.1.9\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="TplCore, Version=1.0.4854.17253, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\TplCore.1.0.4854.17254\lib\net40\TplCore.dll</HintPath>
       <Private>True</Private>
@@ -588,8 +588,6 @@
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Readme.txt" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Scripts\EnableStatus.js" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Scripts\EnableStatus.js" />
-    <Content Include="Areas\CustomerSetting\Views\EnableThirdPartyProductStatus\Scripts\EnableThirdPartyProductStatus.js" />
-    <Content Include="Areas\CustomerSetting\Views\EnableThirdPartyProductStatus\Styles\EnableThirdPartyProductStatus.css" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Scripts\controllers\bet-setting.controller.js" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Scripts\controllers\main.controller.js" />
     <Content Include="Areas\CustomerSetting\Views\Keno\Setting\Scripts\controllers\position-taking.controller.js" />
@@ -2410,7 +2408,6 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\OTP\Index.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\EnableThirdPartyProductStatus\Index.cshtml" />
     <None Include="Areas\GoldDeluxeSetting\Content\bootstrap.css.map" />
     <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.ttf" />

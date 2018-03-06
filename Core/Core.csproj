@@ -134,6 +134,10 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.0-beta08\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTEngine.1.0.4.5\lib\net40\Fanex.PTEngine.dll</HintPath>
       <Private>True</Private>
@@ -242,8 +246,8 @@
       <HintPath>..\packages\RabbitMQ.Client.3.5.6\lib\net40\RabbitMQ.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RemotingRef, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RemotingRef.1.0.0.15\lib\net40\RemotingRef.dll</HintPath>
+    <Reference Include="RemotingRef">
+      <HintPath>..\packages\RemotingRef.2.0.0.13\lib\net40\RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
@@ -318,8 +322,9 @@
     <Compile Include="Authorization\DCS\ProductSettingDcsFunction.cs" />
     <Compile Include="Authorization\GoldDeluxe\GoldDeluxeAuthorizationService.cs" />
     <Compile Include="Authorization\KenoCheckBelongingService.cs" />
-    <Compile Include="Authorization\ThirdPartyStatus\EnableStatusProduct.cs" />
-    <Compile Include="Authorization\ThirdPartyStatus\ProductStatusAuthorization.cs" />
+    <Compile Include="Authorization\ProductStatus\EnableStatusProduct.cs" />
+    <Compile Include="Authorization\ProductStatus\ProductStatusAuthorizeService.cs" />
+    <Compile Include="Authorization\ProductStatus\ProductStatusUser.cs" />
     <Compile Include="Base\BaseController.cs" />
     <Compile Include="Base\ControllerExtentions.cs" />
     <Compile Include="Base\CustomerBase.cs" />

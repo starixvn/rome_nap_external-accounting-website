@@ -8,6 +8,7 @@
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
     using CasinoLibrary.SBAgent;
+    using Core.Authorization.ProductStatus;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Client40;
@@ -18,6 +19,7 @@
     using Logging.Extensions.Web;
     using Module.LeftPanel.ViewModels;
     using ONEbook.UM.Filters;
+    using ProductStatus.Setting.Configuration;
     using Sunplus.Libraries.APILogger;
 
     public class MvcApplication : HttpApplication
@@ -108,6 +110,12 @@
                 .GetHttpHeaderInfo()
                 .GetHttpSessionInfo())
                 .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
+
+            var productStatusConfig = new ProductStatusConfiguration()
+                .UseAuthorizeService(new ProductStatusAuthorizeService())
+                .UseUserSession(new ProductStatusUser())
+                .SetUnAuthorizedUrl("~/AccessDenied.aspx");
+            ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
         }
 
         protected void Application_Error(object sender, EventArgs e)

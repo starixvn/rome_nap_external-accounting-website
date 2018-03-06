@@ -767,10 +767,15 @@
     };
 
     $scope.EnableThirdpartyProduct = function (productId, productName, width, height) {
-        var url_SELECT = 'ThirdPartyProductStatus\?';
-        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&custname=' + $scope.model.personalInfo.currentLevel.value + '&roleid=' + $scope.model.personalInfo.roleId.value + '&productid=' + productId;
+        var url_SELECT = 'ThirdPartyProductStatus/Index?';
+        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&custname=' + $scope.model.personalInfo.currentLevel.value + '&custRoleId=' + $scope.model.personalInfo.roleId.value + '&productid=' + productId;
         var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Update ' + productName + ' Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', width, height, false, null, 1, null);
+        //parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Update ' + productName + ' Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', width, height, false, null, 1, null);
+        alert(url);
+        //var url_SELECT = 'ThirdPartyProductStatus\?';
+        //var query = 'custid=' + $scope.model.personalInfo.custId.value + '&custname=' + $scope.model.personalInfo.currentLevel.value + '&roleid=' + $scope.model.personalInfo.roleId.value + '&productid=' + productId;
+        //var url = parent.resolveClientUrl(url_SELECT + query);
+        //parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Update ' + productName + ' Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', width, height, false, null, 1, null);
     };
 
     $scope.ViewSubTab = function (id) {

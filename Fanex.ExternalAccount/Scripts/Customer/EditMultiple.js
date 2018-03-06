@@ -9,6 +9,7 @@
     var ret = this.IdsAndNames();
     var info = this.CustomerInfo();
     // this.HideGoldDeluxe = showGoldDeluxeSetting == 0;
+    var productIds = [];
 
     if (this.CurrentLevel == this.Super) {
         menuItems = {
@@ -20,6 +21,13 @@
                     Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm?id=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName),
                         'Edit Multiple Double Commission For Losing Tickets',
                         430, 150, false, false, 1);
+                }
+            },
+            productStatusSetting: {
+                name: "Edit Multiple Product Status",
+                className: "iconEnableEdit",
+                callback: function (key, opt) {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus(productIds);
                 }
             }
         };
@@ -55,6 +63,7 @@
                     Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(4, 3, productId, productName);
                 }
             };
+            productIds.push(productId);
         }
 
         if (!this.HideVirtualSports) {
@@ -74,7 +83,7 @@
                         false, null, 1);
                 }
             };
-
+            productIds.push(8);
         }
 
         if (!this.HideGoldDeluxe) {
@@ -85,7 +94,7 @@
                     Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe(Fanex.ExtAcc.Customer.superId, 4, 3);
                 }
             };
-
+            productIds.push(12);
         }
 
         if (!this.HideColossusBet) {
@@ -102,7 +111,7 @@
                         false, null, 1);
                 }
             };
-
+            productIds.push(15);
         }
 
         if (!this.HideSportsbook2) {
@@ -184,6 +193,7 @@
                     Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(3, 2, productId, productName);
                 }
             };
+            productIds.push(productId);
         }
 
         if (!this.HideVirtualSports) {
@@ -203,7 +213,7 @@
                         false, null, 1);
                 }
             };
-
+            productIds.push(8);
         }
 
         if (!this.HideGoldDeluxe) {
@@ -214,7 +224,7 @@
                     Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe(Fanex.ExtAcc.Customer.masterId, 3, 2);
                 }
             };
-
+            productIds.push(12);
         }
 
         if (!this.HideColossusBet) {
@@ -231,7 +241,7 @@
                         false, null, 1);
                 }
             };
-
+            productIds.push(15);
         }
 
         if (!this.HideSportsbook2) {
@@ -385,6 +395,7 @@
                 }
             };
 
+            productIds.push(productId);
         }
 
         if (!this.HideVirtualSports) {
@@ -437,6 +448,7 @@
                     }
                 }
             };
+            productIds.push(8);
         }
 
         if (!this.HideGoldDeluxe) {
@@ -470,6 +482,7 @@
                     }
                 }
             };
+            productIds.push(12);
         }
 
         if (!this.HideColossusBet) {
@@ -486,6 +499,7 @@
                         false, null, 1);
                 }
             };
+            productIds.push(15);
         }
 
         if (!this.HideSportsbook2) {
@@ -535,6 +549,16 @@
                         430, 150, false, false, 1);
                 }
             };
+        }
+    }
+
+    if (productIds.length !== 0) {
+        menuItems.productStatusSetting = {
+            name: "Edit Multiple Product Status",
+            className: "iconEnableEdit",
+            callback: function (key, opt) {
+                Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus(productIds);
+            }
         }
     }
 
@@ -986,4 +1010,16 @@ window.successfulUpdatingCallback = function (isPartialUpdate, isMultipleUpdate)
         isForcingModeElement.value = "false";
         $("#targetForm").attr("action", resolveClientUrl("DCS/ViewCustomerSetting")).submit();
     }
+};
+
+Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus = function (productIds) {
+    var formData = {
+        roleId: Fanex.ExtAcc.Customer.CurrentLevel,
+        productIds: productIds,
+        custIds: Fanex.ExtAcc.Customer.Ids(),
+        custNames: Fanex.ExtAcc.Customer.Names()
+    };
+    var url = 'ThirdPartyProductStatus/MultipleView';
+    var title = 'Edit Multiple Product Status';
+    Fanex.ExtAcc.Form.Show(resolveClientUrl(url), title, 680, 580, false, false, 1, null, formData);
 };

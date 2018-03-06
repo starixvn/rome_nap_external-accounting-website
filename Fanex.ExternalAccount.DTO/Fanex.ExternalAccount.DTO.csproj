@@ -56,6 +56,10 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.0-beta08\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
       <Private>True</Private>
@@ -80,8 +84,8 @@
       <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.Interception.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RemotingRef, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RemotingRef.1.0.0.15\lib\net40\RemotingRef.dll</HintPath>
+    <Reference Include="RemotingRef">
+      <HintPath>..\packages\RemotingRef.2.0.0.13\lib\net40\RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -95,10 +99,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.1.9\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Customer\Commission.cs" />
@@ -107,9 +107,9 @@
     <Compile Include="Customer\LineInfo.cs" />
     <Compile Include="Customer\Customer.cs" />
     <Compile Include="Customer\CustomerClosedReason.cs" />
-    <Compile Include="Customer\ThirdPartyProductStatusViewModel.cs" />
     <Compile Include="Customer\Transfer.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="ProductStatusSetting\MultipleResult.cs" />
     <Compile Include="Products\ProductStatusDto.cs" />
     <Compile Include="Statement\Statement.cs" />
     <Compile Include="RecheckinStatus.cs" />

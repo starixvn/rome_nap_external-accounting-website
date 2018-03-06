@@ -100,6 +100,10 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.0-beta08\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTEngine.1.0.4.5\lib\net40\Fanex.PTEngine.dll</HintPath>
       <Private>True</Private>
@@ -164,10 +168,11 @@
       <HintPath>..\packages\OtpSharp.1.3.0.4\lib\net40\OtpSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RemotingRef, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+   <Reference Include="RemotingRef, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RemotingRef.1.0.0.15\lib\net40\RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
+
     <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
       <Private>True</Private>
@@ -188,10 +193,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.1.9\lib\net40\ThirdPartyProducts.StatusSetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Customer\IAgentService.cs" />
@@ -201,13 +202,12 @@
     <Compile Include="Customer\IMasterService.cs" />
     <Compile Include="Customer\IMemberService.cs" />
     <Compile Include="Customer\ISuperService.cs" />
-    <Compile Include="Customer\IThirdPartyProductStatusService.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Customer\Casino\CasinoManager.cs" />
     <Compile Include="Customer\CommissionService.cs" />
-    <Compile Include="Customer\ThirdPartyProductStatusService.cs" />
     <Compile Include="Login\ILoginService.cs" />
     <Compile Include="OTP\CustomerOtpService.cs" />
+    <Compile Include="ProductStatusSetting\ProductStatusSettingService.cs" />
     <Compile Include="Report\IReportService.cs" />
     <Compile Include="Report\WinLossDetailRequests.cs" />
     <Compile Include="Report\WinLossDetailService.cs" />

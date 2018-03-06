@@ -1,80 +1,108 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
+using Fanex.CustomerSetting.Module.Core.Criteria;
+using Fanex.CustomerSetting.Module.Core.Services.Impl;
+using Fanex.CustomerSetting.Module.Core.Services.Interface;
 using Fanex.CustomerSetting.Security.Authenticate;
-using Fanex.ExternalAccount.Core.Authorization.ThirdPartyStatus;
+using Fanex.ExternalAccount.Core.Authorization.ProductStatus;
 using Fanex.ExternalAccount.Core.Base;
-using Fanex.ExternalAccount.Service.Impl.Customer;
-using Fanex.ExternalAccount.Service.Interface.Customer;
-using Fanex.ExternalAccount.Utilities;
-using ThirdPartyProducts.StatusSetting.Model;
+using Fanex.ExternalAccount.Core.Reports.WinLossDetail;
+using Fanex.ExternalAccount.Core.Shared;
+using Fanex.ExternalAccount.Service.ProductStatusSetting;
+using Fanex.ExternalAccount.ViewModel.ProductStatusSetting;
+using Fanex.ProductStatus.Setting.AppResources;
+using Fanex.ProductStatus.Setting.Models;
 
 namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 {
     public class ThirdPartyProductStatusController : BaseController
     {
-        private const string AccessDeniedView = "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml";
-        private const string EnableThirdPartyProductStatusView = "~/Areas/CustomerSetting/Views/EnableThirdPartyProductStatus/Index.cshtml";
-        private readonly IThirdPartyProductStatusService thirdPartyProductStatusService;
-        private readonly ProductStatusAuthorization authenticationService;
+        private readonly ProductStatusAuthorizeService productStatusAuthorizeService;
+        private readonly ProductStatusSettingService productStatusSettingService;
 
         public ThirdPartyProductStatusController()
         {
-            thirdPartyProductStatusService = new ThirdPartyProductStatusService();
-            authenticationService = new ProductStatusAuthorization();
+            productStatusAuthorizeService = new ProductStatusAuthorizeService();
+            productStatusSettingService = new ProductStatusSettingServiceImpl();
         }
 
-        public ActionResult Index(int custId, string custName, int roleId, int productId)
+        [HttpPost]
+        public ActionResult MultipleView(MultipleViewModel viewModel)
         {
-            var isAllowed = authenticationService.HasPermission(AuthenticateAction.AuthenticationType.Read, productId);
-            if (!isAllowed)
+            viewModel.Products = GetProductList(viewModel.RoleId, viewModel.ProductIds);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [AntiXSRFFilter]
+        public ActionResult MultipleUpdate(MultipleUpdateViewModel viewModel)
+        {
+            var jsonRequestBehavior = JsonRequestBehavior.DenyGet;
+
+            if (!viewModel.IsValid())
             {
-                return View(AccessDeniedView);
+                return Json(new Result(400, Resources.BadRequest), jsonRequestBehavior);
             }
 
-            return View(
-                EnableThirdPartyProductStatusView,
-                thirdPartyProductStatusService.Select(
-                    custId, 
-                    custName,
-                    roleId,
-                    productId
-                    ));
+            if (!productStatusAuthorizeService.HasPermission(AuthenticateAction.AuthenticationType.Host, viewModel.ProductId)
+                || !AuthorizationService.IsBelong())
+            {
+                return ActionDenied(Request);
+            }
+
+            var results = productStatusSettingService.MultipleUpdate(
+                    viewModel.ProductId,
+                    viewModel.CustIds,
+                    viewModel.CustNames,
+                    CurrentSession.UserId,
+                    CurrentContext.Ip4Address,
+                    viewModel.ProductStatus);
+
+            return Json(results, jsonRequestBehavior);
         }
 
-        public JsonResult Update(
-            int custId,
-            int productId,
-            string productStatus)
+        private IEnumerable<KeyValuePair<int, string>> GetProductList(int roleId, int[] productIds)
         {
-            var isAllowed = authenticationService.HasPermission(AuthenticateAction.AuthenticationType.Host, productId);
-            if (!isAllowed)
+            IServiceBase permissionService = new ServiceBase();
+
+            var checkIsInternalAdminResult =
+                permissionService.CheckCustomerIsInternalAdmin(
+                    new CheckCustomerIsInternalAdminCriteria { CustID = CurrentSession.CustId });
+
+            var isAuthorized = permissionService.CheckCustomerHasSpecialSitePermission(
+                new CheckCustomerHasSpecialSiteFunctionPermissionCriteria { CustID = CurrentSession.CustId });
+
+            var products = ProductsConfiguration.Instance.ProductCollection
+                .Where(p => !IsHiddenProduct(p) && p.ProductId != 0 && p.ProductId != 1);
+
+            products = products.Where(p => !p.IsSpecial
+                || !AdminDoesNotHavePermissionOnSpecialProduct(checkIsInternalAdminResult, isAuthorized));
+
+            if (roleId.IsNotSuper())
             {
-                var deniedResult = new List<ProductStatusResult>
+                var includedProducts = ToProductDictionary(productIds);
+
+                products = products.Where(p => includedProducts.ContainsKey(p.ProductId));
+            }
+
+            return products.Select(p => new KeyValuePair<int, string>(p.ProductId, GetProductNameFromRemotingRef(p.ProductId)));
+        }
+
+        private static IDictionary<int, bool> ToProductDictionary(int[] productIds)
+        {
+            IDictionary<int, bool> productDictionary = new Dictionary<int, bool>();
+
+            if (productIds?.Length > 0)
+            {
+                foreach (var item in productIds)
                 {
-                    new ProductStatusResult
-                    {
-                        ErrorCode = "999",
-                        ErrorMessage = ViewLang.DontHavePermission
-                    }
-                };
-
-                return Json(deniedResult);
+                    productDictionary[item] = true;
+                }
             }
 
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            var productStatusModel = js.Deserialize<List<ThirdPartyProducts.StatusSetting.Model.ProductStatus>>(productStatus);
-            var result = thirdPartyProductStatusService.Update(
-                custId,
-                0,
-                productId,
-                CurrentSession.UserId,
-                Config.SystemId,
-                CurrentContext.Ip4Address,
-                CurrentSession.UserName,
-                productStatusModel);            
-
-            return Json(result);
+            return productDictionary;
         }
     }
 }

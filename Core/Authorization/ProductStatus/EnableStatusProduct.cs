@@ -1,4 +1,4 @@
-﻿namespace Fanex.ExternalAccount.Core.Authorization.ThirdPartyStatus
+﻿namespace Fanex.ExternalAccount.Core.Authorization.ProductStatus
 {
     public enum EnableStatusProductFunction
     {

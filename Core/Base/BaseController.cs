@@ -328,7 +328,7 @@
             return list;
         }
 
-        private static bool AdminDoesNotHavePermissionOnSpecialProduct(
+        protected static bool AdminDoesNotHavePermissionOnSpecialProduct(
             CheckCustomerIsInternalAdminResult checkIsInternalAdminResult,
             bool isAuthorized)
             => checkIsInternalAdminResult.IsInternalAdmin
