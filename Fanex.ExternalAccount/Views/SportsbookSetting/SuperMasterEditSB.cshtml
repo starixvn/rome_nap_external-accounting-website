@@ -4,250 +4,251 @@
 <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css"/>
 <link href="@Url.Content("~/assets/styles/pages/customer/pt-engine.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/assets/styles/pages/customer/customer-setting.css")" rel="stylesheet" type="text/css" />
-<div id="errMsg" style="display: none;" class="successMsg">
-</div>
-<div id="arrowUpDown" class="collapse">
-</div>
-<div id="names" style="display: none;" class="names">
-</div>
-<div class="floatR">
-    <input class="btn -submit buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
-</div>
-<div id="custInfo" class="customerInfo" style="width: 850px">
-    <div class="headerTab" style="border-bottom: 0px">
-        General Information
+<div style="width: 852px; margin: 2px">
+    <div id="errMsg" style="display: none;" class="successMsg">
     </div>
-    <div style="width: 850px">
-        <div class="customerInfoBlock1">
-            First Name
+    <div id="arrowUpDown" class="collapse">
+    </div>
+    <div id="names" style="display: none;" class="names">
+    </div>
+    <div class="floatR">
+        <input class="btn -submit buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
+    </div>
+    <div id="custInfo" class="customerInfo" style="width: 850px">
+        <div class="headerTab" style="border-bottom: 0px">
+            General Information
         </div>
-        <div class="customerInfoBlock2">
-            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.firstName)"></span>
+        <div style="width: 850px">
+            <div class="customerInfoBlock1">
+                First Name
+            </div>
+            <div class="customerInfoBlock2">
+                <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.firstName)"></span>
+            </div>
+            <div class="customerInfoBlock3">
+                Last Name
+            </div>
+            <div class="customerInfoBlock4" style="width: 210px">
+                <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.lastName)"></span>
+            </div>
         </div>
-        <div class="customerInfoBlock3">
-            Last Name
+        <div style="width: 850px">
+            <div class="customerInfoBlock1">
+                Phone
+            </div>
+            <div class="customerInfoBlock2">
+                <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.phone)"></span>
+            </div>
+            <div class="customerInfoBlock3">
+                Mobile Phone
+            </div>
+            <div class="customerInfoBlock4" style="width: 210px">
+                <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.mobilePhone)"></span>
+            </div>
         </div>
-        <div class="customerInfoBlock4" style="width: 210px">
-            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.lastName)"></span>
+        <div id="memberSection" style="width: 850px">
+            <div class="customerInfoBlock1">
+                Given Credit
+            </div>
+            <div class="customerInfoBlock2">
+                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.credit"></span>
+            </div>
+            <div class="customerInfoBlock3">
+                Fax
+            </div>
+            <div class="customerInfoBlock4" style="width: 210px">
+                <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.fax)"></span>
+            </div>
+        </div>
+        <div id="memberSection2" style="width: 850px">
+            <div class="customerInfoBlock1">
+                Group
+            </div>
+            <div class="customerInfoBlock2">
+                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.group"></span>
+            </div>
+            <div class="customerInfoBlock3">
+                <label for="closed">
+                    Closed
+                </label>
+            </div>
+            <div class="customerInfoBlock4" style="width: 210px">
+                <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed" />
+            </div>
+        </div>
+        <div id="memberSection3" style="width: 850px">
+            <div class="customerInfoBlock1">
+            </div>
+            <div class="customerInfoBlock2">
+            </div>
+            <div class="customerInfoBlock3">
+                <label for="suspended">
+                    Suspended
+                </label>
+            </div>
+            <div class="customerInfoBlock4" style="width: 210px">
+                <input name="suspended" id="suspended" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended, enable: Fanex.ExtAcc.Customer.PTSetting.context.targetCustId &gt; 0 ? true : !Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended" />
+            </div>
         </div>
     </div>
-    <div style="width: 850px">
-        <div class="customerInfoBlock1">
-            Phone
-        </div>
-        <div class="customerInfoBlock2">
-            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.phone)"></span>
-        </div>
-        <div class="customerInfoBlock3">
-            Mobile Phone
-        </div>
-        <div class="customerInfoBlock4" style="width: 210px">
-            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.mobilePhone)"></span>
-        </div>
+    <div id="statusHeader" class="headerPositionTaking" style="border-top: 1px solid #CCC">
+        Status
     </div>
-    <div id="memberSection" style="width: 850px">
-        <div class="customerInfoBlock1">
-            Given Credit
-        </div>
-        <div class="customerInfoBlock2">
-            <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.credit"></span>
-        </div>
-        <div class="customerInfoBlock3">
-            Fax
-        </div>
-        <div class="customerInfoBlock4" style="width: 210px">
-            <span data-bind="text: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.fax)"></span>
-        </div>
-    </div>
-    <div id="memberSection2" style="width: 850px">
-        <div class="customerInfoBlock1">
-            Group
-        </div>
-        <div class="customerInfoBlock2">
-            <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.group"></span>
-        </div>
-        <div class="customerInfoBlock3">
-            <label for="closed">
-                Closed
-            </label>
-        </div>
-        <div class="customerInfoBlock4" style="width: 210px">
-            <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed"/>
-        </div>
-    </div>
-    <div id="memberSection3" style="width: 850px">
-        <div class="customerInfoBlock1">
-        </div>
-        <div class="customerInfoBlock2">
-        </div>
-        <div class="customerInfoBlock3">
-            <label for="suspended">
-                Suspended
-            </label>
-        </div>
-        <div class="customerInfoBlock4" style="width: 210px">
-            <input name="suspended" id="suspended" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended, enable: Fanex.ExtAcc.Customer.PTSetting.context.targetCustId &gt; 0 ? true : !Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.suspended"/>
-        </div>
-    </div>
-</div>
-<div id="statusHeader" class="headerPositionTaking" style="border-top: 1px solid #CCC">
-    Status
-</div>
-<div id="statusSection" class="positionTaking" style="padding: 0">
-    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: collapse; border-color: #CCC;">
-        <tbody>
-        <tr style="height: 22px">
-            <td class="groupCom" style="border-right: 1px solid #ccc; width: 50%;">
-                <div>
-                    <label for="closed">
-                        Closed
-                    </label>
-                </div>
-            </td>
-            <td class="widthGroup">
-                <div>
-                    <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed"/>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div id="commissionHeader" class="headerPositionTaking">
-    Commission
-</div>
-<div class="positionTaking" style="padding: 0">
-    <div>
-        <table id="tblMember" width="100%" border="0" cellpadding="2">
+    <div id="statusSection" class="positionTaking" style="padding: 0">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: collapse; border-color: #CCC;">
             <tbody>
-            <tr>
-                <td>
-                    <div class="commission">
+                <tr style="height: 22px">
+                    <td class="groupCom" style="border-right: 1px solid #ccc; width: 50%;">
                         <div>
-                            <div class="commissionBlock1 commissionHeader">
-                                &nbsp;
-                            </div>
-                            <div id="masterComm" class="commissionBlock2 commissionHeader" style="width: 182px">
-                                Comm for Master
-                            </div>
-                            <div class="commissionBlock2 commissionHeader" style="width: 182px">
-                                Comm for Agent
-                            </div>
-                            <div class="commissionBlock2 commissionHeader" style="width: 182px">
-                                Comm for Member
-                            </div>
+                            <label for="closed">
+                                Closed
+                            </label>
                         </div>
-                        <div class="clearBlock">
-                            <div class="commissionBlock1">
-                                Asian HDP, OU, OE
-                            </div>
-                            <div id="masterComm2" class="commissionBlock2" style="width: 182px">
-                                <spane data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting2.playerDiscount"></spane>
-                            </div>
-                            <div class="commissionBlock2" style="width: 182px">
-                                <spane data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.discount"></spane>
-                            </div>
-                            <div class="commissionBlock2" style="width: 182px">
-                                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.playerDiscount"></span>
-                            </div>
+                    </td>
+                    <td class="widthGroup">
+                        <div>
+                            <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed" />
                         </div>
-                        <div class="clearBlock">
-                            <div class="commissionBlock1">
-                                1 X 2
-                            </div>
-                            <div id="masterComm3" class="commissionBlock2" style="width: 182px">
-                                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting2.playerDiscount1x2"></span>
-                            </div>
-                            <div class="commissionBlock2" style="width: 182px">
-                                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.discount1x2"></span>
-                            </div>
-                            <div class="commissionBlock2" style="width: 182px">
-                                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.playerDiscount1x2"></span>
-                            </div>
-                        </div>
-                        <div class="clearBlock">
-                            <div class="commissionBlock1">
-                                Other Bettypes
-                            </div>
-                            <div id="masterComm4" class="commissionBlock2" style="width: 182px">
-                                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting2.playerDiscountCs"></span>
-                            </div>
-                            <div class="commissionBlock2" style="width: 182px">
-                                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.discountCS"></span>
-                            </div>
-                            <div class="commissionBlock2" style="width: 182px">
-                                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.playerDiscountCs"></span>
-                            </div>
-                        </div>
-                        <div class="clearBlock">
-                            <div class="commissionBlock1">
-                                Number Game Comm
-                            </div>
-                            <div id="masterComm5" class="commissionBlock2" style="width: 182px">
-                                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting2.playerDiscountNumber"></span>
-                            </div>
-                            <div class="commissionBlock2" style="width: 182px">
-                                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.discountNumber"></span>
-                            </div>
-                            <div class="commissionBlock2" style="width: 182px">
-                                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.playerDiscountNumber"></span>
-                            </div>
-                        </div>
-                        <div class="clearBlock">
-                            <div class="commissionBlock1">
-                                HR Fixed Odds
-                            </div>
-                            <div id="masterComm6" class="commissionBlock2" style="width: 182px">
-                                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting2.playerDiscountHRFixedOdds"></span>
-                            </div>
-                            <div class="commissionBlock2" style="width: 182px">
-                                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.discountHRFixedOdds"></span>
-                            </div>
-                            <div class="commissionBlock2" style="width: 182px">
-                                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.playerDiscountHRFixedOdds"></span>
-                            </div>
-                        </div>
-                        <div class="clearBlock" data-bind="visible: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.isMyanmarOdds">
-                            <div class="commissionBlock1">
-                                % Odds
-                            </div>
-                            <div id="masterComm7" class="commissionBlock2" style="width: 182px">
-                                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting2.playerDiscountMyanmarOdds"></span>
-                            </div>
-                            <div class="commissionBlock2" style="width: 182px">
-                                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.discountMyanmarOdds"></span>
-                            </div>
-                            <div class="commissionBlock2" style="width: 182px">
-                                <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.playerDiscountMyanmarOdds"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="commissionContainer">
-                    </div>
-                </td>
-            </tr>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
-</div>
-<div class="headerPositionTaking">
-    Bet Setting
-</div>
-<div class="positionTaking">
-    <div id="betSetting">
+    <div id="commissionHeader" class="headerPositionTaking">
+        Commission
     </div>
-</div>
-<div class="headerPositionTaking">
-    Postition Taking
-</div>
-<div class="positionTaking">
-    <div id="ptContainer">
+    <div class="positionTaking" style="padding: 0">
+        <div>
+            <table id="tblMember" width="100%" border="0" cellpadding="2">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="commission">
+                                <div>
+                                    <div class="commissionBlock1 commissionHeader">
+                                        &nbsp;
+                                    </div>
+                                    <div id="masterComm" class="commissionBlock2 commissionHeader" style="width: 182px">
+                                        Comm for Master
+                                    </div>
+                                    <div class="commissionBlock2 commissionHeader" style="width: 182px">
+                                        Comm for Agent
+                                    </div>
+                                    <div class="commissionBlock2 commissionHeader" style="width: 182px">
+                                        Comm for Member
+                                    </div>
+                                </div>
+                                <div class="clearBlock">
+                                    <div class="commissionBlock1">
+                                        Asian HDP, OU, OE
+                                    </div>
+                                    <div id="masterComm2" class="commissionBlock2" style="width: 182px">
+                                        <spane data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting2.playerDiscount"></spane>
+                                    </div>
+                                    <div class="commissionBlock2" style="width: 182px">
+                                        <spane data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.discount"></spane>
+                                    </div>
+                                    <div class="commissionBlock2" style="width: 182px">
+                                        <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.playerDiscount"></span>
+                                    </div>
+                                </div>
+                                <div class="clearBlock">
+                                    <div class="commissionBlock1">
+                                        1 X 2
+                                    </div>
+                                    <div id="masterComm3" class="commissionBlock2" style="width: 182px">
+                                        <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting2.playerDiscount1x2"></span>
+                                    </div>
+                                    <div class="commissionBlock2" style="width: 182px">
+                                        <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.discount1x2"></span>
+                                    </div>
+                                    <div class="commissionBlock2" style="width: 182px">
+                                        <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.playerDiscount1x2"></span>
+                                    </div>
+                                </div>
+                                <div class="clearBlock">
+                                    <div class="commissionBlock1">
+                                        Other Bettypes
+                                    </div>
+                                    <div id="masterComm4" class="commissionBlock2" style="width: 182px">
+                                        <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting2.playerDiscountCs"></span>
+                                    </div>
+                                    <div class="commissionBlock2" style="width: 182px">
+                                        <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.discountCS"></span>
+                                    </div>
+                                    <div class="commissionBlock2" style="width: 182px">
+                                        <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.playerDiscountCs"></span>
+                                    </div>
+                                </div>
+                                <div class="clearBlock">
+                                    <div class="commissionBlock1">
+                                        Number Game Comm
+                                    </div>
+                                    <div id="masterComm5" class="commissionBlock2" style="width: 182px">
+                                        <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting2.playerDiscountNumber"></span>
+                                    </div>
+                                    <div class="commissionBlock2" style="width: 182px">
+                                        <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.discountNumber"></span>
+                                    </div>
+                                    <div class="commissionBlock2" style="width: 182px">
+                                        <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.playerDiscountNumber"></span>
+                                    </div>
+                                </div>
+                                <div class="clearBlock">
+                                    <div class="commissionBlock1">
+                                        HR Fixed Odds
+                                    </div>
+                                    <div id="masterComm6" class="commissionBlock2" style="width: 182px">
+                                        <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting2.playerDiscountHRFixedOdds"></span>
+                                    </div>
+                                    <div class="commissionBlock2" style="width: 182px">
+                                        <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.discountHRFixedOdds"></span>
+                                    </div>
+                                    <div class="commissionBlock2" style="width: 182px">
+                                        <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.playerDiscountHRFixedOdds"></span>
+                                    </div>
+                                </div>
+                                <div class="clearBlock" data-bind="visible: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.isMyanmarOdds">
+                                    <div class="commissionBlock1">
+                                        % Odds
+                                    </div>
+                                    <div id="masterComm7" class="commissionBlock2" style="width: 182px">
+                                        <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting2.playerDiscountMyanmarOdds"></span>
+                                    </div>
+                                    <div class="commissionBlock2" style="width: 182px">
+                                        <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.discountMyanmarOdds"></span>
+                                    </div>
+                                    <div class="commissionBlock2" style="width: 182px">
+                                        <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.playerDiscountMyanmarOdds"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="commissionContainer">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
-<div class="floatR">
-    <input class="btn -submit buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
-</div>
-@Html.AntiForgeryToken()
+    <div class="headerPositionTaking">
+        Bet Setting
+    </div>
+    <div class="positionTaking">
+        <div id="betSetting">
+        </div>
+    </div>
+    <div class="headerPositionTaking">
+        Postition Taking
+    </div>
+    <div class="positionTaking">
+        <div id="ptContainer">
+        </div>
+    </div>
+    <div class="floatR">
+        <input class="btn -submit buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
+    </div>
+    @Html.AntiForgeryToken()
 </div>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Languages.en.js")" type="text/javascript"></script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.js")" type="text/javascript"></script>
