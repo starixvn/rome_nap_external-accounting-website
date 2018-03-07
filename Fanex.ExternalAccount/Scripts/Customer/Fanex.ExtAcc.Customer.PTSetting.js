@@ -1324,6 +1324,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 }
 
                 if (success) {
+
                     if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                         var timeout = setTimeout(function () {
                             Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
@@ -1336,6 +1337,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             }
                             else {
                                 $('#errMsg').css('display', 'block');
+                                $('#errMsg').addClass('successMsg').removeClass('errMsg');
                                 $('#errMsg').html('<font color="Blue">Updated successfully</font>');
                             }
 
@@ -1358,6 +1360,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                     }
                                     else {
                                         $('#errMsg').css('display', 'block');
+                                        $('#errMsg').addClass('successMsg').removeClass('errMsg');
                                         $('#errMsg').html('<font color="Blue">Updated successfully</font>');
                                     }
                                 }, 2000);
