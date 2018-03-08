@@ -1,8 +1,4 @@
-﻿@using Fanex.PTEngine.BusinessObjects
-@using Fanex.CustomerSetting.Module.Core
-@using Newtonsoft.Json
-@using Newtonsoft.Json.Serialization
-@model Fanex.PTRacing.BusinessObjects.ICustomer
+﻿@model Fanex.PTRacing.BusinessObjects.ICustomer
 @{
     var bettingLimit = Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.None , new Newtonsoft.Json.JsonSerializerSettings
     { 

@@ -1,22 +1,3 @@
-/*!
- * jQuery UI Dialog 1.9.1
- * http://jqueryui.com
- *
- * Copyright 2012 jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- *
- * http://api.jqueryui.com/dialog/
- *
- * Depends:
- *	jquery.ui.core.js
- *	jquery.ui.widget.js
- *  jquery.ui.button.js
- *	jquery.ui.draggable.js
- *	jquery.ui.mouse.js
- *	jquery.ui.position.js
- *	jquery.ui.resizable.js
- */
 (function( $, undefined ) {
 
 var uiDialogClasses = "ui-dialog ui-widget ui-widget-content ui-corner-all ",

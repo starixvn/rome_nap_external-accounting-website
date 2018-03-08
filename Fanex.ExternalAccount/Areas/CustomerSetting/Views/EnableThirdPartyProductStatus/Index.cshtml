@@ -1,4 +1,5 @@
-﻿@using Fanex.ExternalAccount.DTO.Customer;
+﻿@using Fanex.ExternalAccount.Core.Shared
+@using Fanex.ExternalAccount.DTO.Customer;
 @using Resources;
 @model ThirdPartyProductStatusViewModel
 @{
@@ -8,7 +9,7 @@
     bool isSync = firstProduct.IsSync;
     int productId = firstProduct.ProductId;
 
-    bool isShowEnableDownlines = Model.RoleId != 1 && isHasDownlines;
+    bool isShowEnableDownlines = Model.RoleId.IsNotMember() && isHasDownlines;
     int sportTypePrevious = 0;
 }
 <!DOCTYPE html>
@@ -59,14 +60,14 @@
                     sportTypePrevious = item.SportType;
                 }
                 <tr>
-                    <td @(Model.RoleId == 1 ? "colspan=\"2\"" : " ")>
-                        <input type="checkbox" id="checkEnable_@(item.SportType+"_" + item.BetType)" onchange="enableThirdPartyProductStatus.checkEnable_OnChange(@Html.Raw(Json.Encode(item)))" @(item.IsDisabledUpline ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabled ? Html.Raw("") : Html.Raw("checked ")) />
+                    <td @(Model.RoleId.IsMember() ? "colspan=\"2\"" : " ")>
+                        <input type="checkbox" id="checkEnable_@(item.SportType+"_" + item.BetType)" onchange='enableThirdPartyProductStatus.checkEnable_OnChange(@Html.Raw(Json.Encode(item)))' @(item.IsDisabledUpline ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabled ? Html.Raw("") : Html.Raw("checked ")) />
                         <label for="checkEnable_@(item.SportType+"_" + item.BetType)">@(isUpdateByBettype ? item.BetTypeName : item.ProductName)</label>
                     </td>
                     @if (isShowEnableDownlines)
                     {
                         <td>
-                            <input type="checkbox" id="checkEnableDownlines_@(item.SportType + "_" + item.BetType)" onchange="enableThirdPartyProductStatus.checkEnableDownlines_OnChange(@Html.Raw(Json.Encode(item)));" @(item.IsDisabled || !item.IsDisabledDownline ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabledDownline ? Html.Raw(" ") : Html.Raw("checked ")) />
+                            <input type="checkbox" id="checkEnableDownlines_@(item.SportType + "_" + item.BetType)" onchange='enableThirdPartyProductStatus.checkEnableDownlines_OnChange(@Html.Raw(Json.Encode(item)));' @(item.IsDisabled || !item.IsDisabledDownline ? Html.Raw("disabled") : Html.Raw(" ")) @(item.IsDisabledDownline ? Html.Raw(" ") : Html.Raw("checked ")) />
                             <label for="checkEnableDownlines_@(item.SportType + "_" + item.BetType)">Enable Downlines</label>
                         </td>
                     }
@@ -74,7 +75,7 @@
             }
         </table>
         <div class="align-right">
-            <input id="thirdPartyProductStatusSubmitBtn" type="button" class="button-popup" style="margin-right: 0" value="Submit" disabled onclick="enableThirdPartyProductStatus.submit(@Html.Raw(Json.Encode(Model)))" />
+            <input id="thirdPartyProductStatusSubmitBtn" type="button" class="button-popup" style="margin-right: 0" value="Submit" disabled onclick='enableThirdPartyProductStatus.submit(@Html.Raw(Json.Encode(Model)))' />
         </div>
     </div>
     <script type="text/javascript">

@@ -1,43 +1,22 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="TextBlock.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Excel.Utility
+﻿namespace Fanex.ExternalAccount.Excel.Utility
 {
     using NPOI.SS.UserModel;
 
-    /// <summary>
-    /// Defines text block.
-    /// </summary>
     public class TextBlock
     {
-        private string _text;
-        private IFont _font;
-
         public TextBlock(string text)
         {
-            this._text = text;
+            Text = text;
         }
 
         public TextBlock(string text, IFont font)
         {
-            this._text = text;
-            this._font = font;
+            Text = text;
+            Font = font;
         }
 
-        public string Text
-        {
-            get { return this._text; }
-        }
+        public string Text { get; }
 
-        public IFont Font
-        {
-            get { return this._font; }
-        }
+        public IFont Font { get; }
     }
 }

@@ -1,23 +1,16 @@
 ﻿@{
     Layout = null;
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
-</head>
-<body>
-    <center>
-        <div style="border: 1px solid #B90000; width: 700px">
-           <h2 style="color: #FF0000">
-               Oops..., you are here because of system error.<br />
-               Or server is under maintenance.<br />
-               Please contact your administrator for more information.<br />
-               Thank you!
-           </h2>
-           <a href="javascript:history.back(-1);" style="text-decoration: none">Go back</a>
-        </div>
-   </center>
-</body>
-</html>
+<link href="@Url.Content("~/Content/fonts/AlphaAdmin/style.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/um.css")" rel="stylesheet" type="text/css" />
+
+<div class="block">
+    <object class="img" type="image/svg+xml" data="~/Content/Images/um.svg">
+        <img class="img" src="~/Content/Images/um.png" />
+    </object>
+
+    <p class="info">Oop..., you are here because of system error.</p>
+    <p class="info">Or server is undermaintenance.</p>
+    <p class="info">Please contact your administrator for more information.</p>
+    <p class="info">Thank you!</p>    
+</div>

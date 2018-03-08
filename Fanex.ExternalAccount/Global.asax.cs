@@ -1,108 +1,103 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="Global.asax.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount
+﻿namespace Fanex.ExternalAccount
 {
     using System;
     using System.Collections.Generic;
-    using System.Web.Http;
+    using System.Web;
     using System.Web.Mvc;
-    using System.Web.Optimization;
     using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
-    using Fanex.CustomerSetting.Client40;
-    using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.Utilities;
-    using Fanex.GoldDeluxe.CoreSetting.Mappings;
+    using CasinoLibrary.SBAgent;
+    using Core.Context;
+    using Core.Shared;
+    using CustomerSetting.Client40;
+    using Data.Configuration;
+    using Fanex.ExternalAccount.UI.Helpers;
+    using GoldDeluxe.CoreSetting.Mappings;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
-    using Service.Impl.Login;
-    using Fanex.ExternalAccount.UI.Helpers;
-    using System.Web;
-    using System.Configuration;
+    using Module.LeftPanel.ViewModels;
+    using ONEbook.UM.Filters;
+    using Sunplus.Libraries.APILogger;
 
-    /* Note: For instructions on enabling IIS6 or IIS7 classic mode,
-     visit http://go.microsoft.com/?LinkId=9394801*/
-
-    /// <summary>
-    /// TODO: Global application.
-    /// </summary>
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
         }
 
-        /// <summary>
-        /// Registers routes.
-        /// </summary>
-        /// <param name="routes">Routes collection.</param>
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("{*allaspx}", new { allaspx = @".*\.aspx(/.*)?" });
             routes.IgnoreRoute("{*allashx}", new { allashx = @".*\.ashx(/.*)?" });
-            routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
-
-            routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional });
+            routes.IgnoreRoute("{*favicon}", new { favicon = "(.*/)?favicon.ico(/.*)?" });
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+                "Default",
+                "{controller}/{action}/{id}",
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional });
 
             routes.MapRoute(
-                name: "Default2",
-                url: "{controller}/{action}/{id}/{groupname}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, groupname = UrlParameter.Optional });
+                "Default2",
+                "{controller}/{action}/{id}/{groupname}",
+                new
+                {
+                    controller = "Home",
+                    action = "Index",
+                    id = UrlParameter.Optional,
+                    groupname = UrlParameter.Optional
+                });
 
             routes.MapRoute(
-                name: "Default3",
-                url: "{controller}/{action}/{id}/{username}/{groupname}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, username = UrlParameter.Optional, groupname = UrlParameter.Optional });
+                "Default3",
+                "{controller}/{action}/{id}/{username}/{groupname}",
+                new
+                {
+                    controller = "Home",
+                    action = "Index",
+                    id = UrlParameter.Optional,
+                    username = UrlParameter.Optional,
+                    groupname = UrlParameter.Optional
+                });
 
             routes.MapRoute(
-                name: "Default4",
-                url: "{controller}/{action}/{id}/{custId}/{uplineId}/{username}/{groupname}",
-                defaults: new 
-                { 
-                    controller = "Home", action = "Index", id = UrlParameter.Optional, 
-                    custId = UrlParameter.Optional, uplineId = UrlParameter.Optional, username = UrlParameter.Optional, groupname = UrlParameter.Optional 
+                "Default4",
+                "{controller}/{action}/{id}/{custId}/{uplineId}/{username}/{groupname}",
+                new
+                {
+                    controller = "Home",
+                    action = "Index",
+                    id = UrlParameter.Optional,
+                    custId = UrlParameter.Optional,
+                    uplineId = UrlParameter.Optional,
+                    username = UrlParameter.Optional,
+                    groupname = UrlParameter.Optional
                 });
         }
 
-        /// <summary>
-        /// Application is starting.
-        /// </summary>
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
             CustomerSettingRegistration.Init();
+
+            GlobalFilters.Filters.Add(new CheckUMFilter());
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();            
+            DbSettingProviderManager.Current.Start();
             AutoMapperConfiguration.Configure();
             StaticResources.Init();
 
             var logger = new CasinoAPILogger();
-            var manager = new Sunplus.Libraries.APILogger.APILogManager(logger);
-            string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
-            manager.Register(typeof(CasinoLibrary.SBAgent.Customer), pattern);
-            manager.Register(typeof(CasinoLibrary.SBAgent.BasicInfo), pattern);
+            var manager = new APILogManager(logger);
+            const string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
+            manager.Register(typeof(Customer), pattern);
+            manager.Register(typeof(DownlineList), pattern);
 
             var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
-            defaultCaptchaManager.ImageUrlFactory = (helper, pair) => ImageUrlFactory(defaultCaptchaManager, helper, pair);
+            defaultCaptchaManager.ImageUrlFactory =
+                (helper, pair) => ImageUrlFactory(defaultCaptchaManager, helper, pair);
             defaultCaptchaManager.RefreshUrlFactory = RefreshUrlFactory;
 
             MvcHandler.DisableMvcResponseHeader = true;
@@ -115,25 +110,6 @@ namespace Fanex.ExternalAccount
                 .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
         }
 
-        protected void Session_End(object sender, EventArgs e)
-        {
-            try
-            {
-                var userService = new Fanex.ExternalAccount.Service.Impl.Login.LoginService();
-                userService.Logout(CurrentSession.Instance.OnUserId, CurrentSession.Instance.UserName);
-                Session.Abandon();
-            }
-            catch
-            {
-                // Ignore in case of session is not started or is new session.
-            }
-        }
-
-        /// <summary>
-        /// Processes application error.
-        /// </summary>
-        /// <param name="sender">Object is performed.</param>
-        /// <param name="e">Event is sent.</param>
         protected void Application_Error(object sender, EventArgs e)
         {
             ExceptionHandler.Handle(Server.GetLastError());
@@ -141,52 +117,21 @@ namespace Fanex.ExternalAccount
 
         protected void Application_BeginRequest()
         {
-            if (ConfigurationManager.AppSettings["Environment"] == "UAT")
-            {
-                Context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            }
+            Context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
         }
 
-        protected void Application_AcquireRequestState(object sender, EventArgs e)
-        {
-            try
-            {
-                if (CurrentSession.Instance.IsLogin && Config.Recheckin)
-                {
-                    var userService = new LoginService();
-                    var isKickedOut = false;
-                    userService.Recheckin(CurrentSession.Instance.OnUserId, out isKickedOut);
-                    if (isKickedOut)
-                    {
-                        userService.Logout(CurrentSession.Instance.OnUserId, CurrentSession.Instance.UserName);
-                        Session.Abandon();
+        private static string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair) =>
+            urlHelper.Action("Refresh", "DefaultCaptcha", new { area = string.Empty });
 
-                        Response.Redirect("~/Account/Login");
-                    }
-                }
-            }
-            catch
-            {
-                // Ignore in case of session is not started or is new session.
-            }
-        }
-
-        private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
-        {
-            return urlHelper.Action("Refresh", "DefaultCaptcha", new { area = string.Empty });
-        }
-
-        private string ImageUrlFactory(DefaultCaptchaManager captchaManager, UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
-        {
-            return urlHelper.Action(
+        private static string ImageUrlFactory(DefaultCaptchaManager captchaManager, UrlHelper urlHelper,
+            KeyValuePair<string, ICaptchaValue> keyValuePair) => urlHelper.Action(
             "Generate",
             "DefaultCaptcha",
             new RouteValueDictionary
             {
-                { "area", string.Empty },
-                { captchaManager.TokenParameterName, keyValuePair.Key }
+                {"area", string.Empty},
+                {captchaManager.TokenParameterName, keyValuePair.Key}
             });
-        }
 
         private static List<string> GetRegexToHideSensitiveInfo()
         {

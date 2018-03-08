@@ -1,14 +1,5 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="Request.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.DTO
+﻿namespace Fanex.ExternalAccount.DTO
 {
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class Request
     {
         public string NetSessionId { get; set; }

@@ -1,62 +1,40 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="DailyWinLossReportBuilder.cs" company="">
-// Copyright (c) . All rights reserved.
-// Creator: Simon
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
+﻿namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
 {
     using System.Collections.Generic;
     using System.IO;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.DTO.Report;
-    using NPOI.HSSF.UserModel;
+    using DTO.Report;
 
-    /// <summary>
-    /// Daily win loss report builder.
-    /// </summary>
     public class DailyWinLossReportBuilder
     {
         public DailyWinLossReportBuilder(List<DailyWinLoss> dailyWinLoss, bool isBold, int roleId, string winlostDate)
         {
-            this.WinlostDate = winlostDate;
-            this.IsBold = isBold;
-            this.RoleId = roleId;
-            this.Data = dailyWinLoss;
+            WinlostDate = winlostDate;
+            IsBold = isBold;
+            RoleId = roleId;
+            Data = dailyWinLoss;
         }
 
-        public List<DailyWinLoss> Data { get; private set; }
+        public List<DailyWinLoss> Data { get; }
 
-        public bool IsBold { get; private set; }
+        public bool IsBold { get; }
 
-        public int RoleId { get; private set; }
+        public int RoleId { get; }
 
-        public string WinlostDate { get; private set; }
+        public string WinlostDate { get; }
 
-        /// <summary>
-        /// Builds report.
-        /// </summary>
-        /// <returns>MemoryStream object.</returns>
         public MemoryStream Build()
         {
-            TemplateReport report = null;
-            TemplateSettings settings = new TemplateSettings();
-            string filePath = settings.DailyWinLossPath();
+            var settings = new TemplateSettings();
+            var filePath = settings.DailyWinLossPath();
+            var mem = new MemoryStream();
 
-            report = new DailyWinLossReport(filePath, this);
-
-            MemoryStream mem = new MemoryStream();
-            HSSFWorkbook hssfWorkbook = ((IReportBuilder)report).Build();
-            if (hssfWorkbook != null)
+            using (var report = new DailyWinLossReport(filePath, this))
             {
+                var hssfWorkbook = report.Build();
                 hssfWorkbook.Write(mem);
-                return mem;
             }
 
-            report.Dispose();
-
-            return null;
+            return mem;
         }
     }
 }

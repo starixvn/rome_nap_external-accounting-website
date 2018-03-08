@@ -1,28 +1,20 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="EASDisplayAttribute.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.ViewModel.Extension
+﻿namespace Fanex.ExternalAccount.ViewModel.Extension
 {
     using System;
     using System.ComponentModel;
     using System.Reflection;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
-    public class EASDisplayAttribute : DisplayNameAttribute
+    [AttributeUsageAttribute(AttributeTargets.All, AllowMultiple = false)]
+    public class EasDisplayAttribute : DisplayNameAttribute
     {
         private readonly PropertyInfo _nameProperty;
 
-        public EASDisplayAttribute(string displayNameKey, Type resourceType)
+        public EasDisplayAttribute(string displayNameKey, Type resourceType)
             : base(displayNameKey)
         {
             if (resourceType != null)
             {
-                this._nameProperty = resourceType.GetProperty(base.DisplayName, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                _nameProperty = resourceType.GetProperty(base.DisplayName, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
             }
         }
 
@@ -30,12 +22,12 @@ namespace Fanex.ExternalAccount.ViewModel.Extension
         {
             get
             {
-                if (this._nameProperty == null)
+                if (_nameProperty == null)
                 {
                     return base.DisplayName;
                 }
 
-                return (string)this._nameProperty.GetValue(this._nameProperty.DeclaringType, null);
+                return (string)_nameProperty.GetValue(_nameProperty.DeclaringType, null);
             }
         }
     }

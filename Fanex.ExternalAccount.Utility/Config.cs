@@ -1,238 +1,73 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="Config.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Utilities
+﻿namespace Fanex.ExternalAccount.Utilities
 {
     using System;
     using System.Collections.Generic;
     using System.Configuration;
+    using System.Web;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class Config
     {
         public static DateTime WinlostDate
-        {
-            get
-            {
-                if (System.Web.HttpContext.Current.IsDebuggingEnabled)
-                {
-                    return new DateTime(2012, 11, 6).Date;
-                }
-                else
-                {
-                    return DateTime.Now.AddDays(-1).Date;
-                }
-            }
-        }
+            => HttpContext.Current.IsDebuggingEnabled ? new DateTime(2012, 11, 6).Date : DateTime.Now.AddDays(-1).Date;
 
-        public static bool IsTest
-        {
-            get
-            {
-                return Utils.ToBoolean(GetValue("IsTest"));
-            }
-        }
+        public static bool IsTest => Utils.ToBoolean(GetValue("IsTest"));
 
-        public static string LBUrl
-        {
-            get
-            {
-                return GetValue("LBUrl");
-            }
-        }
+        public static string LbUrl => GetValue("LBUrl");
 
-        public static string TimeFrom
-        {
-            get;
-            set;
-        }
+        public static string TimeFrom { get; set; }
 
-        public static string TimeTo
-        {
-            get;
-            set;
-        }
+        public static string TimeTo { get; set; }
 
-        public static bool Recheckin
-        {
-            get { return Utils.ToBoolean(GetValue("Recheckin")); }
-        }
+        public static bool IsEnabledRecheckin => Utils.ToBoolean(GetValue("Recheckin"));
 
-        public static bool IsShowVirtualSports
-        {
-            get { return Utils.ToBoolean(GetValue("EnableVirtualSports")); }
-        }
+        public static bool IsShowVirtualSports => Utils.ToBoolean(GetValue("EnableVirtualSports"));
 
-        public static string CssFiles
-        {
-            get
-            {
-                return GetValue("CssFiles");
-            }
-        }
+        public static string CssFiles => GetValue("CssFiles");
 
-        public static string JsFiles
-        {
-            get
-            {
-                return GetValue("JsFiles");
-            }
-        }
+        public static string JsFiles => GetValue("JsFiles");
 
-        public static string JsLogin
-        {
-            get
-            {
-                return GetValue("JsLogin");
-            }
-        }
+        public static string JsLogin => GetValue("JsLogin");
 
-        public static string CssLogin
-        {
-            get
-            {
-                return GetValue("CssLogin");
-            }
-        }
+        public static string CssLogin => GetValue("CssLogin");
 
-        public static string JsExtGroup
-        {
-            get
-            {
-                return GetValue("JsExtGroup");
-            }
-        }
+        public static string JsExtGroup => GetValue("JsExtGroup");
 
-        public static string CssExtGroup
-        {
-            get
-            {
-                return GetValue("CssExtGroup");
-            }
-        }
+        public static string CssExtGroup => GetValue("CssExtGroup");
 
-        public static string JsDailyWinLoss
-        {
-            get
-            {
-                return GetValue("JsDailyWinLoss");
-            }
-        }
+        public static string JsDailyWinLoss => GetValue("JsDailyWinLoss");
 
-        public static string CssDailyWinLoss
-        {
-            get
-            {
-                return GetValue("CssDailyWinLoss");
-            }
-        }
+        public static string CssDailyWinLoss => GetValue("CssDailyWinLoss");
 
-        public static string JsWinLossDetail
-        {
-            get
-            {
-                return GetValue("JsWinLossDetail");
-            }
-        }
+        public static string JsWinLossDetail => GetValue("JsWinLossDetail");
 
-        public static string CssWinLossDetail
-        {
-            get
-            {
-                return GetValue("CssWinLossDetail");
-            }
-        }
+        public static string CssWinLossDetail => GetValue("CssWinLossDetail");
 
-        public static string JsStatement
-        {
-            get
-            {
-                return GetValue("JsStatement");
-            }
-        }
+        public static string JsStatement => GetValue("JsStatement");
 
-        public static string CssStatement
-        {
-            get
-            {
-                return GetValue("CssStatement");
-            }
-        }
+        public static string CssStatement => GetValue("CssStatement");
 
-        public static string JsCustomer
-        {
-            get
-            {
-                return GetValue("JsCustomer");
-            }
-        }
+        public static string JsCustomer => GetValue("JsCustomer");
 
-        public static string CssCustomer
-        {
-            get
-            {
-                return GetValue("CssCustomer");
-            }
-        }
+        public static string CssCustomer => GetValue("CssCustomer");
 
-        public static string InternalAgentUMToken
-        {
-            get
-            {
-                return GetValue("int_agent_UMToken");
-            }
-        }
+        public static string InternalAgentUMToken => GetValue("int_agent_UMToken");
 
-        public static string InternalLoginUrl
-        {
-            get
-            {
-                return GetValue("int_agent_url");
-            }
-        }
+        public static string InternalLoginUrl => GetValue("int_agent_url");
 
-        public static string InternalLoginUrl7
-        {
-            get
-            {
-                return GetValue("int_agent_url7");
-            }
-        }
+        public static string InternalLoginUrl7 => GetValue("int_agent_url7");
 
-        public static string InternalLoginUrl9
-        {
-            get
-            {
-                return GetValue("int_agent_url9");
-            }
-        }
+        public static string InternalLoginUrl9 => GetValue("int_agent_url9");
 
-        public static bool HideGoldDeluxe
-        {
-            get { return Utils.ToBoolean(GetValue("HideGoldDeluxe")); }
-        }
+        public static bool HideGoldDeluxe => Utils.ToBoolean(GetValue("HideGoldDeluxe"));
 
-        public static bool IsCache
-        {
-            get
-            {
-                return Utils.ToBoolean(GetValue("IsCache"));
-            }
-        }
+        public static bool IsCache => Utils.ToBoolean(GetValue("IsCache"));
 
         public static IList<int> AdminUsersEditSuperStatus
         {
             get
             {
-                string[] ids = GetValue("AdminUsersEditSuperStatus").Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+                var ids = GetValue("AdminUsersEditSuperStatus")
+                    .Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
                 IList<int> adminIds = new List<int>();
 
                 foreach (var id in ids)
@@ -244,13 +79,15 @@ namespace Fanex.ExternalAccount.Utilities
             }
         }
 
-        public static int SystemId
-        {
-            get
-            {
-                return Utils.ToInt32(GetValue("SystemId"));
-            }
-        }
+        public static int SystemId => Utils.ToInt32(GetValue("SystemId"));
+
+        public static string[] PublicDomains => GetValue("PublicDomains").Split(',');
+
+        public static string[] GroupsDenyAccessPublicDomains => GetValue("GroupsDenyAccessPublicDomains").Split(',');
+
+        public static bool ExternalGroupFunctionDenyAccessPublicDomains => Utils.ToBoolean(GetValue("ExternalGroupFunctionDenyAccessPublicDomains"));
+
+        public static string[] UsersDenyAccessPublicDomains => GetValue("UsersDenyAccessPublicDomains").Split(',');
 
         public static string IgnoreRecheckinCustomers
         {
@@ -260,9 +97,6 @@ namespace Fanex.ExternalAccount.Utilities
             }
         }
 
-        private static string GetValue(string key)
-        {
-            return ConfigurationManager.AppSettings[key];
-        }
+        private static string GetValue(string key) => ConfigurationManager.AppSettings[key];
     }
 }

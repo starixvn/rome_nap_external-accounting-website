@@ -1,7 +1,8 @@
-﻿@using Newtonsoft.Json
-@using Newtonsoft.Json.Serialization
-@using Fanex.ExternalAccount.Utilities
+﻿@using Fanex.ExternalAccount.Utilities
 @model Fanex.ExternalAccount.Module.LeftPanel.ViewModels.MemberUsedCreditModel
+    @{ 
+        Layout = null;
+    }
 
 <div class="page-title">Credit Detail</div>
 <table id="tblInner" class="table width-700">
@@ -25,12 +26,11 @@
         }
         else
         {
-            int index = 0;
-            string className = string.Empty;
+            var index = 0;
 
             foreach (var item in Model.ActiveMemberUsedCreditItems)
             {
-                className = index % 2 == 0 ? string.Empty : "odd";
+                var className = index % 2 == 0 ? string.Empty : "odd";
 
                 <tr>
                     <td class="C @className">@item.Username.DecodeHtml()</td>
@@ -45,7 +45,7 @@
                 <td class="total bold R" colspan="3">TOTAL</td>
                 <td class="total bold R">@Html.Raw(Model.TotalActiveMemberUsedCredit.ToStringFormat())</td>
             </tr>
-        }    
+        }
     </tbody>
 </table>
 
@@ -70,13 +70,12 @@
         }
         else
         {
-            int index = 0;
-            string className = string.Empty;
-            decimal grandTotal = Model.TotalActiveMemberUsedCredit + Model.TotalInactiveMemberUsedCredit;
+            var index = 0;
+            var grandTotal = Model.TotalActiveMemberUsedCredit + Model.TotalInactiveMemberUsedCredit;
 
             foreach (var item in Model.InactiveMemberUsedCreditItems)
             {
-                className = index % 2 == 0 ? string.Empty : "odd";
+                var className = index % 2 == 0 ? string.Empty : "odd";
 
                 <tr>
                     <td class="C @className">@item.Username.DecodeHtml()</td>

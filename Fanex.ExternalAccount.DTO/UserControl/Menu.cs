@@ -1,17 +1,8 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="Menu.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.DTO.UserControl
+﻿namespace Fanex.ExternalAccount.DTO.UserControl
 {
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class Menu
     {
-        public int MenuID { get; set; }
+        public int MenuId { get; set; }
 
         public string MenuName { get; set; }
 
@@ -19,11 +10,11 @@ namespace Fanex.ExternalAccount.DTO.UserControl
 
         public string Url { get; set; }
 
-        public int FuncID { get; set; }
+        public int FuncId { get; set; }
 
         public string FuncName { get; set; }
 
-        public int ParentID { get; set; }
+        public int ParentId { get; set; }
 
         public string ParentName { get; set; }
 

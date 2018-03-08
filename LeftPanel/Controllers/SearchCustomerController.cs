@@ -1,706 +1,134 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="SearchCustomerController.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.07.25">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 {
-    using System;
-    using System.Collections;
-    using System.Data;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.ExternalAccount.Core.Base;
-    using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.Module.LeftPanel.Extensions;
-    using Fanex.ExternalAccount.Module.LeftPanel.Services.Impl;
-    using Fanex.ExternalAccount.Module.LeftPanel.Services.Interface;
-    using Fanex.ExternalAccount.Module.LeftPanel.ViewModels;
-    using Fanex.ExternalAccount.Service.Impl.Customer.Casino;
-    using Fanex.ExternalAccount.Utilities;
-    using Fanex.PTRacing.Services;
-    using IBCUtils;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
+    using Core.Base;
+    using Core.Context;
+    using Core.Shared;
+    using CustomerSetting.Module.Core.Web;
+    using CustomerSetting.Security.Authenticate;
+    using Services;
+    using ViewModels;
 
-    /// <summary>
-    /// Controller for left panel menu.    
-    /// </summary>
     public class SearchCustomerController : BaseController
     {
-        private readonly ILeftPanelService _service = new LeftPanelService();
+        private const string MasterAgentCreditViewl =
+            "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MasterAgentCredit.cshtml";
 
-        /// <summary>
-        /// Gets all info model of left panel.
-        /// </summary>
-        /// <param name="id">Username to view.</param>
-        /// <param name="uplineId">Upper id of customer.</param>
-        /// <param name="pageIndex">Current page index.</param>
-        /// <returns>View contains customer model.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult Index(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
+        private const string MemberCreditView =
+            "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MemberCredit.cshtml";
+
+        private const string SecurityCodeIndexView =
+            "~/Areas/CustomerSetting/Views/LeftPanel/SecurityCode/Index.cshtml";
+
+        private const string LeftPanelIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml";
+        private const string LeftpanelBalanceIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/Balance/Index.cshtml";
+        private const string LeftPanelOtpIndexView = "~/Areas/CustomerSetting/Views/LeftPanel/OTP/Index.cshtml";
+
+        private readonly CustomerQueryService customerQueryService;
+
+        public SearchCustomerController() : this(new CustomerQueryServiceImpl(), null, null)
         {
-            ViewBag.UserId = CurrentSession.UserId;
-
-            return this.ViewBase("~/Areas/CustomerSetting/Views/LeftPanel/Index.cshtml");
         }
 
-        /// <summary>
-        /// Gets all info model of left panel.
-        /// </summary>
-        /// <param name="id">Username to view.</param>
-        /// <param name="uplineId">Upper id of customer.</param>
-        /// <param name="pageIndex">Current page index.</param>
-        /// <returns>View contains customer model.</returns>
-        public ActionResult GetData(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
+        internal SearchCustomerController(
+            CustomerQueryService customerQueryService,
+            ICurrentSession currentSession,
+            ICurrentContext currentContext) : base(currentSession, currentContext)
         {
-            ViewBag.UserId = CurrentSession.UserId;
-            var checkCustomerBelongToSpecialSiteResult = base.CheckCustomerBelongToSpecialSite(id);
-            if (!base.IsAdminHasPermissionOnCustomer(id, checkCustomerBelongToSpecialSiteResult.IsSpecialSite || checkCustomerBelongToSpecialSiteResult.IsSpecialHeadline))
-            {
-                return this.Content("var model = null; $(\"div[data-ng-controller='NoInfoController']\").html(\"You don\'t have permission to access\")");
-            }
-
-            if (!this.IsBelong(uplineId, 0, id, true))
-            {
-                return this.Content("var model = null;");
-            }
-
-            var model = this._service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId, pageIndex);
-            if (model != null)
-            {
-                model.GetProductStatuses(CurrentSession.UserId, uplineId, id);
-            }
-
-            string result = "var model = " + JsonConvert.SerializeObject(
-                model,
-                Formatting.None,
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                }) + ";";
-
-            return this.Content(result);
+            this.customerQueryService = customerQueryService;
         }
 
-        /// <summary>
-        /// Views all down-lines of customer.
-        /// </summary>
-        /// <param name="id">Id of customer.</param>
-        /// <param name="uplineId">Upper id of customer.</param>
-        /// <param name="pageIndex">Current page index.</param>
-        /// <returns>JSON object.</returns>
-        [HttpPost]
-        [AntiXSRFFilter]
-        public ActionResult ViewDownline(string id = null, string uplineId = "ACCDDD", int pageIndex = 1)
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
+            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+        public ActionResult Index(string custName = null, string uplineId = "ACCDDD")
         {
-            ViewBag.UserId = CurrentSession.UserId;
+            var userId = CurrentSession.UserId;
+            ViewBag.UserId = userId;
 
-            if (!this.IsBelong(uplineId, 0, id, true))
+            if (string.IsNullOrWhiteSpace(custName))
             {
-                return this.Content("var model = null;");
+                return View(LeftPanelIndexView);
             }
 
-            var model = this._service.GetCustomerInfo(string.IsNullOrWhiteSpace(id) ? string.Empty : id, uplineId, pageIndex);
+            var checkingResult = CheckCustomerBelongToSpecialSite(custName);
+            if (!IsAdminHasPermissionOnCustomer(checkingResult.IsSpecialSite
+                                                || checkingResult.IsSpecialHeadline))
+            {
+                return Redirect("~/Shared/NoPermission");
+            }
 
-            return this.JsonBase(model);
+            var customerInfo = customerQueryService.SearchCustomer(
+                userId,
+                custName,
+                uplineId);
+
+            return View(LeftPanelIndexView, customerInfo);
         }
 
-        /// <summary>
-        /// Updates info of panel.
-        /// </summary>
-        /// <param name="id">Customer id to update.</param>
-        /// <param name="uplineId">Up-line id of customer.</param>
-        /// <param name="newGivenCredit">New given credit.</param>
-        /// <returns>JSON object.</returns>
-        [HttpPost, ExternalAccountAuthenticate(Function = eFunctions.UpdateCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateGivenCreditPost(int id, int uplineId, decimal newGivenCredit)
+        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        public ActionResult UsedCreditPage(int custId, int roleId)
         {
-            if (!this.IsBelong(Request["groupName"], id, null, true))
+            ViewBag.CustId = custId;
+
+            if (roleId.IsSuper() || roleId.IsMaster())
             {
-                return this.ActionDenied(this.Request);
-            }
+                var items = customerQueryService.MasterAgentUsedCreditItems(custId, roleId);
 
-            var model = this._service.UpdateGivenCredit(id, uplineId, newGivenCredit);
-
-            return this.JsonBase(model);
-        }
-
-        /// <summary>
-        /// Gets used credit page.
-        /// </summary>
-        /// <param name="id">Upper customer id.</param>
-        /// <param name="roleId">Customer role id.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult UsedCreditPage(int id, int roleId)
-        {
-            if (!this.IsBelong(Request["groupName"], id, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            ViewBag.CustId = id;
-
-            if (roleId == Super || roleId == Master)
-            {
-                var items = this._service.MasterAgentUsedCreditItems(id, roleId);
-                var model = new MasterAgentUsedCreditModel
-                {
-                    MasterAgentUsedCreditItems = items
-                };
-
-                return this.PartialViewBase(model, "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MasterAgentCredit.cshtml");
+                return View(
+                    MasterAgentCreditViewl,
+                    new MasterAgentUsedCreditModel
+                    {
+                        MasterAgentUsedCreditItems = items
+                    });
             }
             else
             {
-                var items = this._service.MemberUsedCreditItems(id);
-                var model = new MemberUsedCreditModel
-                {
-                    MemberUsedCreditItems = items
-                };
+                var items = customerQueryService.MemberUsedCreditItems(custId);
 
-                return this.PartialViewBase(model, "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MemberCredit.cshtml");
+                return View(
+                    MemberCreditView,
+                    new MemberUsedCreditModel
+                    {
+                        MemberUsedCreditItems = items
+                    });
             }
         }
 
-        /// <summary>
-        /// Resets member credit.
-        /// </summary>
-        /// <param name="agentId">Agent customer id.</param>
-        /// <param name="closedOnly">Resets closed account only.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult ResetMemberCredit(int agentId, bool closedOnly)
-        {
-            if (!this.IsBelong(Request["groupName"], agentId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            var result = this._service.ResetMemberCredit(CurrentSession.UserId, agentId, closedOnly);
-            return this.JsonBase(result);
-        }
-
-        /// <summary>
-        /// Clears balance.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="custIds">Customer id list.</param>
-        /// <param name="isCheckedAll">Checks all or not.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateClearBalance(int custId, string custIds, bool isCheckedAll)
-        {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            var result = this._service.CustomerInsertClearBalance(custId, custIds, isCheckedAll, CurrentContext.Ip4Address);
-            return this.JsonBase(result);
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult SelectClearBalance(int custId)
         {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
             ViewBag.CustId = custId;
-            var result = this._service.CustomerSelectClearBalance(custId);
-            return this.PartialViewBase(result, "~/Areas/CustomerSetting/Views/LeftPanel/Balance/Index.cshtml");
+            var result = customerQueryService.CustomerSelectClearBalance(custId);
+            return View(LeftpanelBalanceIndexView, result);
         }
 
-        /// <summary>
-        /// Updates closed status.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="uplineId">Upper customer id.</param>
-        /// <param name="close">Closed or not.</param>
-        /// <param name="clearCredit">Clear credit or not.</param>
-        /// <param name="custName">Customer username.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateCloseCutomer(int custId, int uplineId, bool close, bool clearCredit, string custName)
+        [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        public ActionResult GetSecurityCode(int custId, int roleId, string username)
         {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-            if (casinoCustomer != null && casinoCustomer.RoleId == Super && !close
-                && !IsAuthorized(CurrentSession.UserId, eFunctions.OpenSuper, AuthenticateAction.AuthenticationType.Host, Request))
-            {
-                return this.JsonBase(new Result(1, ViewLang.DontHavePermission));
-            }
-
-            if (casinoCustomer != null && casinoCustomer.CasinoSync)
-            {
-                this.UpdateCasinoClosed(custId, close);
-            }
-
-            return this.JsonBase(this._service.CloseCutomer(custId, close, clearCredit, custName));
-        }
-
-        /// <summary>
-        /// Updates suspended status.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="uplineId">Upper customer id.</param>
-        /// <param name="suspend">Suspended or not.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateSuspendCutomer(int custId, int uplineId, bool suspend)
-        {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-
-            if (casinoCustomer != null && casinoCustomer.CasinoSync)
-            {
-                this.UpdateCasinoSuspended(custId, suspend);
-            }
-
-            return this.JsonBase(this._service.SuspendCustomer(custId, suspend));
-        }
-
-        /// <summary>
-        /// Updates outright status.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="allow">Allow or not.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.AllowOutright, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateOutright(int custId, bool allow)
-        {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            return this.JsonBase(this._service.AllowOutright(custId, allow));
-        }
-
-        /// <summary>
-        /// Updates auto master PT status.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="allow">Allow or not.</param>
-        /// <param name="uplineId">Up line id.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.AllowAutoMPT, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateAutoMPT(int custId, bool allow, int uplineId)
-        {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            return this.JsonBase(this._service.AutoMasterPT(custId, allow, uplineId));
-        }
-
-        /// <summary>
-        /// Updates casino status.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="uplineId">Upper customer id.</param>
-        /// <param name="enable">Enable or not.</param>
-        /// <param name="enableDownline">Enable down-lines or not.</param>
-        /// <param name="custName">Customer username.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.EnableCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateCasino(int custId, int uplineId, bool enable, bool enableDownline, string custName)
-        {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            try
-            {
-                var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-                return this.JsonBase(this._service.EnableCasino(custId, enable, enableDownline, casinoCustomer.CasinoSync, custName));
-            }
-            catch (Exception ex)
-            {
-                return this.JsonBase(new { IsSuccess = ex.Message.Contains("Not casino") ? true : false, ErrorCode = 1, ErrorMessage = ex.Message });
-            }
-        }
-
-        /// <summary>
-        /// Updates enable e-sports status.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="enable">Allow or not.</param>
-        /// <param name="enableDownline">Enable down-lines or not.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.EnableESports, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateESports(int custId, bool enable, bool enableDownline)
-        {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            return this.JsonBase(this._service.EnableESports(custId, enable, enableDownline));
-        }
-
-        /// <summary>
-        /// Updates enable number game status.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="enable">Allow or not.</param>
-        /// <param name="enableDownline">Enable down-lines or not.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.EnableNumberGame, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateNumberGame(int custId, bool enable, bool enableDownline)
-        {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            return this.JsonBase(this._service.EnableNumberGame(custId, enable, enableDownline));
-        }
-
-        /// <summary>
-        /// Updates enable live casino status.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="enable">Allow or not.</param>
-        /// <param name="enableDownline">Enable down-lines or not.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.EnableLiveCasino, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateLiveCasino(int custId, bool enable, bool enableDownline)
-        {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            return this.JsonBase(this._service.EnableLiveCasino(custId, enable, enableDownline));
-        }
-
-        /// <summary>
-        /// Gets enable racing page.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="uplineId">Upper customer id.</param>
-        /// <param name="roleId">Customer role id.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.EnableRacing, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult GetEnableRacing(int id, int uplineId, int roleId)
-        {
-            if (!this.IsBelong(Request["groupName"], id, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            ViewBag.roleId = roleId;
-            ViewBag.id = id;
-            ViewBag.uplineId = uplineId;
-
-            return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/LeftPanel/EnableRacing/Index.cshtml");
-        }
-
-        /// <summary>
-        /// Gets racing status.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="uplineId">Upper customer id.</param>
-        /// <param name="roleId">Customer role id.</param>
-        /// <returns>ActionResult object.</returns>        
-        public ActionResult GetRacingData(int id, int uplineId, int roleId)
-        {
-            ViewBag.roleId = roleId;
-            ViewBag.id = id;
-            ViewBag.uplineId = uplineId;
-            var bettingLimitService = new CustomerService();
-            var model = bettingLimitService.GetCustomer(new Fanex.PTRacing.BusinessObjects.RequestContext
-            {
-                CustId = uplineId, // upline id
-                AgentId = 0, // unknow
-                UserName = string.Empty,
-                TargetCustId = id,
-                AdminId = CurrentSession.UserId,
-                SubAccId = 0,
-                RoleId = roleId + 1,
-                CurrencyId = 0,
-                TargetRoleId = roleId,
-                IsNeutralSite = false,
-                FormId = Fanex.PTRacing.BusinessObjects.FormType.EditPT,
-                IP = CurrentContext.Ip4Address
-            });
-            var result = "var model = " + JsonConvert.SerializeObject(
-                model,
-                Formatting.None,
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    NullValueHandling = NullValueHandling.Ignore
-                }) + ";";
-
-            return this.Content(result);
-        }
-
-        /// <summary>
-        /// Edits the bet setting post.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="uplineId">The up-line identifier.</param>
-        /// <param name="txtCustomerObject">The text customer object.</param>
-        /// <param name="roleId">Customer role id.</param>
-        /// <returns>ActionResult object.</returns>
-        [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.EnableRacing, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateRacing(int id, int uplineId, string txtCustomerObject, int roleId)
-        {
-            if (!this.IsBelong(Request["groupName"], id, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            var settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
-            var newSetting = JsonConvert.DeserializeObject<Fanex.PTRacing.BusinessObjects.Customer>(txtCustomerObject, settings);
-
-            var requestContext = new Fanex.PTRacing.BusinessObjects.RequestContext
-            {
-                CustId = uplineId, // upline id
-                AgentId = 0, // unknow
-                UserName = string.Empty,
-                TargetCustId = id,
-                AdminId = CurrentSession.UserId,
-                SubAccId = 0,
-                RoleId = roleId + 1,
-                CurrencyId = 0,
-                TargetRoleId = roleId,
-                IsNeutralSite = false,
-                FormId = Fanex.PTRacing.BusinessObjects.FormType.EditPT,
-                IP = CurrentContext.Ip4Address
-            };
-
-            var bettingLimitService = new Fanex.PTRacing.Services.CustomerService();
-            var oldSetting = bettingLimitService.GetCustomer(requestContext);
-            var result = bettingLimitService.SaveCustomer(oldSetting, newSetting, requestContext, new Hashtable());
-
-            return this.JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage }, settings);
-        }
-
-        /// <summary>
-        /// Gets security code page.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="roleId">Customer role id.</param>
-        /// <param name="username">Customer username.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult GetSecurityCode(int id, int roleId, string username)
-        {
-            if (!this.IsBelong(Request["groupName"], id, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            ViewBag.custId = id;
+            ViewBag.custId = custId;
             ViewBag.roleId = roleId;
             ViewBag.Username = username;
-            return this.PartialViewBase(null, "~/Areas/CustomerSetting/Views/LeftPanel/SecurityCode/Index.cshtml");
+
+            return View(SecurityCodeIndexView);
         }
 
-        /// <summary>
-        /// Updates security code.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="code">Security code.</param>
-        /// <param name="force">Force to change or not.</param>
-        /// <param name="roleId">Customer role id.</param>
-        /// <returns>ActionResult object.</returns>
-        [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateSecurityCode(int id, string code, bool force, int roleId = 2)
-        {
-            if (!this.IsBelong(Request["groupName"], id, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            string hashCode = Encryption.CfsEnCode(code);
-            if (roleId != Member)
-            {
-                var md5 = Fanex.Security.Cryptography.ComputeHash("MD5", id.ToString(), "1qaw3+{:P)");
-                hashCode = Fanex.Security.Cryptography.ComputeHash("SHA1", code, md5);
-            }
-
-            Result result = this._service.ResetSecurityCode(id, hashCode, force || roleId != (int)PTRacing.BusinessObjects.CustomerRole.Super);
-            return this.JsonBase(result);
-        }
-
-        /// <summary>
-        /// Updates enable status of HR Fixed Odds.
-        /// </summary>
-        /// <param name="id">Customer id.</param>
-        /// <param name="enable">Enable or not.</param>
-        /// <param name="enableDownline">Enable down-line or not.</param>
-        /// <returns>ActionResult object.</returns>
-        [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.EnableHRFixedOdds, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateHRFixedOdds(int id, bool enable, bool enableDownline)
-        {
-            if (!this.IsBelong(Request["groupName"], id, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            Result result = this._service.EnableHRFixedOdds(id, enable, enableDownline);
-
-            return this.JsonBase(result);
-        }
-
-        /// <summary>
-        /// Gets online list.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <returns>ActionResult object.</returns>
         [HttpPost]
         [AntiXSRFFilter]
         public ActionResult GetOnlineList(int custId)
-        {
-            var model = new OnlineList();
-            var onlines = this._service.GetOnlineList(custId);
+            => JsonBase(customerQueryService.GetOnlineList(custId));
 
-            foreach (DataRow row in onlines)
-            {
-                model.Onlines.Add(new OnlineInfo
-                {
-                    IP = new ObjectInfo { Text = CustomerModelExtensions.CheckVNIP(row.ToString("ip")) },
-                    LoginTime = new ObjectInfo { Text = Utils.ToDateTime(row["reload_time"]).ToStringExt("MM/dd/yyyy HH:mm:ss tt") }
-                });
-            }
-
-            return this.JsonBase(model);
-        }
-
-        /// <summary>
-        /// Gets down-line list.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="pageIndex">Page index.</param>
-        /// <returns>ActionResult object.</returns>
         [HttpPost]
         [AntiXSRFFilter]
         public ActionResult GetDownlineList(int custId, int pageIndex)
-        {
-            var downlines = this._service.GetDownlineList(custId, 100, pageIndex);
-            var model = new DownlineList();
-            var totalPages = LeftPanelService.TotalPages;
-
-            if (downlines != null && downlines.Rows.Count > 0)
-            {
-                foreach (DataRow item in downlines.Rows)
-                {
-                    model.Downlines.Add(new ObjectInfo { Text = item["username"].ToString() });
-                }
-
-                model.CurrentPage = pageIndex;
-
-                if (totalPages > 1)
-                {
-                    for (int i = 1; i <= totalPages; i++)
-                    {
-                        model.Pages.Add(new ObjectInfo { Value = i, Text = i.ToString() });
-                    }
-                }
-                else
-                {
-                    model.Pages.Add(new ObjectInfo { Value = 1, Text = "1" });
-                }
-            }
-
-            return this.JsonBase(model);
-        }
-
-        /// <summary>
-        /// Updates Gold Deluxe status.
-        /// </summary>
-        /// <param name="custId">Customer id.</param>
-        /// <param name="uplineId">Upper customer id.</param>
-        /// <param name="enable">Enable or not.</param>
-        /// <param name="enableDownline">Enable down-lines or not.</param>
-        /// <param name="custName">Customer username.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.EnableGoldDeluxe, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateGoldDeluxe(int custId, int uplineId, bool enable, bool enableDownline, string custName)
-        {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            try
-            {
-                return this.JsonBase(this._service.UpdateGoldDeluxe(custId, enable, enableDownline, custName, CurrentSession.CustId));
-            }
-            catch (Exception ex)
-            {
-                return this.JsonBase(new { IsSuccess = false, ErrorCode = 1, ErrorMessage = ex.Message });
-            }
-        }
+            => JsonBase(customerQueryService.GetDownlineList(custId, 100, pageIndex));
 
         [HttpGet]
-        [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult RemoveOTP(int custId, string username)
-        {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            return this.PartialViewBase(new { CustId = custId, Username = username }, "~/Areas/CustomerSetting/Views/LeftPanel/OTP/Index.cshtml");
-        }
-
-        [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP, Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult RemoveOTP(int custId)
-        {
-            if (!this.IsBelong(Request["groupName"], custId, null, true))
-            {
-                return this.ActionDenied(this.Request);
-            }
-
-            var result = this._service.RemoveOTP(custId);
-            return this.JsonBase(result);
-        }
+        [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        public ActionResult RemoveOTP(int custId, string username) =>
+            View(LeftPanelOtpIndexView, new { CustId = custId, Username = username });
     }
 }

@@ -132,21 +132,16 @@ Fanex.ExtAcc = {
         iframe.setAttribute('width', ($('#contentSplitter').width() - 5) + 'px');
         iframe.setAttribute('height', ($('#contentSplitter').height() - 5) + 'px');
         iframe.setAttribute('style', 'overflow: auto');
-
+        iframe.setAttribute('onload', 'Fanex.ExtAcc.UnBlockUI()');
         $('#contentSplitter').append(iframe);
-
-        var timeout = setTimeout(function () {
-            clearTimeout(timeout);
-            Fanex.ExtAcc.UnBlockUI();
-        }, 2000);
     },
 
     LoadMainFrame: function (url, id, isLeftPanelClick, isMenu, dontNeedGroupName) {
         this.BlockUI();
         $('#contentSplitter').hide();
-        //if (typeof id != 'undefined') {
-        //    $('#' + id).hide();
-        //}
+        if (typeof id != 'undefined') {
+            $('#' + id).hide();
+        }
 
         if (!isMenu) {
             var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
@@ -190,13 +185,14 @@ Fanex.ExtAcc = {
                 }
             })
             .error(function (data) {
-                if (typeof console != undefined)
-                    console.log(data.responseText);
+                //if (typeof console != undefined)
+                //    console.log(data.responseText);
 
                 Fanex.ExtAcc.UnBlockUI();
                 if (data.errorCode) {
                     $('#contentSplitter').html(data.errorMessage.formatErrorMessage());
-                    return;
+                } else {
+                    $('#contentSplitter').html(data.responseText).show();
                 }
             })
             .done(function (data) {
@@ -250,7 +246,7 @@ Fanex.ExtAcc = {
             $('#windowPopup').scrollTop(0);
             $('#contentSplitter').scrollTop(0);
             $.blockUI({
-                message: '<img src="' + resolveClientUrl('Images/Loading.gif') + '" />',
+                message: '<img src="' + resolveClientUrl('Assets/styles/Images/loading.gif') + '" />',
                 onBlock: function () {
                     Fanex.ExtAcc.BlockedUI = true;
                 },
@@ -343,11 +339,7 @@ Fanex.ExtAcc = {
 
             Fanex.ExtAcc.SuggestionXHR = null;
         })
-        .error(function (err) {
-            if (typeof console != 'undefined' && err.statusText && err.statusText != "abort") {
-                console.log(err);
-            }
-
+        .error(function (xhr, status, err) {
             Fanex.ExtAcc.SuggestionXHR = null;
         });
     },
@@ -442,7 +434,7 @@ Fanex.ExtAcc = {
 
                 $('.ui-autocomplete').hide();
 
-                $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?id=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=1'));
+                $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?custName=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=1'));
 
                 var widthDevice = $(window).width();
                 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
@@ -454,10 +446,9 @@ Fanex.ExtAcc = {
                     }, 100);
                 }
 
-                return true;
-            } else {
-                return true;
-            }
+            } 
+
+            return true;
         });
 
         $('#searchPanel').bind('click', function () {
@@ -470,8 +461,14 @@ Fanex.ExtAcc = {
 
             $('.ui-autocomplete').hide();
 
-            $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?id=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=1'));
+            $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?custName=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=1'));
         });
+
+        $('#leftFrame')
+            .off('load.leftFrame')
+            .on('load.leftFrame', function () {
+                Fanex.ExtAcc.UnBlockUI();
+            });
 
         $('#txtLeftPanelUserName').keyup(function (e) {
             if ($('#txtLeftPanelUserName').val().length > 1) {
@@ -479,7 +476,7 @@ Fanex.ExtAcc = {
             }
         });
 
-        Fanex.ExtAcc.InitSuggestion('txtLeftPanelUserName');
+        //Fanex.ExtAcc.InitSuggestion('txtLeftPanelUserName');
 
         setTimeout(Fanex.ExtAcc.CalculateUserConnectionSpeed, 8000);
     },
@@ -500,7 +497,7 @@ Fanex.ExtAcc = {
         this.BlockUI();
 
         username = username.formatString();
-        $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?id=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=' + pageIndex));
+        $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?custName=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=' + pageIndex));
     },
 
     ToggleSpliter: function () {
@@ -690,7 +687,7 @@ Fanex.ExtAcc = {
     CheckConstraintAgentCredits: function (agentCredit) {
         var value = Fanex.ExtAcc.ReplaceAll(agentCredit.value, ',', '');
         $('#maxCreditMember').text(Fanex.ExtAcc.FormatNumber(value));
-    },
+    },    
 
     FormatErrorMessage: function (username, obj) {
         var msgs = obj;
@@ -825,6 +822,23 @@ $(document).ready(function () {
             var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
             if (antiXSRFToken.length > 0) {
                 xhr.setRequestHeader("__RequestVerificationToken", antiXSRFToken[0].value);
+            }
+        },
+        error: function(){
+            Fanex.ExtAcc.UnBlockUI();
+        },
+        statusCode: {
+            500: function () {
+                Fanex.ExtAcc.Form.Close();
+                Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Shared/Error'));                
+            },
+            401: function (error, callback) {
+                if (JSON && error.responseText) {
+                    var errorResult = JSON.parse(error.responseText);
+                    if (errorResult.code === 999999) {
+                        top.location.href = resolveClientUrl('Shared/Offline');
+                    }
+                }
             }
         }
     });

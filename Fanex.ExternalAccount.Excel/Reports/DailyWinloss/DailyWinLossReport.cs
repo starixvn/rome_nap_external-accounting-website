@@ -1,24 +1,16 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="DailyWinLossReport.cs" company="">
-// Copyright (c) . All rights reserved.
-// Creator: Simon
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
+﻿namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Core.Shared;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using Utility;
 
-    /// <summary>
-    /// Daily win loss report.
-    /// </summary>
     internal class DailyWinLossReport : TemplateReport, IReportBuilder
     {
         private readonly DailyWinLossReportBuilder _builder;
+        private const int LastColumnIndex = 18;
 
         public DailyWinLossReport(string filePath, DailyWinLossReportBuilder builder)
             : base(filePath)
@@ -26,121 +18,114 @@ namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
             _builder = builder;
         }
 
-        /// <summary>
-        /// Builds workbook.
-        /// </summary>
-        /// <returns>HSSFWorkbook object.</returns>
         public HSSFWorkbook Build()
         {
-            var data = _builder.Data;
-            if (data == null)
-            {
-                return null;
-            }
-
-            ISheet templateSheet = HssfWorkbook.GetSheet("Template");
-            ISheet resultSheet = HssfWorkbook.GetSheet("DailyWinLoss");
+            var resultSheet = HssfWorkbook.GetSheet("DailyWinLoss");
             if (_builder.IsBold)
             {
                 BoldAllFonts();
             }
 
-            int rowId = 0, colId = 0, id = 1;
-            var mainTitle = (_builder.RoleId == 5 ? "Super" : _builder.RoleId == 4 ? "Master" : _builder.RoleId == 3 ? "Agent" : "Member") +
-                " Daily Win Loss on " + _builder.WinlostDate;
-            resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
-            rowId = 3;
-            if (data.Count > 0)
-            {
-                WriteCells(ref resultSheet, ref templateSheet, rowId, colId, id);
-            }
+            BuildMainTitle(resultSheet);
+            WriteBodyReport(resultSheet);
+            HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(TemplateSheet));
 
-            HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(templateSheet));
             return HssfWorkbook;
         }
 
-        /// <summary>
-        /// Writes cells of workbook.
-        /// </summary>
-        /// <param name="resultSheet">ISheet of result data.</param>
-        /// <param name="templateSheet">ISheet of template data.</param>
-        /// <param name="rowId">Row id of workbook.</param>
-        /// <param name="colId">Column id of workbook.</param>
-        /// <param name="id">Order id of row.</param>
-        private void WriteCells(ref ISheet resultSheet, ref ISheet templateSheet, int rowId, int colId, int id)
+        private void WriteBodyReport(ISheet resultSheet)
         {
-            List<object> values;
-            int totalColumn = 19, lastColumnIndex = colId + totalColumn - 1;
-            var data = _builder.Data;
-            foreach (var item in data)
-            {
-                resultSheet.CopyRow(templateSheet, id % 2 == 0 ? 1 : 3, rowId, colId, lastColumnIndex);
+            var index = 1;
+            var toRowId = 3;
 
-                values = new List<object>
-                    {
-                        item.No,
-                        item.Username,
-                        item.TotalTO,
-                        item.ComTO,
-                        item.ComTOPercent,
-                        item.SAgTO,
-                        item.SAgTOPercent,
-                        item.MAgTO,
-                        item.MAgTOPercent,
-                        item.AgTO,
-                        item.AgTOPercent,
-                        item.ComWinlost,
-                        item.ComWinlostPercent,
-                        item.SAgWinlost,
-                        item.SAgWinlostPercent,
-                        item.MAgWinlost,
-                        item.MAgWinlostPercent,
-                        item.AgWinlost,
-                        item.AgWinlostPercent
-                    };
-                resultSheet.GetRow(rowId).WriteCells(colId, values);
-                id++;
-                rowId++;
+            foreach (var item in _builder.Data)
+            {
+                var fromRowId = index % 2 == 0 ? OddRowIndex : EvenRowIndex;
+                resultSheet.CopyRow(TemplateSheet, fromRowId, toRowId, FirstColumnIndex, LastColumnIndex);
+
+                var values = new List<object>
+                {
+                    item.No,
+                    item.Username,
+                    item.TotalTO,
+                    item.ComTO,
+                    item.ComTOPercent,
+                    item.SAgTO,
+                    item.SAgTOPercent,
+                    item.MAgTO,
+                    item.MAgTOPercent,
+                    item.AgTO,
+                    item.AgTOPercent,
+                    item.ComWinlost,
+                    item.ComWinlostPercent,
+                    item.SAgWinlost,
+                    item.SAgWinlostPercent,
+                    item.MAgWinlost,
+                    item.MAgWinlostPercent,
+                    item.AgWinlost,
+                    item.AgWinlostPercent
+                };
+                resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, values);
+                index++;
+                toRowId++;
             }
 
-            WriteTotal(ref resultSheet, ref templateSheet, rowId, colId, lastColumnIndex);
+            WriteTotal(resultSheet, toRowId);
         }
 
-        /// <summary>
-        /// Writes total cells of workbook.
-        /// </summary>
-        /// <param name="resultSheet">ISheet of result data.</param>
-        /// <param name="templateSheet">ISheet of template data.</param>
-        /// <param name="rowId">Row id of workbook.</param>
-        /// <param name="colId">Column id of workbook.</param>
-        /// <param name="lastColumnIndex">Order id of last column.</param>
-        private void WriteTotal(ref ISheet resultSheet, ref ISheet templateSheet, int rowId, int colId, int lastColumnIndex)
+        private void WriteTotal(ISheet resultSheet, int toRowIndex)
         {
             var data = _builder.Data;
-            resultSheet.CopyRow(templateSheet, 5, rowId, colId, lastColumnIndex);
+            resultSheet.CopyRow(TemplateSheet, FirstColumnTotalIndex, toRowIndex, FirstColumnIndex, LastColumnIndex);
             var values = new List<object>
-                {
-                    string.Empty,
-                    "Grand Total",
-                    data.Sum(p => p.TotalTO),
-                    data.Sum(p => p.ComTO),
-                    data.Sum(p => p.TotalTO) != 0 ? data.Sum(p => p.ComTO) / data.Sum(p => p.TotalTO) * 100 : 0,
-                    data.Sum(p => p.SAgTO),
-                    data.Sum(p => p.TotalTO) != 0 ? data.Sum(p => p.SAgTO) / data.Sum(p => p.TotalTO) * 100 : 0,
-                    data.Sum(p => p.MAgTO),
-                    data.Sum(p => p.TotalTO) != 0 ? data.Sum(p => p.MAgTO) / data.Sum(p => p.TotalTO) * 100 : 0,
-                    data.Sum(p => p.AgTO),
-                    data.Sum(p => p.TotalTO) != 0 ? data.Sum(p => p.AgTO) / data.Sum(p => p.TotalTO) * 100 : 0,
-                    data.Sum(p => p.ComWinlost),
-                    data.Sum(p => p.ComTO) != 0 ? data.Sum(p => p.ComWinlost) / data.Sum(p => p.ComTO) * 100 : 0,
-                    data.Sum(p => p.SAgWinlost),
-                    data.Sum(p => p.SAgTO) != 0 ? data.Sum(p => p.SAgWinlost) / data.Sum(p => p.SAgTO) * 100 : 0,
-                    data.Sum(p => p.MAgWinlost),
-                    data.Sum(p => p.MAgTO) != 0 ? data.Sum(p => p.MAgWinlost) / data.Sum(p => p.MAgTO) * 100 : 0,
-                    data.Sum(p => p.AgWinlost),
-                    data.Sum(p => p.AgTO) != 0 ? data.Sum(p => p.AgWinlost) / data.Sum(p => p.AgTO) * 100 : 0
-                };
-            resultSheet.GetRow(rowId).WriteCells(colId, values);
+            {
+                string.Empty,
+                "Grand Total",
+                data.Sum(p => p.TotalTO),
+                data.Sum(p => p.ComTO),
+                !data.Sum(p => p.TotalTO).Equals(0)
+                    ? data.Sum(p => p.ComTO) / data.Sum(p => p.TotalTO) * 100
+                    : 0,
+                data.Sum(p => p.SAgTO),
+                !data.Sum(p => p.TotalTO).Equals(0)
+                    ? data.Sum(p => p.SAgTO) / data.Sum(p => p.TotalTO) * 100
+                    : 0,
+                data.Sum(p => p.MAgTO),
+                !data.Sum(p => p.TotalTO).Equals(0)
+                    ? data.Sum(p => p.MAgTO) / data.Sum(p => p.TotalTO) * 100
+                    : 0,
+                data.Sum(p => p.AgTO),
+                !data.Sum(p => p.TotalTO).Equals(0)
+                    ? data.Sum(p => p.AgTO) / data.Sum(p => p.TotalTO) * 100
+                    : 0,
+                data.Sum(p => p.ComWinlost),
+                !data.Sum(p => p.ComTO).Equals(0)
+                    ? data.Sum(p => p.ComWinlost) / data.Sum(p => p.ComTO) * 100
+                    : 0,
+                data.Sum(p => p.SAgWinlost),
+                !data.Sum(p => p.SAgTO).Equals(0)
+                    ? data.Sum(p => p.SAgWinlost) / data.Sum(p => p.SAgTO) * 100
+                    : 0,
+                data.Sum(p => p.MAgWinlost),
+                !data.Sum(p => p.MAgTO).Equals(0)
+                    ? data.Sum(p => p.MAgWinlost) / data.Sum(p => p.MAgTO) * 100
+                    : 0,
+                data.Sum(p => p.AgWinlost),
+                !data.Sum(p => p.AgTO).Equals(0)
+                    ? data.Sum(p => p.AgWinlost) / data.Sum(p => p.AgTO) * 100
+                    : 0            };
+
+            resultSheet.GetRow(toRowIndex).WriteCells(FirstColumnIndex, values);
         }
+
+        private void BuildMainTitle(ISheet resultSheet)
+        {
+            var downlineLevel = _builder.RoleId.DirectDownlineLevel();
+            
+            var mainTitle = $"{downlineLevel.DisplayRoleName()} Daily Win Loss on {_builder.WinlostDate}";
+
+            resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
+        }
+
     }
 }

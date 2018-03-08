@@ -1,20 +1,4 @@
-﻿/*
-* monPickr - jQuery Plugin
-* Just a simple month picker
-*
-* Examples and documentation at: http://update.later
-*
-* Copyright (c) 2012
-*
-* Version: 0.0.1 (6 Jan 2012)
-* Requires: jQuery v1.7+
-*
-* Swatch color: BDC7D8 - base color
-*               333333 - text, link color
-*               999999 - border, button background
-*/
-
-.monPickrWrap 
+﻿.monPickrWrap 
 {
     background-color: #e3dfdf;
     width: 150px;    

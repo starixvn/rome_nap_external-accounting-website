@@ -1,9 +1,3 @@
-/*
-  Adapt.js licensed under GPL and MIT.
-
-  Read more here: http://adapt.960.gs
-*/
-
 // Closure.
 (function(w, d, config, undefined) {
   // If no config, exit.

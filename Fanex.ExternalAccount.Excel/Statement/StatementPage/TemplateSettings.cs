@@ -1,29 +1,17 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="TemplateSettings.cs" company="">
-// Copyright (c) . All rights reserved.
-// Creator: Simon
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
+﻿namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
 {
+    using System.IO;
     using System.Web;
 
-    /// <summary>
-    /// Template setting of statement.
-    /// </summary>
     internal class TemplateSettings
     {
-        private string _dir;
+        private readonly string _dir;
 
         public TemplateSettings()
         {
-            this._dir = HttpContext.Current.Server.MapPath("~/") + "\\ExcelTemplates\\Statement";
+            _dir = HttpContext.Current.Server.MapPath("~/ExcelTemplates/Statement");
         }
 
-        public string StatementPath()
-        {
-            return this._dir + "\\" + "Statement.xls";
-        }
+        public string StatementPath() => Path.Combine(_dir, "Statement.xls");
     }
 }

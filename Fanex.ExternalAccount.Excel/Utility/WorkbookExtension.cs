@@ -1,16 +1,7 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="WorkbookExtension.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.Excel.Utility
+﻿namespace Fanex.ExternalAccount.Excel.Utility
 {
     using NPOI.SS.UserModel;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class WorkbookExtension
     {
         public static ISheet CloneSheet(this IWorkbook workbook, string sourceSheetName, string newSheetName)

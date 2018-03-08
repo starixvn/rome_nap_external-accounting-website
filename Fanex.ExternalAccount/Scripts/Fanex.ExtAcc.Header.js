@@ -105,9 +105,6 @@ Fanex.ExtAcc.Header = {
                             location.href = location.protocol + '//' + location.host + resolveClientUrl('') + 'Home/Index/' + selectedGroupName;
                         }
                     });
-                },
-                error: function (xhr, status, data) {
-                    if (typeof console != 'undefined') console.log(data);
                 }
             });
         }

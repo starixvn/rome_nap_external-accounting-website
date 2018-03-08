@@ -43,7 +43,7 @@ function Update() {
             function () {
                 Fanex.ExtAcc.BlockUI();
                 $.ajax({
-                    url: resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateClearBalance'),
+                    url: resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateClearBalance'),
                     data: {
                         custId: custId,
                         custIds: custIds,
@@ -63,12 +63,6 @@ function Update() {
                             .success(function (result) {
                                 Fanex.ExtAcc.UnBlockUI();
                                 $('#contentSplitter').html(result);
-                            })
-                            .error(function (result) {
-                                Fanex.ExtAcc.UnBlockUI();
-                                if (typeof console != 'undefined') {
-                                    console.log(result);
-                                }
                             });
                         }, 2000);
                     }
@@ -77,11 +71,6 @@ function Update() {
 
                         Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 410, 150, 'errorTransfer');
                     }
-                }).error(function (data) {
-                    Fanex.ExtAcc.UnBlockUI();
-
-                    if (typeof console != undefined)
-                        console.log(data);
                 });
             },
             null,

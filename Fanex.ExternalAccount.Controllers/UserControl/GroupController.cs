@@ -1,153 +1,150 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="GroupController.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// <summary>
-// For current session info
-// </summary>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2012.12.14">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Controllers.UserControl
+﻿namespace Fanex.ExternalAccount.Controllers.UserControl
 {
+    using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.ExternalAccount.Core.Base;
-    using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.DTO.UserControl;
-    using Fanex.ExternalAccount.Service.Impl.Login;
-    using Fanex.ExternalAccount.Service.Impl.UserControl;
-    using Fanex.ExternalAccount.Service.Interface.UserControl;
+    using Core.Base;
+    using Core.Context;
+    using Core.Shared;
+    using CustomerSetting.Security.Authenticate;
+    using DTO.UserControl;
+    using Newtonsoft.Json;
+    using Service.Impl.Login;
+    using Service.Impl.UserControl;
+    using Service.Interface.Login;
+    using Service.Interface.UserControl;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class GroupController : BaseController
     {
-        private IGroupService _groupService = null;
-        private CachingService _cache = null;
+        private readonly CachingService _cache;
+        private readonly IGroupService _groupService;
+        private readonly IFunctionService functionService;
+        private readonly ILoginService loginService;
 
-        public GroupController()
+        public GroupController(
+            CachingService cache,
+            IGroupService groupService,
+            IFunctionService functionService,
+            ILoginService loginService)
         {
-            this._groupService = this._groupService ?? new GroupService();
-            this._cache = this._cache ?? new CachingService();
+            _groupService = groupService ?? new GroupService();
+            _cache = cache ?? new CachingService();
+            this.functionService = functionService ?? new FunctionService();
+            this.loginService = loginService ?? new LoginService();
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult GroupList()
+        public GroupController() : this(null, null, null, null)
         {
-            return this.PartialViewBase();
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
+            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+        public ActionResult GroupList() => PartialViewBase();
+
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
-        public ActionResult AddGroup()
-        {
-            return this.PartialViewBase();
-        }
+        public ActionResult AddGroup() => PartialViewBase();
 
-        /// <summary>
-        /// Gets group list data.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult GroupListPost()
         {
-            var result = this._groupService.GetListGroup();
+            var result = _groupService.GetListGroup().ToList();
 
             if (!CurrentSession.IsITAdmin && !CurrentSession.IsInternalAdmin)
             {
-                result = result.Where(o => o.GroupName == CurrentSession.CurrencyGroup);
+                result = result.Where(o => o.GroupName == CurrentSession.CurrencyGroup).ToList();
             }
-            else if (!CurrentSession.IsITAdmin && CurrentSession.IsInternalAdmin)
+            else
             {
-                result = result.Where(o => o.GroupID != 1);
+                if (!CurrentSession.IsITAdmin && CurrentSession.IsInternalAdmin)
+                {
+                    result = result.Where(o => !Group.IsITGroup(o.GroupID)).ToList();
+                }
             }
 
-            return this.JsonBase(new { total = 1, page = 1, records = result.Count(), rows = result }, new Newtonsoft.Json.JsonSerializerSettings());
+            return JsonBase(new { total = 1, page = 1, records = result.Count, rows = result },
+                new JsonSerializerSettings());
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditGroup(int id)
         {
-            var model = this._groupService.GetGroupById(id);
+            var model = _groupService.GetGroupById(id);
 
             model.GroupName = HttpUtility.HtmlDecode(model.GroupName);
             model.Description = HttpUtility.HtmlDecode(model.Description);
 
-            return this.PartialViewBase(model);
+            return PartialViewBase(model);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult GetGroupPolicy(int groupId)
         {
-            var model = this._groupService.GetAllGroupPolicy(groupId);
+            var model = _groupService.GetAllGroupPolicy(groupId);
 
-            return this.PartialViewBase(model);
+            return PartialViewBase(model);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult Add(string name, string description)
         {
-            var groupId = 0;
+            var result = _groupService.CreateGroup(name, description, CurrentSession.CustId, CurrentContext.Ip4Address);
 
-            var result = this._groupService.CreateGroup(name, description, CurrentSession.CustId, CurrentContext.Ip4Address, out groupId);
-
-            return this.JsonBase(result);
+            return JsonBase(result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult EditPolicy(int groupId, string oldGroupPolicy, string groupPolicy)
         {
-            var result = this._groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
+            var result = _groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId,
+                CurrentContext.Ip4Address, groupId);
 
-            return this.JsonBase(result);
+            return JsonBase(result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult Delete(int groupId)
         {
-            var result = this._groupService.DeleteGroup(groupId, CurrentSession.CustId);
+            var result = _groupService.DeleteGroup(groupId, CurrentSession.CustId);
 
-            return this.JsonBase(result);
+            return JsonBase(result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult Edit(int groupId, string groupName, string description)
         {
-            var result = this._groupService.EditGroup(groupName, description, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
+            var result = _groupService.EditGroup(groupName, description, CurrentSession.CustId,
+                CurrentContext.Ip4Address, groupId);
 
-            return this.JsonBase(result);
+            return JsonBase(result);
         }
 
-        /// <summary>
-        /// Grants permission for group.
-        /// </summary>
-        /// <param name="groupId">Id of group.</param>
-        /// <param name="groupName">Group name.</param>
-        /// <returns>ActionResult object.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult GrantPermission(int groupId, string groupName)
         {
-            var funcs = new FunctionService().GetAllFunctions().ToList();
+            var funcs = functionService.GetAllFunctions().ToList();
             funcs = funcs.Where(f => f.IsTest).ToList();
-            var externalGroup = new LoginService().GroupList();
-            var functionList = this._groupService.GetAllGroupPolicy(groupId);
+            var externalGroup = loginService.GroupList();
+            var functionList = _groupService.GetAllGroupPolicy(groupId).ToList();
 
             var allowFunctions = new List<Function>();
 
@@ -155,7 +152,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             {
                 foreach (var function in functionList)
                 {
-                    if (!funcs.Any(f => f.FuncID == function.FuncID))
+                    if (funcs.All(f => f.FuncID != function.FuncID))
                     {
                         allowFunctions.Add(function);
                     }
@@ -164,43 +161,41 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                 functionList = allowFunctions;
             }
 
-            var isEditExtGroup = false;
             ViewBag.GroupID = groupId;
             ViewBag.GroupName = groupName;
-
-            foreach (var item in externalGroup)
-            {
-                if (item.GroupName.Equals(groupName, System.StringComparison.OrdinalIgnoreCase))
-                {
-                    isEditExtGroup = true;
-                    break;
-                }
-            }
-
-            if (!isEditExtGroup) 
-            {
-                // Continue to check new external groups created after launching
-                isEditExtGroup = groupId != 1 && !groupName.Equals("Finance", System.StringComparison.OrdinalIgnoreCase) && 
-                    !groupName.Equals("Internal", System.StringComparison.OrdinalIgnoreCase);
-            }
+            var isEditExtGroup =
+                externalGroup.Any(i => i.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase))
+                ? externalGroup.Any(i => i.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase))
+                : !Group.IsOfficeGroup(groupName);
 
             if (isEditExtGroup)
             {
-                ViewBag.Function = functionList.Where(x => x.ParentID == 0 && x.FuncKey != eFunctions.ManageFunction &&
-                    x.FuncKey != eFunctions.ManageGroup && x.FuncKey != eFunctions.ManageMenu && x.FuncKey != eFunctions.ManageUser &&
-                    x.FuncKey != eFunctions.Administration && x.FuncKey != eFunctions.SystemConfiguration && x.FuncKey != eFunctions.ExternalGroup);
+                ViewBag.Function = functionList.Where(x => x.ParentID == 0 && x.FuncKey != eFunctions.ManageFunction
+                                                           && x.FuncKey != eFunctions.ManageGroup
+                                                           && x.FuncKey != eFunctions.ManageMenu
+                                                           && x.FuncKey != eFunctions.ManageUser
+                                                           && x.FuncKey != eFunctions.Administration
+                                                           && x.FuncKey != eFunctions.SystemConfiguration
+                                                           && x.FuncKey != eFunctions.ExternalGroup);
 
-                ViewBag.subFunction = functionList.Where(x => x.ParentID != 0 && x.FuncKey != eFunctions.ManageFunction &&
-                    x.FuncKey != eFunctions.ManageGroup && x.FuncKey != eFunctions.ManageMenu && x.FuncKey != eFunctions.ManageUser &&
-                    x.FuncKey != eFunctions.Administration && x.FuncKey != eFunctions.SystemConfiguration && x.FuncKey != eFunctions.ExternalGroup);
+                ViewBag.subFunction = functionList.Where(x =>
+                    x.ParentID != 0 && x.FuncKey != eFunctions.ManageFunction
+                    && x.FuncKey != eFunctions.ManageGroup && x.FuncKey != eFunctions.ManageMenu
+                    && x.FuncKey != eFunctions.ManageUser
+                    && x.FuncKey != eFunctions.Administration && x.FuncKey != eFunctions.SystemConfiguration
+                    && x.FuncKey != eFunctions.ExternalGroup);
             }
-            else if (groupId != 1)
+            else if (!Group.IsITGroup(groupId))
             {
-                ViewBag.Function = functionList.Where(x => x.ParentID == 0 && x.FuncKey != eFunctions.ManageFunction &&
-                        x.FuncKey != eFunctions.ManageMenu && x.FuncKey != eFunctions.SystemConfiguration && x.FuncKey != eFunctions.ExternalGroup);
+                ViewBag.Function = functionList.Where(x => x.ParentID == 0 && x.FuncKey != eFunctions.ManageFunction
+                                                           && x.FuncKey != eFunctions.ManageMenu
+                                                           && x.FuncKey != eFunctions.SystemConfiguration
+                                                           && x.FuncKey != eFunctions.ExternalGroup);
 
-                ViewBag.subFunction = functionList.Where(x => x.ParentID != 0 && x.FuncKey != eFunctions.ManageFunction &&
-                    x.FuncKey != eFunctions.ManageMenu && x.FuncKey != eFunctions.SystemConfiguration && x.FuncKey != eFunctions.ExternalGroup);
+                ViewBag.subFunction = functionList.Where(x =>
+                    x.ParentID != 0 && x.FuncKey != eFunctions.ManageFunction
+                    && x.FuncKey != eFunctions.ManageMenu && x.FuncKey != eFunctions.SystemConfiguration
+                    && x.FuncKey != eFunctions.ExternalGroup);
             }
             else
             {
@@ -208,20 +203,22 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                 ViewBag.subFunction = functionList.Where(x => x.ParentID != 0 && x.FuncKey != eFunctions.ExternalGroup);
             }
 
-            return this.PartialViewBase();
+            return PartialViewBase();
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult GrantPermissionPost(int groupId, string oldGroupPolicy, string groupPolicy)
         {
-            var result = this._groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId, CurrentContext.Ip4Address, groupId);
+            var result = _groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId,
+                CurrentContext.Ip4Address, groupId);
             if (result.IsSuccess)
             {
-                this._cache.RemoveUserCache(CurrentSession.UserId);
+                _cache.RemoveUserCache(CurrentSession.UserId);
             }
 
-            return this.JsonBase(result);
+            return JsonBase(result);
         }
     }
 }

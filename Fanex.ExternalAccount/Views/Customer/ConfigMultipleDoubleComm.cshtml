@@ -1,4 +1,5 @@
-﻿<div>
+﻿@model int
+<div>
     <div style="height: 25px">
         <input style="margin: 5px" id="dblAllow" type="radio" name="dblComm" value="" /><label id="allow" for="dblAllow">Allow Double Commission</label></div>
     <div style="height: 25px">
@@ -9,10 +10,10 @@
 </div>
 <script type="text/javascript">
     var allow = true;
-    var roleId = '@ViewBag.RoleId';
+    var roleId = '@Model';
 
     $(document).ready(function () {
-        if (roleId == '1') {
+        if (roleId === '@Role.Member') {
             $('#allow').html('Turn ON Double Commission');
             $('#disallow').html('Turn OFF Double Commission');
         }

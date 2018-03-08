@@ -1,32 +1,20 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="RtfTextRender.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Excel.Utility
+﻿namespace Fanex.ExternalAccount.Excel.Utility
 {
     using System.Collections.Generic;
+    using System.Text;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
 
-    /// <summary>
-    /// Text renderer.
-    /// </summary>
     public class RtfTextRender
     {
-        private IFont _font;
-        private List<TextBlock> _blocks = new List<TextBlock>();
+        private readonly IFont _font;
+        private readonly List<TextBlock> _blocks = new List<TextBlock>();
 
         public RtfTextRender()
         {
         }
 
         public RtfTextRender(IFont font)
-            : base()
         {
             this._font = font;
         }
@@ -36,23 +24,19 @@ namespace Fanex.ExternalAccount.Excel.Utility
             this._blocks.Clear();
         }
 
-        /// <summary>
-        /// Render text string.
-        /// </summary>
-        /// <returns>IRichTextString object.</returns>
         public IRichTextString Render()
         {
-            string s = string.Empty;
-            foreach (var block in this._blocks)
+            var content = new StringBuilder();
+            foreach (var block in _blocks)
             {
-                s += block.Text;
+                content.Append(block.Text);
             }
 
-            IRichTextString result = new HSSFRichTextString(s);
+            IRichTextString result = new HSSFRichTextString(content.ToString());
             int textIndex = 0;
             foreach (var block in this._blocks)
             {
-                IFont font = this._font;
+                var font = _font;
                 if (font == null)
                 {
                     font = block.Font;
@@ -67,8 +51,7 @@ namespace Fanex.ExternalAccount.Excel.Utility
 
                 if (font != null)
                 {
-                    int startIndex = textIndex;
-                    int endIndex = textIndex + block.Text.Length;
+                    var endIndex = textIndex + block.Text.Length;
                     result.ApplyFont(textIndex, endIndex, font);
                 }
 

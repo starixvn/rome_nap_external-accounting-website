@@ -1,70 +1,43 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="StatementPageBuilder.cs" company="">
-// Copyright (c) . All rights reserved.
-// Creator: Simon
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
+﻿namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
 {
     using System.Collections.Generic;
     using System.IO;
-    using Fanex.ExternalAccount.DTO.Statement;
-    using NPOI.HSSF.UserModel;
+    using DTO.Statement;
 
-    /// <summary>
-    /// Statement page builder.
-    /// </summary>
     public class StatementPageBuilder
     {
-        public StatementPageBuilder(List<Statement> statement, bool isBold, string username, string fromDate, string toDate)
+        public StatementPageBuilder(List<Statement> statement, bool isBold, string username,
+            string fromDate, string toDate)
         {
-            this.Username = username;
-            this.FromDate = fromDate;
-            this.ToDate = toDate;
-            this.IsBold = isBold;
-            this.Data = statement;
+            Username = username;
+            FromDate = fromDate;
+            ToDate = toDate;
+            IsBold = isBold;
+            Data = statement;
         }
 
-        public List<Statement> Data { get; private set; }
+        public List<Statement> Data { get; }
 
-        public bool IsBold { get; private set; }
+        public bool IsBold { get; }
 
-        public string Username { get; private set; }
+        public string Username { get; }
 
-        public string FromDate { get; private set; }
+        public string FromDate { get; }
 
-        public string ToDate { get; private set; }
+        public string ToDate { get; }
 
-        /// <summary>
-        /// Builds report.
-        /// </summary>
-        /// <returns>MemoryStream object.</returns>
         public MemoryStream Build()
         {
-            TemplateReport report = null;
-            TemplateSettings settings = new TemplateSettings();
-            string filePath = settings.StatementPath();
-
-            report = new StatementPage(filePath, this);
-
-            if (report != null)
+            var settings = new TemplateSettings();
+            var filePath = settings.StatementPath();
+            var mem = new MemoryStream();
+            using (var report = new StatementPage(filePath, this))
             {
-                if (report is IReportBuilder)
-                {
-                    MemoryStream mem = new MemoryStream();
-                    HSSFWorkbook hssfWorkbook = ((IReportBuilder)report).Build();
-                    if (hssfWorkbook != null)
-                    {
-                        hssfWorkbook.Write(mem);
-                        return mem;
-                    }
-
-                    report.Dispose();
-                }
+                var hssfWorkbook = report.Build();
+                hssfWorkbook.Write(mem);
             }
 
-            return null;
+            return mem;
         }
     }
 }

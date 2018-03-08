@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Fanex.ExternalAccount.Service</RootNamespace>
     <AssemblyName>Fanex.ExternalAccount.Service</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -20,6 +20,7 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>Fanex.ExternalAccount.Service.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -39,6 +41,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>Fanex.ExternalAccount.Service.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CasinoLibrary, Version=1.0.2.14, Culture=neutral, processorArchitecture=MSIL">
@@ -53,8 +56,17 @@
       <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\CasinoUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Caching">
-      <HintPath>..\Dependencies\Fanex.Caching.dll</HintPath>
+    <Reference Include="Couchbase, Version=1.0.0.0, Culture=neutral, PublicKeyToken=81137140da4e57ef, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Caching.1.0.404.95\lib\net40\Couchbase.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Enyim.Caching, Version=2.12.0.0, Culture=neutral, PublicKeyToken=81137140da4e57ef, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Caching.1.0.404.95\lib\net40\Enyim.Caching.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Caching, Version=1.0.404.95, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Caching.1.0.404.95\lib\net40\Fanex.Caching.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
@@ -76,53 +88,21 @@
       <HintPath>..\packages\Fanex.Logging.Extensions.Web.1.0.5\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Module.Logs, Version=2.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.Logs.2.0.0.4\lib\net40\Fanex.Module.Logs.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.4787.16346, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Fanex.PTEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="GotDotNet.ApplicationBlocks.Data">
-      <HintPath>..\Dependencies\GotDotNet.ApplicationBlocks.Data.dll</HintPath>
+    <Reference Include="Fanex.PTEngine, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTEngine.1.0.4.5\lib\net40\Fanex.PTEngine.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\HandHistoryLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\IBCCrypt.dll</HintPath>
-    </Reference>
-    <Reference Include="IBCDBLibrary">
-      <HintPath>..\Dependencies\IBCDBLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="IBCDLL">
-      <HintPath>..\Dependencies\IBCDLL.dll</HintPath>
-    </Reference>
-    <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Caching.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="IBCMessage">
-      <HintPath>..\Dependencies\IBCMessage.dll</HintPath>
-    </Reference>
-    <Reference Include="IBCUtils">
-      <HintPath>..\Dependencies\IBCUtils.dll</HintPath>
-    </Reference>
-    <Reference Include="ILogger">
-      <HintPath>..\Dependencies\ILogger.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\Dependencies\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.ApplicationBlocks.Data">
-      <HintPath>..\Dependencies\Microsoft.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
@@ -148,8 +128,9 @@
       <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.Interception.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NetUtility">
-      <HintPath>..\Dependencies\NetUtility.dll</HintPath>
+    <Reference Include="NetUtility, Version=1.0.4199.22106, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetUtility.1.0.4199.22106\lib\net40\NetUtility.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="RemotingRef, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RemotingRef.1.0.0.15\lib\net40\RemotingRef.dll</HintPath>
@@ -181,41 +162,50 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Impl\Customer\Casino\CasinoManager.cs" />
-    <Compile Include="Impl\Customer\CommissionService.cs" />
-    <Compile Include="Impl\Customer\ThirdPartyProductStatusService.cs" />
-    <Compile Include="Impl\Statement\StatementService.cs" />
-    <Compile Include="Interface\Customer\ICommissionService.cs" />
-    <Compile Include="Interface\Customer\IMemberService.cs" />
-    <Compile Include="Interface\Customer\IAgentService.cs" />
-    <Compile Include="Interface\Customer\IMasterService.cs" />
-    <Compile Include="Interface\Customer\ICustomerService.cs" />
-    <Compile Include="Interface\Customer\IDataService.cs" />
-    <Compile Include="Interface\Customer\ISuperService.cs" />
-    <Compile Include="Interface\Customer\IThirdPartyProductStatusService.cs" />
-    <Compile Include="Interface\Login\ILoginService.cs" />
-    <Compile Include="Interface\Report\IReportService.cs" />
-    <Compile Include="Interface\Statement\IStatementService.cs" />
-    <Compile Include="Interface\UserControl\ICachingService.cs" />
-    <Compile Include="Interface\UserControl\IFunctionService.cs" />
-    <Compile Include="Interface\UserControl\IGroupService.cs" />
-    <Compile Include="Interface\UserControl\IMenuService.cs" />
-    <Compile Include="Interface\UserControl\IUserService.cs" />
-    <Compile Include="Impl\Customer\MemberService.cs" />
-    <Compile Include="Impl\Customer\AgentService.cs" />
-    <Compile Include="Impl\Customer\MasterService.cs" />
-    <Compile Include="Impl\Customer\CustomerService.cs" />
-    <Compile Include="Impl\Customer\SuperService.cs" />
-    <Compile Include="Impl\Login\LoginService.cs" />
-    <Compile Include="Impl\Report\ReportService.cs" />
-    <Compile Include="Impl\UserControl\CachingService.cs" />
-    <Compile Include="Impl\UserControl\GroupService.cs" />
-    <Compile Include="Impl\UserControl\FunctionService.cs" />
-    <Compile Include="Impl\UserControl\MenuService.cs" />
-    <Compile Include="Impl\UserControl\UserService.cs" />
+    <Compile Include="Customer\IAgentService.cs" />
+    <Compile Include="Customer\ICommissionService.cs" />
+    <Compile Include="Customer\ICustomerService.cs" />
+    <Compile Include="Customer\IDataService.cs" />
+    <Compile Include="Customer\IMasterService.cs" />
+    <Compile Include="Customer\IMemberService.cs" />
+    <Compile Include="Customer\ISuperService.cs" />
+    <Compile Include="Customer\IThirdPartyProductStatusService.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Customer\Casino\CasinoManager.cs" />
+    <Compile Include="Customer\CommissionService.cs" />
+    <Compile Include="Customer\ThirdPartyProductStatusService.cs" />
+    <Compile Include="Login\ILoginService.cs" />
+    <Compile Include="Report\IReportService.cs" />
+    <Compile Include="Report\WinLossDetailRequests.cs" />
+    <Compile Include="Report\WinLossDetailService.cs" />
+    <Compile Include="Report\WinLossDetailServiceImpl.cs" />
+    <Compile Include="Statement\IStatementService.cs" />
+    <Compile Include="Statement\StatementService.cs" />
+    <Compile Include="Customer\MemberService.cs" />
+    <Compile Include="Customer\AgentService.cs" />
+    <Compile Include="Customer\MasterService.cs" />
+    <Compile Include="Customer\CustomerService.cs" />
+    <Compile Include="Customer\SuperService.cs" />
+    <Compile Include="Login\LoginService.cs" />
+    <Compile Include="Report\ReportService.cs" />
+    <Compile Include="UserControl\CachingService.cs" />
+    <Compile Include="UserControl\GroupService.cs" />
+    <Compile Include="UserControl\FunctionService.cs" />
+    <Compile Include="UserControl\ICachingService.cs" />
+    <Compile Include="UserControl\IFunctionService.cs" />
+    <Compile Include="UserControl\IGroupService.cs" />
+    <Compile Include="UserControl\IMenuService.cs" />
+    <Compile Include="UserControl\IUserService.cs" />
+    <Compile Include="UserControl\MenuService.cs" />
+    <Compile Include="UserControl\UserService.cs" />
+    <Compile Include="Products\ProductStatusService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
+      <Project>{05dd3a2f-f9ff-42e1-8d4e-d4f83e51ebf4}</Project>
+      <Name>Core.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.DataAccess\Fanex.ExternalAccount.DataAccess.csproj">
       <Project>{E0A7A640-964E-4ED8-A065-6109BD505107}</Project>
       <Name>Fanex.ExternalAccount.DataAccess</Name>
@@ -235,9 +225,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\Google.Protobuf.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.CSharp.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

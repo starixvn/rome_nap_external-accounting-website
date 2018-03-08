@@ -1,43 +1,24 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="MasterAgentUsedCreditModel.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.26">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class MasterAgentUsedCreditModel
     {
-        public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems
-        {
-            get;
-            set;
-        }
+        public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems { get; set; }
 
         public MasterAgentUsedCreditItem Total
         {
             get
             {
-                if (this.MasterAgentUsedCreditItems == null || this.MasterAgentUsedCreditItems.Count == 0)
+                if (MasterAgentUsedCreditItems == null || MasterAgentUsedCreditItems.Count == 0)
                 {
                     return new MasterAgentUsedCreditItem();
                 }
 
-                decimal givenCredit = 0m;
-                decimal usedCredit = 0m;
+                var givenCredit = 0m;
+                var usedCredit = 0m;
 
-                foreach (var item in this.MasterAgentUsedCreditItems)
+                foreach (var item in MasterAgentUsedCreditItems)
                 {
                     givenCredit += item.GivenCredit;
                     usedCredit += item.UsedCredit;

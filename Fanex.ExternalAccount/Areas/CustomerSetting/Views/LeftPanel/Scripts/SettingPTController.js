@@ -24,7 +24,7 @@
                     var params = "groupName=" + data.groupName
                     + "&enabled=" + data.enabled + "&closed=" + data.closed + "&suspended=" + data.suspended
                     + "&sRecommend=" + parent.Fanex.ExtAcc.Customer.superId + "&mRecommend=" + parent.Fanex.ExtAcc.Customer.masterId + "&recommend=" + parent.Fanex.ExtAcc.Customer.agentId + "&custId=" + parent.Fanex.ExtAcc.Customer.custId
-                    + "&currentLevel=" + parent.Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username;
+                    + "&roleId=" + parent.Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username;
 
                     var url = parent.resolveClientUrl("Customer/GetExportToExcel?") + params;
                     top.exportExcel(url, document);
@@ -441,7 +441,7 @@
         $scope.collapseSidebar();
     };
 
-    $scope.MacauGames = function () {
+    $scope.VoidBridge = function () {
         $scope.RenderDCS(22);
         $scope.collapseSidebar();
     };

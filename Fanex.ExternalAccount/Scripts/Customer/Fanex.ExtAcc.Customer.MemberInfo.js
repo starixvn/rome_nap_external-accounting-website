@@ -383,18 +383,15 @@ Fanex.Customer = {
                     user += document.getElementById(select).value + document.getElementById(select2).value;
                 }
 
-                var data = new Object();
-                data.username = user;
-                data.parentRoleId = parentRoleId;
-
+                var data = { username: user };
                 $.ajax({
-                    url: resolveClientUrl('Customer/CheckUsername'),
+                    url: resolveClientUrl('Customer/IsValidUsername'),
                     data: data,
                     dataType: 'json',
                     type: 'post'
                 })
                 .success(function (result) {
-                    if (result.errCode == 101) {
+                    if (result === true) {
                         document.getElementById(msgId).className = 'successWarning';
                     }
                     else {

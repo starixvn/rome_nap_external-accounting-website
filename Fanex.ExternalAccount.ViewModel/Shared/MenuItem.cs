@@ -1,19 +1,7 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="MenuItem.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
-// </history>
+﻿using System.Collections.Generic;
 
 namespace Fanex.ExternalAccount.ViewModel.Shared
 {
-    using System.Collections.Generic;
-
-    /// <summary>
-    /// Menu Item object.
-    /// </summary>
     public class MenuItem
     {
         public string Name { get; set; }

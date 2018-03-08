@@ -1,5 +1,4 @@
-﻿@using Fanex.PTEngine.BusinessObjects
-@using Fanex.CustomerSetting.Module.Core
+﻿@using Fanex.CustomerSetting.Module.Core
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
 @model Fanex.CustomerSetting.Module.BetSetting.ViewModels.CasinoModel
@@ -18,6 +17,6 @@
     Layout = "~/Areas/CustomerSetting/Views/BetSetting/Shared/_Layout.cshtml";
 }
 @section Casino{    
-    <iframe width="100%" height="600px" frameborder="0" src="@Url.Content("~/CustomerSetting/BetSetting/CasinoBetting/Content/" + id + "/0/" + userId + "/" + siteName)">
+    <iframe id="product-6"  width="100%" height="600px" frameborder="0" src="@Url.Content("~/CustomerSetting/BetSetting/CasinoBetting/Content/" + id + "/0/" + userId + "/" + siteName)">
     </iframe>
 }

@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="IPDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="IPDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="IPDBModelStoreContainer">
-          <EntitySet Name="IPTable" EntityType="IPDBModel.Store.IPTable" store:Type="Tables" store:Schema="dbo" store:Name="IPTable">
+          <EntitySet Name="IPTable" EntityType="IPDBModel.Store.IPTable" store:Type="Tables" store:Schema="dbo" store:Name="IPTable" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
             <DefiningQuery>SELECT 
       [IPTable].[ipKeyFrom] AS [ipKeyFrom], 
       [IPTable].[ipKeyTo] AS [ipKeyTo], 
@@ -20,7 +20,7 @@
       [IPTable].[IsException] AS [IsException]
       FROM [dbo].[IPTable] AS [IPTable]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="IPVN" EntityType="IPDBModel.Store.IPVN" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="IPVN" EntityType="IPDBModel.Store.IPVN" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
         </EntityContainer>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'IPDB.dbo.IPTable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -63,8 +63,8 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="IPDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityContainer Name="IPEntities" annotation:LazyLoadingEnabled="true">
+      <Schema Namespace="IPDBModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="IPEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
           <EntitySet Name="IPTable" EntityType="IPDBModel.IPTable" />
           <EntitySet Name="IPVN" EntityType="IPDBModel.IPVN" />
           <FunctionImport Name="GetIPInfo_Full" EntitySet="IPTable" ReturnType="Collection(IPDBModel.IPTable)">
@@ -107,7 +107,7 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="IPDBModelStoreContainer" CdmEntityContainer="IPEntities">
           <EntitySetMapping Name="IPTable"><EntityTypeMapping TypeName="IPDBModel.IPTable"><MappingFragment StoreEntitySet="IPTable">
             <ScalarProperty Name="ipKeyFrom" ColumnName="ipKeyFrom" />
@@ -133,7 +133,7 @@
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />

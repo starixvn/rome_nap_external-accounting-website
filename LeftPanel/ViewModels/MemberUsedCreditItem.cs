@@ -1,47 +1,27 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="MemberUsedCreditItem.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.26">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
+    using System.Data;
+    using Extensions;
+
     public class MemberUsedCreditItem
     {
-        public string Username
+        public MemberUsedCreditItem(IDataReader reader)
         {
-            get;
-            set;
+            Username = reader.Username();
+            FirstName = reader.FirstName();
+            LastName = reader.LastName();
+            Amount = reader.Credit();
+            IsClosed = reader.IsClosed();
         }
 
-        public string FirstName
-        {
-            get;
-            set;
-        }
+        public string Username { get; }
 
-        public string LastName
-        {
-            get;
-            set;
-        }
+        public string FirstName { get; }
 
-        public decimal Amount
-        {
-            get;
-            set;
-        }
+        public string LastName { get; }
 
-        public bool IsClosed
-        {
-            get;
-            set;
-        }
+        public decimal Amount { get; }
+
+        public bool IsClosed { get; }
     }
 }

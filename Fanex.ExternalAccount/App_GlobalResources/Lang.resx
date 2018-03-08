@@ -1089,7 +1089,7 @@
     <value>The &amp;quot;From&amp;quot; Date can not be greater than the &amp;quot;To&amp;quot; Date</value>
   </data>
   <data name="invalidLogin" xml:space="preserve">
-    <value>Wrong username or password</value>
+    <value>Wrong custName or password</value>
   </data>
   <data name="invalidsession" xml:space="preserve">
     <value>Invalid Session!</value>
@@ -1498,13 +1498,13 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
     <value>Completed</value>
   </data>
   <data name="lblConfirmAllowDownline" xml:space="preserve">
-    <value>Are you sure you want to allow number game of this {username} account and all downlines?</value>
+    <value>Are you sure you want to allow number game of this {custName} account and all downlines?</value>
   </data>
   <data name="lblConfirmClearCredit" xml:space="preserve">
-    <value>Are you sure you want to clear credit of this {username} account and all downlines?</value>
+    <value>Are you sure you want to clear credit of this {custName} account and all downlines?</value>
   </data>
   <data name="lblConfirmClearCreditMember" xml:space="preserve">
-    <value>Are you sure you want to clear credit of this {username} account?</value>
+    <value>Are you sure you want to clear credit of this {custName} account?</value>
   </data>
   <data name="lblConfirmClosed" xml:space="preserve">
     <value>Your account was closed so you're forced to logout. Please contact your upline for the assistance.</value>
@@ -2412,7 +2412,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
     <value>Username is not empty</value>
   </data>
   <data name="msgErrUsernamePassWord" xml:space="preserve">
-    <value>Please input username and password</value>
+    <value>Please input custName and password</value>
   </data>
   <data name="msgNicknameOnly" xml:space="preserve">
     <value>&lt;div class='mt3'&gt;- You are not allowed to change your nickname afterward.&lt;/div&gt;
@@ -3612,7 +3612,7 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
     <value>Only this page</value>
   </data>
   <data name="InfoAllSetting" xml:space="preserve">
-    <value>All settings will be copied from username entered.</value>
+    <value>All settings will be copied from custName entered.</value>
   </data>
   <data name="InfoClickNext" xml:space="preserve">
     <value>Click Next to create new member</value>

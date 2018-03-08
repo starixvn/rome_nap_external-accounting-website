@@ -1,17 +1,3 @@
-/*!
- * jQuery UI Accordion 1.9.1
- * http://jqueryui.com
- *
- * Copyright 2012 jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- *
- * http://api.jqueryui.com/accordion/
- *
- * Depends:
- *	jquery.ui.core.js
- *	jquery.ui.widget.js
- */
 (function( $, undefined ) {
 
 var uid = 0,

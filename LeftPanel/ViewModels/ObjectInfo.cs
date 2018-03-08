@@ -1,43 +1,58 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="ObjectInfo.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
-    /// <summary>
-    /// Object information class.
-    /// </summary>
+    using System;
+
     public class ObjectInfo
     {
-        /// <summary>
-        /// Gets or sets key of a field.
-        /// </summary>
-        /// <value>System.Object object.</value>
-        public object Key { get; set; }
+        public ObjectInfo()
+        {
+        }
 
-        /// <summary>
-        /// Gets or sets value for the title of a field.
-        /// </summary>
-        /// <value>System.Object object.</value>
+        public ObjectInfo(string key, object value)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            if (ReferenceEquals(null, value))
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            Key = key;
+            Value = value;
+        }
+
+        public ObjectInfo(string key, object value, string text) : this(key, value)
+        {
+            Text = text;
+        }
+
+        public ObjectInfo(string key, object value, string text, string tooltip) : this(key, value, text)
+        {
+            Tooltip = tooltip;
+        }
+
+        public ObjectInfo(string key, object value, string text, string tooltip, bool disabled)
+            : this(key, value, text, tooltip)
+        {
+            Disabled = disabled;
+        }
+
+        public string Key { get; set; }
+
         public object Value { get; set; }
 
-        /// <summary>
-        /// Gets or sets title for a field.
-        /// </summary>
-        /// <value>System.String object.</value>
         public string Text { get; set; }
 
-        /// <summary>
-        /// Gets or sets tooltip for title if it's content is too long.        
-        /// </summary>
-        /// <value>System.String object.</value>
         public string Tooltip { get; set; }
 
         public bool Disabled { get; set; }
+
+        public bool Visibled { get; set; } = true;
+
+        public static ObjectInfo CreateInstance(string text, object value)
+            => new ObjectInfo { Value = value, Text = text };
     }
 }

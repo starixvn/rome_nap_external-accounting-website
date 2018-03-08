@@ -61,7 +61,6 @@
     Closed: false,
     Suspended: false,
     TransferCondition: false,
-    IsLoading: false,
 
     URL: '',
     MultipleDblCommError: '',
@@ -93,18 +92,19 @@
 
     RecheckinXHR: null,
     $this: null,
+    IsLoading: false,
 
     ReCheckin: function () {
         if (this.RecheckinXHR != null)
             this.RecheckinXHR.abort();
 
         this.RecheckinXHR = $.ajax({
-            url: resolveClientUrl('Account/ReCheckIn'),
+            url: resolveClientUrl('Shared/ReCheckIn'),
             type: 'GET',
             dataType: 'html',
             cache: false,
             success: function (data) {
-                if (data == -1) {
+                if (data == -1 || isNaN(data)) {
                     try {
                         if (typeof Fanex.ExtAcc.Form != 'undefined') {
                             if (document.getElementById('windowPopup')) {
@@ -120,16 +120,16 @@
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 Fanex.ExtAcc.Form.Alert('Session Expired', 'You have logged in from another session or your login session has expired!', 400, 150, null, function () {
-                                    location.href = resolveClientUrl('Account/Login');
+                                    location.href = resolveClientUrl('Account/LogOff');
                                 }, 1000);
                             }, 1000);
                         }
                     } catch (e) {
-                        top.location.href = resolveClientUrl('Account/Login');
+                        top.location.href = resolveClientUrl('Account/LogOff');
                     }
                 }
                 else if (data == 2) {
-                    top.location.href = resolveClientUrl('Account/Offline');
+                    top.location.href = resolveClientUrl('Shared/Offline');
                 }
                 else if (data == 3) {
                     top.location.href = resolveClientUrl('Shared/Error');
@@ -138,8 +138,6 @@
                 Fanex.ExtAcc.Account.RecheckinXHR = null;
             },
             error: function (xhr, status, e) {
-                if (typeof console != 'undefined') console.log(e);
-
                 Fanex.ExtAcc.Account.RecheckinXHR = null;
             }
         });
@@ -154,6 +152,7 @@
             return;
 
         this.IsLoading = true;
+       
         //Prevent loading group name
         var timeout = setInterval(function () {
             if ($.trim($('#selectedGroupName').html()) != '') {
@@ -166,9 +165,30 @@
         $('#exporttoexcel').click(function () {
             var data = Fanex.ExtAcc.Customer.GetParams();
 
-            var params = "groupName=" + data.groupName + "&enabled=" + data.enabled + "&closed=" + data.closed + "&suspended=" + data.suspended + "&sRecommend=" + Fanex.ExtAcc.Customer.superId + "&mRecommend=" + Fanex.ExtAcc.Customer.masterId + "&recommend=" + Fanex.ExtAcc.Customer.agentId + "&custId=" + Fanex.ExtAcc.Customer.custId + "&currentLevel=" + Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username
+            var params = "groupName=" +
+                data.groupName +
+                "&enabled=" +
 
-            top.exportExcel(resolveClientUrl("Customer/GetExportToExcel?") + params, document);
+            
+                data.enabled +
+                "&closed=" +
+                data.closed +
+                "&suspended=" +
+                data.suspended +
+                "&sRecommend=" +
+                Fanex.ExtAcc.Customer.superId +
+                "&mRecommend=" +
+                Fanex.ExtAcc.Customer.masterId +
+                "&recommend=" +
+                Fanex.ExtAcc.Customer.agentId +
+                "&roleId=" +
+                Fanex.ExtAcc.Customer.CurrentLevel +
+                "&username=" +
+                data.username +
+                "&custId=" +
+                Fanex.ExtAcc.Customer.custId;
+             top.exportExcel(resolveClientUrl("Customer/GetExportToExcel?") + params, document);
+
         });
 
         $('#txtUserName').keypress(function (e) {
@@ -458,11 +478,6 @@
                             Fanex.ExtAcc.UnBlockUI();
                             Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 300, 150, 'alert');
                         }
-                    })
-                    .error(function (xhr) {
-                        if (typeof console != 'undefined') {
-                            console.log(xhr);
-                        }
                     });
             });
         }
@@ -679,7 +694,7 @@
                 Fanex.ExtAcc.Customer.HideNG2 = !rows[0].SyncedNG2;
                 Fanex.ExtAcc.Customer.HideFishingWorld = !rows[0].SyncedFishingWorld;
                 Fanex.ExtAcc.Customer.HideLottery = rows[0].HideLottery;
-                Fanex.ExtAcc.Customer.HideBullfighting = rows[0].HideBullFighting;
+                Fanex.ExtAcc.Customer.HideBullfighting = rows[0].HideBullfighting;
 
                 if (result.roleId == 4) {
                     Fanex.ExtAcc.Customer.GetSuperList(rows[0].custid, result);
@@ -702,8 +717,7 @@
                 $('#exporttoexcel').css('display', 'none');
 
                 Fanex.ExtAcc.UnBlockUI();
-            }
-        });
+            }});
     },
 
     AppendInputToForm: function (id, name, value, targetForm) {

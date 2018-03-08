@@ -233,9 +233,6 @@ Fanex.ExtAcc.Function = {
             };
 
             $this.RenderGrid(options);
-        })
-        .error(function (xhr) {
-            Fanex.ExtAcc.UnBlockUI();
         });
 
         $('#jqbutton').bind('click', function () {
@@ -548,12 +545,12 @@ Fanex.ExtAcc.Function = {
         var editUrl = 'Function/Add';
         var params = new Object();
 
-        params.name = Fanex.ExtAcc.EscapeHtml(name);
-        params.key = Fanex.ExtAcc.EscapeHtml(key);
-        params.desc = Fanex.ExtAcc.EscapeHtml(desc);
+        params.funcname = Fanex.ExtAcc.EscapeHtml(name);
+        params.funckey = Fanex.ExtAcc.EscapeHtml(key);
+        params.funcdesc = Fanex.ExtAcc.EscapeHtml(desc);
         params.parentId = parentId;
-        params.parent = parent;
-        params.order = order;
+        params.parentname = parent;
+        params.displayorder = order;
         params.groups = newGroups;
 
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
@@ -571,11 +568,6 @@ Fanex.ExtAcc.Function = {
                     Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Function/FunctionList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
-
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -622,11 +614,11 @@ Fanex.ExtAcc.Function = {
         var editUrl = 'Function/Edit';
         var params = new Object();
         params.funcId = funcId;
-        params.name = Fanex.ExtAcc.EscapeHtml(name);
-        params.desc = Fanex.ExtAcc.EscapeHtml(desc);
+        params.funcname = Fanex.ExtAcc.EscapeHtml(name);
+        params.funcdesc = Fanex.ExtAcc.EscapeHtml(desc);
         params.parentId = parentId;
-        params.parent = parent;
-        params.order = order;
+        params.parentname = parent;
+        params.displayorder = order;
         params.oldGroups = oldGroups;
         params.groups = newGroups;
 
@@ -645,11 +637,6 @@ Fanex.ExtAcc.Function = {
                     Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Function/FunctionList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
-
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -670,9 +657,6 @@ Fanex.ExtAcc.Function = {
                     Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Function/FunctionList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
         });
     },
 
@@ -686,9 +670,6 @@ Fanex.ExtAcc.Function = {
             else {
                 Fanex.ExtAcc.Form.Close(true);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
         });
     }
 }

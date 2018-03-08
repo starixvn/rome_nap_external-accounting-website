@@ -1,60 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Web.UI;
-using Fanex.Logging.Extensions.Web;
-
-namespace Fanex.ExternalAccount.Core.Context
+﻿namespace Fanex.ExternalAccount.Core.Context
 {
-    public class Encryptor : Page
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Text;
+    using System.Web;
+    using Logging.Extensions.Web;
+
+    public static class Encryptor
     {
         private const string HexDigit = "0123456789abcdef";
+        private const string RandomCaptchaKey = "RandomCaptcha";
+        private const string DefaultCaptcha = "0000";
 
-        public static Encryptor Instance
+
+        public static string RandomCaptcha
         {
-            get
-            {
-                return new Encryptor();
-            }
+            get { return HttpContext.Current.Session[RandomCaptchaKey] as string ?? DefaultCaptcha; }
+
+            set { HttpContext.Current.Session[RandomCaptchaKey] = value; }
         }
 
-        public string Code
-        {
-            get
-            {
-                try
-                {
-                    return (string)Session["RandomCaptcha"];
-                }
-                catch (Exception ex)
-                {
-                    ExceptionHandler.Handle(ex);
-                }
-
-                return "0000";
-            }
-
-            set
-            {
-                try
-                {
-                    Session["RandomCaptcha"] = value;
-                }
-                catch (Exception ex)
-                {
-                    ExceptionHandler.Handle(ex);
-                }
-            }
-        }
-        
         public static string HexDecode(string data)
         {
-            var b16_digits = HexDigit;
-            var b16_map = new char[256];
+            const string b16Digits = HexDigit;
+            var b16Map = new char[256];
             for (var i = 0; i < 256; i++)
             {
-                b16_map[Convert.ToInt32(string.Concat(b16_digits[i >> 4], b16_digits[i & 15]), 16)] = Convert.ToChar(i);
+                b16Map[Convert.ToInt32(string.Concat(b16Digits[i >> 4], b16Digits[i & 15]), 16)] = Convert.ToChar(i);
             }
 
             var c = data.Length;
@@ -66,7 +39,7 @@ namespace Fanex.ExternalAccount.Core.Context
             var result = new List<char>();
             for (var i = 0; i < c; i += 2)
             {
-                result.Add(b16_map[Convert.ToInt32(data.Substring(i, 2), 16)]);
+                result.Add(b16Map[Convert.ToInt32(data.Substring(i, 2), 16)]);
             }
 
             return new string(result.ToArray());
@@ -111,18 +84,18 @@ namespace Fanex.ExternalAccount.Core.Context
             return ct.ToString();
         }
 
-        public string Decrypt(string encrypted, string code)
+        public static string Decrypt(string encrypted, string key)
         {
             try
             {
-                return RC4(code, HexDecode(encrypted));
+                return RC4(key, HexDecode(encrypted));
             }
             catch (Exception ex)
             {
                 ExceptionHandler.Handle(ex, TraceEventType.Warning);
             }
 
-            return "cannot_decrypt_password";
+            return string.Empty;
         }
     }
 }

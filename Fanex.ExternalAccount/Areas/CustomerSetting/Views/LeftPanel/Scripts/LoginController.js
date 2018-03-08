@@ -33,8 +33,8 @@
     };
 
     $scope.ResetSecurityCode = function (id, roleId, username) {
+        var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?custId=' + id + '&roleId=' + roleId + '&username=' + username + '&groupName=' + parent.$('#selectedGroupName').html());
         var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 250 : 500;
-        var url = parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?id=' + id + '&roleId=' + roleId + '&username=' + username + '&groupName=' + parent.$('#selectedGroupName').html());
         parent.Fanex.ExtAcc.Form.ShowFrame(
             url,
             'Reset security code: <font color="#6dcff6">' + username + '</font>',

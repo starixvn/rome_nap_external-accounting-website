@@ -86,8 +86,5 @@ function GetDownline(custId, pageIndex) {
     })
     .error(function (result) {
         parent.Fanex.ExtAcc.UnBlockUI();
-        if (typeof console != 'undefined') {
-            console.log(result);
-        }
     });
 };

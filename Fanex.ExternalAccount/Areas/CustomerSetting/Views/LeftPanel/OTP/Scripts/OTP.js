@@ -17,7 +17,7 @@
         var $errorMessage = $("#errMsg");
         $.ajax({
             type: "POST",
-            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/RemoveOTP'),
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/RemoveOTP'),
             data: { custId: $("#customerId").val(), groupName: parent.$('#selectedGroupName').html() },
             success: function (result) {
                 if (result.isSuccess) {

@@ -1,35 +1,66 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="BalanceInfo.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
+    using System;
     using System.Collections.Generic;
+    using System.Data;
+    using Core.Shared;
+    using Extensions;
+    using Utilities;
 
-    /// <summary>
-    /// Balance information object.
-    /// </summary>
     public class BalanceInfo
     {
-        public BalanceInfo()
+        public BalanceInfo(bool isUpdateCredit, DataRow customerRow, DataRow cashRow)
         {
-            this.Balances = new List<ObjectInfo>();
-            this.Statuses = new List<Status>();
+            var roleId = customerRow.RoleId();
+
+            CurrencyId = ObjectInfo.CreateInstance("Currency Id", customerRow.CurrencyId());
+            Currency = ObjectInfo.CreateInstance("Currency", customerRow.Currency());
+            Balances = new List<ObjectInfo>
+            {
+                ObjectInfo.CreateInstance("Total Cash", Utils.ToDecimal(cashRow[GetCashColumn(roleId)])),
+                ObjectInfo.CreateInstance("Yesterday Cash", Utils.ToDecimal(cashRow[GetYesterdayCashColumn(roleId)])),
+                ObjectInfo.CreateInstance("Outstanding", Utils.ToDecimal(cashRow[GetOutstandingColumn(roleId)])),
+                ObjectInfo.CreateInstance("Given Credit", customerRow.Credit())
+            };
+            IsUpdateCredit = isUpdateCredit;
+
+            if (roleId.IsNotMember())
+            {
+                Balances.Add(ObjectInfo.CreateInstance("Used Credit", cashRow[GetUsedCreditColumn(roleId)]));
+                Balances.Add(ObjectInfo.CreateInstance("Total Balance", cashRow.TotalBalance(roleId)));
+                Balances.Add(ObjectInfo.CreateInstance("Yesterday Balance", cashRow.TotalYesterdayCash(roleId)));
+
+                Balances.Add(ObjectInfo.CreateInstance(
+                    $"{roleId.DirectDownlineLevel().DisplayRoleName()} Outstanding",
+                    cashRow.CustomerOutstanding()));
+            }
         }
 
-        public ObjectInfo CurrencyId { get; set; }
+        internal static string GetOutstandingColumn(int roleId) =>
+            roleId.IsMember() ? "outstanding" : $"{roleId.DisplayRoleName()}PositionTaking";
 
-        public ObjectInfo Currency { get; set; }
+        internal static string GetYesterdayCashColumn(int roleId)
+            => roleId.IsMember() ? "yesterday_cash" : $"yesterday_{roleId.DisplayRoleName()}Cash";
 
-        public List<ObjectInfo> Balances { get; set; }
+        internal static string GetCashColumn(int roleId)
+            => roleId.IsMember() ? "cash" : $"{roleId.DisplayRoleName()}Cash";
 
-        public List<Status> Statuses { get; set; }
+        internal static string GetUsedCreditColumn(int roleId)
+        {
+            if (roleId.IsMember())
+            {
+                throw new ArgumentOutOfRangeException(nameof(roleId), "there is no UsedCredit on member level");
+            }
 
-        public bool IsUpdateCredit { get; set; }
+            return $"{roleId.DisplayRoleName()}UsedCredit";
+        }
+
+        public ObjectInfo CurrencyId { get; }
+
+        public ObjectInfo Currency { get; }
+
+        public List<ObjectInfo> Balances { get; }
+
+        public bool IsUpdateCredit { get; }
     }
 }

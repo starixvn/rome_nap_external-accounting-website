@@ -5,11 +5,6 @@
     var menuList = (IEnumerable<Menu>)ViewBag.MenuList;
     var funcList = (IEnumerable<Function>)ViewBag.FunctionList;
 
-    var menuSelectList = menuList.Where(o => o.ParentID == 0).Select(o => new SelectListItem
-    {
-        Value = o.MenuID.ToString(),
-        Text = o.MenuName
-    }).ToList();
 }
 <link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />
 
@@ -19,7 +14,7 @@
 
     <div class="group">
         <div class="pull-left width-100 text-right">
-            @Html.HiddenFor(m => m.MenuID) @Html.LabelFor(m => m.MenuName, ViewLang.MenuItem, new { @class = "label" })
+            @Html.HiddenFor(m => m.MenuId) @Html.LabelFor(m => m.MenuName, ViewLang.MenuItem, new { @class = "label" })
         </div>
         <div class="pull-left width-250">
             @Html.TextBoxFor(m => m.MenuName, new { @class = "form-control width-250" })
@@ -43,13 +38,13 @@
     </div>
     <div class="group">
         <div class="pull-left width-100 text-right">
-            @Html.LabelFor(m => m.FuncID, ViewLang.Function, new { @class = "label" })
+            @Html.LabelFor(m => m.FuncId, ViewLang.Function, new { @class = "label" })
         </div>
         <div class="pull-left groupCboMenu">
             <select id="FuncID" name="FuncID" class="form-control">
                 @foreach (var item in funcList)
                 {
-                    <option value="@item.FuncID" @(item.FuncID == Model.FuncID ? "selected=selected" : "") @(item.ParentID != 0 ? "class=subItem" : "")>@item.FuncName</option>
+                    <option value="@item.FuncID" @(item.FuncID == Model.FuncId ? "selected=selected" : "") @(item.ParentID != 0 ? "class=subItem" : "")>@item.FuncName</option>
                 }
             </select>
         </div>
@@ -63,7 +58,7 @@
                 <option value="-1">@ViewLang.None</option>
                 @foreach (var item in menuList)
                 {
-                    <option value="@item.MenuID" @(item.MenuID == Model.ParentID ? "selected=selected" : "") @(item.ParentID != 0 ? "class=subItem" : "")>@item.MenuName</option>
+                    <option value="@item.MenuId" @(item.MenuId == Model.ParentId ? "selected=selected" : "") @(item.ParentId != 0 ? "class=subItem" : "")>@item.MenuName</option>
                 }
             </select>
         </div>

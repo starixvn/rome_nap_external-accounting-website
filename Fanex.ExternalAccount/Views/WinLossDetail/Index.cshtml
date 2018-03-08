@@ -1,6 +1,7 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Win Loss Detail";
+    Layout = null;
 }
 <div>
     <div class="page-title">
@@ -102,7 +103,7 @@
     <div id="mainGrid" class="hide tbl-winloss-detail">
         <div id="jqgrid" class="removeRadius freegrid content-grid"></div>
     </div>
-    <div id='msgNoinfo'>
+    <div id="msgNoinfo">
         There is no data.
     </div>
     @Html.AntiForgeryToken()

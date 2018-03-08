@@ -142,15 +142,15 @@ Fanex.ExtAcc.Menus = {
             {
                 HeaderText: 'Menu Item', Name: 'MenuName', Width: 160,
                 CustomCellRender: function (cell) {
-                    var menuId = cell.Value.MenuID;
-                    var isParent = cell.Value.ParentID == 0;
+                    var menuId = cell.Value.MenuId;
+                    var isParent = cell.Value.ParentId == 0;
                     var hasChild = false;
 
                     if ($this.DataSource.rows[index + 1]) {
-                        hasChild = $this.DataSource.rows[index + 1].ParentID != 0;
+                        hasChild = $this.DataSource.rows[index + 1].ParentId != 0;
                     }
 
-                    var func = "javascript:Fanex.ExtAcc.Menus.ShowEdit(" + cell.Value.MenuID + ", '" + titles.Edit + "')";
+                    var func = "javascript:Fanex.ExtAcc.Menus.ShowEdit(" + cell.Value.MenuId + ", '" + titles.Edit + "')";
                     var style = isParent && !hasChild ? "menuItemParentOnly" : (!isParent ? "menuItemChild" : "menuItemParent");
                     var div = '';
 
@@ -159,7 +159,7 @@ Fanex.ExtAcc.Menus = {
                         var length = $this.DataSource.rows.length;
 
                         for (var i = 0; i < length; i++) {
-                            if ($this.DataSource.rows[i].ParentID == menuId) {
+                            if ($this.DataSource.rows[i].ParentId == menuId) {
                                 ids.push(i);
                             }
                         }
@@ -182,7 +182,7 @@ Fanex.ExtAcc.Menus = {
                 HeaderText: 'Active', Name: 'IsActive', CellAlign: 'center', Width: 50,
                 CustomCellRender: function (cell) {
                     var style = cell.Value.IsActive == true ? "menuActive" : "menuInactive";
-                    var menuId = cell.Value.MenuID;
+                    var menuId = cell.Value.MenuId;
                     var menuName = cell.Value.MenuName;
                     var onclick = "javascript:Fanex.ExtAcc.Menus.ShowActivate(" + menuId + ", '" + menuName + "')";
 
@@ -193,7 +193,7 @@ Fanex.ExtAcc.Menus = {
                 HeaderText: 'Delete', Name: 'Delete', CellAlign: 'center', Width: 50,
                 CustomCellRender: function (cell) {
                     var style = "icon-delete";
-                    var menuId = cell.Value.MenuID;
+                    var menuId = cell.Value.MenuId;
                     var menuName = cell.Value.MenuName;
                     var onclick = "javascript:Fanex.ExtAcc.Menus.ShowDelete(" + menuId + ", '" + menuName + "')";
 
@@ -239,9 +239,6 @@ Fanex.ExtAcc.Menus = {
             };
 
             $this.RenderGrid(options);
-        })
-        .error(function (xhr) {
-            Fanex.ExtAcc.UnBlockUI();
         });
 
         $('#jqbutton').bind('click', function () {
@@ -364,10 +361,10 @@ Fanex.ExtAcc.Menus = {
         var editUrl = 'Menu/Add';
         var params = new Object();
 
-        params.name = Fanex.ExtAcc.EscapeHtml(name);
-        params.description = Fanex.ExtAcc.EscapeHtml(desc);
+        params.menuname = Fanex.ExtAcc.EscapeHtml(name);
+        params.menudesc = Fanex.ExtAcc.EscapeHtml(desc);
         params.url = Fanex.ExtAcc.EscapeHtml(url);
-        params.functionId = funcId;
+        params.funcId = funcId;
         params.parentId = parentId;
         params.parentName = ($('#ParentName').val() != '-1' ? $('#ParentName option:selected').text() : '');
         params.displayOrder = order;
@@ -387,11 +384,6 @@ Fanex.ExtAcc.Menus = {
                     window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html())
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
-
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -433,10 +425,10 @@ Fanex.ExtAcc.Menus = {
         var params = new Object();
 
         params.menuId = $('#MenuID').val();
-        params.name = Fanex.ExtAcc.EscapeHtml(name);
-        params.description = Fanex.ExtAcc.EscapeHtml(desc);
+        params.menuname = Fanex.ExtAcc.EscapeHtml(name);
+        params.menudesc = Fanex.ExtAcc.EscapeHtml(desc);
         params.url = Fanex.ExtAcc.EscapeHtml(url);
-        params.functionId = funcId;
+        params.funcId = funcId;
         params.parentId = parentId;
         params.parentName = ($('#ParentName').val() != '-1' ? $('#ParentName option:selected').text() : '');
         params.displayOrder = order;
@@ -456,11 +448,6 @@ Fanex.ExtAcc.Menus = {
                     window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html())
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
-
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -481,11 +468,6 @@ Fanex.ExtAcc.Menus = {
                     window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html());
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
-
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -506,11 +488,6 @@ Fanex.ExtAcc.Menus = {
                     window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html());
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
-
-            Fanex.ExtAcc.UnBlockUI();
         });
     }
 }

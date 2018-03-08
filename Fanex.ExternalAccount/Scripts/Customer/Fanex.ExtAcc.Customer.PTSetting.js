@@ -299,9 +299,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 clearTimeout(timeout);
                 Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -479,9 +476,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 clearTimeout(timeout);
                 Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -670,9 +664,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 clearTimeout(timeout);
                 Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -831,9 +822,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 clearTimeout(timeout);
                 Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -935,9 +923,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 clearTimeout(timeout);
                 Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1048,9 +1033,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 clearTimeout(timeout);
                 Fanex.ExtAcc.UnBlockUI();
             }, Fanex.ExtAcc.Customer.PTSetting.IsMultiple ? 2000 : 100);
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1342,6 +1324,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 }
 
                 if (success) {
+
                     if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                         var timeout = setTimeout(function () {
                             Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
@@ -1354,6 +1337,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             }
                             else {
                                 $('#errMsg').css('display', 'block');
+                                $('#errMsg').addClass('successMsg').removeClass('errMsg');
                                 $('#errMsg').html('<font color="Blue">Updated successfully</font>');
                             }
 
@@ -1376,6 +1360,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                     }
                                     else {
                                         $('#errMsg').css('display', 'block');
+                                        $('#errMsg').addClass('successMsg').removeClass('errMsg');
                                         $('#errMsg').html('<font color="Blue">Updated successfully</font>');
                                     }
                                 }, 2000);
@@ -1445,9 +1430,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     }
                 }
             }
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1596,9 +1578,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     }
                 }
             }
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1657,6 +1636,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             }
                             else {
                                 $('#errMsg').css('display', 'block');
+                                $('#errMsg').addClass('successMsg').removeClass('errMsg');
                                 $('#errMsg').html('<font color="Blue">Updated successfully</font>');
                             }
                         }, 2000);
@@ -1678,6 +1658,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                     }
                                     else {
                                         $('#errMsg').css('display', 'block');
+                                        $('#errMsg').addClass('successMsg').removeClass('errMsg');
                                         $('#errMsg').html('<font color="Blue">Updated successfully</font>');
                                     }
                                 }, 2000);
@@ -1747,9 +1728,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     }
                 }
             }
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -1808,6 +1786,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                         var timeout = setTimeout(function () {
                             $('#errMsg').css('display', 'block');
+                            $('#errMsg').addClass('successMsg').removeClass('errMsg');
                             $('#errMsg').html('<font color="Blue">Updated successfully</font>');
 
                             Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
@@ -1829,6 +1808,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             if (Fanex.ExtAcc.Customer.PTSetting.errorMessage.length == 0) {
                                 var timeout = setTimeout(function () {
                                     $('#errMsg').css('display', 'block');
+                                    $('#errMsg').addClass('successMsg').removeClass('errMsg');
                                     $('#errMsg').html('<font color="Blue">Updated successfully</font>');
 
                                     Fanex.ExtAcc.Customer.PTSetting.CustIdIndex = 0;
@@ -1905,9 +1885,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     }
                 }
             }
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.UnBlockUI();
         });
     }
 };

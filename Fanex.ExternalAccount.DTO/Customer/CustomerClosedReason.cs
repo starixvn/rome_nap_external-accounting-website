@@ -1,14 +1,9 @@
-﻿using System;
-
-namespace Fanex.ExternalAccount.DTO.Customer
+﻿namespace Fanex.ExternalAccount.DTO.Customer
 {
+    using System;
+
     public sealed class CustomerClosedReason
     {
-        private const byte WrongPasswordOthers = 0; // gray: #ccc7ba
-        private const byte ByAdmin = 1; // purple: #b3a2c7
-        private const byte ByUpline = 2; // orange: #f79646
-        private const byte WrongOTPSC = 3; // blue: #86c5e4
-
         public CustomerClosedReason(object closedReason)
         {
             if (closedReason != null && closedReason != DBNull.Value)
@@ -28,26 +23,31 @@ namespace Fanex.ExternalAccount.DTO.Customer
 
         private void AssignParameters(byte closedReason)
         {
+            const byte wrongPasswordOthers = 0; // gray: #ccc7ba
+            const byte byAdmin = 1; // purple: #b3a2c7
+            const byte byUpline = 2; // orange: #f79646
+            const byte wrongOtpsc = 3; // blue: #86c5e4
+
             ClassName = "closed-";
 
             switch (closedReason)
             {
-                case WrongPasswordOthers:
+                case wrongPasswordOthers:
                     ClassName += "wrongPwdOthers";
                     ClosedReason = "This account was closed by failed login or account expired.";
                     break;
 
-                case ByAdmin:
+                case byAdmin:
                     ClassName += "byAdmin";
                     ClosedReason = "This account was closed by admin.";
                     break;
 
-                case ByUpline:
+                case byUpline:
                     ClassName += "byUpline";
                     ClosedReason = "This account was closed by upline.";
                     break;
 
-                case WrongOTPSC:
+                case wrongOtpsc:
                     ClassName += "wrongOTPSC";
                     ClosedReason = "This account was closed by false input of OTP/Security Code.";
                     break;

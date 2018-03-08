@@ -1,22 +1,23 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization.LiveCasino
 {
     using System.Web.Mvc;
-    using Fanex.ExternalAccount.Core.Context;
+    using Context;
     using Fanex.LiveCasino.CoreSetting.Enumerations;
     using Fanex.LiveCasino.CoreSetting.Models;
     using Fanex.LiveCasino.CoreSetting.Services;
+    using Shared;
 
-    /// <summary>
-    /// Live casino authentication.
-    /// </summary>
     public class LiveCasinoAuthorizationService : ILiveCasinoAuthorizationService
     {
-        private ExternalAccountAuthenticate _authenticationService = new ExternalAccountAuthenticate();
+        private readonly ExternalAccountAuthenticateAttribute _authenticationService =
+            new ExternalAccountAuthenticateAttribute();
 
-        public bool IsAuthorizedRead(AuthorizationContext authorizationContext, LiveCasinoSettingContext settingContext)
-        {
-            return _authenticationService.AllowReadByAuthenticationParam(eFunctions.LiveCasino);
-        }
+        private readonly AuthorizationService authorization = new AuthorizationServiceImpl();
+
+        public bool
+            IsAuthorizedRead(AuthorizationContext authorizationContext, LiveCasinoSettingContext settingContext) =>
+            _authenticationService.AllowReadByAuthenticationParam(eFunctions.LiveCasino)
+            && authorization.IsBelong();
 
         public bool IsAuthorizedHost(AuthorizationContext authorizationContext, LiveCasinoSettingContext settingContext)
         {
@@ -25,22 +26,25 @@
                 return false;
             }
 
-            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.LiveCasino);
+            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.LiveCasino)
+                   && authorization.IsBelong();
         }
 
-        public bool IsAuthorizedReadMultiple(AuthorizationContext authorizationContext, LiveCasinoSettingContextMultiple settingContextMultiple)
-        {
-            return _authenticationService.AllowReadByAuthenticationParam(eFunctions.LiveCasino);
-        }
+        public bool IsAuthorizedReadMultiple(AuthorizationContext authorizationContext,
+            LiveCasinoSettingContextMultiple settingContextMultiple) =>
+            _authenticationService.AllowReadByAuthenticationParam(eFunctions.LiveCasino)
+            && authorization.IsBelong();
 
-        public bool IsAuthorizedHostMultiple(AuthorizationContext authorizationContext, LiveCasinoSettingContextMultiple settingContextMultiple)
+        public bool IsAuthorizedHostMultiple(AuthorizationContext authorizationContext,
+            LiveCasinoSettingContextMultiple settingContextMultiple)
         {
             if (settingContextMultiple.Customer.Level.Equals(CustomerLevel.Super))
             {
                 return false;
             }
 
-            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.LiveCasino);
+            return _authenticationService.AllowUpdateByAuthenticationParam(eFunctions.LiveCasino)
+                   && authorization.IsBelong();
         }
     }
 }

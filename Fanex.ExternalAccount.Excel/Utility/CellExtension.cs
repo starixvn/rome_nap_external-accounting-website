@@ -1,28 +1,11 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CellExtension.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Excel.Utility
+﻿namespace Fanex.ExternalAccount.Excel.Utility
 {
     using System;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class CellExtension
     {
-        /// <summary>
-        /// Sets cell value.
-        /// </summary>
-        /// <param name="cell">Cell info.</param>
-        /// <param name="value">Value for cell.</param>
         public static void SetCellValue(this ICell cell, object value)
         {
             if (value == null)
@@ -31,9 +14,10 @@ namespace Fanex.ExternalAccount.Excel.Utility
             }
             else
             {
-                if (value is string)
+                var newString = value as string;
+                if (newString != null)
                 {
-                    cell.SetCellValue((string)value);
+                    cell.SetCellValue(newString);
                 }
                 else if (value is int)
                 {
@@ -49,35 +33,36 @@ namespace Fanex.ExternalAccount.Excel.Utility
                 }
                 else if (value is decimal)
                 {
-                    cell.SetCellValue((decimal)value);
+                    SetCellValue(cell, (object)(decimal)value);
                 }
                 else if (value is bool)
                 {
                     cell.SetCellValue((bool)value);
                 }
-                else if (value is System.DateTime)
+                else if (value is DateTime)
                 {
-                    cell.SetCellValue((System.DateTime)value);
-                }
-                else if (value is IRichTextString)
-                {
-                    cell.SetCellValue((IRichTextString)value);
+                    cell.SetCellValue((DateTime)value);
                 }
                 else
                 {
-                    cell.SetCellValue("Undefined");
+                    var newValue = value as IRichTextString;
+                    if (newValue != null)
+                    {
+                        cell.SetCellValue(newValue);
+                    }
+                    else
+                    {
+                        cell.SetCellValue("Undefined");
+                    }
                 }
             }
         }
 
         public static void SetCellValue(this ICell cell, double? value)
         {
-            if (value == null)
-            {
-                value = 0;
-            }
+            var newValue = value ?? 0;
 
-            cell.SetCellValue((double)value);
+            cell.SetCellValue(newValue);
         }
 
         public static void SetCellValue(this ICell cell, decimal value)
@@ -87,12 +72,9 @@ namespace Fanex.ExternalAccount.Excel.Utility
 
         public static void SetCellValue(this ICell cell, decimal? value)
         {
-            if (value == null)
-            {
-                value = 0;
-            }
+            var newValue = value ?? 0;
 
-            cell.SetCellValue((decimal)value);
+            cell.SetCellValue(newValue);
         }
 
         public static void SetCellValue(this ICell cell, int value)
@@ -102,12 +84,9 @@ namespace Fanex.ExternalAccount.Excel.Utility
 
         public static void SetCellValue(this ICell cell, int? value)
         {
-            if (value == null)
-            {
-                value = 0;
-            }
+            var newValue = value ?? 0;
 
-            cell.SetCellValue((int)value);
+            cell.SetCellValue(newValue);
         }
 
         public static void SetCellValue(this ICell cell, long value)
@@ -117,43 +96,25 @@ namespace Fanex.ExternalAccount.Excel.Utility
 
         public static void SetCellValue(this ICell cell, long? value)
         {
-            if (value == null)
-            {
-                value = 0;
-            }
+            var newValue = value ?? 0;
 
-            cell.SetCellValue((long)value);
+            cell.SetCellValue(newValue);
         }
 
-        /// <summary>
-        /// Copies a cell to another cell.
-        /// </summary>
-        /// <param name="cell">Source cell.</param>
-        /// <param name="sourceCell">Destination cell.</param>
         public static void CopyFrom(this ICell cell, ICell sourceCell)
         {
-            // copy Merged
-            CellRangeAddress sourceRange = null;
+            cell.CellStyle = sourceCell.CellStyle;
             for (var i = 0; i < sourceCell.Sheet.NumMergedRegions; i++)
             {
-                CellRangeAddress range = sourceCell.Sheet.GetMergedRegion(i);
+                var range = sourceCell.Sheet.GetMergedRegion(i);
                 if (range.FirstColumn <= sourceCell.ColumnIndex
                     && range.LastColumn >= sourceCell.ColumnIndex
                     && range.FirstRow <= sourceCell.RowIndex
                     && range.LastRow >= sourceCell.RowIndex)
                 {
-                    sourceRange = range;
-                    break;
+                    cell.Sheet.AddMergedRegion(range.Clone());
                 }
             }
-
-            if (sourceRange != null)
-            {
-                cell.Sheet.AddMergedRegion(sourceRange.Clone());
-            }
-
-            // copy Style
-            cell.CellStyle = sourceCell.CellStyle;
         }
     }
 }

@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using ThirdPartyProducts.StatusSetting.Model;
-
-namespace Fanex.ExternalAccount.DTO.Customer
+﻿namespace Fanex.ExternalAccount.DTO.Customer
 {
+    using System.Collections.Generic;
+    using Core.Shared;
+    using ThirdPartyProducts.StatusSetting.Model;
+
     public class ThirdPartyProductStatusViewModel
     {
         public int CustId { get; set; }
@@ -15,25 +16,7 @@ namespace Fanex.ExternalAccount.DTO.Customer
 
         public bool GroupBySport { get; set; }
 
-        public string RoleName
-        {
-            get
-            {
-                switch (this.RoleId)
-                {
-                    case 1:
-                        return "Member";
-                    case 2:
-                        return "Agent";
-                    case 3:
-                        return "Master";
-                    case 4:
-                        return "Super";
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
+        public string RoleName => RoleId.DisplayRoleName();
 
         public List<ProductStatus> ProductStatusList { get; set; }
     }

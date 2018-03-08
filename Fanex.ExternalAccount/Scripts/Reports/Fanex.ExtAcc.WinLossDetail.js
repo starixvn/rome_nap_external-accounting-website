@@ -1,71 +1,71 @@
 ﻿/// <reference path="../_references.js" />
-if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
+if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
     alert("Fanex.ExtAcc.js module is required!")
 }
 
 Fanex.ExtAcc.WinLossDetail = {
-    groupName: '',
-    username: '',
+    groupName: "",
+    username: "",
     srecommend: 0,
     mrecommend: 0,
     recommend: 0,
     custId: 0,
-    supername: '',
-    mastername: '',
-    agentname: '',
+    supername: "",
+    mastername: "",
+    agentname: "",
     fromdate: new Date(),
     todate: new Date(),
-    parameterProducts: '',
+    parameterProducts: "",
     fixedsortdata: new Array(),
     removedsortdata: new Array(),
     fixedsortlist: new Array(),
-    url: resolveClientUrl('WinLossDetail/GetData'),
+    url: resolveClientUrl("WinLossDetail/GetData"),
     viewlevel: 5,
     dataSource: [],
     $this: null,
     SetRange: function () {
         return {
-            minDate: new Date($('#MinDate').val()),
-            maxDate: new Date($('#MaxDate').val())
+            minDate: new Date($("#MinDate").val()),
+            maxDate: new Date($("#MaxDate").val())
         }
     },
     SwitchCalendarType: function (showType) {
         if (showType == 1) {
-            $('#GroupViewHistory').css('display', 'none');
-            $('#GroupBackToCurrent').css('display', 'block');
+            $("#GroupViewHistory").css("display", "none");
+            $("#GroupBackToCurrent").css("display", "block");
             $('.from-to-date').css('display', 'none');
             $('.group-month-day').css('display', 'inline-block');
         }
         else {
-            $('#GroupViewHistory').css('display', 'block');
-            $('#GroupBackToCurrent').css('display', 'none');
+            $("#GroupViewHistory").css("display", "block");
+            $("#GroupBackToCurrent").css("display", "none");
             $('.from-to-date').css('display', 'inline-block');
             $('.group-month-day').css('display', 'none');
         }
     },
     CallSubmit: function () {
-        this.groupName = $('#selectedGroupName').html();
+        this.groupName = $("#selectedGroupName").html();
         this.ResetParameters();
         this.username = Fanex.encodeHtml($("#txtUserName").val());
         this.Databind(this.username);
     },
     initMonthlyCalendar: function () {
-        $('#monPickr1').monPickr({
-            today: $('#MaxDate').val(),
-            minDate: '2010/1/1',
+        $("#monPickr1").monPickr({
+            today: $("#MaxDate").val(),
+            minDate: "2010/1/1",
             showDateRange: true,
-            fromDayId: 'fromDay1',
-            toDayId: 'toDay1',
+            fromDayId: "fromDay1",
+            toDayId: "toDay1",
             log: function (msg) {
-                if (typeof console != 'undefined')
+                if (typeof console != "undefined")
                     console.warn(msg);
             }
         });
 
-        var today = new Date($('#MaxDate').val());
-        $('#monPickr1').monPickr("setMonth", today);
-        $('#monPickr1').monPickr("setToDay", today.getDate());
-        $('#monPickr1').monPickr("setFromDay", 1);
+        var today = new Date($("#MaxDate").val());
+        $("#monPickr1").monPickr("setMonth", today);
+        $("#monPickr1").monPickr("setToDay", today.getDate());
+        $("#monPickr1").monPickr("setFromDay", 1);
     },
     getDayOfYear: function (date) {
         var day = date.getDate();
@@ -79,19 +79,19 @@ Fanex.ExtAcc.WinLossDetail = {
         return dayNo;
     },
     getParameterProducts: function () {
-        this.parameterProducts = '';
+        this.parameterProducts = "";
         var ids = $(".ui-multiselect-checkboxes :input");
         for (var i = 0; i < ids.length; i++) {
             this.parameterProducts += "&" + ids[i].value + "=" + ids[i].checked;
         }
     },
     InitProductsList: function () {
-        $('#GroupProducts').css('display', 'block');
+        $("#GroupProducts").css("display", "block");
         $("#GroupProducts").multiSelect({
             minWidth: 170,
             showHeader: false,
             onCheck: function () {
-                if (this.value == 'showAll') {
+                if (this.value == "showAll") {
                     var ids = $(".ui-multiselect-checkboxes :input");
                     for (var i = 0; i < ids.length; i++) {
                         ids[i].checked = this.checked;
@@ -99,23 +99,23 @@ Fanex.ExtAcc.WinLossDetail = {
                 }
                 else {
                     if (!this.checked) {
-                        $('#ui-multiselect-GroupProducts-option-0')[0].checked = false;
+                        $("#ui-multiselect-GroupProducts-option-0")[0].checked = false;
                     }
                 }
             },
             noneSelectedText: function () {
                 $("#GroupProducts").attr("title", "");
-                return '';
+                return "";
             },
             selectedText: function (numChecked, numTotal, checkedItems) {
-                if (checkedItems[0].value != 'showAll') {
+                if (checkedItems[0].value != "showAll") {
                     numChecked++;
                 }
 
                 if (numChecked != numTotal) {
-                    var mainTitle = '';
+                    var mainTitle = "";
                     $.each(checkedItems, function (i) {
-                        mainTitle += checkedItems[i].title + ', ';
+                        mainTitle += checkedItems[i].title + ", ";
                     });
 
                     mainTitle = mainTitle.substring(0, mainTitle.length - 2);
@@ -124,9 +124,9 @@ Fanex.ExtAcc.WinLossDetail = {
                     return mainTitle;
                 }
                 else {
-                    $('#ui-multiselect-GroupProducts-option-0')[0].checked = true;
+                    $("#ui-multiselect-GroupProducts-option-0")[0].checked = true;
                     $("#GroupProducts").attr("title", "All");
-                    return 'All';
+                    return "All";
                 }
             }
         });
@@ -135,21 +135,20 @@ Fanex.ExtAcc.WinLossDetail = {
         $.ajax({
             context: $this,
             url: resolveClientUrl("Filter/ProductsList"),
-            type: 'GET',
-            dataType: 'json',
+            type: "GET",
+            dataType: "json",
             cache: false,
             success: function (result) {
-                var productList = '';
+                var productList = "";
                 $.each(result, function (i) {
-                    productList += '<option value="' + result[i].Key + '" selected="selected">' + result[i].Value + '</option>';
+                    productList += '<option value="' + result[i].Key + '" selected="selected">' + result[i].Value + "</option>";
                 });
-                $('#GroupProducts').html(productList);
+                $("#GroupProducts").html(productList);
                 $this.InitProductsList();
                 $("#GroupProducts :input").width($("#GroupProducts").width() - 21);
             }
         })
     },
-
     Init: function () {
         $this = this;
         Fanex.ExtAcc.InitSuggestion();
@@ -159,8 +158,8 @@ Fanex.ExtAcc.WinLossDetail = {
                 var itemIndex = event.target.selectedIndex;
                 $("#DateList").prop("selectedIndex", itemIndex);
 
-                var fdate = new Date($('#MaxDate').val());
-                var tdate = new Date($('#MaxDate').val());
+                var fdate = new Date($("#MaxDate").val());
+                var tdate = new Date($("#MaxDate").val());
                 if (itemIndex == 1) {
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - 1);
                     tdate = fdate;
@@ -181,14 +180,14 @@ Fanex.ExtAcc.WinLossDetail = {
                     return;
                 }
 
-                $("#dtpFromDate").val($.datepicker.formatDate('M dd, yy', fdate));
-                $("#dtpToDate").val($.datepicker.formatDate('M dd, yy', tdate));
+                $("#dtpFromDate").val($.datepicker.formatDate("M dd, yy", fdate));
+                $("#dtpToDate").val($.datepicker.formatDate("M dd, yy", tdate));
             }
         });
 
         $("#userGroup input").attr("readonly", "true");
         $("#userGroup input").bind("click", function () {
-            $(this).autocomplete("search", '');
+            $(this).autocomplete("search", "");
         });
 
         $("#userGroup input").val($("#DateList")[0].options[0].value);
@@ -196,112 +195,95 @@ Fanex.ExtAcc.WinLossDetail = {
         $("#dtpFromDate").datepicker({
             onClose: function (date) {
                 $("#userGroup input").val($("#DateList")[0].options[7].value);
-            }, showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', beforeShow: $this.SetRange, dateFormat: 'M dd, yy'
+            }, showOn: "both", buttonImageOnly: true, buttonImage: resolveClientUrl("Content/Images/calendar.png"), buttonText: "", beforeShow: $this.SetRange, dateFormat: "M dd, yy"
         });
-        $("#dtpFromDate").val($.datepicker.formatDate('M dd, yy', new Date($('#MaxDate').val())));
+        $("#dtpFromDate").val($.datepicker.formatDate("M dd, yy", new Date($("#MaxDate").val())));
 
         $("#dtpToDate").datepicker({
             onClose: function (date) {
                 $("#userGroup input").val($("#DateList")[0].options[7].value);
-            }, showOn: 'both', buttonImageOnly: true, buttonImage: resolveClientUrl('Content/Images/calendar.png'), buttonText: '', beforeShow: $this.SetRange, dateFormat: 'M dd, yy'
+            }, showOn: "both", buttonImageOnly: true, buttonImage: resolveClientUrl("Content/Images/calendar.png"), buttonText: "", beforeShow: $this.SetRange, dateFormat: "M dd, yy"
         });
-        $("#dtpToDate").val($.datepicker.formatDate('M dd, yy', new Date($('#MaxDate').val())));
+        $("#dtpToDate").val($.datepicker.formatDate("M dd, yy", new Date($("#MaxDate").val())));
 
         $(".ui-datepicker").draggable();
 
         $this.initMonthlyCalendar();
 
-        $('#ddlGroupName').bind('change', function (event) {
+        $("#ddlGroupName").bind("change", function (event) {
             var args = event.args;
             if (args) {
                 var item = args.item;
                 $this.groupName = item.innerHTML;
-                //$("#txtUserName").val('');
+
                 $this.ResetParameters();
-                $this.InitShowHideControls('none');
+                $this.InitShowHideControls("none");
             }
         });
 
         this.ProductsList();
 
-        $('#Submit').click(function (e) {
+        $("#Submit").click(function (e) {
             $this.CallSubmit();
         });
 
-        $('#txtUserName').keyup(function (e) {
-            if ($('#txtUserName').val().length > 1) {
+        $("#txtUserName").keyup(function (e) {
+            if ($("#txtUserName").val().length > 1) {
                 Fanex.ExtAcc.InitSuggestion();
             }
         });
 
-        $('#exporttoexcel').click(function () {
+        $("#exporttoexcel").click(function () {
             Fanex.ExtAcc.WinLossDetail.getParameterProducts();
             var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + "&viewlevel=" + $this.viewlevel +
-            '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + Fanex.ExtAcc.WinLossDetail.username;
-            var url = resolveClientUrl("WinLossDetail/GetExportToExcelWinLossDetail?") + params + Fanex.ExtAcc.WinLossDetail.parameterProducts;
+            "&custid=" + $this.custId + "&groupname=" + $this.groupName + "&username=" + Fanex.ExtAcc.WinLossDetail.username;
+            var url = resolveClientUrl("WinLossDetail/ExportWinLossDetailToExcel?") + params + Fanex.ExtAcc.WinLossDetail.parameterProducts;
 
             top.exportExcel(url, document);
         });
 
-        $('#ViewHistoryReport').click(function () {
+        $("#ViewHistoryReport").click(function () {
             $this.SwitchCalendarType(1);
         });
-        $('#BackToCurrentReport').click(function () {
+        $("#BackToCurrentReport").click(function () {
             $this.SwitchCalendarType(0);
         });
 
-        $('#tabSuper').click(function (e) {
-            if ($this.supername != '') {
-                $this.ResetParameters();
-                $this.username = $this.supername;
-                $this.Databind();
-            }
-            else {
-                $this.viewlevel = 5;
+        $("#tabSuper").click(function (e) {
+            $this.viewlevel = 4;
+            $this.srecommend = 0;
+            $this.mrecommend = 0;
+            $this.recommend = 0;
+
+            if ($this.custId !== 0) {
                 $this.custId = 0;
-                $this.srecommend = $("#txtUserName").val() == '' ? 0 : $this.srecommend;
-                //$("#txtUserName").val('');
-                $this.username = '';
-                $this.ToggleTabs('none', 'none', 'none', 'none', 4);
-                $this.Databind();
             }
-        });
-        $('#tabMaster').click(function (e) {
-            if ($this.mastername != '') {
-                $this.ResetParameters();
-                $this.username = $this.mastername;
-                $this.Databind();
-            }
-            else {
-                $this.viewlevel = 4;
-                $this.custId = $this.srecommend;
-                //$("#txtUserName").val('');
-                $this.username = '';
-                $this.ToggleTabs('block', 'block', 'none', 'none', 3);
-                $this.Databind();
-            }
-        });
-        $('#tabAgent').click(function (e) {
-            if ($this.agentname != '') {
-                $this.ResetParameters();
-                $this.username = $this.agentname;
-                $this.Databind();
-            }
-            else {
-                $this.viewlevel = 3;
-                $this.custId = $this.mrecommend;
-                //$("#txtUserName").val('');
-                $this.username = '';
-                $this.ToggleTabs('block', 'block', 'block', 'none', 2);
-                $this.Databind();
-            }
+
+            $this.ToggleTabs('none', 'none', 'none', 'none', 4);
+            $this.Databind($this.supername);
         });
 
-        $this.groupName = $('#selectedGroupName').html();
+        $("#tabMaster").click(function (e) {
+            $this.viewlevel = 4;
+            $this.custId = $this.mastername === "" ? $this.srecommend : 0;
+            $this.ToggleTabs('block', 'block', 'none', 'none', 3);
 
-        $('#txtUserName').keypress(function (e) {
-            if (typeof e == 'undefined') e = window.event;
-            var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
+            $this.Databind($this.mastername);
+        });
+
+        $("#tabAgent").click(function (e) {
+            $this.viewlevel = 3;
+            $this.custId = $this.agentname === "" ? $this.mrecommend : 0;
+            $this.ToggleTabs('block', 'block', 'block', 'none', 2);
+
+            $this.Databind($this.agentname);
+        });
+
+        $this.groupName = $("#selectedGroupName").html();
+
+        $("#txtUserName").keypress(function (e) {
+            if (typeof e == "undefined") e = window.event;
+            var key = (typeof e.keyCode == "undefined") ? e.which : e.keyCode;
             if (key == 13) {
                 $this.CallSubmit();
                 return true;
@@ -330,6 +312,7 @@ Fanex.ExtAcc.WinLossDetail = {
     showHideFilter: function () {
         if ($this.hideFilter) {
             $(".icon-filter").addClass("active");
+       
             $(".filterbox").removeClass("hide");
         } else {
             $(".icon-filter").removeClass("active");
@@ -340,27 +323,28 @@ Fanex.ExtAcc.WinLossDetail = {
         $this.hideFilter = !$this.hideFilter;
     },
     ToggleTabs: function (levelLine, statusSAg, statusMAg, statusAg, status) {
-        $('#tabSuper').css('display', statusSAg);
-        $('#tabMaster').css('display', statusMAg);
-        $('#tabAgent').css('display', statusAg);
+        $("#tabSuper").css("display", statusSAg);
+        $("#tabMaster").css("display", statusMAg);
+        $("#tabAgent").css("display", statusAg);
+
         $('#levelLine').css('display', levelLine);
         if (status == 1) {
-            $('#SelectedLevel').html('Member');
+            $("#SelectedLevel").html("Member");
         }
         else if (status == 2) {
-            $('#SelectedLevel').html('Agent');
+            $("#SelectedLevel").html("Agent");
         }
         else if (status == 3) {
-            $('#SelectedLevel').html('Master');
+            $("#SelectedLevel").html("Master");
         }
         else if (status == 4) {
-            $('#SelectedLevel').html('Super');
+            $("#SelectedLevel").html("Super");
         }
     },
 
     RenderUsernameColumn: function (cell) {
-        if (cell == null || cell.Value.Username == 'Grand Total' || $this.viewlevel < 2) {
-            return '<div class="text-truncate" style="line-height: 22px; text-align: left; padding-left: 3px" title="' + cell.Value.Username + '">' + cell.Value.Username + '</div>';
+        if (cell == null || cell.Value.Username == "Grand Total" || $this.viewlevel < 2) {
+            return '<div class="text-truncate" style="line-height: 22px; text-align: left; padding-left: 3px" title="' + cell.Value.Username + '">' + cell.Value.Username + "</div>";
         }
 
         var func = "javascript: Fanex.ExtAcc.WinLossDetail.GetDownlineWinLossDetail('" + cell.Value.CustId + "')";
@@ -377,60 +361,60 @@ Fanex.ExtAcc.WinLossDetail = {
     },
     defaultColumns: [
         {
-            HeaderText: 'Username', Name: 'Username', Width: 130, Sort: true, HeaderAlign: 'center',
+            HeaderText: "Username", Name: "Username", Width: 130, Sort: true, HeaderAlign: "center",
             CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
         },
-        { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Net Turnover', Name: 'NetTurnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'GrossComm', Name: 'GrossComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Win/Loss', Name: 'MemberWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Comm', Name: 'PlayerComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Total', Name: 'MemberTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Win/Loss', Name: 'AgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Comm', Name: 'AgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Total', Name: 'AgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Win/Loss', Name: 'MAgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Comm', Name: 'MAgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Total', Name: 'MAgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Win/Loss', Name: 'SAgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Comm', Name: 'SAgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Total', Name: 'SAgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Company', Name: 'Company', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
+        { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Win/Loss", Name: "MemberWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Comm", Name: "PlayerComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Total", Name: "MemberTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Win/Loss", Name: "AgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Win/Loss", Name: "MAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Comm", Name: "MAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Total", Name: "MAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Win/Loss", Name: "SAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Comm", Name: "SAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Total", Name: "SAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
     ],
     MAgColumns: [
         {
-            HeaderText: 'Username', Name: 'Username', Width: 130,
-            Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
+            HeaderText: "Username", Name: "Username", Width: 130,
+            Sort: true, HeaderAlign: "center", CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
         },
-        { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Net Turnover', Name: 'NetTurnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'GrossComm', Name: 'GrossComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Win/Loss', Name: 'MemberWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Comm', Name: 'PlayerComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Total', Name: 'MemberTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Win/Loss', Name: 'AgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Comm', Name: 'AgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Total', Name: 'AgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Win/Loss', Name: 'MAgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Comm', Name: 'MAgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Total', Name: 'MAgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Company', Name: 'Company', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
+        { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Win/Loss", Name: "MemberWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Comm", Name: "PlayerComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Total", Name: "MemberTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Win/Loss", Name: "AgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Win/Loss", Name: "MAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Comm", Name: "MAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Total", Name: "MAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
     ],
     AgColumns: [
         {
-            HeaderText: 'Username', Name: 'Username', Width: 130,
-            Sort: true, HeaderAlign: 'center', CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
+            HeaderText: "Username", Name: "Username", Width: 130,
+            Sort: true, HeaderAlign: "center", CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
         },
-        { HeaderText: 'Turnover', Name: 'Turnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Net Turnover', Name: 'NetTurnover', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'GrossComm', Name: 'GrossComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Win/Loss', Name: 'MemberWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Comm', Name: 'PlayerComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Total', Name: 'MemberTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Win/Loss', Name: 'AgWinlost', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Comm', Name: 'AgComm', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Total', Name: 'AgTotal', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
-        { HeaderText: 'Company', Name: 'Company', Width: 130, Sort: true, HeaderAlign: "center", CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' }
+        { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Win/Loss", Name: "MemberWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Comm", Name: "PlayerComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Total", Name: "MemberTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Win/Loss", Name: "AgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
     ],
     SAgHeaderColumns: [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
@@ -743,17 +727,16 @@ Fanex.ExtAcc.WinLossDetail = {
             $("#tabMaster").attr("class", "tabDisable");
             $("#tabAgent").attr("class", "tabActive");
         };
-        $('#headlineDaily').css("visibility", "visible");
+        $("#headlineDaily").css("visibility", "visible");
     },
     GetDownlineWinLossDetail: function (custId) {
         this.custId = custId;
-        //$("#txtUserName").val('');
-        this.username = '';
+        this.username = "";
         this.Databind(this.username);
     },
     InitShowHideControls: function (status) {
-        $("#headlineDaily").css('display', status);
-        $("#mainGrid").css('display', status);
+        $("#headlineDaily").css("display", status);
+        $("#mainGrid").css("display", status);
     },
     ResetParameters: function () {
         this.srecommend = 0;
@@ -765,18 +748,18 @@ Fanex.ExtAcc.WinLossDetail = {
     },
     GetFromDateToDate: function () {
         if ($(".from-to-date").css('display') != 'none') {
-            this.fromdate = $('#dtpFromDate').val();
-            this.todate = $('#dtpToDate').val();
+            this.fromdate = $("#dtpFromDate").val();
+            this.todate = $("#dtpToDate").val();
         }
         else {
-            this.fromdate = $('#monPickr1').monPickr("getFromDate", "MM/dd/yyyy");
-            this.todate = $('#monPickr1').monPickr("getToDate", "MM/dd/yyyy");
+            this.fromdate = $("#monPickr1").monPickr("getFromDate", "MM/dd/yyyy");
+            this.todate = $("#monPickr1").monPickr("getToDate", "MM/dd/yyyy");
         }
     },
     Databind: function (username) {
-        this.username = !username ? '' : username;
+        this.username = !username ? "" : username;
         this.GetFromDateToDate();
-        this.groupName = $('#selectedGroupName').html();
+        this.groupName = $("#selectedGroupName").html();
 
         var dateInfo;
         if (this.fromdate == this.todate) {
@@ -792,7 +775,7 @@ Fanex.ExtAcc.WinLossDetail = {
                             + "&mrecommend=" + this.mrecommend
                             + "&recommend=" + this.recommend
                             + "&custid=" + this.custId
-                            + "&username=" + Fanex.ExtAcc.ReplaceAll(this.viewlevel == 5 ? '' : this.username, '&', '')
+                            + "&username=" + Fanex.ExtAcc.ReplaceAll(this.viewlevel == 5 ? "" : this.username, "&", "")
                             + "&fromdate=" + this.fromdate
                             + "&todate=" + this.todate
                             + "&viewlevel=" + this.viewlevel
@@ -803,14 +786,14 @@ Fanex.ExtAcc.WinLossDetail = {
         $.ajax({
             context: $this,
             url: this.url + parameterUrl,
-            type: 'post',
-            dataType: 'json',
+            type: "post",
+            dataType: "json",
             cache: false,
             beforesend: function (xhr) { },
             success: function (data) {
                 if (data.errorCode) {
                     Fanex.ExtAcc.UnBlockUI();
-                    Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 350, 150, 'alertWLD');
+                    Fanex.ExtAcc.Form.Alert("Error", data.errorMessage.formatErrorMessage(), 350, 150, "alertWLD");
                     return;
                 }
 
@@ -841,12 +824,12 @@ Fanex.ExtAcc.WinLossDetail = {
 
                 $this.ChangeHeadlineTab();
 
-                $('#mainGrid').css('display', $this.totalRows < 1 ? 'none' : 'block');
-                $('#mainGrid').css('visibility', $this.totalRows < 1 ? 'hidden' : 'visible');
-                $('#headlineDaily').css('display', $this.totalRows < 1 ? 'none' : 'block');
-                $('#headlineDaily').css('visibility', $this.totalRows < 1 ? 'hidden' : 'visible');
-                $('#exporttoexcel').css('display', $this.totalRows < 1 ? 'none' : 'block');
-                $('#msgNoinfo').css('display', $this.totalRows < 1 ? 'block' : 'none');
+                $("#mainGrid").css("display", $this.totalRows < 1 ? "none" : "block");
+                $("#mainGrid").css("visibility", $this.totalRows < 1 ? "hidden" : "visible");
+                $("#headlineDaily").css("display", $this.totalRows < 1 ? "none" : "block");
+                $("#headlineDaily").css("visibility", $this.totalRows < 1 ? "hidden" : "visible");
+                $("#exporttoexcel").css("display", $this.totalRows < 1 ? "none" : "block");
+                $("#msgNoinfo").css("display", $this.totalRows < 1 ? "block" : "none");
 
                 if ($this.totalRows > 0) {
                     $this.Render(dateInfo);
@@ -857,21 +840,23 @@ Fanex.ExtAcc.WinLossDetail = {
                     $(".groupBack").addClass("hide");
                 }
 
-                $('#netTurnover').bind('click', function () {
-                    var message = "- For Sportbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
-                    if (data.tooltips.showAllbet) {
-                        var messageGroup = message + "<br/>" + "<br/>" + "- For AllBet, Net Turnover is total valid bets that we use to compute commission.";
-                        Fanex.ExtAcc.Form.Alert("Net Turnover Information", messageGroup, 430, 220);
+                $("#netTurnover").bind("click",
+                    function () {
+                        var message =
+                            "- For Sportbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
+                        if (data.tooltips.showAllbet) {
+                            var messageGroup = message +
+                                "<br/>" +
+                                "<br/>" +
+                                "- For AllBet, Net Turnover is total valid bets that we use to compute commission.";
+                            Fanex.ExtAcc.Form.Alert("Net Turnover Information", messageGroup, 430, 220);
+                            return false;
+                        }
+
+                        Fanex.ExtAcc.Form.Alert("Net Turnover Information", message, 430, 170);
                         return false;
-                    }
+                    });
 
-                    Fanex.ExtAcc.Form.Alert("Net Turnover Information", message, 430, 170);
-                    return false;
-                });
-
-                Fanex.ExtAcc.UnBlockUI();
-            },
-            error: function () {
                 Fanex.ExtAcc.UnBlockUI();
             }
         });

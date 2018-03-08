@@ -1,54 +1,53 @@
-﻿.output
-{
-	font-family:Arial;
-	font-size: 8pt;
-	color:black;
-	padding-left: 3px;
-	padding-top: 3px;
-	border: 1px solid #aaa;
-	width: 145px;
-	cursor: default;
-	background: #fff;
-}
-.shadow
-{
-	width:147px;
-	position:relative;
-	top: 2px;
-	left: 2px;
-	visibility: hidden;
-	cursor: default;
-	background: #ddd;
-}
-.shadow div{
-	position:relative;
-	top: -2px;
-	left: -2px;
+﻿.output {
+    font-family: Arial;
+    font-size: 8pt;
+    color: black;
+    padding-left: 3px;
+    padding-top: 3px;
+    border: 1px solid #aaa;
+    width: 145px;
+    cursor: default;
+    background: #fff;
 }
 
-.opOut
-{
-	min-height:14px;
-	line-height:14px;
-	color:#000;
-	padding-left: 3px;
-	background:White;	
-	border-bottom:solid 1px #ddd;
+.shadow {
+    width: 147px;
+    position: relative;
+    top: 2px;
+    left: 2px;
+    visibility: hidden;
+    cursor: default;
+    background: #ddd;
 }
-.opOver
-{
-	min-height:14px;
-	line-height:14px;
-	color:White;
-	padding-left: 3px;
-	background: #316AC5;	
-	border-bottom:solid 1px #999;
+
+    .shadow div {
+        position: relative;
+        top: -2px;
+        left: -2px;
+    }
+
+.opOut {
+    min-height: 14px;
+    line-height: 14px;
+    color: #000;
+    padding-left: 3px;
+    background: White;
+    border-bottom: solid 1px #ddd;
 }
-.opSpan 
-{
-	color:Gray;
+
+.opOver {
+    min-height: 14px;
+    line-height: 14px;
+    color: White;
+    padding-left: 3px;
+    background: #316AC5;
+    border-bottom: solid 1px #999;
 }
-.opSpanOver
-{
-	color:White;
+
+.opSpan {
+    color: Gray;
+}
+
+.opSpanOver {
+    color: White;
 }

@@ -1,13 +1,3 @@
-/*!
- * jQuery UI Menu 1.9.1
- * http://jqueryui.com
- *
- * Copyright 2012 jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- *
- * http://docs.jquery.com/UI/Menu#theming
- */
 .ui-menu { list-style:none; padding: 2px; margin: 0; display:block; outline: none; }
 .ui-menu .ui-menu { margin-top: -3px; position: absolute; }
 .ui-menu .ui-menu-item { margin: 0; padding: 0; zoom: 1; width: 100%; }

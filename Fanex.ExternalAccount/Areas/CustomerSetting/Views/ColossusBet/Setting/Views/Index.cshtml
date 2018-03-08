@@ -1,4 +1,5 @@
 ﻿@using Fanex.CustomerSetting.Module.ColossusBetSetting.Resources;
+@using Fanex.ExternalAccount.Core.Shared
 @model Fanex.CustomerSetting.Module.ColossusBetSetting.Entities.ColossusBetModel
 <!DOCTYPE html>
 <html ng-app='colossusBetSettingModule' id="ng-app">
@@ -30,7 +31,7 @@
             @Html.Partial("~/Areas/CustomerSetting/Views/ColossusBet/Setting/Views/_CashInShare.cshtml", Model)
             @Html.Hidden("UpdateSettingtUrl", Url.Content("~/customersetting/colossusBetSetting/colossusBetSetting/UpdateSetting"))
 
-          @if (Model.CustomerInformationPartial.RoleId < 4)
+          @if (Model.CustomerInformationPartial.RoleId < Role.Super)
           {
            <div  class="btnLeft">
                 <input ng-class-name="btnUpdate" check-disable-element ng-model="isUpdatedAll" ng-click="updated(false)"

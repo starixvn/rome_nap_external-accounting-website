@@ -3,13 +3,6 @@
 @model Function
 @{
     var parentList = (IEnumerable<Function>)ViewBag.ParentList;
-    var groupList = (IEnumerable<Group>)ViewBag.GroupList;
-
-    var parentSelectList = parentList.Select(o => new SelectListItem
-    {
-        Value = o.ParentID.ToString(),
-        Text = o.ParentName
-    }).ToList();
 
     var oldGroups = (string)ViewBag.OldGroups;
     var oldIDs = (string)ViewBag.OldIDs;

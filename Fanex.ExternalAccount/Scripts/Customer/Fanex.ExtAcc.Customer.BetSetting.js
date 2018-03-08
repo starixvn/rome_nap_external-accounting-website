@@ -89,18 +89,12 @@ Fanex.ExtAcc.Customer.BetSetting = {
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(result.errorMessage.formatErrorMessage());
                         }
-                    })
-                    .error(function (xhr, status, err) {
-                        Fanex.ExtAcc.UnBlockUI();
                     });
                 }
             }
 
             ko.applyBindings(new BetSettingModel());
 
-            Fanex.ExtAcc.UnBlockUI();
-        })
-        .error(function (xhr, status, err) {
             Fanex.ExtAcc.UnBlockUI();
         });
     },
@@ -178,18 +172,12 @@ Fanex.ExtAcc.Customer.BetSetting = {
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(result.errorMessage.formatErrorMessage());
                         }
-                    })
-                    .error(function (xhr, status, err) {
-                        Fanex.ExtAcc.UnBlockUI();
                     });
                 }
             }
 
             ko.applyBindings(new BetSettingModel());
 
-            Fanex.ExtAcc.UnBlockUI();
-        })
-        .error(function (xhr, status, err) {
             Fanex.ExtAcc.UnBlockUI();
         });
     },
@@ -265,18 +253,12 @@ Fanex.ExtAcc.Customer.BetSetting = {
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(result.errorMessage.formatErrorMessage());
                         }
-                    })
-                    .error(function (xhr, status, err) {
-                        Fanex.ExtAcc.UnBlockUI();
                     });
                 }
             }
 
             ko.applyBindings(new BetSettingModel());
 
-            Fanex.ExtAcc.UnBlockUI();
-        })
-        .error(function (xhr, status, err) {
             Fanex.ExtAcc.UnBlockUI();
         });
     }

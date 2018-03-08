@@ -1,70 +1,73 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CurrentContext.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// <summary>
-// Context of current session
-// </summary>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2012.12.14">Created</change>
-// </history>
-namespace Fanex.ExternalAccount.Core.Context
+﻿namespace Fanex.ExternalAccount.Core.Context
 {
-    using System.Collections.Specialized;
+    using System;
+    using System.Collections.Generic;
     using System.Globalization;
+    using System.IO;
+    using System.Linq;
     using System.Net;
+    using System.Text.RegularExpressions;
     using System.Web;
-    using Fanex.CustomerSetting.IP.Utils;
-    using Fanex.CustomerSetting.Module.Core.Web;
+    using Common;
+    using CustomerSetting.IP.Utils;
+    using CustomerSetting.Module.Core.Web;
 
-    /// <summary>
-    /// Current context of session.
-    /// </summary>
     public class CurrentContext : ICurrentContext
     {
-        private static string loginErrorMessage = string.Empty;
+        private readonly string[] custIdParamNames =
+            {"custId", "customerId", "parentId", "srecommend", "mrecommend", "recommend", "agentId"};
 
-        public static string LoginErrorMessage
-        {
-            get { return CurrentContext.loginErrorMessage; }
-            set { CurrentContext.loginErrorMessage = value; }
-        }
+        private readonly string[] custIdsNames = {"custIds", "customerIds"};
 
-        public static ICurrentContext Instance
+        public static string LoginErrorMessage { get; set; } = string.Empty;
+
+        public static ICurrentContext Instance => new CurrentContext();
+
+        public int CustId
         {
             get
             {
-                return new CurrentContext();
+                var custId = GetCustomerIdFromQueryString();
+
+                if (custId <= 0)
+                {
+                    custId = GetCustomerIdFromJson();
+                }
+
+                return custId;
             }
         }
 
-        public System.Web.HttpContext Context
-        {
-            get { return HttpContext.Current; }
-        }
+        public IEnumerable<int> CustIds => GetCustomerIdsFromQueryString();
+
+        public static string GroupName => HttpContext.Current.Request["groupName"];
+
+        public HttpContext Context => HttpContext.Current;
 
         public string Ip4Address
         {
             get
             {
-                string ip = string.Empty;
+                var ip = string.Empty;
 
-                foreach (IPAddress ipa in Dns.GetHostAddresses(HttpContext.Current.Request.UserHostAddress))
+                if (HttpContext.Current.Request != null)
                 {
-                    if (ipa.AddressFamily.ToString().Equals("InterNetwork"))
+                    foreach (var ipa in Dns.GetHostAddresses(HttpContext.Current.Request.UserHostAddress))
                     {
-                        ip = ipa.ToString();
-                        break;
+                        if (ipa.AddressFamily.ToString().Equals("InterNetwork"))
+                        {
+                            ip = ipa.ToString();
+                            break;
+                        }
                     }
                 }
 
-                if (!ip.Equals(string.Empty))
+                if (!string.IsNullOrWhiteSpace(ip))
                 {
                     return ip;
                 }
 
-                foreach (IPAddress ipa in Dns.GetHostAddresses(Dns.GetHostName()))
+                foreach (var ipa in Dns.GetHostAddresses(Dns.GetHostName()))
                 {
                     if (ipa.AddressFamily.ToString().Equals("InterNetwork"))
                     {
@@ -81,14 +84,9 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                string ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                var ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
 
-                if (!string.IsNullOrEmpty(ip))
-                {
-                    string[] range = ip.Split(',');
-                    string trueIP = range[0].Trim();
-                }
-                else
+                if (string.IsNullOrWhiteSpace(ip))
                 {
                     ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
                 }
@@ -97,20 +95,18 @@ namespace Fanex.ExternalAccount.Core.Context
             }
         }
 
-        public string DomainName
-        {
-            get { return HttpContext.Current.Request.ServerVariables["SERVER_NAME"]; }
-        }
+        public string DomainName => HttpContext.Current.Request.ServerVariables["SERVER_NAME"];
 
         public string FullDomainName
         {
             get
             {
-                NameValueCollection variables = HttpContext.Current.Request.ServerVariables;
+                var variables = HttpContext.Current.Request.ServerVariables;
 
-                string protocol = (variables["SERVER_PORT_SECURE"] == "1") ? "https://" : "http://";
-                string domain = variables["SERVER_NAME"];
-                string port = variables["SERVER_PORT"];
+                var protocol =
+                    variables["SERVER_PORT_SECURE"] == "1" ? "https://" : "http://"; //DevSkim: ignore DS137138
+                var domain = variables["SERVER_NAME"];
+                var port = variables["SERVER_PORT"];
 
                 return protocol + domain + ":" + port;
             }
@@ -120,22 +116,106 @@ namespace Fanex.ExternalAccount.Core.Context
         {
             get
             {
-                RegionInfo regionInfo = this.ResolveCountry();
+                var regionInfo = ResolveCountry();
 
-                return regionInfo == null ? null : regionInfo.EnglishName;
+                return regionInfo?.EnglishName;
             }
         }
-        
+
         private RegionInfo ResolveCountry()
         {
             try
             {
-                return new RegionInfo(IpUtils.LocationFromIP(this.Ip4Address).countrySHORT);
+                return new RegionInfo(IpUtils.LocationFromIP(Ip4Address).countrySHORT);
             }
             catch
             {
                 return null;
             }
+        }
+
+        private int GetCustomerIdFromQueryString()
+        {
+            var request = HttpContext.Current.Request;
+
+            foreach (var custIdParamName in custIdParamNames)
+            {
+                var custId = Converter.ToInt(request[custIdParamName]);
+
+                if (custId > 0)
+                {
+                    return custId;
+                }
+            }
+
+            return 0;
+        }
+
+        private IEnumerable<int> GetCustomerIdsFromQueryString()
+        {
+            var custIds = string.Empty;
+            var i = 0;
+
+            while (string.IsNullOrEmpty(custIds) && i < custIdsNames.Length)
+            {
+                custIds = HttpContext.Current.Request[custIdsNames[i]];
+                i++;
+            }
+
+            return custIds?.Split(',').Where(id => int.TryParse(id, out i)).Select(id => Converter.ToInt(id))
+                       .ToList() ?? Enumerable.Empty<int>();
+        }
+
+        private int GetCustomerIdFromJson()
+        {
+            var custId = 0;
+            var i = 0;
+
+            while (custId <= 0 && i < custIdParamNames.Length)
+            {
+                custId = GetCustomerId(custIdParamNames[i]);
+                i++;
+            }
+
+            return custId;
+        }
+
+        private static int GetCustomerId(string parameterName)
+        {
+            var customerId = 0;
+            if (string.IsNullOrEmpty(parameterName))
+            {
+                return customerId;
+            }
+
+            var jsonString = GetJsonDataInRequestBody(HttpContext.Current.Request.InputStream);
+            var pattern = $"(\"{parameterName}\":)(?<paramValue>[^,]+)";
+            var regexMatch = Regex.Match(jsonString, pattern, RegexOptions.IgnoreCase);
+            if (regexMatch.Success)
+            {
+                customerId = Convert.ToInt32(regexMatch.Groups["paramValue"].ToString().Replace("\"", string.Empty));
+            }
+
+            return customerId;
+        }
+
+        private static string GetJsonDataInRequestBody(Stream requestStream)
+        {
+            if (requestStream == null)
+            {
+                return string.Empty;
+            }
+
+            requestStream.Seek(0, SeekOrigin.Begin);
+            var bodyData = new StreamReader(requestStream).ReadToEnd();
+            requestStream.Seek(0, SeekOrigin.Begin);
+            if (!string.IsNullOrWhiteSpace(bodyData)
+                && bodyData.Contains("{"))
+            {
+                return HttpUtility.UrlDecode(bodyData).Replace(@"\", string.Empty);
+            }
+
+            return string.Empty;
         }
     }
 }

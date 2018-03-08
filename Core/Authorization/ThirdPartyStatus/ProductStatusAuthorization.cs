@@ -1,31 +1,31 @@
-﻿using System;
-using Fanex.CustomerSetting.Security.Authenticate;
-using Fanex.ExternalAccount.Core.Context;
-
-namespace Fanex.ExternalAccount.Core.Authorization.ThirdPartyStatus
+﻿namespace Fanex.ExternalAccount.Core.Authorization.ThirdPartyStatus
 {
+    using System;
+    using Context;
+    using CustomerSetting.Security.Authenticate;
+
     public class ProductStatusAuthorization
     {
-        private readonly ExternalAccountAuthenticate _authenticationService;
+        private readonly ExternalAccountAuthenticateAttribute _authenticationService;
 
         public ProductStatusAuthorization() : this(null)
         {
         }
 
-        public ProductStatusAuthorization(ExternalAccountAuthenticate authenticationService)
+        public ProductStatusAuthorization(ExternalAccountAuthenticateAttribute authenticationService)
         {
-            _authenticationService = authenticationService ?? new ExternalAccountAuthenticate();
+            _authenticationService = authenticationService ?? new ExternalAccountAuthenticateAttribute();
         }
 
         public bool HasPermission(AuthenticateAction.AuthenticationType role, int productId)
         {
             var enableFunction = MappingEnableStatus(productId);
-            return role == AuthenticateAction.AuthenticationType.Read ? 
-                _authenticationService.AllowReadByAuthenticationParam(enableFunction) : 
-                _authenticationService.AllowUpdateByAuthenticationParam(enableFunction);
+            return role == AuthenticateAction.AuthenticationType.Read
+                ? _authenticationService.AllowReadByAuthenticationParam(enableFunction)
+                : _authenticationService.AllowUpdateByAuthenticationParam(enableFunction);
         }
 
-        private string MappingEnableStatus(int productId)
+        private static string MappingEnableStatus(int productId)
         {
             var enumName = Enum.GetName(typeof(EnableStatusProductFunction), productId);
 

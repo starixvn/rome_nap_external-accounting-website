@@ -1,6 +1,5 @@
 ﻿@using Fanex.CustomerSetting.Module.Core
 @using Fanex.CustomerSetting.Module.Casino.Resources
-@using Sunplus.Accounting.Core.Common;
 @{
     var id = Utils.ToInt32(Request.QueryString["id"]);
     var uplineId = Utils.ToInt32(Request.QueryString["uplineId"]);
@@ -79,7 +78,7 @@
             <td style="width: 30%" class="noneBorderLeft tdTitleRight">@NGCasinoLang.lblMaximumWin</td>
             <td style="width: 20%">
                 <div>
-                    <select id="maxWinLimit" style="width: 80px !important" data-ng-model="CustomerModel.memberWinLimit.maximumWin" data-ng-options="opt.key for opt in CustomerModel.memberWinLimit.maximumWinLimits track by opt.value"></select>&nbsp;@NGCasinoLang.lblOnGivenCredit
+                    <select id="maxWinLimit" style="width: 80px !important" data-ng-model="CustomerModel.memberWinLimit.maximumWin" data-ng-options="opt.Key for opt in CustomerModel.memberWinLimit.maximumWinLimits track by opt.Value"></select>&nbsp;@NGCasinoLang.lblOnGivenCredit
                 </div>
             </td>
             <td class="noneBorderRight" rowspan="{{CustomerModel.roleId != 1 ? 3 : 4}}"><div><label><input type="checkbox" data-ng-disabled="CustomerModel.memberWinLimit.isDailyAutoResetUpline == false && CustomerModel.roleId != 4" data-ng-model="CustomerModel.memberWinLimit.isDailyAutoReset" />@NGCasinoLang.lblDailyAutoResetLimit</label></div></td>
@@ -131,8 +130,8 @@
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/ptarea.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CustomerController.js?v=" + AccCommon.Version())"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CasinoController.js?v=" + AccCommon.Version())"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CustomerController.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CasinoController.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/CustomerSetting/Casino/CasinoCustomer/CustomerData?id=" + id + "&uplineid=" + uplineId)"></script>
     <script type="text/javascript">
         var casinoLang = {

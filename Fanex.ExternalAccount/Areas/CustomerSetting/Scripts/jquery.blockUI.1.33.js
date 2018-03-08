@@ -1,18 +1,4 @@
-﻿/*!
-* jQuery blockUI plugin
-* Version 2.53 (01-NOV-2012)
-* @requires jQuery v1.3 or later
-*
-* Examples at: http://malsup.com/jquery/block/
-* Copyright (c) 2007-2012 M. Alsup
-* Dual licensed under the MIT and GPL licenses:
-* http://www.opensource.org/licenses/mit-license.php
-* http://www.gnu.org/licenses/gpl.html
-*
-* Thanks to Amir-Hossein Sobhi for some excellent contributions!
-*/
-
-; (function () {
+﻿; (function () {
     "use strict";
 
     function setup($) {

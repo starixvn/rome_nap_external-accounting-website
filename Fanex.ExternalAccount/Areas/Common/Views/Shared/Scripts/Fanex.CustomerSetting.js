@@ -13,7 +13,7 @@ Fanex.CustomerSetting = {
     BlockUI: function () {
         if (!$this.BlockedUI) {
             $.blockUI({
-                message: '<img src="/Areas/Common/Views/Shared/Images/Loading.gif" />',
+                message: '<img src="/Assets/styles/Images/loading.gif" />',
                 onBlock: function () {
                     $this.BlockedUI = true;
                 },

@@ -427,11 +427,6 @@ Fanex.ExtAcc.User = {
                     Fanex.ExtAcc.User.Search();
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
-
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -471,11 +466,6 @@ Fanex.ExtAcc.User = {
                     Fanex.ExtAcc.User.Search();
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
-
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -511,11 +501,6 @@ Fanex.ExtAcc.User = {
                     Fanex.ExtAcc.User.Search();
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
-
-            Fanex.ExtAcc.UnBlockUI();
         });
     },
 
@@ -539,9 +524,6 @@ Fanex.ExtAcc.User = {
                     Fanex.ExtAcc.User.Search();
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
         });
     },
 
@@ -582,9 +564,6 @@ Fanex.ExtAcc.User = {
             else {
                 Fanex.ExtAcc.Form.Close(false);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
         });
     },
 

@@ -1,0 +1,78 @@
+﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
+{
+    using System;
+    using System.Collections;
+    using System.Data;
+    using Data.DNAide;
+    using DTO;
+    using DTO.Customer;
+    using Interface.Customer;
+
+    public class MasterDao : CustomerDao, IMasterDao
+    {
+        public DataTable GetData(
+            int? userId,
+            int? recommend = null,
+            int? custId = null,
+            bool? enabled = null,
+            bool? closed = null,
+            bool? suspended = null)
+        {
+            var param = new Hashtable
+            {
+                {"srecommend", recommend},
+                {"custid", custId},
+                {"enabled", enabled},
+                {"closed", closed},
+                {"suspended", suspended},
+                {"userid", userId}
+            };
+
+            return DbHelper.ExecuteDataTable("EAS_CustomerSelBySAg", param);
+        }
+
+        public Transfer GetTransferOption(int custId)
+        {
+            var param = new Hashtable { { "custid", custId }, { "transferoption", "00000000" } };
+
+            var result = DbHelper.ExecuteDbResult("Acc_CustomerSelTransferOption", param);
+            var transferOption = result.Outputs["transferoption"].ToString();
+            if (transferOption.Length > 0)
+            {
+                return new Transfer
+                {
+                    Weekly = Convert.ToBoolean(int.Parse(transferOption[7].ToString())),
+                    Mon = Convert.ToBoolean(int.Parse(transferOption[1].ToString())),
+                    Tue = Convert.ToBoolean(int.Parse(transferOption[2].ToString())),
+                    Wed = Convert.ToBoolean(int.Parse(transferOption[3].ToString())),
+                    Thu = Convert.ToBoolean(int.Parse(transferOption[4].ToString())),
+                    Fri = Convert.ToBoolean(int.Parse(transferOption[5].ToString())),
+                    Sat = Convert.ToBoolean(int.Parse(transferOption[6].ToString())),
+                    Sun = Convert.ToBoolean(int.Parse(transferOption[0].ToString()))
+                };
+            }
+
+            return null;
+        }
+
+        public Result EditTransferOption(string transferOption, int custId, int userId, string ip, int subAccId, string language)
+        {
+            var param = new Hashtable
+            {
+                {"custid", custId},
+                {"transferoption", transferOption},
+                {"userid", userId},
+                {"ip", ip},
+                {"subaccid", subAccId},
+                {"language", language},
+                {"returnerrcode", false},
+                {"errcode", 0},
+                {"errmsg", string.Empty}
+            };
+
+            var result = DbHelper.ExecuteDbResult("EAS_CustomerUpdTransferOption", param);
+
+            return new Result(result.Outputs["errcode"].ToString(), result.Outputs["errmsg"].ToString(), result.ResultSet);
+        }
+    }
+}

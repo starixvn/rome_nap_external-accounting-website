@@ -1,86 +1,59 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="TemplateReport.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Excel
+﻿namespace Fanex.ExternalAccount.Excel
 {
     using System;
     using System.IO;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
 
-    /// <summary>
-    /// Template report object.
-    /// </summary>
     public abstract class TemplateReport : IDisposable
     {
-        private HSSFWorkbook _hssfWorkbook;
-        private string _products;
+        private readonly string _products;
+        protected const int OddRowIndex = 1;
+        protected const int EvenRowIndex = 3;
+        protected const int FirstRowIndex = 0;
+        protected const int FirstColumnIndex = 0;
+        protected const int FirstColumnTotalIndex = 5;
 
-        public TemplateReport(string filePath, string products = null)
+        protected TemplateReport(string filePath, string products = null)
         {
-            FileStream file = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            this._hssfWorkbook = new HSSFWorkbook(file);
-            this._products = products;
+            var file = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            HssfWorkbook = new HSSFWorkbook(file);
+            _products = products;
+        }
+
+        public ISheet TemplateSheet => HssfWorkbook.GetSheet("Template");
+
+        public HSSFWorkbook Workbook => HssfWorkbook;
+
+        public string Products => string.IsNullOrWhiteSpace(_products) ? string.Empty : _products;
+
+        protected HSSFWorkbook HssfWorkbook { get; set; }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         ~TemplateReport()
         {
-            // Finalizer calls Dispose(false)
-            this.Dispose(false);
-        }
-
-        public HSSFWorkbook Workbook
-        {
-            get
-            {
-                return this._hssfWorkbook;
-            }
-        }
-
-        public string Products
-        {
-            get
-            {
-                return string.IsNullOrWhiteSpace(this._products) ? string.Empty : this._products;
-            }
-        }
-
-        protected HSSFWorkbook HssfWorkbook
-        {
-            get { return this._hssfWorkbook; }
-            set { this._hssfWorkbook = value; }
-        }
-
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
+            Dispose(false);
         }
 
         public void BoldAllFonts()
         {
-            for (short i = 0; i < this._hssfWorkbook.NumberOfFonts; i++)
+            for (short i = 0; i < HssfWorkbook.NumberOfFonts; i++)
             {
-                var font = this._hssfWorkbook.GetFontAt(i);
+                var font = HssfWorkbook.GetFontAt(i);
                 font.Boldweight = (short)FontBoldWeight.Bold;
             }
         }
 
-        /// <summary>
-        /// Dispose an object.
-        /// </summary>
-        /// <param name="disposing">Identifies to dispose or not.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing && this._hssfWorkbook != null)
+            if (disposing && HssfWorkbook != null)
             {
-                this._hssfWorkbook = null;
+                HssfWorkbook = null;
             }
         }
     }

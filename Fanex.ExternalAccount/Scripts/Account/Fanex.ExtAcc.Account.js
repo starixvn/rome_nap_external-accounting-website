@@ -12,17 +12,6 @@ Fanex.ExtAcc.Account = {
     currentRetryTimes: 0,
     LoginAttempt: 0,
 
-    ResetLoginAttempt: function () {
-        $.ajax(resolveClientUrl("Account/ResetLoginAttempt"))
-        .done(function (data) {
-            $('#captcha').hide();
-        })
-        .fail(function (data) {
-            if (typeof console != 'undefined')
-                console.log(data);
-        })
-    },
-
     HandleAjaxResult: function (element) {
         $(element).bind('ajaxComplete', function (event, request) {
             switch (request.status) {
@@ -40,11 +29,6 @@ Fanex.ExtAcc.Account = {
     },
 
     Init: function () {
-        var interval = setInterval(function () {
-            clearInterval(interval);
-            Fanex.ExtAcc.Account.ResetLoginAttempt();
-        }, 300000);
-
         this.HandleAjaxResult(document);
 
         if (document.forms.length > 0) {
@@ -158,7 +142,7 @@ Fanex.ExtAcc.Account = {
         }
     },
     GetValidateImage: function () {
-        $("#imgCode").attr("src", resolveClientUrl('Images/Loading.gif'));
+        $("#imgCode").attr("src", resolveClientUrl('Assets/styles/Images/loading.gif'));
 
         var timeout = setTimeout(function () {
             clearTimeout(timeout);
@@ -180,21 +164,12 @@ Fanex.ExtAcc.Account = {
             cache: false,
             success: function (data) {
                 location.href = resolveClientUrl('Home/Index/?index=' + selectedIndex);
-            },
-            error: function (xhr, status, e) {
-                if (typeof console != 'undefined') console.log(e);
             }
         });
     },
 
     Logout: function () {
-        $.ajax(resolveClientUrl("Account/LogOff"))
-        .done(function (data) {
-            location.href = resolveClientUrl("Account/Login");
-        })
-        .fail(function (data) {
-            if (typeof console != 'undefined') console.log(data);
-        })
+        location.href = resolveClientUrl("Account/LogOff");
     },
 
     GetBrowserSize: function () {

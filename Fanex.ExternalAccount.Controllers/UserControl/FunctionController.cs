@@ -1,85 +1,62 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="FunctionController.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// <summary>
-// For current session info
-// </summary>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2012.12.14">Created</change>
-// </history>
-namespace Fanex.ExternalAccount.Controllers.UserControl
+﻿namespace Fanex.ExternalAccount.Controllers.UserControl
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.ExternalAccount.Core.Base;
-    using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.DTO.UserControl;
-    using Fanex.ExternalAccount.Service.Impl.UserControl;
-    using Fanex.ExternalAccount.Service.Interface.UserControl;
-    using Fanex.ExternalAccount.Utilities;
+    using Core.Base;
+    using Core.Context;
+    using Core.Shared;
+    using CustomerSetting.Security.Authenticate;
+    using DTO.UserControl;
+    using Newtonsoft.Json;
+    using Service.Impl.UserControl;
+    using Service.Interface.UserControl;
+    using Utilities;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class FunctionController : BaseController
     {
         private readonly IFunctionService _funcService = new FunctionService();
+        private readonly IGroupService groupService = new GroupService();
 
-        /// <summary>
-        /// Get function list page.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
+            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult FunctionList()
         {
-            var internalGroup = new GroupService().GetListGroup()
-                .Where(o => o.GroupID == 1).FirstOrDefault();
+            ViewBag.InternalGroupIDs = Group.ITGroupId;
 
-            var ids = string.Empty;
-
-            ids += internalGroup.GroupID;
-
-            ViewBag.InternalGroupIDs = ids;
-
-            return this.PartialViewBase();
+            return PartialViewBase();
         }
 
-        /// <summary>
-        /// Gets data of function list page.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult FunctionListPost()
         {
-            var funcs = this._funcService.GetAllFunctions();
+            var funcs = _funcService.GetAllFunctions();
             var parents = funcs.Where(o => o.ParentID == 0);
             var funcsOrder = new List<Function>();
 
-            if (!this.CurrentSession.IsITAdmin && this.CurrentSession.IsInternalAdmin)
+            if (!CurrentSession.IsITAdmin && CurrentSession.IsInternalAdmin)
             {
-                // Is Internal admin logged in
-                funcs = funcs.Where(o => o.FuncKey != eFunctions.ManageMenu &&
-                    o.FuncKey != eFunctions.ManageFunction);
+                funcs = funcs.Where(o => o.FuncKey != eFunctions.ManageMenu
+                                         && o.FuncKey != eFunctions.ManageFunction);
 
                 parents = parents.Where(o => o.FuncKey != eFunctions.SystemConfiguration);
             }
-            else if (!this.CurrentSession.IsITAdmin && !this.CurrentSession.IsInternalAdmin)
+            else
             {
-                // Is External admin logged in
-                funcs = funcs.Where(o => o.FuncKey != eFunctions.ManageMenu &&
-                    o.FuncKey != eFunctions.ManageFunction &&
-                    o.FuncKey != eFunctions.ManageGroup &&
-                    o.FuncKey != eFunctions.ManageUser);
+                if (!CurrentSession.IsITAdmin && !CurrentSession.IsInternalAdmin)
+                {
+                    funcs = funcs.Where(o => o.FuncKey != eFunctions.ManageMenu
+                                             && o.FuncKey != eFunctions.ManageFunction
+                                             && o.FuncKey != eFunctions.ManageGroup
+                                             && o.FuncKey != eFunctions.ManageUser);
 
-                parents = parents.Where(o => o.FuncKey != eFunctions.Administration &&
-                    o.FuncKey != eFunctions.SystemConfiguration &&
-                    o.FuncKey != eFunctions.ExternalGroup);
+                    parents = parents.Where(o => o.FuncKey != eFunctions.Administration
+                                                 && o.FuncKey != eFunctions.SystemConfiguration
+                                                 && o.FuncKey != eFunctions.ExternalGroup);
+                }
             }
 
             foreach (var item in parents)
@@ -95,22 +72,19 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                 }
             }
 
-            return this.JsonBase(new { total = 1, page = 1, records = funcsOrder.Count(), rows = funcsOrder }, new Newtonsoft.Json.JsonSerializerSettings());
+            return JsonBase(new { total = 1, page = 1, records = funcsOrder.Count, rows = funcsOrder },
+                new JsonSerializerSettings());
         }
 
-        /// <summary>
-        /// Edits function.
-        /// </summary>
-        /// <param name="id">Function id.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult EditFunction(int id)
         {
-            var funcs = this._funcService.GetAllFunctions();
+            var funcs = _funcService.GetAllFunctions();
             var parent = funcs.Where(o => o.ParentID == 0 && o.FuncKey != eFunctions.ExternalGroup);
-            var model = this._funcService.GetFunctionPolicy(id);
-            var groups = new GroupService().GetAllGroup();
+            var model = _funcService.GetFunctionPolicy(id);
+            var groups = groupService.GetAllGroup();
             var tmp = string.Empty;
             var groupIds = string.Empty;
             var index = 0;
@@ -119,29 +93,32 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             model.FuncDesc = HttpUtility.HtmlDecode(model.FuncDesc);
             model.FuncKey = HttpUtility.HtmlDecode(model.FuncKey);
 
-            if (!this.CurrentSession.IsITAdmin && this.CurrentSession.IsInternalAdmin)
+            if (!CurrentSession.IsITAdmin && CurrentSession.IsInternalAdmin)
             {
                 parent = parent.Where(o => o.FuncKey != eFunctions.SystemConfiguration);
             }
-            else if (!this.CurrentSession.IsITAdmin && !this.CurrentSession.IsInternalAdmin)
+            else
             {
-                parent = parent.Where(o => o.FuncKey != eFunctions.Administration &&
-                    o.FuncKey != eFunctions.SystemConfiguration &&
-                    o.FuncKey != eFunctions.ExternalGroup);
+                if (!CurrentSession.IsITAdmin && !CurrentSession.IsInternalAdmin)
+                {
+                    parent = parent.Where(o => o.FuncKey != eFunctions.Administration
+                                               && o.FuncKey != eFunctions.SystemConfiguration
+                                               && o.FuncKey != eFunctions.ExternalGroup);
 
-                groups = groups.Where(o => o.GroupName == CurrentSession.CurrencyGroup);
+                    groups = groups.Where(o => o.GroupName == CurrentSession.CurrencyGroup);
+                }
             }
 
             model.AssignGroups.ToList().ForEach(o =>
+            {
+                if (o.HasPermission)
                 {
-                    if (o.HasPermission)
-                    {
-                        tmp += index + ",";
-                        groupIds += o.GroupID + ",";
-                    }
+                    tmp += index + ",";
+                    groupIds += o.GroupID + ",";
+                }
 
-                    index++;
-                });
+                index++;
+            });
 
             if (tmp.IndexOf(',') != -1)
             {
@@ -154,83 +131,79 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             ViewBag.OldGroups = tmp;
             ViewBag.OldIDs = groupIds;
 
-            return this.PartialViewBase(model);
+            return PartialViewBase(model);
         }
 
-        /// <summary>
-        /// Add new function.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult AddFunction()
         {
-            var funcs = this._funcService.GetAllFunctions();
+            var funcs = _funcService.GetAllFunctions();
             var parent = funcs.Where(o => o.ParentID == 0 && o.FuncKey != eFunctions.ExternalGroup);
             var model = new Function();
-            var groups = new GroupService().GetAllGroup();
+            var groups = groupService.GetAllGroup();
 
-            if (!this.CurrentSession.IsITAdmin && this.CurrentSession.IsInternalAdmin)
+            if (!CurrentSession.IsITAdmin && CurrentSession.IsInternalAdmin)
             {
-                // Is Internal admin logged in
                 parent = parent.Where(o => o.FuncKey != eFunctions.SystemConfiguration);
             }
-            else if (!this.CurrentSession.IsITAdmin && !this.CurrentSession.IsInternalAdmin)
+            else
             {
-                // Is External admin logged in
-                parent = parent.Where(o => o.FuncKey != eFunctions.Administration &&
-                    o.FuncKey != eFunctions.SystemConfiguration &&
-                    o.FuncKey != eFunctions.ExternalGroup);
+                if (!CurrentSession.IsITAdmin && !CurrentSession.IsInternalAdmin)
+                {
+                    parent = parent.Where(o => o.FuncKey != eFunctions.Administration
+                                               && o.FuncKey != eFunctions.SystemConfiguration
+                                               && o.FuncKey != eFunctions.ExternalGroup);
 
-                groups = groups.Where(o => o.GroupName == CurrentSession.CurrencyGroup);
+                    groups = groups.Where(o => o.GroupName == CurrentSession.CurrencyGroup);
+                }
             }
 
             ViewBag.ParentList = parent;
             ViewBag.GroupList = groups;
 
-            return this.PartialViewBase(model);
+            return PartialViewBase(model);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult Edit(int funcId, string name, string desc, int parentId, string parent, int order, string oldGroups, string groups)
+        public ActionResult Edit(Function funtion, string oldGroups, string groups)
         {
-            var result = this._funcService.UpdateFunction(funcId, name, desc, parentId, parent, order, CurrentSession.CustId, CurrentContext.Ip4Address, oldGroups, groups);
+            var result = _funcService.UpdateFunction(funtion, CurrentSession.CustId,
+                CurrentContext.Ip4Address, oldGroups, groups);
 
-            return this.JsonBase(result);
+            return JsonBase(result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult Add(string name, string key, string desc, int parentId, string parent, int order, string groups)
+        public ActionResult Add(Function function, string groups)
         {
-            var funcId = 0;
+            var result = _funcService.CreateFunction(function, CurrentSession.CustId,
+                CurrentContext.Ip4Address, groups);
 
-            var result = this._funcService.CreateFunction(name, key, desc, parentId, parent, order, CurrentSession.CustId, CurrentContext.Ip4Address, groups, out funcId);
-
-            return this.JsonBase(result);
+            return JsonBase(result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateStatus(int funcId, bool isTest)
         {
-            var result = this._funcService.UpdateStatus(funcId, isTest, CurrentSession.CustId, CurrentContext.Ip4Address);
+            var result = _funcService.UpdateStatus(funcId, isTest, CurrentSession.CustId, CurrentContext.Ip4Address);
 
-            return this.JsonBase(result);
+            return JsonBase(result);
         }
 
-        /// <summary>
-        /// Gets policy list of a function.
-        /// </summary>
-        /// <param name="funcId">Function id.</param>
-        /// <param name="addNew">Specify is add new function or not.</param>
-        /// <returns>ActionResult object.</returns>
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction, Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult PolicyList(int funcId, bool addNew = false)
         {
-            var groups = this._funcService.GetFunctionPolicy(funcId).AssignGroups.ToList();
+            var groups = _funcService.GetFunctionPolicy(funcId).AssignGroups.ToList();
 
             if (!CurrentSession.IsInternalAdmin && !CurrentSession.IsITAdmin)
             {
@@ -240,20 +213,10 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
             {
                 if (funcId == 1 && addNew)
                 {
-                    groups.ForEach(o =>
-                    {
-                        if (o.GroupID != 1)
-                        {
-                            o.HasPermission = false;
-                        }
-                        else
-                        {
-                            o.HasPermission = true;
-                        }
-                    });
+                    groups.ForEach(o => o.HasPermission = Group.IsITGroup(o.GroupID));
                 }
 
-                var allChecked = groups.TrueForAll(o => o.HasPermission == true);
+                var allChecked = groups.TrueForAll(o => o.HasPermission);
 
                 groups.Insert(
                     0,
@@ -265,7 +228,7 @@ namespace Fanex.ExternalAccount.Controllers.UserControl
                     });
             }
 
-            return this.JsonBase(groups, new Newtonsoft.Json.JsonSerializerSettings());
+            return JsonBase(groups, new JsonSerializerSettings());
         }
     }
 }

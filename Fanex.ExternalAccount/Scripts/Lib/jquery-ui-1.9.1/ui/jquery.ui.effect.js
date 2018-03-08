@@ -1,13 +1,3 @@
-/*!
- * jQuery UI Effects 1.9.1
- * http://jqueryui.com
- *
- * Copyright 2012 jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- *
- * http://api.jqueryui.com/category/effects-core/
- */
 ;(jQuery.effects || (function($, undefined) {
 
 var backCompat = $.uiBackCompat !== false,

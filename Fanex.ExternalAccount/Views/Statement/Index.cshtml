@@ -4,7 +4,7 @@
 @using Fanex.ExternalAccount.Service.Impl.Report;
 @{
     ViewBag.Title = "Statement";
-    var isInternalCustomer = 0;
+    const int isInternalCustomer = 0;
     var newLayoutDate = string.Format("{0:MM/dd/yyyy}", StatementSection.Instance.NewLayoutDate);
     var balanceUpDay = string.Format("{0:MM/dd/yyyy}", ReportService.BalanceUpDate);
     var moveBetsDay = string.Format("{0:MM/dd/yyyy}", ReportService.MoveBetsDate);

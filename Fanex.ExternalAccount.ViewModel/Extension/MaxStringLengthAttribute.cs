@@ -1,18 +1,9 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="MaxStringLengthAttribute.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.ViewModel.Extension
+﻿namespace Fanex.ExternalAccount.ViewModel.Extension
 {
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Globalization;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public sealed class MaxStringLengthAttribute : ValidationAttribute
     {

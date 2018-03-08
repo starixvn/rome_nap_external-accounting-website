@@ -25,7 +25,7 @@
         $http.defaults.headers.post.__RequestVerificationToken = antiXSRFToken[0].value;
 
         $http({
-            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?id=' + id + '&roleId=' + roleId + '&groupName=' + parent.$('#selectedGroupName').html()),
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?custId=' + id + '&roleId=' + roleId + '&groupName=' + parent.$('#selectedGroupName').html()),
             method: 'post',
             headers: { "X-Requested-With": "XMLHttpRequest" }
         })
@@ -36,10 +36,6 @@
         })
         .error(function (data) {
             parent.Fanex.ExtAcc.UnBlockUI();
-
-            if (typeof console != 'undefined') {
-                console.log(data);
-            }
         })
     };
 
@@ -56,7 +52,7 @@
             $http.defaults.headers.post.__RequestVerificationToken = antiXSRFToken[0].value;
 
             $http({
-                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateGivenCreditPost?id=' + id + '&uplineId=' + uplineId + '&newGivenCredit=' + value + '&groupName=' + parent.$('#selectedGroupName').html()),
+                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateGivenCreditPost?custId=' + id + '&uplineId=' + uplineId + '&newGivenCredit=' + value + '&groupName=' + parent.$('#selectedGroupName').html()),
                 method: 'post',
                 headers: { "X-Requested-With": "XMLHttpRequest" }
             })
@@ -78,10 +74,6 @@
             })
             .error(function (data) {
                 parent.Fanex.ExtAcc.UnBlockUI();
-
-                if (typeof console != 'undefined') {
-                    console.log(data);
-                }
             });
         }
     };

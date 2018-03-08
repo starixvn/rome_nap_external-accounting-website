@@ -1,78 +1,30 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="MemberUsedCreditModel.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.26">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
     using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class MemberUsedCreditModel
     {
-        public IList<MemberUsedCreditItem> MemberUsedCreditItems
-        {
-            get;
-            set;
-        }
+        public IList<MemberUsedCreditItem> MemberUsedCreditItems { get; set; }
 
-        public IList<MemberUsedCreditItem> ActiveMemberUsedCreditItems
-        {
-            get
-            {
-                if (this.MemberUsedCreditItems != null && this.MemberUsedCreditItems.Count > 0)
-                {
-                    return this.MemberUsedCreditItems.Where(o => o.IsClosed == false).ToList();
-                }
+        public IEnumerable<MemberUsedCreditItem> ActiveMemberUsedCreditItems
+            => MemberUsedCreditItems?.Count > 0
+                ? MemberUsedCreditItems.Where(o => !o.IsClosed)
+                : null;
 
-                return null;
-            }
-        }
-
-        public IList<MemberUsedCreditItem> InactiveMemberUsedCreditItems
-        {
-            get
-            {
-                if (this.MemberUsedCreditItems != null && this.MemberUsedCreditItems.Count > 0)
-                {
-                    return this.MemberUsedCreditItems.Where(o => o.IsClosed == true).ToList();
-                }
-
-                return null;
-            }
-        }
+        public IEnumerable<MemberUsedCreditItem> InactiveMemberUsedCreditItems
+            => MemberUsedCreditItems?.Count > 0
+                ? MemberUsedCreditItems.Where(o => o.IsClosed)
+                : null;
 
         public decimal TotalActiveMemberUsedCredit
-        {
-            get
-            {
-                if (this.MemberUsedCreditItems == null || this.MemberUsedCreditItems.Count == 0)
-                {
-                    return 0m;
-                }
-
-                return this.MemberUsedCreditItems.Where(x => x.IsClosed == false).Sum(o => o.Amount);                
-            }
-        }
+            => MemberUsedCreditItems == null || MemberUsedCreditItems.Count == 0
+                ? 0m
+                : MemberUsedCreditItems.Where(x => !x.IsClosed).Sum(o => o.Amount);
 
         public decimal TotalInactiveMemberUsedCredit
-        {
-            get
-            {
-                if (this.MemberUsedCreditItems == null || this.MemberUsedCreditItems.Count == 0)
-                {
-                    return 0m;
-                }
-
-                return this.MemberUsedCreditItems.Where(x => x.IsClosed == true).Sum(o => o.Amount);
-            }
-        }
+            => MemberUsedCreditItems == null || MemberUsedCreditItems.Count == 0
+                ? 0m
+                : MemberUsedCreditItems.Where(x => x.IsClosed).Sum(o => o.Amount);
     }
 }

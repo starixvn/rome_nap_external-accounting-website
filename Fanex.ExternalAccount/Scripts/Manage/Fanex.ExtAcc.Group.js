@@ -215,9 +215,6 @@ Fanex.ExtAcc.Group = {
             };
 
             $this.RenderGrid(options);
-        })
-        .error(function (xhr) {
-            Fanex.ExtAcc.UnBlockUI();
         });
 
         $('#jqbutton').bind('click', function () {
@@ -346,9 +343,6 @@ Fanex.ExtAcc.Group = {
                     Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Group/GroupList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
         });
     },
 
@@ -394,9 +388,6 @@ Fanex.ExtAcc.Group = {
                     Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Group/GroupList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
         });
     },
 
@@ -409,9 +400,6 @@ Fanex.ExtAcc.Group = {
             else {
                 Fanex.ExtAcc.Form.Close(true);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
         });
     },
 
@@ -434,9 +422,6 @@ Fanex.ExtAcc.Group = {
                     Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Group/GroupList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
-        })
-        .error(function (data) {
-            if (typeof console != 'undefined') console.log(data.responseText);
         });
     },
 

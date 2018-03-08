@@ -1,367 +1,237 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="AccountController.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// <summary>
-// Controller for account
-// </summary>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2012.12.13">Created</change>
-// </history>
-
-using System;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Web.Helpers;
-using System.Web.Mvc;
-using System.Web.Security;
-using CaptchaMvc.HtmlHelpers;
-using Fanex.CustomerSetting.Module.Core.Web;
-using Fanex.ExternalAccount.Core.Context;
+﻿namespace Fanex.ExternalAccount.Controllers.Authentication
+{
+    using System;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Web.Helpers;
+    using System.Web.Mvc;
+    using System.Web.Security;
+    using CaptchaMvc.Controllers;
+    using CaptchaMvc.HtmlHelpers;
+    using Core.Context;
+    using CustomerSetting.Module.Core.Web;
+    using DTO;
 using Fanex.ExternalAccount.Core.Helpers;
-using Fanex.ExternalAccount.DTO;
-using Fanex.ExternalAccount.DTO.UserControl;
-using Fanex.ExternalAccount.Service.Impl.Login;
-using Fanex.ExternalAccount.Service.Interface.Login;
-using Fanex.ExternalAccount.Utilities;
-using Fanex.ExternalAccount.ViewModel.Account;
-using Fanex.Logging.Extensions.Web;
-using ONEbook.UM.Models;
-using ONEbook.UM.Services;
-using ONEbook.UM.Services.Impl;
+    using DTO.UserControl;
+    using Logging.Extensions.Web;
+    using Service.Impl.Login;
+    using Service.Interface.Login;
+    using Utilities;
+    using ViewModel.Account;
+    using CurrentContext = Core.Context.CurrentContext;
+    using CurrentSession = Core.Context.CurrentSession;
 using UAParser;
 
-namespace Fanex.ExternalAccount.Controllers.Authentication
-{
-    /// <summary>
-    /// Account controller.
-    /// </summary>
-    public class AccountController : CaptchaMvc.Controllers.DefaultCaptchaController
+    public class AccountController : DefaultCaptchaController
     {
-        private readonly ILoginService _userService;
-
-        private readonly ICurrentSession _currentSession;
-
         private readonly ICurrentContext _currentContext;
-
-        private readonly IMaintenanceService _maintenanceService;
-
+        private readonly CurrentSession _currentSession;
         private readonly NoCaptchaSectionConfiguration _nocaptcha;
+        private readonly ILoginService _userService;
 
         public AccountController()
         {
-            _currentContext = new Core.Context.CurrentContext();
-            _currentSession = new Core.Context.CurrentSession();
+            _currentContext = new CurrentContext();
+            _currentSession = new CurrentSession();
             _userService = new LoginService();
-            _maintenanceService = new MaintenanceService();
             _nocaptcha = NoCaptchaSectionConfiguration.Instance;
         }
 
 
 
-        /// <summary>
-        /// Gets login page.
-        /// </summary>
-        /// <returns>Login page.</returns>
         [HttpGet]
         public ActionResult Login()
         {
-            ViewBag.ShowCaptcha = ((Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 ? string.Empty : "none";
-            Response.AppendHeader("Content-Encoding", "gzip");
-            Response.Filter = new System.IO.Compression.GZipStream(Response.Filter, System.IO.Compression.CompressionMode.Compress);
-
-            if (Request.QueryString[Config.InternalAgentUMToken] != null)
+            if (_currentSession.IsAuthenticated)
             {
-                Session[Config.InternalAgentUMToken] = Request.QueryString[Config.InternalAgentUMToken];
+                return RedirectToHomePage();
             }
 
-            if (_maintenanceService.IsUnderMaintenance())
+            SetUMTokenForInternalAlphaLogin();
+
+            Encryptor.RandomCaptcha = CaptchaUtil.GetCaptchaString(4);
+
+            return View(new LoginModel
             {
-                return RedirectToAction("Offline", "Account");
-            }
-
-            if (_currentSession.IsLogin 
-                && User.Identity.IsAuthenticated
-                && _currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                var group = _currentSession.IsInternalAdmin ? _userService.GroupList().First().GroupName : string.Empty;
-
-                return Redirect("~/Home/Index/" + group);
-            }
-
-            var captcha = new CaptchaResult().GetCaptchaString(4);
-            Encryptor.Instance.Code = captcha;
-
-            return PartialView(new Login { Code = captcha });
+                Code = Encryptor.RandomCaptcha,
+                LoginAttempt = _currentSession.LoginAttempt
+            });
         }
 
-        /// <summary>
-        /// Performs login action.
-        /// </summary>
-        /// <param name="model">Login model object.</param>
-        /// <returns>JSON string.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        [AllowAnonymous]
         [HttpPost]
-        [ActionName("Login")]
-        public ActionResult LoginPost(Login model)
+        public ActionResult Login(LoginModel model)
         {
             if (!ValidateAntiXSRF(model.__RequestVerificationToken))
             {
-                Core.Context.CurrentContext.LoginErrorMessage = "Your login session has expired. Please login again!";
-                return RedirectToAction("Login", "Account");
+                return View(new LoginModel(ViewLang.ExpiredLoginSession));
             }
 
-            var cipher = Encryptor.Instance;
-            var password = cipher.Decrypt(model.Password, model.Code);
-            if (password.Equals("cannot_decrypt_password", StringComparison.OrdinalIgnoreCase))
+            var rawPassword = DecryptPassword(model.Password, model.Code);
+            if (string.IsNullOrEmpty(rawPassword))
             {
-                Core.Context.CurrentContext.LoginErrorMessage = "Your login page has not been loaded completely. Please check your network connection and try login again!";
-
-                return RedirectToAction("Login", "Account");
+                return View(new LoginModel(ViewLang.LoginNetworkError));
             }
 
-            var isValidCaptcha = false;
-            try
+            if (!IsDisabledCaptcha(model)
+                && IsRequiredCaptcha(model.UserName)
+                && !IsValidCaptcha())
             {
-                isValidCaptcha = this.IsCaptchaValid(null);
-            }
-            catch
-            {
-                isValidCaptcha = false;
+                return CreateWrongValidationCaptchaView(model);
             }
 
-            if ((_nocaptcha.AllowIPs.Split(',').Contains(_currentContext.Ip4Address) &&
-                _nocaptcha.AllowAdmins.Split(',').Any(admin => admin.Equals(model.UserName, StringComparison.OrdinalIgnoreCase))) ||
-                ((Core.Context.CurrentSession)_currentSession).LoginAttempt < 3 ||
-                !((Core.Context.CurrentSession)_currentSession).UserAttempt.Equals(model.UserName, StringComparison.OrdinalIgnoreCase) ||
-                isValidCaptcha)
-            {
-                FormsAuthentication.SetAuthCookie(model.UserName, false);
-                Core.Context.CurrentContext.LoginErrorMessage = string.Empty;
-                
-                int custId = 0, onuserId = 0;
-                bool isIntAcc = true;
+            return VerifyLoginCredential(model, rawPassword);
+        }
 
-                var result = _userService.Login(
-                    model.UserName,
-                    password,
+        private ActionResult CreateWrongValidationCaptchaView(LoginModel model) => View(
+            new LoginModel
+            {
+                UserName = model.UserName,
+                LoginAttempt = _currentSession.LoginAttempt,
+                LoginFailedMessage = ViewLang.WrongValidationCode
+            });
+
+        private bool IsRequiredCaptcha(string username) =>
+            _currentSession.LoginAttempt >= LoginModel.ThresholdFailToShowingCaptcha
+            && _currentSession.UserAttempt.Equals(username, StringComparison.OrdinalIgnoreCase);
+
+        private ActionResult VerifyLoginCredential(LoginModel model, string rawPassword)
+        {
+            int custId;
+            int onuserId;
+            bool isInternalAdmin;
+
+            var result = _userService.Login(
+                model.UserName,
+                rawPassword,
                     RequestHelper.GetRequestInfo(model.BrowserSize),
-                    out custId,
-                    out onuserId,
-                    out isIntAcc);
+                out custId,
+                out onuserId,
+                out isInternalAdmin);
 
-                if (((Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 &&
-                    !((Core.Context.CurrentSession)_currentSession).UserAttempt.Equals(model.UserName, StringComparison.OrdinalIgnoreCase) &&
-                    (result == null || !result.IsSuccess || !isValidCaptcha))
-                {
-                    ((Core.Context.CurrentSession)_currentSession).LoginAttempt = 1;
-                    ((Core.Context.CurrentSession)_currentSession).UserAttempt = model.UserName;
-                    ViewBag.ShowCaptcha = "none";
+            return result?.IsSuccess == true
+                ? LoginSuccessful(model, custId, onuserId, isInternalAdmin, result.ResultData as Group)
+                : LoginFailed(model.UserName, result);
+        }
 
-                    return RedirectToAction("Login", "Account");
-                }
+        private ActionResult LoginFailed(string failedUsername, Result result)
+        {
+            UpdateLoginFailedAttempt(failedUsername);
 
-                if (result != null && result.IsSuccess)
-                {
-                    ((Core.Context.CurrentSession)_currentSession).LoginAttempt = 0;
-                    var group = result.ResultData as Group;
+            return View(new LoginModel
+            {
+                UserName = failedUsername,
+                LoginAttempt = _currentSession.LoginAttempt,
+                LoginFailedMessage =
+                    result != null
+                        ? result.ErrorMessage
+                        : ViewLang.LoginError
+            });
+        }
 
-                    RegisterLoginTicket(model, custId, onuserId, isIntAcc, group);
-
-                    return isIntAcc || _currentSession.IsITAdmin ? RedirectToAction("ExternalGroup", "Account") : RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    if (string.IsNullOrWhiteSpace(((Core.Context.CurrentSession)_currentSession).UserAttempt) ||
-                        ((Core.Context.CurrentSession)_currentSession).UserAttempt.Equals(model.UserName, StringComparison.OrdinalIgnoreCase))
-                    {
-                        ++((Core.Context.CurrentSession)_currentSession).LoginAttempt;
-                    }
-                    else
-                    {
-                        ((Core.Context.CurrentSession)_currentSession).LoginAttempt = 1;
-                    }
-
-                    ((Core.Context.CurrentSession)_currentSession).UserAttempt = model.UserName;
-                    ViewBag.ShowCaptcha = ((Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 ? string.Empty : "none";
-                    Core.Context.CurrentContext.LoginErrorMessage = result.ErrorMessage;
-
-                    return RedirectToAction("Login", "Account");
-                }
+        private void UpdateLoginFailedAttempt(string failedUsername)
+        {
+            if (_currentSession.UserAttempt.Equals(failedUsername, StringComparison.OrdinalIgnoreCase))
+            {
+                _currentSession.LoginAttempt++;
             }
             else
             {
-                ViewBag.ShowCaptcha = ((Core.Context.CurrentSession)_currentSession).LoginAttempt > 2 ? string.Empty : "none";
-                Core.Context.CurrentContext.LoginErrorMessage = ViewLang.WrongValidationCode;
-                _currentSession.UserName = string.Empty;
-
-                return RedirectToAction("Login", "Account");
+                _currentSession.LoginAttempt = 1;
+                _currentSession.UserAttempt = failedUsername;
             }
         }
 
-        /// <summary>
-        /// Gets captcha image.
-        /// </summary>
-        /// <param name="prefix">Prefix string.</param>
-        /// <param name="noisy">True if specify noisy points.</param>
-        /// <returns>ActionResult object.</returns>
-        public ActionResult CaptchaImage(string prefix, bool noisy = true)
+        private bool IsDisabledCaptcha(LoginModel model)
         {
-            return Content(new CaptchaResult().GetValiationImage(ControllerContext));
+            var isDisableCaptcha =
+                _nocaptcha.AllowIPs
+                    .Split(',')
+                    .Contains(_currentContext.Ip4Address)
+                && _nocaptcha.AllowAdmins
+                    .Split(',')
+                    .Any(admin => admin.Equals(model.UserName, StringComparison.OrdinalIgnoreCase));
+
+            if (isDisableCaptcha)
+            {
+                ResetLoginAttempt();
+            }
+
+            return isDisableCaptcha;
         }
 
-        #region Logout
+        private static string DecryptPassword(string encryptedPassword, string key) =>
+            Encryptor.Decrypt(encryptedPassword, key);
 
-        /// <summary>
-        /// Logout session.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
-        public ActionResult LogOff()
+        private ActionResult LoginSuccessful(
+            LoginModel model,
+            int custId,
+            int onuserId,
+            bool isIntAcc,
+            Group group)
         {
-            int onuserId = _currentSession.OnUserId;
-            if (onuserId > 0)
+            ResetLoginAttempt();
+
+            var canAccessPublicDomain = IsDenyAccessPublicDomain(isIntAcc, group, model.UserName);
+            if (canAccessPublicDomain)
             {
-                return SignOut(onuserId, _currentSession.UserName);
-            }
-            else
-            {
-                _currentContext.Context.Session.Abandon();
+                return View(new LoginModel(ViewLang.AccessDenyToPublicDomain));
             }
 
-            FormsAuthentication.SignOut();
-            return RedirectToAction("Login", "Account");
+            FormsAuthentication.SetAuthCookie(model.UserName, false);
+
+            SetUserSession(model, custId, onuserId, isIntAcc, group);
+
+            return isIntAcc || _currentSession.IsITAdmin ? RedirectToChooseGroupPage() : RedirectToHomePage();
         }
 
-        /// <summary>
-        /// Recheck in.
-        /// </summary>
-        /// <returns>Integer object.</returns>
-        public int ReCheckIn()
-        {
-            int onuserId = _currentSession.OnUserId;
+        private RedirectResult RedirectToChooseGroupPage() => Redirect("~/Account/ExternalGroup");
 
-            if (_maintenanceService.IsUnderMaintenance())
-            {
-                if (_currentSession.IsLogin)
-                {
-                    SignOut(onuserId, _currentSession.UserName);
-                }
-
-                return (int)StatusKickedOut.Maintenance;
-            }
-
-            var ignoreRecheckinCustomers = Config.IgnoreRecheckinCustomers
-                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-            var re_CheckIn = Config.Recheckin &&
-                !ignoreRecheckinCustomers.Any(s => string.Equals(s, _currentSession.UserName, StringComparison.OrdinalIgnoreCase));
-
-            var isKickOut = false;
-
-            if (!re_CheckIn)
-            {
-                return (int)StatusKickedOut.Continue;
-            }
-
-            if (onuserId <= 0)
-            {
-                _currentContext.Context.Session.Abandon();
-                return (int)StatusKickedOut.KickedOut;
-            }
-
-            try
-            {
-                _userService.Recheckin(onuserId, out isKickOut);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-                return (int)StatusKickedOut.Error;
-            }
-
-            if (!isKickOut)
-            {
-                return (int)StatusKickedOut.Continue;
-            }
-            else
-            {
-                SignOut(onuserId, _currentSession.UserName);
-                return (int)StatusKickedOut.KickedOut;
-            }
-        }
-
-        #endregion Logout
-
-        #region UM Maintenance
-
-        /// <summary>
-        /// Under Maintenance.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
-        public ActionResult Offline()
+        private void SetUMTokenForInternalAlphaLogin()
         {
             if (Request.QueryString[Config.InternalAgentUMToken] != null)
             {
                 Session[Config.InternalAgentUMToken] = Request.QueryString[Config.InternalAgentUMToken];
             }
-
-            if (_maintenanceService.IsUnderMaintenance())
-            {
-                UnderMaintenanceTime underMaintenanceTime = _maintenanceService.GetUnderMaintenanceTime();
-                ViewBag.UmFromTime = underMaintenanceTime.From;
-                ViewBag.UmToTime = underMaintenanceTime.To;
-                return PartialView();
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
         }
 
-        /// <summary>
-        /// Process recheck-in offline mode.
-        /// </summary>
-        /// <returns>Integer number.</returns>
-        public int ReCheckInOffline()
+        private RedirectResult RedirectToHomePage() => Redirect("~/Home/Index/");
+
+        private bool IsValidCaptcha()
         {
-            if (!_maintenanceService.IsUnderMaintenance())
+            try
             {
-                return (int)StatusKickedOut.Login;
+                return this.IsCaptchaValid(null);
             }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex, TraceEventType.Warning);
 
-            return (int)StatusKickedOut.Maintenance;
+                return false;
+            }
         }
 
-        #endregion UM Maintenance
+        public ActionResult CaptchaImage() => Content(CaptchaUtil.GetValiationImage(ControllerContext));
 
-        /// <summary>
-        /// Gets external groups.
-        /// </summary>
-        /// <returns>External groups page.</returns>
+        public ActionResult LogOff()
+        {
+            var onuserId = _currentSession.OnUserId;
+            if (onuserId > 0)
+            {
+                SignOut(onuserId, _currentSession.UserName);
+            }
+
+            Session.Clear();
+            Session.RemoveAll();
+            Session.Abandon();
+            FormsAuthentication.SignOut();
+
+            return RedirectToAction("Login");
+        }
+
         [HttpGet]
+        [ExternalAccountAuthenticate]
         public ActionResult ExternalGroup()
         {
-            Response.AppendHeader("Content-Encoding", "gzip");
-            Response.Filter = new System.IO.Compression.GZipStream(Response.Filter, System.IO.Compression.CompressionMode.Compress);
-
-            if (_maintenanceService.IsUnderMaintenance())
-            {
-                return RedirectToAction("Offline", "Account");
-            }
-
-            if (!_currentSession.IsLogin && !_currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            if (_currentSession.IsLogin && _currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             if (!_currentSession.IsInternalAdmin)
             {
                 return RedirectToAction("Index", "Home");
@@ -369,60 +239,49 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
             ViewBag.GroupList = _userService.GroupList();
 
-            return PartialView();
+            return View();
         }
 
-        /// <summary>
-        /// Gets external groups.
-        /// </summary>
-        /// <returns>External groups.</returns>
+        [ExternalAccountAuthenticate]
         public ActionResult ExternalGroupList()
         {
-            if (_maintenanceService.IsUnderMaintenance())
-            {
-                return RedirectToAction("Offline", "Account");
-            }
-
-            if (!_currentSession.IsLogin && !_currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            if (_currentSession.IsLogin && _currentContext.Context.Request.RawUrl.ToLower().Contains("login"))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             var result = _userService.GroupList();
 
-            return Json(result.Select(o => new { GroupId = o.GroupID, GroupName = o.GroupName }).ToArray(), JsonRequestBehavior.AllowGet);
+            return Json(
+                result.Select(o => new
+                {
+                    GroupId = o.GroupID,
+                    o.GroupName
+                }).ToArray(),
+                JsonRequestBehavior.AllowGet);
         }
 
-        public void ResetLoginAttempt()
+        private bool IsDenyAccessPublicDomain(bool isInternalAdmin, Group currentGroup, string userName)
         {
-            ((Core.Context.CurrentSession)_currentSession).LoginAttempt = 0;
+            if (userName.Equals("starixit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return false;
+            }
+
+            var isPublicDomain = Config.PublicDomains.Contains(_currentContext.DomainName, StringComparer.InvariantCultureIgnoreCase);
+            if (isPublicDomain)
+            {
+                return Config.GroupsDenyAccessPublicDomains.Contains(currentGroup.GroupName)
+                    || Config.UsersDenyAccessPublicDomains.Any(i => userName.StartsWith(i, StringComparison.InvariantCultureIgnoreCase))
+                    || (isInternalAdmin && Config.ExternalGroupFunctionDenyAccessPublicDomains);
+            }
+
+            return false;
         }
 
-        /// <summary>
-        /// Processes sign out session.
-        /// </summary>
-        /// <param name="onuserId">On user id.</param>
-        /// <param name="userName">Username of customer.</param>
-        /// <returns>ActionResult object.</returns>
-        private ActionResult SignOut(int onuserId, string userName)
+        private void ResetLoginAttempt()
         {
-            try
-            {
-                _userService.Logout(onuserId, userName);
-                _currentContext.Context.Session.Abandon();
+            _currentSession.LoginAttempt = 0;
+        }
 
-                return RedirectToAction("Login", "Account");
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-                return RedirectToAction("Error", "Shared");
-            }
+        private void SignOut(int onuserId, string userName)
+        {
+            _userService.Logout(onuserId, userName);
         }
 
         private bool ValidateAntiXSRF(string token)
@@ -430,22 +289,21 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             try
             {
                 var request = Request;
-
                 var formToken = token;
+
                 if (string.IsNullOrWhiteSpace(formToken))
                 {
                     return false;
                 }
 
                 var cookieValue = request.Cookies[AntiForgeryConfig.CookieName];
-                if (cookieValue != null
-                    && !string.IsNullOrWhiteSpace(cookieValue.Value))
+                if (!string.IsNullOrWhiteSpace(cookieValue?.Value))
                 {
                     AntiForgery.Validate(cookieValue.Value, formToken);
                 }
                 else
                 {
-                    var exceptionLog = new Exception("Cannot read Request Verification Token from cookie.");
+                    var exceptionLog = new Exception(ViewLang.CannotReadRequestValidationCookie);
                     ExceptionHandler.Handle(exceptionLog, TraceEventType.Warning);
                 }
             }
@@ -459,25 +317,18 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             return true;
         }
 
-        /// <summary>
-        /// Registers a session login ticket.
-        /// </summary>
-        /// <param name="model">Login object.</param>
-        /// <param name="custId">Identify of customer.</param>
-        /// <param name="onuserId">Identify of login user.</param>
-        /// <param name="isIntAcc">Is internal account or not.</param>
-        /// <param name="group">Group object.</param>
-        private void RegisterLoginTicket(Login model, int custId, int onuserId, bool isIntAcc, Group group)
+        private void SetUserSession(LoginModel model, int custId, int onuserId, bool isInternalAdmin, Group group)
         {
             _currentSession.UserName = model.UserName;
             _currentSession.UserId = custId;
             _currentSession.CustId = custId;
             _currentSession.OnUserId = onuserId;
-            _currentSession.IsInternalAdmin = isIntAcc;
+            _currentSession.IsInternalAdmin = isInternalAdmin;
             _currentSession.GroupId = group.GroupID;
             _currentSession.CurrencyGroup = group.GroupName;
-            _currentSession.IsITAdmin = group.GroupID == 1;
+            _currentSession.IsITAdmin = group.IsIT;
             _currentSession.FromSystem = 3;
+            _currentSession.IsLogin = true;
         }
     }
 }

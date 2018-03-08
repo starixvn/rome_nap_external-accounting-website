@@ -1,137 +1,103 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="WinLossDetailReportAg.cs" company="">
-// Copyright (c) . All rights reserved.
-// Creator: Simon
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
+﻿namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
 {
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using Utility;
 
-    /// <summary>
-    /// Win loss detail report for agent.
-    /// </summary>
     internal class WinLossDetailReportAg : TemplateReport, IReportBuilder
     {
-        private WinLossDetailReportAgBuilder _builder;
+        private readonly MemberWinLossDetailReportBuilder _builder;
+        private const int LastColumnIndex = 10;
 
-        public WinLossDetailReportAg(string filePath, WinLossDetailReportAgBuilder builder, string products = null)
+        public WinLossDetailReportAg(string filePath, MemberWinLossDetailReportBuilder builder, string products = null)
             : base(filePath, products)
         {
-            this._builder = builder;
+            _builder = builder;
         }
 
-        /// <summary>
-        /// Builds report.
-        /// </summary>
-        /// <returns>Workbook object.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public HSSFWorkbook Build()
         {
-            var data = this._builder.Data;
-            if (data == null)
+            var resultSheet = HssfWorkbook.GetSheet("WinLossDetailAg");
+
+            if (_builder.IsBold)
             {
-                return null;
+                BoldAllFonts();
             }
 
-            ISheet templateSheet = HssfWorkbook.GetSheet("TemplateAg");
-            ISheet resultSheet = HssfWorkbook.GetSheet("WinLossDetailAg");
+            BuildMainTitle(resultSheet);
+            WriteBodyReport(resultSheet);
 
-            // apply Bold on all fonts
-            if (this._builder.IsBold)
+            HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(TemplateSheet));
+
+            return HssfWorkbook;
+        }
+
+        private void WriteBodyReport(ISheet resultSheet)
+        {
+            var index = 1;
+            var toRowId = 3;
+
+            foreach (var item in _builder.Data)
             {
-                this.BoldAllFonts();
-            }
+                var fromRowId = index % 2 == 0 ? OddRowIndex : EvenRowIndex;
+                resultSheet.CopyRow(TemplateSheet, fromRowId, toRowId, FirstColumnIndex, LastColumnIndex);
 
-            int rowId = 0;
-            int colId = 0;
-
-            // Header
-            string mainTitle = string.Empty;
-            if (this._builder.FromDate.Equals(this._builder.ToDate))
-            {
-                mainTitle = "Member Win Loss Detail on " + this._builder.FromDate;
-            }
-            else
-            {
-                mainTitle = "Member Win Loss Detail From " + this._builder.FromDate + " To " + this._builder.ToDate;
-            }
-
-            mainTitle += " - " + this.Products;
-
-            resultSheet.GetCell(rowId, colId).SetCellValue(mainTitle);
-
-            // content
-            rowId = 3;
-            int id = 1;
-
-            if (data.Count > 0)
-            {
-                var values = new List<object> { };
-                int totalColumn = 11;
-                int lastColumnIndex = colId + totalColumn - 1;
-
-                foreach (var item in data)
+                var values = new List<object>
                 {
-                    if (id % 2 == 0)
-                    {
-                        resultSheet.CopyRow(templateSheet, 1, rowId, colId, lastColumnIndex);
-                    }
-                    else
-                    {
-                        resultSheet.CopyRow(templateSheet, 3, rowId, colId, lastColumnIndex);
-                    }
-
-                    values = new List<object>
-                    {
-                        item.Username,
-                        item.Turnover,
-                        item.NetTurnover,
-                        item.GrossComm,
-                        item.MemberWinlost,
-                        item.PlayerComm,
-                        item.MemberTotal,
-                        item.AgWinlost,
-                        item.AgComm,
-                        item.AgTotal,
-                        item.Company
-                    };
-
-                    resultSheet.GetRow(rowId).WriteCells(colId, values);
-
-                    id++;
-                    rowId++;
-                }
-
-                // total
-                resultSheet.CopyRow(templateSheet, 5, rowId, colId, lastColumnIndex);
-
-                values = new List<object>
-                {
-                    "Grand Total",
-                    data.Sum(p => p.Turnover),
-                    data.Sum(p => p.NetTurnover),
-                    data.Sum(p => p.GrossComm),
-                    data.Sum(p => p.MemberWinlost),
-                    data.Sum(p => p.PlayerComm),
-                    data.Sum(p => p.MemberTotal),
-                    data.Sum(p => p.AgWinlost),
-                    data.Sum(p => p.AgComm),
-                    data.Sum(p => p.AgTotal),
-                    data.Sum(p => p.Company)
+                    item.Username,
+                    item.Turnover,
+                    item.NetTurnover,
+                    item.GrossComm,
+                    item.MemberWinlost,
+                    item.PlayerComm,
+                    item.MemberTotal,
+                    item.AgWinlost,
+                    item.AgComm,
+                    item.AgTotal,
+                    item.Company
                 };
 
-                resultSheet.GetRow(rowId).WriteCells(colId, values);
+                resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, values);
+                index++;
+                toRowId++;
             }
 
-            this.HssfWorkbook.RemoveSheetAt(this.HssfWorkbook.GetSheetIndex(templateSheet));
-            return this.HssfWorkbook;
+            WriteTotal(resultSheet, toRowId);
+        }
+
+        private void WriteTotal(ISheet resultSheet, int toRowIndex)
+        {
+            var data = _builder.Data;
+            resultSheet.CopyRow(TemplateSheet, FirstColumnTotalIndex, toRowIndex, FirstColumnIndex, LastColumnIndex);
+            var values = new List<object>
+            {
+                "Grand Total",
+                data.Sum(p => p.Turnover),
+                data.Sum(p => p.NetTurnover),
+                data.Sum(p => p.GrossComm),
+                data.Sum(p => p.MemberWinlost),
+                data.Sum(p => p.PlayerComm),
+                data.Sum(p => p.MemberTotal),
+                data.Sum(p => p.AgWinlost),
+                data.Sum(p => p.AgComm),
+                data.Sum(p => p.AgTotal),
+                data.Sum(p => p.Company)
+            };
+
+            resultSheet.GetRow(toRowIndex).WriteCells(FirstColumnIndex, values);
+        }
+
+        private void BuildMainTitle(ISheet resultSheet)
+        {
+            var mainTitle = _builder.FromDate.Equals(_builder.ToDate)
+                ? $"Member Win Loss Detail on {_builder.FromDate}"
+                : $"Member Win Loss Detail From {_builder.FromDate} To {_builder.ToDate}";
+
+            mainTitle += string.IsNullOrEmpty(Products) ? string.Empty : $" - {Products}";
+
+            resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
         }
     }
 }

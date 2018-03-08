@@ -1,19 +1,7 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CellRangeAddressExtension.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Excel.Utility
+﻿namespace Fanex.ExternalAccount.Excel.Utility
 {
     using NPOI.SS.Util;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class CellRangeAddressExtension
     {
         public static CellRangeAddress Clone(this CellRangeAddress range)

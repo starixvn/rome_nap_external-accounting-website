@@ -1,22 +1,5 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="Commission.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.DTO.Customer
+﻿namespace Fanex.ExternalAccount.DTO.Customer
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class Commission
     {
         public double Groupa { get; set; }

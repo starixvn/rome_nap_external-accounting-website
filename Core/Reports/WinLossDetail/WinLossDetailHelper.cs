@@ -1,34 +1,50 @@
-﻿using System;
-using System.Linq;
-using System.Web;
-using Fanex.CustomerSetting.Module.Core.Web;
-
-namespace Fanex.ExternalAccount.Core.Reports.WinLossDetail
+﻿namespace Fanex.ExternalAccount.Core.Reports.WinLossDetail
 {
-    public class WinLossDetailHelper
+    using System;
+    using System.Linq;
+    using System.Web;
+    using CustomerSetting.Module.Core.Web;
+    using DTO.UserControl;
+
+    public static class WinLossDetailHelper
     {
-        public static bool IsHiddenProduct(ProductElementConfiguration product, ICurrentSession currentSession)
+        private static string GetGroupName(ICurrentSession currentSession)
         {
-            if (product.Hide)
+            var requestUrl = HttpContext.Current.Request.UrlReferrer?.AbsolutePath.Split(new[] {"/"},
+                StringSplitOptions.RemoveEmptyEntries);
+
+            var groupName = requestUrl != null && (requestUrl.Length == 0 || !currentSession.IsInternalAdmin)
+                ? currentSession.CurrencyGroup
+                : requestUrl?[requestUrl.Length - 1];
+
+            return groupName;
+        }
+
+        public static bool IsHiddenProduct(ProductElementConfiguration productConfiguration,
+            ICurrentSession currentSession)
+        {
+            if (productConfiguration.Hide)
             {
                 return true;
             }
 
-            if (product.ShowForGroups.Equals("*", StringComparison.OrdinalIgnoreCase))
+            if (productConfiguration.ShowForAll())
             {
                 return false;
             }
 
-            var groups = product.ShowForGroups.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-            var requestURL = HttpContext.Current.Request != null ? HttpContext.Current.Request.UrlReferrer.AbsolutePath.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries) : new string[0];
-            var groupName = requestURL.Length == 0 || !currentSession.IsInternalAdmin ? currentSession.CurrencyGroup : requestURL[requestURL.Length - 1];
+            var groupName = GetGroupName(currentSession);
 
-            foreach (var group in groups)
+            if (string.IsNullOrWhiteSpace(groupName))
             {
-                if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase) ||
-                    groupName.Equals("Finance", StringComparison.OrdinalIgnoreCase) ||
-                    groupName.Equals("Internal", StringComparison.OrdinalIgnoreCase) ||
-                    groupName.Equals("IT", StringComparison.OrdinalIgnoreCase))
+                return true;
+            }
+
+            foreach (var group in productConfiguration.ShowGroupList)
+            {
+                if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase)
+                    || Group.IsOfficeGroup(groupName)
+                )
                 {
                     return false;
                 }
@@ -38,8 +54,7 @@ namespace Fanex.ExternalAccount.Core.Reports.WinLossDetail
         }
 
         public static bool IsShowProduct(string productId, ICurrentSession currentSession)
-        {
-            return !IsHiddenProduct(ProductsConfiguration.Instance.ProductCollection.First(n => n.Id.Equals(productId, StringComparison.OrdinalIgnoreCase)), currentSession);
-        }
+            => !IsHiddenProduct(ProductsConfiguration.Instance.ProductCollection.First(n =>
+                n.Id.Equals(productId, StringComparison.OrdinalIgnoreCase)), currentSession);
     }
 }

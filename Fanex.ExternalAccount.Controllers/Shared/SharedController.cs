@@ -1,30 +1,39 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="SharedController.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// <summary>
-// Shared controller
-// </summary>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2012.5.23">Format styles</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Controllers.Shared
+﻿namespace Fanex.ExternalAccount.Controllers.Shared
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using Core.Context;
+    using DTO;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.ViewModel.Shared;
     using Logging.Extensions.Web;
+    using ONEbook.UM.Models;
+    using ONEbook.UM.Services;
+    using ONEbook.UM.Services.Impl;
+    using Service.Impl.Login;
+    using Service.Interface.Login;
+    using Service.Interface.UserControl;
+    using Utilities;
 
-    /// <summary>
-    /// Shared controller object.
-    /// </summary>
     public class SharedController : BaseController
     {
+        private static readonly string[] ignoreRecheckinCustomers = Config.IgnoreRecheckinCustomers.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+        private readonly ILoginService _loginService;
+        private readonly CurrentSession _currentSession;
+        private readonly IMaintenanceService _maintenanceService;
+        private readonly IMenuService menuService;
+
+        public SharedController()
+        {
+            _currentSession = new CurrentSession();
+            _loginService = new LoginService();
+            _maintenanceService = new MaintenanceService();
+            menuService = new MenuService();
+        }
+
         public ActionResult _Layout()
         {
             return this.View();
@@ -32,8 +41,6 @@ namespace Fanex.ExternalAccount.Controllers.Shared
 
         public ActionResult Error()
         {
-            ExceptionHandler.Handle(Server.GetLastError());
-
             return this.PartialView();
         }
 
@@ -41,17 +48,15 @@ namespace Fanex.ExternalAccount.Controllers.Shared
         {
             return this.PartialView();
         }
+        public ActionResult Unauthorized()
+        {
+            return this.PartialView();
+        }
 
-        /// <summary>
-        /// Gets menus.
-        /// </summary>
-        /// <returns>ActionResult object.</returns>
         public ActionResult _Menu()
         {
-            // load menus
-            var menuService = new MenuService();
             var menuList = menuService.GetMenusByUserId(CurrentSession.UserId);
-            var rootMenuList = menuList.Where(x => x.ParentID == 0);
+            var rootMenuList = menuList.Where(x => x.ParentId == 0);
             var menuDict = new Dictionary<string, MenuItem>();
 
             foreach (var item in rootMenuList)
@@ -64,7 +69,7 @@ namespace Fanex.ExternalAccount.Controllers.Shared
                     Children = new List<MenuItem>()
                 };
 
-                var value = menuList.Where(x => x.ParentID != 0 && x.ParentID == item.MenuID).Select(
+                var value = menuList.Where(x => x.ParentId != 0 && x.ParentId == item.MenuId).Select(
                     x => new MenuItem
                     {
                         Name = x.MenuName,
@@ -83,5 +88,60 @@ namespace Fanex.ExternalAccount.Controllers.Shared
 
             return this.PartialViewBase();
         }
+
+        public int ReCheckIn()
+            => (int)GetRecheckinStatus();
+
+        private RecheckinStatus GetRecheckinStatus()
+        {
+            if (!Config.IsEnabledRecheckin
+                || ignoreRecheckinCustomers.Any(s => string.Equals(s, _currentSession.UserName, StringComparison.OrdinalIgnoreCase)))
+            {
+                return RecheckinStatus.Continue;
+            }
+
+            int onuserId = _currentSession.OnUserId;
+            if (onuserId > 0 && User.Identity.IsAuthenticated)
+            {
+                try
+                {
+                    var isKickOut = _loginService.IsKickedOut(onuserId);
+                    if (!isKickOut)
+                    {
+                        return RecheckinStatus.Continue;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ExceptionHandler.Handle(ex);
+                    return RecheckinStatus.Error;
+                }
+            }
+
+            return RecheckinStatus.KickedOut;
+        }
+
+        public ActionResult Offline()
+        {
+            if (Request.QueryString[Config.InternalAgentUMToken] != null)
+            {
+                Session[Config.InternalAgentUMToken] = Request.QueryString[Config.InternalAgentUMToken];
+            }
+
+            if (_maintenanceService.IsUnderMaintenance())
+            {
+                var underMaintenanceTime = _maintenanceService.GetUnderMaintenanceTime();
+                ViewBag.UmFromTime = underMaintenanceTime.From;
+                ViewBag.UmToTime = underMaintenanceTime.To;
+                return PartialView();
+            }
+
+            return RedirectToAction("Login", "Account");
+        }
+
+        public int ReCheckInOffline()
+            => _maintenanceService.IsUnderMaintenance()
+                ? (int)RecheckinStatus.Maintenance
+                : (int)RecheckinStatus.Login;
     }
 }

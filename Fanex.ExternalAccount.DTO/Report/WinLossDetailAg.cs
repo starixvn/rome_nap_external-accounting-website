@@ -1,16 +1,5 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="WinLossDetailAg.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.DTO.Report
+﻿namespace Fanex.ExternalAccount.DTO.Report
 {
-    using System;
-
-    /// <summary>
-    /// TODO: Summary description.
-    /// </summary>
     public class WinLossDetailAg
     {
         public int CustId { get; set; }

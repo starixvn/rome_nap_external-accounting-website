@@ -1,0 +1,9 @@
+﻿namespace Fanex.ExternalAccount.Service.Interface.Report
+{
+    public interface WinLossDetailService
+    {
+        dynamic DrillDownWinLossDetail(IDrillDownWinLossDetailRequest request);
+
+        dynamic SearchWinLossDetail(ISearchWinLossDetailRequest request);
+    }
+}

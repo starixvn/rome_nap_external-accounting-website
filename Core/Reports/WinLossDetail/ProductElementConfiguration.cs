@@ -1,70 +1,30 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="ProductElementConfiguration.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2015.9.3">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Core.Reports.WinLossDetail
+﻿namespace Fanex.ExternalAccount.Core.Reports.WinLossDetail
 {
+    using System;
     using System.Configuration;
 
-    public class ProductElementConfiguration : ConfigurationElement 
+    public class ProductElementConfiguration : ConfigurationElement
     {
         [ConfigurationProperty("id", IsRequired = true)]
-        public string Id
-        {
-            get
-            {
-                return base["id"] as string;
-            }
-        }
+        public string Id => base["id"] as string;
 
         [ConfigurationProperty("name", IsRequired = true)]
-        public string Name
-        {
-            get
-            {
-                return base["name"] as string;
-            }
-        }
+        public string Name => base["name"] as string;
 
         [ConfigurationProperty("hide", IsRequired = false)]
-        public bool Hide
-        {
-            get
-            {
-                return (bool)base["hide"];
-            }
-        }
+        public bool Hide => (bool) base["hide"];
 
         [ConfigurationProperty("productid", IsRequired = false, DefaultValue = 0)]
-        public int ProductId
-        {
-            get
-            {
-                return (int)base["productid"];
-            }
-        }
+        public int ProductId => (int) base["productid"];
 
         [ConfigurationProperty("isspecial", IsRequired = false, DefaultValue = false)]
-        public bool IsSpecial
-        {
-            get
-            {
-                return (bool)base["isspecial"];
-            }
-        }
+        public bool IsSpecial => (bool) base["isspecial"];
 
         [ConfigurationProperty("showForGroups", IsRequired = false, DefaultValue = "*")]
-        public string ShowForGroups
-        {
-            get
-            {
-                return (string)base["showForGroups"];
-            }
-        }
+        public string ShowForGroups => (string) base["showForGroups"];
+
+        public string[] ShowGroupList => ShowForGroups.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
+
+        public bool ShowForAll() => ShowForGroups.Equals("*", StringComparison.OrdinalIgnoreCase);
     }
 }

@@ -1,6 +1,7 @@
 ﻿@using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
 @using Fanex.CustomerSetting.Module.Keno.Resources;
+@using Fanex.ExternalAccount.Core.Shared;
 <!DOCTYPE html>
 <html ng-app='kenoSettingModule' id="ng-app">
 
@@ -47,7 +48,7 @@
         @Html.AntiForgeryToken()
     </div>
     <div class="tableWidth">
-        @if (Model.CustomerInformation.RoleId != 4)
+        @if (Role.IsNotSuper(Model.CustomerInformation.RoleId))
         {
         <input ng-class-name="btnUpdate" check-disable-element ng-model="isUpdatedKeno" ng-click="updated(false)"  value="Submit" 
             type="button" class="btnUpdate b" />

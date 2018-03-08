@@ -231,12 +231,7 @@ Fanex.ExtAcc.GroupPolicy = {
                         Fanex.ExtAcc.UnBlockUI();
                     }, 2000);
                 }
-            },
-            error: function (xhr, status, err) {
-                Fanex.ExtAcc.UnBlockUI();
-                if (typeof console != 'undefined') console.log(err);
-            }
-        });
+            }});
     }
 }
 

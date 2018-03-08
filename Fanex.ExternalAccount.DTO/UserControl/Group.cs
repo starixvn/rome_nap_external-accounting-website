@@ -1,16 +1,15 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="Group.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.DTO.UserControl
+﻿namespace Fanex.ExternalAccount.DTO.UserControl
 {
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class Group
-    {
+    {        
+        private static readonly List<string> OfficeGroups = new List<string> { "Finance", "IT" };
+
+        public const int ITGroupId = 1;
+
         public int GroupID { get; set; }
 
         public int NoUsers { get; set; }
@@ -22,5 +21,12 @@ namespace Fanex.ExternalAccount.DTO.UserControl
         public string CreatedDate { get; set; }
 
         public string Creator { get; set; }
+
+        public bool IsIT => IsITGroup(GroupID);
+
+        public static bool IsOfficeGroup(string groupName)
+            => OfficeGroups.Any(officeGroup => officeGroup.Equals(groupName, StringComparison.OrdinalIgnoreCase));
+
+        public static bool IsITGroup(int groupId) => ITGroupId == groupId;   
     }
 }

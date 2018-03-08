@@ -1,19 +1,10 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="PTVirtualSportsModel.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.ViewModel.Customer
+﻿namespace Fanex.ExternalAccount.ViewModel.Customer
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class PTVirtualSportsModel
     {
         public int CustId { get; set; }

@@ -817,4 +817,16 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="GoldDeluxe" xml:space="preserve">
     <value>Gold Deluxe</value>
   </data>
+  <data name="CannotReadRequestValidationCookie" xml:space="preserve">
+    <value>Cannot read Request Verification Token from cookie.</value>
+  </data>
+  <data name="ExpiredLoginSession" xml:space="preserve">
+    <value>Your login session has expired. Please login again!</value>
+  </data>
+  <data name="LoginNetworkError" xml:space="preserve">
+    <value>Your login page has not been loaded completely. Please check your network connection and try login again!</value>
+  </data>
+  <data name="AccessDenyToPublicDomain" xml:space="preserve">
+    <value>Internal admins are not allowed to login via public domain of this site. Please login via your office domain.</value>
+  </data>
 </root>

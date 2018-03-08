@@ -8,7 +8,7 @@
             Fanex.ExtAcc.BlockUI();
 
             $.ajax({
-                url: resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/ResetMemberCredit'),
+                url: resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/ResetMemberCredit'),
                 type: 'post',
                 data: {
                     agentId: agentId,
@@ -23,7 +23,7 @@
                 if (result.isSuccess) {
                     Fanex.ExtAcc.BlockUI();
 
-                    var url = resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?id=' + agentId + '&roleId=2&groupName=' + parent.$('#selectedGroupName').html());
+                    var url = resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?custId=' + agentId + '&roleId=2&groupName=' + parent.$('#selectedGroupName').html());
                     $.ajax({
                         url: url,
                         type: 'post'
@@ -32,24 +32,10 @@
                         Fanex.ExtAcc.UnBlockUI();
 
                         $('#contentSplitter').html(view);
-                    })
-                    .error(function (data) {
-                        Fanex.ExtAcc.UnBlockUI();
-
-                        if (typeof console != 'undefined') {
-                            console.log(data);
-                        }
                     });
                 }
                 else {
                     Fanex.ExtAcc.Form.Alert('Reset Member Credit Error', result.errorMessage.formatErrorMessage(), 400, 150, 'alertClosedCredit');
-                }
-            })
-            .error(function (data) {
-                Fanex.ExtAcc.UnBlockUI();
-
-                if (typeof console != 'undefined') {
-                    console.log(data);
                 }
             });
         },
@@ -65,7 +51,7 @@ function ResetAllAccountCredit(agentId) {
         false,
         function () {
             $.ajax({
-                url: resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/ResetMemberCredit'),
+                url: resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/ResetMemberCredit'),
                 type: 'post',
                 data: {
                     agentId: agentId,
@@ -80,7 +66,7 @@ function ResetAllAccountCredit(agentId) {
                 if (result.isSuccess) {
                     Fanex.ExtAcc.BlockUI();
 
-                    var url = resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?id=' + agentId + '&roleId=2&groupName=' + parent.$('#selectedGroupName').html());
+                    var url = resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?custId=' + agentId + '&roleId=2&groupName=' + parent.$('#selectedGroupName').html());
                     $.ajax({
                         url: url,
                         type: 'post'
@@ -89,24 +75,10 @@ function ResetAllAccountCredit(agentId) {
                         Fanex.ExtAcc.UnBlockUI();
 
                         $('#contentSplitter').html(view);
-                    })
-                    .error(function (data) {
-                        Fanex.ExtAcc.UnBlockUI();
-
-                        if (typeof console != 'undefined') {
-                            console.log(data);
-                        }
                     });
                 }
                 else {
                     Fanex.ExtAcc.Form.Alert('Reset Member Credit Error', result.errorMessage.formatErrorMessage(), 400, 150, 'alertAllCredit');
-                }
-            })
-            .error(function (data) {
-                Fanex.ExtAcc.UnBlockUI();
-
-                if (typeof console != 'undefined') {
-                    console.log(data);
                 }
             });
         },

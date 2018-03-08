@@ -1,14 +1,5 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="User.cs" company="">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.ExternalAccount.DTO.UserControl
+﻿namespace Fanex.ExternalAccount.DTO.UserControl
 {
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class User
     {
         public int UserID { get; set; }

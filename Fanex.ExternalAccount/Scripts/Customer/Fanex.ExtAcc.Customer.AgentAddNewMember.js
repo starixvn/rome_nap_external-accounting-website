@@ -174,7 +174,8 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                         var para = {
                             custId: 0,
                             parentId: $('#parentId').val(),
-                            txtCustomerObject: text
+                            txtCustomerObject: text,
+                            groupName: $('#selectedGroupName').html()
                         };
                     }
 
@@ -195,18 +196,12 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                             $('#errMsg').css('display', 'block');
                             $('#errMsg').html(result.errorMessage.formatErrorMessage());
                         }
-                    })
-                    .error(function (xhr, status, err) {
-                        Fanex.ExtAcc.UnBlockUI();
                     });
                 }
             }
 
             ko.applyBindings(new CustomerModel(customer));
 
-            Fanex.ExtAcc.UnBlockUI();
-        })
-        .error(function (xhr, status, err) {
             Fanex.ExtAcc.UnBlockUI();
         });
     },

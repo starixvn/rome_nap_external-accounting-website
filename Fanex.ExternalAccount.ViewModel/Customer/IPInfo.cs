@@ -1,17 +1,5 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="IPInfo.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.1.23">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.ViewModel.Customer
+﻿namespace Fanex.ExternalAccount.ViewModel.Customer
 {
-    /// <summary>
-    /// IP information.
-    /// </summary>
     public class IPInfo
     {
         public string IP { get; set; }

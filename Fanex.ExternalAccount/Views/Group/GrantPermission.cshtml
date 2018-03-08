@@ -2,8 +2,8 @@
 @using Fanex.ExternalAccount.DTO.UserControl
 @using Fanex.ExternalAccount.DTO
 @{
-    var funcs = (IEnumerable<Function>)ViewBag.Function;
-    var subFuncs = (IEnumerable<Function>)ViewBag.subFunction;
+    var funcs = ((IEnumerable<Function>)ViewBag.Function).ToList();
+    var subFuncs = ((IEnumerable<Function>)ViewBag.subFunction).ToList();
 }
 
 <div class="group-name">@ViewLang.GroupName: <span class="name">@ViewBag.GroupName</span></div>
@@ -26,30 +26,22 @@
     <tbody>
         @foreach (Function fn in funcs)
         {
-            var className = "";
+        var className = subFuncs.Count(o => o.ParentID == fn.FuncID) > 0 ? "permItemParent" : "permItemParentOnly";
 
-            if (subFuncs.Where(o => o.ParentID == fn.FuncID).Count() > 0)
-            {
-                className = "permItemParent";
-            }
-            else
-            {
-                className = "permItemParentOnly";
-            }
+        string activeR;
+        string activeW;
+        var val = "0";
 
-            string activeR = "permActive";
-            string activeW = "permInactive";
-            string val = "0";
-            if (fn.GroupPolicy != null)
-            {
-                if (fn.GroupPolicy == EPolicy.Create ||
-                    fn.GroupPolicy == EPolicy.Delete ||
-                    fn.GroupPolicy == EPolicy.Update)
-                {
-                    activeR = activeW = "permActive";
-                    val = "2";
-                }
-                else if (fn.GroupPolicy == EPolicy.Read)
+        if (fn.GroupPolicy == EPolicy.Create ||
+            fn.GroupPolicy == EPolicy.Delete ||
+            fn.GroupPolicy == EPolicy.Update)
+        {
+            activeR = activeW = "permActive";
+            val = "2";
+        }
+        else
+        {
+            if (fn.GroupPolicy == EPolicy.Read)
                 {
                     activeR = "permActive";
                     activeW = "permInactive";
@@ -74,47 +66,48 @@
                     </div>
                 </td>
             </tr>
-            foreach (Function subfn in subFuncs)
+        foreach (var subfn in subFuncs)
             {
                 if (fn.FuncID == subfn.ParentID)
                 {
 
-                    string SubactiveR = "permInactive";
-                    string SubactiveW = "permInactive";
-                    string Subval = "0";
-                    if (subfn.GroupPolicy != null)
+                string subactiveR;
+                string subactiveW;
+                var subval = "0";
+
+                if (subfn.GroupPolicy == EPolicy.Create ||
+                    subfn.GroupPolicy == EPolicy.Delete ||
+                    subfn.GroupPolicy == EPolicy.Update)
+                {
+                    subactiveR = subactiveW = "permActive";
+                    subval = "2";
+                }
+                else
+                {
+                    if (subfn.GroupPolicy == EPolicy.Read)
                     {
-                        if (subfn.GroupPolicy == EPolicy.Create ||
-                            subfn.GroupPolicy == EPolicy.Delete ||
-                            subfn.GroupPolicy == EPolicy.Update)
-                        {
-                            SubactiveR = SubactiveW = "permActive";
-                            Subval = "2";
-                        }
-                        else if (subfn.GroupPolicy == EPolicy.Read)
-                        {
-                            SubactiveR = "permActive";
-                            SubactiveW = "permInactive";
-                            Subval = "1";
+                        subactiveR = "permActive";
+                        subactiveW = "permInactive";
+                        subval = "1";
                         }
                         else
                         {
-                            SubactiveR = SubactiveW = "permInactive";
+                        subactiveR = subactiveW = "permInactive";
                         }
                     }
-                    <tr parentid="@subfn.ParentID" title="@subfn.FuncDesc.DecodeHtml()">
-                        <td>
-                            <span class="permItemChild">@subfn.FuncName</span>
-                        </td>
-                        <td>
-                            <div id="r-@subfn.FuncID" parent="r-@subfn.ParentID" permission="1" class="@SubactiveR" onclick="Fanex.ExtAcc.GroupPolicy.GrantPermissions(this);">
-                            </div>
-                        </td>
-                        <td>
-                            <div id="w-@subfn.FuncID" parent="w-@subfn.ParentID" val="@Subval" permission="2" class="@SubactiveW" onclick="Fanex.ExtAcc.GroupPolicy.GrantPermissions(this);">
-                            </div>
-                        </td>
-                    </tr>
+                <tr parentid="@subfn.ParentID" title="@subfn.FuncDesc.DecodeHtml()">
+                    <td>
+                        <span class="permItemChild">@subfn.FuncName</span>
+                    </td>
+                    <td>
+                        <div id="r-@subfn.FuncID" parent="r-@subfn.ParentID" permission="1" class="@subactiveR" onclick="Fanex.ExtAcc.GroupPolicy.GrantPermissions(this);">
+                        </div>
+                    </td>
+                    <td>
+                        <div id="w-@subfn.FuncID" parent="w-@subfn.ParentID" val="@subval" permission="2" class="@subactiveW" onclick="Fanex.ExtAcc.GroupPolicy.GrantPermissions(this);">
+                        </div>
+                    </td>
+                </tr>
                 }
             }
         }

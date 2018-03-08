@@ -1,15 +1,3 @@
-/*
-* monPickr - jQuery Plugin
-* Just a simple month picker
-*
-* Examples and documentation at: http://update.later
-*
-* Copyright (c) 2012
-*
-* Version: 0.0.1 (6 Jan 2012)
-* Requires: jQuery v1.7+
-*/
-
 (function ($) {
 
     var logger = { error: $.noop };

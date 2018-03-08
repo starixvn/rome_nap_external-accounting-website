@@ -1,6 +1,4 @@
 ﻿@using Fanex.CustomerSetting.Module.Core
-@using Newtonsoft.Json
-@using Newtonsoft.Json.Serialization
 @model IEnumerable<Fanex.CustomerSetting.Module.Keno.KenoSetting.Entities.BetSetting>
 @{
     var bettingLimit = Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.None, new Newtonsoft.Json.JsonSerializerSettings

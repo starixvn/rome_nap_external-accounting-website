@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Fanex.ExternalAccount.Excel</RootNamespace>
     <AssemblyName>Fanex.ExternalAccount.Excel</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -20,6 +20,7 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>Fanex.ExternalAccount.Excel.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -39,10 +41,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>Fanex.ExternalAccount.Excel.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NPOI">
-      <HintPath>..\Dependencies\NPOI.dll</HintPath>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.0.6\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -57,8 +65,10 @@
     <Compile Include="Customer\CustomerList\CustomerListPage.cs" />
     <Compile Include="Customer\CustomerList\CustomerListPageBuilder.cs" />
     <Compile Include="Customer\CustomerList\TemplateSettings.cs" />
+    <Compile Include="Extensions\CustomerInfoDataRowExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IReportBuilder.cs" />
+    <Compile Include="Reports\WinLossDetail\IWinLossDetailReportBuilder.cs" />
     <Compile Include="Statement\StatementPage\StatementPage.cs" />
     <Compile Include="Statement\StatementPage\StatementPageBuilder.cs" />
     <Compile Include="Statement\StatementPage\TemplateSettings.cs" />
@@ -75,8 +85,8 @@
     <Compile Include="Reports\DailyWinloss\DailyWinLossReport.cs" />
     <Compile Include="Reports\DailyWinloss\DailyWinLossReportBuilder.cs" />
     <Compile Include="Reports\DailyWinloss\TemplateSettings.cs" />
-    <Compile Include="Reports\WinLossDetail\WinLossDetailReportAgBuilder.cs" />
-    <Compile Include="Reports\WinLossDetail\WinLossDetailReportMAgBuilder.cs" />
+    <Compile Include="Reports\WinLossDetail\MemberWinLossDetailReportBuilder.cs" />
+    <Compile Include="Reports\WinLossDetail\AgentWinLossDetailReportBuilder.cs" />
     <Compile Include="Reports\WinLossDetail\WinLossDetailReportAg.cs" />
     <Compile Include="Reports\WinLossDetail\WinLossDetailReportMAg.cs" />
     <Compile Include="Reports\WinLossDetail\WinLossDetailReport.cs" />
@@ -86,6 +96,10 @@
     <Compile Include="Utility\WorkbookExtension.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
+      <Project>{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}</Project>
+      <Name>Core.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj">
       <Project>{AA1EA660-0E91-4C46-8100-F39C6A0BFC0B}</Project>
       <Name>Fanex.ExternalAccount.DTO</Name>
@@ -101,9 +115,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\Google.Protobuf.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.CSharp.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

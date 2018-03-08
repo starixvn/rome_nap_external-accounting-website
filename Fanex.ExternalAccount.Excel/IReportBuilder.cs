@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="IReportBuilder.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.17">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Excel
+﻿namespace Fanex.ExternalAccount.Excel
 {
     using NPOI.HSSF.UserModel;
 

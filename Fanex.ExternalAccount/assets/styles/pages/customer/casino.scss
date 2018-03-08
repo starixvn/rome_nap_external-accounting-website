@@ -1,74 +1,73 @@
-﻿.tableInfo
-{
+﻿.tableInfo {
     border: none;
-    border-color: #ccc; 
-    border-collapse: collapse; 
+    border-color: #ccc;
+    border-collapse: collapse;
     border-style: none;
-    width: 100%;    
+    width: 100%;
 }
-.tableInfo tr
-{
-    height: 26px;
-}
-td
-{
+
+    .tableInfo tr {
+        height: 26px;
+    }
+
+td {
     border: 1px solid #ccc;
 }
-.tdTitleLeft
-{
+
+.tdTitleLeft {
     width: 15%;
     text-align: right;
-    font-weight:bold;
+    font-weight: bold;
     border-left: none;
 }
-.tdTitleRight
-{
+
+.tdTitleRight {
     width: 15%;
     text-align: right;
-    font-weight:bold;
+    font-weight: bold;
 }
-.noneBorderLR
-{
+
+.noneBorderLR {
     border-left: none;
     border-right: none;
 }
-.noneBorderR
-{
+
+.noneBorderR {
     border-right: none;
 }
-.noneBorderL
-{
-    border-left: none;    
+
+.noneBorderL {
+    border-left: none;
 }
-.noneBorderT
-{
+
+.noneBorderT {
     border-top: none;
 }
-.noneBorderB
-{
+
+.noneBorderB {
     border-bottom: none;
 }
-.gameTitle
-{
+
+.gameTitle {
     text-align: center;
     font-weight: bold;
     width: 70px;
     border-left: none;
 }
-.ptTitle
-{
+
+.ptTitle {
     text-align: center;
     font-weight: bold;
 }
-.R
-{
+
+.R {
     text-align: right;
 }
-.C
-{
+
+.C {
     text-align: center;
 }
-select
-{
+
+select {
     width: 61px !important;
 }

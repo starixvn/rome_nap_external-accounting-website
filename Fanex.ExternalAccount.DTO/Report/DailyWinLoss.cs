@@ -1,19 +1,5 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="DailyWinLoss.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.DTO.Report
+﻿namespace Fanex.ExternalAccount.DTO.Report
 {
-    using System;
-
-    /// <summary>
-    /// Description for DailyWinLoss.
-    /// </summary>
     public class DailyWinLoss
     {
         public int No { get; set; }

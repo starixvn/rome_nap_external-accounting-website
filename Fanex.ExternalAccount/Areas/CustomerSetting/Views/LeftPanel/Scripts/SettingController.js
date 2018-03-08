@@ -59,9 +59,7 @@
             parent.Fanex.ExtAcc.UnBlockUI();
         })
         .error(function (result) {
-            if (typeof console != 'undefined') {
-                console.log(result);
-            }
+            parent.Fanex.ExtAcc.UnBlockUI();
         })
     };
 
@@ -258,7 +256,7 @@
                     parent.Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
-                        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateCloseCutomer'),
+                        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateCloseCutomer'),
                         dataType: 'json',
                         type: 'post',
                         data: {
@@ -321,7 +319,7 @@
                         parent.Fanex.ExtAcc.BlockUI();
 
                         $.ajax({
-                            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateCloseCutomer'),
+                            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateCloseCutomer'),
                             dataType: 'json',
                             type: 'post',
                             data: {
@@ -409,7 +407,7 @@
                     parent.Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
-                        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateSuspendCutomer'),
+                        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateSuspendCutomer'),
                         dataType: 'json',
                         type: 'post',
                         data: {
@@ -474,7 +472,7 @@
             parent.Fanex.ExtAcc.BlockUI();
 
             $.ajax({
-                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateOutright'),
+                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateOutright'),
                 dataType: 'json',
                 type: 'post',
                 data: {
@@ -536,7 +534,7 @@
                 parent.Fanex.ExtAcc.BlockUI();
 
                 $.ajax({
-                    url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UpdateAutoMPT'),
+                    url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateAutoMPT'),
                     dataType: 'json',
                     type: 'post',
                     data: {
@@ -730,7 +728,7 @@
         $scope.EnableThirdpartyProduct(21, "Allbet", 400, 200);
     };
 
-    $scope.EnableMacauGames = function (enable, id, disabled) {
+    $scope.EnableVoidBridge = function (enable, id, disabled) {
         if (disabled) {
             return;
         }
@@ -1040,7 +1038,7 @@
         $scope.RenderSupeOnMemberDCS(21);
     };
 
-    $scope.SuperMacauGames = function () {
+    $scope.SuperVoidBridge = function () {
         $scope.RenderSupeOnMemberDCS(22);
     };
 
@@ -1085,7 +1083,7 @@
         $scope.RenderMasterOnMemberDCS(21);
     };
 
-    $scope.MasterMacauGames = function () {
+    $scope.MasterVoidBridge = function () {
         $scope.RenderMasterOnMemberDCS(22);
     };
 

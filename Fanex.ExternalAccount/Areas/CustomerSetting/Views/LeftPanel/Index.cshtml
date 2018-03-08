@@ -162,16 +162,16 @@
                 </ul>
                 <div id="tab-1" class="tab-content setting-tab">
                     <div class="edit-item" data-ng-repeat="editItem in setting.editItems">
-                        <div data-ng-hide="{{editItem.isHide }}" class="settingEdit"
+                        <div data-ng-hide="{{editItem.isHide || !editItem.visibled}}" class="settingEdit"
                              title="{{editItem.tooltip}}" data-ng-click="{{editItem.key}}()"><span class="icon-link"></span>{{editItem.text}}</div>
                     </div>
                     <div class="enabled-item" data-ng-repeat="enableItem in setting.enableItems">
                         <div data-ng-click="{{enableItem.key}}({{enableItem.value}}, '{{enableItem.key}}',{{enableItem.disabled}})"
                              class="setting-enable-item" data-ng-disabled="{{enableItem.disabled}}">
-                            <div data-ng-hide="{{enableItem.isHide}}" class="pull-left">
+                            <div data-ng-hide="{{enableItem.isHide || !enableItem.visibled}}" class="pull-left">
                                 <input title="{{enableItem.tooltip}}" id="{{enableItem.key}}" type="checkbox" data-ng-model="enableItem.value" data-ng-disabled="{{enableItem.disabled}}" />
                             </div>
-                            <div data-ng-hide="{{enableItem.isHide}}" class="pull-left" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
+                            <div data-ng-hide="{{enableItem.isHide || !enableItem.visibled}}" class="pull-left" title="{{enableItem.tooltip}}">{{enableItem.text}}</div>
                         </div>
                     </div>
                 </div>
@@ -188,22 +188,22 @@
                     </div>
                     <ul id="edit" class="list-link">
                         <li class="detail" data-ng-repeat="item in setting.details">
-                            <a data-ng-hide="item.isHide" data-ng-click="{{item.key}}();" href="javascript:;">{{item.value}}</a>
+                            <a data-ng-hide="item.isHide || !item.visibled" data-ng-click="{{item.key}}();" href="javascript:;">{{item.value}}</a>
                         </li>
                     </ul>
                     <ul id="minMax" class="list-link" style="display: none">
                         <li class="detail" data-ng-repeat="minMaxPt in setting.minMaxPts">
-                            <a data-ng-hide="minMaxPt.isHide" data-ng-click="{{minMaxPt.key}}(); collapseSidebar();" href="javascript:;">{{minMaxPt.value}}</a>
+                            <a data-ng-hide="minMaxPt.isHide || !minMaxPt.visibled" data-ng-click="{{minMaxPt.key}}(); collapseSidebar();" href="javascript:;">{{minMaxPt.value}}</a>
                         </li>
                     </ul>
                     <ul id="superPT" class="list-link" style="display: none">
                         <li class="detail" data-ng-repeat="superPt in setting.superPts">
-                            <a data-ng-hide="superPt.isHide" data-ng-click="Super{{superPt.key}}(); collapseSidebar();" href="javascript:;">{{superPt.value}}</a>
+                            <a data-ng-hide="superPt.isHide || !superPt.visibled" data-ng-click="Super{{superPt.key}}(); collapseSidebar();" href="javascript:;">{{superPt.value}}</a>
                         </li>
                     </ul>
                     <ul id="masterPT" class="list-link" style="display: none">
                         <li class="detail" data-ng-repeat="masterPt in setting.masterPts">
-                            <a data-ng-hide="masterPt.isHide" data-ng-click="Master{{masterPt.key}}(); collapseSidebar();" href="javascript:;">{{masterPt.value}}</a>
+                            <a data-ng-hide="masterPt.isHide || !masterPt.visibled" data-ng-click="Master{{masterPt.key}}(); collapseSidebar();" href="javascript:;">{{masterPt.value}}</a>
                         </li>
                     </ul>
                 </div>
@@ -290,7 +290,8 @@
     <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/SettingController.js?v=999")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/SettingPTController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/ViewInfoController.js")" type="text/javascript"></script>
-    <script type="text/javascript" src="@Url.Content("~/CustomerSetting/LeftPanel/SearchCustomer/GetData?id=" + Request.QueryString["id"] + "&uplineId=" + Request.QueryString["uplineId"] + "&pageIndex=" + Request.QueryString["pageIndex"])">
+<script type="text/javascript">
+    var model = @(Html.Raw(customerModel));
     </script>
     <script type="text/javascript">
         var userId = parseInt('@userId');

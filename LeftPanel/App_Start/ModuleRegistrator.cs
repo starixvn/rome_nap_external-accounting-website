@@ -1,51 +1,30 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="ModuleRegistrator.cs" company="">
-// Copyright (c) . All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Andy.Nguyen" date="2013.9.16">Created</change>
-// </history>
-
-namespace Fanex.ExternalAccount.Module.LeftPanel.App_Start
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.App_Start
 {
     using System.Reflection;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Module.Core.Web.App_Start;
-    
-    /// <summary>
-    /// Registers area for left panel.
-    /// </summary>
-    public class ModuleRegistrator : AppAreaRegistrator 
+    using CustomerSetting.Module.Core.Web.App_Start;
+
+    public class ModuleRegistrator : AppAreaRegistrator
     {
-        protected string ControllerName
-        {
-            get
-            {
-                return "LeftPanel";
-            }
-        }
+        protected static string ControllerName => "LeftPanel";
 
-        protected string ControllerNameSpace
-        {
-            get
-            {
-                var controllerNameSpace = Assembly.GetExecutingAssembly().GetName().Name + ".Controllers";
-                return controllerNameSpace;
-            }
-        }
+#pragma warning disable S3902 // "Assembly.GetExecutingAssembly" should not be called
+        protected static string ControllerNameSpace => Assembly.GetExecutingAssembly().GetName().Name + ".Controllers";
+#pragma warning restore S3902 // "Assembly.GetExecutingAssembly" should not be called
 
-        /// <summary>
-        /// Overrides register area method.
-        /// </summary>
-        /// <param name="context">Context of request.</param>
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
                 AreaName + "_" + ControllerName,
                 AreaName + "/" + ControllerName + "/{controller}/{action}/{id}/{uplineId}/{pageIndex}",
-                new { action = "Index", id = UrlParameter.Optional, uplineId = UrlParameter.Optional, pageIndex = UrlParameter.Optional },
-                new[] { ControllerNameSpace });
-        }       
+                new
+                {
+                    action = "Index",
+                    id = UrlParameter.Optional,
+                    uplineId = UrlParameter.Optional,
+                    pageIndex = UrlParameter.Optional
+                },
+                new[] {ControllerNameSpace});
+        }
     }
 }

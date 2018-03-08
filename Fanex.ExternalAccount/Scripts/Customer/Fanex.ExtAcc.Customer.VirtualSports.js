@@ -352,11 +352,7 @@ Fanex.ExtAcc.Customer.VirtualSports = {
                 else {
                     Fanex.ExtAcc.UnBlockUI();
                 }
-            },
-            error: function () {
-                Fanex.ExtAcc.UnBlockUI();
-            }
-        });
+            }});
     },
     afterUpdateSuccess: function (timeout) {
         t1 = setTimeout(function () {

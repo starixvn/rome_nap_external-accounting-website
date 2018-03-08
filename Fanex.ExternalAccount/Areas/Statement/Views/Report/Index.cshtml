@@ -1,4 +1,5 @@
-﻿@using Fanex.Module.Statement.Resources;
+﻿@using Fanex.ExternalAccount.Core.Shared
+@using Fanex.Module.Statement.Resources;
 @using Fanex.Module.Statement.Configurations;
 @{
     ViewBag.Title = Labels.Statement_Report;
@@ -47,7 +48,7 @@
 
     function viewGuidelines() {
         OpenPopup(
-           window.rootUrl + "StatementReport/Guideline/?roleId=" + 2,
+                window.rootUrl + "StatementReport/Guideline/?roleId=" + @Role.Agent, 
            "Statement Guidelines",
            900,
            600);
@@ -66,7 +67,7 @@
             fromDate: "12/1/2014",
             toDate: "1/23/2015",
             custId: 0,
-            roleId: 1,
+                roleId: @Role.Member,
             balanceUpDay: balanceUpDay,
             moveBetDay: moveBetsDay,
             username: "member01"
