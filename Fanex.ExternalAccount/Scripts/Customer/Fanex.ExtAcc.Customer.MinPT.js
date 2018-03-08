@@ -168,6 +168,7 @@ Fanex.ExtAcc.Customer.MinPT = {
                                 Fanex.ExtAcc.UnBlockUI();
 
                                 $('#errMsg').css('display', 'block');
+                                $('#errMsg').addClass('successMsg').removeClass('errMsg');
                                 $('#errMsg').html('<font color="Blue">Updated successfully</font>');
 
                                 Fanex.ExtAcc.Form.Close(false);
