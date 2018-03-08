@@ -4,10 +4,11 @@
 <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css"/>
 <link href="@Url.Content("~/assets/styles/pages/customer/pt-engine.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/assets/styles/pages/customer/customer-setting.css")" rel="stylesheet" type="text/css" />
+<div style="width: 852px; margin: 2px 0 0 2px">
     <div id="errMsg" style="display: none;" class="successMsg">
     </div>
     <div class="floatR">
-    <input class="btn -submit buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
+        <input class="btn -submit buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
     </div>
     <div class="headerPositionTaking" style="border-top: 1px solid #CCC">
         Postition Taking
@@ -17,7 +18,7 @@
         </div>
     </div>
     <div class="floatR">
-    <input class="btn -submit buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
+        <input class="btn -submit buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
     </div>
     @Html.AntiForgeryToken()
 </div>
