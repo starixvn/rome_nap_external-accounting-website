@@ -364,11 +364,11 @@ Fanex.ExtAcc = {
 
         var widthDevice = $(window).width();
 
-        if (widthDevice >= 768 && widthDevice <= 1600) {
+        if (widthDevice >= 768 && widthDevice <= 1366) {
             iconUser.on("click", function () {
                 if (iconUser.hasClass("active")) {
                     leftSplitter.addClass("collapse-leftpanel").removeClass("expand-leftpanel");
-                    content.removeClass("collapse-content");
+                    content.removeClass("collapse-content").addClass("expand-content");
                     iconUser.removeClass("active");                    
                 } else {
                     leftSplitter.removeClass("collapse-leftpanel").addClass("expand-leftpanel");
