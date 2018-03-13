@@ -24,10 +24,9 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab8').css('display', Fanex.ExtAcc.Customer.HideVirtualSports ? 'none' : 'block');
         $('#tab9').css('display', Fanex.ExtAcc.Customer.HideKeno ? 'none' : 'block');
         $('#tab10').css('display', Fanex.ExtAcc.Customer.HideGoldDeluxe ? 'none' : 'block');
-        $('#tab10').css('display', Fanex.ExtAcc.Customer.HideGoldDeluxe ? 'none' : 'block');
         $('#tab11').css('display', Fanex.ExtAcc.Customer.HideColossusBets ? 'none' : 'block');
         $('#tab12').css('display', Fanex.ExtAcc.Customer.HideSportsbook2 ? 'none' : 'block');
-        $('#tab14').css('display', Fanex.ExtAcc.Customer.HideCricket ? 'none' : 'block');
+        $('#tab14').css('display', Fanex.ExtAcc.Customer.HideCricket ? 'none' : 'block');        
 
         if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
             // Loads first tab (Sportsbook's Min PT)
@@ -36,7 +35,8 @@ Fanex.ExtAcc.Customer.Settings = {
         else {            
             $('#tab1').hide();
             $('#tabs-1').hide();
-            $('#tabs').tabs({ selected: 1 });
+            $('#tabs').tabs({ selected: 2 });
+            Fanex.ExtAcc.Customer.Settings.RenderDCS(5, "#virtualSportsFrame", "#tabs-8");
         }
 
         $('#tab1').bind('click', function () {
@@ -51,7 +51,7 @@ Fanex.ExtAcc.Customer.Settings = {
 
         $('#tab8').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(5, "#virtualSportsFrame", "#tabs-8");
+            Fanex.ExtAcc.Customer.Settings.RenderDCS(5, "#virtualSportsFrame", "#tabs-3");
         });
 
         $('#tab9').bind('click', function () {
@@ -70,12 +70,12 @@ Fanex.ExtAcc.Customer.Settings = {
         });
         $('#tab12').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(16, "#sportsbook2Frame", "#tabs-12");
+            Fanex.ExtAcc.Customer.Settings.RenderDCS(16, "#sportsbook2Frame", "#tabs-7");
         });
        
         $('#tab14').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(20, "#cricketFrame", "#tabs-14");
+            Fanex.ExtAcc.Customer.Settings.RenderDCS(20, "#cricketFrame", "#tabs-8");
         });
 
         $('.dynamic-setting-tab').bind('click', function () {
