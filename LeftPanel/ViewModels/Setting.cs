@@ -16,8 +16,7 @@
             Details = details;
             MinMaxPts = new List<ObjectInfo>
             {
-                new ObjectInfo {Key = "MinSB", Value = "Sportsbook"},
-                new ObjectInfo {Key = "MinRB", Value = "Racing"}
+                new ObjectInfo {Key = "MinSB", Value = "Sportsbook"}
             };
             SuperPts = new List<ObjectInfo>();
             MasterPts = new List<ObjectInfo>();
