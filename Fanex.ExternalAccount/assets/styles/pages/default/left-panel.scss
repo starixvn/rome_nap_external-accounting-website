@@ -59,11 +59,7 @@ body {
         }
 
         &:hover {
-            color: #7aacf7;
-
-            @media screen and (min-device-width: 767px) {
-                color: $link-color-hover; 
-            }
+            text-decoration: underline;
         }
     }
     
@@ -351,12 +347,11 @@ body {
     float: left;
     cursor: pointer;
     color: #60a0ff;
-
+    .txt-setting:hover {
+        text-decoration: underline;
+    }
     @media screen and (min-device-width: 767px) {
-        color: $link-color;  
-        &:hover {
-            color: $link-color-hover;
-        }   
+        color: $link-color;   
     }
 }
 .setting-enable-item {
@@ -412,7 +407,7 @@ body {
         margin: 0;
         color: #60a0ff;
 
-        a, a:hover {
+        a:hover {
             text-decoration: underline;
         }
 
