@@ -89,6 +89,8 @@
 
         public static string[] UsersDenyAccessPublicDomains => GetValue("UsersDenyAccessPublicDomains").Split(',');
 
+        public static string[] ITAdminAllowedAccessPublicDomains => GetValue("ITAdminAllowedAccessPublicDomains").Split(',');
+
         public static string IgnoreRecheckinCustomers
         {
             get

@@ -11,7 +11,7 @@
     using Core.Context;
     using CustomerSetting.Module.Core.Web;
     using DTO;
-using Fanex.ExternalAccount.Core.Helpers;
+    using Fanex.ExternalAccount.Core.Helpers;
     using DTO.UserControl;
     using Logging.Extensions.Web;
     using Service.Impl.Login;
@@ -20,7 +20,7 @@ using Fanex.ExternalAccount.Core.Helpers;
     using ViewModel.Account;
     using CurrentContext = Core.Context.CurrentContext;
     using CurrentSession = Core.Context.CurrentSession;
-using UAParser;
+    using UAParser;
 
     public class AccountController : DefaultCaptchaController
     {
@@ -258,7 +258,7 @@ using UAParser;
 
         private bool IsDenyAccessPublicDomain(bool isInternalAdmin, Group currentGroup, string userName)
         {
-            if (userName.Equals("starixit", StringComparison.InvariantCultureIgnoreCase))
+            if (Config.ITAdminAllowedAccessPublicDomains.Contains(userName, StringComparer.InvariantCultureIgnoreCase))
             {
                 return false;
             }
