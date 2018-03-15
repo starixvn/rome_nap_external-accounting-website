@@ -66,7 +66,6 @@
                 
             }
         },        
-                Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
 
         separator1: "-----",
         casino: {
@@ -83,7 +82,6 @@
                     null,
                     1);
             }
-                Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
 
         }	
     }

@@ -118,9 +118,6 @@
                     resolveClientUrl('SportsbookSetting/EditCommissionDetail?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Commission ' + '<font color="#6dcff6">' + title + '</font>',
                     871, 250, false, false, 1);
             }
-                Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
-                    
-
         }       
     };
 
@@ -182,8 +179,6 @@
             };
         }
     }    
-
-                Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
 
     var ret = this.CustomerInfo();
 

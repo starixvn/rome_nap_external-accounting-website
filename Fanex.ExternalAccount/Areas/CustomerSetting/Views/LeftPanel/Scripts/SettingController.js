@@ -857,7 +857,6 @@
         $scope.collapseSidebar();
     };
     
-        $scope.collapseSidebar();
     $scope.SuperPT = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
         var masterId = $scope.model.personalInfo.downlines[1].key;
