@@ -6,7 +6,7 @@
     else {
         $scope.model = null;
     }
-
+    
     $(window).bind('orientationchange', function (e) {
         var calculatePopupheight = $scope.shouldCalculatePopupHeight && isMobile.phone;
         if (!calculatePopupheight) {
@@ -24,10 +24,8 @@
 
         var dialog = top.$('.ui-dialog');
         dialog.height((height + 34) + 'px');
-
         top.$("#windowPopup").css("height", height + "px");
     });
-
     $scope.getPopupHeight = function () {
         var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
              $scope.landscapeHeight :

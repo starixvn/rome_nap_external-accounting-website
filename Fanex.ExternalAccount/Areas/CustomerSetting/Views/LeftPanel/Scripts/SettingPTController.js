@@ -169,31 +169,6 @@
         $scope.collapseSidebar();
     };
 
-    $scope.Init = function () {
-        alert(1);
-        $(window).bind('orientationchange', function (e) {
-            var calculatePopupheight = $scope.shouldCalculatePopupHeight && isMobile.phone;
-            if (!calculatePopupheight) {
-                return;
-            }
-
-            var height;
-            var isLandscape = window.matchMedia("(orientation: landscape)").matches;
-            if (isMobile.android.phone) {
-                height = isLandscape ? $scope.portraitHeight : $scope.landscapeHeight;
-            }
-            else {
-                height = isLandscape ? $scope.landscapeHeight : $scope.portraitHeight;
-            }
-
-            var dialog = top.$('.ui-dialog');
-            dialog.height((height + 34) + 'px');
-
-            top.$("#windowPopup").css("height", height + "px");
-            alert(height);
-        });
-    };
-
     $scope.getPopupHeight = function () {
         var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
              $scope.landscapeHeight :
