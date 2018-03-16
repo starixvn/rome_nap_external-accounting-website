@@ -32,17 +32,7 @@
     HideSportsbook2: false,
     HideCockfighting: false,
     HideCricket: false,
-    //HideAllbet: false,
-    //HideVoidbridge: false,
-    //HideNG2: false,
-    //HideFishingWorld: false,
-    //HideLucky3: false,
-    //HideBullfighting: false,
-
-    HideAllbetMember: false,
-    HideVoidbridgeMember: false,
-    HideNG2Member: false,
-    HideFishingWorldMember: false,
+    UplineProductSettings: [],
 
     superSyncCasino: false,
     superSyncLiveCasino: false,
@@ -425,11 +415,11 @@
         if (this.CurrentLevel == this.Super) {
             Fanex.ExtAcc.Customer.GetSuperList(this.custId);
         } else if (this.CurrentLevel == this.Master) {
-            Fanex.ExtAcc.Customer.GetMasterList(this.superId, this.AllowDoubleComm, this.custId, null, this.superSyncCasino, this.superSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet, this.HideVoidbridge, this.HideNG2, this.HideFishingWorld, this.HideLottery, this.HideBullfighting);
+            Fanex.ExtAcc.Customer.GetMasterList(this.superId, this.AllowDoubleComm, this.custId, null, this.superSyncCasino, this.superSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket);
         } else if (this.CurrentLevel == this.Agent) {
-            Fanex.ExtAcc.Customer.GetAgentList(this.masterId, this.AllowDoubleComm, this.custId, null, this.masterSyncCasino, this.masterSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet, this.HideVoidbridge, this.HideNG2, this.HideFishingWorld, this.HideLottery, this.HideBullfighting);
+            Fanex.ExtAcc.Customer.GetAgentList(this.masterId, this.AllowDoubleComm, this.custId, null, this.masterSyncCasino, this.masterSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket);
         } else {
-            Fanex.ExtAcc.Customer.GetMemberList(this.agentId, this.AllowDoubleComm, this.custId, null, this.agentSyncCasino, this.agentSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet, this.HideVoidbridge, this.HideNG2, this.HideFishingWorld, this.HideLottery, this.HideBullfighting);
+            Fanex.ExtAcc.Customer.GetMemberList(this.agentId, this.AllowDoubleComm, this.custId, null, this.agentSyncCasino, this.agentSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket);
         }
     },
 
@@ -690,27 +680,21 @@
                 Fanex.ExtAcc.Customer.HideGoldDeluxe = rows[0].HideGoldDeluxe;
                 Fanex.ExtAcc.Customer.HideKeno = rows[0].HideKeno;
                 Fanex.ExtAcc.Customer.HideVirtualSports = rows[0].HideVirtualSports;
-                Fanex.ExtAcc.Customer.HideAllbet = !rows[0].SyncedAllBet;
-                Fanex.ExtAcc.Customer.HideVoidbridge = !rows[0].SyncedVoidBridge;
-                Fanex.ExtAcc.Customer.HideNG2 = !rows[0].SyncedNG2;
-                Fanex.ExtAcc.Customer.HideFishingWorld = !rows[0].SyncedFishingWorld;
-                Fanex.ExtAcc.Customer.HideLottery = rows[0].HideLottery;
-                Fanex.ExtAcc.Customer.HideBullfighting = rows[0].HideBullfighting;
 
                 if (result.roleId == 4) {
                     Fanex.ExtAcc.Customer.GetSuperList(rows[0].custid, result);
                 } else if (result.roleId == 3) {
                     Fanex.ExtAcc.Customer.superSyncCasino = result.syncCasino;
                     Fanex.ExtAcc.Customer.superSyncLiveCasino = result.syncLiveCasino;
-                    Fanex.ExtAcc.Customer.GetMasterList(result.srecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.superSyncLiveCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCockfighting, Fanex.ExtAcc.Customer.HideCricket, Fanex.ExtAcc.Customer.HideAllbet, Fanex.ExtAcc.Customer.HideVoidbridge, Fanex.ExtAcc.Customer.HideNG2, Fanex.ExtAcc.Customer.HideFishingWorld, Fanex.ExtAcc.Customer.HideLottery, Fanex.ExtAcc.Customer.HideBullfighting);
+                    Fanex.ExtAcc.Customer.GetMasterList(result.srecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.superSyncLiveCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCockfighting, Fanex.ExtAcc.Customer.HideCricket);
                 } else if (result.roleId == 2) {
                     Fanex.ExtAcc.Customer.masterSyncCasino = result.syncCasino;
                     Fanex.ExtAcc.Customer.masterSyncLiveCasino = result.syncLiveCasino;
-                    Fanex.ExtAcc.Customer.GetAgentList(result.mrecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.masterSyncLiveCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCockfighting, Fanex.ExtAcc.Customer.HideCricket, Fanex.ExtAcc.Customer.HideAllbet, Fanex.ExtAcc.Customer.HideVoidbridge, Fanex.ExtAcc.Customer.HideNG2, Fanex.ExtAcc.Customer.HideFishingWorld, Fanex.ExtAcc.Customer.HideLottery, Fanex.ExtAcc.Customer.HideBullfighting);
+                    Fanex.ExtAcc.Customer.GetAgentList(result.mrecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.masterSyncLiveCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCockfighting, Fanex.ExtAcc.Customer.HideCricket);
                 } else {
                     Fanex.ExtAcc.Customer.agentSyncCasino = result.syncCasino;
                     Fanex.ExtAcc.Customer.agentSyncLiveCasino = result.syncLiveCasino;
-                    Fanex.ExtAcc.Customer.GetMemberList(result.recommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.agentSyncLiveCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCockfighting, Fanex.ExtAcc.Customer.HideCricket, Fanex.ExtAcc.Customer.HideAllbet, Fanex.ExtAcc.Customer.HideVoidbridge, Fanex.ExtAcc.Customer.HideNG2, Fanex.ExtAcc.Customer.HideFishingWorld, Fanex.ExtAcc.Customer.HideLottery, Fanex.ExtAcc.Customer.HideBullfighting);
+                    Fanex.ExtAcc.Customer.GetMemberList(result.recommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.agentSyncLiveCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCockfighting, Fanex.ExtAcc.Customer.HideCricket);
                 }
             } else {
                 $('#msgNoinfo').css('display', 'block');
@@ -1033,12 +1017,11 @@
     GetProductSettings: function (customerProductStatus, isCheckUpline) {
         isCheckUpline = typeof (isCheckUpline) == 'undefined' ? true : isCheckUpline;
         var productSettings = [];
-        var currentSiteProduct, currentProduct, isShow;
 
         for (var i = 0, max = siteLevelProducts.length; i < max; i++) {
-            currentSiteProduct = siteLevelProducts[i];
-            currentProduct = customerProductStatus[currentSiteProduct.Id];
-            isShow = isCheckUpline ? currentProduct.upline.isShow : currentProduct.isShow;
+            var currentSiteProduct = siteLevelProducts[i];
+            var currentProduct = customerProductStatus[currentSiteProduct.Id];
+            var isShow = isCheckUpline ? currentProduct.upline.isShow : currentProduct.isShow;
             if (isShow) {
                 productSettings.push({
                     productId: currentSiteProduct.Id,

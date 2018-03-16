@@ -121,32 +121,10 @@
             addSuperEditMultipleMastersMenuItem(20, 'Cricket');
         }
 
-        if (!this.HideAllbet) {
-            addSuperEditMultipleMastersMenuItem(21, 'Allbet');
-        }
+        for (var i = 0, max = this.UplineProductSettings.length; i < max; i++) {
+            var productSetting = this.UplineProductSettings[i];
 
-        if (!this.HideVoidbridge) {
-            addSuperEditMultipleMastersMenuItem(22, 'Macau Games');
-        }
-
-        if (!this.HideNG2) {
-            addSuperEditMultipleMastersMenuItem(23, ng2Text);
-        }
-
-        if (!this.HideFishingWorld) {
-            addSuperEditMultipleMastersMenuItem(24, 'Fishing World');
-        }
-
-        if (!this.HideLottery) {
-            addSuperEditMultipleMastersMenuItem(28, 'Lottery');
-        }
-
-        if (!this.HideLucky3) {
-            addSuperEditMultipleMastersMenuItem(26, 'Lucky 3');
-        }
-
-        if (!this.HideBullfighting) {
-            addSuperEditMultipleMastersMenuItem(30, 'Bullfighting');
+            addSuperEditMultipleMastersMenuItem(productSetting.productId, productSetting.productName);
         }
 
         if (this.AllowDoubleCommMaster) {
@@ -251,32 +229,10 @@
             addMasterEditMultipleAgentsMenuItem(20, 'Cricket');
         }
 
-        if (!this.HideAllbet) {
-            addMasterEditMultipleAgentsMenuItem(21, 'Allbet');
-        }
+        for (var i = 0, max = this.UplineProductSettings.length; i < max; i++) {
+            var productSetting = this.UplineProductSettings[i];
 
-        if (!this.HideVoidbridge) {
-            addMasterEditMultipleAgentsMenuItem(22, 'Macau Games');
-        }
-
-        if (!this.HideNG2) {
-            addMasterEditMultipleAgentsMenuItem(23, ng2Text);
-        }
-
-        if (!this.HideFishingWorld) {
-            addMasterEditMultipleAgentsMenuItem(24, 'Fishing World');
-        }
-
-        if (!this.HideLottery) {
-            addMasterEditMultipleAgentsMenuItem(28, 'Lottery');
-        }
-
-        if (!this.HideLucky3) {
-            addMasterEditMultipleAgentsMenuItem(26, 'Lucky 3');
-        }
-
-        if (!this.HideBullfighting) {
-            addMasterEditMultipleAgentsMenuItem(30, 'Bullfighting');
+            addMasterEditMultipleAgentsMenuItem(productSetting.productId, productSetting.productName);
         }
 
         if (this.AllowDoubleCommAgent) {
@@ -509,32 +465,10 @@
             addUplineEditMemberMenuItems(20, 'Cricket');
         }
 
-        if (!this.HideAllbetMember) {
-            addUplineEditMemberMenuItems(21, 'Allbet');
-        }
+        for (var i = 0, max = this.UplineProductSettings.length; i < max; i++) {
+            var productSetting = this.UplineProductSettings[i];
 
-        if (!this.HideVoidbridgeMember) {
-            addUplineEditMemberMenuItems(22, 'Macau Games');
-        }
-
-        if (!this.HideNG2Member) {
-            addUplineEditMemberMenuItems(23, ng2Text);
-        }
-
-        if (!this.HideFishingWorldMember) {
-            addUplineEditMemberMenuItems(24, 'Fishing World');
-        }
-
-        if (!this.HideLotteryMember) {
-            addUplineEditMemberMenuItems(28, 'Lottery');
-        }
-
-        if (!this.HideLucky3) {
-            addUplineEditMemberMenuItems(26, 'Lucky 3');
-        }
-
-        if (!this.HideBullfightingMember) {
-            addUplineEditMemberMenuItems(30, 'Bullfighting');
+            addUplineEditMemberMenuItems(productSetting.productId, productSetting.productName);
         }
 
         if (this.AllowDoubleComm) {
@@ -665,86 +599,6 @@ Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe = function (uplineId, uplineRol
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 400),
             false, false, 1);
     }
-};
-
-Fanex.ExtAcc.Customer.ShowEditSingleSportsbook2 = function (custid, uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 16, 'Sportsbook 2');
-};
-
-Fanex.ExtAcc.Customer.ShowEditMultipleSportsbook2 = function (uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 16, 'Sportsbook 2');
-};
-
-Fanex.ExtAcc.Customer.ShowEditSingleCricket = function (custid, uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 20, 'Cricket');
-};
-
-Fanex.ExtAcc.Customer.ShowEditMultipleCricket = function (uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 20, 'Cricket');
-};
-
-Fanex.ExtAcc.Customer.ShowEditSingleAllbet = function (custid, uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 21, 'Allbet');
-};
-
-Fanex.ExtAcc.Customer.ShowEditMultipleAllbet = function (uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 21, 'Allbet');
-};
-
-Fanex.ExtAcc.Customer.ShowEditSingleVoidbridge = function (custid, uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 22, 'Macau Games');
-};
-
-Fanex.ExtAcc.Customer.ShowEditMultipleVoidbridge = function (uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 22, 'Macau Games');
-};
-
-Fanex.ExtAcc.Customer.ShowEditSingleFishingWorld = function (custid, uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 24, 'Fishing World');
-};
-
-Fanex.ExtAcc.Customer.ShowEditMultipleFishingWorld = function (uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 24, 'Fishing World');
-};
-
-Fanex.ExtAcc.Customer.ShowEditSingleNG2 = function (custid, uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 23, ng2Text);
-};
-
-Fanex.ExtAcc.Customer.ShowEditMultipleNG2 = function (uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 23, ng2Text);
-};
-
-Fanex.ExtAcc.Customer.ShowEditSingleVirtualSports = function (custid, uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 5, 'Virtual Sports');
-};
-
-Fanex.ExtAcc.Customer.ShowEditMultipleVirtualSports = function (uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 5, 'Virtual Sports');
-};
-
-Fanex.ExtAcc.Customer.ShowEditSingleLottery = function (custid, uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 28, 'Lottery');
-};
-
-Fanex.ExtAcc.Customer.ShowEditMultipleLottery = function (uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 28, 'Lottery');
-};
-
-Fanex.ExtAcc.Customer.ShowEditSingleLucky3 = function (custid, uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 26, 'Lucky 3');
-};
-
-Fanex.ExtAcc.Customer.ShowEditMultipleLucky3 = function (uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 26, 'Lucky 3');
-};
-
-Fanex.ExtAcc.Customer.ShowEditSingleBullfighting = function (custid, uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(custid, uplineRoleId, targetRoleId, 30, 'Bullfighting');
-};
-
-Fanex.ExtAcc.Customer.ShowEditMultipleBullfighting = function (uplineRoleId, targetRoleId) {
-    Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts(uplineRoleId, targetRoleId, 30, 'Bullfighting');
 };
 
 Fanex.ExtAcc.Customer.ShowEditProductForSingleCust = function (custid, uplineRoleId, targetRoleId, productId, productName) {

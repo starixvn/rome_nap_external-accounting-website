@@ -611,14 +611,20 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
     var rows = $.parseJSON(dataSource.rows);
     var options = null;
     var bodyRows = [];
+    var rowsLength = rows.length;
 
-    if (rows.length > 0) {
+    if (rowsLength > 0) {
         this.hasSecurityCode = rows[0].UplineHasSecurityCode || rows[0].HasSecurityCode;
+
+        var firstMasterId = rows[0].custid;
+        this.UplineProductSettings = this.GetProductSettings(dataSource.customerProductStatus[firstMasterId], true);
+    } else {
+        this.UplineProductSettings = [];
     }
 
     this.DataSource = rows;
-    var isMyanmarOdds = rows.length > 0 ? rows[0].IsMyanmarOdds : false;
-    for (var i = 0; i < rows.length; i++) {
+    var isMyanmarOdds = rowsLength > 0 ? rows[0].IsMyanmarOdds : false;
+    for (var i = 0; i < rowsLength; i++) {
         var currentRow = rows[i];
         var cssRow = !currentRow.enabled ? 'rowDisabled' : currentRow.closed ? Fanex.ExtAcc.Customer.GetClosedClassName(currentRow) : currentRow.suspended ? 'rowSuspended' : '';
 
@@ -744,7 +750,7 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
     }
 
     var currentPage = 0;
-    currentPage = (rows.length <= Fanex.ExtAcc.Customer.ItemsPerPage || (parseInt(rows.length / Fanex.ExtAcc.Customer.ItemsPerPage) < Fanex.ExtAcc.Customer.CurrentPage)) ? 0 : Fanex.ExtAcc.Customer.CurrentPage;
+    currentPage = (rowsLength <= Fanex.ExtAcc.Customer.ItemsPerPage || (parseInt(rowsLength / Fanex.ExtAcc.Customer.ItemsPerPage) < Fanex.ExtAcc.Customer.CurrentPage)) ? 0 : Fanex.ExtAcc.Customer.CurrentPage;
     Fanex.ExtAcc.Customer.CurrentPage = currentPage;
     var numberOfFrozenColumn = 6;
     var widthDevice = top.$(top.window).width();
@@ -768,7 +774,7 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
         pagerOption: {
             itemsPerPageArray: [50, 100, 500],
             currentPage: Fanex.ExtAcc.Customer.CurrentPage,
-            totalItem: rows.length,
+            totalItem: rowsLength,
             itemsPerPage: Fanex.ExtAcc.Customer.ItemsPerPage,
             afterPagedFunction: function (options) {
                 Fanex.ExtAcc.Customer.CurrentPage = options.currentPage;
