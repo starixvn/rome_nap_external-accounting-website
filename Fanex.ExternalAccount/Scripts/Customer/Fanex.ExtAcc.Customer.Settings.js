@@ -70,12 +70,12 @@ Fanex.ExtAcc.Customer.Settings = {
         });
         $('#tab12').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(16, "#sportsbook2Frame", "#tabs-7");
+            Fanex.ExtAcc.Customer.Settings.RenderDCS(16, "#sportsbook2Frame", "#tabs-12");
         });
        
         $('#tab14').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(20, "#cricketFrame", "#tabs-8");
+            Fanex.ExtAcc.Customer.Settings.RenderDCS(20, "#cricketFrame", "#tabs-14");
         });
 
         $('.dynamic-setting-tab').bind('click', function () {
