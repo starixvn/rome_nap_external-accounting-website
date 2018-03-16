@@ -19,7 +19,7 @@ function LoadSB() {
 function LoadVirtualSports() {
     Fanex.CustomerSetting.Core.BlockUI();
     var url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=5&customerId=" + custId + "&sssss=v&customerLevel=4&isreadonly=false&groupName=" + parent.$('#selectedGroupName').html() + '&v=0001');
-    document.getElementById('virtualsports').src = url;
+    document.getElementById('product-5').src = url;
     setTimeout(function () {
         Fanex.CustomerSetting.Core.UnBlockUI();
     }, 1000);
