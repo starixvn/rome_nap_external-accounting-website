@@ -132,7 +132,8 @@
                     }
                 }
 
-                parent.$(".icon-filter").click(parent.Fanex.ExtAcc.Customer.showHideFilter);
+                parent.$(".icon-filter").off('click').on('click',parent.Fanex.ExtAcc.Customer.showHideFilter);
+                parent.Fanex.ExtAcc.Customer.bindOrientationChange();
 
                 switch (roleId) {
                     case 4:
@@ -169,6 +170,7 @@
     };
 
     $scope.Init = function () {
+        alert(1);
         $(window).bind('orientationchange', function (e) {
             var calculatePopupheight = $scope.shouldCalculatePopupHeight && isMobile.phone;
             if (!calculatePopupheight) {

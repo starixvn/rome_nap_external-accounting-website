@@ -214,7 +214,10 @@
         Fanex.ExtAcc.InitSuggestion();
 
         $(".icon-filter").click($this.showHideFilter);
-
+        Fanex.ExtAcc.Customer.bindOrientationChange();
+       
+    },
+    bindOrientationChange: function () {
         $(window).bind('orientationchange', function (e) {
             var calculatePopupheight = Fanex.ExtAcc.Customer.shouldCalculatePopupHeight && isMobile.phone;
             if (!calculatePopupheight) {
@@ -229,7 +232,7 @@
             else {
                 height = isLandscape ? Fanex.ExtAcc.Customer.landscapeHeight : Fanex.ExtAcc.Customer.portraitHeight;
             }
-
+            //alert(height);
             var dialog = top.$('.ui-dialog');
             dialog.height((height + 34) + 'px');
 

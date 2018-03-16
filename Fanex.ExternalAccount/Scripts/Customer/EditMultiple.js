@@ -16,6 +16,7 @@
                 name: "Edit Multiple Double Comm",
                 className: "iconEnableEdit",
                 callback: function (key, opt) {
+                    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = false;
                     Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm?id=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName),
                         'Edit Multiple Double Commission For Losing Tickets',
                         430, 150, false, false, 1);
@@ -64,7 +65,12 @@
                 name: "Edit Multiple Keno",
                 className: "iconEnableEdit",
                 callback: function () {
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 700, false, null, 1);
+                    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
+                    Fanex.ExtAcc.Form.ShowFrame(
+                        resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
+                        900,
+                        Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                        false, null, 1);
                 }
             };
 
@@ -86,8 +92,13 @@
                 name: "Edit Multiple ColossusBets",
                 className: "iconEnableEdit",
                 callback: function () {
+                    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
                     url = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&srecommend=" + Fanex.ExtAcc.Customer.superId + "&isMultipleEdit=1&userId=" + parent.userId + "&roleId=3&groupName=" + parent.$('#selectedGroupName').html();
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple ColossusBets Setting' : 'Edit ColossusBets Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 400, false, null, 1);
+                    Fanex.ExtAcc.Form.ShowFrame(
+                        resolveClientUrl(url), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple ColossusBets Setting' : 'Edit ColossusBets Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
+                        900,
+                        Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                        false, null, 1);
                 }
             };
 
@@ -134,6 +145,7 @@
                 name: "Edit Multiple Double Comm",
                 className: "iconEnableEdit",
                 callback: function (key, opt) {
+                    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = false;
                     Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm?id=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName),
                         'Edit Multiple Double Commission For Losing Tickets',
                         430, 150, false, false, 1);
@@ -182,7 +194,12 @@
                 name: "Edit Multiple Keno",
                 className: "iconEnableEdit",
                 callback: function () {
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 700, false, null, 1);
+                    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
+                    Fanex.ExtAcc.Form.ShowFrame(
+                        resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
+                        900,
+                        Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                        false, null, 1);
                 }
             };
 
@@ -204,8 +221,13 @@
                 name: "Edit Multiple ColossusBets",
                 className: "iconEnableEdit",
                 callback: function () {
+                    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
                     url = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&mrecommend=" + Fanex.ExtAcc.Customer.masterId + "&isMultipleEdit=1&userId=" + parent.userId + "&roleId=2&groupName=" + parent.$('#selectedGroupName').html();
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple ColossusBets Setting' : 'Edit ColossusBets Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 400, false, null, 1);
+                    Fanex.ExtAcc.Form.ShowFrame(
+                        resolveClientUrl(url), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple ColossusBets Setting' : 'Edit ColossusBets Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
+                        900,
+                        Fanex.ExtAcc.Customer.GetPopupHeight(270, 400),
+                        false, null, 1);
                 }
             };
 
@@ -252,6 +274,7 @@
                 name: "Edit Multiple Double Comm",
                 className: "iconEnableEdit",
                 callback: function (key, opt) {
+                    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = false;
                     Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm?id=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName),
                         'Edit Multiple Double Commission For Losing Tickets',
                         430, 150, false, false, 1);
@@ -375,25 +398,40 @@
                     agentKN: {
                         name: "Edit Multiple Keno",
                         callback: function () {
+                            Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 700, false, null, 1);
+                            Fanex.ExtAcc.Form.ShowFrame(
+                                resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
+                                900,
+                                Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                                false, null, 1);
                         }
                     },
                     superKN: {
                         name: "Super Edit Multiple Keno",
                         callback: function () {
+                            Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 700, false, null, 1);
+                            Fanex.ExtAcc.Form.ShowFrame(
+                                resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
+                                900,
+                                Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                                false, null, 1);
                         }
                     },
                     masterKN: {
                         name: "Master Edit Multiple Keno",
                         callback: function () {
+                            Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 700, false, null, 1);
+                            Fanex.ExtAcc.Form.ShowFrame(
+                                resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
+                                900,
+                                Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                                false, null, 1);
                         }
                     }
                 }
@@ -438,8 +476,13 @@
                 name: "Edit Multiple ColossusBets",
                 className: "iconEnableEdit",
                 callback: function () {
+                    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
                     url = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&recommend=" + Fanex.ExtAcc.Customer.agentId + "&isMultipleEdit=1&userId=" + parent.userId + "&roleId=1&groupName=" + parent.$('#selectedGroupName').html();
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple ColossusBets Setting' : 'Edit ColossusBets Setting <font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 400, false, null, 1);
+                    Fanex.ExtAcc.Form.ShowFrame(
+                        resolveClientUrl(url), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple ColossusBets Setting' : 'Edit ColossusBets Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
+                        900,
+                        Fanex.ExtAcc.Customer.GetPopupHeight(270, 400),
+                        false, null, 1);
                 }
             };
         }
@@ -485,6 +528,7 @@
                 name: "Edit Multiple Double Comm",
                 className: "iconEnableEdit",
                 callback: function (key, opt) {
+                    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = false;
                     Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm?id=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName),
                         'Edit Multiple Double Commission For Losing Tickets',
                         430, 150, false, false, 1);
@@ -512,11 +556,19 @@ Fanex.ExtAcc.Customer.UpdateMultipleDoubleComm = function (allow) {
 
 Fanex.ExtAcc.Customer.ShowEditMultiplePT = function () {
     var ret = this.IdsAndNames();
-
+    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
     if (!this.IsMultiple)
-        Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditPT?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit PT Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 888, 700, false, false, 1);
+        Fanex.ExtAcc.Form.Show(
+            resolveClientUrl('SportsbookSetting/EditPT?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit PT Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
+            888,
+            Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+            false, false, 1);
     else
-        Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditMultiplePT?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Multiple Sportsbook Setting', 894, 700, false, false, 1);
+        Fanex.ExtAcc.Form.Show(
+            resolveClientUrl('SportsbookSetting/EditMultiplePT?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Multiple Sportsbook Setting',
+            894,
+            Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+            false, false, 1);
 };
 
 Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe = function (uplineId, uplineRoleId, targetRoleId) {
@@ -541,6 +593,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe = function (uplineId, uplineRol
         }
     }
 
+    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
     if (this.IsMultiple) {
         var goldDeluxeUsernames = '';
         var goldDeluxeCustIds = '';
@@ -564,7 +617,11 @@ Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe = function (uplineId, uplineRol
         document.getElementById('language').value = 'E';
         document.getElementById('groupName').value = Fanex.ExtAcc.Customer.GroupName().groupName;
 
-        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSettingMultiple'), levelText + 'Edit Multiple Gold Deluxe Setting', 900, 400, false, false, 1);
+        Fanex.ExtAcc.Form.ShowFrame(
+            resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSettingMultiple'), levelText + 'Edit Multiple Gold Deluxe Setting',
+            900,
+            Fanex.ExtAcc.Customer.GetPopupHeight(270, 400),
+            false, false, 1);
         $("#targetForm").attr("action", resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSettingMultiple')).submit();
     }
     else {
@@ -578,7 +635,11 @@ Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe = function (uplineId, uplineRol
                 break;
         }
 
-        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Gold Deluxe Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 900, 400, false, false, 1);
+        Fanex.ExtAcc.Form.ShowFrame(
+            resolveClientUrl(url + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Gold Deluxe Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
+            900,
+            Fanex.ExtAcc.Customer.GetPopupHeight(270, 400),
+            false, false, 1);
     }
 };
 
@@ -710,9 +771,14 @@ Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts = function (uplineRoleId, 
         document.getElementById('customerIds').value = CustIds;
         document.getElementById('customerNames').value = Usernames;
         document.getElementById('uplineLevel').value = "";
+        Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
 
         if (document.getElementById('customerIds').value == "") {
-            Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Views/_blank.html'), levelText + 'Edit Multiple ' + productName + ' Setting', 900, 600, false, false, 1);
+            Fanex.ExtAcc.Form.ShowFrame(
+                resolveClientUrl('Views/_blank.html'), levelText + 'Edit Multiple ' + productName + ' Setting',
+                900,
+                Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                false, false, 1);
             return;
         }
 
@@ -723,7 +789,11 @@ Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts = function (uplineRoleId, 
             document.getElementById('uplineLevel').value = uplineRoleId;
         }
 
-        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple ' + productName + ' Setting', 900, 750, false, false, 1);
+        Fanex.ExtAcc.Form.ShowFrame(
+            resolveClientUrl('DCS/ViewCustomerSetting'), levelText + 'Edit Multiple ' + productName + ' Setting',
+            900,
+            Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+            false, false, 1);
         $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
     }
     else {
@@ -778,14 +848,22 @@ Fanex.ExtAcc.Customer.ShowEditMultipleCasino = function () {
     } else if (this.isMasterEditMember) {
         levelText = 'Master ';
     }
-
+    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
     if (!this.IsMultiple) {
-        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(actionName), levelText + 'Edit Casino Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 1064, 700, false, false, 1, null);
+        Fanex.ExtAcc.Form.ShowFrame(
+            resolveClientUrl(actionName), levelText + 'Edit Casino Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
+            1064,
+            Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+            false, false, 1, null);
     } else {
         window.IsMultiple = true;
         window.Ids = this.Ids();
         window.Names = this.Names();
-        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(actionName), levelText + 'Edit Multiple Casino Setting', 1064, 700, false, false, 1, null);
+        Fanex.ExtAcc.Form.ShowFrame(
+            resolveClientUrl(actionName), levelText + 'Edit Multiple Casino Setting',
+            1064,
+            Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+            false, false, 1, null);
     }
 };
 
