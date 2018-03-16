@@ -730,6 +730,7 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
             afterPagedFunction: function (options) {
                 Fanex.ExtAcc.Customer.CurrentPage = options.currentPage;
                 Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
+                Fanex.ExtAcc.Customer.DisableMultipleContextMenu();
             }
         },
         marginRight: 12,

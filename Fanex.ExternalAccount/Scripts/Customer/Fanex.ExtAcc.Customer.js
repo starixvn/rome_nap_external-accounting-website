@@ -1022,6 +1022,15 @@
              portraitHeight;
 
         return height;
-    }
+    },
 
+    DisableMultipleContextMenu: function () {
+        var $editMultDiv = $('#editMult');
+        if ($editMultDiv.length) {
+            $editMultDiv
+                .attr('style', 'cursor: default !important')
+                .attr('onclick', '')
+                .contextMenu(false);
+        }
+    }
 };
