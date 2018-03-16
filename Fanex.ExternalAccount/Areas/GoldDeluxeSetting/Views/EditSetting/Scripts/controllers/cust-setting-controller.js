@@ -58,8 +58,18 @@
                 if (mainResult.IsSuccessful) {
                     $scope.isReadOnly = true;
                     $timeout(function () {
-                        $window.location.href = $window.location.href;
-
+                        if ($scope.isEditMultiple
+                            && $window.parent.actionAfterUpdatedGoldDeluxeSettingMultiple) {
+                            $window.parent.actionAfterUpdatedGoldDeluxeSettingMultiple(isUpdatePartial);
+                        }
+                        else {
+                            if ($window.parent.actionAfterUpdatedLiveCasinoSettingSingle) {
+                                $window.parent.actionAfterUpdatedLiveCasinoSettingSingle(isUpdatePartial);
+                            }
+                            else {
+                                $window.location.href = $window.location.href;
+                            }
+                        }
                     }, fanex.goldDeluxeSetting.TIME_OUT_SHOW_MESSAGE);
                 }
             };

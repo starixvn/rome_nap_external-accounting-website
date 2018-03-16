@@ -95,5 +95,9 @@
         $("#userGroup input").bind("click", function () {
             $(this).autocomplete("search", '');
         });
-    });    
+    });
+
+    window.actionAfterUpdatedGoldDeluxeSettingMultiple = function () {
+        document.getElementById("targetForm").submit();
+    };
 </script>
