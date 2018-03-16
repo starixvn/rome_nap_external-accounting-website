@@ -38,16 +38,16 @@
             };
 
         // Get Product status from data, convert to standard structure
-        public static List<ProductStatus> TransformToProductStatus(DataRow statusRow)
+        public static List<ProductStatus> TransformToProductStatus(DataRow statusRow, bool isSetUplineStatus = false)
             => new List<ProductStatus>
             {
-                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Lucky3], statusRow),
-                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Lottery], statusRow),
-                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.FishingWorld], statusRow),
-                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.NG2], statusRow),
-                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.VoidBridge], statusRow, false),
-                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.AllBet], statusRow, false),
-                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.BullFighting], statusRow)
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Lucky3], statusRow, isSetUplineStatus: isSetUplineStatus),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Lottery], statusRow, isSetUplineStatus: isSetUplineStatus),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.FishingWorld], statusRow, isSetUplineStatus: isSetUplineStatus),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.NG2], statusRow, isSetUplineStatus: isSetUplineStatus),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.VoidBridge], statusRow, false, isSetUplineStatus),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.AllBet], statusRow, false, isSetUplineStatus),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.BullFighting], statusRow, isSetUplineStatus: isSetUplineStatus)
             };
 
         public static List<ObjectInfo> CreateSyncAndHiddenItems(DataRow customerRow, DataTable table3RdDcs)

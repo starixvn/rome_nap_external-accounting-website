@@ -6,12 +6,21 @@
 
     public class ProductStatus
     {
-        public ProductStatus(Product product, DataRow dataRow, bool checkSyncedDownlines = true)
+        private ProductStatus()
+        {
+        }
+
+        public ProductStatus(Product product, DataRow dataRow, bool checkSyncedDownlines = true, bool isSetUplineStatus = false)
         {
             ProductId = product.Id;
             ProductKey = product.Key;
             CheckSyncedDownlines = checkSyncedDownlines;
             SetProductStatus(dataRow);
+
+            if (isSetUplineStatus)
+            {
+                SetUplineProductStatus(dataRow);
+            }
         }
 
         public int ProductId { get; }
@@ -42,6 +51,15 @@
             {
                 IsSyncedDownlines = dataRow.ToBoolean($"Synced{ProductKey}Downline", true);
             }
+        }
+
+        private void SetUplineProductStatus(DataRow dataRow)
+        {
+            Upline = Upline ?? new ProductStatus();
+
+            Upline.IsDisabled = dataRow.ToBoolean($"Disable{ProductKey}Upline");
+            Upline.IsHidden = !ProductSettings.IsShowProduct(ProductId) || dataRow.ToBoolean($"Hide{ProductKey}Upline");
+            Upline.IsSynced = dataRow.ToBoolean($"Synced{ProductKey}Upline", true);
         }
     }
 }

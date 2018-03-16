@@ -27,7 +27,7 @@
         private readonly IMemberService memberService;
         private readonly CustomerDataAccess dataAccess;
         private readonly ISuperService superService;
-        private readonly Func<DataRow, List<ProductStatus>> transformToProductStatusMapping;
+        private readonly Func<DataRow, bool, List<ProductStatus>> transformToProductStatusMapping;
 
         public CustomerStatusServiceImpl(
             CustomerDataAccess dataAccess = null,
@@ -36,7 +36,7 @@
             IAgentService agentService = null,
             IMemberService memberService = null,
             AuthorizationService authorizationService = null,
-            Func<DataRow, List<ProductStatus>> transformToProductStatusMapping = null)
+            Func<DataRow, bool, List<ProductStatus>> transformToProductStatusMapping = null)
         {
             this.dataAccess = dataAccess ?? new CustomerDataAccessImpl();
             this.superService = superService ?? new SuperService();
@@ -122,7 +122,7 @@
             SetColossusBetsStatus(custStatus, statusRow);
             SetGoldDeluxeStatus(custStatus, statusRow);
 
-            foreach (var productStatus in transformToProductStatusMapping(statusRow))
+            foreach (var productStatus in transformToProductStatusMapping(statusRow, false))
             {
                 custStatus.ProductStatusDic.Add(productStatus.ProductId, productStatus);
             }
@@ -215,7 +215,7 @@
                 DisableESports = uplineRow.DisableESports()
             };
 
-            foreach (var productStatus in transformToProductStatusMapping(uplineRow))
+            foreach (var productStatus in transformToProductStatusMapping(uplineRow, false))
             {
                 uplineStatus.ProductStatusDic.Add(productStatus.ProductId, productStatus);
             }

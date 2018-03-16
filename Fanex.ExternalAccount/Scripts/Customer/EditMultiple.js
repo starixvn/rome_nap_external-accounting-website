@@ -32,7 +32,6 @@
             }
         };
     } else if (this.CurrentLevel == this.Master) {
-
         menuItems = {
             sportbook: {
                 name: "Edit Multiple Sportsbook",

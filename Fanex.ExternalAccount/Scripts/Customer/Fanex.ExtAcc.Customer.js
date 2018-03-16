@@ -29,22 +29,27 @@
     HideKeno: false,
     HideGoldDeluxe: false,
     HideColossusBet: false,
+    HideSportsbook2: false,
+    HideCockfighting: false,
     HideCricket: false,
-    HideAllbet: false,
-    HideVoidbridge: false,
-    HideNG2: false,
-    HideFishingWorld: false,
-    HideLucky3: false,
-    HideBullfighting: false,
+    //HideAllbet: false,
+    //HideVoidbridge: false,
+    //HideNG2: false,
+    //HideFishingWorld: false,
+    //HideLucky3: false,
+    //HideBullfighting: false,
 
     HideAllbetMember: false,
     HideVoidbridgeMember: false,
     HideNG2Member: false,
     HideFishingWorldMember: false,
 
-    superSyncCasino: false,    
-    masterSyncCasino: false,    
-    agentSyncCasino: false,   
+    superSyncCasino: false,
+    superSyncLiveCasino: false,
+    masterSyncCasino: false,
+    masterSyncLiveCasino: false,
+    agentSyncCasino: false,
+    agentSyncLiveCasino: false,
 
     isSuperEditMember: false,
     isMasterEditMember: false,
@@ -61,6 +66,7 @@
     MultipleDblCommError: '',
     Usernames: '',
     CustIds: '',
+    LiveCasinoStatuses: '',
 
     AllbetSyncList: [],
     AllbetSyncIdList: [],
@@ -210,32 +216,6 @@
         Fanex.ExtAcc.InitSuggestion();
 
         $(".icon-filter").click($this.showHideFilter);
-        Fanex.ExtAcc.Customer.bindOrientationChange();
-       
-    },
-    bindOrientationChange: function () {
-        top.landscapeHeight =  260;
-        top.portraitHeight = 500;
-        top.shouldCalculatePopupHeight = true;
-        $(window).bind('orientationchange', function (e) {
-            var calculatePopupheight = top.shouldCalculatePopupHeight && isMobile.phone;
-            if (!calculatePopupheight) {
-                return;
-            }
-
-            var height;
-            var isLandscape = window.matchMedia("(orientation: landscape)").matches;
-            if (isMobile.android.phone) {
-                height = isLandscape ? top.portraitHeight : top.landscapeHeight;
-            }
-            else {
-                height = isLandscape ? top.landscapeHeight : top.portraitHeight;
-            }
-            var dialog = top.$('.ui-dialog');
-            dialog.height((height + 34) + 'px');
-
-            top.$("#windowPopup").css("height", height + "px");
-        });
     },
     hideFilter: false,
     showHideFilter: function () {
@@ -445,11 +425,11 @@
         if (this.CurrentLevel == this.Super) {
             Fanex.ExtAcc.Customer.GetSuperList(this.custId);
         } else if (this.CurrentLevel == this.Master) {
-            Fanex.ExtAcc.Customer.GetMasterList(this.superId, this.AllowDoubleComm, this.custId, null, this.superSyncCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCricket, this.HideAllbet, this.HideVoidbridge, this.HideNG2, this.HideFishingWorld, this.HideLottery, this.HideBullfighting);
+            Fanex.ExtAcc.Customer.GetMasterList(this.superId, this.AllowDoubleComm, this.custId, null, this.superSyncCasino, this.superSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet, this.HideVoidbridge, this.HideNG2, this.HideFishingWorld, this.HideLottery, this.HideBullfighting);
         } else if (this.CurrentLevel == this.Agent) {
-            Fanex.ExtAcc.Customer.GetAgentList(this.masterId, this.AllowDoubleComm, this.custId, null, this.masterSyncCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCricket, this.HideAllbet, this.HideVoidbridge, this.HideNG2, this.HideFishingWorld, this.HideLottery, this.HideBullfighting);
+            Fanex.ExtAcc.Customer.GetAgentList(this.masterId, this.AllowDoubleComm, this.custId, null, this.masterSyncCasino, this.masterSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet, this.HideVoidbridge, this.HideNG2, this.HideFishingWorld, this.HideLottery, this.HideBullfighting);
         } else {
-            Fanex.ExtAcc.Customer.GetMemberList(this.agentId, this.AllowDoubleComm, this.custId, null, this.agentSyncCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCricket, this.HideAllbet, this.HideVoidbridge, this.HideNG2, this.HideFishingWorld, this.HideLottery, this.HideBullfighting);
+            Fanex.ExtAcc.Customer.GetMemberList(this.agentId, this.AllowDoubleComm, this.custId, null, this.agentSyncCasino, this.agentSyncLiveCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe, this.HideColossusBet, this.HideSportsbook2, this.HideCockfighting, this.HideCricket, this.HideAllbet, this.HideVoidbridge, this.HideNG2, this.HideFishingWorld, this.HideLottery, this.HideBullfighting);
         }
     },
 
@@ -705,6 +685,7 @@
 
                 Fanex.ExtAcc.Customer.HideSportsbook2 = rows[0].HideMuayThai;
                 Fanex.ExtAcc.Customer.HideCricket = rows[0].HideCricket;
+                Fanex.ExtAcc.Customer.HideCockfighting = rows[0].HideCockFighting;
                 Fanex.ExtAcc.Customer.HideColossusBet = rows[0].HideColossusBet;
                 Fanex.ExtAcc.Customer.HideGoldDeluxe = rows[0].HideGoldDeluxe;
                 Fanex.ExtAcc.Customer.HideKeno = rows[0].HideKeno;
@@ -719,14 +700,17 @@
                 if (result.roleId == 4) {
                     Fanex.ExtAcc.Customer.GetSuperList(rows[0].custid, result);
                 } else if (result.roleId == 3) {
-                    Fanex.ExtAcc.Customer.superSyncCasino = result.syncCasino;                    
-                    Fanex.ExtAcc.Customer.GetMasterList(result.srecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCricket, Fanex.ExtAcc.Customer.HideAllbet, Fanex.ExtAcc.Customer.HideVoidbridge, Fanex.ExtAcc.Customer.HideNG2, Fanex.ExtAcc.Customer.HideFishingWorld, Fanex.ExtAcc.Customer.HideLottery, Fanex.ExtAcc.Customer.HideBullfighting);
+                    Fanex.ExtAcc.Customer.superSyncCasino = result.syncCasino;
+                    Fanex.ExtAcc.Customer.superSyncLiveCasino = result.syncLiveCasino;
+                    Fanex.ExtAcc.Customer.GetMasterList(result.srecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.superSyncLiveCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCockfighting, Fanex.ExtAcc.Customer.HideCricket, Fanex.ExtAcc.Customer.HideAllbet, Fanex.ExtAcc.Customer.HideVoidbridge, Fanex.ExtAcc.Customer.HideNG2, Fanex.ExtAcc.Customer.HideFishingWorld, Fanex.ExtAcc.Customer.HideLottery, Fanex.ExtAcc.Customer.HideBullfighting);
                 } else if (result.roleId == 2) {
                     Fanex.ExtAcc.Customer.masterSyncCasino = result.syncCasino;
-                    Fanex.ExtAcc.Customer.GetAgentList(result.mrecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCricket, Fanex.ExtAcc.Customer.HideAllbet, Fanex.ExtAcc.Customer.HideVoidbridge, Fanex.ExtAcc.Customer.HideNG2, Fanex.ExtAcc.Customer.HideFishingWorld, Fanex.ExtAcc.Customer.HideLottery, Fanex.ExtAcc.Customer.HideBullfighting);
+                    Fanex.ExtAcc.Customer.masterSyncLiveCasino = result.syncLiveCasino;
+                    Fanex.ExtAcc.Customer.GetAgentList(result.mrecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.masterSyncLiveCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCockfighting, Fanex.ExtAcc.Customer.HideCricket, Fanex.ExtAcc.Customer.HideAllbet, Fanex.ExtAcc.Customer.HideVoidbridge, Fanex.ExtAcc.Customer.HideNG2, Fanex.ExtAcc.Customer.HideFishingWorld, Fanex.ExtAcc.Customer.HideLottery, Fanex.ExtAcc.Customer.HideBullfighting);
                 } else {
                     Fanex.ExtAcc.Customer.agentSyncCasino = result.syncCasino;
-                    Fanex.ExtAcc.Customer.GetMemberList(result.recommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCricket, Fanex.ExtAcc.Customer.HideAllbet, Fanex.ExtAcc.Customer.HideVoidbridge, Fanex.ExtAcc.Customer.HideNG2, Fanex.ExtAcc.Customer.HideFishingWorld, Fanex.ExtAcc.Customer.HideLottery, Fanex.ExtAcc.Customer.HideBullfighting);
+                    Fanex.ExtAcc.Customer.agentSyncLiveCasino = result.syncLiveCasino;
+                    Fanex.ExtAcc.Customer.GetMemberList(result.recommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.agentSyncLiveCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe, Fanex.ExtAcc.Customer.HideColossusBet, Fanex.ExtAcc.Customer.HideSportsbook2, Fanex.ExtAcc.Customer.HideCockfighting, Fanex.ExtAcc.Customer.HideCricket, Fanex.ExtAcc.Customer.HideAllbet, Fanex.ExtAcc.Customer.HideVoidbridge, Fanex.ExtAcc.Customer.HideNG2, Fanex.ExtAcc.Customer.HideFishingWorld, Fanex.ExtAcc.Customer.HideLottery, Fanex.ExtAcc.Customer.HideBullfighting);
                 }
             } else {
                 $('#msgNoinfo').css('display', 'block');
@@ -764,6 +748,7 @@
 
         this.Usernames = '';
         this.CustIds = '';
+        this.LiveCasinoStatuses = '';
         this.RnGCasinoStatuses = [];
 
         for (var i = 0; i < divs.length; i++) {
@@ -793,6 +778,7 @@
                 for (var j = 0; j < custids.length; j++) {
                     if (custids[j] == row.custid) {
                         this.Usernames += row.username + ', ';
+                        this.LiveCasinoStatuses += (row.SyncLiveCasino ? '1' : '0') + ',';
                         this.RnGCasinoStatuses.push(row.synccasino ? '1' : '0');
                         continue;
                     }
@@ -1044,13 +1030,26 @@
         return height;
     },
 
-    DisableMultipleContextMenu: function () {
-        var $editMultDiv = $('#editMult');
-        if ($editMultDiv.length) {
-            $editMultDiv
-                .attr('style', 'cursor: default !important')
-                .attr('onclick', '')
-                .contextMenu(false);
+    GetProductSettings: function (customerProductStatus, isCheckUpline) {
+        isCheckUpline = typeof (isCheckUpline) == 'undefined' ? true : isCheckUpline;
+        var productSettings = [];
+        var currentSiteProduct, currentProduct, isShow;
+
+        for (var i = 0, max = siteLevelProducts.length; i < max; i++) {
+            currentSiteProduct = siteLevelProducts[i];
+            currentProduct = customerProductStatus[currentSiteProduct.Id];
+            isShow = isCheckUpline ? currentProduct.upline.isShow : currentProduct.isShow;
+            if (isShow) {
+                productSettings.push({
+                    productId: currentSiteProduct.Id,
+                    productKey: currentSiteProduct.Key,
+                    productName: currentSiteProduct.Name,
+                    isDisabled: currentProduct.isDisabled,
+                    isSynced: currentProduct.isSynced
+                });
+            }
         }
+
+        return productSettings;
     }
 };

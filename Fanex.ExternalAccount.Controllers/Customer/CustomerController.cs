@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Data;
     using System.Diagnostics;
     using System.Globalization;
@@ -21,9 +20,11 @@
     using DTO;
     using DTO.Customer;
     using Excel.Customer.CustomerListPage;
+    using Fanex.ExternalAccount.Module.LeftPanel;
+    using Fanex.Module.NG2.Entities;
     using IBCUtils;
     using Logging.Extensions.Web;
-    using Module.NG2.Entities;
+    using Module.LeftPanel.Models;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using PTEngine.BusinessObjects;
@@ -326,7 +327,7 @@
         {
             var lineInfo = GetLineInfo(Request["groupName"], username, BuildCustomerSetting(username));
             var customers = GetCustomerList(groupName, enabled, closed, suspended, lineInfo);
-            SetEditAllBetVisibility(customers);
+            var customerProductStatus = TransformToCustomerProductStatusList(customers);
             var customers2String = Customers2Json(customers);
             var syncCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncCasino");            
             var allowDoubleComm = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean(lineInfo.RoleId > Role.Agent ? "doubleCommLosing" : "doubleCommLosing1");
@@ -341,7 +342,8 @@
                     recommend = lineInfo.AgentId,
                     lineInfo.CustId,
                     syncCasino,
-                    allowDoubleComm
+                    allowDoubleComm,
+                    customerProductStatus
                 });
         }
 
@@ -355,10 +357,10 @@
             bool? suspended = null)
         {
             var supers = _superService.GetData(CurrentSession.UserId, custId, enabled, closed, suspended, groupName);
-            SetEditAllBetVisibility(supers);
+            var customerProductStatus = TransformToCustomerProductStatusList(supers);
             var supers2Json = Customers2Json(supers);
 
-            return JsonBase(new { records = supers.Rows.Count, rows = supers2Json });
+            return JsonBase(new { records = supers.Rows.Count, rows = supers2Json, customerProductStatus });
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
@@ -369,7 +371,7 @@
             var masters = _masterService.GetData(CurrentSession.UserId, srecommend, custId, enabled, closed, suspended);
             var superId = Utils.ToInt32(srecommend);
             var customerSetting = reportService.SearchCustomerInfo(Request["groupName"], superId, null, isGetUplineInfo: true);
-            SetEditAllBetVisibility(masters);
+            var customerProductStatus = TransformToCustomerProductStatusList(masters);
             var master2Json = Customers2Json(masters);
 
             return JsonBase(
@@ -382,7 +384,8 @@
                     mrecommend = customerSetting.MasterId,
                     recommend = customerSetting.AgentId,
                     customerSetting.CustId,
-                    customerSetting.HasSecurityCode
+                    customerSetting.HasSecurityCode,
+                    customerProductStatus
                 });
         }
 
@@ -395,7 +398,7 @@
 
             var masterId = Utils.ToInt32(mrecommend);
             var customerSetting = reportService.SearchCustomerInfo(Request["groupName"], masterId, null, isGetUplineInfo: true);
-            SetEditAllBetVisibility(agents);
+            var customerProductStatus = TransformToCustomerProductStatusList(agents);
             var ret = Customers2Json(agents);
 
             return JsonBase(
@@ -408,7 +411,8 @@
                     MasterRecommend = customerSetting.MasterId,
                     Recommend = customerSetting.AgentId,
                     customerSetting.CustId,
-                    customerSetting.HasSecurityCode
+                    customerSetting.HasSecurityCode,
+                    customerProductStatus
                 });
         }
 
@@ -420,7 +424,7 @@
             var members = _memberService.GetData(CurrentSession.UserId, recommend, custId, enabled, closed, suspended);
             var agentId = Utils.ToInt32(recommend);
             var customerSetting = reportService.SearchCustomerInfo(Request["groupName"], agentId, null, isGetUplineInfo: true);
-            SetEditAllBetVisibility(members);
+            var customerProductStatus = TransformToCustomerProductStatusList(members);
             var member2Json = Customers2Json(members);
 
             return JsonBase(
@@ -432,7 +436,8 @@
                     srecommend = customerSetting.SuperId,
                     mrecommend = customerSetting.MasterId,
                     recommend = customerSetting.AgentId,
-                    customerSetting.CustId
+                    customerSetting.CustId,
+                    customerProductStatus
                 });
         }
 
@@ -595,7 +600,7 @@
             var customerSetting = BuildCustomerSetting(username);
 
             var customers = GetCustomerList(groupName, enabled, closed, suspended, customerSetting);
-            SetEditAllBetVisibility(customers);
+            TransformToCustomerProductStatusList(customers);
 
             var status = string.Empty;
             if (enabled != null || closed != null || suspended != null)
@@ -702,10 +707,30 @@
             return string.IsNullOrWhiteSpace(userName) ? defaultValue ?? new LineInfo() : new LineInfo();
         }
 
-        private static void SetEditAllBetVisibility(DataTable dataTable)
+
+        private static IDictionary<int, IDictionary<int, ProductStatus>> TransformToCustomerProductStatusList(DataTable dataTable)
         {
-            dataTable.AsEnumerable().ToList().ForEach(n =>
-                n["DisableAllBet"] = n.Field<bool>("DisableAllBet") && n.Field<bool>("DisableAllBetVIP"));
+            int custId;
+            IDictionary<int, ProductStatus> customerProductStatus;
+            var customerProductStatusList = new Dictionary<int, IDictionary<int, ProductStatus>>();
+
+            var customerList = dataTable.AsEnumerable().ToList();
+
+            foreach (var customerRow in customerList)
+            {
+                customerRow["DisableAllBet"] = customerRow.Field<bool>("DisableAllBet") && customerRow.Field<bool>("DisableAllBetVIP");
+                custId = customerRow.Field<int>("custid");
+                customerProductStatus = new Dictionary<int, ProductStatus>();
+
+                foreach (var productStatus in AccountInfoProductConfiguration.TransformToProductStatus(customerRow, true))
+                {
+                    customerProductStatus.Add(productStatus.ProductId, productStatus);
+                }
+
+                customerProductStatusList.Add(custId, customerProductStatus);
+            }
+
+            return customerProductStatusList;
         }
 
         private string Customers2Json(DataTable customers)
