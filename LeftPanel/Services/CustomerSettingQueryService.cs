@@ -79,9 +79,9 @@
             };
 
             AddCasinoStatus(customerRow, customerStatus, enableItems);
-            AddNumberGameStatus(customerRow, customerStatus, enableItems);            
+            AddNumberGameStatus(customerRow, customerStatus, enableItems);
             AddVirtualSportsStatus(productStatusTable, customerStatus, enableItems);
-            AddDoubleCommStatus(customerRow, customerStatus, enableItems);            
+            AddDoubleCommStatus(customerRow, customerStatus, enableItems);
             AddESportsStatus(customerRow, customerStatus, enableItems);
             AddColossusBetsStatus(customerRow, customerStatus, enableItems);
             AddGoldDeluxeStatus(customerRow, customerStatus, enableItems);
@@ -269,7 +269,7 @@
             {
                 details.Add(new ObjectInfo("AddNew", "Add New"));
                 details.Add(new ObjectInfo("Transfer", "Transfer Condition"));
-            }            
+            }
 
             AddCasinoEditLink(customerStatus, details);
             AddVirtualSportsEditLink(customerStatus, details);
@@ -289,7 +289,7 @@
                 details.Add(new ObjectInfo("Cricket", "Cricket"));
             }
         }
-       
+
         private static void AddKenoEditLink(List<ObjectInfo> details)
         {
             if (ProductSettings.IsShowKeno)
@@ -344,10 +344,9 @@
         }
 
         internal static List<ObjectInfo> EditItems(CustomerStatus customerStatus)
-	=> new List<ObjectInfo>
-            {                
-                new ObjectInfo {Key = "EnableKeno", Text = "Enable Keno"}
-            };
+            => !customerStatus.HideKeno ?
+            new List<ObjectInfo> { new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" } } :
+            new List<ObjectInfo>();
 
 #pragma warning disable S1541 // Methods and properties should not be too complex
         internal static Setting AddProductSetting(
@@ -390,8 +389,8 @@
 #pragma warning disable S1067 // Expressions should not be too complex
             // Ricky: this code i cannot refactor because of the complexity
             if (!syncUpline
-                || (!sync && roleId.IsMember()) 
-                || (!hide && !sync) 
+                || (!sync && roleId.IsMember())
+                || (!hide && !sync)
                 || (isCheckSyncDownlines && !isSyncDownlines))
 #pragma warning restore S1067 // Expressions should not be too complex
             {
