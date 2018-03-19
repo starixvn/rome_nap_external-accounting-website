@@ -153,7 +153,7 @@
                     <div id="nodownline" class="no-downline" data-ng-hide="true">No downline list</div>
                 </div>
             </div>
-            <div id="settingInfo" class="setting-info" data-ng-controller="SettingController" data-ng-hide="{{model==null}}">
+            <div id="settingInfo" class="setting-info" data-ng-controller="SettingController" data-ng-hide="{{model==null}}" data-ng-init="Init()">
                 <ul class="tabs nav-tabs">
                     <li><a href="#tab-1">Setting</a></li>
                     <li><a href="#tab-2">Detail</a></li>
@@ -175,7 +175,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-content detail-tab" id="tab-2" data-ng-controller="SettingController" data-ng-init="Init()">
+                <div class="tab-content detail-tab" id="tab-2" >
                     <div class="subTab-parent">
                         <div data-ng-click="ViewSubTab('sub-edit')" id="sub-edit"
                              class="pull-left subTab subTab-active">Edit</div>

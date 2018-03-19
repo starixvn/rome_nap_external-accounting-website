@@ -128,7 +128,7 @@
             name: menuName,
             className: !isSynced ? "iconUnsyncEdit" : (isDisabled ? "iconDisableEdit" : "iconEnableEdit"),
             callback: function () {
-                    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 showEditPopUpFunc(custId, 2, 1);

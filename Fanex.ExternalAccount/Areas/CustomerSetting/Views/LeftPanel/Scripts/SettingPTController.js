@@ -1,10 +1,6 @@
 ﻿function LeftPanelController($scope, $element) {
     $scope.model = model;
 
-    $scope.landscapeHeight;
-    $scope.portraitHeight;
-    $scope.shouldCalculatePopupHeight;
-
     $scope.GetCustomerList = function () {
         var roleId = $scope.model.personalInfo.roleId.value;
         var custId = $scope.model.personalInfo.custId.value;
@@ -133,7 +129,6 @@
                 }
 
                 parent.$(".icon-filter").off('click').on('click',parent.Fanex.ExtAcc.Customer.showHideFilter);
-                parent.Fanex.ExtAcc.Customer.bindOrientationChange();
 
                 switch (roleId) {
                     case 4:
@@ -175,26 +170,6 @@
              $scope.portraitHeight;
 
         return height;
-    };
-
-    $scope.Info = function () {
-        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-
-        var url = parent.resolveClientUrl('Customer/EditInfo/?' +
-            'custId=' + $scope.model.personalInfo.custId.value +
-            "&groupName=" + parent.$('#selectedGroupName').html());
-        var title = parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
-
-        $scope.landscapeHeight = 280;
-        $scope.portraitHeight = 500;
-        $scope.shouldCalculatePopupHeight = true;
-        parent.Fanex.ExtAcc.Form.Show(url, title, 500, $scope.getPopupHeight(), false);
-    };    
-
-    $scope.Transfer = function () {
-        $scope.shouldCalculatePopupHeight = false;
-        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditTransferCondition/?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), parent.titles[1] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 600, 250, false, false, 1);
-
     };
 
     $scope.Casino = function () {

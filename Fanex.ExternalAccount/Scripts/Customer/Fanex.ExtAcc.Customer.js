@@ -57,10 +57,6 @@
     Suspended: false,
     TransferCondition: false,
 
-    landscapeHeight: 260,
-    portraitHeight: 500,
-    shouldCalculatePopupHeight: true,
-
     URL: '',
     MultipleDblCommError: '',
     Usernames: '',
@@ -218,8 +214,11 @@
        
     },
     bindOrientationChange: function () {
+        top.landscapeHeight =  260;
+        top.portraitHeight = 500;
+        top.shouldCalculatePopupHeight = true;
         $(window).bind('orientationchange', function (e) {
-            var calculatePopupheight = Fanex.ExtAcc.Customer.shouldCalculatePopupHeight && isMobile.phone;
+            var calculatePopupheight = top.shouldCalculatePopupHeight && isMobile.phone;
             if (!calculatePopupheight) {
                 return;
             }
@@ -227,10 +226,10 @@
             var height;
             var isLandscape = window.matchMedia("(orientation: landscape)").matches;
             if (isMobile.android.phone) {
-                height = isLandscape ? Fanex.ExtAcc.Customer.portraitHeight : Fanex.ExtAcc.Customer.landscapeHeight;
+                height = isLandscape ? top.portraitHeight : top.landscapeHeight;
             }
             else {
-                height = isLandscape ? Fanex.ExtAcc.Customer.landscapeHeight : Fanex.ExtAcc.Customer.portraitHeight;
+                height = isLandscape ? top.landscapeHeight : top.portraitHeight;
             }
             //alert(height);
             var dialog = top.$('.ui-dialog');

@@ -480,6 +480,7 @@ Fanex.ExtAcc = {
 
         setTimeout(Fanex.ExtAcc.CalculateUserConnectionSpeed, 8000);
     },
+
     CalculateUserConnectionSpeed: function () {
         var iframe = document.getElementById('connection-speed');
 

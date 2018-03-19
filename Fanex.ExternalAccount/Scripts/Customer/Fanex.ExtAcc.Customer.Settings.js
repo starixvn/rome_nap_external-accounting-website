@@ -51,7 +51,7 @@ Fanex.ExtAcc.Customer.Settings = {
 
         $('#tab8').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(5, "#virtualSportsFrame", "#tabs-3");
+            Fanex.ExtAcc.Customer.Settings.RenderDCS(5, "#virtualSportsFrame", "#tabs-8");
         });
 
         $('#tab9').bind('click', function () {
@@ -224,8 +224,8 @@ Fanex.ExtAcc.Customer.Settings = {
         else {
             url += 1 + "&UplineLevel=2";
         }
-
         $(tabId).height($('#leftFrame').height() - 10);
+
         $(tabId).css('display', 'block');
         Fanex.ExtAcc.Customer.Settings.LoadProductSetting(frameId, resolveClientUrl(url));
     },

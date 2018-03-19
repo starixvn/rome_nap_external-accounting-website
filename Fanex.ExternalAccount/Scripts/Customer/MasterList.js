@@ -49,7 +49,7 @@
             name: "Sportsbook",
             className: "iconEnableEdit",
             callback: function () {
-                Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
@@ -66,7 +66,7 @@
             name: "PT",
             className: "iconEnableEdit",
             callback: function (key, opt) {
-                Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Form.Show(
@@ -81,7 +81,7 @@
             name: "Min PT",
             className: "iconEnableEdit",
             callback: function (key, opt) {
-                Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Form.Show(
@@ -96,7 +96,7 @@
             name: "Bet Setting",
             className: "iconEnableEdit",
             callback: function (key, opt) {
-                Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Form.Show(
@@ -111,7 +111,7 @@
             name: "Commission",
             className: "iconEnableEdit",
             callback: function (key, opt) {
-                Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = false;
+                top.shouldCalculatePopupHeight = false;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Form.Show(
@@ -130,7 +130,7 @@
                     name: "Casino",
                     className: "iconDisableEdit",
                     callback: function () {
-                        Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
+                        top.shouldCalculatePopupHeight = true;
                         Fanex.ExtAcc.Customer.UserId = custId;
                         Fanex.ExtAcc.Customer.IsMultiple = false;
                         Fanex.ExtAcc.Form.ShowFrame(
@@ -147,7 +147,7 @@
                     name: "Casino",
                     className: "iconEnableEdit",
                     callback: function () {
-                        Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
+                        top.shouldCalculatePopupHeight = true;
                         Fanex.ExtAcc.Customer.UserId = custId;
                         Fanex.ExtAcc.Customer.IsMultiple = false;
                         Fanex.ExtAcc.Form.ShowFrame(
@@ -165,7 +165,7 @@
                 name: "Casino",
                 className: "iconUnsyncEdit",
                 callback: function () {
-                    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
+                    top.shouldCalculatePopupHeight = true;
                     Fanex.ExtAcc.Customer.UserId = custId;
                     Fanex.ExtAcc.Customer.IsMultiple = false;
                     Fanex.ExtAcc.Form.ShowFrame(
@@ -189,8 +189,7 @@
             name: menuName,
             className: !isSynced ? "iconUnsyncEdit" : (isDisabled == true ? "iconDisableEdit" : "iconEnableEdit"),
             callback: function () {
-                    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
-                    Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 showEditPopUpFunc(custId, 4, 3);
@@ -209,7 +208,7 @@
             name: "Keno",
             className: disableKeno ? "iconDisableEdit" : "iconEnableEdit",
             callback: function () {
-                Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                     Fanex.ExtAcc.Form.ShowFrame(
@@ -229,7 +228,7 @@
             name: "Gold Deluxe",
             className: disableGoldDeluxe == true ? "iconDisableEdit" : "iconEnableEdit",
             callback: function () {
-                Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=4&formType=1&level=3" + "&uplineId=" + Fanex.ExtAcc.Customer.superId + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + parent.$('#selectedGroupName').html();
                 Fanex.ExtAcc.Form.ShowFrame(
@@ -250,7 +249,7 @@
             name: "Colossus Bets",
             className: disableColossusBets == true ? "iconDisableEdit" : "iconEnableEdit",
             callback: function () {
-                Fanex.ExtAcc.Customer.shouldCalculatePopupHeight = true;
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 url = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&srecommend=" + Fanex.ExtAcc.Customer.superId + "&isMultipleEdit=0&userId=" + parent.userId + "&roleId=3&groupName=" + parent.$('#selectedGroupName').html();
