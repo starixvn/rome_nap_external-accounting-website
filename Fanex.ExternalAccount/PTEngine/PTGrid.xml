@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet type="text/xsl" href="PTGrid.xslt"?>
 <PTGrid name="ptGrid1">
-  <NumerousSportType>14</NumerousSportType>
+  <NumerousSportType>13</NumerousSportType>
   <SportTypes>
     <SportType id="1" name="Soccer" collapsed="false" resourcekey="Soccer">
       <BetTypeGroupSets>
@@ -121,7 +121,7 @@
                 </BetType>
                 <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
                 </BetType>
-				<BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
+                <BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -160,7 +160,7 @@
                   <RepresentativeForBetType id="141" name="Highest Scoring Half Home Team" />
                   <RepresentativeForBetType id="142" name="Highest Scoring Half Away Team" />
                 </BetType>
-				<BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
+                <BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -181,7 +181,7 @@
                 </BetType>
                 <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
                 </BetType>
-				<BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
+                <BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -204,7 +204,7 @@
                 </BetType>
                 <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
                 </BetType>
-				<BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
+                <BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -223,7 +223,7 @@
                 </BetType>
                 <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
                 </BetType>
-				<BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
+                <BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -246,7 +246,7 @@
                 </BetType>
                 <BetType id="20" name="Money Line" minWidth="140" resourcekey="moneyline">
                 </BetType>
-				<BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
+                <BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
                 </BetType>
               </BetTypes>
             </BetTypeGroup>
@@ -268,7 +268,22 @@
           </BetTypeGroups>
         </BetTypeGroupSet>
       </BetTypeGroupSets>
-    </SportType>    
+    </SportType>
+
+    <SportType id="154" name="HR Fixed Odds">
+      <BetTypeGroupSets>
+        <BetTypeGroupSet isLive="false">
+          <BetTypeGroups>
+            <BetTypeGroup>
+              <BetTypes>
+                <BetType id="20" name="Money Line">
+                </BetType>
+              </BetTypes>
+            </BetTypeGroup>
+          </BetTypeGroups>
+        </BetTypeGroupSet>
+      </BetTypeGroupSets>
+    </SportType>
 
     <SportType id="161" name="Number Game" resourcekey="numbergame">
       <BetTypeGroupSets>
