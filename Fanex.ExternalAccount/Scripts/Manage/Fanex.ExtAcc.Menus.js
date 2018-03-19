@@ -124,9 +124,6 @@ Fanex.ExtAcc.Menus = {
     MenuId: null,
 
     URL: '',
-    landscapeHeight: 260,
-    portraitHeight: 330,
-    shouldCalculatePopupHeight: true,
 
     $this: null,
 
@@ -245,23 +242,23 @@ Fanex.ExtAcc.Menus = {
         });
 
         $('#jqbutton').bind('click', function () {
-            Fanex.ExtAcc.Menus.shouldCalculatePopupHeight = true;
-            Fanex.ExtAcc.Menus.portraitHeight = 500;
+            top.shouldCalculatePopupHeight = true;
+            top.portraitHeight = 500;
+            top.landscapeHeight = 260;
 
-            Fanex.ExtAcc.Form.Show(resolveClientUrl("Menu/AddMenu"), $.parseJSON(menuTitles).Create, 400, Fanex.ExtAcc.Menus.GetPopupHeight(Fanex.ExtAcc.Menus.landscapeHeight, Fanex.ExtAcc.Menus.portraitHeight), false);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl("Menu/AddMenu"), $.parseJSON(menuTitles).Create, 400, Fanex.ExtAcc.Menus.GetPopupHeight(top.landscapeHeight, top.portraitHeight), false);
         });
 
         Fanex.ExtAcc.OnResize = function () {
             try {
-                $('#jqgrid').fanexGrid('resizeGrid');
+                $('#jqgrid-menu').fanexGrid('resizeGrid');
             }
             catch (err) {
             }
         }
 
         $(window).bind('orientationchange', function (e) {
-            //alert(1);
-            var calculatePopupheight = Fanex.ExtAcc.Menus.shouldCalculatePopupHeight && isMobile.phone;
+            var calculatePopupheight = top.shouldCalculatePopupHeight && isMobile.phone;
             if (!calculatePopupheight) {
                 return;
             }
@@ -269,10 +266,10 @@ Fanex.ExtAcc.Menus = {
             var height;
             var isLandscape = window.matchMedia("(orientation: landscape)").matches;
             if (isMobile.android.phone) {
-                height = isLandscape ? Fanex.ExtAcc.Menus.portraitHeight : Fanex.ExtAcc.Menus.landscapeHeight;
+                height = isLandscape ? top.portraitHeight : top.landscapeHeight;
             }
             else {
-                height = isLandscape ? Fanex.ExtAcc.Menus.landscapeHeight : Fanex.ExtAcc.Menus.portraitHeight;
+                height = isLandscape ? top.landscapeHeight : top.portraitHeight;
             }
 
             var dialog = top.$('.ui-dialog');
@@ -293,7 +290,7 @@ Fanex.ExtAcc.Menus = {
     RenderGrid: function (options) {
         try {
             // Init Grid jqgrid
-            $('#jqgrid').fanexGrid(options);
+            $('#jqgrid-menu').fanexGrid(options);
             Fanex.ExtAcc.UnBlockUI();
 
             $('#mainGrid').css('visibility', 'visible');
@@ -309,21 +306,22 @@ Fanex.ExtAcc.Menus = {
 
     ShowEdit: function (menuId, title) {
         Fanex.ExtAcc.Menus.MenuId = menuId;
-        Fanex.ExtAcc.Menus.portraitHeight = 500;
-        Fanex.ExtAcc.Menus.shouldCalculatePopupHeight = true;
+        top.portraitHeight = 500;
+        top.landscapeHeight = 260;
+        top.shouldCalculatePopupHeight = true;
 
         Fanex.ExtAcc.Form.Show(
             resolveClientUrl('Menu/EditMenu/' + menuId),
             title,
             400,
-            Fanex.ExtAcc.Menus.GetPopupHeight(Fanex.ExtAcc.Menus.landscapeHeight, Fanex.ExtAcc.Menus.portraitHeight),
+            Fanex.ExtAcc.Menus.GetPopupHeight(top.landscapeHeight, top.portraitHeight),
             false);
     },
 
     ShowActivate: function (menuId, menuName) {
         var titles = $.parseJSON(menuTitles);
         var title = '';
-        Fanex.ExtAcc.Menus.shouldCalculatePopupHeight = false;
+        top.shouldCalculatePopupHeight = false;
 
         title = $('#menu-' + menuId).attr('class') == 'menuActive' ? 'Deactivate Menu' : 'Activate Menu';
 
@@ -344,7 +342,7 @@ Fanex.ExtAcc.Menus = {
 
         var titles = $.parseJSON(menuTitles);
         var title = titles.Delete;
-        Fanex.ExtAcc.Menus.shouldCalculatePopupHeight = false;
+        top.shouldCalculatePopupHeight = false;
 
         Fanex.ExtAcc.Form.ConfirmBox(
             'Delete Menu',

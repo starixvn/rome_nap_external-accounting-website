@@ -125,10 +125,6 @@ Fanex.ExtAcc.Function = {
 
     URL: '',
 
-    landscapeHeight: 260,
-    portraitHeight: 330,
-    shouldCalculatePopupHeight: true,
-
     $this: null,
 
     Init: function () {
@@ -245,7 +241,7 @@ Fanex.ExtAcc.Function = {
 
         Fanex.ExtAcc.OnResize = function () {
             try {
-                $("#jqgrid").fanexGrid("resizeGrid");
+                $("#jqgrid-function").fanexGrid("resizeGrid");
                 //$("#jqgrid").fanexGrid("resizeHeight", 160);
             }
             catch (err) {
@@ -253,8 +249,10 @@ Fanex.ExtAcc.Function = {
         }
 
         $(window).bind('orientationchange', function (e) {
-            //alert(1);
-            var calculatePopupheight = Fanex.ExtAcc.Function.shouldCalculatePopupHeight && isMobile.phone;
+
+            top.landscapeHeight = 260;
+
+            var calculatePopupheight = top.shouldCalculatePopupHeight && isMobile.phone;
             if (!calculatePopupheight) {
                 return;
             }
@@ -262,10 +260,10 @@ Fanex.ExtAcc.Function = {
             var height;
             var isLandscape = window.matchMedia("(orientation: landscape)").matches;
             if (isMobile.android.phone) {
-                height = isLandscape ? Fanex.ExtAcc.Function.portraitHeight : Fanex.ExtAcc.Function.landscapeHeight;
+                height = isLandscape ? top.portraitHeight : top.landscapeHeight;
             }
             else {
-                height = isLandscape ? Fanex.ExtAcc.Function.landscapeHeight : Fanex.ExtAcc.Function.portraitHeight;
+                height = isLandscape ? top.landscapeHeight : top.portraitHeight;
             }
 
             var dialog = top.$('.ui-dialog');
@@ -286,7 +284,7 @@ Fanex.ExtAcc.Function = {
     RenderGrid: function (options) {
         try {
             // Init Grid jqgrid
-            $('#jqgrid').fanexGrid(options);
+            $('#jqgrid-function').fanexGrid(options);
             Fanex.ExtAcc.UnBlockUI();
 
             $('#mainGrid').css('visibility', 'visible');
@@ -302,14 +300,14 @@ Fanex.ExtAcc.Function = {
 
     ShowEdit: function (funcId, title) {
         Fanex.ExtAcc.Function.FunctionId = funcId;
-        Fanex.ExtAcc.Function.portraitHeight = 500;
-        Fanex.ExtAcc.Function.shouldCalculatePopupHeight = true;
+        top.portraitHeight = 500;
+        top.shouldCalculatePopupHeight = true;
 
         Fanex.ExtAcc.Form.Show(
             resolveClientUrl('Function/EditFunction/' + funcId),
             title,
             410,
-            Fanex.ExtAcc.Function.GetPopupHeight(Fanex.ExtAcc.Function.landscapeHeight, Fanex.ExtAcc.Function.portraitHeight),
+            Fanex.ExtAcc.Function.GetPopupHeight(top.landscapeHeight, top.portraitHeight),
             false,
             function () {
                 var url = resolveClientUrl("Function/PolicyList/?funcId=" + $('#FuncID').val());
@@ -398,7 +396,7 @@ Fanex.ExtAcc.Function = {
         var titles = $.parseJSON(menuTitles);
         var title = '';
         var warning = 'This function will be <font style="color: #ff0000">{0}</font> on grant permission form<br> on PRODUCTION environment';
-        Fanex.ExtAcc.Function.shouldCalculatePopupHeight = false;
+        top.shouldCalculatePopupHeight = false;
 
         title = $('#test-' + funcId).attr('class') == 'menuActive' ? titles.Deactivate : titles.Activate;
         warning = $('#test-' + funcId).attr('class') == 'menuActive' ?
@@ -419,7 +417,7 @@ Fanex.ExtAcc.Function = {
 
     ShowDelete: function (funcId, funcName) {
         Fanex.ExtAcc.Function.FunctionId = funcId;
-        Fanex.ExtAcc.Function.shouldCalculatePopupHeight = false;
+        top.shouldCalculatePopupHeight = false;
 
         var titles = $.parseJSON(menuTitles);
         var title = titles.Delete;
@@ -436,12 +434,12 @@ Fanex.ExtAcc.Function = {
     },
 
     AddNew: function () {
-        Fanex.ExtAcc.Function.portraitHeight = 500;
-        Fanex.ExtAcc.Function.shouldCalculatePopupHeight = true;
+        top.portraitHeight = 500;
+        top.shouldCalculatePopupHeight = true;
         Fanex.ExtAcc.Form.Show(
             resolveClientUrl("Function/AddFunction"), $.parseJSON(menuTitles).CreateFunction,
             400,
-            Fanex.ExtAcc.Function.GetPopupHeight(Fanex.ExtAcc.Function.landscapeHeight, Fanex.ExtAcc.Function.portraitHeight),
+            Fanex.ExtAcc.Function.GetPopupHeight(top.landscapeHeight, top.portraitHeight),
             false,
             function () {
                 var url = resolveClientUrl("Function/PolicyList/?funcId=1&addNew=true");

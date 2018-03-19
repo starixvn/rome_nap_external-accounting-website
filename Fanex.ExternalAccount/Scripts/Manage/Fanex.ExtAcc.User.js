@@ -129,10 +129,6 @@ Fanex.ExtAcc.User = {
     $this: null,
     options: null,
 
-    landscapeHeight: 260,
-    portraitHeight: 330,
-    shouldCalculatePopupHeight: true,
-
     Init: function () {
         //$('#mainGrid').css('visibility', 'hidden');
         $this = this;
@@ -219,12 +215,19 @@ Fanex.ExtAcc.User = {
             Fanex.ExtAcc.Form.Show(resolveClientUrl("User/AddExistUser"), $.parseJSON(menuTitles).CreateExistUser, 400, 200, false);
         });
 
-        Fanex.ExtAcc.OnResize = $this.resizeReportGrid;
+        Fanex.ExtAcc.OnResize = function () {
+            try {
+                $('#jqgrid-user').fanexGrid('resizeGrid');
+            }
+            catch (err) {
+            }
+        }
+        //$this.resizeReportGrid;
+
         $(".icon-filter").click($this.showHideFilter);
 
         $(window).bind('orientationchange', function (e) {
-            //alert(1);
-            var calculatePopupheight = Fanex.ExtAcc.User.shouldCalculatePopupHeight && isMobile.phone;
+            var calculatePopupheight = top.shouldCalculatePopupHeight && isMobile.phone;
             if (!calculatePopupheight) {
                 return;
             }
@@ -232,10 +235,10 @@ Fanex.ExtAcc.User = {
             var height;
             var isLandscape = window.matchMedia("(orientation: landscape)").matches;
             if (isMobile.android.phone) {
-                height = isLandscape ? Fanex.ExtAcc.User.portraitHeight : Fanex.ExtAcc.User.landscapeHeight;
+                height = isLandscape ? top.portraitHeight : top.landscapeHeight;
             }
             else {
-                height = isLandscape ? Fanex.ExtAcc.User.landscapeHeight : Fanex.ExtAcc.User.portraitHeight;
+                height = isLandscape ? top.landscapeHeight : top.portraitHeight;
             }
 
             var dialog = top.$('.ui-dialog');
@@ -305,7 +308,7 @@ Fanex.ExtAcc.User = {
                     $('#msgNoinfo').css('display', 'none');
                     $('#jqgrid').css('display', 'block');
                     // Init Grid jqgrid
-                    $('#jqgrid').fanexGrid(Fanex.ExtAcc.User.options);
+                    $('#jqgrid-user').fanexGrid(Fanex.ExtAcc.User.options);
 
                     var divs = $('div');
                     var activeUsers = 0;
@@ -340,7 +343,7 @@ Fanex.ExtAcc.User = {
     },
 
     ShowEdit: function (userId, title) {
-        Fanex.ExtAcc.User.shouldCalculatePopupHeight = false;
+        top.shouldCalculatePopupHeight = false;
         Fanex.ExtAcc.User.UserId = userId;
         Fanex.ExtAcc.Form.Show(
             resolveClientUrl('User/EditUser/' + userId),
@@ -357,7 +360,7 @@ Fanex.ExtAcc.User = {
         title = $('#' + userId).attr('class') == 'menuActive' ? 'Deactivate User' : 'Activate User';
 
         Fanex.ExtAcc.User.UserId = userId;
-        Fanex.ExtAcc.User.shouldCalculatePopupHeight = false;
+        top.shouldCalculatePopupHeight = false;
 
         Fanex.ExtAcc.Form.ConfirmBox(
             title,
@@ -372,7 +375,7 @@ Fanex.ExtAcc.User = {
 
     ShowResetPwd: function (userId, isOwner, username) {
         Fanex.ExtAcc.User.UserId = userId;
-        Fanex.ExtAcc.User.shouldCalculatePopupHeight = false;
+        top.shouldCalculatePopupHeight = false;
 
         var titles = $.parseJSON(menuTitles);
         var title = titles.ResetPwd;
@@ -394,14 +397,14 @@ Fanex.ExtAcc.User = {
         params.userId = userId;
         params.username = username;
         params.groupName = groupName;
-        Fanex.ExtAcc.User.portraitHeight = 500;
-        Fanex.ExtAcc.User.shouldCalculatePopupHeight = true;
+        top.portraitHeight = 500;
+        top.shouldCalculatePopupHeight = true;
 
         Fanex.ExtAcc.Form.Show(
             resolveClientUrl('User/GrantPermission'),
             'Grant Permission',
             520,
-            Fanex.ExtAcc.User.GetPopupHeight(Fanex.ExtAcc.User.landscapeHeight, Fanex.ExtAcc.User.portraitHeight),
+            Fanex.ExtAcc.User.GetPopupHeight(top.landscapeHeight, top.portraitHeight),
             false,
             null,
             0,

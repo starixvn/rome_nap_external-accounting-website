@@ -127,9 +127,6 @@ Fanex.ExtAcc.Group = {
 
     $this: null,
 
-    landscapeHeight: 260,
-    portraitHeight: 330,
-    shouldCalculatePopupHeight: true,
     Init: function () {
         Fanex.ExtAcc.BlockUI();
 
@@ -221,21 +218,23 @@ Fanex.ExtAcc.Group = {
         });
 
         $('#jqbutton').bind('click', function () {
-            Fanex.ExtAcc.Group.shouldCalculatePopupHeight = false;
+            top.shouldCalculatePopupHeight = false;
             Fanex.ExtAcc.Form.Show(resolveClientUrl('Group/AddGroup'), 'Add New Group', 400, 300, false);
         });
 
         Fanex.ExtAcc.OnResize = function () {
             try {
-                $("#jqgrid").fanexGrid("resizeGrid");
+                $("#jqgrid-group").fanexGrid("resizeGrid");
             }
             catch (err) {
             }
         }
 
         $(window).bind('orientationchange', function (e) {
-            //alert(1);
-            var calculatePopupheight = Fanex.ExtAcc.Group.shouldCalculatePopupHeight && isMobile.phone;
+
+            top.landscapeHeight =  260;
+
+            var calculatePopupheight = top.shouldCalculatePopupHeight && isMobile.phone;
             if (!calculatePopupheight) {
                 return;
             }
@@ -243,10 +242,10 @@ Fanex.ExtAcc.Group = {
             var height;
             var isLandscape = window.matchMedia("(orientation: landscape)").matches;
             if (isMobile.android.phone) {
-                height = isLandscape ? Fanex.ExtAcc.Group.portraitHeight : Fanex.ExtAcc.Group.landscapeHeight;
+                height = isLandscape ? top.portraitHeight : top.landscapeHeight;
             }
             else {
-                height = isLandscape ? Fanex.ExtAcc.Group.landscapeHeight : Fanex.ExtAcc.Group.portraitHeight;
+                height = isLandscape ? top.landscapeHeight : top.portraitHeight;
             }
 
             var dialog = top.$('.ui-dialog');
@@ -267,7 +266,7 @@ Fanex.ExtAcc.Group = {
     RenderGrid: function (options) {
         try {
             // Init Grid jqgrid
-            $('#jqgrid').fanexGrid(options);
+            $('#jqgrid-group').fanexGrid(options);
             Fanex.ExtAcc.UnBlockUI();
 
             $('#mainGrid').css('visibility', 'visible');
@@ -282,7 +281,7 @@ Fanex.ExtAcc.Group = {
     },
 
     ShowEdit: function (groupId, title) {
-        Fanex.ExtAcc.Group.shouldCalculatePopupHeight = false;
+        top.shouldCalculatePopupHeight = false;
         Fanex.ExtAcc.Group.GroupId = groupId;
         Fanex.ExtAcc.Form.Show(
             resolveClientUrl('Group/EditGroup/' + groupId),
@@ -299,14 +298,13 @@ Fanex.ExtAcc.Group = {
 
         params.groupId = groupId;
         params.groupName = groupName;
-        Fanex.ExtAcc.Group.portraitHeight = 500;
-        Fanex.ExtAcc.Group.shouldCalculatePopupHeight = true;
-
+        top.portraitHeight = 500;
+        top.shouldCalculatePopupHeight = true;
         Fanex.ExtAcc.Form.Show(
             resolveClientUrl('Group/GrantPermission'),
             'Grant Permission',
             400,
-            Fanex.ExtAcc.Group.GetPopupHeight(Fanex.ExtAcc.Group.landscapeHeight, Fanex.ExtAcc.Group.portraitHeight),
+            Fanex.ExtAcc.Group.GetPopupHeight(top.landscapeHeight, top.portraitHeight),
             false,
             null,
             0,
@@ -319,7 +317,7 @@ Fanex.ExtAcc.Group = {
 
         var titles = $.parseJSON(menuTitles);
         var title = titles.Delete;
-        Fanex.ExtAcc.Group.shouldCalculatePopupHeight = false;
+        top.shouldCalculatePopupHeight = false;
 
         Fanex.ExtAcc.Form.ConfirmBox(
             'Delete Group',
