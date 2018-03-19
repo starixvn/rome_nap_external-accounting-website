@@ -9,48 +9,58 @@
     public class ProductStatusAuthorizeService : IProductStatusAuthorizeService
     {
         private readonly ExternalAccountAuthenticateAttribute _authenticationService;
+        private readonly AuthorizationService _authorization;
 
         public ProductStatusAuthorizeService()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public ProductStatusAuthorizeService(ExternalAccountAuthenticateAttribute authenticationService)
+        public ProductStatusAuthorizeService(
+            ExternalAccountAuthenticateAttribute authenticationService,
+            AuthorizationService authorization)
         {
             _authenticationService = authenticationService ?? new ExternalAccountAuthenticateAttribute();
+            _authorization = authorization ?? new AuthorizationServiceImpl();
         }
 
         public bool CanView(AuthorizationContext filterContext)
         {
-            int productId;
-
-            if (int.TryParse(filterContext.HttpContext.Request["productid"], out productId))
-            {
-                return HasPermission(AuthenticateAction.AuthenticationType.Read, productId);
-            }
-
-            return false;
+            return HasPermission(filterContext, AuthenticateAction.AuthenticationType.Read);
         }
 
         public bool CanUpdate(AuthorizationContext filterContext)
         {
-            int productId;
+            return HasPermission(filterContext, AuthenticateAction.AuthenticationType.Host);
+        }
 
-            if (int.TryParse(filterContext.HttpContext.Request["productid"], out productId))
+        private bool HasPermission(AuthorizationContext filterContext, AuthenticateAction.AuthenticationType role)
+        {
+            int productId;
+            var productIdParam = role == AuthenticateAction.AuthenticationType.Read
+                ? filterContext.HttpContext.Request["productid"]
+                : GetActionParameterValue(filterContext.Controller.ValueProvider, "productid");
+
+            if (int.TryParse(productIdParam, out productId))
             {
-                return HasPermission(AuthenticateAction.AuthenticationType.Host, productId);
+                var enableFunction = Enum.GetName(typeof(EnableStatusProductFunction), productId);
+                var hasPermission = role == AuthenticateAction.AuthenticationType.Read
+                    ? _authenticationService.AllowReadByAuthenticationParam(enableFunction)
+                    : _authenticationService.AllowUpdateByAuthenticationParam(enableFunction);
+
+                return hasPermission && _authorization.IsBelong();
             }
 
             return false;
         }
 
-        public bool HasPermission(AuthenticateAction.AuthenticationType role, int productId)
+        private static string GetActionParameterValue(IValueProvider valueProvider, string parameterName)
         {
-            var enableFunction = Enum.GetName(typeof(EnableStatusProductFunction), productId);
+            var valueProviderResult = valueProvider.GetValue(parameterName);
 
-            return role == AuthenticateAction.AuthenticationType.Read
-                ? _authenticationService.AllowReadByAuthenticationParam(enableFunction)
-                : _authenticationService.AllowUpdateByAuthenticationParam(enableFunction);
+            return valueProviderResult != null
+                ? valueProviderResult.AttemptedValue
+                : string.Empty;
         }
     }
 }

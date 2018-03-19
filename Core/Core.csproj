@@ -135,7 +135,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.0-beta08\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.0-beta13\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
@@ -322,6 +322,7 @@
     <Compile Include="Authorization\DCS\ProductSettingDcsFunction.cs" />
     <Compile Include="Authorization\GoldDeluxe\GoldDeluxeAuthorizationService.cs" />
     <Compile Include="Authorization\KenoCheckBelongingService.cs" />
+    <Compile Include="Authorization\ProductListAuthorization.cs" />
     <Compile Include="Authorization\ProductStatus\EnableStatusProduct.cs" />
     <Compile Include="Authorization\ProductStatus\ProductStatusAuthorizeService.cs" />
     <Compile Include="Authorization\ProductStatus\ProductStatusUser.cs" />

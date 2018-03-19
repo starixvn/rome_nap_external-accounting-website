@@ -193,7 +193,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.0-beta08\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.0-beta13\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
@@ -846,6 +846,10 @@
     <Content Include="Areas\NG2\Styles\Images\icon_warning.gif" />
     <Content Include="Areas\NG2\Styles\um.css" />
     <Content Include="Areas\NG2\UM.aspx" />
+    <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.min.js" />
+    <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting.min.js" />
+    <Content Include="Areas\ProductStatusSetting\Styles\images\ajax-loader.png" />
+    <Content Include="Areas\ProductStatusSetting\Styles\product-status-setting.min.css" />
     <Content Include="Areas\Statement\StatementSection.config" />
     <Content Include="Areas\Statement\Views\Guideline\MemberGuildeline.cshtml" />
     <Content Include="Areas\Statement\Views\Guideline\SMAGuildeline.cshtml" />
@@ -2614,6 +2618,11 @@
     </Content>
     <Content Include="assets\bundles\statement\index.min.js.map">
       <DependentUpon>index.min.js</DependentUpon>
+    </Content>
+    <Content Include="Areas\ProductStatusSetting\Views\Index.cshtml" />
+    <Content Include="Areas\ProductStatusSetting\Views\MultipleView.cshtml" />
+    <Content Include="Areas\ProductStatusSetting\Views\web.config">
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\ONEbook.NG2.API.config" />
     <Content Include="assets\bundles\otp\otp.min.js.map">

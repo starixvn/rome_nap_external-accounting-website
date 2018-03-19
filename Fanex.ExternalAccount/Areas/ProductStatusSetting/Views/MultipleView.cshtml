@@ -1,0 +1,131 @@
+﻿@model QueryViewModel
+
+@{
+    Layout = null;
+    var isMultipleBetTypes = Model.ProductStatus.Count() > 1;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="@Url.Content("~/Areas/ProductStatusSetting/Styles/product-status-setting.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div id="sectionMessage" class="msg-container hide"></div>
+    @if (Model.ProductStatus.Count() > 0)
+    {
+        <table class="tbl-product margin-top10" id="tbl-product">
+            <thead>
+                <tr>
+                    <th class="title" colspan="@(Model.CustRole + 1)"> @Model.GetRoleName(Model.CustRole): @Model.CustName</th>
+                </tr>
+                <tr>
+                    <th rowspan="2"></th>
+                    @RenderHeaderLevelName(Model.CustRole + 1, isMultipleBetTypes)
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ProductStatus)
+                {
+                    <tr>
+                        <td class="bettype-name">@item.Name</td>
+                        <td>@RenderStatus(item.SportType, item.BetType, item.IsDisabled, item.IsDisabledUpline, Model.CustRole)</td>
+
+                        @if (item.Master != null)
+                        {
+                            <td>@RenderStatus(item.SportType, item.BetType, item.IsDisabled, item.IsDisabledUpline, 3)</td>
+                        }
+
+                        @if (item.Agent != null)
+                        {
+                            <td>@RenderStatus(item.SportType, item.BetType, item.IsDisabled, item.IsDisabledUpline, 2)</td>
+                        }
+
+                        @if (item.Member != null)
+                        {
+                            <td>@RenderStatus(item.SportType, item.BetType, item.IsDisabled, item.IsDisabledUpline, 1)</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="margin-top10 align-right">
+            <button type="button" class="btn btn-reset" id="btnReset">@Resources.Reset</button>
+            <button type="button" class="margin-left5 btn" id="btnSubmit">@Resources.Submit</button>
+        </div>
+    }
+    else
+    {
+        <div id="sectionMessage" class="msg-container">
+            <div class="alerterror align-center"> @Resources.ThereIsNoData</div>
+        </div>
+    }
+
+    @Html.Hidden("custId", Model.CustId)
+    @Html.Hidden("custRole", Model.CustRole)
+    @Html.Hidden("productId", Model.ProductId)
+    @Html.Hidden("enabled", Resources.Enabled)
+    @Html.Hidden("disabled", Resources.Disabled)
+    @Html.Hidden("thereIsNoChange", Resources.ThereIsNoChange)
+    @Html.Hidden("updateStatusFailed", Resources.UpdateStatusFailed)
+    @Html.AntiForgeryToken()
+
+    <script type="text/javascript" src="@Url.Content("~/Areas/ProductStatusSetting/Scripts/product-status-setting-multiple.js")"></script>
+</body>
+</html>
+
+@helper RenderHeaderLevelName(int roleId, bool isMultipleBetTypes)
+{
+while (roleId > 0 && --roleId > 0)
+{
+    var id = string.Format("header_{0}", roleId);
+    var roleName = Model.GetRoleName((byte)roleId);
+
+        <th>
+            @if (isMultipleBetTypes)
+            {
+                <div class="current-role">@roleName</div>
+                            <div class="all-status">
+                                <input type="checkbox" class="checkbox-hide" id="@id"
+                                       data-roleid="@roleId" checked ="checked"/>
+
+                                <label for="@id" class="enabled">
+                                    @Resources.EnableAll
+                                </label>
+                            </div>
+            }
+            else
+            {
+                @Model.GetRoleName(Model.CustRole)
+            }
+        </th>
+    }
+}
+
+@helper RenderStatus(
+    int sportType, 
+    int betType, 
+    bool isDisabled, 
+    bool isDisabledUpline, 
+    byte roleId)
+{
+
+var id = string.Format("{0}_{1}", roleId, betType);
+var roleName = Model.GetRoleName(roleId);
+
+    <input type="checkbox" class="checkbox-hide" id="@id"
+           data-roleid="@roleId"
+           data-disabledupline="@isDisabledUpline"
+           data-sporttype="@sportType"
+           data-bettype="@betType"
+           data-originstatus="@isDisabled"
+           checked ="checked"
+           @(isDisabledUpline ? "disabled " : string.Empty) />
+
+        <label for="@id" class="enabled">
+            @Resources.EnableAll
+        </label>
+
+}

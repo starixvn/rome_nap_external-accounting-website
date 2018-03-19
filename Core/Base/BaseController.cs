@@ -6,6 +6,7 @@
     using System.Data;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
@@ -15,16 +16,12 @@
     using CustomerSetting.Module.Core.Criteria;
     using CustomerSetting.Module.Core.Models;
     using CustomerSetting.Module.Core.Services.Impl;
-    using CustomerSetting.Module.Core.Services.Interface;
     using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
-    using DTO.UserControl;
     using Logging.Extensions.Web;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using PTEngine.BusinessObjects;
-    using RemotingRef;
-    using Reports.WinLossDetail;
     using Service.Impl.Customer.Casino;
     using Shared;
     using Utilities;
@@ -295,79 +292,14 @@
                 new CheckCustomerIsSpecialSiteCriteria { UserName = username });
         }
 
-        protected List<KeyValuePair<string, string>> GetProductList(bool isHideInactiveProduct = true)
+        protected static List<KeyValuePair<string, string>> GetProductList()
         {
-            var list = new List<KeyValuePair<string, string>>();
-            var products = ProductsConfiguration.Instance.ProductCollection;
-            IServiceBase permissionService = new ServiceBase();
-
-            var checkIsInternalAdminResult =
-                permissionService.CheckCustomerIsInternalAdmin(
-                    new CheckCustomerIsInternalAdminCriteria { CustID = CurrentSession.CustId });
-
-            var isAuthorized = permissionService.CheckCustomerHasSpecialSitePermission(
-                new CheckCustomerHasSpecialSiteFunctionPermissionCriteria { CustID = CurrentSession.CustId });
-
-            foreach (ProductElementConfiguration product in products)
-            {
-                if (!IsHiddenProduct(product))
-                {
-                    if ((isHideInactiveProduct && product.IsHideInactiveProduct)
-                        || (product.IsSpecial
-                        && AdminDoesNotHavePermissionOnSpecialProduct(checkIsInternalAdminResult, isAuthorized)))
-                    {
-                        continue;
-                    }
-
-                    list.Add(new KeyValuePair<string, string>(
-                        product.Id,
-                        product.ProductId == 0 ? product.Name : GetProductNameFromRemotingRef(product.ProductId)));
-                }
-            }
-
-            return list;
+            return new ProductListAuthorization()
+                .GetProductList()
+                .Select(product => new KeyValuePair<string, string>(
+                    product.Id,
+                    product.ProductId == 0 ? product.Name : ProductListAuthorization.GetProductNameFromRemotingRef(product.ProductId)))
+                .ToList();
         }
-
-        protected static bool AdminDoesNotHavePermissionOnSpecialProduct(
-            CheckCustomerIsInternalAdminResult checkIsInternalAdminResult,
-            bool isAuthorized)
-            => checkIsInternalAdminResult.IsInternalAdmin
-               && (!checkIsInternalAdminResult.IsAllowAccess || !isAuthorized);
-
-        protected bool IsHiddenProduct(ProductElementConfiguration product)
-        {
-            if (product.Hide)
-            {
-                return true;
-            }
-
-            if (product.ShowForGroups.Equals("*", StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
-
-            var groups = product.ShowForGroups.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-
-            var requestUrl = Request != null && Request.UrlReferrer != null
-                ? Request.UrlReferrer.AbsolutePath.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries)
-                : new string[0];
-            var groupName = requestUrl.Length == 0 || !CurrentSession.IsInternalAdmin
-                ? CurrentSession.CurrencyGroup
-                : requestUrl[requestUrl.Length - 1];
-
-            foreach (var group in groups)
-            {
-                if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase)
-                    || Group.IsOfficeGroup(groupName))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        protected static string GetProductNameFromRemotingRef(int productId) =>
-            RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en", null);
     }
 }

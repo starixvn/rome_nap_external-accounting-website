@@ -2,6 +2,7 @@
 {
     public enum EnableStatusProductFunction
     {
+        EnableNumberGame = 3,
         EnableVirtualSports = 5,
         EnableCasino = 6,
         Keno = 8,

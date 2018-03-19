@@ -114,7 +114,7 @@
             var productStatusConfig = new ProductStatusConfiguration()
                 .UseAuthorizeService(new ProductStatusAuthorizeService())
                 .UseUserSession(new ProductStatusUser())
-                .SetUnAuthorizedUrl("~/AccessDenied.aspx");
+                .SetUnAuthorizedUrl("~/ThirdPartyProductStatus/AccessDenied");
             ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
         }
 

@@ -1,0 +1,212 @@
+﻿@model QueryViewModel
+
+@{
+    Layout = null;
+    var isMultipleBetTypes = Model.ProductStatus.Count() > 1;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="@Url.Content("~/Areas/ProductStatusSetting/Styles/product-status-setting.min.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div id="sectionMessage" class="msg-container hide"></div>
+    @if (Model.ProductStatus.Count() > 0)
+    {
+        <table class="tbl-product margin-top10" id="tbl-product">
+            <thead>
+                <tr>
+                    <th class="title" colspan="@(Model.CustRole * 2)"> @Model.GetRoleName(Model.CustRole): @Model.CustName</th>
+                </tr>
+                <tr>
+                    <th rowspan="2"></th>
+                    <th rowspan="2">
+                        @if (isMultipleBetTypes)
+                        {
+                            var roleName = Model.GetRoleName(Model.CustRole);
+                            <div class="current-role">@roleName</div>
+                            <div class="all-status">
+                                <span class="enabled" data-roleid="@Model.CustRole"
+                                      title="@String.Format(Resources.SearchAccountTHeadTooltip, Resources.Enable.ToLower(), roleName)">
+                                    @Resources.Enable
+                                </span>
+                                <span class="disabled" data-roleid="@Model.CustRole"
+                                       title="@String.Format(Resources.SearchAccountTHeadTooltip, Resources.Enable.ToLower(), roleName)">
+                                    @Resources.Disable
+                                </span>
+                            </div>
+                        }
+                        else
+                        {
+                            @Model.GetRoleName(Model.CustRole)
+                        }
+                    </th>
+                    @RenderHeaderLevelName(Model.CustRole)
+                </tr>
+                <tr>
+                    @RenderHeaderStatus(Model.CustRole, isMultipleBetTypes)
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ProductStatus)
+                {
+                    <tr>
+                        <td class="bettype-name">@item.Name</td>
+                        <td>@RenderStatus(item.SportType, item.BetType, item.IsDisabled, item.IsDisabledUpline, Model.CustRole)</td>
+
+                        @if (item.Master != null)
+                        {
+                            @RenderDownlineStatus(item.SportType, item.BetType, 3, item.IsDisabledUpline, item.Master)
+                        }
+
+                        @if (item.Agent != null)
+                        {
+                            @RenderDownlineStatus(item.SportType, item.BetType, 2, item.IsDisabledUpline, item.Agent)
+                        }
+
+                        @if (item.Member != null)
+                        {
+                            @RenderDownlineStatus(item.SportType, item.BetType, 1, item.IsDisabledUpline, item.Member)
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="margin-top10 align-right">
+            <button type="button" class="btn btn-reset" id="btnReset">@Resources.Reset</button>
+            <button type="button" class="margin-left5 btn" id="btnSubmit">@Resources.Submit</button>
+        </div>
+    }
+    else
+    {
+        <div id="sectionMessage" class="msg-container">
+            <div class="alerterror align-center"> @Resources.ThereIsNoData</div>
+        </div>
+    }
+
+    @Html.Hidden("custId", Model.CustId)
+    @Html.Hidden("custRole", Model.CustRole)
+    @Html.Hidden("productId", Model.ProductId)
+    @Html.Hidden("enabled", Resources.Enabled)
+    @Html.Hidden("disabled", Resources.Disabled)
+    @Html.Hidden("thereIsNoChange", Resources.ThereIsNoChange)
+    @Html.Hidden("updateStatusFailed", Resources.UpdateStatusFailed)
+    @Html.AntiForgeryToken()
+
+    <script type="text/javascript" src="@Url.Content("~/Areas/ProductStatusSetting/Scripts/product-status-setting.min.js")"></script>
+</body>
+</html>
+
+@helper RenderHeaderLevelName(byte roleId)
+{
+    while (roleId > 0 && --roleId > 0)
+    {
+        <th colspan="2">
+            @Model.GetRoleName(roleId)
+        </th>
+    }
+}
+
+@helper RenderHeaderStatus(byte roleId, bool isMultipleBetTypes)
+{
+    while (roleId > 0 && --roleId > 0)
+    {
+        @RenderHeader(roleId, isMultipleBetTypes);
+    }
+}
+
+@helper RenderStatus(
+    int sportType, 
+    int betType, 
+    bool isDisabled, 
+    bool isDisabledUpline, 
+    byte roleId)
+{
+var labelText = isDisabled ? Resources.Disabled : Resources.Enabled;
+var labelClass = isDisabledUpline ? "gray" : labelText.ToLowerInvariant();
+var id = string.Format("{0}_{1}_{2}", labelClass, roleId, betType);
+var roleName = Model.GetRoleName(roleId);
+
+var tbodyEnableDownlineTooltip = String.Format(Resources.TBodyDownlineTooltip, Resources.Enable.ToLower(), roleName + "s");
+var tbodyDisableDownlineTooltip = String.Format(Resources.TBodyDownlineTooltip, Resources.Disable.ToLower(), roleName + "s");
+
+    <input type="checkbox" class="checkbox-hide" id="@id"
+           data-roleid="@roleId"
+           data-disabledupline="@isDisabledUpline"
+           data-sporttype="@sportType"
+           data-bettype="@betType"
+           data-originstatus="@isDisabled"
+           title="@tbodyEnableDownlineTooltip"
+           @(isDisabled ? string.Empty : "checked ") 
+           @(isDisabledUpline ? "disabled " : string.Empty) />
+
+        <label for="@id" class="@labelClass"
+               title="@(isDisabled ? tbodyEnableDownlineTooltip : tbodyDisableDownlineTooltip)"
+               data-enabletooltip="@tbodyEnableDownlineTooltip"
+               data-disabletooltip="@tbodyDisableDownlineTooltip">
+            @labelText
+        </label>
+
+}
+
+@helper RenderDownlineStatus(
+    int sportType, 
+    int betType, 
+    byte roleId, 
+    bool isDisabledUpline, 
+    DownlineStatusViewModel downlineStatus)
+{
+    var enabledSpanClass = "enabled" + (downlineStatus.IsDisabled ? " gray" : string.Empty);
+    var enabledId = string.Format("enabled_{0}_{1}", roleId, betType);
+    var disabledSpanClass = "disabled" + (downlineStatus.IsDisabled ? " gray" : string.Empty);
+    var disabledId = string.Format("disabled_{0}_{1}", roleId, betType);
+    var roleName = Model.GetRoleName(roleId);
+
+    <td>
+        <span id="@enabledId" class="@enabledSpanClass"
+              title="@String.Format(Resources.TBodyDownlineTooltip, Resources.Enable.ToLower(), roleName + "s")"
+              data-roleid="@roleId"
+              data-sporttype="@sportType"
+              data-bettype="@betType"
+              data-total="@downlineStatus.Total"
+              data-totalenabled="@downlineStatus.TotalEnabled">@downlineStatus.TotalEnabled.ToString("N0")</span>
+        </td>
+        <td>
+            <span id="@disabledId" class="@disabledSpanClass"
+                  title="@String.Format(Resources.TBodyDownlineTooltip, Resources.Disable.ToLower(), roleName + "s")"
+                  data-roleid="@roleId"
+                  data-sporttype="@sportType"
+                  data-total="@downlineStatus.Total"
+                  data-totaldisabled="@downlineStatus.TotalDisabled"
+                  data-bettype="@betType">@downlineStatus.TotalDisabled.ToString("N0")</span>
+        </td>
+}
+
+
+@helper RenderHeader(byte roleId, bool isMultipleBetTypes)
+{
+    var roleName = Model.GetRoleName(roleId);
+    if (isMultipleBetTypes)
+    {
+        <th>
+            <span class="enabled" data-roleid="@roleId" 
+                    title="@String.Format(Resources.HeaderTooltip, Resources.Enable.ToLower(), roleName)">
+                @Resources.Enable
+            </span>
+        </th>
+        <th>
+            <span class="disabled" data-roleid="@roleId" 
+                    title="@String.Format(Resources.HeaderTooltip, Resources.Disable.ToLower(), roleName)">
+                @Resources.Disable
+            </span>
+        </th>
+    }
+    else
+    {
+        <th>@Resources.Enable</th>
+        <th>@Resources.Disable</th>
+    }
+}

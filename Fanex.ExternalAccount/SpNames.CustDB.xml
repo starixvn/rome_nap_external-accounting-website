@@ -283,4 +283,19 @@
   <Function Name="Otp">
     <Setting Key="EAS_OTP_CustomerOTPSel" SpName="EAS_OTP_CustomerOTPSel" DbName="DBCUST.CustDB.bodbExtAccNet" />
   </Function>
+  <Function Name="Product Status Setting">
+    <!--Select functions-->
+    <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductId_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_Admin_DisableGameStatusSelect" SpName="Acc_Admin_DisableGameStatusSelect_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="EAS_CustomerSelSportsByProduct" SpName="EAS_CustomerSelSportsByProduct_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <!--Update functions-->
+    <Setting Key="Acc_AdminUpdDisableNumberGame" SpName="Acc_AdminUpdDisableNumberGame_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_AdminUpdCSStatus_Cust" SpName="Acc_AdminUpdCSStatus_Cust_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_AdminUpdDisableKeno" SpName="Acc_AdminUpdDisableKeno_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_AdminUpdDisableGoldDeluxe" SpName="Acc_AdminUpdDisableGoldDeluxe_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_AdminUpdDisableColossusBet" SpName="Acc_AdminUpdDisableColossusBet_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_Admin_DisableGameStatusUpd" SpName="Acc_Admin_DisableGameStatusUpd_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_Admin_DisableNewProductStatusUpd" SpName="Acc_Admin_DisableNewProductStatusUpd_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
+  </Function>
 </Functions>
