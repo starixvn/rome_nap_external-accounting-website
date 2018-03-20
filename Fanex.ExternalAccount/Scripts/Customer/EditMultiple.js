@@ -731,6 +731,7 @@ Fanex.ExtAcc.Customer.ShowEditProductForSingleCust = function (custid, uplineRol
     document.getElementById('customerId').value = custid;
     document.getElementById('isMultiple').value = false;
     document.getElementById('uplineLevel').value = "";
+    top.shouldCalculatePopupHeight = true;
 
     if (this.CurrentLevel == this.Super) {
         document.getElementById('uplineLevel').value = "";

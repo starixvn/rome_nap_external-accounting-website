@@ -129,8 +129,8 @@
                 }
 
                 parent.$(".icon-filter").off('click').on('click',parent.Fanex.ExtAcc.Customer.showHideFilter);
-
-                switch (roleId) {
+                parent.Fanex.ExtAcc.Customer.bindOrientationChange();
+;                switch (roleId) {
                     case 4:
                         parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2,  isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting);
                         break;
