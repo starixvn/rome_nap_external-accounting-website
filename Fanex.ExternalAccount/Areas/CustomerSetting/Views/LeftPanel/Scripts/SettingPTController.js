@@ -209,6 +209,7 @@
         var url = parent.resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/' + param);
 
         parent.Fanex.ExtAcc.LoadMainIFrame(url);
+        $scope.collapseSidebar();
     };
         
     $scope.VirtualSports = function () {
