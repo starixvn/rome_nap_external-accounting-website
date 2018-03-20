@@ -231,7 +231,6 @@
             else {
                 height = isLandscape ? top.landscapeHeight : top.portraitHeight;
             }
-            //alert(height);
             var dialog = top.$('.ui-dialog');
             dialog.height((height + 34) + 'px');
 

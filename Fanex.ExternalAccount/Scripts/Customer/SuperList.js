@@ -282,7 +282,7 @@
                     900,
                     Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
                     false,
-                    null, 1, 'bettingLimitPopup');
+                    null, 1);
             }
         };
     }
