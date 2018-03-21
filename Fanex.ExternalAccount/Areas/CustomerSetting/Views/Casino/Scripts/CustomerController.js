@@ -19,8 +19,7 @@ function CustomerController($scope, $element) {
     $scope.IsMaster = false;
     $scope.IsAgent = false;
     $scope.IsMember = false;
-    $scope.IsSuper = false;
-    $scope.CustomerModel.maxTransferFormated = !$scope.CustomerModel.casinoSync && $scope.CustomerModel.roleId == 4 ? $scope.CustomerModel.defaultTransferCredit.formatNumber() : $scope.CustomerModel.maxTransferCredit.formatNumber();
+    $scope.IsSuper = false;   
     $scope.CustomerModel.memberWinLimit.maximumLossFormated = $scope.CustomerModel.memberWinLimit.maximumLoss.formatNumber();
     $scope.IsSuperMasterOnMember = ($scope.CustomerModel.uplineRoleId == 4 || $scope.CustomerModel.uplineRoleId == 3) && $scope.CustomerModel.roleId == 1;
   
@@ -55,10 +54,7 @@ function CustomerController($scope, $element) {
             IsMember = false;
             break;
     }
-
-    if ($scope.IsSuper) {
-        customerModel.maxTransferCreditLimit = 0;
-    }
+   
 
     $('#downline').each(function (i, item) {
         $(item).html($scope.Level)

@@ -3,6 +3,7 @@
 @{
     var id = Utils.ToInt32(Request.QueryString["id"]);
     var uplineId = Utils.ToInt32(Request.QueryString["uplineId"]);
+    
 }
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" />
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" />
@@ -98,29 +99,6 @@
         <tr data-ng-hide="CustomerModel.roleId != 1">
             <td class="noneBorderLeft tdTitleRight">@NGCasinoLang.lblCurrentWinLossAmount</td>
             <td class=""><div id="currentWinLimit" style="color: #0000ff; cursor: pointer" data-ng-click="GetCurrentWinLimit()">@NGCasinoLang.lblClickToViewCurrentWinLossAmount</div></td>
-        </tr>
-    </table>
-    <div data-ng-hide="true" class="headerPositionTaking noneBorderLR noneBorderBottom">
-        @NGCasinoLang.BetSetting
-    </div>
-    <table data-ng-hide="true" cellpadding="0" cellspacing="0" class="tableInfo">
-        <tr>
-            <td style="width: 35%" class="noneBorderLeft tdTitleRight">@NGCasinoLang.lblAccumulatedWinLoss</td>
-            <td class="noneBorderRight">
-                <span style="margin-left: 4px; float: left; width: 130px">{{CustomerModel.totalWinLoss.formatNumber()}}</span>
-                <div data-ng-hide="CustomerModel.totalWinLoss == 0 || (CustomerModel.uplineRoleId == 4 && CustomerModel.roleId == 2) || !CustomerModel.casinoSync" style="float: left; color: #0066CC; cursor: pointer" data-ng-click="Reset()">@NGCasinoLang.reset</div>
-            </td>
-        </tr>
-        <tr>
-            <td class="noneBorderLeft tdTitleRight">@NGCasinoLang.lblMaxTransferCredit</td>
-            <td class="noneBorderRight">
-                <div style="float: left; height: 24px"><input data-ng-disabled="true" id="maxTransfer" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="13" type="text" data-ng-init="CustomerModel.maxTransferFormated" data-ng-change="CustomerModel.maxTransferCredit = CustomerModel.maxTransferFormated" data-ng-model="CustomerModel.maxTransferFormated" /></div>
-                <div style="float: left; height: 24px;"><input data-ng-disabled="true" id="isAutoReset" type="checkbox" data-ng-model="CustomerModel.isAutoReset" /><label for="isAutoReset">@NGCasinoLang.lblDailyAutoResetLimit</label></div>
-            </td>
-        </tr>
-        <tr>
-            <td class="noneBorderLeft"></td>
-            <td class="noneBorderRight">(<span id="minCredit">{{CustomerModel.minTransferCreditLimit.formatNumber()}}</span>&nbsp;-&nbsp;<span id="maxCredit">{{CustomerModel.maxTransferCreditLimit == 0 ? '@NGCasinoLang.noLimited' : CustomerModel.maxTransferCreditLimit.formatNumber()}}</span>)</td>
         </tr>
     </table>
     @Html.AntiForgeryToken()

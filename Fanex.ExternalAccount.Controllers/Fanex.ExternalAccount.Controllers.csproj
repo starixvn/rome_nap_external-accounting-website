@@ -52,16 +52,12 @@
       <HintPath>..\packages\CaptchaMVC.2.4.1\lib\CaptchaMvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CasinoLibrary, Version=1.0.2.14, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\CasinoLibrary.dll</HintPath>
+    <Reference Include="CasinoLibrary, Version=2.0.1.16464, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary.1.0.2.19-Jackpot-05\lib\net40\CasinoLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\CasinoSetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="CasinoUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\CasinoUtility.dll</HintPath>
+    <Reference Include="CasinoUtility, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoUtility.2.3.1\lib\net40\CasinoUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Couchbase, Version=1.0.0.0, Culture=neutral, PublicKeyToken=81137140da4e57ef, processorArchitecture=MSIL">
@@ -86,6 +82,10 @@
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.3.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.AllSites.2.0.3.1\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.2.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.2.2-Jackpot\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
@@ -124,8 +124,8 @@
       <HintPath>..\packages\FluentValidation.3.2.0.0\lib\Net40\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\HandHistoryLibrary.dll</HintPath>
+    <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IBCCrypt.1.1.0.0\lib\IBCCrypt.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -142,6 +142,10 @@
     </Reference>
     <Reference Include="Ionic.Zip, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.9.1.5\lib\net40\Ionic.Zip.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -174,6 +178,10 @@
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetUtility, Version=4.5.6325.30210, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetUtility.4.5.6325.30210\lib\net40\NetUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

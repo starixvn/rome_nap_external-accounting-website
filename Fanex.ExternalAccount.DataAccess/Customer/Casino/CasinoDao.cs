@@ -1,12 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Customer.Casino
 {
-    using System;
-    using System.Collections;
-    using System.Data;
-    using CasinoLibrary.SBAgent;
     using Data.DNAide;
     using DTO.Customer.Casino;
-    using Core.Shared;
+    using System.Collections;
+    using System.Data;
     using Utilities;
 
     public class CasinoDao
@@ -58,31 +55,7 @@
             {
                 var drupline = upline.ResultSet.Tables[0].Rows[0];
                 customerDetail.UplineCasinoSync = Utils.ToBoolean(drupline["synccasino"]);
-            }
-
-            var customer = new Customer();
-
-            try
-            {
-                var dt = customer.GetDefaultMaxTransfer(customerDetail.UpperCustID, customerDetail.Currency, uplineId == 0);
-
-                if (customerDetail.RoleId.IsNotSuper() && dt != null && dt.Rows.Count > 0)
-                {
-                    customerDetail.MaxTransferCreditLimit = Utils.ToDouble(dt.Rows[0]["MaxLimit"]);
-                    customerDetail.MinTransferCreditLimit = Utils.ToDouble(dt.Rows[0]["MinLimit"]);
-                    customerDetail.DefaultTransferCredit = Utils.ToDouble(dt.Rows[0]["DefMaxTransferCredit"]);
-                }
-                else
-                {
-                    customerDetail.MaxTransferCreditLimit = Utils.ToDouble(dt.Rows[0]["MaxTransferCredit"]);
-                    customerDetail.MinTransferCreditLimit = customerDetail.MaxTransferCreditLimit;
-                    customerDetail.DefaultTransferCredit = Utils.ToDouble(dt.Rows[0]["SuperMaxTransfer"]);
-                }
-            }
-            catch
-            {
-                // TODO: Writelog
-            }
+            }            
 
             customerDetail.NoIBCData = false;
 

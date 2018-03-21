@@ -10,12 +10,6 @@
 
         public decimal GivenCredit { get; set; }
 
-        public double MinTransferCreditLimit { get; set; }
-
-        public double MaxTransferCreditLimit { get; set; }
-
-        public double DefaultTransferCredit { get; set; }
-
         public string CurrencyName { get; set; }
 
         public string UserPwd { get; set; }
@@ -69,8 +63,6 @@
         public double MaxLose { get; set; }
 
         public double MinCreditBase { get; set; }
-
-        public double MaxTransferCredit { get; set; }
 
         public bool IsMaxWin { get; set; }
 
