@@ -193,7 +193,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.0-beta13\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.0-beta14\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
@@ -2625,6 +2625,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\ONEbook.NG2.API.config" />
+    <Content Include="Areas\ProductStatusSetting\Views\MultiplePartialView.cshtml" />
     <Content Include="assets\bundles\otp\otp.min.js.map">
       <DependentUpon>otp.min.js</DependentUpon>
     </Content>
@@ -2853,7 +2854,6 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51127/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

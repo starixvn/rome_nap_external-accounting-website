@@ -17,6 +17,7 @@
         {
             return new ProductListAuthorization()
                 .GetProductList()
+                .Where(product => product.ProductId > 1)
                 .Select(product => new KeyValuePair<int, string>(
                     product.ProductId,
                     product.ProductId == 0 ? product.Name : ProductListAuthorization.GetProductNameFromRemotingRef(product.ProductId)))

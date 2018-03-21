@@ -866,13 +866,20 @@ window.successfulUpdatingCallback = function (isPartialUpdate, isMultipleUpdate)
 };
 
 Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus = function (productIds) {
-    var formData = {
-        roleId: Fanex.ExtAcc.Customer.CurrentLevel,
-        productIds: productIds,
-        custIds: Fanex.ExtAcc.Customer.Ids(),
-        custNames: Fanex.ExtAcc.Customer.Names()
-    };
-    var url = 'ThirdPartyProductStatus/MultipleView';
-    var title = 'Edit Multiple Product Status';
-    Fanex.ExtAcc.Form.Show(resolveClientUrl(url), title, 680, 580, false, false, 1, null, formData);
+    var blankUrl = resolveClientUrl('Views/_blank.html'),
+        title = 'Edit Multiple Product Status',
+        width = 860,
+        height = 540,
+        custIds = this.Ids().join(',');
+
+    if (custIds.len === 0) {
+        Fanex.ExtAcc.Form.ShowFrame(blankUrl, title, width, height, false, false, 1);
+    } else {
+        document.getElementById('productIds').value = productIds.join(',');
+        document.getElementById('custIds').value = custIds;
+        document.getElementById('custNames').value = this.Names().join(', ');
+        document.getElementById('custRole').value = this.CurrentLevel;
+        Fanex.ExtAcc.Form.ShowFrame(blankUrl, title, width, height, false, false, 1);
+        $('#targetProductStatusSettingForm').attr('action', resolveClientUrl('ProductStatusSetting/MultipleView')).submit();
+    }
 };

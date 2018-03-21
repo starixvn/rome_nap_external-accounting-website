@@ -69,11 +69,17 @@
     <input type="hidden" id="language" name="language" value="" />
     <input type="hidden" id="groupName" name="groupName" value="" />
     <input type="hidden" id="productId" name="productId" value="" />
-    <input type="hidden" name="customerId" id="customerId" value="" />
+    <input type="hidden" id="customerId" name="customerId" value="" />
     <input type="hidden" id="isMultiple" name="isMultiple" value="false" />
     <input type="hidden" id="IsReadOnly" name="IsReadOnly" value="false" />
     <input type="hidden" id="formType" name="formType" value="1" />
     <input type="hidden" id="isForcingMode" name="isForcingMode" value="false" />
+</form>
+<form id="targetProductStatusSettingForm" method="post" target="windowPopup" action="" class="hide">
+    <input type="hidden" id="productIds" name="productIds" value="" />
+    <input type="hidden" id="custIds" name="custIds" value="" />
+    <input type="hidden" id="custNames" name="custNames" value="" />
+    <input type="hidden" id="custRole" name="custRole" value="" />
 </form>
 <script type="text/javascript">
     $('#customerStatus').combobox();

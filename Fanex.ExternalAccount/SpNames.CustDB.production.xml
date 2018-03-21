@@ -289,7 +289,6 @@
     <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductId" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_Admin_DisableGameStatusSelect" SpName="Acc_Admin_DisableGameStatusSelect" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="EAS_CustomerSelSportsByProduct" SpName="EAS_CustomerSelSportsByProduct" DbName="DBCust.CustDB.bodbExtAccNet" />
     <!--Update functions-->
     <Setting Key="Acc_AdminUpdDisableNumberGame" SpName="Acc_AdminUpdDisableNumberGame" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_AdminUpdCSStatus_Cust" SpName="Acc_AdminUpdCSStatus_Cust" DbName="DBCust.CustDB.bodbExtAccNet" />
