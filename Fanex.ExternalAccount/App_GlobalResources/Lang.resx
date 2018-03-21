@@ -571,12 +571,6 @@
   <data name="content" xml:space="preserve">
     <value>Content</value>
   </data>
-  <data name="copyallfromtotewin" xml:space="preserve">
-    <value>Copy all Position Taking From Tote - Win</value>
-  </data>
-  <data name="copyallfromuktotewin" xml:space="preserve">
-    <value>Copy all Bet Setting and Position Taking From UK Tote - Win</value>
-  </data>
   <data name="copymasterpresetformember" xml:space="preserve">
     <value>Apply Master Preset PT to all members</value>
   </data>
@@ -694,9 +688,6 @@
   <data name="disabled" xml:space="preserve">
     <value>Disabled</value>
   </data>
-  <data name="disabledfi" xml:space="preserve">
-    <value>Disabled Finance</value>
-  </data>
   <data name="disabledHR" xml:space="preserve">
     <value>Disabled HR</value>
   </data>
@@ -727,9 +718,6 @@
   <data name="editmultcs" xml:space="preserve">
     <value>Edit Multiple Casino PT</value>
   </data>
-  <data name="editmultfinance" xml:space="preserve">
-    <value>Edit Multiple Finance's PT</value>
-  </data>
   <data name="editmultsportbook" xml:space="preserve">
     <value>Edit Multiple Sportsbook's PT</value>
   </data>
@@ -747,12 +735,6 @@
   </data>
   <data name="enablehr" xml:space="preserve">
     <value>Enable HR</value>
-  </data>
-  <data name="enablesatote" xml:space="preserve">
-    <value>Enable SA Tote</value>
-  </data>
-  <data name="enableuktote" xml:space="preserve">
-    <value>Enable UK Tote</value>
   </data>
   <data name="entered" xml:space="preserve">
     <value>Entered</value>
@@ -817,23 +799,11 @@
   <data name="filterfi" xml:space="preserve">
     <value>Filtered data for Financial product are only available from june 15th 2009</value>
   </data>
-  <data name="fiminpt" xml:space="preserve">
-    <value>Finance's Min PT</value>
-  </data>
   <data name="fiminpt1" xml:space="preserve">
     <value>FI's Min PT</value>
   </data>
   <data name="finalscore" xml:space="preserve">
     <value>Final Score</value>
-  </data>
-  <data name="Financial" xml:space="preserve">
-    <value>Finance</value>
-  </data>
-  <data name="financialComm" xml:space="preserve">
-    <value>Finance Comm</value>
-  </data>
-  <data name="financialCommission" xml:space="preserve">
-    <value>Finance Commission</value>
   </data>
   <data name="first" xml:space="preserve">
     <value>First</value>
@@ -1272,44 +1242,8 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="lblAlertDisableCSMember" xml:space="preserve">
     <value>Are you sure you want to disable Casino on this customer?</value>
   </data>
-  <data name="lblAlertDisableSATote" xml:space="preserve">
-    <value>WARNING!!! \n\n Are you sure you want to disable SA Tote on this customer and all downlines?</value>
-  </data>
-  <data name="lblAlertDisableSAToteMember" xml:space="preserve">
-    <value>WARNING!!! \n\n Are you sure you want to disable SA Tote on this customer?</value>
-  </data>
-  <data name="lblAlertDisableUKTote" xml:space="preserve">
-    <value>WARNING!!! \n\n Are you sure you want to disable UK Tote on this customer and all downlines?</value>
-  </data>
-  <data name="lblAlertDisableUKToteMember" xml:space="preserve">
-    <value>WARNING!!! \n\n Are you sure you want to disable UK Tote on this customer?</value>
-  </data>
-  <data name="lblAlertDisalbeFI" xml:space="preserve">
-    <value>WARNING!!! \n\n Are you sure you want to disable Finance on this customer and all downlines?</value>
-  </data>
-  <data name="lblAlertDisalbeFIMember" xml:space="preserve">
-    <value>Are you sure you want to disable Finance on this customer?</value>
-  </data>
   <data name="lblAlertEnableCS" xml:space="preserve">
     <value>Are you sure you want to enable Casino on this customer?</value>
-  </data>
-  <data name="lblAlertEnableFI" xml:space="preserve">
-    <value>Do you want to enable Finance on this all customer's downlines?</value>
-  </data>
-  <data name="lblAlertEnableFIMember" xml:space="preserve">
-    <value>Are you sure you want to enable Finance on this customer?</value>
-  </data>
-  <data name="lblAlertEnableSATote" xml:space="preserve">
-    <value>Are you sure you want to enable SA Tote on this customer?</value>
-  </data>
-  <data name="lblAlertEnableSAToteDownline" xml:space="preserve">
-    <value>Do you want to enable SA Tote on this all customer's downlines?</value>
-  </data>
-  <data name="lblAlertEnableUKTote" xml:space="preserve">
-    <value>Are you sure you want to enable UK Tote on this customer?</value>
-  </data>
-  <data name="lblAlertEnableUKToteDownline" xml:space="preserve">
-    <value>Do you want to enable UK Tote on this all customer's downlines?</value>
   </data>
   <data name="lblalertMaxBetNegativeHR" xml:space="preserve">
     <value>Max Bet must be greater than zero.</value>
@@ -1415,9 +1349,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="lblCommissionByBettype" xml:space="preserve">
     <value>Commission By Bet Type</value>
-  </data>
-  <data name="lblCommissionByFinance" xml:space="preserve">
-    <value>Finance Commission</value>
   </data>
   <data name="lblCommissionForAgent" xml:space="preserve">
     <value>Comm for Agent</value>
@@ -1551,9 +1482,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="lbleditcustcomm" xml:space="preserve">
     <value>Edit Customer Commission</value>
   </data>
-  <data name="lbleditfi" xml:space="preserve">
-    <value>Edit Finance</value>
-  </data>
   <data name="lblEditInfo" xml:space="preserve">
     <value>Edit Info</value>
   </data>
@@ -1580,9 +1508,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="lblEnableCS" xml:space="preserve">
     <value>Enable Casino</value>
-  </data>
-  <data name="lblenableFI" xml:space="preserve">
-    <value>Enable Finance</value>
   </data>
   <data name="lblEnableNumber" xml:space="preserve">
     <value>Enable Game</value>
@@ -1658,9 +1583,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="lblHROthersComm" xml:space="preserve">
     <value>HR SA</value>
-  </data>
-  <data name="lblHRTOComm" xml:space="preserve">
-    <value>HR Tote</value>
   </data>
   <data name="lblHRUKcomm" xml:space="preserve">
     <value>HR UK</value>
@@ -1977,7 +1899,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="lblSorryThere" xml:space="preserve">
     <value>Sorry, there is no detail information for  Reference No </value>
-  </data>  
+  </data>
   <data name="lblStartBalance" xml:space="preserve">
     <value>Start Balance</value>
   </data>
@@ -2553,15 +2475,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="Place" xml:space="preserve">
     <value>Place</value>
   </data>
-  <data name="placeautote" xml:space="preserve">
-    <value>Place.Aust Tote</value>
-  </data>
-  <data name="placesatote" xml:space="preserve">
-    <value>Place.SA Tote</value>
-  </data>
-  <data name="placeuktote" xml:space="preserve">
-    <value>Place.UK Tote</value>
-  </data>
   <data name="player" xml:space="preserve">
     <value>Player</value>
   </data>
@@ -2693,21 +2606,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="sat" xml:space="preserve">
     <value>Sat</value>
-  </data>
-  <data name="satote" xml:space="preserve">
-    <value>SA Tote</value>
-  </data>
-  <data name="satotecomm" xml:space="preserve">
-    <value>SA Tote Comm</value>
-  </data>
-  <data name="satotecommforagent" xml:space="preserve">
-    <value>SA Tote Comm for Agent</value>
-  </data>
-  <data name="satotecommformaster" xml:space="preserve">
-    <value>SA Tote Comm for Master</value>
-  </data>
-  <data name="satotecommformember" xml:space="preserve">
-    <value>SA Tote Comm for Member</value>
   </data>
   <data name="saturday" xml:space="preserve">
     <value>Saturday</value>
@@ -3029,21 +2927,6 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="totalsuperagent" xml:space="preserve">
     <value>Total S.Agent</value>
   </data>
-  <data name="tote" xml:space="preserve">
-    <value>Tote</value>
-  </data>
-  <data name="totecomm" xml:space="preserve">
-    <value>Tote Comm</value>
-  </data>
-  <data name="totecommforagent" xml:space="preserve">
-    <value>Tote Comm for Agent</value>
-  </data>
-  <data name="totecommformaster" xml:space="preserve">
-    <value>Tote Comm for Master</value>
-  </data>
-  <data name="totecommformember" xml:space="preserve">
-    <value>Tote Comm for Member</value>
-  </data>
   <data name="tpage" xml:space="preserve">
     <value>Page</value>
   </data>
@@ -3089,21 +2972,6 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   </data>
   <data name="ukmeeting" xml:space="preserve">
     <value>UK Meeting</value>
-  </data>
-  <data name="uktote" xml:space="preserve">
-    <value>UK Tote</value>
-  </data>
-  <data name="uktotecomm" xml:space="preserve">
-    <value>UK Tote Comm</value>
-  </data>
-  <data name="uktotecommforagent" xml:space="preserve">
-    <value>UK Tote Comm for Agent</value>
-  </data>
-  <data name="uktotecommformaster" xml:space="preserve">
-    <value>UK Tote Comm for Master</value>
-  </data>
-  <data name="uktotecommformember" xml:space="preserve">
-    <value>UK Tote Comm for Member</value>
   </data>
   <data name="under" xml:space="preserve">
     <value>Under</value>
@@ -3237,9 +3105,6 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="win" xml:space="preserve">
     <value>Win/Loss</value>
   </data>
-  <data name="winautote" xml:space="preserve">
-    <value>Win.Aust Tote</value>
-  </data>
   <data name="WinHR" xml:space="preserve">
     <value>Win</value>
   </data>
@@ -3249,17 +3114,11 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="winningamount" xml:space="preserve">
     <value>Winning amount</value>
   </data>
-  <data name="winsatote" xml:space="preserve">
-    <value>Win.SA Tote</value>
-  </data>
   <data name="winter" xml:space="preserve">
     <value>Winter Sports</value>
   </data>
   <data name="wintype" xml:space="preserve">
     <value>Win Type</value>
-  </data>
-  <data name="winuktote" xml:space="preserve">
-    <value>Win.UK Tote</value>
   </data>
   <data name="withPictures" xml:space="preserve">
     <value>Results with pictures</value>
@@ -3546,9 +3405,6 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   </data>
   <data name="skip" xml:space="preserve">
     <value>Skip</value>
-  </data>
-  <data name="ukIrish" xml:space="preserve">
-    <value>UK/Irish Tote - Win</value>
   </data>
   <data name="warningUncheckAll" xml:space="preserve">
     <value>Unchecking all stake levels will affect and apply to all downlines</value>

@@ -998,29 +998,11 @@
     <Content Include="assets\styles\pages\customer\keno-setting.min.css">
       <DependentUpon>keno-setting.css</DependentUpon>
     </Content>
-    <Content Include="assets\styles\pages\customer\live-casino.css">
-      <DependentUpon>live-casino.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\customer\live-casino.min.css">
-      <DependentUpon>live-casino.css</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\customer\livecasino-setting.css">
-      <DependentUpon>livecasino-setting.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\customer\livecasino-setting.min.css">
-      <DependentUpon>livecasino-setting.css</DependentUpon>
-    </Content>
     <Content Include="assets\styles\pages\customer\pt-engine.css">
       <DependentUpon>pt-engine.scss</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\customer\pt-engine.min.css">
       <DependentUpon>pt-engine.css</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\customer\racing-setting.css">
-      <DependentUpon>racing-setting.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\customer\racing-setting.min.css">
-      <DependentUpon>racing-setting.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\customer\virtual-sport.css">
       <DependentUpon>virtual-sport.scss</DependentUpon>
@@ -2592,10 +2574,8 @@
     <Content Include="assets\styles\base\_alpha-admin-fonts.scss" />
     <Content Include="assets\styles\pages\customer\keno-setting.scss" />
     <Content Include="assets\styles\pages\customer\customer-setting.scss" />
-    <Content Include="assets\styles\pages\customer\racing-setting.scss" />
     <Content Include="assets\styles\pages\customer\bet-limit.scss" />
     <Content Include="assets\styles\pages\customer\casino.scss" />
-    <Content Include="assets\styles\pages\customer\live-casino.scss" />
     <Content Include="assets\styles\pages\customer\virtual-sport.scss" />
     <Content Include="assets\styles\pages\customer\pt-engine.scss" />
     <Content Include="assets\styles\pages\statement\guideline.scss" />
@@ -2606,7 +2586,6 @@
     <Content Include="assets\bundles\common.min.js.map">
       <DependentUpon>common.min.js</DependentUpon>
     </Content>
-    <Content Include="assets\styles\pages\customer\livecasino-setting.scss" />
     <Content Include="assets\styles\pages\customer\gold-deluxe-setting.scss" />
     <Content Include="assets\bundles\login\login.min.js.map">
       <DependentUpon>login.min.js</DependentUpon>
