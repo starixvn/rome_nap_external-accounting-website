@@ -324,7 +324,7 @@
             bool? suspended = null,
             string username = null)
         {
-            var lineInfo = GetLineInfo(Request["groupName"], username);
+            var lineInfo = GetLineInfo(Request["groupName"], username, BuildCustomerSetting(username));
             var customers = GetCustomerList(groupName, enabled, closed, suspended, lineInfo);
             SetEditAllBetVisibility(customers);
             var customers2String = Customers2Json(customers);
@@ -684,7 +684,7 @@
                 CustId = string.IsNullOrWhiteSpace(username) ? 0 : Utils.ToInt32(Request["custId"])
             };
 
-        private LineInfo GetLineInfo(string groupName, string userName)
+        private LineInfo GetLineInfo(string groupName, string userName, LineInfo defaultValue = null)
         {
             var customerInfo = reportService.GetCustomerInfo(groupName, 0, userName, isGetUplineInfo: true);
             if (customerInfo != null)
@@ -699,7 +699,7 @@
                 };
             }
 
-            return new LineInfo();
+            return string.IsNullOrWhiteSpace(userName) ? defaultValue ?? new LineInfo() : new LineInfo();
         }
 
         private static void SetEditAllBetVisibility(DataTable dataTable)
