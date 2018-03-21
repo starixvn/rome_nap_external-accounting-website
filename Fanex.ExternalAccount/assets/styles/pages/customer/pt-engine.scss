@@ -515,11 +515,11 @@ input.BettingLimitTextBox5
 }
 
 .BettingLimitHeaderTop {
-    min-width: 232px !important;
+    //min-width: 232px !important;
 }
 
 .BettingLimitHeader {
-    min-width: 125px !important;
+    //min-width: 125px !important;
 }
 
 .BettingLimitHeaderCopied, .BettingLimitHeaderCopiedActive
@@ -530,7 +530,6 @@ input.BettingLimitTextBox5
 	border-top: 1px solid #CCC;
 	font-size: 11px !important;
 	text-indent: 1px !important;
-    min-width: 125px;
 }
 .GroupLabel, .GroupLabel2, .BetTypeHeader, .BetTypeHeader2, .BetTypeSelect, .BetTypeLabel, .BettingLimitItem9, .BettingLimitItem, .BettingLimitItem4, .BettingLimitItem5
 {
