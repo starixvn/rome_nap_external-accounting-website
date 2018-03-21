@@ -72,7 +72,7 @@
 
     $scope.collapseSidebar = function () {
         var widthDevice = top.$(top.window).width();
-        if (widthDevice <= 768) {
+        if (widthDevice < 1024) {
             top.$("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
             top.$("#sidebar").removeClass("expand-sidebar").addClass("collapse-sidebar");
             top.$("#leftSplitter").removeClass("expand-leftpanel").addClass("collapse-leftpanel");
