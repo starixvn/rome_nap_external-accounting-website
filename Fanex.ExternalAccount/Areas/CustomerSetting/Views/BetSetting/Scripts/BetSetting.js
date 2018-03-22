@@ -16,23 +16,13 @@ function LoadSB() {
     document.location.href = toUrl('Sportsbook/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName + '?v=1');
 };
 
-function LoadRacing() {
-    Fanex.CustomerSetting.Core.BlockUI();
-    document.location.href = toUrl('RacingBetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName + '?v=0001');
-};
-
 function LoadVirtualSports() {
     Fanex.CustomerSetting.Core.BlockUI();
     var url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=5&customerId=" + custId + "&sssss=v&customerLevel=4&isreadonly=false&groupName=" + parent.$('#selectedGroupName').html() + '&v=0001');
-    document.getElementById('virtualsports').src = url;
+    document.getElementById('product-5').src = url;
     setTimeout(function () {
         Fanex.CustomerSetting.Core.UnBlockUI();
     }, 1000);
-};
-
-function LoadLiveCasino() {
-    Fanex.CustomerSetting.Core.BlockUI();
-    document.location.href = toUrl('LiveCasinoBetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName + '?v=0001');
 };
 
 function LoadCasino() {

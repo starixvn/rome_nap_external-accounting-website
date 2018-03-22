@@ -41,7 +41,7 @@
             return list;
         }
 
-        public ActionResult ProductsList() => JsonBase(GetProductList(), new JsonSerializerSettings());
+        public ActionResult ProductsList(bool isHideInactiveProduct) => JsonBase(GetProductList(isHideInactiveProduct), new JsonSerializerSettings());
 
         public ActionResult GetSuggestedUserName()
         {

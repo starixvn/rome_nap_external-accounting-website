@@ -295,7 +295,7 @@
                 new CheckCustomerIsSpecialSiteCriteria { UserName = username });
         }
 
-        protected List<KeyValuePair<string, string>> GetProductList()
+        protected List<KeyValuePair<string, string>> GetProductList(bool isHideInactiveProduct = true)
         {
             var list = new List<KeyValuePair<string, string>>();
             var products = ProductsConfiguration.Instance.ProductCollection;
@@ -312,8 +312,9 @@
             {
                 if (!IsHiddenProduct(product))
                 {
-                    if (product.IsSpecial
-                        && AdminDoesNotHavePermissionOnSpecialProduct(checkIsInternalAdminResult, isAuthorized))
+                    if ((isHideInactiveProduct && product.IsHideInactiveProduct)
+                        || (product.IsSpecial
+                        && AdminDoesNotHavePermissionOnSpecialProduct(checkIsInternalAdminResult, isAuthorized)))
                     {
                         continue;
                     }

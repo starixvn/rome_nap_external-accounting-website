@@ -11,26 +11,20 @@ DailyWinLoss
 WinLossDetail
 Statement
 Sportsbook
-Racing
 Casino
-LiveCasino
 VirtualSports
 CreateNew
 EditCustomer (personal info, reset pwd, double comm, Security Code, and transfer)
 SportsbookBetting
-RacingBetting
 VirtualSportsBetting
-LiveCasinoBetting
 --------------
 CloseCustomer
 SuspendCustomer
 AllowOutright
 AllowAutoMPT
-EnableRacing
 EnableCasino
 EnableNumberGame
 EnableVirtualSports
-EnableLiveCasino
 EnableDoubleComm
 UpdateCredit // +/- credit for customer
 UpdateSecurityCode

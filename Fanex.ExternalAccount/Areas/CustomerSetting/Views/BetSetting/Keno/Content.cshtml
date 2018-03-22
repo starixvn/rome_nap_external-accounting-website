@@ -60,13 +60,13 @@
 <script type="text/javascript">
     parent.$('#tab1').removeClass('ui-tabs-active ui-state-active');
     parent.$('#tab2').removeClass('ui-tabs-active ui-state-active');
-    parent.$('#tab4').removeClass('ui-tabs-active ui-state-active');
+    parent.$('#tab3').removeClass('ui-tabs-active ui-state-active');
     parent.$('#tab6').removeClass('ui-tabs-active ui-state-active');
     parent.$('#tab7').removeClass('ui-tabs-active ui-state-active');
 
     parent.$('#tabs-1').hide();
     parent.$('#tabs-2').hide();
-    parent.$('#tabs-4').hide();
+    parent.$('#tabs-3').hide();
     parent.$('#tabs-6').hide();
     parent.$('#tabs-7').hide();
 
@@ -75,8 +75,7 @@
     var uplineId = parseInt('@uplineId');
     var userId = parseInt('@userId');
     var siteName = '@siteName';
-    var syncCasino = '@ViewBag.SyncCasino';
-    var syncLiveCasino = '@ViewBag.SyncLiveCasino';
+    var syncCasino = '@ViewBag.SyncCasino';    
 
     function toUrl(relativeUrl) {
         return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
@@ -85,10 +84,6 @@
     $(document).ready(function () {
         if (syncCasino == 'False') {
             parent.$('#tab6').remove();
-        }
-
-        if (syncLiveCasino == 'False') {
-            parent.$('#tab4').remove();
         }
 
         parent.$('#tab7').addClass('ui-tabs-active ui-state-active');

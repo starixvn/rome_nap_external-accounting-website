@@ -18,8 +18,7 @@ language.goldDeluxe['th-TH'] = {
 	lblClose : "ปิด",
 	lblCurrentWinLimit : "วงเงินชนะปัจจุบัน",
 	lblCustomerInformation : "ข้อมูลลูกค้า",
-	lblDailyAutoResetLimit : "รีเซทร์อัตโนมัติรายวัน ( 12นาฬิกา GMT+8)",
-	lblEditMultipleLiveCasino : "แก้ไขคาสิโนสดหลายทาง",
+	lblDailyAutoResetLimit : "รีเซทร์อัตโนมัติรายวัน ( 12นาฬิกา GMT+8)",	
 	lblEnable : "เปิดใช้งาน",
 	lblFax : "แฟกซ์",
 	lblFirstName : "ชื่อ",
@@ -64,8 +63,6 @@ language.goldDeluxe['th-TH'] = {
 	UnauthorizeMsg : "คุณไม่มีอำนาจในการเข้าใช้งานฟังก์ชันนี้",
 	UpdatedUnsuccessfully : "อัพเดทไม่สำเร็จ",
 	UpdatedWinLimitSuccessfully : "วงเงินชนะสูงสุด: อัพเดทเสร็จสมบูรณ์",
-	UpdateLiveCasinoStatusSuccess : "สถานะ: อัพเดทเสร็จสมบูรณ์",
-	UpdateLiveCasinoStatusUnSuccess : "อัพเดตไม่สำเร็จ เนื่องจาก สถานะของคาซิโนเกมสด ได้ถูกปิดการใช้งาน โดย อัพไลด์",
 	UpdateSuccessfully : "อัพเดทเสร็จสมบูรณ์",
 	WarningUncheckAllStakeLevelMsg : "ยกเลิกทุกระดับการเดิมพัน ดาวน์ไลด์ ทั้งหมดจะได้รับผลกระทบ"
 };

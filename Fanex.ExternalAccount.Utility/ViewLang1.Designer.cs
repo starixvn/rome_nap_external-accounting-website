@@ -268,15 +268,6 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bingo.
-        /// </summary>
-        public static string Bingo {
-            get {
-                return ResourceManager.GetString("Bingo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Both.
         /// </summary>
         public static string Both {
@@ -1015,15 +1006,6 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to HR Fixed Odds.
-        /// </summary>
-        public static string HRFixedOdds {
-            get {
-                return ResourceManager.GetString("HRFixedOdds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Inactive User.
         /// </summary>
         public static string InactiveUser {
@@ -1138,15 +1120,6 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string LG {
             get {
                 return ResourceManager.GetString("LG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Live Casino.
-        /// </summary>
-        public static string LiveCasino {
-            get {
-                return ResourceManager.GetString("LiveCasino", resourceCulture);
             }
         }
         
@@ -1669,15 +1642,6 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string Products {
             get {
                 return ResourceManager.GetString("Products", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Racing.
-        /// </summary>
-        public static string Racing {
-            get {
-                return ResourceManager.GetString("Racing", resourceCulture);
             }
         }
         

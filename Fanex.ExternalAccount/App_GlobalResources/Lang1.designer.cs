@@ -268,15 +268,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agent Real Time Bingo Winloss.
-        /// </summary>
-        internal static string agentRealTimeBingoWinloss {
-            get {
-                return ResourceManager.GetString("agentRealTimeBingoWinloss", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Agent Real Time Casino Winloss.
         /// </summary>
         internal static string agentRealTimeWinloss {
@@ -1014,24 +1005,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bingo.
-        /// </summary>
-        internal static string bingo {
-            get {
-                return ResourceManager.GetString("bingo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bingo Position Taking (%).
-        /// </summary>
-        internal static string bingoPositionTaking {
-            get {
-                return ResourceManager.GetString("bingoPositionTaking", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to BON.
         /// </summary>
         internal static string BON {
@@ -1347,15 +1320,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disable Live Casino?.
-        /// </summary>
-        internal static string confirmDisableLiveCasino {
-            get {
-                return ResourceManager.GetString("confirmDisableLiveCasino", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to disable auto position taking feature of this master?.
         /// </summary>
         internal static string confirmDisableMAutoPT {
@@ -1397,15 +1361,6 @@ namespace Resources {
         internal static string confirmDisableOutright_Member {
             get {
                 return ResourceManager.GetString("confirmDisableOutright_Member", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable Live Casino?.
-        /// </summary>
-        internal static string confirmEnableLiveCasino {
-            get {
-                return ResourceManager.GetString("confirmEnableLiveCasino", resourceCulture);
             }
         }
         
@@ -1514,24 +1469,6 @@ namespace Resources {
         internal static string content {
             get {
                 return ResourceManager.GetString("content", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Copy all Position Taking From Tote - Win.
-        /// </summary>
-        internal static string copyallfromtotewin {
-            get {
-                return ResourceManager.GetString("copyallfromtotewin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Copy all Bet Setting and Position Taking From UK Tote - Win.
-        /// </summary>
-        internal static string copyallfromuktotewin {
-            get {
-                return ResourceManager.GetString("copyallfromuktotewin", resourceCulture);
             }
         }
         
@@ -1905,15 +1842,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disabled Finance.
-        /// </summary>
-        internal static string disabledfi {
-            get {
-                return ResourceManager.GetString("disabledfi", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Disabled HR.
         /// </summary>
         internal static string disabledHR {
@@ -2004,33 +1932,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Live Casino.
-        /// </summary>
-        internal static string EditLiveCasino {
-            get {
-                return ResourceManager.GetString("EditLiveCasino", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Multiple Live Casino.
-        /// </summary>
-        internal static string EditLiveCasinoMultiple {
-            get {
-                return ResourceManager.GetString("EditLiveCasinoMultiple", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Multiple Bingo PT.
-        /// </summary>
-        internal static string editmultbingo {
-            get {
-                return ResourceManager.GetString("editmultbingo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Edit Multiple Casino PT.
         /// </summary>
         internal static string editmultcs {
@@ -2040,47 +1941,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Multiple Finance&apos;s PT.
-        /// </summary>
-        internal static string editmultfinance {
-            get {
-                return ResourceManager.GetString("editmultfinance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Multiple Racing PT.
-        /// </summary>
-        internal static string editmulthr {
-            get {
-                return ResourceManager.GetString("editmulthr", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Multiple P2P.
-        /// </summary>
-        internal static string editmultp2p {
-            get {
-                return ResourceManager.GetString("editmultp2p", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Edit Multiple Sportsbook&apos;s PT.
         /// </summary>
         internal static string editmultsportbook {
             get {
                 return ResourceManager.GetString("editmultsportbook", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit P2P.
-        /// </summary>
-        internal static string editP2P {
-            get {
-                return ResourceManager.GetString("editP2P", resourceCulture);
             }
         }
         
@@ -2126,24 +1991,6 @@ namespace Resources {
         internal static string enablehr {
             get {
                 return ResourceManager.GetString("enablehr", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable SA Tote.
-        /// </summary>
-        internal static string enablesatote {
-            get {
-                return ResourceManager.GetString("enablesatote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable UK Tote.
-        /// </summary>
-        internal static string enableuktote {
-            get {
-                return ResourceManager.GetString("enableuktote", resourceCulture);
             }
         }
         
@@ -2355,38 +2202,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Filtered data for Horse Racing product are only available from june 15th 2009.
-        /// </summary>
-        internal static string filterhr {
-            get {
-                return ResourceManager.GetString("filterhr", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Filtered data for Horse Racing and Financial product are only available from june 15th 2009.
-        /// </summary>
-        internal static string filterhrandfi {
-            get {
-                return ResourceManager.GetString("filterhrandfi", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Filter Options.
         /// </summary>
         internal static string FilterOptions {
             get {
                 return ResourceManager.GetString("FilterOptions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Finance&apos;s Min PT.
-        /// </summary>
-        internal static string fiminpt {
-            get {
-                return ResourceManager.GetString("fiminpt", resourceCulture);
             }
         }
         
@@ -2405,33 +2225,6 @@ namespace Resources {
         internal static string finalscore {
             get {
                 return ResourceManager.GetString("finalscore", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Finance.
-        /// </summary>
-        internal static string Financial {
-            get {
-                return ResourceManager.GetString("Financial", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Finance Comm.
-        /// </summary>
-        internal static string financialComm {
-            get {
-                return ResourceManager.GetString("financialComm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Finance Commission.
-        /// </summary>
-        internal static string financialCommission {
-            get {
-                return ResourceManager.GetString("financialCommission", resourceCulture);
             }
         }
         
@@ -3021,65 +2814,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Racing.
-        /// </summary>
-        internal static string Horse {
-            get {
-                return ResourceManager.GetString("Horse", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Racing.
-        /// </summary>
-        internal static string horseRacing {
-            get {
-                return ResourceManager.GetString("horseRacing", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Racing Commission.
-        /// </summary>
-        internal static string horseracingComm {
-            get {
-                return ResourceManager.GetString("horseracingComm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Hot Level.
         /// </summary>
         internal static string HotLevel {
             get {
                 return ResourceManager.GetString("HotLevel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Racing.
-        /// </summary>
-        internal static string hr {
-            get {
-                return ResourceManager.GetString("hr", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Racing&apos;s Min PT.
-        /// </summary>
-        internal static string hrminpt {
-            get {
-                return ResourceManager.GetString("hrminpt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Racing&apos;s Min PT.
-        /// </summary>
-        internal static string hrminpt1 {
-            get {
-                return ResourceManager.GetString("hrminpt1", resourceCulture);
             }
         }
         
@@ -3156,7 +2895,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All settings will be copied from username entered..
+        ///   Looks up a localized string similar to All settings will be copied from custName entered..
         /// </summary>
         internal static string InfoAllSetting {
             get {
@@ -3256,7 +2995,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wrong username or password.
+        ///   Looks up a localized string similar to Wrong custName or password.
         /// </summary>
         internal static string invalidLogin {
             get {
@@ -3932,155 +3671,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WARNING!!! \n\n Are you sure you want to disable Horse Racing on this customer and all downlines?.
-        /// </summary>
-        internal static string lblAlertDisableHR {
-            get {
-                return ResourceManager.GetString("lblAlertDisableHR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WARNING!!! \n\n Are you sure you want to disable Horse Racing on this customer?.
-        /// </summary>
-        internal static string lblAlertDisableHRMember {
-            get {
-                return ResourceManager.GetString("lblAlertDisableHRMember", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WARNING!!! \n\n Are you sure you want to disable SA Tote on this customer and all downlines?.
-        /// </summary>
-        internal static string lblAlertDisableSATote {
-            get {
-                return ResourceManager.GetString("lblAlertDisableSATote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WARNING!!! \n\n Are you sure you want to disable SA Tote on this customer?.
-        /// </summary>
-        internal static string lblAlertDisableSAToteMember {
-            get {
-                return ResourceManager.GetString("lblAlertDisableSAToteMember", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WARNING!!! \n\n Are you sure you want to disable UK Tote on this customer and all downlines?.
-        /// </summary>
-        internal static string lblAlertDisableUKTote {
-            get {
-                return ResourceManager.GetString("lblAlertDisableUKTote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WARNING!!! \n\n Are you sure you want to disable UK Tote on this customer?.
-        /// </summary>
-        internal static string lblAlertDisableUKToteMember {
-            get {
-                return ResourceManager.GetString("lblAlertDisableUKToteMember", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WARNING!!! \n\n Are you sure you want to disable Finance on this customer and all downlines?.
-        /// </summary>
-        internal static string lblAlertDisalbeFI {
-            get {
-                return ResourceManager.GetString("lblAlertDisalbeFI", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to disable Finance on this customer?.
-        /// </summary>
-        internal static string lblAlertDisalbeFIMember {
-            get {
-                return ResourceManager.GetString("lblAlertDisalbeFIMember", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to enable Casino on this customer?.
         /// </summary>
         internal static string lblAlertEnableCS {
             get {
                 return ResourceManager.GetString("lblAlertEnableCS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Do you want to enable Finance on this all customer&apos;s downlines?.
-        /// </summary>
-        internal static string lblAlertEnableFI {
-            get {
-                return ResourceManager.GetString("lblAlertEnableFI", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to enable Finance on this customer?.
-        /// </summary>
-        internal static string lblAlertEnableFIMember {
-            get {
-                return ResourceManager.GetString("lblAlertEnableFIMember", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to enable Horse Racing on this customer?.
-        /// </summary>
-        internal static string lblAlertEnableHR {
-            get {
-                return ResourceManager.GetString("lblAlertEnableHR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Do you want to enable Horse Racing on this all customer&apos;s downlines?.
-        /// </summary>
-        internal static string lblAlertEnableHRDownline {
-            get {
-                return ResourceManager.GetString("lblAlertEnableHRDownline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to enable SA Tote on this customer?.
-        /// </summary>
-        internal static string lblAlertEnableSATote {
-            get {
-                return ResourceManager.GetString("lblAlertEnableSATote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Do you want to enable SA Tote on this all customer&apos;s downlines?.
-        /// </summary>
-        internal static string lblAlertEnableSAToteDownline {
-            get {
-                return ResourceManager.GetString("lblAlertEnableSAToteDownline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to enable UK Tote on this customer?.
-        /// </summary>
-        internal static string lblAlertEnableUKTote {
-            get {
-                return ResourceManager.GetString("lblAlertEnableUKTote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Do you want to enable UK Tote on this all customer&apos;s downlines?.
-        /// </summary>
-        internal static string lblAlertEnableUKToteDownline {
-            get {
-                return ResourceManager.GetString("lblAlertEnableUKToteDownline", resourceCulture);
             }
         }
         
@@ -4283,15 +3878,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bingo Traditional Hand History.
-        /// </summary>
-        internal static string lblBingoTraditionalHandHistory {
-            get {
-                return ResourceManager.GetString("lblBingoTraditionalHandHistory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Bold.
         /// </summary>
         internal static string lblBold {
@@ -4418,15 +4004,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Finance Commission.
-        /// </summary>
-        internal static string lblCommissionByFinance {
-            get {
-                return ResourceManager.GetString("lblCommissionByFinance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Comm for Agent.
         /// </summary>
         internal static string lblCommissionForAgent {
@@ -4481,15 +4058,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Racing Commission.
-        /// </summary>
-        internal static string lblcommssionhorseracing {
-            get {
-                return ResourceManager.GetString("lblcommssionhorseracing", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Company Total.
         /// </summary>
         internal static string lblCompanyTotal {
@@ -4508,7 +4076,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to allow number game of this {username} account and all downlines?.
+        ///   Looks up a localized string similar to Are you sure you want to allow number game of this {custName} account and all downlines?.
         /// </summary>
         internal static string lblConfirmAllowDownline {
             get {
@@ -4517,7 +4085,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to clear credit of this {username} account and all downlines?.
+        ///   Looks up a localized string similar to Are you sure you want to clear credit of this {custName} account and all downlines?.
         /// </summary>
         internal static string lblConfirmClearCredit {
             get {
@@ -4526,7 +4094,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to clear credit of this {username} account?.
+        ///   Looks up a localized string similar to Are you sure you want to clear credit of this {custName} account?.
         /// </summary>
         internal static string lblConfirmClearCreditMember {
             get {
@@ -4778,15 +4346,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disabled Horse Racing.
-        /// </summary>
-        internal static string lblDisabledHR {
-            get {
-                return ResourceManager.GetString("lblDisabledHR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Draw.
         /// </summary>
         internal static string lblDraw {
@@ -4837,24 +4396,6 @@ namespace Resources {
         internal static string lbleditcustcomm {
             get {
                 return ResourceManager.GetString("lbleditcustcomm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Finance.
-        /// </summary>
-        internal static string lbleditfi {
-            get {
-                return ResourceManager.GetString("lbleditfi", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Racing.
-        /// </summary>
-        internal static string lbledithr {
-            get {
-                return ResourceManager.GetString("lbledithr", resourceCulture);
             }
         }
         
@@ -4936,15 +4477,6 @@ namespace Resources {
         internal static string lblEnableCS {
             get {
                 return ResourceManager.GetString("lblEnableCS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable Finance.
-        /// </summary>
-        internal static string lblenableFI {
-            get {
-                return ResourceManager.GetString("lblenableFI", resourceCulture);
             }
         }
         
@@ -5147,15 +4679,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Racing.
-        /// </summary>
-        internal static string lblHorseName {
-            get {
-                return ResourceManager.GetString("lblHorseName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Runner No.
         /// </summary>
         internal static string lblHorseNo {
@@ -5192,29 +4715,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Horse Racing (FOdds).
-        /// </summary>
-        internal static string lblHrFOdds {
-            get {
-                return ResourceManager.GetString("lblHrFOdds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to HR SA.
         /// </summary>
         internal static string lblHROthersComm {
             get {
                 return ResourceManager.GetString("lblHROthersComm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to HR Tote.
-        /// </summary>
-        internal static string lblHRTOComm {
-            get {
-                return ResourceManager.GetString("lblHRTOComm", resourceCulture);
             }
         }
         
@@ -5242,15 +4747,6 @@ namespace Resources {
         internal static string lblInformation {
             get {
                 return ResourceManager.GetString("lblInformation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This customer is not allowed to bet on the Horse Racing..
-        /// </summary>
-        internal static string lblInvalidCurrencyHR {
-            get {
-                return ResourceManager.GetString("lblInvalidCurrencyHR", resourceCulture);
             }
         }
         
@@ -6110,15 +5606,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Real Time Bingo Win Loss.
-        /// </summary>
-        internal static string lblRealTimeBingoWinloss {
-            get {
-                return ResourceManager.GetString("lblRealTimeBingoWinloss", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Real Time Casino Win Loss.
         /// </summary>
         internal static string lblRealTimeCSWinloss {
@@ -6241,15 +5728,6 @@ namespace Resources {
         internal static string lblSP {
             get {
                 return ResourceManager.GetString("lblSP", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sportsbook/Horse Racing.
-        /// </summary>
-        internal static string lblSportsbookandHorseRacing {
-            get {
-                return ResourceManager.GetString("lblSportsbookandHorseRacing", resourceCulture);
             }
         }
         
@@ -6407,33 +5885,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total Bingo Outstanding.
-        /// </summary>
-        internal static string lblTotalBGOutstanding {
-            get {
-                return ResourceManager.GetString("lblTotalBGOutstanding", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Total Bingo Transfer.
-        /// </summary>
-        internal static string lblTotalBGTransfer {
-            get {
-                return ResourceManager.GetString("lblTotalBGTransfer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Total Bingo Transfer|Outstanding.
-        /// </summary>
-        internal static string lblTotalBGTransferOutstanding {
-            get {
-                return ResourceManager.GetString("lblTotalBGTransferOutstanding", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Total Cash.
         /// </summary>
         internal static string lblTotalCash {
@@ -6506,33 +5957,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to P2P Outstanding.
-        /// </summary>
-        internal static string lblTotalP2POutstanding {
-            get {
-                return ResourceManager.GetString("lblTotalP2POutstanding", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to P2P Transfer.
-        /// </summary>
-        internal static string lblTotalP2PTransfer {
-            get {
-                return ResourceManager.GetString("lblTotalP2PTransfer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Total P2P Transfer|Outstanding.
-        /// </summary>
-        internal static string lblTotalP2PTransferOutstanding {
-            get {
-                return ResourceManager.GetString("lblTotalP2PTransferOutstanding", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to U/E.
         /// </summary>
         internal static string lblUE {
@@ -6574,15 +5998,6 @@ namespace Resources {
         internal static string lblUO {
             get {
                 return ResourceManager.GetString("lblUO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Horse Racing Setting was updated successfully..
-        /// </summary>
-        internal static string lblUpdatedSuccessfullHR {
-            get {
-                return ResourceManager.GetString("lblUpdatedSuccessfullHR", resourceCulture);
             }
         }
         
@@ -6754,15 +6169,6 @@ namespace Resources {
         internal static string lineno {
             get {
                 return ResourceManager.GetString("lineno", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Live Casino.
-        /// </summary>
-        internal static string LiveCasino {
-            get {
-                return ResourceManager.GetString("LiveCasino", resourceCulture);
             }
         }
         
@@ -6992,15 +6398,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Master Real Time Bingo Winloss.
-        /// </summary>
-        internal static string masterRealTimeBingoWinloss {
-            get {
-                return ResourceManager.GetString("masterRealTimeBingoWinloss", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Master Real Time Casino Winloss.
         /// </summary>
         internal static string masterRealTimeWinloss {
@@ -7204,15 +6601,6 @@ namespace Resources {
         internal static string memberoutstanding {
             get {
                 return ResourceManager.GetString("memberoutstanding", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Member Real Time Bingo Winloss.
-        /// </summary>
-        internal static string memberRealTimeBingoWinloss {
-            get {
-                return ResourceManager.GetString("memberRealTimeBingoWinloss", resourceCulture);
             }
         }
         
@@ -7505,7 +6893,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please input username and password.
+        ///   Looks up a localized string similar to Please input custName and password.
         /// </summary>
         internal static string msgErrUsernamePassWord {
             get {
@@ -8164,24 +7552,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to P2P.
-        /// </summary>
-        internal static string P2P {
-            get {
-                return ResourceManager.GetString("P2P", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to P2P Games.
-        /// </summary>
-        internal static string p2pGame {
-            get {
-                return ResourceManager.GetString("p2pGame", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 3P.
         /// </summary>
         internal static string P3 {
@@ -8304,33 +7674,6 @@ namespace Resources {
         internal static string Place {
             get {
                 return ResourceManager.GetString("Place", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Place.Aust Tote.
-        /// </summary>
-        internal static string placeautote {
-            get {
-                return ResourceManager.GetString("placeautote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Place.SA Tote.
-        /// </summary>
-        internal static string placesatote {
-            get {
-                return ResourceManager.GetString("placesatote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Place.UK Tote.
-        /// </summary>
-        internal static string placeuktote {
-            get {
-                return ResourceManager.GetString("placeuktote", resourceCulture);
             }
         }
         
@@ -8565,15 +7908,6 @@ namespace Resources {
         internal static string quickSelect {
             get {
                 return ResourceManager.GetString("quickSelect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Racing.
-        /// </summary>
-        internal static string Racebook {
-            get {
-                return ResourceManager.GetString("Racebook", resourceCulture);
             }
         }
         
@@ -8871,51 +8205,6 @@ namespace Resources {
         internal static string sat {
             get {
                 return ResourceManager.GetString("sat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SA Tote.
-        /// </summary>
-        internal static string satote {
-            get {
-                return ResourceManager.GetString("satote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SA Tote Comm.
-        /// </summary>
-        internal static string satotecomm {
-            get {
-                return ResourceManager.GetString("satotecomm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SA Tote Comm for Agent.
-        /// </summary>
-        internal static string satotecommforagent {
-            get {
-                return ResourceManager.GetString("satotecommforagent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SA Tote Comm for Master.
-        /// </summary>
-        internal static string satotecommformaster {
-            get {
-                return ResourceManager.GetString("satotecommformaster", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SA Tote Comm for Member.
-        /// </summary>
-        internal static string satotecommformember {
-            get {
-                return ResourceManager.GetString("satotecommformember", resourceCulture);
             }
         }
         
@@ -9307,7 +8596,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sportsbook - Racing - Number Game.
+        ///   Looks up a localized string similar to Sportsbook - Number Game.
         /// </summary>
         internal static string SportHorseNumberGame {
             get {
@@ -10046,51 +9335,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tote.
-        /// </summary>
-        internal static string tote {
-            get {
-                return ResourceManager.GetString("tote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tote Comm.
-        /// </summary>
-        internal static string totecomm {
-            get {
-                return ResourceManager.GetString("totecomm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tote Comm for Agent.
-        /// </summary>
-        internal static string totecommforagent {
-            get {
-                return ResourceManager.GetString("totecommforagent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tote Comm for Master.
-        /// </summary>
-        internal static string totecommformaster {
-            get {
-                return ResourceManager.GetString("totecommformaster", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tote Comm for Member.
-        /// </summary>
-        internal static string totecommformember {
-            get {
-                return ResourceManager.GetString("totecommformember", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Page.
         /// </summary>
         internal static string tpage {
@@ -10236,65 +9480,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UK/Irish Tote - Win.
-        /// </summary>
-        internal static string ukIrish {
-            get {
-                return ResourceManager.GetString("ukIrish", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to UK Meeting.
         /// </summary>
         internal static string ukmeeting {
             get {
                 return ResourceManager.GetString("ukmeeting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UK Tote.
-        /// </summary>
-        internal static string uktote {
-            get {
-                return ResourceManager.GetString("uktote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UK Tote Comm.
-        /// </summary>
-        internal static string uktotecomm {
-            get {
-                return ResourceManager.GetString("uktotecomm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UK Tote Comm for Agent.
-        /// </summary>
-        internal static string uktotecommforagent {
-            get {
-                return ResourceManager.GetString("uktotecommforagent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UK Tote Comm for Master.
-        /// </summary>
-        internal static string uktotecommformaster {
-            get {
-                return ResourceManager.GetString("uktotecommformaster", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UK Tote Comm for Member.
-        /// </summary>
-        internal static string uktotecommformember {
-            get {
-                return ResourceManager.GetString("uktotecommformember", resourceCulture);
             }
         }
         
@@ -10776,15 +9966,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Win.Aust Tote.
-        /// </summary>
-        internal static string winautote {
-            get {
-                return ResourceManager.GetString("winautote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Win.
         /// </summary>
         internal static string WinHR {
@@ -10812,15 +9993,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Win.SA Tote.
-        /// </summary>
-        internal static string winsatote {
-            get {
-                return ResourceManager.GetString("winsatote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Winter Sports.
         /// </summary>
         internal static string winter {
@@ -10835,15 +10007,6 @@ namespace Resources {
         internal static string wintype {
             get {
                 return ResourceManager.GetString("wintype", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Win.UK Tote.
-        /// </summary>
-        internal static string winuktote {
-            get {
-                return ResourceManager.GetString("winuktote", resourceCulture);
             }
         }
         

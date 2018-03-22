@@ -242,16 +242,41 @@ Fanex.ExtAcc.Menus = {
         });
 
         $('#jqbutton').bind('click', function () {
-            Fanex.ExtAcc.Form.Show(resolveClientUrl("Menu/AddMenu"), $.parseJSON(menuTitles).Create, 400, Fanex.ExtAcc.Menus.GetPopupHeight(300, 500), false);
+            top.shouldCalculatePopupHeight = true;
+            top.portraitHeight = 500;
+            top.landscapeHeight = 260;
+
+            Fanex.ExtAcc.Form.Show(resolveClientUrl("Menu/AddMenu"), $.parseJSON(menuTitles).Create, 400, Fanex.ExtAcc.Menus.GetPopupHeight(top.landscapeHeight, top.portraitHeight), false);
         });
 
         Fanex.ExtAcc.OnResize = function () {
             try {
-                $('#jqgrid').fanexGrid('resizeGrid');
+                $('#jqgrid-menu').fanexGrid('resizeGrid');
             }
             catch (err) {
             }
         }
+
+        $(window).bind('orientationchange', function (e) {
+            var calculatePopupheight = top.shouldCalculatePopupHeight && isMobile.phone;
+            if (!calculatePopupheight) {
+                return;
+            }
+
+            var height;
+            var isLandscape = window.matchMedia("(orientation: landscape)").matches;
+            if (isMobile.android.phone) {
+                height = isLandscape ? top.portraitHeight : top.landscapeHeight;
+            }
+            else {
+                height = isLandscape ? top.landscapeHeight : top.portraitHeight;
+            }
+
+            var dialog = top.$('.ui-dialog');
+            dialog.height((height + 34) + 'px');
+
+            top.$("#windowPopup").css("height", height + "px");
+        });
     },
 
     GetPopupHeight: function (landscapeHeight, portraitHeight) {
@@ -265,7 +290,7 @@ Fanex.ExtAcc.Menus = {
     RenderGrid: function (options) {
         try {
             // Init Grid jqgrid
-            $('#jqgrid').fanexGrid(options);
+            $('#jqgrid-menu').fanexGrid(options);
             Fanex.ExtAcc.UnBlockUI();
 
             $('#mainGrid').css('visibility', 'visible');
@@ -281,17 +306,22 @@ Fanex.ExtAcc.Menus = {
 
     ShowEdit: function (menuId, title) {
         Fanex.ExtAcc.Menus.MenuId = menuId;
+        top.portraitHeight = 500;
+        top.landscapeHeight = 260;
+        top.shouldCalculatePopupHeight = true;
+
         Fanex.ExtAcc.Form.Show(
             resolveClientUrl('Menu/EditMenu/' + menuId),
             title,
             400,
-            Fanex.ExtAcc.Menus.GetPopupHeight(300, 500),
+            Fanex.ExtAcc.Menus.GetPopupHeight(top.landscapeHeight, top.portraitHeight),
             false);
     },
 
     ShowActivate: function (menuId, menuName) {
         var titles = $.parseJSON(menuTitles);
         var title = '';
+        top.shouldCalculatePopupHeight = false;
 
         title = $('#menu-' + menuId).attr('class') == 'menuActive' ? 'Deactivate Menu' : 'Activate Menu';
 
@@ -312,6 +342,7 @@ Fanex.ExtAcc.Menus = {
 
         var titles = $.parseJSON(menuTitles);
         var title = titles.Delete;
+        top.shouldCalculatePopupHeight = false;
 
         Fanex.ExtAcc.Form.ConfirmBox(
             'Delete Menu',

@@ -115,7 +115,7 @@ fanex.goldDeluxeSetting.errorResult = {
 };
 
 
-fanex.goldDeluxeSetting.rootUrl = document.getElementById('LiveCasinoRoot') ? document.getElementById('LiveCasinoRoot').value : '/';
+fanex.goldDeluxeSetting.rootUrl = document.getElementById('GoldDeluxeRoot') ? document.getElementById('GoldDeluxeRoot').value : '/';
 
 
 fanex.goldDeluxeSetting.config([ '$httpProvider', function ($httpProvider) {

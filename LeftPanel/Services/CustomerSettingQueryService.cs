@@ -80,10 +80,8 @@
 
             AddCasinoStatus(customerRow, customerStatus, enableItems);
             AddNumberGameStatus(customerRow, customerStatus, enableItems);
-            AddLiveCasinoStatus(customerRow, customerStatus, enableItems);
             AddVirtualSportsStatus(productStatusTable, customerStatus, enableItems);
             AddDoubleCommStatus(customerRow, customerStatus, enableItems);
-            AddHRFixedOddsStatus(customerRow, customerStatus, enableItems);
             AddESportsStatus(customerRow, customerStatus, enableItems);
             AddColossusBetsStatus(customerRow, customerStatus, enableItems);
             AddGoldDeluxeStatus(customerRow, customerStatus, enableItems);
@@ -154,24 +152,6 @@
             enableItems.Add(eSportsStatus);
         }
 
-        private static void AddHRFixedOddsStatus(DataRow customerRow, CustomerStatus customerStatus,
-            ICollection<ObjectInfo> enableItems)
-        {
-            var hrFixedOddsStatus = new ObjectInfo(
-                "EnableHRFixedOdds",
-                customerRow.EnableHorseRacingFixedOdds(),
-                "HR Fixed Odds",
-                "Enable Horse Racing Fixed Odds");
-
-            if (customerStatus.RoleId.IsNotSuper()
-                && customerStatus.UplineStatus.DisableHRFixedOdds)
-            {
-                hrFixedOddsStatus = DisableStatus(hrFixedOddsStatus);
-            }
-
-            enableItems.Add(hrFixedOddsStatus);
-        }
-
         private static void AddDoubleCommStatus(
             DataRow customerRow,
             CustomerStatus customerStatus,
@@ -207,28 +187,6 @@
             }
 
             enableItems.Add(virtualSportsStatus);
-        }
-
-        private static void AddLiveCasinoStatus(
-            DataRow customerRow,
-            CustomerStatus customerStatus,
-            ICollection<ObjectInfo> enableItems)
-        {
-            if (!customerStatus.SyncLiveCasino)
-            {
-                return;
-            }
-
-            var liveCasinoStatus = new ObjectInfo("EnableLiveCasino", customerRow.EnableLiveCasino(),
-                "Enable Live Casino");
-
-            if (customerStatus.RoleId.IsNotSuper()
-                && customerStatus.UplineStatus.DisableLiveCasino)
-            {
-                liveCasinoStatus = DisableStatus(liveCasinoStatus);
-            }
-
-            enableItems.Add(liveCasinoStatus);
         }
 
         private static void AddNumberGameStatus(DataRow customerRow, CustomerStatus customerStatus,
@@ -303,26 +261,22 @@
         {
             var details = new List<ObjectInfo>
             {
-                new ObjectInfo("Info", "Edit Info"),
-                new ObjectInfo("PT", "Edit Position Taking")
+                new ObjectInfo("Info", "Info"),
+                new ObjectInfo("PT", "Position Taking")
             };
 
             if (roleId.IsNotMember())
             {
                 details.Add(new ObjectInfo("AddNew", "Add New"));
-                details.Add(new ObjectInfo("Transfer", "Edit Transfer Condition"));
+                details.Add(new ObjectInfo("Transfer", "Transfer Condition"));
             }
 
-            details.Add(new ObjectInfo("Racing", "Edit Racing"));
-
             AddCasinoEditLink(customerStatus, details);
-            AddLiveCasinoEditLink(customerStatus, details);
             AddVirtualSportsEditLink(customerStatus, details);
             AddKenoEditLink(details);
             AddGoldDeluxeEditLink(customerStatus, details);
             AddColossusBetsEditLink(customerStatus, details);
             AddSportsbook2EditLink(customerStatus, details);
-            AddCockfightingEditLink(customerStatus, details);
             AddCricketEditLink(customerStatus, details);
 
             return details;
@@ -332,15 +286,7 @@
         {
             if (!customerStatus.HideCricket)
             {
-                details.Add(new ObjectInfo("Cricket", "Edit Cricket"));
-            }
-        }
-
-        private static void AddCockfightingEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
-        {
-            if (!customerStatus.HideCockfighting)
-            {
-                details.Add(new ObjectInfo("Cockfighting", "Edit Cockfighting"));
+                details.Add(new ObjectInfo("Cricket", "Cricket"));
             }
         }
 
@@ -348,7 +294,7 @@
         {
             if (ProductSettings.IsShowKeno)
             {
-                details.Add(new ObjectInfo("Keno", "Edit Keno"));
+                details.Add(new ObjectInfo("Keno", "Keno"));
             }
         }
 
@@ -356,7 +302,7 @@
         {
             if (!customerStatus.DisableSportsbook2)
             {
-                details.Add(new ObjectInfo("Sportsbook2", "Edit Sportsbook 2"));
+                details.Add(new ObjectInfo("Sportsbook2", "Sportsbook 2"));
             }
         }
 
@@ -364,7 +310,7 @@
         {
             if (!customerStatus.HideColossusBets)
             {
-                details.Add(new ObjectInfo("ColossusBets", "Edit Colossus Bets"));
+                details.Add(new ObjectInfo("ColossusBets", "Colossus Bets"));
             }
         }
 
@@ -372,16 +318,7 @@
         {
             if (!customerStatus.UplineStatus.HideGoldDeluxe)
             {
-                details.Add(new ObjectInfo("GoldDeluxe", "Edit Gold Deluxe"));
-            }
-        }
-
-        private static void AddLiveCasinoEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
-        {
-            if (customerStatus.UplineStatus.SyncLiveCasino
-                || customerStatus.RoleId.IsSuper())
-            {
-                details.Add(new ObjectInfo("LiveCasino", "Edit Live Casino"));
+                details.Add(new ObjectInfo("GoldDeluxe", "Gold Deluxe"));
             }
         }
 
@@ -390,7 +327,7 @@
             if (customerStatus.UplineStatus.SyncCasino
                 || customerStatus.RoleId.IsSuper())
             {
-                details.Add(new ObjectInfo("Casino", "Edit Casino"));
+                details.Add(new ObjectInfo("Casino", "Casino"));
             }
         }
 
@@ -402,29 +339,14 @@
 
             if (!hideVirtualSports)
             {
-                details.Add(new ObjectInfo("VirtualSports", "Edit Virtual Sports"));
+                details.Add(new ObjectInfo("VirtualSports", "Virtual Sports"));
             }
         }
 
         internal static List<ObjectInfo> EditItems(CustomerStatus customerStatus)
-        {
-            var editItems = new List<ObjectInfo>
-            {
-                new ObjectInfo {Key = "EnableRacing", Text = "Enable Racing"}
-            };
-
-            if (!customerStatus.HideKeno)
-            {
-                editItems.Add(new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" });
-            }
-
-            if(!customerStatus.HideCockfighting)
-            {
-                editItems.Add(new ObjectInfo { Key = "EnableCockfighting", Text = "Enable Cockfighting" });
-            }
-
-            return editItems;
-        }
+            => !customerStatus.HideKeno ?
+            new List<ObjectInfo> { new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" } } :
+            new List<ObjectInfo>();
 
 #pragma warning disable S1541 // Methods and properties should not be too complex
         internal static Setting AddProductSetting(
@@ -467,8 +389,8 @@
 #pragma warning disable S1067 // Expressions should not be too complex
             // Ricky: this code i cannot refactor because of the complexity
             if (!syncUpline
-                || (!sync && roleId.IsMember()) 
-                || (!hide && !sync) 
+                || (!sync && roleId.IsMember())
+                || (!hide && !sync)
                 || (isCheckSyncDownlines && !isSyncDownlines))
 #pragma warning restore S1067 // Expressions should not be too complex
             {
@@ -521,7 +443,7 @@
         }
 
         internal static ObjectInfo GetEditSettingLink(string productNameNoSpace, string productName)
-            => new ObjectInfo { Key = productNameNoSpace, Value = $"Edit {productName}" };
+            => new ObjectInfo { Key = productNameNoSpace, Value = $"{productName}" };
 
         internal static bool IsProductVisibledToSite(DataTable productStatusTable, int productId)
             => productStatusTable.Select($"ProductID = {productId}").Length > 0

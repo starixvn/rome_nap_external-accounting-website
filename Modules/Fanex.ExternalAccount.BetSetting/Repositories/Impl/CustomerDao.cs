@@ -35,9 +35,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Repositories.Impl
                                 Email = reader.ToString("email"),
                                 Fax = reader.ToString("fax"),
                                 RoleId = reader.ToInt("roleid"),
-                                SyncBingo = reader.ToBool("syncBingo"),
                                 SyncCasino = reader.ToBool("syncCasino"),
-                                SyncLiveCasino = reader.ToBool("syncLiveCasino"),
                                 HideGoldDeluxe = reader.ToBool("HideGoldDeluxe") || !ProductSettings.IsShowGoldDeluxe,
                                 CurrencyName = reader.ToString("currencyName")
                             };

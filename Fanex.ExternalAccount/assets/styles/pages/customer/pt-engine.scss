@@ -469,6 +469,9 @@
 	border-bottom: 1px solid #CCC;
 	border-right: 1px solid #CCC;
 }
+.BettingLimit4 {
+    width: 716px !important;
+}
 .BettingLimitTextBox
 {
 	vertical-align: top;
@@ -479,12 +482,12 @@
 	width: 186px;
 	vertical-align: top;
 }
-.BettingLimitTextBox9
+input.BettingLimitTextBox9
 {
 	width: 90px;
 	vertical-align: top;
 }
-.BettingLimitTextBox5
+input.BettingLimitTextBox5
 {
 	width: 137px;
 	vertical-align: top;
@@ -493,7 +496,7 @@
 {
 	background-color: #FFF;
 	border-top: 1px solid #CCC;
-    min-width: 114px;
+    min-width: 112px;
     height: 26px;
     line-height: 26px;
 }
@@ -510,6 +513,15 @@
 	font-size: 11px !important;
 	text-indent: 1px !important;
 }
+
+.BettingLimitHeaderTop {
+    //min-width: 232px !important;
+}
+
+.BettingLimitHeader {
+    //min-width: 125px !important;
+}
+
 .BettingLimitHeaderCopied, .BettingLimitHeaderCopiedActive
 {
 	font-family: Tahoma,Arial,helvetica,sans-serif;

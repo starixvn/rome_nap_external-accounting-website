@@ -130,7 +130,7 @@ Fanex.ExtAcc = {
         iframe.setAttribute('src', url);
         iframe.setAttribute('frameborder', 0);
         iframe.setAttribute('width', ($('#contentSplitter').width() - 5) + 'px');
-        iframe.setAttribute('height', ($('#contentSplitter').height() - 5) + 'px');
+        //iframe.setAttribute('height', ($('#contentSplitter').height() - 5) + 'px');
         iframe.setAttribute('style', 'overflow: auto');
         iframe.setAttribute('onload', 'Fanex.ExtAcc.UnBlockUI()');
         $('#contentSplitter').append(iframe);
@@ -364,11 +364,11 @@ Fanex.ExtAcc = {
 
         var widthDevice = $(window).width();
 
-        if (widthDevice >= 768 && widthDevice <= 1600) {
+        if (widthDevice >= 768 && widthDevice <= 1366) {
             iconUser.on("click", function () {
                 if (iconUser.hasClass("active")) {
                     leftSplitter.addClass("collapse-leftpanel").removeClass("expand-leftpanel");
-                    content.removeClass("collapse-content");
+                    content.removeClass("collapse-content").addClass("expand-content");
                     iconUser.removeClass("active");                    
                 } else {
                     leftSplitter.removeClass("collapse-leftpanel").addClass("expand-leftpanel");
@@ -480,6 +480,7 @@ Fanex.ExtAcc = {
 
         setTimeout(Fanex.ExtAcc.CalculateUserConnectionSpeed, 8000);
     },
+
     CalculateUserConnectionSpeed: function () {
         var iframe = document.getElementById('connection-speed');
 
@@ -516,11 +517,11 @@ Fanex.ExtAcc = {
 
         //$('#leftSplitter').height($('#contentSplitter').height());
         $('#leftFrame').height($('#contentSplitter').height() - 35);
-        $('#mainFrame').height($('#contentSplitter').height() - 30);
+        //$('#mainFrame').height($('#contentSplitter').height() - 30);
 
         if (document.getElementById('mainIFrame')) {
             $('#mainIFrame').width($('#contentSplitter').width() - 5);
-            $('#mainIFrame').height($('#contentSplitter').height() - 5);
+            //$('#mainIFrame').height($('#contentSplitter').height() - 5);
         }
 
         if (document.getElementById('tabs-2')) {
@@ -550,7 +551,7 @@ Fanex.ExtAcc = {
 
         if (document.getElementById('mainIFrame')) {
             $('#mainIFrame').width($('#contentSplitter').width() - 5);
-            $('#mainIFrame').height($('#contentSplitter').height() - 5);
+            //$('#mainIFrame').height($('#contentSplitter').height() - 5);
         }
 
         try {
@@ -561,7 +562,7 @@ Fanex.ExtAcc = {
 
         //$('#leftSplitter').height($('#contentSplitter').height() + 5);
         $('#leftFrame').height($('#contentSplitter').height() - 35);
-        $('#mainFrame').height($('#contentSplitter').height() - 30);
+        //$('#mainFrame').height($('#contentSplitter').height() - 30);
 
         if (document.getElementById('tabs-2')) {
             $('#tabs-2').height($('#contentSplitter').height() - 40);

@@ -15,8 +15,7 @@
 }
 @model EditSettingViewModel
 <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/GoldDeluxeSetting/content/bootstrap.css")" />
-<link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/GoldDeluxeSetting/content/fanex-gold-deluxe-setting.css")?v=1" />
-<link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/GoldDeluxeSetting/content/fanex-gold-deluxe-setting-override.css")" />
+<link type="text/css" rel="Stylesheet" href="@Url.Content("~/assets/styles/pages/customer/gold-deluxe-setting.css")?v=1" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/GoldDeluxe/Styles/BettingLimiteGoldDeluxe.css")" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
     @(Html.ToJavascriptObject(Model, "settingViewModel"))
@@ -63,7 +62,7 @@
         <div class="pt-title">
             <span class="pt-title-text">@GoldDeluxeLang.lblGameSetting</span>
         </div>
-       <table class="game-setting col-xs-12">
+       <table class="game-setting">
         <thead>
             <tr>
                 <td class="col-xs-3 right bold">
@@ -103,8 +102,8 @@
             </tr>
         </tbody>
     </table>
-        <div class="update-setting col-xs-12">
-            <input type="button" class="update-setting-ext-acc-submit" data-ng-click="updateGameSetting()" title="@GoldDeluxeLang.lblSubmit"
+        <div class="update-setting">
+            <input type="button" class="btn -submit update-setting-ext-acc-submit" data-ng-click="updateGameSetting()" title="@GoldDeluxeLang.lblSubmit"
                    value="@GoldDeluxeLang.lblSubmit" data-ng-show="!isReadOnly" />
         </div>
     </div>
@@ -113,7 +112,7 @@
     <span class="loading-icon"></span>
 </div>
 @Html.Hidden("UpdateGameSettingUrl", Url.Content("~/CustomerSetting/BetSetting/GoldDeluxeBetting/UpdateGameSetting"))
-@Html.Hidden("LiveCasinoRoot", Url.Content("~/"))
+
 @Scripts.Render("~/areasjs/golddeluxe/core")
 <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/gold-deluxe-lang.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/areas/GoldDeluxeSetting/scripts/core/language/GoldDeluxeLang.js")"></script>
@@ -141,8 +140,7 @@
     var uplineId = parseInt('@uplineId');
     var userId = parseInt('@userId');
     var siteName = '@siteName';
-    var syncCasino = '@ViewBag.SyncCasino';
-    var syncLiveCasino = '@ViewBag.SyncLiveCasino';
+    var syncCasino = '@ViewBag.SyncCasino';    
 
     function toUrl(relativeUrl) {
         return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
@@ -152,11 +150,7 @@
         if (syncCasino == 'False') {
             $('#tab6').remove();
         }
-
-        if (syncLiveCasino == 'False') {
-            $('#tab4').remove();
-        }
-
+        
         $('#tab8').addClass('ui-tabs-active ui-state-active');
         $('#tab1').removeClass('ui-tabs-active ui-state-active');
         $('#tab2').removeClass('ui-tabs-active ui-state-active');

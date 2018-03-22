@@ -50,13 +50,11 @@
 
                 var allowDoubleComm = false;
                 var syncCasino = false;
-                var syncLiveCasino = false;
                 var isHideKeno = true;
                 var isHideVirtualSport = true;
                 var isHideGoldDeluxe = true;
                 var isHideColossusBets = true;
                 var isHideSportsbook2 = true;
-                var isHideCockfighting = true;
                 var isHideCricket = true;
                 var isHideAllbet = true;
                 var isHideVoidbridge = true;
@@ -77,11 +75,7 @@
                 for (var i = 0; i < $scope.model.setting.syncItems.length; i++) {
                     if ($scope.model.setting.syncItems[i].key == 'SyncCasino') {
                         syncCasino = $scope.model.setting.syncItems[i].value;
-                    }
-
-                    if ($scope.model.setting.syncItems[i].key == 'SyncLiveCasino') {
-                        syncLiveCasino = $scope.model.setting.syncItems[i].value;
-                    }
+                    }                    
 
                     if ($scope.model.setting.syncItems[i].key == 'HideAllbet') {
                         isHideAllbet = $scope.model.setting.syncItems[i].value;
@@ -128,25 +122,23 @@
                     if ($scope.model.setting.details[i].key == 'Sportsbook2') {
                         isHideSportsbook2 = false;
                     }
-                    if ($scope.model.setting.details[i].key == 'Cockfighting') {
-                        isHideCockfighting = false;
-                    }
+                    
                     if ($scope.model.setting.details[i].key == 'Cricket') {
                         isHideCricket = false;
                     }
                 }
 
-                parent.$(".icon-filter").click(parent.Fanex.ExtAcc.Customer.showHideFilter);
-
-                switch (roleId) {
+                parent.$(".icon-filter").off('click').on('click',parent.Fanex.ExtAcc.Customer.showHideFilter);
+                parent.Fanex.ExtAcc.Customer.bindOrientationChange();
+;                switch (roleId) {
                     case 4:
-                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting);
+                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2,  isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting);
                         break;
                     case 3:
-                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting);
+                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting);
                         break;
                     case 2:
-                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, syncLiveCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCockfighting, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting);
+                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting);
                         break;
                     default:
                         break;
@@ -172,54 +164,12 @@
         $scope.collapseSidebar();
     };
 
-    $scope.Init = function () {
-        //$(window).bind('orientationchange', function (e) {
-        //    var calculatePopupheight = $scope.shouldCalculatePopupHeight && isMobile.phone;
-        //    if (!calculatePopupheight) {
-        //        return;
-        //    }
-
-        //    var height;
-        //    var isLandscape = window.matchMedia("(orientation: landscape)").matches;
-        //    if (isMobile.android.phone) {
-        //        height = isLandscape ? $scope.portraitHeight : $scope.landscapeHeight;
-        //    }
-        //    else {
-        //        height = isLandscape ? $scope.landscapeHeight : $scope.portraitHeight;
-        //    }
-
-        //    var dialog = top.$('.ui-dialog');
-        //    dialog.height((height + 34) + 'px');
-
-        //    top.$("#windowPopup").css("height", height + "px");
-        //});
-    };
-
-    $scope.Info = function () {
-        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-
-        var url = parent.resolveClientUrl('Customer/EditInfo/?' +
-            'custId=' + $scope.model.personalInfo.custId.value +
-            "&groupName=" + parent.$('#selectedGroupName').html());
-        var title = parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
-
-        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 280 : 550;
-        var width = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 400 : 500;
-
-        parent.Fanex.ExtAcc.Form.Show(url, title, 500, height, false);
-    };
-
     $scope.getPopupHeight = function () {
         var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
              $scope.landscapeHeight :
              $scope.portraitHeight;
 
         return height;
-    };
-
-    $scope.Transfer = function () {
-        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditTransferCondition/?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), parent.titles[1] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 600, 250, false, false, 1);
-
     };
 
     $scope.Casino = function () {
@@ -251,43 +201,7 @@
         }
 
         $scope.collapseSidebar();
-    };
-
-    $scope.LiveCasino = function () {
-        var roleId = $scope.model.personalInfo.roleId.value;
-        var custId = $scope.model.personalInfo.custId.value;
-        var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
-        var url = '';
-        var title = $scope.model.personalInfo.currentLevel.value;
-
-        $scope.ResetGlobalValue();
-        parent.Fanex.ExtAcc.Customer.CurrentLevel = roleId;
-        parent.Fanex.ExtAcc.Customer.UserId = custId;
-        parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = parent.Fanex.ExtAcc.Customer.agentId = uplineId;
-
-        switch (roleId) {
-            case 4:
-                url = parent.resolveClientUrl("LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&customerId=" + $scope.model.personalInfo.custId.value + "&customerLevel=4&formType=2");
-                break;
-            case 3:
-                url = parent.resolveClientUrl("LiveCasinoSetting/Setting/EditSetting?uplineId=" + $scope.model.personalInfo.uplineId.value + "&parentId=" + $scope.model.personalInfo.uplineId.value + "&uplineLevel=4&customerId=" + $scope.model.personalInfo.custId.value + "&customerLevel=3");
-                break;
-            case 2:
-                url = parent.resolveClientUrl("LiveCasinoSetting/Setting/EditSetting?uplineId=" + $scope.model.personalInfo.uplineId.value + "&parentId=" + $scope.model.personalInfo.uplineId.value + "&uplineLevel=3&customerId=" + $scope.model.personalInfo.custId.value + "&customerLevel=2");
-                break;
-            case 1:
-                url = parent.resolveClientUrl("LiveCasinoSetting/Setting/EditSetting?uplineId=" + $scope.model.personalInfo.uplineId.value + "&parentId=" + $scope.model.personalInfo.uplineId.value + "&uplineLevel=2&customerId=" + $scope.model.personalInfo.custId.value + "&customerLevel=1");
-                break;
-            default:
-                break;
-        }
-
-        if (url != '') {
-            parent.Fanex.ExtAcc.LoadMainIFrame(url + "&actorId=" + parent.userId + "&actorUsername=" + parent.username + "&groupName=" + parent.$('#selectedGroupName').html(), null, null, null, true);
-        }
-
-        $scope.collapseSidebar();
-    };
+    };   
 
     $scope.BetSetting = function () {
         var custId = $scope.model.personalInfo.custId.value;
@@ -295,38 +209,9 @@
         var url = parent.resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/' + param);
 
         parent.Fanex.ExtAcc.LoadMainIFrame(url);
-    };
-
-    $scope.Racing = function () {
-        $scope.ResetGlobalValue();
-
-        var roleId = $scope.model.personalInfo.roleId.value;
-        var custId = $scope.model.personalInfo.custId.value;
-        var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
-        var url = '';
-        switch (roleId) {
-            case 4:
-                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Super?id=' + custId);
-                break;
-            case 3:
-                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Master?id=' + custId + '&uplineid=' + uplineId);
-                break;
-            case 2:
-                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Agent?id=' + custId + '&uplineid=' + uplineId);
-                break;
-            case 1:
-                url = parent.resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Member?id=' + custId + '&uplineid=' + uplineId);
-                break;
-            default:
-                break;
-        }
-
-        if (url !== '') {
-            parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupName=' + parent.$('#selectedGroupName').html());
-        }
         $scope.collapseSidebar();
     };
-
+        
     $scope.VirtualSports = function () {
         $scope.RenderDCS(5);
         $scope.collapseSidebar();
@@ -424,16 +309,11 @@
     $scope.Sportsbook2 = function () {
         $scope.RenderDCS(16);
         $scope.collapseSidebar();
-    };
-
-    $scope.Cockfighting = function () {
-        $scope.RenderDCS(19);
-        $scope.collapseSidebar();
-    };
-
+    };    
+        
     $scope.Cricket = function () {
         $scope.RenderDCS(20);
-
+        $scope.collapseSidebar();
     };
 
     $scope.Allbet = function () {
@@ -507,6 +387,7 @@
     $scope.collapseSidebar = function () {
         var widthDevice = top.$(top.window).width();
         if (widthDevice <= 768) {
+            
             top.$("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
             top.$("#sidebar").removeClass("expand-sidebar").addClass("collapse-sidebar");
             top.$("#leftSplitter").removeClass("expand-leftpanel").addClass("collapse-leftpanel");

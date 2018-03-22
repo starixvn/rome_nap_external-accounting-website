@@ -32,9 +32,7 @@
     <div id="tabs" style="float: left; width: 870px; border: none">
         <ul class="tabs">
             <li id="tab1" onclick="LoadSB()"><a href="#tabs-1">Sportsbook</a></li>
-            <li id="tab2" onclick="LoadRacing()"><a href="#tabs-2">Racing</a></li>
-            <li id="tab5" onclick="LoadProduct(5)"><a href="#tabs-5">Virtual Sports</a></li>
-            <li id="tab4" onclick="LoadLiveCasino()"><a href="#tabs-4">Live Casino</a></li>
+            <li id="tab5" onclick="LoadVirtualSports()"><a href="#tabs-5">Virtual Sports</a></li>            
             <li id="tab6" onclick="LoadCasino()"><a href="#tabs-6">Casino</a></li>
             <li id="tab8" onclick="LoadKeno()"><a href="#tabs-8">Keno</a></li>
             <li id="tab12" onclick="LoadGoldDeluxe()"><a href="#tabs-12">Gold Deluxe</a></li>
@@ -50,15 +48,10 @@
         <div id = "tabs-1" >
             @RenderSection("Sportsbook", false)
         </div>
-        <div id="tabs-2">
-            @RenderSection("Racing", false)
-        </div>
+        
         <div id = "tabs-5" >
-            <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
+	        <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
             <div><iframe id = "product-5" width="100%" height="450px" frameborder="0" src=""></iframe></div>
-        </div>
-        <div id = "tabs-4" >
-            @RenderSection("LiveCasino", false)
         </div>
         <div id="tabs-6">
             @RenderSection("Casino", false)
@@ -94,17 +87,15 @@
         $(document).ready(function () {
             var url = document.URL.toLowerCase();
             var index = url.indexOf('sportsbook') != -1 ? 0 :
-                url.indexOf('racingbetting') != -1 ? 1 :
-                url.indexOf('virtualsportsbetting') != -1 ? 2 :
-                url.indexOf('livecasinobetting') != -1 ? 3 :
-                url.indexOf('casinobetting') != -1 ? 4 :
-                url.indexOf('kenobetting') != -1 ? 5 :
-                url.indexOf('golddeluxebetting') != -1 ? 6 :
-                url.indexOf('allbet') != -1 ? 7 :
-                url.indexOf('voidbridge') != -1 ? 8 :
-                url.indexOf('ng2') != -1 ? 9 :
-                url.indexOf('lottery') != -1 ? 10 :
-                url.indexOf('product-30') != -1 ? 11 : 0;
+                url.indexOf('virtualsportsbetting') != -1 ? 1 :                
+                url.indexOf('casinobetting') != -1 ? 2 :
+                url.indexOf('kenobetting') != -1 ? 3 :
+                url.indexOf('golddeluxebetting') != -1 ? 4 :
+                url.indexOf('allbet') != -1 ? 5 :
+                url.indexOf('voidbridge') != -1 ? 6 :
+                url.indexOf('ng2') != -1 ? 7 :
+                url.indexOf('lottery') != -1 ? 8 :
+                url.indexOf('product-30') != -1 ? 9 : 0;
 
             var custInfo = @Html.Raw(custInfo);
 
@@ -115,19 +106,14 @@
             }
 
             if (!custInfo.syncCasino) {
-                $('#tab6').remove();
-                $('#tabs-6').remove();
+                $('#tab3').remove();
+                $('#tabs-3').remove();
             }
-
-            if (!custInfo.syncLiveCasino) {
-                $('#tab4').remove();
-                $('#tabs-4').remove();
-            }
-
+            
             if (custInfo.hideGoldDeluxe)
             {
-                $('#tab12').remove();
-                $('#tabs-12').remove();
+                $('#tab5').remove();
+                $('#tabs-5').remove();
             }
 
             $('#tabs').tabs({ selected: index });

@@ -31,7 +31,6 @@ language.goldDeluxe['en-US'] = {
 	lblDailyAutoResetLimit : "Daily auto reset limit (at 12 noon GMT+8)",
 	lblDownline : "Downline",
 	lblEditGoldDeluxe : "Edit Gold Deluxe",
-	lblEditMultipleLiveCasino : "Edit Multiple Live Casino",
 	lblEnable : "Enable",
 	lblFax : "Fax",
 	lblFirstName : "First Name",
@@ -77,8 +76,6 @@ language.goldDeluxe['en-US'] = {
 	UnauthorizeMsg : "You are not authorized on this function",
 	UpdatedUnsuccessfully : "Updated unsuccessfully",
 	UpdatedWinLimitSuccessfully : "Maximum Win: Updated successfully.",
-	UpdateLiveCasinoStatusSuccess : "Status: Updated successfully.",
-	UpdateLiveCasinoStatusUnSuccess : "Updated Status unsuccessfully because Live Casino status has been disabled at upline.",
 	UpdateSuccessfully : "Updated Successfully.",
 	WarningUncheckAllStakeLevelMsg : "Unchecking all stake levels will affect and apply to all downlines",
 	WarningUplineUncheckAllStakeLevelMsg : "do/does not have any Betting Limit because the upline has all Betting Limit settings unchecked and it affects the downline settings. Therefore, the Betting Limit will be taken from the minimum Betting Limit of UPLINE by default"

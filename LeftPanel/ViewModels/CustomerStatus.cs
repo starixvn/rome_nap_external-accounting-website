@@ -14,9 +14,7 @@
 
         public int RoleId { get; set; }
 
-        public bool SyncCasino { get; set; }
-
-        public bool SyncLiveCasino { get; set; }
+        public bool SyncCasino { get; set; }        
 
         public bool AllowDoubleComm { get; set; }
 
@@ -32,15 +30,11 @@
 
         public bool DisableCasino { get; set; }
 
-        public bool DisableLiveCasino { get; set; }
-
         public bool Closed { get; set; }
 
         public bool Suspended { get; set; }
 
-        public bool HideVirtualSports { get; set; }
-
-        public bool DisableHRFixedOdds { get; set; }
+        public bool HideVirtualSports { get; set; }               
 
         public bool HideKeno { get; set; }
 
@@ -59,11 +53,7 @@
         public bool DisableSportsbook2 { get; set; }
 
         public bool HideSportsbook2 { get; set; }
-
-        public bool DisableCockfighting { get; set; }
-
-        public bool HideCockfighting { get; set; }
-
+        
         public bool HideCricket { get; set; }
 
         public bool SyncGoldDeluxeDownlines { get; set; }

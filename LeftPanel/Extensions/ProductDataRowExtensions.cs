@@ -17,19 +17,12 @@
 
         internal static bool DisableNumberGame(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableNumber"]);
 
-        internal static bool EnableNumberGame(this DataRow dataRow) => !DisableNumberGame(dataRow);
-
-        internal static bool DisableLiveCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableLiveCasino"]);
-
-        internal static bool EnableLiveCasino(this DataRow dataRow) => !DisableLiveCasino(dataRow);
-
+        internal static bool EnableNumberGame(this DataRow dataRow) => !DisableNumberGame(dataRow);        
+        
         internal static bool EnableAutoMasterPT(this DataRow dataRow) => !Utils.ToBoolean(dataRow["disableAutoMPT"]);
 
         internal static bool EnableDoubleComm(this DataRow dataRow) => Utils.ToBoolean(dataRow["doubleCommLosing"]);
-
-        internal static bool EnableHorseRacingFixedOdds(this DataRow dataRow) =>
-            !Utils.ToBoolean(dataRow["DisableHRFixedOdds"]);
-
+        
         internal static bool DisableESports(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableESports"]);
 
         internal static bool EnableESports(this DataRow dataRow) => !DisableESports(dataRow);
@@ -40,9 +33,7 @@
 
         internal static bool EnableGoldDeluxe(this DataRow dataRow) => !Utils.ToBoolean(dataRow["DisableGoldDeluxe"]);
 
-        internal static bool IsSyncedCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncCasino"]);
-
-        internal static bool IsSyncedLiveCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncLiveCasino"]);
+        internal static bool IsSyncedCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncCasino"]);        
 
         internal static bool DisableTransfer(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableTransfer"]);
 
@@ -50,21 +41,15 @@
 
         internal static bool HideCricket(this DataRow dataRow) => Utils.ToBoolean(dataRow["HideCricket"]);
 
-        internal static bool IsIMBC(this DataRow dataRow) => Utils.ToBoolean(dataRow["IsIMBC"]);
-
-        internal static bool HideCockfighting(this DataRow dataRow) => Utils.ToBoolean(dataRow["HideCockfighting"]);
+        internal static bool IsIMBC(this DataRow dataRow) => Utils.ToBoolean(dataRow["IsIMBC"]);        
 
         internal static bool HideMuayThai(this DataRow dataRow) => Utils.ToBoolean(dataRow["HideMuayThai"]);
-
-        internal static bool SyncLiveCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncLiveCasino"]);
 
         internal static bool SyncCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncCasino"]);
 
         internal static bool HideVirtualSports(this DataRow dataRow) => Utils.ToBoolean(dataRow["hideVirtualSports"]);
 
         internal static bool DisableVirtualSports(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableVirtualSports"]);
-
-        internal static bool DisableHRFixedOdds(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableHRFixedOdds"]);
 
         internal static bool HideKeno(this DataRow dataRow) => Utils.ToBoolean(dataRow["HideKeno"]);
 

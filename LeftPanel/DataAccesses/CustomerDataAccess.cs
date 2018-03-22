@@ -34,10 +34,10 @@
         Result SuspendCustomer(int custId, bool suspend);
 
         Result AllowOutright(int custId, bool allow);
-
+        
         Result AutoMasterPT(int id, bool allow);
 
-        Result ResetSecurityCode(int id, string code, bool force);
+        Result ResetSecurityCode(int id, string code, bool force);        
 
         Result RemoveOTP(RemoveOtpCriteria criteria);
     }

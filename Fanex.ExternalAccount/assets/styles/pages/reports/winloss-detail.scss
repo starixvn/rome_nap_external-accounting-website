@@ -111,6 +111,9 @@
     color: #2489ce;
     cursor: pointer;
     font-style: italic;
+    .txt-history:hover {
+        text-decoration: underline;
+    }
 }
 
 .arrow {

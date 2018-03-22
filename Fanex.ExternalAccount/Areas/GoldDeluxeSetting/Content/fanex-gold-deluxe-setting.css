@@ -338,6 +338,10 @@ label.clearfix
     background: url(Images/loader3.gif) no-repeat;
 }
 
+.game-setting {
+    width: 100%;
+}
+
 .game-setting .betting-limit-container
 {
     padding: 2px 0px 4px 3px;

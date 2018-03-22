@@ -31,10 +31,7 @@
     "outputFile": "assets/styles/pages/customer/customer-setting.css",
     "inputFile": "assets/styles/pages/customer/customer-setting.scss"
   },
-  {
-    "outputFile": "assets/styles/pages/customer/racing-setting.css",
-    "inputFile": "assets/styles/pages/customer/racing-setting.scss"
-  },
+
   {
     "outputFile": "assets/styles/pages/customer/bet-limit.css",
     "inputFile": "assets/styles/pages/customer/bet-limit.scss"
@@ -43,10 +40,7 @@
     "outputFile": "assets/styles/pages/customer/pt-engine.css",
     "inputFile": "assets/styles/pages/customer/pt-engine.scss"
   },
-  {
-    "outputFile": "assets/styles/pages/customer/live-casino.css",
-    "inputFile": "assets/styles/pages/customer/live-casino.scss"
-  },
+ 
   {
     "outputFile": "assets/styles/pages/customer/virtual-sport.css",
     "inputFile": "assets/styles/pages/customer/virtual-sport.scss"
@@ -66,5 +60,18 @@
   {
     "outputFile": "assets/styles/pages/account/security-code.css",
     "inputFile": "assets/styles/pages/account/security-code.scss"
+  },
+
+  {
+    "outputFile": "assets/styles/vendors/bootstrap.css",
+    "inputFile": "assets/styles/vendors/bootstrap.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/gold-deluxe-setting.css",
+    "inputFile": "assets/styles/pages/customer/gold-deluxe-setting.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/colossusbet-setting.css",
+    "inputFile": "assets/styles/pages/customer/colossusbet-setting.scss"
   }
 ]

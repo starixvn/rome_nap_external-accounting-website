@@ -9,7 +9,7 @@ URL to call get and update:
 	{0}: 
 	context = {
 		"username": customer name need to edit (in case of enable/disable status without bet type id),
-		"synced": for bingo, casino only,
+		"synced": for casino only,
 		"isCasino": true if enable casino is used,
 		"hideDownline": true if you wanna update status without downline is mentioned,
 		"enable": true/false (in case of enable/disable status without bet type id),
@@ -18,7 +18,7 @@ URL to call get and update:
 		"custId": customer id,
 		"uplineId": upline customer id,
 		"userId": admin id or upline id,
-		"productId": name of product, such as "livecasino", "casino", ...,
+		"productId": name of product, such as "casino", ...,
 		"subAccId": sub account id,
 		"language": Language key,
 		"level": super/master/agent/member or 4/3/2/1

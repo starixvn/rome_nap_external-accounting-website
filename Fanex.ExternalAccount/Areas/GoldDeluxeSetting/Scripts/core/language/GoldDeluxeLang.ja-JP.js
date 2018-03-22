@@ -18,6 +18,5 @@ language.goldDeluxe['ja-JP'] = {
 	lblUsername : "ユーザー名",
 	Master : "マスター",
 	Member : "メンバー",
-	NoInformation : "情報がありません",
-	UpdateLiveCasinoStatusSuccess : "状態: Updated successfully"
+	NoInformation : "情報がありません"
 };

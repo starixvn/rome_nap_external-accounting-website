@@ -31,12 +31,14 @@ Fanex.ExtAcc.WinLossDetail = {
     },
     SwitchCalendarType: function (showType) {
         if (showType == 1) {
+            this.ProductsList(false);
             $("#GroupViewHistory").css("display", "none");
             $("#GroupBackToCurrent").css("display", "block");
             $('.from-to-date').css('display', 'none');
             $('.group-month-day').css('display', 'inline-block');
         }
         else {
+            this.ProductsList(true);
             $("#GroupViewHistory").css("display", "block");
             $("#GroupBackToCurrent").css("display", "none");
             $('.from-to-date').css('display', 'inline-block');
@@ -44,6 +46,7 @@ Fanex.ExtAcc.WinLossDetail = {
         }
     },
     CallSubmit: function () {
+
         this.groupName = $("#selectedGroupName").html();
         this.ResetParameters();
         this.username = Fanex.encodeHtml($("#txtUserName").val());
@@ -87,6 +90,7 @@ Fanex.ExtAcc.WinLossDetail = {
     },
     InitProductsList: function () {
         $("#GroupProducts").css("display", "block");
+        $("#productList div").remove();
         $("#GroupProducts").multiSelect({
             minWidth: 170,
             showHeader: false,
@@ -131,11 +135,12 @@ Fanex.ExtAcc.WinLossDetail = {
             }
         });
     },
-    ProductsList: function () {
+    ProductsList: function (isHide) {
         $.ajax({
             context: $this,
             url: resolveClientUrl("Filter/ProductsList"),
             type: "GET",
+            data: { isHideInactiveProduct: isHide },
             dataType: "json",
             cache: false,
             success: function (result) {
@@ -221,7 +226,7 @@ Fanex.ExtAcc.WinLossDetail = {
             }
         });
 
-        this.ProductsList();
+        this.ProductsList(true);
 
         $("#Submit").click(function (e) {
             $this.CallSubmit();
@@ -312,7 +317,7 @@ Fanex.ExtAcc.WinLossDetail = {
     showHideFilter: function () {
         if ($this.hideFilter) {
             $(".icon-filter").addClass("active");
-       
+
             $(".filterbox").removeClass("hide");
         } else {
             $(".icon-filter").removeClass("active");

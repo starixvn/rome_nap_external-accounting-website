@@ -1,6 +1,9 @@
 ﻿
 var StatementReportManager = function () {
     var self = this;
+    self.landscapeHeight = 260;
+    self.portraitHeight = 500;
+    self.shouldCalculatePopupHeight = true;
     self.Enums = {
         RoleId: {
             Member: 1
@@ -35,6 +38,13 @@ var StatementReportManager = function () {
         self.eventFunction.viewBetListFunction = viewBetListFunction;
     };
 
+    self.getPopupHeight = function () {
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+             self.landscapeHeight :
+             self.portraitHeight;
+
+        return height;
+    }
     self.checkCriteria = function (criteria) {
         var newLayoutFromDate = new Date(newLayoutDate);
         if (new Date(criteria.fromDate) < newLayoutFromDate &&
@@ -501,8 +511,7 @@ var StatementReportManager = function () {
             BalanceUpDate: balanceUpDay,
             SiteName: ''
         };
-        var heightPopup = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
-             250 : 600;
+        self.portraitHeight = 600;
         if (self.eventFunction.openPopup) {
             self.eventFunction.openPopup({
                 url: url + "?" + jQuery.param(criteria),
@@ -510,7 +519,7 @@ var StatementReportManager = function () {
                 left: 400,
                 top: 100,
                 width: 800,
-                height: heightPopup
+                height: self.getPopupHeight()
             });
         }
     };

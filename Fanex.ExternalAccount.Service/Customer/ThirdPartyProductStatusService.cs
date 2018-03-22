@@ -21,8 +21,7 @@
                 CustId = custId,
                 RoleId = roleId,
                 CustName = custName,
-                HasCheckAll = productId == (int)Product.Keno,
-                GroupBySport = productId == (int)Product.Racing,
+                HasCheckAll = productId == (int)Product.Keno,                
                 ProductStatusList =
                     StatusSettingService.GetProductStatus(new GetProductStatusRequest
                     {

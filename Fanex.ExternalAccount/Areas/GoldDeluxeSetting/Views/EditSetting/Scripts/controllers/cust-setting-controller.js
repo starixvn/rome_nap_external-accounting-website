@@ -59,8 +59,8 @@
                     $scope.isReadOnly = true;
                     $timeout(function () {
                         if ($scope.isEditMultiple
-                            && $window.parent.actionAfterUpdatedLiveCasinoSettingMultiple) {
-                            $window.parent.actionAfterUpdatedLiveCasinoSettingMultiple(isUpdatePartial);
+                            && $window.parent.actionAfterUpdatedGoldDeluxeSettingMultiple) {
+                            $window.parent.actionAfterUpdatedGoldDeluxeSettingMultiple(isUpdatePartial);
                         }
                         else {
                             if ($window.parent.actionAfterUpdatedLiveCasinoSettingSingle) {

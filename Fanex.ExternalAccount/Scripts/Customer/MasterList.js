@@ -4,12 +4,9 @@
     transferCondition,
     syncCasino,
     disableCasino,
-    syncLiveCasino,
-    disableLiveCasino,
     hideVirtualSport,
     disableVirtualSport,
     superSyncCasino,
-    superSyncLiveCasino,
     isHideKeno,
     disableKeno,
     isHideGoldDeluxe,
@@ -18,8 +15,6 @@
     disableColossusBets,
     isHideSportsbook2,
     disableSportsbook2,
-    isHideCockfighting,
-    disableCockfighting,
     isHideCricket,
     disableCricket,
     isHideAllbet,
@@ -45,7 +40,6 @@
     this.HideGoldDeluxe = showGoldDeluxeSetting == 0 || isHideGoldDeluxe;
     this.HideColossusBet = showColossusBets == 0 || isHideColossusBets;
     this.HideSportsbook2 = showSportsbook2 == 0 || isHideSportsbook2;
-    this.HideCockfighting = showCockfighting == 0 || isHideCockfighting;
     this.HideCricket = showCricket == 0 || isHideCricket;
 
     this.ResetFlags();
@@ -55,69 +49,76 @@
             name: "Sportsbook",
             className: "iconEnableEdit",
             callback: function () {
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditMultiplePT?roleId=3&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
+                Fanex.ExtAcc.Form.Show(
+                    resolveClientUrl('SportsbookSetting/EditMultiplePT?roleId=3&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + title + '</font>',
+                    900,
+                    Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                    false,
+                    false,
+                    1);
             }
         },
         ptSportbook: {
             name: "PT",
             className: "iconEnableEdit",
             callback: function (key, opt) {
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditPT?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit PT Setting ' + '<font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1);
+                Fanex.ExtAcc.Form.Show(
+                    resolveClientUrl('SportsbookSetting/EditPT?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit PT Setting ' + '<font color="#6dcff6">' + title + '</font>',
+                    888,
+                    Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                    false,
+                    false, 1);
             }
         },
         minPTSportbook: {
             name: "Min PT",
             className: "iconEnableEdit",
             callback: function (key, opt) {
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditMinPT?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Min PT ' + '<font color="#6dcff6">' + title + '</font>', 888, 700, false, false, 1);
+                Fanex.ExtAcc.Form.Show(
+                    resolveClientUrl('SportsbookSetting/EditMinPT?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Min PT ' + '<font color="#6dcff6">' + title + '</font>',
+                    888,
+                    Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                    false,
+                    false, 1);
             }
         },
         betSetting: {
             name: "Bet Setting",
             className: "iconEnableEdit",
             callback: function (key, opt) {
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditBetSetting?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Bet Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, 490, false, false, 1);
+                Fanex.ExtAcc.Form.Show(
+                    resolveClientUrl('SportsbookSetting/EditBetSetting?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Bet Setting ' + '<font color="#6dcff6">' + title + '</font>',
+                    871,
+                    Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                    false,
+                    false, 1);
             }
         },
         commission: {
             name: "Commission",
             className: "iconEnableEdit",
             callback: function (key, opt) {
+                top.shouldCalculatePopupHeight = false;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditCommissionDetail?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Commission ' + '<font color="#6dcff6">' + title + '</font>', 871, 250, false, false, 1);
+                Fanex.ExtAcc.Form.Show(
+                    resolveClientUrl('SportsbookSetting/EditCommissionDetail?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Commission ' + '<font color="#6dcff6">' + title + '</font>',
+                    871, 250, false, false, 1);
             }
-        },
-        separator: "-----",
-        racing: {
-            name: "Racing",
-            className: "iconEnableEdit",
-            callback: function (key, opt) {
-                Fanex.ExtAcc.Customer.UserId = custId;
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/racebook/racingsetting/master?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupName=' + $('#selectedGroupName').html()), 'Edit Racing Setting <font color="#6dcff6">' + title + '</font>', 1050, 775, false, null, 1);
-            }
-        },
-        minPTRacing: {
-            name: "Min PT",
-            className: "iconEnableEdit",
-            callback: function (key, opt) {
-                Fanex.ExtAcc.Customer.UserId = custId;
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                var url = 'CustomerSetting/Racebook/RacingSetting/MasterMinMaxPT?id=' + Fanex.ExtAcc.Customer.UserId + '&roleId=' + Fanex.ExtAcc.Customer.CurrentLevel;
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url + '&groupName=' + $('#selectedGroupName').html()), 'Edit Min PT Racing: <font color="#6dcff6">' + title + '</font>', 980, 680);
-            }
-        },
-        separator1: "-----"
+        }       
     };
 
     var has3rdParty = false;
@@ -129,9 +130,16 @@
                     name: "Casino",
                     className: "iconDisableEdit",
                     callback: function () {
+                        top.shouldCalculatePopupHeight = true;
                         Fanex.ExtAcc.Customer.UserId = custId;
                         Fanex.ExtAcc.Customer.IsMultiple = false;
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Master/EditMaster?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1064, 700, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(
+                            resolveClientUrl('CustomerSetting/Casino/Master/EditMaster?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>',
+                            1064,
+                            Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                            false,
+                            null,
+                            1);
                     }
                 };
             } else {
@@ -139,9 +147,16 @@
                     name: "Casino",
                     className: "iconEnableEdit",
                     callback: function () {
+                        top.shouldCalculatePopupHeight = true;
                         Fanex.ExtAcc.Customer.UserId = custId;
                         Fanex.ExtAcc.Customer.IsMultiple = false;
-                        Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Master/EditMaster?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1064, 700, false, null, 1);
+                        Fanex.ExtAcc.Form.ShowFrame(
+                            resolveClientUrl('CustomerSetting/Casino/Master/EditMaster?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>',
+                            1064,
+                            Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                            false,
+                            null,
+                            1);
                     }
                 };
             }
@@ -150,27 +165,20 @@
                 name: "Casino",
                 className: "iconUnsyncEdit",
                 callback: function () {
+                    top.shouldCalculatePopupHeight = true;
                     Fanex.ExtAcc.Customer.UserId = custId;
                     Fanex.ExtAcc.Customer.IsMultiple = false;
-                    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Master/EditMaster?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1064, 700, false, null, 1);
+                    Fanex.ExtAcc.Form.ShowFrame(
+                        resolveClientUrl('CustomerSetting/Casino/Master/EditMaster?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>',
+                        1064,
+                        Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                        false,
+                        null,
+                        1);
                 }
             };
         }
-    }
-
-    if (superSyncLiveCasino) {
-        has3rdParty = true;
-
-        itemsMaster.liveCasino = {
-            name: "Live Casino",
-            className: syncLiveCasino == true ? (disableLiveCasino == true ? "iconDisableEdit" : "iconEnableEdit") : "iconUnsyncEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.UserId = custId;
-                url = "LiveCasinoSetting/Setting/EditSetting?uplineId=" + Fanex.ExtAcc.Customer.superId + "&parentId=" + Fanex.ExtAcc.Customer.superId + "&uplineLevel=4&customerId=" + Fanex.ExtAcc.Customer.UserId + "&customerLevel=3" + "&actorId=" + parent.userId + "&actorUsername=" + parent.username + "&groupName=" + parent.$('#selectedGroupName').html();
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);
-            }
-        };
-    }
+    }    
 
     var ret = this.CustomerInfo();
 
@@ -181,6 +189,7 @@
             name: menuName,
             className: !isSynced ? "iconUnsyncEdit" : (isDisabled == true ? "iconDisableEdit" : "iconEnableEdit"),
             callback: function () {
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 showEditPopUpFunc(custId, 4, 3);
@@ -199,9 +208,15 @@
             name: "Keno",
             className: disableKeno ? "iconDisableEdit" : "iconEnableEdit",
             callback: function () {
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, null, 1);
+                    Fanex.ExtAcc.Form.ShowFrame(
+                        resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId), 'Edit Keno Setting <font color="#6dcff6">' + title + '</font>',
+                        900,
+                        Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                        false,
+                        null, 1);
             }
         };
     }
@@ -213,9 +228,16 @@
             name: "Gold Deluxe",
             className: disableGoldDeluxe == true ? "iconDisableEdit" : "iconEnableEdit",
             callback: function () {
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=4&formType=1&level=3" + "&uplineId=" + Fanex.ExtAcc.Customer.superId + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + parent.$('#selectedGroupName').html();
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Gold Deluxe Setting <font color="#6dcff6">' + title + '</font>', 900, 400, false, false, 1);
+                Fanex.ExtAcc.Form.ShowFrame(
+                    resolveClientUrl(url), 'Edit Gold Deluxe Setting <font color="#6dcff6">' + title + '</font>',
+                    900,
+                    Fanex.ExtAcc.Customer.GetPopupHeight(270, 400),
+                    false,
+                    false,
+                    1);
             }
         }
     }
@@ -227,10 +249,17 @@
             name: "Colossus Bets",
             className: disableColossusBets == true ? "iconDisableEdit" : "iconEnableEdit",
             callback: function () {
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 url = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&srecommend=" + Fanex.ExtAcc.Customer.superId + "&isMultipleEdit=0&userId=" + parent.userId + "&roleId=3&groupName=" + parent.$('#selectedGroupName').html();
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit ColossusBets Setting <font color="#6dcff6">' + title + '</font>', 900, 400, false, false, 1);
+                Fanex.ExtAcc.Form.ShowFrame(
+                    resolveClientUrl(url), 'Edit ColossusBets Setting <font color="#6dcff6">' + title + '</font>',
+                    900,
+                    Fanex.ExtAcc.Customer.GetPopupHeight(270, 400),
+                    false,
+                    false,
+                    1);
             }
         }
     }
@@ -238,12 +267,7 @@
     if (!this.HideSportsbook2) {
         has3rdParty = true;
         addEditProductMasterContextMenuItem('sportsbook2', 'Sportsbook 2', disableSportsbook2, Fanex.ExtAcc.Customer.ShowEditSingleSportsbook2);
-    }
-
-    if (!this.HideCockfighting) {
-        has3rdParty = true;
-        addEditProductMasterContextMenuItem('cockFighting', 'Cockfighting', disableCockfighting, Fanex.ExtAcc.Customer.ShowEditSingleCockfighting);
-    }
+    }    
 
     if (!this.HideCricket) {
         has3rdParty = true;
@@ -287,19 +311,20 @@
 
     if (has3rdParty)
         itemsMaster.separator2 = "-----";
-    itemsMaster.editInfo = {
-        name: "Edit Info",
-        className: "iconEnableEdit editInfoBg",
-        callback: function (key, opt) {
-            Fanex.ExtAcc.Customer.UserId = custId;
-            Fanex.ExtAcc.Customer.IsMultiple = false;
-            Fanex.ExtAcc.Form.Show(
-                resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
-                500,
-                Fanex.ExtAcc.Customer.GetPopupHeight(300, 580),
-                false);
+        itemsMaster.editInfo = {
+            name: "Edit Info",
+            className: "iconEnableEdit editInfoBg",
+            callback: function (key, opt) {
+                Fanex.ExtAcc.Customer.UserId = custId;
+                Fanex.ExtAcc.Customer.IsMultiple = false;
+                Fanex.ExtAcc.Form.Show(
+                    resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                    500,
+                    Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                    false);
         }
-    };
+        };
+
     itemsMaster.changePassword = {
         name: "Reset Password",
         className: "iconEnableEdit editInfoBg",
@@ -309,7 +334,7 @@
             Fanex.ExtAcc.Form.Show(
                 resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                 415,
-                Fanex.ExtAcc.Customer.GetPopupHeight(330, 400),
+                Fanex.ExtAcc.Customer.GetPopupHeight(270, 400),
                 false, 
                 false);
         }
@@ -333,7 +358,7 @@
                     resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?' + $.param(params)),
                     'Reset security code: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                     650,
-                    Fanex.ExtAcc.Customer.GetPopupHeight(300, 500),
+                    Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
                     false,
                     false);
             }
@@ -377,13 +402,11 @@ Fanex.ExtAcc.Customer.GetMasterList = function (
     custId,
     dataSource,
     superSyncCasino,
-    superSyncLiveCasino,
     isHideKeno,
     isHideVirtualSport,
     isHideGoldDeluxe,
     isHideColossusBets,
     isHideSportsbook2,
-    isHideCockfighting,
     isHideCricket,
     isHideAllbet,
     isHideVoidbridge,
@@ -400,13 +423,11 @@ Fanex.ExtAcc.Customer.GetMasterList = function (
     this.AllowDoubleCommMaster = allow;
 
     this.superSyncCasino = superSyncCasino;
-    this.superSyncLiveCasino = superSyncLiveCasino;
     this.HideKeno = showKenoSetting == 'false' || isHideKeno;
     this.HideVirtualSports = isHideVirtualSport;
     this.HideGoldDeluxe = isHideGoldDeluxe;
     this.HideColossusBet = isHideColossusBets;
     this.HideSportsbook2 = isHideSportsbook2;
-    this.HideCockfighting = isHideCockfighting;
     this.HideCricket = isHideCricket;
 
     this.HideAllbet = isHideAllbet;
@@ -460,7 +481,7 @@ Fanex.ExtAcc.Customer.GetMasterList = function (
             var hideLucky3SettingLink = cell.Value.HideLucky3Upline;
             var hideBullfightingSettingLink = cell.Value.HideBullFightingUpline;
 
-            var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + ", " + cell.Value.SyncLiveCasino + "," + cell.Value.HideKeno + "," + cell.Value.HideVirtualSports + "," + cell.Value.HideGoldDeluxe + "," + cell.Value.HideColossusBet + "," + cell.Value.HideMuayThai + "," + cell.Value.HideCockFighting + "," + cell.Value.HideCricket + "," + hideAllbetSettingLink + "," + hideVoidbridgeSettingLink + "," + hideNG2SettingLink + "," + hideFishingWorldSettingLink + "," + hideLotterySettingLink + "," + hideLucky3SettingLink + "," + hideBullfightingSettingLink + ")";
+            var func = "javascript:Fanex.ExtAcc.Customer.GetAgentList(" + custId + ", " + cell.Value.DoubleCommLosing + ", null, null, " + cell.Value.synccasino + "," + cell.Value.HideKeno + "," + cell.Value.HideVirtualSports + "," + cell.Value.HideGoldDeluxe + "," + cell.Value.HideColossusBet + "," + cell.Value.HideMuayThai + "," + cell.Value.HideCricket + "," + hideAllbetSettingLink + "," + hideVoidbridgeSettingLink + "," + hideNG2SettingLink + "," + hideFishingWorldSettingLink + "," + hideLotterySettingLink + "," + hideLucky3SettingLink + "," + hideBullfightingSettingLink + ")";
 
             var len = cell.Value.username.length;
             var title = len >= 15 ? ' title="' + cell.Value.username + '"' : '';
@@ -477,7 +498,6 @@ Fanex.ExtAcc.Customer.GetMasterList = function (
             var hideGoldDeluxe = showGoldDeluxeSetting == 0 || !cell.Value.SyncGoldDeluxeUpline;
             var hideColossusBets = showColossusBets == 0 || cell.Value.HideColossusBet || isHideColossusBets;
             var hideSportsbook2 = showSportsbook2 == 0 || cell.Value.HideMuayThai || isHideSportsbook2;
-            var hideCockfighting = showCockfighting == 0 || cell.Value.HideCockFighting || isHideCockfighting;
             var hideCricket = showCricket == 0 || cell.Value.HideCricket || isHideCricket || !cell.Value.IsIMBC;
 
             var hideAllbetSettingLink = !cell.Value.SyncedAllBetUpline || cell.Value.HideAllBetUpline;
@@ -488,7 +508,7 @@ Fanex.ExtAcc.Customer.GetMasterList = function (
             var hideLucky3SettingLink = cell.Value.HideLucky3Upline;
             var hideBullfightingSettingLink = cell.Value.HideBullFightingUpline;
 
-            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMaster(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.SyncLiveCasino + ", " + cell.Value.DisableLiveCasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + superSyncCasino + ", " + superSyncLiveCasino + "," + hideKeno + ", " + cell.Value.DisableKeno + "," + hideGoldDeluxe + ", " + cell.Value.DisableGoldDeluxe + "," + hideColossusBets + ", " + cell.Value.DisableColossusBet + "," + hideSportsbook2 + ", " + cell.Value.DisableMuayThai + "," + hideCockfighting + ", " + cell.Value.DisableCockFighting + "," + hideCricket + ", " + cell.Value.DisableCricket + "," + hideAllbetSettingLink + ", " + cell.Value.DisableAllBet + "," + hideVoidbridgeSettingLink + ", " + cell.Value.DisableVoidBridge + "," + hideNG2SettingLink + "," + cell.Value.DisableNG2 + "," + cell.Value.SyncedNG2 + "," + hideFishingWorldSettingLink + "," + cell.Value.DisableFishingWorld + "," + hideLotterySettingLink + "," + cell.Value.DisableLottery + "," + hideLucky3SettingLink + "," + cell.Value.DisableLucky3 + "," + hideBullfightingSettingLink + "," + cell.Value.DisableBullFighting + ")";
+            var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMaster(" + cell.Value.custid + ", '" + title + "', " + cell.Value.disableTransfer + ", " + cell.Value.synccasino + ", " + cell.Value.disablecasino + ", " + cell.Value.HideVirtualSports + ", " + cell.Value.DisableVirtualSports + ", " + superSyncCasino + "," + hideKeno + ", " + cell.Value.DisableKeno + "," + hideGoldDeluxe + ", " + cell.Value.DisableGoldDeluxe + "," + hideColossusBets + ", " + cell.Value.DisableColossusBet + "," + hideSportsbook2 + ", " + cell.Value.DisableMuayThai + "," + hideCricket + ", " + cell.Value.DisableCricket + "," + hideAllbetSettingLink + ", " + cell.Value.DisableAllBet + "," + hideVoidbridgeSettingLink + ", " + cell.Value.DisableVoidBridge + "," + hideNG2SettingLink + "," + cell.Value.DisableNG2 + "," + cell.Value.SyncedNG2 + "," + hideFishingWorldSettingLink + "," + cell.Value.DisableFishingWorld + "," + hideLotterySettingLink + "," + cell.Value.DisableLottery + "," + hideLucky3SettingLink + "," + cell.Value.DisableLucky3 + "," + hideBullfightingSettingLink + "," + cell.Value.DisableBullFighting + ")";
 
             return '<div onclick="' + func + '" id="edit-' + cell.Value.custid + '" class="editMaster"></div>';
         }

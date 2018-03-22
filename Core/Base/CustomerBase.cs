@@ -12,7 +12,6 @@
     using CasinoLibrary.Model.UserException;
     using Data;
     using Data.DNAide;
-    using LiveCasino.CoreSetting.Services;
     using Logging.Extensions.Web;
     using Module.NG2.Entities;
     using Module.NG2.Services;
@@ -30,41 +29,6 @@
         private const string CasinoNo = "01";
         private readonly IReportService _report = new ReportService();
         protected readonly ProductStatusService productStatusService = new ProductStatusServiceImpl();
-
-        [NonAction]
-        protected Task<Result> AutoInsertLiveCasinoPost(
-            int custId,
-            int parentId,
-            int actorId,
-            string actorUsername,
-            string ip)
-        {
-            return Task.Factory.StartNew(() =>
-            {
-                var livecasinoSettingService = new SettingService();
-
-                var customerInfo = livecasinoSettingService.GetCustomerLiveCasinoInfo(custId);
-                var parentInfo = livecasinoSettingService.GetCustomerLiveCasinoInfo(parentId);
-
-                if (!customerInfo.IsSyncLiveCasino && parentInfo.IsSyncLiveCasino)
-                {
-                    Thread.Sleep(5000);
-
-                    var results = livecasinoSettingService.AutoInsertAccount(
-                        custId,
-                        actorId,
-                        actorUsername,
-                        0,
-                        string.Empty,
-                        ip,
-                        "E");
-
-                    return new Result(results.Code, results.Message);
-                }
-
-                return new Result(0, string.Empty);
-            });
-        }
 
         [NonAction]
         protected Result AutoInsertCasinoPost(int custId, int uplineId)

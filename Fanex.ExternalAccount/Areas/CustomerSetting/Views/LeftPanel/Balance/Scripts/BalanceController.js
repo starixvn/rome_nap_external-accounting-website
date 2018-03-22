@@ -68,8 +68,8 @@ function Update() {
                     }
                     else {
                         Fanex.ExtAcc.UnBlockUI();
-
-                        Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 410, 150, 'errorTransfer');
+                        var msg = '<div id="err-message" class="errMsg">'+result.errorMessage.formatErrorMessage()+'</div>';
+                        Fanex.ExtAcc.Form.Alert('Error', msg, 410, 200, 'errorTransfer');
                     }
                 });
             },
