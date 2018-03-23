@@ -248,7 +248,8 @@
         }
 
         try {
-            $("#jqgrid").fanexGrid("resizeGrid");
+            if ($("#jqgrid").is(":visible"))
+                $("#jqgrid").fanexGrid("resizeGrid");
         }
         catch (err) { }
 

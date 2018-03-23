@@ -297,7 +297,7 @@ Fanex.ExtAcc.User = {
 
                 if (bodyRows.length == 0) {
                     $('#msgNoinfo').css('display', 'block');
-                    $('#jqgrid').css('display', 'none');
+                    $('#jqgrid-user').css('display', 'none');
 
                     $('#activeUsers').html('0');
                     $('#inActiveUsers').html('0');
@@ -306,7 +306,7 @@ Fanex.ExtAcc.User = {
                 }
                 else {
                     $('#msgNoinfo').css('display', 'none');
-                    $('#jqgrid').css('display', 'block');
+                    $('#jqgrid-user').css('display', 'block');
                     // Init Grid jqgrid
                     $('#jqgrid-user').fanexGrid(Fanex.ExtAcc.User.options);
 
@@ -652,7 +652,8 @@ Fanex.ExtAcc.User = {
 
     resizeReportGrid: function () {
         try {
-            $("#jqgrid").fanexGrid("resizeGrid");
+            if ($("#jqgrid-user").is(":visible"))
+                $("#jqgrid-user").fanexGrid("resizeGrid");
         }
         catch (err) { }
     },
