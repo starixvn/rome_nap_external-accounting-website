@@ -1032,9 +1032,14 @@
     },
 
     GetPopupHeight: function (landscapeHeight, portraitHeight) {
-        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
-            landscapeHeight :
-             portraitHeight;
+        if (!(isMobile.phone || isMobile.tablet)) {
+            height = 700;
+        }
+        else {
+            height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+                landscapeHeight :
+                portraitHeight;
+        }
 
         return height;
     },
