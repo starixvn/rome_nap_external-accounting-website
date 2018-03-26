@@ -16,7 +16,7 @@
         public IEnumerable<KeyValuePair<int, string>> GetProductList()
         {
             return new ProductListAuthorization()
-                .GetProductList()
+                .GetProductList(true)
                 .Where(product => product.ProductId > 1)
                 .Select(product => new KeyValuePair<int, string>(
                     product.ProductId,
