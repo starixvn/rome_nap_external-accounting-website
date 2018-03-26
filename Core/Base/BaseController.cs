@@ -292,10 +292,10 @@
                 new CheckCustomerIsSpecialSiteCriteria { UserName = username });
         }
 
-        protected static List<KeyValuePair<string, string>> GetProductList()
+        protected static List<KeyValuePair<string, string>> GetProductList(bool isHideInactiveProduct = true)
         {
             return new ProductListAuthorization()
-                .GetProductList()
+                .GetProductList(isHideInactiveProduct)
                 .Select(product => new KeyValuePair<string, string>(
                     product.Id,
                     product.ProductId == 0 ? product.Name : ProductListAuthorization.GetProductNameFromRemotingRef(product.ProductId)))

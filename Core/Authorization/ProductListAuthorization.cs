@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web;
     using CustomerSetting.Module.Core.Criteria;
     using CustomerSetting.Module.Core.Models;
@@ -29,7 +28,7 @@
             this.permissionService = permissionService ?? new ServiceBase();
         }
 
-        public IEnumerable<ProductElementConfiguration> GetProductList()
+        public IEnumerable<ProductElementConfiguration> GetProductList(bool isHideInactiveProduct)
         {
             var custId = currentSession.CustId;
 
@@ -40,9 +39,22 @@
             var isAuthorized = permissionService.CheckCustomerHasSpecialSitePermission(
                 new CheckCustomerHasSpecialSiteFunctionPermissionCriteria { CustID = custId });
 
-            return ProductsConfiguration.Instance.ProductCollection
-                .Where(product => !IsHiddenProduct(product)
-                    && (!product.IsSpecial || !AdminDoesNotHavePermissionOnSpecialProduct(checkIsInternalAdminResult, isAuthorized)));
+            var products = ProductsConfiguration.Instance.ProductCollection;
+
+            foreach (ProductElementConfiguration product in products)
+            {
+                if (!IsHiddenProduct(product))
+                {
+                    if ((isHideInactiveProduct && product.IsHideInactiveProduct)
+                        || (product.IsSpecial
+                        && AdminDoesNotHavePermissionOnSpecialProduct(checkIsInternalAdminResult, isAuthorized)))
+                    {
+                        continue;
+                    }
+
+                    yield return product;
+                }
+            }
         }
 
         private static bool AdminDoesNotHavePermissionOnSpecialProduct(
