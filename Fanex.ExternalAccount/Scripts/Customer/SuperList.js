@@ -3,7 +3,6 @@
     title,
     hideGoldDeluxe,
     hideSportsbook2,
-    hideCockfighting,
     hideColossusBets,
     hideCricket,
     productSettingsJson) {
@@ -13,7 +12,6 @@
     this.CurrentLevel = this.Super;
     this.HideGoldDeluxe = hideGoldDeluxe;
     this.HideSportsbook2 = hideSportsbook2;
-    this.HideCockfighting = hideCockfighting;
     this.HideCricket = hideCricket;
     var productSettings = JSON.parse(unescape(productSettingsJson));
 
@@ -32,15 +30,6 @@
                 
             }
         },
-        separator0: "-----",
-        racing: {
-            name: "Racing",
-            className: "iconViewEdit",
-            callback: function (key, opt) {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Racebook/RacingSetting/Super?id=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + $('#selectedGroupName').html()), 'Edit Racing Setting <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 1050, 620, false, null, 1);                               
-            }
-        },
         separator1: "-----",
         casino: {
             name: "Casino",
@@ -48,15 +37,6 @@
             callback: function () {
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Super/EditSuper?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=0&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 1064, 700, false, null, 1);                
-            }
-        },
-        liveCasino: {
-            name: "Live Casino",
-            className: "iconViewEdit",
-            callback: function () {
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                url = "LiveCasinoSetting/Setting/EditSetting?uplineId=0&uplineLevel=0&customerId=" + Fanex.ExtAcc.Customer.UserId + "&customerLevel=4&formType=2" + "&actorId=" + parent.userId + "&actorUsername=" + parent.username + parent.$('#selectedGroupName').html();
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Live Casino Setting <font color="#6dcff6">' + title + '</font>', 900, 700, false, false, 1);                
             }
         }
     }
@@ -121,10 +101,6 @@
 
     if (!this.HideSportsbook2) {
         addEditProductSuperContextMenuItem(16, 'sportsbook2', 'Sportsbook 2');
-    }
-
-    if (!this.HideCockfighting) {
-        addEditProductSuperContextMenuItem(19, 'cockFighting', 'Cockfighting');
     }
 
     if (!this.HideCricket) {
@@ -276,13 +252,11 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
                 + custId + ","
                 + cellValue.DoubleCommLosing + ",null,null,"
                 + cellValue.synccasino + ","
-                + cellValue.SyncLiveCasino + ","
                 + hideKeno + ","
                 + cellValue.HideVirtualSports + ","
                 + cellValue.HideGoldDeluxe + ","
                 + cellValue.HideColossusBet + ","
                 + cellValue.HideMuayThai + ","
-                + cellValue.HideCockFighting + ","
                 + cellValue.HideCricket + ")";
 
             var len = cellValue.username.length;
@@ -301,7 +275,6 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
                 + escape(cellValue.username) + "',"
                 + cellValue.HideGoldDeluxe + ","
                 + cellValue.HideMuayThai + ","
-                + cellValue.HideCockFighting + ","
                 + cellValue.HideColossusBet + ","
                 + cellValue.HideCricket + ",'"
                 + escape(JSON.stringify(cellValue.productSettings)) + "')";
@@ -573,6 +546,7 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource) {
             afterPagedFunction: function (options) {
                 Fanex.ExtAcc.Customer.CurrentPage = options.currentPage;
                 Fanex.ExtAcc.Customer.ItemsPerPage = options.itemsPerPage;
+                Fanex.ExtAcc.Customer.DisableMultipleContextMenu();
             }
         },
         marginRight: 12,
