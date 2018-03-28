@@ -848,7 +848,9 @@
     <Content Include="Areas\NG2\UM.aspx" />
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.min.js" />
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting.min.js" />
-    <Content Include="Areas\ProductStatusSetting\Styles\images\ajax-loader.png" />
+    <Content Include="Areas\ProductStatusSetting\Styles\images\error.png" />
+    <Content Include="Areas\ProductStatusSetting\Styles\images\loading.gif" />
+    <Content Include="Areas\ProductStatusSetting\Styles\images\success.png" />
     <Content Include="Areas\ProductStatusSetting\Styles\product-status-setting.min.css" />
     <Content Include="Areas\Statement\StatementSection.config" />
     <Content Include="Areas\Statement\Views\Guideline\MemberGuildeline.cshtml" />
@@ -2854,7 +2856,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:62181/</IISUrl>
+          <IISUrl>http://localhost:64826/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
