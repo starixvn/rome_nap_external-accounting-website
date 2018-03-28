@@ -520,7 +520,7 @@ Fanex.ExtAcc = {
 
         if (document.getElementById('mainIFrame')) {
             $('#mainIFrame').width($('#contentSplitter').width() - 5);
-            //$('#mainIFrame').height($('#contentSplitter').height() - 5);
+            $('#mainIFrame').height($('#contentSplitter').height() - 5);
         }
 
         if (document.getElementById('tabs-2')) {
@@ -550,7 +550,7 @@ Fanex.ExtAcc = {
 
         if (document.getElementById('mainIFrame')) {
             $('#mainIFrame').width($('#contentSplitter').width() - 5);
-            //$('#mainIFrame').height($('#contentSplitter').height() - 5);
+            $('#mainIFrame').height($('#contentSplitter').height() - 5);
         }
 
         try {

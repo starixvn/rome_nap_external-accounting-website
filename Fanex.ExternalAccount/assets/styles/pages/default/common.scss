@@ -592,6 +592,8 @@ no-info {
     width: 100%;
     min-width: 568px;
     height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 div#contentSplitter > div#msg {
