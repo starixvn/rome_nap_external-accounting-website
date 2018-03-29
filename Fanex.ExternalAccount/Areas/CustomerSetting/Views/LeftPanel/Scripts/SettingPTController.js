@@ -272,7 +272,7 @@
                 break;
         }
 
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url), null, null, null, true);
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url));
 
         $scope.collapseSidebar();
     };
@@ -375,7 +375,7 @@
                 break;
         }
 
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url), null, null, null, true);
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url));
     };
 
     $scope.ResetGlobalValue = function (productId) {

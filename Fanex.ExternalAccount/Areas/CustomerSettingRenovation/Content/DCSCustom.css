@@ -1,5 +1,9 @@
 ﻿/* File Created: October 12, 2015 */
+
+
+
 .customer-setting {
+    display: table;
     border-color: #999;
     background-color: #e6e9f0;
     margin: 2px 20px 2px 2px;
@@ -107,6 +111,7 @@
 }
 
 .msg-container {
+    max-height: initial;
     margin: 2px 20px 2px 2px;
 }
 
@@ -117,6 +122,11 @@
 .modal__title {
     background-color: #f1f1a6;
     border-bottom-color: #999;
+}
+
+.system-4 {
+    display: table;
+    width: 100%;
 }
 
 .system-4 .customer-level-4 .right-btn-area,
