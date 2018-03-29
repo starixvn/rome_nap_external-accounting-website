@@ -201,6 +201,31 @@
         Fanex.ExtAcc.InitSuggestion();
 
         $(".icon-filter").click($this.showHideFilter);
+        Fanex.ExtAcc.Customer.bindOrientationChange();
+    },
+    bindOrientationChange: function () {
+        top.landscapeHeight = 260;
+        top.portraitHeight = 500;
+        top.shouldCalculatePopupHeight = true;
+        $(window).bind('orientationchange', function (e) {
+            var calculatePopupheight = top.shouldCalculatePopupHeight && isMobile.phone;
+            if (!calculatePopupheight) {
+                return;
+            }
+
+            var height;
+            var isLandscape = window.matchMedia("(orientation: landscape)").matches;
+            if (isMobile.android.phone) {
+                height = isLandscape ? top.portraitHeight : top.landscapeHeight;
+            }
+            else {
+                height = isLandscape ? top.landscapeHeight : top.portraitHeight;
+            }
+            var dialog = top.$('.ui-dialog');
+            dialog.height((height + 34) + 'px');
+
+            top.$("#windowPopup").css("height", height + "px");
+        });
     },
     hideFilter: false,
     showHideFilter: function () {

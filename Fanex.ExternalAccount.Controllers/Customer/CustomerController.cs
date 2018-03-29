@@ -707,7 +707,6 @@
             return string.IsNullOrWhiteSpace(userName) ? defaultValue ?? new LineInfo() : new LineInfo();
         }
 
-
         private static IDictionary<int, IDictionary<int, ProductStatus>> TransformToCustomerProductStatusList(DataTable dataTable)
         {
             int custId;
