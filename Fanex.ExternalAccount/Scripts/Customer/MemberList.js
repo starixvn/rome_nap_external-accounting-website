@@ -242,10 +242,11 @@
         callback: function (key, opt) {
             Fanex.ExtAcc.Customer.UserId = custId;
             Fanex.ExtAcc.Customer.IsMultiple = false;
+            var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 480) : 500;
             Fanex.ExtAcc.Form.Show(
                 resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                 500,
-                Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                height,
                 false);
         }
         };
@@ -256,10 +257,11 @@
         callback: function (key, opt) {
             Fanex.ExtAcc.Customer.UserId = custId;
             Fanex.ExtAcc.Customer.IsMultiple = false;
+            var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 480) : 400;
             Fanex.ExtAcc.Form.Show(
                 resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                 415,
-                Fanex.ExtAcc.Customer.GetPopupHeight(270, 400),
+                height,
                 false,
                 false);
         }

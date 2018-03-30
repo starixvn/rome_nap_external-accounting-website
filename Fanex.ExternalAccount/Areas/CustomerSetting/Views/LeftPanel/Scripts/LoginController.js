@@ -27,8 +27,8 @@
     });
     $scope.getPopupHeight = function () {
         var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
-             $scope.landscapeHeight :
-             $scope.portraitHeight;
+             top.landscapeHeight :
+             top.portraitHeight;
 
         return height;
     };
