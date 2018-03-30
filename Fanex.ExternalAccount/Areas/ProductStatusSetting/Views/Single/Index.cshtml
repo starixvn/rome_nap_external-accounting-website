@@ -3,6 +3,7 @@
 @{
     Layout = null;
     var isMultipleBetTypes = Model.ProductStatus.Count() > 1;
+    var isDisabledAll = Model.ProductStatus.All(product => product.IsDisabledUpline);
 }
 
 <!DOCTYPE html>
@@ -14,7 +15,7 @@
 </head>
 <body>
     <div id="sectionMessage" class="msg-container hide"></div>
-    @if (Model.ProductStatus.Count() > 0)
+    @if (Model.ProductStatus.Any())
     {
         <table class="tbl-product margin-top10" id="tbl-product">
             <thead>
@@ -29,12 +30,14 @@
                             var roleName = Model.GetRoleName(Model.CustRole);
                             <div class="current-role">@roleName</div>
                             <div class="all-status">
-                                <span class="enabled" data-roleid="@Model.CustRole"
+                                <span class="enabled gray" 
+                                      data-roleid="@Model.CustRole"
                                       title="@String.Format(Resources.SearchAccountTHeadTooltip, Resources.Enable.ToLower(), roleName)">
                                     @Resources.Enable
                                 </span>
-                                <span class="disabled" data-roleid="@Model.CustRole"
-                                       title="@String.Format(Resources.SearchAccountTHeadTooltip, Resources.Enable.ToLower(), roleName)">
+                                <span class="disabled  gray" 
+                                      data-roleid="@Model.CustRole"
+                                      title="@String.Format(Resources.SearchAccountTHeadTooltip, Resources.Disable.ToLower(), roleName)">
                                     @Resources.Disable
                                 </span>
                             </div>
@@ -76,8 +79,11 @@
             </tbody>
         </table>
         <div class="margin-top10 align-right">
-            <button type="button" class="btn btn-reset" id="btnReset">@Resources.Reset</button>
-            <button type="button" class="margin-left5 btn" id="btnSubmit">@Resources.Submit</button>
+            @if (!isDisabledAll)
+            {
+                <button type="button" class="btn btn-reset" id="btnReset">@Resources.Reset</button>
+                <button type="button" class="margin-left5 btn" id="btnSubmit">@Resources.Submit</button>
+            }
         </div>
     }
     else
@@ -88,12 +94,16 @@
     }
 
     @Html.Hidden("custId", Model.CustId)
+    @Html.Hidden("custName", Model.CustName)
     @Html.Hidden("custRole", Model.CustRole)
     @Html.Hidden("productId", Model.ProductId)
     @Html.Hidden("enabled", Resources.Enabled)
     @Html.Hidden("disabled", Resources.Disabled)
     @Html.Hidden("thereIsNoChange", Resources.ThereIsNoChange)
     @Html.Hidden("updateStatusFailed", Resources.UpdateStatusFailed)
+    @Html.Hidden("leftPanelFrame", Model.SystemId == 1 ? "leftPanel" : "leftFrame")
+    @Html.Hidden("popupId", Model.SystemId == 1 ? "#dialog-modalProductStatusSetting" : "#windowPopup")
+    @Html.Hidden("isMultipleBetTypes", isMultipleBetTypes)
     @Html.AntiForgeryToken()
 
     <script type="text/javascript" src="@Url.Content("~/Areas/ProductStatusSetting/Scripts/product-status-setting.min.js")"></script>
@@ -125,13 +135,13 @@
     bool isDisabledUpline, 
     byte roleId)
 {
-var labelText = isDisabled ? Resources.Disabled : Resources.Enabled;
-var labelClass = isDisabledUpline ? "gray" : labelText.ToLowerInvariant();
-var id = string.Format("{0}_{1}_{2}", labelClass, roleId, betType);
-var roleName = Model.GetRoleName(roleId);
+    var labelText = isDisabled ? Resources.Disabled : Resources.Enabled;
+    var labelClass = isDisabledUpline ? "gray" : labelText.ToLowerInvariant();
+    var id = string.Format("{0}_{1}_{2}", labelClass, roleId, betType);
+    var roleName = Model.GetRoleName(roleId);
 
-var tbodyEnableDownlineTooltip = String.Format(Resources.TBodyDownlineTooltip, Resources.Enable.ToLower(), roleName + "s");
-var tbodyDisableDownlineTooltip = String.Format(Resources.TBodyDownlineTooltip, Resources.Disable.ToLower(), roleName + "s");
+    var tbodyEnableDownlineTooltip = String.Format(Resources.TBodyDownlineTooltip, Resources.Enable.ToLower(), roleName + "s");
+    var tbodyDisableDownlineTooltip = String.Format(Resources.TBodyDownlineTooltip, Resources.Disable.ToLower(), roleName + "s");
 
     <input type="checkbox" class="checkbox-hide" id="@id"
            data-roleid="@roleId"
@@ -139,7 +149,6 @@ var tbodyDisableDownlineTooltip = String.Format(Resources.TBodyDownlineTooltip, 
            data-sporttype="@sportType"
            data-bettype="@betType"
            data-originstatus="@isDisabled"
-           title="@tbodyEnableDownlineTooltip"
            @(isDisabled ? string.Empty : "checked ") 
            @(isDisabledUpline ? "disabled " : string.Empty) />
 
@@ -192,13 +201,13 @@ var tbodyDisableDownlineTooltip = String.Format(Resources.TBodyDownlineTooltip, 
     if (isMultipleBetTypes)
     {
         <th>
-            <span class="enabled" data-roleid="@roleId" 
+            <span class="enabled gray" data-roleid="@roleId" 
                     title="@String.Format(Resources.HeaderTooltip, Resources.Enable.ToLower(), roleName)">
                 @Resources.Enable
             </span>
         </th>
         <th>
-            <span class="disabled" data-roleid="@roleId" 
+            <span class="disabled gray" data-roleid="@roleId" 
                     title="@String.Format(Resources.HeaderTooltip, Resources.Disable.ToLower(), roleName)">
                 @Resources.Disable
             </span>

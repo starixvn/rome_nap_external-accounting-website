@@ -193,7 +193,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.0-beta14\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.0-beta15\lib\net40\Fanex.ProductStatus.Setting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
@@ -2621,13 +2621,13 @@
     <Content Include="assets\bundles\statement\index.min.js.map">
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
-    <Content Include="Areas\ProductStatusSetting\Views\Index.cshtml" />
-    <Content Include="Areas\ProductStatusSetting\Views\MultipleView.cshtml" />
     <Content Include="Areas\ProductStatusSetting\Views\web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\ONEbook.NG2.API.config" />
-    <Content Include="Areas\ProductStatusSetting\Views\MultiplePartialView.cshtml" />
+    <Content Include="Areas\ProductStatusSetting\Views\Multiple\Index.cshtml" />
+    <Content Include="Areas\ProductStatusSetting\Views\Multiple\MultiplePartialView.cshtml" />
+    <Content Include="Areas\ProductStatusSetting\Views\Single\Index.cshtml" />
     <Content Include="assets\bundles\otp\otp.min.js.map">
       <DependentUpon>otp.min.js</DependentUpon>
     </Content>

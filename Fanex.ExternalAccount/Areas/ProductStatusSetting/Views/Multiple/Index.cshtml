@@ -22,26 +22,30 @@
                 new List<SelectListItem>(
                     Model.Products.Select(product => new SelectListItem { Value = product.Key.ToString(), Text = product.Value })),
                         "Select Product",
-                        new { @class = "form-control" })
+                        new { @class = "form-control", id = "productIds" })
 
             if (!Model.ProductStatus.Any() && !Model.ProductId.Equals(0))
             {
                 <span class="alerterror align-center"> @Resources.UnauthorizeProductMessage</span>
             }
 
-            @Html.Hidden("ProductId", 0)
-           
-            @Html.Hidden("CustIds", Model.CustIds)
-            @Html.Hidden("CustNames", Model.CustNames)
-           
-            @Html.Hidden("CustRole", Model.CustRole)
-            @Html.Hidden("CustId", Model.CustIds[0])
+            @Html.Hidden("productId", Model.ProductId)
+            @Html.Hidden("custIds", Model.CustIds)
+            @Html.Hidden("custNames", Model.CustNames)
+            @Html.Hidden("productIds", Model.ProductIds)
+            @Html.Hidden("custRole", Model.CustRole)
+            @Html.Hidden("custId", Model.CustIds.Split(',')[0])
+            @Html.Hidden("isMultipleBetTypes", Model.ProductStatus.Count() > 1)
+            @Html.Hidden("enableAll", Resources.EnableAll)
+            @Html.Hidden("disableAll", Resources.DisableAll)
+            @Html.Hidden("thereIsNoChange", Resources.ThereIsNoChange)
+            @Html.Hidden("updateStatusFailed", Resources.UpdateStatusFailed)
         }
     </div>
 
     @if (Model.ProductStatus.Any())
     {
-        @Html.Partial("~/Areas/ProductStatusSetting/Views/MultiplePartialView.cshtml", Model)
+        @Html.Partial("~/Areas/ProductStatusSetting/Views/Multiple/MultiplePartialView.cshtml", Model)
     }
 
     <script type="text/javascript" src="@Url.Content("~/Areas/ProductStatusSetting/Scripts/product-status-setting-multiple.min.js")"></script>

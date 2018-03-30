@@ -4,14 +4,18 @@
     using System.Linq;
     using Context;
     using Fanex.ProductStatus.Setting.Services;
+    using Utilities;
 
-    public class ProductStatusUser : IProductStatusUser
+    public class ProductStatusUser : IProductStatusUserService
     {
         public int GetActorId()
             => CurrentSession.Instance.UserId;
 
         public string GetClientIP()
             => CurrentContext.Instance.Ip4Address;
+
+        public byte GetSystemId()
+            => (byte)Config.SystemId;
 
         public IEnumerable<KeyValuePair<int, string>> GetProductList()
         {
