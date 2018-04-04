@@ -407,7 +407,7 @@
     <Content Include="Areas\Common\Views\Shared\Images\Loading.gif" />
     <Content Include="Areas\Common\Views\Shared\Scripts\Fanex.CustomerSetting.js" />
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Common\Views\Web.config" />
+    <Content Include="Areas\Web.config" />
     <Content Include="Areas\CustomerSettingRenovation\Content\DCSCustom.css" />
     <Content Include="Areas\CustomerSettingRenovation\Content\Images\bgHeader.jpg" />
     <Content Include="Areas\CustomerSettingRenovation\Content\Images\btn-bgsubmit-original.png" />
@@ -785,7 +785,6 @@
     <Content Include="Areas\CustomerSetting\Views\SylouCaptcha\Styles\Images\stop.png" />
     <Content Include="Areas\CustomerSetting\Views\SylouCaptcha\Styles\Index.css" />
     <Content Include="Areas\CustomerSetting\Views\SylouCaptcha\SylouCaptchaPartialView.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Web.config" />
     <Content Include="Areas\GoldDeluxeSetting\Content\bootstrap.css" />
     <Content Include="Areas\GoldDeluxeSetting\Content\fanex-gold-deluxe-setting.css" />
     <Content Include="Areas\GoldDeluxeSetting\Content\fanex-gold-deluxe-setting-override.css" />
@@ -862,7 +861,6 @@
     <Content Include="Areas\Statement\Views\StatementDetails\Index.cshtml" />
     <Content Include="Areas\Statement\Views\StatementDetails\Scripts\StatementDetailsManager.js" />
     <Content Include="Areas\Statement\Views\StatementDetails\Styles\StatementDetails.css" />
-    <Content Include="Areas\Statement\Views\Web.config" />
     <Content Include="assets\bundles\choosegroup\choosegroup.css" />
     <Content Include="assets\bundles\choosegroup\choosegroup.js" />
     <Content Include="assets\bundles\choosegroup\choosegroup.min.css">
@@ -2856,7 +2854,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:64826/</IISUrl>
+          <IISUrl>http://localhost:64470/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
