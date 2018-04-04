@@ -88,3 +88,10 @@ function GetDownline(custId, pageIndex) {
         parent.Fanex.ExtAcc.UnBlockUI();
     });
 };
+
+window.top.reloadLeftPanel = function() {
+    parent.Fanex.ExtAcc.Form.Close();
+    Fanex.CustomerSetting.Core.BlockUI();
+    var iframe = parent.document.getElementById("leftFrame");
+    iframe.src = iframe.src;
+}
