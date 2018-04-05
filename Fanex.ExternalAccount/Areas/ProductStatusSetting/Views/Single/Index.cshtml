@@ -101,8 +101,6 @@
     @Html.Hidden("disabled", Resources.Disabled)
     @Html.Hidden("thereIsNoChange", Resources.ThereIsNoChange)
     @Html.Hidden("updateStatusFailed", Resources.UpdateStatusFailed)
-    @Html.Hidden("leftPanelFrame", Model.SystemId == 1 ? "leftPanel" : "leftFrame")
-    @Html.Hidden("popupId", Model.SystemId == 1 ? "#dialog-modalProductStatusSetting" : "#windowPopup")
     @Html.Hidden("isMultipleBetTypes", isMultipleBetTypes)
     @Html.AntiForgeryToken()
 
