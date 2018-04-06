@@ -20,24 +20,12 @@ Fanex.ExtAcc.Customer.Settings = {
         Fanex.ExtAcc.Customer.IsMultiple = false;
         $('#tabs').tabs();
 
-        $('#tab4').css('display', Fanex.ExtAcc.Customer.SyncCasino ? 'block' : 'none');
         $('#tab8').css('display', Fanex.ExtAcc.Customer.HideVirtualSports ? 'none' : 'block');
         $('#tab9').css('display', Fanex.ExtAcc.Customer.HideKeno ? 'none' : 'block');
         $('#tab10').css('display', Fanex.ExtAcc.Customer.HideGoldDeluxe ? 'none' : 'block');
         $('#tab11').css('display', Fanex.ExtAcc.Customer.HideColossusBets ? 'none' : 'block');
         $('#tab12').css('display', Fanex.ExtAcc.Customer.HideSportsbook2 ? 'none' : 'block');
         $('#tab14').css('display', Fanex.ExtAcc.Customer.HideCricket ? 'none' : 'block');        
-
-        if (Fanex.ExtAcc.Customer.CurrentLevel != Fanex.ExtAcc.Customer.Member) {
-            // Loads first tab (Sportsbook's Min PT)
-            Fanex.ExtAcc.Customer.Settings.GetSportsbookMinPT();
-        }
-        else {            
-            $('#tab1').hide();
-            $('#tabs-1').hide();
-            $('#tabs').tabs({ selected: 2 });
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(5, "#virtualSportsFrame", "#tabs-8");
-        }
 
         $('#tab1').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
@@ -83,12 +71,13 @@ Fanex.ExtAcc.Customer.Settings = {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.RenderDCS(productId, "#Frame_" + productId, "#tabs-" + productId);
         });
+
+        $('#tabs-list>li:first').click();
     },
 
     GetSportsbookMinPT: function () {
         Fanex.ExtAcc.Customer.IsMultiple = false;
 
-        Fanex.ExtAcc.BlockUI();
         Fanex.ExtAcc.Customer.UserId = this.UserId;
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/EditMinPT?custId=' + Fanex.ExtAcc.Customer.Settings.UserId + '&groupName=' + $('#selectedGroupName').html())
@@ -128,7 +117,6 @@ Fanex.ExtAcc.Customer.Settings = {
 
         $('#tabs-4').height($('#leftFrame').height() - 10);
         $('#tabs-4').css('display', 'block');
-
         Fanex.ExtAcc.Customer.Settings.LoadProductSetting('#casinoFrame', url);
     },
 
@@ -239,12 +227,10 @@ Fanex.ExtAcc.Customer.Settings = {
     },
 
     LoadProductSetting: function (frameId, url) {
-        var iframe = $(frameId);
         Fanex.ExtAcc.BlockUI();
+        var iframe = $(frameId);
+        iframe.attr('onload', 'Fanex.ExtAcc.UnBlockUI()');
         iframe.attr('src', url);
-        iframe.load(function () {
-            Fanex.ExtAcc.UnBlockUI();
-        });
     }
 };
 

@@ -29,9 +29,16 @@
 <link href="@Url.Content("~/assets/styles/pages/customer/customer-setting.css")" rel="stylesheet" type="text/css" />
 
 <div id="tabs" style="border:none">
-    <ul class="tabs">
-        <li id="tab1"><a href="#tabs-1">Sportsbook's Min PT</a></li>
-        <li id="tab4"><a href="#tabs-4">Casino</a></li>
+    <ul id="tabs-list" class="tabs">
+        @if ((int)ViewBag.CurrentLevel != Role.Member)
+        {
+            <li id="tab1"><a href="#tabs-1">Sportsbook's Min PT</a></li>
+        }
+
+        @if ((bool)ViewBag.SyncCasino)
+        {
+            <li id="tab4"><a href="#tabs-4">Casino</a></li>
+        }
         <li id="tab8"><a href="#tabs-8">Virtual Sports</a></li>
         <li id="tab9"><a href="#tabs-9">Keno</a></li>
         <li id="tab10"><a href="#tabs-10">Gold Deluxe</a></li>
@@ -48,12 +55,19 @@
             </li>
         }
     </ul>
-    <div id="tabs-1" class="divTab">
-    </div>
 
-    <div id="tabs-4" class="divTab" style="padding: 0px">
-        <iframe id="casinoFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-    </div>
+    @if ((int)ViewBag.CurrentLevel != Role.Member)
+    {
+        <div id="tabs-1" class="divTab">
+        </div>
+    }
+
+    @if ((bool)ViewBag.SyncCasino)
+    {
+        <div id="tabs-4" class="divTab" style="padding: 0px">
+            <iframe id="casinoFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
+        </div>
+    }
 
     <div id="tabs-8" class="divTab">
         <iframe id="virtualSportsFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
