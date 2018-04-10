@@ -134,78 +134,71 @@ Fanex.ExtAcc = {
         iframe.setAttribute('height', '100%');
         iframe.setAttribute('onload', 'Fanex.ExtAcc.UnBlockUI()');
         $('#contentSplitter').append(iframe);
-        
+
     },
 
-    LoadMainFrame: function (url, id, isLeftPanelClick, isMenu, dontNeedGroupName) {
+    LoadMainFrame: function (url, id, isLeftPanelClick, dontNeedGroupName) {
         this.BlockUI();
         $('#contentSplitter').hide();
         if (typeof id != 'undefined') {
             $('#' + id).hide();
         }
 
-        if (!isMenu) {
-            var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
-            $.ajax({
-                url: fullUrl, type: 'post', success: function (result) {
-                    $('#contentSplitter').html('');
+        var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
+        $.ajax({
+            url: fullUrl, type: 'post', success: function (result) {
+                $('#contentSplitter').html('');
                     if ((url.indexOf('Customer/Settings') == -1 && url.indexOf('Customer/CustomerList') == -1) || $(result).text().indexOf('You are not authorized on this function') != -1) {
-                        Fanex.ExtAcc.UnBlockUI();
-                    }
-
-                    if (result.errorCode) {
-                        $('#contentSplitter').html(result.errorMessage.formatErrorMessage());
-                        return;
-                    }
-
-                    $('#contentSplitter').html(result);
-
-                    if (document.getElementById('btnLogin')) {
-                        location.href = resolveClientUrl('Account/Login');
-                        return;
-                    }
-
-                    if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
-                        var interval = setInterval(function () {
-                            if (document.getElementById('btnSearch')) {
-                                clearInterval(interval);
-
-                                Fanex.ExtAcc.Customer.CurrentLevel = 4;
-                                Fanex.ExtAcc.Customer.Init();
-
-                                var timeout = setTimeout(function () {
-                                    clearTimeout(timeout);
-                                    if ($.trim($('#jqgrid').html()) == '' && !Fanex.ExtAcc.Customer.IsLoading && $('#msgNoinfo').css('display') == 'none') {
-                                        $('#btnSearch').click();
-                                    }
-                                }, 2000);
-                            }
-                        }, 100);
-                    }
+                if (url.indexOf('Customer/CustomerList') == -1 || $(result).text().indexOf('You are not authorized on this function') != -1) {
+                    Fanex.ExtAcc.UnBlockUI();
                 }
-            })
-            .error(function (data) {
-                //if (typeof console != undefined)
-                //    console.log(data.responseText);
 
-                Fanex.ExtAcc.UnBlockUI();
-                if (data.errorCode) {
-                    $('#contentSplitter').html(data.errorMessage.formatErrorMessage());
-                } else {
-                    $('#contentSplitter').html(data.responseText).show();
+                if (result.errorCode) {
+                    $('#contentSplitter').html(result.errorMessage.formatErrorMessage());
+                    return;
                 }
-            })
-            .done(function (data) {
-                $('#contentSplitter').ready(function () {
-                    $('#contentSplitter').height($('#mainContent').height()- 20);
-                    $('#contentSplitter').show();
 
-                });
+                $('#contentSplitter').html(result);
+
+                if (document.getElementById('btnLogin')) {
+                    location.href = resolveClientUrl('Account/Login');
+                    return;
+                }
+
+                if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
+                    var interval = setInterval(function () {
+                        if (document.getElementById('btnSearch')) {
+                            clearInterval(interval);
+
+                            Fanex.ExtAcc.Customer.CurrentLevel = 4;
+                            Fanex.ExtAcc.Customer.Init();
+
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                if ($.trim($('#jqgrid').html()) == '' && !Fanex.ExtAcc.Customer.IsLoading && $('#msgNoinfo').css('display') == 'none') {
+                                    $('#btnSearch').click();
+                                }
+                            }, 2000);
+                        }
+                    }, 100);
+                }
+            }
+        })
+        .error(function (data) {
+            Fanex.ExtAcc.UnBlockUI();
+            if (data.errorCode) {
+                $('#contentSplitter').html(data.errorMessage.formatErrorMessage());
+            } else {
+                $('#contentSplitter').html(data.responseText).show();
+            }
+        })
+        .done(function (data) {
+            $('#contentSplitter').ready(function () {
+                $('#contentSplitter').height($('#mainContent').height() - 20);
+                $('#contentSplitter').show();
+
             });
-        }
-        else {
-            window.location.href = url + '/' + $('#selectedGroupName').html();
-        }
+        });
     },
 
     FormatNumber: function (number) { // Format a number to 1,234,567.89

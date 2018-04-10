@@ -60,9 +60,9 @@ Fanex.ExtAcc.Form = {
                 Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 300, 150, 'alert');
                 return;
             }
-            else {                
+            else {                                
+                document.body.appendChild(Form);
                 $(DivContent).html(data);
-                document.body.appendChild(Form);                
             }
 
             $('#' + id).dialog({
@@ -78,7 +78,7 @@ Fanex.ExtAcc.Form = {
                     $self.Close(reloadOnClose, null, id);
                     if (typeof closeClick == 'function') {
                         closeClick();
-                    }
+                    }                    
                 }
             });
 

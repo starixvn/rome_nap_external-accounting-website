@@ -1,7 +1,4 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@using Fanex.ExternalAccount.Utilities
+﻿@using Fanex.ExternalAccount.Utilities
 <div id='jqWidget'>
     <div class="page-title">
         <div class="pull-left">
@@ -18,7 +15,6 @@
     </div>
     @Html.AntiForgeryToken()
 </div>
-@section Scripts{
 <script src="@Url.Content("~/Scripts/Manage/Fanex.ExtAcc.Menus.js")" type="text/javascript"></script>
 <script type="text/javascript">
     Fanex.ExtAcc.Menus.dataTexts = [
@@ -32,4 +28,3 @@
     '@ViewLang.Delete'
     ];
 </script>
-}
