@@ -326,6 +326,7 @@ body {
     bottom: 0;
     padding: 10px;
     background-color: #f1f1f2;
+    overflow: auto;
     -webkit-overflow-scrolling: touch;
 
     @media screen and (min-device-width: 768px) {
