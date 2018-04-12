@@ -122,7 +122,6 @@ Fanex.ExtAcc = {
 
     LoadMainIFrame: function (url) {
         this.BlockUI();
-
         $('#contentSplitter').html('');
         $('#contentSplitter').height($('#mainContent').height() - 20);
         var iframe = document.createElement('iframe');
