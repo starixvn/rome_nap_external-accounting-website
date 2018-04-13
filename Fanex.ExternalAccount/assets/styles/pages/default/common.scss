@@ -589,7 +589,7 @@ no-info {
 
 
 #contentSplitter #mainIFrame{
-    width: 100%;
+    width: 100% !important;
     min-width: 568px;
     height: 100% !important;
     overflow: auto;
