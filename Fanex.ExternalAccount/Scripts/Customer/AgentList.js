@@ -784,12 +784,17 @@ Fanex.ExtAcc.Customer.RenderAgentList = function (dataSource) {
     var currentPage = 0;
     currentPage = (rows.length <= Fanex.ExtAcc.Customer.ItemsPerPage || (parseInt(rows.length / Fanex.ExtAcc.Customer.ItemsPerPage) < Fanex.ExtAcc.Customer.CurrentPage)) ? 0 : Fanex.ExtAcc.Customer.CurrentPage;
     Fanex.ExtAcc.Customer.CurrentPage = currentPage;
+    var numberOfFrozenColumn = 6;
+    var widthDevice = top.$(top.window).width();
+    if (widthDevice <= 768) {
+        numberOfFrozenColumn = 3;
+    }
 
     options = {
         columns: this.DataFields,
         bodyRows: bodyRows,
         autoCalculateGridExpandHeight: true,
-        numberOfFrozenColumn: isMobile.phone ? 3 : 6,
+        numberOfFrozenColumn: numberOfFrozenColumn,
         fullHeight: !isMobile.phone,
         gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
         bodyRowHeight: isMobile.phone ? 28 : 25,

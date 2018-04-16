@@ -128,9 +128,7 @@ Fanex.ExtAcc = {
         iframe.setAttribute('id', 'mainIFrame');
         iframe.setAttribute('src', url);
         iframe.setAttribute('frameborder', 0);
-        iframe.setAttribute('scrolling', 'no');
         iframe.setAttribute('width', ($('#contentSplitter').width() - 5) + 'px');
-        iframe.setAttribute('height', '100%');
         iframe.setAttribute('onload', 'Fanex.ExtAcc.UnBlockUI()');
         $('#contentSplitter').append(iframe);
 
@@ -147,7 +145,6 @@ Fanex.ExtAcc = {
         $.ajax({
             url: fullUrl, type: 'post', success: function (result) {
                 $('#contentSplitter').html('');
-                    if ((url.indexOf('Customer/Settings') == -1 && url.indexOf('Customer/CustomerList') == -1) || $(result).text().indexOf('You are not authorized on this function') != -1) {
                 if (url.indexOf('Customer/CustomerList') == -1 || $(result).text().indexOf('You are not authorized on this function') != -1) {
                     Fanex.ExtAcc.UnBlockUI();
                 }
@@ -193,7 +190,7 @@ Fanex.ExtAcc = {
         })
         .done(function (data) {
             $('#contentSplitter').ready(function () {
-                $('#contentSplitter').height($('#mainContent').height() - 20);
+                //$('#contentSplitter').height($('#mainContent').height() - 20);
                 $('#contentSplitter').show();
 
             });
