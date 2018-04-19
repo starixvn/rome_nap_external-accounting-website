@@ -148,8 +148,7 @@ Fanex.ExtAcc = {
             $.ajax({
                 url: fullUrl, type: 'post', success: function (result) {
                     $('#contentSplitter').html('');
-
-                    if (url.indexOf('Customer/CustomerList') == -1 || $(result).text().indexOf('You are not authorized on this function') != -1) {
+                    if ((url.indexOf('Customer/Settings') == -1 && url.indexOf('Customer/CustomerList') == -1) || $(result).text().indexOf('You are not authorized on this function') != -1) {
                         Fanex.ExtAcc.UnBlockUI();
                     }
 

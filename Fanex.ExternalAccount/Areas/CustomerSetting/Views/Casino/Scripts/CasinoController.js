@@ -1,6 +1,5 @@
-﻿function CasinoController(userId, username, isMultiple, custIds, usernames, syncStatuses) {
-    var defaultTransferCredit = customerModel.defaultTransferCredit;
-    var maxTransferCredit = customerModel.maxTransferCredit;
+﻿function CasinoController(userId, username, isMultiple, custIds, usernames, syncStatuses) {  
+    
     var isAutoReset = customerModel.isAutoReset;
     var CustomerModel = customerModel;
     var SettingModel = customerSetting;
@@ -13,7 +12,7 @@
     var SuccessMessage = '';
     var actionName = '';
     CustomerModel.casinoEnabled = CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && (CustomerModel.casinoSync || !CustomerModel.uplineDisabledCasino);
-    CustomerModel.maxTransferCredit = CustomerModel.maxTransferFormated;
+  
     if (isMultiple) {
         if (!custIds) {
             alert('Please input custIds parameter is array');
@@ -115,13 +114,7 @@
     };
 
     var ProcessUpdate = function (custIdIndex, ondone) {
-        CustomerModel.isAutoReset = isAutoReset;
-        if (CustomerModel.casinoSync) {
-            CustomerModel.maxTransferCredit = maxTransferCredit;
-        }
-        else {
-            CustomerModel.maxTransferCredit = CustomerModel.defaultTransferCredit = defaultTransferCredit;
-        }
+        CustomerModel.isAutoReset = isAutoReset;      
         var isSync = SyncStatuses[custIdIndex] == 1 ? true : false;
         CustomerModel.casinoSync = custIdIndex == null ? CustomerModel.casinoSync : isSync;
         var data = {

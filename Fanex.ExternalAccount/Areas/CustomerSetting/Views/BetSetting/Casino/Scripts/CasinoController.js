@@ -12,28 +12,11 @@ Fanex.CustomerSetting.Betting.Casino = function ($scope, $element) {
 
     $scope.customerModel = model != null ? model.customerModel : null;
     $scope.gameKinds = model != null ? $scope.model.settingModel.gameGroups : null;
-
-    $scope.Init = function () {
-        if ($scope.customerModel)
-            $scope.customerModel.generalInfo.maxTransferCredit = $scope.customerModel.generalInfo.maxTransferCredit.formatNumber();
-    };
+  
 };
 
 Fanex.CustomerSetting.Betting.Casino.Update = function (ondone) {
-    $(document).scrollTop(0);
-    /*
-    var max = model.customerModel.maxWin;
-    var isUnlimit = max == 0;
-
-    if (model.customerModel.maxTransferCredit.replaceAll(',', '') < model.customerModel.minTransferCreditLimit && isUnlimit) {
-        Validators.show($('#maxTransferCredit').get(0), 'Member Max Transfer Credit must be greater than or equals to ' + model.customerModel.minTransferCreditLimit.formatNumber(), undefined, undefined, 3000);
-        return;
-    };
-
-    if (model.customerModel.maxTransferCredit.replaceAll(',', '') < model.customerModel.minTransferCreditLimit && !isUnlimit) {
-        Validators.show($('#maxTransferCredit').get(0), 'Member Max Transfer Credit must be between ' + model.customerModel.minTransferCreditLimit.formatNumber() + ' and ' + max.formatNumber(), undefined, undefined, 3000);
-        return;
-    };*/
+    $(document).scrollTop(0);  
 
     Fanex.CustomerSetting.Core.BlockUI();
 

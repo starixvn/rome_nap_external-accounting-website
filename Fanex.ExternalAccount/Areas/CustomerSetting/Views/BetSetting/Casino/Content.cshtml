@@ -28,29 +28,7 @@
         Update Bet Setting: @ViewBag.Username
     </div>
     <div data-ng-hide="model != null" style="color: Red; height: 25px; border: 1px solid #CCC" class="C">There is no information available.</div>
-    <table class="tableInfo" border="1" cellpadding="0" cellspacing="0" data-ng-hide="model == null">
-        @*<tr>
-            <td colspan="3" style="border: none">
-                <table class="tableInfo" border="0" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td class="bold R">Accumulated Transferable Amount</td>
-                        <td style="text-indent: 6px">{{customerModel.totalWinLoss.formatNumber()}}</td>
-                    </tr>
-                    <tr>
-                        <td class="bold R">Member Max Transfer Credit</td>
-                        <td>
-                            <input id="maxTransferCredit" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" type="text" data-ng-model="customerModel.maxTransferCredit" style="text-align: left" />
-                            <input id="chkDailyAutoReset" type="checkbox" data-ng-model="customerModel.isAutoReset" />
-                            <label class="normal" for="chkDailyAutoReset">Daily auto reset limit (at 12 noon GMT + 8)</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>({{customerModel.minTransferCreditLimit.formatNumber()}} - {{customerModel.maxWin == 0 ? 'No limited' : customerModel.maxWin.formatNumber()}})</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>*@
+    <table class="tableInfo" border="1" cellpadding="0" cellspacing="0" data-ng-hide="model == null">      
         <tr>
             <td colspan="3" style="border: none">
                 <table class="tableInfo" border="0" cellpadding="0" cellspacing="0">
