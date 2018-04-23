@@ -98,7 +98,7 @@
         {
             int custId;
             int onuserId;
-            bool isInternalAdmin;
+            bool hasMultipleGroupsPermission;
 
             var result = _userService.Login(
                 model.UserName,
@@ -106,10 +106,10 @@
                     RequestHelper.GetRequestInfo(model.BrowserSize),
                 out custId,
                 out onuserId,
-                out isInternalAdmin);
+                out hasMultipleGroupsPermission);
 
             return result?.IsSuccess == true
-                ? LoginSuccessful(model, custId, onuserId, isInternalAdmin, result.ResultData as Group)
+                ? LoginSuccessful(model, custId, onuserId, hasMultipleGroupsPermission, result.ResultData as Group)
                 : LoginFailed(model.UserName, result);
         }
 
@@ -166,12 +166,12 @@
             LoginModel model,
             int custId,
             int onuserId,
-            bool isIntAcc,
+            bool hasMultipleGroupsPermission,
             Group group)
         {
             ResetLoginAttempt();
 
-            var canAccessPublicDomain = IsDenyAccessPublicDomain(isIntAcc, group, model.UserName);
+            var canAccessPublicDomain = IsDenyAccessPublicDomain(hasMultipleGroupsPermission);
             if (canAccessPublicDomain)
             {
                 return View(new LoginModel(ViewLang.AccessDenyToPublicDomain));
@@ -179,9 +179,9 @@
 
             FormsAuthentication.SetAuthCookie(model.UserName, false);
 
-            SetUserSession(model, custId, onuserId, isIntAcc, group);
+            SetUserSession(model, custId, onuserId, hasMultipleGroupsPermission, group);
 
-            return isIntAcc || _currentSession.IsITAdmin ? RedirectToChooseGroupPage() : RedirectToHomePage();
+            return hasMultipleGroupsPermission || _currentSession.IsITAdmin ? RedirectToChooseGroupPage() : RedirectToHomePage();
         }
 
         private RedirectResult RedirectToChooseGroupPage() => Redirect("~/Account/ExternalGroup");
@@ -256,22 +256,11 @@
                 JsonRequestBehavior.AllowGet);
         }
 
-        private bool IsDenyAccessPublicDomain(bool isInternalAdmin, Group currentGroup, string userName)
+        private bool IsDenyAccessPublicDomain(bool hasMultipleGroupsPermission)
         {
-            if (Config.ITAdminAllowedAccessPublicDomains.Contains(userName, StringComparer.InvariantCultureIgnoreCase))
-            {
-                return false;
-            }
-
-            var isPublicDomain = Config.PublicDomains.Contains(_currentContext.DomainName, StringComparer.InvariantCultureIgnoreCase);
-            if (isPublicDomain)
-            {
-                return Config.GroupsDenyAccessPublicDomains.Contains(currentGroup.GroupName)
-                    || Config.UsersDenyAccessPublicDomains.Any(i => userName.StartsWith(i, StringComparison.InvariantCultureIgnoreCase))
-                    || (isInternalAdmin && Config.ExternalGroupFunctionDenyAccessPublicDomains);
-            }
-
-            return false;
+            string url = Request.Url.ToString();
+            var isPublicDomain = Config.PublicDomains.Any(url.Contains);
+            return Config.IsRestrictAccessPublicDomain && isPublicDomain && hasMultipleGroupsPermission;
         }
 
         private void ResetLoginAttempt()

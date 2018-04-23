@@ -83,13 +83,7 @@
 
         public static string[] PublicDomains => GetValue("PublicDomains").Split(',');
 
-        public static string[] GroupsDenyAccessPublicDomains => GetValue("GroupsDenyAccessPublicDomains").Split(',');
-
-        public static bool ExternalGroupFunctionDenyAccessPublicDomains => Utils.ToBoolean(GetValue("ExternalGroupFunctionDenyAccessPublicDomains"));
-
-        public static string[] UsersDenyAccessPublicDomains => GetValue("UsersDenyAccessPublicDomains").Split(',');
-
-        public static string[] ITAdminAllowedAccessPublicDomains => GetValue("ITAdminAllowedAccessPublicDomains").Split(',');
+        public static bool IsRestrictAccessPublicDomain => Utils.ToBoolean(GetValue("IsRestrictAccessPublicDomain"));
 
         public static string IgnoreRecheckinCustomers
         {
