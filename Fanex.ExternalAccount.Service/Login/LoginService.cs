@@ -24,7 +24,7 @@
         }
 
         public Result Login(string username, string password, Request request, out int custId, out int onuserId,
-            out bool isIntAcc)
+            out bool hasMultipleGroupsPermission)
         {
             Check.Argument.IsNotNull(username, "username");
             Check.Argument.IsNotEmpty(username, "username");
@@ -34,7 +34,7 @@
 
             custId = 0;
             onuserId = 0;
-            isIntAcc = true;
+            hasMultipleGroupsPermission = true;
 
             var result = _loginDao.Login(username, password, request.Browser, request.IP, request.DomainName,
                 request.CountryCode, request.Platform, out custId);
@@ -43,7 +43,7 @@
             {
                 _loginDao.Checkin(custId, request.NetSessionId, request.IP, out onuserId);
 
-                isIntAcc = _loginDao.CheckExternalGroup(custId, 11, "ExternalGroup");
+                hasMultipleGroupsPermission = _loginDao.CheckExternalGroup(custId, 11, "ExternalGroup");
 
                 result.ResultData = groupService.GetGroupById((int)result.ResultData);
             }

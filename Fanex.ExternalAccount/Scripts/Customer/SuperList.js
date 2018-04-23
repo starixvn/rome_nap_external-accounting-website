@@ -207,10 +207,11 @@
         callback: function (key, opt) {
             top.shouldCalculatePopupHeight = true;
             Fanex.ExtAcc.Customer.IsMultiple = false;
+            var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 480) : 500;
             Fanex.ExtAcc.Form.Show(
                 resolveClientUrl('Customer/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                 500,
-                Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                height,
                 false);
         }
     };
@@ -221,10 +222,11 @@
         callback: function (key, opt) {
             top.shouldCalculatePopupHeight = true;
             Fanex.ExtAcc.Customer.IsMultiple = false;
+            var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 400) : 400;
             Fanex.ExtAcc.Form.Show(
                 resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                 415,
-                Fanex.ExtAcc.Customer.GetPopupHeight(270, 400),
+                height,
                 false,
                 false);
         }
@@ -243,12 +245,12 @@
                 username: Fanex.ExtAcc.Customer.TitleEditInfo,
                 groupName: Fanex.ExtAcc.Customer.GroupName().groupName
             };
-
+            var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 480) : 500;
             Fanex.ExtAcc.Form.ShowFrame(
                 resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?' + $.param(params)),
                 'Reset security code: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                 650,
-                Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                height,
                 false,
                 false);
         }
@@ -614,12 +616,16 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource) {
     var currentPage = 0;
     currentPage = (rows.length <= Fanex.ExtAcc.Customer.ItemsPerPage || (parseInt(rows.length / Fanex.ExtAcc.Customer.ItemsPerPage) < Fanex.ExtAcc.Customer.CurrentPage)) ? 0 : Fanex.ExtAcc.Customer.CurrentPage;
     Fanex.ExtAcc.Customer.CurrentPage = currentPage;
-
+    var numberOfFrozenColumn = 6;
+    var widthDevice = top.$(top.window).width();
+    if (widthDevice <= 768) {
+        numberOfFrozenColumn = 3;
+    }
     options = {
         columns: this.DataFields,
         bodyRows: bodyRows,
         autoCalculateGridExpandHeight: true,
-        numberOfFrozenColumn: isMobile.phone ? 3 : 6,
+        numberOfFrozenColumn: numberOfFrozenColumn,
         bodyRowHeight: isMobile.phone ? 28 : 25,
         fullHeight: !isMobile.phone,
         gridHeight: isMobile.phone ? $(window).height() - 70 : 0,

@@ -14,10 +14,8 @@
                 {
                     foreach (var menu in value.Children)
                     {
-                        var isMenu = menu.Url.Equals("~/Menu/MenuList", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
-
                         <li class="menu">
-                            <a class="link" parent="ddl-@value.Name.Replace(" ", string.Empty)" href="javascript:;" onclick="Fanex.ExtAcc.LoadMainFrame('@(menu.Url != "" ? @Url.Content(menu.Url) : "")', '@id', null, @isMenu)">
+                            <a class="link" parent="ddl-@value.Name.Replace(" ", string.Empty)" href="javascript:;" onclick="Fanex.ExtAcc.LoadMainFrame('@(menu.Url != "" ? @Url.Content(menu.Url) : "")', '@id', null)">
                                         @menu.Name
                             </a>
                         </li>

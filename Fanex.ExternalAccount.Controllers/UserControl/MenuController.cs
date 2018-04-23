@@ -26,7 +26,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult MenuList() => View();
+        public ActionResult MenuList() => PartialViewBase();
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Read)]

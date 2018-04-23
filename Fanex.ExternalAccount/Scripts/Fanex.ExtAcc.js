@@ -122,87 +122,79 @@ Fanex.ExtAcc = {
 
     LoadMainIFrame: function (url) {
         this.BlockUI();
-
         $('#contentSplitter').html('');
-
+        $('#contentSplitter').height($('#mainContent').height() - 20);
         var iframe = document.createElement('iframe');
         iframe.setAttribute('id', 'mainIFrame');
         iframe.setAttribute('src', url);
         iframe.setAttribute('frameborder', 0);
         iframe.setAttribute('width', ($('#contentSplitter').width() - 5) + 'px');
-        //iframe.setAttribute('height', ($('#contentSplitter').height() - 5) + 'px');
-        iframe.setAttribute('style', 'overflow: auto');
         iframe.setAttribute('onload', 'Fanex.ExtAcc.UnBlockUI()');
         $('#contentSplitter').append(iframe);
+
     },
 
-    LoadMainFrame: function (url, id, isLeftPanelClick, isMenu, dontNeedGroupName) {
+    LoadMainFrame: function (url, id, isLeftPanelClick, dontNeedGroupName) {
         this.BlockUI();
         $('#contentSplitter').hide();
         if (typeof id != 'undefined') {
             $('#' + id).hide();
         }
 
-        if (!isMenu) {
-            var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
-            $.ajax({
-                url: fullUrl, type: 'post', success: function (result) {
-                    $('#contentSplitter').html('');
-                    if ((url.indexOf('Customer/Settings') == -1 && url.indexOf('Customer/CustomerList') == -1) || $(result).text().indexOf('You are not authorized on this function') != -1) {
-                        Fanex.ExtAcc.UnBlockUI();
-                    }
-
-                    if (result.errorCode) {
-                        $('#contentSplitter').html(result.errorMessage.formatErrorMessage());
-                        return;
-                    }
-
-                    $('#contentSplitter').html(result);
-
-                    if (document.getElementById('btnLogin')) {
-                        location.href = resolveClientUrl('Account/Login');
-                        return;
-                    }
-
-                    if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
-                        var interval = setInterval(function () {
-                            if (document.getElementById('btnSearch')) {
-                                clearInterval(interval);
-
-                                Fanex.ExtAcc.Customer.CurrentLevel = 4;
-                                Fanex.ExtAcc.Customer.Init();
-
-                                var timeout = setTimeout(function () {
-                                    clearTimeout(timeout);
-                                    if ($.trim($('#jqgrid').html()) == '' && !Fanex.ExtAcc.Customer.IsLoading && $('#msgNoinfo').css('display') == 'none') {
-                                        $('#btnSearch').click();
-                                    }
-                                }, 2000);
-                            }
-                        }, 100);
-                    }
+        var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
+        $.ajax({
+            url: fullUrl, type: 'post', success: function (result) {
+                $('#contentSplitter').html('');
+                if (url.indexOf('Customer/CustomerList') == -1 || $(result).text().indexOf('You are not authorized on this function') != -1) {
+                    Fanex.ExtAcc.UnBlockUI();
                 }
-            })
-            .error(function (data) {
-                //if (typeof console != undefined)
-                //    console.log(data.responseText);
 
-                Fanex.ExtAcc.UnBlockUI();
-                if (data.errorCode) {
-                    $('#contentSplitter').html(data.errorMessage.formatErrorMessage());
-                } else {
-                    $('#contentSplitter').html(data.responseText).show();
+                if (result.errorCode) {
+                    $('#contentSplitter').html(result.errorMessage.formatErrorMessage());
+                    return;
                 }
-            })
-            .done(function (data) {
-                $('#contentSplitter').ready(function () {
-                    $('#contentSplitter').show();
-                });
+
+                $('#contentSplitter').html(result);
+
+                if (document.getElementById('btnLogin')) {
+                    location.href = resolveClientUrl('Account/Login');
+                    return;
+                }
+
+                if (!isLeftPanelClick && url.indexOf('Customer/CustomerList') != -1) {
+                    var interval = setInterval(function () {
+                        if (document.getElementById('btnSearch')) {
+                            clearInterval(interval);
+
+                            Fanex.ExtAcc.Customer.CurrentLevel = 4;
+                            Fanex.ExtAcc.Customer.Init();
+
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                if ($.trim($('#jqgrid').html()) == '' && !Fanex.ExtAcc.Customer.IsLoading && $('#msgNoinfo').css('display') == 'none') {
+                                    $('#btnSearch').click();
+                                }
+                            }, 2000);
+                        }
+                    }, 100);
+                }
+            }
+        })
+        .error(function (data) {
+            Fanex.ExtAcc.UnBlockUI();
+            if (data.errorCode) {
+                $('#contentSplitter').html(data.errorMessage.formatErrorMessage());
+            } else {
+                $('#contentSplitter').html(data.responseText).show();
+            }
+        })
+        .done(function (data) {
+            $('#contentSplitter').ready(function () {
+                //$('#contentSplitter').height($('#mainContent').height() - 20);
+                $('#contentSplitter').show();
+
             });
-        }
-        else {
-            window.location.href = url + '/' + $('#selectedGroupName').html();
-        }
+        });
     },
 
     FormatNumber: function (number) { // Format a number to 1,234,567.89
@@ -368,7 +360,7 @@ Fanex.ExtAcc = {
                 if (iconUser.hasClass("active")) {
                     leftSplitter.addClass("collapse-leftpanel").removeClass("expand-leftpanel");
                     content.removeClass("collapse-content").addClass("expand-content");
-                    iconUser.removeClass("active");                    
+                    iconUser.removeClass("active");
                 } else {
                     leftSplitter.removeClass("collapse-leftpanel").addClass("expand-leftpanel");
                     content.addClass("collapse-content");
@@ -383,7 +375,7 @@ Fanex.ExtAcc = {
                 }
             });
             iconUser.on("click", function () {
-                if (iconUser.hasClass("active")) {    
+                if (iconUser.hasClass("active")) {
                     iconUser.removeClass("active");
                     leftSplitter.removeClass("expand-leftpanel").addClass("collapse-leftpanel");
                     content.removeClass("collapse-content").addClass("expand-content");
@@ -394,7 +386,7 @@ Fanex.ExtAcc = {
                     if ($this.shouldReloadLeftPanel) {
                         document.getElementById('leftFrame').contentDocument.location.reload(false);
                     }
-                  
+
                 }
                 $this.shouldReloadLeftPanel = false;
 
@@ -403,7 +395,7 @@ Fanex.ExtAcc = {
                 $(window).resize();
             });
         }
-            
+
 
         $(window).resize(function () {
             Fanex.ExtAcc.Resize();
@@ -445,7 +437,7 @@ Fanex.ExtAcc = {
                     }, 100);
                 }
 
-            } 
+            }
 
             return true;
         });
@@ -484,8 +476,7 @@ Fanex.ExtAcc = {
         var iframe = document.getElementById('connection-speed');
 
         if (typeof (iframe) == 'undefined'
-            || iframe == null)
-        {
+            || iframe == null) {
             iframe = document.createElement('iframe');
             iframe.id = 'connection-speed';
             iframe.style.display = 'none';
@@ -520,7 +511,7 @@ Fanex.ExtAcc = {
 
         if (document.getElementById('mainIFrame')) {
             $('#mainIFrame').width($('#contentSplitter').width() - 5);
-            //$('#mainIFrame').height($('#contentSplitter').height() - 5);
+            $('#mainIFrame').height($('#contentSplitter').height() - 5);
         }
 
         if (document.getElementById('tabs-2')) {
@@ -550,7 +541,7 @@ Fanex.ExtAcc = {
 
         if (document.getElementById('mainIFrame')) {
             $('#mainIFrame').width($('#contentSplitter').width() - 5);
-            //$('#mainIFrame').height($('#contentSplitter').height() - 5);
+            $('#mainIFrame').height($('#contentSplitter').height() - 5);
         }
 
         try {
@@ -687,7 +678,7 @@ Fanex.ExtAcc = {
     CheckConstraintAgentCredits: function (agentCredit) {
         var value = Fanex.ExtAcc.ReplaceAll(agentCredit.value, ',', '');
         $('#maxCreditMember').text(Fanex.ExtAcc.FormatNumber(value));
-    },    
+    },
 
     FormatErrorMessage: function (username, obj) {
         var msgs = obj;
@@ -824,13 +815,13 @@ $(document).ready(function () {
                 xhr.setRequestHeader("__RequestVerificationToken", antiXSRFToken[0].value);
             }
         },
-        error: function(){
+        error: function () {
             Fanex.ExtAcc.UnBlockUI();
         },
         statusCode: {
             500: function () {
                 Fanex.ExtAcc.Form.Close();
-                Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Shared/Error'));                
+                Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Shared/Error'));
             },
             401: function (error, callback) {
                 if (JSON && error.responseText) {
@@ -876,16 +867,14 @@ Array.prototype.contains = function (obj) {
     return false;
 }
 
-function setPagerOptionOnMobile(gridOption)
-{
+function setPagerOptionOnMobile(gridOption) {
     if (isMobile.phone && gridOption.pagerOption != null) {
         gridOption.pagerOption.numDisplayEntries = 2;
         gridOption.pagerOption.numEdgeEntries = 1;
     }
 }
 
-function workaroundForGridOnPhone()
-{
+function workaroundForGridOnPhone() {
     if (isMobile.phone) {
         // TODO: this is workaround for android browsers, header auto transparent when scrolling
 

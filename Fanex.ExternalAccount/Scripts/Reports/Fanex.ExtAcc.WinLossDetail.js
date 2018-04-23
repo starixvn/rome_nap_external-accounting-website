@@ -475,11 +475,17 @@ Fanex.ExtAcc.WinLossDetail = {
               $this.viewlevel == 2 ? "Agent" :
               "Member";
 
+        var numberOfFrozenColumn = 3;
+        var widthDevice = top.$(top.window).width();
+        if (widthDevice <= 768) {
+            numberOfFrozenColumn = 1;
+        }
+
         var gridOption = {
             customizeHeader: true,
             groupHeaderRows: [{ Columns: arrGroupHeaders }],
             columns: arrColData,
-            numberOfFrozenColumn: isMobile.phone ? 1 : 3,
+            numberOfFrozenColumn: numberOfFrozenColumn,
             autoCalculateGridExpandHeight: true,
             fullHeight: !isMobile.phone,
             gridHeight: isMobile.phone ? $(window).height() - 70 : 0,

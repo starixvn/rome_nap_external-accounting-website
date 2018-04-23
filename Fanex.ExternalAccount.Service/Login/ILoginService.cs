@@ -13,7 +13,7 @@
             Request request, 
             out int custId, 
             out int onuserId, 
-            out bool isIntAcc);
+            out bool hasMultipleGroupsPermission);
 
         Result Logout(int custId, string username);
 

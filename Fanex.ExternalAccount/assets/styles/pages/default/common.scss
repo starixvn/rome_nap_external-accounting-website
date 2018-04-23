@@ -326,7 +326,7 @@ body {
     bottom: 0;
     padding: 10px;
     background-color: #f1f1f2;
-    overflow-y: scroll;
+    overflow: auto;
     -webkit-overflow-scrolling: touch;
 
     @media screen and (min-device-width: 768px) {
@@ -589,9 +589,11 @@ no-info {
 
 
 #contentSplitter #mainIFrame{
-    width: 100%;
+    width: 100% !important;
     min-width: 568px;
-    height: 100%;
+    height: 100% !important;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 div#contentSplitter > div#msg {

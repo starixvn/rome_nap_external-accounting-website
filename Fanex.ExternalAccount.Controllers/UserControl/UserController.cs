@@ -324,10 +324,9 @@
             var domain = CurrentContext.DomainName
                 .Replace("www.", string.Empty)
                 .Replace("staging.", string.Empty);
-            var domainSpliters = domain.Split('.', ':');
-            var ip = 0;
-            var isDomainRequest = domainSpliters.Any(i => !int.TryParse(i, out ip));
-            domain = isDomainRequest ? domain : "focapts.com";
+            string url = Request.Url.ToString();
+            var isPublicDomain = Config.PublicDomains.Any(url.Contains);
+            domain = isPublicDomain ? domain : "focapts.com";
             switch (siteCode)
             {
                 case AlphaSiteCode.I7:

@@ -270,6 +270,12 @@ Fanex.ExtAcc.DailyWinLoss = {
               $this.viewlevel == 2 ? "Agent" :
               "Member";
 
+        var numberOfFrozenColumn = 3;
+        var widthDevice = top.$(top.window).width();
+        if (widthDevice <= 768) {
+            numberOfFrozenColumn = 2;
+        }
+
         var gridOption = {
             customizeHeader: true,
             groupHeaderRows: [
@@ -284,7 +290,7 @@ Fanex.ExtAcc.DailyWinLoss = {
                     }
             ],
             columns: $this.defaultColumns,
-            numberOfFrozenColumn: isMobile.phone ? 2 : 3,
+            numberOfFrozenColumn: numberOfFrozenColumn,
             fullHeight: !isMobile.phone,
             gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
             autoCalculateGridExpandHeight: true,

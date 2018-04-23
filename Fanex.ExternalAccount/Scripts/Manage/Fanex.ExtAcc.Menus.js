@@ -241,11 +241,10 @@ Fanex.ExtAcc.Menus = {
             $this.RenderGrid(options);
         });
 
-        $('#jqbutton').bind('click', function () {
+        $('#jqbutton').bind('click', function () {            
             top.shouldCalculatePopupHeight = true;
             top.portraitHeight = 500;
             top.landscapeHeight = 260;
-
             Fanex.ExtAcc.Form.Show(resolveClientUrl("Menu/AddMenu"), $.parseJSON(menuTitles).Create, 400, Fanex.ExtAcc.Menus.GetPopupHeight(top.landscapeHeight, top.portraitHeight), false);
         });
 
@@ -412,7 +411,7 @@ Fanex.ExtAcc.Menus = {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.Form.Close();
-                    window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html())
+                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
         });
@@ -454,8 +453,7 @@ Fanex.ExtAcc.Menus = {
 
         var editUrl = 'Menu/Edit/?';
         var params = new Object();
-
-        params.menuId = $('#MenuID').val();
+        params.menuId = $('#MenuId').val();
         params.menuname = Fanex.ExtAcc.EscapeHtml(name);
         params.menudesc = Fanex.ExtAcc.EscapeHtml(desc);
         params.url = Fanex.ExtAcc.EscapeHtml(url);
@@ -476,7 +474,7 @@ Fanex.ExtAcc.Menus = {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.Form.Close();
-                    window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html())
+                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Menu/MenuList/' +$('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
         });
@@ -496,7 +494,7 @@ Fanex.ExtAcc.Menus = {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.Form.Close();
-                    window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html());
+                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
         });
@@ -516,7 +514,7 @@ Fanex.ExtAcc.Menus = {
                 var timeout = setTimeout(function () {
                     clearTimeout(timeout);
                     Fanex.ExtAcc.Form.Close();
-                    window.location.href = resolveClientUrl('Menu/MenuList/' + $('#selectedGroupName').html());
+                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Menu/MenuList/' +$('#selectedGroupName').html()), 'dll-Administration');
                 }, 2000);
             }
         });
