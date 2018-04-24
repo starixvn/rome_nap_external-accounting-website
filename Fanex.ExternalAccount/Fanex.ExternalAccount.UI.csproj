@@ -2712,6 +2712,7 @@
     </Content>
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\NetworkSpeed\Index.cshtml" />
+    <Content Include="Views\OTP\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">

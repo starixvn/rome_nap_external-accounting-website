@@ -108,6 +108,15 @@
                 out onuserId,
                 out hasMultipleGroupsPermission);
 
+            //if (result?.IsSuccess == true)
+            //{
+            //    return RedirectToAction("Index", "OTP");
+            //}
+            //else
+            //{
+            //    return LoginFailed(model.UserName, result);
+            //}
+
             return result?.IsSuccess == true
                 ? LoginSuccessful(model, custId, onuserId, hasMultipleGroupsPermission, result.ResultData as Group)
                 : LoginFailed(model.UserName, result);
@@ -181,7 +190,9 @@
 
             SetUserSession(model, custId, onuserId, hasMultipleGroupsPermission, group);
 
-            return hasMultipleGroupsPermission || _currentSession.IsITAdmin ? RedirectToChooseGroupPage() : RedirectToHomePage();
+            return RedirectToAction("Index", "OTP"); 
+
+           // return hasMultipleGroupsPermission || _currentSession.IsITAdmin ? RedirectToChooseGroupPage() : RedirectToHomePage();
         }
 
         private RedirectResult RedirectToChooseGroupPage() => Redirect("~/Account/ExternalGroup");
@@ -195,6 +206,7 @@
         }
 
         private RedirectResult RedirectToHomePage() => Redirect("~/Home/Index/");
+        private RedirectResult RedirectOTP() => Redirect("~/OTP/Index/");
 
         private bool IsValidCaptcha()
         {
