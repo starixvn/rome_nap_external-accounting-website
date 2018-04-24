@@ -44,6 +44,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Base32, Version=1.0.0.26, Culture=neutral, PublicKeyToken=3427d4dc8cee30c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Base32.1.0.0.26\lib\portable-net40+sl40+win+wp80\Base32.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CasinoLibrary, Version=2.0.1.34888, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CasinoLibrary.1.0.4\lib\net40\CasinoLibrary.dll</HintPath>
       <Private>True</Private>
@@ -100,6 +104,10 @@
       <HintPath>..\packages\Fanex.PTEngine.1.0.4.5\lib\net40\Fanex.PTEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Gma.QrCodeNet.Encoding, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\QrCode.Net.0.4.0.0\lib\net45\Gma.QrCodeNet.Encoding.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\HandHistoryLibrary.2015.6.11.1141\lib\net40\HandHistoryLibrary.dll</HintPath>
       <Private>True</Private>
@@ -148,6 +156,14 @@
       <HintPath>..\packages\NetUtility.4.5.6325.30210\lib\net40\NetUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ONEbook.OTP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ONEbook.OTP.1.0.0\lib\net461\ONEbook.OTP.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OtpSharp, Version=1.3.0.4, Culture=neutral, PublicKeyToken=1ec2a4a54aeffc1e, processorArchitecture=MSIL">
+      <HintPath>..\packages\OtpSharp.1.3.0.4\lib\net40\OtpSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RemotingRef, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RemotingRef.1.0.0.15\lib\net40\RemotingRef.dll</HintPath>
       <Private>True</Private>
@@ -191,6 +207,9 @@
     <Compile Include="Customer\CommissionService.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusService.cs" />
     <Compile Include="Login\ILoginService.cs" />
+    <Compile Include="OTP\CustomerOtpService.cs" />
+    <Compile Include="OTP\GetCustomerOtpCriteria.cs" />
+    <Compile Include="OTP\ICustomerOtpService.cs" />
     <Compile Include="Report\IReportService.cs" />
     <Compile Include="Report\WinLossDetailRequests.cs" />
     <Compile Include="Report\WinLossDetailService.cs" />
