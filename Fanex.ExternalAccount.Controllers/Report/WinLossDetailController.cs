@@ -49,12 +49,7 @@
         [AntiXSRFFilter]
         public ActionResult GetData(WinLossDetailRequest request)
         {
-            var viewModel = request.IsSearch()
-                ? winLossDetailService.SearchWinLossDetail(
-                    new SearchWinLossDetailRequest(request, ToolTipsProducts))
-                : winLossDetailService.DrillDownWinLossDetail(
-                    new DrillDownWinLossDetailRequest(request, ToolTipsProducts));
-
+            var viewModel = GetDataFromDB(request);
             return Json(viewModel);
         }
 
@@ -67,6 +62,12 @@
                 case Role.Member:
                     {
                         var winlossDetailData = cacheManager.Get<List<WinLossDetailAg>>(request.GetCacheKey());
+                        if (winlossDetailData == null)
+                        {
+                            GetDataFromDB(request);
+                            winlossDetailData = cacheManager.Get<List<WinLossDetailAg>>(request.GetCacheKey());
+                        }
+
                         builder = new MemberWinLossDetailReportBuilder(
                             winlossDetailData,
                             request.viewlevel,
@@ -78,6 +79,12 @@
                 case Role.Agent:
                     {
                         var winlossDetailData = cacheManager.Get<List<WinLossDetailMAg>>(request.GetCacheKey());
+                        if (winlossDetailData == null)
+                        {
+                            GetDataFromDB(request);
+                            winlossDetailData = cacheManager.Get<List<WinLossDetailMAg>>(request.GetCacheKey());
+                        }
+
                         builder = new AgentWinLossDetailReportBuilder(
                             winlossDetailData,
                             request.viewlevel,
@@ -89,6 +96,12 @@
                 default:
                     {
                         var winlossDetailData = cacheManager.Get<List<WinLossDetail>>(request.GetCacheKey());
+                        if (winlossDetailData == null)
+                        {
+                            GetDataFromDB(request);
+                            winlossDetailData = cacheManager.Get<List<WinLossDetail>>(request.GetCacheKey());
+                        }
+
                         builder = new WinLossDetailReportBuilder(
                             winlossDetailData,
                             request.viewlevel,
@@ -107,6 +120,15 @@
                 ExportToExcel(memoryStream, request.FileName);
                 memoryStream.Dispose();
             }
+        }
+
+        private dynamic GetDataFromDB(WinLossDetailRequest request)
+        {
+            return request.IsSearch()
+                ? winLossDetailService.SearchWinLossDetail(
+                    new SearchWinLossDetailRequest(request, ToolTipsProducts))
+                : winLossDetailService.DrillDownWinLossDetail(
+                    new DrillDownWinLossDetailRequest(request, ToolTipsProducts));
         }
     }
 
