@@ -14,7 +14,6 @@
         DateTime ToDate { get; }
         string ProductIds { get; }
         dynamic ToolTipsProducts { get; }
-        Func<string> GetCacheKey { get; }
         bool IsValid { get; }
         bool IsNotValid { get; }
     }
@@ -27,6 +26,5 @@
         DateTime ToDate { get; }
         string ProductIds { get; }
         dynamic ToolTipsProducts { get; }
-        Func<string> GetCacheKey { get; }
     }
 }

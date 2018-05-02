@@ -1,10 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
-    using Caching;
     using Core.Base;
     using Core.Context;
     using Core.Reports;
@@ -16,22 +11,23 @@
     using Excel.Reports.WinLossDetailReport;
     using Service.Impl.Report;
     using Service.Interface.Report;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
     using Utilities;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
     public class WinLossDetailController : BaseController
     {
-        private readonly ICache cacheManager;
         private readonly WinLossDetailService winLossDetailService;
         private readonly dynamic ToolTipsProducts;
 
         public WinLossDetailController(
-            ICache cacheManager,
             ICurrentSession currentSession,
             WinLossDetailService winLossDetailService)
         {
-            this.cacheManager = cacheManager ?? CacheService.CreateInstance(CacheType.MemoryCache);
             this.winLossDetailService = winLossDetailService ?? new WinLossDetailServiceImpl();
 
             ToolTipsProducts = new
@@ -40,7 +36,7 @@
             };
         }
 
-        public WinLossDetailController() : this(null, null, null)
+        public WinLossDetailController() : this(null, null)
         {
         }
 
@@ -56,20 +52,15 @@
         public void ExportWinLossDetailToExcel(ExportWinLossDetailRequest request)
         {
             IWinLossDetailReportBuilder builder;
-
+            request.viewlevel ++;
+            var winlossDetail = GetDataFromDB(request);
+            request.viewlevel--;
             switch (request.viewlevel)
             {
                 case Role.Member:
                     {
-                        var winlossDetailData = cacheManager.Get<List<WinLossDetailAg>>(request.GetCacheKey());
-                        if (winlossDetailData == null)
-                        {
-                            GetDataFromDB(request);
-                            winlossDetailData = cacheManager.Get<List<WinLossDetailAg>>(request.GetCacheKey());
-                        }
-
                         builder = new MemberWinLossDetailReportBuilder(
-                            winlossDetailData,
+                            (List<WinLossDetailAg>)winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null),
                             request.viewlevel,
                             request.fromdate,
                             request.todate);
@@ -78,15 +69,8 @@
                     }
                 case Role.Agent:
                     {
-                        var winlossDetailData = cacheManager.Get<List<WinLossDetailMAg>>(request.GetCacheKey());
-                        if (winlossDetailData == null)
-                        {
-                            GetDataFromDB(request);
-                            winlossDetailData = cacheManager.Get<List<WinLossDetailMAg>>(request.GetCacheKey());
-                        }
-
                         builder = new AgentWinLossDetailReportBuilder(
-                            winlossDetailData,
+                            (List<WinLossDetailMAg>)winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null),
                             request.viewlevel,
                             request.fromdate,
                             request.todate);
@@ -95,15 +79,8 @@
                     }
                 default:
                     {
-                        var winlossDetailData = cacheManager.Get<List<WinLossDetail>>(request.GetCacheKey());
-                        if (winlossDetailData == null)
-                        {
-                            GetDataFromDB(request);
-                            winlossDetailData = cacheManager.Get<List<WinLossDetail>>(request.GetCacheKey());
-                        }
-
                         builder = new WinLossDetailReportBuilder(
-                            winlossDetailData,
+                            (List<WinLossDetail>)winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null),
                             request.viewlevel,
                             request.fromdate,
                             request.todate);
@@ -212,13 +189,6 @@
 
             return formatedProducts;
         }
-
-        public string GetCacheKey()
-        {
-            string querySpecification = IsSearch() ? username : custId.ToString();
-
-            return string.Join(":", "WinLossDetail", querySpecification, fromdate, todate, GetProductIds()).ToLowerInvariant();
-        }
     }
 
     public class SearchWinLossDetailRequest : ISearchWinLossDetailRequest
@@ -231,7 +201,6 @@
             ToDate = request.todate;
             ProductIds = request.GetProductIds();
             ToolTipsProducts = toolTipsProducts;
-            GetCacheKey = request.GetCacheKey;
         }
 
         public string GroupName { get; }
@@ -240,8 +209,6 @@
         public DateTime ToDate { get; }
         public string ProductIds { get; }
         public dynamic ToolTipsProducts { get; }
-
-        public Func<string> GetCacheKey { get; }
     }
 
     public class DrillDownWinLossDetailRequest : IDrillDownWinLossDetailRequest
@@ -255,9 +222,6 @@
             ViewLevel = request.viewlevel;
             ProductIds = request.GetProductIds();
             ToolTipsProducts = toolTipsProducts;
-
-            GetCacheKey = request.GetCacheKey;
-
             switch (ViewLevel)
             {
                 case Role.Super:
@@ -290,8 +254,6 @@
         public DateTime ToDate { get; }
         public string ProductIds { get; }
         public dynamic ToolTipsProducts { get; }
-
-        public Func<string> GetCacheKey { get; }
 
         public bool IsValid => !ViewLevel.IsMember()
                                && ViewLevel <= Role.Group
