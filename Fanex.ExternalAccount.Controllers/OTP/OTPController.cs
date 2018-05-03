@@ -20,6 +20,7 @@
         public ActionResult Index(bool redirect = false)
         {
             ViewBag.redirect = redirect;
+            ViewBag.username = _currentSession.UserName;
             return View();
         }
 

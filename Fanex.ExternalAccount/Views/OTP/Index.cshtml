@@ -15,26 +15,29 @@
 <body>
    @using (Html.BeginForm("VerifyOTP", "OTP", FormMethod.Post, new { id = "otp-form", method = "Post" }))
    {
-        <div class="block-login">
-            <div class="row">
-                <div class="login-logo icon-outline-lock"></div>
-            </div>
-            @if (ViewBag.redirect)
-            {
-                <div id="err-message" class="row errMsg">
-                    Verify OTP fail
-                </div>
-            }
-            <div class="row">
-                <input type="password" autocomplete="off" class="form-control" name="otp" id="otp" placeholder="Input OTP" maxlength="6">
-                <label id="otp-error" class="error"></label>
-                <span class="icon-lock"></span>
-            </div>
-
-            <div class="row">
-                <button id="btnLogin" class="btnLogin">Submit</button>
-            </div>
+    <div class="block-login">
+        <div class="row">
+            <div class="otp-logo">@Resources.Error.OTP</div>
         </div>
+        <div class="row">
+            @Html.Raw(String.Format(Resources.Error.HintOTP, ViewBag.username))
+        </div>
+        @if (ViewBag.redirect)
+        {
+            <div id="err-message" class="row errMsg">
+                @Resources.Error.WrongOTP
+            </div>
+        }
+        <div class="row">
+            <input type="password" autocomplete="off" class="form-control" name="otp" id="otp" placeholder="Input OTP" maxlength="6">
+            <label id="otp-error" class="error"></label>
+            <span class="icon-lock"></span>
+        </div>
+
+        <div class="row">
+            <button id="btnLogin" class="btnLogin">Submit</button>
+        </div>
+    </div>
 
     }
 
