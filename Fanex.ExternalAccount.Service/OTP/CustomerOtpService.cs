@@ -1,75 +1,40 @@
 ﻿namespace Fanex.ExternalAccount.Service.OTP
 {
-    using System;
-    using System.Collections;
-    using Data;
     using DTO;
     using DTO.OTP;
-    using NAP.Framework.Data;
+    using Fanex.ExternalAccount.DataAccess.OTP;
     using ONEbook.OTP.Services;
-    using Utilities;
+    using System;
 
     public class CustomerOtpService : ICustomerOtpService
     {
-        private const int TimePeriod = 30;
-        private const int OtpSize = 6;
+        private const int SuccessCode = -1;
+        private const int ErrorCode = 101;
 
-        private readonly IDynamicRepository dynamicRepository;
         private readonly OtpService otpService;
+        private readonly ICustomerOtpDataAccess customerOtpDataAccess;
 
-        public CustomerOtpService(IDynamicRepository dynamicRepository = null, OtpService otpService = null)
+        public CustomerOtpService(OtpService otpService = null, ICustomerOtpDataAccess customerOtpDataAccess = null)
         {
-            this.dynamicRepository = dynamicRepository?? new DynamicRepository();
-            this.otpService = otpService?? new OtpServiceImpl();
+            this.otpService = otpService ?? new OtpServiceImpl();
+            this.customerOtpDataAccess = customerOtpDataAccess ?? new CustomerOtpDataAccess();
         }
 
         public Result VerifyOtp(CustomerOtp param)
         {
-            if (param == null)
+            if (param == null || string.IsNullOrEmpty(param.Otp))
             {
-                throw new ArgumentNullException(nameof(param), "Verify Otp Param Parameters cannot be null");
+                return new Result(100, "Verify fail");
             }
 
-            var customerOtp = GetCustomerOtp(param.CustId, param.SubAccId);
+            var customerOtp = GetCustomerOtp(param.CustId);
 
-            var isCorrect = otpService.VerifyOtp(customerOtp.SecretKey, param.Otp, TimePeriod, OtpSize);
+            var isCorrect = otpService.VerifyOtp(customerOtp.SecretKey, param.Otp);
 
-            return new Result(isCorrect ? -1 : 100, isCorrect ? "Verify okie" : "Verify fail");
+            return new Result(isCorrect ? SuccessCode : ErrorCode, isCorrect ? "Verify okie" : "Verify fail");
         }
 
-        public CustomerOtpDto GetCustomerOtpDto(int custId)
-        {
-            var param = new Hashtable
-            {
-                { "custid", custId }
-            };
-
-            // Cannot use dynamic mapping here due to old fanex.data
-            var CustId = 0;
-            var Enabled = false;
-            var SecretKey = string.Empty;
-            using (var db = new ObjectDb("Age_OTP_CustomerOTPSel"))
-            {
-                var reader = db.ExecuteReader(param);
-
-                while (reader.Read())
-                {
-                    CustId = reader.ToInt32("CustID");
-                    Enabled= reader.ToBoolean("Enabled");
-                    SecretKey = reader.ToString("SecretKey");
-                }
-
-                return new CustomerOtpDto
-                {
-                    CustId = CustId,
-                    Enabled = Enabled,
-                    SecretKey = SecretKey,
-                    SubAccId = 0
-                };
-            }
-        }
-
-        public virtual CustomerOtp GetCustomerOtp(int custId, int subAccId = 0)
+        private CustomerOtp GetCustomerOtp(int custId)
         {
             try
             {
@@ -78,25 +43,7 @@
                     throw new ArgumentOutOfRangeException(nameof(custId), "Cust Id cannot be negative or zero");
                 }
 
-                if (subAccId < 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(custId), "Sub account Id cannot be negative");
-                }
-
-                var customerOtpDto = GetCustomerOtpDto(custId);
-
-                if (customerOtpDto == null)
-                {
-                    return new CustomerOtp();
-                }
-
-                return new CustomerOtp
-                {
-                    CustId = customerOtpDto.CustId,
-                    Enabled = customerOtpDto.Enabled,
-                    SecretKey = customerOtpDto.SecretKey,
-                    SubAccId = customerOtpDto.SubAccId
-                };
+                return customerOtpDataAccess.GetCustomerOtpDto(custId);
             }
             catch (Exception ex)
             {

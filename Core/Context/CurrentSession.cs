@@ -13,6 +13,7 @@
         public const string EASOnUserId = "EASOnUserId";
         public const string EASCaptcha = "EASCaptcha";
         public const string EASCurrencyGroup = "EASCurrencyGroup";
+        public const string EASHasMultipleGroupsPermission = "EASHasMultipleGroupsPermission";
         public const string EASInternalAdmin = "EASInternalAdmin";
         public const string EASITAdmin = "EASITAdmin";
         public const string EASGroupId = "EASGroupId";
@@ -102,6 +103,14 @@
             set { HttpContext.Current.Session[EASCurrencyGroup] = value; }
         }
 
+        public bool HasMultipleGroupsPermission
+        {
+            get { return Utils.ToBoolean(HttpContext.Current.Session[EASHasMultipleGroupsPermission]); }
+
+            set { HttpContext.Current.Session[EASHasMultipleGroupsPermission] = value; }
+        }
+
+        
         public bool IsInternalAdmin
         {
             get { return Utils.ToBoolean(HttpContext.Current.Session[EASInternalAdmin]); }

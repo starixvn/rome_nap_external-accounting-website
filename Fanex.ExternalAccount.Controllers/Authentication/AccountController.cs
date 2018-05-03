@@ -188,9 +188,9 @@
 
             FormsAuthentication.SetAuthCookie(model.UserName, false);
 
-            SetUserSession(model, custId, onuserId, hasMultipleGroupsPermission, group);
+            SetUserSession(model, custId, onuserId, hasMultipleGroupsPermission, hasMultipleGroupsPermission, group);
 
-            return RedirectToAction("Index", "OTP"); 
+            return RedirectOTP(); 
 
            // return hasMultipleGroupsPermission || _currentSession.IsITAdmin ? RedirectToChooseGroupPage() : RedirectToHomePage();
         }
@@ -318,7 +318,7 @@
             return true;
         }
 
-        private void SetUserSession(LoginModel model, int custId, int onuserId, bool isInternalAdmin, Group group)
+        private void SetUserSession(LoginModel model, int custId, int onuserId, bool isInternalAdmin, bool hasMultipleGroupsPermission, Group group)
         {
             _currentSession.UserName = model.UserName;
             _currentSession.UserId = custId;
@@ -329,7 +329,7 @@
             _currentSession.CurrencyGroup = group.GroupName;
             _currentSession.IsITAdmin = group.IsIT;
             _currentSession.FromSystem = 3;
-            _currentSession.IsLogin = true;
+            _currentSession.HasMultipleGroupsPermission = hasMultipleGroupsPermission;
         }
     }
 }
