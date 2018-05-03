@@ -137,9 +137,9 @@ Fanex.ExtAcc = {
     LoadMainFrame: function (url, id, isLeftPanelClick, dontNeedGroupName) {
         this.BlockUI();
         $('#contentSplitter').hide();
-        if (typeof id != 'undefined') {
-            $('#' + id).hide();
-        }
+        //if (typeof id != 'undefined') {
+        //    $('#' + id).hide();
+        //}
 
         var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
         $.ajax({
