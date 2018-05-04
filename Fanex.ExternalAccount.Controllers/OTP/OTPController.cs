@@ -29,7 +29,7 @@
              {
                  CustId = _currentSession.UserId,
                  Otp = otp
-             }).IsSuccess ? VerifyOTPSuccessful() : RedirectToVerifyOTPPage();
+             }) ? VerifyOTPSuccessful() : RedirectToVerifyOTPPage();
 
         private RedirectResult RedirectToVerifyOTPPage() => Redirect("~/OTP/Index?redirect=true");
 

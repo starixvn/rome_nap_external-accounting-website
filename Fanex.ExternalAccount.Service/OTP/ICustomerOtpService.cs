@@ -5,6 +5,6 @@
 
     public interface ICustomerOtpService
     {
-        Result VerifyOtp(CustomerOtp param);
+        bool VerifyOtp(CustomerOtp param);
     }
 }
