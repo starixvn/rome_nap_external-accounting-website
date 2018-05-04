@@ -36,6 +36,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -889,6 +890,10 @@
     <Content Include="assets\bundles\login\login.min.js">
       <DependentUpon>login.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\otp\otp.js" />
+    <Content Include="assets\bundles\otp\otp.min.js">
+      <DependentUpon>otp.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\statement\index.js" />
     <Content Include="assets\bundles\statement\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -1529,6 +1534,7 @@
     <Content Include="Content\Validators.css" />
     <Content Include="Images\tick.png" />
     <Content Include="Images\x5.gif" />
+    <Content Include="Scripts\Account\Fanex.ExtAcc.Account.OTP.js" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.js" />
     <Content Include="Scripts\Customer\EditMultiple.js" />
     <Content Include="Scripts\Customer\MemberList.js" />
@@ -2611,6 +2617,9 @@
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
     <Content Include="Areas\ONEbook.NG2.API.config" />
+    <Content Include="assets\bundles\otp\otp.min.js.map">
+      <DependentUpon>otp.min.js</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

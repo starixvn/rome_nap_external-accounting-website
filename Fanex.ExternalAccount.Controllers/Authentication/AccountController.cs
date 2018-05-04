@@ -242,7 +242,7 @@
 
         [HttpGet]
         [ExternalAccountAuthenticate]
-        public ActionResult ExternalGroup()
+        public ActionResult ExternalGroup(string code)
         {
             if (!_currentSession.IsInternalAdmin)
             {
@@ -250,6 +250,7 @@
             }
 
             ViewBag.GroupList = _userService.GroupList();
+            ViewBag._cd = code;
 
             return View();
         }

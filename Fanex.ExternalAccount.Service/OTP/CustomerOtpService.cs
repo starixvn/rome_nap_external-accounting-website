@@ -24,7 +24,7 @@
 
             var customerOtp = customerOtpDataAccess.GetCustomerOtpDto(param.CustId); 
 
-            return otpService.VerifyOtp(customerOtp.SecretKey, param.Otp);
+            return !customerOtp.Enabled || otpService.VerifyOtp(customerOtp.SecretKey, param.Otp);
         }
     }
 }

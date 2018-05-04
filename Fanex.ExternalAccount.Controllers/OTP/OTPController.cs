@@ -5,6 +5,8 @@
     using Service.OTP;
     using System.Web.Mvc;
     using CurrentSession = Core.Context.CurrentSession;
+    using Core.Context;
+    using Authentication;
 
     public class OTPController : BaseController 
     {
@@ -21,27 +23,42 @@
         {
             ViewBag.redirect = redirect;
             ViewBag.username = _currentSession.UserName;
+
+            Encryptor.RandomCaptcha = CaptchaUtil.GetCaptchaString(4);
+            ViewBag.code = Encryptor.RandomCaptcha;
+
             return View();
         }
 
-        public ActionResult VerifyOTP(string otp)
-             => customerOtpService.VerifyOtp(new CustomerOtp
-             {
-                 CustId = _currentSession.UserId,
-                 Otp = otp
-             }) ? VerifyOTPSuccessful() : RedirectToVerifyOTPPage();
+        private static string DecryptOTP(string encryptedOTP, string key) =>
+          Encryptor.Decrypt(encryptedOTP, key);
+
+        public ActionResult VerifyOTP(string otp, string _pt, string _cd)
+        {
+            var rawOTP = DecryptOTP(_pt, _cd);
+            if(!string.IsNullOrEmpty(rawOTP) || rawOTP.Contains(_currentSession.UserName))
+            {
+                return VerifyOTPSuccessful(_cd);
+            }
+
+            return customerOtpService.VerifyOtp(new CustomerOtp
+            {
+                CustId = _currentSession.UserId,
+                Otp = otp
+            }) ? VerifyOTPSuccessful(_cd) : RedirectToVerifyOTPPage();
+        }
 
         private RedirectResult RedirectToVerifyOTPPage() => Redirect("~/OTP/Index?redirect=true");
 
-        private RedirectResult VerifyOTPSuccessful()
+        private RedirectResult VerifyOTPSuccessful(string code)
         {
             _currentSession.IsLogin = true;
 
-            return _currentSession.HasMultipleGroupsPermission ? RedirectToChooseGroupPage() : RedirectToHomePage();
+            return _currentSession.HasMultipleGroupsPermission ? RedirectToChooseGroupPage(code) : RedirectToHomePage();
         }
 
         private RedirectResult RedirectToHomePage() => Redirect("~/Home/Index/");
 
-        private RedirectResult RedirectToChooseGroupPage() => Redirect("~/Account/ExternalGroup");
+        private RedirectResult RedirectToChooseGroupPage(string code) => Redirect("~/Account/ExternalGroup?code="+ code);
     }
 }

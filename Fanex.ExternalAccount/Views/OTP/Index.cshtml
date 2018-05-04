@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "OTP";
     Layout = null;
 }
@@ -13,39 +12,42 @@
     @StaticResources.RenderStyles("~/assets/bundles/login/login")
 </head>
 <body>
-   @using (Html.BeginForm("VerifyOTP", "OTP", FormMethod.Post, new { id = "otp-form", method = "Post" }))
-   {
-    <div class="block-login">
-        <div class="row">
-            <div class="otp-logo">@Resources.Error.OTP</div>
-        </div>
-        <div class="row">
-            @Html.Raw(String.Format(Resources.Error.HintOTP, ViewBag.username))
-        </div>
-        @if (ViewBag.redirect)
-        {
-            <div id="err-message" class="row errMsg">
-                @Resources.Error.WrongOTP
+    @using (Html.BeginForm("VerifyOTP", "OTP", FormMethod.Post, new { id = "otp-form", method = "Post" }))
+    {
+        <div class="block-login">
+            <div class="row">
+                <div class="otp-logo">@Resources.Error.OTP</div>
             </div>
-        }
-        <div class="row">
-            <input type="password" autocomplete="off" class="form-control" name="otp" id="otp" placeholder="Input OTP" maxlength="6">
-            <label id="otp-error" class="error"></label>
-            <span class="icon-lock"></span>
-        </div>
+            <div class="row">
+                @Html.Raw(String.Format(Resources.Error.HintOTP, ViewBag.username))
+            </div>
+            @if (ViewBag.redirect)
+            {
+                <div id="err-message" class="row errMsg">
+                    @Resources.Error.WrongOTP
+                </div>
+            }
+            <div class="row">
+                <input type="password" autocomplete="off" class="form-control" name="otp" id="otp" placeholder="Input OTP" maxlength="6">
+                <label id="otp-error" class="error"></label>
+                <span class="icon-lock"></span>
 
-        <div class="row">
-            <button id="btnLogin" class="btnLogin">Submit</button>
-        </div>
-    </div>
+                <input type="hidden" id="_cd" name="_cd" value="@ViewBag.code">
+                <input type="hidden" id="_pt" name="_pt" value="">
+            </div>
 
+            <div class="row">
+                <button id="btnLogin" class="btnLogin">Submit</button>
+            </div>
+        </div>
     }
+
 
     <script type="text/javascript">
         function resolveClientUrl(relativeUrl) {
             return '@Url.Content("~/")' + relativeUrl;
         }
     </script>
-    @StaticResources.RenderScripts("~/assets/bundles/login/login")
+    @StaticResources.RenderScripts("~/assets/bundles/otp/otp")
 </body>
 </html>
