@@ -1534,6 +1534,7 @@
     <Content Include="Content\Validators.css" />
     <Content Include="Images\tick.png" />
     <Content Include="Images\x5.gif" />
+    <Content Include="Scripts\Fanex.ExtAcc.EcHcUtil.js" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.OTP.js" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.js" />
     <Content Include="Scripts\Customer\EditMultiple.js" />
