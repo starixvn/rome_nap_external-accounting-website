@@ -79,8 +79,8 @@
                 $('#dllUsername').hide();
             });
 
-            localStorage.setItem("_cd", "@ViewBag._cd");
-            localStorage.setItem("_pt", "@(CurrentSession.Instance.UserName + "_pt")".ec("@ViewBag._cd").hc());
+            localStorage.setItem("@(CurrentSession.Instance.UserName + "_cd")", "@ViewBag._cd");
+            localStorage.setItem("@(CurrentSession.Instance.UserName + "_pt")", "@(CurrentSession.Instance.UserName + "_pt")".ec("@ViewBag._cd").hc());
         });
 
         function resolveClientUrl(relativeUrl) {

@@ -1,10 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Service.OTP
 {
-    using DTO;
     using DTO.OTP;
 
     public interface ICustomerOtpService
     {
-        bool VerifyOtp(CustomerOtp param);
+        CustomerOtp EnableOTP(int custId);
+
+        bool VerifyOtp(string otp, string secretKey);
     }
 }

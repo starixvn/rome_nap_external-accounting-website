@@ -18,6 +18,14 @@
     ],
     "sourceMap": true
   },
+   {
+    "outputFileName": "assets/bundles/home/home.js",
+    "inputFiles": [
+      "Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.3.min.js",
+      "Scripts/Fanex.ExtAcc.EcHcUtil.js"
+    ],
+    "sourceMap": true
+  },
   {
     "outputFileName": "assets/bundles/login/login.css",
     "inputFiles": [

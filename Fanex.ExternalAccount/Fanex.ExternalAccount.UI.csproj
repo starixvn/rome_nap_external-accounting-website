@@ -882,6 +882,10 @@
     <Content Include="assets\bundles\dailywinloss\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\home\home.js" />
+    <Content Include="assets\bundles\home\home.min.js">
+      <DependentUpon>home.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\login\login.css" />
     <Content Include="assets\bundles\login\login.js" />
     <Content Include="assets\bundles\login\login.min.css">
@@ -2620,6 +2624,9 @@
     <Content Include="Areas\ONEbook.NG2.API.config" />
     <Content Include="assets\bundles\otp\otp.min.js.map">
       <DependentUpon>otp.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\home\home.min.js.map">
+      <DependentUpon>home.min.js</DependentUpon>
     </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">

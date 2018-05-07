@@ -1,4 +1,14 @@
+@using Fanex.ExternalAccount.Core.Context;
 @{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@StaticResources.RenderScripts("~/assets/bundles/home/home")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        localStorage.setItem("@(CurrentSession.Instance.UserName + "_cd")", "@ViewBag._cd");
+        localStorage.setItem("@(CurrentSession.Instance.UserName + "_pt")", "@(CurrentSession.Instance.UserName + "_pt")".ec("@ViewBag._cd").hc());
+    });
+</script>

@@ -227,18 +227,21 @@
 
         [HttpGet]
         [ExternalAccountAuthenticate]
-        public ActionResult ExternalGroup(string code)
+        public ActionResult ExternalGroup(string _cd)
         {
             if (!_currentSession.IsInternalAdmin)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToHomePage(_cd);
             }
 
             ViewBag.GroupList = _userService.GroupList();
-            ViewBag._cd = code;
+
+            ViewBag._cd = _cd;
 
             return View();
         }
+
+        private RedirectResult RedirectToHomePage(string code) => Redirect("~/Home/Index?_cd=" + code);
 
         [ExternalAccountAuthenticate]
         public ActionResult ExternalGroupList()

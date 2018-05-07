@@ -1,7 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Service.OTP
 {
+    using System;
+    using DataAccess.OTP;
     using DTO.OTP;
-    using Fanex.ExternalAccount.DataAccess.OTP;
     using ONEbook.OTP.Services;
 
     public class CustomerOtpService : ICustomerOtpService
@@ -15,16 +16,24 @@
             this.customerOtpDataAccess = customerOtpDataAccess ?? new CustomerOtpDataAccess();
         }
 
-        public bool VerifyOtp(CustomerOtp param)
+        public CustomerOtp EnableOTP(int custId)
         {
-            if (param == null || string.IsNullOrEmpty(param.Otp) || param.CustId <= 0)
+            if (custId <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(custId), "Cust Id cannot be negative or zero");
+            }
+
+           return customerOtpDataAccess.GetCustomerOtpDto(custId);
+        }
+          
+        public bool VerifyOtp(string otp, string secretKey)
+        {
+            if (string.IsNullOrEmpty(otp))
             {
                 return false;
             }
 
-            var customerOtp = customerOtpDataAccess.GetCustomerOtpDto(param.CustId); 
-
-            return !customerOtp.Enabled || otpService.VerifyOtp(customerOtp.SecretKey, param.Otp);
+            return otpService.VerifyOtp(secretKey, otp);
         }
     }
 }

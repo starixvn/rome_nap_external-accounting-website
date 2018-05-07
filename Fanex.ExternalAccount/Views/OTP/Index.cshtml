@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CustomerOtpViewModel
+@{
     ViewBag.Title = "OTP";
     Layout = null;
 }
@@ -19,9 +20,9 @@
                 <div class="otp-logo">@Resources.Error.OTP</div>
             </div>
             <div class="row">
-                @Html.Raw(String.Format(Resources.Error.HintOTP, ViewBag.username))
+                @Html.Raw(String.Format(Resources.Error.HintOTP, Model.Username))
             </div>
-            @if (ViewBag.redirect)
+            @if (Model.Redirect)
             {
                 <div id="err-message" class="row errMsg">
                     @Resources.Error.WrongOTP
@@ -32,8 +33,9 @@
                 <label id="otp-error" class="error"></label>
                 <span class="icon-lock"></span>
 
-                <input type="hidden" id="_cd" name="_cd" value="@ViewBag.code">
-                <input type="hidden" id="_pt" name="_pt" value="">
+                <input type="hidden" name="_cd" id="_cd" value="@Model.Code">
+                <input type="hidden" name="_pt" id="_pt" value="">
+                <input type="hidden" id="_username" value="@Model.Username">
             </div>
 
             <div class="row">
@@ -43,12 +45,6 @@
         @Html.AntiForgeryToken()
     }
 
-
-    <script type="text/javascript">
-        function resolveClientUrl(relativeUrl) {
-            return '@Url.Content("~/")' + relativeUrl;
-        }
-    </script>
     @StaticResources.RenderScripts("~/assets/bundles/otp/otp")
 </body>
 </html>

@@ -1,18 +1,17 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Home
 {
     using System;
-using System.Collections.Generic;
-using System.Configuration;
     using System.Web.Mvc;
+    using Core.Base;
     using Core.Context;
-    using Fanex.ExternalAccount.Core.Base;
-    using Fanex.Logging.Extensions.Web;
+    using Logging.Extensions.Web;
 
     public class HomeController : BaseController
     {
         [ExternalAccountAuthenticate]
-        public ActionResult Index()
+        public ActionResult Index(string _cd)
         {
+            ViewBag._cd = _cd;
             return View();
         }
 
