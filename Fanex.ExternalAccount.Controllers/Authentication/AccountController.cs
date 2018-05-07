@@ -11,8 +11,8 @@
     using Core.Context;
     using CustomerSetting.Module.Core.Web;
     using DTO;
-    using Fanex.ExternalAccount.Core.Helpers;
     using DTO.UserControl;
+    using Core.Helpers;
     using Logging.Extensions.Web;
     using Service.Impl.Login;
     using Service.Interface.Login;
@@ -20,7 +20,6 @@
     using ViewModel.Account;
     using CurrentContext = Core.Context.CurrentContext;
     using CurrentSession = Core.Context.CurrentSession;
-    using UAParser;
 
     public class AccountController : DefaultCaptchaController
     {
@@ -36,8 +35,6 @@
             _userService = new LoginService();
             _nocaptcha = NoCaptchaSectionConfiguration.Instance;
         }
-
-
 
         [HttpGet]
         public ActionResult Login()
@@ -61,7 +58,7 @@
         [HttpPost]
         public ActionResult Login(LoginModel model)
         {
-            if (!ValidateAntiXSRF(model.__RequestVerificationToken))
+            if (!AntiXSRFUtil.ValidateAntiXSRF(Request, model.__RequestVerificationToken))
             {
                 return View(new LoginModel(ViewLang.ExpiredLoginSession));
             }
@@ -107,15 +104,6 @@
                 out custId,
                 out onuserId,
                 out hasMultipleGroupsPermission);
-
-            //if (result?.IsSuccess == true)
-            //{
-            //    return RedirectToAction("Index", "OTP");
-            //}
-            //else
-            //{
-            //    return LoginFailed(model.UserName, result);
-            //}
 
             return result?.IsSuccess == true
                 ? LoginSuccessful(model, custId, onuserId, hasMultipleGroupsPermission, result.ResultData as Group)
@@ -190,12 +178,8 @@
 
             SetUserSession(model, custId, onuserId, hasMultipleGroupsPermission, hasMultipleGroupsPermission, group);
 
-            return RedirectOTP(); 
-
-           // return hasMultipleGroupsPermission || _currentSession.IsITAdmin ? RedirectToChooseGroupPage() : RedirectToHomePage();
+            return RedirectOTP();
         }
-
-        private RedirectResult RedirectToChooseGroupPage() => Redirect("~/Account/ExternalGroup");
 
         private void SetUMTokenForInternalAlphaLogin()
         {
@@ -206,6 +190,7 @@
         }
 
         private RedirectResult RedirectToHomePage() => Redirect("~/Home/Index/");
+
         private RedirectResult RedirectOTP() => Redirect("~/OTP/Index/");
 
         private bool IsValidCaptcha()
@@ -284,39 +269,6 @@
         private void SignOut(int onuserId, string userName)
         {
             _userService.Logout(onuserId, userName);
-        }
-
-        private bool ValidateAntiXSRF(string token)
-        {
-            try
-            {
-                var request = Request;
-                var formToken = token;
-
-                if (string.IsNullOrWhiteSpace(formToken))
-                {
-                    return false;
-                }
-
-                var cookieValue = request.Cookies[AntiForgeryConfig.CookieName];
-                if (!string.IsNullOrWhiteSpace(cookieValue?.Value))
-                {
-                    AntiForgery.Validate(cookieValue.Value, formToken);
-                }
-                else
-                {
-                    var exceptionLog = new Exception(ViewLang.CannotReadRequestValidationCookie);
-                    ExceptionHandler.Handle(exceptionLog, TraceEventType.Warning);
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex, TraceEventType.Warning);
-
-                return false;
-            }
-
-            return true;
         }
 
         private void SetUserSession(LoginModel model, int custId, int onuserId, bool isInternalAdmin, bool hasMultipleGroupsPermission, Group group)

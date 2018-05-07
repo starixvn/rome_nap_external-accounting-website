@@ -1,12 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using System.Web.Mvc;
+    using Authentication;
+    using Core.Context;
     using CustomerSetting.Module.Core.Web.Controllers;
+    using CustomerSetting.Security.Authenticate;
     using DTO.OTP;
     using Service.OTP;
-    using System.Web.Mvc;
     using CurrentSession = Core.Context.CurrentSession;
-    using Core.Context;
-    using Authentication;
 
     public class OTPController : BaseController 
     {
@@ -33,8 +34,14 @@
         private static string DecryptOTP(string encryptedOTP, string key) =>
           Encryptor.Decrypt(encryptedOTP, key);
 
-        public ActionResult VerifyOTP(string otp, string _pt, string _cd)
+        [HttpPost]
+        public ActionResult VerifyOTP(string otp, string _pt, string _cd, string __RequestVerificationToken)
         {
+            if(!AntiXSRFUtil.ValidateAntiXSRF(Request, __RequestVerificationToken))
+            {
+                return RedirectToVerifyOTPPage();
+            }
+
             var rawOTP = DecryptOTP(_pt, _cd);
             if(!string.IsNullOrEmpty(rawOTP) || rawOTP.Contains(_currentSession.UserName))
             {
