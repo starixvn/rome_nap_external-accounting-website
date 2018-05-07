@@ -10,12 +10,10 @@
     public class WinLossDetailServiceImpl : WinLossDetailService
     {
         private readonly IReportService reportService;
-        private readonly ICache cacheManager;
 
-        public WinLossDetailServiceImpl(IReportService reportService = null, ICache cacheManager = null)
+        public WinLossDetailServiceImpl(IReportService reportService = null)
         {
             this.reportService = reportService ?? new ReportService();
-            this.cacheManager = cacheManager ?? CacheService.CreateInstance();
         }
 
         private Func<int, int, DateTime, DateTime, string, object> GetWinLossDetailFunction(int roleId)
@@ -51,13 +49,7 @@
                 request.FromDate,
                 request.ToDate,
                 request.ProductIds);
-
-            if (winLossDetailData != null)
-            {
-                var cacheKey = request.GetCacheKey();
-                cacheManager.Set(cacheKey, winLossDetailData);
-            }
-
+            
             return
                 new
                 {
@@ -88,14 +80,7 @@
             }
 
             var winLossDetailData = SearchWinLossDetailData(request.GroupName, request.FromDate, request.ToDate, request.ProductIds, customerInfo);
-
-            if (winLossDetailData != null)
-            {
-                var cacheKey = request.GetCacheKey();
-
-                cacheManager.Set(cacheKey, winLossDetailData);
-            }
-
+            
             return
                 new
                 {

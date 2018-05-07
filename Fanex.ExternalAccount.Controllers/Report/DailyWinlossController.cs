@@ -1,9 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
-    using Caching;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
@@ -13,13 +9,14 @@
     using Newtonsoft.Json;
     using Service.Impl.Report;
     using Service.Interface.Report;
+    using System;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
     using Utilities;
 
     public class DailyWinlossController : BaseController
     {
-        private readonly ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
         private readonly IReportService _reportService = new ReportService();
-        private string _cacheList = string.Empty;
         private int _custId;
         private string _groupname = string.Empty;
         private List<DailyWinLoss> _listDailyWinLoss;
@@ -45,7 +42,6 @@
             _srecommend = CheckRequest.GetIntRequest("srecommend", 0);
             _mrecommend = CheckRequest.GetIntRequest("mrecommend", 0);
             _recommend = CheckRequest.GetIntRequest("recommend", 0);
-            _cacheList = "CacheList" + _username + _groupname + _custId + _winlostDate;
 
             return _custId != 0 ? GetDailyWinLossDownline() : GetDailyWinLossSearch();
         }
@@ -53,10 +49,7 @@
         public void GetExportToExcel()
         {
             GetRequestPage();
-            _cacheList = "CacheList" + _username + _groupname + _custId + _winlostDate;
-
             GetDailyWinLoss();
-
             var builder = new DailyWinLossReportBuilder(
                 _listDailyWinLoss,
                 false,
@@ -120,7 +113,6 @@
             if (_roleId > Role.Master)
             {
                 _listDailyWinLoss = _reportService.GetDailyWinLoss(_winlostDate, _srecommend, _groupname);
-                _cache.Set(_cacheList, _listDailyWinLoss);
                 return JsonBase(
                     new
                     {
@@ -135,7 +127,6 @@
             if (_roleId.IsMaster())
             {
                 _listDailyWinLoss = _reportService.GetDailyWinLossSuper(_winlostDate, _srecommend, _mrecommend);
-                _cache.Set(_cacheList, _listDailyWinLoss);
                 return JsonBase(
                     new
                     {
@@ -152,7 +143,6 @@
             if (_roleId.IsAgent())
             {
                 _listDailyWinLoss = _reportService.GetDailyWinLossMaster(_winlostDate, _mrecommend, _recommend);
-                _cache.Set(_cacheList, _listDailyWinLoss);
                 return JsonBase(
                     new
                     {
@@ -168,7 +158,6 @@
                     new JsonSerializerSettings());
             }
             _listDailyWinLoss = _reportService.GetDailyWinLossAgent(_winlostDate, _recommend, _memberId);
-            _cache.Set(_cacheList, _listDailyWinLoss);
             return JsonBase(
                 new
                 {
@@ -189,7 +178,6 @@
             if (_viewlevel.IsSuper())
             {
                 _listDailyWinLoss = _reportService.GetDailyWinLossSuper(_winlostDate, _custId, 0);
-                _cache.Set(_cacheList, _listDailyWinLoss);
                 return JsonBase(
                     new { viewlevel = Role.Master, srecommend = _custId, rows = _listDailyWinLoss },
                     new JsonSerializerSettings());
@@ -197,7 +185,6 @@
             if (_viewlevel.IsMaster())
             {
                 _listDailyWinLoss = _reportService.GetDailyWinLossMaster(_winlostDate, _custId, 0);
-                _cache.Set(_cacheList, _listDailyWinLoss);
                 return JsonBase(
                     new
                     {
@@ -208,8 +195,8 @@
                     },
                     new JsonSerializerSettings());
             }
+
             _listDailyWinLoss = _reportService.GetDailyWinLossAgent(_winlostDate, _custId, 0);
-            _cache.Set(_cacheList, _listDailyWinLoss);
             return JsonBase(
                 new
                 {

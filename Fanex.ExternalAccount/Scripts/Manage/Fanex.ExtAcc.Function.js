@@ -338,10 +338,7 @@ Fanex.ExtAcc.Function = {
                                 }
                             }
                         },
-                        noneSelectedText: function () {
-                            $("#groups").attr("title", "");
-                            return '';
-                        },
+                        noneSelectedText: '',
                         selectedText: function (numChecked, numTotal, checkedItems) {
                             var tmp = '';
                             var itemsChecked = '';
