@@ -8,6 +8,8 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        localStorage.setItem("@(CurrentSession.Instance.UserName + "_pt")", "@(CurrentSession.Instance.UserName + "_pt")".ec("@ViewBag._cd").hc());
+         if ("@Json.Encode(ViewBag._enabledOTP)") {
+            localStorage.setItem("@(CurrentSession.Instance.UserName + "_pt")", "@(CurrentSession.Instance.UserName + "_pt")".ec("@ViewBag._cd").hc());
+        }
     });
 </script>

@@ -7,7 +7,5 @@
         public string SecretKey { get; set; }
 
         public bool Enabled { get; set; }
-
-        public string Otp { get; set; }
     }
 }

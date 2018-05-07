@@ -3,8 +3,8 @@
     using System.Web.Mvc;
     using Authentication;
     using Core.Context;
-    using DTO.OTP;
     using Service.OTP;
+    using ViewModels;
     using CurrentSession = Core.Context.CurrentSession;
 
     public class OTPController : Controller
@@ -23,8 +23,8 @@
         public ActionResult Index(bool redirect = false)
         {
             var otpModel = customerOtpService.EnableOTP(_currentSession.CustId);
-
-            if (!otpModel.Enabled)
+            _currentSession.EnaledOTP = otpModel.Enabled;
+            if (!_currentSession.EnaledOTP)
             {
                 return VerifyOTPSuccessful();
             }

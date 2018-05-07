@@ -20,6 +20,7 @@
     using ViewModel.Account;
     using CurrentContext = Core.Context.CurrentContext;
     using CurrentSession = Core.Context.CurrentSession;
+    using ViewModels;
 
     public class AccountController : DefaultCaptchaController
     {
@@ -237,6 +238,7 @@
             ViewBag.GroupList = _userService.GroupList();
 
             ViewBag._cd = _cd;
+            ViewBag._enabledOTP = _currentSession.EnaledOTP;
 
             return View();
         }

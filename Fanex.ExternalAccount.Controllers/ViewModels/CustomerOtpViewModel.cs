@@ -1,4 +1,4 @@
-﻿namespace Fanex.ExternalAccount.DTO.OTP
+﻿namespace Fanex.ExternalAccount.Controllers.ViewModels
 {
     public class CustomerOtpViewModel
     {

@@ -14,6 +14,7 @@
         public const string EASCaptcha = "EASCaptcha";
         public const string EASCurrencyGroup = "EASCurrencyGroup";
         public const string EASHasMultipleGroupsPermission = "EASHasMultipleGroupsPermission";
+        public const string EASEnaledOTP = "EASEnaledOTP";
         public const string EASOTPSecretKey = "EASOTPSecretKey";
         public const string EASInternalAdmin = "EASInternalAdmin";
         public const string EASITAdmin = "EASITAdmin";
@@ -111,6 +112,13 @@
             set { HttpContext.Current.Session[EASHasMultipleGroupsPermission] = value; }
         }
 
+        public bool EnaledOTP
+        {
+            get { return Utils.ToBoolean(HttpContext.Current.Session[EASEnaledOTP]); }
+
+            set { HttpContext.Current.Session[EASEnaledOTP] = value; }
+        }
+        
         public string OTPSecretKey
         {
             get { return Utils.ToString(HttpContext.Current.Session[EASOTPSecretKey]); }
