@@ -894,7 +894,11 @@
     <Content Include="assets\bundles\login\login.min.js">
       <DependentUpon>login.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\otp\otp.css" />
     <Content Include="assets\bundles\otp\otp.js" />
+    <Content Include="assets\bundles\otp\otp.min.css">
+      <DependentUpon>otp.css</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\otp\otp.min.js">
       <DependentUpon>otp.js</DependentUpon>
     </Content>

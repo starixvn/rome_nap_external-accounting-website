@@ -231,7 +231,7 @@
         {
             if (!_currentSession.IsInternalAdmin)
             {
-                return RedirectToHomePage(_cd);
+                return RedirectToHomePage();
             }
 
             ViewBag.GroupList = _userService.GroupList();
@@ -240,8 +240,6 @@
 
             return View();
         }
-
-        private RedirectResult RedirectToHomePage(string code) => Redirect("~/Home/Index?_cd=" + code);
 
         [ExternalAccountAuthenticate]
         public ActionResult ExternalGroupList()

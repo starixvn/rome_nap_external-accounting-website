@@ -268,3 +268,8 @@
 {
     background-color: #DCDCDC;
 }
+
+.hidden
+{
+    display: none !important;
+}

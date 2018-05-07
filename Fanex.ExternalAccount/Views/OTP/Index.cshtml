@@ -13,37 +13,41 @@
     @StaticResources.RenderStyles("~/assets/bundles/login/login")
 </head>
 <body>
-    @using (Html.BeginForm("VerifyOTP", "OTP", FormMethod.Post, new { id = "otp-form", method = "Post" }))
-    {
-        <div class="block-login">
-            <div class="row">
-                <div class="otp-logo">@Resources.Error.OTP</div>
-            </div>
-            <div class="row">
-                @Html.Raw(String.Format(Resources.Error.HintOTP, Model.Username))
-            </div>
-            @if (Model.Redirect)
-            {
-                <div id="err-message" class="row errMsg">
-                    @Resources.Error.WrongOTP
+    <div>
+        @using (Html.BeginForm("VerifyOTP", "OTP",
+                    FormMethod.Post,
+                    new { id = "otp-form", method = "Post", @class = "hidden" }))
+        {
+            <div class="block-login">
+                <div class="row">
+                    <div class="otp-logo">@Resources.Error.OTP</div>
                 </div>
-            }
-            <div class="row">
-                <input type="password" autocomplete="off" class="form-control" name="otp" id="otp" placeholder="Input OTP" maxlength="6">
-                <label id="otp-error" class="error"></label>
-                <span class="icon-lock"></span>
+                <div class="row">
+                    @Html.Raw(String.Format(Resources.Error.HintOTP, Model.Username))
+                </div>
+                @if (Model.Redirect)
+                {
+                    <div id="err-message" class="row errMsg">
+                        @Resources.Error.WrongOTP
+                    </div>
+                }
+                <div class="row">
+                    <input type="password" autocomplete="off" class="form-control" name="otp" id="otp" placeholder="Input OTP" maxlength="6">
+                    <label id="otp-error" class="error"></label>
+                    <span class="icon-lock"></span>
 
-                <input type="hidden" name="_cd" id="_cd" value="@Model.Code">
-                <input type="hidden" name="_pt" id="_pt" value="">
-                <input type="hidden" id="_username" value="@Model.Username">
-            </div>
+                    <input type="hidden" name="_cd" id="_cd" value="@Model.Code">
+                    <input type="hidden" name="_pt" id="_pt" value="">
+                    <input type="hidden" id="_username" value="@Model.Username">
+                </div>
 
-            <div class="row">
-                <button id="btnLogin" class="btnLogin">Submit</button>
+                <div class="row">
+                    <button id="btnLogin" class="btnLogin">Submit</button>
+                </div>
             </div>
-        </div>
-        @Html.AntiForgeryToken()
-    }
+            @Html.AntiForgeryToken()
+        }
+    </div>
 
     @StaticResources.RenderScripts("~/assets/bundles/otp/otp")
 </body>

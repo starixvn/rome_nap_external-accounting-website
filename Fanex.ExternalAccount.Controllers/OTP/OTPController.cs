@@ -23,6 +23,7 @@
         public ActionResult Index(bool redirect = false)
         {
             var otpModel = customerOtpService.EnableOTP(_currentSession.CustId);
+
             if (!otpModel.Enabled)
             {
                 return VerifyOTPSuccessful();
