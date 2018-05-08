@@ -11,7 +11,7 @@
     "sourceMap": true
   },
   {
-    "outputFileName": "assets/bundles/otp/otp.min.js",
+    "outputFileName": "assets/bundles/otp/otp.js",
     "inputFiles": [
       "Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.3.min.js",
       "Scripts/Account/Fanex.ExtAcc.Account.OTP.js"
