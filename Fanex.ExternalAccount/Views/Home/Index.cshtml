@@ -9,7 +9,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-         if ("@Json.Encode(Model.EnabledOTP)") {
+        if (JSON.parse("@Model.EnabledOTP.ToString().ToLower()")) {
              localStorage.setItem("@(Model.Username + "_pt")", "@(Model.Username + "_pt")".ec("@Model.Code").hc());
              localStorage.setItem("@(Model.Username + "_cd")", "@(Model.Code)");
         }

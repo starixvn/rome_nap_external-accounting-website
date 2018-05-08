@@ -40,6 +40,8 @@
                     <input type="hidden" name="_cd" id="_cd" value="@Model.Code">
                     <input type="hidden" name="_pt" id="_pt" value="">
                     <input type="hidden" id="_username" value="@Model.Username">
+                    <input type="hidden" id="_reverify" value="@Json.Encode(Model.Reverify)">
+                    <input type="hidden" id="_loginUrl" value="@Url.Action("Login", "Account")">
                 </div>
 
                 <div class="row">

@@ -9,6 +9,13 @@
         $("#otp-form").submit();
     }
     else {
+        var failNumerous = parseInt(localStorage.getItem(username + "_revevify"));
+        if (failNumerous  == 4)
+        {
+            window.location.href = $("#_loginUrl").val();
+        }
+
+        localStorage.setItem(username + "_revevify", $("#_reverify").val() == "true" ? failNumerous + 1 : 0);
         $("#otp-form").removeClass("hidden");
     }
 });
