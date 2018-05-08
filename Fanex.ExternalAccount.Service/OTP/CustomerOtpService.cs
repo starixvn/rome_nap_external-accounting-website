@@ -5,6 +5,13 @@
     using DTO.OTP;
     using ONEbook.OTP.Services;
 
+    public interface ICustomerOtpService
+    {
+        CustomerOtp EnableOTP(int custId);
+
+        bool VerifyOtp(string otp, string secretKey);
+    }
+
     public class CustomerOtpService : ICustomerOtpService
     {
         private readonly OtpService otpService;

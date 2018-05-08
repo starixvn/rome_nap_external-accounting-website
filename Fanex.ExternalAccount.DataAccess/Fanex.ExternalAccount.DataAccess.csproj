@@ -168,7 +168,6 @@
     <Compile Include="Login\ILoginDao.cs" />
     <Compile Include="Login\LoginDao.cs" />
     <Compile Include="OTP\CustomerOtpDataAccess.cs" />
-    <Compile Include="OTP\ICustomerOtpDataAccess.cs" />
     <Compile Include="Report\IReportDAO.cs" />
     <Compile Include="Report\ReportDao.cs" />
     <Compile Include="Statement\IStatementDAO.cs" />

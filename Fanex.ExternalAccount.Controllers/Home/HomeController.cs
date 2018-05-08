@@ -5,6 +5,7 @@
     using Core.Base;
     using Core.Context;
     using Logging.Extensions.Web;
+    using ViewModels;
     using CurrentSession = Core.Context.CurrentSession;
 
     public class HomeController : BaseController
@@ -17,12 +18,12 @@
 
         [ExternalAccountAuthenticate]
         public ActionResult Index(string _cd)
-        {
-            ViewBag._cd = _cd;
-            ViewBag._enabledOTP = _currentSession.EnaledOTP;
-
-            return View();
-        }
+           => View(new HomeViewModel
+           {
+               Username = _currentSession.UserName,
+               Code = _cd,
+               EnabledOTP = _currentSession.EnaledOTP
+           });
 
         public ActionResult TestLog()
         {
@@ -30,8 +31,6 @@
 
             return View();
         }
-
-        
 
         //private void LogUserNWSpeed()
     }

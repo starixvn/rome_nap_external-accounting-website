@@ -7,7 +7,7 @@
     {
         public string Username { get; set; }
 
-        public ICollection<Group> GroupList { get; set; }
+        public List<Group> GroupList { get; set; }
 
         public bool EnabledOTP { get; set; }
 

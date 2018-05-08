@@ -4,7 +4,7 @@
     {
         public string Username { get; set; }
 
-        public bool Redirect { get; set; }
+        public bool Reverify { get; set; }
 
         public string Code { get; set; }
     }

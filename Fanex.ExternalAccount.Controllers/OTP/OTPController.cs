@@ -12,30 +12,29 @@
         private const string String_Empty = "";
 
         private readonly ICustomerOtpService customerOtpService;
-        private readonly CurrentSession _currentSession;
+        private readonly CurrentSession currentSession;
 
         public OTPController()
         {
-            _currentSession = new CurrentSession();
+            currentSession = new CurrentSession();
             customerOtpService = new CustomerOtpService();
         }
 
-        public ActionResult Index(bool redirect = false)
+        public ActionResult Index(bool reverify = false)
         {
-            var otpModel = customerOtpService.EnableOTP(_currentSession.CustId);
-            _currentSession.EnaledOTP = otpModel.Enabled;
-            if (!_currentSession.EnaledOTP)
+            var customerOTP = customerOtpService.EnableOTP(currentSession.CustId);
+            SetUserOTPSession(customerOTP.Enabled, customerOTP.SecretKey);
+
+            if (!currentSession.EnaledOTP)
             {
                 return VerifyOTPSuccessful();
             }
 
-            _currentSession.OTPSecretKey = otpModel.SecretKey;
-
             Encryptor.RandomCaptcha = CaptchaUtil.GetCaptchaString(4);
 
             return View(new CustomerOtpViewModel {
-                Redirect = redirect,
-                Username = _currentSession.UserName,
+                Reverify = reverify,
+                Username = currentSession.UserName,
                 Code = Encryptor.RandomCaptcha
             });
         }
@@ -49,25 +48,31 @@
             }
 
             var rawOTP = Encryptor.Decrypt(_pt, _cd);
-            if(!string.IsNullOrEmpty(rawOTP) || rawOTP.Contains(_currentSession.UserName))
+            if(!string.IsNullOrEmpty(rawOTP) && rawOTP.Equals($"{currentSession.UserName}_pt"))
             {
                 return VerifyOTPSuccessful(_cd);
             }
 
-            return customerOtpService.VerifyOtp(otp, _currentSession.OTPSecretKey) ? VerifyOTPSuccessful(_cd) : RedirectToVerifyOTPPage();
+            return customerOtpService.VerifyOtp(otp, currentSession.OTPSecretKey) ? VerifyOTPSuccessful(_cd) : RedirectToVerifyOTPPage();
         }
 
-        private RedirectResult RedirectToVerifyOTPPage() => Redirect("~/OTP/Index?redirect=true");
+        private RedirectResult RedirectToVerifyOTPPage() => Redirect("~/OTP/Index?reverify=true");
 
         private RedirectResult VerifyOTPSuccessful(string code = String_Empty)
         {
-            _currentSession.IsLogin = true;
+            currentSession.IsLogin = true;
 
-            return _currentSession.HasMultipleGroupsPermission ? RedirectToChooseGroupPage(code) : RedirectToHomePage(code);
+            return currentSession.HasMultipleGroupsPermission ? RedirectToChooseGroupPage(code) : RedirectToHomePage(code);
         }
 
         private RedirectResult RedirectToHomePage(string code) => Redirect("~/Home/Index?_cd=" + code);
 
         private RedirectResult RedirectToChooseGroupPage(string code) => Redirect("~/Account/ExternalGroup?_cd=" + code);
+
+        private void SetUserOTPSession(bool enabled, string secretKey)
+        {
+            currentSession.EnaledOTP = enabled;
+            currentSession.OTPSecretKey = secretKey;
+        }
     }
 }

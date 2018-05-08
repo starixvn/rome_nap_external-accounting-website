@@ -3,24 +3,23 @@
     using System;
     using System.Diagnostics;
     using System.Linq;
-    using System.Web.Helpers;
     using System.Web.Mvc;
     using System.Web.Security;
     using CaptchaMvc.Controllers;
     using CaptchaMvc.HtmlHelpers;
     using Core.Context;
+    using Core.Helpers;
     using CustomerSetting.Module.Core.Web;
     using DTO;
     using DTO.UserControl;
-    using Core.Helpers;
     using Logging.Extensions.Web;
     using Service.Impl.Login;
     using Service.Interface.Login;
     using Utilities;
     using ViewModel.Account;
+    using ViewModels;
     using CurrentContext = Core.Context.CurrentContext;
     using CurrentSession = Core.Context.CurrentSession;
-    using ViewModels;
 
     public class AccountController : DefaultCaptchaController
     {
@@ -179,7 +178,7 @@
 
             SetUserSession(model, custId, onuserId, hasMultipleGroupsPermission, hasMultipleGroupsPermission, group);
 
-            return RedirectOTP();
+            return RedirectOTPPage();
         }
 
         private void SetUMTokenForInternalAlphaLogin()
@@ -192,7 +191,7 @@
 
         private RedirectResult RedirectToHomePage() => Redirect("~/Home/Index/");
 
-        private RedirectResult RedirectOTP() => Redirect("~/OTP/Index/");
+        private RedirectResult RedirectOTPPage() => Redirect("~/OTP/Index/");
 
         private bool IsValidCaptcha()
         {
@@ -235,12 +234,13 @@
                 return RedirectToHomePage();
             }
 
-            ViewBag.GroupList = _userService.GroupList();
-
-            ViewBag._cd = _cd;
-            ViewBag._enabledOTP = _currentSession.EnaledOTP;
-
-            return View();
+            return View(new ExternalGroupViewModel
+            {
+                Username = _currentSession.UserName,
+                GroupList = _userService.GroupList().ToList(),
+                Code = _cd,
+                EnabledOTP = _currentSession.EnaledOTP
+            });
         }
 
         [ExternalAccountAuthenticate]

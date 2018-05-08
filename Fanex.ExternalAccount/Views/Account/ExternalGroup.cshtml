@@ -1,5 +1,7 @@
 ﻿@using Fanex.ExternalAccount.Utilities;
 @using Fanex.ExternalAccount.Core.Context;
+@model ExternalGroupViewModel
+
 @{ 
     Layout = null;
 }
@@ -51,16 +53,15 @@
         </div>
         <div class="groupChosen">
             @{
-                var tmp = ViewBag.GroupList as System.Collections.Generic.List<Fanex.ExternalAccount.DTO.UserControl.Group>;
                 var index = 0;
 
-                foreach (var item in tmp)
+                foreach (var group in Model.GroupList)
                 {
-                    var url = Url.Content("~/Home/Index/" + @item.GroupName);
+                    var url = Url.Content("~/Home/Index/" + @group.GroupName);
 
                     <div class="col">
                         <a href="@url" class="currencyGroup">
-                            @item.GroupName
+                            @group.GroupName
                         </a>
                     </div>
                     index++;
@@ -79,8 +80,9 @@
                 $('#dllUsername').hide();
             });
 
-            if ("@Json.Encode(ViewBag._enabledOTP)") {
-                localStorage.setItem("@(CurrentSession.Instance.UserName + "_pt")", "@(CurrentSession.Instance.UserName + "_pt")".ec("@ViewBag._cd").hc());
+            if ("@Json.Encode(Model.EnabledOTP)") {
+                localStorage.setItem("@(Model.Username + "_pt")", "@(Model.Username + "_pt")".ec("@Model.Code").hc());
+                localStorage.setItem("@(Model.Username + "_cd")", "@(Model.Code)");
             }
         });
 

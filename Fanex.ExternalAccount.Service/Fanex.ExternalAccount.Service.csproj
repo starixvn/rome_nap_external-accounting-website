@@ -208,7 +208,6 @@
     <Compile Include="Customer\ThirdPartyProductStatusService.cs" />
     <Compile Include="Login\ILoginService.cs" />
     <Compile Include="OTP\CustomerOtpService.cs" />
-    <Compile Include="OTP\ICustomerOtpService.cs" />
     <Compile Include="Report\IReportService.cs" />
     <Compile Include="Report\WinLossDetailRequests.cs" />
     <Compile Include="Report\WinLossDetailService.cs" />
