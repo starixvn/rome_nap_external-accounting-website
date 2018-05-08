@@ -21,10 +21,10 @@
         {
             <div class="block-login">
                 <div class="row">
-                    <div class="otp-logo">@Resources.Error.OTP</div>
+                    <div class="otp-logo">@Resources.Lang.OTP</div>
                 </div>
                 <div class="row">
-                    @Html.Raw(String.Format(Resources.Error.HintOTP, Model.Username))
+                    @Html.Raw(String.Format(Resources.Lang.HintOTP, Model.Username))
                 </div>
                 @if (Model.Reverify)
                 {
@@ -40,8 +40,6 @@
                     <input type="hidden" name="_cd" id="_cd" value="@Model.Code">
                     <input type="hidden" name="_pt" id="_pt" value="">
                     <input type="hidden" id="_username" value="@Model.Username">
-                    <input type="hidden" id="_reverify" value="@Json.Encode(Model.Reverify)">
-                    <input type="hidden" id="_loginUrl" value="@Url.Action("Login", "Account")">
                 </div>
 
                 <div class="row">
@@ -52,6 +50,6 @@
         }
     </div>
 
-    @StaticResources.RenderScripts("~/assets/bundles/otp/otp")
+    @StaticResources.RenderScripts("~/assets/bundles/otp/otp.min")
 </body>
 </html>

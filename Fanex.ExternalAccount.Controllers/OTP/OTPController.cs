@@ -9,10 +9,10 @@
 
     public class OTPController : Controller
     {
-        private const string String_Empty = "";
-
         private readonly ICustomerOtpService customerOtpService;
         private readonly CurrentSession currentSession;
+
+        private const int FailedLimited = 5;
 
         public OTPController()
         {
@@ -30,12 +30,10 @@
                 return VerifyOTPSuccessful();
             }
 
-            Encryptor.RandomCaptcha = CaptchaUtil.GetCaptchaString(4);
-
             return View(new CustomerOtpViewModel {
                 Reverify = reverify,
                 Username = currentSession.UserName,
-                Code = Encryptor.RandomCaptcha
+                Code = currentSession.OTPEncryptCode
             });
         }
 
@@ -48,29 +46,49 @@
             }
 
             var rawOTP = Encryptor.Decrypt(_pt, _cd);
-            if(!string.IsNullOrEmpty(rawOTP) && rawOTP.Equals($"{currentSession.UserName}_pt"))
+            if(!string.IsNullOrEmpty(rawOTP) && rawOTP.Equals(GetOTPQuote()))
             {
-                return VerifyOTPSuccessful(_cd);
+                return VerifyOTPSuccessful();
             }
 
-            return customerOtpService.VerifyOtp(otp, currentSession.OTPSecretKey) ? VerifyOTPSuccessful(_cd) : RedirectToVerifyOTPPage();
+            var verifyOTPSusscess = customerOtpService.VerifyOtp(otp, currentSession.OTPSecretKey);
+
+            return verifyOTPSusscess ? VerifyOTPSuccessful() : VerifyOTPFailed();
+        }
+
+        private RedirectResult VerifyOTPFailed()
+        {
+            currentSession.OTPFailedCounter += 1;
+
+            return currentSession.OTPFailedCounter.Equals(FailedLimited) ? RedirectToLoginPage() : RedirectToVerifyOTPPage();
         }
 
         private RedirectResult RedirectToVerifyOTPPage() => Redirect("~/OTP/Index?reverify=true");
 
-        private RedirectResult VerifyOTPSuccessful(string code = String_Empty)
+        private RedirectResult VerifyOTPSuccessful()
         {
             currentSession.IsLogin = true;
 
-            return currentSession.HasMultipleGroupsPermission ? RedirectToChooseGroupPage(code) : RedirectToHomePage(code);
+            return currentSession.HasMultipleGroupsPermission ? RedirectToChooseGroupPage() : RedirectToHomePage();
         }
 
-        private RedirectResult RedirectToHomePage(string code) => Redirect("~/Home/Index?_cd=" + code);
+        private RedirectResult RedirectToLoginPage()
+        {
+            currentSession.OTPFailedCounter = 0;
 
-        private RedirectResult RedirectToChooseGroupPage(string code) => Redirect("~/Account/ExternalGroup?_cd=" + code);
+            return Redirect("~/Account/Login");
+        }
+
+        private RedirectResult RedirectToHomePage() => Redirect("~/Home/Index");
+
+        private RedirectResult RedirectToChooseGroupPage() => Redirect("~/Account/ExternalGroup");
+
+        private string GetOTPQuote() => $"{currentSession.UserName} is already verified OTP.";
 
         private void SetUserOTPSession(bool enabled, string secretKey)
         {
+            Encryptor.RandomCaptcha = CaptchaUtil.GetCaptchaString(4);
+            currentSession.OTPEncryptCode = Encryptor.RandomCaptcha;
             currentSession.EnaledOTP = enabled;
             currentSession.OTPSecretKey = secretKey;
         }

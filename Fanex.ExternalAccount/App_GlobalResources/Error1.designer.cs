@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option or rebuild the Visual Studio project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "14.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Error {
@@ -75,26 +75,6 @@ namespace Resources {
         internal static string AjaxCallError {
             get {
                 return ResourceManager.GetString("AjaxCallError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hi {0}, &lt;/br&gt;
-        ///You are signing in using a different Device/ Browser from&lt;br&gt;
-        ///your last login. Please enter an OTP to continue..
-        /// </summary>
-        internal static string HintOTP {
-            get {
-                return ResourceManager.GetString("HintOTP", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to OTP.
-        /// </summary>
-        internal static string OTP {
-            get {
-                return ResourceManager.GetString("OTP", resourceCulture);
             }
         }
         

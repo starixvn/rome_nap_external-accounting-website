@@ -123,14 +123,6 @@
   <data name="AjaxCallError" xml:space="preserve">
     <value>Sorry, an error occurred while processing your request, please notify the administrators.</value>
   </data>
-  <data name="HintOTP" xml:space="preserve">
-    <value>Hi {0}, &lt;/br&gt;
-You are signing in using a different Device/ Browser from&lt;br&gt;
-your last login. Please enter an OTP to continue.</value>
-  </data>
-  <data name="OTP" xml:space="preserve">
-    <value>OTP</value>
-  </data>
   <data name="ThereIsNoChange" xml:space="preserve">
     <value>There is no change to update.</value>
   </data>

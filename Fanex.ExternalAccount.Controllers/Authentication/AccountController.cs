@@ -227,7 +227,7 @@
 
         [HttpGet]
         [ExternalAccountAuthenticate]
-        public ActionResult ExternalGroup(string _cd)
+        public ActionResult ExternalGroup()
         {
             if (!_currentSession.IsInternalAdmin)
             {
@@ -238,7 +238,7 @@
             {
                 Username = _currentSession.UserName,
                 GroupList = _userService.GroupList().ToList(),
-                Code = _cd,
+                Code = _currentSession.OTPEncryptCode,
                 EnabledOTP = _currentSession.EnaledOTP
             });
         }

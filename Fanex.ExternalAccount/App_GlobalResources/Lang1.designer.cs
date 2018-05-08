@@ -2778,6 +2778,17 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hi {0}, &lt;/br&gt;
+        ///You are signing in using a different Device/ Browser from&lt;br&gt;
+        ///your last login. Please enter an OTP to continue..
+        /// </summary>
+        internal static string HintOTP {
+            get {
+                return ResourceManager.GetString("HintOTP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This report supports viewing historical data up to 18 months.
         /// </summary>
         internal static string historicalMessage18months {
@@ -7485,6 +7496,24 @@ namespace Resources {
         internal static string OtherSports {
             get {
                 return ResourceManager.GetString("OtherSports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OTP.
+        /// </summary>
+        internal static string OTP {
+            get {
+                return ResourceManager.GetString("OTP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is already verified OTP..
+        /// </summary>
+        internal static string OTPQuote {
+            get {
+                return ResourceManager.GetString("OTPQuote", resourceCulture);
             }
         }
         

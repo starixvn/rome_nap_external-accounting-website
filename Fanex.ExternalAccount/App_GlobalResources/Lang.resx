@@ -3493,4 +3493,15 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="warningUnsyncedAllDownline" xml:space="preserve">
     <value>The {0} Setting is not fully available. Please go to Edit {0} page to adjust.</value>
   </data>
+  <data name="OTPQuote" xml:space="preserve">
+    <value>{0} is already verified OTP.</value>
+  </data>
+  <data name="HintOTP" xml:space="preserve">
+    <value>Hi {0}, &lt;/br&gt;
+You are signing in using a different Device/ Browser from&lt;br&gt;
+your last login. Please enter an OTP to continue.</value>
+  </data>
+  <data name="OTP" xml:space="preserve">
+    <value>OTP</value>
+  </data>
 </root>

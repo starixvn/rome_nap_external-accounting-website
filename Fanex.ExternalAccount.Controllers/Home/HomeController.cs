@@ -17,11 +17,11 @@
         }
 
         [ExternalAccountAuthenticate]
-        public ActionResult Index(string _cd)
+        public ActionResult Index()
            => View(new HomeViewModel
            {
                Username = _currentSession.UserName,
-               Code = _cd,
+               Code = _currentSession.OTPEncryptCode,
                EnabledOTP = _currentSession.EnaledOTP
            });
 
