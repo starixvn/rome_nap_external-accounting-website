@@ -30,10 +30,12 @@ namespace Fanex.ExternalAccount.ViewModel.Account
 
         public string __RequestVerificationToken { get; set; }
 
-        public bool IsVisibleCaptcha => LoginAttempt >= ThresholdFailToShowingCaptcha;
+        public bool IsVisibleCaptcha => (LoginAttempt >= ThresholdFailToShowingCaptcha) || InvalidOTP;
 
         public int LoginAttempt { get; set; }
 
         public string LoginFailedMessage { get; set; }
+
+        public bool InvalidOTP { get; set; }
     }
 }

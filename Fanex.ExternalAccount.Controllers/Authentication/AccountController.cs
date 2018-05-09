@@ -37,7 +37,7 @@
         }
 
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult Login(bool showCaptcha = false)
         {
             if (_currentSession.IsAuthenticated)
             {
@@ -51,7 +51,8 @@
             return View(new LoginModel
             {
                 Code = Encryptor.RandomCaptcha,
-                LoginAttempt = _currentSession.LoginAttempt
+                LoginAttempt = _currentSession.LoginAttempt,
+                InvalidOTP = showCaptcha
             });
         }
 

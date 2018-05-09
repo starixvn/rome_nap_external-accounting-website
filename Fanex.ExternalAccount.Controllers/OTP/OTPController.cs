@@ -76,7 +76,7 @@
         {
             currentSession.OTPFailedCounter = 0;
 
-            return Redirect("~/Account/Login");
+            return Redirect("~/Account/Login?showCaptcha=true");
         }
 
         private RedirectResult RedirectToHomePage() => Redirect("~/Home/Index");
