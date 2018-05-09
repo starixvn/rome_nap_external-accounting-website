@@ -12,7 +12,7 @@
         private readonly ICustomerOtpService customerOtpService;
         private readonly CurrentSession currentSession;
 
-        private const int FailedLimited = 5;
+        private const int LimitedFailure = 5;
 
         public OTPController()
         {
@@ -60,7 +60,7 @@
         {
             currentSession.OTPFailedCounter += 1;
 
-            return currentSession.OTPFailedCounter.Equals(FailedLimited) ? RedirectToLoginPage() : RedirectToVerifyOTPPage();
+            return currentSession.OTPFailedCounter.Equals(LimitedFailure) ? RedirectToLoginPage() : RedirectToVerifyOTPPage();
         }
 
         private RedirectResult RedirectToVerifyOTPPage() => Redirect("~/OTP/Index?reverify=true");
