@@ -33,7 +33,8 @@
             return View(new CustomerOtpViewModel {
                 Reverify = reverify,
                 Username = currentSession.UserName,
-                Code = currentSession.OTPEncryptCode
+                Code = currentSession.OTPEncryptCode,
+                Reset = customerOTP.Reset
             });
         }
 

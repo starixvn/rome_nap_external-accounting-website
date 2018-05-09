@@ -5,5 +5,7 @@
         public string SecretKey { get; set; }
 
         public bool Enabled { get; set; }
-    }
+
+        public bool Reset { get; set; }
+}
 }

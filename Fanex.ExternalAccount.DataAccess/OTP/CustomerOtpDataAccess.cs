@@ -15,8 +15,9 @@
         public CustomerOtp GetCustomerOtpDto(int custId)
         {
             // Cannot use dynamic mapping here due to old fanex.data
-            var Enabled = false;
-            var SecretKey = string.Empty;
+            var enabled = false;
+            var reset = false;
+            var secretKey = string.Empty;
 
             using (var db = new ObjectDb("EAS_OTP_CustomerOTPSel"))
             {
@@ -27,14 +28,16 @@
 
                 while (reader.Read())
                 {
-                    Enabled = reader.ToBoolean("Enabled");
-                    SecretKey = reader.ToString("SecretKey");
+                    enabled = reader.ToBoolean("Enabled");
+                    reset = reader.ToBoolean("Reset");
+                    secretKey = reader.ToString("SecretKey"); 
                 }
 
                 return new CustomerOtp
                 {
-                    Enabled = Enabled,
-                    SecretKey = SecretKey
+                    Enabled = enabled,
+                    SecretKey = secretKey,
+                    Reset = reset
                 };
             }
         }

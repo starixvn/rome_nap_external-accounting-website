@@ -1,6 +1,8 @@
 ﻿$(document).ready(function () {
     var username = $("#_username").val();
-    if (localStorage.getItem(username + "_pt") != null
+    var reset = $("#_reset").val() == "true";
+
+    if (!reset && localStorage.getItem(username + "_pt") != null
         && localStorage.getItem(username + "_pt") != ""
         && localStorage.getItem(username + "_cd") != null
         && localStorage.getItem(username + "_cd") != "") {

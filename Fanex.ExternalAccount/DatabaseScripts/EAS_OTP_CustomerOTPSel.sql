@@ -22,7 +22,7 @@ AS
 BEGIN
 	SET NOCOUNT ON
 
-	SELECT SecretKey, [Enabled]
+	SELECT SecretKey, [Enabled], [Reset]
 	FROM dbo.EASCustOTP WITH(NOLOCK)
 	WHERE CustID = @CustID
 END

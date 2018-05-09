@@ -7,5 +7,7 @@
         public bool Reverify { get; set; }
 
         public string Code { get; set; }
+
+        public bool Reset { get; set; }
     }
 }
