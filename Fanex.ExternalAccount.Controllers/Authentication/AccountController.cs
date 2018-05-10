@@ -37,7 +37,7 @@
         }
 
         [HttpGet]
-        public ActionResult Login(bool showCaptcha = false)
+        public ActionResult Login()
         {
             if (_currentSession.IsAuthenticated)
             {
@@ -52,7 +52,7 @@
             {
                 Code = Encryptor.RandomCaptcha,
                 LoginAttempt = _currentSession.LoginAttempt,
-                InvalidOTP = showCaptcha
+                InvalidOTP = _currentSession.InvalidOTP
             });
         }
 
@@ -85,12 +85,14 @@
             {
                 UserName = model.UserName,
                 LoginAttempt = _currentSession.LoginAttempt,
-                LoginFailedMessage = ViewLang.WrongValidationCode
+                LoginFailedMessage = ViewLang.WrongValidationCode,
+                InvalidOTP = _currentSession.InvalidOTP
             });
 
         private bool IsRequiredCaptcha(string username) =>
-            _currentSession.LoginAttempt >= LoginModel.ThresholdFailToShowingCaptcha
-            && _currentSession.UserAttempt.Equals(username, StringComparison.OrdinalIgnoreCase);
+            (_currentSession.LoginAttempt >= LoginModel.ThresholdFailToShowingCaptcha
+            && _currentSession.UserAttempt.Equals(username, StringComparison.OrdinalIgnoreCase))
+            || _currentSession.InvalidOTP;
 
         private ActionResult VerifyLoginCredential(LoginModel model, string rawPassword)
         {

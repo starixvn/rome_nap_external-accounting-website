@@ -1537,6 +1537,7 @@
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
     <Content Include="DatabaseScripts\EAS_CustOTPTable.sql" />
+    <Content Include="DatabaseScripts\EAS_OTP_CustomerOTPSecretKeyUpdate.sql" />
     <Content Include="DatabaseScripts\EAS_OTP_CustomerOTPReset.sql" />
     <Content Include="DatabaseScripts\EAS_OTP_CustomerOTPSel.sql" />
     <Content Include="Images\tick.png" />

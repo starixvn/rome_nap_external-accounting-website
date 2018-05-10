@@ -81,8 +81,9 @@
         private RedirectResult RedirectToLoginPage()
         {
             currentSession.OTPFailedCounter = 0;
+            currentSession.InvalidOTP = true;
 
-            return Redirect("~/Account/Login?showCaptcha=true");
+            return Redirect("~/Account/Login");
         }
 
         private RedirectResult RedirectToHomePage() => Redirect("~/Home/Index");
