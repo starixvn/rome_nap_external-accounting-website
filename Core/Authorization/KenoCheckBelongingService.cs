@@ -4,8 +4,6 @@
 
     public class KenoCheckBelongingService : IKenoCheckBelongingService
     {
-        private readonly AuthorizationService authorization = new AuthorizationServiceImpl();
-
-        public bool IsBelonging() => authorization.IsBelong();
+        public bool IsBelonging() => true;
     }
 }

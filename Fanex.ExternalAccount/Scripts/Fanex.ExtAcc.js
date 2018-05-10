@@ -425,7 +425,7 @@ Fanex.ExtAcc = {
 
                 $('.ui-autocomplete').hide();
 
-                $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?custName=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=1'));
+                $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?custName=' + (username == '' ? "''" : username) + '&groupName=' + $('#selectedGroupName').html() + '&pageIndex=1'));
 
                 var widthDevice = $(window).width();
                 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
@@ -452,7 +452,7 @@ Fanex.ExtAcc = {
 
             $('.ui-autocomplete').hide();
 
-            $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?custName=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=1'));
+            $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?custName=' + (username == '' ? "''" : username) + '&groupName=' + $('#selectedGroupName').html() + '&pageIndex=1'));
         });
 
         $('#leftFrame')
@@ -488,7 +488,7 @@ Fanex.ExtAcc = {
         this.BlockUI();
 
         username = username.formatString();
-        $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?custName=' + (username == '' ? "''" : username) + '&uplineId=' + $('#selectedGroupName').html() + '&pageIndex=' + pageIndex));
+        $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?custName=' + (username == '' ? "''" : username) + '&groupName=' + $('#selectedGroupName').html() + '&pageIndex=' + pageIndex));
     },
 
     ToggleSpliter: function () {
@@ -829,7 +829,10 @@ $(document).ready(function () {
                     if (errorResult.code === 999999) {
                         top.location.href = resolveClientUrl('Shared/Offline');
                     }
-                }
+                    if (errorResult.code == 401) {
+                        top.location.href = resolveClientUrl('Account/Login');
+                    }
+                }                
             }
         }
     });

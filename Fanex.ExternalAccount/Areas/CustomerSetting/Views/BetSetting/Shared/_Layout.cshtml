@@ -3,10 +3,10 @@
 @using Newtonsoft.Json.Serialization
 @using Fanex.CustomerSetting.Module.BetSetting;
 @{
-    var id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]);
-    var uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]);
-    var userId = Utils.ToInt32(Request.RequestContext.RouteData.Values["userId"]);
-    var siteName = Request.RequestContext.RouteData.Values["siteName"];
+    var id = Utils.ToInt32(Request["custId"]);
+    var uplineId = Utils.ToInt32(Request["uplineId"]);
+    var userId = Utils.ToInt32(Request["userId"]);
+    var siteName = Request["groupName"];
     var customer = new Fanex.CustomerSetting.Module.BetSetting.Services.Impl.CustomerService();
     var cust = customer.UserInfo(id);
     var custInfo = JsonConvert.SerializeObject(cust, Formatting.None, new JsonSerializerSettings

@@ -17,7 +17,7 @@
         private readonly string[] custIdParamNames =
             {"custId", "customerId", "parentId", "srecommend", "mrecommend", "recommend", "agentId"};
 
-        private readonly string[] custIdsNames = {"custIds", "customerIds"};
+        private readonly string[] custIdsNames = { "custIds", "customerIds" };
 
         public static string LoginErrorMessage { get; set; } = string.Empty;
 
@@ -27,18 +27,18 @@
         {
             get
             {
-                var custId = GetCustomerIdFromQueryString();
+                var custId = GetCustomerIdInQueryString();
 
                 if (custId <= 0)
                 {
-                    custId = GetCustomerIdFromJson();
+                    custId = GetCustomerIdInJson();
                 }
 
                 return custId;
             }
         }
 
-        public IEnumerable<int> CustIds => GetCustomerIdsFromQueryString();
+        public IEnumerable<int> CustIds => GetCustomerIdsInQueryString();
 
         public static string GroupName => HttpContext.Current.Request["groupName"];
 
@@ -134,7 +134,7 @@
             }
         }
 
-        private int GetCustomerIdFromQueryString()
+        private int GetCustomerIdInQueryString()
         {
             var request = HttpContext.Current.Request;
 
@@ -151,52 +151,52 @@
             return 0;
         }
 
-        private IEnumerable<int> GetCustomerIdsFromQueryString()
+        private IEnumerable<int> GetCustomerIdsInQueryString()
         {
-            var custIds = string.Empty;
-            var i = 0;
-
-            while (string.IsNullOrEmpty(custIds) && i < custIdsNames.Length)
+            var request = HttpContext.Current.Request;
+            foreach (var custIdName in custIdsNames)
             {
-                custIds = HttpContext.Current.Request[custIdsNames[i]];
-                i++;
+                var custIds = request[custIdName];
+                if (!string.IsNullOrEmpty(custIds))
+                {
+                    return custIds.Split(',').Select(id => Converter.ToInt(id));
+                }
             }
 
-            return custIds?.Split(',').Where(id => int.TryParse(id, out i)).Select(id => Converter.ToInt(id))
-                       .ToList() ?? Enumerable.Empty<int>();
+            return Enumerable.Empty<int>();
         }
 
-        private int GetCustomerIdFromJson()
-        {
-            var custId = 0;
-            var i = 0;
-
-            while (custId <= 0 && i < custIdParamNames.Length)
+        private int GetCustomerIdInJson()
+        {            
+            foreach (var custIdName in custIdParamNames)
             {
-                custId = GetCustomerId(custIdParamNames[i]);
-                i++;
+                var custId = GetPropertyValueInJson(custIdName);
+                if (custId > 0)
+                {
+                    return custId;
+                }
             }
 
-            return custId;
+            return 0;
         }
 
-        private static int GetCustomerId(string parameterName)
+        private static int GetPropertyValueInJson(string propertyName)
         {
-            var customerId = 0;
-            if (string.IsNullOrEmpty(parameterName))
+            var propertyValue = 0;
+            if (string.IsNullOrEmpty(propertyName))
             {
-                return customerId;
+                return propertyValue;
             }
 
             var jsonString = GetJsonDataInRequestBody(HttpContext.Current.Request.InputStream);
-            var pattern = $"(\"{parameterName}\":)(?<paramValue>[^,]+)";
+            var pattern = $"(\"{propertyName}\":)(?<paramValue>[^,}}]+)";
             var regexMatch = Regex.Match(jsonString, pattern, RegexOptions.IgnoreCase);
             if (regexMatch.Success)
             {
-                customerId = Convert.ToInt32(regexMatch.Groups["paramValue"].ToString().Replace("\"", string.Empty));
+                propertyValue = Convert.ToInt32(regexMatch.Groups["paramValue"].ToString().Replace("\"", string.Empty));
             }
 
-            return customerId;
+            return propertyValue;
         }
 
         private static string GetJsonDataInRequestBody(Stream requestStream)

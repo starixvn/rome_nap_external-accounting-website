@@ -13,16 +13,14 @@
 
     public class FilterController : BaseController
     {
-        private readonly AuthorizationService authorizationService;
         private readonly IReportService reportService;
 
-        public FilterController(IReportService reportService, AuthorizationService authorizationService)
+        public FilterController(IReportService reportService)
         {
             this.reportService = reportService ?? new ReportService();
-            this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
         }
 
-        public FilterController() : this(null, null)
+        public FilterController() : this(null)
         {
         }
 
@@ -45,13 +43,6 @@
 
         public ActionResult GetSuggestedUserName()
         {
-            var groupName = CheckRequest.GetStringRequest("groupname", string.Empty);
-
-            if (string.IsNullOrEmpty(groupName) || !authorizationService.IsBelong(groupName, 0, null, true))
-            {
-                return JsonBase(new { username = string.Empty });
-            }
-
             var users = reportService.GetSuggestedUserName(
                 CurrentSession.CustId,
                 CheckRequest.GetStringRequest("username", string.Empty),

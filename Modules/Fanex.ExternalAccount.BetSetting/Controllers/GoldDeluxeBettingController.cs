@@ -28,18 +28,8 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             _settingService = settingService ?? new SettingService();
         }
 
-        public ActionResult Index(int id, int uplineId, int userId, string siteName)
-        {
-            var obj =
-                Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as
-                    IAuthenticate;
-            if (!obj.IsBelong(id, null, siteName))
-            {
-                return ActionDenied(Request);
-            }
-
-            return View("~/Areas/CustomerSetting/Views/BetSetting/GoldDeluxe/Index.cshtml");
-        }
+        public ActionResult Index(int custId, int uplineId, int userId, string groupName)
+            => View("~/Areas/CustomerSetting/Views/BetSetting/GoldDeluxe/Index.cshtml");
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "GoldDeluxeBetting")]
         public ActionResult UpdateGameSetting(EditSettingViewModel model)
@@ -81,7 +71,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             }
 
             ViewBag.Username = customer.Username;
-            ViewBag.SyncCasino = customer.SyncCasino;    
+            ViewBag.SyncCasino = customer.SyncCasino;
             ViewBag.HideGoldDeluxe = customer.HideGoldDeluxe;
 
             var model = new EditSettingViewModel

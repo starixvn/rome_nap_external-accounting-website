@@ -335,6 +335,7 @@
     <Compile Include="Context\Encryptor.cs" />
     <Compile Include="Context\ExternalAccountAuthenticateAttribute.cs" />
     <Compile Include="Context\NoCaptchaSectionConfiguration.cs" />
+    <Compile Include="Filters\CheckBelongingFilter.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\RequestHelper.cs" />
     <Compile Include="Helpers\GoogleAnalyticHepler.cs" />

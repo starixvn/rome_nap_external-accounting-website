@@ -41,7 +41,6 @@
     {
         private const string DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt";
         private readonly AgentService _agentService = new AgentService();
-        private readonly AuthorizationService _authorization = new AuthorizationServiceImpl();
         private readonly CustomerService _customerService = new CustomerService();
         private readonly PTEngine.Services.ICustomerService ptCustomerService = new PTEngine.Services.CustomerService();
         private readonly MasterService _masterService = new MasterService();
@@ -283,12 +282,12 @@
             ViewBag.CurrentLevel = id;
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
-            ViewBag.SyncCasino = (bool)result.Rows[0]["SyncCasino"];            
+            ViewBag.SyncCasino = (bool)result.Rows[0]["SyncCasino"];
             ViewBag.HideVirtualSports = (bool)result.Rows[0]["HideVirtualSports"];
             ViewBag.HideKeno = (bool)result.Rows[0]["HideKeno"] || !ProductSettings.ShowKenoSetting;
             ViewBag.HideGoldDeluxe = (bool)result.Rows[0]["HideGoldDeluxe"] || !ProductSettings.IsShowGoldDeluxe;
             ViewBag.HideColossusBets = (bool)result.Rows[0]["HideColossusBet"] || !ProductSettings.IsShowColossusBets;
-            ViewBag.HideSportsbook2 = Converter.ToBool(result.Rows[0]["HideMuayThai"]);            
+            ViewBag.HideSportsbook2 = Converter.ToBool(result.Rows[0]["HideMuayThai"]);
             ViewBag.HideCricket = Converter.ToBool(result.Rows[0]["HideCricket"]) || !ProductSettings.IsShowCricket;
             var visibledProducts = GetVisibledProducts(id, custId);
 
@@ -328,7 +327,7 @@
             var customers = GetCustomerList(groupName, enabled, closed, suspended, lineInfo);
             SetEditAllBetVisibility(customers);
             var customers2String = Customers2Json(customers);
-            var syncCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncCasino");            
+            var syncCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncCasino");
             var allowDoubleComm = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean(lineInfo.RoleId > Role.Agent ? "doubleCommLosing" : "doubleCommLosing1");
             return JsonBase(
                 new
@@ -635,39 +634,32 @@
             LineInfo lineInfo)
         {
             int? id = null;
-            var result = new DataTable();
+            DataTable result;
 
             switch (lineInfo.RoleId)
             {
                 case Role.Super:
-                    result = _authorization.IsBelong(groupName, lineInfo.CustId, null, true)
-                        ? _superService.GetData(CurrentSession.UserId, lineInfo.CustId == 0 ? id : lineInfo.CustId,
-                            enabled,
-                            closed, suspended, groupName)
-                        : result;
+                    result = _superService.GetData(CurrentSession.UserId, lineInfo.CustId == 0
+                        ? id
+                        : lineInfo.CustId, enabled, closed, suspended, groupName);
                     break;
 
                 case Role.Master:
-                    result = _authorization.IsBelong(groupName, lineInfo.SuperId, null, true)
-                        ? _masterService.GetData(CurrentSession.UserId, lineInfo.SuperId, lineInfo.CustId == 0 ? id : lineInfo.CustId,
-                            enabled, closed, suspended)
-                        : result;
+                    result = _masterService.GetData(CurrentSession.UserId, lineInfo.SuperId, lineInfo.CustId == 0
+                        ? id
+                        : lineInfo.CustId, enabled, closed, suspended);
                     break;
 
                 case Role.Agent:
-                    result = _authorization.IsBelong(groupName, lineInfo.MasterId, null, true)
-                        ? _agentService.GetData(CurrentSession.UserId, lineInfo.MasterId,
-                            lineInfo.CustId == 0 ? id : lineInfo.CustId,
-                            enabled, closed, suspended)
-                        : result;
+                    result = _agentService.GetData(CurrentSession.UserId, lineInfo.MasterId, lineInfo.CustId == 0
+                        ? id
+                        : lineInfo.CustId, enabled, closed, suspended);
                     break;
 
                 default:
-                    result = _authorization.IsBelong(groupName, lineInfo.AgentId, null, true)
-                        ? _memberService.GetData(CurrentSession.UserId, lineInfo.AgentId,
-                            lineInfo.CustId == 0 ? id : lineInfo.CustId,
-                            enabled, closed, suspended)
-                        : result;
+                    result = _memberService.GetData(CurrentSession.UserId, lineInfo.AgentId, lineInfo.CustId == 0
+                        ? id
+                        : lineInfo.CustId, enabled, closed, suspended);
                     break;
             }
 

@@ -22,15 +22,9 @@
         if (model.downlineLoaded) return;
 
         parent.Fanex.ExtAcc.BlockUI();
-        var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
-        var token = "";
-        if (antiXSRFToken.length > 0) {
-            token = antiXSRFToken[0].value;
-        }
-        $http({
+        $.ajax({
             url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetDownlineList?custId=' + custId + '&pageIndex=1'),
-            method: 'post',
-            headers: { "X-Requested-With": "XMLHttpRequest", "__RequestVerificationToken": token }
+            method: 'post'
         })
         .success(function (result) {
             model.downlineLoaded = true;
@@ -83,9 +77,6 @@
                 }, 100);
             }
 
-            parent.Fanex.ExtAcc.UnBlockUI();
-        })
-        .error(function (result) {
             parent.Fanex.ExtAcc.UnBlockUI();
         });
     };

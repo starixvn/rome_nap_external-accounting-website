@@ -13,21 +13,13 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
     public class SportsbookController : BettingControllerBase
     {
-        public ActionResult Index(int id, int uplineId, int userId, string siteName)
-        {
-            var obj = Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as IAuthenticate;
-            if (!obj.IsBelong(id, null, siteName))
-            {
-                return ActionDenied(Request);
-            }
-
-            return PartialView("~/Areas/CustomerSetting/Views/BetSetting/Sportsbook/Index.cshtml");
-        }
+        public ActionResult Index(int custId, int uplineId, int userId, string groupName)
+            => PartialView("~/Areas/CustomerSetting/Views/BetSetting/Sportsbook/Index.cshtml");
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "SportsbookBetting")]
-        public ActionResult Content(int id, int uplineId, int userId, string siteName)
+        public ActionResult Content(int custId, int uplineId, int userId, string groupName)
         {
-            var customer = CustomerInfo(id, userId);
+            var customer = CustomerInfo(custId, userId);
 
             if (customer.RoleId.IsNotSuper())
             {
@@ -44,10 +36,10 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             {
                 FormId = FormType.EditPT,
                 CustId = uplineId,
-                TargetCustId = id,
+                TargetCustId = custId,
                 SubAccId = 0,
                 AdminId = userId,
-                SiteName = siteName,
+                SiteName = groupName,
                 Language = "En",
                 LangKey = "E",
             };
@@ -59,15 +51,9 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
         [HttpPost]
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "SportsbookBetting")]
-        public ActionResult EditBetSettingPost(int id, int uplineId, int userId, string txtCustomerObject, string siteName = "ACCUT")
+        public ActionResult EditBetSettingPost(int custId, int uplineId, int userId, string txtCustomerObject)
         {
-            var obj = Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as IAuthenticate;
-            if (!obj.IsBelong(id, null, siteName))
-            {
-                return ActionDenied(Request);
-            }
-
-            var customer = CustomerInfo(id, userId);
+            var customer = CustomerInfo(custId, userId);
 
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
@@ -83,7 +69,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             var requestContext = new RequestContext()
             {
                 CustId = userId,
-                TargetCustId = id,
+                TargetCustId = custId,
                 FormId = FormType.EditPT,
                 SubAccId = 0,
                 AdminId = userId,

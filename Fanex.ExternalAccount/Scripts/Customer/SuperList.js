@@ -280,7 +280,7 @@
                 top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Form.ShowFrame(
-                    resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.UserId + '/' + userId + '/' + $('#selectedGroupName').html()), 'Edit Bet Setting',
+                    resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.UserId + '&userId=' + userId + '&groupName=' + $('#selectedGroupName').html()), 'Edit Bet Setting',
                     900,
                     Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
                     false,

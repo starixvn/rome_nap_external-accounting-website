@@ -47,8 +47,7 @@
                 return;
             }
 
-            if (!FunctionAuthorization(currentSession.UserId, Function, Policy)
-                || !authorization.IsBelong())
+            if (!FunctionAuthorization(currentSession.UserId, Function, Policy))
             {
                 HandleUnauthorizedFunction(filterContext);
             }

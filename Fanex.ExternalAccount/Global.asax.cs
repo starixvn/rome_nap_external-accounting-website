@@ -9,6 +9,7 @@
     using CaptchaMvc.Interface;
     using CasinoLibrary.SBAgent;
     using Core.Context;
+    using Core.Filters;
     using Core.Shared;
     using CustomerSetting.Client40;
     using Data.Configuration;
@@ -22,9 +23,11 @@
 
     public class MvcApplication : HttpApplication
     {
-        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+        private static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new CheckUMFilter());
+            filters.Add(new CheckBelongingFilter());
         }
 
         public static void RegisterRoutes(RouteCollection routes)
@@ -81,8 +84,7 @@
         {
             AreaRegistration.RegisterAllAreas();
             CustomerSettingRegistration.Init();
-
-            GlobalFilters.Filters.Add(new CheckUMFilter());
+                        
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
             DbSettingProviderManager.Current.Start();

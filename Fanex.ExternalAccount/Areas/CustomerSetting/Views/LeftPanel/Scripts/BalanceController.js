@@ -21,13 +21,9 @@
 
         parent.Fanex.ExtAcc.BlockUI();
 
-        var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
-        $http.defaults.headers.post.__RequestVerificationToken = antiXSRFToken[0].value;
-
-        $http({
+        $.ajax({
             url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?custId=' + id + '&roleId=' + roleId + '&groupName=' + parent.$('#selectedGroupName').html()),
-            method: 'post',
-            headers: { "X-Requested-With": "XMLHttpRequest" }
+            method: 'post'
         })
         .success(function (result) {
             parent.Fanex.ExtAcc.UnBlockUI();
@@ -48,33 +44,31 @@
         if (keyCode == 13 && value != '') {
             parent.Fanex.ExtAcc.BlockUI();
             value = value.replace(/,/g, "");
-            var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
-            $http.defaults.headers.post.__RequestVerificationToken = antiXSRFToken[0].value;
 
-            $http({
+
+            $.ajax({
                 url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateGivenCreditPost?custId=' + id + '&uplineId=' + uplineId + '&newGivenCredit=' + value + '&groupName=' + parent.$('#selectedGroupName').html()),
-                method: 'post',
-                headers: { "X-Requested-With": "XMLHttpRequest" }
+                method: 'post'
             })
-            .success(function (result) {
-                parent.Fanex.ExtAcc.UnBlockUI();
+        .success(function (result) {
+            parent.Fanex.ExtAcc.UnBlockUI();
 
-                $('#linkGivenCredit').show();
-                $('#givenCredit').hide();
+            $('#linkGivenCredit').show();
+            $('#givenCredit').hide();
 
-                if (result.isSuccess) {
-                    $('#linkGivenCredit').html(value.replaceAll(',', '').toFixed(2).formatNumber());
-                    $('#givenCredit').val(value);
-                    $('#givenCredit').attr('ng-blur', 'RevertCredit("' + value.replaceAll(',', '').toFixed(2).formatNumber() + '")');
-                }
-                else {
-                    $('#givenCredit').val($scope.preVal.replaceAll(',', '').toFixed(2).formatNumber());
-                    parent.Fanex.ExtAcc.Form.Alert('Update Credit Error', result.errorMessage.formatErrorMessage(), 400, 200, 'alert');
-                }
-            })
-            .error(function (data) {
-                parent.Fanex.ExtAcc.UnBlockUI();
-            });
+            if (result.isSuccess) {
+                $('#linkGivenCredit').html(value.replaceAll(',', '').toFixed(2).formatNumber());
+                $('#givenCredit').val(value);
+                $('#givenCredit').attr('ng-blur', 'RevertCredit("' + value.replaceAll(',', '').toFixed(2).formatNumber() + '")');
+            }
+            else {
+                $('#givenCredit').val($scope.preVal.replaceAll(',', '').toFixed(2).formatNumber());
+                parent.Fanex.ExtAcc.Form.Alert('Update Credit Error', result.errorMessage.formatErrorMessage(), 400, 200, 'alert');
+            }
+        })
+        .error(function (data) {
+            parent.Fanex.ExtAcc.UnBlockUI();
+        });
         }
     };
 

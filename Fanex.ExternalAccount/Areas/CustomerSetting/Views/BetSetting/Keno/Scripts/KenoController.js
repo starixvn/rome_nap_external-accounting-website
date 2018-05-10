@@ -231,11 +231,10 @@ Fanex.CustomerSetting.Betting.Keno.Update = function (ondone) {
         type: 'post',
         url: toUrl('KenoBetting/EditBetSettingPost'),
         data: {
-            id: custId,
+            custId: custId,
             uplineId: uplineId,
             userId: userId,
-            txtCustomerObject: JSON.stringify(model),
-            siteName: siteName
+            txtCustomerObject: JSON.stringify(model)            
         }
     })
     .success(function (data) {

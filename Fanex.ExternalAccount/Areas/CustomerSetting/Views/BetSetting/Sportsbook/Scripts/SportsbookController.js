@@ -345,11 +345,10 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
         type: 'post',
         url: toUrl('Sportsbook/EditBetSettingPost'),
         data: {
-            id: custId,
+            custId: custId,
             uplineId: uplineId,
             userId: userId,
-            txtCustomerObject: JSON.stringify(model),
-            siteName: siteName
+            txtCustomerObject: JSON.stringify(model)
         }
     })
     .success(function (data) {

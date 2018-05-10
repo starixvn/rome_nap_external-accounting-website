@@ -25,11 +25,10 @@ Fanex.CustomerSetting.Betting.Casino.Update = function (ondone) {
         type: 'post',
         url: toUrl('CasinoBetting/EditBetSettingPost'),
         data: {
-            id: custId,
+            custId: custId,
             uplineId: uplineId,
             userId: userId,
-            txtCustomerObject: JSON.stringify(model),
-            siteName: siteName
+            txtCustomerObject: JSON.stringify(model)
         }
     })
     .success(function (data) {
