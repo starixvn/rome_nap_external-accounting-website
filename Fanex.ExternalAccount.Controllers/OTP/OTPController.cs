@@ -39,22 +39,22 @@
         }
 
         [HttpPost]
-        public ActionResult VerifyOTP(string otp, string _pt, string _cd, string __RequestVerificationToken)
+        public ActionResult VerifyOTP(VerifyOtpCommand command)
         {
-            if(!AntiXSRFUtil.ValidateAntiXSRF(Request, __RequestVerificationToken))
+            if(!AntiXSRFUtil.ValidateAntiXSRF(Request, command.__RequestVerificationToken))
             {
                 return RedirectToVerifyOTPPage();
             }
 
-            var rawOTP = Encryptor.Decrypt(_pt, _cd);
+            var rawOTP = Encryptor.Decrypt(command._pt, command._cd);
             if(!string.IsNullOrEmpty(rawOTP) && rawOTP.Equals(GetOTPQuote()))
             {
                 return VerifyOTPSuccessful();
             }
 
-            var verifyOTPSusscess = customerOtpService.VerifyOtp(otp, currentSession.OTPSecretKey);
+            var verifyOTPSusscess = customerOtpService.VerifyOtp(command._otp, currentSession.OTPSecretKey);
 
-            return verifyOTPSusscess ? VerifyOTPSuccessful() : VerifyOTPFailed();
+            return verifyOTPSusscess ? VerifyOTPSuccessful(command._reset) : VerifyOTPFailed();
         }
 
         private RedirectResult VerifyOTPFailed()
@@ -66,8 +66,13 @@
 
         private RedirectResult RedirectToVerifyOTPPage() => Redirect("~/OTP/Index?reverify=true");
 
-        private RedirectResult VerifyOTPSuccessful()
+        private RedirectResult VerifyOTPSuccessful(bool reset = false)
         {
+            if(reset && !customerOtpService.TurnResetOTPOff(currentSession.CustId).IsSuccess)
+            {
+                return RedirectToVerifyOTPPage();
+            }
+
             currentSession.IsLogin = true;
 
             return currentSession.HasMultipleGroupsPermission ? RedirectToChooseGroupPage() : RedirectToHomePage();

@@ -2,6 +2,7 @@
 {
     using System;
     using DataAccess.OTP;
+    using DTO;
     using DTO.OTP;
     using ONEbook.OTP.Services;
 
@@ -10,6 +11,8 @@
         CustomerOtp EnableOTP(int custId);
 
         bool VerifyOtp(string otp, string secretKey);
+
+        Result TurnResetOTPOff(int custId);
     }
 
     public class CustomerOtpService : ICustomerOtpService
@@ -42,5 +45,7 @@
 
             return otpService.VerifyOtp(secretKey, otp);
         }
+
+        public Result TurnResetOTPOff(int custId) => customerOtpDataAccess.TurnResetOTPOff(custId);
     }
 }

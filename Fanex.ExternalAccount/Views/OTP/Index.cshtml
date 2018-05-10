@@ -33,14 +33,14 @@
                     </div>
                 }
                 <div class="row">
-                    <input type="number" class="form-control" name="otp" id="otp" placeholder="Input OTP" maxlength="6">
+                    <input type="number" class="form-control" name="_otp" id="_otp" placeholder="Input OTP" maxlength="6">
                     <label id="otp-error" class="error"></label>
                     <span class="icon-lock"></span>
 
                     <input type="hidden" name="_cd" id="_cd" value="@Model.Code">
                     <input type="hidden" name="_pt" id="_pt" value="">
                     <input type="hidden" id="_username" value="@Model.Username">
-                    <input type="hidden" id="_reset" value="@Json.Encode(Model.Reset)">
+                    <input type="hidden" id="_reset" name="_reset" value="@Json.Encode(Model.Reset)">
                 </div>
 
                 <div class="row">
