@@ -1,6 +1,15 @@
 USE [CustDB]
 GO
-/****** Object:  StoredProcedure [dbo].[EAS_OTP_CustomerOTPSecretKeyUpdate]    Script Date: 05/10/2018 9:30:30 AM ******/
+/*
+	Creator: David
+	Date: 2018-05-10
+	DB: DBCUST.CustDB
+	Task: Update secret key 
+
+	Revisions:
+
+	Param's Explanation:
+*/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -12,22 +21,13 @@ ALTER PROCEDURE [dbo].[EAS_OTP_CustomerOTPSecretKeyUpdate]
 	@ErrCode	INT = 0 OUTPUT,
 	@ErrMsg		NVARCHAR(200) = '' OUTPUT
 AS
-/*
-	Creator: David
-	Date: 2018-05-10
-	DB: DBCUST.CustDB
-	Task: Reset 
-
-	Revisions:
-
-	Param's Explanation:
-*/
 BEGIN
 	SET NOCOUNT ON
 
 BEGIN TRY
 	UPDATE [dbo].[EASCustOTP] WITH(ROWLOCK, UPDLOCK) 
-	SET  [SecretKey] = @SecretKey
+	SET  [SecretKey] = @SecretKey,
+		 [ModifyDate] = GETDATE()
 	WHERE dbo.EASCustOTP.CustID = @CustID
  END TRY
  BEGIN CATCH

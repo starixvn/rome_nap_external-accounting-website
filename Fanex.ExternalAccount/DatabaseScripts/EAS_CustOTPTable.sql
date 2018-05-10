@@ -18,7 +18,6 @@ CREATE TABLE [dbo].[EASCustOTP](
 	[CustID] [int] NOT NULL,
 	[SecretKey] [nvarchar](50) NOT NULL,
 	[Enabled] [bit] NOT NULL DEFAULT ((0)),
-	[Reset] [bit] NOT NULL DEFAULT ((0)),
 	[ModifyDate] [datetime] NULL,
  CONSTRAINT [PK_EASCustOTP] PRIMARY KEY CLUSTERED 
 (

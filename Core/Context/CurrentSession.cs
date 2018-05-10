@@ -19,6 +19,7 @@
         public const string EASOTPFailedCounter = "EASOTPFailedCounter";
         public const string EASOTPEncryptCode = "EASOTPEncryptCode";
         public const string EASOTPSecretKey = "EASOTPSecretKey";
+        public const string EASOTPModifyDate = "EASOTPModifyDate";
         public const string EASInternalAdmin = "EASInternalAdmin";
         public const string EASITAdmin = "EASITAdmin";
         public const string EASGroupId = "EASGroupId";
@@ -115,6 +116,7 @@
             set { HttpContext.Current.Session[EASHasMultipleGroupsPermission] = value; }
         }
 
+
         public bool InvalidOTP
         {
             get { return Utils.ToBoolean(HttpContext.Current.Session[EASInvalidOTP]); }
@@ -136,21 +138,27 @@
             set { HttpContext.Current.Session[EASOTPFailedCounter] = value; }
         }
         
-
         public bool EnaledOTP
         {
             get { return Utils.ToBoolean(HttpContext.Current.Session[EASEnaledOTP]); }
 
             set { HttpContext.Current.Session[EASEnaledOTP] = value; }
         }
-        
+
         public string OTPSecretKey
         {
             get { return Utils.ToString(HttpContext.Current.Session[EASOTPSecretKey]); }
 
             set { HttpContext.Current.Session[EASOTPSecretKey] = value; }
         }
-        
+
+        public string OTPModifyDate
+        {
+            get { return Utils.ToString(HttpContext.Current.Session[EASOTPModifyDate]); }
+
+            set { HttpContext.Current.Session[EASOTPModifyDate] = value; }
+        }
+
         public bool IsInternalAdmin
         {
             get { return Utils.ToBoolean(HttpContext.Current.Session[EASInternalAdmin]); }

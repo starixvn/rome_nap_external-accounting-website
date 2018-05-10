@@ -1,6 +1,15 @@
 USE [CustDB]
 GO
-/****** Object:  StoredProcedure [dbo].[EAS_OTP_CustomerOTPSel]    Script Date: 05/03/2018 2:46:30 PM ******/
+/*
+	Creator: David
+	Date: 2018-05-03
+	DB: DBCUST.CustDB
+	Task: Select Customer OTP
+
+	Revisions:
+
+	Param's Explanation:
+*/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9,20 +18,10 @@ GO
 ALTER PROCEDURE [dbo].[EAS_OTP_CustomerOTPSel]
 	@CustID INT
 AS
-/*
-	Creator: David
-	Date: 2018-05-03
-	DB: DBCUST.CustDB
-	Task: Select secret key
-
-	Revisions:
-
-	Param's Explanation:
-*/
 BEGIN
 	SET NOCOUNT ON
 
-	SELECT SecretKey, [Enabled], [Reset]
+	SELECT [SecretKey], [Enabled], [ModifyDate]
 	FROM dbo.EASCustOTP WITH(NOLOCK)
 	WHERE CustID = @CustID
 END

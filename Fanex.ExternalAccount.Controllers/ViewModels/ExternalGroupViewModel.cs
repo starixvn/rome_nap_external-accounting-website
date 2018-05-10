@@ -12,5 +12,7 @@
         public bool EnabledOTP { get; set; }
 
         public string Code { get; set; }
+
+        public string ModifyDate { get; set; }
     }
 }

@@ -242,7 +242,8 @@
                 Username = _currentSession.UserName,
                 GroupList = _userService.GroupList().ToList(),
                 Code = _currentSession.OTPEncryptCode,
-                EnabledOTP = _currentSession.EnaledOTP
+                EnabledOTP = _currentSession.EnaledOTP,
+                ModifyDate = _currentSession.OTPModifyDate
             });
         }
 

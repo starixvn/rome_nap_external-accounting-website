@@ -10,6 +10,6 @@
 
         public string __RequestVerificationToken { get; set; }
 
-        public bool _reset { get; set; }
+        public string _md { get; set; }
     }
 }

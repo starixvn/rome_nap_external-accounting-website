@@ -8,6 +8,6 @@
 
         public string Code { get; set; }
 
-        public bool Reset { get; set; }
+        public string ModifyDate { get; set; }
     }
 }
