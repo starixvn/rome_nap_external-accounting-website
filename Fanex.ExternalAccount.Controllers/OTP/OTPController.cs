@@ -20,25 +20,21 @@
             customerOtpService = new CustomerOtpService();
         }
 
-        public ActionResult Index(bool reverify = false)
+        public ActionResult Index()
         {
-            SetUserOTPSession(reverify);
-
-            if (currentSession.OTPFailedCounter.Equals(LimitedFailure))
-            {
-                return RedirectToLoginPage();
-            }
+            SetUserOTPSession();
 
             if (!currentSession.EnaledOTP)
             {
-                return VerifyOTPSuccessful();
+                return LoginSuccessful();
             }
 
             return View(new CustomerOtpViewModel {
-                Reverify = reverify,
                 Username = currentSession.UserName,
                 Code = currentSession.OTPEncryptCode,
-                ModifyDate = currentSession.OTPModifyDate
+                ModifyDate = currentSession.OTPModifyDate,
+                FailedCounter = currentSession.OTPFailedCounter,
+                RequireInputOTP = currentSession.InvalidOTP
             });
         }
 
@@ -47,7 +43,7 @@
         {
             if (!AntiXSRFUtil.ValidateAntiXSRF(Request, command.__RequestVerificationToken))
             {
-                return RedirectToVerifyOTPPage();
+                return LoginFail();
             }
 
             var rawOTPQuote = Encryptor.Decrypt(command._pt, command._cd);
@@ -56,19 +52,32 @@
                 && !string.IsNullOrEmpty(rawOTPQuote) 
                 && rawOTPQuote.Equals(GetOTPQuote()))
             {
-                return VerifyOTPSuccessful();
+                return LoginSuccessful();
             }
 
-            var verifyOTPSusscess = customerOtpService.VerifyOtp(command._otp, currentSession.OTPSecretKey);
+            var verifyOTPSuccess = customerOtpService.VerifyOtp(command._otp, currentSession.OTPSecretKey);
 
-            return verifyOTPSusscess ? VerifyOTPSuccessful() : RedirectToVerifyOTPPage();
+            return verifyOTPSuccess ? LoginSuccessful() : LoginFail();
         }
 
-        private RedirectResult RedirectToVerifyOTPPage() => Redirect("~/OTP/Index?reverify=true");
+        private RedirectResult LoginFail()
+        {
+            currentSession.OTPFailedCounter += 1;
 
-        private RedirectResult VerifyOTPSuccessful()
+            if (currentSession.OTPFailedCounter.Equals(LimitedFailure))
+            {
+                return RedirectToLoginPage();
+            }
+
+            return RedirectToOTPPage();
+        }
+
+        private RedirectResult RedirectToOTPPage() => Redirect("~/OTP/Index");
+
+        private RedirectResult LoginSuccessful()
         {
             currentSession.IsLogin = true;
+            currentSession.InvalidOTP = false;
 
             return currentSession.HasMultipleGroupsPermission ? RedirectToChooseGroupPage() : RedirectToHomePage();
         }
@@ -85,9 +94,10 @@
 
         private RedirectResult RedirectToChooseGroupPage() => Redirect("~/Account/ExternalGroup");
 
-        private string GetOTPQuote() => $"{currentSession.UserName} is already verified OTP.";
+        private string GetOTPQuote() 
+            => $"{currentSession.UserName} is already verified OTP and Modify date is {currentSession.OTPModifyDate} !";
 
-        private void SetUserOTPSession(bool reverify)
+        private void SetUserOTPSession()
         {
             var customerOtp = customerOtpService.EnableOTP(currentSession.CustId);
 
@@ -96,11 +106,6 @@
             currentSession.EnaledOTP = customerOtp.Enabled;
             currentSession.OTPSecretKey = customerOtp.SecretKey;
             currentSession.OTPModifyDate = customerOtp.ModifyDate;
-
-            if (reverify)
-            {
-                currentSession.OTPFailedCounter += 1;
-            }
         }
     }
 }

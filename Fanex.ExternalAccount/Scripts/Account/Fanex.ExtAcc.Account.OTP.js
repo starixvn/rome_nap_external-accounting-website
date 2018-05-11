@@ -2,6 +2,7 @@
     var username = $("#_username").val();
 
     if ($("#_md").val() == localStorage.getItem(username + "_md")
+        && $("#_requireInputOTP").val() == "false"
         && localStorage.getItem(username + "_pt") != null
         && localStorage.getItem(username + "_pt") != ""
         && localStorage.getItem(username + "_cd") != null

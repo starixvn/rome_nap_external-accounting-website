@@ -7509,7 +7509,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} is already verified OTP..
+        ///   Looks up a localized string similar to {0} is already verified OTP and Modify date is {1} !.
         /// </summary>
         internal static string OTPQuote {
             get {

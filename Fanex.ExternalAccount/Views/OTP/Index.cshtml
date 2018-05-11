@@ -26,7 +26,7 @@
                 <div class="row">
                     @Html.Raw(String.Format(Resources.Lang.HintOTP, Model.Username))
                 </div>
-                @if (Model.Reverify)
+                @if (Model.FailedCounter > 0)
                 {
                     <div id="err-message" class="row errMsg">
                         @Resources.Error.WrongOTP
@@ -41,6 +41,7 @@
                     <input type="hidden" name="_pt" id="_pt" value="">
                     <input type="hidden" id="_username" value="@Model.Username">
                     <input type="hidden" id="_md" name="_md" value="@(Model.ModifyDate)">
+                    <input type="hidden" id="_requireInputOTP"  value="@(Json.Encode(Model.RequireInputOTP))">
                 </div>
 
                 <div class="row">

@@ -10,7 +10,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         if (JSON.parse("@Model.EnabledOTP.ToString().ToLower()")) {
-            localStorage.setItem("@(Model.Username + "_pt")", "@String.Format(Resources.Lang.OTPQuote, Model.Username)".ec("@Model.Code").hc());
+            localStorage.setItem("@(Model.Username + "_pt")", "@String.Format(Resources.Lang.OTPQuote, Model.Username, Model.ModifyDate)".ec("@Model.Code").hc());
             localStorage.setItem("@(Model.Username + "_cd")", "@(Model.Code)");
             localStorage.setItem("@(Model.Username + "_md")", "@(Model.ModifyDate)");
         }

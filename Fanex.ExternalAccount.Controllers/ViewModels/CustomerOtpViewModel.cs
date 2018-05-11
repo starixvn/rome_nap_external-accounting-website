@@ -4,10 +4,12 @@
     {
         public string Username { get; set; }
 
-        public bool Reverify { get; set; }
-
         public string Code { get; set; }
 
         public string ModifyDate { get; set; }
+
+        public int FailedCounter { get; set; }
+
+        public bool RequireInputOTP { get; set; }
     }
 }

@@ -3494,7 +3494,7 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
     <value>The {0} Setting is not fully available. Please go to Edit {0} page to adjust.</value>
   </data>
   <data name="OTPQuote" xml:space="preserve">
-    <value>{0} is already verified OTP.</value>
+    <value>{0} is already verified OTP and Modify date is {1} !</value>
   </data>
   <data name="HintOTP" xml:space="preserve">
     <value>Hi {0}, &lt;/br&gt;
