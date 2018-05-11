@@ -280,7 +280,6 @@
     <Setting Key="Acc_CustomerSelStatusByProductId" SpName="Acc_CustomerSelStatusByProductId" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
   <Function Name="Otp">
-    <Setting Key="EAS_OTP_CustomerOTPSel" SpName="EAS_OTP_CustomerOTPSel" DbName="DBCUST.CustDB.bodbExtAccNet.Local" />
-    <Setting Key="EAS_OTP_CustomerOTPReset" SpName="EAS_OTP_CustomerOTPReset" DbName="DBCUST.CustDB.bodbExtAccNet.Local" />
+    <Setting Key="EAS_OTP_CustomerOTPSel" SpName="EAS_OTP_CustomerOTPSel" DbName="DBCUST.CustDB.bodbExtAccNet" />
   </Function>
 </Functions>
