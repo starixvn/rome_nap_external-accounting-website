@@ -19,7 +19,7 @@
         public const string EASOTPFailedCounter = "EASOTPFailedCounter";
         public const string EASOTPEncryptCode = "EASOTPEncryptCode";
         public const string EASOTPSecretKey = "EASOTPSecretKey";
-        public const string EASOTPModifyDate = "EASOTPModifyDate";
+        public const string EASOTPModifiedDate = "EASOTPModifiedDate";
         public const string EASInternalAdmin = "EASInternalAdmin";
         public const string EASITAdmin = "EASITAdmin";
         public const string EASGroupId = "EASGroupId";
@@ -152,11 +152,11 @@
             set { HttpContext.Current.Session[EASOTPSecretKey] = value; }
         }
 
-        public string OTPModifyDate
+        public string OTPModifiedDate
         {
-            get { return Utils.ToString(HttpContext.Current.Session[EASOTPModifyDate]); }
+            get { return Utils.ToString(HttpContext.Current.Session[EASOTPModifiedDate]); }
 
-            set { HttpContext.Current.Session[EASOTPModifyDate] = value; }
+            set { HttpContext.Current.Session[EASOTPModifiedDate] = value; }
         }
 
         public bool IsInternalAdmin

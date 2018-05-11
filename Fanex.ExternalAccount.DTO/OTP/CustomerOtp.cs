@@ -8,6 +8,6 @@
 
         public bool Enabled { get; set; }
 
-        public string ModifyDate { get; set; }
+        public string ModifiedDate { get; set; }
     }
 }

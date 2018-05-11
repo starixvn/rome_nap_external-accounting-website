@@ -1536,10 +1536,6 @@
     <Content Include="Content\um.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
-    <Content Include="DatabaseScripts\EAS_OTP_CustomerOTP_Insert.sql" />
-    <Content Include="DatabaseScripts\EAS_CustOTPTable.sql" />
-    <Content Include="DatabaseScripts\EAS_OTP_CustomerOTPSecretKeyUpdate.sql" />
-    <Content Include="DatabaseScripts\EAS_OTP_CustomerOTPSel.sql" />
     <Content Include="Images\tick.png" />
     <Content Include="Images\x5.gif" />
     <Content Include="Scripts\Fanex.ExtAcc.EcHcUtil.js" />

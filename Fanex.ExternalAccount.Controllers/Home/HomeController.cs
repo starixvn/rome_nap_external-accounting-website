@@ -23,7 +23,7 @@
                Username = _currentSession.UserName,
                Code = _currentSession.OTPEncryptCode,
                EnabledOTP = _currentSession.EnaledOTP,
-               ModifyDate = _currentSession.OTPModifyDate
+               ModifiedDate = _currentSession.OTPModifiedDate
            });
 
         public ActionResult TestLog()

@@ -243,7 +243,7 @@
                 GroupList = _userService.GroupList().ToList(),
                 Code = _currentSession.OTPEncryptCode,
                 EnabledOTP = _currentSession.EnaledOTP,
-                ModifyDate = _currentSession.OTPModifyDate
+                ModifiedDate = _currentSession.OTPModifiedDate
             });
         }
 

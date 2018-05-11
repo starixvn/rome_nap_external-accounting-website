@@ -6,10 +6,10 @@
 
         public string Code { get; set; }
 
-        public string ModifyDate { get; set; }
+        public string ModifiedDate { get; set; }
 
         public int FailedCounter { get; set; }
 
-        public bool RequireInputOTP { get; set; }
+        public bool RequiredInputOTP { get; set; }
     }
 }

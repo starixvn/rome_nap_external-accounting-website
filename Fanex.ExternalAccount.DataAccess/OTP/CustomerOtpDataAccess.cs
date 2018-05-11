@@ -1,10 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.OTP
 {
     using System.Collections;
-    using System.Data;
     using Common;
     using Data;
-    using DTO;
     using DTO.OTP;
     using Utilities;
 
@@ -20,7 +18,7 @@
             // Cannot use dynamic mapping here due to old fanex.data
             var enabled = false;
             var secretKey = string.Empty;
-            var modifyDate = string.Empty;
+            var modifiedDate = string.Empty;
 
             using (var db = new ObjectDb("EAS_OTP_CustomerOTPSel"))
             {
@@ -33,14 +31,14 @@
                 {
                     enabled = reader.ToBoolean("Enabled");
                     secretKey = reader.ToString("SecretKey"); 
-                    modifyDate = Converter.ToDateTime(reader.ToString("modifyDate")).Ticks.ToString();
+                    modifiedDate = Converter.ToDateTime(reader.ToString("ModifiedDate")).Ticks.ToString();
                 }
 
                 return new CustomerOtp
                 {
                     Enabled = enabled,
                     SecretKey = secretKey,
-                    ModifyDate = modifyDate
+                    ModifiedDate = modifiedDate
                 };
             }
         }

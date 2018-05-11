@@ -35,9 +35,9 @@
             return View(new CustomerOtpViewModel {
                 Username = currentSession.UserName,
                 Code = currentSession.OTPEncryptCode,
-                ModifyDate = currentSession.OTPModifyDate,
+                ModifiedDate = currentSession.OTPModifiedDate,
                 FailedCounter = currentSession.OTPFailedCounter,
-                RequireInputOTP = currentSession.InvalidOTP
+                RequiredInputOTP = currentSession.InvalidOTP
             });
         }
 
@@ -51,7 +51,7 @@
 
             var rawOTPQuote = Encryptor.Decrypt(command._pt, command._cd);
 
-            if(command._md.Equals(currentSession.OTPModifyDate)
+            if(command._md.Equals(currentSession.OTPModifiedDate)
                 && !string.IsNullOrEmpty(rawOTPQuote) 
                 && rawOTPQuote.Equals(GetOTPQuote()))
             {
@@ -99,7 +99,7 @@
         private RedirectResult RedirectToChooseGroupPage() => Redirect("~/Account/ExternalGroup");
 
         private string GetOTPQuote() 
-            => String.Format(OTP.OTPQuote, currentSession.UserName, currentSession.OTPModifyDate);
+            => String.Format(OTP.OTPQuote, currentSession.UserName, currentSession.OTPModifiedDate);
 
         private void SetUserOTPSession()
         {
@@ -109,7 +109,7 @@
             currentSession.OTPEncryptCode = Encryptor.RandomCaptcha;
             currentSession.EnaledOTP = customerOtp.Enabled;
             currentSession.OTPSecretKey = customerOtp.SecretKey;
-            currentSession.OTPModifyDate = customerOtp.ModifyDate;
+            currentSession.OTPModifiedDate = customerOtp.ModifiedDate;
         }
     }
 }
