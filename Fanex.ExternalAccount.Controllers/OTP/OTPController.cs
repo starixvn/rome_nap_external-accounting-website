@@ -1,8 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using System;
     using System.Web.Mvc;
     using Authentication;
     using Core.Context;
+    using Logging.Extensions.Web;
+    using Resources;
     using Service.OTP;
     using ViewModels;
     using CurrentSession = Core.Context.CurrentSession;
@@ -66,6 +69,7 @@
 
             if (currentSession.OTPFailedCounter.Equals(LimitedFailure))
             {
+                ExceptionHandler.Handle(new Exception($"{currentSession.UserName} is failed OTP 5 times."));
                 return RedirectToLoginPage();
             }
 
@@ -95,7 +99,7 @@
         private RedirectResult RedirectToChooseGroupPage() => Redirect("~/Account/ExternalGroup");
 
         private string GetOTPQuote() 
-            => $"{currentSession.UserName} is already verified OTP and Modify date is {currentSession.OTPModifyDate} !";
+            => String.Format(OTP.OTPQuote, currentSession.UserName, currentSession.OTPModifyDate);
 
         private void SetUserOTPSession()
         {

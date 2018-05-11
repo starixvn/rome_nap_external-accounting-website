@@ -86,14 +86,5 @@ namespace Resources {
                 return ResourceManager.GetString("ThereIsNoChange", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wrong OTP, please try again..
-        /// </summary>
-        internal static string WrongOTP {
-            get {
-                return ResourceManager.GetString("WrongOTP", resourceCulture);
-            }
-        }
     }
 }

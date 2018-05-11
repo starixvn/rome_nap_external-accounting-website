@@ -1,6 +1,6 @@
 ﻿@model CustomerOtpViewModel
 @{
-    ViewBag.Title = "OTP";
+    ViewBag.Title = OTP.Title;
     Layout = null;
 }
 
@@ -21,15 +21,15 @@
         {
             <div class="block-login">
                 <div class="row">
-                    <div class="otp-logo">@Resources.Lang.OTP</div>
+                    <div class="otp-logo">@OTP.Title</div>
                 </div>
                 <div class="row">
-                    @Html.Raw(String.Format(Resources.Lang.HintOTP, Model.Username))
+                    @Html.Raw(String.Format(OTP.HintOTP, Model.Username))
                 </div>
                 @if (Model.FailedCounter > 0)
                 {
                     <div id="err-message" class="row errMsg">
-                        @Resources.Error.WrongOTP
+                        @OTP.WrongOTP
                     </div>
                 }
                 <div class="row">

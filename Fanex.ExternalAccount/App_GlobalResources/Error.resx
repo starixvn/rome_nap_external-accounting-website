@@ -126,7 +126,4 @@
   <data name="ThereIsNoChange" xml:space="preserve">
     <value>There is no change to update.</value>
   </data>
-  <data name="WrongOTP" xml:space="preserve">
-    <value>Wrong OTP, please try again.</value>
-  </data>
 </root>
