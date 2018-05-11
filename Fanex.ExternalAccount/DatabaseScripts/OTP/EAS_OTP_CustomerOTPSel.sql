@@ -21,7 +21,7 @@ AS
 BEGIN
 	SET NOCOUNT ON
 
-	SELECT [SecretKey], [Enabled], [ModifyDate]
+	SELECT [SecretKey], [Enabled], [ModifiedDate]
 	FROM dbo.EASCustOTP WITH(NOLOCK)
 	WHERE CustID = @CustID
 END

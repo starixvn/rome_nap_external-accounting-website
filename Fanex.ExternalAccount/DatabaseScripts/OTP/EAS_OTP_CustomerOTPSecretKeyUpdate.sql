@@ -27,7 +27,7 @@ BEGIN
 BEGIN TRY
 	UPDATE [dbo].[EASCustOTP] WITH(ROWLOCK, UPDLOCK) 
 	SET  [SecretKey] = @SecretKey,
-		 [ModifyDate] = GETDATE()
+		 [ModifiedDate] = GETDATE()
 	WHERE dbo.EASCustOTP.CustID = @CustID
  END TRY
  BEGIN CATCH
