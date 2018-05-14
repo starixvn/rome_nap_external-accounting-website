@@ -274,8 +274,12 @@
     display: none !important;
 }
 
-.no-spin::-webkit-inner-spin-button, .no-spin::-webkit-outer-spin-button {
-    -webkit-appearance: none !important;
-    margin: 0 !important;
-    -moz-appearance:textfield !important;
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
 }
