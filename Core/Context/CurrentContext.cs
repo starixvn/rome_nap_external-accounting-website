@@ -1,46 +1,14 @@
 ﻿namespace Fanex.ExternalAccount.Core.Context
 {
-    using System;
-    using System.Collections.Generic;
     using System.Globalization;
-    using System.IO;
-    using System.Linq;
     using System.Net;
-    using System.Text.RegularExpressions;
     using System.Web;
-    using Common;
     using CustomerSetting.IP.Utils;
     using CustomerSetting.Module.Core.Web;
 
     public class CurrentContext : ICurrentContext
     {
-        private readonly string[] custIdParamNames =
-            {"custId", "customerId", "parentId", "srecommend", "mrecommend", "recommend", "agentId"};
-
-        private readonly string[] custIdsNames = { "custIds", "customerIds" };
-
-        public static string LoginErrorMessage { get; set; } = string.Empty;
-
         public static ICurrentContext Instance => new CurrentContext();
-
-        public int CustId
-        {
-            get
-            {
-                var custId = GetCustomerIdInQueryString();
-
-                if (custId <= 0)
-                {
-                    custId = GetCustomerIdInJson();
-                }
-
-                return custId;
-            }
-        }
-
-        public IEnumerable<int> CustIds => GetCustomerIdsInQueryString();
-
-        public static string GroupName => HttpContext.Current.Request["groupName"];
 
         public HttpContext Context => HttpContext.Current;
 
@@ -132,90 +100,6 @@
             {
                 return null;
             }
-        }
-
-        private int GetCustomerIdInQueryString()
-        {
-            var request = HttpContext.Current.Request;
-
-            foreach (var custIdParamName in custIdParamNames)
-            {
-                var custId = Converter.ToInt(request[custIdParamName]);
-
-                if (custId > 0)
-                {
-                    return custId;
-                }
-            }
-
-            return 0;
-        }
-
-        private IEnumerable<int> GetCustomerIdsInQueryString()
-        {
-            var request = HttpContext.Current.Request;
-            foreach (var custIdName in custIdsNames)
-            {
-                var custIds = request[custIdName];
-                if (!string.IsNullOrEmpty(custIds))
-                {
-                    return custIds.Split(',').Select(id => Converter.ToInt(id));
-                }
-            }
-
-            return Enumerable.Empty<int>();
-        }
-
-        private int GetCustomerIdInJson()
-        {            
-            foreach (var custIdName in custIdParamNames)
-            {
-                var custId = GetPropertyValueInJson(custIdName);
-                if (custId > 0)
-                {
-                    return custId;
-                }
-            }
-
-            return 0;
-        }
-
-        private static int GetPropertyValueInJson(string propertyName)
-        {
-            var propertyValue = 0;
-            if (string.IsNullOrEmpty(propertyName))
-            {
-                return propertyValue;
-            }
-
-            var jsonString = GetJsonDataInRequestBody(HttpContext.Current.Request.InputStream);
-            var pattern = $"(\"{propertyName}\":)(?<paramValue>[^,}}]+)";
-            var regexMatch = Regex.Match(jsonString, pattern, RegexOptions.IgnoreCase);
-            if (regexMatch.Success)
-            {
-                propertyValue = Convert.ToInt32(regexMatch.Groups["paramValue"].ToString().Replace("\"", string.Empty));
-            }
-
-            return propertyValue;
-        }
-
-        private static string GetJsonDataInRequestBody(Stream requestStream)
-        {
-            if (requestStream == null)
-            {
-                return string.Empty;
-            }
-
-            requestStream.Seek(0, SeekOrigin.Begin);
-            var bodyData = new StreamReader(requestStream).ReadToEnd();
-            requestStream.Seek(0, SeekOrigin.Begin);
-            if (!string.IsNullOrWhiteSpace(bodyData)
-                && bodyData.Contains("{"))
-            {
-                return HttpUtility.UrlDecode(bodyData).Replace(@"\", string.Empty);
-            }
-
-            return string.Empty;
         }
     }
 }

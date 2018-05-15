@@ -1,0 +1,141 @@
+﻿namespace Fanex.ExternalAccount.Core.Context
+{
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using System.Web;
+    using Common;
+
+    public interface IExtRequest
+    {
+        string GroupName { get; }
+
+        int CustId { get; }
+
+        IEnumerable<int> CustIds { get; }
+    }
+
+    public class ExtRequest : IExtRequest
+    {
+        private readonly string[] custIdParamNames =
+            {"custId", "customerId", "parentId", "srecommend", "mrecommend", "recommend", "agentId"};
+
+        private readonly string[] custIdsNames = { "custIds", "customerIds" };
+
+        public static IExtRequest Instance => new ExtRequest();
+
+        public string GroupName
+        {
+            get
+            {
+                var groupName = HttpContext.Current.Request["groupName"];
+
+                return string.IsNullOrEmpty(groupName) ? CurrentSession.Instance.CurrencyGroup : groupName;
+            }
+        }                
+
+        public int CustId
+        {
+            get
+            {
+                var custId = GetCustomerIdInQueryString();
+
+                if (custId <= 0)
+                {
+                    custId = GetCustomerIdInJson();
+                }
+
+                return custId;
+            }
+        }
+
+        public IEnumerable<int> CustIds => GetCustomerIdsInQueryString();
+            
+
+        private int GetCustomerIdInQueryString()
+        {
+            var request = HttpContext.Current.Request;
+
+            foreach (var custIdParamName in custIdParamNames)
+            {
+                var custId = Converter.ToInt(request[custIdParamName]);
+
+                if (custId > 0)
+                {
+                    return custId;
+                }
+            }
+
+            return 0;
+        }
+
+        private IEnumerable<int> GetCustomerIdsInQueryString()
+        {
+            var request = HttpContext.Current.Request;
+            foreach (var custIdName in custIdsNames)
+            {
+                var custIds = request[custIdName];
+                if (!string.IsNullOrEmpty(custIds))
+                {
+                    return custIds.Split(',').Select(id => Converter.ToInt(id));
+                }
+            }
+
+            return Enumerable.Empty<int>();
+        }
+
+        private int GetCustomerIdInJson()
+        {
+            foreach (var custIdName in custIdParamNames)
+            {
+                var custId = GetPropertyValueInJson(custIdName);
+                if (custId > 0)
+                {
+                    return custId;
+                }
+            }
+
+            return 0;
+        }
+
+        private static int GetPropertyValueInJson(string propertyName)
+        {
+            var propertyValue = 0;
+            if (string.IsNullOrEmpty(propertyName))
+            {
+                return propertyValue;
+            }
+
+            var jsonString = GetJsonDataInRequestBody(HttpContext.Current.Request.InputStream);
+            var pattern = $"(\"{propertyName}\":)(?<paramValue>[^,}}]+)";
+            var regexMatch = Regex.Match(jsonString, pattern, RegexOptions.IgnoreCase);
+            if (regexMatch.Success)
+            {
+                propertyValue = Convert.ToInt32(regexMatch.Groups["paramValue"].ToString().Replace("\"", string.Empty));
+            }
+
+            return propertyValue;
+        }
+
+        private static string GetJsonDataInRequestBody(Stream requestStream)
+        {
+            if (requestStream == null)
+            {
+                return string.Empty;
+            }
+
+            requestStream.Seek(0, SeekOrigin.Begin);
+            var bodyData = new StreamReader(requestStream).ReadToEnd();
+            requestStream.Seek(0, SeekOrigin.Begin);
+            if (!string.IsNullOrWhiteSpace(bodyData)
+                && bodyData.Contains("{"))
+            {
+                return HttpUtility.UrlDecode(bodyData).Replace(@"\", string.Empty);
+            }
+
+            return string.Empty;
+        }
+    }
+}

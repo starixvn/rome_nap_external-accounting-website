@@ -87,11 +87,8 @@
             _username = CheckRequest.GetStringRequest("username", string.Empty);
             _custId = CheckRequest.GetIntRequest("custid", 0);
             _fromDate = CheckRequest.GetDateTimeRequest("fromdate", DateTime.Today);
-            _toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);
-            var groupname = CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin
-                ? CheckRequest.GetStringRequest("groupname", string.Empty)
-                : CurrentSession.CurrencyGroup;
-            _cacheName = $"CacheList{_username}{groupname}{_custId}{_fromDate}{_toDate}";
+            _toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);            
+            _cacheName = $"CacheList{_username}{ExtRequest.GroupName}{_custId}{_fromDate}{_toDate}";
         }
     }
 }

@@ -70,9 +70,7 @@
             _username = CheckRequest.GetStringRequest("username", string.Empty);
             _viewlevel = CheckRequest.GetIntRequest("viewlevel", 0);
             _custId = CheckRequest.GetIntRequest("custid", 0);
-            _groupname = CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin
-                ? CheckRequest.GetStringRequest("groupname", string.Empty)
-                : CurrentSession.CurrencyGroup;
+            _groupname = ExtRequest.GroupName;
             _winlostDate = CheckRequest.GetDateTimeRequest("date", DateTime.Today);
         }
 

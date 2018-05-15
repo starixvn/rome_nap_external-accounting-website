@@ -334,6 +334,7 @@
     <Compile Include="Context\CurrentSession.cs" />
     <Compile Include="Context\Encryptor.cs" />
     <Compile Include="Context\ExternalAccountAuthenticateAttribute.cs" />
+    <Compile Include="Context\ExtRequest.cs" />
     <Compile Include="Context\NoCaptchaSectionConfiguration.cs" />
     <Compile Include="Filters\CheckBelongingFilter.cs" />
     <Compile Include="GlobalSuppressions.cs" />
