@@ -165,7 +165,9 @@ Fanex.ExtAcc = {
                     var interval = setInterval(function () {
                         if (document.getElementById('btnSearch')) {
                             clearInterval(interval);
-
+                            Fanex.ExtAcc.Customer.superId = 0;
+                            Fanex.ExtAcc.Customer.masterId = 0;
+                            Fanex.ExtAcc.Customer.agentId = 0;
                             Fanex.ExtAcc.Customer.CurrentLevel = 4;
                             Fanex.ExtAcc.Customer.Init();
 
