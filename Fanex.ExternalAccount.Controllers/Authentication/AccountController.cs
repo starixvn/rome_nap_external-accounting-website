@@ -179,7 +179,7 @@
 
             FormsAuthentication.SetAuthCookie(model.UserName, false);
 
-            SetUserSession(model, custId, onuserId, hasMultipleGroupsPermission, hasMultipleGroupsPermission, group);
+            SetUserSession(model, custId, onuserId, hasMultipleGroupsPermission, group);
 
             return RedirectOTPPage();
         }
@@ -278,7 +278,7 @@
             _userService.Logout(onuserId, userName);
         }
 
-        private void SetUserSession(LoginModel model, int custId, int onuserId, bool isInternalAdmin, bool hasMultipleGroupsPermission, Group group)
+        private void SetUserSession(LoginModel model, int custId, int onuserId, bool isInternalAdmin, Group group)
         {
             _currentSession.UserName = model.UserName;
             _currentSession.UserId = custId;
@@ -289,7 +289,6 @@
             _currentSession.CurrencyGroup = group.GroupName;
             _currentSession.IsITAdmin = group.IsIT;
             _currentSession.FromSystem = 3;
-            _currentSession.HasMultipleGroupsPermission = hasMultipleGroupsPermission;
         }
     }
 }

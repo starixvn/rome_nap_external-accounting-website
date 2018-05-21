@@ -65,7 +65,7 @@
 
         private RedirectResult LoginFail()
         {
-            currentSession.OTPFailedCounter += 1;
+            currentSession.OTPFailedCounter++;
 
             if (currentSession.OTPFailedCounter.Equals(LimitedFailure))
             {
@@ -83,7 +83,7 @@
             currentSession.IsLogin = true;
             currentSession.InvalidOTP = false;
 
-            return currentSession.HasMultipleGroupsPermission ? RedirectToChooseGroupPage() : RedirectToHomePage();
+            return currentSession.IsInternalAdmin ? RedirectToChooseGroupPage() : RedirectToHomePage();
         }
 
         private RedirectResult RedirectToLoginPage()
