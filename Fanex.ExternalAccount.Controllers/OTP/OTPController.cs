@@ -2,6 +2,7 @@
 {
     using System;
     using System.Web.Mvc;
+    using System.Web.Security;
     using Authentication;
     using Core.Context;
     using Logging.Extensions.Web;
@@ -27,7 +28,7 @@
         {
             SetUserOTPSession();
 
-            if (!currentSession.EnaledOTP)
+            if (!currentSession.EnabledOTP)
             {
                 return LoginSuccessful();
             }
@@ -90,6 +91,10 @@
         {
             currentSession.OTPFailedCounter = 0;
             currentSession.InvalidOTP = true;
+            currentSession.UserName = string.Empty;
+            currentSession.UserId = 0;
+            currentSession.CustId = 0;
+            FormsAuthentication.SignOut();
 
             return Redirect("~/Account/Login");
         }
@@ -103,11 +108,11 @@
 
         private void SetUserOTPSession()
         {
-            var customerOtp = customerOtpService.EnableOTP(currentSession.CustId);
+            var customerOtp = customerOtpService.GetCustomerOtpDto(currentSession.CustId);
 
             Encryptor.RandomCaptcha = CaptchaUtil.GetCaptchaString(4);
             currentSession.OTPEncryptCode = Encryptor.RandomCaptcha;
-            currentSession.EnaledOTP = customerOtp.Enabled;
+            currentSession.EnabledOTP = customerOtp.Enabled;
             currentSession.OTPSecretKey = customerOtp.SecretKey;
             currentSession.OTPModifiedDate = customerOtp.ModifiedDate;
         }

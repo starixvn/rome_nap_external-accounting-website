@@ -7,7 +7,7 @@
 
     public interface ICustomerOtpService
     {
-        CustomerOtp EnableOTP(int custId);
+        CustomerOtp GetCustomerOtpDto(int custId);
 
         bool VerifyOtp(string otp, string secretKey);
     }
@@ -23,7 +23,7 @@
             this.customerOtpDataAccess = customerOtpDataAccess ?? new CustomerOtpDataAccess();
         }
 
-        public CustomerOtp EnableOTP(int custId)
+        public CustomerOtp GetCustomerOtpDto(int custId)
         {
             if (custId <= 0)
             {

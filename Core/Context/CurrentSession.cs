@@ -14,7 +14,7 @@
         public const string EASCaptcha = "EASCaptcha";
         public const string EASCurrencyGroup = "EASCurrencyGroup";
         public const string EASInvalidOTP = "EASInvalidOTP";
-        public const string EASEnaledOTP = "EASEnaledOTP";
+        public const string EASEnabledOTP = "EASEnabledOTP";
         public const string EASOTPFailedCounter = "EASOTPFailedCounter";
         public const string EASOTPEncryptCode = "EASOTPEncryptCode";
         public const string EASOTPSecretKey = "EASOTPSecretKey";
@@ -129,11 +129,11 @@
             set { HttpContext.Current.Session[EASOTPFailedCounter] = value; }
         }
         
-        public bool EnaledOTP
+        public bool EnabledOTP
         {
-            get { return Utils.ToBoolean(HttpContext.Current.Session[EASEnaledOTP]); }
+            get { return Utils.ToBoolean(HttpContext.Current.Session[EASEnabledOTP]); }
 
-            set { HttpContext.Current.Session[EASEnaledOTP] = value; }
+            set { HttpContext.Current.Session[EASEnabledOTP] = value; }
         }
 
         public string OTPSecretKey
