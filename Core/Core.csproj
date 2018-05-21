@@ -316,12 +316,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authorization\ColossusBetCheckBelongingService.cs" />
     <Compile Include="Authorization\DCS\CustomerSettingClientRegistration.cs" />
     <Compile Include="Authorization\DCS\ProductBettingLimitDcsFunction.cs" />
     <Compile Include="Authorization\DCS\ProductSettingDcsFunction.cs" />
     <Compile Include="Authorization\GoldDeluxe\GoldDeluxeAuthorizationService.cs" />
-    <Compile Include="Authorization\KenoCheckBelongingService.cs" />
     <Compile Include="Authorization\ThirdPartyStatus\EnableStatusProduct.cs" />
     <Compile Include="Authorization\ThirdPartyStatus\ProductStatusAuthorization.cs" />
     <Compile Include="Base\BaseController.cs" />
