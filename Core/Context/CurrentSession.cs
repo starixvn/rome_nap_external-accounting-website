@@ -13,6 +13,12 @@
         public const string EASOnUserId = "EASOnUserId";
         public const string EASCaptcha = "EASCaptcha";
         public const string EASCurrencyGroup = "EASCurrencyGroup";
+        public const string EASInvalidOTP = "EASInvalidOTP";
+        public const string EASEnabledOTP = "EASEnabledOTP";
+        public const string EASOTPFailedCounter = "EASOTPFailedCounter";
+        public const string EASOTPEncryptCode = "EASOTPEncryptCode";
+        public const string EASOTPSecretKey = "EASOTPSecretKey";
+        public const string EASOTPModifiedDate = "EASOTPModifiedDate";
         public const string EASInternalAdmin = "EASInternalAdmin";
         public const string EASITAdmin = "EASITAdmin";
         public const string EASGroupId = "EASGroupId";
@@ -100,6 +106,48 @@
             get { return Utils.ToString(HttpContext.Current.Session[EASCurrencyGroup]); }
 
             set { HttpContext.Current.Session[EASCurrencyGroup] = value; }
+        }
+
+        public bool InvalidOTP
+        {
+            get { return Utils.ToBoolean(HttpContext.Current.Session[EASInvalidOTP]); }
+
+            set { HttpContext.Current.Session[EASInvalidOTP] = value; }
+        }
+        
+        public string OTPEncryptCode
+        {
+            get { return Utils.ToString(HttpContext.Current.Session[EASOTPEncryptCode]); }
+
+            set { HttpContext.Current.Session[EASOTPEncryptCode] = value; }
+        }
+
+        public int OTPFailedCounter
+        {
+            get { return Utils.ToInt32(HttpContext.Current.Session[EASOTPFailedCounter]); }
+
+            set { HttpContext.Current.Session[EASOTPFailedCounter] = value; }
+        }
+        
+        public bool EnabledOTP
+        {
+            get { return Utils.ToBoolean(HttpContext.Current.Session[EASEnabledOTP]); }
+
+            set { HttpContext.Current.Session[EASEnabledOTP] = value; }
+        }
+
+        public string OTPSecretKey
+        {
+            get { return Utils.ToString(HttpContext.Current.Session[EASOTPSecretKey]); }
+
+            set { HttpContext.Current.Session[EASOTPSecretKey] = value; }
+        }
+
+        public string OTPModifiedDate
+        {
+            get { return Utils.ToString(HttpContext.Current.Session[EASOTPModifiedDate]); }
+
+            set { HttpContext.Current.Session[EASOTPModifiedDate] = value; }
         }
 
         public bool IsInternalAdmin

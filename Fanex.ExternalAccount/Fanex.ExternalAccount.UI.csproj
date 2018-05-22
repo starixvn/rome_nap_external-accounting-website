@@ -36,6 +36,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -881,6 +882,10 @@
     <Content Include="assets\bundles\dailywinloss\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\home\home.js" />
+    <Content Include="assets\bundles\home\home.min.js">
+      <DependentUpon>home.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\login\login.css" />
     <Content Include="assets\bundles\login\login.js" />
     <Content Include="assets\bundles\login\login.min.css">
@@ -888,6 +893,10 @@
     </Content>
     <Content Include="assets\bundles\login\login.min.js">
       <DependentUpon>login.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\otp\otp.js" />
+    <Content Include="assets\bundles\otp\otp.min.js">
+      <DependentUpon>otp.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\statement\index.js" />
     <Content Include="assets\bundles\statement\index.min.js">
@@ -1529,6 +1538,8 @@
     <Content Include="Content\Validators.css" />
     <Content Include="Images\tick.png" />
     <Content Include="Images\x5.gif" />
+    <Content Include="Scripts\Fanex.ExtAcc.EcHcUtil.js" />
+    <Content Include="Scripts\Account\Fanex.ExtAcc.Account.OTP.js" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.js" />
     <Content Include="Scripts\Customer\EditMultiple.js" />
     <Content Include="Scripts\Customer\MemberList.js" />
@@ -2611,6 +2622,12 @@
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
     <Content Include="Areas\ONEbook.NG2.API.config" />
+    <Content Include="assets\bundles\otp\otp.min.js.map">
+      <DependentUpon>otp.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\home\home.min.js.map">
+      <DependentUpon>home.min.js</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2712,6 +2729,7 @@
     </Content>
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\NetworkSpeed\Index.cshtml" />
+    <Content Include="Views\OTP\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
@@ -2737,6 +2755,10 @@
     <ProjectReference Include="..\Fanex.ExternalAccount.Excel\Fanex.ExternalAccount.Excel.csproj">
       <Project>{E397E628-A155-4259-A806-D8210D54025D}</Project>
       <Name>Fanex.ExternalAccount.Excel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.Resources\Fanex.ExternalAccount.Resources.csproj">
+      <Project>{825f3ea3-33ae-4427-91b5-9d30d9fefa3a}</Project>
+      <Name>Fanex.ExternalAccount.Resources</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Service\Fanex.ExternalAccount.Service.csproj">
       <Project>{D172255E-6B0A-4602-B22C-8A4BABA84D07}</Project>

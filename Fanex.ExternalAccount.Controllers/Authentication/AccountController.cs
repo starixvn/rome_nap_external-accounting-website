@@ -3,24 +3,23 @@
     using System;
     using System.Diagnostics;
     using System.Linq;
-    using System.Web.Helpers;
     using System.Web.Mvc;
     using System.Web.Security;
     using CaptchaMvc.Controllers;
     using CaptchaMvc.HtmlHelpers;
     using Core.Context;
+    using Core.Helpers;
     using CustomerSetting.Module.Core.Web;
     using DTO;
-    using Fanex.ExternalAccount.Core.Helpers;
     using DTO.UserControl;
     using Logging.Extensions.Web;
     using Service.Impl.Login;
     using Service.Interface.Login;
     using Utilities;
     using ViewModel.Account;
+    using ViewModels;
     using CurrentContext = Core.Context.CurrentContext;
     using CurrentSession = Core.Context.CurrentSession;
-    using UAParser;
 
     public class AccountController : DefaultCaptchaController
     {
@@ -37,8 +36,6 @@
             _nocaptcha = NoCaptchaSectionConfiguration.Instance;
         }
 
-
-
         [HttpGet]
         public ActionResult Login()
         {
@@ -54,14 +51,15 @@
             return View(new LoginModel
             {
                 Code = Encryptor.RandomCaptcha,
-                LoginAttempt = _currentSession.LoginAttempt
+                LoginAttempt = _currentSession.LoginAttempt,
+                InvalidOTP = _currentSession.InvalidOTP
             });
         }
 
         [HttpPost]
         public ActionResult Login(LoginModel model)
         {
-            if (!ValidateAntiXSRF(model.__RequestVerificationToken))
+            if (!AntiXSRFUtil.ValidateAntiXSRF(Request, model.__RequestVerificationToken))
             {
                 return View(new LoginModel(ViewLang.ExpiredLoginSession));
             }
@@ -87,12 +85,14 @@
             {
                 UserName = model.UserName,
                 LoginAttempt = _currentSession.LoginAttempt,
-                LoginFailedMessage = ViewLang.WrongValidationCode
+                LoginFailedMessage = ViewLang.WrongValidationCode,
+                InvalidOTP = _currentSession.InvalidOTP
             });
 
         private bool IsRequiredCaptcha(string username) =>
-            _currentSession.LoginAttempt >= LoginModel.ThresholdFailToShowingCaptcha
-            && _currentSession.UserAttempt.Equals(username, StringComparison.OrdinalIgnoreCase);
+            (_currentSession.LoginAttempt >= LoginModel.ThresholdFailToShowingCaptcha
+            && _currentSession.UserAttempt.Equals(username, StringComparison.OrdinalIgnoreCase))
+            || _currentSession.InvalidOTP;
 
         private ActionResult VerifyLoginCredential(LoginModel model, string rawPassword)
         {
@@ -181,10 +181,8 @@
 
             SetUserSession(model, custId, onuserId, hasMultipleGroupsPermission, group);
 
-            return hasMultipleGroupsPermission || _currentSession.IsITAdmin ? RedirectToChooseGroupPage() : RedirectToHomePage();
+            return RedirectOTPPage();
         }
-
-        private RedirectResult RedirectToChooseGroupPage() => Redirect("~/Account/ExternalGroup");
 
         private void SetUMTokenForInternalAlphaLogin()
         {
@@ -195,6 +193,8 @@
         }
 
         private RedirectResult RedirectToHomePage() => Redirect("~/Home/Index/");
+
+        private RedirectResult RedirectOTPPage() => Redirect("~/OTP/Index/");
 
         private bool IsValidCaptcha()
         {
@@ -234,12 +234,17 @@
         {
             if (!_currentSession.IsInternalAdmin)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToHomePage();
             }
 
-            ViewBag.GroupList = _userService.GroupList();
-
-            return View();
+            return View(new ExternalGroupViewModel
+            {
+                Username = _currentSession.UserName,
+                GroupList = _userService.GroupList().ToList(),
+                Code = _currentSession.OTPEncryptCode,
+                EnabledOTP = _currentSession.EnabledOTP,
+                ModifiedDate = _currentSession.OTPModifiedDate
+            });
         }
 
         [ExternalAccountAuthenticate]
@@ -273,39 +278,6 @@
             _userService.Logout(onuserId, userName);
         }
 
-        private bool ValidateAntiXSRF(string token)
-        {
-            try
-            {
-                var request = Request;
-                var formToken = token;
-
-                if (string.IsNullOrWhiteSpace(formToken))
-                {
-                    return false;
-                }
-
-                var cookieValue = request.Cookies[AntiForgeryConfig.CookieName];
-                if (!string.IsNullOrWhiteSpace(cookieValue?.Value))
-                {
-                    AntiForgery.Validate(cookieValue.Value, formToken);
-                }
-                else
-                {
-                    var exceptionLog = new Exception(ViewLang.CannotReadRequestValidationCookie);
-                    ExceptionHandler.Handle(exceptionLog, TraceEventType.Warning);
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex, TraceEventType.Warning);
-
-                return false;
-            }
-
-            return true;
-        }
-
         private void SetUserSession(LoginModel model, int custId, int onuserId, bool isInternalAdmin, Group group)
         {
             _currentSession.UserName = model.UserName;
@@ -317,7 +289,6 @@
             _currentSession.CurrencyGroup = group.GroupName;
             _currentSession.IsITAdmin = group.IsIT;
             _currentSession.FromSystem = 3;
-            _currentSession.IsLogin = true;
         }
     }
 }

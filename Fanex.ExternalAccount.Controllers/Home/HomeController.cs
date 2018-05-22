@@ -1,20 +1,30 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Home
 {
     using System;
-using System.Collections.Generic;
-using System.Configuration;
     using System.Web.Mvc;
+    using Core.Base;
     using Core.Context;
-    using Fanex.ExternalAccount.Core.Base;
-    using Fanex.Logging.Extensions.Web;
+    using Logging.Extensions.Web;
+    using ViewModels;
+    using CurrentSession = Core.Context.CurrentSession;
 
     public class HomeController : BaseController
     {
+        private readonly CurrentSession _currentSession;
+        public HomeController()
+        {
+            _currentSession = new CurrentSession();
+        }
+
         [ExternalAccountAuthenticate]
         public ActionResult Index()
-        {
-            return View();
-        }
+           => View(new HomeViewModel
+           {
+               Username = _currentSession.UserName,
+               Code = _currentSession.OTPEncryptCode,
+               EnabledOTP = _currentSession.EnabledOTP,
+               ModifiedDate = _currentSession.OTPModifiedDate
+           });
 
         public ActionResult TestLog()
         {
@@ -22,8 +32,6 @@ using System.Configuration;
 
             return View();
         }
-
-        
 
         //private void LogUserNWSpeed()
     }

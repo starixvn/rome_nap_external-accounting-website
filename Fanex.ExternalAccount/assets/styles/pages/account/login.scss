@@ -37,6 +37,17 @@ body {
     }
 }
 
+.otp-logo {
+    font-size: 48px;
+    color: gray;
+    font-weight: bold;
+    width: 72px;
+    height: 72px;
+    text-align: center;
+    line-height: 43px;
+    margin: 12px auto 24px;
+}
+
 .login-logo {
     @include border-radius(50%);
     border: 2px solid #dfe2e8;

@@ -1,4 +1,18 @@
+@model HomeViewModel
+
 @{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@StaticResources.RenderScripts("~/assets/bundles/home/home")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (JSON.parse("@Model.EnabledOTP.ToString().ToLower()")) {
+            localStorage.setItem("@(Model.Username + "_pt")", "@String.Format(OTP.OTPQuote, Model.Username, Model.ModifiedDate)".ec("@Model.Code").hc());
+            localStorage.setItem("@(Model.Username + "_cd")", "@(Model.Code)");
+            localStorage.setItem("@(Model.Username + "_md")", "@(Model.ModifiedDate)");
+        }
+    });
+</script>

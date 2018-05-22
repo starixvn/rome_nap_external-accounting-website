@@ -48,6 +48,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Base32, Version=1.0.0.26, Culture=neutral, PublicKeyToken=3427d4dc8cee30c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\Base32.1.0.0.26\lib\portable-net40+sl40+win+wp80\Base32.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CaptchaMvc, Version=2.4.1.0, Culture=neutral, PublicKeyToken=fe46ad421dd3b0e6, processorArchitecture=MSIL">
       <HintPath>..\packages\CaptchaMVC.2.4.1\lib\CaptchaMvc.dll</HintPath>
       <Private>True</Private>
@@ -126,6 +130,10 @@
     </Reference>
     <Reference Include="FluentValidation, Version=3.2.0.0, Culture=neutral, PublicKeyToken=a82054b837897c66, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.3.2.0.0\lib\Net40\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Gma.QrCodeNet.Encoding, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\QrCode.Net.0.4.0.0\lib\net45\Gma.QrCodeNet.Encoding.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -220,12 +228,20 @@
       <HintPath>..\packages\ONEbook.NG2.API.NAP.1.0.0.4\lib\net40\ONEbook.NG2.API.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ONEbook.OTP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ONEbook.OTP.1.0.0\lib\net461\ONEbook.OTP.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ONEbook.UM, Version=2.0.2.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ONEbook.UM.2.0.2.7\lib\net40\ONEbook.UM.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ONEbook.UM.ThirdParty, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ONEbook.UM.ThirdParty.1.0.0.0\lib\net40\ONEbook.UM.ThirdParty.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OtpSharp, Version=1.3.0.4, Culture=neutral, PublicKeyToken=1ec2a4a54aeffc1e, processorArchitecture=MSIL">
+      <HintPath>..\packages\OtpSharp.1.3.0.4\lib\net40\OtpSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RabbitMQ.Client, Version=3.5.6.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
@@ -310,6 +326,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\AccountController.cs" />
+    <Compile Include="Authentication\AntiXSRFUtil.cs" />
     <Compile Include="Authentication\CaptchaUtil.cs" />
     <Compile Include="Customer\CustomerController.cs" />
     <Compile Include="Customer\SportsbookSettingController.cs" />
@@ -319,6 +336,7 @@
     </Compile>
     <Compile Include="Home\NetworkSpeedController.cs" />
     <Compile Include="GlobalSuppressions2.cs" />
+    <Compile Include="OTP\OTPController.cs" />
     <Compile Include="Statement\StatementController.cs" />
     <Compile Include="UserControl\FunctionController.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
@@ -339,6 +357,10 @@
     <Compile Include="UserControl\UserController.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
+    <Compile Include="ViewModels\VerifyOtpCommand.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\ExternalGroupViewModel.cs" />
+    <Compile Include="ViewModels\CustomerOtpViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -363,6 +385,10 @@
     <ProjectReference Include="..\Fanex.ExternalAccount.Excel\Fanex.ExternalAccount.Excel.csproj">
       <Project>{E397E628-A155-4259-A806-D8210D54025D}</Project>
       <Name>Fanex.ExternalAccount.Excel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.Resources\Fanex.ExternalAccount.Resources.csproj">
+      <Project>{825f3ea3-33ae-4427-91b5-9d30d9fefa3a}</Project>
+      <Name>Fanex.ExternalAccount.Resources</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Service\Fanex.ExternalAccount.Service.csproj">
       <Project>{D172255E-6B0A-4602-B22C-8A4BABA84D07}</Project>
