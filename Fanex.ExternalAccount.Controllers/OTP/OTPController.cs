@@ -45,7 +45,8 @@
         [HttpPost]
         public ActionResult VerifyOTP(VerifyOtpCommand command)
         {
-            if (!AntiXSRFUtil.ValidateAntiXSRF(Request, command.__RequestVerificationToken))
+            if (!AntiXSRFUtil.ValidateAntiXSRF(Request, command.__RequestVerificationToken)
+                && command.InValid)
             {
                 return LoginFail();
             }
