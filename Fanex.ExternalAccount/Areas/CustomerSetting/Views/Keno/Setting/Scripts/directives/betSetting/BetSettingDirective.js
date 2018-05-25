@@ -17,6 +17,8 @@ KenoModule.directive('betSettingElement', ['$templateCache', function ($template
                 };
 
                 $scope.unlimited = false;
+                $scope.notAllowPlaceBets = false;
+
                 $scope.isDownlinechkDisabled = true;
 
                 if ($scope.betSetting.upline.minBet == 0) {
@@ -64,8 +66,11 @@ KenoModule.directive('betSettingElement', ['$templateCache', function ($template
 
                 $scope.$watch('[betSetting.minBet,betSetting.maxBet,betSetting.maxPerMatch,valids]', function () {
                     $scope.unlimited = $scope.betSetting.minBet == 0 && $scope.betSetting.maxBet == 0 && $scope.betSetting.maxPerMatch == 0;
+                    $scope.notAllowPlaceBets = $scope.betSetting.minBet == 0 && $scope.betSetting.maxBet == 0.1 && $scope.betSetting.maxPerMatch == 0.1;
 
-                    $scope.betSetting.isValid = ($scope.valids.minBet && $scope.valids.maxBet && $scope.valids.maxPerMatch) || $scope.unlimited;
+                    $scope.betSetting.isValid = ($scope.valids.minBet && $scope.valids.maxBet && $scope.valids.maxPerMatch)
+                        || $scope.unlimited
+                        || $scope.notAllowPlaceBets;
 
                     $scope.betSetting.isBetSettingUpdated = ($scope.betSetting.minBet != $scope.originalBetSetting.minBet) || ($scope.betSetting.maxBet != $scope.originalBetSetting.maxBet) || ($scope.betSetting.maxPerMatch != $scope.originalBetSetting.maxPerMatch);
 
