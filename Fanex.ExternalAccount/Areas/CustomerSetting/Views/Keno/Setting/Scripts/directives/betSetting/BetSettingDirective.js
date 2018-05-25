@@ -44,6 +44,10 @@ KenoModule.directive('betSettingElement', ['$templateCache', function ($template
                 }
 
                 $scope.formatNumber = function (value) {
+                    if (value.toString().endsWith(".")) {
+                        return value;
+                    }
+
                     return $filter("number")(value);
                 };
 
