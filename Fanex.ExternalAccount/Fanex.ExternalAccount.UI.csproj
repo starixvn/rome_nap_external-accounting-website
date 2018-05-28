@@ -2632,6 +2632,9 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
+    <Content Include="Configurations\connectionStrings.dev.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
