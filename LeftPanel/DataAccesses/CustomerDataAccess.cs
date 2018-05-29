@@ -9,7 +9,7 @@
 
     public interface CustomerDataAccess
     {
-        DataSet GetCustomerInfo(string username, string groupName = "ACCDDD");
+        DataSet GetCustomerInfo(string username, string groupName);
 
         DataTable EAS_CustomerSelUserInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
 

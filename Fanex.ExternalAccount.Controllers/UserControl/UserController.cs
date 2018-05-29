@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
+    using Core.Authorization;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
@@ -26,6 +27,7 @@
         private readonly IGroupService groupService = new GroupService();
         private readonly ILoginService loginService = new LoginService();
         private readonly IFunctionService functionService = new FunctionService();
+        private readonly AuthorizationService _authorization = new AuthorizationServiceImpl();
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -235,13 +237,13 @@
             }
 
             var groupId = groups
-                .FirstOrDefault(o => o.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase))?.GroupID;
+                .FirstOrDefault(o => o.GroupName.Equals(ExtRequest.GroupName, StringComparison.OrdinalIgnoreCase))?.GroupID;
 
             ViewBag.UserID = userId;
             ViewBag.Username = username;
 
             var isExternalGroup =
-                externalGroup.Any(i => i.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase));
+                externalGroup.Any(i => i.GroupName.Equals(ExtRequest.GroupName, StringComparison.OrdinalIgnoreCase));
 
             if (isExternalGroup)
             {
@@ -298,22 +300,22 @@
 
         public ActionResult InternalLogin(string username)
         {
-            string url;
+            var url = Url.Content("~") + "Shared/NoPermission";
             var checkCustomerBelongToSpecialSiteResult = CheckCustomerBelongToSpecialSite(username);
             if (IsAdminHasPermissionOnCustomer(checkCustomerBelongToSpecialSiteResult.IsSpecialSite))
             {
-                var encryption = new EncryptionThread();
-                var param = string.Join("&", username, CurrentSession.UserId, loginService.GetDbTime().Ticks,
-                    "NAPEXT");
-                param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
+                var isBelonging = _authorization.IsBelong(CurrentSession.CurrencyGroup, 0, username, false);
+                if (isBelonging)
+                {
+                    var encryption = new EncryptionThread();
+                    var param = string.Join("&", username, CurrentSession.UserId, loginService.GetDbTime().Ticks,
+                        "NAPEXT");
+                    param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
 
-                url =
-                    $"{GetInternalLoginUrl((AlphaSiteCode)checkCustomerBelongToSpecialSiteResult.SiteCode)}" +
-                    $"?{(Session[Config.InternalAgentUMToken] == null ? string.Empty : $"UMToken={Session[Config.InternalAgentUMToken]}&")}params={param}";
-            }
-            else
-            {
-                url = Url.Content("~") + "Shared/NoPermission";
+                    url =
+                        $"{GetInternalLoginUrl((AlphaSiteCode)checkCustomerBelongToSpecialSiteResult.SiteCode)}" +
+                        $"?{(Session[Config.InternalAgentUMToken] == null ? string.Empty : $"UMToken={Session[Config.InternalAgentUMToken]}&")}params={param}";
+                }
             }
 
             return Redirect(url);

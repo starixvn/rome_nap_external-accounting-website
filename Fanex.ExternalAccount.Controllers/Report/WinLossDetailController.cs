@@ -115,23 +115,20 @@
         private const string ShowAll = "showAll";
 
         private readonly Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter;
-        private readonly ICurrentSession currentSession;
-
+        private readonly IExtRequest extRequest;
         public WinLossDetailRequest() : this(null, null)
         {
         }
 
         public WinLossDetailRequest(
             Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter,
-            ICurrentSession currentSession)
+            IExtRequest extRequest)
         {
             this.selectedProductQueryGetter = selectedProductQueryGetter ?? new FilterController().AsCollection;
-            this.currentSession = currentSession ?? new Core.Context.CurrentSession();
+            this.extRequest = extRequest ?? new ExtRequest();
         }
 
-        public string groupName => currentSession.IsInternalAdmin
-            ? CheckRequest.GetStringRequest("groupname", string.Empty)
-            : currentSession.CurrencyGroup;
+        public string groupName => extRequest.GroupName;
 
         public string username { get; set; }
         public int srecommend { get; set; }

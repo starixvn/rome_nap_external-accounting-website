@@ -21,14 +21,10 @@ namespace Fanex.CustomerSetting.Module.BetSetting.App_Start
         {
             context.MapRoute(
                 AreaName + "_" + ModuleName,
-                AreaName + "/" + ModuleName + "/{controller}/{action}/{id}/{uplineId}/{userId}/{siteName}",
+                AreaName + "/" + ModuleName + "/{controller}/{action}",
                 new
                 {
-                    action = "Index",
-                    id = UrlParameter.Optional,
-                    uplineId = UrlParameter.Optional,
-                    userId = UrlParameter.Optional,
-                    siteName = UrlParameter.Optional
+                    action = "Index"
                 },
                 new[] { ModuleNameSpace });
         }

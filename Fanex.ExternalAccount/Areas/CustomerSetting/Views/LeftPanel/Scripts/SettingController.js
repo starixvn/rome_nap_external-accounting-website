@@ -10,17 +10,11 @@
     $scope.GetOnline = function (custId) {
         if (model.onlineLoaded) return;
 
-        parent.Fanex.ExtAcc.BlockUI();
-        var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
-        var token = "";
-        if (antiXSRFToken.length > 0) {
-            token = antiXSRFToken[0].value;
-        }
+        parent.Fanex.ExtAcc.BlockUI();       
 
-        $http({
+        $.ajax({
             url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetOnlineList?custId=' + custId),
-            method: 'post',
-            headers: { "X-Requested-With": "XMLHttpRequest", "__RequestVerificationToken": token }
+            method: 'post'
         })
         .success(function (result) {
             model.onlineLoaded = true;

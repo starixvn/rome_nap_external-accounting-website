@@ -69,12 +69,12 @@
             switch (roleId)
             {
                 case Role.Super:
-                    custData = superService.GetData(userId, custId, groupName: groupName);
+                    custData = superService.GetData(userId, groupName, custId);
                     break;
 
                 case Role.Master:
                     custData = masterService.GetData(userId, srecommend, custId);
-                    upperInfo = superService.GetData(userId, uplineId, groupName: groupName);
+                    upperInfo = superService.GetData(userId, groupName, uplineId);
                     break;
 
                 case Role.Agent:
@@ -83,7 +83,7 @@
                     break;
 
                 default:
-                    custData = memberService.GetData(userId, recommend, custId);
+                    custData = memberService.GetData(userId, groupName, recommend, custId);
                     upperInfo = agentService.GetData(userId, mrecommend, uplineId);
                     break;
             }

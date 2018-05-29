@@ -13,14 +13,15 @@
     {
         private readonly CustomerCommandService customerCommandService;
 
-        public UpdateCustomerController() : this(new CustomerCommandServiceImpl(), null, null)
+        public UpdateCustomerController() : this(new CustomerCommandServiceImpl(), null, null, null)
         {
         }
 
         internal UpdateCustomerController(
             CustomerCommandService customerCommandService,
             ICurrentSession currentSession,
-            ICurrentContext currentContext) : base(currentSession, currentContext)
+            ICurrentContext currentContext,
+            IExtRequest extRequest) : base(currentSession, currentContext, extRequest)
         {
             this.customerCommandService = customerCommandService;
         }

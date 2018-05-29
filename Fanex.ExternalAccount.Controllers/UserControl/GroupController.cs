@@ -130,7 +130,7 @@
         [AntiXSRFFilter]
         public ActionResult Edit(int groupId, string groupName, string description)
         {
-            var result = _groupService.EditGroup(groupName, description, CurrentSession.CustId,
+            var result = _groupService.EditGroup(ExtRequest.GroupName, description, CurrentSession.CustId,
                 CurrentContext.Ip4Address, groupId);
 
             return JsonBase(result);
@@ -162,11 +162,11 @@
             }
 
             ViewBag.GroupID = groupId;
-            ViewBag.GroupName = groupName;
+            ViewBag.GroupName = ExtRequest.GroupName;
             var isEditExtGroup =
-                externalGroup.Any(i => i.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase))
-                ? externalGroup.Any(i => i.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase))
-                : !Group.IsOfficeGroup(groupName);
+                externalGroup.Any(i => i.GroupName.Equals(ExtRequest.GroupName, StringComparison.OrdinalIgnoreCase))
+                ? externalGroup.Any(i => i.GroupName.Equals(ExtRequest.GroupName, StringComparison.OrdinalIgnoreCase))
+                : !Group.IsOfficeGroup(ExtRequest.GroupName);
 
             if (isEditExtGroup)
             {

@@ -316,12 +316,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authorization\ColossusBetCheckBelongingService.cs" />
     <Compile Include="Authorization\DCS\CustomerSettingClientRegistration.cs" />
     <Compile Include="Authorization\DCS\ProductBettingLimitDcsFunction.cs" />
     <Compile Include="Authorization\DCS\ProductSettingDcsFunction.cs" />
     <Compile Include="Authorization\GoldDeluxe\GoldDeluxeAuthorizationService.cs" />
-    <Compile Include="Authorization\KenoCheckBelongingService.cs" />
     <Compile Include="Authorization\ThirdPartyStatus\EnableStatusProduct.cs" />
     <Compile Include="Authorization\ThirdPartyStatus\ProductStatusAuthorization.cs" />
     <Compile Include="Base\BaseController.cs" />
@@ -334,7 +332,9 @@
     <Compile Include="Context\CurrentSession.cs" />
     <Compile Include="Context\Encryptor.cs" />
     <Compile Include="Context\ExternalAccountAuthenticateAttribute.cs" />
+    <Compile Include="Context\ExtRequest.cs" />
     <Compile Include="Context\NoCaptchaSectionConfiguration.cs" />
+    <Compile Include="Filters\CheckBelongingFilter.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\RequestHelper.cs" />
     <Compile Include="Helpers\GoogleAnalyticHepler.cs" />

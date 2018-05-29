@@ -3,15 +3,6 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
     alert("Fanex.ExtAcc.js module is required!")
 }
 
-$.ajaxSetup({
-    beforeSend: function (xhr) {
-        var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
-        if (antiXSRFToken.length > 0) {
-            xhr.setRequestHeader("__RequestVerificationToken", antiXSRFToken[0].value);
-        }
-    }
-});
-
 Fanex.ExtAcc.Form = {
     Init: function () {
     },

@@ -49,78 +49,60 @@ namespace Fanex.ExternalAccount.Core.Authorization
         public static readonly AuthorizationServiceImpl Instance = new AuthorizationServiceImpl();
 
         private readonly ICachingService cachingService;
-        private readonly ILoginService loginService;
         private readonly IReportService reportService;
 
-        public AuthorizationServiceImpl() : this(null, null, null)
+        public AuthorizationServiceImpl() : this(null, null)
         {
         }
 
         public AuthorizationServiceImpl(
             ICachingService cachingService,
-            ILoginService loginService,
             IReportService reportService)
         {
             this.cachingService = cachingService ?? new CachingService();
-            this.loginService = loginService ?? new LoginService();
             this.reportService = reportService ?? new ReportService();
         }
 
         public bool IsBelong()
         {
-            var currentContext = new CurrentContext();
-            if (currentContext.CustIds.Any())
+            if (ExtRequest.Instance.CustIds.Any())
             {
-                return IsBelong(CurrentSession.Instance.CurrencyGroup, currentContext.CustIds, string.Empty, true);
+                return IsBelong(ExtRequest.Instance.GroupName, ExtRequest.Instance.CustIds);
             }
 
-            return IsBelong(CurrentSession.Instance.CurrencyGroup, currentContext.CustId, string.Empty, true);
+            return IsBelong(ExtRequest.Instance.GroupName, ExtRequest.Instance.CustId, string.Empty, false);
         }
 
         public bool IsBelong(string groupName, int custId, string userName, bool isGetUplineInfo)
         {
-            var currentSession = new CurrentSession();
-
-            if (currentSession.IsInternalAdmin)
+            if (!CurrentSession.Instance.IsInternalAdmin)
             {
-                return true;
-            }
-
-            var groups = loginService.GroupList();
-            var userGroup = groups.Where(o => o.GroupID == currentSession.GroupId).ToList();
-
-            var defaultGroupName = string.IsNullOrEmpty(groupName) ? userGroup.FirstOrDefault()?.GroupName : groupName;
-
-            var result = reportService.GetCustomerInfo(defaultGroupName, custId, userName, isGetUplineInfo);
-
-            return result?.Rows.Count > 0 || custId == 0 && userGroup.Count > 0;
-        }
-
-        private bool IsBelong(string groupName, IEnumerable<int> custIds, string userName, bool isGetUplineInfo)
-        {
-            var currentSession = new CurrentSession();
-
-            if (currentSession.IsInternalAdmin)
-            {
-                return true;
-            }
-
-            var groups = loginService.GroupList();
-            var userGroup = groups.Where(o => o.GroupID == currentSession.GroupId).ToList();
-
-            var defaultGroupName = string.IsNullOrEmpty(groupName) ? userGroup.FirstOrDefault()?.GroupName : groupName;
-
-            if (defaultGroupName == null)
-            {
-                return true;
-            }
-
-            foreach (var id in custIds)
-            {
-                var result = reportService.GetCustomerInfo(defaultGroupName, id, userName, isGetUplineInfo);
-                if (result == null || result.Rows.Count <= 0)
+                if (!string.IsNullOrEmpty(groupName) && !groupName.Equals(CurrentSession.Instance.CurrencyGroup))
                 {
                     return false;
+                }
+
+                if (custId == 0 && string.IsNullOrEmpty(userName))
+                {
+                    return true;
+                }
+
+                var result = reportService.GetCustomerInfo(CurrentSession.Instance.CurrencyGroup, custId, userName, isGetUplineInfo);
+
+                return result?.Rows.Count > 0;
+            }
+
+            return CurrentSession.Instance.IsInternalAdmin;
+        }
+
+        private bool IsBelong(string groupName, IEnumerable<int> custIds)
+        {
+            foreach (var id in custIds)
+            {
+                var isBeloging = IsBelong(groupName, id, string.Empty, false);
+                if (!isBeloging)
+                {
+                    return isBeloging;
                 }
             }
 

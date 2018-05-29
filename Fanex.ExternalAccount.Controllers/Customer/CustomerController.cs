@@ -41,7 +41,6 @@
     {
         private const string DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt";
         private readonly AgentService _agentService = new AgentService();
-        private readonly AuthorizationService _authorization = new AuthorizationServiceImpl();
         private readonly CustomerService _customerService = new CustomerService();
         private readonly PTEngine.Services.ICustomerService ptCustomerService = new PTEngine.Services.CustomerService();
         private readonly MasterService _masterService = new MasterService();
@@ -277,18 +276,18 @@
 
         public ActionResult Settings(int id, int custId, int uplineId, string userName, string groupName)
         {
-            var customerSetting = GetLineInfo(groupName, userName);
-            var result = GetCustomerList(groupName, null, null, null, customerSetting);
+            var customerSetting = GetLineInfo(ExtRequest.GroupName, userName);
+            var result = GetCustomerList(ExtRequest.GroupName, null, null, null, customerSetting);
 
             ViewBag.CurrentLevel = id;
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
-            ViewBag.SyncCasino = (bool)result.Rows[0]["SyncCasino"];            
+            ViewBag.SyncCasino = (bool)result.Rows[0]["SyncCasino"];
             ViewBag.HideVirtualSports = (bool)result.Rows[0]["HideVirtualSports"];
             ViewBag.HideKeno = (bool)result.Rows[0]["HideKeno"] || !ProductSettings.ShowKenoSetting;
             ViewBag.HideGoldDeluxe = (bool)result.Rows[0]["HideGoldDeluxe"] || !ProductSettings.IsShowGoldDeluxe;
             ViewBag.HideColossusBets = (bool)result.Rows[0]["HideColossusBet"] || !ProductSettings.IsShowColossusBets;
-            ViewBag.HideSportsbook2 = Converter.ToBool(result.Rows[0]["HideMuayThai"]);            
+            ViewBag.HideSportsbook2 = Converter.ToBool(result.Rows[0]["HideMuayThai"]);
             ViewBag.HideCricket = Converter.ToBool(result.Rows[0]["HideCricket"]) || !ProductSettings.IsShowCricket;
             var visibledProducts = GetVisibledProducts(id, custId);
 
@@ -318,17 +317,17 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult SearchListPost(
-            string groupName = "ACCDDD",
+            string groupName,
             bool? enabled = null,
             bool? closed = null,
             bool? suspended = null,
             string username = null)
         {
-            var lineInfo = GetLineInfo(Request["groupName"], username, BuildCustomerSetting(username));
-            var customers = GetCustomerList(groupName, enabled, closed, suspended, lineInfo);
+            var lineInfo = GetLineInfo(ExtRequest.GroupName, username, BuildCustomerSetting(username));
+            var customers = GetCustomerList(ExtRequest.GroupName, enabled, closed, suspended, lineInfo);
             SetEditAllBetVisibility(customers);
             var customers2String = Customers2Json(customers);
-            var syncCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncCasino");            
+            var syncCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncCasino");
             var allowDoubleComm = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean(lineInfo.RoleId > Role.Agent ? "doubleCommLosing" : "doubleCommLosing1");
             return JsonBase(
                 new
@@ -348,13 +347,13 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         [AntiXSRFFilter]
         public ActionResult SuperListPost(
-            string groupName = "ACCDDD",
+            string groupName,
             int? custId = null,
             bool? enabled = null,
             bool? closed = null,
             bool? suspended = null)
         {
-            var supers = _superService.GetData(CurrentSession.UserId, custId, enabled, closed, suspended, groupName);
+            var supers = _superService.GetData(CurrentSession.UserId, ExtRequest.GroupName, custId, enabled, closed, suspended);
             SetEditAllBetVisibility(supers);
             var supers2Json = Customers2Json(supers);
 
@@ -368,7 +367,7 @@
         {
             var masters = _masterService.GetData(CurrentSession.UserId, srecommend, custId, enabled, closed, suspended);
             var superId = Utils.ToInt32(srecommend);
-            var customerSetting = reportService.SearchCustomerInfo(Request["groupName"], superId, null, isGetUplineInfo: true);
+            var customerSetting = reportService.SearchCustomerInfo(ExtRequest.GroupName, superId, null, isGetUplineInfo: true);
             SetEditAllBetVisibility(masters);
             var master2Json = Customers2Json(masters);
 
@@ -394,7 +393,7 @@
             var agents = _agentService.GetData(CurrentSession.UserId, mrecommend, custId, enabled, closed, suspended);
 
             var masterId = Utils.ToInt32(mrecommend);
-            var customerSetting = reportService.SearchCustomerInfo(Request["groupName"], masterId, null, isGetUplineInfo: true);
+            var customerSetting = reportService.SearchCustomerInfo(ExtRequest.GroupName, masterId, null, isGetUplineInfo: true);
             SetEditAllBetVisibility(agents);
             var ret = Customers2Json(agents);
 
@@ -414,12 +413,12 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         [AntiXSRFFilter]
-        public ActionResult MemberListPost(int? recommend = null, int? custId = null, bool? enabled = null,
+        public ActionResult MemberListPost(string groupName, int? recommend = null, int? custId = null, bool? enabled = null,
             bool? closed = null, bool? suspended = null)
         {
-            var members = _memberService.GetData(CurrentSession.UserId, recommend, custId, enabled, closed, suspended);
+            var members = _memberService.GetData(CurrentSession.UserId, ExtRequest.GroupName, recommend, custId, enabled, closed, suspended);
             var agentId = Utils.ToInt32(recommend);
-            var customerSetting = reportService.SearchCustomerInfo(Request["groupName"], agentId, null, isGetUplineInfo: true);
+            var customerSetting = reportService.SearchCustomerInfo(ExtRequest.GroupName, agentId, null, isGetUplineInfo: true);
             SetEditAllBetVisibility(members);
             var member2Json = Customers2Json(members);
 
@@ -586,7 +585,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public void GetExportToExcel(
-            string groupName = "ACCDDD",
+            string groupName,
             bool? enabled = null,
             bool? closed = null,
             bool? suspended = null,
@@ -594,7 +593,7 @@
         {
             var customerSetting = BuildCustomerSetting(username);
 
-            var customers = GetCustomerList(groupName, enabled, closed, suspended, customerSetting);
+            var customers = GetCustomerList(ExtRequest.GroupName, enabled, closed, suspended, customerSetting);
             SetEditAllBetVisibility(customers);
 
             var status = string.Empty;
@@ -622,12 +621,7 @@
             ExportToExcel(excelStream, fileName);
         }
 
-#pragma warning disable S1541 // Methods and properties should not be too complex
-
-#pragma warning disable S3776 // Cognitive Complexity of methods should not be too high
         private DataTable GetCustomerList(
-#pragma warning restore S3776 // Cognitive Complexity of methods should not be too high
-#pragma warning restore S1541 // Methods and properties should not be too complex
             string groupName,
             bool? enabled,
             bool? closed,
@@ -635,39 +629,32 @@
             LineInfo lineInfo)
         {
             int? id = null;
-            var result = new DataTable();
+            DataTable result;
 
             switch (lineInfo.RoleId)
             {
                 case Role.Super:
-                    result = _authorization.IsBelong(groupName, lineInfo.CustId, null, true)
-                        ? _superService.GetData(CurrentSession.UserId, lineInfo.CustId == 0 ? id : lineInfo.CustId,
-                            enabled,
-                            closed, suspended, groupName)
-                        : result;
+                    result = _superService.GetData(CurrentSession.UserId, groupName, lineInfo.CustId == 0
+                        ? id
+                        : lineInfo.CustId, enabled, closed, suspended);
                     break;
 
                 case Role.Master:
-                    result = _authorization.IsBelong(groupName, lineInfo.SuperId, null, true)
-                        ? _masterService.GetData(CurrentSession.UserId, lineInfo.SuperId, lineInfo.CustId == 0 ? id : lineInfo.CustId,
-                            enabled, closed, suspended)
-                        : result;
+                    result = _masterService.GetData(CurrentSession.UserId, lineInfo.SuperId, lineInfo.CustId == 0
+                        ? id
+                        : lineInfo.CustId, enabled, closed, suspended);
                     break;
 
                 case Role.Agent:
-                    result = _authorization.IsBelong(groupName, lineInfo.MasterId, null, true)
-                        ? _agentService.GetData(CurrentSession.UserId, lineInfo.MasterId,
-                            lineInfo.CustId == 0 ? id : lineInfo.CustId,
-                            enabled, closed, suspended)
-                        : result;
+                    result = _agentService.GetData(CurrentSession.UserId, lineInfo.MasterId, lineInfo.CustId == 0
+                        ? id
+                        : lineInfo.CustId, enabled, closed, suspended);
                     break;
 
                 default:
-                    result = _authorization.IsBelong(groupName, lineInfo.AgentId, null, true)
-                        ? _memberService.GetData(CurrentSession.UserId, lineInfo.AgentId,
-                            lineInfo.CustId == 0 ? id : lineInfo.CustId,
-                            enabled, closed, suspended)
-                        : result;
+                    result = _memberService.GetData(CurrentSession.UserId, groupName, lineInfo.AgentId, lineInfo.CustId == 0
+                        ? id
+                        : lineInfo.CustId, enabled, closed, suspended);
                     break;
             }
 

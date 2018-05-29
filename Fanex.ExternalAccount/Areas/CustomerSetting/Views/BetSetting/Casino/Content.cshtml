@@ -9,10 +9,10 @@
         NullValueHandling = NullValueHandling.Ignore
     });
 
-    var id = Utils.ToInt32(Request.RequestContext.RouteData.Values["id"]);
-    var uplineId = Utils.ToInt32(Request.RequestContext.RouteData.Values["uplineId"]);
-    var userId = Utils.ToInt32(Request.RequestContext.RouteData.Values["userId"]);
-    var siteName = Request.RequestContext.RouteData.Values["siteName"];    
+    var id = Utils.ToInt32(Request["custId"]);
+    var uplineId = Utils.ToInt32(Request["uplineId"]);
+    var userId = Utils.ToInt32(Request["userId"]);
+    var siteName = Request["groupName"];    
 }
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />

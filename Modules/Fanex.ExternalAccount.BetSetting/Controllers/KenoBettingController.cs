@@ -14,21 +14,13 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
     public class KenoBettingController : BettingControllerBase
     {
-        public ActionResult Index(int id, int uplineId, int userId, string siteName)
-        {
-            var obj = Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as IAuthenticate;
-            if (!obj.IsBelong(id, null, siteName))
-            {
-                return ActionDenied(Request);
-            }
-
-            return PartialView("~/Areas/CustomerSetting/Views/BetSetting/Keno/Index.cshtml");
-        }
+        public ActionResult Index(int custId, int uplineId, int userId, string groupName)
+            => PartialView("~/Areas/CustomerSetting/Views/BetSetting/Keno/Index.cshtml");
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "KenoBetting")]
-        public ActionResult Content(int id, int uplineId, int userId, string siteName)
+        public ActionResult Content(int custId, int uplineId, int userId, string groupName)
         {
-            var customer = CustomerInfo(id, userId);
+            var customer = CustomerInfo(custId, userId);
 
             if (customer.RoleId.IsNotSuper())
             {
@@ -36,12 +28,12 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             }
 
             ViewBag.Username = customer.Username;
-            ViewBag.SyncCasino = customer.SyncCasino;   
+            ViewBag.SyncCasino = customer.SyncCasino;
             ViewBag.HideGoldDeluxe = customer.HideGoldDeluxe;
 
             var model = KenoService.GetSuperSetting(new Keno.KenoSetting.ViewModels.CustomerInformationViewModel
             {
-                CustId = id,
+                CustId = custId,
                 SubAccId = 0,
                 UserId = userId
             }).BetSettings.Where(o => !KenoSection.Instance.ExcludeBetTypeList.Contains(o.BetTypeId));
@@ -56,15 +48,9 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
         [HttpPost]
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "KenoBetting")]
-        public ActionResult EditBetSettingPost(int id, int uplineId, int userId, string txtCustomerObject, string siteName = "ACCUT")
+        public ActionResult EditBetSettingPost(int custId, int uplineId, int userId, string txtCustomerObject)
         {
-            var obj = Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as IAuthenticate;
-            if (!obj.IsBelong(id, null, siteName))
-            {
-                return ActionDenied(Request);
-            }
-
-            var customer = CustomerInfo(id, userId);
+            var customer = CustomerInfo(custId, userId);
 
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
@@ -80,7 +66,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
             foreach (var item in newSetting)
             {
-                result.Add(KenoService.UpdateBetSettingSuper(item, id, userId));
+                result.Add(KenoService.UpdateBetSettingSuper(item, custId, userId));
             }
 
             return JsonBase(result, settings);

@@ -752,6 +752,7 @@
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\OTP\Scripts\OTP.js" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\OTP\Styles\OTP.css" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\AjaxSetup.js" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\SettingPTController.js" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\PersonalInfoController.js" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\NoInfoController.js" />

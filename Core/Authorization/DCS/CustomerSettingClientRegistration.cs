@@ -12,17 +12,14 @@
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
-        private readonly AuthorizationService authorization = new AuthorizationServiceImpl();
-
-
         public override bool VerifyQueryPermission(PermissionContext permissionContext) =>
-            AllowRead(permissionContext) && authorization.IsBelong();
+            AllowRead(permissionContext);
 
         public override bool VerifyUpdatePermission(PermissionContext permissionContext) =>
-            AllowUpdated(permissionContext) && authorization.IsBelong();
+            AllowUpdated(permissionContext);
 
         public override bool VerifyMultipleUpdatePermission(PermissionContext permissionContext) =>
-            AllowUpdated(permissionContext) && authorization.IsBelong();
+            AllowUpdated(permissionContext);
 
         public override SettingContext FetchSettingContext()
         {

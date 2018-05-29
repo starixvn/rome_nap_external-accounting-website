@@ -18,7 +18,7 @@
 
     public class CustomerDataAccessImpl : CustomerDataAccess
     {
-        public DataSet GetCustomerInfo(string username, string groupName = "ACCDDD")
+        public DataSet GetCustomerInfo(string username, string groupName)
         {
             var customerInfo = EAS_CustomerSelUserInfo(groupName, 0, username, true);
 
