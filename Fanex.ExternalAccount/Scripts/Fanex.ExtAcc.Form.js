@@ -105,10 +105,6 @@ Fanex.ExtAcc.Form = {
         Frame.setAttribute('frameBorder', "0");
         Frame.setAttribute('name', id);
 
-        if (Frame.src == '') {
-            Frame.src = url;
-        }
-
         var $self = this;
         var data = null;
 
@@ -123,9 +119,14 @@ Fanex.ExtAcc.Form = {
             modal: true,
             autoOpen: true,
             position: { my: "center", at: "center", of: window },
+            open: function () {
+                if (Frame.src == '') {
+                    Frame.src = url;
+                }
+            },
             close: function () {
+                Frame.src = 'about:blank';
                 $self.Close(reloadOnClose, null, id);
-                
             }
         });
 
