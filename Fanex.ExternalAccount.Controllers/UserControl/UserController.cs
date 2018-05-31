@@ -335,6 +335,8 @@
                     return string.Format(Config.InternalLoginUrl7, domain);
                 case AlphaSiteCode.I9:
                     return string.Format(Config.InternalLoginUrl9, domain);
+                case AlphaSiteCode.I8:
+                    return string.Format(Config.InternalLoginUrl8, domain);
                 default:
                     return string.Format(Config.InternalLoginUrl, domain);
             }
@@ -369,7 +371,8 @@
         {
             I1 = 1,
             I7 = 7,
-            I9 = 9
+            I9 = 9,
+            I8 = 8
         }
     }
 }
