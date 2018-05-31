@@ -13,11 +13,6 @@
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            if (filterContext.RequestContext.HttpContext.Request.Url.ToString().Contains("Shared/Offline"))
-            {
-                return;
-            }
-
             base.OnAuthorization(filterContext);
 
             if (!authorization.IsBelong())

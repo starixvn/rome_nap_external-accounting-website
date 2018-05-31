@@ -39,15 +39,19 @@
             return this.View();
         }
 
+        [AllowAnonymous]
         public ActionResult Error()
         {
             return this.PartialView();
         }
 
+        [AllowAnonymous]
         public ActionResult NoPermission()
         {
             return this.PartialView();
         }
+
+        [AllowAnonymous]
         public ActionResult Unauthorized()
         {
             return this.PartialView();
@@ -121,6 +125,7 @@
             return RecheckinStatus.KickedOut;
         }
 
+        [AllowAnonymous]
         public ActionResult Offline()
         {
             if (Request.QueryString[Config.InternalAgentUMToken] != null)
