@@ -250,14 +250,14 @@
             foreach (DataRow row in table.Rows)
             {
                 var ip = row.ToString(fieldName);
-                if (string.IsNullOrWhiteSpace(ip) || !IpUtils.IsVnIp(ip))
+                if (string.IsNullOrWhiteSpace(ip))
                 {
                     continue;
                 }
 
                 if (!AuthorizationService.IsAuthorized(
                     CurrentSession.UserId,
-                    eFunctions.ViewVNIP))
+                    eFunctions.ViewVNIP) && IpUtils.IsVnIp(ip))
                 {
                     row[fieldName] = string.Empty;
                 }

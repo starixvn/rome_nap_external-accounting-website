@@ -441,7 +441,7 @@
             var ipInfo = new IPInfo { Flag = "-.gif", IP = ip };
             if (Utils.IsValidIpAddress(ip))
             {
-                if (IpUtils.IsVnIp(ip) && !AuthorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP))
+                if (!AuthorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP) && IpUtils.IsVnIp(ip))
                 {
                     return PartialViewBase("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
                 }

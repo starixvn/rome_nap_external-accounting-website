@@ -204,6 +204,6 @@ namespace Fanex.ExternalAccount.Core.Authorization
             => functions.Any(function => IsAuthorized(userId, function));
 
         public bool CanViewVNIP(string ip)
-            => !IpUtils.IsVnIp(ip) || IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP);
+            => IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP) || !IpUtils.IsVnIp(ip);
     }
 }
