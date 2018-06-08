@@ -12,7 +12,6 @@
     using Authorization;
     using CasinoLibrary.Model.UserException;
     using Context;
-    using CustomerSetting.IP.Utils;
     using CustomerSetting.Module.Core.Criteria;
     using CustomerSetting.Module.Core.Models;
     using CustomerSetting.Module.Core.Services.Impl;
@@ -26,6 +25,7 @@
     using PTEngine.BusinessObjects;
     using RemotingRef;
     using Reports.WinLossDetail;
+    using Service;
     using Service.Impl.Customer.Casino;
     using Shared;
     using Utilities;
@@ -47,7 +47,7 @@
         private readonly IExtRequest extRequest;
 
         protected readonly AuthorizationService AuthorizationService = new AuthorizationServiceImpl();
-
+        protected readonly IIPInformatonService ipInformationService = new IPInformationService();
 
         protected BaseController() : this(new CurrentSession(), new CurrentContext(), new ExtRequest())
         {
@@ -239,7 +239,7 @@
             };
         }
 
-        protected DataTable CheckVNIP(DataTable table, string ipFieldName = null)
+        protected DataTable Reset789IP(DataTable table, string ipFieldName = null)
         {
             var fieldName = string.IsNullOrWhiteSpace(ipFieldName) ? "lastloginip" : ipFieldName;
             if (ReferenceEquals(null, table) || table.Rows.Count == 0 || !table.Columns.Contains(fieldName))
@@ -247,6 +247,7 @@
                 return table;
             }
 
+            var ip789List = ipInformationService.Get789IP();
             foreach (DataRow row in table.Rows)
             {
                 var ip = row.ToString(fieldName);
@@ -257,7 +258,7 @@
 
                 if (!AuthorizationService.IsAuthorized(
                     CurrentSession.UserId,
-                    eFunctions.ViewVNIP) && IpUtils.IsVnIp(ip))
+                    eFunctions.ViewVNIP) && ipInformationService.IsExistedInList(ip, ip789List))
                 {
                     row[fieldName] = string.Empty;
                 }

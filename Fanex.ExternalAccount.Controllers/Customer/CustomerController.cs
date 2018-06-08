@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Data;
     using System.Diagnostics;
     using System.Globalization;
@@ -16,8 +15,8 @@
     using Core.Base;
     using Core.Context;
     using Core.Shared;
-    using CustomerSetting.IP.Utils;
     using CustomerSetting.Security.Authenticate;
+    using DataAccess.Criteria.Customer;
     using DTO;
     using DTO.Customer;
     using Excel.Customer.CustomerListPage;
@@ -441,18 +440,18 @@
             var ipInfo = new IPInfo { Flag = "-.gif", IP = ip };
             if (Utils.IsValidIpAddress(ip))
             {
-                if (!AuthorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP) && IpUtils.IsVnIp(ip))
+                if (!AuthorizationService.CanViewVNIP(ip))
                 {
                     return PartialViewBase("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
                 }
 
-                var info = IpUtils.LocationFromIP(ip);
+                var info = ipInformationService.GetFromIP(ip);
                 ipInfo = new IPInfo
                 {
                     IP = ip,
-                    City = string.IsNullOrWhiteSpace(info.ipCity) ? string.Empty : info.ipCity,
-                    Country = string.IsNullOrWhiteSpace(info.countryLONG) ? string.Empty : info.countryLONG,
-                    Flag = string.IsNullOrWhiteSpace(info.countrySHORT) ? "-.gif" : info.countrySHORT + ".gif",
+                    City = string.IsNullOrWhiteSpace(info.IPCity) ? string.Empty : info.IPCity,
+                    Country = string.IsNullOrWhiteSpace(info.CountryLong) ? string.Empty : info.CountryLong,
+                    Flag = string.IsNullOrWhiteSpace(info.CountryShort) ? "-.gif" : info.CountryShort + ".gif",
                     Info = string.Format(ViewLang.IPNote, ip)
                 };
             }
@@ -465,20 +464,11 @@
         public ActionResult ConfigDoubleComm(int custid, bool allow)
         {
             var result = _superService.ConfigDoubleComm(
-                custid,
-                allow,
-                new Request
-                {
-                    Browser = Request.Browser.Browser,
-                    CountryCode = CurrentContext.CountryCode,
-                    DomainName = CurrentContext.DomainName,
-                    IP = CurrentContext.Ip4Address,
-                    Language = "en",
-                    NetSessionId = CurrentSession.NetSessionId,
-                    Platform = Request.Browser.Platform,
-                    SubAccId = 0,
-                    UserId = CurrentSession.UserId
-                });
+                new UpdateDoubleCommCriteria(
+                    custid,
+                    allow,
+                    CurrentSession.UserId,
+                    CurrentContext.Ip4Address));
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, result.IsSuccess });
         }
@@ -543,20 +533,12 @@
         public ActionResult UpdatePassword(int custId, string password)
         {
             var result = _customerService.ResetPassword(
-                custId,
-                password,
-                new Request
-                {
-                    Browser = Request.Browser.Browser,
-                    CountryCode = CurrentContext.CountryCode,
-                    DomainName = CurrentContext.DomainName,
-                    IP = CurrentContext.Ip4Address,
-                    Language = "en",
-                    NetSessionId = CurrentSession.NetSessionId,
-                    Platform = Request.Browser.Platform,
-                    SubAccId = 0,
-                    UserId = CurrentSession.UserId
-                });
+                new ResetPasswordCriteria(
+                    custId,
+                    password,
+                    CurrentSession.UserId,
+                    CurrentContext.Ip4Address)
+                );
 
             if (result.ErrorCode.Equals("0"))
             {
@@ -609,7 +591,7 @@
             }
 
             var builder = new CustomerListPageBuilder(
-                CheckVNIP(customers),
+                Reset789IP(customers),
                 false,
                 status,
                 Convert.ToInt32(customerSetting.RoleId),
@@ -697,7 +679,7 @@
 
         private string Customers2Json(DataTable customers)
             => JsonConvert.SerializeObject(
-                CheckVNIP(customers), Formatting.None,
+                Reset789IP(customers), Formatting.None,
                 new IsoDateTimeConverter { DateTimeFormat = DateTimeFormat });
     }
 }

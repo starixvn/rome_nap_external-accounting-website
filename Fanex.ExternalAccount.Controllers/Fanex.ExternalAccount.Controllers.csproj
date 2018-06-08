@@ -402,10 +402,6 @@
       <Project>{C8CB1E7B-E68A-4065-AE30-3F8FB371974A}</Project>
       <Name>Fanex.ExternalAccount.ViewModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Modules\Fanex.ExternalAccount.IPEntities\Fanex.ExternalAccount.IPEntities.csproj">
-      <Project>{6570d17c-fef2-4c1c-a1eb-841266df380d}</Project>
-      <Name>Fanex.ExternalAccount.IPEntities</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

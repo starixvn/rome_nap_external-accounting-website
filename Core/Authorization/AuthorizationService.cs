@@ -1,8 +1,5 @@
-﻿using Fanex.CustomerSetting.IP.Utils;
-
-namespace Fanex.ExternalAccount.Core.Authorization
+﻿namespace Fanex.ExternalAccount.Core.Authorization
 {
-    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
@@ -11,10 +8,9 @@ namespace Fanex.ExternalAccount.Core.Authorization
     using CustomerSetting.Security.Authenticate;
     using DTO;
     using DTO.UserControl;
-    using Service.Impl.Login;
+    using Service;
     using Service.Impl.Report;
     using Service.Impl.UserControl;
-    using Service.Interface.Login;
     using Service.Interface.Report;
     using Service.Interface.UserControl;
     using Shared;
@@ -50,17 +46,20 @@ namespace Fanex.ExternalAccount.Core.Authorization
 
         private readonly ICachingService cachingService;
         private readonly IReportService reportService;
+        private readonly IIPInformatonService ipInformationService;
 
-        public AuthorizationServiceImpl() : this(null, null)
+        public AuthorizationServiceImpl() : this(null, null, null)
         {
         }
 
         public AuthorizationServiceImpl(
             ICachingService cachingService,
-            IReportService reportService)
+            IReportService reportService,
+            IIPInformatonService ipInformationService)
         {
             this.cachingService = cachingService ?? new CachingService();
             this.reportService = reportService ?? new ReportService();
+            this.ipInformationService = ipInformationService ?? new IPInformationService();
         }
 
         public bool IsBelong()
@@ -204,6 +203,6 @@ namespace Fanex.ExternalAccount.Core.Authorization
             => functions.Any(function => IsAuthorized(userId, function));
 
         public bool CanViewVNIP(string ip)
-            => IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP) || !IpUtils.IsVnIp(ip);
+            => IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP) || !ipInformationService.Is789IP(ip);
     }
 }

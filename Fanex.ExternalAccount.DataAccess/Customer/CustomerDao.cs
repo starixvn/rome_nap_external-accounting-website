@@ -4,6 +4,7 @@
     using Base;
     using Common;
     using Common.Extensions;
+    using Criteria.Customer;
     using Data.DNAide;
     using DTO;
     using DTO.Customer;
@@ -79,42 +80,17 @@
             return new Result(result.Outputs["errorcode"], result.Outputs["errormsg"], result.ResultSet);
         }
 
-        public Result ResetPassword(int custId, string password, Request request)
+        public Result ResetPassword(ResetPasswordCriteria criteria)
         {
-            var param = new Hashtable
-            {
-                {"custid", custId},
-                {"userpwd", Cryptography.CfsEnCode(password)},
-                {"userid", request.UserId},
-                {"discasino", 0},
-                {"language", request.Language},
-                {"subaccid", request.SubAccId},
-                {"loginip", request.IP},
-                {"errcode", 0},
-                {"errmsg", string.Empty}
-            };
-
-            var result = DbHelper.ExecuteDbResult("Age_CustomerUpdPwd", param);
+            var result = DbHelper.ExecuteDbResult(criteria.GetSettingKey(), criteria.GetSpParams());
 
             return new Result(result.Outputs["errcode"].ToString(), result.Outputs["errmsg"].ToString(),
                 result.ResultSet);
         }
 
-        public Result ConfigDoubleComm(int custId, bool allow, Request request)
+        public Result ConfigDoubleComm(UpdateDoubleCommCriteria criteria)
         {
-            var param = new Hashtable
-            {
-                {"custid", custId},
-                {"doublecommlosing", allow},
-                {"userid", request.UserId},
-                {"language", request.Language},
-                {"subaccid", request.SubAccId},
-                {"ip", request.IP},
-                {"errcode", 0},
-                {"errmsg", string.Empty}
-            };
-
-            var result = DbHelper.ExecuteDbResult("Acc_CustomerUpdDoubleCommLosing", param);
+            var result = DbHelper.ExecuteDbResult(criteria.GetSettingKey(), criteria.GetSpParams());
 
             return new Result(result.Outputs["errcode"].ToString(), result.Outputs["errmsg"].ToString(),
                 result.ResultSet);
