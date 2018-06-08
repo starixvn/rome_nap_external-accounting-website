@@ -291,6 +291,7 @@
     <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect" DbName="DBCust.CustDB.bodbExtAccNet" />
     <!--Update functions-->
     <Setting Key="Acc_AdminUpdDisableNumberGame" SpName="Acc_AdminUpdDisableNumberGame" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_AdminCheckAllowedDownlinesByLevel" SpName="Acc_AdminCheckAllowedDownlinesByLevel" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_AdminUpdCSStatus_Cust" SpName="Acc_AdminUpdCSStatus_Cust" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_AdminUpdDisableKeno" SpName="Acc_AdminUpdDisableKeno" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_AdminUpdDisableGoldDeluxe" SpName="Acc_AdminUpdDisableGoldDeluxe" DbName="DBCust.CustDB.bodbExtAccNet" />

@@ -7,11 +7,11 @@
     <Setting Key="Acc_CustomerUpdDisableESports" SpName="Acc_CustomerUpdDisableESports" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Keno">
-    <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_CustomerUpdDisableKeno_UAT1" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableKeno" SpName="Acc_CustomerUpdDisableKeno" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelKenoStatus" SpName="Acc_CustomerSelKenoStatus" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerSelEditSuperKeno" SpName="Acc_CustomerSelEditSuperKeno_UAT1" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerSelEditMasterKeno" SpName="Acc_CustomerSelEditMasterKeno_UAT1" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
-    <Setting Key="Acc_CustomerSelEditAgentKeno" SpName="Acc_CustomerSelEditAgentKeno_UAT1" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditSuperKeno" SpName="Acc_CustomerSelEditSuperKeno" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditMasterKeno" SpName="Acc_CustomerSelEditMasterKeno" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="Acc_CustomerSelEditAgentKeno" SpName="Acc_CustomerSelEditAgentKeno" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerSelEditMemberKeno" SpName="Acc_CustomerSelEditMemberKeno" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerSelSEditCustomerKeno" SpName="Acc_CustomerSelSEditCustomerKeno" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
     <Setting Key="Acc_CustomerSelMEditCustomerKeno" SpName="Acc_CustomerSelMEditCustomerKeno" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" TimeOut="600" />
@@ -129,17 +129,17 @@
     <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableNumber" SpName="Acc_CustomerUpdDisableNumber" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableVS" SpName="Acc_CustomerUpdDisableVS" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust_UAT1" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_GetCSStatus" SpName="Age_GetCSStatus" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe_UAT1" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Customer List">
     <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_UAT1" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0">
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0">
       <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
     </Setting>
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
@@ -237,24 +237,24 @@
   </Functions>
   <Function Name="Colossus Bet Setting">
     <Function Name="Get Setting">
-      <Setting Key="Acc_CustomerSelEditSuperColossusBet" SpName="Acc_CustomerSelEditSuperColossusBet_UAT1" DbName="DBCUST.CustDB.bodbExtAccNet" />
-      <Setting Key="Acc_CustomerSelEditMasterColossusBet" SpName="Acc_CustomerSelEditMasterColossusBet_UAT1" DbName="DBCUST.CustDB.bodbExtAccNet" />
-      <Setting Key="Acc_CustomerSelEditAgentColossusBet" SpName="Acc_CustomerSelEditAgentColossusBet_UAT1" DbName="DBCUST.CustDB.bodbExtAccNet" />
-      <Setting Key="Acc_CustomerSelEditMemberColossusBet" SpName="Acc_CustomerSelEditMemberColossusBet_UAT1" DbName="DBCUST.CustDB.bodbExtAccNet" />
+      <Setting Key="Acc_CustomerSelEditSuperColossusBet" SpName="Acc_CustomerSelEditSuperColossusBet" DbName="DBCUST.CustDB.bodbExtAccNet" />
+      <Setting Key="Acc_CustomerSelEditMasterColossusBet" SpName="Acc_CustomerSelEditMasterColossusBet" DbName="DBCUST.CustDB.bodbExtAccNet" />
+      <Setting Key="Acc_CustomerSelEditAgentColossusBet" SpName="Acc_CustomerSelEditAgentColossusBet" DbName="DBCUST.CustDB.bodbExtAccNet" />
+      <Setting Key="Acc_CustomerSelEditMemberColossusBet" SpName="Acc_CustomerSelEditMemberColossusBet" DbName="DBCUST.CustDB.bodbExtAccNet" />
       <Setting Key="Acc_CustomerSelProductStatus" SpName="Acc_CustomerSelProductStatus" DbName="DBCUST.CustDB.bodbExtAccNet" />
     </Function>
     <Function Name="Update Setting">
-      <Setting Key="Acc_CustomerUpdColossusBet" SpName="Acc_CustomerUpdColossusBet_UAT1" DbName="DBCUST.CustDB.bodbExtAccNet" />
+      <Setting Key="Acc_CustomerUpdColossusBet" SpName="Acc_CustomerUpdColossusBet" DbName="DBCUST.CustDB.bodbExtAccNet" />
     </Function>
     <Function Name="Update Status">
-      <Setting Key="Acc_CustomerUpdDisableColossusBet" SpName="Acc_CustomerUpdDisableColossusBet_UAT1" DbName="DBCUST.CustDB.bodbExtAccNet" />
+      <Setting Key="Acc_CustomerUpdDisableColossusBet" SpName="Acc_CustomerUpdDisableColossusBet" DbName="DBCUST.CustDB.bodbExtAccNet" />
     </Function>
     <Function Name="DCS">
       <Function Name="Enable Status">
         <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect" DbName="DBCUST.CustDB.bodbExtAccNet" />
         <Setting Key="Acc_CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd" DbName="DBCUST.CustDB.bodbExtAccNet" />
-        <Setting Key="Acc_CustSetting_DisableNewProductStatusUpd" SpName="Acc_CustSetting_DisableNewProductStatusUpd_UAT1" DbName="DBCust.CustDB.bodbExtAccNet" />
-        <Setting Key="Acc_CustomerSelStatusGoldDeluxe" SpName="Acc_CustomerSelStatusGoldDeluxe_UAT1" DbName="DBCUST.CustDB.bodbExtAccNet" />
+        <Setting Key="Acc_CustSetting_DisableNewProductStatusUpd" SpName="Acc_CustSetting_DisableNewProductStatusUpd" DbName="DBCust.CustDB.bodbExtAccNet" />
+        <Setting Key="Acc_CustomerSelStatusGoldDeluxe" SpName="Acc_CustomerSelStatusGoldDeluxe" DbName="DBCUST.CustDB.bodbExtAccNet" />
       </Function>
     </Function>
   </Function>
@@ -268,8 +268,8 @@
     <Setting Key="Acc_Con_CheckPermission_All" SpName="Acc_Con_CheckPermission_All" DbName="DBPOLICY.bodb02.bodbExtAccNet" />
     <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBPOLICY.bodb02.bodbExtAccNet" />
     <Setting Key="Acc_CustomerIsInternalAdmin" SpName="Acc_CustomerIsInternalAdmin" DbName="DBPOLICY.bodb02.bodbExtAccNet" />
-    <Setting Key="Acc_CustSetting_DisableGameStatusSelect" SpName="Acc_CustSetting_DisableGameStatusSelect_UAT1" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd_UAT1" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_CustSetting_DisableGameStatusSelect" SpName="Acc_CustSetting_DisableGameStatusSelect" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
@@ -278,23 +278,24 @@
     <Setting Key="WriteLog_UserLog_ExternalAPI_UpdResponse" SpName="WriteLog_UserLog_ExternalAPI_UpdResponse" IgnoreImport="true" DbName="dblog" Plain="0" />
   </Function>
   <Function Name="Customer - ThirdParty">
-    <Setting Key="Acc_CustomerSelStatusByProductId" SpName="Acc_CustomerSelStatusByProductID_UAT1" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_CustomerSelStatusByProductId" SpName="Acc_CustomerSelStatusByProductID" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
   <Function Name="Otp">
     <Setting Key="EAS_OTP_CustomerOTPSel" SpName="EAS_OTP_CustomerOTPSel" DbName="DBCUST.CustDB.bodbExtAccNet" />
   </Function>
   <Function Name="Product Status Setting">
     <!--Select functions-->
-    <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductId_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_Admin_DisableGameStatusSelect" SpName="Acc_Admin_DisableGameStatusSelect_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductId" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_Admin_DisableGameStatusSelect" SpName="Acc_Admin_DisableGameStatusSelect" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect" DbName="DBCust.CustDB.bodbExtAccNet" />
     <!--Update functions-->
-    <Setting Key="Acc_AdminUpdDisableNumberGame" SpName="Acc_AdminUpdDisableNumberGame_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_AdminUpdCSStatus_Cust" SpName="Acc_AdminUpdCSStatus_Cust_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_AdminUpdDisableKeno" SpName="Acc_AdminUpdDisableKeno_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_AdminUpdDisableGoldDeluxe" SpName="Acc_AdminUpdDisableGoldDeluxe_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_AdminUpdDisableColossusBet" SpName="Acc_AdminUpdDisableColossusBet_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_Admin_DisableGameStatusUpd" SpName="Acc_Admin_DisableGameStatusUpd_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_Admin_DisableNewProductStatusUpd" SpName="Acc_Admin_DisableNewProductStatusUpd_uat1" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_AdminUpdDisableNumberGame" SpName="Acc_AdminUpdDisableNumberGame" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_AdminCheckAllowedDownlinesByLevel" SpName="Acc_AdminCheckAllowedDownlinesByLevel" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_AdminUpdCSStatus_Cust" SpName="Acc_AdminUpdCSStatus_Cust" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_AdminUpdDisableKeno" SpName="Acc_AdminUpdDisableKeno" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_AdminUpdDisableGoldDeluxe" SpName="Acc_AdminUpdDisableGoldDeluxe" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_AdminUpdDisableColossusBet" SpName="Acc_AdminUpdDisableColossusBet" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_Admin_DisableGameStatusUpd" SpName="Acc_Admin_DisableGameStatusUpd" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_Admin_DisableNewProductStatusUpd" SpName="Acc_Admin_DisableNewProductStatusUpd" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
 </Functions>
