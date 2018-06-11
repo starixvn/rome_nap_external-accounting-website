@@ -53,7 +53,7 @@ else
         <button type="button" class="margin-left5 btn" id="btnSubmit">@Resources.Submit</button>
     </div>
 }
-       
+
 
 @Html.AntiForgeryToken()
 
@@ -127,7 +127,7 @@ var tbodyDisableDownlineTooltip = String.Format(Resources.TBodyDownlineTooltip, 
                title="@tbodyDisableDownlineTooltip"
                data-enabletooltip="@tbodyEnableDownlineTooltip"
                data-disabletooltip="@tbodyDisableDownlineTooltip">
-            @(isDisabledUpline ? Resources.DisableAll : Resources.EnableAll)
+            @(isDisabledUpline ? Resources.UplineDisabled : Resources.EnableAll)
         </label>
 
 }
