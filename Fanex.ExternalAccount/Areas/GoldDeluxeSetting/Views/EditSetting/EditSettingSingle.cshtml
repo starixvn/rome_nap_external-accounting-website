@@ -79,10 +79,11 @@
                 else
                 {
                     <td class="right bold info-lable">
-                        @GoldDeluxeLang.lblEnable
+                        @GoldDeluxeLang.ProductStatus
                     </td>
                     <td class="left info-value">
                         <input type="checkbox" data-ng-model="enableGoldDeluxe" data-ng-disabled="disableCheckBoxGoldDeluxe || $parent.isReadOnly" ng-change="updateDownlineStatus()" />
+                        <label>@Model.Level.ToString()</label>
                     </td>
                 }
             </tr>

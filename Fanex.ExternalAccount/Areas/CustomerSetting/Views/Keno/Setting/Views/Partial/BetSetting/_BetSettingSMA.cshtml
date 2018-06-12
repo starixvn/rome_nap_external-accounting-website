@@ -11,7 +11,7 @@
                 <span ng-model="statusCopyAll.isCopiedAll" ng-click="copyAllStatus(!statusCopyAll.isCopiedAll, betSettingList[0].betTypeId)"
                        ng-class="{'btnCopyAll' : statusCopyAll.isCopiedAll, 'btnUnCopyAll' : !statusCopyAll.isCopiedAll}"
                        title="@LayoutTexts.lblCopyAllStatus"></span>
-                <span>@LayoutTexts.EnableStatus</span>
+                <span>@LayoutTexts.ProductStatus</span>
                 <input ng-class-name="btnSave" check-disable-element ng-model="$parent.isBetSettingPartial"
                        ng-click="!$parent.isBetSettingPartial||updated(true, 'BetSetting')" type="button" title="@LayoutTexts.Update" />
             </td>

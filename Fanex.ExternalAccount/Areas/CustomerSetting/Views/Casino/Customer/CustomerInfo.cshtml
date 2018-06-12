@@ -3,7 +3,8 @@
 @{
     var id = Utils.ToInt32(Request.QueryString["id"]);
     var uplineId = Utils.ToInt32(Request.QueryString["uplineId"]);
-    
+    var levelName = Request.QueryString["levelName"];
+
 }
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" />
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" />
@@ -35,7 +36,7 @@
             <tr>
                 <td class="tdTitleLeft">@NGCasinoLang.lblFax</td>
                 <td><span>{{CustomerModel.fax.decodeHtml()}}</span></td>
-                <td class="tdTitleRight">@NGCasinoLang.lblEnable</td>
+                <td class="tdTitleRight">@NGCasinoLang.ProductStatus</td>
                 <td class="noneBorderRight">
                     <div style="float: left; height: 24px">
                         <input type="checkbox" id="chkEnable" style="margin-top: 5px"
@@ -43,7 +44,12 @@
                                data-ng-model="CustomerModel.casinoEnabled"
                                data-ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled;"
                                data-ng-disabled="CustomerModel.uplineDisabledCasino" />
-                        <label for="chkEnable">Enable</label>
+                        <label for="chkEnable" ng-switch="{{CustomerModel.roleId}}">
+                            <span ng-switch-when="4">@NGCasinoLang.Super</span>
+                            <span ng-switch-when="3">@NGCasinoLang.Master</span>
+                            <span ng-switch-when="2">@NGCasinoLang.Agent</span>
+                            <span ng-switch-default>@NGCasinoLang.Member</span>
+                        </label>
                     </div>
                 </td>
             </tr>
