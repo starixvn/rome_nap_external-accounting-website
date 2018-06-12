@@ -51,6 +51,7 @@
                     Fanex.ExtAcc.Customer.ShowEditMultipleCasino();
                 }
             };
+            productIds.push(6);
         }       
 
         function addSuperEditMultipleMastersMenuItem(productId, productName) {
@@ -159,6 +160,7 @@
                     Fanex.ExtAcc.Customer.ShowEditMultipleCasino();
                 }
             };
+            productIds.push(6);
         }        
 
         function addMasterEditMultipleAgentsMenuItem(productId, productName) {
@@ -313,6 +315,7 @@
                     }
                 }
             };
+            productIds.push(6);
         }        
 
         function addUplineEditMemberMenuItems(productId, productName) {
