@@ -42,18 +42,18 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
             try
             {
-                var settingModel = CasinoManager.Instance.SuperCasinoModel(id, uplineId);
-                var customerModel = CasinoManager.Instance.GetCustInfoIBC(id, uplineId);
+                var settingModel = superCasinoService.SuperCasinoModel(id, uplineId);
+                var customerModel = casinoServiceBaseImpl.GetCustInfoIBC(id, uplineId);
 
                 var customerUpline = new CasinoCustomer
                 {
                     GeneralInfo = {IBCCustID = uplineId}
                 };
 
-                CasinoManager.Instance.GetCustSettingCS(ref customerUpline);
+                customerUpline = casinoServiceBaseImpl.GetCustSettingCS(customerUpline);
 
                 customerModel.GeneralInfo.IBCCustID = customerModel.GeneralInfo.CasinoSync ? id : uplineId;
-                CasinoManager.Instance.GetCustSettingCS(ref customerModel);
+                customerModel = casinoServiceBaseImpl.GetCustSettingCS(customerModel);
 
                 customerModel.GeneralInfo.UplineRoleId = customerUpline.GeneralInfo.RoleId;
 
@@ -102,15 +102,14 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             }
 
             var model = JsonConvert.DeserializeObject<CasinoModel>(txtCustomerObject);
-            var result = CasinoManager.Instance.UpdateSuperBettingLimit(
+            var result = superCasinoService.UpdateSuperBettingLimit(
                 id,
                 4,
                 Request.UserHostAddress,
                 userId,
                 customer.Username,
                 AppSession.CurrentSession.FromSystem,
-                model.SettingModel,
-                model.CustomerModel);
+                model.SettingModel);
 
             return JsonBase(result, settings);
         }
