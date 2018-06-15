@@ -11,11 +11,11 @@
 
         public DataTable GetData(
             int? userId,
+            string groupName,
             int? custId = null,
             bool? enabled = null,
             bool? closed = null,
-            bool? suspended = null,
-            string groupName = "ACCDDD")
-            => _dao.GetData(userId, custId, enabled, closed, suspended, groupName);
+            bool? suspended = null)
+            => _dao.GetData(userId, groupName, custId, enabled, closed, suspended);
     }
 }

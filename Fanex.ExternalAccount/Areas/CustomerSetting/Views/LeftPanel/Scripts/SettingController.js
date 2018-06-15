@@ -7,24 +7,14 @@
         $scope.model = null;
     }
 
-    $scope.landscapeHeight;
-    $scope.portraitHeight;
-    $scope.shouldCalculatePopupHeight;
-
     $scope.GetOnline = function (custId) {
         if (model.onlineLoaded) return;
 
-        parent.Fanex.ExtAcc.BlockUI();
-        var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
-        var token = "";
-        if (antiXSRFToken.length > 0) {
-            token = antiXSRFToken[0].value;
-        }
+        parent.Fanex.ExtAcc.BlockUI();       
 
-        $http({
+        $.ajax({
             url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetOnlineList?custId=' + custId),
-            method: 'post',
-            headers: { "X-Requested-With": "XMLHttpRequest", "__RequestVerificationToken": token }
+            method: 'post'
         })
         .success(function (result) {
             model.onlineLoaded = true;
@@ -80,17 +70,12 @@
                 }
             }
 
-            var syncCasino = true;
-            var syncLiveCasino = true;
+            var syncCasino = true;            
 
             for (var j = 0; j < $scope.setting.syncItems.length; j++) {
                 if (!$scope.setting.syncItems[j].value && $scope.setting.syncItems[j].key == 'SyncCasino') {
                     syncCasino = false;
-                }
-
-                if (!$scope.setting.syncItems[j].value && $scope.setting.syncItems[j].key == 'SyncLiveCasino') {
-                    syncLiveCasino = false;
-                }
+                }                
             }
 
             for (var i = 0; i < $scope.setting.enableItems.length; i++) {
@@ -102,9 +87,7 @@
 
                 if ($scope.setting.enableItems[i].key == 'EnableCasino')
                     $scope.setting.enableItems[i].isHide = !syncCasino;
-
-                if ($scope.setting.enableItems[i].key == 'EnableLiveCasino')
-                    $scope.setting.enableItems[i].isHide = !syncLiveCasino;
+                
             }
 
             for (var i = 0; i < $scope.setting.masterPts.length; i++) {
@@ -122,20 +105,18 @@
                     }
                 }
             }
-
-            $(window).bind('orientationchange', function (e) {
-                if (!$scope.shouldCalculatePopupHeight || (!isMobile.phone && /webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
-                    return;
-                }
-
-                var height = $scope.getPopupHeight() + 34;
-                var dialog = top.$('.ui-dialog');
-                dialog.height(height + 'px');
-                //top.document.getElementById('windowPopup').contentDocument.location.reload(false);
-            });
+            
 
         }
     };
+
+    $scope.getPopupHeight = function () {
+        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
+             $scope.landscapeHeight :
+             $scope.portraitHeight;
+
+        return height;
+    }
 
     $scope.AddNew = function () {
         var roleId = $scope.model.personalInfo.roleId.value;
@@ -235,6 +216,7 @@
             return;
         }
 
+        top.shouldCalculatePopupHeight = false;
         var allowAdmins = eval(parent.allowAdminEditSuperStatus);
         if ($scope.model.personalInfo.roleId.value == 4 && !allowAdmins.contains(parseInt(parent.userId)) && close) {
             return;
@@ -384,6 +366,7 @@
             return;
         }
 
+        top.shouldCalculatePopupHeight = false;
         var message = '';
         var title = '';
         var roleId = $scope.model.personalInfo.roleId.value;
@@ -458,6 +441,7 @@
             return;
         }
 
+        top.shouldCalculatePopupHeight = false;
         var roleId = $scope.model.personalInfo.roleId.value;
         var title = '';
         var subtitle = roleId == 1 ? 'Warning, this member can\'t place Outright bet!' : 'Warning, all members under this agent can\'t place Outright bet!';
@@ -522,6 +506,7 @@
             return;
         }
 
+        top.shouldCalculatePopupHeight = false;
         var message = 'Are you sure you want to change Auto Master PT status for this customer?';
         var title = allow ? ('Disallow Auto Master PT: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>') : ('Allow Auto Master PT: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>');
 
@@ -584,7 +569,7 @@
         if (disabled) {
             return;
         }
-
+        top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(6, "Casino", 680, 270);
     };
@@ -594,23 +579,9 @@
             return;
         }
 
+        top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(3, "Number Game", 680, 270);
-    };
-
-    $scope.EnableLiveCasino = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        var url_SELECT = 'customersetting/enablestatus/productstatus?';
-        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
-        '&userid=' + parent.userId + '&productid=livecasino&level=' + $scope.model.personalInfo.roleId.value +
-        '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
-        var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'Live Casino: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 180, false, function () {
-            document.getElementById(id).checked = enable;
-        }, 1, null);
     };
 
     $scope.EnableVirtualSports = function (enable, id, disabled) {
@@ -618,6 +589,7 @@
             return;
         }
 
+        top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(5, "Virtual Sports", 680, 270);
     };
@@ -627,27 +599,13 @@
             return;
         }
 
+        top.shouldCalculatePopupHeight = false;
         var url_SELECT = 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
         '&userid=' + parent.userId + '&productid=esports&level=' + $scope.model.personalInfo.roleId.value +
         '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
         var url = parent.resolveClientUrl(url_SELECT + query);
         parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'eSports: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 180, false, function () {
-            document.getElementById(id).checked = enable;
-        }, 1, null);
-    };
-
-    $scope.EnableHRFixedOdds = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        var url_SELECT = 'customersetting/enablestatus/productstatus?';
-        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
-        '&userid=' + parent.userId + '&productid=hrfixedodds&level=' + $scope.model.personalInfo.roleId.value +
-        '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
-        var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'HR Fixed Odds: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 180, false, function () {
             document.getElementById(id).checked = enable;
         }, 1, null);
     };
@@ -659,15 +617,25 @@
 
         return height;
     }
-    $scope.EnableRacing = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
 
-        $scope.landscapeHeight = 250;
-        $scope.portraitHeight = 400;
-        $scope.shouldCalculatePopupHeight = true;
-        $scope.EnableThirdpartyProduct(2, "Racing", 400, $scope.getPopupHeight());
+$scope.Info = function () {
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+
+        var url = parent.resolveClientUrl('Customer/EditInfo/?' +
+            'custId=' + $scope.model.personalInfo.custId.value +
+            "&groupName=" + parent.$('#selectedGroupName').html());
+        var title = parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
+
+        top.landscapeHeight = 280;
+        top.portraitHeight = 500;
+        top.shouldCalculatePopupHeight = true;
+        parent.Fanex.ExtAcc.Form.Show(url, title, 500, $scope.getPopupHeight(), false);
+    };
+
+    $scope.Transfer = function () {
+        top.shouldCalculatePopupHeight = false;
+        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditTransferCondition/?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), parent.titles[1] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 600, 250, false, false, 1);
+
     };
 
     $scope.EnableKeno = function (enable, id, disabled) {
@@ -675,15 +643,17 @@
             return;
         }
 
-        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ? 500 : 520;
-        $scope.EnableThirdpartyProduct(8, "Keno", 680, height);
+        top.landscapeHeight = 250;
+        top.portraitHeight = 400;
+        top.shouldCalculatePopupHeight = true;
+        $scope.EnableThirdpartyProduct(8, "Keno", 680, $scope.getPopupHeight());
     };
 
     $scope.EnableColossusBets = function (enable, id, disabled) {
         if (disabled) {
             return;
         }
-
+        top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(15, "Colossus Bets", 680, 270);
     };
@@ -693,6 +663,7 @@
             return;
         }
 
+        top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(24, "Fishing World", 680, 270);
     };
@@ -702,23 +673,18 @@
             return;
         }
 
+        top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(12, "Gold Deluxe", 680, 270);
     };
 
-    $scope.EnableCockfighting = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        $scope.EnableDCS(19, 'Cockfighting');
-    };
 
     $scope.EnableAllbet = function (enable, id, disabled) {
         if (disabled) {
             return;
         }
 
+        top.shouldCalculatePopupHeight = false;
         $scope.EnableThirdpartyProduct(21, "Allbet", 680, 320);
     };
 
@@ -727,6 +693,7 @@
             return;
         }
 
+        top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(22, "Macau Games", 680, 270);
     };
@@ -736,6 +703,7 @@
             return;
         }
 
+        top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(23, parent.ng2Text, 680, 270);
     };
@@ -745,6 +713,7 @@
             return;
         }
 
+        top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(28, "Lottery", 680, 270);
     };
@@ -754,6 +723,7 @@
             return;
         }
 
+        top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(26, "Lucky 3", 680, 270);
     };
@@ -763,6 +733,7 @@
             return;
         }
 
+        top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(30, "Bullfighting", 680, 270);
     };
@@ -860,24 +831,7 @@
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMinPT' + "?custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
         $scope.collapseSidebar();
     };
-
-    $scope.MinRB = function () {
-        var typeUrl = '';
-        var roleId = $scope.model.personalInfo.roleId.value;
-        if (roleId === 3) { // master
-            typeUrl = 'MasterMinMaxPT';
-        }
-        else if (roleId === 2) { // agent
-            typeUrl = 'AgentMinMaxPT';
-        }
-
-        if (typeUrl !== '') {
-            var url = 'CustomerSetting/Racebook/RacingSetting/' + typeUrl + '?id=' + $scope.model.personalInfo.custId.value + '&roleId=' + roleId;
-            parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url + '&groupName=' + parent.$('#selectedGroupName').html()));
-        }
-        $scope.collapseSidebar();
-    };
-
+    
     $scope.SuperPT = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
         var masterId = $scope.model.personalInfo.downlines[1].key;
@@ -896,21 +850,6 @@
         $scope.ResetGlobalValueAtSuperOnMember();
         var superId = $scope.model.personalInfo.downlines[0].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberBySuper?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId + '&groupname=' + parent.$('#selectedGroupName').html()));
-    };
-
-    $scope.SuperRacing = function () {
-        $scope.ResetGlobalValueAtSuperOnMember();
-        var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/supereditmember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId + '&groupName=' + parent.$('#selectedGroupName').html()));
-    };
-
-    $scope.SuperLiveCasino = function () {
-        var superId = $scope.model.personalInfo.downlines[0].key;
-        $scope.ResetGlobalValueAtSuperOnMember();
-        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Customer.superId = superId;
-        var url = "LiveCasinoSetting/Setting/EditSetting?uplineId=" + superId + "&parentId=" + $scope.model.personalInfo.uplineId.value + "&uplineLevel=4&customerId=" + $scope.model.personalInfo.custId.value + "&customerLevel=1";
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url + "&actorId=" + parent.userId + "&actorUsername=" + parent.username + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
     };
 
     $scope.SuperVirtualSports = function () {
@@ -951,13 +890,7 @@
         $scope.ResetGlobalValueAtMasterOnMember();
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberByMaster?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupname=' + parent.$('#selectedGroupName').html()));
-    };
-
-    $scope.MasterRacing = function () {
-        $scope.ResetGlobalValueAtMasterOnMember();
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/racebook/racingsetting/mastereditmember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupName=' + parent.$('#selectedGroupName').html()));
-    };
+    };    
 
     $scope.MasterVirtualSports = function () {
         $scope.RenderMasterOnMemberDCS(5);
@@ -967,16 +900,7 @@
         $scope.ResetGlobalValueAtMasterOnMember();
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value + "&userId=" + parent.userId));
-    };
-
-    $scope.MasterLiveCasino = function () {
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        $scope.ResetGlobalValueAtMasterOnMember();
-        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Customer.masterId = masterId;
-        var url = "LiveCasinoSetting/Setting/EditSetting?uplineId=" + masterId + "&parentId=" + $scope.model.personalInfo.uplineId.value + "&uplineLevel=3&customerId=" + $scope.model.personalInfo.custId.value + "&customerLevel=1";
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url + "&actorId=" + parent.userId + "&actorUsername=" + parent.username + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, null, true);
-    };
+    };   
 
     $scope.MasterGoldDeluxe = function () {
         var masterId = $scope.model.personalInfo.downlines[1].key;
@@ -1020,10 +944,6 @@
         $scope.RenderSupeOnMemberDCS(16);
     };
 
-    $scope.SuperCockfighting = function () {
-        $scope.RenderSupeOnMemberDCS(19);
-    };
-
     $scope.SuperCricket = function () {
         $scope.RenderSupeOnMemberDCS(20);
     };
@@ -1063,11 +983,7 @@
 
     $scope.MasterSportsbook2 = function () {
         $scope.RenderMasterOnMemberDCS(16);
-    };
-
-    $scope.MasterCockfighting = function () {
-        $scope.RenderMasterOnMemberDCS(19);
-    };
+    };    
 
     $scope.MasterCricket = function () {
         $scope.RenderMasterOnMemberDCS(20);

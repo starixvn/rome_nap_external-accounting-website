@@ -205,8 +205,8 @@
 
     $scope.BetSetting = function () {
         var custId = $scope.model.personalInfo.custId.value;
-        var param = custId + '/' + custId + '/' + parent.userId + '/' + parent.$('#selectedGroupName').html();
-        var url = parent.resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/' + param);
+        var param = 'custId='+ custId + '&uplineId=' + custId + '&userId=' + parent.userId + '&groupName=' + parent.$('#selectedGroupName').html();
+        var url = parent.resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index?' + param);
 
         parent.Fanex.ExtAcc.LoadMainIFrame(url);
         $scope.collapseSidebar();

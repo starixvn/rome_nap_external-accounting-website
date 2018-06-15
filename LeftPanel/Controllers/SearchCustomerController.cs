@@ -26,21 +26,22 @@
 
         private readonly CustomerQueryService customerQueryService;
 
-        public SearchCustomerController() : this(new CustomerQueryServiceImpl(), null, null)
+        public SearchCustomerController() : this(new CustomerQueryServiceImpl(), null, null, null)
         {
         }
 
         internal SearchCustomerController(
             CustomerQueryService customerQueryService,
             ICurrentSession currentSession,
-            ICurrentContext currentContext) : base(currentSession, currentContext)
+            ICurrentContext currentContext,
+            IExtRequest extRequest) : base(currentSession, currentContext, extRequest)
         {
             this.customerQueryService = customerQueryService;
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult Index(string custName = null, string uplineId = "ACCDDD")
+        public ActionResult Index(string groupName, string custName)
         {
             var userId = CurrentSession.UserId;
             ViewBag.UserId = userId;
@@ -60,7 +61,7 @@
             var customerInfo = customerQueryService.SearchCustomer(
                 userId,
                 custName,
-                uplineId);
+                ExtRequest.GroupName);
 
             return View(LeftPanelIndexView, customerInfo);
         }

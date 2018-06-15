@@ -326,7 +326,6 @@
     <Compile Include="Authentication\CaptchaUtil.cs" />
     <Compile Include="Customer\CustomerController.cs" />
     <Compile Include="Customer\SportsbookSettingController.cs" />
-    <Compile Include="Customer\ThirdPartyProductStatusController.cs" />
     <Compile Include="GlobalSuppressions.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>

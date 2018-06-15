@@ -9,7 +9,7 @@
 
     public interface CustomerQueryService
     {
-        CustomerModel SearchCustomer(int actorId, string custName, string groupName = "ACCDDD");
+        CustomerModel SearchCustomer(int actorId, string custName, string groupName);
 
         OnlineList GetOnlineList(int custId);
 
@@ -38,7 +38,7 @@
             this.customerInfoQueryService = customerInfoQueryService ?? new CustomerInfoQueryServiceImpl();
         }
 
-        public CustomerModel SearchCustomer(int actorId, string custName, string groupName = "ACCDDD")
+        public CustomerModel SearchCustomer(int actorId, string custName, string groupName )
         {
             var customerInfoDataSet = customerDataAccess.GetCustomerInfo(
                 string.IsNullOrWhiteSpace(custName)

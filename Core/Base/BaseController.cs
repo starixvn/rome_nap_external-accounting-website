@@ -12,16 +12,21 @@
     using System.Web.SessionState;
     using Authorization;
     using CasinoLibrary.Model.UserException;
+    using Context;
     using CustomerSetting.IP.Utils;
     using CustomerSetting.Module.Core.Criteria;
     using CustomerSetting.Module.Core.Models;
     using CustomerSetting.Module.Core.Services.Impl;
+    using CustomerSetting.Module.Core.Services.Interface;
     using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
+    using DTO.UserControl;
     using Logging.Extensions.Web;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using PTEngine.BusinessObjects;
+    using RemotingRef;
+    using Reports.WinLossDetail;
     using Service.Impl.Customer.Casino;
     using Shared;
     using Utilities;
@@ -39,20 +44,22 @@
         protected const string UAT = "UAT";
         protected const string PRO = "LIVE";
         private readonly ICurrentContext currentContext;
-
         private readonly ICurrentSession currentSession;
+        private readonly IExtRequest extRequest;
+
         protected readonly AuthorizationService AuthorizationService = new AuthorizationServiceImpl();
 
 
-        protected BaseController() : this(new CurrentSession(), new CurrentContext())
+        protected BaseController() : this(new CurrentSession(), new CurrentContext(), new ExtRequest())
         {
 
         }
 
-        protected BaseController(ICurrentSession currentSession, ICurrentContext currentContext)
+        protected BaseController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest)
         {
             this.currentContext = currentContext;
             this.currentSession = currentSession;
+            this.extRequest = extRequest;
         }
 
         protected static string Environment => Utils.ToString(ConfigurationManager.AppSettings["Environment"]);
@@ -62,6 +69,8 @@
         protected virtual ICurrentContext CurrentContext => currentContext ?? new CurrentContext();
 
         protected virtual ICurrentSession CurrentSession => currentSession ?? new CurrentSession();
+
+        protected virtual IExtRequest ExtRequest => extRequest ?? new ExtRequest();
 
         protected virtual ActionResult JsonBase(object data, JsonSerializerSettings settings = null)
             => this.JsonExt(data, settings ?? new JsonSerializerSettings
@@ -239,17 +248,17 @@
                 return table;
             }
 
-            foreach (DataRow row in table.Rows)
+           foreach (DataRow row in table.Rows)
             {
                 var ip = row.ToString(fieldName);
-                if (string.IsNullOrWhiteSpace(ip) || !IpUtils.IsVnIp(ip))
+                if (string.IsNullOrWhiteSpace(ip))
                 {
                     continue;
                 }
 
                 if (!AuthorizationService.IsAuthorized(
                     CurrentSession.UserId,
-                    eFunctions.ViewVNIP))
+                    eFunctions.ViewVNIP) && IpUtils.IsVnIp(ip))
                 {
                     row[fieldName] = string.Empty;
                 }
@@ -301,5 +310,8 @@
                     product.ProductId == 0 ? product.Name : ProductListAuthorization.GetProductNameFromRemotingRef(product.ProductId)))
                 .ToList();
         }
+
+        protected static string GetProductNameFromRemotingRef(int productId) =>
+            RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en", null);
     }
 }

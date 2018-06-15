@@ -4,7 +4,7 @@
 
     public interface ISuperService 
     {
-        DataTable GetData(int? userId, int? custId = null, bool? enabled = null,
-            bool? closed = null, bool? suspended = null, string groupName = "ACCDDD");
+        DataTable GetData(int? userId, string groupName, int? custId = null, bool? enabled = null,
+            bool? closed = null, bool? suspended = null);
     }
 }

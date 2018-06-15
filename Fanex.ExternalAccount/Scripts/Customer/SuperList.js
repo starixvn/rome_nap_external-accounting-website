@@ -22,6 +22,7 @@
             name: "Sportsbook",
             className: "iconViewEdit",
             callback: function () {
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Form.Show(
@@ -35,6 +36,7 @@
             name: "Casino",
             className: "iconViewEdit",
             callback: function () {
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Super/EditSuper?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=0&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 1064, 700, false, null, 1);                
             }
@@ -46,6 +48,7 @@
             name: productName,
             className: "iconViewEdit",
             callback: function () {
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(
@@ -65,6 +68,7 @@
             name: "Keno",
             className: "iconViewEdit",
             callback: function () {
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditSuper?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Keno Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 880, 700, false, false, 1);                
@@ -77,6 +81,7 @@
             name: "Gold Deluxe",
             className: "iconViewEdit",
             callback: function () {
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=0&uplineId=0&formType=2&level=4" + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + parent.$('#selectedGroupName').html();
@@ -91,6 +96,7 @@
             name: "Colossus Bets",
             className: "iconViewEdit",
             callback: function () {
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 url = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&isMultipleEdit=0&userId=" + parent.userId + "&roleId=4&groupName=" + parent.$('#selectedGroupName').html();
@@ -120,6 +126,7 @@
         height: 25,
         className: "iconEnableEdit editInfoBg",
         callback: function (key, opt) {
+            top.shouldCalculatePopupHeight = true;
             Fanex.ExtAcc.Customer.IsMultiple = false;
             var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 480) : 500;
             Fanex.ExtAcc.Form.Show(
@@ -134,6 +141,7 @@
         name: "Reset Password",
         className: "iconEnableEdit editInfoBg",
         callback: function (key, opt) {
+            top.shouldCalculatePopupHeight = true;
             Fanex.ExtAcc.Customer.IsMultiple = false;
             var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 400) : 400;
             Fanex.ExtAcc.Form.Show(
@@ -150,6 +158,7 @@
         name: "Security Code",
         className: "iconEnableEdit editInfoBg",
         callback: function (key, opt) {
+            top.shouldCalculatePopupHeight = true;
             Fanex.ExtAcc.Customer.IsMultiple = false;
             var params = {
                 custId: Fanex.ExtAcc.Customer.UserId,
@@ -172,6 +181,7 @@
         name: "Transfer Condition",
         className: "iconEnableEdit editInfoBg",
         callback: function (key, opt) {
+            top.shouldCalculatePopupHeight = false;
             Fanex.ExtAcc.Customer.IsMultiple = false;
             Fanex.ExtAcc.Form.Show(
                 resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
@@ -188,8 +198,14 @@
             name: "Edit Betting Limit",
             className: "iconEnableEdit editInfoBg",
             callback: function (key, opt) {
+                top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index/' + Fanex.ExtAcc.Customer.UserId + '/' + Fanex.ExtAcc.Customer.UserId + '/' + userId + '/' + $('#selectedGroupName').html()), 'Edit Bet Setting', 900, 660, false, null, 1, 'bettingLimitPopup');
+                Fanex.ExtAcc.Form.ShowFrame(
+                    resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.UserId + '&userId=' + userId + '&groupName=' + $('#selectedGroupName').html()), 'Edit Bet Setting',
+                    900,
+                    Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                    false,
+                    null, 1);
             }
         };
     }

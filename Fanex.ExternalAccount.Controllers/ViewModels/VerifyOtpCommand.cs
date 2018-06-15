@@ -11,5 +11,11 @@
         public string __RequestVerificationToken { get; set; }
 
         public string _md { get; set; }
+
+        public bool InValid
+            => string.IsNullOrEmpty(_otp)
+            || string.IsNullOrEmpty(_pt)
+            || string.IsNullOrEmpty(_cd)
+            || string.IsNullOrEmpty(_md);
     }
 }

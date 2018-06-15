@@ -418,6 +418,7 @@
     <Content Include="Areas\Common\Views\Shared\Images\Loading.gif" />
     <Content Include="Areas\Common\Views\Shared\Scripts\Fanex.CustomerSetting.js" />
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\AjaxSetup.js" />
     <Content Include="Areas\Web.config" />
     <Content Include="Areas\CustomerSettingRenovation\Content\DCSCustom.css" />
     <Content Include="Areas\CustomerSettingRenovation\Content\Images\bgHeader.jpg" />
@@ -758,6 +759,7 @@
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\OTP\Scripts\OTP.js" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\OTP\Styles\OTP.css" />
+    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\AjaxSetup.js" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\SettingPTController.js" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\PersonalInfoController.js" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\NoInfoController.js" />
@@ -2358,7 +2360,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Common\Views\Shared\Styles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />
@@ -2396,6 +2397,7 @@
     </Content>
     <Content Include="Areas\CustomerSetting\Views\BetSetting\GoldDeluxe\Content.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\GoldDeluxe\Index.cshtml" />
+    <Content Include="Areas\Common\Views\Web.config" />
     <None Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Document.doc" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\ColossusBet-setting.less" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Common.less" />

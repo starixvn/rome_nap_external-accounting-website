@@ -13,7 +13,7 @@ angular.element($('#ng-app')).ready(function () {
 
 function LoadSB() {
     Fanex.CustomerSetting.Core.BlockUI();
-    document.location.href = toUrl('Sportsbook/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName + '?v=1');
+    document.location.href = toUrl('Sportsbook/Index?custId=' + custId + '&uplineId=' + uplineId + '&userId=' + userId + '&groupName=' + siteName);
 };
 
 function LoadVirtualSports() {
@@ -27,17 +27,17 @@ function LoadVirtualSports() {
 
 function LoadCasino() {
     Fanex.CustomerSetting.Core.BlockUI();
-    document.location.href = toUrl('CasinoBetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName + '?v=0001');
+    document.location.href = toUrl('CasinoBetting/Index?custId=' + custId + '&uplineId=' + uplineId + '&userId=' + userId + '&groupName=' + siteName);
 };
 
 function LoadKeno() {
     Fanex.CustomerSetting.Core.BlockUI();
-    document.location.href = toUrl('KenoBetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName + '?v=0001');
+    document.location.href = toUrl('KenoBetting/Index?custId=' + custId + '&uplineId=' + uplineId + '&userId=' + userId + '&groupName=' + siteName);
 };
 
 function LoadGoldDeluxe() {
     Fanex.CustomerSetting.Core.BlockUI();
-    document.location.href = toUrl('GoldDeluxeBetting/Index/' + custId + '/' + uplineId + '/' + userId + '/' + siteName + '?v=0001');
+    document.location.href = toUrl('GoldDeluxeBetting/Index?custId=' + custId + '&uplineId=' + uplineId + '&userId=' + userId + '&groupName=' + siteName);
 };
 
 function LoadAllBet() {

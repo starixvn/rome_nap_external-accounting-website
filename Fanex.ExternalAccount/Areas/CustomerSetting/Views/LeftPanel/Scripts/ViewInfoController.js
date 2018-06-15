@@ -20,10 +20,9 @@
 
     $scope.GetBalance = function (custId) {
         parent.Fanex.ExtAcc.BlockUI();
-        $http({
+        $.ajax({
             url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/SelectClearBalance?custId=' + custId + '&groupName=' + parent.$('#selectedGroupName').html()),
-            method: 'post',
-            headers: { "X-Requested-With": "XMLHttpRequest" }
+            method: 'post'
         })
         .success(function (result) {
             parent.Fanex.ExtAcc.UnBlockUI();

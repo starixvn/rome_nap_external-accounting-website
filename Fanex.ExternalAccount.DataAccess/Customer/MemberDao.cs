@@ -11,13 +11,12 @@
 
         public DataTable GetData(
             int? userId,
+            string groupName,
             int? recommend = null, 
             int? custId = null, 
             bool? enabled = null, 
             bool? closed = null, 
-            bool? suspended = null, 
-            string groupName = "ACCDDD"
-            )
+            bool? suspended = null)
         {
             var param = new Hashtable();
             param.Add("recommend", recommend);
