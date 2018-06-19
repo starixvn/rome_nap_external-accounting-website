@@ -67,10 +67,10 @@ namespace Fanex.ExternalAccount.Core.Authorization
         {
             if (ExtRequest.Instance.CustIds.Any())
             {
-                return IsBelong(ExtRequest.Instance.GroupName, ExtRequest.Instance.CustIds);
+                return IsBelong(ExtRequest.Instance.GetGroupName(), ExtRequest.Instance.CustIds);
             }
 
-            return IsBelong(ExtRequest.Instance.GroupName, ExtRequest.Instance.CustId, string.Empty, false);
+            return IsBelong(ExtRequest.Instance.GetGroupName(), ExtRequest.Instance.CustId, string.Empty, false);
         }
 
         public bool IsBelong(string groupName, int custId, string userName, bool isGetUplineInfo)

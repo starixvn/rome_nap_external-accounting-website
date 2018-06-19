@@ -237,13 +237,13 @@
             }
 
             var groupId = groups
-                .FirstOrDefault(o => o.GroupName.Equals(ExtRequest.GroupName, StringComparison.OrdinalIgnoreCase))?.GroupID;
+                .FirstOrDefault(o => o.GroupName.Equals(ExtRequest.GetGroupName(groupName), StringComparison.OrdinalIgnoreCase))?.GroupID;
 
             ViewBag.UserID = userId;
             ViewBag.Username = username;
 
             var isExternalGroup =
-                externalGroup.Any(i => i.GroupName.Equals(ExtRequest.GroupName, StringComparison.OrdinalIgnoreCase));
+                externalGroup.Any(i => i.GroupName.Equals(ExtRequest.GetGroupName(groupName), StringComparison.OrdinalIgnoreCase));
 
             if (isExternalGroup)
             {

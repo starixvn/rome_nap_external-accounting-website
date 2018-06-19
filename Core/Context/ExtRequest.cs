@@ -10,7 +10,7 @@
 
     public interface IExtRequest
     {
-        string GroupName { get; }
+        string GetGroupName(string group = null);
 
         int CustId { get; }
 
@@ -26,15 +26,13 @@
 
         public static IExtRequest Instance => new ExtRequest();
 
-        public string GroupName
+        public string GetGroupName(string group = null)
         {
-            get
-            {
-                var groupName = HttpContext.Current.Request["groupName"];
+            var newGroup = string.IsNullOrEmpty(group) ? HttpContext.Current.Request["groupName"] : group;
 
-                return string.IsNullOrEmpty(groupName) ? CurrentSession.Instance.CurrencyGroup : groupName;
-            }
-        }                
+            return string.IsNullOrEmpty(newGroup) ? CurrentSession.Instance.CurrencyGroup : newGroup;
+        }
+
 
         public int CustId
         {
@@ -52,7 +50,7 @@
         }
 
         public IEnumerable<int> CustIds => GetCustomerIdsInQueryString();
-            
+
 
         private int GetCustomerIdInQueryString()
         {

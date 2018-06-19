@@ -61,7 +61,7 @@
             var customerInfo = customerQueryService.SearchCustomer(
                 userId,
                 custName,
-                ExtRequest.GroupName);
+                ExtRequest.GetGroupName(groupName));
 
             return View(LeftPanelIndexView, customerInfo);
         }
