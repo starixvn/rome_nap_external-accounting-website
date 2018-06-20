@@ -110,10 +110,9 @@
         }
     };
 
-    $scope.getPopupHeight = function () {
+    $scope.getPopupHeight = function (landscapeHeight, portraitHeight) {
         var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
-             $scope.landscapeHeight :
-             $scope.portraitHeight;
+            landscapeHeight : portraitHeight;
 
         return height;
     }
@@ -610,10 +609,9 @@
         }, 1, null);
     };
 
-    $scope.getPopupHeight = function () {
+    $scope.getPopupHeight = function (landscapeHeight, portraitHeight) {
         var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
-             $scope.landscapeHeight :
-             $scope.portraitHeight;
+             landscapeHeight : portraitHeight;
 
         return height;
     }
@@ -626,10 +624,10 @@ $scope.Info = function () {
             "&groupName=" + parent.$('#selectedGroupName').html());
         var title = parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
 
-        top.landscapeHeight = 280;
-        top.portraitHeight = 500;
+        var landscapeHeight = 280;
+        var portraitHeight = 500;
         top.shouldCalculatePopupHeight = true;
-        parent.Fanex.ExtAcc.Form.Show(url, title, 500, $scope.getPopupHeight(), false);
+        parent.Fanex.ExtAcc.Form.Show(url, title, 500, $scope.getPopupHeight(landscapeHeight, portraitHeight), false);
     };
 
     $scope.Transfer = function () {
@@ -643,10 +641,10 @@ $scope.Info = function () {
             return;
         }
 
-        top.landscapeHeight = 250;
-        top.portraitHeight = 400;
+        var landscapeHeight = 250;
+        var portraitHeight = isMobile.phone || isMobile.tablet ? 400 :  700;
         top.shouldCalculatePopupHeight = true;
-        $scope.EnableThirdpartyProduct(8, "Keno", 680, $scope.getPopupHeight());
+        $scope.EnableThirdpartyProduct(8, "Keno", 680, $scope.getPopupHeight(landscapeHeight, portraitHeight));
     };
 
     $scope.EnableColossusBets = function (enable, id, disabled) {
