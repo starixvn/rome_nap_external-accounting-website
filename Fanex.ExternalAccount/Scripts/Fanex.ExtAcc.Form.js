@@ -96,10 +96,6 @@ Fanex.ExtAcc.Form = {
         Frame.setAttribute('frameBorder', "0");
         Frame.setAttribute('name', id);
 
-        if (Frame.src == '') {
-            Frame.src = url;
-        }
-
         var $self = this;
         var data = null;
 

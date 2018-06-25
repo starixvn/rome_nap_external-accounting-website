@@ -43,6 +43,9 @@
             }
         };
 
+        // Number Game
+        productIds.push(3);
+
         if (this.superSyncCasino) {
             menuItems.casino = {
                 name: "Edit Multiple Casino",
@@ -151,6 +154,9 @@
                 }
             }
         };
+
+        // Number Game
+        productIds.push(3);
 
         if (this.masterSyncCasino) {
             menuItems.casino = {
@@ -283,6 +289,9 @@
                 }
             }
         };
+
+        // Number Game
+        productIds.push(3);
 
         if (this.agentSyncCasino) {
             menuItems.casino = {
