@@ -15,13 +15,23 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
     public class CasinoBettingController : BettingControllerBase
     {
-        public ActionResult Index(int custId, int uplineId, int userId, string groupName)
-            => View("~/Areas/CustomerSetting/Views/BetSetting/Casino/Index.cshtml");
+        public ActionResult Index(int id, int uplineId, int userId, string siteName)
+        {
+            var obj = Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as
+                    IAuthenticate;
+
+            if (!obj.IsBelong(id, null, siteName))
+            {
+                return ActionDenied(Request);
+            }
+
+            return View("~/Areas/CustomerSetting/Views/BetSetting/Casino/Index.cshtml");
+        }
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "CasinoBetting")]
-        public ActionResult Content(int custId, int uplineId, int userId, string groupName)
+        public ActionResult Content(int id, int uplineId, int userId, string siteName)
         {
-            var customer = CustomerInfo(custId, userId);
+            var customer = CustomerInfo(id, userId);
 
             if (customer.RoleId.IsNotSuper() || !customer.SyncCasino)
             {
@@ -32,18 +42,18 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
             try
             {
-                var settingModel = CasinoManager.Instance.SuperCasinoModel(custId, uplineId);
-                var customerModel = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
+                var settingModel = superCasinoService.SuperCasinoModel(id, uplineId);
+                var customerModel = casinoServiceBaseImpl.GetCustInfoIBC(id, uplineId);
 
                 var customerUpline = new CasinoCustomer
                 {
                     GeneralInfo = { IBCCustID = uplineId }
                 };
 
-                CasinoManager.Instance.GetCustSettingCS(ref customerUpline);
+                customerUpline = casinoServiceBaseImpl.GetCustSettingCS(customerUpline);
 
-                customerModel.GeneralInfo.IBCCustID = customerModel.GeneralInfo.CasinoSync ? custId : uplineId;
-                CasinoManager.Instance.GetCustSettingCS(ref customerModel);
+                customerModel.GeneralInfo.IBCCustID = customerModel.GeneralInfo.CasinoSync ? id : uplineId;
+                customerModel = casinoServiceBaseImpl.GetCustSettingCS(customerModel);
 
                 customerModel.GeneralInfo.UplineRoleId = customerUpline.GeneralInfo.RoleId;
 
@@ -67,9 +77,18 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
         [HttpPost]
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "CasinoBetting")]
-        public ActionResult EditBetSettingPost(int custId, int uplineId, int userId, string txtCustomerObject)
+        public ActionResult EditBetSettingPost(int id, int uplineId, int userId, string txtCustomerObject,
+            string siteName = "ACCUT")
         {
-            var customer = CustomerInfo(custId, userId);
+            var obj =
+                Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as
+                    IAuthenticate;
+            if (!obj.IsBelong(id, null, siteName))
+            {
+                return ActionDenied(Request);
+            }
+
+            var customer = CustomerInfo(id, userId);
 
             var settings = new JsonSerializerSettings
             {
@@ -83,15 +102,14 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             }
 
             var model = JsonConvert.DeserializeObject<CasinoModel>(txtCustomerObject);
-            var result = CasinoManager.Instance.UpdateSuperBettingLimit(
-                custId,
+            var result = superCasinoService.UpdateSuperBettingLimit(
+                id,
                 4,
                 Request.UserHostAddress,
                 userId,
                 customer.Username,
                 AppSession.CurrentSession.FromSystem,
-                model.SettingModel,
-                model.CustomerModel);
+                model.SettingModel);
 
             return JsonBase(result, settings);
         }

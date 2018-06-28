@@ -33,6 +33,10 @@
             return View();
         }
 
-        //private void LogUserNWSpeed()
+        [AllowAnonymous]
+        public ActionResult TestExceptionLog()
+        {
+            throw new Exception("Test Exception.");
+        }
     }
 }

@@ -128,7 +128,7 @@
             this.extRequest = extRequest ?? new ExtRequest();
         }
 
-        public string groupName => extRequest.GroupName;
+        public string groupName => extRequest.GetGroupName();
 
         public string username { get; set; }
         public int srecommend { get; set; }

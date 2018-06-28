@@ -277,8 +277,8 @@
 
         public ActionResult Settings(int id, int custId, int uplineId, string userName, string groupName)
         {
-            var customerSetting = GetLineInfo(ExtRequest.GroupName, userName);
-            var result = GetCustomerList(ExtRequest.GroupName, null, null, null, customerSetting);
+            var customerSetting = GetLineInfo(ExtRequest.GetGroupName(groupName), userName);
+            var result = GetCustomerList(ExtRequest.GetGroupName(groupName), null, null, null, customerSetting);
 
             ViewBag.CurrentLevel = id;
             ViewBag.UserId = custId;
@@ -324,8 +324,8 @@
             bool? suspended = null,
             string username = null)
         {
-            var lineInfo = GetLineInfo(ExtRequest.GroupName, username, BuildCustomerSetting(username));
-            var customers = GetCustomerList(ExtRequest.GroupName, enabled, closed, suspended, lineInfo);
+            var lineInfo = GetLineInfo(ExtRequest.GetGroupName(groupName), username, BuildCustomerSetting(username));
+            var customers = GetCustomerList(ExtRequest.GetGroupName(groupName), enabled, closed, suspended, lineInfo);
             var customerProductStatus = TransformToCustomerProductStatusList(customers);
             var customers2String = Customers2Json(customers);
             var syncCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncCasino");
@@ -355,7 +355,7 @@
             bool? closed = null,
             bool? suspended = null)
         {
-            var supers = _superService.GetData(CurrentSession.UserId, ExtRequest.GroupName, custId, enabled, closed, suspended);
+            var supers = _superService.GetData(CurrentSession.UserId, ExtRequest.GetGroupName(groupName), custId, enabled, closed, suspended);
             var customerProductStatus = TransformToCustomerProductStatusList(supers);
             var supers2Json = Customers2Json(supers);
 
@@ -369,7 +369,7 @@
         {
             var masters = _masterService.GetData(CurrentSession.UserId, srecommend, custId, enabled, closed, suspended);
             var superId = Utils.ToInt32(srecommend);
-            var customerSetting = reportService.SearchCustomerInfo(ExtRequest.GroupName, superId, null, isGetUplineInfo: true);
+            var customerSetting = reportService.SearchCustomerInfo(ExtRequest.GetGroupName(), superId, null, isGetUplineInfo: true);
             var customerProductStatus = TransformToCustomerProductStatusList(masters);
             var master2Json = Customers2Json(masters);
 
@@ -396,7 +396,7 @@
             var agents = _agentService.GetData(CurrentSession.UserId, mrecommend, custId, enabled, closed, suspended);
 
             var masterId = Utils.ToInt32(mrecommend);
-            var customerSetting = reportService.SearchCustomerInfo(ExtRequest.GroupName, masterId, null, isGetUplineInfo: true);
+            var customerSetting = reportService.SearchCustomerInfo(ExtRequest.GetGroupName(), masterId, null, isGetUplineInfo: true);
             var customerProductStatus = TransformToCustomerProductStatusList(agents);
             var ret = Customers2Json(agents);
 
@@ -420,9 +420,9 @@
         public ActionResult MemberListPost(string groupName, int? recommend = null, int? custId = null, bool? enabled = null,
             bool? closed = null, bool? suspended = null)
         {
-            var members = _memberService.GetData(CurrentSession.UserId, ExtRequest.GroupName, recommend, custId, enabled, closed, suspended);
+            var members = _memberService.GetData(CurrentSession.UserId, ExtRequest.GetGroupName(groupName), recommend, custId, enabled, closed, suspended);
             var agentId = Utils.ToInt32(recommend);
-            var customerSetting = reportService.SearchCustomerInfo(ExtRequest.GroupName, agentId, null, isGetUplineInfo: true);
+            var customerSetting = reportService.SearchCustomerInfo(ExtRequest.GetGroupName(groupName), agentId, null, isGetUplineInfo: true);
             var customerProductStatus = TransformToCustomerProductStatusList(members);
             var member2Json = Customers2Json(members);
 
@@ -598,7 +598,7 @@
         {
             var customerSetting = BuildCustomerSetting(username);
 
-            var customers = GetCustomerList(ExtRequest.GroupName, enabled, closed, suspended, customerSetting);
+            var customers = GetCustomerList(ExtRequest.GetGroupName(groupName), enabled, closed, suspended, customerSetting);
             TransformToCustomerProductStatusList(customers);
 
             var status = string.Empty;

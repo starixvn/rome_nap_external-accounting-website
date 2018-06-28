@@ -88,7 +88,7 @@
             _custId = CheckRequest.GetIntRequest("custid", 0);
             _fromDate = CheckRequest.GetDateTimeRequest("fromdate", DateTime.Today);
             _toDate = CheckRequest.GetDateTimeRequest("todate", DateTime.Today);            
-            _cacheName = $"CacheList{_username}{ExtRequest.GroupName}{_custId}{_fromDate}{_toDate}";
+            _cacheName = $"CacheList{_username}{ExtRequest.GetGroupName()}{_custId}{_fromDate}{_toDate}";
         }
     }
 }

@@ -70,7 +70,7 @@
             _username = CheckRequest.GetStringRequest("username", string.Empty);
             _viewlevel = CheckRequest.GetIntRequest("viewlevel", 0);
             _custId = CheckRequest.GetIntRequest("custid", 0);
-            _groupname = ExtRequest.GroupName;
+            _groupname = ExtRequest.GetGroupName();
             _winlostDate = CheckRequest.GetDateTimeRequest("date", DateTime.Today);
         }
 
