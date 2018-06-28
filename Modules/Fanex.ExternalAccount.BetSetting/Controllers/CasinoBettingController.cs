@@ -15,23 +15,13 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
     public class CasinoBettingController : BettingControllerBase
     {
-        public ActionResult Index(int id, int uplineId, int userId, string siteName)
-        {
-            var obj = Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as
-                    IAuthenticate;
-
-            if (!obj.IsBelong(id, null, siteName))
-            {
-                return ActionDenied(Request);
-            }
-
-            return View("~/Areas/CustomerSetting/Views/BetSetting/Casino/Index.cshtml");
-        }
+        public ActionResult Index(int custId, int uplineId, int userId, string groupName)
+           => View("~/Areas/CustomerSetting/Views/BetSetting/Casino/Index.cshtml");
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "CasinoBetting")]
-        public ActionResult Content(int id, int uplineId, int userId, string siteName)
+        public ActionResult Content(int custId, int uplineId, int userId, string groupName)
         {
-            var customer = CustomerInfo(id, userId);
+            var customer = CustomerInfo(custId, userId);
 
             if (customer.RoleId.IsNotSuper() || !customer.SyncCasino)
             {
@@ -42,8 +32,8 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
             try
             {
-                var settingModel = superCasinoService.SuperCasinoModel(id, uplineId);
-                var customerModel = casinoServiceBaseImpl.GetCustInfoIBC(id, uplineId);
+                var settingModel = superCasinoService.SuperCasinoModel(custId, uplineId);
+                var customerModel = casinoServiceBaseImpl.GetCustInfoIBC(custId, uplineId);
 
                 var customerUpline = new CasinoCustomer
                 {
@@ -52,7 +42,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
                 customerUpline = casinoServiceBaseImpl.GetCustSettingCS(customerUpline);
 
-                customerModel.GeneralInfo.IBCCustID = customerModel.GeneralInfo.CasinoSync ? id : uplineId;
+                customerModel.GeneralInfo.IBCCustID = customerModel.GeneralInfo.CasinoSync ? custId : uplineId;
                 customerModel = casinoServiceBaseImpl.GetCustSettingCS(customerModel);
 
                 customerModel.GeneralInfo.UplineRoleId = customerUpline.GeneralInfo.RoleId;
@@ -77,18 +67,9 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
         [HttpPost]
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "CasinoBetting")]
-        public ActionResult EditBetSettingPost(int id, int uplineId, int userId, string txtCustomerObject,
-            string siteName = "ACCUT")
+        public ActionResult EditBetSettingPost(int custId, int uplineId, int userId, string txtCustomerObject)
         {
-            var obj =
-                Activator.CreateInstance(Type.GetType(CustomerSettingSection.Instance.AuthenticateFactory)) as
-                    IAuthenticate;
-            if (!obj.IsBelong(id, null, siteName))
-            {
-                return ActionDenied(Request);
-            }
-
-            var customer = CustomerInfo(id, userId);
+            var customer = CustomerInfo(custId, userId);
 
             var settings = new JsonSerializerSettings
             {
@@ -101,9 +82,10 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
                 return JsonBase(new { ErrorCode = 1, ErrorMessage = "You're not authorized on this function" }, settings);
             }
 
+
             var model = JsonConvert.DeserializeObject<CasinoModel>(txtCustomerObject);
             var result = superCasinoService.UpdateSuperBettingLimit(
-                id,
+                custId,
                 4,
                 Request.UserHostAddress,
                 userId,
