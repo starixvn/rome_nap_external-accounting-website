@@ -115,7 +115,7 @@
             var productStatusConfig = new ProductStatusConfiguration()
                 .UseAuthorizeService(new ProductStatusAuthorizeService())
                 .UseProductStatusActor(new ProductStatusActor())
-                .SetUnAuthorizedUrl("~/ThirdPartyProductStatus/AccessDenied")
+                .SetUnAuthorizedUrl("~/Customer/AccessDenied")
                 .UseCustomerProductList(MultipleEditProductStatus.GetCustomerProductList);
             ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
         }

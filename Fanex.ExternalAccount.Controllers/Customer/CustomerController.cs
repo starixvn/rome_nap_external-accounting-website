@@ -626,7 +626,9 @@
             ExportToExcel(excelStream, fileName);
         }
 
- private DataTable GetCustomerList(
+        public ActionResult AccessDenied() => ActionDenied(Request);
+
+        private DataTable GetCustomerList(
             string groupName,
             bool? enabled,
             bool? closed,
