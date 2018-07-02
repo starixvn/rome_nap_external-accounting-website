@@ -683,7 +683,7 @@ $scope.Info = function () {
         }
 
         top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(21, "Allbet", 680, 320);
+        $scope.EnableThirdpartyProduct(21, "Allbet", 800, 320);
     };
 
     $scope.EnableVoidBridge = function (enable, id, disabled) {

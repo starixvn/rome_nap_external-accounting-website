@@ -62,17 +62,34 @@
 
                         @if (item.Master != null)
                         {
-                            @RenderDownlineStatus(item.SportType, item.BetType, 3, item.IsDisabledUpline, item.Master)
+                            @RenderDownlineStatus(
+                               item.SportType,
+                               item.BetType,
+                               RoleIdentity.Master,
+                               item.IsDisabledUpline,
+                               item.Master)
                         }
 
                         @if (item.Agent != null)
                         {
-                            @RenderDownlineStatus(item.SportType, item.BetType, 2, item.IsDisabledUpline, item.Agent)
+                            @RenderDownlineStatus(
+                               item.SportType,
+                               item.BetType,
+                               RoleIdentity.Agent,
+                               item.IsDisabledUpline,
+                               item.Agent,
+                               Model.CustRole.Equals(RoleIdentity.Master) ? 0 : item.Master.TotalDisabled)
                         }
 
                         @if (item.Member != null)
                         {
-                            @RenderDownlineStatus(item.SportType, item.BetType, 1, item.IsDisabledUpline, item.Member)
+                            @RenderDownlineStatus(
+                           item.SportType,
+                           item.BetType,
+                           RoleIdentity.Member,
+                           item.IsDisabledUpline,
+                           item.Member,
+                           Model.CustRole.Equals(RoleIdentity.Agent) ? 0 : item.Agent.TotalDisabled)
                         }
                     </tr>
                 }
@@ -160,17 +177,18 @@
 }
 
 @helper RenderDownlineStatus(
-    int sportType, 
-    int betType, 
-    byte roleId, 
-    bool isDisabledUpline, 
-    DownlineStatusViewModel downlineStatus)
+    int sportType,
+    int betType,
+    byte roleId,
+    bool isDisabledUpline,
+    DownlineStatusViewModel downlineStatus,
+    int totalDisabledUpline = 0)
 {
-    var enabledSpanClass = "enabled" + (downlineStatus.IsDisabled ? " gray" : string.Empty);
-    var enabledId = string.Format("enabled_{0}_{1}", roleId, betType);
-    var disabledSpanClass = "disabled" + (downlineStatus.IsDisabled ? " gray" : string.Empty);
-    var disabledId = string.Format("disabled_{0}_{1}", roleId, betType);
-    var roleName = Model.GetRoleName(roleId);
+var enabledSpanClass = "enabled" + (downlineStatus.IsDisabled || isDisabledUpline || totalDisabledUpline > 0 ? " gray" : string.Empty);
+var enabledId = string.Format("enabled_{0}_{1}", roleId, betType);
+var disabledSpanClass = "disabled" + (downlineStatus.IsDisabled || isDisabledUpline ? " gray" : string.Empty);
+var disabledId = string.Format("disabled_{0}_{1}", roleId, betType);
+var roleName = Model.GetRoleName(roleId);
 
     <td>
         <span id="@enabledId" class="@enabledSpanClass"
