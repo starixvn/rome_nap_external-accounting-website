@@ -137,7 +137,7 @@
             return;
 
         this.IsLoading = true;
-       
+
         //Prevent loading group name
         var timeout = setInterval(function () {
             if ($.trim($('#selectedGroupName').html()) != '') {
@@ -154,7 +154,7 @@
                 data.groupName +
                 "&enabled=" +
 
-            
+
                 data.enabled +
                 "&closed=" +
                 data.closed +
@@ -172,7 +172,7 @@
                 data.username +
                 "&custId=" +
                 Fanex.ExtAcc.Customer.custId;
-             top.exportExcel(resolveClientUrl("Customer/GetExportToExcel?") + params, document);
+            top.exportExcel(resolveClientUrl("Customer/GetExportToExcel?") + params, document);
 
         });
 
@@ -718,7 +718,8 @@
                 $('#exporttoexcel').css('display', 'none');
 
                 Fanex.ExtAcc.UnBlockUI();
-            }});
+            }
+        });
     },
 
     AppendInputToForm: function (id, name, value, targetForm) {

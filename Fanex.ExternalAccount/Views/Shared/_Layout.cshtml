@@ -33,6 +33,7 @@
     var showLottery = ProductSettings.IsShowLottery ? 1 : 0;
     var showLucky3 = ProductSettings.IsShowLucky3 ? 1 : 0;
     var showBullfighting = ProductSettings.IsShowBullfighting ? 1 : 0;
+    var showPokerGames = ProductSettings.IsShowPokerGames ? 1 : 0;
     var ng2Text = RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
     var products = JsonConvert.SerializeObject(ProductSettings.SiteProducts.Values);
 }
@@ -150,6 +151,7 @@
         //var showFishingWorldBetting = true;
         var showNG2Betting = true;
         var showBullfighting = @showBullfighting;
+        var showPokerGames = @showPokerGames;
         var showBullfightingBetting = true;
         var ng2Text = '@ng2Text';
         var showLottery = @showLottery;

@@ -63,6 +63,7 @@
                 var isHideLottery = true;
                 var isHideLucky3 = true;
                 var isHideBullfighting = true;
+                var isHidePokerGames = true;
 
                 for (var i = 0; i < $scope.model.setting.enableItems.length; i++) {
                     if ($scope.model.setting.enableItems[i].key == 'DoubleComm') {
@@ -75,7 +76,7 @@
                 for (var i = 0; i < $scope.model.setting.syncItems.length; i++) {
                     if ($scope.model.setting.syncItems[i].key == 'SyncCasino') {
                         syncCasino = $scope.model.setting.syncItems[i].value;
-                    }                    
+                    }
 
                     if ($scope.model.setting.syncItems[i].key == 'HideAllbet') {
                         isHideAllbet = $scope.model.setting.syncItems[i].value;
@@ -104,6 +105,10 @@
                     if ($scope.model.setting.syncItems[i].key == 'HideBullfighting') {
                         isHideBullfighting = $scope.model.setting.syncItems[i].value;
                     }
+
+                    if ($scope.model.setting.syncItems[i].key == 'HidePokerGames') {
+                        isHidePokerGames = $scope.model.setting.syncItems[i].value;
+                    }
                 }
 
                 for (var i = 0; i < $scope.model.setting.details.length; i++) {
@@ -122,23 +127,23 @@
                     if ($scope.model.setting.details[i].key == 'Sportsbook2') {
                         isHideSportsbook2 = false;
                     }
-                    
+
                     if ($scope.model.setting.details[i].key == 'Cricket') {
                         isHideCricket = false;
                     }
                 }
 
-                parent.$(".icon-filter").off('click').on('click',parent.Fanex.ExtAcc.Customer.showHideFilter);
+                parent.$(".icon-filter").off('click').on('click', parent.Fanex.ExtAcc.Customer.showHideFilter);
                 parent.Fanex.ExtAcc.Customer.bindOrientationChange();
-;                switch (roleId) {
+                ; switch (roleId) {
                     case 4:
-                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2,  isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting);
+                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting, isHidePokerGames);
                         break;
                     case 3:
-                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting);
+                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting, isHidePokerGames);
                         break;
                     case 2:
-                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting);
+                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting, isHidePokerGames);
                         break;
                     default:
                         break;
@@ -160,7 +165,7 @@
         parent.Fanex.ExtAcc.Customer.isSuperEditAgent = false;
         $scope.ResetGlobalValue();
 
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMultiplePT' + "?roleId=" + $scope.model.personalInfo.roleId.value + "&custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()),null , null, true);
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMultiplePT' + "?roleId=" + $scope.model.personalInfo.roleId.value + "&custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
         $scope.collapseSidebar();
     };
 
@@ -201,17 +206,17 @@
         }
 
         $scope.collapseSidebar();
-    };   
+    };
 
     $scope.BetSetting = function () {
         var custId = $scope.model.personalInfo.custId.value;
-        var param = 'custId='+ custId + '&uplineId=' + custId + '&userId=' + parent.userId + '&groupName=' + parent.$('#selectedGroupName').html();
+        var param = 'custId=' + custId + '&uplineId=' + custId + '&userId=' + parent.userId + '&groupName=' + parent.$('#selectedGroupName').html();
         var url = parent.resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index?' + param);
 
         parent.Fanex.ExtAcc.LoadMainIFrame(url);
         $scope.collapseSidebar();
     };
-        
+
     $scope.VirtualSports = function () {
         $scope.RenderDCS(5);
         $scope.collapseSidebar();
@@ -309,8 +314,8 @@
     $scope.Sportsbook2 = function () {
         $scope.RenderDCS(16);
         $scope.collapseSidebar();
-    };    
-        
+    };
+
     $scope.Cricket = function () {
         $scope.RenderDCS(20);
         $scope.collapseSidebar();
@@ -351,6 +356,11 @@
         $scope.collapseSidebar();
     };
 
+    $scope.PokerGames = function () {
+        $scope.RenderDCS(33);
+        $scope.collapseSidebar();
+    };
+
     $scope.RenderDCS = function (productId) {
         $scope.ResetGlobalValue();
 
@@ -387,7 +397,7 @@
     $scope.collapseSidebar = function () {
         var widthDevice = top.$(top.window).width();
         if (widthDevice <= 768) {
-            
+
             top.$("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
             top.$("#sidebar").removeClass("expand-sidebar").addClass("collapse-sidebar");
             top.$("#leftSplitter").removeClass("expand-leftpanel").addClass("collapse-leftpanel");

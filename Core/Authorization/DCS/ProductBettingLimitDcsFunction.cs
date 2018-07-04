@@ -9,6 +9,7 @@
         NG2Betting = 23,
         FishingWorldBetting = 24,
         LotteryBetting = 28,
-        BullfightingBetting = 30
+        BullfightingBetting = 30,
+        PokerGamesBetting = 33
     }
 }

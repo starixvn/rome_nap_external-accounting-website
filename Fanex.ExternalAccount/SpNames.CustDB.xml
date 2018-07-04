@@ -183,7 +183,6 @@
     <Setting Key="Age_CustomerUpdAgentComm" SpName="Age_CustomerUpdAgentComm" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerUpdUserComm" SpName="Age_CustomerUpdUserComm" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
-
   <Function Name="PTVirtualSports - Setting">
     <Setting Key="Acc_CustomerSelEditMasterVS" SpName="Acc_CustomerSelEditMasterVS" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelEditAgentVS" SpName="Acc_CustomerSelEditAgentVS" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
@@ -304,5 +303,5 @@
   <Function Name="IP">
     <Setting Key="GetIPInfo" SpName="Acc_GetIPInfo_Full" DbName="DBCust.IPDB.bodbExtAccNet" Plain="0" />
     <Setting Key="GetIPVN" SpName="GetIPVN" DbName="DBCust.IPDB.bodbExtAccNet"/>
- </Function>
+  </Function>
 </Functions>
