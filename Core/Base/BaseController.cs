@@ -12,7 +12,6 @@
     using Authorization;
     using CasinoLibrary.Model.UserException;
     using Context;
-    using CustomerSetting.IP.Utils;
     using CustomerSetting.Module.Core.Criteria;
     using CustomerSetting.Module.Core.Models;
     using CustomerSetting.Module.Core.Services.Impl;
@@ -26,6 +25,7 @@
     using PTEngine.BusinessObjects;
     using RemotingRef;
     using Reports.WinLossDetail;
+    using Service;
     using Service.Impl.Customer.Casino;
     using Shared;
     using Utilities;
@@ -47,7 +47,6 @@
         private readonly IExtRequest extRequest;
 
         protected readonly AuthorizationService AuthorizationService = new AuthorizationServiceImpl();
-
 
         protected BaseController() : this(new CurrentSession(), new CurrentContext(), new ExtRequest())
         {
@@ -237,34 +236,7 @@
             {
                 ViewName = "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml"
             };
-        }
-
-        protected DataTable CheckVNIP(DataTable table, string ipFieldName = null)
-        {
-            var fieldName = string.IsNullOrWhiteSpace(ipFieldName) ? "lastloginip" : ipFieldName;
-            if (ReferenceEquals(null, table) || table.Rows.Count == 0 || !table.Columns.Contains(fieldName))
-            {
-                return table;
-            }
-
-            foreach (DataRow row in table.Rows)
-            {
-                var ip = row.ToString(fieldName);
-                if (string.IsNullOrWhiteSpace(ip))
-                {
-                    continue;
-                }
-
-                if (!AuthorizationService.IsAuthorized(
-                    CurrentSession.UserId,
-                    eFunctions.ViewVNIP) && IpUtils.IsVnIp(ip))
-                {
-                    row[fieldName] = string.Empty;
-                }
-            }
-
-            return table;
-        }
+        }        
 
         protected bool IsAdminHasPermissionOnCustomer(bool isSpecialSiteCustomer)
         {

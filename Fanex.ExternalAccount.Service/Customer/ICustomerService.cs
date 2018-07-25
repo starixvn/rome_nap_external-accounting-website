@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Service.Interface.Customer
 {
+    using DataAccess.Criteria.Customer;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Customer;
 
@@ -15,8 +16,8 @@
             int subAccId,
             string language);
 
-        Result ResetPassword(int custId, string password, Request request);
+        Result ResetPassword(ResetPasswordCriteria criteria);
 
-        Result ConfigDoubleComm(int custId, bool allow, Request request);
+        Result ConfigDoubleComm(UpdateDoubleCommCriteria criteria);
     }
 }

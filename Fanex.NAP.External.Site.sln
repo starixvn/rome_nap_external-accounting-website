@@ -40,8 +40,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{E738
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.BetSetting", "Modules\Fanex.ExternalAccount.BetSetting\Fanex.ExternalAccount.BetSetting.csproj", "{F9261CF3-913A-436F-AD9D-6607C190367E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.IPEntities", "Modules\Fanex.ExternalAccount.IPEntities\Fanex.ExternalAccount.IPEntities.csproj", "{6570D17C-FEF2-4C1C-A1EB-841266DF380D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Shared", "Core.Shared\Core.Shared.csproj", "{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.Resources", "Fanex.ExternalAccount.Resources\Fanex.ExternalAccount.Resources.csproj", "{825F3EA3-33AE-4427-91B5-9D30D9FEFA3A}"
@@ -165,16 +163,6 @@ Global
 		{F9261CF3-913A-436F-AD9D-6607C190367E}.Development|Any CPU.Build.0 = Debug-Alpha|Any CPU
 		{F9261CF3-913A-436F-AD9D-6607C190367E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9261CF3-913A-436F-AD9D-6607C190367E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6570D17C-FEF2-4C1C-A1EB-841266DF380D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6570D17C-FEF2-4C1C-A1EB-841266DF380D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6570D17C-FEF2-4C1C-A1EB-841266DF380D}.Debug-Alpha|Any CPU.ActiveCfg = Debug|Any CPU
-		{6570D17C-FEF2-4C1C-A1EB-841266DF380D}.Debug-Alpha|Any CPU.Build.0 = Debug|Any CPU
-		{6570D17C-FEF2-4C1C-A1EB-841266DF380D}.Debug-NAP|Any CPU.ActiveCfg = Debug|Any CPU
-		{6570D17C-FEF2-4C1C-A1EB-841266DF380D}.Debug-NAP|Any CPU.Build.0 = Debug|Any CPU
-		{6570D17C-FEF2-4C1C-A1EB-841266DF380D}.Development|Any CPU.ActiveCfg = Debug|Any CPU
-		{6570D17C-FEF2-4C1C-A1EB-841266DF380D}.Development|Any CPU.Build.0 = Debug|Any CPU
-		{6570D17C-FEF2-4C1C-A1EB-841266DF380D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6570D17C-FEF2-4C1C-A1EB-841266DF380D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}.Debug-Alpha|Any CPU.ActiveCfg = Debug|Any CPU
@@ -201,10 +189,9 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F9261CF3-913A-436F-AD9D-6607C190367E} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
-		{6570D17C-FEF2-4C1C-A1EB-841266DF380D} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\EnterpriseLibrary.Caching.5.0.505.0\lib\NET35
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal

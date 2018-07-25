@@ -206,6 +206,7 @@
     <Compile Include="Customer\Casino\CasinoManager.cs" />
     <Compile Include="Customer\CommissionService.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusService.cs" />
+    <Compile Include="IPInformatonService.cs" />
     <Compile Include="Login\ILoginService.cs" />
     <Compile Include="OTP\CustomerOtpService.cs" />
     <Compile Include="Report\IReportService.cs" />

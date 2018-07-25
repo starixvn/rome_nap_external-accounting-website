@@ -3,11 +3,12 @@
     using System.Globalization;
     using System.Net;
     using System.Web;
-    using CustomerSetting.IP.Utils;
     using CustomerSetting.Module.Core.Web;
+    using Service;
 
     public class CurrentContext : ICurrentContext
     {
+        private readonly IIPInformatonService ipInformationService = new IPInformationService();
         public static ICurrentContext Instance => new CurrentContext();
 
         public HttpContext Context => HttpContext.Current;
@@ -94,7 +95,7 @@
         {
             try
             {
-                return new RegionInfo(IpUtils.LocationFromIP(Ip4Address).countrySHORT);
+                return new RegionInfo(ipInformationService.GetFromIP(Ip4Address).CountryShort);
             }
             catch
             {
