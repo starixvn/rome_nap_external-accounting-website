@@ -2,18 +2,17 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text.RegularExpressions;
+    using System.Data;
     using Fanex.ExternalAccount.DataAccess.Criteria.IPInformation;
     using Fanex.ExternalAccount.DTO;
     using Fanex.NAP.Framework.Data;
+    using Utilities;
 
     public interface IIPInformatonService
     {
         IPInformation GetFromIP(string ip);
-        bool Is789IP(string ip);
-        bool IsExistedInList(string ip, IEnumerable<IPRange> ipList);
-        IEnumerable<IPRange> Get789IP();
+        bool IsSpecialIP(string ip);
+        DataTable HideSpecialIP(DataTable table, bool viewSpecialIPPermission);
     }
 
     public class IPInformationService : IIPInformatonService
@@ -33,45 +32,38 @@
         public IPInformation GetFromIP(string ip)
             => dynamicRepository.Get<IPInformation>(new GetIPInformationCriteria { IP = ip });
 
-        public bool Is789IP(string ip)
+        public bool IsSpecialIP(string ip)
         {
             var ipInformation = GetFromIP(ip);
 
             return ipInformation != null && ipInformation.CountryShort.Equals("vn", StringComparison.CurrentCultureIgnoreCase);
         }
 
-        public IEnumerable<IPRange> Get789IP()
-            => dynamicRepository.Fetch<IPRange>(new GetAll789IPCriteria());
-
-        public bool IsExistedInList(string ip, IEnumerable<IPRange> ipList)
+        public DataTable HideSpecialIP(DataTable table, bool viewSpecialIPPermission)
         {
-            var ipNumber = ConvertIpToNumber(ip);
-
-            return ipList.Any(i => i.IPFrom <= ipNumber && i.IPTo >= ipNumber);
-        }        
-
-        private static double ConvertIpToNumber(string ip)
-        {
-            var num = 0.0;
-            if (IsValidIp(ip))
+            var fieldName = "lastloginip";
+            if (ReferenceEquals(null, table) ||
+                table.Rows.Count == 0 ||
+                !table.Columns.Contains(fieldName) ||
+                viewSpecialIPPermission)
             {
-                var strArray = ip.Split('.');
-                num = (((double.Parse(strArray[0]) * 16777216.0) + (double.Parse(strArray[1]) * 65536.0)) +
-                    (double.Parse(strArray[2]) * 256.0)) + double.Parse(strArray[3]);
+                return table;
             }
 
-            return num;
-        }
-
-        private static bool IsValidIp(string ip)
-        {
-            if (string.IsNullOrEmpty(ip))
+            var specialIPList = GetSpecialIP();
+            foreach (DataRow row in table.Rows)
             {
-                return false;
+                var ip = row.ToString(fieldName);                
+                if (!string.IsNullOrWhiteSpace(ip) && specialIPList.IsExistedInList(ip))
+                {
+                    row[fieldName] = string.Empty;
+                }
             }
 
-            var regex = new Regex(@"(?<First>2[0-4]\d|25[0-5]|[01]?\d\d?)\.(?<Second>2[0-4]\d|25[0-5]|[01]?\d\d?)\.(?<Third>2[0-4]\d|25[0-5]|[01]?\d\d?)\.(?<Fourth>2[0-4]\d|25[0-5]|[01]?\d\d?)");
-            return regex.IsMatch(ip, 0);
+            return table;
         }
+
+        private IEnumerable<IPRange> GetSpecialIP()
+            => dynamicRepository.Fetch<IPRange>(new GetAllSpecialIPCriteria());
     }
 }

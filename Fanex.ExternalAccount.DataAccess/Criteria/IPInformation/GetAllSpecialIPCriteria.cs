@@ -2,7 +2,7 @@
 {
     using Fanex.NAP.Framework.Data;
 
-    public class GetAll789IPCriteria : CriteriaBase
+    public class GetAllSpecialIPCriteria : CriteriaBase
     {
         public override string GetSettingKey() => "GetIPVN";
     }

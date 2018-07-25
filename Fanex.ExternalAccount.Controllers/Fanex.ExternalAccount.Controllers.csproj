@@ -335,7 +335,6 @@
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
     <Compile Include="Home\NetworkSpeedController.cs" />
-    <Compile Include="GlobalSuppressions2.cs" />
     <Compile Include="OTP\OTPController.cs" />
     <Compile Include="Statement\StatementController.cs" />
     <Compile Include="UserControl\FunctionController.cs">

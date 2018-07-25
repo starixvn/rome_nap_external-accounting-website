@@ -26,6 +26,7 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using PTEngine.BusinessObjects;
+    using Service;
     using Service.Impl.Customer;
     using Service.Impl.Customer.Casino;
     using Service.Impl.Report;
@@ -46,6 +47,7 @@
         private readonly MemberService _memberService = new MemberService();
         private readonly SuperService _superService = new SuperService();
         private readonly IReportService reportService = new ReportService();
+        private readonly IIPInformatonService ipInformationService = new IPInformationService();
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public ActionResult IsValidUsername(string username)
@@ -590,8 +592,11 @@
                             : "Open";
             }
 
+            var viewSpecialIPPermission = AuthorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP);
+            var newCustomers = ipInformationService.HideSpecialIP(customers, viewSpecialIPPermission);
+
             var builder = new CustomerListPageBuilder(
-                Reset789IP(customers),
+                newCustomers,
                 false,
                 status,
                 Convert.ToInt32(customerSetting.RoleId),
@@ -678,8 +683,15 @@
         }
 
         private string Customers2Json(DataTable customers)
-            => JsonConvert.SerializeObject(
-                Reset789IP(customers), Formatting.None,
+        {
+            var viewSpecialIPPermission = AuthorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP);
+            var newCustomers = ipInformationService.HideSpecialIP(customers, viewSpecialIPPermission);
+
+            return JsonConvert.SerializeObject(
+                newCustomers,
+                Formatting.None,
                 new IsoDateTimeConverter { DateTimeFormat = DateTimeFormat });
+        }
+
     }
 }

@@ -47,7 +47,6 @@
         private readonly IExtRequest extRequest;
 
         protected readonly AuthorizationService AuthorizationService = new AuthorizationServiceImpl();
-        protected readonly IIPInformatonService ipInformationService = new IPInformationService();
 
         protected BaseController() : this(new CurrentSession(), new CurrentContext(), new ExtRequest())
         {
@@ -237,35 +236,7 @@
             {
                 ViewName = "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml"
             };
-        }
-
-        protected DataTable Reset789IP(DataTable table, string ipFieldName = null)
-        {
-            var fieldName = string.IsNullOrWhiteSpace(ipFieldName) ? "lastloginip" : ipFieldName;
-            if (ReferenceEquals(null, table) || table.Rows.Count == 0 || !table.Columns.Contains(fieldName))
-            {
-                return table;
-            }
-
-            var ip789List = ipInformationService.Get789IP();
-            foreach (DataRow row in table.Rows)
-            {
-                var ip = row.ToString(fieldName);
-                if (string.IsNullOrWhiteSpace(ip))
-                {
-                    continue;
-                }
-
-                if (!AuthorizationService.IsAuthorized(
-                    CurrentSession.UserId,
-                    eFunctions.ViewVNIP) && ipInformationService.IsExistedInList(ip, ip789List))
-                {
-                    row[fieldName] = string.Empty;
-                }
-            }
-
-            return table;
-        }
+        }        
 
         protected bool IsAdminHasPermissionOnCustomer(bool isSpecialSiteCustomer)
         {

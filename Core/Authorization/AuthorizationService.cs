@@ -203,6 +203,6 @@
             => functions.Any(function => IsAuthorized(userId, function));
 
         public bool CanViewVNIP(string ip)
-            => IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP) || !ipInformationService.Is789IP(ip);
+            => IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP) || !ipInformationService.IsSpecialIP(ip);
     }
 }

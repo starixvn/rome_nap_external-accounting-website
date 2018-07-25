@@ -1,13 +1,35 @@
 ﻿namespace Fanex.ExternalAccount.Utilities
 {
     using System;
+    using System.Collections.Generic;
     using System.Data;
+    using System.Linq;
     using System.Net;
     using System.Web;
-    using System.Web.Optimization;
+    using DTO;
 
     public static class Utils
     {
+        public static bool IsExistedInList(this IEnumerable<IPRange> ipList, string ip)
+        {
+            var ipNumber = ConvertIpToNumber(ip);
+
+            return ipList.Any(i => i.IPFrom <= ipNumber && i.IPTo >= ipNumber);
+        }
+
+        public static double ConvertIpToNumber(string ip)
+        {
+            var num = 0.0;
+            if (IsValidIpAddress(ip))
+            {
+                var strArray = ip.Split('.');
+                num = (((double.Parse(strArray[0]) * 16777216.0) + (double.Parse(strArray[1]) * 65536.0)) +
+                    (double.Parse(strArray[2]) * 256.0)) + double.Parse(strArray[3]);
+            }
+
+            return num;
+        }
+
         public static bool IsValidIpAddress(string ip)
         {
             IPAddress address;
