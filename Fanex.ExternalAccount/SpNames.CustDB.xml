@@ -301,4 +301,8 @@
   <Function Name="Check allow downlines">
     <Setting Key="Acc_CustomerSelCheckAllowedDownlines" SpName="Acc_CustomerSelCheckAllowedDownlines" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
+  <Function Name="IP">
+    <Setting Key="GetIPInfo" SpName="Acc_GetIPInfo_Full" DbName="DBCust.IPDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="GetIPVN" SpName="GetIPVN" DbName="DBCust.IPDB.bodbExtAccNet"/>
+ </Function>
 </Functions>

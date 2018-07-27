@@ -284,6 +284,10 @@
   <Function Name="Otp">
     <Setting Key="EAS_OTP_CustomerOTPSel" SpName="EAS_OTP_CustomerOTPSel" DbName="DBCUST.CustDB.bodbExtAccNet" />
   </Function>
+   <Function Name="IP">
+    <Setting Key="GetIPInfo" SpName="Acc_GetIPInfo_Full" DbName="DBCust.IPDB.bodbExtAccNet"/>
+    <Setting Key="GetIPVN" SpName="GetIPVN" DbName="DBCust.IPDB.bodbExtAccNet"/>
+  </Function>
   <Function Name="Product Status Setting">
     <!--Select functions-->
     <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductId" DbName="DBCust.CustDB.bodbExtAccNet" />

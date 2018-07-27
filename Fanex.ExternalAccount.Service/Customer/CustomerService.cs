@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Customer
 {
+    using DataAccess.Criteria.Customer;
     using DataAccess.Impl.Customer;
     using DataAccess.Interface.Customer;
     using DTO;
@@ -24,10 +25,10 @@
             => dataAccess.EditUserInfo(customer, ip, userId, subAccId, language);
 
 
-        public Result ResetPassword(int custId, string password, Request request)
-            => dataAccess.ResetPassword(custId, password, request);
+        public Result ResetPassword(ResetPasswordCriteria criteria)
+            => dataAccess.ResetPassword(criteria);
 
-        public Result ConfigDoubleComm(int custId, bool allow, Request request)
-            => dataAccess.ConfigDoubleComm(custId, allow, request);
+        public Result ConfigDoubleComm(UpdateDoubleCommCriteria criteria)
+            => dataAccess.ConfigDoubleComm(criteria);
     }
 }
