@@ -73,7 +73,7 @@
                     }, fanex.goldDeluxeSetting.TIME_OUT_SHOW_MESSAGE);
                 }
             };
-
+            
             $('#tblSetting').show();
         }
     ]);

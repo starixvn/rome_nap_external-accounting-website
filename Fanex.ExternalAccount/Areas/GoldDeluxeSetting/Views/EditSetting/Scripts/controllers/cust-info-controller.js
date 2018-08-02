@@ -1,8 +1,31 @@
 ﻿fanex.goldDeluxeSetting.controller('CustomerInfoController',
   [
       '$scope',
-      function ($scope) {
+      'CustomerSettingService',
+      function ($scope, customerSettingService) {
           'use strict';
+
+          $scope.SuperInfo =
+              {
+                  FirstName: settingViewModel.Setting.FirstName,
+                  LastName: settingViewModel.Setting.LastName,
+                  Phone: settingViewModel.Setting.Phone,
+                  MobilePhone: settingViewModel.Setting.MobilePhone,
+                  Fax: settingViewModel.Setting.Fax
+              };
+          if (settingViewModel.Level == 4) {
+              var getSuperInfoUrl = $('#GetSuperInfoUrl').val();
+              customerSettingService.getSuperInfo(settingViewModel.CustId, getSuperInfoUrl).success(function (data) {
+                  $scope.SuperInfo =
+                      {
+                          FirstName: data.firstName,
+                          LastName: data.lastName,
+                          Phone: data.phone,
+                          MobilePhone: data.mobilePhone,
+                          Fax: data.fax
+                      };
+              });
+          }
 
           $scope.enableGoldDeluxe = !settingViewModel.Setting.DisableGoldDeluxe;
           $scope.enableDownline = !settingViewModel.Setting.DisableDownlines;

@@ -11,6 +11,7 @@
     public interface CustomerSettingQueryService
     {
         Setting GetSetting(int actorId, string custName, int uplineId, string groupName, DataSet customerInfoDataset);
+        PersonalInfo GetPersonalInfo(int custId, DataSet customerInfoDataset);
     }
 
     public class CustomerSettingServiceImpl : CustomerSettingQueryService
@@ -27,6 +28,14 @@
             this.customerStatusQueryService = customerStatusQueryService ?? new CustomerStatusServiceImpl();
             this.productSettingElements = productSettingElements ?? AccountInfoProductConfiguration.ProductSettingParamList;
             this.hiddenAndSyncItemsCreator = hiddenAndSyncItemsCreator ?? AccountInfoProductConfiguration.CreateSyncAndHiddenItems;
+        }
+
+        public virtual PersonalInfo GetPersonalInfo(int custId, DataSet customerInfoDataset)
+        {
+            var custInfoRow = customerInfoDataset.Tables[0].Rows[0];
+            var lineRow = customerInfoDataset.Tables[1].Rows[0];
+
+            return new PersonalInfo(custInfoRow, lineRow);
         }
 
         public virtual Setting GetSetting(int actorId, string custName, int uplineId, string groupName,

@@ -4,7 +4,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
     kenoRepositories.getData().then(
         function (kenoSetting) {
             $scope.kenoSetting = kenoSetting;
-            $scope.customerInformation = $scope.kenoSetting.customerInformation;
+            
             $scope.betSettingList = $scope.kenoSetting.betSettings;
             $scope.betSettingCopyAll = $scope.kenoSetting.betSettingCopyAll;
             $scope.positionTakingList = $scope.kenoSetting.positionTakings;
@@ -17,7 +17,17 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
             $scope.isBetSettingValid = true;
             $scope.confirmIsAutoArray = [];
             $scope.errors = false;
-
+            $scope.customerInformation = $scope.kenoSetting.customerInformation;
+            if ($scope.customerInformation.roleId == 4) {
+                kenoRepositories.getSuperInfo($scope.customerInformation.custId).then(function (superInfo) {
+                    $scope.customerInformation.firstName = superInfo.firstName;
+                    $scope.customerInformation.lastName = superInfo.lastName;
+                    $scope.customerInformation.mobilePhone = superInfo.mobilePhone;
+                    $scope.customerInformation.phone = superInfo.phone;
+                    $scope.customerInformation.fax = superInfo.fax;
+                });
+            }
+                
             $scope.multipleEdit = {
                 isMultipleEdit: isMultipleEdit,
                 custids: isMultipleEdit ? custids : [],

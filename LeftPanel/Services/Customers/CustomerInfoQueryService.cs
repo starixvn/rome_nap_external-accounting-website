@@ -39,11 +39,13 @@
         {
             var custInfoRow = customerInfoDataset.Tables[0].Rows[0];
             var roleId = custInfoRow.RoleId();
+            var custId = custInfoRow.CustId();
             var isUpdateCredit = authorizationService.HasUpdateCreditPermission(actorId);
 
             var customerModel = new CustomerModel(customerInfoDataset, isUpdateCredit, authorizationService.CanViewVNIP);
 
             AssignSettingValue(actorId, custName, groupName, customerInfoDataset, roleId, customerModel);
+            AssignPersonalProfile(custId, customerInfoDataset, roleId, customerModel);
 
             return customerModel;
         }
@@ -65,6 +67,21 @@
 
             customerModel.Setting =
                 settingServices[roleId].GetSetting(actorId, custName, uplineId, groupName, customerInfoDataset);
+        }
+
+        private void AssignPersonalProfile(
+            int custId,
+            DataSet customerInfoDataset,
+            int roleId,
+            CustomerModel customerModel)
+        {
+            if (!settingServices.ContainsKey(roleId))
+            {
+                throw new ArgumentException($"RoleId {roleId} is out of range");
+            }
+
+            customerModel.PersonalInfo =
+                settingServices[roleId].GetPersonalInfo(custId, customerInfoDataset);
         }
     }
 }

@@ -487,7 +487,7 @@
             var model = _customerService.UserInfo(custId);
             model.FirstName = HttpUtility.HtmlDecode(model.FirstName);
             model.LastName = HttpUtility.HtmlDecode(model.LastName);
-            model.HomePhone = HttpUtility.HtmlDecode(model.HomePhone);
+            model.Phone = HttpUtility.HtmlDecode(model.Phone);
             model.MobilePhone = HttpUtility.HtmlDecode(model.MobilePhone);
             model.Email = HttpUtility.HtmlDecode(model.Email);
             model.Fax = HttpUtility.HtmlDecode(model.Fax);
@@ -498,7 +498,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult EditInfoPost(CustomerDTO customer)
+        public ActionResult EditInfoPost(DTO.Customer.Customer customer)
         {
             var result = _customerService.EditUserInfo(customer, CurrentContext.Ip4Address, CurrentSession.CustId, 0, "E");
 

@@ -25,5 +25,14 @@ if (fanex.goldDeluxeSetting) {
                 scope.mainResult = fanex.goldDeluxeSetting.errorResult;
             });
         };
+
+        me.getSuperInfo = function (superId, url) {            
+            return $http({
+                method: 'POST',
+                url: url,
+                data: { superId: superId },
+                async: false
+            });
+        }
     }]);
 }

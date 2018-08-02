@@ -622,6 +622,12 @@
         var url = parent.resolveClientUrl('Customer/EditInfo/?' +
             'custId=' + $scope.model.personalInfo.custId.value +
             "&groupName=" + parent.$('#selectedGroupName').html());
+        if ($scope.model.personalInfo.roleId.value == 4) {
+            url = parent.resolveClientUrl('MainSuper/EditInfo/?' +
+            'custId=' + $scope.model.personalInfo.custId.value +
+            "&groupName=" + parent.$('#selectedGroupName').html());
+        }
+
         var title = parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
 
         var landscapeHeight = 280;

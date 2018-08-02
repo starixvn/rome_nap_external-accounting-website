@@ -104,6 +104,7 @@
   <ItemGroup>
     <Compile Include="Customer\Commission.cs" />
     <Compile Include="Customer\Casino\CasinoCustomer.cs" />
+    <Compile Include="Customer\CustomerInfo.cs" />
     <Compile Include="IPInformation\IPInformation.cs" />
     <Compile Include="IPInformation\IPRange.cs" />
     <Compile Include="OTP\CustomerOtp.cs" />

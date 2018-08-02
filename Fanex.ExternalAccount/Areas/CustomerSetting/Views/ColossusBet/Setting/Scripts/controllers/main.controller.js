@@ -3,6 +3,14 @@ var ColossusBetModule = angular.module('colossusBetSettingModule', []);
 ColossusBetModule.controller('mainController', function ($scope, $timeout, colossusBetRepositories, commonService) {
     colossusBetRepositories.getData().then(
         function (colossusBetSetting) {
+            if (colossusBetSetting.CustomerInformationPartial.RoleId == 4) {              
+                colossusBetRepositories.getSuperInfo(colossusBetSetting.CustomerInformationPartial.CustId).then(function (data) {
+                    colossusBetSetting.CustomerInformationPartial.FirstName = data.firstName;
+                    colossusBetSetting.CustomerInformationPartial.LastName = data.lastName;
+                    colossusBetSetting.CustomerInformationPartial.Phone = data.phone;
+                    colossusBetSetting.CustomerInformationPartial.MobilePhone = data.mobilePhone;
+                });
+            }
             $scope.colossusBetSetting = colossusBetSetting;
 
             $scope.customerInformationPartial = $scope.colossusBetSetting.CustomerInformationPartial;

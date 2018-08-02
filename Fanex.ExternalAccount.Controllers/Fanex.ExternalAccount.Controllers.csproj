@@ -324,6 +324,7 @@
     <Compile Include="Authentication\AccountController.cs" />
     <Compile Include="Authentication\AntiXSRFUtil.cs" />
     <Compile Include="Authentication\CaptchaUtil.cs" />
+    <Compile Include="Customer\MainSuperController.cs" />
     <Compile Include="Customer\CustomerController.cs" />
     <Compile Include="Customer\SportsbookSettingController.cs" />
     <Compile Include="GlobalSuppressions.cs">
