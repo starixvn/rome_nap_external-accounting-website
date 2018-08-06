@@ -36,7 +36,7 @@
         [AllowAnonymous]
         public ActionResult TestExceptionLog()
         {
-            throw new Exception("Test Exception.");
+            throw new NotImplementedException("Test Exception.");
         }
     }
 }
