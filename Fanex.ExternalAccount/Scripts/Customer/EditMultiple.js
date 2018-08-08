@@ -22,13 +22,6 @@
                         'Edit Multiple Double Commission For Losing Tickets',
                         430, 150, false, false, 1);
                 }
-            },
-            productStatusSetting: {
-                name: "Edit Multiple Product Status",
-                className: "iconEnableEdit",
-                callback: function (key, opt) {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus(productIds);
-                }
             }
         };
     } else if (this.CurrentLevel == this.Master) {
@@ -41,6 +34,14 @@
                     Fanex.ExtAcc.Customer.ShowEditMultiplePT();
                 }
             }
+            //},
+            //productStatusSetting: {
+            //    name: "Edit Multiple Product Status",
+            //    className: "iconEnableEdit",
+            //    callback: function (key, opt) {
+            //        Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus(productIds);
+            //    }
+            //}
         };
 
         // Number Game
@@ -498,13 +499,13 @@
     }
 
     if (productIds.length !== 0) {
-        menuItems.productStatusSetting = {
-            name: "Edit Multiple Product Status",
-            className: "iconEnableEdit",
-            callback: function (key, opt) {
-                Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus(productIds);
-            }
-        }
+        //menuItems.productStatusSetting = {
+        //    name: "Edit Multiple Product Status",
+        //    className: "iconEnableEdit",
+        //    callback: function (key, opt) {
+        //        Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus(productIds);
+        //    }
+        //}
     }
 
     if ($.contextMenu) $.contextMenu('destroy');
