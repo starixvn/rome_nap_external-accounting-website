@@ -58,9 +58,14 @@
         <input type="checkbox" id="chkEnable" style="margin-top: 5px"
                data-ng-init="CustomerModel.originalCasinoEnabled = !CustomerModel.casinoDisabled; CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && (CustomerModel.casinoSync || !CustomerModel.uplineDisabledCasino)"
                data-ng-model="CustomerModel.casinoEnabled"
-               data-ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled; CustomerModel.casinoEnabledDownline = CustomerModel.casinoEnabled == CustomerModel.originalCasinoEnabled ? CustomerModel.originalEnabledDownline : CustomerModel.casinoEnabled ? CustomerModel.casinoEnabledDownline : false; CustomerModel.casinoDisabledDownline = !CustomerModel.casinoEnabledDownline;"
+                data-ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled;"
                data-ng-disabled="CustomerModel.uplineDisabledCasino" />
-        <label for="chkEnable">Enable</label>
+        <label for="chkEnable" ng-switch="{{CustomerModel.roleId}}">
+            <span ng-switch-when="4">@NGCasinoLang.Super</span>
+            <span ng-switch-when="3">@NGCasinoLang.Master</span>
+            <span ng-switch-when="2">@NGCasinoLang.Agent</span>
+            <span ng-switch-default>@NGCasinoLang.Member</span>
+        </label>
     </div>
     <div class="headerPositionTaking noneBorderLR noneBorderBottom">
         <span data-ng-bind="CustomerModel.roleId != 1 ? '@NGCasinoLang.lblMemberWinLimit' : '@NGCasinoLang.lblMemberWinLossLimit'"></span>
