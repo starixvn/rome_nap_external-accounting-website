@@ -61,7 +61,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.3.1.7705, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.GoldDeluxe.Setting.1.0.0.10\lib\net40\Antlr3.Runtime.dll</HintPath>
+      <HintPath>..\packages\Fanex.GoldDeluxe.Setting.1.0.1.0\lib\net40\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="AutoMapper, Version=2.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
@@ -152,7 +152,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.GoldDeluxe.CoreSetting, Version=1.0.0.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.GoldDeluxe.Setting.1.0.0.10\lib\net40\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
+      <HintPath>..\packages\Fanex.GoldDeluxe.Setting.1.0.1.0\lib\net40\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.HttpModule.NG2.UM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

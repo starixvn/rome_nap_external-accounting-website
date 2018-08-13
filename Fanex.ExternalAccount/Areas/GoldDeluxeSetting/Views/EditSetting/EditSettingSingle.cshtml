@@ -28,11 +28,8 @@
                 <td class="right bold info-lable">
                     @GoldDeluxeLang.lblNickname
                 </td>
-                <td class="left info-value">
-                    @if (GoldDeluxeSettings.Settings.System != SystemType.Agency)
-                    {
-                        @Model.Setting.NickName
-                    }
+                <td class="left info-value">                    
+                    @Model.Setting.NickName
                 </td>
             </tr>
             <tr>
