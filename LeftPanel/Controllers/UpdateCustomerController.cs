@@ -21,7 +21,7 @@
             CustomerCommandService customerCommandService,
             ICurrentSession currentSession,
             ICurrentContext currentContext,
-            IExtRequest extRequest) : base(currentSession, currentContext, extRequest)
+            IExtRequest extRequest) : base(currentSession, currentContext, extRequest, null)
         {
             this.customerCommandService = customerCommandService;
         }
