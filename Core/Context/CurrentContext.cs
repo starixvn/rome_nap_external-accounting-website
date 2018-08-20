@@ -17,35 +17,8 @@
         {
             get
             {
-                var ip = string.Empty;
-
-                if (HttpContext.Current.Request != null)
-                {
-                    foreach (var ipa in Dns.GetHostAddresses(HttpContext.Current.Request.UserHostAddress))
-                    {
-                        if (ipa.AddressFamily.ToString().Equals("InterNetwork"))
-                        {
-                            ip = ipa.ToString();
-                            break;
-                        }
-                    }
-                }
-
-                if (!string.IsNullOrWhiteSpace(ip))
-                {
-                    return ip;
-                }
-
-                foreach (var ipa in Dns.GetHostAddresses(Dns.GetHostName()))
-                {
-                    if (ipa.AddressFamily.ToString().Equals("InterNetwork"))
-                    {
-                        ip = ipa.ToString();
-                        break;
-                    }
-                }
-
-                return ip.Trim();
+                var ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                return ip.Split(',')[0];
             }
         }
 
