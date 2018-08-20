@@ -926,6 +926,8 @@
     <Content Include="assets\bundles\dailywinloss\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\data-range\index.js" />
+    <Content Include="assets\bundles\data-range\index.min.js" />
     <Content Include="assets\bundles\home\home.js" />
     <Content Include="assets\bundles\home\home.min.js">
       <DependentUpon>home.js</DependentUpon>
@@ -1582,6 +1584,7 @@
     <Content Include="Content\Validators.css" />
     <Content Include="Images\tick.png" />
     <Content Include="Images\x5.gif" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.DataRange.js" />
     <Content Include="Scripts\Fanex.ExtAcc.EcHcUtil.js" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.OTP.js" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.js" />
@@ -2677,6 +2680,7 @@
     <Content Include="assets\bundles\home\home.min.js.map">
       <DependentUpon>home.min.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\data-range\index.min.js.map" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2729,7 +2733,6 @@
     <Content Include="deployment.ignore" />
     <Content Include="ExcelTemplates\Customer\CustomerListMO.xls" />
     <Content Include="ExcelTemplates\Customer\MemberListMO.xls" />
-    <Content Include="ExcelTemplates\Customer\SuperList.xls" />
     <Content Include="IbcKeys\ibckey.snk" />
     <Content Include="NumberGame2Section.config" />
     <Content Include="Fanex.ExternalAccount.UI.ruleset" />
@@ -2740,6 +2743,7 @@
     <Content Include="assets\styles\abstracts\_mixins.scss" />
     <Content Include="Content\Images\um.svg" />
     <Content Include="PTEngine\PTMappingSection.config" />
+    <Content Include="ExcelTemplates\Customer\SuperList.xls" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />
@@ -2782,6 +2786,7 @@
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\NetworkSpeed\Index.cshtml" />
     <Content Include="Views\OTP\Index.cshtml" />
+    <Content Include="Views\DataRange\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">

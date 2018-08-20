@@ -156,6 +156,7 @@
   <ItemGroup>
     <Compile Include="Criteria\Customer\UpdateDoubleCommCriteria.cs" />
     <Compile Include="Criteria\Customer\ResetPasswordCriteria.cs" />
+    <Compile Include="Criteria\DataRange\UpdateDataRangeCriteria.cs" />
     <Compile Include="Criteria\IPInformation\GetIPInformationCriteria.cs" />
     <Compile Include="Criteria\IPInformation\GetAllSpecialIPCriteria.cs" />
     <Compile Include="Customer\IAgentDao.cs" />
@@ -165,6 +166,8 @@
     <Compile Include="Customer\IMasterDao.cs" />
     <Compile Include="Customer\IMemberDao.cs" />
     <Compile Include="Customer\ISuperDao.cs" />
+    <Compile Include="DataRange\DataRangeDao.cs" />
+    <Compile Include="DataRange\IDataRangeDao.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Base\DAOBase.cs" />
     <Compile Include="Customer\Casino\CasinoDao.cs" />

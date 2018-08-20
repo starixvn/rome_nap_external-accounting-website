@@ -22,6 +22,15 @@
                         'Edit Multiple Double Commission For Losing Tickets',
                         430, 150, false, false, 1);
                 }
+            },
+            dataRange: {
+                name: "Edit Multiple Data Range",
+                className: "iconEnableEdit",
+                callback: function (key, opt) {
+                    top.shouldCalculatePopupHeight = false;
+                    var url = resolveClientUrl('DataRange/Index?custIds=' + Fanex.ExtAcc.Customer.IdsAndNames().Ids);
+                    Fanex.ExtAcc.Form.Show(url, 'Edit Multiple Data Range For Customer(s)', 400, 170, false, false, 1);
+                }
             }
         };
     } else if (this.CurrentLevel == this.Master) {
@@ -56,7 +65,7 @@
                 }
             };
             productIds.push(6);
-        }       
+        }
 
         function addSuperEditMultipleMastersMenuItem(productId, productName) {
             var productKey = 'product_super_master_' + productId;
@@ -120,7 +129,7 @@
 
         if (!this.HideSportsbook2) {
             addSuperEditMultipleMastersMenuItem(16, 'Sportsbook 2');
-        }       
+        }
 
         if (!this.HideCricket) {
             addSuperEditMultipleMastersMenuItem(20, 'Cricket');
@@ -168,7 +177,7 @@
                 }
             };
             productIds.push(6);
-        }        
+        }
 
         function addMasterEditMultipleAgentsMenuItem(productId, productName) {
             var productKey = 'product_master_agent_' + productId;
@@ -232,7 +241,7 @@
 
         if (!this.HideSportsbook2) {
             addMasterEditMultipleAgentsMenuItem(16, 'Sportsbook 2');
-        }       
+        }
 
         if (!this.HideCricket) {
             addMasterEditMultipleAgentsMenuItem(20, 'Cricket');
@@ -326,7 +335,7 @@
                 }
             };
             productIds.push(6);
-        }        
+        }
 
         function addUplineEditMemberMenuItems(productId, productName) {
             var productKey = 'product_' + productId;
@@ -472,7 +481,7 @@
 
         if (!this.HideSportsbook2) {
             addUplineEditMemberMenuItems(16, 'Sportsbook 2');
-        }        
+        }
 
         if (!this.HideCricket) {
             addUplineEditMemberMenuItems(20, 'Cricket');

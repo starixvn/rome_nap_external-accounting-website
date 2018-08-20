@@ -834,7 +834,7 @@ $(document).ready(function () {
                     if (errorResult.code == 401) {
                         top.location.href = resolveClientUrl('Account/Login');
                     }
-                }                
+                }
             }
         }
     });

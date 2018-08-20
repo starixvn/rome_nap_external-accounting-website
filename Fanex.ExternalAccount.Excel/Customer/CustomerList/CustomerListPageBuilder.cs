@@ -6,13 +6,14 @@
     public class CustomerListPageBuilder
     {
         public CustomerListPageBuilder(DataTable customerList, bool isBold, string status, int roleId,
-            bool isMyanmarOdds = false)
+            bool isMyanmarOdds = false, bool withDataLimited = false)
         {
             Status = status;
             RoleId = roleId;
             IsBold = isBold;
             Data = customerList;
             IsMyanmarOdds = isMyanmarOdds;
+            WithDataLimited = withDataLimited;
         }
 
         public DataTable Data { get; }
@@ -24,6 +25,8 @@
         public string Status { get; }
 
         public bool IsMyanmarOdds { get; }
+
+        public bool WithDataLimited { get; }
 
         public MemoryStream Build()
         {

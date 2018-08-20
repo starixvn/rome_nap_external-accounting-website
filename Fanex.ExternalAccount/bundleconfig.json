@@ -18,7 +18,7 @@
     ],
     "sourceMap": true
   },
-   {
+  {
     "outputFileName": "assets/bundles/home/home.js",
     "inputFiles": [
       "Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.3.min.js",
@@ -152,6 +152,12 @@
       "Scripts/Statement/Fanex.ExtAcc.Statement.js"
     ],
     "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/data-range/index.js",
+    "inputFiles": [
+      "Scripts/Customer/Fanex.ExtAcc.DataRange.js"
+    ],
+    "sourceMap": true
   }
-
 ]

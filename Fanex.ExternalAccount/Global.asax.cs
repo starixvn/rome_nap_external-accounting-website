@@ -85,12 +85,12 @@
         {
             AreaRegistration.RegisterAllAreas();
             CustomerSettingRegistration.Init();
-                        
+
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
             DbSettingProviderManager.Current.Start();
             AutoMapperConfiguration.Configure();
-            StaticResources.Init();
+            StaticResources.Init("");
 
             var logger = new CasinoAPILogger();
             var manager = new APILogManager(logger);

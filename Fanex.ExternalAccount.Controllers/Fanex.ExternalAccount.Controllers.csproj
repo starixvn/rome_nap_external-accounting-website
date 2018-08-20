@@ -325,6 +325,7 @@
     <Compile Include="Authentication\AntiXSRFUtil.cs" />
     <Compile Include="Authentication\CaptchaUtil.cs" />
     <Compile Include="Customer\CustomerController.cs" />
+    <Compile Include="DataRange\DataRangeController.cs" />
     <Compile Include="Customer\SportsbookSettingController.cs" />
     <Compile Include="GlobalSuppressions.cs">
       <SonarQubeExclude>true</SonarQubeExclude>

@@ -15,7 +15,8 @@
             int? custId = null,
             bool? enabled = null,
             bool? closed = null,
-            bool? suspended = null)
-            => _dao.GetData(userId, groupName, custId, enabled, closed, suspended);
+            bool? suspended = null,
+            bool? withDataLimited = null)
+            => _dao.GetData(userId, groupName, custId, enabled, closed, suspended, withDataLimited);
     }
 }

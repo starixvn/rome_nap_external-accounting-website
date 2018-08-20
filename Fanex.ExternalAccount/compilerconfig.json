@@ -40,7 +40,7 @@
     "outputFile": "assets/styles/pages/customer/pt-engine.css",
     "inputFile": "assets/styles/pages/customer/pt-engine.scss"
   },
- 
+
   {
     "outputFile": "assets/styles/pages/customer/virtual-sport.css",
     "inputFile": "assets/styles/pages/customer/virtual-sport.scss"
