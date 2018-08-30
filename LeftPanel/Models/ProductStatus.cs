@@ -69,7 +69,8 @@
                 return dataRow.ToBoolean($"DisablePokerGames1401")
                     && dataRow.ToBoolean($"DisablePokerGames1402")
                     && dataRow.ToBoolean($"DisablePokerGames1403")
-                    && dataRow.ToBoolean($"DisablePokerGames1404");
+                    && dataRow.ToBoolean($"DisablePokerGames1404")
+                    && dataRow.ToBoolean($"DisablePokerGames1405");
             }
 
             return dataRow.ToBoolean($"Disable{ProductKey}");
