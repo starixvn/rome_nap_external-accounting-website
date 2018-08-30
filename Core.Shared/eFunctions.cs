@@ -22,13 +22,13 @@
         public const string VirtualSports = "VirtualSports";
         public const string CreateNew = "CreateNew";
         public const string EditCustomer = "EditCustomer";
-        public const string SportsbookBetting = "SportsbookBetting";        
+        public const string SportsbookBetting = "SportsbookBetting";
         public const string VirtualSportsBetting = "VirtualSportsBetting";
         public const string CasinoBetting = "CasinoBetting";
         public const string CloseCustomer = "CloseCustomer";
         public const string SuspendCustomer = "SuspendCustomer";
         public const string AllowOutright = "AllowOutright";
-        public const string AllowAutoMPT = "AllowAutoMPT";        
+        public const string AllowAutoMPT = "AllowAutoMPT";
         public const string EnableCasino = "EnableCasino";
         public const string EnableNumberGame = "EnableNumberGame";
         public const string EnableVirtualSports = "EnableVirtualSports";
@@ -38,7 +38,7 @@
         public const string UpdateBalance = "UpdateBalance";
         public const string ClearCredit = "ClearCredit";
         public const string Transfer = "Transfer";
-        public const string ViewVNIP = "ViewVNIP";        
+        public const string ViewVNIP = "ViewVNIP";
         public const string CustomerList = "CustomerList";
         public const string Keno = "Keno";
         public const string KenoSetting = "KenoSetting";

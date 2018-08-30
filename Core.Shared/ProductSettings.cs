@@ -16,7 +16,8 @@
                 [ProductConstants.FishingWorld] = new Product(ProductConstants.FishingWorld, "Fishing World"),
                 [ProductConstants.Lottery] = new Product(ProductConstants.Lottery, "Lottery"),
                 [ProductConstants.Lucky3] = new Product(ProductConstants.Lucky3, "Lucky 3"),
-                [ProductConstants.BullFighting] = new Product(ProductConstants.BullFighting, "Bullfighting")
+                [ProductConstants.BullFighting] = new Product(ProductConstants.BullFighting, "Bullfighting"),
+                [ProductConstants.PokerGames] = new Product(ProductConstants.PokerGames, "Poker Games")
             };
 
         public static bool IsShowGoldDeluxe => IsShowProduct(ProductConstants.GoldDeluxe);
@@ -27,7 +28,7 @@
 
         public static bool IsShowColossusBets => IsShowProduct(ProductConstants.ColossusBets);
 
-        public static bool IsShowSportsbook2 => IsShowProduct(ProductConstants.Sportsbook2);        
+        public static bool IsShowSportsbook2 => IsShowProduct(ProductConstants.Sportsbook2);
 
         public static bool IsShowCricket => IsShowProduct(ProductConstants.Cricket);
 
@@ -47,6 +48,8 @@
 
         public static bool IsShowBullfighting => IsShowProduct(ProductConstants.BullFighting);
 
+        public static bool IsShowPokerGames => IsShowProduct(ProductConstants.PokerGames);
+
         internal static NameValueCollection Configs { get; set; } = ConfigurationManager.AppSettings;
 
         public static bool IsShowProduct(int productId) => ToBoolean(Configs[$"IsShowProduct-{productId}"]);
@@ -60,6 +63,6 @@
 
             return value == "1" || value.Equals("true", StringComparison.CurrentCultureIgnoreCase);
         }
-            
+
     }
 }

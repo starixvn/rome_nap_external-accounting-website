@@ -14,6 +14,7 @@
         EnableGoldDeluxe = 12,
         EnableLottery = 28,
         EnableLucky3 = 26,
-        EnableBullfighting = 30
+        EnableBullfighting = 30,
+        EnablePokerGames = 33
     }
 }

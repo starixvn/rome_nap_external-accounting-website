@@ -19,7 +19,8 @@
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.FishingWorld], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Lottery], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Lucky3], StatusType.Checkbox),
-                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.BullFighting], StatusType.Checkbox)
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.BullFighting], StatusType.Checkbox),
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.PokerGames], StatusType.Link)
             };
 
         public static readonly IReadOnlyDictionary<int, string> VisibleBetSettingPermissions =
@@ -28,7 +29,7 @@
                 // Show edit bet setting tab for edit super setting
                 {ProductConstants.RNGCasino, eFunctions.CasinoBetting},
                 {ProductConstants.GoldDeluxe, eFunctions.GoldDeluxeBetting},
-                {ProductConstants.Keno, eFunctions.KenoBetting},                                
+                {ProductConstants.Keno, eFunctions.KenoBetting},
                 {ProductConstants.Sportsbook, eFunctions.SportsbookBetting},
                 {ProductConstants.AllBet, eFunctions.AllbetBetting},
                 {ProductConstants.VoidBridge, eFunctions.VoidbridgeBetting},
@@ -47,20 +48,22 @@
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.NG2], statusRow, isSetUplineStatus: isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.VoidBridge], statusRow, false, isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.AllBet], statusRow, false, isSetUplineStatus),
-                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.BullFighting], statusRow, isSetUplineStatus: isSetUplineStatus)
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.BullFighting], statusRow, isSetUplineStatus: isSetUplineStatus),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.PokerGames], statusRow, isSetUplineStatus:isSetUplineStatus)
             };
 
         public static List<ObjectInfo> CreateSyncAndHiddenItems(DataRow customerRow, DataTable table3RdDcs)
             => new List<ObjectInfo>
             {
-                new ObjectInfo("SyncCasino", customerRow.IsSyncedCasino(), "Casino Synced"),                
+                new ObjectInfo("SyncCasino", customerRow.IsSyncedCasino(), "Casino Synced"),
                 new ObjectInfo("HideAllbet", table3RdDcs.IsHiddenProduct(ProductConstants.AllBet)),
                 new ObjectInfo("HideVoidbridge", table3RdDcs.IsHiddenProduct(ProductConstants.VoidBridge)),
                 new ObjectInfo("HideNG2", table3RdDcs.IsHiddenProduct(ProductConstants.NG2)),
                 new ObjectInfo("HideFishingWorld", table3RdDcs.IsHiddenProduct(ProductConstants.FishingWorld)),
                 new ObjectInfo("HideLottery", table3RdDcs.IsHiddenProduct(ProductConstants.Lottery)),
                 new ObjectInfo("HideLucky3", table3RdDcs.IsHiddenProduct(ProductConstants.Lucky3)),
-                new ObjectInfo("HideBullfighting", table3RdDcs.IsHiddenProduct(ProductConstants.BullFighting))
+                new ObjectInfo("HideBullfighting", table3RdDcs.IsHiddenProduct(ProductConstants.BullFighting)),
+                new ObjectInfo("HidePokerGames", table3RdDcs.IsHiddenProduct(ProductConstants.PokerGames))
             };
     }
 }

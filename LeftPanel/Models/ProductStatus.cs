@@ -43,7 +43,7 @@
 
         public void SetProductStatus(DataRow dataRow)
         {
-            IsDisabled = dataRow.ToBoolean($"Disable{ProductKey}");
+            IsDisabled = GetDisabledStatus(dataRow);
             IsHidden = !ProductSettings.IsShowProduct(ProductId) || dataRow.ToBoolean($"Hide{ProductKey}");
             IsSynced = dataRow.ToBoolean($"Synced{ProductKey}", true);
 
@@ -60,6 +60,19 @@
             Upline.IsDisabled = dataRow.ToBoolean($"Disable{ProductKey}Upline");
             Upline.IsHidden = !ProductSettings.IsShowProduct(ProductId) || dataRow.ToBoolean($"Hide{ProductKey}Upline");
             Upline.IsSynced = dataRow.ToBoolean($"Synced{ProductKey}Upline", true);
+        }
+
+        private bool GetDisabledStatus(DataRow dataRow)
+        {
+            if (ProductId == ProductConstants.PokerGames)
+            {
+                return dataRow.ToBoolean($"DisablePokerGames1401")
+                    && dataRow.ToBoolean($"DisablePokerGames1402")
+                    && dataRow.ToBoolean($"DisablePokerGames1403")
+                    && dataRow.ToBoolean($"DisablePokerGames1404");
+            }
+
+            return dataRow.ToBoolean($"Disable{ProductKey}");
         }
     }
 }

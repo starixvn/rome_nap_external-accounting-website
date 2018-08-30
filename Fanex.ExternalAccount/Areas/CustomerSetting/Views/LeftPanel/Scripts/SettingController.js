@@ -10,7 +10,7 @@
     $scope.GetOnline = function (custId) {
         if (model.onlineLoaded) return;
 
-        parent.Fanex.ExtAcc.BlockUI();       
+        parent.Fanex.ExtAcc.BlockUI();
 
         $.ajax({
             url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetOnlineList?custId=' + custId),
@@ -70,12 +70,12 @@
                 }
             }
 
-            var syncCasino = true;            
+            var syncCasino = true;
 
             for (var j = 0; j < $scope.setting.syncItems.length; j++) {
                 if (!$scope.setting.syncItems[j].value && $scope.setting.syncItems[j].key == 'SyncCasino') {
                     syncCasino = false;
-                }                
+                }
             }
 
             for (var i = 0; i < $scope.setting.enableItems.length; i++) {
@@ -87,7 +87,7 @@
 
                 if ($scope.setting.enableItems[i].key == 'EnableCasino')
                     $scope.setting.enableItems[i].isHide = !syncCasino;
-                
+
             }
 
             for (var i = 0; i < $scope.setting.masterPts.length; i++) {
@@ -105,7 +105,7 @@
                     }
                 }
             }
-            
+
 
         }
     };
@@ -611,12 +611,12 @@
 
     $scope.getPopupHeight = function (landscapeHeight, portraitHeight) {
         var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
-             landscapeHeight : portraitHeight;
+            landscapeHeight : portraitHeight;
 
         return height;
     }
 
-$scope.Info = function () {
+    $scope.Info = function () {
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
 
         var url = parent.resolveClientUrl('Customer/EditInfo/?' +
@@ -642,7 +642,7 @@ $scope.Info = function () {
         }
 
         var landscapeHeight = 250;
-        var portraitHeight = isMobile.phone || isMobile.tablet ? 400 :  700;
+        var portraitHeight = isMobile.phone || isMobile.tablet ? 400 : 700;
         top.shouldCalculatePopupHeight = true;
         $scope.EnableThirdpartyProduct(8, "Keno", 680, $scope.getPopupHeight(landscapeHeight, portraitHeight));
     };
@@ -684,6 +684,15 @@ $scope.Info = function () {
 
         top.shouldCalculatePopupHeight = false;
         $scope.EnableThirdpartyProduct(21, "Allbet", 800, 320);
+    };
+
+    $scope.EnablePokerGames = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
+        top.shouldCalculatePopupHeight = false;
+        $scope.EnableThirdpartyProduct(33, "Poker Games", 800, 400);
     };
 
     $scope.EnableVoidBridge = function (enable, id, disabled) {
@@ -829,7 +838,7 @@ $scope.Info = function () {
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMinPT' + "?custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
         $scope.collapseSidebar();
     };
-    
+
     $scope.SuperPT = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
         var masterId = $scope.model.personalInfo.downlines[1].key;
@@ -888,7 +897,7 @@ $scope.Info = function () {
         $scope.ResetGlobalValueAtMasterOnMember();
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberByMaster?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupname=' + parent.$('#selectedGroupName').html()));
-    };    
+    };
 
     $scope.MasterVirtualSports = function () {
         $scope.RenderMasterOnMemberDCS(5);
@@ -898,7 +907,7 @@ $scope.Info = function () {
         $scope.ResetGlobalValueAtMasterOnMember();
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value + "&userId=" + parent.userId));
-    };   
+    };
 
     $scope.MasterGoldDeluxe = function () {
         var masterId = $scope.model.personalInfo.downlines[1].key;
@@ -974,6 +983,10 @@ $scope.Info = function () {
         $scope.RenderSupeOnMemberDCS(30);
     };
 
+    $scope.SuperPokerGames = function () {
+        $scope.RenderSupeOnMemberDCS(33);
+    };
+
     $scope.RenderSupeOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=' + productId + '&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
@@ -981,7 +994,7 @@ $scope.Info = function () {
 
     $scope.MasterSportsbook2 = function () {
         $scope.RenderMasterOnMemberDCS(16);
-    };    
+    };
 
     $scope.MasterCricket = function () {
         $scope.RenderMasterOnMemberDCS(20);
@@ -1013,6 +1026,10 @@ $scope.Info = function () {
 
     $scope.MasterBullfighting = function () {
         $scope.RenderMasterOnMemberDCS(30);
+    };
+
+    $scope.MasterPokerGames = function () {
+        $scope.RenderMasterOnMemberDCS(33);
     };
 
     $scope.RenderMasterOnMemberDCS = function (productId) {
