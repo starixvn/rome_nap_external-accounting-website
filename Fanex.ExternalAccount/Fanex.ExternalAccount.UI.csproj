@@ -1685,7 +1685,7 @@
     <Content Include="Scripts\_Libs\PopUp\dialogbox.js" />
     <Content Include="Scripts\_Libs\PopUp\dialogbox.js" />
     <Content Include="Images\Content\view.png" />
-    <Content Include="SpNames.CustDB.kbt67.xml">
+    <Content Include="SpNames.CustDB.mnl.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="SpNames.CustDB.production.xml">
@@ -2421,10 +2421,10 @@
     <Content Include="Configurations\connectionStrings.uat.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configurations\connectionStrings.kbt67.config">
+    <Content Include="Configurations\connectionStrings.mnl.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configurations\appSettings.kbt67.config">
+    <Content Include="Configurations\appSettings.mnl.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\CustomerSetting\Views\BetSetting\GoldDeluxe\Content.cshtml" />
@@ -2488,7 +2488,7 @@
     </Content>
     <Content Include="Areas\NG2\NumberGame2Section.config" />
     <Content Include="Areas\NG2\ONEbook.NG2.API.config" />
-    <Content Include="Areas\NG2\ONEbook.NG2.API.kbt67.config" />
+    <Content Include="Areas\NG2\ONEbook.NG2.API.mnl.config" />
     <Content Include="Areas\NG2\ONEbook.NG2.API.pro.config" />
     <Content Include="Areas\NG2\ONEbook.NG2.API.sit.config">
       <SubType>Designer</SubType>
@@ -2720,7 +2720,7 @@
     <Content Include="IbcKeys\ibckeydec.snk" />
     <Content Include="IbcKeys\ibcpkey.snk" />
     <Content Include="IbcKeys\Web.config" />
-    <Content Include="Web.kbt67.config">
+    <Content Include="Web.mnl.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.sit.config">
