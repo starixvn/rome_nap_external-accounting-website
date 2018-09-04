@@ -92,8 +92,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.0\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.3.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.3.7\lib\net40\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.3.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.3.9\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=2.0.0.6, Culture=neutral, processorArchitecture=MSIL">
@@ -112,8 +112,12 @@
       <HintPath>..\packages\Fanex.Logging.Extensions.1.0.5\lib\net40\Fanex.Logging.Extensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Logging.Extensions.Web, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Logging.Extensions.Web.1.0.5\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
+    <Reference Include="Fanex.Logging.Extensions.Database.V59, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.Extensions.Database.V59.1.0.3\lib\net40\Fanex.Logging.Extensions.Database.V59.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Logging.Extensions.Web, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.Extensions.Web.1.0.6\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Module.NG2, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
@@ -248,20 +252,12 @@
       <HintPath>..\packages\RabbitMQ.Client.3.5.6\lib\net40\RabbitMQ.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RemotingRef, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RemotingRef.2.0.0.13\lib\net40\RemotingRef.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RSACryptoPad, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RSACryptoPad.1.0.0.0\lib\net40\RSACryptoPad.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">

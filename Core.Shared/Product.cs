@@ -1,16 +1,26 @@
-﻿namespace Fanex.ExternalAccount.Core.Shared
+﻿using Fanex.RemotingRef;
+
+namespace Fanex.ExternalAccount.Core.Shared
 {
+    
     public class Product
     {
-        protected Product()
+        private readonly IRemotingRefService _remotingRefService;
+
+        protected Product(): this(null)
         {
+        }
+
+        protected Product(IRemotingRefService remotingRefService)
+        {
+            _remotingRefService = remotingRefService ?? new RemotingRefService();
         }
 
         public Product(
             int productId,
             string productName,
             bool isGetNameFromRemotingRef = false,
-            string substituteProductKey = null)
+            string substituteProductKey = null):this(new RemotingRefService())
         {
             Id = productId;
             Key = string.IsNullOrWhiteSpace(productName)
@@ -19,7 +29,7 @@
                     ? productName.Replace(" ", string.Empty) 
                     : substituteProductKey;
             Name = isGetNameFromRemotingRef
-                ? RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en-US", productName)
+                ? _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en-US", productName)
                 : productName;
         }
 

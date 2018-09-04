@@ -37,6 +37,7 @@
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class BaseController : Controller
     {
+        private readonly IRemotingRefService _remotingRefService;
         protected const string SiteName = "ExtAcc";
 
         protected const int FromSystem = 3;
@@ -49,16 +50,17 @@
 
         protected readonly AuthorizationService AuthorizationService = new AuthorizationServiceImpl();
 
-        protected BaseController() : this(new CurrentSession(), new CurrentContext(), new ExtRequest())
+        protected BaseController() : this(new CurrentSession(), new CurrentContext(), new ExtRequest(), null)
         {
 
         }
 
-        protected BaseController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest)
+        protected BaseController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IRemotingRefService remotingRefService)
         {
             this.currentContext = currentContext;
             this.currentSession = currentSession;
             this.extRequest = extRequest;
+            _remotingRefService = remotingRefService ?? new RemotingRefService();
         }
 
         protected static string Environment => Utils.ToString(ConfigurationManager.AppSettings["Environment"]);
@@ -237,7 +239,7 @@
             {
                 ViewName = "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml"
             };
-        }        
+        }
 
 
         protected bool IsAdminHasPermissionOnCustomer(bool isSpecialSiteCustomer)
@@ -274,17 +276,14 @@
                 new CheckCustomerIsSpecialSiteCriteria { UserName = username });
         }
 
-        protected static List<KeyValuePair<string, string>> GetProductList(bool isHideInactiveProduct = true)
+        protected List<KeyValuePair<string, string>> GetProductList(bool isHideInactiveProduct = true)
         {
             return new ProductListAuthorization()
                 .GetProductList(isHideInactiveProduct)
                 .Select(product => new KeyValuePair<string, string>(
                     product.Id,
-                    product.ProductId == 0 ? product.Name : ProductListAuthorization.GetProductNameFromRemotingRef(product.ProductId)))
+                    product.ProductId == 0 ? product.Name : _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", product.ProductId.ToString(), "en-US", product.Name)))
                 .ToList();
         }
-
-        protected static string GetProductNameFromRemotingRef(int productId) =>
-            RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en", null);
     }
 }

@@ -1,17 +1,11 @@
 ﻿namespace Fanex.ExternalAccount
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
     using CasinoLibrary.SBAgent;
     using Core.Authorization.ProductStatus;
     using Core.Context;
     using Core.Filters;
-    using Core.Shared;
     using CustomerSetting.Client40;
     using Data.Configuration;
     using Fanex.ExternalAccount.UI.Helpers;
@@ -22,6 +16,12 @@
     using ONEbook.UM.Filters;
     using ProductStatus.Setting.Configuration;
     using Sunplus.Libraries.APILogger;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Routing;
 
     public class MvcApplication : HttpApplication
     {
@@ -116,8 +116,12 @@
                 .UseAuthorizeService(new ProductStatusAuthorizeService())
                 .UseProductStatusActor(new ProductStatusActor())
                 .SetUnAuthorizedUrl("~/Customer/AccessDenied")
-                .UseCustomerProductList(MultipleEditProductStatus.GetCustomerProductList);
+                .UseCustomerProductList(new MultipleEditProductStatus().GetCustomerProductList);
             ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
+            Fanex.RemotingRef.RefDataTypeContainer
+                .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service"]))
+                .FromApplication("Ext NAP")
+                .SupportOnlyDefaultLanguage();
         }
 
         protected void Application_Error(object sender, EventArgs e)

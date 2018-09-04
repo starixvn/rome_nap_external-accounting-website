@@ -4,6 +4,7 @@
 @using Fanex.PTEngine
 @using Fanex.ExternalAccount.Module.LeftPanel
 @using Newtonsoft.Json;
+@using Fanex.RemotingRef;
 
 @{
     var isLocal = Request.IsLocal ? 1 : 0;
@@ -34,7 +35,7 @@
     var showLucky3 = ProductSettings.IsShowLucky3 ? 1 : 0;
     var showBullfighting = ProductSettings.IsShowBullfighting ? 1 : 0;
     var showPokerGames = ProductSettings.IsShowPokerGames ? 1 : 0;
-    var ng2Text = RemotingRef.RefData.GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
+    var ng2Text = new RemotingRefService().GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
     var products = JsonConvert.SerializeObject(ProductSettings.SiteProducts.Values);
 }
 <!DOCTYPE html>

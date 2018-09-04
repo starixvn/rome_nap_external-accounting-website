@@ -18,10 +18,14 @@
         private readonly ICurrentSession currentSession;
         private readonly IServiceBase permissionService;
 
+        public ProductListAuthorization() : this(null, null, null, null)
+        { }
+
         public ProductListAuthorization(
-            HttpRequest request = null,
-            ICurrentSession currentSession = null,
-            IServiceBase permissionService = null)
+            HttpRequest request,
+            ICurrentSession currentSession,
+            IServiceBase permissionService,
+            IRemotingRefService remotingRefService)
         {
             this.request = request ?? HttpContext.Current.Request;
             this.currentSession = currentSession ?? Context.CurrentSession.Instance;
@@ -95,8 +99,5 @@
 
             return true;
         }
-
-        public static string GetProductNameFromRemotingRef(int productId) =>
-            RefData.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en", null);
     }
 }
