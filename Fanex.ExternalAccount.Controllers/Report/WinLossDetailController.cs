@@ -32,7 +32,8 @@
 
             ToolTipsProducts = new
             {
-                showAllbet = WinLossDetailHelper.IsShowProduct("showAB", currentSession ?? CurrentSession)
+                showAllbet = WinLossDetailHelper.IsShowProduct("showAB", currentSession ?? CurrentSession),
+                showPokerGames = WinLossDetailHelper.IsShowProduct("showPG", currentSession ?? CurrentSession)
             };
         }
 
@@ -52,7 +53,7 @@
         public void ExportWinLossDetailToExcel(ExportWinLossDetailRequest request)
         {
             IWinLossDetailReportBuilder builder;
-            request.viewlevel ++;
+            request.viewlevel++;
             var winlossDetail = GetDataFromDB(request);
             request.viewlevel--;
             switch (request.viewlevel)
