@@ -30,6 +30,7 @@ Fanex.ExtAcc.DailyWinLoss = {
     SumSAgWinlost: 0,
     SumMAgWinlost: 0,
     SumAgWinlost: 0,
+    tooltips: null,
     SetRange: function () {
         return {
             minDate: new Date($('#BalanceUpDay').val()),
@@ -276,6 +277,11 @@ Fanex.ExtAcc.DailyWinLoss = {
             numberOfFrozenColumn = 2;
         }
 
+        var totalTurnoverHeader = "Total Turnover";
+        if ($this.tooltips.showPokerGames) {
+            totalTurnoverHeader += "&nbsp;<span id=\"total-turnover\" class=\"bet-type-detail-icon\"></span>";
+        }
+
         var gridOption = {
             customizeHeader: true,
             groupHeaderRows: [
@@ -283,7 +289,7 @@ Fanex.ExtAcc.DailyWinLoss = {
                         Columns: [
                                 { HeaderText: "No.", Name: "No", MergeRowNumber: 2 },
                                 { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
-                                { HeaderText: "Total Turnover", Name: "TotalTO", MergeRowNumber: 2 },
+                                { HeaderText: totalTurnoverHeader, Name: "TotalTO", MergeRowNumber: 2 },
                                 { HeaderText: "Turnover & Position Taking", Name: "ComTO", MergeColNumber: 8 },
                                 { HeaderText: winLossMarginHeader, Name: "ComWinlost", MergeColNumber: 8 }
                         ]
@@ -409,6 +415,16 @@ Fanex.ExtAcc.DailyWinLoss = {
         $('.toggle-margin').click($this.showHideMarginColumns);
 
         workaroundForGridOnPhone();
+        if ($this.tooltips.showPokerGames) {
+            $("#total-turnover").bind("click",
+                function () {
+                    var message = "- Turnover of Poker Games are the buy-in/top up amount on table.";
+                    var height = 150;
+
+                    Fanex.ExtAcc.Form.Alert("Turnover Information", message, 430, height);
+                    return false;
+                });
+        }
     },
     showHideMarginColumns: function () {
         if ($this.hidedMargin) {
@@ -458,6 +474,7 @@ Fanex.ExtAcc.DailyWinLoss = {
                 }
 
                 $this.dataSource = data.rows;
+                $this.tooltips = data.tooltips;
                 $this.totalRows = data.rows.length;
                 $this.viewlevel = data.viewlevel;
                 if ($this.viewlevel == 3) {

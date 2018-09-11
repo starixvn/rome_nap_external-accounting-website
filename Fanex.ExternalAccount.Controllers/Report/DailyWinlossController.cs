@@ -1,17 +1,19 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
+    using Core.Reports.WinLossDetail;
     using Core.Shared;
+    using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
     using DTO.Report;
     using Excel.Reports.DailyWinLossReport;
     using Newtonsoft.Json;
     using Service.Impl.Report;
     using Service.Interface.Report;
-    using System;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
     using Utilities;
 
     public class DailyWinlossController : BaseController
@@ -28,6 +30,19 @@
         private string _username = string.Empty;
         private int _viewlevel = Role.Group;
         private DateTime _winlostDate = DateTime.Today;
+        private readonly dynamic ToolTipsProducts;
+
+        public DailyWinlossController(ICurrentSession currentSession)
+        {
+            ToolTipsProducts = new
+            {
+                showPokerGames = WinLossDetailHelper.IsShowProduct("showPG", currentSession ?? CurrentSession)
+            };
+        }
+
+        public DailyWinlossController() : this(null)
+        {
+        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -104,7 +119,8 @@
                     supername = _username,
                     mastername = string.Empty,
                     agentname = string.Empty,
-                    rows = string.Empty
+                    rows = string.Empty,
+                    tooltips = ToolTipsProducts
                 });
             }
 
@@ -118,7 +134,8 @@
                         supername = _username,
                         mastername = string.Empty,
                         agentname = string.Empty,
-                        rows = _listDailyWinLoss
+                        rows = _listDailyWinLoss,
+                        tooltips = ToolTipsProducts
                     },
                     new JsonSerializerSettings());
             }
@@ -134,7 +151,8 @@
                         agentname = string.Empty,
                         srecommend = _srecommend,
                         mrecommend = _mrecommend,
-                        rows = _listDailyWinLoss
+                        rows = _listDailyWinLoss,
+                        tooltips = ToolTipsProducts
                     },
                     new JsonSerializerSettings());
             }
@@ -151,7 +169,8 @@
                         srecommend = _srecommend,
                         mrecommend = _mrecommend,
                         recommend = _recommend,
-                        rows = _listDailyWinLoss
+                        rows = _listDailyWinLoss,
+                        tooltips = ToolTipsProducts
                     },
                     new JsonSerializerSettings());
             }
@@ -166,7 +185,8 @@
                     srecommend = _srecommend,
                     mrecommend = _mrecommend,
                     recommend = _recommend,
-                    rows = _listDailyWinLoss
+                    rows = _listDailyWinLoss,
+                    tooltips = ToolTipsProducts
                 },
                 new JsonSerializerSettings());
         }
@@ -177,7 +197,13 @@
             {
                 _listDailyWinLoss = _reportService.GetDailyWinLossSuper(_winlostDate, _custId, 0);
                 return JsonBase(
-                    new { viewlevel = Role.Master, srecommend = _custId, rows = _listDailyWinLoss },
+                    new
+                    {
+                        viewlevel = Role.Master,
+                        srecommend = _custId,
+                        rows = _listDailyWinLoss,
+                        tooltips = ToolTipsProducts
+                    },
                     new JsonSerializerSettings());
             }
             if (_viewlevel.IsMaster())
@@ -189,7 +215,8 @@
                         viewlevel = Role.Agent,
                         srecommend = _srecommend,
                         mrecommend = _custId,
-                        rows = _listDailyWinLoss
+                        rows = _listDailyWinLoss,
+                        tooltips = ToolTipsProducts
                     },
                     new JsonSerializerSettings());
             }
@@ -202,7 +229,8 @@
                     srecommend = _srecommend,
                     mrecommend = _mrecommend,
                     recommend = _custId,
-                    rows = _listDailyWinLoss
+                    rows = _listDailyWinLoss,
+                    tooltips = ToolTipsProducts
                 },
                 new JsonSerializerSettings());
         }

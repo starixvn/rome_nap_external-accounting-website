@@ -23,6 +23,9 @@ Fanex.ExtAcc.WinLossDetail = {
     viewlevel: 5,
     dataSource: [],
     $this: null,
+
+    showPokerGames: false,
+
     SetRange: function () {
         return {
             minDate: new Date($("#MinDate").val()),
@@ -148,6 +151,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 $.each(result, function (i) {
                     productList += '<option value="' + result[i].Key + '" selected="selected">' + result[i].Value + "</option>";
                 });
+
                 $("#GroupProducts").html(productList);
                 $this.InitProductsList();
                 $("#GroupProducts :input").width($("#GroupProducts").width() - 21);
@@ -855,16 +859,25 @@ Fanex.ExtAcc.WinLossDetail = {
                     function () {
                         var message =
                             "- For Sportbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
+                        var height = 170;
+
                         if (data.tooltips.showAllbet) {
-                            var messageGroup = message +
+                            message +=
                                 "<br/>" +
                                 "<br/>" +
                                 "- For AllBet, Net Turnover is total valid bets that we use to compute commission.";
-                            Fanex.ExtAcc.Form.Alert("Net Turnover Information", messageGroup, 430, 220);
-                            return false;
+                            height += 50;
                         }
 
-                        Fanex.ExtAcc.Form.Alert("Net Turnover Information", message, 430, 170);
+                        if (data.tooltips.showPokerGames) {
+                            message +=
+                                    "<br/>" +
+                                    "<br/>" +
+                                    "- Turnover and Net Turnover of Poker Games are the buy-in/top up amount on table.";
+                            height += 50;
+                        }
+
+                        Fanex.ExtAcc.Form.Alert("Net Turnover Information", message, 430, height);
                         return false;
                     });
 
