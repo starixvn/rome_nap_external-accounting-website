@@ -205,8 +205,11 @@
     <Compile Include="Login\ILoginService.cs" />
     <Compile Include="OTP\CustomerOtpService.cs" />
     <Compile Include="Report\IReportService.cs" />
+    <Compile Include="Report\PokerGamesWinLossDetailRequests.cs" />
     <Compile Include="Report\WinLossDetailRequests.cs" />
+    <Compile Include="Report\PokerGamesWinLossDetailService.cs" />
     <Compile Include="Report\WinLossDetailService.cs" />
+    <Compile Include="Report\PokerGamesWinLossDetailServiceImpl.cs" />
     <Compile Include="Report\WinLossDetailServiceImpl.cs" />
     <Compile Include="Statement\IStatementService.cs" />
     <Compile Include="Statement\StatementService.cs" />

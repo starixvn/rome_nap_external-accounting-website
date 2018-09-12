@@ -91,6 +91,34 @@
         public ArrayList GetSortingOrderList(string groupname)
             => _reportDao.EAS_Rpt_WinLossDaily_SortingOrder(groupname);
 
+        public List<PokerGamesWinLossDetail> GetSuperPokerGamesWinLossDetail(
+           string groupname,
+           int custId,
+           DateTime fromDate,
+           DateTime toDate)
+           => _reportDao.EAS_Rpt_WinLossDetailPokerGames_Com(groupname, custId, fromDate, toDate, BalanceUpDate);
+
+        public List<PokerGamesWinLossDetail> GetMasterPokerGamesWinLossDetail(
+            int custId,
+            int masterId,
+            DateTime fromDate,
+            DateTime toDate)
+            => _reportDao.EAS_Rpt_WinLossDetailPokerGames_SAg(custId, masterId, fromDate, toDate, BalanceUpDate);
+
+        public List<PokerGamesWinLossDetailMAg> GetAgentPokerGamesWinLossDetail(
+            int custId,
+            int agentId,
+            DateTime fromDate,
+            DateTime toDate)
+            => _reportDao.EAS_Rpt_WinLossDetailPokerGames_MAg(custId, agentId, fromDate, toDate, BalanceUpDate);
+
+        public List<PokerGamesWinLossDetailAg> GetMemberPokerGamesWinLossDetail(
+            int custId,
+            int memberId,
+            DateTime fromDate,
+            DateTime toDate)
+            => _reportDao.EAS_Rpt_WinLossDetailPokerGames_Ag(custId, memberId, fromDate, toDate, BalanceUpDate);
+
         public static DataTable GetBalanceUpDay()
         {
             var balanceUpDay = Cache.Get<DataTable>(BalanceUpDayKey);
