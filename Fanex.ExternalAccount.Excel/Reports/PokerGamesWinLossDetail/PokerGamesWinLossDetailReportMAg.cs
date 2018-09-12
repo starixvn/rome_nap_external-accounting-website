@@ -19,7 +19,7 @@
 
         public HSSFWorkbook Build()
         {
-            var resultSheet = HssfWorkbook.GetSheet("PokerGamesWinLossDetailMAg");
+            var resultSheet = HssfWorkbook.GetSheet("PokerGamesWinLossMAg");
 
             if (_builder.IsBold)
             {
@@ -99,8 +99,8 @@
         private void BuildMainTitle(ISheet resultSheet)
         {
             var mainTitle = _builder.FromDate.Equals(_builder.ToDate)
-                ? $"Agent Poker Games Win Loss Detail on {_builder.FromDate}"
-                : $"Agent Poker Games Win Loss Detail From {_builder.FromDate} To {_builder.ToDate}";
+                ? $"Agent Poker Games Win Loss on {_builder.FromDate}"
+                : $"Agent Poker Games Win Loss From {_builder.FromDate} To {_builder.ToDate}";
 
             resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
         }

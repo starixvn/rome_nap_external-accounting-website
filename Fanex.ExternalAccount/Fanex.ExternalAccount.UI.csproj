@@ -943,7 +943,9 @@
       <DependentUpon>otp.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\pokergames-winlossdetail\index.js" />
-    <Content Include="assets\bundles\pokergames-winlossdetail\index.min.js" />
+    <Content Include="assets\bundles\pokergames-winlossdetail\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\statement\index.js" />
     <Content Include="assets\bundles\statement\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -2751,9 +2753,9 @@
     <Content Include="assets\styles\abstracts\_mixins.scss" />
     <Content Include="Content\Images\um.svg" />
     <Content Include="PTEngine\PTMappingSection.config" />
-    <Content Include="ExcelTemplates\Reports\PokerGamesWinLossDetail.xls" />
-    <Content Include="ExcelTemplates\Reports\PokerGamesWinLossDetailAg.xls" />
-    <Content Include="ExcelTemplates\Reports\PokerGamesWinLossDetailMAg.xls" />
+    <Content Include="ExcelTemplates\Reports\PokerGamesWinLoss.xls" />
+    <Content Include="ExcelTemplates\Reports\PokerGamesWinLossAg.xls" />
+    <Content Include="ExcelTemplates\Reports\PokerGamesWinLossMAg.xls" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />

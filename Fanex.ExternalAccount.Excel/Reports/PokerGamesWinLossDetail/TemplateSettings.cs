@@ -18,11 +18,11 @@
             switch (roleId)
             {
                 case Role.Member:
-                    return Path.Combine(_dir, "PokerGamesWinLossDetailAg.xls");
+                    return Path.Combine(_dir, "PokerGamesWinLossAg.xls");
                 case Role.Agent:
-                    return Path.Combine(_dir, "PokerGamesWinLossDetailMAg.xls");
+                    return Path.Combine(_dir, "PokerGamesWinLossMAg.xls");
                 default:
-                    return Path.Combine(_dir, "PokerGamesWinLossDetail.xls");
+                    return Path.Combine(_dir, "PokerGamesWinLoss.xls");
             }
         }
     }

@@ -7,6 +7,6 @@
         private const string DateFormat = "yyyyMMdd";
 
         public string FileName =>
-            $"{viewlevel.DisplayRoleName()}PokerGamesWinLossDetail_{fromdate.ToString(DateFormat)}_{todate.ToString(DateFormat)}.xls";
+            $"{viewlevel.DisplayRoleName()}PokerGamesWinLoss_{fromdate.ToString(DateFormat)}_{todate.ToString(DateFormat)}.xls";
     }
 }

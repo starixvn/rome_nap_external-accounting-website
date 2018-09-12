@@ -427,7 +427,7 @@ Fanex.ExtAcc.PokerGamesWinLossDetail = {
             gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
             showTitle: true,
             titleInfo: {
-                text: level + " Poker Games Win Loss Detail " + dateInfo
+                text: level + " Poker Games Win Loss " + dateInfo
             },
             showFooter: true,
             gridExpandHeight: 256,
