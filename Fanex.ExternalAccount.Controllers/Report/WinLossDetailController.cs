@@ -33,7 +33,8 @@
             ToolTipsProducts = new
             {
                 showAllbet = WinLossDetailHelper.IsShowProduct("showAB", currentSession ?? CurrentSession),
-                showPokerGames = WinLossDetailHelper.IsShowProduct("showPG", currentSession ?? CurrentSession)
+                showPokerGames = WinLossDetailHelper.IsShowProduct("showPG", currentSession ?? CurrentSession),
+                showBullfighting = WinLossDetailHelper.IsShowProduct("showBf", currentSession ?? CurrentSession)
             };
         }
 

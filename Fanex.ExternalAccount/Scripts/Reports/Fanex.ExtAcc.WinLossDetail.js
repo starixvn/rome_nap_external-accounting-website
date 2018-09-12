@@ -877,6 +877,14 @@ Fanex.ExtAcc.WinLossDetail = {
                             height += 50;
                         }
 
+                        if (data.tooltips.showBullfighting) {
+                            message +=
+                                    "<br/>" +
+                                    "<br/>" +
+                                    "- For Bullfighting, Net Turnover is Turnover which excludes the draw tickets.";
+                            height += 50;
+                        }
+
                         Fanex.ExtAcc.Form.Alert("Net Turnover Information", message, 430, height);
                         return false;
                     });
