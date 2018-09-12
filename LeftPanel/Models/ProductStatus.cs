@@ -66,11 +66,11 @@
         {
             if (ProductId == ProductConstants.PokerGames)
             {
-                return dataRow.ToBoolean($"DisablePokerGames1401")
-                    && dataRow.ToBoolean($"DisablePokerGames1402")
-                    && dataRow.ToBoolean($"DisablePokerGames1403")
-                    && dataRow.ToBoolean($"DisablePokerGames1404")
-                    && dataRow.ToBoolean($"DisablePokerGames1405");
+                return dataRow.ToInt32($"DisablePokerGames1401")
+                       + dataRow.ToInt32($"DisablePokerGames1402")
+                       + dataRow.ToInt32($"DisablePokerGames1403")
+                       + dataRow.ToInt32($"DisablePokerGames1404")
+                       + dataRow.ToInt32($"DisablePokerGames1405") > 0;
             }
 
             return dataRow.ToBoolean($"Disable{ProductKey}");

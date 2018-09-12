@@ -163,6 +163,10 @@
             {
                 val = Convert.ToInt32(value);
             }
+            else if (value is bool)
+            {
+                val = (bool)value ? 1 : 0;
+            }
             else
             {
                 int.TryParse(value.ToString(), out val);
