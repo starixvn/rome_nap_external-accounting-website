@@ -358,7 +358,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             int custId,
             DateTime fromDate,
             DateTime toDate,
-            DateTime balanceUpDay)
+            DateTime balanceUpDay,
+            DateTime moveBetsDay)
         {
             var parameters = new Hashtable
             {
@@ -366,6 +367,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 {"fromdate", fromDate},
                 {"todate", toDate},
                 {"balanceupday", balanceUpDay},
+                {"movebetsday", moveBetsDay},
                 {"productids", "33"}
             };
 
@@ -382,7 +384,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             int masterId,
             DateTime fromDate,
             DateTime toDate,
-            DateTime balanceUpDay)
+            DateTime balanceUpDay,
+            DateTime moveBetsDay)
         {
             var parameters = new Hashtable
             {
@@ -390,6 +393,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 {"fromdate", fromDate},
                 {"todate", toDate},
                 {"balanceupday", balanceUpDay},
+                {"movebetsday", moveBetsDay},
                 {"productids", "33"}
             };
 
@@ -406,7 +410,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             int agentId,
             DateTime fromDate,
             DateTime toDate,
-            DateTime balanceUpDay)
+            DateTime balanceUpDay,
+            DateTime moveBetsDay)
         {
             var parameters = new Hashtable
             {
@@ -414,6 +419,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 {"fromdate", fromDate},
                 {"todate", toDate},
                 {"balanceupday", balanceUpDay},
+                {"movebetsday", moveBetsDay},
                 {"productids", "33"}
             };
 
@@ -430,7 +436,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             int memberId,
             DateTime fromDate,
             DateTime toDate,
-            DateTime balanceUpDay)
+            DateTime balanceUpDay,
+            DateTime moveBetsDay)
         {
             var parameters = new Hashtable
             {
@@ -438,6 +445,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 {"fromdate", fromDate},
                 {"todate", toDate},
                 {"balanceupday", balanceUpDay},
+                {"movebetsday", moveBetsDay},
                 {"productids", "33"}
             };
 
@@ -674,19 +682,19 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             CustId = reader.ToInt("custid"),
             Username = reader.To<string>("username"),
             Turnover = reader.ToDouble("Turnover"),
-            NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-            TaxComm = reader.ToDouble("GrossComm"),
-            MemberWinLoss = reader.ToDouble("MemberWinlost"),
-            MemberInsuranceGemsWinLoss = reader.ToDouble("InsGemMemberWinlost"),
+            NetTurnover = reader.ToDouble("NetTurnover"),
+            TaxComm = reader.ToDouble("TaxComm"),
+            MemberWinLoss = reader.ToDouble("MemberWinLoss"),
+            MemberInsuranceGemsWinLoss = reader.ToDouble("InsGemMemberWinLoss"),
             MemberComm = reader.ToDouble("PlayerComm"),
             MemberTotal = reader.ToDouble("MemberTotal"),
-            AgInsuranceGemsWinLoss = reader.ToDouble("InsGemAgWinlost"),
+            AgInsuranceGemsWinLoss = reader.ToDouble("InsGemAgWinLoss"),
             AgComm = reader.ToDouble("AgComm"),
             AgTotal = reader.ToDouble("AgTotal"),
-            MAgInsuranceGemsWinLoss = reader.ToDouble("InsGemMAgWinlost"),
+            MAgInsuranceGemsWinLoss = reader.ToDouble("InsGemMAgWinLoss"),
             MAgComm = reader.ToDouble("MAgComm"),
             MAgTotal = reader.ToDouble("MAgTotal"),
-            SAgInsuranceGemsWinLoss = reader.ToDouble("InsGemSAgWinlost"),
+            SAgInsuranceGemsWinLoss = reader.ToDouble("InsGemSAgWinLoss"),
             SAgComm = reader.ToDouble("SAgComm"),
             SAgTotal = reader.ToDouble("SAgTotal"),
             Company = reader.ToDouble("Company")
@@ -716,16 +724,16 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             CustId = reader.ToInt("custid"),
             Username = reader.To<string>("username"),
             Turnover = reader.ToDouble("Turnover"),
-            NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-            TaxComm = reader.ToDouble("GrossComm"),
-            MemberWinLoss = reader.ToDouble("MemberWinlost"),
-            MemberInsuranceGemsWinLoss = reader.ToDouble("InsGemMemberWinlost"),
+            NetTurnover = reader.ToDouble("NetTurnover"),
+            TaxComm = reader.ToDouble("TaxComm"),
+            MemberWinLoss = reader.ToDouble("MemberWinloss"),
+            MemberInsuranceGemsWinLoss = reader.ToDouble("InsGemMemberWinLoss"),
             MemberComm = reader.ToDouble("PlayerComm"),
             MemberTotal = reader.ToDouble("MemberTotal"),
-            AgInsuranceGemsWinLoss = reader.ToDouble("InsGemAgWinlost"),
+            AgInsuranceGemsWinLoss = reader.ToDouble("InsGemAgWinLoss"),
             AgComm = reader.ToDouble("AgComm"),
             AgTotal = reader.ToDouble("AgTotal"),
-            MAgInsuranceGemsWinLoss = reader.ToDouble("InsGemMAgWinlost"),
+            MAgInsuranceGemsWinLoss = reader.ToDouble("InsGemMAgWinLoss"),
             MAgComm = reader.ToDouble("MAgComm"),
             MAgTotal = reader.ToDouble("MAgTotal"),
             Company = reader.ToDouble("Company")
@@ -755,13 +763,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             CustId = reader.ToInt("custid"),
             Username = reader.To<string>("username"),
             Turnover = reader.ToDouble("Turnover"),
-            NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-            TaxComm = reader.ToDouble("GrossComm"),
-            MemberWinLoss = reader.ToDouble("MemberWinlost"),
-            MemberInsuranceGemsWinLoss = reader.ToDouble("InsGemMemberWinlost"),
+            NetTurnover = reader.ToDouble("NetTurnover"),
+            TaxComm = reader.ToDouble("TaxComm"),
+            MemberWinLoss = reader.ToDouble("MemberWinLoss"),
+            MemberInsuranceGemsWinLoss = reader.ToDouble("InsGemMemberWinLoss"),
             MemberComm = reader.ToDouble("PlayerComm"),
             MemberTotal = reader.ToDouble("MemberTotal"),
-            AgInsuranceGemsWinLoss = reader.ToDouble("InsGemAgWinlost"),
+            AgInsuranceGemsWinLoss = reader.ToDouble("InsGemAgWinLoss"),
             AgComm = reader.ToDouble("AgComm"),
             AgTotal = reader.ToDouble("AgTotal"),
             Company = reader.ToDouble("Company")

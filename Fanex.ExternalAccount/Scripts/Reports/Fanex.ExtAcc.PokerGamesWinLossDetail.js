@@ -231,9 +231,13 @@ Fanex.ExtAcc.PokerGamesWinLossDetail = {
 
         $("#report-notes").bind("click",
             function () {
-                var message =
-                    "- Some notes.";
-                var height = 170;
+                var message = "- Turnover of Poker Games are the buy-in/top up amount on table.<br /><br />";
+                message += "- Net Turnover of Poker Games are actual amount member played on game table and Gems bought.<br /><br />";
+                message += "- Gross Tax Comm is commission for whole line.<br /><br />";
+                message += "- Member Win Loss excludes Insurance and Gems bought.<br /><br />";
+                message += "- Member Insurance and Gems Win Loss is the win loss on Insurance and Gems bought only.";
+
+                var height = 320;
 
                 Fanex.ExtAcc.Form.Alert("Report Information", message, 430, height);
                 return false;
@@ -304,18 +308,18 @@ Fanex.ExtAcc.PokerGamesWinLossDetail = {
         },
         { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Tax Comm", Name: "TaxComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Gross Tax Comm", Name: "TaxComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Win/Loss", Name: "MemberWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Insurance/Gems Win Loss", Name: "MemberInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
+        { HeaderText: "Insurance & Gems Win Loss", Name: "MemberInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
         { HeaderText: "Comm", Name: "MemberComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "MemberTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Insurance/Gems Win Loss", Name: "AgInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
+        { HeaderText: "Insurance & Gems Win Loss", Name: "AgInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
         { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Insurance/Gems Win Loss", Name: "MAgInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
+        { HeaderText: "Insurance & Gems Win Loss", Name: "MAgInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
         { HeaderText: "Comm", Name: "MAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "MAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Insurance/Gems Win Loss", Name: "SAgInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
+        { HeaderText: "Insurance & Gems Win Loss", Name: "SAgInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
         { HeaderText: "Comm", Name: "SAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "SAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
@@ -327,15 +331,15 @@ Fanex.ExtAcc.PokerGamesWinLossDetail = {
         },
         { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Tax Comm", Name: "TaxComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Gross Tax Comm", Name: "TaxComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Win/Loss", Name: "MemberWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Insurance/Gems Win Loss", Name: "MemberInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
+        { HeaderText: "Insurance & Gems Win Loss", Name: "MemberInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
         { HeaderText: "Comm", Name: "MemberComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "MemberTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Insurance/Gems Win Loss", Name: "AgInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
+        { HeaderText: "Insurance & Gems Win Loss", Name: "AgInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
         { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Insurance/Gems Win Loss", Name: "MAgInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
+        { HeaderText: "Insurance & Gems Win Loss", Name: "MAgInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
         { HeaderText: "Comm", Name: "MAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "MAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
@@ -347,12 +351,12 @@ Fanex.ExtAcc.PokerGamesWinLossDetail = {
         },
         { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Tax Comm", Name: "TaxComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Gross Tax Comm", Name: "TaxComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Win/Loss", Name: "MemberWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Insurance/Gems Win Loss", Name: "MemberInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
+        { HeaderText: "Insurance & Gems Win Loss", Name: "MemberInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
         { HeaderText: "Comm", Name: "MemberComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "MemberTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Insurance/Gems Win Loss", Name: "AgInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
+        { HeaderText: "Insurance & Gems Win Loss", Name: "AgInsuranceGemsWinLoss", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", CssClass: "col-insurance-games-win-loss" },
         { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
@@ -361,7 +365,7 @@ Fanex.ExtAcc.PokerGamesWinLossDetail = {
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 3 },
         { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 3 },
         { HeaderText: "Net Turnover", Name: "NetTurnover", MergeRowNumber: 3 },
-        { HeaderText: "Tax Comm", Name: "TaxComm", MergeRowNumber: 3 },
+        { HeaderText: "Gross Tax Comm", Name: "TaxComm", MergeRowNumber: 3 },
         { HeaderText: "Member", Name: "MemberWinLoss", MergeColNumber: 4 },
         { HeaderText: "Agent", Name: "AgInsuranceGemsWinLoss", MergeColNumber: 3 },
         { HeaderText: "Master", Name: "MAgInsuranceGemsWinLoss", MergeColNumber: 3 },
@@ -372,7 +376,7 @@ Fanex.ExtAcc.PokerGamesWinLossDetail = {
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 3 },
         { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 3 },
         { HeaderText: "Net Turnover", Name: "NetTurnover", MergeRowNumber: 3 },
-        { HeaderText: "Tax Comm", Name: "TaxComm", MergeRowNumber: 3 },
+        { HeaderText: "Gross Tax Comm", Name: "TaxComm", MergeRowNumber: 3 },
         { HeaderText: "Member", Name: "MemberWinLoss", MergeColNumber: 4 },
         { HeaderText: "Agent", Name: "AgInsuranceGemsWinLoss", MergeColNumber: 3 },
         { HeaderText: "Master", Name: "MAgInsuranceGemsWinLoss", MergeColNumber: 3 },
@@ -382,7 +386,7 @@ Fanex.ExtAcc.PokerGamesWinLossDetail = {
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 3 },
         { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 3 },
         { HeaderText: "Net Turnover", Name: "NetTurnover", MergeRowNumber: 3 },
-        { HeaderText: "Tax Comm", Name: "TaxComm", MergeRowNumber: 3 },
+        { HeaderText: "Gross Tax Comm", Name: "TaxComm", MergeRowNumber: 3 },
         { HeaderText: "Member", Name: "MemberWinLoss", MergeColNumber: 4 },
         { HeaderText: "Agent", Name: "AgInsuranceGemsWinLoss", MergeColNumber: 3 },
         { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
@@ -781,15 +785,14 @@ Fanex.ExtAcc.PokerGamesWinLossDetail = {
                 $("#mainGrid").css("visibility", $this.totalRows < 1 ? "hidden" : "visible");
                 $("#headlineDaily").css("display", $this.totalRows < 1 ? "none" : "block");
                 $("#headlineDaily").css("visibility", $this.totalRows < 1 ? "hidden" : "visible");
-                $("#exporttoexcel").css("display", $this.totalRows < 1 ? "none" : "block");
                 $("#msgNoinfo").css("display", $this.totalRows < 1 ? "block" : "none");
 
                 if ($this.totalRows > 0) {
                     $this.Render(dateInfo);
-                    $("#exporttoexcel").removeClass("hide");
+                    $(".export-to-excel-container").removeClass("hide");
                     $(".groupBack").removeClass("hide");
                 } else {
-                    $("#exporttoexcel").addClass("hide");
+                    $(".export-to-excel-container").addClass("hide");
                     $(".groupBack").addClass("hide");
                 }
 

@@ -72,27 +72,31 @@
             int custId,
             DateTime fromDate,
             DateTime toDate,
-            DateTime balanceUpDay);
+            DateTime balanceUpDay,
+            DateTime moveBetsDay);
 
         List<PokerGamesWinLossDetail> EAS_Rpt_WinLossDetailPokerGames_SAg(
             int custId,
             int masterId,
             DateTime fromDate,
             DateTime toDate,
-            DateTime balanceUpDay);
+            DateTime balanceUpDay,
+            DateTime moveBetsDay);
 
         List<PokerGamesWinLossDetailMAg> EAS_Rpt_WinLossDetailPokerGames_MAg(
             int custId,
             int agentId,
             DateTime fromDate,
             DateTime toDate,
-            DateTime balanceUpDay);
+            DateTime balanceUpDay,
+            DateTime moveBetsDay);
 
         List<PokerGamesWinLossDetailAg> EAS_Rpt_WinLossDetailPokerGames_Ag(
             int custId,
             int memberId,
             DateTime fromDate,
             DateTime toDate,
-            DateTime balanceUpDay);
+            DateTime balanceUpDay,
+            DateTime moveBetsDay);
     }
 }
