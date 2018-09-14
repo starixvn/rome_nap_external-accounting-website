@@ -218,7 +218,7 @@
             Fanex.ExtAcc.Customer.IsMultiple = false;
 
             var url = resolveClientUrl('DataRange/Index?custIds=' + Fanex.ExtAcc.Customer.UserId);
-            Fanex.ExtAcc.Form.Show(url, 'Edit Data Range For Customer(s)', 400, 170, false, null, 1);
+            Fanex.ExtAcc.Form.Show(url, 'Edit Data Range For <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 400, 170, false, null, 1);
         }
     };
 
@@ -501,7 +501,8 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource, requestParam) {
 
         var dateLimit = currentRow.MinDate
             ? moment(currentRow.MinDate).format("MM/DD/YYYY")
-            : (currentRow.LimitDays || "");
+            : currentRow.LimitDays != "" ? currentRow.LimitDays
+            : "";
 
         columns.push({
             Name: 'DateLimit',

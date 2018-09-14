@@ -3,6 +3,7 @@
     using DataAccess.Criteria.DataRange;
     using DataAccess.DataRange;
     using DTO;
+    using DTO.DataRange;
 
     public class DataRangeService : IDataRangeService
     {
@@ -15,5 +16,8 @@
 
         public Result Update(UpdateDataRangeCriteria criteria)
             => dataRangeDao.Update(criteria);
+
+        public CustomerDataRange Select(SelectDataRangeCriteria criteria)
+            => dataRangeDao.Select(criteria);
     }
 }

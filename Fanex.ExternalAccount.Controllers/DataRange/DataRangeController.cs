@@ -1,9 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.DataRange
 {
     using System.Web.Mvc;
+    using Common;
     using Core.Base;
+    using Core.Shared;
     using DataAccess.Criteria.DataRange;
+    using DTO.DataRange;
     using Service.DataRange;
+    using ViewModels;
 
     public class DataRangeController : BaseController
     {
@@ -21,7 +25,14 @@
 
         public ActionResult Index(string custIds)
         {
-            var viewModel = custIds ?? string.Empty;
+            var dataRange = string.IsNullOrWhiteSpace(custIds) || custIds.IndexOf(",") != -1
+                ? new CustomerDataRange { Type = CustomerDataRangeType.None }
+                : service.Select(new SelectDataRangeCriteria { CustId = custIds });
+            var viewModel = new CustomerDataRangeViewModel
+            {
+                CustIds = custIds,
+                CustomerDataRange = dataRange
+            };
 
             return PartialViewBase(viewModel);
         }

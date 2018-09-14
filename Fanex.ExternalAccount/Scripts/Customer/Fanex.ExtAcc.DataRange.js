@@ -22,7 +22,8 @@
             buttonImageOnly: true,
             buttonImage: resolveClientUrl('Content/Images/calendar.png'),
             buttonText: '',
-            dateFormat: 'M dd, yy'
+            dateFormat: 'M dd, yy',
+            maxDate: new Date(),
         });
 
         txtMinDate.val($.datepicker.formatDate('M dd, yy', new Date()));
@@ -58,12 +59,39 @@
                 $(this).val("");
             }
         });
+        $(".rdb-data-range").click(dataRangeController.clickDataRange);
+        dataRangeController.initCustData();
+    },
+    clickDataRange: function () {
+        var type = parseInt($(".rdb-data-range:checked").val(), 0);
+        switch (type) {
+            case dataRangeController.dataRangeType.none:
+                $("#txt-time-period").attr("disabled", "disabled");
+                $("#txt-time-period").val("");
+
+                $("#txt-min-date").attr("disabled", "disabled");
+                $("#txt-min-date").val($.datepicker.formatDate('M dd, yy', new Date()));
+                $("#txt-min-date").datepicker("disable");
+                break;
+            case dataRangeController.dataRangeType.timePeriod:
+                $("#txt-min-date").attr("disabled", "disabled");
+                $("#txt-min-date").val($.datepicker.formatDate('M dd, yy', new Date()));
+                $("#txt-min-date").datepicker("disable");
+
+                $("#txt-time-period").attr("disabled", null);
+                break;
+            case dataRangeController.dataRangeType.minDate:
+                $("#txt-time-period").attr("disabled", "disabled");
+                $("#txt-time-period").val("");
+
+                $("#txt-min-date").attr("disabled", null);
+                $("#txt-min-date").datepicker("enable");
+                break;
+        }
     },
     clearForm: function () {
         $("#rdb-none").attr("checked", "checked");
-        $("#txt-time-period").val("");
-
-        dataRangeController.txtMinDate.val($.datepicker.formatDate('M dd, yy', new Date()));
+        dataRangeController.clickDataRange();
     },
     updateDataRange: function () {
         var type = parseInt($(".rdb-data-range:checked").val(), 0);
@@ -85,6 +113,13 @@
                 if (params.LimitDays == "") {
                     $("#txt-time-period").focus();
                     Validators.showDown($("#txt-time-period").get(0), "This field is required", 0, 10, 37, -10, 10);
+                    return;
+                }
+
+                var limitDays = parseInt(params.LimitDays, 0);
+                if (limitDays == 0 || limitDays > 32767) {
+                    $("#txt-time-period").focus();
+                    Validators.showDown($("#txt-time-period").get(0), "Time period is from 1 to 32767", 0, 10, 37, -10, 10);
                     return;
                 }
 
@@ -131,6 +166,22 @@
         }
 
         Fanex.ExtAcc.Form.Alert("Error", dataRangeController.updateResultMessage.formatErrorMessage(), 300, 150, "alert");
+    },
+    initCustData: function () {
+        var type = parseInt($("#DataRangeType").val(), 0);
+        $(".rdb-data-range[value='" + type + "'").click();
+        dataRangeController.clickDataRange();
+
+        switch (type) {
+            case dataRangeController.dataRangeType.none:
+                break;
+            case dataRangeController.dataRangeType.timePeriod:
+                $("#txt-time-period").val($("#LimitDays").val());
+                break;
+            case dataRangeController.dataRangeType.minDate:
+                $("#txt-min-date").val($.datepicker.formatDate('M dd, yy', new Date($("#MinDate").val())));
+                break;
+        }
     }
 };
 

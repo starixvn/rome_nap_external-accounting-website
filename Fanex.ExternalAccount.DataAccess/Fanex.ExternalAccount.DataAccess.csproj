@@ -156,6 +156,7 @@
   <ItemGroup>
     <Compile Include="Criteria\Customer\UpdateDoubleCommCriteria.cs" />
     <Compile Include="Criteria\Customer\ResetPasswordCriteria.cs" />
+    <Compile Include="Criteria\DataRange\SelectDataRangeCriteria.cs" />
     <Compile Include="Criteria\DataRange\UpdateDataRangeCriteria.cs" />
     <Compile Include="Criteria\IPInformation\GetIPInformationCriteria.cs" />
     <Compile Include="Criteria\IPInformation\GetAllSpecialIPCriteria.cs" />
