@@ -65,6 +65,11 @@
     <Setting Key="EAS_Rpt_WinLossDetail_MAg" SpName="EAS_Rpt_WinLossDetail_MAg" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" TimeOut="600" />
     <Setting Key="EAS_Rpt_WinLossDetail_Ag" SpName="EAS_Rpt_WinLossDetail_Ag" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" TimeOut="600" />
     <Setting Key="EAS_Rpt_WinLossDaily_SortingOrder" SpName="EAS_Rpt_WinLossDaily_SortingOrder" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
+
+    <Setting Key="EAS_Rpt_WinLossDetailPokerGames_Com" SpName="EAS_Rpt_WinLossDetailPokerGames_Com" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="EAS_Rpt_WinLossDetailPokerGames_SAg" SpName="EAS_Rpt_WinLossDetailPokerGames_SAg" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="EAS_Rpt_WinLossDetailPokerGames_MAg" SpName="EAS_Rpt_WinLossDetailPokerGames_MAg" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="EAS_Rpt_WinLossDetailPokerGames_Ag" SpName="EAS_Rpt_WinLossDetailPokerGames_Ag" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
   </Function>
   <Function Name="Group">
     <Setting Key="EAS_GroupInfoDel" SpName="EAS_GroupInfoDel" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
@@ -117,7 +122,7 @@
     <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdResetMemberCredit" SpName="Acc_CustomerUpdResetMemberCredit" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="DBCust.NAP_UserControl.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />    
+    <Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelEditSuperVS" SpName="Acc_CustomerSelEditSuperVS" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelClearBalance" SpName="Acc_CustomerSelClearBalance" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
@@ -126,11 +131,11 @@
     <Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdDisableNumber" SpName="Acc_CustomerUpdDisableNumber" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />    
+    <Setting Key="Acc_CustomerUpdDisableNumber" SpName="Acc_CustomerUpdDisableNumber" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableVS" SpName="Acc_CustomerUpdDisableVS" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_GetCSStatus" SpName="Age_GetCSStatus" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />    
+    <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Customer List">
@@ -184,7 +189,7 @@
     <Setting Key="Age_CustomerUpdAgentComm" SpName="Age_CustomerUpdAgentComm" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerUpdUserComm" SpName="Age_CustomerUpdUserComm" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
-  
+
   <Function Name="PTVirtualSports - Setting">
     <Setting Key="Acc_CustomerSelEditMasterVS" SpName="Acc_CustomerSelEditMasterVS" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelEditAgentVS" SpName="Acc_CustomerSelEditAgentVS" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
@@ -202,7 +207,7 @@
     <Setting Key="Acc_CustomerUpdMaxPerMatchVS180_1201" SpName="Acc_CustomerUpdMaxPerMatchVS180_1201" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableVS" SpName="Acc_CustomerUpdDisableVS" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
-  
+
   <Function Name="Casino">
     <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="dblog" IgnoreImport="true" />
   </Function>
@@ -237,7 +242,7 @@
       <Setting Key="Acc_CustomerWinlimitUpd" SpName="Acc_CustomerWinlimitUpd" DbName="DBCust.CustDB.bodbExtAccNet" />
     </Function>
   </Functions>
-  
+
   <Function Name="Colossus Bet Setting">
     <Function Name="Get Setting">
       <Setting Key="Acc_CustomerSelEditSuperColossusBet" SpName="Acc_CustomerSelEditSuperColossusBet" DbName="DBCUST.CustDB.bodbExtAccNet" />
@@ -283,7 +288,7 @@
   <Function Name="Customer - ThirdParty">
     <Setting Key="Acc_CustomerSelStatusByProductId" SpName="Acc_CustomerSelStatusByProductId" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
-   <Function Name="Otp">
+  <Function Name="Otp">
     <Setting Key="EAS_OTP_CustomerOTPSel" SpName="EAS_OTP_CustomerOTPSel" DbName="DBCUST.CustDB.bodbExtAccNet" />
   </Function>
   <Function Name="Product Status Setting">

@@ -942,6 +942,10 @@
     <Content Include="assets\bundles\otp\otp.min.js">
       <DependentUpon>otp.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\pokergames-winlossdetail\index.js" />
+    <Content Include="assets\bundles\pokergames-winlossdetail\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\statement\index.js" />
     <Content Include="assets\bundles\statement\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -1084,6 +1088,12 @@
     </Content>
     <Content Include="assets\styles\pages\reports\daily-winloss.min.css">
       <DependentUpon>daily-winloss.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\pokergames-winloss-detail.css">
+      <DependentUpon>pokergames-winloss-detail.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\pokergames-winloss-detail.min.css">
+      <DependentUpon>pokergames-winloss-detail.scss</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\reports\winloss-detail.css">
       <DependentUpon>winloss-detail.scss</DependentUpon>
@@ -1640,6 +1650,7 @@
     <Content Include="Scripts\jquery.ui.touch-punch.js" />
     <Content Include="Scripts\MultiSelect\select2.css" />
     <Content Include="Scripts\MultiSelect\select2.js" />
+    <Content Include="Scripts\Reports\Fanex.ExtAcc.PokerGamesWinLossDetail.js" />
     <Content Include="Scripts\_Libs\jQuery\classList.js" />
     <Content Include="Scripts\_Libs\jQuery\Core\jquery.js" />
     <Content Include="Scripts\_Libs\jQuery\Countdown\jquery.countdown.css" />
@@ -2677,6 +2688,8 @@
     <Content Include="assets\bundles\home\home.min.js.map">
       <DependentUpon>home.min.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\pokergames-winlossdetail\index.min.js.map" />
+    <Content Include="assets\styles\pages\reports\pokergames-winloss-detail.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2740,6 +2753,9 @@
     <Content Include="assets\styles\abstracts\_mixins.scss" />
     <Content Include="Content\Images\um.svg" />
     <Content Include="PTEngine\PTMappingSection.config" />
+    <Content Include="ExcelTemplates\Reports\PokerGamesWinLoss.xls" />
+    <Content Include="ExcelTemplates\Reports\PokerGamesWinLossAg.xls" />
+    <Content Include="ExcelTemplates\Reports\PokerGamesWinLossMAg.xls" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />
@@ -2783,6 +2799,7 @@
     <Content Include="Views\NetworkSpeed\Index.cshtml" />
     <Content Include="Views\OTP\Index.cshtml" />
     <Content Include="Views\MainSuper\EditInfo.cshtml" />
+    <Content Include="Views\PokerGamesWinLossDetail\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">

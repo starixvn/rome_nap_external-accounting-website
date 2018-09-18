@@ -32,5 +32,13 @@
         List<WinLossDetailAg> GetMemberWinLossDetail(int custId, int memberId, DateTime fromDate, DateTime toDate, string productIds);
 
         ArrayList GetSortingOrderList(string groupname);
+
+        List<PokerGamesWinLossDetail> GetSuperPokerGamesWinLossDetail(string groupname, int custId, DateTime fromDate, DateTime toDate);
+
+        List<PokerGamesWinLossDetail> GetMasterPokerGamesWinLossDetail(int custId, int masterId, DateTime fromDate, DateTime toDate);
+
+        List<PokerGamesWinLossDetailMAg> GetAgentPokerGamesWinLossDetail(int custId, int agentId, DateTime fromDate, DateTime toDate);
+
+        List<PokerGamesWinLossDetailAg> GetMemberPokerGamesWinLossDetail(int custId, int memberId, DateTime fromDate, DateTime toDate);
     }
 }

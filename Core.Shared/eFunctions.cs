@@ -13,6 +13,8 @@
         public const string ManageMenu = "ManageMenu";
         public const string DailyWinloss = "DailyWinloss";
         public const string WinlossDetail = "WinlossDetail";
+        public const string PokerGamesWinLossDetail = "PokerGamesWinLossDetail";
+
         public const string Statement = "Statement";
         public const string EnableGoldDeluxe = "EnableGoldDeluxe";
         public const string UpdateGoldDeluxe = "UpdateGoldDeluxe";
