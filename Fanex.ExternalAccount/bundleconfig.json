@@ -155,6 +155,13 @@
     "sourceMap": true
   },
   {
+    "outputFileName": "assets/bundles/data-range/index.js",
+    "inputFiles": [
+      "Scripts/Customer/Fanex.ExtAcc.DataRange.js"
+    ],
+    "sourceMap": true
+  },
+  {
     "outputFileName": "assets/bundles/pokergames-winlossdetail/index.js",
     "inputFiles": [
       "Scripts/monthPicker/monPickr-0.0.1.js",

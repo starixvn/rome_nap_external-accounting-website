@@ -355,9 +355,10 @@
             int? custId = null,
             bool? enabled = null,
             bool? closed = null,
-            bool? suspended = null)
+            bool? suspended = null,
+            bool? withDataLimited = null)
         {
-            var supers = _superService.GetData(CurrentSession.UserId, ExtRequest.GetGroupName(groupName), custId, enabled, closed, suspended);
+            var supers = _superService.GetData(CurrentSession.UserId, ExtRequest.GetGroupName(groupName), custId, enabled, closed, suspended, withDataLimited);
             var customerProductStatus = TransformToCustomerProductStatusList(supers);
             var supers2Json = Customers2Json(supers);
 
@@ -579,11 +580,12 @@
             bool? enabled = null,
             bool? closed = null,
             bool? suspended = null,
-            string username = null)
+            string username = null,
+            bool? withDataLimited = null)
         {
             var customerSetting = BuildCustomerSetting(username);
 
-            var customers = GetCustomerList(ExtRequest.GetGroupName(groupName), enabled, closed, suspended, customerSetting);
+            var customers = GetCustomerList(ExtRequest.GetGroupName(groupName), enabled, closed, suspended, customerSetting, withDataLimited);
             TransformToCustomerProductStatusList(customers);
 
             var status = string.Empty;
@@ -607,7 +609,8 @@
                 status,
                 Convert.ToInt32(customerSetting.RoleId),
                 customers?.Rows.Count > 0
-                && (customers.Rows[0].ToBoolean("ismyanmarodds") || customerSetting.RoleId.IsSuper()));
+                && (customers.Rows[0].ToBoolean("ismyanmarodds") || customerSetting.RoleId.IsSuper()),
+                withDataLimited.HasValue && withDataLimited.Value);
             var excelStream = builder.Build();
             var fileName = $"{status}{customerSetting.RoleId.DisplayRoleName()}List{DateTime.Now.ToString("yyyyMMdd")}.xls";
 
@@ -621,7 +624,8 @@
             bool? enabled,
             bool? closed,
             bool? suspended,
-            LineInfo lineInfo)
+            LineInfo lineInfo,
+            bool? withDataLimited = null)
         {
             int? id = null;
             DataTable result;
@@ -631,7 +635,7 @@
                 case Role.Super:
                     result = _superService.GetData(CurrentSession.UserId, groupName, lineInfo.CustId == 0
                         ? id
-                        : lineInfo.CustId, enabled, closed, suspended);
+                        : lineInfo.CustId, enabled, closed, suspended, withDataLimited);
                     break;
 
                 case Role.Master:

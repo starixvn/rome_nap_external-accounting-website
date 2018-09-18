@@ -172,6 +172,11 @@
                 data.username +
                 "&custId=" +
                 Fanex.ExtAcc.Customer.custId;
+
+            if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Super) {
+                params += "&withDataLimited=" + $("#chk-show-limit-date").is(":checked");
+            }
+
             top.exportExcel(resolveClientUrl("Customer/GetExportToExcel?") + params, document);
 
         });
@@ -202,6 +207,7 @@
 
         $(".icon-filter").click($this.showHideFilter);
         Fanex.ExtAcc.Customer.bindOrientationChange();
+        Fanex.ExtAcc.Customer.ShowCustomerLimitDateFilter();
     },
     bindOrientationChange: function () {
         top.landscapeHeight = 260;
@@ -1061,5 +1067,14 @@
         }
 
         return productSettings;
+    },
+
+    ShowCustomerLimitDateFilter: function () {
+        var customerLimitDate = parent.$('.customer-limit-date');
+        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Super) {
+            customerLimitDate.removeClass('hidden');
+        } else {
+            customerLimitDate.addClass('hidden');
+        }
     }
 };

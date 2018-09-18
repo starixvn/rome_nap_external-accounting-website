@@ -484,6 +484,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customers with data limited.
+        /// </summary>
+        public static string CustomersWithDataLimited {
+            get {
+                return ResourceManager.GetString("CustomersWithDataLimited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Daily.
         /// </summary>
         public static string daily {

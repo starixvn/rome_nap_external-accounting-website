@@ -15,8 +15,8 @@
             int? custId = null,
             bool? enabled = null,
             bool? closed = null,
-            bool? suspended = null
-        )
+            bool? suspended = null,
+            bool? withDataLimited = null)
         {
             var param = new Hashtable
             {
@@ -25,6 +25,7 @@
                 {"enabled", enabled},
                 {"closed", closed},
                 {"suspended", suspended},
+                {"isdatalimited", withDataLimited},
                 {"userid", userId}
             };
 

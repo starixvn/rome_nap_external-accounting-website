@@ -38,6 +38,11 @@
         {
             var dtr = _builder.Data.Rows;
             var totalColumn = _builder.IsMyanmarOdds || _builder.RoleId.IsSuper() ? 16 : 15;
+            if (_builder.RoleId.IsSuper())
+            {
+                totalColumn++;
+            }
+
             var lastColumnIndex = FirstColumnIndex + totalColumn - 1;
             if (_builder.RoleId.IsNotMember())
             {
@@ -49,7 +54,6 @@
                 lastColumnIndex = FirstColumnIndex + totalColumn - 1;
                 WriteMemberReport(resultSheet, dtr, lastColumnIndex, _builder.IsMyanmarOdds);
             }
-
         }
 
         private void WriteMemberReport(
@@ -124,11 +128,16 @@
                     items.Discount1x2(),
                     items.DiscountCasino(),
                     items.DiscountNumberGame(),
-                    items.IsMyanmarOdds() ? items.DiscountMyanmarOdds() : "N/A",
-                    items.CreateDate(),
-                    items.LastLoginIP()
+                    items.IsMyanmarOdds() ? items.DiscountMyanmarOdds() : "N/A"
                 };
 
+                if (_builder.RoleId.IsSuper())
+                {
+                    values.Add(items.LimitDays()?.ToString() ?? items.MinDate() ?? string.Empty);
+                }
+
+                values.Add(items.CreateDate());
+                values.Add(items.LastLoginIP());
                 values = RemoveOddsColumn(values);
                 resultSheet.GetRow(rowId).WriteCells(FirstColumnIndex, values);
                 id++;

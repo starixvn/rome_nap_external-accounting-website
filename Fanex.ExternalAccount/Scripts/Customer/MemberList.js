@@ -180,7 +180,7 @@
 
     if (has3rdParty)
         itemsMember.separator5 = "-----";
-        itemsMember.editInfo = {
+    itemsMember.editInfo = {
         name: "Edit Info",
         className: "iconEnableEdit editInfoBg",
         callback: function (key, opt) {
@@ -193,7 +193,7 @@
                 height,
                 false);
         }
-        };
+    };
 
     itemsMember.changePassword = {
         name: "Reset Password",
@@ -262,6 +262,7 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
     this.custId = custId == 'undefined' ? null : custId;
     data.custId = data.username == '' ? null : custId;
 
+    Fanex.ExtAcc.Customer.ShowCustomerLimitDateFilter();
     if (custId == undefined) {
         this.directSuperId = null;
         this.directMasterId = null;

@@ -28,7 +28,7 @@
                 Fanex.ExtAcc.Form.Show(
                     resolveClientUrl('SportsbookSetting/EditMultiplePT' + '/?roleId=4&groupName=' + $('#selectedGroupName').html() + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                     900, 700, false, false, 1);
-                
+
             }
         },
         separator1: "-----",
@@ -38,7 +38,7 @@
             callback: function () {
                 top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Super/EditSuper?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=0&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 1064, 700, false, null, 1);                
+                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Super/EditSuper?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=0&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 1064, 700, false, null, 1);
             }
         }
     }
@@ -71,7 +71,7 @@
                 top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditSuper?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Keno Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 880, 700, false, false, 1);                
+                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditSuper?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Keno Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 880, 700, false, false, 1);
             }
         }
     }
@@ -86,7 +86,7 @@
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=0&uplineId=0&formType=2&level=4" + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + parent.$('#selectedGroupName').html();
                 Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Gold Deluxe Setting <font color="#6dcff6">' + title + '</font>', 900, 400, false, false, 1);
-                
+
             }
         }
     }
@@ -100,7 +100,7 @@
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 url = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&isMultipleEdit=0&userId=" + parent.userId + "&roleId=4&groupName=" + parent.$('#selectedGroupName').html();
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Colossus Bets Setting <font color="#6dcff6">' + title + '</font>', 900, 400, false, false, 1);                               
+                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Colossus Bets Setting <font color="#6dcff6">' + title + '</font>', 900, 400, false, false, 1);
             }
         }
     }
@@ -210,6 +210,18 @@
         };
     }
 
+    items.customerDataRange = {
+        name: "Edit Data Range",
+        className: "iconEnableEdit editInfoBg",
+        callback: function (key, opt) {
+            top.shouldCalculatePopupHeight = false;
+            Fanex.ExtAcc.Customer.IsMultiple = false;
+
+            var url = resolveClientUrl('DataRange/Index?custIds=' + Fanex.ExtAcc.Customer.UserId);
+            Fanex.ExtAcc.Form.Show(url, 'Edit Data Range For <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 400, 170, false, null, 1);
+        }
+    };
+
     if ($.contextMenu) $.contextMenu('destroy');
 
     $.contextMenu({
@@ -232,7 +244,9 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
     var data = this.GetParams();
     this.custId = custId == 'undefined' ? null : custId;
     data.custId = data.username == '' ? null : custId;
+    data.withDataLimited = $("#chk-show-limit-date").is(":checked");
 
+    Fanex.ExtAcc.Customer.ShowCustomerLimitDateFilter();
     if (custId == undefined) {
         this.directSuperId = null;
         this.directMasterId = null;
@@ -374,13 +388,24 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
         Width: 60,
         CellAlign: 'center',
         CustomAttr: ' title="Myanmar Odds" '
-    }, {
+    }];
+
+    this.DataFields.push({
+        HeaderText: 'Data Available',
+        Name: 'DateLimit',
+        CellAlign: 'center',
+        Width: 100
+    });
+
+    this.DataFields.push({
         HeaderText: 'Created Date',
         Name: 'createdate',
         CellAlign: 'center',
         Width: 160,
         FormatDateTime: 'MM/DD/YYYY hh:mm:ss A'
-    }, {
+    });
+
+    this.DataFields.push({
         HeaderText: 'Login IP',
         Name: 'lastloginip',
         CellAlign: 'center',
@@ -388,10 +413,10 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
         CustomCellRender: function (cell) {
             return '<div><a href="javascript:Fanex.ExtAcc.Customer.ShowIpInfo(\'' + cell.Value + '\')">' + cell.Value + '</a></div>';
         }
-    }];
+    });
 
     if (dataSource) {
-        this.RenderSuperList(dataSource);
+        this.RenderSuperList(dataSource, data);
     } else {
         $.ajax({
             url: url,
@@ -400,12 +425,12 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
             type: 'post'
         })
         .success(function (result) {
-            Fanex.ExtAcc.Customer.RenderSuperList(result);
+            Fanex.ExtAcc.Customer.RenderSuperList(result, data);
         });
     }
 };
 
-Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource) {
+Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource, requestParam) {
     if (dataSource.srecommend) {
         this.superId = dataSource.srecommend;
         this.masterId = dataSource.mrecommend;
@@ -424,68 +449,83 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource) {
         var cssRow = !currentRow.enabled ? 'rowDisabled' : currentRow.closed ? Fanex.ExtAcc.Customer.GetClosedClassName(currentRow) : currentRow.suspended ? 'rowSuspended' : '';
 
         currentRow.productSettings = this.GetProductSettings(dataSource.customerProductStatus[currentRow.custid], false);
+        var columns = [{
+            Name: 'RowNumber',
+            Value: currentRow.RowNumber
+        }, {
+            Name: 'Check',
+            Value: currentRow
+        }, {
+            Name: 'username',
+            Value: currentRow
+        }, {
+            Name: 'Edit',
+            Value: currentRow
+        }, {
+            Name: 'Status',
+            Value: currentRow
+        }, {
+            Name: 'DoubleCommLosing',
+            Value: currentRow
+        }, {
+            Name: 'firstname',
+            Value: currentRow.firstname
+        }, {
+            Name: 'lastname',
+            Value: currentRow.lastname
+        }, {
+            Name: 'groupa',
+            Value: currentRow.groupa
+        }, {
+            Name: 'groupb',
+            Value: currentRow.groupb
+        }, {
+            Name: 'groupc',
+            Value: currentRow.groupc
+        }, {
+            Name: 'groupd',
+            Value: currentRow.groupd
+        }, {
+            Name: 'discount1x2',
+            Value: currentRow.discount1x2
+        }, {
+            Name: 'discountcs',
+            Value: currentRow.discountcs
+        }, {
+            Name: 'discountnumber',
+            Value: currentRow.discountnumber
+        }, {
+            Name: 'discountmo',
+            Value: currentRow.IsMyanmarOdds ? (currentRow.discountMyanmarOdds ? currentRow.discountMyanmarOdds : 0) : 'N/A'
+        }];
+
+        var dateLimit = currentRow.MinDate
+            ? moment(currentRow.MinDate).format("MM/DD/YYYY")
+            : currentRow.LimitDays != "" ? currentRow.LimitDays
+            : "";
+
+        columns.push({
+            Name: 'DateLimit',
+            Value: dateLimit
+        });
+
+        columns.push({
+            Name: 'createdate',
+            Value: currentRow.createdate
+        });
+
+        columns.push({
+            Name: 'lastloginip',
+            Value: currentRow.lastloginip
+        });
 
         bodyRows.push({
-            Columns: [{
-                Name: 'RowNumber',
-                Value: currentRow.RowNumber
-            }, {
-                Name: 'Check',
-                Value: currentRow
-            }, {
-                Name: 'username',
-                Value: currentRow
-            }, {
-                Name: 'Edit',
-                Value: currentRow
-            }, {
-                Name: 'Status',
-                Value: currentRow
-            }, {
-                Name: 'DoubleCommLosing',
-                Value: currentRow
-            }, {
-                Name: 'firstname',
-                Value: currentRow.firstname
-            }, {
-                Name: 'lastname',
-                Value: currentRow.lastname
-            }, {
-                Name: 'groupa',
-                Value: currentRow.groupa
-            }, {
-                Name: 'groupb',
-                Value: currentRow.groupb
-            }, {
-                Name: 'groupc',
-                Value: currentRow.groupc
-            }, {
-                Name: 'groupd',
-                Value: currentRow.groupd
-            }, {
-                Name: 'discount1x2',
-                Value: currentRow.discount1x2
-            }, {
-                Name: 'discountcs',
-                Value: currentRow.discountcs
-            }, {
-                Name: 'discountnumber',
-                Value: currentRow.discountnumber
-            }, {
-                Name: 'discountmo',
-                Value: currentRow.IsMyanmarOdds ? (currentRow.discountMyanmarOdds ? currentRow.discountMyanmarOdds : 0) : 'N/A'
-            }, {
-                Name: 'createdate',
-                Value: currentRow.createdate
-            }, {
-                Name: 'lastloginip',
-                Value: currentRow.lastloginip
-            }],
+            Columns: columns,
             CssClass: cssRow
         });
     }
 
-    var groupHeader = [{
+    var groupHeader = {
         Columns: [{
             HeaderText: 'No.',
             Name: 'RowNumber',
@@ -522,16 +562,26 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource) {
             HeaderText: 'Commission',
             Name: 'groupa',
             MergeColNumber: 8
-        }, {
-            HeaderText: 'Created Date',
-            Name: 'createdate',
-            MergeRowNumber: 2
-        }, {
-            HeaderText: 'Login IP',
-            Name: 'lastloginip',
-            MergeRowNumber: 2
         }]
-    }]
+    };
+
+    groupHeader.Columns.push({
+        HeaderText: 'Data Available',
+        Name: 'DateLimit',
+        MergeRowNumber: 2
+    });
+
+    groupHeader.Columns.push({
+        HeaderText: 'Created Date',
+        Name: 'createdate',
+        MergeRowNumber: 2
+    });
+
+    groupHeader.Columns.push({
+        HeaderText: 'Login IP',
+        Name: 'lastloginip',
+        MergeRowNumber: 2
+    });
 
     var currentPage = 0;
     currentPage = (rowsLength <= Fanex.ExtAcc.Customer.ItemsPerPage || (parseInt(rowsLength / Fanex.ExtAcc.Customer.ItemsPerPage) < Fanex.ExtAcc.Customer.CurrentPage)) ? 0 : Fanex.ExtAcc.Customer.CurrentPage;
@@ -550,7 +600,7 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource) {
         fullHeight: !isMobile.phone,
         gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
         customizeHeader: true,
-        groupHeaderRows: groupHeader,
+        groupHeaderRows: [groupHeader],
         highlightFrozenWidth: 2,
         showPager: true,
         customPager: false,

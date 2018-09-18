@@ -926,6 +926,8 @@
     <Content Include="assets\bundles\dailywinloss\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\data-range\index.js" />
+    <Content Include="assets\bundles\data-range\index.min.js" />
     <Content Include="assets\bundles\home\home.js" />
     <Content Include="assets\bundles\home\home.min.js">
       <DependentUpon>home.js</DependentUpon>
@@ -1592,6 +1594,7 @@
     <Content Include="Content\Validators.css" />
     <Content Include="Images\tick.png" />
     <Content Include="Images\x5.gif" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.DataRange.js" />
     <Content Include="Scripts\Fanex.ExtAcc.EcHcUtil.js" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.OTP.js" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.js" />
@@ -2688,6 +2691,7 @@
     <Content Include="assets\bundles\home\home.min.js.map">
       <DependentUpon>home.min.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\data-range\index.min.js.map" />
     <Content Include="assets\bundles\pokergames-winlossdetail\index.min.js.map" />
     <Content Include="assets\styles\pages\reports\pokergames-winloss-detail.scss" />
     <None Include="compilerconfig.json" />
@@ -2742,7 +2746,6 @@
     <Content Include="deployment.ignore" />
     <Content Include="ExcelTemplates\Customer\CustomerListMO.xls" />
     <Content Include="ExcelTemplates\Customer\MemberListMO.xls" />
-    <Content Include="ExcelTemplates\Customer\SuperList.xls" />
     <Content Include="IbcKeys\ibckey.snk" />
     <Content Include="NumberGame2Section.config" />
     <Content Include="Fanex.ExternalAccount.UI.ruleset" />
@@ -2753,6 +2756,7 @@
     <Content Include="assets\styles\abstracts\_mixins.scss" />
     <Content Include="Content\Images\um.svg" />
     <Content Include="PTEngine\PTMappingSection.config" />
+    <Content Include="ExcelTemplates\Customer\SuperList.xls" />
     <Content Include="ExcelTemplates\Reports\PokerGamesWinLoss.xls" />
     <Content Include="ExcelTemplates\Reports\PokerGamesWinLossAg.xls" />
     <Content Include="ExcelTemplates\Reports\PokerGamesWinLossMAg.xls" />
@@ -2798,6 +2802,7 @@
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\NetworkSpeed\Index.cshtml" />
     <Content Include="Views\OTP\Index.cshtml" />
+    <Content Include="Views\DataRange\Index.cshtml" />
     <Content Include="Views\MainSuper\EditInfo.cshtml" />
     <Content Include="Views\PokerGamesWinLossDetail\Index.cshtml" />
   </ItemGroup>
