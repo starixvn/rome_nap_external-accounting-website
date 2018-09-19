@@ -303,6 +303,7 @@
         data.username = Fanex.encodeHtml($('#txtUserName').val());
         data.roleId = this.CurrentLevel;
         data.custId = data.username == '' ? null : this.UserId;
+        data.withDataLimited = $("#chk-show-limit-date").length ? $("#chk-show-limit-date").is(":checked") : false;
 
         return data;
     },
@@ -336,7 +337,7 @@
         var editUrl = 'Customer/EditInfoPost';
         if (Fanex.ExtAcc.Customer.RoleId == this.Super) {
             editUrl = 'MainSuper/EditInfoPost';
-        }        
+        }
 
         var data = {
             custId: this.UserId,

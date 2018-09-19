@@ -324,10 +324,11 @@
             bool? enabled = null,
             bool? closed = null,
             bool? suspended = null,
-            string username = null)
+            string username = null,
+            bool? withDataLimited = null)
         {
             var lineInfo = GetLineInfo(ExtRequest.GetGroupName(groupName), username, BuildCustomerSetting(username));
-            var customers = GetCustomerList(ExtRequest.GetGroupName(groupName), enabled, closed, suspended, lineInfo);
+            var customers = GetCustomerList(ExtRequest.GetGroupName(groupName), enabled, closed, suspended, lineInfo, withDataLimited);
             var customerProductStatus = TransformToCustomerProductStatusList(customers);
             var customers2String = Customers2Json(customers);
             var syncCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncCasino");
