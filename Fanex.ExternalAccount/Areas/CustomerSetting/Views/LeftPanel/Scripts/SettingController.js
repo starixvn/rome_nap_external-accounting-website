@@ -597,16 +597,9 @@
         if (disabled) {
             return;
         }
-
+        var esportTypeId = 43;
         top.shouldCalculatePopupHeight = false;
-        var url_SELECT = 'customersetting/enablestatus/productstatus?';
-        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
-        '&userid=' + parent.userId + '&productid=esports&level=' + $scope.model.personalInfo.roleId.value +
-        '&enable=' + !enable + '&enabledownlines=false&hasdownline=' + ($scope.model.hasDownline ? 'true' : 'false') + '&username=' + $scope.model.personalInfo.currentLevel.value + '&enableuplines=true';
-        var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, (enable ? 'Disable ' : 'Enable ') + 'eSports: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 400, 180, false, function () {
-            document.getElementById(id).checked = enable;
-        }, 1, null);
+        $scope.EnableThirdpartyProduct(16, "E-Sports", 800, 320, esportTypeId);
     };
 
     $scope.getPopupHeight = function (landscapeHeight, portraitHeight) {
@@ -772,7 +765,7 @@
         }, 1, null);
     };
 
-    $scope.EnableThirdpartyProduct = function (productId, productName, width, height) {
+    $scope.EnableThirdpartyProduct = function (productId, productName, width, height, sportTypeId) {
         width = width || 680;
         height = height || 320;
         var personalInfo = $scope.model.personalInfo;
@@ -781,6 +774,8 @@
             + '&custname=' + personalInfo.currentLevel.value
             + '&custRole=' + personalInfo.roleId.value
             + '&productid=' + productId
+            + '&height=' + height
+            + '&sporttypeid=' + sportTypeId;
         var url = parent.resolveClientUrl(url_SELECT);
         var title = 'Update ' + productName + ' Status: <font color="#6dcff6">' + personalInfo.currentLevel.value + '</font>';
         parent.Fanex.ExtAcc.Form.ShowFrame(url, title, width, height, false);

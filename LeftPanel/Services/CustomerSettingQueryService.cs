@@ -91,7 +91,7 @@
             AddNumberGameStatus(customerRow, customerStatus, enableItems);
             AddVirtualSportsStatus(productStatusTable, customerStatus, enableItems);
             AddDoubleCommStatus(customerRow, customerStatus, enableItems);
-            AddESportsStatus(customerRow, customerStatus, enableItems);
+            AddESportsStatus(productStatusTable, customerStatus, enableItems);
             AddColossusBetsStatus(customerRow, customerStatus, enableItems);
             AddGoldDeluxeStatus(customerRow, customerStatus, enableItems);
 
@@ -141,7 +141,7 @@
             enableItems.Add(colossusBetsStatus);
         }
 
-        private static void AddESportsStatus(DataRow customerRow, CustomerStatus customerStatus,
+        private static void AddESportsStatus(DataTable productStatusTable, CustomerStatus customerStatus,
             List<ObjectInfo> enableItems)
         {
             if (customerStatus.HideEsports)
@@ -150,7 +150,7 @@
             }
 
             var eSportsStatus =
-                new ObjectInfo("EnableESports", customerRow.EnableESports(), "E-Sports", "Enable E-Sports");
+                new ObjectInfo("EnableESports", productStatusTable.GetESportStatus(), "E-Sports", "Enable E-Sports");
 
             if (customerStatus.RoleId.IsNotSuper()
                 && customerStatus.UplineStatus.DisableESports)

@@ -49,7 +49,8 @@
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.VoidBridge], statusRow, false, isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.AllBet], statusRow, false, isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.BullFighting], statusRow, isSetUplineStatus: isSetUplineStatus),
-                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.PokerGames], statusRow, isSetUplineStatus:isSetUplineStatus)
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.PokerGames], statusRow, isSetUplineStatus:isSetUplineStatus),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Sportsbook2], statusRow, isSetUplineStatus:isSetUplineStatus)
             };
 
         public static List<ObjectInfo> CreateSyncAndHiddenItems(DataRow customerRow, DataTable table3RdDcs)

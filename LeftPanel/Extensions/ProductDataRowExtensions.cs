@@ -83,6 +83,9 @@
         internal static bool GetVirtualSportsStatus(this DataTable table3rdDCS)
             => table3rdDCS.IsProductEnabled(ProductConstants.VirtualSports);
 
+        internal static bool GetESportStatus(this DataTable table3rdDCS)
+            => table3rdDCS.IsProductEnabled(ProductConstants.Sportsbook2);
+
         internal static bool IsProductEnabled(this DataTable productTable, int productId)
         {
             var productRows = productTable.Select($"ProductID = {productId}");

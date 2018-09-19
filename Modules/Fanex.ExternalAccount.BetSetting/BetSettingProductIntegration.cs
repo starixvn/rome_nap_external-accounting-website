@@ -17,7 +17,8 @@
             ProductSettings.SiteProducts[ProductConstants.VoidBridge],
             ProductSettings.SiteProducts[ProductConstants.NG2],
             ProductSettings.SiteProducts[ProductConstants.Lottery],
-            ProductSettings.SiteProducts[ProductConstants.BullFighting]
+            ProductSettings.SiteProducts[ProductConstants.BullFighting],
+            ProductSettings.SiteProducts[ProductConstants.Sportsbook2]
         };
 
         private static CustomerStatusQueryService customerStatusService = new CustomerStatusServiceImpl();

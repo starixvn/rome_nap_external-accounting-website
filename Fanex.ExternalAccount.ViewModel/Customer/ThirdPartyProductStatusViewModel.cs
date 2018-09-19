@@ -10,6 +10,8 @@
 
         public int ProductId { get; set; }
 
+        public int SportTypeId { get; set; }
+
         public int Height { get; set; }
     }
 }
