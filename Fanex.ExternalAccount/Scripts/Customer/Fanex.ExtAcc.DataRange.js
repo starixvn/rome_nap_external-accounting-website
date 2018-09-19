@@ -117,7 +117,7 @@
                 }
 
                 var limitDays = parseInt(params.LimitDays, 0);
-                if (limitDays == 0 || limitDays > 32767) {
+                if (limitDays == 0 || limitDays > 32767 || limitDays <= 0) {
                     $("#txt-time-period").focus();
                     Validators.showDown($("#txt-time-period").get(0), "Time period is from 1 to 32767", 0, 10, 37, -10, 10);
                     return;
