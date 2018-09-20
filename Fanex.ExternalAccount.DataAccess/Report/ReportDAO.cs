@@ -353,6 +353,109 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return GetSortingOrderList("EAS_Rpt_WinLossDaily_SortingOrder", parameters);
         }
 
+        public List<PokerGamesWinLossDetail> EAS_Rpt_WinLossDetailPokerGames_Com(
+            string groupname,
+            int custId,
+            DateTime fromDate,
+            DateTime toDate,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay)
+        {
+            var parameters = new Hashtable
+            {
+                {"groupname", groupname},
+                {"fromdate", fromDate},
+                {"todate", toDate},
+                {"balanceupday", balanceUpDay},
+                {"movebetsday", moveBetsDay},
+                {"productids", "33"}
+            };
+
+            if (custId != 0)
+            {
+                parameters.Add("custid", custId);
+            }
+
+            return GetCommonPokerGamesWinLossDetail("EAS_Rpt_WinLossDetailPokerGames_Com", parameters);
+        }
+
+        public List<PokerGamesWinLossDetail> EAS_Rpt_WinLossDetailPokerGames_SAg(
+            int custId,
+            int masterId,
+            DateTime fromDate,
+            DateTime toDate,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay)
+        {
+            var parameters = new Hashtable
+            {
+                {"custid", custId},
+                {"fromdate", fromDate},
+                {"todate", toDate},
+                {"balanceupday", balanceUpDay},
+                {"movebetsday", moveBetsDay},
+                {"productids", "33"}
+            };
+
+            if (masterId != 0)
+            {
+                parameters.Add("masterid", masterId);
+            }
+
+            return GetCommonPokerGamesWinLossDetail("EAS_Rpt_WinLossDetailPokerGames_SAg", parameters);
+        }
+
+        public List<PokerGamesWinLossDetailMAg> EAS_Rpt_WinLossDetailPokerGames_MAg(
+            int custId,
+            int agentId,
+            DateTime fromDate,
+            DateTime toDate,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay)
+        {
+            var parameters = new Hashtable
+            {
+                {"custid", custId},
+                {"fromdate", fromDate},
+                {"todate", toDate},
+                {"balanceupday", balanceUpDay},
+                {"movebetsday", moveBetsDay},
+                {"productids", "33"}
+            };
+
+            if (agentId != 0)
+            {
+                parameters.Add("agentid", agentId);
+            }
+
+            return GetCommonPokerGamesWinLossDetailMAg("EAS_Rpt_WinLossDetailPokerGames_MAg", parameters);
+        }
+
+        public List<PokerGamesWinLossDetailAg> EAS_Rpt_WinLossDetailPokerGames_Ag(
+            int custId,
+            int memberId,
+            DateTime fromDate,
+            DateTime toDate,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay)
+        {
+            var parameters = new Hashtable
+            {
+                {"custid", custId},
+                {"fromdate", fromDate},
+                {"todate", toDate},
+                {"balanceupday", balanceUpDay},
+                {"movebetsday", moveBetsDay},
+                {"productids", "33"}
+            };
+
+            if (memberId != 0)
+            {
+                parameters.Add("memberid", memberId);
+            }
+            return GetCommonPokerGamesWinLossDetailAg("EAS_Rpt_WinLossDetailPokerGames_Ag", parameters);
+        }
+
         public DataTable Age_SelBalanceUpDay()
         {
             using (var db = new ObjectDb("Age_SelBalanceUpDay"))
@@ -553,5 +656,123 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 ? reader.ToDouble("AgWinlost") * 100 / reader.ToDouble("AgTO")
                 : 0
             };
+
+
+        private List<PokerGamesWinLossDetail> GetCommonPokerGamesWinLossDetail(string spname, Hashtable parameters)
+        {
+            var entityList = new List<PokerGamesWinLossDetail>();
+
+            using (var reader = ExecDataReader(spname, parameters))
+            {
+                if (reader != null)
+                {
+                    while (reader.Read())
+                    {
+                        var entity = CreatePokerGamesWinLossDetailEntity(reader);
+                        entityList.Add(entity);
+                    }
+                }
+            }
+
+            return entityList;
+        }
+
+        private static PokerGamesWinLossDetail CreatePokerGamesWinLossDetailEntity(IDataReader reader) => new PokerGamesWinLossDetail
+        {
+            CustId = reader.ToInt("custid"),
+            Username = reader.To<string>("username"),
+            Turnover = reader.ToDouble("Turnover"),
+            NetTurnover = reader.ToDouble("NetTurnover"),
+            TaxComm = reader.ToDouble("TaxComm"),
+            MemberWinLoss = reader.ToDouble("MemberWinLoss"),
+            MemberInsuranceGemsWinLoss = reader.ToDouble("InsGemMemberWinLoss"),
+            MemberComm = reader.ToDouble("PlayerComm"),
+            MemberTotal = reader.ToDouble("MemberTotal"),
+            AgInsuranceGemsWinLoss = reader.ToDouble("InsGemAgWinLoss"),
+            AgComm = reader.ToDouble("AgComm"),
+            AgTotal = reader.ToDouble("AgTotal"),
+            MAgInsuranceGemsWinLoss = reader.ToDouble("InsGemMAgWinLoss"),
+            MAgComm = reader.ToDouble("MAgComm"),
+            MAgTotal = reader.ToDouble("MAgTotal"),
+            SAgInsuranceGemsWinLoss = reader.ToDouble("InsGemSAgWinLoss"),
+            SAgComm = reader.ToDouble("SAgComm"),
+            SAgTotal = reader.ToDouble("SAgTotal"),
+            Company = reader.ToDouble("Company")
+        };
+
+        private List<PokerGamesWinLossDetailMAg> GetCommonPokerGamesWinLossDetailMAg(string spname, Hashtable parameters)
+        {
+            var entityList = new List<PokerGamesWinLossDetailMAg>();
+
+            using (var reader = ExecDataReader(spname, parameters))
+            {
+                if (reader != null)
+                {
+                    while (reader.Read())
+                    {
+                        var entity = CreatePokerGamesWinLossDetailMAgEntity(reader);
+                        entityList.Add(entity);
+                    }
+                }
+            }
+
+            return entityList;
+        }
+
+        private static PokerGamesWinLossDetailMAg CreatePokerGamesWinLossDetailMAgEntity(IDataReader reader) => new PokerGamesWinLossDetailMAg
+        {
+            CustId = reader.ToInt("custid"),
+            Username = reader.To<string>("username"),
+            Turnover = reader.ToDouble("Turnover"),
+            NetTurnover = reader.ToDouble("NetTurnover"),
+            TaxComm = reader.ToDouble("TaxComm"),
+            MemberWinLoss = reader.ToDouble("MemberWinloss"),
+            MemberInsuranceGemsWinLoss = reader.ToDouble("InsGemMemberWinLoss"),
+            MemberComm = reader.ToDouble("PlayerComm"),
+            MemberTotal = reader.ToDouble("MemberTotal"),
+            AgInsuranceGemsWinLoss = reader.ToDouble("InsGemAgWinLoss"),
+            AgComm = reader.ToDouble("AgComm"),
+            AgTotal = reader.ToDouble("AgTotal"),
+            MAgInsuranceGemsWinLoss = reader.ToDouble("InsGemMAgWinLoss"),
+            MAgComm = reader.ToDouble("MAgComm"),
+            MAgTotal = reader.ToDouble("MAgTotal"),
+            Company = reader.ToDouble("Company")
+        };
+
+        private List<PokerGamesWinLossDetailAg> GetCommonPokerGamesWinLossDetailAg(string spname, Hashtable parameters)
+        {
+            var entityList = new List<PokerGamesWinLossDetailAg>();
+
+            using (var reader = ExecDataReader(spname, parameters))
+            {
+                if (reader != null)
+                {
+                    while (reader.Read())
+                    {
+                        var entity = CreatePokerGamesWinLossDetailAgEntity(reader);
+                        entityList.Add(entity);
+                    }
+                }
+            }
+
+            return entityList;
+        }
+
+        private static PokerGamesWinLossDetailAg CreatePokerGamesWinLossDetailAgEntity(IDataReader reader) => new PokerGamesWinLossDetailAg
+        {
+            CustId = reader.ToInt("custid"),
+            Username = reader.To<string>("username"),
+            Turnover = reader.ToDouble("Turnover"),
+            NetTurnover = reader.ToDouble("NetTurnover"),
+            TaxComm = reader.ToDouble("TaxComm"),
+            MemberWinLoss = reader.ToDouble("MemberWinLoss"),
+            MemberInsuranceGemsWinLoss = reader.ToDouble("InsGemMemberWinLoss"),
+            MemberComm = reader.ToDouble("PlayerComm"),
+            MemberTotal = reader.ToDouble("MemberTotal"),
+            AgInsuranceGemsWinLoss = reader.ToDouble("InsGemAgWinLoss"),
+            AgComm = reader.ToDouble("AgComm"),
+            AgTotal = reader.ToDouble("AgTotal"),
+            Company = reader.ToDouble("Company")
+        };
     }
 }

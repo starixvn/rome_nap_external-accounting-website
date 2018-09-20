@@ -104,6 +104,8 @@
   <ItemGroup>
     <Compile Include="Customer\Commission.cs" />
     <Compile Include="Customer\Casino\CasinoCustomer.cs" />
+    <Compile Include="Customer\CustomerInfo.cs" />
+    <Compile Include="DataRange\CustomerDataRange.cs" />
     <Compile Include="IPInformation\IPInformation.cs" />
     <Compile Include="IPInformation\IPRange.cs" />
     <Compile Include="OTP\CustomerOtp.cs" />
@@ -113,6 +115,9 @@
     <Compile Include="Customer\Transfer.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Products\ProductStatusDto.cs" />
+    <Compile Include="Report\PokerGamesWinLossDetail.cs" />
+    <Compile Include="Report\PokerGamesWinLossDetailAg.cs" />
+    <Compile Include="Report\PokerGamesWinLossDetailMAg.cs" />
     <Compile Include="Statement\Statement.cs" />
     <Compile Include="RecheckinStatus.cs" />
     <Compile Include="GroupCurrency.cs" />

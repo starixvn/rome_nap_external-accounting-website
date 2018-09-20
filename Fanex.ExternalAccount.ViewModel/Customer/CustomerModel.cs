@@ -14,8 +14,8 @@
         public string LastName { get; set; }
 
         [Required]
-        [EasDisplay("HomePhone", typeof(ViewLang))]
-        public string HomePhone { get; set; }
+        [EasDisplay("Phone", typeof(ViewLang))]
+        public string Phone { get; set; }
 
         [EasDisplay("MobilePhone", typeof(ViewLang))]
         public string MobilePhone { get; set; }

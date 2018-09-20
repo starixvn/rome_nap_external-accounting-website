@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Fanex.ExternalAccount.Core.Shared
+@{
     Layout = "~/Areas/GoldDeluxeSetting/Views/EditSetting/_EditSetting.cshtml";
     ViewBag.Title = GoldDeluxeLang.lblEditGoldDeluxe;
 }
@@ -37,13 +38,13 @@
                     @GoldDeluxeLang.lblFirstName
                 </td>
                 <td class="left info-value">
-                    @Model.Setting.FirstName
+                    {{SuperInfo.FirstName}}
                 </td>
                 <td class="right bold info-lable">
                     @GoldDeluxeLang.lblLastName
                 </td>
                 <td class="left info-value">
-                    @Model.Setting.LastName
+                    {{SuperInfo.LastName}}
                 </td>
             </tr>
             <tr>
@@ -51,13 +52,13 @@
                     @GoldDeluxeLang.lblPhone
                 </td>
                 <td class="left info-value">
-                    @Model.Setting.Phone
+                    {{SuperInfo.Phone}}
                 </td>
                 <td class="right bold info-lable">
                     @GoldDeluxeLang.lblMobilePhone
                 </td>
                 <td class="left info-value">
-                    @Model.Setting.MobilePhone
+                    {{SuperInfo.MobilePhone}}
                 </td>
             </tr>
             <tr>
@@ -65,7 +66,7 @@
                     @GoldDeluxeLang.lblFax
                 </td>
                 <td class="left info-value">
-                    @Model.Setting.Fax
+                    {{SuperInfo.Fax}}
                 </td>
                 @if (Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Master
                     || Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Super)
@@ -93,5 +94,6 @@
     @Html.Hidden("UpdatePTComSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdatePTAndCom"))
     @Html.Hidden("UpdateWinLimitUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateWinLimit"))
     @Html.Hidden("UpdateGameSettingUrl", Url.Content("~/GoldDeluxeSetting/GoldDeluxe/UpdateGameSetting"))
+    @Html.Hidden("GetSuperInfoUrl", Url.Content("~/MainSuper/GetInfo"))
 }
 

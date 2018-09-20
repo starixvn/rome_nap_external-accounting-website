@@ -18,7 +18,7 @@
     ],
     "sourceMap": true
   },
-   {
+  {
     "outputFileName": "assets/bundles/home/home.js",
     "inputFiles": [
       "Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.3.min.js",
@@ -57,6 +57,7 @@
       "assets/styles/pages/statement/statement.css",
       "assets/styles/pages/reports/daily-winloss.css",
       "assets/styles/pages/reports/winloss-detail.css",
+      "assets/styles/pages/reports/pokergames-winloss-detail.css",
       "assets/styles/pages/customer/pt-engine.css"
     ],
     "sourceMap": true
@@ -152,6 +153,21 @@
       "Scripts/Statement/Fanex.ExtAcc.Statement.js"
     ],
     "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/data-range/index.js",
+    "inputFiles": [
+      "Scripts/Customer/Fanex.ExtAcc.DataRange.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/pokergames-winlossdetail/index.js",
+    "inputFiles": [
+      "Scripts/monthPicker/monPickr-0.0.1.js",
+      "Scripts/Combobox/Combobox.js",
+      "Scripts/Reports/Fanex.ExtAcc.PokerGamesWinLossDetail.js"
+    ],
+    "sourceMap": true
   }
-
 ]

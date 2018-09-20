@@ -7,6 +7,13 @@ ColossusBetModule.factory('colossusBetRepositories', function ($http, $q) {
             deferred.resolve(colossusBetSetting);
             return deferred.promise;
         },
+        getSuperInfo: function (superId) {
+            var deferred = $q.defer();
+            $http.post(domain + "MainSuper/GetInfo", { superId: superId })
+            .success(function (data, status, headers, config) { deferred.resolve(data); })
+                .error(function () { deferred.reject(); });
+            return deferred.promise;
+        },
         save: function (url, colossusBetSetting) {
             var antiXSRFToken = document.getElementsByName("__RequestVerificationToken");
             $http.defaults.headers.post.__RequestVerificationToken = antiXSRFToken[0].value;

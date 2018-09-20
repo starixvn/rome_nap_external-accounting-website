@@ -324,13 +324,20 @@
     <Compile Include="Authentication\AccountController.cs" />
     <Compile Include="Authentication\AntiXSRFUtil.cs" />
     <Compile Include="Authentication\CaptchaUtil.cs" />
+    <Compile Include="Customer\MainSuperController.cs" />
     <Compile Include="Customer\CustomerController.cs" />
+    <Compile Include="DataRange\DataRangeController.cs" />
     <Compile Include="Customer\SportsbookSettingController.cs" />
     <Compile Include="GlobalSuppressions.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
     <Compile Include="Home\NetworkSpeedController.cs" />
     <Compile Include="OTP\OTPController.cs" />
+    <Compile Include="Report\PokerGamesWinLossDetailController.cs" />
+    <Compile Include="Requests\PokerGamesWinLossDetail\DrillDownPokerGamesWinLossDetailRequest.cs" />
+    <Compile Include="Requests\PokerGamesWinLossDetail\ExportPokerGamesWinLossDetailRequest.cs" />
+    <Compile Include="Requests\PokerGamesWinLossDetail\PokerGamesWinLossDetailRequest.cs" />
+    <Compile Include="Requests\PokerGamesWinLossDetail\SearchPokerGamesWinLossDetailRequest.cs" />
     <Compile Include="Statement\StatementController.cs" />
     <Compile Include="UserControl\FunctionController.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
@@ -351,6 +358,7 @@
     <Compile Include="UserControl\UserController.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
+    <Compile Include="ViewModels\CustomerDataRangeViewModel.cs" />
     <Compile Include="ViewModels\VerifyOtpCommand.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\ExternalGroupViewModel.cs" />

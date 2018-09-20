@@ -2,7 +2,9 @@
 {
     using System.Collections;
     using System.Data;
+    using Criteria.Customer;
     using Data.DNAide;
+    using DTO;
     using Interface.Customer;
 
     public class SuperDao : CustomerDao, ISuperDao
@@ -13,8 +15,8 @@
             int? custId = null,
             bool? enabled = null,
             bool? closed = null,
-            bool? suspended = null
-        )
+            bool? suspended = null,
+            bool? withDataLimited = null)
         {
             var param = new Hashtable
             {
@@ -23,10 +25,18 @@
                 {"enabled", enabled},
                 {"closed", closed},
                 {"suspended", suspended},
+                {"isdatalimited", withDataLimited},
                 {"userid", userId}
             };
 
             return DbHelper.ExecuteDataTable("EAS_CustomerSelByCom", param);
+        }
+
+        public Result UpdateSuperInfo(UpdateSuperInfoCriteria criteria)
+        {
+            var result = DbHelper.ExecuteDbResult(criteria.GetSettingKey(), criteria.GetSpParams());
+
+            return new Result(result.Outputs["errcode"].ToString(), result.Outputs["errmsg"].ToString(), result.ResultSet);
         }
     }
 }

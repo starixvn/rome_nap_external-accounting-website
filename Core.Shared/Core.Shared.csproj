@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppSettings.cs" />
+    <Compile Include="CustomerDataRangeType.cs" />
     <Compile Include="eFunctions.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductSettings.cs" />

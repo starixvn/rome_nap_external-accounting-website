@@ -264,7 +264,7 @@
                 415,
                 height,
                 false, false);
-            
+
         }
     };
 
@@ -353,6 +353,7 @@ Fanex.ExtAcc.Customer.GetAgentList = function (
     this.custId = custId == 'undefined' ? null : custId;
     data.custId = data.username == '' ? null : custId;
 
+    Fanex.ExtAcc.Customer.ShowCustomerLimitDateFilter();
     if (custId == undefined) {
         this.directSuperId = null;
         this.directMasterId = null;

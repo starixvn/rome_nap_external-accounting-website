@@ -60,5 +60,9 @@
         internal static bool Suspended(this DataRow dataRow) => Utils.ToBoolean(dataRow["suspended"]);
 
         internal static byte ClosedReason(this DataRow dataRow) => Convert.ToByte(dataRow["closedreason"]);
+
+        internal static int? LimitDays(this DataRow dataRow) => dataRow["LimitDays"] == DBNull.Value ? (int?)null : Convert.ToInt32(dataRow["LimitDays"]);
+
+        internal static string MinDate(this DataRow dataRow) => dataRow["MinDate"] == DBNull.Value ? null : Convert.ToDateTime(dataRow["MinDate"]).ToString("MM/dd/yyyy");
     }
 }

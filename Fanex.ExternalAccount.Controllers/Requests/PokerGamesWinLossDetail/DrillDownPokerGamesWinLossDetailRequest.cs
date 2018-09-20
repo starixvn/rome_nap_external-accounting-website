@@ -1,0 +1,55 @@
+﻿namespace Fanex.ExternalAccount.Controllers.Requests.PokerGamesWinLossDetail
+{
+    using System;
+    using Core.Shared;
+    using Service.Interface.Report;
+    using Utilities;
+
+    public class DrillDownPokerGamesWinLossDetailRequest : IDrillDownPokerGamesWinLossDetailRequest
+    {
+        public DrillDownPokerGamesWinLossDetailRequest(PokerGamesWinLossDetailRequest request)
+        {
+            GroupName = request.groupName;
+            CustId = request.custId;
+            FromDate = request.fromdate;
+            ToDate = request.todate;
+            ViewLevel = request.viewlevel;
+            switch (ViewLevel)
+            {
+                case Role.Super:
+                    SuperId = CustId;
+                    MasterId = 0;
+                    AgentId = 0;
+                    break;
+
+                case Role.Master:
+                    SuperId = CheckRequest.GetIntRequest("srecommend", 0);
+                    MasterId = CustId;
+                    AgentId = 0;
+                    break;
+
+                default:
+                    SuperId = CheckRequest.GetIntRequest("srecommend", 0);
+                    MasterId = CheckRequest.GetIntRequest("mrecommend", 0);
+                    AgentId = CustId;
+                    break;
+            }
+        }
+
+        public string GroupName { get; }
+        public int SuperId { get; }
+        public int MasterId { get; }
+        public int AgentId { get; }
+        public int CustId { get; }
+        public int ViewLevel { get; }
+        public DateTime FromDate { get; }
+        public DateTime ToDate { get; }
+
+        public bool IsValid => !ViewLevel.IsMember()
+                               && ViewLevel <= Role.Group
+                               && (ToDate >= FromDate)
+                               && CustId > 0;
+
+        public bool IsNotValid => !IsValid;
+    }
+}

@@ -52,6 +52,18 @@ function CustomerController($scope, $element) {
             IsMaster = false;
             IsAgent = false;
             IsMember = false;
+            $.ajax({
+                url: domain + 'MainSuper/GetInfo',
+                method: 'POST',
+                data: { superId: custId },
+                async: false
+            }).success(function (result) {
+                $scope.CustomerModel.firstName = result.firstName;
+                $scope.CustomerModel.lastName = result.lastName;
+                $scope.CustomerModel.phone = result.phone;
+                $scope.CustomerModel.mobilePhone = result.mobilePhone;
+                $scope.CustomerModel.fax = result.fax;
+            });
             break;
     }
    

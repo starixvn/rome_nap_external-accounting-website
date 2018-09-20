@@ -6,7 +6,7 @@
             Customer List
         </div>
         <div id="breadcrumbs">
-        </div>   
+        </div>
         <span class="icon-filter active"></span>
     </div>
     <div id="searchBar" class="search-form filterbox">
@@ -27,6 +27,10 @@
                     </select>
                 </div>
             </div>
+            <div class="form-group hidden customer-limit-date">
+                <input id="chk-show-limit-date" type="checkbox" />
+                <div class="label lbl-show-limit-date">@ViewLang.CustomersWithDataLimited</div>
+            </div>
             <div class="form-group">
                 <input id="btnSearch" type="button" value="Submit" class="btn -submit" onclick="Fanex.ExtAcc.Customer.Search()" />
             </div>
@@ -38,7 +42,7 @@
     <div class="bgTitle titleSearch">
         <div class="pull-left searchBar">
             <span class="text-select">@ViewLang.Select:</span>
-            <span class="status-select"  onclick="Fanex.ExtAcc.Customer.SelectAll('menuActive')">@ViewLang.All</span>
+            <span class="status-select" onclick="Fanex.ExtAcc.Customer.SelectAll('menuActive')">@ViewLang.All</span>
             <span class="character">
                 |
             </span>

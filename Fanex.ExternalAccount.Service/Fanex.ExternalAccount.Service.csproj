@@ -198,6 +198,8 @@
     <Compile Include="Customer\IMasterService.cs" />
     <Compile Include="Customer\IMemberService.cs" />
     <Compile Include="Customer\ISuperService.cs" />
+    <Compile Include="DataRange\DataRangeService.cs" />
+    <Compile Include="DataRange\IDataRangeService.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Customer\Casino\CasinoManager.cs" />
     <Compile Include="Customer\CommissionService.cs" />
@@ -205,8 +207,11 @@
     <Compile Include="Login\ILoginService.cs" />
     <Compile Include="OTP\CustomerOtpService.cs" />
     <Compile Include="Report\IReportService.cs" />
+    <Compile Include="Report\PokerGamesWinLossDetailRequests.cs" />
     <Compile Include="Report\WinLossDetailRequests.cs" />
+    <Compile Include="Report\PokerGamesWinLossDetailService.cs" />
     <Compile Include="Report\WinLossDetailService.cs" />
+    <Compile Include="Report\PokerGamesWinLossDetailServiceImpl.cs" />
     <Compile Include="Report\WinLossDetailServiceImpl.cs" />
     <Compile Include="Statement\IStatementService.cs" />
     <Compile Include="Statement\StatementService.cs" />
@@ -258,6 +263,7 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

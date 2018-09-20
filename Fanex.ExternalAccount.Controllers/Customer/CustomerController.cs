@@ -324,10 +324,11 @@
             bool? enabled = null,
             bool? closed = null,
             bool? suspended = null,
-            string username = null)
+            string username = null,
+            bool? withDataLimited = null)
         {
             var lineInfo = GetLineInfo(ExtRequest.GetGroupName(groupName), username, BuildCustomerSetting(username));
-            var customers = GetCustomerList(ExtRequest.GetGroupName(groupName), enabled, closed, suspended, lineInfo);
+            var customers = GetCustomerList(ExtRequest.GetGroupName(groupName), enabled, closed, suspended, lineInfo, withDataLimited);
             var customerProductStatus = TransformToCustomerProductStatusList(customers);
             var customers2String = Customers2Json(customers);
             var syncCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncCasino");
@@ -355,9 +356,10 @@
             int? custId = null,
             bool? enabled = null,
             bool? closed = null,
-            bool? suspended = null)
+            bool? suspended = null,
+            bool? withDataLimited = null)
         {
-            var supers = _superService.GetData(CurrentSession.UserId, ExtRequest.GetGroupName(groupName), custId, enabled, closed, suspended);
+            var supers = _superService.GetData(CurrentSession.UserId, ExtRequest.GetGroupName(groupName), custId, enabled, closed, suspended, withDataLimited);
             var customerProductStatus = TransformToCustomerProductStatusList(supers);
             var supers2Json = Customers2Json(supers);
 
@@ -487,7 +489,7 @@
             var model = _customerService.UserInfo(custId);
             model.FirstName = HttpUtility.HtmlDecode(model.FirstName);
             model.LastName = HttpUtility.HtmlDecode(model.LastName);
-            model.HomePhone = HttpUtility.HtmlDecode(model.HomePhone);
+            model.Phone = HttpUtility.HtmlDecode(model.Phone);
             model.MobilePhone = HttpUtility.HtmlDecode(model.MobilePhone);
             model.Email = HttpUtility.HtmlDecode(model.Email);
             model.Fax = HttpUtility.HtmlDecode(model.Fax);
@@ -498,7 +500,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult EditInfoPost(CustomerDTO customer)
+        public ActionResult EditInfoPost(DTO.Customer.Customer customer)
         {
             var result = _customerService.EditUserInfo(customer, CurrentContext.Ip4Address, CurrentSession.CustId, 0, "E");
 
@@ -579,11 +581,12 @@
             bool? enabled = null,
             bool? closed = null,
             bool? suspended = null,
-            string username = null)
+            string username = null,
+            bool? withDataLimited = null)
         {
             var customerSetting = BuildCustomerSetting(username);
 
-            var customers = GetCustomerList(ExtRequest.GetGroupName(groupName), enabled, closed, suspended, customerSetting);
+            var customers = GetCustomerList(ExtRequest.GetGroupName(groupName), enabled, closed, suspended, customerSetting, withDataLimited);
             TransformToCustomerProductStatusList(customers);
 
             var status = string.Empty;
@@ -607,7 +610,8 @@
                 status,
                 Convert.ToInt32(customerSetting.RoleId),
                 customers?.Rows.Count > 0
-                && (customers.Rows[0].ToBoolean("ismyanmarodds") || customerSetting.RoleId.IsSuper()));
+                && (customers.Rows[0].ToBoolean("ismyanmarodds") || customerSetting.RoleId.IsSuper()),
+                withDataLimited.HasValue && withDataLimited.Value);
             var excelStream = builder.Build();
             var fileName = $"{status}{customerSetting.RoleId.DisplayRoleName()}List{DateTime.Now.ToString("yyyyMMdd")}.xls";
 
@@ -621,7 +625,8 @@
             bool? enabled,
             bool? closed,
             bool? suspended,
-            LineInfo lineInfo)
+            LineInfo lineInfo,
+            bool? withDataLimited = null)
         {
             int? id = null;
             DataTable result;
@@ -631,7 +636,7 @@
                 case Role.Super:
                     result = _superService.GetData(CurrentSession.UserId, groupName, lineInfo.CustId == 0
                         ? id
-                        : lineInfo.CustId, enabled, closed, suspended);
+                        : lineInfo.CustId, enabled, closed, suspended, withDataLimited);
                     break;
 
                 case Role.Master:

@@ -172,6 +172,11 @@
                 data.username +
                 "&custId=" +
                 Fanex.ExtAcc.Customer.custId;
+
+            if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Super) {
+                params += "&withDataLimited=" + $("#chk-show-limit-date").is(":checked");
+            }
+
             top.exportExcel(resolveClientUrl("Customer/GetExportToExcel?") + params, document);
 
         });
@@ -202,6 +207,7 @@
 
         $(".icon-filter").click($this.showHideFilter);
         Fanex.ExtAcc.Customer.bindOrientationChange();
+        Fanex.ExtAcc.Customer.ShowCustomerLimitDateFilter();
     },
     bindOrientationChange: function () {
         top.landscapeHeight = 260;
@@ -297,6 +303,7 @@
         data.username = Fanex.encodeHtml($('#txtUserName').val());
         data.roleId = this.CurrentLevel;
         data.custId = data.username == '' ? null : this.UserId;
+        data.withDataLimited = $("#chk-show-limit-date").length ? $("#chk-show-limit-date").is(":checked") : false;
 
         return data;
     },
@@ -312,7 +319,7 @@
     ResetInfo: function () {
         $('#FirstName').val(Fanex.ExtAcc.Customer.FirstName);
         $('#LastName').val(Fanex.ExtAcc.Customer.LastName);
-        $('#HomePhone').val(Fanex.ExtAcc.Customer.HomePhone);
+        $('#Phone').val(Fanex.ExtAcc.Customer.Phone);
         $('#MobilePhone').val(Fanex.ExtAcc.Customer.MobilePhone);
         $('#Email').val(Fanex.ExtAcc.Customer.Email);
         $('#Fax').val(Fanex.ExtAcc.Customer.Fax);
@@ -322,19 +329,21 @@
     EditInfo: function () {
         var firstName = $('#FirstName').val();
         var lastName = $('#LastName').val();
-        var homePhone = $('#HomePhone').val();
+        var phone = $('#Phone').val();
         var mobilePhone = $('#MobilePhone').val();
         var email = $('#Email').val();
         var fax = $('#Fax').val();
         var remark = $('#Remark').val();
-
         var editUrl = 'Customer/EditInfoPost';
+        if (Fanex.ExtAcc.Customer.RoleId == this.Super) {
+            editUrl = 'MainSuper/EditInfoPost';
+        }
 
         var data = {
             custId: this.UserId,
             firstName: Fanex.ExtAcc.EscapeHtml(firstName),
             lastName: Fanex.ExtAcc.EscapeHtml(lastName),
-            homePhone: Fanex.ExtAcc.EscapeHtml(homePhone),
+            phone: Fanex.ExtAcc.EscapeHtml(phone),
             mobilePhone: Fanex.ExtAcc.EscapeHtml(mobilePhone),
             email: Fanex.ExtAcc.EscapeHtml(email),
             fax: Fanex.ExtAcc.EscapeHtml(fax),
@@ -1059,5 +1068,14 @@
         }
 
         return productSettings;
+    },
+
+    ShowCustomerLimitDateFilter: function () {
+        var customerLimitDate = parent.$('.customer-limit-date');
+        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Super) {
+            customerLimitDate.removeClass('hidden');
+        } else {
+            customerLimitDate.addClass('hidden');
+        }
     }
 };

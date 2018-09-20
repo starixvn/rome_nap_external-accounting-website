@@ -26,6 +26,10 @@
                     + "&sRecommend=" + parent.Fanex.ExtAcc.Customer.superId + "&mRecommend=" + parent.Fanex.ExtAcc.Customer.masterId + "&recommend=" + parent.Fanex.ExtAcc.Customer.agentId + "&custId=" + parent.Fanex.ExtAcc.Customer.custId
                     + "&roleId=" + parent.Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username;
 
+                    if (parent.Fanex.ExtAcc.Customer.CurrentLevel == parent.Fanex.ExtAcc.Customer.Super) {
+                        params += "&withDataLimited=" + parent.$("#chk-show-limit-date").is(":checked");
+                    }
+
                     var url = parent.resolveClientUrl("Customer/GetExportToExcel?") + params;
                     top.exportExcel(url, document);
                 });
@@ -135,7 +139,7 @@
 
                 parent.$(".icon-filter").off('click').on('click', parent.Fanex.ExtAcc.Customer.showHideFilter);
                 parent.Fanex.ExtAcc.Customer.bindOrientationChange();
-                ; switch (roleId) {
+                switch (roleId) {
                     case 4:
                         parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting, isHidePokerGames);
                         break;

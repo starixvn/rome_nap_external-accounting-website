@@ -31,6 +31,7 @@
         private readonly ICommissionService commissionService = new CommissionService();
         private readonly IBettingLimitService bettingLimitService = new BettingLimitService();
         private readonly PTEngine.Services.ICustomerService customerService = new CustomerService();
+        private readonly ISuperService superService = new SuperService();
 
         public ActionResult EditBetSetting() => PartialViewBase();
 
@@ -224,8 +225,8 @@
                 SubAccId = 0,
                 UserName = CurrentSession.UserName.ToUpper(CultureInfo.InvariantCulture)
             };
-
-            var customer = customerService.GetCustomerForCompanyEditSuper(context);
+            
+            var customer = superService.GetCustomerForCompanyEditSuper(context);
 
             return JsonBase(new { context, customer });
         }

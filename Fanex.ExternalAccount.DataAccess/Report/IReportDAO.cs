@@ -34,19 +34,19 @@
         List<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag(DateTime winlostDate, int custId, int memberId);
 
         List<WinLossDetail> EAS_Rpt_WinLossDetail_Com(
-            string groupname, 
-            int custId, 
-            DateTime fromDate, 
-            DateTime toDate, 
+            string groupname,
+            int custId,
+            DateTime fromDate,
+            DateTime toDate,
             string productIds,
             DateTime balanceUpDay);
 
         List<WinLossDetail> EAS_Rpt_WinLossDetail_SAg(
-            int custId, 
-            int masterId, 
-            DateTime fromDate, 
+            int custId,
+            int masterId,
+            DateTime fromDate,
             DateTime toDate,
-            string productIds, 
+            string productIds,
             DateTime balanceUpDay);
 
         List<WinLossDetailMAg> EAS_Rpt_WinLossDetail_MAg(
@@ -54,17 +54,49 @@
             int agentId,
             DateTime fromDate,
             DateTime toDate,
-            string productIds, 
+            string productIds,
             DateTime balanceUpDay);
 
         List<WinLossDetailAg> EAS_Rpt_WinLossDetail_Ag(
-            int custId, 
-            int memberId, 
-            DateTime fromDate, 
+            int custId,
+            int memberId,
+            DateTime fromDate,
             DateTime toDate,
-            string productIds, 
+            string productIds,
             DateTime balanceUpDay);
 
         ArrayList EAS_Rpt_WinLossDaily_SortingOrder(string groupname);
+
+        List<PokerGamesWinLossDetail> EAS_Rpt_WinLossDetailPokerGames_Com(
+            string groupname,
+            int custId,
+            DateTime fromDate,
+            DateTime toDate,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay);
+
+        List<PokerGamesWinLossDetail> EAS_Rpt_WinLossDetailPokerGames_SAg(
+            int custId,
+            int masterId,
+            DateTime fromDate,
+            DateTime toDate,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay);
+
+        List<PokerGamesWinLossDetailMAg> EAS_Rpt_WinLossDetailPokerGames_MAg(
+            int custId,
+            int agentId,
+            DateTime fromDate,
+            DateTime toDate,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay);
+
+        List<PokerGamesWinLossDetailAg> EAS_Rpt_WinLossDetailPokerGames_Ag(
+            int custId,
+            int memberId,
+            DateTime fromDate,
+            DateTime toDate,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay);
     }
 }

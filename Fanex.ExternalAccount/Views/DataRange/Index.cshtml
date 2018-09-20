@@ -1,0 +1,55 @@
+﻿@using Fanex.ExternalAccount.Controllers.ViewModels
+@model CustomerDataRangeViewModel
+<div class="data-range-form">
+    <table>
+        <tbody>
+            <tr>
+                <td colspan="2">
+                    <div class="content-row">
+                        <input id="rdb-none" type="radio" name="rdb-data-range" checked="checked" class="rdb-data-range" value="@CustomerDataRangeType.None" />
+                        <label for="rdb-none">None</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="content-row">
+                        <input id="rdb-time-period" type="radio" name="rdb-data-range" class="rdb-data-range" value="@CustomerDataRangeType.TimePeriod" />
+                        <label for="rdb-time-period">Time period (day)</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="content-row">
+                        <input id="txt-time-period" type="text" autocomplete="off" maxlength="6" disabled="disabled" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="content-row">
+                        <input id="rdb-min-date" type="radio" name="rdb-data-range" checked="checked" class="rdb-data-range" value="@CustomerDataRangeType.MinDate" />
+                        <label for="rdb-min-date">Min Date</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="content-row">
+                        <input id="txt-min-date" type="text" readonly="readonly" disabled="disabled" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="float-right btn-row">
+                        <input id="btn-clear" type="button" value="Clear" class="btn -submit buttonPopup" />
+                        <input id="btn-submit" type="button" value="Submit" class="btn -submit buttonPopup" />
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+@Html.Hidden("CustIds", Model.CustIds)
+@Html.Hidden("DataRangeType", Model.CustomerDataRange.Type)
+@Html.Hidden("LimitDays", Model.CustomerDataRange.LimitDays)
+@Html.Hidden("MinDate", Model.CustomerDataRange.MinDate.HasValue ? Model.CustomerDataRange.MinDate.Value.ToString("MM/dd/yyyy") : string.Empty)
+@StaticResources.RenderScripts("~/assets/bundles/data-range/index")

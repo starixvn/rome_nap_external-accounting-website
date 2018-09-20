@@ -81,15 +81,15 @@
 
         public ObjectInfo CurrentLevel { get; private set; }
 
-        public ObjectInfo Name { get; }
+        public ObjectInfo Name { get; set; }
 
-        public ObjectInfo Nickname { get; }
+        public ObjectInfo Nickname { get; set; }
 
-        public ObjectInfo Phone { get; }
+        public ObjectInfo Phone { get; set; }
 
-        public ObjectInfo Mobile { get; }
+        public ObjectInfo Mobile { get; set; }
 
-        public ObjectInfo Fax { get; }
+        public ObjectInfo Fax { get; set; }
 
         public ObjectInfo CustList { get; }
 

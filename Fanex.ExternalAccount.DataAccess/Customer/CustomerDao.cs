@@ -42,7 +42,7 @@
                         FirstName = reader.ToString("firstname"),
                         LastName = reader.ToString("lastname"),
                         MobilePhone = reader.ToString("mobilephone"),
-                        HomePhone = reader.ToString("phone"),
+                        Phone = reader.ToString("phone"),
                         Email = reader.ToString("email"),
                         Fax = reader.ToString("fax"),
 
@@ -61,7 +61,7 @@
                 {"custid", customer.CustId},
                 {"firstname", customer.FirstName??string.Empty},
                 {"lastname", customer.LastName??string.Empty},
-                {"phone", customer.HomePhone??string.Empty},
+                {"phone", customer.Phone??string.Empty},
                 {"mobilephone", customer.MobilePhone??string.Empty},
                 {"email", customer.Email??string.Empty},
                 {"fax", customer.Fax??string.Empty},
