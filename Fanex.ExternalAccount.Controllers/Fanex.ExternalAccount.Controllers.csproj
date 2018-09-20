@@ -336,10 +336,10 @@
     <Compile Include="OTP\OTPController.cs" />
     <Compile Include="Report\BaseReportController.cs" />
     <Compile Include="Report\PokerGamesWinLossDetailController.cs" />
-    <Compile Include="Requests\PokerGamesWinLossDetail\DrillDownPokerGamesWinLossDetailRequest.cs" />
+    <Compile Include="Requests\DrillDownWinLossDetailRequest.cs" />
     <Compile Include="Requests\PokerGamesWinLossDetail\ExportPokerGamesWinLossDetailRequest.cs" />
-    <Compile Include="Requests\PokerGamesWinLossDetail\PokerGamesWinLossDetailRequest.cs" />
-    <Compile Include="Requests\PokerGamesWinLossDetail\SearchPokerGamesWinLossDetailRequest.cs" />
+    <Compile Include="Requests\SearchWinLossDetailRequest.cs" />
+    <Compile Include="Requests\WinLossDetailRequest.cs" />
     <Compile Include="Statement\StatementController.cs" />
     <Compile Include="UserControl\FunctionController.cs">
       <SonarQubeExclude>true</SonarQubeExclude>

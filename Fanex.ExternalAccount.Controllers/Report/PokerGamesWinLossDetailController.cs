@@ -9,6 +9,7 @@
     using CustomerSetting.Security.Authenticate;
     using DTO.Report;
     using Excel.Reports.PokerGamesWinLossDetail;
+    using Requests;
     using Requests.PokerGamesWinLossDetail;
     using Service.Impl.Report;
     using Service.Interface.Report;
@@ -33,7 +34,7 @@
         public ActionResult Index() => View();
 
         [AntiXSRFFilter]
-        public ActionResult GetData(PokerGamesWinLossDetailRequest request)
+        public ActionResult GetData(WinLossDetailRequest request)
         {
             var viewModel = GetDataFromDB(request);
             return Json(viewModel);
@@ -82,11 +83,11 @@
             }
         }
 
-        private dynamic GetDataFromDB(PokerGamesWinLossDetailRequest request)
+        private dynamic GetDataFromDB(WinLossDetailRequest request)
         {
             return request.IsSearch()
-                ? reportService.SearchPokerGamesWinLossDetail(new SearchPokerGamesWinLossDetailRequest(request))
-                : reportService.DrillDownPokerGamesWinLossDetail(new DrillDownPokerGamesWinLossDetailRequest(request));
+                ? reportService.SearchPokerGamesWinLossDetail(new SearchWinLossDetailRequest(request))
+                : reportService.DrillDownPokerGamesWinLossDetail(new DrillDownWinLossDetailRequest(request));
         }
     }
 }

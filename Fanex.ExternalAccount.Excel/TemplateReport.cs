@@ -1,9 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Excel
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using Utility;
 
     public abstract class TemplateReport : IDisposable
     {
@@ -47,6 +49,49 @@
                 var font = HssfWorkbook.GetFontAt(i);
                 font.Boldweight = (short)FontBoldWeight.Bold;
             }
+        }
+
+        public HSSFWorkbook Build(string sheetName, bool isBold)
+        {
+            var resultSheet = HssfWorkbook.GetSheet(sheetName);
+
+            if (isBold)
+            {
+                BoldAllFonts();
+            }
+
+            BuildMainTitle(resultSheet);
+            WriteBodyReport(resultSheet);
+            HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(TemplateSheet));
+
+            return HssfWorkbook;
+        }
+
+        public virtual void BuildMainTitle(ISheet resultSheet) { }
+
+        public virtual void WriteBodyReport(ISheet resultSheet) { }
+
+        public int WriteBodyReport(ISheet resultSheet, IEnumerable<List<object>> data, int lastColumnIndex)
+        {
+            var index = 1;
+            var toRowId = 3;
+
+            foreach (var item in data)
+            {
+                var fromRowId = index % 2 == 0 ? OddRowIndex : EvenRowIndex;
+                resultSheet.CopyRow(TemplateSheet, fromRowId, toRowId, FirstColumnIndex, lastColumnIndex);
+                resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, item);
+                index++;
+                toRowId++;
+            }
+
+            return toRowId;
+        }
+
+        public void WriteTotal(ISheet resultSheet, int toRowIndex, List<object> data, int lastColumnIndex)
+        {
+            resultSheet.CopyRow(TemplateSheet, FirstColumnTotalIndex, toRowIndex, FirstColumnIndex, lastColumnIndex);
+            resultSheet.GetRow(toRowIndex).WriteCells(FirstColumnIndex, data);
         }
 
         protected virtual void Dispose(bool disposing)

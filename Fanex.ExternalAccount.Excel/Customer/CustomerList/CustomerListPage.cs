@@ -34,7 +34,7 @@
             return HssfWorkbook;
         }
 
-        private void WriteBodyReport(ISheet resultSheet)
+        public override void WriteBodyReport(ISheet resultSheet)
         {
             var dtr = _builder.Data.Rows;
             var totalColumn = _builder.IsMyanmarOdds || _builder.RoleId.IsSuper() ? 16 : 15;
@@ -185,7 +185,7 @@
             return custStatus;
         }
 
-        private void BuildMainTitle(ISheet resultSheet)
+        public override void BuildMainTitle(ISheet resultSheet)
         {
             var mainTitle = $"{_builder.Status} {_builder.RoleId.DisplayRoleName()} List";
 
