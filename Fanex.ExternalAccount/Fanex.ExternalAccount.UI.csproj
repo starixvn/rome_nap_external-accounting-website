@@ -927,7 +927,9 @@
       <DependentUpon>index.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\data-range\index.js" />
-    <Content Include="assets\bundles\data-range\index.min.js" />
+    <Content Include="assets\bundles\data-range\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\home\home.js" />
     <Content Include="assets\bundles\home\home.min.js">
       <DependentUpon>home.js</DependentUpon>

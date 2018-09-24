@@ -170,7 +170,7 @@
     },
     initCustData: function () {
         var type = parseInt($("#DataRangeType").val(), 0);
-        $(".rdb-data-range[value='" + type + "'").click();
+        $(".rdb-data-range[value='" + type + "']").click();
         dataRangeController.clickDataRange();
 
         switch (type) {
