@@ -187,8 +187,8 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.1.2\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.1.5-oldbehavior01\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.5, Culture=neutral, processorArchitecture=MSIL">
@@ -417,10 +417,6 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.2.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.2.2\lib\net461\ThirdPartyProducts.StatusSetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="TplCore, Version=1.0.4854.17253, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\TplCore.1.0.4854.17254\lib\net40\TplCore.dll</HintPath>
       <Private>True</Private>
@@ -451,8 +447,14 @@
     <Content Include="Areas\Common\Views\Shared\Scripts\Fanex.CustomerSetting.js" />
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\AjaxSetup.js" />
+    <Content Include="Areas\CustomerSetting\Views\ThirdPartyProductStatus\Index.cshtml" />
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.js" />
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting.js" />
+    <Content Include="Areas\ProductStatusSetting\Scripts\simple-product-status-setting.js" />
+    <Content Include="Areas\ProductStatusSetting\Scripts\simple-product-status-setting.min.js" />
+    <Content Include="Areas\ProductStatusSetting\Styles\images\copy-icon.png" />
+    <Content Include="Areas\ProductStatusSetting\Styles\product-status-setting-multiple.min.css" />
+    <Content Include="Areas\ProductStatusSetting\Styles\simple-product-status-setting.min.css" />
     <Content Include="Areas\Web.config" />
     <Content Include="Areas\CustomerSettingRenovation\Content\DCSCustom.css" />
     <Content Include="Areas\CustomerSettingRenovation\Content\Images\bgHeader.jpg" />
@@ -2698,6 +2700,8 @@
     <Content Include="assets\bundles\data-range\index.min.js.map" />
     <Content Include="assets\bundles\pokergames-winlossdetail\index.min.js.map" />
     <Content Include="assets\styles\pages\reports\pokergames-winloss-detail.scss" />
+    <Content Include="Areas\ProductStatusSetting\Views\Simple\Index.cshtml" />
+    <Content Include="Areas\ProductStatusSetting\Styles\font\AlphaAdmin\AlphaAdmin.ttf" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

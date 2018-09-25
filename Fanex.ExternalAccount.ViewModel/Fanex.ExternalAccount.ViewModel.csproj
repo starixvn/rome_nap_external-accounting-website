@@ -135,6 +135,7 @@
     <Compile Include="Customer\IPInfo.cs" />
     <Compile Include="Customer\PTModel.cs" />
     <Compile Include="Customer\PTVirtualSportsModel.cs" />
+    <Compile Include="Customer\ThirdPartyProductStatusViewModel.cs" />
     <Compile Include="Extension\EASDisplayAttribute.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Shared\MenuItem.cs" />

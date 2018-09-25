@@ -2,6 +2,7 @@
 
 @{
     Layout = null;
+    string assetsVersion = "201810031422";
 }
 
 <!DOCTYPE html>
@@ -9,7 +10,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <link href="@Url.Content("~/Areas/ProductStatusSetting/Styles/product-status-setting.min.css?v=06132018")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Areas/ProductStatusSetting/Styles/product-status-setting-multiple.min.css?v=")@assetsVersion">
 </head>
 <body>
     <div id="sectionMessage" class="msg-container hide"></div>
@@ -19,10 +20,10 @@
         {
 
             @Html.DropDownListFor(model => model.Products,
-                new List<SelectListItem>(
-                    Model.Products.Select(product => new SelectListItem { Value = product.Key.ToString(), Text = product.Value })),
-                        "Select Product",
-                        new { @class = "form-control", id = "productIds" })
+             new List<SelectListItem>(
+                 Model.Products.Select(product => new SelectListItem { Value = product.Key.ToString(), Text = product.Value })),
+                     "Select Product",
+                     new { @class = "form-control", id = "productIds" })
 
             if (!Model.ProductStatus.Any() && !Model.ProductId.Equals(0))
             {
@@ -43,11 +44,21 @@
         }
     </div>
 
+    <div id="dialog-confirm" title="@Resources.Warning!!!">
+        <p>@Resources.ConfirmBeforeMultipleUpdate</p>
+    </div>
+
     @if (Model.ProductStatus.Any())
     {
         @Html.Partial("~/Areas/ProductStatusSetting/Views/Multiple/MultiplePartialView.cshtml", Model)
     }
 
-    <script type="text/javascript" src="@Url.Content("~/Areas/ProductStatusSetting/Scripts/product-status-setting-multiple.min.js?v=06182018")"></script>
+    @{
+        var jsUrl = string.Format(
+            "~/Areas/ProductStatusSetting/Scripts/product-status-setting-multiple{0}.js?v={1}",
+            HttpContext.Current.IsDebuggingEnabled ? string.Empty : ".min",
+            assetsVersion);
+    }
+    <script type="text/javascript" src="@Url.Content(jsUrl)"></script>
 </body>
 </html>

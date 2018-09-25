@@ -67,12 +67,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OTP.resx</DependentUpon>
     </Compile>
+    <Compile Include="ProductStatus.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductStatus.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="OTP.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OTP.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductStatus.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductStatus.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

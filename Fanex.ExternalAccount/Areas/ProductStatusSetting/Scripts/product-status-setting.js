@@ -11025,7 +11025,15 @@ var ProductStatusSettingBase = /** @class */ (function () {
                 error: _this.onDefaultError
             });
         };
-        this.onDefaultError = function () { return _this.showMessage(_this.$errorCodeDefault, _this.$resources.updateStatusFailed); };
+        this.onDefaultError = function (jqXHR) {
+            if (jqXHR.status === 403) {
+                var denyObject = _this.$.parseJSON(jqXHR.responseText);
+                _this.showMessage(denyObject.ErrorCode, denyObject.ErrorMessage);
+            }
+            else {
+                _this.showMessage(_this.$errorCodeDefault, _this.$resources.updateStatusFailed);
+            }
+        };
         this.hideMessage = function () { return _this.$("#sectionMessage").html("").addClass("hide"); };
         this.$ = $;
         this.$topWindow = topWindow;
