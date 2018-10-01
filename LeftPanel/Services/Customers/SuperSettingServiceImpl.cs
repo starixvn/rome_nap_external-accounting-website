@@ -41,6 +41,7 @@
                 setting.Details.Insert(2, new ObjectInfo("BetSetting", "Betting Limit"));
             }
 
+            setting.Details.Add(new ObjectInfo("DataRange", "Data Range"));
             return setting;
         }
 
