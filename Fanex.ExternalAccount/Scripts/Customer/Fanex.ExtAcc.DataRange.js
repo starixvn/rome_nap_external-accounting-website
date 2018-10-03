@@ -162,7 +162,8 @@
     showResultMessage: function () {
         if (dataRangeController.updateResultMessage == "") {
             Fanex.ExtAcc.Form.Close();
-            Fanex.ExtAcc.Customer.CallBackCustomerList();
+            if ($('#customerListGrid').length)
+                Fanex.ExtAcc.Customer.CallBackCustomerList();
             return;
         }
 
