@@ -56,16 +56,46 @@
 
             $scope.showCurrentWinLimit = function (custId) {
                 customerWinLimitService.getCurrentMemberWinLimit(custId).success(function (data) {
+                    $scope.currentWinLimit = numeral(data.MaxWinCredit).format('0,0.00');
+
                     if (data.MaxWinLimit === 0) {
                         $scope.currentWinLimit = -1;
                     }
                     else {
-                        $scope.currentWinLimit = numeral(data.MaxWinCredit).format('0,0.00');
                         $scope.percent = numeral(data.WinPercent).format('0,0.00');
                     }
 
                     $scope.isShowCurrentWinLimit = true;
-                    $scope.isPercentShowRedColor = parseFloat(data.WinPercent) >= 100;
+                    $scope.isPercentShowRedColor = parseFloat(data.WinPercent) >= 100 || parseInt(data.WinPercent) == -2;
+
+                    $scope.currentWinLimitDetail = "";
+                    if ($scope.percent > 0) {
+                        if (parseFloat(data.CurrentAmount) >= parseFloat(data.MaxWinCredit)) {
+                            $scope.currentWinLimitDetail =
+                                "&nbsp;&nbsp;(<font color='red'>" +
+                                numeral(data.CurrentAmount).format('0,0.00') + "</font>/" +
+                                numeral(data.MaxWinCredit).format('0,0.00') + ")";
+                        }
+                        else if (parseFloat(data.MaxWinCredit) <= 0) {
+                            $scope.currentWinLimitDetail =
+                                "&nbsp;&nbsp;(" +
+                                numeral(data.CurrentAmount).format('0,0.00') + "/<font color='red'>" +
+                                numeral(data.MaxWinCredit).format('0,0.00') + "</font>)";
+                        }
+                        else {
+                            $scope.currentWinLimitDetail =
+                                "&nbsp;&nbsp;(" +
+                                numeral(data.CurrentAmount).format('0,0.00') + "/" +
+                                numeral(data.MaxWinCredit).format('0,0.00') + ")";
+                        }
+                    }
+                    else if (parseInt($scope.percent) == -2) {
+                        $scope.percent = "N/A";
+                        $scope.currentWinLimitDetail =
+                                "&nbsp;&nbsp;(" +
+                                numeral(data.CurrentAmount).format('0,0.00') + "/" +
+                                numeral(data.MaxWinCredit).format('0,0.00') + ")";
+                    }
                 });
             };
 
