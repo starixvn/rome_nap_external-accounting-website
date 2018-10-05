@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections;
-    using Caching;
     using Core.Shared;
     using DTO.Customer;
     using Interface.Report;
@@ -49,7 +48,7 @@
                 request.FromDate,
                 request.ToDate,
                 request.ProductIds);
-            
+
             return
                 new
                 {
@@ -80,7 +79,7 @@
             }
 
             var winLossDetailData = SearchWinLossDetailData(request.GroupName, request.FromDate, request.ToDate, request.ProductIds, customerInfo);
-            
+
             return
                 new
                 {

@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
     using System.Web.Mvc;
-    using Authorization;
     using Base;
     using Newtonsoft.Json;
     using Service.Impl.Report;
@@ -27,7 +27,8 @@
         public ICollection<KeyValuePair<string, bool>> AsCollection()
         {
             var list = new List<KeyValuePair<string, bool>>();
-            foreach (var product in GetProductList())
+
+            foreach (var product in GetProductList(Enumerable.Empty<int>()))
             {
                 if (!product.Key.Equals("showAll", StringComparison.CurrentCultureIgnoreCase))
                 {
@@ -39,7 +40,12 @@
             return list;
         }
 
-        public ActionResult ProductsList(bool isHideInactiveProduct) => JsonBase(GetProductList(isHideInactiveProduct), new JsonSerializerSettings());
+        public ActionResult ProductsList(bool isHideInactiveProduct)
+        {
+            var excludeProductIds = reportService.GetExcludeProductIds(ExtRequest.GetGroupName());
+
+            return JsonBase(GetProductList(excludeProductIds, isHideInactiveProduct), new JsonSerializerSettings());
+        }
 
         public ActionResult GetSuggestedUserName()
         {

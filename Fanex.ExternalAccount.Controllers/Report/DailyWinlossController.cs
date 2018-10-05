@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
@@ -30,6 +31,7 @@
         private string _username = string.Empty;
         private int _viewlevel = Role.Group;
         private DateTime _winlostDate = DateTime.Today;
+        private readonly bool _showIncludePockerGamesOption;
         private readonly dynamic ToolTipsProducts;
 
         public DailyWinlossController(ICurrentSession currentSession)
@@ -42,11 +44,21 @@
 
         public DailyWinlossController() : this(null)
         {
+            if (ProductSettings.IsShowPokerGames
+                && _reportService.GetExcludeProductIds(ExtRequest.GetGroupName()).Contains(ProductConstants.PokerGames))
+            {
+                _showIncludePockerGamesOption = true;
+            }
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult Index() => PartialViewBase();
+        public ActionResult Index()
+        {
+            ViewBag.ShowIncludePockerGamesOption = _showIncludePockerGamesOption;
+
+            return PartialViewBase();
+        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,
             Policy = AuthenticateAction.AuthenticationType.Read)]
@@ -58,7 +70,12 @@
             _mrecommend = CheckRequest.GetIntRequest("mrecommend", 0);
             _recommend = CheckRequest.GetIntRequest("recommend", 0);
 
-            return _custId != 0 ? GetDailyWinLossDownline() : GetDailyWinLossSearch();
+            var includePockerGames = CheckRequest.GetBooleanRequest("includepockergames", false);
+            var excludeProductIds = _showIncludePockerGamesOption && !includePockerGames
+                ? ProductConstants.PokerGames.ToString()
+                : string.Empty;
+
+            return _custId != 0 ? GetDailyWinLossDownline(excludeProductIds) : GetDailyWinLossSearch(excludeProductIds);
         }
 
         public void GetExportToExcel()
@@ -109,7 +126,7 @@
             return true;
         }
 
-        private ActionResult GetDailyWinLossSearch()
+        private ActionResult GetDailyWinLossSearch(string excludeProductIds)
         {
             if (!CheckSearchCustomer())
             {
@@ -126,7 +143,7 @@
 
             if (_roleId > Role.Master)
             {
-                _listDailyWinLoss = _reportService.GetDailyWinLoss(_winlostDate, _srecommend, _groupname);
+                _listDailyWinLoss = _reportService.GetDailyWinLoss(_winlostDate, _srecommend, _groupname, excludeProductIds);
                 return JsonBase(
                     new
                     {
@@ -141,7 +158,7 @@
             }
             if (_roleId.IsMaster())
             {
-                _listDailyWinLoss = _reportService.GetDailyWinLossSuper(_winlostDate, _srecommend, _mrecommend);
+                _listDailyWinLoss = _reportService.GetDailyWinLossSuper(_winlostDate, _srecommend, _mrecommend, excludeProductIds);
                 return JsonBase(
                     new
                     {
@@ -158,7 +175,7 @@
             }
             if (_roleId.IsAgent())
             {
-                _listDailyWinLoss = _reportService.GetDailyWinLossMaster(_winlostDate, _mrecommend, _recommend);
+                _listDailyWinLoss = _reportService.GetDailyWinLossMaster(_winlostDate, _mrecommend, _recommend, excludeProductIds);
                 return JsonBase(
                     new
                     {
@@ -174,7 +191,7 @@
                     },
                     new JsonSerializerSettings());
             }
-            _listDailyWinLoss = _reportService.GetDailyWinLossAgent(_winlostDate, _recommend, _memberId);
+            _listDailyWinLoss = _reportService.GetDailyWinLossAgent(_winlostDate, _recommend, _memberId, excludeProductIds);
             return JsonBase(
                 new
                 {
@@ -191,11 +208,11 @@
                 new JsonSerializerSettings());
         }
 
-        private ActionResult GetDailyWinLossDownline()
+        private ActionResult GetDailyWinLossDownline(string excludeProductIds)
         {
             if (_viewlevel.IsSuper())
             {
-                _listDailyWinLoss = _reportService.GetDailyWinLossSuper(_winlostDate, _custId, 0);
+                _listDailyWinLoss = _reportService.GetDailyWinLossSuper(_winlostDate, _custId, 0, excludeProductIds);
                 return JsonBase(
                     new
                     {
@@ -208,7 +225,7 @@
             }
             if (_viewlevel.IsMaster())
             {
-                _listDailyWinLoss = _reportService.GetDailyWinLossMaster(_winlostDate, _custId, 0);
+                _listDailyWinLoss = _reportService.GetDailyWinLossMaster(_winlostDate, _custId, 0, excludeProductIds);
                 return JsonBase(
                     new
                     {
@@ -221,7 +238,7 @@
                     new JsonSerializerSettings());
             }
 
-            _listDailyWinLoss = _reportService.GetDailyWinLossAgent(_winlostDate, _custId, 0);
+            _listDailyWinLoss = _reportService.GetDailyWinLossAgent(_winlostDate, _custId, 0, excludeProductIds);
             return JsonBase(
                 new
                 {

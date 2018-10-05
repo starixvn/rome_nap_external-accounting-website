@@ -15,13 +15,13 @@
 
         List<SuggestedUserName> GetSuggestedUserName(int custId, string username, string groupName);
 
-        List<DailyWinLoss> GetDailyWinLoss(DateTime winlostDate, int custId, string groupName);
+        List<DailyWinLoss> GetDailyWinLoss(DateTime winlostDate, int custId, string groupName, string excludeProductIds);
 
-        List<DailyWinLoss> GetDailyWinLossSuper(DateTime winlostDate, int custId, int masterId);
+        List<DailyWinLoss> GetDailyWinLossSuper(DateTime winlostDate, int custId, int masterId, string excludeProductIds);
 
-        List<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId);
+        List<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId, string excludeProductIds);
 
-        List<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId);
+        List<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId, string excludeProductIds);
 
         List<WinLossDetail> GetSuperWinLossDetail(string groupname, int custId, DateTime fromDate, DateTime toDate, string productIds);
 
@@ -40,5 +40,7 @@
         List<PokerGamesWinLossDetailMAg> GetAgentPokerGamesWinLossDetail(int custId, int agentId, DateTime fromDate, DateTime toDate);
 
         List<PokerGamesWinLossDetailAg> GetMemberPokerGamesWinLossDetail(int custId, int memberId, DateTime fromDate, DateTime toDate);
+
+        IEnumerable<int> GetExcludeProductIds(string groupName);
     }
 }

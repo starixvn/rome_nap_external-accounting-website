@@ -1,4 +1,4 @@
-namespace Fanex.ExternalAccount.DataAccess.Impl.Report
+﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Report
 {
     using System;
     using System.Collections;
@@ -116,12 +116,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return entityList;
         }
 
-        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_Com14(DateTime winlostDate, int custId, string groupname)
+        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_Com14(DateTime winlostDate, int custId, string groupname, string excludeProductIds)
         {
             var parameters = new Hashtable
             {
                 {"winlostdate", winlostDate},
-                {"groupname", groupname}
+                {"groupname", groupname},
+                { "excludeproductids", excludeProductIds}
             };
 
             if (custId != 0)
@@ -132,12 +133,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_Com14", parameters);
         }
 
-        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_Com(DateTime winlostDate, int custId, string groupname)
+        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_Com(DateTime winlostDate, int custId, string groupname, string excludeProductIds)
         {
             var parameters = new Hashtable
             {
                 {"winlostdate", winlostDate},
-                {"groupname", groupname}
+                {"groupname", groupname},
+                { "excludeproductids", excludeProductIds}
             };
 
             if (custId != 0)
@@ -148,12 +150,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_Com", parameters);
         }
 
-        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg14(DateTime winlostDate, int custId, int masterId)
+        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg14(DateTime winlostDate, int custId, int masterId, string excludeProductIds)
         {
             var parameters = new Hashtable
             {
                 {"winlostdate", winlostDate},
-                {"custid", custId}
+                {"custid", custId},
+                { "excludeproductids", excludeProductIds}
             };
 
             if (masterId != 0)
@@ -164,12 +167,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_SAg14", parameters);
         }
 
-        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg(DateTime winlostDate, int custId, int masterId)
+        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg(DateTime winlostDate, int custId, int masterId, string excludeProductIds)
         {
             var parameters = new Hashtable
             {
                 {"winlostdate", winlostDate},
-                {"custid", custId}
+                {"custid", custId},
+                { "excludeproductids", excludeProductIds}
             };
 
             if (masterId != 0)
@@ -180,12 +184,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_SAg", parameters);
         }
 
-        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg14(DateTime winlostDate, int custId, int agentId)
+        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg14(DateTime winlostDate, int custId, int agentId, string excludeProductIds)
         {
             var parameters = new Hashtable
             {
                 {"winlostdate", winlostDate},
-                {"custid", custId}
+                {"custid", custId},
+                { "excludeproductids", excludeProductIds}
             };
 
             if (agentId != 0)
@@ -196,12 +201,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_MAg14", parameters);
         }
 
-        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg(DateTime winlostDate, int custId, int agentId)
+        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg(DateTime winlostDate, int custId, int agentId, string excludeProductIds)
         {
             var parameters = new Hashtable
             {
                 {"winlostdate", winlostDate},
-                {"custid", custId}
+                {"custid", custId},
+                { "excludeproductids", excludeProductIds}
             };
 
             if (agentId != 0)
@@ -212,12 +218,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_MAg", parameters);
         }
 
-        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag14(DateTime winlostDate, int custId, int memberId)
+        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag14(DateTime winlostDate, int custId, int memberId, string excludeProductIds)
         {
             var parameters = new Hashtable
             {
                 {"winlostdate", winlostDate},
-                {"custid", custId}
+                {"custid", custId},
+                { "excludeproductids", excludeProductIds}
             };
 
             if (memberId != 0)
@@ -228,12 +235,13 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_Ag14", parameters);
         }
 
-        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag(DateTime winlostDate, int custId, int memberId)
+        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag(DateTime winlostDate, int custId, int memberId, string excludeProductIds)
         {
             var parameters = new Hashtable
             {
                 {"winlostdate", winlostDate},
-                {"custid", custId}
+                {"custid", custId},
+                { "excludeproductids", excludeProductIds}
             };
 
             if (memberId != 0)
@@ -464,6 +472,28 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             }
         }
 
+        public IEnumerable<int> GetExcludeProductIds(string groupName)
+        {
+            var productIds = new List<int>();
+            var parameters = new Hashtable
+            {
+                ["groupname"] = groupName
+            };
+
+            using (var reader = ExecDataReader("Age_ExcludeProduct_SiteCurrency_Sel", parameters))
+            {
+                if (reader != null)
+                {
+                    while (reader.Read())
+                    {
+                        productIds.Add(reader.ToInt("ProductId"));
+                    }
+                }
+            }
+
+            return productIds;
+        }
+
         private List<WinLossDetail> GetCommonWinLossDetail(string spname, Hashtable parameters)
         {
             var entityList = new List<WinLossDetail>();
@@ -656,7 +686,6 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 ? reader.ToDouble("AgWinlost") * 100 / reader.ToDouble("AgTO")
                 : 0
             };
-
 
         private List<PokerGamesWinLossDetail> GetCommonPokerGamesWinLossDetail(string spname, Hashtable parameters)
         {

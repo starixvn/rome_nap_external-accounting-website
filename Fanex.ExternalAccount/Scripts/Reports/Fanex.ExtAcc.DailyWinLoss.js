@@ -18,6 +18,7 @@ Fanex.ExtAcc.DailyWinLoss = {
     date: new Date(),
     url: resolveClientUrl('DailyWinLoss/GetDailyWinLoss'),
     viewlevel: 5,
+    includePockerGames: false,
     hidedMargin: false,
     dataSource: [],
     $this: null,
@@ -57,7 +58,13 @@ Fanex.ExtAcc.DailyWinLoss = {
         });
 
         $('#exporttoexcel').click(function () {
-            var params = "date=" + $this.date + "&viewlevel=" + ($this.viewlevel + 1) + '&custid=' + $this.custId + '&groupname=' + $this.groupName + '&username=' + $this.username;
+            var params = "date=" + $this.date
+                + "&viewlevel=" + ($this.viewlevel + 1)
+                + '&custid=' + $this.custId
+                + '&groupname=' + $this.groupName
+                + '&username=' + $this.username
+                + '&includepockergames=' + $this.includePockerGames;
+
             var url = resolveClientUrl("DailyWinLoss/GetExportToExcel?") + params;
             top.exportExcel(url, document);
         });
@@ -203,6 +210,7 @@ Fanex.ExtAcc.DailyWinLoss = {
         this.custId = 0;
         this.username = '';
         this.viewlevel = 4;
+        this.includePockerGames = false;
     },
 
     resizeReportGrid: function () {
@@ -449,6 +457,8 @@ Fanex.ExtAcc.DailyWinLoss = {
         this.date = $('#dtpWinLossDate').val();
         $("#DateValueInfo").html(this.date);
 
+        this.includePockerGames = $('#chkIncludePockerGames').is(":checked");
+
         var parameterUrl = "?groupname=" + this.groupName
                             + "&srecommend=" + this.srecommend
                             + "&mrecommend=" + this.mrecommend
@@ -456,7 +466,8 @@ Fanex.ExtAcc.DailyWinLoss = {
                             + "&custid=" + this.custId
                             + "&username=" + Fanex.ExtAcc.ReplaceAll(this.viewlevel == 5 ? '' : this.username, '&', '')
                             + "&date=" + this.date
-                            + "&viewlevel=" + this.viewlevel;
+                            + "&viewlevel=" + this.viewlevel
+                            + "&includepockergames=" + this.includePockerGames;
 
         Fanex.ExtAcc.BlockUI();
         $.ajax({

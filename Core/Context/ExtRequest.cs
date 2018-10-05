@@ -30,9 +30,10 @@
         {
             var newGroup = string.IsNullOrEmpty(group) ? HttpContext.Current.Request["groupName"] : group;
 
+            newGroup = string.IsNullOrEmpty(newGroup) ? HttpContext.Current.Request.RequestContext.RouteData.Values["id"]?.ToString() : newGroup;
+
             return string.IsNullOrEmpty(newGroup) ? CurrentSession.Instance.CurrencyGroup : newGroup;
         }
-
 
         public int CustId
         {
@@ -50,7 +51,6 @@
         }
 
         public IEnumerable<int> CustIds => GetCustomerIdsInQueryString();
-
 
         private int GetCustomerIdInQueryString()
         {
