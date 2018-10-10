@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
@@ -44,11 +43,7 @@
 
         public DailyWinlossController() : this(null)
         {
-            if (ProductSettings.IsShowPokerGames
-                && _reportService.GetExcludeProductIds(ExtRequest.GetGroupName()).Contains(ProductConstants.PokerGames))
-            {
-                _showIncludePockerGamesOption = true;
-            }
+            _showIncludePockerGamesOption = _reportService.IsShowIncludePockerGames(ExtRequest.GetGroupName());
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,

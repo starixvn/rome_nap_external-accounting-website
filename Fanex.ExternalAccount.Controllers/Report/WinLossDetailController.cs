@@ -25,7 +25,6 @@
         private readonly IReportService reportService;
         private readonly dynamic ToolTipsProducts;
         private readonly bool showIncludePockerGamesOption;
-        private readonly IEnumerable<int> excludeProductIds;
 
         public WinLossDetailController(
             ICurrentSession currentSession,
@@ -45,13 +44,7 @@
 
         public WinLossDetailController() : this(null, null, null)
         {
-            excludeProductIds = reportService.GetExcludeProductIds(ExtRequest.GetGroupName());
-
-            if (ProductSettings.IsShowPokerGames
-                && excludeProductIds.Contains(ProductConstants.PokerGames))
-            {
-                showIncludePockerGamesOption = true;
-            }
+            showIncludePockerGamesOption = reportService.IsShowIncludePockerGames(ExtRequest.GetGroupName());
         }
 
         public ActionResult Index()
@@ -107,11 +100,10 @@
                     }
             }
 
-            var excludeProducts = request.IncludePockerGames
-                ? excludeProductIds.Where(p => p != ProductConstants.PokerGames)
-                : excludeProductIds;
+            var excludeProductIds = reportService.GetExcludeProductIds(ExtRequest.GetGroupName())
+                .Where(p => !(p == ProductConstants.PokerGames && request.IncludePockerGames));
 
-            var formatedProducts = request.GetProductNames(GetProductList(excludeProducts));
+            var formatedProducts = request.GetProductNames(GetProductList(excludeProductIds));
             var memoryStream = builder.Build(formatedProducts);
 
             if (memoryStream != null)
