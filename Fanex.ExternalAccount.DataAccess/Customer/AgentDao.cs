@@ -1,11 +1,14 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
 {
-    using System;
-    using System.Collections;
-    using System.Data;
+    using Criteria.Customer;
+    using Data;
+    using DTO;
     using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DataAccess.Interface.Customer;
     using Fanex.ExternalAccount.DTO.Customer;
+    using System;
+    using System.Collections;
+    using System.Data;
 
     public class AgentDao : CustomerDao, IAgentDao
     {
@@ -51,6 +54,21 @@
             }
 
             return null;
+        }
+
+        public Result IsLimitMemberCreationBySuper(CheckMemberCreationCriteria criteria)
+        {
+            var result = new Result();
+            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                objDb.ExecuteNonQuery();
+                var outputs = objDb.GetOuputParams();
+                result.ErrorCode = outputs["errcode"].ToString();
+                result.ErrorMessage = outputs["errmsg"].ToString();
+            }
+
+            return result;
         }
     }
 }
