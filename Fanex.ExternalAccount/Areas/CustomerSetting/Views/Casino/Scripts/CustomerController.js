@@ -167,11 +167,11 @@ function CustomerController($scope, $element) {
 
                         initArray.push('&nbsp;&nbsp;');
                         initArray.push('(');
-                        if (current >= maxAmount) {
+                        if (current >= maxAmount && maxAmount != 0) {
                             initArray.push('<font style="color: red">');
                         }
                         initArray.push(current.toFixed(2).formatNumber());
-                        if (current >= maxAmount) {
+                        if (current >= maxAmount && maxAmount != 0) {
                             initArray.push('</font>');
                         }
                         initArray.push('/');
