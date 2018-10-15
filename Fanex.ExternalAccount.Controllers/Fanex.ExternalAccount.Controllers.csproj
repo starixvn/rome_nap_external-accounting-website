@@ -334,6 +334,7 @@
     <Compile Include="GlobalSuppressions2.cs" />
     <Compile Include="Home\NetworkSpeedController.cs" />
     <Compile Include="OTP\OTPController.cs" />
+    <Compile Include="Report\BaseReportController.cs" />
     <Compile Include="Report\PokerGamesWinLossDetailController.cs" />
     <Compile Include="Requests\PokerGamesWinLossDetail\DrillDownPokerGamesWinLossDetailRequest.cs" />
     <Compile Include="Requests\PokerGamesWinLossDetail\ExportPokerGamesWinLossDetailRequest.cs" />

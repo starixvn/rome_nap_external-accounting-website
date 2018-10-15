@@ -1,5 +1,5 @@
 ﻿@using Fanex.ExternalAccount.Utilities
-@using System.Web.Optimization
+@model bool
 @{
     ViewBag.Title = "Daily WinLoss";
 }
@@ -35,7 +35,7 @@
                     <input id="BalanceUpDay" type="hidden" value="@Fanex.ExternalAccount.Service.Impl.Report.ReportService.BalanceUpDate" />
                 </div>
             </div>
-            @if (ViewBag.ShowIncludePockerGamesOption)
+            @if (Model)
             {
                 <div class="form-group">
                     <input type="checkbox" id="chkIncludePockerGames" value="" />

@@ -42,7 +42,5 @@
         List<PokerGamesWinLossDetailAg> GetMemberPokerGamesWinLossDetail(int custId, int memberId, DateTime fromDate, DateTime toDate);
 
         IEnumerable<int> GetExcludeProductIds(string groupName);
-
-        bool IsShowIncludePockerGames(string groupName);
     }
 }

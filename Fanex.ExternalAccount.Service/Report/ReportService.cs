@@ -4,9 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    using System.Linq;
     using Caching;
-    using Core.Shared;
     using DataAccess.Impl.Report;
     using DataAccess.Interface.Report;
     using DTO.Customer;
@@ -152,10 +150,6 @@
 
             return excludeProductIds;
         }
-
-        public bool IsShowIncludePockerGames(string groupName)
-            => ProductSettings.IsShowPokerGames
-            && GetExcludeProductIds(groupName).Contains(ProductConstants.PokerGames);
 
         private static bool CheckConstraintMoveBetsDay(DateTime fromDate)
             => DateTime.Compare(fromDate, MoveBetsDate) > 0;

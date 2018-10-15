@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
-    using Core.Base;
     using Core.Context;
     using Core.Reports;
     using Core.Reports.WinLossDetail;
@@ -19,25 +18,23 @@
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-    public class WinLossDetailController : BaseController
+    public class WinLossDetailController : BaseReportController
     {
         private readonly WinLossDetailService winLossDetailService;
-        private readonly IReportService reportService;
         private readonly dynamic ToolTipsProducts;
 
         public WinLossDetailController(
             ICurrentSession currentSession,
             WinLossDetailService winLossDetailService,
             IReportService reportService)
+            : base(currentSession, reportService)
         {
             this.winLossDetailService = winLossDetailService ?? new WinLossDetailServiceImpl();
-            this.reportService = reportService ?? new ReportService();
-
             ToolTipsProducts = new
             {
-                showAllbet = WinLossDetailHelper.IsShowProduct("showAB", currentSession ?? CurrentSession),
-                showPokerGames = WinLossDetailHelper.IsShowProduct("showPG", currentSession ?? CurrentSession),
-                showBullfighting = WinLossDetailHelper.IsShowProduct("showBf", currentSession ?? CurrentSession)
+                showAllbet = WinLossDetailHelper.IsShowProduct("showAB", this.currentSession),
+                showPokerGames = WinLossDetailHelper.IsShowProduct("showPG", this.currentSession),
+                showBullfighting = WinLossDetailHelper.IsShowProduct("showBf", this.currentSession)
             };
         }
 
@@ -47,8 +44,8 @@
 
         public ActionResult Index(string id)
         {
-            ViewBag.ShowIncludePockerGamesOption = reportService.IsShowIncludePockerGames(id);
-            return View();
+            var showIncludePockerGamesOption = IsShowIncludePockerGames(id);
+            return View(showIncludePockerGamesOption);
         }
 
         [AntiXSRFFilter]
