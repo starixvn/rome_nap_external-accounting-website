@@ -30,7 +30,6 @@
         private string _username = string.Empty;
         private int _viewlevel = Role.Group;
         private DateTime _winlostDate = DateTime.Today;
-        private readonly bool _showIncludePockerGamesOption;
         private readonly dynamic ToolTipsProducts;
 
         public DailyWinlossController(ICurrentSession currentSession)
@@ -43,14 +42,13 @@
 
         public DailyWinlossController() : this(null)
         {
-            _showIncludePockerGamesOption = _reportService.IsShowIncludePockerGames(ExtRequest.GetGroupName());
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
-            ViewBag.ShowIncludePockerGamesOption = _showIncludePockerGamesOption;
+            ViewBag.ShowIncludePockerGamesOption = _reportService.IsShowIncludePockerGames(id);
 
             return PartialViewBase();
         }
@@ -66,7 +64,7 @@
             _recommend = CheckRequest.GetIntRequest("recommend", 0);
 
             var includePockerGames = CheckRequest.GetBooleanRequest("includepockergames", false);
-            var excludeProductIds = _showIncludePockerGamesOption && !includePockerGames
+            var excludeProductIds = _reportService.IsShowIncludePockerGames(ExtRequest.GetGroupName()) && !includePockerGames
                 ? ProductConstants.PokerGames.ToString()
                 : string.Empty;
 

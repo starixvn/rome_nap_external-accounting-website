@@ -24,7 +24,6 @@
         private readonly WinLossDetailService winLossDetailService;
         private readonly IReportService reportService;
         private readonly dynamic ToolTipsProducts;
-        private readonly bool showIncludePockerGamesOption;
 
         public WinLossDetailController(
             ICurrentSession currentSession,
@@ -44,12 +43,11 @@
 
         public WinLossDetailController() : this(null, null, null)
         {
-            showIncludePockerGamesOption = reportService.IsShowIncludePockerGames(ExtRequest.GetGroupName());
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
-            ViewBag.ShowIncludePockerGamesOption = showIncludePockerGamesOption;
+            ViewBag.ShowIncludePockerGamesOption = reportService.IsShowIncludePockerGames(id);
             return View();
         }
 
