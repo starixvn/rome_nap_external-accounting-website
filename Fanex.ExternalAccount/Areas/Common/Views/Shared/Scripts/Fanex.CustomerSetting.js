@@ -25,7 +25,7 @@ Fanex.CustomerSetting = {
     },
 
     UnBlockUI: function () {
-        $.unblockUI(document);
+        $.unblockUI();
     }
 }
 
