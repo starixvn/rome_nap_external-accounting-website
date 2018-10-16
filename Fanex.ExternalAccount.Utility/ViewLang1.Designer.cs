@@ -1024,6 +1024,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include Pocker Games.
+        /// </summary>
+        public static string IncludePockerGames {
+            get {
+                return ResourceManager.GetString("IncludePockerGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Additional info at DNSstuff:&lt;a href=&quot;{0}&quot; target=&quot;_blank&quot;&gt; click here&lt;/a&gt;.
         ///Note: Country and city information is provided by IP2Location™ and DNSstuff which might only serve as a reference, with no warranty. Please consult other reliable sources for the current and accurate information, if required..
         /// </summary>

@@ -820,4 +820,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="CustomersWithDataLimited" xml:space="preserve">
     <value>Customers with data limited</value>
   </data>
+  <data name="IncludePockerGames" xml:space="preserve">
+    <value>Include Pocker Games</value>
+  </data>
 </root>

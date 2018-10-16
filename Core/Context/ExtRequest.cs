@@ -33,7 +33,6 @@
             return string.IsNullOrEmpty(newGroup) ? CurrentSession.Instance.CurrencyGroup : newGroup;
         }
 
-
         public int CustId
         {
             get
@@ -50,7 +49,6 @@
         }
 
         public IEnumerable<int> CustIds => GetCustomerIdsInQueryString();
-
 
         private int GetCustomerIdInQueryString()
         {

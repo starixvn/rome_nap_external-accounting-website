@@ -16,17 +16,13 @@
     using CustomerSetting.Module.Core.Criteria;
     using CustomerSetting.Module.Core.Models;
     using CustomerSetting.Module.Core.Services.Impl;
-    using CustomerSetting.Module.Core.Services.Interface;
     using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
-    using DTO.UserControl;
     using Logging.Extensions.Web;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using PTEngine.BusinessObjects;
     using RemotingRef;
-    using Reports.WinLossDetail;
-    using Service;
     using Service.Impl.Customer.Casino;
     using Shared;
     using Utilities;
@@ -52,7 +48,6 @@
 
         protected BaseController() : this(new CurrentSession(), new CurrentContext(), new ExtRequest(), null)
         {
-
         }
 
         protected BaseController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IRemotingRefService remotingRefService)
@@ -241,7 +236,6 @@
             };
         }
 
-
         protected bool IsAdminHasPermissionOnCustomer(bool isSpecialSiteCustomer)
         {
             var permisisonService = new ServiceBase();
@@ -276,10 +270,11 @@
                 new CheckCustomerIsSpecialSiteCriteria { UserName = username });
         }
 
-        protected List<KeyValuePair<string, string>> GetProductList(bool isHideInactiveProduct = true)
+        protected List<KeyValuePair<string, string>> GetProductList(IEnumerable<int> excludeProductIds, bool isHideInactiveProduct = true)
         {
             return new ProductListAuthorization()
                 .GetProductList(isHideInactiveProduct)
+                .Where(product => !excludeProductIds.Contains(product.ProductId))
                 .Select(product => new KeyValuePair<string, string>(
                     product.Id,
                     product.ProductId == 0 ? product.Name : _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", product.ProductId.ToString(), "en-US", product.Name)))

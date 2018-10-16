@@ -1,6 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
-    using Core.Base;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
     using Core.Context;
     using Core.Reports;
     using Core.Reports.WinLossDetail;
@@ -11,38 +14,39 @@
     using Excel.Reports.WinLossDetailReport;
     using Service.Impl.Report;
     using Service.Interface.Report;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
     using Utilities;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-    public class WinLossDetailController : BaseController
+    public class WinLossDetailController : BaseReportController
     {
         private readonly WinLossDetailService winLossDetailService;
         private readonly dynamic ToolTipsProducts;
 
         public WinLossDetailController(
             ICurrentSession currentSession,
-            WinLossDetailService winLossDetailService)
+            WinLossDetailService winLossDetailService,
+            IReportService reportService)
+            : base(currentSession, reportService)
         {
             this.winLossDetailService = winLossDetailService ?? new WinLossDetailServiceImpl();
-
             ToolTipsProducts = new
             {
-                showAllbet = WinLossDetailHelper.IsShowProduct("showAB", currentSession ?? CurrentSession),
-                showPokerGames = WinLossDetailHelper.IsShowProduct("showPG", currentSession ?? CurrentSession),
-                showBullfighting = WinLossDetailHelper.IsShowProduct("showBf", currentSession ?? CurrentSession)
+                showAllbet = WinLossDetailHelper.IsShowProduct("showAB", this.currentSession),
+                showPokerGames = WinLossDetailHelper.IsShowProduct("showPG", this.currentSession),
+                showBullfighting = WinLossDetailHelper.IsShowProduct("showBf", this.currentSession)
             };
         }
 
-        public WinLossDetailController() : this(null, null)
+        public WinLossDetailController() : this(null, null, null)
         {
         }
 
-        public ActionResult Index() => View();
+        public ActionResult Index(string id)
+        {
+            var showIncludePockerGamesOption = IsShowIncludePockerGames(id);
+            return View(showIncludePockerGamesOption);
+        }
 
         [AntiXSRFFilter]
         public ActionResult GetData(WinLossDetailRequest request)
@@ -91,7 +95,10 @@
                     }
             }
 
-            var formatedProducts = request.GetProductNames(GetProductList());
+            var excludeProductIds = reportService.GetExcludeProductIds(ExtRequest.GetGroupName())
+                .Where(p => !(p == ProductConstants.PokerGames && request.IncludePockerGames));
+
+            var formatedProducts = request.GetProductNames(GetProductList(excludeProductIds));
             var memoryStream = builder.Build(formatedProducts);
 
             if (memoryStream != null)
@@ -115,9 +122,11 @@
     {
         private const string Seperator = ", ";
         private const string ShowAll = "showAll";
+        private const string ShowPG = "showPG";
 
         private readonly Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter;
         private readonly IExtRequest extRequest;
+
         public WinLossDetailRequest() : this(null, null)
         {
         }
@@ -126,8 +135,8 @@
             Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter,
             IExtRequest extRequest)
         {
-            this.selectedProductQueryGetter = selectedProductQueryGetter ?? new FilterController().AsCollection;
             this.extRequest = extRequest ?? new ExtRequest();
+            this.selectedProductQueryGetter = selectedProductQueryGetter ?? new FilterController().AsCollection;
         }
 
         public string groupName => extRequest.GetGroupName();
@@ -140,6 +149,8 @@
         public DateTime fromdate { get; set; }
         public DateTime todate { get; set; }
         public int viewlevel { get; set; }
+
+        public bool IncludePockerGames { get; set; }
 
         public bool IsSearch() => custId == 0;
 
@@ -161,19 +172,26 @@
                 }
             }
 
+            if (IncludePockerGames)
+            {
+                formatedProductIds.Add(ProductConstants.PokerGames);
+            }
+
             return string.Join(",", formatedProductIds);
         }
 
         internal string GetProductNames(List<KeyValuePair<string, string>> productList)
         {
             var filterParams = selectedProductQueryGetter();
+
             var formatedProducts = string.Empty;
 
             filterParams.ToList().ForEach(o =>
             {
                 productList.ForEach(p =>
                 {
-                    if (!p.Key.Equals(ShowAll, StringComparison.OrdinalIgnoreCase) && o.Value
+                    if (!p.Key.Equals(ShowAll, StringComparison.OrdinalIgnoreCase)
+                        && (o.Value || (IncludePockerGames && p.Key.Equals(ShowPG, StringComparison.OrdinalIgnoreCase)))
                         && o.Key.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
                     {
                         formatedProducts += p.Value + Seperator;
@@ -220,6 +238,7 @@
             ToDate = request.todate;
             ViewLevel = request.viewlevel;
             ProductIds = request.GetProductIds();
+
             ToolTipsProducts = toolTipsProducts;
             switch (ViewLevel)
             {

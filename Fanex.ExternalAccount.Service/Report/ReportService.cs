@@ -15,7 +15,10 @@
     public class ReportService : IReportService
     {
         private const string BalanceUpDayKey = "SUNPLUS.AGENT.MODEL.BL.REPORTS.BALANCEUPDAY";
+        private const string ExcludeProductIdsCacheKey = "Fanex.ExternalAccount.Service.Impl.Report.ExcludeProductIds";
+
         private static readonly ICache Cache = CacheService.CreateInstance(CacheType.MemoryCache);
+
         private readonly IReportDao _reportDao;
 
         public ReportService(IReportDao reportRespository = null)
@@ -36,25 +39,25 @@
         public List<SuggestedUserName> GetSuggestedUserName(int custId, string username, string groupName)
             => _reportDao.EAS_CustomerSelUserSearch(custId, username, groupName);
 
-        public List<DailyWinLoss> GetDailyWinLoss(DateTime winlostDate, int custId, string groupName)
+        public List<DailyWinLoss> GetDailyWinLoss(DateTime winlostDate, int custId, string groupName, string excludeProductIds)
             => CheckConstraintMoveBetsDay(winlostDate)
-                ? _reportDao.EAS_Rpt_WinLossDaily_Com(winlostDate, custId, groupName)
-                : _reportDao.EAS_Rpt_WinLossDaily_Com14(winlostDate, custId, groupName);
+                ? _reportDao.EAS_Rpt_WinLossDaily_Com(winlostDate, custId, groupName, excludeProductIds)
+                : _reportDao.EAS_Rpt_WinLossDaily_Com14(winlostDate, custId, groupName, excludeProductIds);
 
-        public List<DailyWinLoss> GetDailyWinLossSuper(DateTime winlostDate, int custId, int masterId)
+        public List<DailyWinLoss> GetDailyWinLossSuper(DateTime winlostDate, int custId, int masterId, string excludeProductIds)
             => CheckConstraintMoveBetsDay(winlostDate)
-                ? _reportDao.EAS_Rpt_WinLossDaily_SAg(winlostDate, custId, masterId)
-                : _reportDao.EAS_Rpt_WinLossDaily_SAg14(winlostDate, custId, masterId);
+                ? _reportDao.EAS_Rpt_WinLossDaily_SAg(winlostDate, custId, masterId, excludeProductIds)
+                : _reportDao.EAS_Rpt_WinLossDaily_SAg14(winlostDate, custId, masterId, excludeProductIds);
 
-        public List<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId)
+        public List<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId, string excludeProductIds)
             => CheckConstraintMoveBetsDay(winlostDate)
-                ? _reportDao.EAS_Rpt_WinLossDaily_MAg(winlostDate, custId, agentId)
-                : _reportDao.EAS_Rpt_WinLossDaily_MAg14(winlostDate, custId, agentId);
+                ? _reportDao.EAS_Rpt_WinLossDaily_MAg(winlostDate, custId, agentId, excludeProductIds)
+                : _reportDao.EAS_Rpt_WinLossDaily_MAg14(winlostDate, custId, agentId, excludeProductIds);
 
-        public List<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId)
+        public List<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId, string excludeProductIds)
             => CheckConstraintMoveBetsDay(winlostDate)
-                ? _reportDao.EAS_Rpt_WinLossDaily_Ag(winlostDate, custId, memberId)
-                : _reportDao.EAS_Rpt_WinLossDaily_Ag14(winlostDate, custId, memberId);
+                ? _reportDao.EAS_Rpt_WinLossDaily_Ag(winlostDate, custId, memberId, excludeProductIds)
+                : _reportDao.EAS_Rpt_WinLossDaily_Ag14(winlostDate, custId, memberId, excludeProductIds);
 
         public List<WinLossDetail> GetSuperWinLossDetail(
             string groupname,
@@ -133,6 +136,19 @@
             }
 
             return balanceUpDay;
+        }
+
+        public IEnumerable<int> GetExcludeProductIds(string groupName)
+        {
+            var excludeProductIds = Cache.Get<IEnumerable<int>>($"{ExcludeProductIdsCacheKey}.{groupName}");
+
+            if (excludeProductIds == null)
+            {
+                excludeProductIds = _reportDao.GetExcludeProductIds(groupName);
+                Cache.Set($"{ExcludeProductIdsCacheKey}.{groupName}", excludeProductIds, DateTime.Now.AddMinutes(5));
+            }
+
+            return excludeProductIds;
         }
 
         private static bool CheckConstraintMoveBetsDay(DateTime fromDate)

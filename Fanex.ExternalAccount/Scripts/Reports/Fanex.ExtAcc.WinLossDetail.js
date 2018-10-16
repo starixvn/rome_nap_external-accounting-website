@@ -21,6 +21,7 @@ Fanex.ExtAcc.WinLossDetail = {
     fixedsortlist: new Array(),
     url: resolveClientUrl("WinLossDetail/GetData"),
     viewlevel: 5,
+    includePockerGames: false,
     dataSource: [],
     $this: null,
 
@@ -49,7 +50,6 @@ Fanex.ExtAcc.WinLossDetail = {
         }
     },
     CallSubmit: function () {
-
         this.groupName = $("#selectedGroupName").html();
         this.ResetParameters();
         this.username = Fanex.encodeHtml($("#txtUserName").val());
@@ -143,7 +143,7 @@ Fanex.ExtAcc.WinLossDetail = {
             context: $this,
             url: resolveClientUrl("Filter/ProductsList"),
             type: "GET",
-            data: { isHideInactiveProduct: isHide },
+            data: { isHideInactiveProduct: isHide, groupName: this.groupName },
             dataType: "json",
             cache: false,
             success: function (result) {
@@ -230,6 +230,8 @@ Fanex.ExtAcc.WinLossDetail = {
             }
         });
 
+        $this.groupName = $("#selectedGroupName").html();
+
         this.ProductsList(true);
 
         $("#Submit").click(function (e) {
@@ -245,7 +247,8 @@ Fanex.ExtAcc.WinLossDetail = {
         $("#exporttoexcel").click(function () {
             Fanex.ExtAcc.WinLossDetail.getParameterProducts();
             var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + "&viewlevel=" + $this.viewlevel +
-            "&custid=" + $this.custId + "&groupname=" + $this.groupName + "&username=" + Fanex.ExtAcc.WinLossDetail.username;
+            "&custid=" + $this.custId + "&groupname=" + $this.groupName + "&username=" + Fanex.ExtAcc.WinLossDetail.username
+            + "&includepockergames=" + $this.includePockerGames;
             var url = resolveClientUrl("WinLossDetail/ExportWinLossDetailToExcel?") + params + Fanex.ExtAcc.WinLossDetail.parameterProducts;
 
             top.exportExcel(url, document);
@@ -287,8 +290,6 @@ Fanex.ExtAcc.WinLossDetail = {
 
             $this.Databind($this.agentname);
         });
-
-        $this.groupName = $("#selectedGroupName").html();
 
         $("#txtUserName").keypress(function (e) {
             if (typeof e == "undefined") e = window.event;
@@ -760,6 +761,7 @@ Fanex.ExtAcc.WinLossDetail = {
         this.custId = 0;
         this.username = '';
         this.viewlevel = 4;
+        this.includePockerGames = false;
     },
     GetFromDateToDate: function () {
         if ($(".from-to-date").css('display') != 'none') {
@@ -775,6 +777,7 @@ Fanex.ExtAcc.WinLossDetail = {
         this.username = !username ? "" : username;
         this.GetFromDateToDate();
         this.groupName = $("#selectedGroupName").html();
+        this.includePockerGames = $('#chkIncludePockerGames').is(":checked");
 
         var dateInfo;
         if (this.fromdate == this.todate) {
@@ -794,6 +797,7 @@ Fanex.ExtAcc.WinLossDetail = {
                             + "&fromdate=" + this.fromdate
                             + "&todate=" + this.todate
                             + "&viewlevel=" + this.viewlevel
+                            + "&includepockergames=" + this.includePockerGames
                             + this.parameterProducts;
 
         Fanex.ExtAcc.BlockUI();
