@@ -70,6 +70,8 @@
 
                     $scope.CurrentAmount = numeral(data.CurrentAmount).format('0,0.00');
                     $scope.MaxWinCredit = numeral(data.MaxWinCredit).format('0,0.00');
+                    $scope.Current = data.CurrentAmount;
+                    $scope.Max = data.MaxWinCredit;
 
                     if (parseInt($scope.percent) == -2) {
                         $scope.percent = "N/A";
