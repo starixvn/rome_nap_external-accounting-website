@@ -62,7 +62,7 @@
         </div>
     </div>
     <div class="group form-action">
-        <input class="btn -submit buttonPopup" type="button" value="Update" onclick="Fanex.ExtAcc.Customer.EditInfo()" />
+        <input class="btn -submit buttonPopup" type="button" value="Update" onclick="Fanex.ExtAcc.Customer.EditInfo(true)" />
         <input class="btn -submit buttonPopup" type="button" value="Reset" onclick="Fanex.ExtAcc.Customer.ResetInfo()" />
     </div>
     @Html.AntiForgeryToken()
@@ -75,5 +75,4 @@
     Fanex.ExtAcc.Customer.MobilePhone = $('#MobilePhone').val();
     Fanex.ExtAcc.Customer.Email = $('#Email').val();
     Fanex.ExtAcc.Customer.Fax = $('#Fax').val();
-    Fanex.ExtAcc.Customer.RoleId = @Role.Super;
 </script>

@@ -326,7 +326,7 @@
         $('#FirstName').focus();
     },
 
-    EditInfo: function () {
+    EditInfo: function (isEditSuper) {
         var firstName = $('#FirstName').val();
         var lastName = $('#LastName').val();
         var phone = $('#Phone').val();
@@ -335,7 +335,7 @@
         var fax = $('#Fax').val();
         var remark = $('#Remark').val();
         var editUrl = 'Customer/EditInfoPost';
-        if (Fanex.ExtAcc.Customer.RoleId == this.Super) {
+        if (isEditSuper) {
             editUrl = 'MainSuper/EditInfoPost';
         }
 
