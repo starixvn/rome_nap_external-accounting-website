@@ -45,11 +45,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult Index(string id)
-        {
-            var showIncludePockerGamesOption = IsShowIncludePockerGames(id);
-
-            return PartialViewBase(showIncludePockerGamesOption);
-        }
+            => PartialViewBase(IsShowIncludePokerGames(id));
 
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,
             Policy = AuthenticateAction.AuthenticationType.Read)]
@@ -61,8 +57,8 @@
             _mrecommend = CheckRequest.GetIntRequest("mrecommend", 0);
             _recommend = CheckRequest.GetIntRequest("recommend", 0);
 
-            var includePockerGames = CheckRequest.GetBooleanRequest("includepockergames", false);
-            var excludeProductIds = IsShowIncludePockerGames(ExtRequest.GetGroupName()) && !includePockerGames
+            var includePokerGames = CheckRequest.GetBooleanRequest("includepokergames", false);
+            var excludeProductIds = IsShowIncludePokerGames(ExtRequest.GetGroupName()) && !includePokerGames
                 ? ProductConstants.PokerGames.ToString()
                 : string.Empty;
 

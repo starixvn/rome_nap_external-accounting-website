@@ -43,10 +43,7 @@
         }
 
         public ActionResult Index(string id)
-        {
-            var showIncludePockerGamesOption = IsShowIncludePockerGames(id);
-            return View(showIncludePockerGamesOption);
-        }
+            => View(IsShowIncludePokerGames(id));
 
         [AntiXSRFFilter]
         public ActionResult GetData(WinLossDetailRequest request)
@@ -96,7 +93,7 @@
             }
 
             var excludeProductIds = reportService.GetExcludeProductIds(ExtRequest.GetGroupName())
-                .Where(p => !(p == ProductConstants.PokerGames && request.IncludePockerGames));
+                .Where(p => !(p == ProductConstants.PokerGames && request.IncludePokerGames));
 
             var formatedProducts = request.GetProductNames(GetProductList(excludeProductIds));
             var memoryStream = builder.Build(formatedProducts);
@@ -150,7 +147,7 @@
         public DateTime todate { get; set; }
         public int viewlevel { get; set; }
 
-        public bool IncludePockerGames { get; set; }
+        public bool IncludePokerGames { get; set; }
 
         public bool IsSearch() => custId == 0;
 
@@ -172,7 +169,7 @@
                 }
             }
 
-            if (IncludePockerGames)
+            if (IncludePokerGames)
             {
                 formatedProductIds.Add(ProductConstants.PokerGames);
             }
@@ -191,7 +188,7 @@
                 productList.ForEach(p =>
                 {
                     if (!p.Key.Equals(ShowAll, StringComparison.OrdinalIgnoreCase)
-                        && (o.Value || (IncludePockerGames && p.Key.Equals(ShowPG, StringComparison.OrdinalIgnoreCase)))
+                        && (o.Value || (IncludePokerGames && p.Key.Equals(ShowPG, StringComparison.OrdinalIgnoreCase)))
                         && o.Key.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
                     {
                         formatedProducts += p.Value + Seperator;

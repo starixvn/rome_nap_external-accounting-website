@@ -21,7 +21,7 @@ Fanex.ExtAcc.WinLossDetail = {
     fixedsortlist: new Array(),
     url: resolveClientUrl("WinLossDetail/GetData"),
     viewlevel: 5,
-    includePockerGames: false,
+    includePokerGames: false,
     dataSource: [],
     $this: null,
 
@@ -248,7 +248,7 @@ Fanex.ExtAcc.WinLossDetail = {
             Fanex.ExtAcc.WinLossDetail.getParameterProducts();
             var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + "&viewlevel=" + $this.viewlevel +
             "&custid=" + $this.custId + "&groupname=" + $this.groupName + "&username=" + Fanex.ExtAcc.WinLossDetail.username
-            + "&includepockergames=" + $this.includePockerGames;
+            + "&includepokergames=" + $this.includePokerGames;
             var url = resolveClientUrl("WinLossDetail/ExportWinLossDetailToExcel?") + params + Fanex.ExtAcc.WinLossDetail.parameterProducts;
 
             top.exportExcel(url, document);
@@ -761,7 +761,7 @@ Fanex.ExtAcc.WinLossDetail = {
         this.custId = 0;
         this.username = '';
         this.viewlevel = 4;
-        this.includePockerGames = false;
+        this.includePokerGames = false;
     },
     GetFromDateToDate: function () {
         if ($(".from-to-date").css('display') != 'none') {
@@ -777,7 +777,7 @@ Fanex.ExtAcc.WinLossDetail = {
         this.username = !username ? "" : username;
         this.GetFromDateToDate();
         this.groupName = $("#selectedGroupName").html();
-        this.includePockerGames = $('#chkIncludePockerGames').is(":checked");
+        this.includePokerGames = $('#chkIncludePokerGames').is(":checked");
 
         var dateInfo;
         if (this.fromdate == this.todate) {
@@ -797,7 +797,7 @@ Fanex.ExtAcc.WinLossDetail = {
                             + "&fromdate=" + this.fromdate
                             + "&todate=" + this.todate
                             + "&viewlevel=" + this.viewlevel
-                            + "&includepockergames=" + this.includePockerGames
+                            + "&includepokergames=" + this.includePokerGames
                             + this.parameterProducts;
 
         Fanex.ExtAcc.BlockUI();
