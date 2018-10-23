@@ -155,39 +155,56 @@ function CustomerController($scope, $element) {
             }
         }).success(function (result) {
             if (result.errorCode == 0) {
-                var buildWinLossHandler = function (initArray, percent, maxAmount) {
-                    if (maxAmount) {
-                        if (percent >= 100) {
+                var buildWinLossHandler = function (initArray, current, percent, maxAmount) {
+                    if (percent >= 100 || percent == -2 || percent > 0) { // >= 100 or N/A or specific
+                        if (percent >= 100 || percent == -2) {
                             initArray.push('<font style="color: red">');
-                            initArray.push(percent.toFixed(2).formatNumber());
-                            initArray.push('%</font>');
                         }
-                        else {
-                            initArray.push(percent.toFixed(2).formatNumber());
-                            initArray.push('%');
+                        initArray.push(percent == -2 ? "N/A" : percent.toFixed(2).formatNumber() + "%");
+                        if (percent >= 100 || percent == -2) {
+                            initArray.push('</font>');
                         }
 
                         initArray.push('&nbsp;&nbsp;');
-                        initArray.push(casinoLang.of);
-                        initArray.push('&nbsp;&nbsp;');
+                        initArray.push('(');
+                        if (current >= maxAmount && maxAmount != 0) {
+                            initArray.push('<font style="color: red">');
+                        }
+                        initArray.push(current.toFixed(2).formatNumber());
+                        if (current >= maxAmount && maxAmount != 0) {
+                            initArray.push('</font>');
+                        }
+                        initArray.push('/');
+                        if (maxAmount <= 0) {
+                            initArray.push('<font style="color: red">');
+                        }
                         initArray.push(maxAmount.toFixed(2).formatNumber());
+                        if (maxAmount <= 0) {
+                            initArray.push('</font>');
+                        }
+                        initArray.push(')');
                     }
-                    else {
-                        initArray.push(casinoLang.unlimited);
+                    else if (percent == -1) { // Unlimited
+                        initArray.push(casinoLang.lblunlimited);
+                    }
+                    else { // 0%
+                        initArray.push('0%');
                     }
 
-                    return '<p style="margin:3px 0;">' + initArray.join('') + '</p>';
+                    return '<p style="margin:3px 0;line-height:1.2;">' + initArray.join('') + '</p>';
                 };
 
                 var currentWinLoss = result.result;
 
                 var winningHtml = buildWinLossHandler(
                     [casinoLang.winning, ':&nbsp;&nbsp;'],
+                    currentWinLoss.currentAmount,
                     currentWinLoss.winPercent,
                     currentWinLoss.maxWinAmount);
 
                 var losingHtml = buildWinLossHandler(
                     [casinoLang.losing, ':&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'],
+                    currentWinLoss.currentAmount * -1,
                     currentWinLoss.lossPercent,
                     currentWinLoss.maxLossAmount);
 

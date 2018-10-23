@@ -251,7 +251,7 @@ Fanex.ExtAcc = {
     },
 
     UnBlockUI: function () {
-        $.unblockUI(document);
+        $.unblockUI();
     },
 
     modules: [

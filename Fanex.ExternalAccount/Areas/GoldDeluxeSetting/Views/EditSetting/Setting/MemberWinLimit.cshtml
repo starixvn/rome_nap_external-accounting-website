@@ -32,17 +32,14 @@
                             <div id="showWinLimit" class="member-win-limit" data-ng-click="showCurrentWinLimit(@Model.CustId)" data-ng-show="!isShowCurrentWinLimit">
                                 @GoldDeluxeLang.lblClickToViewCurrentWinLimit
                             </div>
-                            <div class="current-win-limit {{isPercentShowRedColor?'text-red':''}}" id="currentWinLimit"
+                            <div id="currentWinLimit"
                                  data-ng-show="isShowCurrentWinLimit && currentWinLimit !='-1'">
-                                {{percent}} %
+                                <span class="{{isPercentShowRedColor?'text-red':''}}">{{percent}}{{percent == 'N/A' ? '' : '%'}}</span>
+                                &nbsp;&nbsp;<span data-ng-show="percent != 0">(<span class="{{Current >= Max && Max != 0 ? 'text-red':''}}">{{CurrentAmount}}</span>/<span class="{{Max <= 0 ? 'text-red' : ''}}">{{MaxWinCredit}}</span>)</span>
                             </div>
                             <div class="current-win-limit" id="currentWinLimit" data-ng-show="isShowCurrentWinLimit && currentWinLimit == '-1'">
                                 @GoldDeluxeLang.lblUnlimited
                             </div>
-                            <span id="ofMaxCredit" data-ng-show="isShowCurrentWinLimit && currentWinLimit !='-1'">
-                                @GoldDeluxeLang.lblOf
-                                {{currentWinLimit}}
-                            </span>
                         </td>
                         <td class="col-xs-3"></td>
                     </tr>
