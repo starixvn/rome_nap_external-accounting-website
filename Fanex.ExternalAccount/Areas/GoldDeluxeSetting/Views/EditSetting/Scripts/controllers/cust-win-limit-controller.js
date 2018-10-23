@@ -61,6 +61,9 @@
                     if (data.MaxWinLimit === 0) {
                         $scope.currentWinLimit = -1;
                     }
+                    else if (data.WinPercent == 0) {
+                        $scope.percent = 0;
+                    }
                     else {
                         $scope.percent = numeral(data.WinPercent).format('0,0.00');
                     }
