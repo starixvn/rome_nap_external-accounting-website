@@ -34,7 +34,7 @@
             return HssfWorkbook;
         }
 
-        private void WriteBodyReport(ISheet resultSheet)
+        public override void WriteBodyReport(ISheet resultSheet)
         {
             var index = 1;
             var toRowId = 3;
@@ -89,7 +89,7 @@
             resultSheet.GetRow(toRowIndex).WriteCells(FirstColumnIndex, values);
         }
 
-        private void BuildMainTitle(ISheet resultSheet)
+        public override void BuildMainTitle(ISheet resultSheet)
         {
             var mainTitle = _builder.FromDate.Equals(_builder.ToDate)
                 ? $"Member Win Loss Detail on {_builder.FromDate}"

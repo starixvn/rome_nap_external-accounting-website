@@ -27,6 +27,18 @@
         }
 
         public Result Age_CustomerUpdMasterComm(ICommissionSetting commissionSetting, IRequestContext requestContext)
+            => DoCustomerUpdComm(commissionSetting, requestContext, "Age_CustomerUpdMasterComm");
+
+        public Result Age_CustomerUpdAgentComm(ICommissionSetting commissionSetting, IRequestContext requestContext)
+            => DoCustomerUpdComm(commissionSetting, requestContext, "Age_CustomerUpdAgentComm");
+
+        public Result Age_CustomerUpdUserComm(ICommissionSetting commissionSetting, IRequestContext requestContext)
+            => DoCustomerUpdComm(commissionSetting, requestContext, "Age_CustomerUpdUserComm");
+
+        public Result DoCustomerUpdComm(
+            ICommissionSetting commissionSetting,
+            IRequestContext requestContext,
+            string spName)
         {
             var parameters = new Hashtable();
             commissionSetting.MapToSpParameters(parameters);
@@ -38,36 +50,6 @@
             parameters.Add("ip", requestContext.IP);
 
             var result = DbHelper.ExecuteDbResult("Age_CustomerUpdMasterComm", parameters);
-            return new Result(result.Outputs["errorcode"], result.Outputs["errormsg"], result.ResultSet);
-        }
-
-        public Result Age_CustomerUpdAgentComm(ICommissionSetting commissionSetting, IRequestContext requestContext)
-        {
-            var parameters = new Hashtable();
-            commissionSetting.MapToSpParameters(parameters);
-
-            parameters.Add("custid", requestContext.TargetCustId);
-            parameters.Add("userid", requestContext.CustId);
-            parameters.Add("subaccid", requestContext.SubAccId);
-            parameters.Add("language", requestContext.Language);
-            parameters.Add("ip", requestContext.IP);
-
-            var result = DbHelper.ExecuteDbResult("Age_CustomerUpdAgentComm", parameters);
-            return new Result(result.Outputs["errorcode"], result.Outputs["errormsg"], result.ResultSet);
-        }
-
-        public Result Age_CustomerUpdUserComm(ICommissionSetting commissionSetting, IRequestContext requestContext)
-        {
-            var parameters = new Hashtable();
-            commissionSetting.MapToSpParameters(parameters);
-
-            parameters.Add("custid", requestContext.TargetCustId);
-            parameters.Add("userid", requestContext.CustId);
-            parameters.Add("subaccid", requestContext.SubAccId);
-            parameters.Add("language", requestContext.Language);
-            parameters.Add("ip", requestContext.IP);
-
-            var result = DbHelper.ExecuteDbResult("Age_CustomerUpdUserComm", parameters);
             return new Result(result.Outputs["errorcode"], result.Outputs["errormsg"], result.ResultSet);
         }
     }

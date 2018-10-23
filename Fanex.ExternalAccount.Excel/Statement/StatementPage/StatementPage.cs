@@ -28,7 +28,7 @@
                 BoldAllFonts();
             }
 
-            
+
             BuildMainTitle(resultSheet);
             WriteBodyReport(resultSheet);
 
@@ -37,7 +37,7 @@
             return HssfWorkbook;
         }
 
-        private void WriteBodyReport(ISheet resultSheet)
+        public override void WriteBodyReport(ISheet resultSheet)
         {
             var index = 0;
             var toRowId = 2;
@@ -102,8 +102,7 @@
 
         }
 
-
-        private void BuildMainTitle(ISheet resultSheet)
+        public override void BuildMainTitle(ISheet resultSheet)
         {
             var mainTitle = $" Statement - {_builder.Username} - From {_builder.FromDate} To {_builder.ToDate}";
 

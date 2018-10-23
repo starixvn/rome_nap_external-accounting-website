@@ -33,7 +33,7 @@
             return HssfWorkbook;
         }
 
-        private void WriteBodyReport(ISheet resultSheet)
+        public override void WriteBodyReport(ISheet resultSheet)
         {
             var index = 1;
             var toRowId = 3;
@@ -118,10 +118,10 @@
             resultSheet.GetRow(toRowIndex).WriteCells(FirstColumnIndex, values);
         }
 
-        private void BuildMainTitle(ISheet resultSheet)
+        public override void BuildMainTitle(ISheet resultSheet)
         {
             var downlineLevel = _builder.RoleId.DirectDownlineLevel();
-            
+
             var mainTitle = $"{downlineLevel.DisplayRoleName()} Daily Win Loss on {_builder.WinlostDate}";
 
             resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);

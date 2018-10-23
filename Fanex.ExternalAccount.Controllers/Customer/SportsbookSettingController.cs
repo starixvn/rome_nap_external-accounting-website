@@ -3,7 +3,6 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.Linq;
     using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
@@ -18,9 +17,9 @@
     using Service.Impl.Customer;
     using Service.Interface.Customer;
     using Utilities;
+    using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
     using CustomerService = PTEngine.Services.CustomerService;
     using Result = DTO.Result;
-    using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
 
     [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
     public class SportsbookSettingController : BaseController
@@ -225,7 +224,7 @@
                 SubAccId = 0,
                 UserName = CurrentSession.UserName.ToUpper(CultureInfo.InvariantCulture)
             };
-            
+
             var customer = superService.GetCustomerForCompanyEditSuper(context);
 
             return JsonBase(new { context, customer });
@@ -260,18 +259,8 @@
         public ActionResult SuperUpdateMasterPTPost(int custId, int parentId, string txtCustomerObject,
             bool isUpdateAllMember, decimal newPositionTaking)
         {
-            var mult = Request["isMult"];
-            var para = Request["para"];
-            var param = new Hashtable();
+            var param = GetParamFromRequest();
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-            if (!string.IsNullOrWhiteSpace(para))
-            {
-                for (var i = 0; i < para.Length; i++)
-                {
-                    param.Add(i, para[i].ToString());
-                }
-            }
-
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
 
             var requestContext = new RequestContext
@@ -286,6 +275,7 @@
                 SystemId = (byte)Config.SystemId
             };
 
+            var mult = Request["isMult"];
             var result = !string.IsNullOrWhiteSpace(mult) && mult.Equals("true")
                 ? customerService.SuperUpdateMultipleMasters(customer, requestContext, isUpdateAllMember, newPositionTaking,
                     param)
@@ -328,17 +318,8 @@
         public ActionResult MasterUpdateAgentPTPost(int custId, int parentId, string txtCustomerObject,
             bool isUpdateAllMember, decimal newPositionTaking)
         {
-            var mult = Request["isMult"];
-            var para = Request["para"];
-            var param = new Hashtable();
+            var param = GetParamFromRequest();
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-            if (!string.IsNullOrWhiteSpace(para))
-            {
-                for (var i = 0; i < para.Length; i++)
-                {
-                    param.Add(i, para[i].ToString());
-                }
-            }
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
             var requestContext = new RequestContext
@@ -353,6 +334,7 @@
                 SystemId = (byte)Config.SystemId
             };
 
+            var mult = Request["isMult"];
             var result = !string.IsNullOrWhiteSpace(mult) && mult.Equals("true")
                 ? customerService.MasterUpdateMultipleAgents(customer, requestContext, isUpdateAllMember, newPositionTaking,
                     param)
@@ -394,18 +376,8 @@
         [AntiXSRFFilter]
         public ActionResult AgentUpdateMemberPTPost(int custId, int parentId, string txtCustomerObject)
         {
-            var mult = Request["isMult"];
-            var para = Request["para"];
-            var param = new Hashtable();
+            var param = GetParamFromRequest();
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-            if (!string.IsNullOrWhiteSpace(para))
-            {
-                for (var i = 0; i < para.Length; i++)
-                {
-                    param.Add(i, para[i].ToString());
-                }
-            }
-
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
 
             var requestContext = new RequestContext
@@ -420,6 +392,7 @@
                 SystemId = (byte)Config.SystemId
             };
 
+            var mult = Request["isMult"];
             var result = !string.IsNullOrWhiteSpace(mult) && mult.Equals("true")
                 ? customerService.AgentUpdateMultipleMembers(customer, requestContext, param)
                 : customerService.AgentUpdateMember(customer, requestContext);
@@ -723,6 +696,21 @@
             }
 
             return true;
+        }
+
+        private Hashtable GetParamFromRequest()
+        {
+            var para = Request["para"];
+            var param = new Hashtable();
+            if (!string.IsNullOrWhiteSpace(para))
+            {
+                for (var i = 0; i < para.Length; i++)
+                {
+                    param.Add(i, para[i].ToString());
+                }
+            }
+
+            return param;
         }
     }
 }

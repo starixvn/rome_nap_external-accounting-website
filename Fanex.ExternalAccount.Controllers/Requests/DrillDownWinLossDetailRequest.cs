@@ -1,13 +1,20 @@
-﻿namespace Fanex.ExternalAccount.Controllers.Requests.PokerGamesWinLossDetail
+﻿namespace Fanex.ExternalAccount.Controllers.Requests
 {
     using System;
     using Core.Shared;
     using Service.Interface.Report;
     using Utilities;
 
-    public class DrillDownPokerGamesWinLossDetailRequest : IDrillDownPokerGamesWinLossDetailRequest
+    public class DrillDownWinLossDetailRequest : IDrillDownWinLossDetailRequest
     {
-        public DrillDownPokerGamesWinLossDetailRequest(PokerGamesWinLossDetailRequest request)
+        public DrillDownWinLossDetailRequest(WinLossDetailRequest request, dynamic toolTipsProducts)
+            : this(request)
+        {
+            ProductIds = request.GetProductIds();
+            ToolTipsProducts = toolTipsProducts;
+        }
+
+        public DrillDownWinLossDetailRequest(WinLossDetailRequest request)
         {
             GroupName = request.groupName;
             CustId = request.custId;
@@ -44,6 +51,8 @@
         public int ViewLevel { get; }
         public DateTime FromDate { get; }
         public DateTime ToDate { get; }
+        public string ProductIds { get; }
+        public dynamic ToolTipsProducts { get; }
 
         public bool IsValid => !ViewLevel.IsMember()
                                && ViewLevel <= Role.Group
