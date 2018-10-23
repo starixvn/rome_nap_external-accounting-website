@@ -6,13 +6,7 @@
     {
         public int AgentId { get; set; }
 
-        public string Language
-        {
-            get
-            {
-                return "E";
-            }
-        }
+        public static readonly string Language = "E";
 
         public override string GetSettingKey()
             => "Age_MaxMemberLimitBySuperCheck";

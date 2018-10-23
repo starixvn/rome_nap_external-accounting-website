@@ -49,7 +49,7 @@
             parameters.Add("language", requestContext.Language);
             parameters.Add("ip", requestContext.IP);
 
-            var result = DbHelper.ExecuteDbResult("Age_CustomerUpdMasterComm", parameters);
+            var result = DbHelper.ExecuteDbResult(spName, parameters);
             return new Result(result.Outputs["errorcode"], result.Outputs["errormsg"], result.ResultSet);
         }
     }

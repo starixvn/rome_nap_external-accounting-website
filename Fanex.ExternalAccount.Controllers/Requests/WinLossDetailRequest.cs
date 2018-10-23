@@ -1,11 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Requests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Core.Context;
     using Core.Reports;
     using Core.Reports.WinLossDetail;
+    using Core.Shared;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class WinLossDetailRequest
     {
@@ -38,7 +39,7 @@
         public DateTime todate { get; set; }
         public int viewlevel { get; set; }
 
-        public bool IncludePockerGames { get; set; }
+        public bool IncludePokerGames { get; set; }
 
         public bool IsSearch() => custId == 0;
 
@@ -60,6 +61,11 @@
                 }
             }
 
+            if (IncludePokerGames)
+            {
+                formatedProductIds.Add(ProductConstants.PokerGames);
+            }
+
             return string.Join(",", formatedProductIds);
         }
 
@@ -72,8 +78,8 @@
             {
                 productList.ForEach(p =>
                 {
-                    if (!p.Key.Equals(ShowAll, StringComparison.OrdinalIgnoreCase) && o.Value
-                        && (o.Value || (IncludePockerGames && p.Key.Equals(ShowPG, StringComparison.OrdinalIgnoreCase)))
+                    if (!p.Key.Equals(ShowAll, StringComparison.OrdinalIgnoreCase)
+                        && (o.Value || (IncludePokerGames && p.Key.Equals(ShowPG, StringComparison.OrdinalIgnoreCase)))
                         && o.Key.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
                     {
                         formatedProducts += p.Value + Seperator;

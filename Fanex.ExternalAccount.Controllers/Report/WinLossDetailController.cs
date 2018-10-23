@@ -41,10 +41,7 @@
         }
 
         public ActionResult Index(string id)
-        {
-            var showIncludePockerGamesOption = IsShowIncludePockerGames(id);
-            return View(showIncludePockerGamesOption);
-        }
+            => View(IsShowIncludePokerGames(id));
 
         [AntiXSRFFilter]
         public ActionResult GetData(WinLossDetailRequest request)
@@ -94,7 +91,7 @@
             }
 
             var excludeProductIds = reportService.GetExcludeProductIds(ExtRequest.GetGroupName())
-                .Where(p => !(p == ProductConstants.PokerGames && request.IncludePockerGames));
+                .Where(p => !(p == ProductConstants.PokerGames && request.IncludePokerGames));
 
             var formatedProducts = request.GetProductNames(GetProductList(excludeProductIds));
             var memoryStream = builder.Build(formatedProducts);
