@@ -2,7 +2,7 @@
 {
     using Core.Shared;
 
-    public class ExportPokerGamesWinLossDetailRequest : PokerGamesWinLossDetailRequest
+    public class ExportPokerGamesWinLossDetailRequest : WinLossDetailRequest
     {
         private const string DateFormat = "yyyyMMdd";
 

@@ -1026,9 +1026,9 @@ namespace Fanex.ExternalAccount.Utilities {
         /// <summary>
         ///   Looks up a localized string similar to Include Poker Games.
         /// </summary>
-        public static string IncludePockerGames {
+        public static string IncludePokerGames {
             get {
-                return ResourceManager.GetString("IncludePockerGames", resourceCulture);
+                return ResourceManager.GetString("IncludePokerGames", resourceCulture);
             }
         }
         

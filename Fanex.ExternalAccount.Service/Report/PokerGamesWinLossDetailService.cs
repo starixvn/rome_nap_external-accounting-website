@@ -2,8 +2,8 @@
 {
     public interface PokerGamesWinLossDetailService
     {
-        dynamic DrillDownPokerGamesWinLossDetail(IDrillDownPokerGamesWinLossDetailRequest request);
+        dynamic DrillDownPokerGamesWinLossDetail(IDrillDownWinLossDetailRequest request);
 
-        dynamic SearchPokerGamesWinLossDetail(ISearchPokerGamesWinLossDetailRequest request);
+        dynamic SearchPokerGamesWinLossDetail(ISearchWinLossDetailRequest request);
     }
 }

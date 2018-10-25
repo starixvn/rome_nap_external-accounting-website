@@ -19,7 +19,7 @@
             this.reportService = reportService ?? new ReportService();
         }
 
-        protected bool IsShowIncludePockerGames(string groupName)
+        protected bool IsShowIncludePokerGames(string groupName)
             => WinLossDetailHelper.IsShowProduct("showPG", currentSession)
             && reportService.GetExcludeProductIds(groupName).Contains(ProductConstants.PokerGames);
     }

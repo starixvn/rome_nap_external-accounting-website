@@ -2809,6 +2809,7 @@
     <Content Include="Views\DataRange\Index.cshtml" />
     <Content Include="Views\MainSuper\EditInfo.cshtml" />
     <Content Include="Views\PokerGamesWinLossDetail\Index.cshtml" />
+    <Content Include="Views\Customer\LimitMemberCreation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">

@@ -205,7 +205,24 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public ActionResult AgentAddNewMember() => PartialViewBase();
+        public ActionResult AgentAddNewMember(int custId)
+        {
+            var isLimitMemberCreationBySuper = _agentService.IsLimitMemberCreationBySuper(new CheckMemberCreationCriteria
+            {
+                AgentId = custId
+            });
+
+            if (!isLimitMemberCreationBySuper.ErrorCode.Equals("0"))
+            {
+                return new PartialViewResult
+                {
+                    ViewName = "~/Views/Customer/LimitMemberCreation.cshtml",
+                    ViewData = new ViewDataDictionary(isLimitMemberCreationBySuper.ErrorMessage)
+                };
+            }
+
+            return PartialViewBase();
+        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]

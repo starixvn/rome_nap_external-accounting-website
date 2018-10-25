@@ -33,7 +33,7 @@
             }
         }
 
-        public dynamic DrillDownPokerGamesWinLossDetail(IDrillDownPokerGamesWinLossDetailRequest request)
+        public dynamic DrillDownPokerGamesWinLossDetail(IDrillDownWinLossDetailRequest request)
         {
             if (request.IsNotValid)
             {
@@ -60,7 +60,7 @@
                 };
         }
 
-        public dynamic SearchPokerGamesWinLossDetail(ISearchPokerGamesWinLossDetailRequest request)
+        public dynamic SearchPokerGamesWinLossDetail(ISearchWinLossDetailRequest request)
         {
             var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
 

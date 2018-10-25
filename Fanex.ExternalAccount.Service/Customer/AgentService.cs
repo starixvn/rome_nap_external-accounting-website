@@ -4,6 +4,8 @@
     using DataAccess.Impl.Customer;
     using DataAccess.Interface.Customer;
     using Interface.Customer;
+    using DTO;
+    using DataAccess.Criteria.Customer;
 
     public class AgentService : CustomerService, IAgentService
     {
@@ -17,5 +19,7 @@
             bool? closed = null,
             bool? suspended = null)
             => _dao.GetData(userId, recommend, custId, enabled, closed, suspended);
+
+        public Result IsLimitMemberCreationBySuper(CheckMemberCreationCriteria criteria) => _dao.IsLimitMemberCreationBySuper(criteria);
     }
 }

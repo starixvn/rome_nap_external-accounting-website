@@ -1,6 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Reports.PokerGamesWinLossDetail
 {
-    using System.Collections.Generic;
     using System.Linq;
     using Core.Shared;
     using NPOI.HSSF.UserModel;
@@ -18,93 +17,26 @@
             _builder = builder;
         }
 
-        public HSSFWorkbook Build()
+        public HSSFWorkbook Build() => Build("PokerGamesWinLoss", _builder.IsBold);
+
+        public override void WriteBodyReport(ISheet resultSheet)
         {
-            var resultSheet = HssfWorkbook.GetSheet("PokerGamesWinLoss");
-
-            if (_builder.IsBold)
-            {
-                BoldAllFonts();
-            }
-
-            BuildMainTitle(resultSheet);
-            WriteBodyReport(resultSheet);
-
-            HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(TemplateSheet));
-
-            return HssfWorkbook;
-        }
-
-        private void WriteBodyReport(ISheet resultSheet)
-        {
-            var index = 1;
-            var toRowId = 3;
-
-            foreach (var item in _builder.Data)
-            {
-                var fromRowId = index % 2 == 0 ? OddRowIndex : EvenRowIndex;
-                resultSheet.CopyRow(TemplateSheet, fromRowId, toRowId, FirstColumnIndex, LastColumnIndex);
-
-                var values = new List<object>
-                {
-                    item.Username,
-                    item.Turnover,
-                    item.NetTurnover,
-                    item.TaxComm,
-                    item.MemberWinLoss,
-                    item.MemberInsuranceGemsWinLoss,
-                    item.MemberComm,
-                    item.MemberTotal,
-                    item.AgInsuranceGemsWinLoss,
-                    item.AgComm,
-                    item.AgTotal,
-                    item.MAgInsuranceGemsWinLoss,
-                    item.MAgComm,
-                    item.MAgTotal,
-                    item.SAgInsuranceGemsWinLoss,
-                    item.SAgComm,
-                    item.SAgTotal,
-                    item.Company
-                };
-
-                resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, values);
-                index++;
-                toRowId++;
-            }
-
+            var toRowId = WriteBodyReport(resultSheet, _builder.Data.Select(item => item.GetExcelColumns()), LastColumnIndex);
             WriteTotal(resultSheet, toRowId);
         }
 
         private void WriteTotal(ISheet resultSheet, int toRowIndex)
         {
-            var data = _builder.Data;
-            resultSheet.CopyRow(TemplateSheet, FirstColumnTotalIndex, toRowIndex, FirstColumnIndex, LastColumnIndex);
-            var values = new List<object>
+            var total = new Fanex.ExternalAccount.DTO.Report.PokerGamesWinLossDetail { Username = "Grand Total" };
+            foreach (var p in _builder.Data)
             {
-                "Grand Total",
-                data.Sum(p => p.Turnover),
-                data.Sum(p => p.NetTurnover),
-                data.Sum(p => p.TaxComm),
-                data.Sum(p => p.MemberWinLoss),
-                data.Sum(p => p.MemberInsuranceGemsWinLoss),
-                data.Sum(p => p.MemberComm),
-                data.Sum(p => p.MemberTotal),
-                data.Sum(p => p.AgInsuranceGemsWinLoss),
-                data.Sum(p => p.AgComm),
-                data.Sum(p => p.AgTotal),
-                data.Sum(p => p.MAgInsuranceGemsWinLoss),
-                data.Sum(p => p.MAgComm),
-                data.Sum(p => p.MAgTotal),
-                data.Sum(p => p.SAgInsuranceGemsWinLoss),
-                data.Sum(p => p.SAgComm),
-                data.Sum(p => p.SAgTotal),
-                data.Sum(p => p.Company)
-            };
+                total.Sum(p);
+            }
 
-            resultSheet.GetRow(toRowIndex).WriteCells(FirstColumnIndex, values);
+            WriteTotal(resultSheet, toRowIndex, total.GetExcelColumns(), LastColumnIndex);
         }
 
-        private void BuildMainTitle(ISheet resultSheet)
+        public override void BuildMainTitle(ISheet resultSheet)
         {
             var mainTitle = _builder.RoleId.IsSuper() ? "Super " : _builder.RoleId.IsMaster() ? "Master " : string.Empty;
 

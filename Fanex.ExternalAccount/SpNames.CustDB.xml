@@ -186,6 +186,7 @@
     <Setting Key="Acc_CustomerSelComEditOverride_SAg" SpName="Acc_CustomerSelComEditOverride_SAg" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerCheckExists" SpName="Age_CustomerCheckExists" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Age_MaxMemberLimitBySuperCheck" SpName="Age_MaxMemberLimitBySuperCheck" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Edit Commission">
     <Setting Key="Age_CustomerUpdMasterComm" SpName="Age_CustomerUpdMasterComm" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
