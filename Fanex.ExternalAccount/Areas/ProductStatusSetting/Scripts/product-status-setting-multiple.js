@@ -15487,7 +15487,7 @@ var ProductStatusSettingBase = /** @class */ (function () {
     };
     return ProductStatusSettingBase;
 }());
-//# sourceMappingURL=product-status-setting-base.js.map
+
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -15581,7 +15581,7 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
         this.loadMultiple();
         this.bindingToggleAllEvent();
         this.bindingToggleEvent();
-        this.bindingResetEvent();
+        this.$("#btnReset").on("click", function () { return _this.$("#product-form").submit(); });
         this.$("#btnSubmit").on("click", function (e) {
             e.preventDefault();
             var updateViewModel = _this.getUpdateViewModel();
@@ -15762,4 +15762,3 @@ $(function () {
     var productStatusSettingMultipe = new ProductStatusSettingMultipe($, window.top);
     productStatusSettingMultipe.init();
 });
-//# sourceMappingURL=product-status-setting-multiple.js.map

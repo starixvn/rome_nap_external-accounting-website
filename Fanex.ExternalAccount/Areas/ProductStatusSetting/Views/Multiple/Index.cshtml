@@ -2,7 +2,7 @@
 
 @{
     Layout = null;
-    string assetsVersion = "201810031422";
+    string assetsVersion = "201810261448";
 }
 
 <!DOCTYPE html>
@@ -36,13 +36,14 @@
             @Html.Hidden("productIds", Model.ProductIds)
             @Html.Hidden("custRole", Model.CustRole)
             @Html.Hidden("custId", Model.CustIds.Split(',')[0])
-            @Html.Hidden("isMultipleBetTypes", Model.ProductStatus.Count() > 1)
-            @Html.Hidden("enableAll", Resources.EnableAll)
-            @Html.Hidden("disableAll", Resources.DisableAll)
-            @Html.Hidden("thereIsNoChange", Resources.ThereIsNoChange)
-            @Html.Hidden("updateStatusFailed", Resources.UpdateStatusFailed)
         }
     </div>
+
+    @Html.Hidden("isMultipleBetTypes", Model.ProductStatus.Count() > 1)
+    @Html.Hidden("enableAll", Resources.EnableAll)
+    @Html.Hidden("disableAll", Resources.DisableAll)
+    @Html.Hidden("thereIsNoChange", Resources.ThereIsNoChange)
+    @Html.Hidden("updateStatusFailed", Resources.UpdateStatusFailed)
 
     <div id="dialog-confirm" title="@Resources.Warning!!!">
         <p>@Resources.ConfirmBeforeMultipleUpdate</p>
