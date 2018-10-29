@@ -15475,7 +15475,7 @@ var ProductStatusSettingBase = /** @class */ (function () {
     ProductStatusSettingBase.prototype.onSuccess = function (result) {
         var _this = this;
         this.showMessage(result.Code, result.Message);
-        if (result.Code == 0) {
+        if (result.Code == 0 && this.$topWindow.reloadLeftPanel) {
             setTimeout(function () { return _this.$topWindow.reloadLeftPanel(); }, this.$timeoutDefault);
         }
     };
@@ -15487,7 +15487,7 @@ var ProductStatusSettingBase = /** @class */ (function () {
     };
     return ProductStatusSettingBase;
 }());
-
+//# sourceMappingURL=product-status-setting-base.js.map
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -15762,3 +15762,4 @@ $(function () {
     var productStatusSettingMultipe = new ProductStatusSettingMultipe($, window.top);
     productStatusSettingMultipe.init();
 });
+//# sourceMappingURL=product-status-setting-multiple.js.map
