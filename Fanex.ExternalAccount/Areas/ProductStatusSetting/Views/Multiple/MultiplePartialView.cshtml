@@ -16,7 +16,7 @@ else
     <table class="tbl-product margin-top10" id="tbl-product">
         <thead>
             <tr>
-                <th class="title" colspan="@(Model.CustRole + 1)"> @String.Join(", ", Model.CustNames)</th>
+                <th class="title" colspan="@(Model.CustRole + 1)"> @string.Join(", ", Model.CustNames)</th>
             </tr>
             <tr>
                 <th rowspan="2"></th>
@@ -54,7 +54,6 @@ else
     </div>
 }
 
-
 @Html.AntiForgeryToken()
 
 @helper RenderHeaderLevelName(int roleId, bool isMultipleBetTypes, bool isDisabledUpline)
@@ -65,15 +64,14 @@ else
         {3, Resources.AllMasters},
         {2, Resources.AllAgents },
         {1, Resources.AllMembers }
-
     };
 
     while (roleId > 0 && --roleId > 0)
     {
         var roleName = Model.GetRoleName((byte)roleId);
         var id = string.Format("header_{0}", roleId);
-        var tbodyEnableDownlineTooltip = String.Format(Resources.SearchAccountTHeadMulitpleTooltip, Resources.Enable.ToLower(), roleName + "s");
-        var tbodyDisableDownlineTooltip = String.Format(Resources.SearchAccountTHeadMulitpleTooltip, Resources.Disable.ToLower(), roleName + "s");
+        var tbodyEnableDownlineTooltip = string.Format(Resources.SearchAccountTHeadMulitpleTooltip, Resources.Enable.ToLower(), roleName + "s");
+        var tbodyDisableDownlineTooltip = string.Format(Resources.SearchAccountTHeadMulitpleTooltip, Resources.Disable.ToLower(), roleName + "s");
 
         <th>
             @if (isMultipleBetTypes)
@@ -99,7 +97,7 @@ else
                 @roleNameDic[roleId]
             }
         </th>
-}
+    }
 }
 
 @helper RenderStatus(
@@ -109,10 +107,10 @@ else
     bool isDisabledUpline,
     byte roleId)
 {
-var roleName = Model.GetRoleName((byte)roleId);
-var id = string.Format("{0}_{1}", roleId, betType);
-var tbodyEnableDownlineTooltip = String.Format(Resources.TBodyDownlineTooltip, Resources.Enable.ToLower(), roleName + "s");
-var tbodyDisableDownlineTooltip = String.Format(Resources.TBodyDownlineTooltip, Resources.Disable.ToLower(), roleName + "s");
+    var roleName = Model.GetRoleName(roleId);
+    var id = string.Format("{0}_{1}", roleId, betType);
+    var tbodyEnableDownlineTooltip = string.Format(Resources.TBodyDownlineTooltip, Resources.Enable.ToLower(), roleName + "s");
+    var tbodyDisableDownlineTooltip = string.Format(Resources.TBodyDownlineTooltip, Resources.Disable.ToLower(), roleName + "s");
 
     <input type="checkbox" class="checkbox-hide" id="@id"
            data-roleid="@roleId"
@@ -129,5 +127,4 @@ var tbodyDisableDownlineTooltip = String.Format(Resources.TBodyDownlineTooltip, 
                data-disabletooltip="@tbodyDisableDownlineTooltip">
             @(isDisabledUpline ? Resources.UplineDisabled : Resources.EnableAll)
         </label>
-
 }

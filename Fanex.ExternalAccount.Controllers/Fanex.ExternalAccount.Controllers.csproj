@@ -311,10 +311,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="ThirdPartyProducts.StatusSetting, Version=1.0.2.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ThirdPartyProducts.StatusSetting.1.0.2.2\lib\net461\ThirdPartyProducts.StatusSetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="UAParser, Version=2.1.0.0, Culture=neutral, PublicKeyToken=f7377bf021646069, processorArchitecture=MSIL">
       <HintPath>..\packages\UAParser.2.1.0.0\lib\net40-Client\UAParser.dll</HintPath>
       <Private>True</Private>
@@ -326,6 +322,7 @@
     <Compile Include="Authentication\CaptchaUtil.cs" />
     <Compile Include="Customer\MainSuperController.cs" />
     <Compile Include="Customer\CustomerController.cs" />
+    <Compile Include="Customer\ThirdPartyProductStatusController.cs" />
     <Compile Include="DataRange\DataRangeController.cs" />
     <Compile Include="Customer\SportsbookSettingController.cs" />
     <Compile Include="GlobalSuppressions.cs">

@@ -11025,7 +11025,15 @@ var ProductStatusSettingBase = /** @class */ (function () {
                 error: _this.onDefaultError
             });
         };
-        this.onDefaultError = function () { return _this.showMessage(_this.$errorCodeDefault, _this.$resources.updateStatusFailed); };
+        this.onDefaultError = function (jqXHR) {
+            if (jqXHR.status === 403) {
+                var denyObject = _this.$.parseJSON(jqXHR.responseText);
+                _this.showMessage(denyObject.ErrorCode, denyObject.ErrorMessage);
+            }
+            else {
+                _this.showMessage(_this.$errorCodeDefault, _this.$resources.updateStatusFailed);
+            }
+        };
         this.hideMessage = function () { return _this.$("#sectionMessage").html("").addClass("hide"); };
         this.$ = $;
         this.$topWindow = topWindow;
@@ -11084,7 +11092,7 @@ var ProductStatusSettingBase = /** @class */ (function () {
     ProductStatusSettingBase.prototype.onSuccess = function (result) {
         var _this = this;
         this.showMessage(result.Code, result.Message);
-        if (result.Code == 0) {
+        if (result.Code == 0 && this.$topWindow.reloadLeftPanel) {
             setTimeout(function () { return _this.$topWindow.reloadLeftPanel(); }, this.$timeoutDefault);
         }
     };

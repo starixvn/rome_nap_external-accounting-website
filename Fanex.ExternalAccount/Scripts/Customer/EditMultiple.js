@@ -23,6 +23,13 @@
                         430, 150, false, false, 1);
                 }
             },
+            productStatusSetting: {
+                name: "Edit Multiple Product Status",
+                className: "iconEnableEdit",
+                callback: function (key, opt) {
+                    Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus(productIds);
+                }
+            },
             dataRange: {
                 name: "Edit Multiple Data Range",
                 className: "iconEnableEdit",
@@ -43,14 +50,6 @@
                     Fanex.ExtAcc.Customer.ShowEditMultiplePT();
                 }
             }
-            //},
-            //productStatusSetting: {
-            //    name: "Edit Multiple Product Status",
-            //    className: "iconEnableEdit",
-            //    callback: function (key, opt) {
-            //        Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus(productIds);
-            //    }
-            //}
         };
 
         // Number Game
@@ -508,13 +507,13 @@
     }
 
     if (productIds.length !== 0) {
-        //menuItems.productStatusSetting = {
-        //    name: "Edit Multiple Product Status",
-        //    className: "iconEnableEdit",
-        //    callback: function (key, opt) {
-        //        Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus(productIds);
-        //    }
-        //}
+        menuItems.productStatusSetting = {
+            name: "Edit Multiple Product Status",
+            className: "iconEnableEdit",
+            callback: function (key, opt) {
+                Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus(productIds);
+            }
+        }
     }
 
     if ($.contextMenu) $.contextMenu('destroy');

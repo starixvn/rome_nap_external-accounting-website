@@ -570,7 +570,7 @@
         }
         top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(6, "Casino", 680, 270);
+        $scope.EnableThirdpartyProduct(6, "Casino");
     };
 
     $scope.EnableNumberGame = function (enable, id, disabled) {
@@ -580,7 +580,7 @@
 
         top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(3, "Number Game", 680, 270);
+        $scope.EnableThirdpartyProduct(3, "Number Game");
     };
 
     $scope.EnableVirtualSports = function (enable, id, disabled) {
@@ -590,7 +590,7 @@
 
         top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(5, "Virtual Sports", 680, 270);
+        $scope.EnableThirdpartyProduct(5, "Virtual Sports");
     };
 
     $scope.EnableESports = function (enable, id, disabled) {
@@ -653,9 +653,9 @@
         }
 
         var landscapeHeight = 250;
-        var portraitHeight = isMobile.phone || isMobile.tablet ? 400 : 700;
+        var portraitHeight = isMobile.phone || isMobile.tablet ? 400 : 730;
         top.shouldCalculatePopupHeight = true;
-        $scope.EnableThirdpartyProduct(8, "Keno", 680, $scope.getPopupHeight(landscapeHeight, portraitHeight));
+        $scope.EnableThirdpartyProduct(8, "Keno", 720, $scope.getPopupHeight(landscapeHeight, portraitHeight));
     };
 
     $scope.EnableColossusBets = function (enable, id, disabled) {
@@ -664,7 +664,7 @@
         }
         top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(15, "Colossus Bets", 680, 270);
+        $scope.EnableThirdpartyProduct(15, "Colossus Bets");
     };
 
     $scope.EnableFishingWorld = function (enable, id, disabled) {
@@ -674,7 +674,7 @@
 
         top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(24, "Fishing World", 680, 270);
+        $scope.EnableThirdpartyProduct(24, "Fishing World");
     };
 
     $scope.EnableGoldDeluxe = function (enable, id, disabled) {
@@ -684,7 +684,7 @@
 
         top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(12, "Gold Deluxe", 680, 270);
+        $scope.EnableThirdpartyProduct(12, "Gold Deluxe");
     };
 
 
@@ -694,7 +694,7 @@
         }
 
         top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(21, "Allbet", 800, 320);
+        $scope.EnableThirdpartyProduct(21, "Allbet", 800, 350);
     };
 
     $scope.EnablePokerGames = function (enable, id, disabled) {
@@ -703,7 +703,7 @@
         }
 
         top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(33, "Poker Games", 800, 400);
+        $scope.EnableThirdpartyProduct(33, "Poker Games", 720, 430);
     };
 
     $scope.EnableVoidBridge = function (enable, id, disabled) {
@@ -713,7 +713,7 @@
 
         top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(22, "Macau Games", 680, 270);
+        $scope.EnableThirdpartyProduct(22, "Macau Games");
     };
 
     $scope.EnableNG2 = function (enable, id, disabled) {
@@ -723,7 +723,7 @@
 
         top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(23, parent.ng2Text, 680, 270);
+        $scope.EnableThirdpartyProduct(23, parent.ng2Text);
     };
 
     $scope.EnableLottery = function (enable, id, disabled) {
@@ -733,7 +733,7 @@
 
         top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(28, "Lottery", 680, 270);
+        $scope.EnableThirdpartyProduct(28, "Lottery");
     };
 
     $scope.EnableLucky3 = function (enable, id, disabled) {
@@ -743,7 +743,7 @@
 
         top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(26, "Lucky 3", 680, 270);
+        $scope.EnableThirdpartyProduct(26, "Lucky 3");
     };
 
     $scope.EnableBullfighting = function (enable, id, disabled) {
@@ -753,7 +753,7 @@
 
         top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(30, "Bullfighting", 680, 270);
+        $scope.EnableThirdpartyProduct(30, "Bullfighting");
     };
 
     $scope.EnableDCS = function (productId, productName, enable, id, productText, width, height) {
@@ -773,10 +773,18 @@
     };
 
     $scope.EnableThirdpartyProduct = function (productId, productName, width, height) {
-        var url_SELECT = 'ProductStatusSetting/Index?';
-        var query = 'custid=' + $scope.model.personalInfo.custId.value + '&custname=' + $scope.model.personalInfo.currentLevel.value + '&custRole=' + $scope.model.personalInfo.roleId.value + '&productid=' + productId;
-        var url = parent.resolveClientUrl(url_SELECT + query);
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, 'Update ' + productName + ' Status: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', width, height, false, null, 1, null);
+        width = width || 680;
+        height = height || 320;
+        var personalInfo = $scope.model.personalInfo;
+        var url_SELECT = 'ThirdPartyProductStatus/Index?'
+            + 'custid=' + personalInfo.custId.value
+            + '&custname=' + personalInfo.currentLevel.value
+            + '&custRole=' + personalInfo.roleId.value
+            + '&productid=' + productId
+            + '&height=' + height;
+        var url = parent.resolveClientUrl(url_SELECT);
+        var title = 'Update ' + productName + ' Status: <font color="#6dcff6">' + personalInfo.currentLevel.value + '</font>';
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, title, width, height, false);
     };
 
     $scope.ViewSubTab = function (id) {
