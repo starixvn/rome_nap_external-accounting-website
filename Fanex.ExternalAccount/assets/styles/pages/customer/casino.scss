@@ -71,3 +71,19 @@ td {
 select {
     width: 61px !important;
 }
+
+.btnSave {
+    background: url(Images/save_s.png) 0px;
+    border: 0 solid red;
+    cursor: pointer;
+    height: 20px;
+    margin: 0 2px;
+    cursor: pointer;
+    width: 20px;
+    float: right;
+    padding-top: 3px;
+    opacity: 2;
+}
+.btnSave:hover {
+    opacity: 0.6;
+}

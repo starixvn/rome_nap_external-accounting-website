@@ -3,11 +3,11 @@
 @{
     var id = Utils.ToInt32(Request.QueryString["id"]);
     var uplineId = Utils.ToInt32(Request.QueryString["uplineId"]);
-
 }
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" />
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" />
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Styles/Casino.css")" />
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/styles/pages/customer/Casino.min.css")" />
 <div class="custInfo" data-ng-controller="CustomerController">
     <div class="headerPositionTaking noneBorderLR custInfoHeader">
         @NGCasinoLang.lblCustomerInformation
@@ -69,6 +69,7 @@
     </div>
     <div class="headerPositionTaking noneBorderLR noneBorderBottom">
         <span data-ng-bind="CustomerModel.roleId != 1 ? '@NGCasinoLang.lblMemberWinLimit' : '@NGCasinoLang.lblMemberWinLossLimit'"></span>
+        <span title="Update" data-ng-click="SaveCurrentWinLimit()" data-ng-show="CustomerModel.casinoSync && !IsCrossLine && CustomerModel.roleId < 4" class="btnSave"></span>
     </div>
     <table cellpadding="0" cellspacing="0" class="tableInfo">
         <tr>
@@ -104,7 +105,7 @@
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/ptarea.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CustomerController.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CustomerController.js?v=1")"></script>
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CasinoController.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/CustomerSetting/Casino/CasinoCustomer/CustomerData?id=" + id + "&uplineid=" + uplineId)"></script>
     <script type="text/javascript">
@@ -118,6 +119,8 @@
         var custId = '@id';
         var uplineId = '@uplineId';
         var domain = '@Url.Content("~")';
+        var userId = @Fanex.ExternalAccount.Core.Context.CurrentSession.Instance.UserId;
+        var subAccId = 0;
         function toUrl(relativeUrl) {
             return '@Url.Content("~/CustomerSetting/Casino/")' + relativeUrl;
         }

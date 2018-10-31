@@ -752,7 +752,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleCasino = function () {
     if (!this.IsMultiple) {
         Fanex.ExtAcc.Form.ShowFrame(
             resolveClientUrl(actionName), levelText + 'Edit Casino Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
-            1064,
+            1150,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1, null);
     } else {
@@ -761,7 +761,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleCasino = function () {
         window.Names = this.Names();
         Fanex.ExtAcc.Form.ShowFrame(
             resolveClientUrl(actionName), levelText + 'Edit Multiple Casino Setting',
-            1064,
+            1150,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1, null);
     }

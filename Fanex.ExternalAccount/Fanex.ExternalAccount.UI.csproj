@@ -112,8 +112,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.2.0.3\lib\net461\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.3.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.4\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.3.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.5-UpdateWLPartial-01\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ColossusBetSetting, Version=2.0.1.4, Culture=neutral, processorArchitecture=MSIL">
@@ -962,6 +962,7 @@
     <Content Include="assets\bundles\winlossdetail\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="assets\content\images\content\icon-customerlist.png" />
     <Content Include="assets\js\libs\bootstrap\affix.js" />
     <Content Include="assets\js\libs\bootstrap\alert.js" />
     <Content Include="assets\js\libs\bootstrap\bootstrap.js" />
@@ -993,6 +994,7 @@
     <Content Include="assets\styles\images\bg-Title-Grid.png" />
     <Content Include="assets\styles\images\btn-bgsubmit-hover.png" />
     <Content Include="assets\styles\images\btn-bgsubmit-original.png" />
+    <Content Include="assets\styles\images\calendar.svg" />
     <Content Include="assets\styles\images\checkbox.png" />
     <Content Include="assets\styles\images\delete-icn.png" />
     <Content Include="assets\styles\images\error.png" />
@@ -1001,6 +1003,7 @@
     <Content Include="assets\styles\images\important.gif" />
     <Content Include="assets\styles\images\info.gif" />
     <Content Include="assets\styles\images\info.png" />
+    <Content Include="assets\styles\images\information-icon2.png" />
     <Content Include="assets\styles\images\loading.gif" />
     <Content Include="assets\styles\images\loading1.gif" />
     <Content Include="assets\styles\images\loading2.gif" />
@@ -1009,6 +1012,7 @@
     <Content Include="assets\styles\images\pointer.png" />
     <Content Include="assets\styles\images\pointerDown.png" />
     <Content Include="assets\styles\images\sample_test_network_speed.jpg" />
+    <Content Include="assets\styles\images\save.png" />
     <Content Include="assets\styles\images\sprites.png" />
     <Content Include="assets\styles\images\Success.gif" />
     <Content Include="assets\styles\images\tick.png" />
@@ -1061,6 +1065,9 @@
     <Content Include="assets\styles\pages\customer\gold-deluxe-setting.min.css">
       <DependentUpon>gold-deluxe-setting.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\customer\images\tick.png" />
+    <Content Include="assets\styles\pages\customer\images\warning.png" />
+    <Content Include="assets\styles\pages\customer\images\save_s.png" />
     <Content Include="assets\styles\pages\customer\keno-setting.css">
       <DependentUpon>keno-setting.scss</DependentUpon>
     </Content>
