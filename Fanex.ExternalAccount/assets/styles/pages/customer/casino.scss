@@ -83,6 +83,7 @@ select {
     float: right;
     padding-top: 3px;
     opacity: 2;
+    z-index: 9999;
 }
 .btnSave:hover {
     opacity: 0.6;
