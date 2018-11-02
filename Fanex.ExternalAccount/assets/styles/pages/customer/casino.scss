@@ -77,14 +77,8 @@ select {
     border: 0 solid red;
     cursor: pointer;
     height: 20px;
-    margin: 0 2px;
-    cursor: pointer;
     width: 20px;
     float: right;
-    padding-top: 3px;
+    margin: 3px 10px 0 0;
     opacity: 2;
-    z-index: 9999;
-}
-.btnSave:hover {
-    opacity: 0.6;
 }

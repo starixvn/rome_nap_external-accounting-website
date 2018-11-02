@@ -25,7 +25,9 @@ function CustomerController($scope, $element) {
     $scope.IsCrossLine = $scope.CustomerModel.uplineRoleId - $scope.CustomerModel.roleId > 1 ||
         parent.Fanex.ExtAcc.Customer.isSuperEditMember ||
         parent.Fanex.ExtAcc.Customer.isMasterEditMember;
-    UplineRoleId = $scope.CustomerModel.uplineRoleId;
+    UplineRoleId = parent.Fanex.ExtAcc.Customer.isSuperEditMember ? 4 :
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember ? 3 :
+        $scope.CustomerModel.roleId + 1;
 
     switch ($scope.CustomerModel.roleId) {
         case 1:
@@ -226,6 +228,8 @@ function CustomerController($scope, $element) {
                 .show();
 
             try {
+                Fanex.CustomerSetting.Core.UnBlockUI();
+
                 if (!HasError) {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
@@ -245,7 +249,18 @@ function CustomerController($scope, $element) {
             return;
         }
 
-        if (index == null && !$scope.CustomerModel.casinoSync) {
+        if ($scope.IsCrossLine) {
+            try {
+                $('#errMsg')
+                    .html('<div style="margin-bottom: 5px;"><font color="red">You don\'t have permission to perform this action .</font></div>')
+                    .show();
+
+                Fanex.CustomerSetting.Core.UnBlockUI();
+            }
+            catch (e) {
+            }
+        }
+        else if (index == null && !$scope.CustomerModel.casinoSync) {
             HasError = true;
             UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='red'>Not casino's Customer.</font></div>";
             try {
@@ -271,7 +286,8 @@ function CustomerController($scope, $element) {
                     custId: custId,
                     userId: userId,
                     subAccId: subAccId,
-                    winLimit: winLossLimit
+                    winLimit: winLossLimit,
+                    roleId: $scope.CustomerModel.roleId
                 }
             }).success(function (result) {
                 if (result.errorCode == 0) {
