@@ -220,6 +220,31 @@ function CustomerController($scope, $element) {
     var ProcessUpdateWinLossLimit = function (index, custIds, usernames, winLossLimit, syncStatuses) {
         var custId = index == null ? $scope.CustomerModel.iBCCustID : custIds[index];
         var username = index == null ? $scope.CustomerModel.userName : usernames[index];
+        if (index != null && index >= custIds.length) {
+            $('#errMsg')
+                .html(UpdateWinLossMessage)
+                .show();
+
+            try {
+                if (!HasError) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        if (parent.document.getElementById('customerListGrid')) {
+                            parent.Fanex.ExtAcc.Customer.CallBackCustomerList();
+                            parent.Fanex.ExtAcc.Form.Close();
+                        }
+                        else {
+                            document.location.reload(true);
+                        }
+                    }, 3000);
+                }
+            }
+            catch (e) {
+            }
+
+            return;
+        }
+
         if (index == null && !$scope.CustomerModel.casinoSync) {
             HasError = true;
             UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='red'>Not casino's Customer.</font></div>";
@@ -233,7 +258,7 @@ function CustomerController($scope, $element) {
             catch (e) {
             }
         }
-        else if (index != null && !syncStatuses[index]) {
+        else if (index != null && index < custIds.length && syncStatuses[index] == "0") {
             HasError = true;
             UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='red'>Not casino's Customer </font></div>";
             ProcessUpdateWinLossLimit(++index, custIds, usernames, winLossLimit, syncStatuses);
