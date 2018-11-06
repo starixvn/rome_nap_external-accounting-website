@@ -2457,6 +2457,7 @@
     <Content Include="Areas\CustomerSetting\Views\BetSetting\GoldDeluxe\Content.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\GoldDeluxe\Index.cshtml" />
     <Content Include="Areas\Common\Views\Web.config" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Shared\_Layout.cshtml" />
     <None Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Document.doc" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\ColossusBet-setting.less" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Common.less" />

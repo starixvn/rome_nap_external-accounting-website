@@ -1,13 +1,4 @@
-﻿@using Fanex.CustomerSetting.Module.Core
-@using Fanex.CustomerSetting.Module.Casino.Resources
-@{
-    var id = Utils.ToInt32(Request.QueryString["id"]);
-    var uplineId = Utils.ToInt32(Request.QueryString["uplineId"]);
-}
-<link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" />
-<link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" />
-<link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Styles/Casino.css")" />
-<link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/styles/pages/customer/Casino.min.css")" />
+﻿@using Fanex.CustomerSetting.Module.Casino.Resources
 <div class="custInfo" data-ng-controller="CustomerController">
     <div class="headerPositionTaking noneBorderLR custInfoHeader">
         @NGCasinoLang.lblCustomerInformation
@@ -98,31 +89,4 @@
             <td class=""><div id="currentWinLimit" style="color: #0000ff; cursor: pointer" data-ng-click="GetCurrentWinLimit()">@NGCasinoLang.lblClickToViewCurrentWinLossAmount</div></td>
         </tr>
     </table>
-    @Html.AntiForgeryToken()
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/ptarea.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CustomerController.js?v=1")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CasinoController.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/CustomerSetting/Casino/CasinoCustomer/CustomerData?id=" + id + "&uplineid=" + uplineId)"></script>
-    <script type="text/javascript">
-        var casinoLang = {
-            winning: '@NGCasinoLang.lblWinning' + '%',
-            losing: '@NGCasinoLang.lblLosing' + '%',
-            of: '@NGCasinoLang.lblOf',
-            unlimited: '@NGCasinoLang.lblUnlimited'
-        };
-
-        var custId = '@id';
-        var uplineId = '@uplineId';
-        var domain = '@Url.Content("~")';
-        var userId = @Fanex.ExternalAccount.Core.Context.CurrentSession.Instance.UserId;
-        var subAccId = 0;
-        function toUrl(relativeUrl) {
-            return '@Url.Content("~/CustomerSetting/Casino/")' + relativeUrl;
-        }
-    </script>
 </div>
