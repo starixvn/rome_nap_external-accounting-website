@@ -9,22 +9,13 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title></title>
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Styles/Validators.css")" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Styles/Casino.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/bundles/casino/index.min.css")" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/styles/pages/customer/Casino.min.css")" />
 </head>
 <body>
     @RenderBody()
     @Html.AntiForgeryToken()
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/Validators.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/ptarea.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CustomerController.js?v=1")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/CasinoController.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/assets/bundles/casino/index.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/CustomerSetting/Casino/CasinoCustomer/CustomerData?id=" + id + "&uplineid=" + uplineId)"></script>
     <script type="text/javascript">
         var casinoLang = {

@@ -910,6 +910,14 @@
     <Content Include="Areas\Statement\Views\StatementDetails\Index.cshtml" />
     <Content Include="Areas\Statement\Views\StatementDetails\Scripts\StatementDetailsManager.js" />
     <Content Include="Areas\Statement\Views\StatementDetails\Styles\StatementDetails.css" />
+    <Content Include="assets\bundles\casino\index.css" />
+    <Content Include="assets\bundles\casino\index.js" />
+    <Content Include="assets\bundles\casino\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\casino\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\choosegroup\choosegroup.css" />
     <Content Include="assets\bundles\choosegroup\choosegroup.js" />
     <Content Include="assets\bundles\choosegroup\choosegroup.min.css">
@@ -2710,6 +2718,9 @@
     <Content Include="assets\styles\pages\reports\pokergames-winloss-detail.scss" />
     <Content Include="Areas\ProductStatusSetting\Views\Simple\Index.cshtml" />
     <Content Include="Areas\ProductStatusSetting\Styles\font\AlphaAdmin\AlphaAdmin.ttf" />
+    <Content Include="assets\bundles\casino\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
