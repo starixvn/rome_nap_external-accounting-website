@@ -702,7 +702,6 @@
                 Fanex.ExtAcc.Customer.custId = Fanex.ExtAcc.Customer.UserId = result.custId;
                 Fanex.ExtAcc.Customer.AllowDoubleComm = result.allowDoubleComm;
 
-                Fanex.ExtAcc.Customer.HideSportsbook2 = rows[0].HideMuayThai;
                 Fanex.ExtAcc.Customer.HideCricket = rows[0].HideCricket;
                 Fanex.ExtAcc.Customer.HideColossusBet = rows[0].HideColossusBet;
                 Fanex.ExtAcc.Customer.HideGoldDeluxe = rows[0].HideGoldDeluxe;

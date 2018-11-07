@@ -43,8 +43,6 @@
 
         internal static bool IsIMBC(this DataRow dataRow) => Utils.ToBoolean(dataRow["IsIMBC"]);        
 
-        internal static bool HideMuayThai(this DataRow dataRow) => Utils.ToBoolean(dataRow["HideMuayThai"]);
-
         internal static bool SyncCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncCasino"]);
 
         internal static bool HideVirtualSports(this DataRow dataRow) => Utils.ToBoolean(dataRow["hideVirtualSports"]);

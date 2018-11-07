@@ -285,7 +285,6 @@
             AddKenoEditLink(details);
             AddGoldDeluxeEditLink(customerStatus, details);
             AddColossusBetsEditLink(customerStatus, details);
-            AddSportsbook2EditLink(customerStatus, details);
             AddCricketEditLink(customerStatus, details);
 
             return details;
@@ -304,14 +303,6 @@
             if (ProductSettings.IsShowKeno)
             {
                 details.Add(new ObjectInfo("Keno", "Keno"));
-            }
-        }
-
-        private static void AddSportsbook2EditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
-        {
-            if (!customerStatus.DisableSportsbook2)
-            {
-                details.Add(new ObjectInfo("Sportsbook2", "Sportsbook 2"));
             }
         }
 
@@ -421,21 +412,24 @@
             ProductSettingElement productSettingElement,
             bool isUplineDisabled)
         {
-            if (productSettingElement.StatusType == StatusType.Checkbox)
+            if (productSettingElement.StatusType != StatusType.OnlyDetail)
             {
-                var enableItem = CreateEnableCheckboxItem(productSettingElement.Key,
-                    !productStatusTable.IsProductEnabled(productSettingElement.Id), productSettingElement.Name);
-
-                if (isUplineDisabled)
+                if (productSettingElement.StatusType == StatusType.Checkbox)
                 {
-                    enableItem = DisableStatus(enableItem);
-                }
+                    var enableItem = CreateEnableCheckboxItem(productSettingElement.Key,
+                        !productStatusTable.IsProductEnabled(productSettingElement.Id), productSettingElement.Name);
 
-                setting.EnableItems.Add(enableItem);
-            }
-            else
-            {
-                setting.EditItems.Add(CreateEnableLinkItem(productSettingElement.Key, productSettingElement.Name));
+                    if (isUplineDisabled)
+                    {
+                        enableItem = DisableStatus(enableItem);
+                    }
+
+                    setting.EnableItems.Add(enableItem);
+                }
+                else
+                {
+                    setting.EditItems.Add(CreateEnableLinkItem(productSettingElement.Key, productSettingElement.Name));
+                }
             }
         }
 

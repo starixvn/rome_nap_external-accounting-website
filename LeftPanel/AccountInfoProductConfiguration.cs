@@ -20,7 +20,8 @@
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Lottery], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Lucky3], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.BullFighting], StatusType.Checkbox),
-                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.PokerGames], StatusType.Link)
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.PokerGames], StatusType.Link),
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Sportsbook2], StatusType.OnlyDetail),
             };
 
         public static readonly IReadOnlyDictionary<int, string> VisibleBetSettingPermissions =

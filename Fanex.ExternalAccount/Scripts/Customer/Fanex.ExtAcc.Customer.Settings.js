@@ -24,7 +24,6 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab9').css('display', Fanex.ExtAcc.Customer.HideKeno ? 'none' : 'block');
         $('#tab10').css('display', Fanex.ExtAcc.Customer.HideGoldDeluxe ? 'none' : 'block');
         $('#tab11').css('display', Fanex.ExtAcc.Customer.HideColossusBets ? 'none' : 'block');
-        $('#tab12').css('display', Fanex.ExtAcc.Customer.HideSportsbook2 ? 'none' : 'block');
         $('#tab14').css('display', Fanex.ExtAcc.Customer.HideCricket ? 'none' : 'block');        
 
         $('#tab1').bind('click', function () {
@@ -56,10 +55,7 @@ Fanex.ExtAcc.Customer.Settings = {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.GetColossusBetsSetting();
         });
-        $('#tab12').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(16, "#sportsbook2Frame", "#tabs-12");
-        });
+        
        
         $('#tab14').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();

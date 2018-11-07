@@ -13,8 +13,6 @@
     disableGoldDeluxe,
     isHideColossusBets,
     disableColossusBets,
-    isHideSportsbook2,
-    disableSportsbook2,
     isHideCricket,
     disableCricket,
     productSettingsJson) {
@@ -26,7 +24,6 @@
     this.HideKeno = showKenoSetting == 'false' || isHideKeno;
     this.HideGoldDeluxe = showGoldDeluxeSetting == 0 || isHideGoldDeluxe;
     this.HideColossusBet = showColossusBets == 0 || isHideColossusBets;
-    this.HideSportsbook2 = showSportsbook2 == 0 || isHideSportsbook2;
     this.HideCricket = showCricket == 0 || isHideCricket;
     var productSettings = JSON.parse(unescape(productSettingsJson));
 
@@ -158,10 +155,6 @@
         };
     }
 
-    if (!this.HideSportsbook2) {
-        addEditProductMemberContextMenuItem(16, 'sportsbook2', 'Sportsbook 2', disableSportsbook2);
-    }
-
     if (!this.HideCricket) {
         addEditProductMemberContextMenuItem(20, 'cricket', 'Cricket', disableCricket);
     }
@@ -231,7 +224,6 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
     isHideVirtualSport,
     isHideGoldDeluxe,
     isHideColossusBets,
-    isHideSportsbook2,
     isHideCricket) {
     Fanex.ExtAcc.BlockUI();
 
@@ -244,7 +236,6 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
     this.HideVirtualSports = isHideVirtualSport;
     this.HideGoldDeluxe = isHideGoldDeluxe;
     this.HideColossusBet = isHideColossusBets
-    this.HideSportsbook2 = isHideSportsbook2;
     this.HideCricket = isHideCricket;
 
     this.AllbetSyncIdList = [];
@@ -313,7 +304,6 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
             var hideKeno = showKenoSetting == 'false' || cellValue.HideKeno == true;
             var hideGoldDeluxe = showGoldDeluxeSetting == 0 || !cellValue.SyncGoldDeluxeUpline;
             var hideColossusBets = showColossusBets == 0 || cellValue.HideColossusBet || isHideColossusBets;
-            var hideSportsbook2 = showSportsbook2 == 0 || cellValue.HideMuayThai || isHideSportsbook2;
             var hideCricket = showCricket == 0 || cellValue.HideCricket || isHideCricket || !cellValue.IsIMBC;
 
             var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMember("
@@ -331,8 +321,6 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
                 + cellValue.DisableGoldDeluxe + ","
                 + hideColossusBets + ","
                 + cellValue.DisableColossusBet + ","
-                + hideSportsbook2 + ","
-                + cellValue.DisableMuayThai + ","
                 + hideCricket + ","
                 + cellValue.DisableCricket + ",'"
                 + escape(JSON.stringify(cellValue.productSettings)) + "')";
@@ -703,7 +691,6 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
         + Fanex.ExtAcc.Customer.HideVirtualSports + ','
         + Fanex.ExtAcc.Customer.HideGoldDeluxe + ','
         + Fanex.ExtAcc.Customer.HideColossusBet + ','
-        + Fanex.ExtAcc.Customer.HideSportsbook2 + ','
         + Fanex.ExtAcc.Customer.HideCricket + ')">' + 'Master' + '</a>';
     var linkAgent = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetAgentList("
         + Fanex.ExtAcc.Customer.masterId + ','
@@ -714,7 +701,6 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
         + Fanex.ExtAcc.Customer.HideVirtualSports + ','
         + Fanex.ExtAcc.Customer.HideGoldDeluxe + ','
         + Fanex.ExtAcc.Customer.HideColossusBet + ','
-        + Fanex.ExtAcc.Customer.HideSportsbook2 + ','
         + Fanex.ExtAcc.Customer.HideCricket + ')">' + 'Agent' + '</a>';
 
     $('#breadcrumbs').append('<div class="level-line"></div><div style="float:left">' + linkSuper + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div class="level-active">' + linkAgent + '</div>');
