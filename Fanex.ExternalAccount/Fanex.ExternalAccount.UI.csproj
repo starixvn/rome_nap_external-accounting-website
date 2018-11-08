@@ -112,8 +112,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.2.0.3\lib\net461\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.3.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.4\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.3.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.5\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.ColossusBetSetting, Version=2.0.1.4, Culture=neutral, processorArchitecture=MSIL">
@@ -910,6 +910,14 @@
     <Content Include="Areas\Statement\Views\StatementDetails\Index.cshtml" />
     <Content Include="Areas\Statement\Views\StatementDetails\Scripts\StatementDetailsManager.js" />
     <Content Include="Areas\Statement\Views\StatementDetails\Styles\StatementDetails.css" />
+    <Content Include="assets\bundles\casino\index.css" />
+    <Content Include="assets\bundles\casino\index.js" />
+    <Content Include="assets\bundles\casino\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\casino\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\choosegroup\choosegroup.css" />
     <Content Include="assets\bundles\choosegroup\choosegroup.js" />
     <Content Include="assets\bundles\choosegroup\choosegroup.min.css">
@@ -962,6 +970,7 @@
     <Content Include="assets\bundles\winlossdetail\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="assets\content\images\content\icon-customerlist.png" />
     <Content Include="assets\js\libs\bootstrap\affix.js" />
     <Content Include="assets\js\libs\bootstrap\alert.js" />
     <Content Include="assets\js\libs\bootstrap\bootstrap.js" />
@@ -993,6 +1002,7 @@
     <Content Include="assets\styles\images\bg-Title-Grid.png" />
     <Content Include="assets\styles\images\btn-bgsubmit-hover.png" />
     <Content Include="assets\styles\images\btn-bgsubmit-original.png" />
+    <Content Include="assets\styles\images\calendar.svg" />
     <Content Include="assets\styles\images\checkbox.png" />
     <Content Include="assets\styles\images\delete-icn.png" />
     <Content Include="assets\styles\images\error.png" />
@@ -1001,6 +1011,7 @@
     <Content Include="assets\styles\images\important.gif" />
     <Content Include="assets\styles\images\info.gif" />
     <Content Include="assets\styles\images\info.png" />
+    <Content Include="assets\styles\images\information-icon2.png" />
     <Content Include="assets\styles\images\loading.gif" />
     <Content Include="assets\styles\images\loading1.gif" />
     <Content Include="assets\styles\images\loading2.gif" />
@@ -1009,6 +1020,7 @@
     <Content Include="assets\styles\images\pointer.png" />
     <Content Include="assets\styles\images\pointerDown.png" />
     <Content Include="assets\styles\images\sample_test_network_speed.jpg" />
+    <Content Include="assets\styles\images\save.png" />
     <Content Include="assets\styles\images\sprites.png" />
     <Content Include="assets\styles\images\Success.gif" />
     <Content Include="assets\styles\images\tick.png" />
@@ -1061,6 +1073,9 @@
     <Content Include="assets\styles\pages\customer\gold-deluxe-setting.min.css">
       <DependentUpon>gold-deluxe-setting.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\customer\images\tick.png" />
+    <Content Include="assets\styles\pages\customer\images\warning.png" />
+    <Content Include="assets\styles\pages\customer\images\save_s.png" />
     <Content Include="assets\styles\pages\customer\keno-setting.css">
       <DependentUpon>keno-setting.scss</DependentUpon>
     </Content>
@@ -2450,6 +2465,7 @@
     <Content Include="Areas\CustomerSetting\Views\BetSetting\GoldDeluxe\Content.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\GoldDeluxe\Index.cshtml" />
     <Content Include="Areas\Common\Views\Web.config" />
+    <Content Include="Areas\CustomerSetting\Views\Casino\Shared\_Layout.cshtml" />
     <None Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Document.doc" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\ColossusBet-setting.less" />
     <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Common.less" />
@@ -2702,6 +2718,9 @@
     <Content Include="assets\styles\pages\reports\pokergames-winloss-detail.scss" />
     <Content Include="Areas\ProductStatusSetting\Views\Simple\Index.cshtml" />
     <Content Include="Areas\ProductStatusSetting\Styles\font\AlphaAdmin\AlphaAdmin.ttf" />
+    <Content Include="assets\bundles\casino\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

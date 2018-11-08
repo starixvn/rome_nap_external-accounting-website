@@ -169,5 +169,28 @@
       "Scripts/Reports/Fanex.ExtAcc.PokerGamesWinLossDetail.js"
     ],
     "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/casino/index.js",
+    "inputFiles": [
+      "Areas/CustomerSetting/Scripts/jquery.js",
+      "Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js",
+      "Areas/CustomerSetting/Scripts/angular.min.js",
+      "Areas/CustomerSetting/Scripts/Validators.js",
+      "Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js",
+      "Areas/CustomerSetting/Scripts/ptarea.js",
+      "Areas/CustomerSetting/Views/Casino/Scripts/CustomerController.js",
+      "Areas/CustomerSetting/Views/Casino/Scripts/CasinoController.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/casino/index.css",
+    "inputFiles": [
+      "Areas/CustomerSetting/Styles/Validators.css",
+      "Areas/CustomerSetting/Styles/Common.css",
+      "Areas/CustomerSetting/Views/Casino/Styles/Casino.css"
+    ],
+    "sourceMap": true
   }
 ]

@@ -22,8 +22,12 @@ function CustomerController($scope, $element) {
     $scope.IsSuper = false;   
     $scope.CustomerModel.memberWinLimit.maximumLossFormated = $scope.CustomerModel.memberWinLimit.maximumLoss.formatNumber();
     $scope.IsSuperMasterOnMember = ($scope.CustomerModel.uplineRoleId == 4 || $scope.CustomerModel.uplineRoleId == 3) && $scope.CustomerModel.roleId == 1;
-  
-    UplineRoleId = $scope.CustomerModel.uplineRoleId;
+    $scope.IsCrossLine = $scope.CustomerModel.uplineRoleId - $scope.CustomerModel.roleId > 1 ||
+        parent.Fanex.ExtAcc.Customer.isSuperEditMember ||
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember;
+    UplineRoleId = parent.Fanex.ExtAcc.Customer.isSuperEditMember ? 4 :
+        parent.Fanex.ExtAcc.Customer.isMasterEditMember ? 3 :
+        $scope.CustomerModel.roleId + 1;
 
     switch ($scope.CustomerModel.roleId) {
         case 1:
@@ -93,47 +97,6 @@ function CustomerController($scope, $element) {
                 }
             }
         }
-    },
-
-    $scope.Reset = function () {
-        if ($scope.CustomerModel.roleId == 4 || ($scope.CustomerModel.uplineRoleId == 4 && $scope.CustomerModel.roleId == 2)) {
-            return;
-        }
-
-        try {
-            Fanex.CustomerSetting.Core.BlockUI();
-        }
-        catch (e) {
-        }
-
-        $.ajax({
-            url: toUrl('CasinoCustomer/ResetMaxTransfer'),
-            data: {
-                id: $scope.CustomerModel.iBCCustID,
-                groupName: parent.$('#selectedGroupName').html()
-            }
-        }).success(function (result) {
-            if (result.errorCode == 0) {
-                $('#errMsg').html('<font color="Blue">Reset max transfer successfully</font>'.formatSuccessMessage());
-                $('#errMsg').show();
-                setTimeout(function () {
-                    document.location.reload(true);
-                }, 2000);
-            }
-            else {
-                $('#errMsg').html(result.errorMessage.formatErrorMessage());
-                $('#errMsg').show();
-            }
-        }).error(function (data) {
-            if (typeof console != 'undefined')
-                console.log(data);
-        }).complete(function (data) {
-            try {
-                Fanex.CustomerSetting.Core.UnBlockUI();
-            }
-            catch (e) {
-            }
-        });
     },
 
     $scope.GetCurrentWinLimit = function () {
@@ -230,5 +193,154 @@ function CustomerController($scope, $element) {
             catch (e) {
             }
         });
+    }
+
+    $scope.SaveCurrentWinLimit = function () {
+        var custids = parent.Fanex.ExtAcc.Customer.Ids();
+        var usernames = parent.Fanex.ExtAcc.Customer.Names();
+        var isMultipleEdit = parent.Fanex.ExtAcc.Customer.IsMultiple;
+        var syncStatuses = parent.Fanex.ExtAcc.Customer.RnGCasinoStatuses;
+        
+        UpdateWinLossMessage = '';
+        HasError = false;
+        try {
+            Fanex.CustomerSetting.Core.BlockUI();
+        }
+        catch (e) {
+        }
+
+        if (isMultipleEdit) {            
+            ProcessUpdateWinLossLimit(0, custids, usernames, JSON.stringify($scope.CustomerModel.memberWinLimit), syncStatuses);
+        }
+        else {
+            ProcessUpdateWinLossLimit(null, custids, usernames, JSON.stringify($scope.CustomerModel.memberWinLimit), syncStatuses);
+        }
+    }
+
+    var UpdateWinLossMessage = '';
+    var HasError = false;
+    var ProcessUpdateWinLossLimit = function (index, custIds, usernames, winLossLimit, syncStatuses) {
+        var custId = index == null ? $scope.CustomerModel.iBCCustID : custIds[index];
+        var username = index == null ? $scope.CustomerModel.userName : usernames[index];
+        if (index != null && index >= custIds.length) {
+            $('#errMsg')
+                .html(UpdateWinLossMessage)
+                .show();
+
+            try {
+                Fanex.CustomerSetting.Core.UnBlockUI();
+
+                if (!HasError) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        if (parent.document.getElementById('customerListGrid')) {
+                            parent.Fanex.ExtAcc.Customer.CallBackCustomerList();
+                            parent.Fanex.ExtAcc.Form.Close();
+                        }
+                        else {
+                            document.location.reload(true);
+                        }
+                    }, 3000);
+                }
+            }
+            catch (e) {
+            }
+
+            return;
+        }
+
+        if ($scope.IsCrossLine) {
+            try {
+                $('#errMsg')
+                    .html('<div style="margin-bottom: 5px;"><font color="red">You don\'t have permission to perform this action .</font></div>')
+                    .show();
+
+                Fanex.CustomerSetting.Core.UnBlockUI();
+            }
+            catch (e) {
+            }
+        }
+        else if (index == null && !$scope.CustomerModel.casinoSync) {
+            HasError = true;
+            UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='red'>Not casino's Customer.</font></div>";
+            try {
+                $('#errMsg')
+                    .html(UpdateWinLossMessage)
+                    .show();
+
+                Fanex.CustomerSetting.Core.UnBlockUI();
+            }
+            catch (e) {
+            }
+        }
+        else if (index != null && index < custIds.length && syncStatuses[index] == "0") {
+            HasError = true;
+            UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='red'>Not casino's Customer </font></div>";
+            ProcessUpdateWinLossLimit(++index, custIds, usernames, winLossLimit, syncStatuses);
+        }
+        else {
+            $.ajax({
+                url: toUrl('WinLossLimit/Update'),
+                type: 'post',
+                data: {
+                    custId: custId,
+                    userId: userId,
+                    subAccId: subAccId,
+                    winLimit: winLossLimit,
+                    roleId: $scope.CustomerModel.roleId
+                }
+            }).success(function (result) {
+                if (result.errorCode == 0) {
+                    UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='blue'>Updated successfully.</font></div>";
+                }
+                else {
+                    HasError = true;
+                    UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='red'>" + result.errorMessage.formatErrorMessage() + "</font></div>";
+                }
+                if (index == null || index == custIds.length - 1) {
+                    $('#errMsg')
+                        .html(UpdateWinLossMessage)
+                        .show();
+
+                    try {
+                        Fanex.CustomerSetting.Core.UnBlockUI();
+                        if (!HasError) {
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                if (parent.document.getElementById('customerListGrid')) {
+                                    parent.Fanex.ExtAcc.Customer.CallBackCustomerList();
+                                    parent.Fanex.ExtAcc.Form.Close();
+                                }
+                                else {
+                                    document.location.reload(true);
+                                }
+                            }, 3000);
+                        }
+                    }
+                    catch (e) {
+                    }
+                }
+                else {
+                    ProcessUpdateWinLossLimit(++index, custIds, usernames, winLossLimit, syncStatuses);
+                }
+            }).error(function (data) {
+                HasError = true;
+                UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='red'>Not casino's Customer.</font></div>";
+                if (index == null || index == custIds.length - 1) {
+                    $('#errMsg')
+                        .html(UpdateWinLossMessage)
+                        .show();
+
+                    try {
+                        Fanex.CustomerSetting.Core.UnBlockUI();
+                    }
+                    catch (e) {
+                    }
+                }
+                else {
+                    ProcessUpdateWinLossLimit(++index, custIds, usernames, winLossLimit, syncStatuses);
+                }
+            });
+        }
     }
 }

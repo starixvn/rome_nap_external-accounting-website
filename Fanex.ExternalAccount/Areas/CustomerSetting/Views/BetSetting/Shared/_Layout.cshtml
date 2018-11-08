@@ -106,14 +106,20 @@
             }
 
             if (!custInfo.syncCasino) {
-                $('#tab3').remove();
-                $('#tabs-3').remove();
+                $('#tab6').remove();
+                $('#tabs-6').remove();
+                if (index > 2) {
+                    --index;
+                }
             }
             
             if (custInfo.hideGoldDeluxe)
             {
-                $('#tab5').remove();
-                $('#tabs-5').remove();
+                $('#tab12').remove();
+                $('#tabs-12').remove();
+                if (index > 4) {
+                    --index;
+                }
             }
 
             $('#tabs').tabs({ selected: index });

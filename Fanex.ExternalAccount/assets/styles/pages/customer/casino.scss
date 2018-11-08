@@ -71,3 +71,14 @@ td {
 select {
     width: 61px !important;
 }
+
+.btnSave {
+    background: url(Images/save_s.png) 0px;
+    border: 0 solid red;
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+    float: right;
+    margin: 3px 10px 0 0;
+    opacity: 2;
+}
