@@ -776,12 +776,11 @@
         width = width || 680;
         height = height || 320;
         var personalInfo = $scope.model.personalInfo;
-        var url_SELECT = 'ThirdPartyProductStatus/Index?'
+        var url_SELECT = 'ProductStatusSetting/Index?'
             + 'custid=' + personalInfo.custId.value
             + '&custname=' + personalInfo.currentLevel.value
             + '&custRole=' + personalInfo.roleId.value
             + '&productid=' + productId
-            + '&height=' + height;
         var url = parent.resolveClientUrl(url_SELECT);
         var title = 'Update ' + productName + ' Status: <font color="#6dcff6">' + personalInfo.currentLevel.value + '</font>';
         parent.Fanex.ExtAcc.Form.ShowFrame(url, title, width, height, false);
