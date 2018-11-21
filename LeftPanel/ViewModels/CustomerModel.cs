@@ -8,18 +8,24 @@
 
     public class CustomerModel
     {
-        public CustomerModel(DataSet customerInfoDataset, bool isUpdateCredit, Func<string, bool> canViewVNIP)
+        public CustomerModel(
+            DataSet customerInfoDataset, 
+            DataSet loginInfoDataset,
+            DataSet balanceInfoDataset,
+            DataSet customerStatusInfoDataset,
+            bool isUpdateCredit, 
+            Func<string, bool> canViewVNIP)
         {
             var custInfoRow = customerInfoDataset.Tables[0].Rows[0];
-            var cashRow = customerInfoDataset.Tables[2].Rows[0];
-            var lineRow = customerInfoDataset.Tables[1].Rows[0];
+            var custStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];
+            var cashRow = balanceInfoDataset.Tables[0].Rows[0];
 
-            HasDownline = custInfoRow.HasDownline();
+            HasDownline = custStatusRow.HasDownline();
             UplineHasSecurityCode = custInfoRow.UplineHasSecurityCode();
-            CurrencyId = custInfoRow.CurrencyId();
-            BalanceInfo = new BalanceInfo(isUpdateCredit, custInfoRow, cashRow);
-            PersonalInfo = new PersonalInfo(custInfoRow, lineRow);
-            Login = GetLoginInfo(cashRow, custInfoRow, canViewVNIP);
+            CurrencyId = cashRow.CurrencyId();
+            BalanceInfo = new BalanceInfo(isUpdateCredit, custInfoRow.RoleId(), cashRow);
+            PersonalInfo = new PersonalInfo(custInfoRow);
+            Login = GetLoginInfo(loginInfoDataset, canViewVNIP);
             DownlineList = new DownlineList();
             OnlineList = new OnlineList();
         }
@@ -42,34 +48,35 @@
 
         public bool UplineHasSecurityCode { get; set; }
 
-        internal List<ObjectInfo> GetLoginInfo(DataRow cashRow, DataRow custInfoRow, Func<string, bool> canViewVNIP)
+        internal List<ObjectInfo> GetLoginInfo(DataSet loginInfoDataset, Func<string, bool> canViewVNIP)
         {
-            var roleId = custInfoRow.RoleId();
-            var lastLoginIp = custInfoRow.LastLogInIP();
+            var loginInfoDataRow = loginInfoDataset.Tables[0].Rows[0];
+            var roleId = loginInfoDataRow.RoleId();
+            var lastLoginIp = loginInfoDataRow.LastLogInIP();
 
-            var site = roleId.IsNotMember() ? custInfoRow.Site() : custInfoRow.MemberSite();
+            var site = loginInfoDataRow.Site();
             var ip = canViewVNIP(lastLoginIp) ? lastLoginIp : string.Empty;
 
             var loginInfos = new List<ObjectInfo>
             {
                 ObjectInfo.CreateInstance("Site", site),
-                ObjectInfo.CreateInstance("Created Date", custInfoRow.CreateDate()),
-                ObjectInfo.CreateInstance("Last Login", custInfoRow.LastLogged()),
+                ObjectInfo.CreateInstance("Created Date", loginInfoDataRow.CreatedDate()),
+                ObjectInfo.CreateInstance("Last Login", loginInfoDataRow.LastLoggedIn()),
                 new ObjectInfo
                 {
-                    Value =  cashRow.LastTxn(),
+                    Value =  loginInfoDataRow.LastTxn(),
                     Text = "Last Txn",
                     Tooltip = "Last Transaction"
                 },
-                ObjectInfo.CreateInstance("Password", custInfoRow.ExpiredPasswordDay()),
+                ObjectInfo.CreateInstance("Password", loginInfoDataRow.PasswordExpired()),
                 ObjectInfo.CreateInstance("Last Login IP", ip),
-                ObjectInfo.CreateInstance("Security Code", custInfoRow.LastChangedSecurityCodeDate())
+                ObjectInfo.CreateInstance("Security Code", loginInfoDataRow.LastChangedSecurityCodeDate())
             };
 
             if (roleId.IsNotMember())
             {
-                loginInfos.Add(ObjectInfo.CreateInstance("Login Options", custInfoRow.LoginOptions()));
-                loginInfos.Add(ObjectInfo.CreateInstance("OTP", custInfoRow.OTPCreateDate()));
+                loginInfos.Add(ObjectInfo.CreateInstance("Login Options", loginInfoDataRow.LoginOptions()));
+                loginInfos.Add(ObjectInfo.CreateInstance("OTP", loginInfoDataRow.OTPCreateDate()));
             }
 
             return loginInfos;

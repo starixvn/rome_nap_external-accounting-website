@@ -54,18 +54,18 @@
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Sportsbook2], statusRow, isSetUplineStatus:isSetUplineStatus)
             };
 
-        public static List<ObjectInfo> CreateSyncAndHiddenItems(DataRow customerRow, DataTable table3RdDcs)
+        public static List<ObjectInfo> CreateSyncAndHiddenItems(DataRow nonDCSProductStatusRow,DataTable dcsProductStatusTable)
             => new List<ObjectInfo>
             {
-                new ObjectInfo("SyncCasino", customerRow.IsSyncedCasino(), "Casino Synced"),
-                new ObjectInfo("HideAllbet", table3RdDcs.IsHiddenProduct(ProductConstants.AllBet)),
-                new ObjectInfo("HideVoidbridge", table3RdDcs.IsHiddenProduct(ProductConstants.VoidBridge)),
-                new ObjectInfo("HideNG2", table3RdDcs.IsHiddenProduct(ProductConstants.NG2)),
-                new ObjectInfo("HideFishingWorld", table3RdDcs.IsHiddenProduct(ProductConstants.FishingWorld)),
-                new ObjectInfo("HideLottery", table3RdDcs.IsHiddenProduct(ProductConstants.Lottery)),
-                new ObjectInfo("HideLucky3", table3RdDcs.IsHiddenProduct(ProductConstants.Lucky3)),
-                new ObjectInfo("HideBullfighting", table3RdDcs.IsHiddenProduct(ProductConstants.BullFighting)),
-                new ObjectInfo("HidePokerGames", table3RdDcs.IsHiddenProduct(ProductConstants.PokerGames))
+                new ObjectInfo("SyncCasino", nonDCSProductStatusRow.IsSyncedCasino(), "Casino Synced"),
+                new ObjectInfo("HideAllbet", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.AllBet)),
+                new ObjectInfo("HideVoidbridge", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.VoidBridge)),
+                new ObjectInfo("HideNG2", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.NG2)),
+                new ObjectInfo("HideFishingWorld", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.FishingWorld)),
+                new ObjectInfo("HideLottery", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.Lottery)),
+                new ObjectInfo("HideLucky3", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.Lucky3)),
+                new ObjectInfo("HideBullfighting", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.BullFighting)),
+                new ObjectInfo("HidePokerGames", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.PokerGames))
             };
     }
 }

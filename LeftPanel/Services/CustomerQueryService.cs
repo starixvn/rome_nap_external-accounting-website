@@ -1,10 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services
 {
-    using System.Collections.Generic;
-    using System.Data;
     using Core.Authorization;
     using Customers;
     using DataAccesses;
+    using Extensions;
+    using System.Collections.Generic;
+    using System.Data;
     using ViewModels;
 
     public interface CustomerQueryService
@@ -40,18 +41,27 @@
 
         public CustomerModel SearchCustomer(int actorId, string custName, string groupName )
         {
-            var customerInfoDataSet = customerDataAccess.GetCustomerInfo(
+            var personalInfoDataSet = customerDataAccess.GetPersonalInfo(
                 string.IsNullOrWhiteSpace(custName)
                     ? string.Empty
                     : custName,
-                groupName);
+                groupName,
+                actorId);
 
-            if (customerInfoDataSet == null || customerInfoDataSet.Tables.Count <= 0)
+            if (personalInfoDataSet == null || personalInfoDataSet.Tables.Count <= 0)
             {
                 return null;
             }
 
-            return customerInfoQueryService.GetCustomerModel(actorId, custName, groupName, customerInfoDataSet);
+            var custId = personalInfoDataSet.Tables[0].Rows[0].CustId();
+            return customerInfoQueryService.GetCustomerModel(
+                actorId, 
+                custName, 
+                groupName, 
+                personalInfoDataSet,
+                customerDataAccess.GetLoginInfo(custId, groupName),
+                customerDataAccess.GetBalanceInfo(custId),
+                customerDataAccess.GetCustomerStatusInfo(custId));
         }
 
         public OnlineList GetOnlineList(int custId)

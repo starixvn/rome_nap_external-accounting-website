@@ -1,7 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Customers
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
+    using Core.Authorization;
+    using Models;
     using ViewModels;
 
     public class MemberSettingServiceImpl : CustomerSettingServiceImpl
@@ -9,14 +12,19 @@
         private static readonly IList<string> IgnoredSettingsWhenEditMember =
             new List<string> { "Info", "ColossusBets", "AddNew", "Transfer" };
 
-        public override Setting GetSetting(
-            int actorId,
-            string custName,
-            int uplineId,
-            string groupName,
-            DataSet customerInfoDataset)
+        public MemberSettingServiceImpl(
+            int userId, 
+            int roleId, 
+            string site, 
+            IEnumerable<ProductSettingElement> productSettingElements = null,
+            AuthorizationService authorizationService = null, 
+            Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null) 
+            : base(userId, roleId, site, productSettingElements, authorizationService, hiddenAndSyncItemsCreator)
+        { }
+
+        public override Setting GetSetting(DataSet customerStatusInfoDataset)
         {
-            var setting = base.GetSetting(actorId, custName, uplineId, groupName, customerInfoDataset);
+            var setting = base.GetSetting(customerStatusInfoDataset);
 
             foreach (var detailLink in setting.Details)
             {

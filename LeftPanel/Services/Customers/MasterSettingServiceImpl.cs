@@ -1,22 +1,31 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Customers
 {
-    using System.Data;
+    using Core.Authorization;
     using Extensions;
+    using Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
     using ViewModels;
 
     public class MasterSettingServiceImpl : CustomerSettingServiceImpl
     {
-        public override Setting GetSetting(
-            int actorId,
-            string custName,
-            int uplineId,
-            string groupName,
-            DataSet customerInfoDataset)
-        {
-            var setting = base.GetSetting(actorId, custName, uplineId, groupName, customerInfoDataset);
+        public MasterSettingServiceImpl(
+            int userId,
+            int roleId,
+            string site,
+            IEnumerable<ProductSettingElement> productSettingElements = null,
+            AuthorizationService authorizationService = null,
+            Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null)
+            : base(userId, roleId, site, productSettingElements, authorizationService, hiddenAndSyncItemsCreator)
+        { }
 
-            var cashRow = customerInfoDataset.Tables[2].Rows[0];
-            setting.EnableItems.Insert(2, new ObjectInfo("AutoPT", cashRow.EnableAutoMasterPT(), "Allow Auto PT"));
+        public override Setting GetSetting(DataSet customerStatusInfoDataset)
+        {
+            var setting = base.GetSetting(customerStatusInfoDataset);
+
+            var nonProductStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];
+            setting.EnableItems.Insert(2, new ObjectInfo("AutoPT", nonProductStatusRow.EnableAutoMasterPT(), "Allow Auto PT"));
 
             return setting;
         }

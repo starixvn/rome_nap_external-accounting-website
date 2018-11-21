@@ -9,9 +9,13 @@
 
         internal static bool Closed(this DataRow dataRow) => Utils.ToBoolean(dataRow["closed"]);
 
+        internal static bool ClosedUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["upLineClosed"]);
+
         internal static bool Enabled(this DataRow dataRow) => Utils.ToBoolean(dataRow["enabled"]);
 
         internal static bool Suspended(this DataRow dataRow) => Utils.ToBoolean(dataRow["suspended"]);
+
+        internal static bool SuspendedUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["upLineSuspend"]);
 
         internal static bool IsHidden(this DataRow dataRow) => Utils.ToBoolean(dataRow["IsHidden"]);
 
@@ -28,7 +32,5 @@
         internal static int Recommend(this DataRow dataRow) => Utils.ToInt32(dataRow["recommend"]);
 
         internal static string Site(this DataRow dataRow) => Utils.ToString(dataRow["site"]);
-
-        internal static string MemberSite(this DataRow dataRow) => Utils.ToString(dataRow["membersite"]);
     }
 }

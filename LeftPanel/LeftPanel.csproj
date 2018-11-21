@@ -50,6 +50,9 @@
       <HintPath>..\packages\CasinoLibrary.2.0.2.28015\lib\net40\CasinoUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ext.AccountInfo">
+      <HintPath>..\..\..\Fanex.Account\ExternalNAP\src\Ext.AccountInfo\bin\Debug\Ext.AccountInfo.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
@@ -237,6 +240,7 @@
     <Compile Include="Controllers\SearchCustomerController.cs" />
     <Compile Include="Controllers\UpdateCustomerController.cs" />
     <Compile Include="Criteria\RemoveOTPCriteria.cs" />
+    <Compile Include="Extensions\LoginInfoDataRowExtensions.cs" />
     <Compile Include="Extensions\CashDataRowExtensions.cs" />
     <Compile Include="Extensions\CustomerInfoDataRowExtensions.cs" />
     <Compile Include="Extensions\OnlineInfoDataRowExtensions.cs" />

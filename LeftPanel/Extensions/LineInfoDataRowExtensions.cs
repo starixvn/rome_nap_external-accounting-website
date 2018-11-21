@@ -7,13 +7,13 @@
 
     public static class LineInfoDataRowExtensions
     {
-        private static int SuperId(this DataRow dataRow) => Utils.ToInt32(dataRow["superID"]);
+        private static int SuperId(this DataRow dataRow) => Utils.ToInt32(dataRow["srecommend"]);
 
-        private static int MasterId(this DataRow dataRow) => Utils.ToInt32(dataRow["masterID"]);
+        private static int MasterId(this DataRow dataRow) => Utils.ToInt32(dataRow["mrecommend"]);
 
-        private static int AgentId(this DataRow dataRow) => Utils.ToInt32(dataRow["agentID"]);
+        private static int AgentId(this DataRow dataRow) => Utils.ToInt32(dataRow["recommend"]);
 
-        private static int MemberId(this DataRow dataRow) => Utils.ToInt32(dataRow["memberID"]);
+        private static int MemberId(this DataRow dataRow) => Utils.ToInt32(dataRow["custid"]);
 
         internal static int CustomerId(this DataRow dataRow, int role)
         {
@@ -40,7 +40,7 @@
 
         private static string AgentName(this DataRow dataRow) => Utils.ToString(dataRow["agentName"]);
 
-        private static string MemberName(this DataRow dataRow) => Utils.ToString(dataRow["memberName"]);
+        private static string MemberName(this DataRow dataRow) => Utils.ToString(dataRow["userName"]);
 
         internal static string CustomerName(this DataRow dataRow, int role)
         {
@@ -57,35 +57,6 @@
 
                 case Role.Member:
                     return dataRow.MemberName();
-
-                default:
-                    throw new ArgumentException(nameof(role));
-            }
-        }
-
-        private static bool SuperEnabled(this DataRow dataRow) => Utils.ToBoolean(dataRow["superEnabled"]);
-
-        private static bool MasterEnabled(this DataRow dataRow) => Utils.ToBoolean(dataRow["masterEnabled"]);
-
-        private static bool AgentEnabled(this DataRow dataRow) => Utils.ToBoolean(dataRow["agentEnabled"]);
-
-        private static bool MemberEnabled(this DataRow dataRow) => Utils.ToBoolean(dataRow["membeEnabled"]);
-
-        internal static bool CustomerEnabled(this DataRow dataRow, int role)
-        {
-            switch (role)
-            {
-                case Role.Super:
-                    return dataRow.SuperEnabled();
-
-                case Role.Master:
-                    return dataRow.MasterEnabled();
-
-                case Role.Agent:
-                    return dataRow.AgentEnabled();
-
-                case Role.Member:
-                    return dataRow.MemberEnabled();
 
                 default:
                     throw new ArgumentException(nameof(role));

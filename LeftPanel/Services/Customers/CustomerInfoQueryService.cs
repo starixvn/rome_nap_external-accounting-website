@@ -10,78 +10,78 @@
 
     public interface CustomerInfoQueryService
     {
-        CustomerModel GetCustomerModel(int actorId, string custName, string groupName, DataSet customerInfoDataset);
+        CustomerModel GetCustomerModel(
+            int actorId,
+            string custName,
+            string groupName,
+            DataSet personalInfoDataset,
+            DataSet loginInfoDataset,
+            DataSet balanceInfoDataset,
+            DataSet customerStatusInfoDataset);
     }
 
     public class CustomerInfoQueryServiceImpl : CustomerInfoQueryService
     {
-        private static readonly IReadOnlyDictionary<int, CustomerSettingQueryService> settingServiceInstances
-            = new Dictionary<int, CustomerSettingQueryService>
-            {
-                [Role.Super] = new SuperSettingServiceImpl(),
-                [Role.Master] = new MasterSettingServiceImpl(),
-                [Role.Agent] = new CustomerSettingServiceImpl(),
-                [Role.Member] = new MemberSettingServiceImpl()
-            };
-
         protected readonly AuthorizationService authorizationService;
-        protected readonly IReadOnlyDictionary<int, CustomerSettingQueryService> settingServices;
+        protected IDictionary<int, CustomerSettingQueryService> settingServices;
 
         public CustomerInfoQueryServiceImpl(
             AuthorizationService authorizationService = null,
-            IReadOnlyDictionary<int, CustomerSettingQueryService> settingServices = null)
+            IDictionary<int, CustomerSettingQueryService> settingServices = null)
         {
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
-            this.settingServices = settingServices ?? settingServiceInstances;
+            this.settingServices = settingServices;
         }
 
-        public CustomerModel GetCustomerModel(int actorId, string custName, string groupName, DataSet customerInfoDataset)
+        public CustomerModel GetCustomerModel(
+            int actorId,
+            string custName,
+            string groupName,
+            DataSet personalInfoDataset,
+            DataSet loginInfoDataset,
+            DataSet balanceInfoDataset,
+            DataSet customerStatusInfoDataset)
         {
-            var custInfoRow = customerInfoDataset.Tables[0].Rows[0];
-            var roleId = custInfoRow.RoleId();
-            var custId = custInfoRow.CustId();
+            var personalInfoRow = personalInfoDataset.Tables[0].Rows[0];
+            var roleId = personalInfoRow.RoleId();
             var isUpdateCredit = authorizationService.HasUpdateCreditPermission(actorId);
+            InstanceSettingService(roleId, actorId, personalInfoRow.Site());
+            var customerModel = new CustomerModel(
+                personalInfoDataset,
+                loginInfoDataset,
+                balanceInfoDataset,
+                customerStatusInfoDataset,
+                isUpdateCredit,
+                authorizationService.CanViewVNIP);
 
-            var customerModel = new CustomerModel(customerInfoDataset, isUpdateCredit, authorizationService.CanViewVNIP);
-
-            AssignSettingValue(actorId, custName, groupName, customerInfoDataset, roleId, customerModel);
-            AssignPersonalProfile(custId, customerInfoDataset, roleId, customerModel);
+            AssignSettingValue(customerStatusInfoDataset, roleId, customerModel);
 
             return customerModel;
         }
 
+        private void InstanceSettingService(int roleId, int userId, string site)
+        {
+            settingServices = new Dictionary<int, CustomerSettingQueryService>
+            {
+                [Role.Super] = new SuperSettingServiceImpl(userId, roleId, site),
+                [Role.Master] = new MasterSettingServiceImpl(userId, roleId, site),
+                [Role.Agent] = new CustomerSettingServiceImpl(userId, roleId, site),
+                [Role.Member] = new MemberSettingServiceImpl(userId, roleId, site)
+            };
+        }
+
         private void AssignSettingValue(
-            int actorId,
-            string custName,
-            string groupName,
-            DataSet customerInfoDataset,
+            DataSet customerStatusInfoDataset,
             int roleId,
             CustomerModel customerModel)
         {
-            var uplineId = roleId.IsSuper() ? 0 : (int) customerModel.PersonalInfo.UplineId.Value;
-
             if (!settingServices.ContainsKey(roleId))
             {
                 throw new ArgumentException($"RoleId {roleId} is out of range");
             }
 
             customerModel.Setting =
-                settingServices[roleId].GetSetting(actorId, custName, uplineId, groupName, customerInfoDataset);
-        }
-
-        private void AssignPersonalProfile(
-            int custId,
-            DataSet customerInfoDataset,
-            int roleId,
-            CustomerModel customerModel)
-        {
-            if (!settingServices.ContainsKey(roleId))
-            {
-                throw new ArgumentException($"RoleId {roleId} is out of range");
-            }
-
-            customerModel.PersonalInfo =
-                settingServices[roleId].GetPersonalInfo(custId, customerInfoDataset);
+                settingServices[roleId].GetSetting(customerStatusInfoDataset);
         }
     }
 }
