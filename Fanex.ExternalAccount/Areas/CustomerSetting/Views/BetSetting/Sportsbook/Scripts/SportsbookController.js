@@ -16,7 +16,7 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
 
     $scope.$watch("model.bettingLimitItems[0].minBetFormated", function (newValue, oldValue, _model) {
         if (_model.bettingLimits[0].checked) {
-            for (var i = 1; i < length - 1; i++) {
+            for (var i = 1; i < length - 2; i++) {
                 _model.bettingLimits[i].minBetFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
                 _model.bettingLimits[i].minBet = _model.bettingLimits[i].minBetFormated;
             }
@@ -25,7 +25,7 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
 
     $scope.$watch("model.bettingLimitItems[0].maxBetFormated", function (newValue, oldValue, _model) {
         if (_model.bettingLimits[0].checked) {
-            for (var i = 1; i < length - 1; i++) {
+            for (var i = 1; i < length - 2; i++) {
                 _model.bettingLimits[i].maxBetFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
                 _model.bettingLimits[i].maxBet = _model.bettingLimits[i].maxBetFormated;
             }
@@ -34,7 +34,7 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
 
     $scope.$watch("model.bettingLimitItems[0].maxPerMatchFormated", function (newValue, oldValue, _model) {
         if (_model.bettingLimits[0].checked) {
-            for (var i = 1; i < length - 1; i++) {
+            for (var i = 1; i < length - 2; i++) {
                 _model.bettingLimits[i].maxPerMatchFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
                 _model.bettingLimits[i].maxPerMatch = _model.bettingLimits[i].maxPerMatchFormated;
             }
@@ -43,7 +43,7 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
 
     $scope.$watch("model.bettingLimitItems[2].minBetFormated", function (newValue, oldValue, _model) {
         if (_model.bettingLimits[2].checked) {
-            for (var i = 2; i < length - 1; i++) {
+            for (var i = 2; i < length - 2; i++) {
                 _model.bettingLimits[i].minBetFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
                 _model.bettingLimits[i].minBet = _model.bettingLimits[i].minBetFormated;
             }
@@ -52,7 +52,7 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
 
     $scope.$watch("model.bettingLimitItems[2].maxBetFormated", function (newValue, oldValue, _model) {
         if (_model.bettingLimits[2].checked) {
-            for (var i = 2; i < length - 1; i++) {
+            for (var i = 2; i < length - 2; i++) {
                 _model.bettingLimits[i].maxBetFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
                 _model.bettingLimits[i].maxBet = _model.bettingLimits[i].maxBetFormated;
             }
@@ -61,7 +61,34 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
 
     $scope.$watch("model.bettingLimitItems[2].maxPerMatchFormated", function (newValue, oldValue, _model) {
         if (_model.bettingLimits[2].checked) {
-            for (var i = 2; i < length - 1; i++) {
+            for (var i = 2; i < length - 2; i++) {
+                _model.bettingLimits[i].maxPerMatchFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
+                _model.bettingLimits[i].maxPerMatch = _model.bettingLimits[i].maxPerMatchFormated;
+            }
+        }
+    });
+
+    $scope.$watch("model.bettingLimitItems[10].minBetFormated", function (newValue, oldValue, _model) {
+        if (_model.bettingLimits[10].checked) {
+            for (var i = 10; i < length ; i++) {
+                _model.bettingLimits[i].minBetFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
+                _model.bettingLimits[i].minBet = _model.bettingLimits[i].minBetFormated;
+            }
+        }
+    });
+
+    $scope.$watch("model.bettingLimitItems[10].maxBetFormated", function (newValue, oldValue, _model) {
+        if (_model.bettingLimits[10].checked) {
+            for (var i = 10; i < length; i++) {
+                _model.bettingLimits[i].maxBetFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
+                _model.bettingLimits[i].maxBet = _model.bettingLimits[i].maxBetFormated;
+            }
+        }
+    });
+
+    $scope.$watch("model.bettingLimitItems[10].maxPerMatchFormated", function (newValue, oldValue, _model) {
+        if (_model.bettingLimits[10].checked) {
+            for (var i = 10; i < length; i++) {
                 _model.bettingLimits[i].maxPerMatchFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
                 _model.bettingLimits[i].maxPerMatch = _model.bettingLimits[i].maxPerMatchFormated;
             }
@@ -69,10 +96,11 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
     });
 
     $scope.Init = function () {
-        for (var i = 0; i < length - 1; i++) {
+        for (var i = 0; i < length; i++) {
             $scope.model.bettingLimitItems[i].title = $scope.model.bettingLimitItems[i].resourceKey == 'Soccer' ?
             'Copy all below bet settings from Soccer (excluding Number Game)' : $scope.model.bettingLimitItems[i].resourceKey == 'Basketball' ?
-            'Copy all below bet settings from Basketball (excluding Number Game)' : '';
+            'Copy all below bet settings from Basketball (excluding Number Game)' : $scope.model.bettingLimitItems[i].resourceKey == 'NumberGame' ?
+            'Copy all below bet settings from Number Game' : '';
         }
     };
 
@@ -96,7 +124,7 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
                     var maxBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((soccerBetting.maxBetFormated == '' ? '0' : soccerBetting.maxBetFormated), ',', ''));
                     var maxPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((soccerBetting.maxPerMatchFormated == '' ? '0' : soccerBetting.maxPerMatchFormated), ',', ''));
 
-                    for (var i = 1; i < length - 1; i++) {
+                    for (var i = 1; i < length - 2; i++) {
                         $scope.model.bettingLimitItems[i].bgClass = 'inactive';
 
                         $scope.model.bettingLimitItems[i].minBetFormated = minBet.formatNumber();
@@ -115,7 +143,7 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
 
                     $scope.model.bettingLimitItems[0].checked = false;
 
-                    for (var i = 1; i < length - 1; i++) {
+                    for (var i = 1; i < length - 2; i++) {
                         $scope.model.bettingLimitItems[i].bgClass = '';
 
                         var minBet = $scope.model.bettingLimitItems[i].preValMinBet;
@@ -154,7 +182,7 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
                 $(soccerElement).addClass('true');
 
                 if (soccerChecked) {
-                    for (var i = 1; i < length - 1; i++) {
+                    for (var i = 1; i < length - 2; i++) {
                         $scope.model.bettingLimitItems[i].bgClass = '';
 
                         var minBet = $scope.model.bettingLimitItems[i].preValMinBet;
@@ -183,7 +211,7 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
                     var maxBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((basketballBetting.maxBetFormated == '' ? '0' : basketballBetting.maxBetFormated), ',', ''));
                     var maxPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((basketballBetting.maxPerMatchFormated == '' ? '0' : basketballBetting.maxPerMatchFormated), ',', ''));
 
-                    for (var i = 3; i < length - 1; i++) {
+                    for (var i = 3; i < length - 2; i++) {
                         $scope.model.bettingLimitItems[i].bgClass = 'inactive';
 
                         $scope.model.bettingLimitItems[i].minBetFormated = minBet.formatNumber();
@@ -211,7 +239,7 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
 
                     $scope.model.bettingLimitItems[2].checked = false;
 
-                    for (var i = 3; i < length - 1; i++) {
+                    for (var i = 3; i < length - 2; i++) {
                         $scope.model.bettingLimitItems[i].bgClass = '';
 
                         var minBet = $scope.model.bettingLimitItems[i].preValMinBet;
@@ -228,7 +256,62 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
                     }
                 }
 
+                break;
+            case 'numbergame':
+                $scope.model.bettingLimitItems[1].checked = false;
+
+                var element = $('#_' + scope.betting.resourceKey);
+                var unchecked = element.hasClass('true');
+                var numberGameBetting = $scope.model.bettingLimitItems[10];
+
+                if (unchecked) {
+                    $(element).removeClass('true');
+                    $(element).addClass('copied');
+                    $(element).addClass('copyActive');
+
+                    $scope.model.bettingLimitItems[10].checked = true;
+
+                    var minBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((numberGameBetting.minBetFormated == '' ? '0' : numberGameBetting.minBetFormated), ',', ''));
+                    var maxBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((numberGameBetting.maxBetFormated == '' ? '0' : numberGameBetting.maxBetFormated), ',', ''));
+                    var maxPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((numberGameBetting.maxPerMatchFormated == '' ? '0' : numberGameBetting.maxPerMatchFormated), ',', ''));
+
+                    for (var i = 11; i < length; i++) {
+                        $scope.model.bettingLimitItems[i].bgClass = 'inactive';
+
+                        $scope.model.bettingLimitItems[i].minBetFormated = minBet.formatNumber();
+                        $scope.model.bettingLimitItems[i].maxBetFormated = maxBet.formatNumber();
+                        $scope.model.bettingLimitItems[i].maxPerMatchFormated = maxPerMatch.formatNumber();
+
+                        $scope.model.bettingLimitItems[i].minBet = minBet.formatNumber();
+                        $scope.model.bettingLimitItems[i].maxBet = maxBet.formatNumber();
+                        $scope.model.bettingLimitItems[i].maxPerMatch = maxPerMatch.formatNumber();
+                    }
+                }
+                else {
+                    $(element).removeClass('copied');
+                    $(element).removeClass('copyActive');
+                    $(element).addClass('true');
+
+                    $scope.model.bettingLimitItems[10].checked = false;
+
+                    for (var i = 11; i < length; i++) {
+                        $scope.model.bettingLimitItems[i].bgClass = '';
+
+                        var minBet = $scope.model.bettingLimitItems[i].preValMinBet;
+                        var maxBet = $scope.model.bettingLimitItems[i].preValMaxBet;
+                        var maxPerMatch = $scope.model.bettingLimitItems[i].preValMaxPerMatch;
+
+                        $scope.model.bettingLimitItems[i].minBetFormated = minBet;
+                        $scope.model.bettingLimitItems[i].maxBetFormated = maxBet;
+                        $scope.model.bettingLimitItems[i].maxPerMatchFormated = maxPerMatch;
+
+                        $scope.model.bettingLimitItems[i].minBet = minBet;
+                        $scope.model.bettingLimitItems[i].maxBet = maxBet;
+                        $scope.model.bettingLimitItems[i].maxPerMatch = maxPerMatch;
+                    }
+                }
                 return;
+
             default:
                 break;
         }
