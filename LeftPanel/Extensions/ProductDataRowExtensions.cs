@@ -69,6 +69,8 @@
 
         internal static bool HideGoldDeluxe(this DataRow dataRow) => Utils.ToBoolean(dataRow["HideGoldDeluxe"]);
 
+        internal static bool HideGoldDeluxeUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineHideGoldDeluxe"]);
+
         internal static bool DisableGoldDeluxeUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineDisableGoldDeluxe"]);
 
         internal static bool DisableGoldDeluxe(this DataRow dataRow) => Utils.ToBoolean(dataRow["DisableGoldDeluxe"]);

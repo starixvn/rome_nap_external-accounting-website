@@ -292,7 +292,7 @@
 
         private static void AddGoldDeluxeEditLink(DataRow nonDCSProductStatusRow, ICollection<ObjectInfo> details)
         {
-            if (!nonDCSProductStatusRow.HideGoldDeluxe())
+            if (!nonDCSProductStatusRow.HideGoldDeluxeUpline())
             {
                 details.Add(new ObjectInfo("GoldDeluxe", "Gold Deluxe"));
             }
