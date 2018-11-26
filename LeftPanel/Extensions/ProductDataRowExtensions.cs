@@ -29,7 +29,7 @@
 
         internal static bool EnableDoubleComm(this DataRow dataRow) => Utils.ToBoolean(dataRow["doubleCommLosing"]);
 
-        internal static bool EnableDoubleCommUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineDoubleCommLosing"]);
+        internal static bool EnableDoubleCommUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineDoubleCommLosing"], true);
 
         internal static bool DisableESportsUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineDisableEsports"]);
 
