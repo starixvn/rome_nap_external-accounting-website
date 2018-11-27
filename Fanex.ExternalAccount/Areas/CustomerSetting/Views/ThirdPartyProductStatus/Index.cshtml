@@ -13,30 +13,13 @@
 </head>
 <body>
     <div id="ThirdPartyProductStatusTabs">
-        <ul class="tabs">
-            <li><a href="#tabOldVersion">@ProductStatus.OldVersion</a></li>
-            <li><a href="#tabNewVersion">@ProductStatus.NewVersion</a></li>
-        </ul>
-        <div id="tabOldVersion">
-            <iframe id="iframeOldVersion"
-                width="100%"
-                height="@iframeHeight"
-                frameborder="0"
-                src="@Url.Content(string.Format(
-                    "{0}ProductStatusSetting/Simple?custId={1}&custName={2}&custRole={3}&productId={4}",
-                    Url.Content("~"), Model.CustId, Model.CustName, Model.CustRole, Model.ProductId))">
-            </iframe>
-        </div>
-        <div id="tabNewVersion">
-            <iframe id="iframeNewVersion"
+        <iframe id="iframeNewVersion"
                 width="100%"
                 height="@iframeHeight"
                 frameborder="0"
                 src="@Url.Content(string.Format(
                     "{0}ProductStatusSetting/Index?custId={1}&custName={2}&custRole={3}&productId={4}",
-                    Url.Content("~"), Model.CustId, Model.CustName, Model.CustRole, Model.ProductId))">
-            </iframe>
-        </div>
+                    Url.Content("~"), Model.CustId, Model.CustName, Model.CustRole, Model.ProductId))"></iframe>
     </div>
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery-ui-1.9.1.min.js")"></script>
