@@ -970,6 +970,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Group list.
+        /// </summary>
+        public static string GroupList {
+            get {
+                return ResourceManager.GetString("GroupList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group Name.
         /// </summary>
         public static string GroupName {
@@ -984,6 +993,15 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string GroupPermission {
             get {
                 return ResourceManager.GetString("GroupPermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide on Win Loss Detail report.
+        /// </summary>
+        public static string HideInactiveProduct {
+            get {
+                return ResourceManager.GetString("HideInactiveProduct", resourceCulture);
             }
         }
         
@@ -1439,6 +1457,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This checkbox is used for inactive products whose statistics is hidden on current mode but still showing on history mode.
+        /// </summary>
+        public static string NoteHideInactiveProduct {
+            get {
+                return ResourceManager.GetString("NoteHideInactiveProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data is up to 3 months. For more historical data, please click.
         /// </summary>
         public static string NoteViewHistory {
@@ -1651,6 +1678,24 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string PositionTaking {
             get {
                 return ResourceManager.GetString("PositionTaking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product list.
+        /// </summary>
+        public static string ProductList {
+            get {
+                return ResourceManager.GetString("ProductList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Management.
+        /// </summary>
+        public static string ProductManagement {
+            get {
+                return ResourceManager.GetString("ProductManagement", resourceCulture);
             }
         }
         

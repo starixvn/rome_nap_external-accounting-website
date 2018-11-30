@@ -22,7 +22,7 @@
                 .Where(product => product.ProductId > 1)
                 .Select(product => new KeyValuePair<int, string>(
                     product.ProductId,
-                    product.ProductId == 0 ? product.Name : _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", product.ProductId.ToString(), "en-US", null)))
+                    _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", product.ProductId.ToString(), "en-US", string.Empty)))
                 .ToList();
     }
 }

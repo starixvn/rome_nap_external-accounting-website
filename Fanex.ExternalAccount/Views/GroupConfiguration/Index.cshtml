@@ -1,0 +1,78 @@
+﻿@using Fanex.ExternalAccount.Controllers.ViewModels
+@using Fanex.ExternalAccount.Utilities;
+
+@{
+    Layout = null;
+}
+
+@model GroupConfigurationViewModel
+<div id='jqWidget'>
+    <div class="page-title">
+        <div class="pull-left">
+            @ViewLang.ProductManagement
+        </div>
+
+    </div>
+    <div id="mainGrid">
+        <div id="tabs" style="float: left; width: 870px; border: none">
+            <ul class="tabs">
+                <li><a href="#tabs-Product" onclick="Fanex.ExtAcc.GroupConfiguration.GetDataByProduct()">Product</a></li>
+                <li><a href="#tabs-Group" onclick="Fanex.ExtAcc.GroupConfiguration.GetDataByGroup()">Group</a></li>
+            </ul>
+
+            <div id="tabs-Product" style="width: 870px; border: none">
+                <div class="search-form filterbox">
+                    <div class="form-group">
+                        <label class="label">
+                            @ViewLang.ProductList
+                        </label>
+                        <div id="productlist" class="usergroup pull-left">
+                            <select id="productIds" class="usernameInput group">
+                                @foreach (var item in Model.Products)
+                                {
+                                    <option value="@item.ProductId">@item.ProductName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input id="chk-hideInactiveProduct" type="checkbox" />
+                        <div class="label lbl-show-limit-date">@ViewLang.HideInactiveProduct</div>
+                        <div class="">@ViewLang.NoteHideInactiveProduct</div>
+                    </div>
+                </div>
+                <div id="ProductGrid" class="removeRadius freegrid content-grid">
+
+                </div>
+                <input type="button" value="Submit" class="btn -submit" style="float:right;margin:30px" id="updateByProduct" />
+            </div>
+
+            <div id="tabs-Group" style="width: 870px; border: none">
+                <div class="search-form filterbox">
+                    <div class="form-group">
+                        <label class="label">
+                            @ViewLang.GroupList
+                        </label>
+                        <div id="grouplist" class="user-group pull-left">
+                            <select id="groupIds" class="usernameInput group">
+                                @foreach (var item in Model.Groups)
+                                {
+                                    <option value="@item.GroupID">@item.GroupName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div id="GroupGrid" class="removeRadius freegrid content-grid">
+
+                </div>
+                <input type="button" value="Submit" class="btn -submit" style="float:right;margin:30px" id="updateByGroup" />
+            </div>
+        </div>
+    </div>   
+
+</div>
+@Html.Hidden("HideInactiveProducts", Config.HideInactiveProducts)
+
+<script src="@Url.Content("~/Scripts/Manage/Fanex.ExtAcc.GroupConfiguration.js")" type="text/javascript"></script>

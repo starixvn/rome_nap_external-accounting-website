@@ -1672,6 +1672,7 @@
     <Content Include="Scripts\Fanex.Grid\ThirdParties\Numeral\numeral.min.js" />
     <Content Include="Scripts\isMobile.min.js" />
     <Content Include="Scripts\jquery.ui.touch-punch.js" />
+    <Content Include="Scripts\Manage\Fanex.ExtAcc.GroupConfiguration.js" />
     <Content Include="Scripts\MultiSelect\select2.css" />
     <Content Include="Scripts\MultiSelect\select2.js" />
     <Content Include="Scripts\Reports\Fanex.ExtAcc.PokerGamesWinLossDetail.js" />
@@ -2833,6 +2834,7 @@
     <Content Include="Views\MainSuper\EditInfo.cshtml" />
     <Content Include="Views\PokerGamesWinLossDetail\Index.cshtml" />
     <Content Include="Views\Customer\LimitMemberCreation.cshtml" />
+    <Content Include="Views\GroupConfiguration\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">

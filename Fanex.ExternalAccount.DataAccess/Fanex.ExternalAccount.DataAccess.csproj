@@ -162,6 +162,9 @@
     <Compile Include="Criteria\Customer\ResetPasswordCriteria.cs" />
     <Compile Include="Criteria\DataRange\SelectDataRangeCriteria.cs" />
     <Compile Include="Criteria\DataRange\UpdateDataRangeCriteria.cs" />
+    <Compile Include="Criteria\GroupConfiguration\GroupConfigurationDetail.cs" />
+    <Compile Include="Criteria\GroupConfiguration\UpdateGroupConfigurationCriteria.cs" />
+    <Compile Include="Criteria\GroupConfiguration\GetGroupConfigurationCriteria.cs" />
     <Compile Include="Criteria\IPInformation\GetIPInformationCriteria.cs" />
     <Compile Include="Criteria\IPInformation\GetAllSpecialIPCriteria.cs" />
     <Compile Include="Customer\IAgentDao.cs" />
@@ -185,11 +188,13 @@
     <Compile Include="Login\ILoginDao.cs" />
     <Compile Include="Login\LoginDao.cs" />
     <Compile Include="OTP\CustomerOtpDataAccess.cs" />
+    <Compile Include="Products\GetProductsCriteria.cs" />
     <Compile Include="Report\IReportDAO.cs" />
     <Compile Include="Report\ReportDao.cs" />
     <Compile Include="Statement\IStatementDAO.cs" />
     <Compile Include="Statement\StatementDao.cs" />
     <Compile Include="UserControl\FunctionDao.cs" />
+    <Compile Include="UserControl\GroupConfigurationDAO.cs" />
     <Compile Include="UserControl\GroupDao.cs" />
     <Compile Include="UserControl\IFunctionDao.cs" />
     <Compile Include="UserControl\IGroupDao.cs" />
