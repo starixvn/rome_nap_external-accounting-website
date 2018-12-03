@@ -61,9 +61,7 @@
         }
 
         public bool IsKickedOut(int custId) => _loginDao.IsKickedOut(custId);
-
-        public ICollection<Group> GroupList() => _loginDao.GroupList().OrderBy(o => o.GroupName).ToList();
-
+        
         public bool CheckExternalGroup(int custId, int? funcId, string funcKey)
         {
             Check.Argument.IsNotNegative(custId, "custId");

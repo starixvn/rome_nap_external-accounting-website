@@ -95,8 +95,6 @@
             }
         }
 
-        public static string HideInactiveProducts => GetValue("HideInactiveProducts");
-
         private static string GetValue(string key) => ConfigurationManager.AppSettings[key];
     }
 }

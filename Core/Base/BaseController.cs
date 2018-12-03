@@ -33,7 +33,6 @@
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class BaseController : Controller
     {
-        private readonly IRemotingRefService _remotingRefService;
         protected const string SiteName = "ExtAcc";
 
         protected const int FromSystem = 3;
@@ -46,16 +45,15 @@
 
         protected readonly AuthorizationService AuthorizationService = new AuthorizationServiceImpl();
 
-        protected BaseController() : this(new CurrentSession(), new CurrentContext(), new ExtRequest(), null)
+        protected BaseController() : this(new CurrentSession(), new CurrentContext(), new ExtRequest())
         {
         }
 
-        protected BaseController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IRemotingRefService remotingRefService)
+        protected BaseController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest)
         {
             this.currentContext = currentContext;
             this.currentSession = currentSession;
             this.extRequest = extRequest;
-            _remotingRefService = remotingRefService ?? new RemotingRefService();
         }
 
         protected static string Environment => Utils.ToString(ConfigurationManager.AppSettings["Environment"]);
@@ -270,14 +268,12 @@
                 new CheckCustomerIsSpecialSiteCriteria { UserName = username });
         }
 
-        protected List<KeyValuePair<string, string>> GetProductList(IEnumerable<int> excludeProductIds, bool isHideInactiveProduct = true)
+        protected static List<KeyValuePair<string, string>> GetProductList(IEnumerable<int> excludeProductIds, bool isHideInactiveProduct = true)
         {
             return new ProductListAuthorization()
                 .GetProductList(isHideInactiveProduct)
                 .Where(product => !excludeProductIds.Contains(product.ProductId))
-                .Select(product => new KeyValuePair<string, string>(
-                    product.Id,
-                    product.ProductId == 0 ? product.Name : _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", product.ProductId.ToString(), "en-US", product.Name)))
+                .Select(product => new KeyValuePair<string, string>(product.Id, product.ProductName))
                 .ToList();
         }
     }

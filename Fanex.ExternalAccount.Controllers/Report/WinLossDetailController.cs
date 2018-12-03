@@ -4,7 +4,6 @@
     using System.Linq;
     using System.Web.Mvc;
     using Core.Context;
-    using Core.Reports.WinLossDetail;
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
@@ -13,6 +12,7 @@
     using Requests;
     using Service.Impl.Report;
     using Service.Interface.Report;
+    using Service.UserControl;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -24,24 +24,25 @@
         public WinLossDetailController(
             ICurrentSession currentSession,
             WinLossDetailService winLossDetailService,
-            IReportService reportService)
-            : base(currentSession, reportService)
+            IReportService reportService,
+            IGroupConfigurationService groupConfigurationService)
+            : base(currentSession, reportService, groupConfigurationService)
         {
             this.winLossDetailService = winLossDetailService ?? new WinLossDetailServiceImpl();
             ToolTipsProducts = new
             {
-                showAllbet = WinLossDetailHelper.IsShowProduct("showAB", this.currentSession),
-                showPokerGames = WinLossDetailHelper.IsShowProduct("showPG", this.currentSession),
-                showBullfighting = WinLossDetailHelper.IsShowProduct("showBf", this.currentSession)
+                showAllbet = this.groupConfigurationService.IsShowByProductAndGroup(ProductConstants.AllBet, this.currentSession.CurrencyGroup),
+                showPokerGames = this.groupConfigurationService.IsShowByProductAndGroup(ProductConstants.PokerGames, this.currentSession.CurrencyGroup),
+                showBullfighting = this.groupConfigurationService.IsShowByProductAndGroup(ProductConstants.BullFighting, this.currentSession.CurrencyGroup),
             };
         }
 
-        public WinLossDetailController() : this(null, null, null)
+        public WinLossDetailController() : this(null, null, null, null)
         {
         }
 
-        public ActionResult Index(string id)
-            => View(IsShowIncludePokerGames(id));
+        public ActionResult Index()
+            => View(IsShowIncludePokerGames());
 
         [AntiXSRFFilter]
         public ActionResult GetData(WinLossDetailRequest request)

@@ -4,23 +4,14 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 }
 
 Fanex.ExtAcc.GroupConfiguration = {
-    hideInactiveProducts: '',
 
     $this: null,
 
     Init: function () {
         $this = this;
         $('#tabs').tabs();
-        $this.hideInactiveProducts = $("#HideInactiveProducts").val();
         $("#productIds").combobox({
-            selected: function (event, ui) {
-                var selectedProduct = $("#productIds").val();
-                if ($this.hideInactiveProducts.indexOf(selectedProduct) >= 0) {
-                    $("#chk-hideInactiveProduct").prop('checked', true);
-                } else {
-                    $("#chk-hideInactiveProduct").prop('checked', false);
-                }
-
+            selected: function (event, ui) {               
                 $this.GetDataByProduct();
             }
         });
@@ -44,8 +35,6 @@ Fanex.ExtAcc.GroupConfiguration = {
                     GroupDetails: a
                 },
                 type: 'POST'
-            }).success(function () {
-                alert('OK');
             }).done(function () {
                 Fanex.ExtAcc.UnBlockUI();
             });
@@ -60,8 +49,6 @@ Fanex.ExtAcc.GroupConfiguration = {
                     GroupDetails: a
                 },
                 type: 'POST'
-            }).success(function () {
-                alert('OK');
             }).done(function () {
                 Fanex.ExtAcc.UnBlockUI();
             });
@@ -91,7 +78,6 @@ Fanex.ExtAcc.GroupConfiguration = {
     UpdateDataByGroup: function () {
         var data = [];
         var groupId = $("#groupIds").val();
-        debugger;
         $("#GroupGrid tbody tr").each(function (i, row) {
             var $row = $(row);
             var isShow = $row.find('#IsShow');
@@ -114,7 +100,9 @@ Fanex.ExtAcc.GroupConfiguration = {
             data: { ProductId: $("#productIds").val() },
             type: 'POST'
         }).success(function (data) {
-
+            var isHideInactive = data[0].IsHideInactiveProduct;
+            $("#chk-hideInactiveProduct").prop('checked', isHideInactive);
+            
             var bodyRows = [];
 
             for (var i = 0; i < data.length; i++) {

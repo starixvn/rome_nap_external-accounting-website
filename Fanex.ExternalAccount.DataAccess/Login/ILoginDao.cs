@@ -13,9 +13,7 @@
 
         Result Checkin(int custId, string netSessionId, string ip, out int onuserId);
 
-        bool IsKickedOut(int custId);
-
-        ICollection<Group> GroupList();
+        bool IsKickedOut(int custId);        
 
         bool CheckExternalGroup(int custId, int? funcId, string funcKey);
 

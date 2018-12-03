@@ -6,12 +6,16 @@
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.NAP.Framework.Data;
+    using Utilities.Reports.WinLossDetail;
+    using System.Linq;
 
     public interface IGroupConfigurationService
     {
         IEnumerable<GroupConfigurationModel> Get(GetGroupConfigurationCriteria criteria);
 
-        Result Update(UpdateGroupConfigurationCriteria criteria);        
+        Result Update(UpdateGroupConfigurationCriteria criteria);
+
+        bool IsShowByProductAndGroup(int productId, string groupName);
     }
 
     public class GroupConfigurationService : IGroupConfigurationService
@@ -31,9 +35,25 @@
         }
 
         public IEnumerable<GroupConfigurationModel> Get(GetGroupConfigurationCriteria criteria)
-            => dynamicRepository.Fetch<GroupConfigurationModel>(criteria);       
+        {
+            var configurations=dynamicRepository.Fetch<GroupConfigurationModel>(criteria);
+
+            return configurations.Where(i => !Group.IsOfficeGroup(i.GroupName));
+        }
 
         public Result Update(UpdateGroupConfigurationCriteria criteria)
             => groupConfigurationDAO.Update(criteria);
+
+        public bool IsShowByProductAndGroup(int productId, string groupName)
+        {
+            if (Group.IsOfficeGroup(groupName))
+            {
+                return true;
+            }
+
+            var groups = Get(new GetGroupConfigurationCriteria { ProductId = productId });
+
+            return groups.FirstOrDefault(i => i.GroupName.Equals(groupName)).IsShow;
+        }
     }
 }

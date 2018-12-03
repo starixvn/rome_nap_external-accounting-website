@@ -37,7 +37,7 @@
         public ActionResult Index()
         {
             var products = productService.GetAllProducts();
-            var groups = groupService.GetAllGroup();
+            var groups = groupService.GetExternalGroup();
 
             return View(new GroupConfigurationViewModel { Groups = groups, Products = products });
         }

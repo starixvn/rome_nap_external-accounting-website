@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Web.Mvc;
     using Core.Context;
-    using Core.Reports.WinLossDetail;
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
@@ -12,6 +11,7 @@
     using Excel.Reports.DailyWinLossReport;
     using Newtonsoft.Json;
     using Service.Interface.Report;
+    using Service.UserControl;
     using Utilities;
 
     public class DailyWinlossController : BaseReportController
@@ -29,23 +29,26 @@
         private DateTime _winlostDate = DateTime.Today;
         private readonly dynamic ToolTipsProducts;
 
-        public DailyWinlossController(ICurrentSession currentSession, IReportService reportService)
-            : base(currentSession, reportService)
+        public DailyWinlossController(
+            ICurrentSession currentSession,
+            IReportService reportService,
+            IGroupConfigurationService groupConfigurationService)
+            : base(currentSession, reportService, groupConfigurationService)
         {
             ToolTipsProducts = new
             {
-                showPokerGames = WinLossDetailHelper.IsShowProduct("showPG", this.currentSession)
+                showPokerGames = this.groupConfigurationService.IsShowByProductAndGroup(ProductConstants.PokerGames, this.currentSession.CurrencyGroup)
             };
         }
 
-        public DailyWinlossController() : this(null, null)
+        public DailyWinlossController() : this(null, null, null)
         {
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult Index(string id)
-            => PartialViewBase(IsShowIncludePokerGames(id));
+        public ActionResult Index()
+            => PartialViewBase(IsShowIncludePokerGames());
 
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,
             Policy = AuthenticateAction.AuthenticationType.Read)]
@@ -58,7 +61,7 @@
             _recommend = CheckRequest.GetIntRequest("recommend", 0);
 
             var includePokerGames = CheckRequest.GetBooleanRequest("includepokergames", false);
-            var excludeProductIds = IsShowIncludePokerGames(ExtRequest.GetGroupName()) && !includePokerGames
+            var excludeProductIds = IsShowIncludePokerGames() && !includePokerGames
                 ? ProductConstants.PokerGames.ToString()
                 : string.Empty;
 

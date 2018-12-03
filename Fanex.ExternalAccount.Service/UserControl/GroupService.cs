@@ -7,6 +7,7 @@
     using DTO;
     using DTO.UserControl;
     using Interface.UserControl;
+    using System.Linq;
 
     public class GroupService : IGroupService
     {
@@ -18,6 +19,8 @@
         }
 
         public IEnumerable<Group> GetListGroup() => _groupDao.GetListGroup();
+
+        public IEnumerable<Group> GetExternalGroup() => _groupDao.GetExternalGroup().OrderBy(i => i.GroupName);
 
         public IEnumerable<Group> GetAllGroup() => _groupDao.GetAllGroup();
 

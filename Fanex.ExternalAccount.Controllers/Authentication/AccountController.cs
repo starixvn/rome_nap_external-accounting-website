@@ -14,7 +14,9 @@
     using DTO.UserControl;
     using Logging.Extensions.Web;
     using Service.Impl.Login;
+    using Service.Impl.UserControl;
     using Service.Interface.Login;
+    using Service.Interface.UserControl;
     using Utilities;
     using ViewModel.Account;
     using ViewModels;
@@ -27,6 +29,7 @@
         private readonly CurrentSession _currentSession;
         private readonly NoCaptchaSectionConfiguration _nocaptcha;
         private readonly ILoginService _userService;
+        private readonly IGroupService groupService;
 
         public AccountController()
         {
@@ -34,6 +37,7 @@
             _currentSession = new CurrentSession();
             _userService = new LoginService();
             _nocaptcha = NoCaptchaSectionConfiguration.Instance;
+            groupService = new GroupService();
         }
 
         [HttpGet]
@@ -240,7 +244,7 @@
             return View(new ExternalGroupViewModel
             {
                 Username = _currentSession.UserName,
-                GroupList = _userService.GroupList().ToList(),
+                GroupList = groupService.GetExternalGroup().ToList(),
                 Code = _currentSession.OTPEncryptCode,
                 EnabledOTP = _currentSession.EnabledOTP,
                 ModifiedDate = _currentSession.OTPModifiedDate
@@ -250,7 +254,7 @@
         [ExternalAccountAuthenticate]
         public ActionResult ExternalGroupList()
         {
-            var result = _userService.GroupList();
+            var result = groupService.GetExternalGroup();
 
             return Json(
                 result.Select(o => new
