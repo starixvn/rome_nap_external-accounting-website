@@ -1,6 +1,6 @@
 ﻿@import "../abstracts/_mixins.scss";
 
-#userGroup input {
+#userGroup input, .select-box input {
     border-radius: 0 !important;
     border: 1px solid #a6a6a6; 
     height: 28px;
@@ -11,7 +11,7 @@
     }
 }
 
-#userGroup button {
+#userGroup button, .select-box button {
     background: #fff;
     background-image: none !important;
     border: none;
@@ -27,7 +27,7 @@
     }
 }
 
-#userGroup button:hover {
+#userGroup button:hover, .select-box button:hover {
     background-image: none !important;
 }
 

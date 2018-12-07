@@ -58,7 +58,8 @@
       "assets/styles/pages/reports/daily-winloss.css",
       "assets/styles/pages/reports/winloss-detail.css",
       "assets/styles/pages/reports/pokergames-winloss-detail.css",
-      "assets/styles/pages/customer/pt-engine.css"
+      "assets/styles/pages/customer/pt-engine.css",
+       "assets/styles/pages/admin/product.css"
     ],
     "sourceMap": true
   },

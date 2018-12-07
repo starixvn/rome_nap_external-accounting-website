@@ -1047,6 +1047,12 @@
     <Content Include="assets\styles\pages\account\security-code.min.css">
       <DependentUpon>security-code.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\admin\product.css">
+      <DependentUpon>product.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\admin\product.min.css">
+      <DependentUpon>product.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\pages\customer\bet-limit.css">
       <DependentUpon>bet-limit.scss</DependentUpon>
     </Content>
@@ -2722,6 +2728,7 @@
     <Content Include="assets\bundles\casino\index.min.js.map">
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\admin\product.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
