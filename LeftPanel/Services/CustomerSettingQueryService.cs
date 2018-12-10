@@ -258,9 +258,11 @@
             return details;
         }
 
-        private static void AddVirtualSportsEditLink(DataTable table3rdDCS, ICollection<ObjectInfo> details)
+        private void AddVirtualSportsEditLink(DataTable table3rdDCS, ICollection<ObjectInfo> details)
         {
-            if (!table3rdDCS.IsProductHidden(ProductConstants.VirtualSports))
+            if (_roleId.IsMember() ?
+                !table3rdDCS.IsProductHiddenUpline(ProductConstants.VirtualSports):
+                !table3rdDCS.IsProductHidden(ProductConstants.VirtualSports))
             {
                 details.Add(new ObjectInfo("VirtualSports", "Virtual Sports"));
             }
