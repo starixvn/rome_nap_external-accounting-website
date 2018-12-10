@@ -140,7 +140,7 @@ Fanex.ExtAcc.GroupConfiguration = {
             var options = {
                 columns: columns,
                 bodyRows: bodyRows,
-                gridHeight: 700,
+                gridHeight: 650,
                 fullHeight: false,
                 marginRight: 10,
                 showDistinctRow: false,
@@ -193,7 +193,7 @@ Fanex.ExtAcc.GroupConfiguration = {
             var options = {
                 columns: columns,
                 bodyRows: bodyRows,
-                gridHeight: 700,
+                gridHeight: 650,
                 fullHeight: false,
                 marginRight: 10,
                 showDistinctRow: false,

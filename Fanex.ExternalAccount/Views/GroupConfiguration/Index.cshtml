@@ -17,7 +17,7 @@
                 <li><a href="#tabs-Product" onclick="Fanex.ExtAcc.GroupConfiguration.GetDataByProduct()">Product</a></li>
                 <li><a href="#tabs-Group" onclick="Fanex.ExtAcc.GroupConfiguration.GetDataByGroup()">Group</a></li>
             </ul>
-            <div id="tabs-Product">
+            <div id="tabs-Product" style="width:100%;">
                 <div class="search-form filterbox">
                     <div class="searchBar">
                         <div class="form-group">
@@ -34,7 +34,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label><input id="chk-hideInactiveProduct" type="checkbox" />@ViewLang.HideInactiveProduct</label>
+                            <label><input onclick="return false;" id="chk-hideInactiveProduct" type="checkbox" />@ViewLang.HideInactiveProduct</label>
                             <div class="note">(*) @ViewLang.NoteHideInactiveProduct</div>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                 </div>
                 <input type="button" value="Submit" class="btn -submit" style="float:right;margin:30px" id="updateByProduct" />
             </div>
-            <div id="tabs-Group">
+            <div id="tabs-Group" style="width:100%;">
                 <div class="search-form filterbox">
                     <div class="form-group">
                         <label class="label">

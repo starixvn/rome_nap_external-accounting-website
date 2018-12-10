@@ -48,6 +48,9 @@
     .ui-tabs .ui-tabs-nav li a {
         padding: .7em 1em .3em;
     }
+    .select-box input {
+        min-width: 200px;
+    }
 }
 
 .ui-tabs .ui-tabs-panel
