@@ -17,7 +17,8 @@
                 [ProductConstants.Lottery] = new Product(ProductConstants.Lottery, "Lottery"),
                 [ProductConstants.Lucky3] = new Product(ProductConstants.Lucky3, "Lucky 3"),
                 [ProductConstants.BullFighting] = new Product(ProductConstants.BullFighting, "Bullfighting"),
-                [ProductConstants.PokerGames] = new Product(ProductConstants.PokerGames, "Poker Games")
+                [ProductConstants.PokerGames] = new Product(ProductConstants.PokerGames, "Poker Games"),
+                [ProductConstants.Sportsbook2] = new Product(ProductConstants.Sportsbook2, "Sportsbook 2")
             };
 
         public static bool IsShowGoldDeluxe => IsShowProduct(ProductConstants.GoldDeluxe);
@@ -27,8 +28,6 @@
         public static bool ShowKenoSetting => Configs["ShowKenoSetting"] == "true";
 
         public static bool IsShowColossusBets => IsShowProduct(ProductConstants.ColossusBets);
-
-        public static bool IsShowSportsbook2 => IsShowProduct(ProductConstants.Sportsbook2);
 
         public static bool IsShowCricket => IsShowProduct(ProductConstants.Cricket);
 

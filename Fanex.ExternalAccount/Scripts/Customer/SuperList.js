@@ -2,7 +2,6 @@
     custId,
     title,
     hideGoldDeluxe,
-    hideSportsbook2,
     hideColossusBets,
     hideCricket,
     productSettingsJson) {
@@ -11,7 +10,6 @@
     this.TitleEditInfo = unescape(title);
     this.CurrentLevel = this.Super;
     this.HideGoldDeluxe = hideGoldDeluxe;
-    this.HideSportsbook2 = hideSportsbook2;
     this.HideCricket = hideCricket;
     var productSettings = JSON.parse(unescape(productSettingsJson));
 
@@ -103,10 +101,6 @@
                 Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Colossus Bets Setting <font color="#6dcff6">' + title + '</font>', 900, 400, false, false, 1);
             }
         }
-    }
-
-    if (!this.HideSportsbook2) {
-        addEditProductSuperContextMenuItem(16, 'sportsbook2', 'Sportsbook 2');
     }
 
     if (!this.HideCricket) {
@@ -286,7 +280,6 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
                 + cellValue.HideVirtualSports + ","
                 + cellValue.HideGoldDeluxe + ","
                 + cellValue.HideColossusBet + ","
-                + cellValue.HideMuayThai + ","
                 + cellValue.HideCricket + ")";
 
             var len = cellValue.username.length;
@@ -304,7 +297,6 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
                 + cellValue.custid + ",'"
                 + escape(cellValue.username) + "',"
                 + cellValue.HideGoldDeluxe + ","
-                + cellValue.HideMuayThai + ","
                 + cellValue.HideColossusBet + ","
                 + cellValue.HideCricket + ",'"
                 + escape(JSON.stringify(cellValue.productSettings)) + "')";

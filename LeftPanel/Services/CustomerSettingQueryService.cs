@@ -91,7 +91,7 @@
             AddNumberGameStatus(customerRow, customerStatus, enableItems);
             AddVirtualSportsStatus(productStatusTable, customerStatus, enableItems);
             AddDoubleCommStatus(customerRow, customerStatus, enableItems);
-            AddESportsStatus(customerRow, customerStatus, enableItems);
+            AddESportsStatus(productStatusTable, customerStatus, enableItems);
             AddColossusBetsStatus(customerRow, customerStatus, enableItems);
             AddGoldDeluxeStatus(customerRow, customerStatus, enableItems);
 
@@ -141,7 +141,7 @@
             enableItems.Add(colossusBetsStatus);
         }
 
-        private static void AddESportsStatus(DataRow customerRow, CustomerStatus customerStatus,
+        private static void AddESportsStatus(DataTable productStatusTable, CustomerStatus customerStatus,
             List<ObjectInfo> enableItems)
         {
             if (customerStatus.HideEsports)
@@ -150,7 +150,7 @@
             }
 
             var eSportsStatus =
-                new ObjectInfo("EnableESports", customerRow.EnableESports(), "E-Sports", "Enable E-Sports");
+                new ObjectInfo("EnableESports", productStatusTable.GetESportStatus(), "E-Sports", "Enable E-Sports");
 
             if (customerStatus.RoleId.IsNotSuper()
                 && customerStatus.UplineStatus.DisableESports)
@@ -285,7 +285,6 @@
             AddKenoEditLink(details);
             AddGoldDeluxeEditLink(customerStatus, details);
             AddColossusBetsEditLink(customerStatus, details);
-            AddSportsbook2EditLink(customerStatus, details);
             AddCricketEditLink(customerStatus, details);
 
             return details;
@@ -304,14 +303,6 @@
             if (ProductSettings.IsShowKeno)
             {
                 details.Add(new ObjectInfo("Keno", "Keno"));
-            }
-        }
-
-        private static void AddSportsbook2EditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
-        {
-            if (!customerStatus.DisableSportsbook2)
-            {
-                details.Add(new ObjectInfo("Sportsbook2", "Sportsbook 2"));
             }
         }
 
@@ -421,21 +412,24 @@
             ProductSettingElement productSettingElement,
             bool isUplineDisabled)
         {
-            if (productSettingElement.StatusType == StatusType.Checkbox)
+            if (productSettingElement.StatusType != StatusType.OnlyDetail)
             {
-                var enableItem = CreateEnableCheckboxItem(productSettingElement.Key,
-                    !productStatusTable.IsProductEnabled(productSettingElement.Id), productSettingElement.Name);
-
-                if (isUplineDisabled)
+                if (productSettingElement.StatusType == StatusType.Checkbox)
                 {
-                    enableItem = DisableStatus(enableItem);
-                }
+                    var enableItem = CreateEnableCheckboxItem(productSettingElement.Key,
+                        !productStatusTable.IsProductEnabled(productSettingElement.Id), productSettingElement.Name);
 
-                setting.EnableItems.Add(enableItem);
-            }
-            else
-            {
-                setting.EditItems.Add(CreateEnableLinkItem(productSettingElement.Key, productSettingElement.Name));
+                    if (isUplineDisabled)
+                    {
+                        enableItem = DisableStatus(enableItem);
+                    }
+
+                    setting.EnableItems.Add(enableItem);
+                }
+                else
+                {
+                    setting.EditItems.Add(CreateEnableLinkItem(productSettingElement.Key, productSettingElement.Name));
+                }
             }
         }
 

@@ -3493,4 +3493,13 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="warningUnsyncedAllDownline" xml:space="preserve">
     <value>The {0} Setting is not fully available. Please go to Edit {0} page to adjust.</value>
   </data>
+  <data name="NoteSportsbookSetting" xml:space="preserve">
+    <value>For E-Sports' PT and Bet Settings, please use Sportsbook 2 instead</value>
+  </data>
+  <data name="NotePTSetting" xml:space="preserve">
+    <value>For E-Sports' PT Settings, please use Sportsbook 2 instead</value>
+  </data>
+  <data name="NoteBetSetting" xml:space="preserve">
+    <value>For E-Sports' Bet Settings, please use Sportsbook 2 instead</value>
+  </data>
 </root>

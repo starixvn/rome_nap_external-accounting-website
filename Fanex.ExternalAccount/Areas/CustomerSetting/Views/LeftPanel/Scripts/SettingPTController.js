@@ -3,8 +3,7 @@
 
     $scope.GetCustomerList = function () {
         var roleId = $scope.model.personalInfo.roleId.value;
-        var custId = $scope.model.personalInfo.custId.value;
-
+        var custId = $scope.model.personalInfo.custId.value;        
         if (!parent.document.getElementById('customerListGrid')) {
             parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('Customer/CustomerList'), undefined, true);
         }
@@ -58,7 +57,6 @@
                 var isHideVirtualSport = true;
                 var isHideGoldDeluxe = true;
                 var isHideColossusBets = true;
-                var isHideSportsbook2 = true;
                 var isHideCricket = true;
                 var isHideAllbet = true;
                 var isHideVoidbridge = true;
@@ -127,10 +125,7 @@
                     }
                     if ($scope.model.setting.details[i].key == 'ColossusBets') {
                         isHideColossusBets = false;
-                    }
-                    if ($scope.model.setting.details[i].key == 'Sportsbook2') {
-                        isHideSportsbook2 = false;
-                    }
+                    }                   
 
                     if ($scope.model.setting.details[i].key == 'Cricket') {
                         isHideCricket = false;
@@ -141,13 +136,13 @@
                 parent.Fanex.ExtAcc.Customer.bindOrientationChange();
                 switch (roleId) {
                     case 4:
-                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting, isHidePokerGames);
+                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting, isHidePokerGames);
                         break;
                     case 3:
-                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting, isHidePokerGames);
+                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting, isHidePokerGames);
                         break;
                     case 2:
-                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideSportsbook2, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting, isHidePokerGames);
+                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting, isHidePokerGames);
                         break;
                     default:
                         break;

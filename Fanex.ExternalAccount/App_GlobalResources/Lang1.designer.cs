@@ -7264,6 +7264,33 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to For E-Sports&apos; Bet Settings, please use Sportsbook 2 instead.
+        /// </summary>
+        internal static string NoteBetSetting {
+            get {
+                return ResourceManager.GetString("NoteBetSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For E-Sports&apos; PT Settings, please use Sportsbook 2 instead.
+        /// </summary>
+        internal static string NotePTSetting {
+            get {
+                return ResourceManager.GetString("NotePTSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For E-Sports&apos; PT and Bet Settings, please use Sportsbook 2 instead.
+        /// </summary>
+        internal static string NoteSportsbookSetting {
+            get {
+                return ResourceManager.GetString("NoteSportsbookSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This user does not exist.
         /// </summary>
         internal static string notExist {

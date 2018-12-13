@@ -5,7 +5,8 @@
     public enum StatusType
     {
         Checkbox,
-        Link
+        Link,
+        OnlyDetail
     }
 
     public class ProductSettingElement : Product

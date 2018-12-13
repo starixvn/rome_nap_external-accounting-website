@@ -6,14 +6,15 @@
         EnableVirtualSports = 5,
         EnableCasino = 6,
         Keno = 8,
+        EnableGoldDeluxe = 12,
         EnableColossusBets = 15,
+        EnableESports = 16,
         EnableAllbet = 21,
         EnableVoidbridge = 22,
         EnableNG2 = 23,
         EnableFishingWorld = 24,
-        EnableGoldDeluxe = 12,
-        EnableLottery = 28,
         EnableLucky3 = 26,
+        EnableLottery = 28,
         EnableBullfighting = 30,
         EnablePokerGames = 33
     }

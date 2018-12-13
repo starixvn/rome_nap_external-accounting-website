@@ -2,32 +2,30 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Web;
+    using Context;
     using CustomerSetting.Module.Core.Criteria;
     using CustomerSetting.Module.Core.Models;
     using CustomerSetting.Module.Core.Services.Impl;
     using CustomerSetting.Module.Core.Services.Interface;
     using CustomerSetting.Module.Core.Web;
     using DTO.UserControl;
-    using RemotingRef;
     using Reports.WinLossDetail;
 
     public class ProductListAuthorization
     {
-        private readonly HttpRequest request;
+        private readonly ExtRequest extRequest;
         private readonly ICurrentSession currentSession;
         private readonly IServiceBase permissionService;
 
-        public ProductListAuthorization() : this(null, null, null, null)
+        public ProductListAuthorization() : this(null, null, null)
         { }
 
         public ProductListAuthorization(
-            HttpRequest request,
+            ExtRequest extRequest,
             ICurrentSession currentSession,
-            IServiceBase permissionService,
-            IRemotingRefService remotingRefService)
+            IServiceBase permissionService)
         {
-            this.request = request ?? HttpContext.Current.Request;
+            this.extRequest = extRequest ?? new ExtRequest();
             this.currentSession = currentSession ?? Context.CurrentSession.Instance;
             this.permissionService = permissionService ?? new ServiceBase();
         }
@@ -43,11 +41,12 @@
             var isAuthorized = permissionService.CheckCustomerHasSpecialSitePermission(
                 new CheckCustomerHasSpecialSiteFunctionPermissionCriteria { CustID = custId });
 
+            var groupName = extRequest.GetGroupName();
             var products = ProductsConfiguration.Instance.ProductCollection;
 
             foreach (ProductElementConfiguration product in products)
             {
-                if (!IsHiddenProduct(product))
+                if (!IsHiddenProduct(product, groupName))
                 {
                     if ((isHideInactiveProduct && product.IsHideInactiveProduct)
                         || (product.IsSpecial
@@ -67,7 +66,7 @@
             => checkIsInternalAdminResult.IsInternalAdmin
                && (!checkIsInternalAdminResult.IsAllowAccess || !isAuthorized);
 
-        private bool IsHiddenProduct(ProductElementConfiguration product)
+        private static bool IsHiddenProduct(ProductElementConfiguration product, string groupName)
         {
             if (product.Hide)
             {
@@ -78,13 +77,6 @@
             {
                 return false;
             }
-
-            var requestUrl = request != null && request.UrlReferrer != null
-                ? request.UrlReferrer.AbsolutePath.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries)
-                : new string[0];
-            var groupName = requestUrl.Length == 0 || !currentSession.IsInternalAdmin
-                ? currentSession.CurrencyGroup
-                : requestUrl[requestUrl.Length - 1];
 
             var groups = product.ShowForGroups.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 

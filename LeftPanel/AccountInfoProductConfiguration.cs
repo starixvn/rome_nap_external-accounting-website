@@ -20,7 +20,8 @@
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Lottery], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Lucky3], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.BullFighting], StatusType.Checkbox),
-                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.PokerGames], StatusType.Link)
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.PokerGames], StatusType.Link),
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Sportsbook2], StatusType.OnlyDetail),
             };
 
         public static readonly IReadOnlyDictionary<int, string> VisibleBetSettingPermissions =
@@ -49,7 +50,8 @@
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.VoidBridge], statusRow, false, isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.AllBet], statusRow, false, isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.BullFighting], statusRow, isSetUplineStatus: isSetUplineStatus),
-                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.PokerGames], statusRow, isSetUplineStatus:isSetUplineStatus)
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.PokerGames], statusRow, isSetUplineStatus:isSetUplineStatus),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Sportsbook2], statusRow, isSetUplineStatus:isSetUplineStatus)
             };
 
         public static List<ObjectInfo> CreateSyncAndHiddenItems(DataRow customerRow, DataTable table3RdDcs)

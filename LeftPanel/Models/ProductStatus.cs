@@ -73,6 +73,11 @@
                        + dataRow.ToInt32($"DisablePokerGames1405") > 0;
             }
 
+            if (ProductId == ProductConstants.Sportsbook2)
+            {
+                return dataRow.ToBoolean($"DisableEsports") && dataRow.ToBoolean($"DisableMuayThai");
+            }
+
             return dataRow.ToBoolean($"Disable{ProductKey}");
         }
     }

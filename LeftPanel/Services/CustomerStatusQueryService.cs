@@ -117,7 +117,6 @@
             SetVirtualSportsStatus(custStatus, statusRow);
             SetKenoStatus(custStatus, statusRow);
             SetEsportsStatus(custStatus, userId, statusRow);
-            SetSportsbook2Status(custStatus, statusRow);
             SetCricketStatus(custStatus, statusRow);
             SetColossusBetsStatus(custStatus, statusRow);
             SetGoldDeluxeStatus(custStatus, statusRow);
@@ -155,11 +154,8 @@
         private static void SetCricketStatus(CustomerStatus custStatus, DataRow statusRow)
             => custStatus.HideCricket = statusRow.HideCricket()
                                         || !ProductSettings.IsShowCricket
-                                        || !statusRow.IsIMBC();
-      
-        private static void SetSportsbook2Status(CustomerStatus custStatus, DataRow statusRow)
-            => custStatus.HideSportsbook2 = statusRow.HideMuayThai() || !ProductSettings.IsShowSportsbook2;
-
+                                        || !statusRow.IsIMBC();      
+       
         private static void SetCasinoStatus(CustomerStatus custStatus, DataRow statusRow)
         {
             custStatus.SyncCasino = statusRow.SyncCasino();
