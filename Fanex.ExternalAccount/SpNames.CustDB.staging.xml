@@ -184,7 +184,7 @@
     <Setting Key="Acc_CustomerUpdMember_All" SpName="Acc_CustomerUpdMember_All" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdMember_Super" SpName="Acc_CustomerUpdMember_Super" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdMember_Master" SpName="Acc_CustomerUpdMember_Master" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustOverrideUpd" SpName="Acc_custoverrideUpd" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustOverrideUpd" SpName="Acc_CustOverrideUpd" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelComEditOverride_SAg" SpName="Acc_CustomerSelComEditOverride_SAg" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
@@ -298,10 +298,6 @@
   <Function Name="Otp">
     <Setting Key="EAS_OTP_CustomerOTPSel" SpName="EAS_OTP_CustomerOTPSel" DbName="DBCUST.CustDB.bodbExtAccNet" />
   </Function>
-  <Function Name="IP">
-    <Setting Key="GetIPInfo" SpName="Acc_GetIPInfo_Full" DbName="DBCust.IPDB.bodbExtAccNet" />
-    <Setting Key="GetIPVN" SpName="GetIPVN" DbName="DBCust.IPDB.bodbExtAccNet" />
-  </Function>
   <Function Name="Product Status Setting">
     <!--Select functions-->
     <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductId" DbName="DBCust.CustDB.bodbExtAccNet" />
@@ -321,8 +317,12 @@
   <Function Name="Check allow downlines">
     <Setting Key="Acc_CustomerSelCheckAllowedDownlines" SpName="Acc_CustomerSelCheckAllowedDownlines" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
+  <Function Name="IP">
+    <Setting Key="GetIPInfo" SpName="Acc_GetIPInfo_Full" DbName="DBCust.IPDB.bodbExtAccNet" />
+    <Setting Key="GetIPVN" SpName="GetIPVN" DbName="DBCust.IPDB.bodbExtAccNet" />
+  </Function>
   <Function Name="Data Range">
-    <Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd" DbName="DBAGE.bodb_AGE.bodbExtAccNet" />
-    <Setting Key="EAS_CustomerDateLimitSel" SpName="EAS_CustomerDateLimitSel" DbName="DBAGE.bodb_AGE.bodbExtAccNet" />
+    <Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="EAS_CustomerDateLimitSel" SpName="EAS_CustomerDateLimitSel" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
 </Functions>
