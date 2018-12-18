@@ -116,7 +116,6 @@
             SetCasinoStatus(custStatus, statusRow);            
             SetVirtualSportsStatus(custStatus, statusRow);
             SetKenoStatus(custStatus, statusRow);
-            SetEsportsStatus(custStatus, userId, statusRow);
             SetCricketStatus(custStatus, statusRow);
             SetColossusBetsStatus(custStatus, statusRow);
             SetGoldDeluxeStatus(custStatus, statusRow);
@@ -162,16 +161,6 @@
             custStatus.DisableCasino = statusRow.DisableCasino();
         }
 
-        private void SetEsportsStatus(
-            CustomerStatus custStatus,
-            int userId,
-            DataRow statusRow)
-        {
-            custStatus.HideEsports = !authorizationService.IsAuthorized(userId, eFunctions.ShowEnableEsports)
-                                     || ProductSettings.HideEsports;
-            custStatus.DisableESports = statusRow.DisableESports();
-        }
-
         private static void SetVirtualSportsStatus(CustomerStatus custStatus, DataRow statusRow)
         {
             custStatus.HideVirtualSports = statusRow.HideVirtualSports();
@@ -208,7 +197,6 @@
                 Closed = uplineRow.Closed(),
                 Suspended = uplineRow.Suspended(),
                 HideVirtualSports = uplineRow.HideVirtualSports(),                
-                DisableESports = uplineRow.DisableESports()
             };
 
             foreach (var productStatus in transformToProductStatusMapping(uplineRow, false))

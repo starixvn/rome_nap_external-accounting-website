@@ -31,12 +31,6 @@
 
         internal static bool EnableDoubleCommUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineDoubleCommLosing"], true);
 
-        internal static bool DisableESportsUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineDisableEsports"]);
-
-        internal static bool DisableESports(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableESports"]);
-
-        internal static bool EnableESports(this DataRow dataRow) => !DisableESports(dataRow);
-
         internal static bool DisableColossusBetUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineDisableColossusBet"]);
 
         internal static bool DisableColossusBet(this DataRow dataRow) => Utils.ToBoolean(dataRow["DisableColossusBet"]);

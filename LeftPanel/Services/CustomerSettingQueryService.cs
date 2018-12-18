@@ -72,7 +72,7 @@
             AddNumberGameStatus(nonDCSProductStatusRow, enableItems);
             AddVirtualSportsStatus(table3rdDCS, enableItems);
             AddDoubleCommStatus(nonProductStatusRow, enableItems);
-            AddESportsStatus(nonDCSProductStatusRow, enableItems);
+            AddESportsStatus(table3rdDCS, enableItems);
             AddColossusBetsStatus(nonDCSProductStatusRow, enableItems);
             AddGoldDeluxeStatus(nonDCSProductStatusRow, enableItems);
 
@@ -134,7 +134,7 @@
             enableItems.Add(colossusBetsStatus);
         }
 
-        private void AddESportsStatus(DataRow nonDCSProductStatusRow, List<ObjectInfo> enableItems)
+        private void AddESportsStatus(DataTable table3rdDCS, List<ObjectInfo> enableItems)
         {
             if (!authorizationService.IsAuthorized(_userId, eFunctions.ShowEnableEsports)
                 || ProductSettings.HideEsports)
@@ -143,9 +143,9 @@
             }
 
             var eSportsStatus =
-                new ObjectInfo("EnableESports", nonDCSProductStatusRow.EnableESports(), "E-Sports", "Enable E-Sports");
+                new ObjectInfo("EnableESports", !table3rdDCS.IsProductDisabled(ProductConstants.Sportsbook2), "E-Sports", "Enable E-Sports");
 
-            if (nonDCSProductStatusRow.DisableESportsUpline())
+            if (table3rdDCS.IsProductDisabledUpline(ProductConstants.Sportsbook2))
             {
                 eSportsStatus = DisableStatus(eSportsStatus);
             }
