@@ -22,8 +22,6 @@
 
         public bool DisableVirtualSports { get; set; }
 
-        public bool DisableESports { get; set; }
-
         public bool AllowOutright { get; set; }
 
         public bool DisableNumberGame { get; set; }
@@ -37,8 +35,6 @@
         public bool HideVirtualSports { get; set; }               
 
         public bool HideKeno { get; set; }
-
-        public bool HideEsports { get; set; }
 
         public bool DisableKeno { get; set; }
 

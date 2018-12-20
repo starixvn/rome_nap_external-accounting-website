@@ -18,6 +18,49 @@
 
     public class CustomerDataAccessImpl : CustomerDataAccess
     {
+        public DataSet GetPersonalInfo(string username, string groupName, int userId)
+        {
+            var param = new Hashtable
+            {
+                { "username", username },
+                { "groupname", groupName },
+                { "userid", userId }
+            };
+
+            return DbHelper.ExecuteDataSet("EAS_CustomerSelAllInfo", param);
+        }
+
+        public DataSet GetLoginInfo(int custId, string groupName)
+        {
+            var param = new Hashtable
+            {
+                { "custid", custId },
+                { "groupname", groupName }
+            };
+
+            return DbHelper.ExecuteDataSet("EAS_CustomerSelLoginInfo", param);
+        }
+
+        public DataSet GetCustomerStatusInfo(int custId)
+        {
+            var param = new Hashtable
+            {
+                { "custid", custId }
+            };
+
+            return DbHelper.ExecuteDataSet("EAS_CustomerSelAllStatus", param);
+        }
+
+        public DataSet GetBalanceInfo(int custId)
+        {
+            var param = new Hashtable
+            {
+                { "custid", custId }
+            };
+
+            return DbHelper.ExecuteDataSet("EAS_CustomerSelBalanceInfo", param);
+        }
+
         public DataSet GetCustomerInfo(string username, string groupName)
         {
             var customerInfo = EAS_CustomerSelUserInfo(groupName, 0, username, true);

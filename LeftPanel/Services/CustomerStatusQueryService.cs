@@ -22,7 +22,6 @@
     public class CustomerStatusServiceImpl : CustomerStatusQueryService
     {
         private readonly IAgentService agentService;
-        private readonly AuthorizationService authorizationService;
         private readonly IMasterService masterService;
         private readonly IMemberService memberService;
         private readonly CustomerDataAccess dataAccess;
@@ -35,7 +34,6 @@
             IMasterService masterService = null,
             IAgentService agentService = null,
             IMemberService memberService = null,
-            AuthorizationService authorizationService = null,
             Func<DataRow, bool, List<ProductStatus>> transformToProductStatusMapping = null)
         {
             this.dataAccess = dataAccess ?? new CustomerDataAccessImpl();
@@ -43,7 +41,6 @@
             this.masterService = masterService ?? new MasterService();
             this.agentService = agentService ?? new AgentService();
             this.memberService = memberService ?? new MemberService();
-            this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
             this.transformToProductStatusMapping = transformToProductStatusMapping ?? AccountInfoProductConfiguration.TransformToProductStatus;
         }
 
@@ -88,11 +85,10 @@
                     break;
             }
 
-            return GetCustStatus(userId, roleId, custData, upperInfo);
+            return GetCustStatus(roleId, custData, upperInfo);
         }
 
         private CustomerStatus GetCustStatus(
-            int userId,
             int roleId,
             DataTable result,
             DataTable upperInfo)
@@ -113,10 +109,9 @@
             SetNonProductStatus(roleId, custStatus, statusRow);
 
             SetNumberGameStatus(custStatus, statusRow);
-            SetCasinoStatus(custStatus, statusRow);            
+            SetCasinoStatus(custStatus, statusRow);
             SetVirtualSportsStatus(custStatus, statusRow);
             SetKenoStatus(custStatus, statusRow);
-            SetEsportsStatus(custStatus, userId, statusRow);
             SetCricketStatus(custStatus, statusRow);
             SetColossusBetsStatus(custStatus, statusRow);
             SetGoldDeluxeStatus(custStatus, statusRow);
@@ -154,28 +149,18 @@
         private static void SetCricketStatus(CustomerStatus custStatus, DataRow statusRow)
             => custStatus.HideCricket = statusRow.HideCricket()
                                         || !ProductSettings.IsShowCricket
-                                        || !statusRow.IsIMBC();      
-       
+                                        || !statusRow.IsIMBC();
+
         private static void SetCasinoStatus(CustomerStatus custStatus, DataRow statusRow)
         {
             custStatus.SyncCasino = statusRow.SyncCasino();
             custStatus.DisableCasino = statusRow.DisableCasino();
         }
 
-        private void SetEsportsStatus(
-            CustomerStatus custStatus,
-            int userId,
-            DataRow statusRow)
-        {
-            custStatus.HideEsports = !authorizationService.IsAuthorized(userId, eFunctions.ShowEnableEsports)
-                                     || ProductSettings.HideEsports;
-            custStatus.DisableESports = statusRow.DisableESports();
-        }
-
         private static void SetVirtualSportsStatus(CustomerStatus custStatus, DataRow statusRow)
         {
             custStatus.HideVirtualSports = statusRow.HideVirtualSports();
-            custStatus.DisableVirtualSports = statusRow.DisableVirtualSports();            
+            custStatus.DisableVirtualSports = statusRow.DisableVirtualSports();
         }
 
         private static void SetKenoStatus(CustomerStatus custStatus, DataRow statusRow)
@@ -207,8 +192,7 @@
                 DisableColossusBets = uplineRow.DisableColossusBet(),
                 Closed = uplineRow.Closed(),
                 Suspended = uplineRow.Suspended(),
-                HideVirtualSports = uplineRow.HideVirtualSports(),                
-                DisableESports = uplineRow.DisableESports()
+                HideVirtualSports = uplineRow.HideVirtualSports(),
             };
 
             foreach (var productStatus in transformToProductStatusMapping(uplineRow, false))

@@ -1,196 +1,95 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services
 {
+    using Core.Authorization;
+    using Core.Shared;
+    using Extensions;
+    using Models;
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using Extensions;
-    using Core.Shared;
-    using Models;
     using ViewModels;
 
     public interface CustomerSettingQueryService
     {
-        Setting GetSetting(int actorId, string custName, int uplineId, string groupName, DataSet customerInfoDataset);
-        PersonalInfo GetPersonalInfo(int custId, DataSet customerInfoDataset);
+        Setting GetSetting(DataSet customerStatusInfoDataset);
     }
 
     public class CustomerSettingServiceImpl : CustomerSettingQueryService
     {
-        private readonly CustomerStatusQueryService customerStatusQueryService;
         private readonly IEnumerable<ProductSettingElement> productSettingElements;
         private readonly Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator;
+        private readonly AuthorizationService authorizationService;
+        private readonly int _roleId;
+        protected readonly int _userId;
+        private readonly string _site;
 
-        public CustomerSettingServiceImpl(
-            CustomerStatusQueryService customerStatusQueryService = null,
+        public CustomerSettingServiceImpl(int userId, int roleId, string site,
             IEnumerable<ProductSettingElement> productSettingElements = null,
+            AuthorizationService authorizationService = null,
             Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null)
         {
-            this.customerStatusQueryService = customerStatusQueryService ?? new CustomerStatusServiceImpl();
+            _roleId = roleId;
+            _userId = userId;
+            _site = site;
             this.productSettingElements = productSettingElements ?? AccountInfoProductConfiguration.ProductSettingParamList;
             this.hiddenAndSyncItemsCreator = hiddenAndSyncItemsCreator ?? AccountInfoProductConfiguration.CreateSyncAndHiddenItems;
+            this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
         }
 
-        public virtual PersonalInfo GetPersonalInfo(int custId, DataSet customerInfoDataset)
+        public virtual Setting GetSetting(DataSet customerStatusInfoDataset)
         {
-            var custInfoRow = customerInfoDataset.Tables[0].Rows[0];
-            var lineRow = customerInfoDataset.Tables[1].Rows[0];
-
-            return new PersonalInfo(custInfoRow, lineRow);
-        }
-
-        public virtual Setting GetSetting(int actorId, string custName, int uplineId, string groupName,
-            DataSet customerInfoDataset)
-        {
-            var custInfoTable = customerInfoDataset.Tables[0];
-            var productStatusTable = customerInfoDataset.Tables[4];
-            var roleId = custInfoTable.Rows[0].RoleId();
-
-            var customerStatus = customerStatusQueryService.GetCustomerStatus(
-                actorId,
-                groupName,
-                custName,
-                uplineId);
-
-            return GetCustomerSetting(roleId, custInfoTable, productStatusTable, customerStatus);
-        }
-
-        internal Setting GetCustomerSetting(int role, DataTable custTable, DataTable productStatusTable,
-            CustomerStatus customerStatus)
-        {
-            var customerRow = custTable.Rows[0];
-
+            var nonDCSProductStatusRow = customerStatusInfoDataset.Tables[1].Rows[0];
+            var table3rdDCS = customerStatusInfoDataset.Tables[2];
             var setting = new Setting
             (
-                EnableItems(customerRow, productStatusTable, customerStatus),
-                hiddenAndSyncItemsCreator(customerRow, productStatusTable),
-                EditItems(customerStatus),
-                Details(role, customerStatus)
+                EnableItems(customerStatusInfoDataset),
+                hiddenAndSyncItemsCreator(nonDCSProductStatusRow, table3rdDCS),
+                EditItems(nonDCSProductStatusRow),
+                Details(customerStatusInfoDataset)
             );
 
             foreach (var productSettingParam in productSettingElements)
             {
-                setting = AddProductSetting(setting, productStatusTable, productSettingParam, customerStatus);
+                setting = AddProductSetting(setting, table3rdDCS, productSettingParam);
             }
 
             return setting;
         }
 
-        internal static List<ObjectInfo> EnableItems(
-            DataRow customerRow,
-            DataTable productStatusTable,
-            CustomerStatus customerStatus)
+        internal List<ObjectInfo> EnableItems(DataSet customerStatusInfoDataset)
         {
+            var nonProductStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];
+            var nonDCSProductStatusRow = customerStatusInfoDataset.Tables[1].Rows[0];
+            var table3rdDCS = customerStatusInfoDataset.Tables[2];
             var enableItems = new List<ObjectInfo>
             {
-                ClosedStatus(customerRow, customerStatus),
-                SuspendedStatus(customerRow, customerStatus),
-                OutrightStatus(customerRow, customerStatus)
+                ClosedStatus(nonProductStatusRow),
+                SuspendedStatus(nonProductStatusRow),
+                OutrightStatus(nonProductStatusRow)
             };
 
-            AddCasinoStatus(customerRow, customerStatus, enableItems);
-            AddNumberGameStatus(customerRow, customerStatus, enableItems);
-            AddVirtualSportsStatus(productStatusTable, customerStatus, enableItems);
-            AddDoubleCommStatus(customerRow, customerStatus, enableItems);
-            AddESportsStatus(productStatusTable, customerStatus, enableItems);
-            AddColossusBetsStatus(customerRow, customerStatus, enableItems);
-            AddGoldDeluxeStatus(customerRow, customerStatus, enableItems);
+            AddCasinoStatus(nonDCSProductStatusRow, enableItems);
+            AddNumberGameStatus(nonDCSProductStatusRow, enableItems);
+            AddVirtualSportsStatus(table3rdDCS, enableItems);
+            AddDoubleCommStatus(nonProductStatusRow, enableItems);
+            AddESportsStatus(table3rdDCS, enableItems);
+            AddColossusBetsStatus(nonDCSProductStatusRow, enableItems);
+            AddGoldDeluxeStatus(nonDCSProductStatusRow, enableItems);
 
             return enableItems;
         }
 
-        private static void AddGoldDeluxeStatus(
-            DataRow customerRow,
-            CustomerStatus customerStatus,
-            ICollection<ObjectInfo> enableItems)
+        private static void AddVirtualSportsStatus(DataTable table3rdDCS, ICollection<ObjectInfo> enableItems)
         {
-            if (customerStatus.HideGoldDeluxe)
-            {
-                return;
-            }
-
-            var goldDeluxeStatus =
-                new ObjectInfo("EnableGoldDeluxe", customerRow.EnableGoldDeluxe(), "Gold Deluxe");
-
-            if (customerStatus.RoleId.IsNotSuper()
-                && customerStatus.UplineStatus.DisableGoldDeluxe)
-            {
-                goldDeluxeStatus = DisableStatus(goldDeluxeStatus);
-            }
-
-            enableItems.Add(goldDeluxeStatus);
-        }
-
-        private static void AddColossusBetsStatus(DataRow customerRow, CustomerStatus customerStatus,
-            ICollection<ObjectInfo> enableItems)
-        {
-            if (customerStatus.HideColossusBets)
-            {
-                return;
-            }
-
-            var colossusBetsStatus = new ObjectInfo("EnableColossusBets", customerRow.EnableColossusBet(),
-                "Colossus Bets",
-                "Enable Colossus Bets");
-
-            if (customerStatus.RoleId.IsNotSuper()
-                && customerStatus.UplineStatus.DisableColossusBets)
-            {
-                colossusBetsStatus = DisableStatus(colossusBetsStatus);
-            }
-
-            enableItems.Add(colossusBetsStatus);
-        }
-
-        private static void AddESportsStatus(DataTable productStatusTable, CustomerStatus customerStatus,
-            List<ObjectInfo> enableItems)
-        {
-            if (customerStatus.HideEsports)
-            {
-                return;
-            }
-
-            var eSportsStatus =
-                new ObjectInfo("EnableESports", productStatusTable.GetESportStatus(), "E-Sports", "Enable E-Sports");
-
-            if (customerStatus.RoleId.IsNotSuper()
-                && customerStatus.UplineStatus.DisableESports)
-            {
-                eSportsStatus = DisableStatus(eSportsStatus);
-            }
-
-            enableItems.Add(eSportsStatus);
-        }
-
-        private static void AddDoubleCommStatus(
-            DataRow customerRow,
-            CustomerStatus customerStatus,
-            ICollection<ObjectInfo> enableItems)
-        {
-            var doubleCommStatus = new ObjectInfo("DoubleComm", customerRow.EnableDoubleComm(), "Double Comm",
-                "Enable Double Commission");
-
-            if (customerStatus.RoleId.IsNotSuper()
-                && !customerStatus.UplineStatus.AllowDoubleComm)
-            {
-                doubleCommStatus = DisableStatus(doubleCommStatus);
-            }
-
-            enableItems.Add(doubleCommStatus);
-        }
-
-        private static void AddVirtualSportsStatus(DataTable productStatusTable, CustomerStatus customerStatus,
-            ICollection<ObjectInfo> enableItems)
-        {
-            if (customerStatus.HideVirtualSports)
+            if (table3rdDCS.IsProductHidden(ProductConstants.VirtualSports))
             {
                 return;
             }
 
             var virtualSportsStatus = new ObjectInfo("EnableVirtualSports",
-                productStatusTable.GetVirtualSportsStatus(), "Virtual Sports");
+               !table3rdDCS.IsProductDisabled(ProductConstants.VirtualSports), "Virtual Sports");
 
-            if (customerStatus.RoleId.IsNotSuper()
-                && customerStatus.UplineStatus.DisableVirtualSports)
+            if (table3rdDCS.IsProductDisabledUpline(ProductConstants.VirtualSports))
             {
                 virtualSportsStatus = DisableStatus(virtualSportsStatus);
             }
@@ -198,13 +97,81 @@
             enableItems.Add(virtualSportsStatus);
         }
 
-        private static void AddNumberGameStatus(DataRow customerRow, CustomerStatus customerStatus,
-            ICollection<ObjectInfo> enableItems)
+        private static void AddGoldDeluxeStatus(DataRow nonDCSProductStatusRow, ICollection<ObjectInfo> enableItems)
         {
-            var numberGameStatus = new ObjectInfo("EnableNumberGame", customerRow.EnableNumberGame(), "Enable Num Game",
+            if (nonDCSProductStatusRow.HideGoldDeluxe() || !ProductSettings.IsShowProduct(ProductConstants.GoldDeluxe))
+            {
+                return;
+            }
+
+            var goldDeluxeStatus =
+                new ObjectInfo("EnableGoldDeluxe", nonDCSProductStatusRow.EnableGoldDeluxe(), "Gold Deluxe");
+
+            if (nonDCSProductStatusRow.DisableGoldDeluxeUpline())
+            {
+                goldDeluxeStatus = DisableStatus(goldDeluxeStatus);
+            }
+
+            enableItems.Add(goldDeluxeStatus);
+        }
+
+        private static void AddColossusBetsStatus(DataRow nonDCSProductStatusRow, ICollection<ObjectInfo> enableItems)
+        {
+            if (!ProductSettings.IsShowColossusBets || nonDCSProductStatusRow.HideColossusBet())
+            {
+                return;
+            }
+
+            var colossusBetsStatus = new ObjectInfo("EnableColossusBets", nonDCSProductStatusRow.EnableColossusBet(),
+                "Colossus Bets",
+                "Enable Colossus Bets");
+
+            if (nonDCSProductStatusRow.DisableColossusBetUpline())
+            {
+                colossusBetsStatus = DisableStatus(colossusBetsStatus);
+            }
+
+            enableItems.Add(colossusBetsStatus);
+        }
+
+        private void AddESportsStatus(DataTable table3rdDCS, List<ObjectInfo> enableItems)
+        {
+            if (!authorizationService.IsAuthorized(_userId, eFunctions.ShowEnableEsports)
+                || ProductSettings.HideEsports)
+            {
+                return;
+            }
+
+            var eSportsStatus =
+                new ObjectInfo("EnableESports", !table3rdDCS.IsProductDisabled(ProductConstants.Sportsbook2), "E-Sports", "Enable E-Sports");
+
+            if (table3rdDCS.IsProductDisabledUpline(ProductConstants.Sportsbook2))
+            {
+                eSportsStatus = DisableStatus(eSportsStatus);
+            }
+
+            enableItems.Add(eSportsStatus);
+        }
+
+        private static void AddDoubleCommStatus(DataRow nonProductStatusRow, ICollection<ObjectInfo> enableItems)
+        {
+            var doubleCommStatus = new ObjectInfo("DoubleComm", nonProductStatusRow.EnableDoubleComm(), "Double Comm",
+                "Enable Double Commission");
+
+            if (!nonProductStatusRow.EnableDoubleCommUpline())
+            {
+                doubleCommStatus = DisableStatus(doubleCommStatus);
+            }
+
+            enableItems.Add(doubleCommStatus);
+        }
+
+        private static void AddNumberGameStatus(DataRow nonDCSProductStatusRow, ICollection<ObjectInfo> enableItems)
+        {
+            var numberGameStatus = new ObjectInfo("EnableNumberGame", nonDCSProductStatusRow.EnableNumberGame(), "Enable Num Game",
                 "Enable Number Game");
 
-            if (customerStatus.RoleId.IsNotSuper() && customerStatus.UplineStatus.DisableNumberGame)
+            if (nonDCSProductStatusRow.DisableNumberGameUpline())
             {
                 numberGameStatus = DisableStatus(numberGameStatus);
             }
@@ -212,17 +179,16 @@
             enableItems.Add(numberGameStatus);
         }
 
-        private static void AddCasinoStatus(DataRow customerRow, CustomerStatus customerStatus,
-            ICollection<ObjectInfo> enableItems)
+        private static void AddCasinoStatus(DataRow nonDCSProductStatusRow, ICollection<ObjectInfo> enableItems)
         {
-            if (!customerStatus.SyncCasino)
+            if (!nonDCSProductStatusRow.SyncCasino())
             {
                 return;
             }
 
-            var casinoStatus = new ObjectInfo("EnableCasino", customerRow.EnableCasino(), "Enable Casino");
+            var casinoStatus = new ObjectInfo("EnableCasino", nonDCSProductStatusRow.EnableCasino(), "Enable Casino");
 
-            if (customerStatus.RoleId.IsNotSuper() && customerStatus.UplineStatus.DisableCasino)
+            if (nonDCSProductStatusRow.DisableCasinoUpline())
             {
                 casinoStatus = DisableStatus(casinoStatus);
             }
@@ -230,11 +196,11 @@
             enableItems.Add(casinoStatus);
         }
 
-        private static ObjectInfo OutrightStatus(DataRow customerRow, CustomerStatus customerStatus)
+        private static ObjectInfo OutrightStatus(DataRow nonProductStatusRow)
         {
-            var outrightStatus = new ObjectInfo("Outright", customerRow.EnableOutright(), "Allow Outright");
+            var outrightStatus = new ObjectInfo("Outright", nonProductStatusRow.EnableOutright(), "Allow Outright");
 
-            if (customerStatus.RoleId.IsNotSuper() && !customerStatus.UplineStatus.AllowOutright)
+            if (nonProductStatusRow.DisableOutrightUpline())
             {
                 outrightStatus = DisableStatus(outrightStatus);
             }
@@ -242,11 +208,11 @@
             return outrightStatus;
         }
 
-        private static ObjectInfo SuspendedStatus(DataRow customerRow, CustomerStatus customerStatus)
+        private static ObjectInfo SuspendedStatus(DataRow nonProductStatusRow)
         {
-            var suspendedStatus = new ObjectInfo("Suspended", customerRow.Suspended(), "Suspened");
+            var suspendedStatus = new ObjectInfo("Suspended", nonProductStatusRow.Suspended(), "Suspened");
 
-            if (customerStatus.RoleId.IsNotSuper() && customerStatus.UplineStatus.Suspended)
+            if (nonProductStatusRow.SuspendedUpline())
             {
                 suspendedStatus = DisableStatus(suspendedStatus);
             }
@@ -254,11 +220,11 @@
             return suspendedStatus;
         }
 
-        private static ObjectInfo ClosedStatus(DataRow customerRow, CustomerStatus customerStatus)
+        private static ObjectInfo ClosedStatus(DataRow nonProductStatusRow)
         {
-            var closedStatus = new ObjectInfo("Closed", customerRow.Closed(), "Closed");
+            var closedStatus = new ObjectInfo("Closed", nonProductStatusRow.Closed(), "Closed");
 
-            if (customerStatus.RoleId.IsNotSuper() && customerStatus.UplineStatus.Closed)
+            if (nonProductStatusRow.ClosedUpline())
             {
                 closedStatus = DisableStatus(closedStatus);
             }
@@ -266,33 +232,45 @@
             return closedStatus;
         }
 
-        internal static List<ObjectInfo> Details(int roleId, CustomerStatus customerStatus)
+        internal List<ObjectInfo> Details(DataSet customerStatusInfoDataset)
         {
+            var nonDCSProductStatusRow = customerStatusInfoDataset.Tables[1].Rows[0];
+            var table3rdDCS = customerStatusInfoDataset.Tables[2];
             var details = new List<ObjectInfo>
             {
                 new ObjectInfo("Info", "Info"),
                 new ObjectInfo("PT", "Position Taking")
             };
 
-            if (roleId.IsNotMember())
+            if (_roleId.IsNotMember())
             {
                 details.Add(new ObjectInfo("AddNew", "Add New"));
                 details.Add(new ObjectInfo("Transfer", "Transfer Condition"));
             }
 
-            AddCasinoEditLink(customerStatus, details);
-            AddVirtualSportsEditLink(customerStatus, details);
+            AddCasinoEditLink(nonDCSProductStatusRow, details);
+            AddVirtualSportsEditLink(table3rdDCS, details);
             AddKenoEditLink(details);
-            AddGoldDeluxeEditLink(customerStatus, details);
-            AddColossusBetsEditLink(customerStatus, details);
-            AddCricketEditLink(customerStatus, details);
+            AddGoldDeluxeEditLink(nonDCSProductStatusRow, details);
+            AddColossusBetsEditLink(nonDCSProductStatusRow, details);
+            AddCricketEditLink(table3rdDCS, details);
 
             return details;
         }
 
-        private static void AddCricketEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
+        private void AddVirtualSportsEditLink(DataTable table3rdDCS, ICollection<ObjectInfo> details)
         {
-            if (!customerStatus.HideCricket)
+            if (_roleId.IsMember() ?
+                !table3rdDCS.IsProductHiddenUpline(ProductConstants.VirtualSports):
+                !table3rdDCS.IsProductHidden(ProductConstants.VirtualSports))
+            {
+                details.Add(new ObjectInfo("VirtualSports", "Virtual Sports"));
+            }
+        }
+
+        private void AddCricketEditLink(DataTable table3rdDCS, ICollection<ObjectInfo> details)
+        {
+            if (!table3rdDCS.IsProductHidden(ProductConstants.Cricket) && ProductSettings.IsShowCricket && _site == "IMBC")
             {
                 details.Add(new ObjectInfo("Cricket", "Cricket"));
             }
@@ -306,81 +284,59 @@
             }
         }
 
-        private static void AddColossusBetsEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
+        private static void AddColossusBetsEditLink(DataRow nonProductStatusRow, ICollection<ObjectInfo> details)
         {
-            if (!customerStatus.HideColossusBets)
+            if (ProductSettings.IsShowColossusBets && !nonProductStatusRow.HideColossusBet())
             {
                 details.Add(new ObjectInfo("ColossusBets", "Colossus Bets"));
             }
         }
 
-        private static void AddGoldDeluxeEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
+        private static void AddGoldDeluxeEditLink(DataRow nonDCSProductStatusRow, ICollection<ObjectInfo> details)
         {
-            if (!customerStatus.UplineStatus.HideGoldDeluxe)
+            if (!nonDCSProductStatusRow.HideGoldDeluxeUpline())
             {
                 details.Add(new ObjectInfo("GoldDeluxe", "Gold Deluxe"));
             }
         }
 
-        private static void AddCasinoEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
+        private void AddCasinoEditLink(DataRow nonProductStatusRow, ICollection<ObjectInfo> details)
         {
-            if (customerStatus.UplineStatus.SyncCasino
-                || customerStatus.RoleId.IsSuper())
+            if (_roleId.IsSuper() || nonProductStatusRow.SyncCasinoUpline())
             {
                 details.Add(new ObjectInfo("Casino", "Casino"));
             }
         }
 
-        private static void AddVirtualSportsEditLink(CustomerStatus customerStatus, ICollection<ObjectInfo> details)
-        {
-            var hideVirtualSports = customerStatus.RoleId.IsMember()
-                ? customerStatus.UplineStatus.HideVirtualSports
-                : customerStatus.HideVirtualSports;
-
-            if (!hideVirtualSports)
-            {
-                details.Add(new ObjectInfo("VirtualSports", "Virtual Sports"));
-            }
-        }
-
-        internal static List<ObjectInfo> EditItems(CustomerStatus customerStatus)
-            => !customerStatus.HideKeno ?
+        internal static List<ObjectInfo> EditItems(DataRow nonDCSProductStatusRow)
+            => !nonDCSProductStatusRow.HideKeno() ?
             new List<ObjectInfo> { new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" } } :
             new List<ObjectInfo>();
 
 #pragma warning disable S1541 // Methods and properties should not be too complex
-        internal static Setting AddProductSetting(
+        internal Setting AddProductSetting(
 #pragma warning restore S1541 // Methods and properties should not be too complex
             Setting setting,
             DataTable productStatusTable,
-            ProductSettingElement productElement,
-            CustomerStatus customerStatus)
+            ProductSettingElement productElement)
         {
             if (!IsProductVisibledToSite(productStatusTable, productElement.Id))
             {
                 return setting;
             }
 
-            var roleId = customerStatus.RoleId;
-            var hide = customerStatus.ProductStatusDic[productElement.Id].IsHidden;
-            var sync = customerStatus.ProductStatusDic[productElement.Id].IsSynced;
-            var isSyncDownlines = customerStatus.ProductStatusDic[productElement.Id].IsSyncedDownlines;
-            var isCheckSyncDownlines = customerStatus.ProductStatusDic[productElement.Id].CheckSyncedDownlines;
-            var hideUpline = customerStatus.RoleId.IsNotSuper()
-                ? customerStatus.UplineStatus.ProductStatusDic[productElement.Id].IsHidden
-                : hide;
-            var isUplineDisabled = customerStatus.RoleId.IsNotSuper()
-                                   && customerStatus.UplineStatus.ProductStatusDic[productElement.Id].IsDisabled;
-            var syncUpline = customerStatus.RoleId.IsNotSuper()
-                ? customerStatus.UplineStatus.ProductStatusDic[productElement.Id].IsSynced
-                : sync;
+            var hide = productStatusTable.IsProductHidden(productElement.Id);
+            var sync = productStatusTable.IsProductSynced(productElement.Id);
+            var hideUpline = productStatusTable.IsProductHiddenUpline(productElement.Id);
+            var isUplineDisabled = productStatusTable.IsProductDisabledUpline(productElement.Id);
+            var syncUpline = productStatusTable.IsProductSyncedUpline(productElement.Id);
 
-            if (IsHiddenProduct(customerStatus.RoleId, hideUpline, hide))
+            if (IsHiddenProduct(_roleId, hideUpline, hide))
             {
                 return setting;
             }
 
-            if (syncUpline || roleId.IsSuper())
+            if (syncUpline || _roleId.IsSuper())
             {
                 setting.Details.Add(
                     GetEditSettingLink(productElement.Key, productElement.Name));
@@ -389,9 +345,8 @@
 #pragma warning disable S1067 // Expressions should not be too complex
             // Ricky: this code i cannot refactor because of the complexity
             if (!syncUpline
-                || (!sync && roleId.IsMember())
-                || (!hide && !sync)
-                || (isCheckSyncDownlines && !isSyncDownlines))
+                || (!sync && _roleId.IsMember())
+                || (!hide && !sync))
 #pragma warning restore S1067 // Expressions should not be too complex
             {
                 return setting;
@@ -417,7 +372,7 @@
                 if (productSettingElement.StatusType == StatusType.Checkbox)
                 {
                     var enableItem = CreateEnableCheckboxItem(productSettingElement.Key,
-                        !productStatusTable.IsProductEnabled(productSettingElement.Id), productSettingElement.Name);
+                    productStatusTable.IsProductDisabled(productSettingElement.Id), productSettingElement.Name);
 
                     if (isUplineDisabled)
                     {

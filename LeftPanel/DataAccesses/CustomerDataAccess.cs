@@ -9,6 +9,14 @@
 
     public interface CustomerDataAccess
     {
+        DataSet GetPersonalInfo(string username, string groupName, int userId);
+
+        DataSet GetLoginInfo(int custId, string groupName);
+
+        DataSet GetCustomerStatusInfo(int custId);
+
+        DataSet GetBalanceInfo(int custId);
+
         DataSet GetCustomerInfo(string username, string groupName);
 
         DataTable EAS_CustomerSelUserInfo(string groupname, int custId, string userName, bool isGetUplineInfo);

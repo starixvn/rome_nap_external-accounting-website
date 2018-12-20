@@ -7,7 +7,7 @@
 
     public class PersonalInfo : DownlineList
     {
-        public PersonalInfo(DataRow customerInfoRow, DataRow lineRow)
+        public PersonalInfo(DataRow customerInfoRow)
         {
             var role = customerInfoRow.RoleId();
             var enabled = customerInfoRow.Enabled();
@@ -29,32 +29,31 @@
             };
             Status = new ObjectInfo { Tooltip = customerInfoRow.StatusTooltip(enabled, closed, suspended) };
             BackgroundColor = new ObjectInfo { Value = customerInfoRow.StatusBackground(enabled, closed, suspended) };
-            IsInternal = new ObjectInfo { Value = customerInfoRow.IsInternal() };
 
-            SetLineInfo(role, lineRow);
+            SetLineInfo(role, customerInfoRow);
         }
 
-        internal void SetLineInfo(int role, DataRow lineRow)
+        internal void SetLineInfo(int role, DataRow customerInfoRow)
         {
-            CurrentLevel = ObjectInfo.CreateInstance(text: role.DisplayRoleName(), value: lineRow.CustomerName(role));
+            CurrentLevel = ObjectInfo.CreateInstance(text: role.DisplayRoleName(), value: customerInfoRow.CustomerName(role));
 
-            Downlines = GetLines(lineRow, role);
+            Downlines = GetLines(customerInfoRow, role);
 
             if (role.IsNotSuper())
             {
                 UplineId = ObjectInfo.CreateInstance(
                     text: $"{role.DirectUplineLevel().DisplayRoleName()} ID",
-                    value: lineRow.CustomerId(role.DirectUplineLevel()));
+                    value: customerInfoRow.CustomerId(role.DirectUplineLevel()));
             }
         }
 
-        internal static List<ObjectInfo> GetLines(DataRow lineRow, int roleId)
+        internal static List<ObjectInfo> GetLines(DataRow customerInfoRow, int roleId)
         {
             var downLines = new List<ObjectInfo>
             {
                 new ObjectInfo(
-                    lineRow.CustomerId(Role.Super).ToString(),
-                    lineRow.CustomerName(Role.Super),
+                    customerInfoRow.CustomerId(Role.Super).ToString(),
+                    customerInfoRow.CustomerName(Role.Super),
                     Role.Super.DisplayRoleName())
             };
 
@@ -64,15 +63,15 @@
             }
 
             downLines.Add(new ObjectInfo(
-                lineRow.CustomerId(Role.Master).ToString(),
-                lineRow.CustomerName(Role.Master),
+                customerInfoRow.CustomerId(Role.Master).ToString(),
+                customerInfoRow.CustomerName(Role.Master),
                 Role.Master.DisplayRoleName()));
 
             if (roleId.IsNotMaster())
             {
                 downLines.Add(new ObjectInfo(
-                    lineRow.CustomerId(Role.Agent).ToString(),
-                    lineRow.CustomerName(Role.Agent),
+                    customerInfoRow.CustomerId(Role.Agent).ToString(),
+                    customerInfoRow.CustomerName(Role.Agent),
                     Role.Agent.DisplayRoleName()));
             }
 
@@ -96,7 +95,5 @@
         public ObjectInfo Status { get; }
 
         public ObjectInfo BackgroundColor { get; }
-
-        public ObjectInfo IsInternal { get; }
     }
 }

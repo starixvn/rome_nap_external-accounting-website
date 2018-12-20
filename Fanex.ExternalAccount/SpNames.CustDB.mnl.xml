@@ -70,6 +70,7 @@
     <Setting Key="EAS_Rpt_WinLossDetailPokerGames_SAg" SpName="EAS_Rpt_WinLossDetailPokerGames_SAg" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
     <Setting Key="EAS_Rpt_WinLossDetailPokerGames_MAg" SpName="EAS_Rpt_WinLossDetailPokerGames_MAg" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
     <Setting Key="EAS_Rpt_WinLossDetailPokerGames_Ag" SpName="EAS_Rpt_WinLossDetailPokerGames_Ag" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
+
     <Setting Key="Age_ExcludeProduct_SiteCurrency_Sel" SpName="Age_ExcludeProduct_SiteCurrency_Sel" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Group">
@@ -138,6 +139,10 @@
     <Setting Key="Age_GetCSStatus" SpName="Age_GetCSStatus" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelAllInfo" SpName="EAS_CustomerSelAllInfo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelAllStatus" SpName="EAS_CustomerSelAllStatus" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelLoginInfo" SpName="EAS_CustomerSelLoginInfo" DbName="DBACC.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelBalanceInfo" SpName="EAS_CustomerSelBalanceInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Customer List">
     <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
@@ -317,7 +322,7 @@
     <Setting Key="GetIPVN" SpName="GetIPVN" DbName="DBCust.IPDB.bodbExtAccNet" />
   </Function>
   <Function Name="Data Range">
-    <Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd" DbName="DBAGE.bodb_AGE.bodbExtAccNet" />
-    <Setting Key="EAS_CustomerDateLimitSel" SpName="EAS_CustomerDateLimitSel" DbName="DBAGE.bodb_AGE.bodbExtAccNet" />
+    <Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="EAS_CustomerDateLimitSel" SpName="EAS_CustomerDateLimitSel" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
 </Functions>
