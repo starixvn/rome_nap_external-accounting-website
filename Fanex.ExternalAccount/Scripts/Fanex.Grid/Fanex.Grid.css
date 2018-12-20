@@ -17,7 +17,7 @@
 {
     box-shadow: 0 0px 2px 0px rgba(0,0,0,0.25);
     -moz-box-shadow: 0 0px 2px 0px rgba(0,0,0,0.25);
-    -webkit-box-shadow: 0 0px 2x 0px rgba(0,0,0,0.25);
+    -webkit-box-shadow: 0 0px 2px 0px rgba(0,0,0,0.25);
 }
 
 .grid-title .btnExcel
@@ -588,8 +588,6 @@ div.divSorter.desc {
      background-color: #9EB2DC;
 }
 
-
-
 ::-webkit-scrollbar
 {
 	height: 18px;
@@ -674,4 +672,12 @@ div.divSorter.desc {
    position: absolute; 
    visibility: hidden; 
    display: block;
+}
+
+.freegrid td.bg-grey {
+    background-color: #dfdfdf;
+}
+
+.freegrid tr.highlight-row:hover td.bg-grey {
+	 background-color: #dfdfdf!important;
 }

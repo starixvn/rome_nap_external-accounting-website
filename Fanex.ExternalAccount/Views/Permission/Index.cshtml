@@ -1,0 +1,130 @@
+﻿@model IList<Fanex.ExternalAccount.DTO.UserControl.Function>
+<div id="jqWidget">
+    <div class="page-title">
+        Grant Permission
+    </div>
+    <div class="search-form filterbox">
+        <div class="searchBar">
+            <div class="form-group">
+                <label class="label">Permission From</label>
+                <div id="permissionFromList" class="select-box pull-left">
+                    <select id="permissionFromIds" class="usernameInput group">
+                        @foreach (var item in Model)
+                        {
+                            <option value="@item.FuncID">@item.FuncName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="label">Permission To</label>
+                <div id="permissionToList" class="select-box pull-left">
+                    <select id="permissionToIds" class="usernameInput group">
+                        @foreach (var item in Model)
+                        {
+                            <option value="@item.FuncID">@item.FuncName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div id="tabs" style="float: left; border: none">
+            <ul class="tabs">
+                <li><a href="#tabs-UserPermission">User Permission</a></li>
+                <li><a href="#tabs-GroupPermission">Group Permission</a></li>
+            </ul>
+            <div id="tabs-UserPermission" style="width:100%;">
+                <div class="search-form filterbox">
+                    <div class="searchBar">
+                        <div class="form-group">
+                            
+                        </div>
+                        <div class="form-group">
+                            
+                        </div>
+                    </div>
+            </div>
+            <div id="ProductGrid" class="removeRadius freegrid content-grid"></div>
+            <input type="button" value="Submit" class="btn -submit" style="float:left;margin:30px 30px 30px 730px" id="updateByProduct" />
+        </div>
+        <div id="tabs-GroupPermission" style="width:100%;">
+            <div class="search-form filterbox">
+                    <div class="form-group">
+                        
+                    </div>
+                </div>
+                <div id="GroupGrid" class="removeRadius freegrid content-grid"></div>
+                <input type="button" value="Submit" class="btn -submit" style="float:left;margin:30px 30px 30px 730px" id="updateByGroup" />
+        </div>
+    </div>
+
+
+
+    @*<div id="mainGrid">
+        <div id="jqgrid-permission" class="removeRadius freegrid content-grid">
+        </div>
+    </div>
+    @Html.AntiForgeryToken()*@
+
+
+
+    @*<div id="ThirdPartyProductStatusTabs">
+        <ul class="tabs">
+            <li><a href="#tabOldVersion">@ProductStatus.OldVersion</a></li>
+            <li><a href="#tabNewVersion">@ProductStatus.NewVersion</a></li>
+        </ul>
+        <div id="tabOldVersion">
+            
+        </div>
+        <div id="tabNewVersion">
+            
+        </div>
+    </div>*@
+
+    
+</div>
+<script type="text/javascript" src="@Url.Content("~/Scripts/Manage/Fanex.ExtAcc.Permission.js")"></script>
+@*<script type="text/javascript" src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery-ui-1.9.1.min.js")"></script>*@
+@*<script type="text/javascript">
+    Fanex.ExtAcc.Function.dataTexts = [
+    '@ViewLang.Function',
+    '@ViewLang.Key',
+    '@ViewLang.Description',
+    '@ViewLang.Order',
+    '@ViewLang.Lastmodified',
+    '@ViewLang.IsTest'
+    ];
+    Fanex.ExtAcc.InternalGroupIDs = '@ViewBag.InternalGroupIDs';
+</script>*@
+<script type="text/javascript">
+    $(function () {
+        $("#tabs").tabs();
+
+        var $permissionFromIds = $("#permissionFromIds");
+        $("#permissionFromIds").combobox({
+            selected: function (event, ui) {
+
+            }
+        });
+
+        $("#permissionFromList input")
+            .val("@Model[0].FuncName")
+            .attr("readonly", "true")
+            .bind("click", function () {
+                //$(this).autocomplete("search", '');
+            });
+
+        //var $permissionToIds = $("#permissionToIds");
+        $("#permissionToIds").combobox({
+            selected: function (event, ui) {
+
+            }
+        });
+
+        $("#permissionToList input").val($("#permissionToIds")[0].options[0].text);
+        $("#permissionToList input").attr("readonly", "true");
+        $("#permissionToList input").bind("click", function () {
+            //$(this).autocomplete("search", '');
+        });
+    });
+</script>

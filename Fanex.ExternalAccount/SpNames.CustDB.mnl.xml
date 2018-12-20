@@ -116,6 +116,9 @@
     <Setting Key="EAS_MenuUpdStatus" SpName="EAS_MenuUpdStatus" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_FunctionSelEdit" SpName="EAS_FunctionSelEdit" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
   </Function>
+  <Function Name="Grant Permission">
+    <Setting Key="EAS_UserPolicySelByFuncID" SpName="EAS_UserPolicySelByFuncID" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
+  </Function>
   <Function Name="Left Panel">
     <Setting Key="Acc_CustomerSelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />

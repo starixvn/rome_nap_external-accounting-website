@@ -355,6 +355,7 @@
     <Compile Include="Report\WinLossDetailController.cs" />
     <Compile Include="Report\DailyWinlossController.cs" />
     <Compile Include="Shared\SharedController.cs" />
+    <Compile Include="UserControl\PermissionController.cs" />
     <Compile Include="UserControl\UserController.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>

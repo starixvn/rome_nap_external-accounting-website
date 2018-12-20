@@ -684,7 +684,7 @@ Fanex.ExtAcc.Function = {
                         Fanex.ExtAcc.UnBlockUI();
                         Fanex.ExtAcc.Form.Alert(
                             'Warning',
-                            'Please consider to <b>grant permission</b> for the existing accounts in Ext NAP for the new function.',
+                            'Please consider to <b>grant existing accounts permission</b> of new function in Ext NAP',
                             400,
                             160,
                             null,
