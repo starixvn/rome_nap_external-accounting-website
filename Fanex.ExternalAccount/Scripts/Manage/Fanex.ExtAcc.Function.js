@@ -673,17 +673,34 @@ Fanex.ExtAcc.Function = {
 
         $.ajax({ url: resolveClientUrl('Function/UpdateStatus/?funcId=' + funcId + '&isTest=' + isActive), type: 'POST' })
         .done(function (data) {
-            if (!data.isSuccess) {
-                Fanex.ExtAcc.UnBlockUI();
-
+            
+            if (!data.isSuccess) { 
                 alert(data.errorMessage);
             }
             else {
-                var timeout = setTimeout(function () {
-                    Fanex.ExtAcc.Form.Close(false);
-
-                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Function/FunctionList/' + $('#selectedGroupName').html()), 'dll-Administration');
-                }, 2000);
+                Fanex.ExtAcc.Form.Close(false);
+                if (!isActive) {
+                    setTimeout(function () {
+                        Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.Form.Alert(
+                            'Warning',
+                            'Please consider to grant permission for the existing accounts in Ext NAP for the new function.',
+                            400,
+                            160,
+                            null,
+                            function () {
+                                var timeout = setTimeout(function () {                                    
+                                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Function/FunctionList/' + $('#selectedGroupName').html()), 'dll-Administration');
+                                }, 500);
+                            });
+                    }, 300);
+                }
+                else {
+                    var timeout = setTimeout(function () {
+                        Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Function/FunctionList/' + $('#selectedGroupName').html()), 'dll-Administration');
+                    }, 2000);
+                }
             }
         });
     },
