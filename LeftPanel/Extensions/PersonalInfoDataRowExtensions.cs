@@ -7,7 +7,6 @@
     public static class PersonalInfoDataRowExtensions
     {
         private const string ThisAccountWas = "This account was ";
-        private const string DateTimeFormat = "M/d/yyyy H:mm tt";
 
         internal static int CustId(this DataRow dataRow) => Utils.ToInt32(dataRow["custid"]);
 
