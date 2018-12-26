@@ -51,7 +51,7 @@
     <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelUserInfo" SpName="EAS_CustomerSelUserInfo" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelUserSearch" SpName="EAS_CustomerSelUserSearch" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerUpdUserSearch" SpName="EAS_CustomerUpdUserSearch" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerUpdUserSearch" SpName="EAS_CustomerUpdUserSearch" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDaily_Com14" SpName="EAS_Rpt_WinLossDaily_Com14" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDaily_Com" SpName="EAS_Rpt_WinLossDaily_Com" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDaily_SAg14" SpName="EAS_Rpt_WinLossDaily_SAg14" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
