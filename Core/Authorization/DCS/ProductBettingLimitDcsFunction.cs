@@ -10,6 +10,6 @@
         FishingWorldBetting = 24,
         LotteryBetting = 28,
         BullfightingBetting = 30,
-        PokerGamesBetting = 33
+        VirtualSportsBetting = 5
     }
 }
