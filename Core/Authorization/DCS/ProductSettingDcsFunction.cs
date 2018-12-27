@@ -11,7 +11,7 @@
         LotterySetting = 28,
         Lucky3Setting = 26,
         BullfightingSetting = 30,
-        VirtualSportsSetting = 5,
+        VirtualSports = 5,
         PokerGamesSetting = 33
     }
 }
