@@ -1113,11 +1113,15 @@ Fanex.ExtAcc.Customer.PTSetting = {
         // Render for Basket ball
         Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportContainCopyallIcon(items[2], 2);
 
+        // Render for Number Game
+        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportContainCopyallIcon(items[10], 10);
+        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportWithoutCopyallIcon(items[11], 11);
+
         // Render for soccer parlay
         Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportWithoutCopyallIcon(items[1], 1);
 
         // Render for the rest
-        for (var i = 3; i < items.length; i++) {
+        for (var i = 3; i < items.length - 2; i++) {
             Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportWithoutCopyallIcon(items[i], i);
         }
     },
@@ -1131,7 +1135,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         checkBox.onclick = function (event) {
             var items = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.items;
             var item = this.id.toString();
-            var id = item.substring(12, 13);
+            var id = item.substring(12, item.length);
             if (this.checked) {
                 reEnableChildren(items[id].element, 0);
             }
@@ -2142,6 +2146,7 @@ function initBettingLimit() {
 
     var headerSoccer = items[0].header;
     var headerBasketBall = items[2].header;
+    var numberGame = items[10].header;
     headerSoccer.onclick = function () {
         if (document.getElementById('bettingLimit0').checked) {
             if (items[0].active === false) { // Uncheck --> Checked
@@ -2152,7 +2157,7 @@ function initBettingLimit() {
                     headerBasketBall.className = "BettingLimitHeaderCopied";
                 }
 
-                for (var i = 1; i < c - 1; i++) {
+                for (var i = 1; i < c - 2; i++) {
                     var item = items[i];
                     item.copiedItem = {
                         id: 0
@@ -2187,7 +2192,7 @@ function initBettingLimit() {
 
             setOriginalStatusSoccerParlay();
 
-            var c = items.length - 1;
+            var c = items.length - 2;
             if (items[2].active === false) { // Uncheck --> Checked
                 items[2].active = true;
                 headerBasketBall.className = "BettingLimitHeaderCopiedActive";
@@ -2216,6 +2221,47 @@ function initBettingLimit() {
                     if (item.inactive === false) break;
                     item.inactive = false;
                     var checkBox = 'bettingLimit' + i;
+                    reEnableChildren(item.element, 1);
+                }
+            }
+        }
+    };
+
+    numberGame.onclick = function () {
+        if (document.getElementById('bettingLimit10').checked) {
+
+            if (items[10].inactive == true) { // Re-enable current
+                items[10].inactive = false;
+                items[10].copiedItem = null; // Remove copiedItem
+                Fanex.PTEngine.ReEnableChildren(items[10].element);
+            }
+
+            var c = items.length;
+            if (items[10].active === false) { // Uncheck --> Checked
+                items[10].active = true;
+                numberGame.className = "BettingLimitHeaderCopiedActive";
+
+                for (var i = 11; i < c; i++) {
+                    var item = items[i];
+                    item.copiedItem = {
+                        id: 10
+                    }; // Copied from Number game, using index
+
+                    item.inactive = true;
+                    var checkBox = 'bettingLimit' + i;
+                    $(checkBox).checked = true;
+                    Fanex.PTEngine.DisableChildren(item.element, "BetTypeInactive");
+                }
+            } else {
+                items[10].active = false;
+                numberGame.className = "BettingLimitHeaderCopied";
+                for (var i = 11; i < c; i++) {
+                    var item = items[i];
+                    item.copiedItem = null; // Remove copiedItem
+                    if (item.inactive === false) break;
+                    item.inactive = false;
+                    var checkBox = 'bettingLimit' + i;
+                    $(checkBox).checked = false;
                     reEnableChildren(item.element, 1);
                 }
             }
@@ -2457,29 +2503,46 @@ function getUpdateParamaters() {
     }
 
     if (document.getElementById("bettingLimit0").checked && items[0].active === true) {
-        for (var i = 0; i < items.length - 1; i++) {
+        for (var i = 0; i < items.length - 2; i++) {
             paramaters += "1";
             if (!isUpdate) {
                 isUpdate = true;
             }
         }
-
-        document.getElementById("bettingLimit" + (items.length - 1)).checked ? paramaters += "1" : paramaters += "0";
     }
     else if (document.getElementById("bettingLimit2").checked && items[2].active === true) {
         document.getElementById("bettingLimit0").checked ? paramaters += "1" : paramaters += "0";
         document.getElementById("bettingLimit1").checked ? paramaters += "1" : paramaters += "0";
-        for (var i = 2; i < items.length - 1; i++) {
+        for (var i = 2; i < items.length - 2; i++) {
             paramaters += "1";
             if (!isUpdate) {
                 isUpdate = true;
             }
         }
-
-        document.getElementById("bettingLimit" + (items.length - 1)).checked ? paramaters += "1" : paramaters += "0";
     }
     else {
-        for (var i = 0; i < items.length; i++) {
+        for (var i = 0; i < items.length-2; i++) {
+            if (document.getElementById("bettingLimit" + i).checked) {
+                paramaters += "1";
+                if (!isUpdate) {
+                    isUpdate = true;
+                }
+            }
+            else {
+                paramaters += "0";
+            }
+        }
+    }
+
+    if (document.getElementById("bettingLimit10").checked && items[10].active === true) {
+        for (var i = 10; i < items.length; i++) {
+            paramaters += "1";
+            if (!isUpdate) {
+                isUpdate = true;
+            }
+        }        
+    } else {
+        for (var i = 10; i < items.length; i++) {
             if (document.getElementById("bettingLimit" + i).checked) {
                 paramaters += "1";
                 if (!isUpdate) {

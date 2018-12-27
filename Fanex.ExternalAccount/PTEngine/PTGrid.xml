@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet type="text/xsl" href="PTGrid.xslt"?>
 <PTGrid name="ptGrid1">
-  <NumerousSportType>13</NumerousSportType>
+  <NumerousSportType>14</NumerousSportType>
   <SportTypes>
     <SportType id="1" name="Soccer" collapsed="false" resourcekey="Soccer">
       <BetTypeGroupSets>
