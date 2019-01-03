@@ -10,6 +10,8 @@
         FishingWorldSetting = 24,
         LotterySetting = 28,
         Lucky3Setting = 26,
-        BullfightingSetting = 30
+        BullfightingSetting = 30,
+        VirtualSports = 5,
+        PokerGamesSetting = 33
     }
 }
