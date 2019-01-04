@@ -67,7 +67,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
+            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult UsedCreditPage(int custId, int roleId)
         {
             ViewBag.CustId = custId;
@@ -97,7 +97,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
+            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult SelectClearBalance(int custId)
         {
             ViewBag.CustId = custId;
