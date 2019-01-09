@@ -67,7 +67,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
+            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult UsedCreditPage(int custId, int roleId)
         {
             ViewBag.CustId = custId;
@@ -97,7 +97,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
+            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult SelectClearBalance(int custId)
         {
             ViewBag.CustId = custId;
@@ -106,7 +106,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
+            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult GetSecurityCode(int custId, int roleId, string username)
         {
             ViewBag.custId = custId;
@@ -128,7 +128,7 @@
 
         [HttpGet]
         [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
+            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult RemoveOTP(int custId, string username) =>
             View(LeftPanelOtpIndexView, new { CustId = custId, Username = username });
     }
