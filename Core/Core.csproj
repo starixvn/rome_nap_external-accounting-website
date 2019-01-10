@@ -90,8 +90,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBetSetting.2.0.1.4\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.3.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.3.9\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.2-CN8801\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=2.0.1.5, Culture=neutral, processorArchitecture=MSIL">
@@ -366,6 +366,8 @@
     <Compile Include="Base\CustomerBase.cs" />
     <Compile Include="Base\JsonBase.cs" />
     <Compile Include="Authorization\AuthorizationService.cs" />
+    <Compile Include="Configurations\InternalLogin\InternalLoginManager.cs" />
+    <Compile Include="Configurations\InternalLogin\InternalLoginSection.cs" />
     <Compile Include="Context\CasinoAPILogger.cs" />
     <Compile Include="Context\CurrentContext.cs" />
     <Compile Include="Context\CurrentSession.cs" />
