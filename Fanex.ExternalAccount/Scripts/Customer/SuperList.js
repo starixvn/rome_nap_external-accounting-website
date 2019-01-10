@@ -25,7 +25,7 @@
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                 Fanex.ExtAcc.Form.Show(
                     resolveClientUrl('SportsbookSetting/EditMultiplePT' + '/?roleId=4&groupName=' + $('#selectedGroupName').html() + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
-                    900, 700, false, false, 1);
+                    900, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
 
             }
         },
@@ -36,7 +36,7 @@
             callback: function () {
                 top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Super/EditSuper?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=0&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 1150, 700, false, null, 1);
+                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Super/EditSuper?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=0&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 1150, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, null, 1);
             }
         }
     }
@@ -69,7 +69,7 @@
                 top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditSuper?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Keno Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 880, 700, false, false, 1);
+                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditSuper?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Keno Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 880, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
             }
         }
     }
