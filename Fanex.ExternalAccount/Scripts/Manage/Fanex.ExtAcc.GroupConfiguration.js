@@ -10,6 +10,7 @@ Fanex.ExtAcc.GroupConfiguration = {
     Init: function () {
         $this = this;
         $('#tabs').tabs();
+        
         $("#productIds").combobox({
             selected: function (event, ui) {               
                 $this.GetDataByProduct();
@@ -21,10 +22,16 @@ Fanex.ExtAcc.GroupConfiguration = {
                 $this.GetDataByGroup();
             }
         });
-        $("#productlist input").val($("#productIds")[0].options[0].text);
-        $("#grouplist input").val($("#groupIds")[0].options[0].text);
+        $("#productlist input").val($("#productIds")[0].options[0].text);        
         $("#productlist input").attr("readonly", "true");
+        $("#productlist input").bind("click", function () {
+            $(this).autocomplete("search", '');
+        });
+        $("#grouplist input").val($("#groupIds")[0].options[0].text);
         $("#grouplist input").attr("readonly", "true");
+        $("#grouplist input").bind("click", function () {
+            $(this).autocomplete("search", '');
+        });
 
         $("#updateByProduct").on('click', function () {
             Fanex.ExtAcc.BlockUI();
