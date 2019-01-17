@@ -112,13 +112,13 @@ Fanex.ExtAcc.GroupConfiguration = {
             
             var bodyRows = [];
 
-            for (var i = 0; i < data.length; i++) {
+            for (var i = 0; i < data.length; i++) {                
                 bodyRows.push({
                     Columns: [
                         { Name: 'GroupName', Value: data[i] },
-                        { Name: 'Currency', Value: data[i].Currency },
+                        { Name: 'Currency', Value: data[i].FormatedCurrency },
                         { Name: 'CurrencyCode', Value: data[i].CurrencyCode },
-                        { Name: 'Site', Value: data[i].Site },
+                        { Name: 'Site', Value: data[i].FormatedSite },
                         { Name: 'IsShow', Value: data[i] }
                     ]
                 });
@@ -151,7 +151,7 @@ Fanex.ExtAcc.GroupConfiguration = {
                 fullHeight: false,
                 marginRight: 10,
                 showDistinctRow: false,
-                allowTruncate: true
+                allowTruncate: false
             };
             $this.RenderGrid('ProductGrid', options);
         }).done(function () {
@@ -204,7 +204,7 @@ Fanex.ExtAcc.GroupConfiguration = {
                 fullHeight: false,
                 marginRight: 10,
                 showDistinctRow: false,
-                allowTruncate: true
+                allowTruncate: false
             };
             $this.RenderGrid('GroupGrid', options);
         }).done(function () {

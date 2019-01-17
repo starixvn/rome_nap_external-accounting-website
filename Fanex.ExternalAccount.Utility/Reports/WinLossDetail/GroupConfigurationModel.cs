@@ -14,9 +14,13 @@
 
         public string Currency { get; set; }
 
+        public string FormatedCurrency => string.IsNullOrEmpty(Currency) ? string.Empty : Currency.Replace(",", ", ");
+
         public string CurrencyCode { get; set; }
 
         public string Site { get; set; }
+
+        public string FormatedSite => string.IsNullOrEmpty(Site) ? string.Empty : Site.Replace(",", ", ");
 
         public bool IsShow { get; set; }
 
