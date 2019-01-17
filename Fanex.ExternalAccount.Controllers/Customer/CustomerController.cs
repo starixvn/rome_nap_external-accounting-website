@@ -347,8 +347,11 @@
             var customers = GetCustomerList(ExtRequest.GetGroupName(groupName), enabled, closed, suspended, lineInfo, withDataLimited);
             var customerProductStatus = TransformToCustomerProductStatusList(customers);
             var customers2String = Customers2Json(customers);
-            var syncCasino = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean("syncCasino");
-            var allowDoubleComm = customers.Rows.Count != 0 && customers.Rows[0].ToBoolean(lineInfo.RoleId > Role.Agent ? "doubleCommLosing" : "doubleCommLosing1");
+
+            var hasCustomerData = customers.Rows.Count != 0;
+            var syncCasino = hasCustomerData && customers.Rows[0].ToBoolean("syncCasino");
+            var allowDoubleComm = hasCustomerData && customers.Rows[0].ToBoolean(lineInfo.RoleId == Role.Super ? "doubleCommLosing" : "doubleCommLosingUpline");
+
             return JsonBase(
                 new
                 {

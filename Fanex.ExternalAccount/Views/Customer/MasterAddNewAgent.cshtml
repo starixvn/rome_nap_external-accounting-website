@@ -10,7 +10,7 @@
         Add New Agent
     </div>
 </div>
-<div id="mainGrid" style="margin: 0px 3px; visibility: visible;">
+<div id="mainGrid" style="margin: 0px 3px; visibility: visible; width: 841px;">
     <div id="errMsg" style="display: none; width: 811px" class="successMsg">
     </div>
     <div class="blockBtn">
@@ -111,7 +111,7 @@
         </div>
     </div>
     <div class="clear" style="border: 1px solid #ccc; height: 75px">
-        <div class="headerTab" style="width: 841px; border-right: 1px solid #ccc; margin-bottom: 2px;">
+        <div class="headerTab" style="width: 840px; border-right: 1px solid #ccc; margin-bottom: 2px;">
             @ViewLang.commission</div>
         <div style="width: 841px">
             @Html.Action("EditCommission", "SportsbookSetting")
@@ -136,7 +136,7 @@
         </div>
     </div>
     <div class="blockBtn">
-        <input id="btnSubmitFooter" class="btn -submit buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
+        <input id="btnSubmitFooter" class="btn -submit buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
     </div>
     <input type="hidden" id="parentId" value="@Request["custId"]" />
     <input type="hidden" id="parentUsername" value="@parentUsername" />

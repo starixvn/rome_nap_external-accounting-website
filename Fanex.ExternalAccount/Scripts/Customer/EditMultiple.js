@@ -645,7 +645,12 @@ Fanex.ExtAcc.Customer.ShowEditProductForSingleCust = function (custid, uplineRol
     }
 
     Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('DCS/ViewCustomerSetting'), 'Edit ' + productName + ' Setting', 900, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
-    $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+    var targetForm = $("#targetForm")
+        .attr("method", "get")
+        .attr("action", resolveClientUrl('DCS/ViewCustomerSetting'))
+        .submit();
+    // Reset form method in order to it does NOT affect other Products
+    targetForm.attr("method", "post");
 };
 
 Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts = function (uplineRoleId, targetRoleId, productId, productName) {
@@ -694,7 +699,12 @@ Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts = function (uplineRoleId, 
             900,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);
-        $("#targetForm").attr("action", resolveClientUrl('DCS/ViewCustomerSetting')).submit();
+        var targetForm = $("#targetForm")
+            .attr("method", "get")
+            .attr("action", resolveClientUrl('DCS/ViewCustomerSetting'))
+            .submit();
+        // Reset form method in order to it does NOT affect other Products
+        targetForm.attr("method", "post");
     }
     else {
         Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(Fanex.ExtAcc.Customer.UserId, uplineRoleId, targetRoleId, productId, productName);
