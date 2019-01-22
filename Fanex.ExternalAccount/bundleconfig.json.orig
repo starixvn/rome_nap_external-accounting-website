@@ -1,0 +1,204 @@
+[
+  {
+    "outputFileName": "assets/bundles/login/login.js",
+    "inputFiles": [
+      "Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.3.min.js",
+      "Scripts/aes.js",
+      "Scripts/Fanex.ExtAcc.EcHcUtil.js",
+      "Scripts/Validators.js",
+      "Scripts/Account/Fanex.ExtAcc.Account.js",
+      "Scripts/isMobile.min.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/otp/otp.js",
+    "inputFiles": [
+      "Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.3.min.js",
+      "Scripts/Account/Fanex.ExtAcc.Account.OTP.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/home/home.js",
+    "inputFiles": [
+      "Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.3.min.js",
+      "Scripts/aes.js",
+      "Scripts/Fanex.ExtAcc.EcHcUtil.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/login/login.css",
+    "inputFiles": [
+      "assets/styles/fonts/AlphaAdmin/style.css",
+      "assets/styles/base/normalize.css",
+      "assets/styles/base/Validators.css",
+      "assets/styles/pages/account/login.css",
+      "Areas/CustomerSetting/Views/SylouCaptcha/Styles/Index.css"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/common.css",
+    "inputFiles": [
+      "assets/styles/fonts/AlphaAdmin/style.css",
+      "Content/normalize.css",
+      "assets/styles/base/Validators.css",
+      "Content/UserControl/UserControl.css",
+      "Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css",
+      "Scripts/Fanex.Grid/Fanex.Pagination.css",
+      "Scripts/Fanex.Grid/Fanex.Grid.css",
+      "Scripts/MultiSelect/jquery.multiselect.css",
+      "Scripts/MultiSelect/select2.css",
+      "Scripts/ContextMenu/jquery.contextMenu.css",
+      "Scripts/Combobox/Combobox.css",
+      "Scripts/monthPicker/monPickr-0.0.1.css",
+      "assets/styles/pages/default/common.css",
+      "assets/styles/pages/customer/customer-setting.css",
+      "assets/styles/pages/statement/statement.css",
+      "assets/styles/pages/reports/daily-winloss.css",
+      "assets/styles/pages/reports/winloss-detail.css",
+      "assets/styles/pages/reports/pokergames-winloss-detail.css",
+      "assets/styles/pages/customer/pt-engine.css",
+<<<<<<< HEAD
+       "assets/styles/pages/admin/product.css"
+=======
+      "assets/styles/pages/admin/product.css"
+>>>>>>> 000 - support UI
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/common.js",
+    "inputFiles": [
+      "Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.3.min.js",
+      "Scripts/Lib/jquery-ui-1.9.1/ui/jquery-ui.js",
+      "Scripts/jquery.ui.touch-punch.js",
+      "Scripts/Fanex.Grid/moment.min.js",
+      "Scripts/ContextMenu/jquery.contextMenu.js",
+      "Scripts/Fanex.Grid/Fanex.Pagination.js",
+      "Scripts/Fanex.Grid/Fanex.Grid.js",
+      "Scripts/superfish/superfish.js",
+      "Scripts/numeral.js",
+      "Scripts/jquery.blockUI.js",
+      "Scripts/MultiSelect/jquery.multiselect.min.js",
+      "Scripts/MultiSelect/select2.js",
+      "Scripts/cookie.js",
+      "Scripts/Fanex.ExtAcc.js",
+      "Scripts/Fanex.ExtAcc.Header.js",
+      "Scripts/Fanex.ExtAcc.Form.js",
+      "Scripts/Account/Fanex.ExtAcc.Account.js",
+      "Scripts/Validators.js",
+      "Scripts/Manage/Fanex.ExtAcc.User.js",
+      "Scripts/Combobox/Combobox.js",
+      "Scripts/Customer/Fanex.ExtAcc.Customer.js",
+      "Scripts/Customer/SuperList.js",
+      "Scripts/Customer/MasterList.js",
+      "Scripts/Customer/AgentList.js",
+      "Scripts/Customer/MemberList.js",
+      "Scripts/Customer/EditMultiple.js",
+      "Scripts/isMobile.min.js",
+      "Scripts/knockout.min-2.0.js",
+      "Scripts/Fanex.ExtAcc.Utils.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/choosegroup/choosegroup.css",
+    "inputFiles": [
+      "assets/styles/fonts/AlphaAdmin/style.css",
+      "assets/styles/base/Validators.css",
+      "Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css",
+      "assets/styles/pages/account/external-group.css"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/choosegroup/choosegroup.js",
+    "inputFiles": [
+      "Scripts/aes.js",
+      "Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.2.js",
+      "Scripts/Lib/jquery-ui-1.9.1/ui/jquery-ui.js",
+      "Scripts/Lib/jquery-ui-1.9.1/ui/jquery.ui.core.js",
+      "Scripts/Lib/jquery-ui-1.9.1/ui/jquery.ui.widget.js",
+      "Scripts/Lib/jquery-ui-1.9.1/ui/jquery.ui.dialog.js",
+      "Scripts/Lib/jquery-ui-1.9.1/ui/jquery.ui.mouse.js",
+      "Scripts/Lib/jquery-ui-1.9.1/ui/jquery.ui.draggable.js",
+      "Scripts/Lib/jquery-ui-1.9.1/ui/jquery.ui.droppable.js",
+      "Scripts/isMobile.min.js",
+      "Scripts/superfish/superfish.js",
+      "Scripts/Account/Fanex.ExtAcc.Account.js",
+      "Scripts/Fanex.ExtAcc.EcHcUtil.js",
+      "Scripts/Validators.js",
+      "Scripts/Fanex.ExtAcc.Form.js",
+      "Scripts/Manage/Fanex.ExtAcc.User.js"
+
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/winlossdetail/index.js",
+    "inputFiles": [
+      "Scripts/monthPicker/monPickr-0.0.1.js",
+      "Scripts/Combobox/Combobox.js",
+      "Scripts/Reports/Fanex.ExtAcc.WinLossDetail.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/dailywinloss/index.js",
+    "inputFiles": [
+      "Scripts/Reports/Fanex.ExtAcc.DailyWinLoss.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/statement/index.js",
+    "inputFiles": [
+      "Scripts/isMobile.min.js",
+      "Areas/Statement/Views/Report/Scripts/StatementReportManager.js",
+      "Scripts/Statement/Fanex.ExtAcc.Statement.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/data-range/index.js",
+    "inputFiles": [
+      "Scripts/Customer/Fanex.ExtAcc.DataRange.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/pokergames-winlossdetail/index.js",
+    "inputFiles": [
+      "Scripts/monthPicker/monPickr-0.0.1.js",
+      "Scripts/Combobox/Combobox.js",
+      "Scripts/Reports/Fanex.ExtAcc.PokerGamesWinLossDetail.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/casino/index.js",
+    "inputFiles": [
+      "Areas/CustomerSetting/Scripts/jquery.js",
+      "Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js",
+      "Areas/CustomerSetting/Scripts/angular.min.js",
+      "Areas/CustomerSetting/Scripts/Validators.js",
+      "Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js",
+      "Areas/CustomerSetting/Scripts/ptarea.js",
+      "Areas/CustomerSetting/Views/Casino/Scripts/CustomerController.js",
+      "Areas/CustomerSetting/Views/Casino/Scripts/CasinoController.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/casino/index.css",
+    "inputFiles": [
+      "Areas/CustomerSetting/Styles/Validators.css",
+      "Areas/CustomerSetting/Styles/Common.css",
+      "Areas/CustomerSetting/Views/Casino/Styles/Casino.css"
+    ],
+    "sourceMap": true
+  }
+]
