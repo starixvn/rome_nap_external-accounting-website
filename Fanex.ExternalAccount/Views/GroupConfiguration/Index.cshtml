@@ -14,10 +14,11 @@
     </div>
         <div id="tabs" style="float: left; border: none">
             <ul class="tabs">
-                <li><a href="#tabs-Product" onclick="Fanex.ExtAcc.GroupConfiguration.GetDataByProduct()">Product</a></li>
-                <li><a href="#tabs-Group" onclick="Fanex.ExtAcc.GroupConfiguration.GetDataByGroup()">Group</a></li>
+                <li><a href="#tabs-Product" onclick="Fanex.ExtAcc.GroupConfiguration.RenderDataByProduct()">Product</a></li>
+                <li><a href="#tabs-Group" onclick="Fanex.ExtAcc.GroupConfiguration.RenderDataByGroup()">Group</a></li>
             </ul>
             <div id="tabs-Product" style="width:100%;">
+                <div id="msgProductSection"></div>
                 <div class="search-form filterbox">
                     <div class="searchBar">
                         <div class="form-group">
@@ -36,7 +37,7 @@
                         <div class="form-group">
                             <label><input onclick="return false;" id="chk-hideInactiveProduct" type="checkbox" />@ViewLang.HideInactiveProduct</label>
                             <div class="note">(*) @ViewLang.NoteHideInactiveProduct</div>
-                        </div>
+                        </div>                        
                     </div>
                 </div>
                 <div id="ProductGrid" class="removeRadius freegrid content-grid">
@@ -44,6 +45,7 @@
                 <input type="button" value="Submit" class="btn -submit" style="float:left;margin:30px 30px 30px 730px" id="updateByProduct" />
             </div>
             <div id="tabs-Group" style="width:100%;">
+                <div id="msgGroupSection"></div>
                 <div class="search-form filterbox">
                     <div class="form-group">
                         <label class="label">

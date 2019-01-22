@@ -13,13 +13,13 @@ Fanex.ExtAcc.GroupConfiguration = {
         
         $("#productIds").combobox({
             selected: function (event, ui) {               
-                $this.GetDataByProduct();
+                $this.RenderDataByProduct();
             }
         });
 
         $("#groupIds").combobox({
             selected: function (event, ui) {
-                $this.GetDataByGroup();
+                $this.RenderDataByGroup();
             }
         });
         $("#productlist input").val($("#productIds")[0].options[0].text);        
@@ -34,37 +34,59 @@ Fanex.ExtAcc.GroupConfiguration = {
         });
 
         $("#updateByProduct").on('click', function () {
-            Fanex.ExtAcc.BlockUI();
-            var a = $this.UpdateDataByProduct();
-            $.ajax({
-                url: resolveClientUrl('GroupConfiguration/Update'),
-                data: {
-                    GroupDetails: a
-                },
-                type: 'POST'
-            }).done(function () {
-                Fanex.ExtAcc.UnBlockUI();
-            });
+            $this.UpdateDataByProduct();
         });
 
         $("#updateByGroup").on('click', function () {
-            Fanex.ExtAcc.BlockUI();
-            var a = $this.UpdateDataByGroup();
-            $.ajax({
-                url: resolveClientUrl('GroupConfiguration/Update'),
-                data: {
-                    GroupDetails: a
-                },
-                type: 'POST'
-            }).done(function () {
-                Fanex.ExtAcc.UnBlockUI();
-            });
+            $this.UpdateDataByGroup();
         });
 
-        $this.GetDataByProduct();
+        $this.RenderDataByProduct();
     },
 
-    UpdateDataByProduct: function () {
+    UpdateDataByProduct: function(){
+        Fanex.ExtAcc.BlockUI();
+        var products = $this.GetDataByProduct();
+        $.ajax({
+            url: resolveClientUrl('GroupConfiguration/Update'),
+            data: {
+                GroupDetails: products
+            },
+            type: 'POST'
+        }).success(function () {
+            $('#msgProductSection').attr('class', 'successMsg');
+            $('#msgProductSection').html('<font color="Blue">Updated successfully</font>');
+            $('#msgProductSection').show();
+            setTimeout(function () {
+                $('#msgProductSection').hide();
+            }, 2000);
+        }).done(function () {
+            Fanex.ExtAcc.UnBlockUI();
+        });
+    },
+
+    UpdateDataByGroup: function(){
+        Fanex.ExtAcc.BlockUI();
+        var groups = $this.GetDataByGroup();
+        $.ajax({
+            url: resolveClientUrl('GroupConfiguration/Update'),
+            data: {
+                GroupDetails: groups
+            },
+            type: 'POST'
+        }).success(function () {
+            $('#msgGroupSection').attr('class', 'successMsg');
+            $('#msgGroupSection').html('<font color="Blue">Updated successfully</font>');
+            $('#msgGroupSection').show();
+            setTimeout(function () {
+                $('#msgGroupSection').hide();
+            }, 2000);
+        }).done(function () {
+            Fanex.ExtAcc.UnBlockUI();
+        });
+    },
+
+    GetDataByProduct: function () {
         var data = [];
         var productId = $("#productIds").val();
         $("#ProductGrid tbody tr").each(function (i, row) {
@@ -82,7 +104,7 @@ Fanex.ExtAcc.GroupConfiguration = {
         return data;
     },
 
-    UpdateDataByGroup: function () {
+    GetDataByGroup: function () {
         var data = [];
         var groupId = $("#groupIds").val();
         $("#GroupGrid tbody tr").each(function (i, row) {
@@ -100,7 +122,7 @@ Fanex.ExtAcc.GroupConfiguration = {
         return data;
     },
 
-    GetDataByProduct: function () {
+    RenderDataByProduct: function () {
         Fanex.ExtAcc.BlockUI();
         $.ajax({
             url: resolveClientUrl('GroupConfiguration/Get'),
@@ -159,7 +181,7 @@ Fanex.ExtAcc.GroupConfiguration = {
         });
     },
 
-    GetDataByGroup: function () {
+    RenderDataByGroup: function () {
         Fanex.ExtAcc.BlockUI();
         $.ajax({
             url: resolveClientUrl('GroupConfiguration/Get'),
@@ -212,6 +234,20 @@ Fanex.ExtAcc.GroupConfiguration = {
         })
     },
 
+    RenderGrid: function (id, options) {
+        try {
+            $('#' + id).fanexGrid(options);
+            Fanex.ExtAcc.UnBlockUI();
+        }
+        catch (e) {
+            if (typeof console != 'undefined') {
+                console.log(e);
+            }
+
+            Fanex.ExtAcc.UnBlockUI();
+        }
+    },
+
     CheckAllForGroup: function (element) {
         $this.CheckAll("GroupGrid", element);
     },
@@ -233,21 +269,7 @@ Fanex.ExtAcc.GroupConfiguration = {
         } else {
             $(element).attr('class', 'menuActive')
         }
-    },
-
-    RenderGrid: function (id, options) {
-        try {
-            $('#' + id).fanexGrid(options);
-            Fanex.ExtAcc.UnBlockUI();
-        }
-        catch (e) {
-            if (typeof console != 'undefined') {
-                console.log(e);
-            }
-
-            Fanex.ExtAcc.UnBlockUI();
-        }
-    },
+    }   
 }
 
 $(document).ready(function () {
