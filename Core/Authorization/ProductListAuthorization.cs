@@ -46,11 +46,11 @@
             var isAuthorized = permissionService.CheckCustomerHasSpecialSitePermission(
                 new CheckCustomerHasSpecialSiteFunctionPermissionCriteria { CustID = custId });
 
-            var products = GetProductConfiguration();
+            var products = GetProductConfiguration().OrderBy(i => i.ProductId);
             var showedProductList = new List<GroupConfigurationModel>();
             foreach (var product in products)
             {
-                if (!showedProductList.Any(i => i.ProductId == product.ProductId) && product.IsShow)
+                if (!showedProductList.Any(i => i.ProductId == product.ProductId) && product.IsShow && !string.IsNullOrEmpty(product.Id))
                 {
                     if ((isHideInactiveProduct && product.IsHideInactiveProduct)
                         || (product.IsSpecial
@@ -67,14 +67,14 @@
 
         private IEnumerable<GroupConfigurationModel> GetProductConfiguration()
         {
-            if(Group.IsOfficeGroup(currentSession.CurrencyGroup))
+            if (Group.IsOfficeGroup(currentSession.CurrencyGroup))
             {
                 return groupConfigurationService.Get(new GetGroupConfigurationCriteria());
             }
 
             return groupConfigurationService.Get(new GetGroupConfigurationCriteria { GroupId = currentSession.GroupId });
         }
-             
+
         private static bool AdminDoesNotHavePermissionOnSpecialProduct(
             CheckCustomerIsInternalAdminResult checkIsInternalAdminResult,
             bool isAuthorized)

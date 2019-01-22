@@ -139,7 +139,7 @@ Fanex.ExtAcc.GroupConfiguration = {
                     Columns: [
                         { Name: 'GroupName', Value: data[i] },
                         { Name: 'Currency', Value: data[i].FormatedCurrency },
-                        { Name: 'CurrencyCode', Value: data[i].CurrencyCode },
+                        { Name: 'CurrencyCode', Value: data[i].FormatedCurrencyCode },
                         { Name: 'Site', Value: data[i].FormatedSite },
                         { Name: 'IsShow', Value: data[i] }
                     ]
@@ -195,7 +195,7 @@ Fanex.ExtAcc.GroupConfiguration = {
                 bodyRows.push({
                     Columns: [
                         { Name: 'ProductId', Value: data[i] },
-                        { Name: 'ProductName', Value: data[i].ProductName },
+                        { Name: 'ProductName', Value: data[i].ProductText },
                         { Name: 'IsShow', Value: data[i] }
                     ]
                 });

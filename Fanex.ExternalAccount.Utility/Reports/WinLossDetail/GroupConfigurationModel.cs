@@ -1,12 +1,27 @@
 ﻿namespace Fanex.ExternalAccount.Utilities.Reports.WinLossDetail
 {
     using System.Linq;
+    using RemotingRef;
 
     public class GroupConfigurationModel
     {
+        private readonly IRemotingRefService remotingRefService;
+
+        protected GroupConfigurationModel(): this(null)
+        {
+        }
+
+        protected GroupConfigurationModel(IRemotingRefService remotingRefService)
+        {
+            this.remotingRefService = remotingRefService ?? new RemotingRefService();
+        }
+
         public int ProductId { get; set; }
 
         public string ProductName { get; set; }
+
+        public string ProductText
+            => remotingRefService.GetResourceDataByRefIdAndResourceId("Product", ProductId.ToString(), "en-US", ProductName);
 
         public int GroupId { get; set; }
 
@@ -17,6 +32,8 @@
         public string FormatedCurrency => string.IsNullOrEmpty(Currency) ? string.Empty : Currency.Replace(",", ", ");
 
         public string CurrencyCode { get; set; }
+
+        public string FormatedCurrencyCode => string.IsNullOrEmpty(CurrencyCode) ? string.Empty : CurrencyCode.Replace(",", ", ");
 
         public string Site { get; set; }
 

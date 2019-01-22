@@ -273,7 +273,7 @@
             return new ProductListAuthorization()
                 .GetProductList(isHideInactiveProduct)
                 .Where(product => !excludeProductIds.Contains(product.ProductId))
-                .Select(product => new KeyValuePair<string, string>(product.Id, product.ProductName))
+                .Select(product => new KeyValuePair<string, string>(product.Id, product.ProductText))
                 .ToList();
         }
     }
