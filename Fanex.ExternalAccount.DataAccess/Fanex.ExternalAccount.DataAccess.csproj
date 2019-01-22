@@ -154,6 +154,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Criteria\Customer\CheckNewCustomerLimitationCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckMemberCreationCriteria.cs" />
     <Compile Include="Criteria\Customer\UpdateSuperInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\GetSuperInfoCriteria.cs" />
