@@ -117,6 +117,7 @@
     <Setting Key="EAS_FunctionSelEdit" SpName="EAS_FunctionSelEdit" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Grant Permission">
+    <Setting Key="EAS_GroupPolicySelByFuncID" SpName="EAS_GroupPolicySelByFuncID" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_UserPolicySelByFuncID" SpName="EAS_UserPolicySelByFuncID" DbName="DBEAS.bodb_EAS.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Left Panel">

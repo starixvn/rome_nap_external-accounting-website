@@ -4,26 +4,27 @@
     using System.Linq;
     using System.Web.Mvc;
     using Core.Base;
-    using Core.Context;
     using Core.Shared;
-    using CustomerSetting.Security.Authenticate;
     using DTO.UserControl;
     using Service.Impl.UserControl;
     using Service.Interface.UserControl;
+    using Service.UserControl;
 
     public class PermissionController : BaseController
     {
         private readonly IFunctionService functionService;
+        private readonly IPermissionService permissionService;
 
         public PermissionController()
         {
             functionService = new FunctionService();
+            permissionService = new PermissionService();
         }
 
-        [ExternalAccountAuthenticate(
-            Function = eFunctions.ManageFunction,
-            Policy = AuthenticateAction.AuthenticationType.Read,
-            IsAjaxRequest = false)]
+        //[ExternalAccountAuthenticate(
+        //    Function = eFunctions.ManageFunction,
+        //    Policy = AuthenticateAction.AuthenticationType.Read,
+        //    IsAjaxRequest = false)]
         public ActionResult Index()
         {
             var funcs = functionService.GetAllFunctions();
