@@ -83,6 +83,15 @@
     margin: 0;
 }
 
-.grant-permission .ui-widget-content {
-    z-index: unset;
+.grant-permission {
+    .ui-widget-content {
+        z-index: unset;
+    }
+    .groupCboMenu {
+        .ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
+            border-top-left-radius: 0 !important;
+        }
+    }
+        
 }
+    
