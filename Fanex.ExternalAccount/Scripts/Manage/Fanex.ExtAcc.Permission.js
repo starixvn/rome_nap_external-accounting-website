@@ -1,23 +1,107 @@
 ﻿/// <reference path="../_references.js" />
-if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
+if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
     alert("Fanex.ExtAcc.js module is required!")
 }
 
 Fanex.ExtAcc.Permission = {
-    Init: function () {
-        this.RenderPermissionGrid();
+    FunctionFrom: null,
+    FunctionTo: null,
+    PolicyMessage: null,
+    PolicyTabs: null,
+    GroupPolicyGridOptions: null,
+    GroupPolicyGridContainer: null,
+    GroupPolicyGrid: null,
+    UserPolicyGridOptions: null,
+    UserPolicyGridContainer: null,
+    UserPolicyGrid: null,
+    GridExpandHeight: null,
 
-        //$.ajax({
-        //    url: this.URL,
-        //    dataType: 'json',
-        //    type: 'post'
-        //})
-        //.success(function (data) {
-        //    $this.DataSource = data;
+    Init: function () {
+        var self = this;
+
+        this.CacheDOMElements();
+        this.GridExpandHeight = parseInt($("#gridExpandHeightHiddenField").val());
+        this.GroupPolicyGridOptions = this.InitGroupPolicyGridOptions();
+        this.UserPolicyGridOptions = this.InitUserPolicyGridOptions();
+
+        this.RegisterEvents();
+    },
+
+    CacheDOMElements: function () {
+        this.FunctionFrom = $("#functionFrom");
+        this.FunctionTo = $("#functionTo");
+        this.PolicyMessage = $("#err-message");
+        this.PolicyTabs = $("#tabs").tabs();
+        this.GroupPolicyGridContainer = $("#groupPolicyGrid");
+        this.GroupPolicyGrid = $("#jqgrid-groupPolicy");
+        this.UserPolicyGridContainer = $("#userPolicyGrid");
+        this.UserPolicyGrid = $("#jqgrid-userPolicy");
+    },
+
+    RegisterEvents: function () {
+        var self = this;
+
+        var functionChange = function () {
+            var funcFrom = self.FunctionFrom.val();
+            var funcTo = self.FunctionTo.val();
+
+            if (funcFrom !== "0" && funcTo !== "0") {
+                if (self.PolicyTabs.tabs("option", "active") === 0) {
+                    self.RenderGroupPolicyGrid(funcFrom);
+                } else {
+                    self.RenderUserPolicyGrid(funcFrom);
+                }
+
+                self.PolicyTabs.removeClass("hide");
+            }
+        };
+
+        this.FunctionFrom.change(functionChange);
+        this.FunctionTo.change(functionChange);
+
+        this.PolicyTabs.on("tabsactivate", function (event, ui) {
+            if (self.PolicyTabs.tabs("option", "active") === 0) {
+                self.RenderGroupPolicyGrid(self.FunctionFrom.val());
+            } else {
+                self.RenderUserPolicyGrid(self.FunctionFrom.val());
+            }
+        });
+
+        $("#updateGroupPolicy").click(function () {
+            var funcName = self.FunctionTo.find("option:selected").html();
+
+            Fanex.ExtAcc.Form.ConfirmBox(
+                "Group Permission",
+                "Are you sure to set group permission for <b>" + funcName + "</b> function?",
+                420,
+                150,
+                false,
+                function () {
+                    self.OnSubmit(self.GroupPolicyGrid, resolveClientUrl("Permission/UpdateGroupPolicy"));
+                });
+        });
+
+        $("#updateUserPolicy").click(function () {
+            var funcName = self.FunctionTo.find("option:selected").html();
+
+            Fanex.ExtAcc.Form.ConfirmBox(
+                "User Permission",
+                "Are you sure to set user permission for <b>" + funcName + "</b> function?",
+                420,
+                150,
+                false,
+                function () {
+                    self.OnSubmit(self.UserPolicyGrid, resolveClientUrl("Permission/UpdateUserPolicy"));
+                });
+        });
 
         Fanex.ExtAcc.OnResize = function () {
             try {
-                $("#jqgrid-permission").fanexGrid("resizeGrid");
+                if (self.PolicyTabs.tabs("option", "active") === 0) {
+                    self.GroupPolicyGrid.fanexGrid("resizeGrid");
+                } else {
+                    self.UserPolicyGrid.fanexGrid("resizeGrid");
+                }
             }
             catch (err) {
             }
@@ -47,73 +131,35 @@ Fanex.ExtAcc.Permission = {
         });
     },
 
-    RenderPermissionGrid: function () {
-        Fanex.ExtAcc.BlockUI();
-
-        var url = resolveClientUrl("Function/FunctionListPost");
-        var mainGrid = $("#mainGrid").css("visibility", "hidden");
-
-        var data = [
-            { Username: "starix1", GroupName: "ACCUUS", SourcePermission: 1, DestinationPermission: 1, PermissionKey: 1 },
-            { Username: "starix2", GroupName: "ACCUUS", SourcePermission: 3, DestinationPermission: 3, PermissionKey: 2 },
-            { Username: "starix3", GroupName: "ACCUUS", SourcePermission: 1, DestinationPermission: 1, PermissionKey: 3 },
-            { Username: "starix4", GroupName: "ACCUUS", SourcePermission: 3, DestinationPermission: 3, PermissionKey: 4 },
-            { Username: "starix5", GroupName: "ACCUUS", SourcePermission: 0, DestinationPermission: 0, PermissionKey: 5 }
-        ];
-
-        var bodyRows = [];
-        var datum;
-
-        for (var i = 0, max = data.length; i < max; i++) {
-            datum = data[i];
-            bodyRows.push({
+    GetGroupPolicyGridGroupHeaderRows: function (funcFrom, funcTo) {
+        return [
+            {
                 Columns: [
-                    { Name: "colUsername", Value: datum.Username, CssClass: "colUsername" },
-                    { Name: "colGroupName", Value: datum.GroupName },
-                    { Name: "colSourcePermissionRead", Value: datum.SourcePermission },
-                    { Name: "colSourcePermissionWrite", Value: datum.SourcePermission },
-                    { Name: "colDestinationPermissionRead", Value: datum },
-                    { Name: "colDestinationPermissionWrite", Value: datum }
+                    { HeaderText: "Group Name", Name: "colGroupName", MergeRowNumber: 2 },
+                    { HeaderText: "Group Permission<br/>(Form " + funcFrom + ")", Name: "colSourcePermissionRead", MergeColNumber: 2 },
+                    { HeaderText: "Group Permission<br/>(For " + funcTo + ")", Name: "colDestinationPermissionRead", MergeColNumber: 2 }
                 ]
-            });
-        }
-
-        var gridOptions = this.GetGridOptions(bodyRows);
-        setTimeout(function () {
-            $("#jqgrid-permission").fanexGrid(gridOptions);
-            Fanex.ExtAcc.UnBlockUI();
-            mainGrid.css("visibility", "visible");
-        }, 1000);
+            }
+        ];
     },
 
-    GetGridOptions: function (bodyRows) {
+    InitGroupPolicyGridOptions: function () {
         return {
             customizeHeader: true,
-            groupHeaderRows: [
-                {
-                    Columns: [
-                        { HeaderText: "Username", Name: "colUsername", MergeRowNumber: 2 },
-                        { HeaderText: "Group Name", Name: "colGroupName", MergeRowNumber: 2 },
-                        { HeaderText: "Source Permission", Name: "colSourcePermissionRead", MergeColNumber: 2 },
-                        { HeaderText: "Destination Permission", Name: "colDestinationPermissionRead", MergeColNumber: 2 }
-                    ]
-                }
-            ],
             columns: [
-                { HeaderText: "Username", Name: "colUsername", Width: 200 },
                 { HeaderText: "Group Name", Name: "colGroupName", Width: 200 },
                 {
                     HeaderText: "Read",
                     Name: "colSourcePermissionRead",
-                    Width: 70,
+                    Width: 90,
                     CellAlign: "center",
                     TdClass: "bg-grey",
-                    CustomCellRender: function (sourcePermission) {
-                        if (sourcePermission.Value === 0) {
+                    CustomCellRender: function (policy) {
+                        if (policy.Value === 0) {
                             return '<div class="permInactive" style="cursor:default"></div>';
                         }
 
-                        return sourcePermission.Value > 0
+                        return policy.Value > 0
                             ? '<div class="permActive" style="cursor:default"></div>'
                             : "";
                     }
@@ -121,11 +167,11 @@ Fanex.ExtAcc.Permission = {
                 {
                     HeaderText: "Write",
                     Name: "colSourcePermissionWrite",
-                    Width: 70,
+                    Width: 90,
                     CellAlign: "center",
                     TdClass: "bg-grey",
-                    CustomCellRender: function (sourcePermission) {
-                        return sourcePermission.Value === 3
+                    CustomCellRender: function (policy) {
+                        return policy.Value === 3
                             ? '<div class="permActive" style="cursor:default"></div>'
                             : '<div class="permInactive" style="cursor:default"></div>';
                     }
@@ -133,54 +179,215 @@ Fanex.ExtAcc.Permission = {
                 {
                     HeaderText: "Read",
                     Name: "colDestinationPermissionRead",
-                    Width: 70,
+                    Width: 90,
                     CellAlign: "center",
                     CustomCellRender: function (cell) {
                         return [
                             '<div class="',
-                            cell.Value.DestinationPermission === 0 ? "permInactive" : "permActive",
+                            cell.Value.Policy === 0 ? "permInactive" : "permActive",
                             '" onclick="javascript:Fanex.ExtAcc.Permission.OnReadChanged(this);" id="read',
-                            cell.Value.Username,
-                            '" data-username="',
-                            cell.Value.Username,
-                            '" data-permissionkey="',
-                            cell.Value.PermissionKey,
-                            '"></div>'
+                            cell.Value.GroupId,
+                            '" data-id="',
+                            cell.Value.GroupId,
+                            '" data-read="1"></div>'
                         ].join("");
                     }
                 },
                 {
                     HeaderText: "Write",
                     Name: "colDestinationPermissionWrite",
-                    Width: 70,
+                    Width: 90,
                     CellAlign: "center",
                     CustomCellRender: function (cell) {
                         return [
                             '<div class="',
-                            cell.Value.DestinationPermission === 3 ? "permActive" : "permInactive",
+                            cell.Value.Policy === 3 ? "permActive" : "permInactive",
                             '" onclick="javascript:Fanex.ExtAcc.Permission.OnWriteChanged(this);" id="write',
-                            cell.Value.Username,
-                            '" data-username="',
-                            cell.Value.Username,
-                            '" data-permissionkey="',
-                            cell.Value.PermissionKey,
+                            cell.Value.GroupId,
+                            '" data-id="',
+                            cell.Value.GroupId,
                             '"></div>'
                         ].join("");
                     }
                 }
             ],
-            bodyRows: bodyRows || [],
-            autoCalculateGridExpandHeight: true,
-            marginRight: 10,
+            gridExpandHeight: this.GridExpandHeight,
             showDistinctRow: false,
             allowTruncate: true
         };
     },
 
+    RenderGroupPolicyGrid: function (funcId) {
+        var self = this;
+
+        Fanex.ExtAcc.BlockUI();
+        this.GroupPolicyGridContainer.css("visibility", "hidden");
+
+        $.ajax({
+            type: "GET",
+            url: resolveClientUrl("Permission/GetGroupPolicies?funcId=" + funcId),
+            dataType: "json"
+        })
+        .success(function (data) {
+            var group;
+            var bodyRows = [];
+
+            for (var i = 0, max = data.length; i < max; i++) {
+                group = data[i];
+                bodyRows.push({
+                    Columns: [
+                        { Name: "colGroupName", Value: group.GroupName },
+                        { Name: "colSourcePermissionRead", Value: group.Policy },
+                        { Name: "colSourcePermissionWrite", Value: group.Policy },
+                        { Name: "colDestinationPermissionRead", Value: group },
+                        { Name: "colDestinationPermissionWrite", Value: group }
+                    ]
+                });
+            }
+
+            self.GroupPolicyGridOptions.groupHeaderRows = self.GetGroupPolicyGridGroupHeaderRows(
+                self.FunctionFrom.find("option:selected").html(),
+                self.FunctionTo.find("option:selected").html());
+            self.GroupPolicyGridOptions.bodyRows = bodyRows;
+            self.GroupPolicyGrid.fanexGrid(self.GroupPolicyGridOptions);
+
+            Fanex.ExtAcc.UnBlockUI();
+            self.GroupPolicyGridContainer.css("visibility", "visible");
+        });
+    },
+
+    GetUserPolicyGridGroupHeaderRows: function (funcFrom, funcTo) {
+        return [
+                {
+                    Columns: [
+                        { HeaderText: "Username", Name: "colUsername", MergeRowNumber: 2 },
+                        { HeaderText: "Group Name", Name: "colGroupName", MergeRowNumber: 2 },
+                        { HeaderText: "User Permission<br/>(Form " + funcFrom + ")", Name: "colSourcePermissionRead", MergeColNumber: 2 },
+                        { HeaderText: "User Permission<br/>(For " + funcTo + ")", Name: "colDestinationPermissionRead", MergeColNumber: 2 }
+                    ]
+                }
+        ];
+    },
+
+    InitUserPolicyGridOptions: function () {
+        return {
+            customizeHeader: true,
+            columns: [
+                { HeaderText: "Username", Name: "colUsername", Width: 200 },
+                { HeaderText: "Group Name", Name: "colGroupName", Width: 120 },
+                {
+                    HeaderText: "Read",
+                    Name: "colSourcePermissionRead",
+                    Width: 90,
+                    CellAlign: "center",
+                    TdClass: "bg-grey",
+                    CustomCellRender: function (policy) {
+                        if (policy.Value === 0) {
+                            return '<div class="permInactive" style="cursor:default"></div>';
+                        }
+
+                        return policy.Value > 0
+                            ? '<div class="permActive" style="cursor:default"></div>'
+                            : "";
+                    }
+                },
+                {
+                    HeaderText: "Write",
+                    Name: "colSourcePermissionWrite",
+                    Width: 90,
+                    CellAlign: "center",
+                    TdClass: "bg-grey",
+                    CustomCellRender: function (policy) {
+                        return policy.Value === 3
+                            ? '<div class="permActive" style="cursor:default"></div>'
+                            : '<div class="permInactive" style="cursor:default"></div>';
+                    }
+                },
+                {
+                    HeaderText: "Read",
+                    Name: "colDestinationPermissionRead",
+                    Width: 90,
+                    CellAlign: "center",
+                    CustomCellRender: function (cell) {
+                        return [
+                            '<div class="',
+                            cell.Value.Policy === 0 ? "permInactive" : "permActive",
+                            '" onclick="javascript:Fanex.ExtAcc.Permission.OnReadChanged(this);" id="read',
+                            cell.Value.CustId,
+                            '" data-id="',
+                            cell.Value.CustId,
+                            '" data-read="1"></div>'
+                        ].join("");
+                    }
+                },
+                {
+                    HeaderText: "Write",
+                    Name: "colDestinationPermissionWrite",
+                    Width: 90,
+                    CellAlign: "center",
+                    CustomCellRender: function (cell) {
+                        return [
+                            '<div class="',
+                            cell.Value.Policy === 3 ? "permActive" : "permInactive",
+                            '" onclick="javascript:Fanex.ExtAcc.Permission.OnWriteChanged(this);" id="write',
+                            cell.Value.CustId,
+                            '" data-id="',
+                            cell.Value.CustId,
+                            '"></div>'
+                        ].join("");
+                    }
+                }
+            ],
+            gridExpandHeight: this.GridExpandHeight,
+            showDistinctRow: false,
+            allowTruncate: true
+        };
+    },
+
+    RenderUserPolicyGrid: function (funcId) {
+        var self = this;
+
+        Fanex.ExtAcc.BlockUI();
+        this.UserPolicyGridContainer.css("visibility", "hidden");
+
+        $.ajax({
+            type: "GET",
+            url: resolveClientUrl("Permission/GetUserPolicies?funcId=" + funcId),
+            dataType: "json"
+        })
+        .success(function (data) {
+            var user;
+            var bodyRows = [];
+
+            for (var i = 0, max = data.length; i < max; i++) {
+                user = data[i];
+                bodyRows.push({
+                    Columns: [
+                        { Name: "colUsername", Value: user.Username },
+                        { Name: "colGroupName", Value: user.GroupName },
+                        { Name: "colSourcePermissionRead", Value: user.Policy },
+                        { Name: "colSourcePermissionWrite", Value: user.Policy },
+                        { Name: "colDestinationPermissionRead", Value: user },
+                        { Name: "colDestinationPermissionWrite", Value: user }
+                    ]
+                });
+            }
+
+            self.UserPolicyGridOptions.groupHeaderRows = self.GetUserPolicyGridGroupHeaderRows(
+                self.FunctionFrom.find("option:selected").html(),
+                self.FunctionTo.find("option:selected").html());
+            self.UserPolicyGridOptions.bodyRows = bodyRows;
+            self.UserPolicyGrid.fanexGrid(self.UserPolicyGridOptions);
+
+            Fanex.ExtAcc.UnBlockUI();
+            self.UserPolicyGridContainer.css("visibility", "visible");
+        });
+    },
+
     OnReadChanged: function (target) {
         var $target = this.OnPermissionChanged(target);
         if ($target.hasClass("permInactive")) {
-            $("#write" + $target.data("username"))
+            $("#write" + $target.data("id"))
                 .removeClass()
                 .addClass("permInactive");
         }
@@ -189,7 +396,7 @@ Fanex.ExtAcc.Permission = {
     OnWriteChanged: function (target) {
         var $target = this.OnPermissionChanged(target);
         if ($target.hasClass("permActive")) {
-            $("#read" + $target.data("username"))
+            $("#read" + $target.data("id"))
                 .removeClass()
                 .addClass("permActive");
         }
@@ -203,510 +410,79 @@ Fanex.ExtAcc.Permission = {
             .addClass(checked ? "permInactive" : "permActive");
     },
 
-    Submit: function () {
+    OnSubmit: function (table, url) {
+        Fanex.ExtAcc.Form.Close();
         Fanex.ExtAcc.BlockUI();
 
-        var formData = this.GetFormData();
         var jqxhr = $.ajax({
             type: "POST",
-            url: resolveClientUrl("Function/FunctionListPost"),
-            headers: this.SetupAntiXSRF(),
-            data: JSON.stringify(formData),
+            url: url,
+            data: JSON.stringify({
+                FuncId: this.FunctionTo.val(),
+                Policies: this.GetFormData(table)
+            }),
             dataType: "json",
             contentType: "application/json; charset=utf-8"
         });
 
+        var self = this;
         jqxhr
-            .done(function (data) { })
-            .fail(function () { })
+            .done(function (data) {
+                if (data.IsSuccess) {
+                    self.ShowMessage(data.ErrorMessage);
+                    self.HideMessage(3000);
+                } else {
+                    self.ShowMessage(data.ErrorMessage, 1);
+                }
+            })
             .always(Fanex.ExtAcc.UnBlockUI);
     },
 
-    GetFormData: function () {
+    GetFormData: function (table) {
         var formData = [];
-        var tableContent = $("#tblContent_jqgrid-permission");
-        var usernameArray = tableContent.find(".colUsername");
+        var resultArray = table.find('[data-read="1"]');
 
-        for (var i = 0, max = usernameArray.length; i < max; i++) {
-            formData.push(this.GetUserPermissionPolicy(tableContent, usernameArray[i].innerHTML));
+        for (var i = 0, max = resultArray.length; i < max; i++) {
+            formData.push(this.GetFormDataRow(table, $(resultArray[i]).data("id")));
         }
 
-        return formData;
+        return formData.join(";");
     },
 
-    GetUserPermissionPolicy: function (tableContent, username) {
+    GetFormDataRow: function (table, id) {
         var policy = 0;
-        var readElement = tableContent.find("#read" + username);
-        var permissionKey = readElement.data("permissionkey");
+        var readElement = table.find("#read" + id);
 
         if (readElement.hasClass("permActive")) {
             policy = 1;
 
-            var writeElement = $("#write" + username);
+            var writeElement = $("#write" + id);
 
             if (writeElement.hasClass("permActive")) {
                 policy = 3;
             }
         }
 
-        return { Username: username, PermissionKey: permissionKey, Policy: policy };
+        return id + "," + policy;
     },
 
-    SetupAntiXSRF: function () {
-        var headers = {};
-        var token = $("[name=__RequestVerificationToken]").val();
-        headers["__RequestVerificationToken"] = token;
-
-        return headers;
+    ShowMessage: function (message, code) {
+        this.PolicyMessage
+            .html(message)
+            .removeClass()
+            .addClass(code ? "errMsg" : "successMsg");
     },
 
+    HideMessage: function (timeout) {
+        if (timeout) {
+            var self = this;
 
-
-
-
-    GetPopupHeight: function (landscapeHeight, portraitHeight) {
-        var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
-            landscapeHeight :
-             portraitHeight;
-
-        return height;
-    },
-
-    RenderGrid: function (options) {
-        try {
-            // Init Grid jqgrid
-            $('#jqgrid-permission').fanexGrid(options);
-            Fanex.ExtAcc.UnBlockUI();
-
-            $('#mainGrid').css('visibility', 'visible');
+            setTimeout(function () {
+                self.PolicyMessage.removeClass().addClass("hide").html("");
+            }, timeout);
+        } else {
+            this.PolicyMessage.removeClass().addClass("hide").html("");
         }
-        catch (e) {
-            if (typeof console != 'undefined') {
-                console.log(e);
-            }
-
-            Fanex.ExtAcc.UnBlockUI();
-        }
-    },
-
-    ShowEdit: function (funcId, title) {
-        Fanex.ExtAcc.Function.FunctionId = funcId;
-        top.portraitHeight = 500;
-        top.shouldCalculatePopupHeight = true;
-
-        Fanex.ExtAcc.Form.Show(
-            resolveClientUrl('Function/EditFunction/' + funcId),
-            title,
-            410,
-            Fanex.ExtAcc.Function.GetPopupHeight(top.landscapeHeight, top.portraitHeight),
-            false,
-            function () {
-                var url = resolveClientUrl("Function/PolicyList/?funcId=" + $('#FuncID').val());
-
-                $.ajax(url).success(function (result) {
-                    var groups = '';
-
-                    $.each(result, function (i) {
-                        groups += '<option value="' + result[i].GroupID + '"' + (result[i].HasPermission ? ' selected="selected">' : '>') + result[i].GroupName + '</option>';
-                    });
-
-                    $('#groups').html(groups);
-
-                    $('#groups').css('display', 'block');
-                    $("#groups").multiSelect({
-                        minWidth: 255,
-                        showHeader: false,
-                        onCheck: function () {
-                            if (this.value == '-1') {
-                                var ids = $(".ui-multiselect-checkboxes :input");
-                                for (var i = 0; i < ids.length; i++) {
-                                    ids[i].checked = this.checked;
-                                }
-                            }
-                            else {
-                                if (!this.checked) {
-                                    $('#ui-multiselect-groups-option-0')[0].checked = false;
-                                }
-                            }
-                        },
-                        noneSelectedText: '',
-                        selectedText: function (numChecked, numTotal, checkedItems) {
-                            var tmp = '';
-                            var itemsChecked = '';
-
-                            if (checkedItems[0].value != '-1') {
-                                numChecked++;
-                            }
-
-                            if (numChecked != numTotal) {
-                                var mainTitle = '';
-
-                                $.each(checkedItems, function (i) {
-                                    mainTitle += checkedItems[i].title + ', ';
-
-                                    itemsChecked += checkedItems[i].value + ',';
-
-                                    if (itemsChecked.indexOf(',') != -1) {
-                                        tmp = itemsChecked.substr(0, itemsChecked.length - 1);
-                                    }
-                                });
-
-                                mainTitle = mainTitle.substring(0, mainTitle.length - 2);
-                                $("#groups").attr("title", mainTitle);
-                                $('#newGroups').val(tmp.replace('-1,', ''));
-
-                                return mainTitle;
-                            }
-                            else {
-                                $('#ui-multiselect-groups-option-0')[0].checked = true;
-                                $("#groups").attr("title", "All");
-
-                                $.each(checkedItems, function (i) {
-                                    itemsChecked += checkedItems[i].value + ',';
-
-                                    if (itemsChecked.indexOf(',') != -1) {
-                                        tmp = itemsChecked.substr(0, itemsChecked.length - 1);
-                                    }
-                                });
-                                $('#newGroups').val(tmp.replace('-1,', ''));
-
-                                return 'All';
-                            }
-                        }
-                    });
-
-                    $('#groups input').css('width', '235px');
-                });
-            });
-    },
-
-    ShowActivate: function (funcId, funcName) {
-        var titles = $.parseJSON(menuTitles);
-        var title = '';
-        var warning = 'This function will be <font style="color: #ff0000">{0}</font> on grant permission form<br> on PRODUCTION environment';
-        top.shouldCalculatePopupHeight = false;
-
-        title = $('#test-' + funcId).attr('class') == 'menuActive' ? titles.Deactivate : titles.Activate;
-        warning = $('#test-' + funcId).attr('class') == 'menuActive' ?
-            warning.replace('{0}', 'shown') : warning.replace('{0}', 'hidden');
-
-        Fanex.ExtAcc.Function.FunctionId = funcId;
-        Fanex.ExtAcc.Form.ConfirmBox(
-            title,
-            'Are you sure to ' + title.toLowerCase() + ' [Is Test] of function <font color="#4b91be">' + funcName + '</font>?<br>' +
-            warning,
-            400,
-            190,
-            false,
-            function () {
-                Fanex.ExtAcc.Function.Activate(funcId, !($('#test-' + funcId).attr('class') == 'menuActive'));
-            });
-    },
-
-    ShowDelete: function (funcId, funcName) {
-        Fanex.ExtAcc.Function.FunctionId = funcId;
-        top.shouldCalculatePopupHeight = false;
-
-        var titles = $.parseJSON(menuTitles);
-        var title = titles.Delete;
-
-        Fanex.ExtAcc.Form.ConfirmBox(
-            title,
-            'Are you sure to delete func <font color="#4b91be">' + funcName + '</font> ?',
-            400,
-            150,
-            false,
-            function () {
-                Fanex.ExtAcc.Function.Delete(funcId);
-            });
-    },
-
-    AddNew: function () {
-        top.portraitHeight = 500;
-        top.shouldCalculatePopupHeight = true;
-        Fanex.ExtAcc.Form.Show(
-            resolveClientUrl("Function/AddFunction"), $.parseJSON(menuTitles).CreateFunction,
-            400,
-            Fanex.ExtAcc.Function.GetPopupHeight(top.landscapeHeight, top.portraitHeight),
-            false,
-            function () {
-                var url = resolveClientUrl("Function/PolicyList/?funcId=1&addNew=true");
-                var itemsChecked = '';
-
-                $.ajax(url).success(function (result) {
-                    var groups = '';
-
-                    $.each(result, function (i) {
-                        groups += '<option value="' + result[i].GroupID + '"' + (result[i].HasPermission ? ' selected="selected">' : '>') + result[i].GroupName + '</option>';
-                    });
-
-                    $('#groupsAdd').html(groups);
-
-                    $(".groupCboMenu input").val($("#ParentID")[0].options[0].text);
-
-                    $('#groupsAdd').css('display', 'block');
-                    $("#groupsAdd").multiSelect({
-                        minWidth: 255,
-                        showHeader: false,
-                        onCheck: function () {
-                            if (this.value == '-1') {
-                                var ids = $(".ui-multiselect-checkboxes :input");
-                                for (var i = 0; i < ids.length; i++) {
-                                    ids[i].checked = this.checked;
-                                }
-                            }
-                            else {
-                                if (!this.checked) {
-                                    $('#ui-multiselect-groupsAdd-option-0')[0].checked = false;
-                                }
-                            }
-                        },
-                        noneSelectedText: function () {
-                            $("#groupsAdd").attr("title", "");
-                            return '';
-                        },
-                        selectedText: function (numChecked, numTotal, checkedItems) {
-                            var tmp = '';
-                            var itemsChecked = '';
-
-                            if (checkedItems[0].value != '-1') {
-                                numChecked++;
-                            }
-
-                            if (numChecked != numTotal) {
-                                var mainTitle = '';
-                                $.each(checkedItems, function (i) {
-                                    mainTitle += checkedItems[i].title + ', ';
-
-                                    itemsChecked += checkedItems[i].value + ',';
-
-                                    if (itemsChecked.indexOf(',') != -1) {
-                                        tmp = itemsChecked.substr(0, itemsChecked.length - 1);
-                                    }
-                                });
-
-                                mainTitle = mainTitle.substring(0, mainTitle.length - 2);
-                                $("#groupsAdd").attr("title", mainTitle);
-                                $('#newGroups').val(tmp.replace('-1,', ''));
-
-                                return mainTitle;
-                            }
-                            else {
-                                $('#ui-multiselect-groupsAdd-option-0')[0].checked = true;
-                                $("#groupsAdd").attr("title", "All");
-
-                                $.each(checkedItems, function (i) {
-                                    itemsChecked += checkedItems[i].value + ',';
-
-                                    if (itemsChecked.indexOf(',') != -1) {
-                                        tmp = itemsChecked.substr(0, itemsChecked.length - 1);
-                                    }
-                                });
-                                $('#newGroups').val(tmp.replace('-1,', ''));
-
-                                return 'All';
-                            }
-                        }
-                    });
-
-                    $('#groupsAdd input').css('width', '235px');
-                });
-            });
-    },
-
-    Add: function () {
-        if (!Validators.validateInput($('#FuncName').val())) {
-            $('#FuncName').focus();
-            Validators.showDown($('#FuncName').get(0), 'This field is required', 0, 10, 41, -10, 15);
-            return false;
-        }
-
-        if (!Validators.validateName($('#FuncName').val())) {
-            $('#FuncName').focus();
-            Validators.showDown($('#FuncName').get(0), 'Please input alphanumeric characters only', 0, 10, 41, -10, 15);
-            return false;
-        }
-
-        if (!Validators.validateInput($('#FuncKey').val())) {
-            $('#FuncKey').focus();
-            Validators.show($('#FuncKey').get(0), 'This field is required');
-            return false;
-        }
-
-        if (!Validators.validateKey($('#FuncKey').val())) {
-            $('#FuncKey').focus();
-            Validators.show($('#FuncKey').get(0), 'Please input alphanumeric characters only');
-            return false;
-        }
-
-        if (!Validators.validateInput($('#DisplayOrder').val())) {
-            $('#DisplayOrder').focus();
-            Validators.show($('#DisplayOrder').get(0), 'This field is required');
-            return false;
-        }
-
-        if (!Validators.validateNumber($('#DisplayOrder').val())) {
-            $('#DisplayOrder').focus();
-            Validators.show($('#DisplayOrder').get(0), 'Please input a number');
-            return false;
-        }
-
-        Fanex.ExtAcc.BlockUI();
-
-        var name = $('#FuncName').val();
-        var desc = $('#FuncDesc').val();
-        var parentId = $('#ParentID').val() != '-1' ? $('#ParentID').val() : '0';
-        var parent = $('#ParentID option:selected').val() != '-1' ? $('#ParentID option:selected').text() : '';
-        var order = $('#DisplayOrder').val();
-        var newGroups = $('#newGroups').val();
-        var key = $('#FuncKey').val();
-
-        var editUrl = 'Function/Add';
-        var params = new Object();
-
-        params.funcname = Fanex.ExtAcc.EscapeHtml(name);
-        params.funckey = Fanex.ExtAcc.EscapeHtml(key);
-        params.funcdesc = Fanex.ExtAcc.EscapeHtml(desc);
-        params.parentId = parentId;
-        params.parentname = parent;
-        params.displayorder = order;
-        params.groups = newGroups;
-
-        $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
-        .done(function (data) {
-            if (!data.isSuccess) {
-                Fanex.ExtAcc.UnBlockUI();
-
-                $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.errorMessage.formatErrorMessage());
-            }
-            else {
-                var timeout = setTimeout(function () {
-                    Fanex.ExtAcc.Form.Close(false);
-
-                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Function/FunctionList/' + $('#selectedGroupName').html()), 'dll-Administration');
-                }, 2000);
-            }
-        });
-    },
-
-    Edit: function () {
-        if (!Validators.validateInput($('#FuncName').val())) {
-            $('#FuncName').focus();
-            Validators.showDown($('#FuncName').get(0), 'This field is required', 0, 10, 41, -10, 15);
-            return false;
-        }
-
-        if (!Validators.validateName($('#FuncName').val())) {
-            $('#FuncName').focus();
-            Validators.showDown($('#FuncName').get(0), 'Please input alphanumeric characters only', 0, 10, 41, -10, 15);
-            return false;
-        }
-
-        if (!Validators.validateInput($('#DisplayOrder').val())) {
-            $('#DisplayOrder').focus();
-            Validators.show($('#DisplayOrder').get(0), 'This field is required');
-            return false;
-        }
-
-        if (!Validators.validateNumber($('#DisplayOrder').val())) {
-            $('#DisplayOrder').focus();
-            Validators.show($('#DisplayOrder').get(0), 'Please input a number');
-            return false;
-        }
-
-        Fanex.ExtAcc.BlockUI();
-
-        var name = $('#FuncName').val();
-        var desc = $('#FuncDesc').val();
-        var parentId = $('#ParentID').val() != '-1' ? $('#ParentID').val() : '0';
-        var parent = $('#ParentID option:selected').val() != '-1' ? $('#ParentID option:selected').text() : '';
-        var funcId = $('#FuncID').val();
-        var order = $('#DisplayOrder').val();
-        var oldGroups = $('#oldIDs').val();
-        var newGroups = $('#newGroups').val();
-
-        if (newGroups == '') {
-            newGroups = oldGroups;
-        }
-
-        var editUrl = 'Function/Edit';
-        var params = new Object();
-        params.funcId = funcId;
-        params.funcname = Fanex.ExtAcc.EscapeHtml(name);
-        params.funcdesc = Fanex.ExtAcc.EscapeHtml(desc);
-        params.parentId = parentId;
-        params.parentname = parent;
-        params.displayorder = order;
-        params.oldGroups = oldGroups;
-        params.groups = newGroups;
-
-        $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
-        .done(function (data) {
-            if (!data.isSuccess) {
-                Fanex.ExtAcc.UnBlockUI();
-
-                $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.errorMessage.formatErrorMessage());
-            }
-            else {
-                var timeout = setTimeout(function () {
-                    Fanex.ExtAcc.Form.Close(false);
-
-                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Function/FunctionList/' + $('#selectedGroupName').html()), 'dll-Administration');
-                }, 2000);
-            }
-        });
-    },
-
-    Activate: function (funcId, isActive) {
-        Fanex.ExtAcc.BlockUI();
-
-        $.ajax({ url: resolveClientUrl('Function/UpdateStatus/?funcId=' + funcId + '&isTest=' + isActive), type: 'POST' })
-        .done(function (data) {
-
-            if (!data.isSuccess) {
-                alert(data.errorMessage);
-            }
-            else {
-                Fanex.ExtAcc.Form.Close(false);
-                if (!isActive) {
-                    setTimeout(function () {
-                        Fanex.ExtAcc.UnBlockUI();
-                        Fanex.ExtAcc.Form.Alert(
-                            'Warning',
-                            'Please consider to <b>grant existing accounts permission</b> of new function in Ext NAP',
-                            400,
-                            160,
-                            null,
-                            function () {
-                                var timeout = setTimeout(function () {
-                                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Function/FunctionList/' + $('#selectedGroupName').html()), 'dll-Administration');
-                                }, 500);
-                            });
-                    }, 300);
-                }
-                else {
-                    var timeout = setTimeout(function () {
-                        Fanex.ExtAcc.UnBlockUI();
-                        Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Function/FunctionList/' + $('#selectedGroupName').html()), 'dll-Administration');
-                    }, 2000);
-                }
-            }
-        });
-    },
-
-    Delete: function (funcId) {
-        $.ajax({ url: resolveClientUrl('Function/Delete/?funcId=' + funcId), type: 'POST' })
-        .done(function (data) {
-            if (!data.isSuccess) {
-                $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.errorMessage.formatErrorMessage());
-            }
-            else {
-                Fanex.ExtAcc.Form.Close(true);
-            }
-        });
     }
 }
 

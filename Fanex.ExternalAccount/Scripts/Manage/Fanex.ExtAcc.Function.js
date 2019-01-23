@@ -299,6 +299,20 @@ Fanex.ExtAcc.Function = {
     },
 
     ShowEdit: function (funcId, title) {
+        Fanex.ExtAcc.Form.Show(
+            resolveClientUrl("Permission/Index?funcId=" + funcId),
+            "Grant Permisssion",
+            860,
+            760,
+            false,
+            null,
+            null,
+            "popupGrantPermission");
+        return;
+
+
+
+
         Fanex.ExtAcc.Function.FunctionId = funcId;
         top.portraitHeight = 500;
         top.shouldCalculatePopupHeight = true;
@@ -689,7 +703,8 @@ Fanex.ExtAcc.Function = {
                             160,
                             null,
                             function () {
-                                var timeout = setTimeout(function () {                                    
+                                var timeout = setTimeout(function () {
+                                    //Fanex.ExtAcc.Form.Show(resolveClientUrl("Permission/Index?funcId=" + funcId), "Grant Permisssion", 820, 800, false);
                                     Fanex.ExtAcc.LoadMainFrame(resolveClientUrl('Function/FunctionList/' + $('#selectedGroupName').html()), 'dll-Administration');
                                 }, 500);
                             });

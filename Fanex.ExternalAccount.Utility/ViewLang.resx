@@ -823,7 +823,16 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="IncludePokerGames" xml:space="preserve">
     <value>Include Poker Games</value>
   </data>
-  <data name="HideInactiveProduct" xml:space="preserve">
+  <data name="PermissionFrom" xml:space="preserve">
+    <value>Permission From</value>
+  </data>
+  <data name="PermissionTo" xml:space="preserve">
+    <value>Permission To</value>
+  </data>
+  <data name="UpdateSuccessfully" xml:space="preserve">
+    <value>Update successfully!</value>
+  </data>
+<data name="HideInactiveProduct" xml:space="preserve">
     <value>Hide on Win Loss Detail report</value>
   </data>
   <data name="NoteHideInactiveProduct" xml:space="preserve">

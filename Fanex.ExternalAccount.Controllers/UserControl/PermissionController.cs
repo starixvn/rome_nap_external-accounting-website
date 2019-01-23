@@ -1,73 +1,88 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.UserControl
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using Core.Base;
+    using Core.Context;
     using Core.Shared;
+    using CustomerSetting.Security.Authenticate;
     using DTO.UserControl;
-    using Service.Impl.UserControl;
-    using Service.Interface.UserControl;
+    using Newtonsoft.Json;
     using Service.UserControl;
 
     public class PermissionController : BaseController
     {
-        private readonly IFunctionService functionService;
-        private readonly IPermissionService permissionService;
+        private readonly IPolicyService policyService;
 
         public PermissionController()
         {
-            functionService = new FunctionService();
-            permissionService = new PermissionService();
+            policyService = new PolicyService();
         }
 
-        //[ExternalAccountAuthenticate(
-        //    Function = eFunctions.ManageFunction,
-        //    Policy = AuthenticateAction.AuthenticationType.Read,
-        //    IsAjaxRequest = false)]
-        public ActionResult Index()
+        public ActionResult Index(int? funcId)
         {
-            var funcs = functionService.GetAllFunctions();
-            var parents = funcs.Where(f => f.ParentID == 0);
+            ViewBag.FuncId = funcId;
+
+            return PartialViewBase(policyService.GetHierarchicalFunctions());
+        }
+
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.ManageGroup,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        public ActionResult GetGroupPolicies(int funcId)
+        {
+            var groupPolicies = policyService.GetGroupPolicies(funcId);
 
             if (!CurrentSession.IsITAdmin)
             {
-                if (CurrentSession.IsInternalAdmin)
-                {
-                    funcs = funcs.Where(f => f.FuncKey != eFunctions.ManageMenu
-                                             && f.FuncKey != eFunctions.ManageFunction);
-
-                    parents = parents.Where(f => f.FuncKey != eFunctions.SystemConfiguration);
-                }
-                else
-                {
-                    funcs = funcs.Where(f => f.FuncKey != eFunctions.ManageMenu
-                                             && f.FuncKey != eFunctions.ManageFunction
-                                             && f.FuncKey != eFunctions.ManageGroup
-                                             && f.FuncKey != eFunctions.ManageUser);
-
-                    parents = parents.Where(f => f.FuncKey != eFunctions.Administration
-                                                 && f.FuncKey != eFunctions.SystemConfiguration
-                                                 && f.FuncKey != eFunctions.ExternalGroup);
-                }
+                groupPolicies = CurrentSession.IsInternalAdmin
+                    ? groupPolicies.Where(o => !Group.IsITGroup(o.GroupId))
+                    : groupPolicies.Where(o => o.GroupName == CurrentSession.CurrencyGroup);
             }
 
-            IList<Function> funcsOrder = new List<Function>();
-
-            foreach (var item in parents)
-            {
-                funcsOrder.Add(item);
-
-                foreach (var child in funcs)
-                {
-                    if (child.ParentID != 0 && item.FuncID == child.ParentID)
-                    {
-                        funcsOrder.Add(child);
-                    }
-                }
-            }
-
-            return PartialViewBase(funcsOrder);
+            return JsonBase(groupPolicies, GetJsonSerializerSettings());
         }
+
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.ManageUser,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        public ActionResult GetUserPolicies(int funcId)
+        {
+            var userPolicies = policyService.GetUserPolicies(funcId);
+
+            if (!CurrentSession.IsITAdmin)
+            {
+                userPolicies = CurrentSession.IsInternalAdmin
+                    ? userPolicies.Where(o => !Group.IsITGroup(o.GroupId))
+                    : userPolicies.Where(o => o.GroupName == CurrentSession.CurrencyGroup);
+            }
+
+            return JsonBase(userPolicies, GetJsonSerializerSettings());
+        }
+
+        [AntiXSRFFilter]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.ManageGroup,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
+        public ActionResult UpdateGroupPolicy(int funcId, string policies)
+            => JsonBase(
+                policyService.UpdateMultipleGroupPolicies(funcId, policies, CurrentSession.UserId, CurrentContext.Ip4Address),
+                GetJsonSerializerSettings());
+
+        [AntiXSRFFilter]
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.ManageUser,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
+        public ActionResult UpdateUserPolicy(int funcId, string policies)
+            => JsonBase(
+                policyService.UpdateMultipleUserPolicies(funcId, policies, CurrentSession.UserId, CurrentContext.Ip4Address),
+                GetJsonSerializerSettings());
+
+        private static JsonSerializerSettings GetJsonSerializerSettings()
+            => new JsonSerializerSettings
+            {
+                Formatting = Formatting.None,
+                NullValueHandling = NullValueHandling.Ignore
+            };
     }
 }
