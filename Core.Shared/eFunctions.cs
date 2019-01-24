@@ -12,6 +12,7 @@
         public const string ManageUser = "ManageUser";
         public const string ManageFunction = "ManageFunction";
         public const string ManageMenu = "ManageMenu";
+        public const string GrantPermission = "GrantPermission";
         public const string DailyWinloss = "DailyWinloss";
         public const string WinlossDetail = "WinlossDetail";
         public const string PokerGamesWinLossDetail = "PokerGamesWinLossDetail";

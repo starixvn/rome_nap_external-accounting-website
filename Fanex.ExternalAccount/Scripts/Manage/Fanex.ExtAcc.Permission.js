@@ -42,6 +42,7 @@ Fanex.ExtAcc.Permission = {
         var self = this;
 
         var functionChange = function () {
+            self.HideMessage();
             var funcFrom = self.FunctionFrom.val();
             var funcTo = self.FunctionTo.val();
 
@@ -60,6 +61,7 @@ Fanex.ExtAcc.Permission = {
         this.FunctionTo.change(functionChange);
 
         this.PolicyTabs.on("tabsactivate", function (event, ui) {
+            self.HideMessage();
             if (self.PolicyTabs.tabs("option", "active") === 0) {
                 self.RenderGroupPolicyGrid(self.FunctionFrom.val());
             } else {

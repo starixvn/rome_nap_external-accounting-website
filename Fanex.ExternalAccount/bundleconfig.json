@@ -129,7 +129,6 @@
       "Scripts/Validators.js",
       "Scripts/Fanex.ExtAcc.Form.js",
       "Scripts/Manage/Fanex.ExtAcc.User.js"
-
     ],
     "sourceMap": true
   },

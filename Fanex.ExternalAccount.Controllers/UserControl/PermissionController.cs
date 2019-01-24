@@ -19,6 +19,10 @@
             policyService = new PolicyService();
         }
 
+        [ExternalAccountAuthenticate(
+            Function = eFunctions.GrantPermission,
+            Policy = AuthenticateAction.AuthenticationType.Read,
+            IsAjaxRequest = false)]
         public ActionResult Index(int? funcId)
         {
             ViewBag.FuncId = funcId;
@@ -27,7 +31,7 @@
         }
 
         [ExternalAccountAuthenticate(
-            Function = eFunctions.ManageGroup,
+            Function = eFunctions.GrantPermission,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult GetGroupPolicies(int funcId)
         {
@@ -44,7 +48,7 @@
         }
 
         [ExternalAccountAuthenticate(
-            Function = eFunctions.ManageUser,
+            Function = eFunctions.GrantPermission,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult GetUserPolicies(int funcId)
         {
@@ -62,7 +66,7 @@
 
         [AntiXSRFFilter]
         [ExternalAccountAuthenticate(
-            Function = eFunctions.ManageGroup,
+            Function = eFunctions.GrantPermission,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateGroupPolicy(int funcId, string policies)
             => JsonBase(
@@ -71,7 +75,7 @@
 
         [AntiXSRFFilter]
         [ExternalAccountAuthenticate(
-            Function = eFunctions.ManageUser,
+            Function = eFunctions.GrantPermission,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         public ActionResult UpdateUserPolicy(int funcId, string policies)
             => JsonBase(

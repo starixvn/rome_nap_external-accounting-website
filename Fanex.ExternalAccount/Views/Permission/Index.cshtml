@@ -14,7 +14,7 @@
                 <label class="label">@ViewLang.PermissionFrom</label>
                 <div class="groupCboMenu pull-left">
                     <select id="functionFrom">
-                        <option value="0" selected="selected" style="display:none"></option>
+                        <option value="0" selected style="display:none"></option>
                         @foreach (var func in Model)
                         {
                             if (func.HasSubFunctions)
@@ -66,22 +66,22 @@
             <li><a href="#tabs-GroupPolicy">@ViewLang.GroupPermission</a></li>
             <li><a href="#tabs-UserPolicy">@ViewLang.UserPermission</a></li>
         </ul>
-        <div id="tabs-GroupPolicy" style="padding:10px;width:100%;">
+        <div id="tabs-GroupPolicy" style="padding:10px 0 0 10px;width:100%;">
             <div id="groupPolicyGrid">
                 <div id="jqgrid-groupPolicy" class="removeRadius freegrid content-grid">
                 </div>
+                <input type="button" value="Submit" class="btn -submit" style="float:left;margin:15px 15px 15px 540px" id="updateGroupPolicy" />
             </div>
-            <input type="button" value="Submit" class="btn -submit" style="float:left;margin:15px 15px 15px 540px" id="updateGroupPolicy" />
         </div>
-        <div id="tabs-UserPolicy" style="padding:10px;width:100%;">
+        <div id="tabs-UserPolicy" style="padding:10px 0 0 10px;width:100%;">
             <div id="userPolicyGrid">
                 <div id="jqgrid-userPolicy" class="removeRadius freegrid content-grid">
                 </div>
+                <input type="button" value="@ViewLang.Submit" class="btn -submit" style="float:left;margin:15px 15px 15px 664px" id="updateUserPolicy" />
             </div>
-            <input type="button" value="@ViewLang.Submit" class="btn -submit" style="float:left;margin:15px 15px 15px 664px" id="updateUserPolicy" />
         </div>
     </div>
     @Html.AntiForgeryToken()
-    <input id="gridExpandHeightHiddenField" type="hidden" value="@(funcId == 0 ? 256 : 426)" />
+    <input id="gridExpandHeightHiddenField" type="hidden" value="@(funcId == 0 ? 256 : 430)" />
 </div>
 <script type="text/javascript" src="@Url.Content("~/Scripts/Manage/Fanex.ExtAcc.Permission.js")"></script>
