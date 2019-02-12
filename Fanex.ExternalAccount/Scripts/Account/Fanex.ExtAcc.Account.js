@@ -61,7 +61,7 @@ Fanex.ExtAcc.Account = {
                 $("#err-message").addClass("hide");
                 $(".invalid-field").removeClass("invalid-field");
 
-                $('#Password').val($('#Password').val().ec($('#Code').val()).hc());
+                $('#Password').val($('#Password').val().encrypt($('#Code').val()));
             };
         }
 
