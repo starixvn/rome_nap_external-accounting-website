@@ -6632,7 +6632,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inputting 0 / 0 / 0 / (0) for Min Bet / Max Bet / Max Per Match / (Max Per Ball) will prevent member from playing the game..
+        ///   Looks up a localized string similar to Inputting 0 / 0 / 0 / (0) for Min Bet / Max Bet / Max Per Match / (Max Per Ball) will prevent members from playing the game..
         /// </summary>
         internal static string MemberUnlimitedBetSettingWarningMessage {
             get {
