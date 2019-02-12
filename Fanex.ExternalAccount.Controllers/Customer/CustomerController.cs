@@ -764,34 +764,20 @@
         }
 
         private ActionResult LimitationPage(string message)
-        {
-            return new PartialViewResult
-            {
-                ViewName = "~/Views/Customer/LimitMemberCreation.cshtml",
-                ViewData = new ViewDataDictionary(message)
-            };
-        }
+            => PartialView("~/Views/Customer/LimitMemberCreation.cshtml", ViewData = new ViewDataDictionary(message));
 
         private DTO.Result CheckReachLimitationResult(int custId, int roleId, string username)
-        {
-            var reachLimitationResult = _customerService.CheckNewCustomerIsReachLimitation(new CheckNewCustomerLimitationCriteria
+            => _customerService.CheckNewCustomerIsReachLimitation(new CheckNewCustomerLimitationCriteria
             {
                 CustId = custId,
                 RoleId = roleId,
                 Username = username
             });
 
-            return reachLimitationResult;
-        }
-
         private DTO.Result CheckMemberLimitedBySuperResult(int custId)
-        {
-            var limitedMemberBySuper = _agentService.IsLimitMemberCreationBySuper(new CheckMemberCreationCriteria
+            => _agentService.IsLimitMemberCreationBySuper(new CheckMemberCreationCriteria
             {
                 AgentId = custId
             });
-
-            return limitedMemberBySuper;
-        }
     }
 }
