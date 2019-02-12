@@ -138,7 +138,7 @@ Fanex.ExtAcc.Permission = {
             {
                 Columns: [
                     { HeaderText: "Group Name", Name: "colGroupName", MergeRowNumber: 2 },
-                    { HeaderText: "Group Permission<br/>(Form " + funcFrom + ")", Name: "colSourcePermissionRead", MergeColNumber: 2 },
+                    { HeaderText: "Group Permission<br/>(From " + funcFrom + ")", Name: "colSourcePermissionRead", MergeColNumber: 2 },
                     { HeaderText: "Group Permission<br/>(For " + funcTo + ")", Name: "colDestinationPermissionRead", MergeColNumber: 2 }
                 ]
             }
@@ -173,7 +173,7 @@ Fanex.ExtAcc.Permission = {
                     CellAlign: "center",
                     TdClass: "bg-grey",
                     CustomCellRender: function (policy) {
-                        return policy.Value === 3
+                        return policy.Value === 2
                             ? '<div class="permActive" style="cursor:default"></div>'
                             : '<div class="permInactive" style="cursor:default"></div>';
                     }
@@ -203,7 +203,7 @@ Fanex.ExtAcc.Permission = {
                     CustomCellRender: function (cell) {
                         return [
                             '<div class="',
-                            cell.Value.Policy === 3 ? "permActive" : "permInactive",
+                            cell.Value.Policy === 2 ? "permActive" : "permInactive",
                             '" onclick="javascript:Fanex.ExtAcc.Permission.OnWriteChanged(this);" id="write',
                             cell.Value.GroupId,
                             '" data-id="',
@@ -260,14 +260,15 @@ Fanex.ExtAcc.Permission = {
 
     GetUserPolicyGridGroupHeaderRows: function (funcFrom, funcTo) {
         return [
-                {
-                    Columns: [
-                        { HeaderText: "Username", Name: "colUsername", MergeRowNumber: 2 },
-                        { HeaderText: "Group Name", Name: "colGroupName", MergeRowNumber: 2 },
-                        { HeaderText: "User Permission<br/>(Form " + funcFrom + ")", Name: "colSourcePermissionRead", MergeColNumber: 2 },
-                        { HeaderText: "User Permission<br/>(For " + funcTo + ")", Name: "colDestinationPermissionRead", MergeColNumber: 2 }
-                    ]
-                }
+            {
+                Columns: [
+                    { HeaderText: "Username", Name: "colUsername", MergeRowNumber: 2 },
+                    { HeaderText: "Group Name", Name: "colGroupName", MergeRowNumber: 2 },
+                    { HeaderText: "Active", Name: "colActive", MergeRowNumber: 2 },
+                    { HeaderText: "User Permission<br/>(From " + funcFrom + ")", Name: "colSourcePermissionRead", MergeColNumber: 2 },
+                    { HeaderText: "User Permission<br/>(For " + funcTo + ")", Name: "colDestinationPermissionRead", MergeColNumber: 2 }
+                ]
+            }
         ];
     },
 
@@ -277,6 +278,15 @@ Fanex.ExtAcc.Permission = {
             columns: [
                 { HeaderText: "Username", Name: "colUsername", Width: 200 },
                 { HeaderText: "Group Name", Name: "colGroupName", Width: 120 },
+                {
+                    HeaderText: "Active",
+                    Name: "colActive",
+                    Width: 50,
+                    CellAlign: "center",
+                    CustomCellRender: function (enabled) {
+                        return '<div class="' + (enabled.Value ? "permActive" : "permInactive") + '" style="cursor:default"></div>';
+                    }
+                },
                 {
                     HeaderText: "Read",
                     Name: "colSourcePermissionRead",
@@ -300,7 +310,7 @@ Fanex.ExtAcc.Permission = {
                     CellAlign: "center",
                     TdClass: "bg-grey",
                     CustomCellRender: function (policy) {
-                        return policy.Value === 3
+                        return policy.Value === 2
                             ? '<div class="permActive" style="cursor:default"></div>'
                             : '<div class="permInactive" style="cursor:default"></div>';
                     }
@@ -330,7 +340,7 @@ Fanex.ExtAcc.Permission = {
                     CustomCellRender: function (cell) {
                         return [
                             '<div class="',
-                            cell.Value.Policy === 3 ? "permActive" : "permInactive",
+                            cell.Value.Policy === 2 ? "permActive" : "permInactive",
                             '" onclick="javascript:Fanex.ExtAcc.Permission.OnWriteChanged(this);" id="write',
                             cell.Value.CustId,
                             '" data-id="',
@@ -367,6 +377,7 @@ Fanex.ExtAcc.Permission = {
                     Columns: [
                         { Name: "colUsername", Value: user.Username },
                         { Name: "colGroupName", Value: user.GroupName },
+                        { Name: "colActive", Value: user.Enabled },
                         { Name: "colSourcePermissionRead", Value: user.Policy },
                         { Name: "colSourcePermissionWrite", Value: user.Policy },
                         { Name: "colDestinationPermissionRead", Value: user },
@@ -461,7 +472,7 @@ Fanex.ExtAcc.Permission = {
             var writeElement = $("#write" + id);
 
             if (writeElement.hasClass("permActive")) {
-                policy = 3;
+                policy = 2;
             }
         }
 
