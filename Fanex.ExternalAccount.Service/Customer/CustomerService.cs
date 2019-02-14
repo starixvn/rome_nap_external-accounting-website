@@ -30,5 +30,8 @@
 
         public Result ConfigDoubleComm(UpdateDoubleCommCriteria criteria)
             => dataAccess.ConfigDoubleComm(criteria);
+
+        public Result CheckNewCustomerIsReachLimitation(CheckNewCustomerLimitationCriteria criteria)
+            => dataAccess.CheckNewCustomerIsReachLimitation(criteria);
     }
 }

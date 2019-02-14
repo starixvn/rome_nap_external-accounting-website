@@ -6632,6 +6632,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inputting 0 / 0 / 0 / (0) for Min Bet / Max Bet / Max Per Match / (Max Per Ball) will prevent members from playing the game..
+        /// </summary>
+        internal static string MemberUnlimitedBetSettingWarningMessage {
+            get {
+                return ResourceManager.GetString("MemberUnlimitedBetSettingWarningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Member Win.
         /// </summary>
         internal static string memberwin {
@@ -8565,6 +8574,15 @@ namespace Resources {
         internal static string skip {
             get {
                 return ResourceManager.GetString("skip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inputting Min Bet = Max Bet = Max Per Match = (Max Per Ball) = 0 means that you will not limit the bet setting of this account.&lt;br/&gt;In order to prevent members from playing the game, set the value to 0 / 0.1 / 0.1 / (0.1) for Min Bet / Max Bet / Max Per Match / (Max Per Ball)..
+        /// </summary>
+        internal static string SMAUnlimitedBetSettingWarningMessage {
+            get {
+                return ResourceManager.GetString("SMAUnlimitedBetSettingWarningMessage", resourceCulture);
             }
         }
         

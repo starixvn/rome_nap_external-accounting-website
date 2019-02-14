@@ -1,7 +1,8 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using Fanex.PTEngine
 @{
-    var actionName = Utils.ToInt32(Request["roleId"]).IsNotMember() ? "EditCommission" : "EditCommissionMember";
+    var roleId = Utils.ToInt32(Request["roleId"]);
+    var actionName = roleId.IsNotMember() ? "EditCommission" : "EditCommissionMember";
 }
 <link href="@Url.Content("~/assets/styles/pages/customer/pt-engine.css")" rel="stylesheet" type="text/css" />
 <div style="margin: 2px 0 0 2px; width: 852px;">
@@ -16,6 +17,9 @@
     </div>
     <div class="noteMsg">
         @Resources.Lang.NoteSportsbookSetting
+    </div>
+    <div class="noteMsg">
+        @Html.Raw(roleId.IsMember() ? Resources.Lang.MemberUnlimitedBetSettingWarningMessage : Resources.Lang.SMAUnlimitedBetSettingWarningMessage)
     </div>
     <div id="custInfo" class="customerInfo">
         <div class="headerTab" style="border-bottom: 0px">

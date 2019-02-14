@@ -16,6 +16,13 @@
         </tr>
         <tr>
             <td>
+                <div class="noteMsg">
+                    @Html.Raw(Request["roleid"] == "1" ? Resources.Lang.MemberUnlimitedBetSettingWarningMessage : Resources.Lang.SMAUnlimitedBetSettingWarningMessage)
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <div id="bettingLimitContainer">
                 </div>
             </td>

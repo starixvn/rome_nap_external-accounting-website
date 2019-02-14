@@ -19,5 +19,7 @@
         Result ResetPassword(ResetPasswordCriteria criteria);
 
         Result ConfigDoubleComm(UpdateDoubleCommCriteria criteria);
+
+        Result CheckNewCustomerIsReachLimitation(CheckNewCustomerLimitationCriteria criteria);
     }
 }

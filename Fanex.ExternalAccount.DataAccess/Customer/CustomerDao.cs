@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
 {
+    using System;
     using System.Collections;
     using Base;
     using Common;
@@ -9,6 +10,7 @@
     using DTO;
     using DTO.Customer;
     using Interface.Customer;
+    using Data;
 
     public class CustomerDao : DAOBase, ICustomerDao
     {
@@ -94,6 +96,21 @@
 
             return new Result(result.Outputs["errcode"].ToString(), result.Outputs["errmsg"].ToString(),
                 result.ResultSet);
+        }
+
+        public Result CheckNewCustomerIsReachLimitation(CheckNewCustomerLimitationCriteria criteria)
+        {
+            var result = new Result();
+            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                objDb.ExecuteNonQuery();
+                var outputs = objDb.GetOuputParams();
+                result.ErrorCode = outputs["errcode"].ToString();
+                result.ErrorMessage = outputs["errmsg"].ToString();
+            }
+
+            return result;
         }
     }
 }

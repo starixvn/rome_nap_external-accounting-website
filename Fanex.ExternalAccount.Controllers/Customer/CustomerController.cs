@@ -62,7 +62,17 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public ActionResult SuperAddNewMaster() => PartialViewBase();
+        public ActionResult SuperAddNewMaster(int custId, string username)
+        {
+            var reachLimitationResult = CheckReachLimitationResult(custId, Role.Super, username);
+
+            if (!reachLimitationResult.IsSuccess)
+            {
+                return LimitationPage(reachLimitationResult.ErrorMessage);
+            }
+
+            return PartialViewBase();
+        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
@@ -133,7 +143,17 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public ActionResult MasterAddNewAgent() => PartialViewBase();
+        public ActionResult MasterAddNewAgent(int custId, string username)
+        {
+            var reachLimitationResult = CheckReachLimitationResult(custId, Role.Master, username);
+
+            if (!reachLimitationResult.IsSuccess)
+            {
+                return LimitationPage(reachLimitationResult.ErrorMessage);
+            }
+
+            return PartialViewBase();
+        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
@@ -205,22 +225,21 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public ActionResult AgentAddNewMember(int custId)
+        public ActionResult AgentAddNewMember(int custId, string username)
         {
-            var isLimitMemberCreationBySuper = _agentService.IsLimitMemberCreationBySuper(new CheckMemberCreationCriteria
+            var reachLimitationResult = CheckReachLimitationResult(custId, Role.Agent, username);
+            if (!reachLimitationResult.IsSuccess)
             {
-                AgentId = custId
-            });
-
-            if (!isLimitMemberCreationBySuper.ErrorCode.Equals("0"))
-            {
-                return new PartialViewResult
-                {
-                    ViewName = "~/Views/Customer/LimitMemberCreation.cshtml",
-                    ViewData = new ViewDataDictionary(isLimitMemberCreationBySuper.ErrorMessage)
-                };
+                return LimitationPage(reachLimitationResult.ErrorMessage);
             }
 
+            var limitedMemberBySuperResult = CheckMemberLimitedBySuperResult(custId);
+
+            if (!limitedMemberBySuperResult.IsSuccess)
+            {
+                return LimitationPage(limitedMemberBySuperResult.ErrorMessage);
+            }
+            
             return PartialViewBase();
         }
 
@@ -744,5 +763,21 @@
                 new IsoDateTimeConverter { DateTimeFormat = DateTimeFormat });
         }
 
+        private ActionResult LimitationPage(string message)
+            => PartialView("~/Views/Customer/LimitMemberCreation.cshtml", message);
+
+        private DTO.Result CheckReachLimitationResult(int custId, int roleId, string username)
+            => _customerService.CheckNewCustomerIsReachLimitation(new CheckNewCustomerLimitationCriteria
+            {
+                CustId = custId,
+                RoleId = roleId,
+                Username = username
+            });
+
+        private DTO.Result CheckMemberLimitedBySuperResult(int custId)
+            => _agentService.IsLimitMemberCreationBySuper(new CheckMemberCreationCriteria
+            {
+                AgentId = custId
+            });
     }
 }

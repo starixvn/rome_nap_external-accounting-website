@@ -33,12 +33,13 @@
 <div ng-controller="mainController" class="content">
 <div id="page_main" >
     <div id="customerInfo" class="tableWidth"  >
-       <div id="errMsg" style="display: none" ng-class="{'errMsg' : errors, 'successMsg' : !errors}">
-       </div>
-     <div id="arrowUpDown" style="display: none;"  class="collapse ">
-    </div>
-    <div id="names" style="display: none; width: 829px;" class="names">
-    </div>  
+        <div id="errMsg" style="display: none" ng-class="{'errMsg' : errors, 'successMsg' : !errors}">
+        </div>
+        <div id="arrowUpDown" style="display: none;"  class="collapse ">
+        </div>
+        <div id="names" style="display: none; width: 829px;" class="names">
+        </div>
+        <div class="errMsg" style="color: #ff5411">@Html.Raw(Role.IsMember(Model.CustomerInformation.RoleId) ? LayoutTexts.MemberUnlimitedBetSettingWarningMessage : LayoutTexts.SMAUnlimitedBetSettingWarningMessage)</div>
         @Html.Partial("~/Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/CustomerInfo/_Information.cshtml")
         @RenderBody()
         @Html.AntiForgeryToken()
