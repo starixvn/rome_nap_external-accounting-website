@@ -3,6 +3,7 @@
     "outputFileName": "assets/bundles/login/login.js",
     "inputFiles": [
       "Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.3.min.js",
+      "Scripts/aes.js",
       "Scripts/Fanex.ExtAcc.EcHcUtil.js",
       "Scripts/Validators.js",
       "Scripts/Account/Fanex.ExtAcc.Account.js",
@@ -22,6 +23,7 @@
     "outputFileName": "assets/bundles/home/home.js",
     "inputFiles": [
       "Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.3.min.js",
+      "Scripts/aes.js",
       "Scripts/Fanex.ExtAcc.EcHcUtil.js"
     ],
     "sourceMap": true
@@ -111,6 +113,7 @@
   {
     "outputFileName": "assets/bundles/choosegroup/choosegroup.js",
     "inputFiles": [
+      "Scripts/aes.js",
       "Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.2.js",
       "Scripts/Lib/jquery-ui-1.9.1/ui/jquery-ui.js",
       "Scripts/Lib/jquery-ui-1.9.1/ui/jquery.ui.core.js",
