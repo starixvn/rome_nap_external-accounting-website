@@ -2,25 +2,30 @@
 {
     using System.Linq;
     using Core.Base;
-    using Core.Reports.WinLossDetail;
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
     using Service.Impl.Report;
     using Service.Interface.Report;
+    using Service.UserControl;
 
     public class BaseReportController : BaseController
     {
         protected readonly ICurrentSession currentSession;
         protected readonly IReportService reportService;
+        protected readonly IGroupConfigurationService groupConfigurationService;
 
-        protected BaseReportController(ICurrentSession currentSession, IReportService reportService)
+        protected BaseReportController(
+            ICurrentSession currentSession,
+            IReportService reportService,
+            IGroupConfigurationService groupConfigurationService)
         {
             this.currentSession = currentSession ?? CurrentSession;
             this.reportService = reportService ?? new ReportService();
+            this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
         }
 
-        protected bool IsShowIncludePokerGames(string groupName)
-            => WinLossDetailHelper.IsShowProduct("showPG", currentSession)
-            && reportService.GetExcludeProductIds(groupName).Contains(ProductConstants.PokerGames);
+        protected bool IsShowIncludePokerGames()
+            => groupConfigurationService.IsShowByProductAndGroup(ProductConstants.PokerGames, currentSession.CurrencyGroup) &&
+            reportService.GetExcludeProductIds(currentSession.CurrencyGroup).Contains(ProductConstants.PokerGames);
     }
 }

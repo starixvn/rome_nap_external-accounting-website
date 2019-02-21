@@ -823,4 +823,19 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="IncludePokerGames" xml:space="preserve">
     <value>Include Poker Games</value>
   </data>
+  <data name="HideInactiveProduct" xml:space="preserve">
+    <value>Hide on Win Loss Detail report</value>
+  </data>
+  <data name="NoteHideInactiveProduct" xml:space="preserve">
+    <value>This checkbox is used for inactive products whose statistics is hidden on current mode but still showing on history mode</value>
+  </data>
+  <data name="ProductList" xml:space="preserve">
+    <value>Product list</value>
+  </data>
+  <data name="ProductManagement" xml:space="preserve">
+    <value>Product Management</value>
+  </data>
+  <data name="GroupList" xml:space="preserve">
+    <value>Group list</value>
+  </data>
 </root>

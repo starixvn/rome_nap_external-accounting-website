@@ -143,7 +143,7 @@
         {
             var funcs = functionService.GetAllFunctions().ToList();
             funcs = funcs.Where(f => f.IsTest).ToList();
-            var externalGroup = loginService.GroupList();
+            var externalGroup = _groupService.GetExternalGroup();
             var functionList = _groupService.GetAllGroupPolicy(groupId).ToList();
 
             var allowFunctions = new List<Function>();

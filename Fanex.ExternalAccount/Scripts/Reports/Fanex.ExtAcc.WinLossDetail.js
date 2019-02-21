@@ -146,8 +146,8 @@ Fanex.ExtAcc.WinLossDetail = {
             data: { isHideInactiveProduct: isHide, groupName: this.groupName },
             dataType: "json",
             cache: false,
-            success: function (result) {
-                var productList = "";
+            success: function (result) {                
+                var productList = '<option value="' + 'showAll' + '" selected="selected">' + 'All' + "</option>";
                 $.each(result, function (i) {
                     productList += '<option value="' + result[i].Key + '" selected="selected">' + result[i].Value + "</option>";
                 });

@@ -34,7 +34,7 @@
             CustomerQueryService customerQueryService,
             ICurrentSession currentSession,
             ICurrentContext currentContext,
-            IExtRequest extRequest) : base(currentSession, currentContext, extRequest, null)
+            IExtRequest extRequest) : base(currentSession, currentContext, extRequest)
         {
             this.customerQueryService = customerQueryService;
         }

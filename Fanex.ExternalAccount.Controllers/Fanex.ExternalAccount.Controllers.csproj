@@ -341,6 +341,7 @@
     <Compile Include="UserControl\FunctionController.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
+    <Compile Include="UserControl\GroupConfigurationController.cs" />
     <Compile Include="UserControl\GroupController.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
@@ -358,6 +359,7 @@
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
     <Compile Include="ViewModels\CustomerDataRangeViewModel.cs" />
+    <Compile Include="ViewModels\GroupConfigurationViewModel.cs" />
     <Compile Include="ViewModels\VerifyOtpCommand.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\ExternalGroupViewModel.cs" />

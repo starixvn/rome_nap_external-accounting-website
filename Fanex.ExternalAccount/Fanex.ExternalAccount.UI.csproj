@@ -104,6 +104,10 @@
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Cryptography.Aes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Cryptography.Aes.1.0.0.0\lib\net461\Fanex.Cryptography.Aes.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Fanex.CustomerSetting.Client40, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.1.1.1\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
       <Private>True</Private>
@@ -1047,6 +1051,12 @@
     <Content Include="assets\styles\pages\account\security-code.min.css">
       <DependentUpon>security-code.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\admin\product.css">
+      <DependentUpon>product.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\admin\product.min.css">
+      <DependentUpon>product.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\pages\customer\bet-limit.css">
       <DependentUpon>bet-limit.scss</DependentUpon>
     </Content>
@@ -1615,6 +1625,7 @@
     <Content Include="Content\Validators.css" />
     <Content Include="Images\tick.png" />
     <Content Include="Images\x5.gif" />
+    <Content Include="Scripts\aes.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.DataRange.js" />
     <Content Include="Scripts\Fanex.ExtAcc.EcHcUtil.js" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.OTP.js" />
@@ -1672,6 +1683,7 @@
     <Content Include="Scripts\Fanex.Grid\ThirdParties\Numeral\numeral.min.js" />
     <Content Include="Scripts\isMobile.min.js" />
     <Content Include="Scripts\jquery.ui.touch-punch.js" />
+    <Content Include="Scripts\Manage\Fanex.ExtAcc.GroupConfiguration.js" />
     <Content Include="Scripts\MultiSelect\select2.css" />
     <Content Include="Scripts\MultiSelect\select2.js" />
     <Content Include="Scripts\Reports\Fanex.ExtAcc.PokerGamesWinLossDetail.js" />
@@ -2721,6 +2733,7 @@
     <Content Include="assets\bundles\casino\index.min.js.map">
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\admin\product.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2833,6 +2846,7 @@
     <Content Include="Views\MainSuper\EditInfo.cshtml" />
     <Content Include="Views\PokerGamesWinLossDetail\Index.cshtml" />
     <Content Include="Views\Customer\LimitMemberCreation.cshtml" />
+    <Content Include="Views\GroupConfiguration\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">

@@ -1,28 +1,27 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization.ProductStatus
 {
-    using RemotingRef;
     using System.Collections.Generic;
     using System.Linq;
+    using Shared;
 
     public class MultipleEditProductStatus
     {
-        private readonly IRemotingRefService _remotingRefService;
-
-        public MultipleEditProductStatus():this(null)
-        { }
-
-        public MultipleEditProductStatus(IRemotingRefService remotingRefService)
+        private static List<int> UnsupportProductStatus = new List<int>
         {
-            _remotingRefService = remotingRefService ?? new RemotingRefService();
+            ProductConstants.Sportsbook
+        };
+
+        protected MultipleEditProductStatus()
+        {
         }
 
-        public IEnumerable<KeyValuePair<int, string>> GetCustomerProductList()
+        public static IEnumerable<KeyValuePair<int, string>> GetCustomerProductList()
             => new ProductListAuthorization()
                 .GetProductList(true)
-                .Where(product => product.ProductId > 1)
+                .Where(product => !UnsupportProductStatus.Any(i => i == product.ProductId))
                 .Select(product => new KeyValuePair<int, string>(
-                    product.ProductId,
-                    product.ProductId == 0 ? product.Name : _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", product.ProductId.ToString(), "en-US", null)))
+                    product.ProductId, 
+                    product.ProductText))
                 .ToList();
     }
 }

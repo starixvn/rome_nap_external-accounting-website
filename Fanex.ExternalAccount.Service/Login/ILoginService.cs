@@ -18,9 +18,7 @@
         Result Logout(int custId, string username);
 
         bool IsKickedOut(int custId);
-
-        ICollection<Group> GroupList();
-
+        
         bool CheckExternalGroup(int custId, int? funcId, string funcKey);
 
         DateTime GetDbTime();

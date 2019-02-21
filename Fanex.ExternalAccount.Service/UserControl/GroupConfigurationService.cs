@@ -1,0 +1,59 @@
+﻿namespace Fanex.ExternalAccount.Service.UserControl
+{
+    using System.Collections.Generic;
+    using Fanex.ExternalAccount.DataAccess.Criteria.GroupConfiguration;
+    using Fanex.ExternalAccount.DataAccess.UserControl;
+    using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.DTO.UserControl;
+    using Fanex.NAP.Framework.Data;
+    using Utilities.Reports.WinLossDetail;
+    using System.Linq;
+
+    public interface IGroupConfigurationService
+    {
+        IEnumerable<GroupConfigurationModel> Get(GetGroupConfigurationCriteria criteria);
+
+        Result Update(UpdateGroupConfigurationCriteria criteria);
+
+        bool IsShowByProductAndGroup(int productId, string groupName);
+    }
+
+    public class GroupConfigurationService : IGroupConfigurationService
+    {
+        private readonly IDynamicRepository dynamicRepository;
+        private readonly IGroupConfigurationDAO groupConfigurationDAO;
+
+        public GroupConfigurationService() : this(null, null)
+        {
+
+        }
+
+        public GroupConfigurationService(IDynamicRepository dynamicRepository, IGroupConfigurationDAO groupConfigurationDAO)
+        {
+            this.groupConfigurationDAO = groupConfigurationDAO ?? new GroupConfigurationDAO();
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+
+        public IEnumerable<GroupConfigurationModel> Get(GetGroupConfigurationCriteria criteria)
+        {
+            var configurations=dynamicRepository.Fetch<GroupConfigurationModel>(criteria);
+
+            return configurations.Where(i => !Group.IsOfficeGroup(i.GroupName));
+        }
+
+        public Result Update(UpdateGroupConfigurationCriteria criteria)
+            => groupConfigurationDAO.Update(criteria);
+
+        public bool IsShowByProductAndGroup(int productId, string groupName)
+        {
+            if (Group.IsOfficeGroup(groupName))
+            {
+                return true;
+            }
+
+            var groups = Get(new GetGroupConfigurationCriteria { ProductId = productId });
+
+            return groups.FirstOrDefault(i => i.GroupName.Equals(groupName)).IsShow;
+        }
+    }
+}

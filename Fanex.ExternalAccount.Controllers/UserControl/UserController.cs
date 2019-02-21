@@ -94,7 +94,7 @@
             }
             else
             {
-                ViewBag.GroupList = loginService.GroupList();
+                ViewBag.GroupList = groupService.GetExternalGroup();
             }
 
             return PartialViewBase(model);
@@ -219,7 +219,7 @@
             var funcs = functionService.GetAllFunctions().ToList();
             funcs = funcs.Where(f => f.IsTest).ToList();
             var groups = groupService.GetListGroup();
-            var externalGroup = loginService.GroupList();
+            var externalGroup = groupService.GetExternalGroup();
             var functionList = _userService.GetUserFunction(userId);
             var allowFunctions = new List<Function>();
 

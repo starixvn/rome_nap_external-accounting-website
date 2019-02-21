@@ -202,6 +202,7 @@
     <Compile Include="IPInformatonService.cs" />
     <Compile Include="Login\ILoginService.cs" />
     <Compile Include="OTP\CustomerOtpService.cs" />
+    <Compile Include="Products\ProductService.cs" />
     <Compile Include="Report\IReportService.cs" />
     <Compile Include="Report\PokerGamesWinLossDetailRequests.cs" />
     <Compile Include="Report\WinLossDetailRequests.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Login\LoginService.cs" />
     <Compile Include="Report\ReportService.cs" />
     <Compile Include="UserControl\CachingService.cs" />
+    <Compile Include="UserControl\GroupConfigurationService.cs" />
     <Compile Include="UserControl\GroupService.cs" />
     <Compile Include="UserControl\FunctionService.cs" />
     <Compile Include="UserControl\ICachingService.cs" />

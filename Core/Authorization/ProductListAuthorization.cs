@@ -1,6 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization
 {
     using System;
+    using System.Linq;
+
     using System.Collections.Generic;
     using Context;
     using CustomerSetting.Module.Core.Criteria;
@@ -8,29 +10,32 @@
     using CustomerSetting.Module.Core.Services.Impl;
     using CustomerSetting.Module.Core.Services.Interface;
     using CustomerSetting.Module.Core.Web;
+    using DataAccess.Criteria.GroupConfiguration;
     using DTO.UserControl;
-    using Reports.WinLossDetail;
+    using Service.UserControl;
+    using Shared;
+    using Utilities.Reports.WinLossDetail;
 
     public class ProductListAuthorization
     {
-        private readonly ExtRequest extRequest;
         private readonly ICurrentSession currentSession;
         private readonly IServiceBase permissionService;
+        private readonly IGroupConfigurationService groupConfigurationService;
 
         public ProductListAuthorization() : this(null, null, null)
         { }
 
         public ProductListAuthorization(
-            ExtRequest extRequest,
             ICurrentSession currentSession,
-            IServiceBase permissionService)
+            IServiceBase permissionService,
+            IGroupConfigurationService groupConfigurationService)
         {
-            this.extRequest = extRequest ?? new ExtRequest();
             this.currentSession = currentSession ?? Context.CurrentSession.Instance;
             this.permissionService = permissionService ?? new ServiceBase();
+            this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
         }
 
-        public IEnumerable<ProductElementConfiguration> GetProductList(bool isHideInactiveProduct)
+        public IEnumerable<GroupConfigurationModel> GetProductList(bool isHideInactiveProduct)
         {
             var custId = currentSession.CustId;
 
@@ -41,12 +46,11 @@
             var isAuthorized = permissionService.CheckCustomerHasSpecialSitePermission(
                 new CheckCustomerHasSpecialSiteFunctionPermissionCriteria { CustID = custId });
 
-            var groupName = extRequest.GetGroupName();
-            var products = ProductsConfiguration.Instance.ProductCollection;
-
-            foreach (ProductElementConfiguration product in products)
+            var products = GetProductConfiguration().OrderBy(i => i.ProductId);
+            var showedProductList = new List<GroupConfigurationModel>();
+            foreach (var product in products)
             {
-                if (!IsHiddenProduct(product, groupName))
+                if (!showedProductList.Any(i => i.ProductId == product.ProductId) && product.IsShow && !string.IsNullOrEmpty(product.Id))
                 {
                     if ((isHideInactiveProduct && product.IsHideInactiveProduct)
                         || (product.IsSpecial
@@ -55,9 +59,20 @@
                         continue;
                     }
 
-                    yield return product;
+                    showedProductList.Add(product);
                 }
             }
+            return showedProductList;
+        }
+
+        private IEnumerable<GroupConfigurationModel> GetProductConfiguration()
+        {
+            if (Group.IsOfficeGroup(currentSession.CurrencyGroup))
+            {
+                return groupConfigurationService.Get(new GetGroupConfigurationCriteria());
+            }
+
+            return groupConfigurationService.Get(new GetGroupConfigurationCriteria { GroupId = currentSession.GroupId });
         }
 
         private static bool AdminDoesNotHavePermissionOnSpecialProduct(
@@ -65,31 +80,5 @@
             bool isAuthorized)
             => checkIsInternalAdminResult.IsInternalAdmin
                && (!checkIsInternalAdminResult.IsAllowAccess || !isAuthorized);
-
-        private static bool IsHiddenProduct(ProductElementConfiguration product, string groupName)
-        {
-            if (product.Hide)
-            {
-                return true;
-            }
-
-            if (product.ShowForGroups.Equals("*", StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
-
-            var groups = product.ShowForGroups.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var group in groups)
-            {
-                if (groupName.Equals(group, StringComparison.OrdinalIgnoreCase)
-                    || Group.IsOfficeGroup(groupName))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
     }
 }

@@ -60,6 +60,24 @@
             }
         }
 
+        public IEnumerable<Group> GetExternalGroup()
+        {
+            using (var db = new ObjectDb("EAS_GroupInfoSelExternalGroup"))
+            {
+                using (var reader = db.ExecuteReader())
+                {
+                    while (reader?.Read() == true)
+                    {
+                        yield return new Group
+                        {
+                            GroupID = reader.ToInt("GroupID"),
+                            GroupName = reader.To<string>("GroupName")
+                        };
+                    }
+                }
+            }
+        }
+
         public IEnumerable<Function> GetAllGroupPolicy(int groupId)
         {
             var result = new List<Function>();

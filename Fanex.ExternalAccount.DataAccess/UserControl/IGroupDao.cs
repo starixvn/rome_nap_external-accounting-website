@@ -10,6 +10,8 @@
 
         IEnumerable<Group> GetAllGroup();
 
+        IEnumerable<Group> GetExternalGroup();
+
         IEnumerable<Function> GetAllGroupPolicy(int groupId);
 
         Group GetGroupById(int groupId);

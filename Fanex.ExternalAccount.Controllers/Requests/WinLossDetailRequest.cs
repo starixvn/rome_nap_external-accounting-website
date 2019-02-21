@@ -1,12 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Requests
 {
-    using Core.Context;
-    using Core.Reports;
-    using Core.Reports.WinLossDetail;
-    using Core.Shared;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Core.Context;
+    using Core.Reports;
+    using Core.Shared;
+    using DataAccess.Criteria.GroupConfiguration;
+    using Service.UserControl;
 
     public class WinLossDetailRequest
     {
@@ -16,20 +17,23 @@
 
         private readonly Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter;
         private readonly IExtRequest extRequest;
-        public WinLossDetailRequest() : this(null, null)
+        private readonly IGroupConfigurationService groupConfigurationService;
+
+        public WinLossDetailRequest() : this(null, null, null)
         {
         }
 
         public WinLossDetailRequest(
             Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter,
-            IExtRequest extRequest)
+            IExtRequest extRequest,
+            IGroupConfigurationService groupConfigurationService)
         {
             this.selectedProductQueryGetter = selectedProductQueryGetter ?? new FilterController().AsCollection;
             this.extRequest = extRequest ?? new ExtRequest();
+            this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
         }
 
         public string groupName => extRequest.GetGroupName();
-
         public string username { get; set; }
         public int srecommend { get; set; }
         public int mrecommend { get; set; }
@@ -49,7 +53,8 @@
 
             var formatedProductIds = new List<int>();
 
-            foreach (ProductElementConfiguration item in ProductsConfiguration.Instance.ProductCollection)
+            var products = groupConfigurationService.Get(new GetGroupConfigurationCriteria()).Where(i => i.GroupName == groupName);
+            foreach (var item in products)
             {
                 foreach (var product in filterParams)
                 {

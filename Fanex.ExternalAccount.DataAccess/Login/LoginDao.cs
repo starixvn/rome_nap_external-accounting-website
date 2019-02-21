@@ -96,29 +96,7 @@
 
                 return (bool) db.GetParameterValue("isKickedOut");
             }
-        }
-
-        public ICollection<Group> GroupList()
-        {
-            var list = new List<Group>();
-
-            using (var db = new ObjectDb("EAS_GroupInfoSelExternalGroup"))
-            {
-                using (var reader = db.ExecuteReader())
-                {
-                    while (reader?.Read() == true)
-                    {
-                        list.Add(new Group
-                        {
-                            GroupID = reader.ToInt("GroupID"),
-                            GroupName = reader.To<string>("GroupName")
-                        });
-                    }
-                }
-            }
-
-            return list;
-        }
+        }        
 
         public bool CheckExternalGroup(int custId, int? funcId, string funcKey)
         {

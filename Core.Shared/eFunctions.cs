@@ -8,6 +8,7 @@
         public const string ManageCustomer = "ManageCustomer";
         public const string ExternalGroup = "ExternalGroup";
         public const string ManageGroup = "ManageGroup";
+        public const string ManageProduct = "ManageProduct";
         public const string ManageUser = "ManageUser";
         public const string ManageFunction = "ManageFunction";
         public const string ManageMenu = "ManageMenu";

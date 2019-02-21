@@ -1,4 +1,4 @@
-﻿namespace Fanex.ExternalAccount.Core.Reports.WinLossDetail
+﻿namespace Fanex.ExternalAccount.Utilities.Reports.WinLossDetail
 {
     using System.Collections.Generic;
     using System.Configuration;
