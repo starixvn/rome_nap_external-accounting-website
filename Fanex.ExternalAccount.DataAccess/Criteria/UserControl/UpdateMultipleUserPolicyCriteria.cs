@@ -5,8 +5,9 @@
         public UpdateMultipleUserPolicyCriteria(
             int funcId,
             string policy,
+            string oldPolicy,
             int userId,
-            string ip) : base(funcId, policy, userId, ip)
+            string ip) : base(funcId, policy, oldPolicy, userId, ip)
         {
         }
 

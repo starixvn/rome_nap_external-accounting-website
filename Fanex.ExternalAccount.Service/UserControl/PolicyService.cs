@@ -58,18 +58,6 @@
             return hierarchicalFunctions;
         }
 
-        public IEnumerable<GroupPolicy> GetGroupPolicies(int functionId)
-            => policyDAO.GetGroupPolicies(new GetGroupPolicyCriteria(functionId));
-
-        public IEnumerable<UserPolicy> GetUserPolicies(int functionId)
-            => policyDAO.GetUserPolicies(new GetUserPolicyCriteria(functionId));
-
-        public Result UpdateMultipleGroupPolicies(int functionId, string policy, int userId, string ip)
-            => UpdatePolicies(new UpdateMultipleGroupPolicyCriteria(functionId, policy, userId, ip));
-
-        public Result UpdateMultipleUserPolicies(int functionId, string policy, int userId, string ip)
-            => UpdatePolicies(new UpdateMultipleUserPolicyCriteria(functionId, policy, userId, ip));
-
         private static void FillSubFunctions(IEnumerable<Function> functions, HierarchicalFunction parent)
         {
             var subFunctions = functions.Where(s => s.ParentID == parent.Id);
@@ -82,6 +70,46 @@
 
                 parent.SubFunctions.Add(hierarchicalFunction);
             }
+        }
+
+        public IEnumerable<GroupPolicy> GetGroupPolicies(int functionId)
+            => policyDAO.GetGroupPolicies(new GetGroupPolicyCriteria(functionId));
+
+        public IEnumerable<UserPolicy> GetUserPolicies(int functionId)
+            => policyDAO.GetUserPolicies(new GetUserPolicyCriteria(functionId));
+
+        public Result UpdateMultipleGroupPolicies(int functionId, string policy, int userId, string ip)
+            => UpdatePolicies(new UpdateMultipleGroupPolicyCriteria(
+                functionId,
+                policy,
+                GetOldGroupPolicies(functionId),
+                userId,
+                ip));
+
+        private string GetOldGroupPolicies(int functionId)
+        {
+            var oldGroupPolicies = GetGroupPolicies(functionId);
+
+            return oldGroupPolicies?.Any() == false
+                ? string.Empty
+                : string.Join(";", oldGroupPolicies.Select(policy => $"{policy.GroupId},{policy.Policy}"));
+        }
+
+        public Result UpdateMultipleUserPolicies(int functionId, string policy, int userId, string ip)
+            => UpdatePolicies(new UpdateMultipleUserPolicyCriteria(
+                functionId,
+                policy,
+                GetOldUserPolicies(functionId),
+                userId,
+                ip));
+
+        private string GetOldUserPolicies(int functionId)
+        {
+            var oldUserPolicies = GetUserPolicies(functionId);
+
+            return oldUserPolicies?.Any() == false
+                ? string.Empty
+                : string.Join(";", oldUserPolicies.Select(policy => $"{policy.CustId},{policy.Policy}"));
         }
 
         private Result UpdatePolicies(ICriteria criteria)
