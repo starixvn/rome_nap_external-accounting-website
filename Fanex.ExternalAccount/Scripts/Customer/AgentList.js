@@ -295,9 +295,9 @@
                 Fanex.ExtAcc.Customer.UserId = custId;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Form.Show(
-                    resolveClientUrl('Customer/EditTransferCondition/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                    resolveClientUrl('Customer/EditTransferCondition/?roleId=2&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                     600,
-                    250,
+                    300,
                     false, false,
                     1);
             }

@@ -17,7 +17,6 @@
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
     using DataAccess.Criteria.Customer;
-    using DTO;
     using DTO.Customer;
     using Excel.Customer.CustomerListPage;
     using Fanex.ExternalAccount.Module.LeftPanel;
@@ -34,10 +33,10 @@
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Utilities;
+    using ViewModel;
     using ViewModel.Customer;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
     using Customer = PTEngine.BusinessObjects.Customer;
-    using CustomerDTO = Fanex.ExternalAccount.DTO.Customer.Customer;
 
     public class CustomerController : CustomerBase //DevSkim: ignore DS184626
     {
@@ -239,7 +238,7 @@
             {
                 return LimitationPage(limitedMemberBySuperResult.ErrorMessage);
             }
-            
+
             return PartialViewBase();
         }
 
@@ -549,14 +548,22 @@
         public ActionResult ConfigMultipleDoubleComm(int id) => PartialViewBase(id);
 
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public ActionResult TransferCondition() => PartialViewBase();
+        public ActionResult TransferCondition()
+        {
+            var custId = int.Parse(Request["CustId"]);
+            var isSuperInAutomateTransfer = _masterService.GetSuperInAutomateTransfer(custId).Any();
+
+            return PartialViewBase(isSuperInAutomateTransfer);
+        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public ActionResult EditTransferCondition(int custId)
+        public ActionResult EditTransferCondition(int custId, int roleId)
         {
             ViewBag.CustId = custId;
             var model = _masterService.GetTransferOption(custId);
-            return PartialViewBase(model);
+            var isSuperInAutomateTransfer = _masterService.GetSuperInAutomateTransfer(custId).Any();
+
+            return PartialViewBase(new TransferConditionViewModel(model, isSuperInAutomateTransfer, roleId));
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]

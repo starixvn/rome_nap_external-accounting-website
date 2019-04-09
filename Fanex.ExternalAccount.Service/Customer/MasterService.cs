@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Customer
 {
+    using System.Collections.Generic;
     using System.Data;
     using DataAccess.Impl.Customer;
     using DataAccess.Interface.Customer;
@@ -14,6 +15,9 @@
         public DataTable GetData(int? userId, int? recommend = null, int? custId = null, bool? enabled = null,
             bool? closed = null, bool? suspended = null)
             => _dao.GetData(userId, recommend, custId, enabled, closed, suspended);
+
+        public IEnumerable<int> GetSuperInAutomateTransfer(int custId)
+            => _dao.GetSuperInAutomateTransfer(custId);
 
         public Transfer GetTransferOption(int custId)
             => _dao.GetTransferOption(custId);

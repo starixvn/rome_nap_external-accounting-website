@@ -832,7 +832,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="UpdateSuccessfully" xml:space="preserve">
     <value>Update successfully!</value>
   </data>
-<data name="HideInactiveProduct" xml:space="preserve">
+  <data name="HideInactiveProduct" xml:space="preserve">
     <value>Hide on Win Loss Detail report</value>
   </data>
   <data name="NoteHideInactiveProduct" xml:space="preserve">
@@ -846,5 +846,11 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="GroupList" xml:space="preserve">
     <value>Group list</value>
+  </data>
+  <data name="TransferConditionsWarning_Super" xml:space="preserve">
+    <value>The Daily Transfer setting has been applied to this account via the company automated transfer process. You are not allowed to adjust the Weekly Transfer Condition.</value>
+  </data>
+  <data name="TransferConditionsWarning_Master" xml:space="preserve">
+    <value>The Daily Transfer setting has been applied to this account by the upline. You are not allowed to adjust the Weekly Transfer Condition.</value>
   </data>
 </root>

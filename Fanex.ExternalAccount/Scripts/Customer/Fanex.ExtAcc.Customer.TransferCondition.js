@@ -4,10 +4,10 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
 }
 
 Fanex.ExtAcc.Customer.TransferCondition = {
-    arrWeekly: new Array("#Sun", "#Mon", "#Tue", "#Wed", "#Thu", "#Fri", "#Sat"),
+    arrWeekly: new Array("#Transfer_Sun", "#Transfer_Mon", "#Transfer_Tue", "#Transfer_Wed", "#Transfer_Thu", "#Transfer_Fri", "#Transfer_Sat"),
 
     Init: function () {
-        if ($('input:radio[name=Daily]').is(':checked')) {
+        if ($('input:radio[name="Transfer.Daily"]').is(':checked')) {
             for (var i = 0; i < Fanex.ExtAcc.Customer.TransferCondition.arrWeekly.length; i++) {
                 $(Fanex.ExtAcc.Customer.TransferCondition.arrWeekly[i]).attr("disabled", true);
             }
@@ -17,20 +17,20 @@ Fanex.ExtAcc.Customer.TransferCondition = {
             $(this.arrWeekly[i]).bind('click', this.CheckChooseDaily);
         }
 
-        $('#Daily').bind('click', function () {
+        $('#Transfer_Daily').bind('click', function () {
             for (var i = 0; i < Fanex.ExtAcc.Customer.TransferCondition.arrWeekly.length; i++) {
                 $(Fanex.ExtAcc.Customer.TransferCondition.arrWeekly[i]).attr("disabled", true);
             }
 
-            $('input:radio[name=Weekly]').attr("checked", false);
+            $('input:radio[name="Transfer.Weekly"]').attr("checked", false);
         });
 
-        $('#Weekly').bind('click', function () {
+        $('#Transfer_Weekly').bind('click', function () {
             for (var i = 0; i < Fanex.ExtAcc.Customer.TransferCondition.arrWeekly.length; i++) {
                 $(Fanex.ExtAcc.Customer.TransferCondition.arrWeekly[i]).attr("disabled", false);
             }
 
-            $('input:radio[name=Daily]').attr("checked", false);
+            $('input:radio[name="Transfer.Daily"]').attr("checked", false);
         });
 
         $self = this;
@@ -38,12 +38,12 @@ Fanex.ExtAcc.Customer.TransferCondition = {
 
     CheckChooseDaily: function () {
         var chkCount = 0;
-        if ($('input:radio[name=Weekly]').is(':checked')) {
+        if ($('input:radio[name="Transfer.Weekly"]').is(':checked')) {
             for (var i = 0; i < Fanex.ExtAcc.Customer.TransferCondition.arrWeekly.length; i++) {
                 if ($(Fanex.ExtAcc.Customer.TransferCondition.arrWeekly[i]).is(':checked')) {
                     chkCount++;
                     if (chkCount == 7) {
-                        Validators.show($('#Daily').get(0), titles[3], -10, 7, -40, 35, 15, 5000);
+                        Validators.show($('#Transfer_Daily').get(0), titles[3], -10, 7, -40, 35, 15, 5000);
 
                         return false;
                     }
@@ -56,7 +56,7 @@ Fanex.ExtAcc.Customer.TransferCondition = {
 
     ValidationTransferCondition: function () {
         var isSelect = false;
-        if ($('input:radio[name=Weekly]').is(':checked')) {
+        if ($('input:radio[name="Transfer.Weekly"]').is(':checked')) {
             for (var i = 0; i < Fanex.ExtAcc.Customer.TransferCondition.arrWeekly.length; i++) {
                 if ($(Fanex.ExtAcc.Customer.TransferCondition.arrWeekly[i]).is(':checked')) {
                     isSelect = true;
@@ -65,7 +65,7 @@ Fanex.ExtAcc.Customer.TransferCondition = {
             }
 
             if (!isSelect) {
-                Validators.show($('#Mon').get(0), titles[4], -10, 7, -40, 35, 15, 5000);
+                Validators.show($('#Transfer.Mon').get(0), titles[4], -10, 7, -40, 35, 15, 5000);
 
                 return false;
             }
@@ -83,7 +83,7 @@ Fanex.ExtAcc.Customer.TransferCondition = {
         }
 
         $self.ShowConfirm(titles[1], titles[2], 400, 150, function () {
-            if ($('input:radio[name=Weekly]').is(':checked')) {
+            if ($('input:radio[name="Transfer.Weekly"]').is(':checked')) {
                 for (var i = 0; i < Fanex.ExtAcc.Customer.TransferCondition.arrWeekly.length; i++) {
                     if ($(Fanex.ExtAcc.Customer.TransferCondition.arrWeekly[i]).is(':checked')) {
                         str += "1";

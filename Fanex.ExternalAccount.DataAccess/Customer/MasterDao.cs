@@ -2,7 +2,9 @@
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Data;
+    using System.Linq;
     using Data.DNAide;
     using DTO;
     using DTO.Customer;
@@ -29,6 +31,15 @@
             };
 
             return DbHelper.ExecuteDataTable("EAS_CustomerSelBySAg", param);
+        }
+
+        public IEnumerable<int> GetSuperInAutomateTransfer(int custId)
+        {
+            var param = new Hashtable { { "custid", custId }};
+
+            var result = DbHelper.ExecuteDbResult("Acc_CustomerSelSuperAutoTransfer", param);
+
+            return result.ResultSet.Tables[0].Rows.Cast<DataRow>().Select(row => int.Parse(row["custId"].ToString()));
         }
 
         public Transfer GetTransferOption(int custId)
