@@ -737,7 +737,7 @@
 
             foreach (var customerRow in customerList)
             {
-                customerRow["DisableAllBet"] = customerRow.Field<bool>("DisableAllBet") && customerRow.Field<bool>("DisableAllBetVIP");
+                customerRow["DisableAllBet"] = customerRow.Field<bool>("DisableAllBet");
                 custId = customerRow.Field<int>("custid");
                 customerProductStatus = new Dictionary<int, ProductStatus>();
 
