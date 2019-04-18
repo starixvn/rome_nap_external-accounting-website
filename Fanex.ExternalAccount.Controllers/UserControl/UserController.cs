@@ -19,6 +19,7 @@
     using Service.Interface.Login;
     using Service.Interface.UserControl;
     using Utilities;
+    using Tarus.Infrastructure.Configurations.InternalLogin;
 
     public class UserController : BaseController
     {
@@ -313,7 +314,7 @@
                     param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
 
                     url =
-                        $"{GetInternalLoginUrl((AlphaSiteCode)checkCustomerBelongToSpecialSiteResult.SiteCode)}" +
+                        $"{GetInternalLoginUrl(checkCustomerBelongToSpecialSiteResult.Site)}" +
                         $"?{(Session[Config.InternalAgentUMToken] == null ? string.Empty : $"UMToken={Session[Config.InternalAgentUMToken]}&")}params={param}";
                 }
             }
@@ -321,7 +322,7 @@
             return Redirect(url);
         }
 
-        private string GetInternalLoginUrl(AlphaSiteCode siteCode)
+        private string GetInternalLoginUrl(string site)
         {
             var domain = CurrentContext.DomainName
                 .Replace("www.", string.Empty)
@@ -329,17 +330,8 @@
             string url = Request.Url.ToString();
             var isPublicDomain = Config.PublicDomains.Any(url.Contains);
             domain = isPublicDomain ? domain : "focapts.com";
-            switch (siteCode)
-            {
-                case AlphaSiteCode.I7:
-                    return string.Format(Config.InternalLoginUrl7, domain);
-                case AlphaSiteCode.I9:
-                    return string.Format(Config.InternalLoginUrl9, domain);
-                case AlphaSiteCode.I8:
-                    return string.Format(Config.InternalLoginUrl8, domain);
-                default:
-                    return string.Format(Config.InternalLoginUrl, domain);
-            }
+            string internalUrl = InternalLoginManager.GetInternalLoginUrl(site);
+            return string.Format(internalUrl, domain);
         }
 
         [AntiXSRFFilter]
@@ -365,14 +357,6 @@
             var model = _userService.GetUserById(id);
             ViewBag.IsInternalAdmin = loginService.CheckExternalGroup(id, null, eFunctions.ExternalGroup);
             return PartialViewBase(model);
-        }
-
-        private enum AlphaSiteCode
-        {
-            I1 = 1,
-            I7 = 7,
-            I9 = 9,
-            I8 = 8
         }
     }
 }
