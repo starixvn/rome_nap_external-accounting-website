@@ -227,8 +227,10 @@
     <Compile Include="UserControl\IFunctionService.cs" />
     <Compile Include="UserControl\IGroupService.cs" />
     <Compile Include="UserControl\IMenuService.cs" />
+    <Compile Include="UserControl\IPolicyService.cs" />
     <Compile Include="UserControl\IUserService.cs" />
     <Compile Include="UserControl\MenuService.cs" />
+    <Compile Include="UserControl\PolicyService.cs" />
     <Compile Include="UserControl\UserService.cs" />
     <Compile Include="Products\ProductStatusService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

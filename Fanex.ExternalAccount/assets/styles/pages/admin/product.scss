@@ -3,15 +3,16 @@
     font-style: italic;
     color: #444;
 }
-
 .manage-product {
-    .page-title {
+     .page-title {
         margin-bottom: 10px;
     }
-    .successMsg {
-        font-size: 13px;
-        margin-top: 12px;
+    .filterbox {
+        margin: 0 0 10px;
+        padding: 8px 0;
     }
+}
+.manage-product, .grant-permission {   
     .ui-tabs .ui-tabs-panel {
         border-bottom: 1px solid #ccc;
         padding: 0 16px;
@@ -22,10 +23,7 @@
     .tabs {
         background-color: #fff !important;
     }
-    .filterbox {
-        margin: 0 0 10px;
-        padding: 8px 0;
-    }
+    
     .ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
         border-top-right-radius: 4px !important;
     }
@@ -84,3 +82,25 @@
 {
     margin: 0;
 }
+
+.grant-permission {
+    .ui-widget-content {
+        z-index: unset;
+    }
+    .groupCboMenu {
+        .ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
+            border-top-left-radius: 0 !important;
+        }
+    }
+        
+}
+
+#popupGrantPermission {
+   .filterbox {
+       margin: 0;
+       .searchBar {
+           margin: -8px -16px 4px;
+       }
+   }
+}
+    

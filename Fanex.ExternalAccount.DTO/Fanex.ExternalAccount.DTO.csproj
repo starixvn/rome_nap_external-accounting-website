@@ -166,9 +166,12 @@
     <Compile Include="UserControl\Function.cs" />
     <Compile Include="UserControl\FunctionPolicy.cs" />
     <Compile Include="UserControl\Group.cs" />
+    <Compile Include="UserControl\GroupPolicy.cs" />
+    <Compile Include="UserControl\HierarchicalFunction.cs" />
     <Compile Include="UserControl\Menu.cs" />
     <Compile Include="UserControl\User.cs" />
     <Compile Include="UserControl\UserCache.cs" />
+    <Compile Include="UserControl\UserPolicy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
