@@ -9002,6 +9002,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;- When a customer is suspended, all his downlines shall be suspended as well&lt;/p&gt;&lt;p&gt;- When a customer is unsuspended:&lt;/p&gt;&lt;p&gt;+ Only the downlines who were &lt;b&gt;indirectly &lt;/b&gt;suspended by upline shall be updated to unsuspend. You can click on number of affected downlines to view the list.&lt;/p&gt;&lt;p&gt;+ For the downlines who were &lt;b&gt;directly &lt;/b&gt;suspended by upline shall be kept, the current status shall not be updated. You can click on number of remain unchanged downline to view the list.&lt;/p&gt;&lt;p&gt;- Affected Donwline [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SuspendInfoMessage {
+            get {
+                return ResourceManager.GetString("SuspendInfoMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Swimming.
         /// </summary>
         internal static string swimming {
@@ -9070,6 +9079,15 @@ namespace Resources {
         internal static string tf {
             get {
                 return ResourceManager.GetString("tf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no information available..
+        /// </summary>
+        internal static string thereisnodata {
+            get {
+                return ResourceManager.GetString("thereisnodata", resourceCulture);
             }
         }
         
@@ -9629,6 +9647,15 @@ namespace Resources {
         internal static string updatesuccessfull {
             get {
                 return ResourceManager.GetString("updatesuccessfull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected customer and his affected donwlines have been successfully updated..
+        /// </summary>
+        internal static string UpdateSuspendSuccess {
+            get {
+                return ResourceManager.GetString("UpdateSuspendSuccess", resourceCulture);
             }
         }
         

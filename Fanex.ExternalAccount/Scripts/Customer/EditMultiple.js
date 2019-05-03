@@ -515,6 +515,16 @@
             }
         }
     }
+    
+    menuItems.suspend = {
+            name: "Edit Multiple Suspend Status",
+            className: "iconEnableEdit",
+            callback: function (key, opt) {
+                top.shouldCalculatePopupHeight = false;
+                var url = resolveClientUrl('Customer/MultipleSuspend?custIdList=' + Fanex.ExtAcc.Customer.IdsAndNames().Ids + '&roleid=' + Fanex.ExtAcc.Customer.CurrentLevel);
+                Fanex.ExtAcc.Customer.Status.ViewSuspendMultiple(Fanex.ExtAcc.Customer.IdsAndNames().Ids, Fanex.ExtAcc.Customer.CurrentLevel);
+            }
+    }
 
     if ($.contextMenu) $.contextMenu('destroy');
 

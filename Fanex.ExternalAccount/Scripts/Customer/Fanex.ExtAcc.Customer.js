@@ -1076,5 +1076,5 @@
         } else {
             customerLimitDate.addClass('hidden');
         }
-    }
+    },
 };

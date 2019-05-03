@@ -369,14 +369,17 @@
         var message = '';
         var title = '';
         var roleId = $scope.model.personalInfo.roleId.value;
-        var subMessage = roleId == 1 ? 'Warning, this member can\'t place bet!' : 'Warning, all members under this agent can\'t place bet!';
+        var suspendedSubMessage = roleId == 1 ? 'Warning, this member can\'t place bet!' : 'Warning, all members under this agent can\'t place bet!';
+        var unsuspendedSubMessage = roleId == 1 ? '' : 'All downlines will be un-suspended as well';
 
         if (suspend) {
-            message = 'Are you sure you want to change Suspended status for this customer? All downlines will be un-suspended as well';
+            message = 'Are you sure you want to change Unsuspended status for this customer? ' + unsuspendedSubMessage;
             title = 'Un-suspend Customer: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
+            if (roleId != 1)
+                return parent.Fanex.ExtAcc.Customer.Status.ViewSuspendSingle($scope.model.personalInfo.custId.value, $scope.model.personalInfo.currentLevel.value)
         }
         else {
-            message = "Are you sure you want to change Suspended status for this customer? " + subMessage;
+            message = "Are you sure you want to change Suspended status for this customer? " + suspendedSubMessage;
             title = 'Suspend Customer: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
         }
 
@@ -389,19 +392,18 @@
                     parent.Fanex.ExtAcc.BlockUI();
 
                     $.ajax({
-                        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateSuspendCutomer'),
+                        url: parent.resolveClientUrl('Customer/UpdateSuspendSingle'),
                         dataType: 'json',
                         type: 'post',
                         data: {
                             custId: $scope.model.personalInfo.custId.value,
-                            uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
-                            suspend: !suspend,
+                            suspended: !suspend,
                             groupName: parent.$('#selectedGroupName').html()
                         }
                     })
                     .success(function (result) {
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'popupSuspend');
-                        if (result.isSuccess) {
+                        if (result.IsSuccess) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
                                 parent.Fanex.ExtAcc.UnBlockUI();
@@ -411,7 +413,7 @@
                         else {
                             parent.Fanex.ExtAcc.UnBlockUI();
                             parent.Fanex.ExtAcc.Form.Close(null, null, 'popupSuspend');
-                            parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
+                            parent.Fanex.ExtAcc.Form.Alert('Error', result.ErrorCode == "600" ? "This account was disabled".formatErrorMessage() : result.ErrorMessage.formatErrorMessage(), 350, 150, 'alert');
                             document.getElementById(id).checked = suspend;
                         }
                     })

@@ -1,14 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Linq;
-    using System.Threading;
-    using System.Web;
-    using System.Web.Mvc;
     using CasinoLibrary.Model.UserException;
     using Common;
     using Core.Authorization;
@@ -17,6 +8,8 @@
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
     using DataAccess.Criteria.Customer;
+    using DataAccess.Criteria.Customer.CustomerStatus;
+    using DTO;
     using DTO.Customer;
     using Excel.Customer.CustomerListPage;
     using Fanex.ExternalAccount.Module.LeftPanel;
@@ -32,14 +25,24 @@
     using Service.Impl.Customer.Casino;
     using Service.Impl.Report;
     using Service.Interface.Report;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading;
+    using System.Web;
+    using System.Web.Mvc;
     using Utilities;
     using ViewModel;
     using ViewModel.Customer;
+    using ViewModel.Customer.Suspend;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
     using Customer = PTEngine.BusinessObjects.Customer;
 
     public class CustomerController : CustomerBase //DevSkim: ignore DS184626
-    {
+    { 
         private const string DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt";
         private readonly AgentService _agentService = new AgentService();
         private readonly CustomerService _customerService = new CustomerService();
@@ -664,6 +667,46 @@
         }
 
         public ActionResult AccessDenied() => ActionDenied(Request);
+
+        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        public ActionResult UnsuspendSingle(int custId, string userName)
+        {
+            return PartialViewBase(_customerService.GetSingleUpdateSuspendViewModel(custId, userName));
+        }
+
+        [HttpPost]
+        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        public ActionResult MultipleSuspend(string custIdList, int roleId)
+        {
+            return PartialViewBase(_customerService.GetMultipleSuspendCustomerViewModel(new GetMultipleSuspendCustomerInfoCriteria(custIdList, roleId)));
+        }
+
+        [HttpPost]
+        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer,
+            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [AntiXSRFFilter]
+        public JsonResult GetSuspendDownlinesDetail(int custId, bool isAffected, int downlineRoleId, int pageSize = 50, int pageIndex = 0)
+        {
+            return Json(_customerService.GetSuspendDownlinesDetail(new GetSuspendCustomerDetailInfoCriteria(custId,isAffected,downlineRoleId, pageSize, pageIndex)));
+        }
+
+        [HttpPost]
+        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
+        public JsonResult UpdateSuspendSingle(int custId, bool suspended)
+        {
+            return Json(_customerService.SuspendCustomer(new UpdateSuspendCustomerCriteria(CurrentSession.UserId, custId, suspended,"E", CurrentContext.Ip4Address)));
+        }
+
+        [HttpPost]
+        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
+        public JsonResult UpdateSuspendMultiple(List<MultipleUpdateSuspendRequest> request)
+        {
+            return Json(_customerService.SuspendMultipleCustomer(request, CurrentSession.UserId, CurrentContext.Ip4Address));
+        }
 
         private DataTable GetCustomerList(
             string groupName,

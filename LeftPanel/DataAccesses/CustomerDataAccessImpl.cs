@@ -241,28 +241,6 @@
             }
         }
 
-        public Result SuspendCustomer(int custId, bool suspend)
-        {
-            using (var objDb = new ObjectDb("Acc_CustomerUpdSuspended"))
-            {
-                var param = new Hashtable
-                {
-                    {"userid", CurrentSession.Instance.UserId},
-                    {"custid", custId},
-                    {"suspended", suspend},
-                    {"language", "E"},
-                    {"errcode", 0},
-                    {"errmsg", string.Empty},
-                    {"ip", CurrentContext.Instance.Ip4Address}
-                };
-
-                objDb.AssignParamValues(param);
-                objDb.ExecuteNonQuery();
-
-                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
-            }
-        }
-
         public Result AllowOutright(int custId, bool allow)
         {
             using (var objDb = new ObjectDb("Acc_CustomerUpdDisableOutright", 600))

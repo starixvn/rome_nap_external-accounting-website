@@ -28,8 +28,6 @@
         Result CloseCutomer(int custId, int uplineId, ICurrentSession currentSession, ICurrentContext currentContext,
             bool close, bool clearCredit, string custName);
 
-        Result SuspendCustomer(int custId, bool suspend);
-
         Result AllowOutright(int custId, bool allow);
         
         Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress);
@@ -87,9 +85,6 @@
 
             return customerDataAccess.CloseCutomer(custId, close, clearCredit, custName);
         }
-
-        public Result SuspendCustomer(int custId, bool suspend)
-            => customerDataAccess.SuspendCustomer(custId, suspend);
 
         public Result AllowOutright(int custId, bool allow)
             => customerDataAccess.AllowOutright(custId, allow);

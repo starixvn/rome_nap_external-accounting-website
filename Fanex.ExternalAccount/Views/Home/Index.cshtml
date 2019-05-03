@@ -15,4 +15,9 @@
             localStorage.setItem("@(Model.Username + "_md")", "@(Model.ModifiedDate)");
         }
     });
+
+    var LanguageResources = {
+        UpdateSuspendSuccess: '@Resources.Lang.UpdateSuspendSuccess',
+        SuspendInfoMessage: '@Html.Raw(Resources.Lang.SuspendInfoMessage)',
+    };
 </script>

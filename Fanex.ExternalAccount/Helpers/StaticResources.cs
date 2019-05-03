@@ -31,7 +31,8 @@
             Assembly assembly = Assembly.GetCallingAssembly();
             FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
 
-            return versionInfo.FileVersion;
+            return System.DateTime.Now.Ticks.ToString();
+            //return versionInfo.FileVersion;
         }
 
         private static bool IsDebugMode()

@@ -89,6 +89,7 @@
       "Scripts/Manage/Fanex.ExtAcc.User.js",
       "Scripts/Combobox/Combobox.js",
       "Scripts/Customer/Fanex.ExtAcc.Customer.js",
+      "Scripts/Customer/Fanex.ExtAcc.Customer.Status.js",
       "Scripts/Customer/SuperList.js",
       "Scripts/Customer/MasterList.js",
       "Scripts/Customer/AgentList.js",

@@ -3508,4 +3508,13 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="SMAUnlimitedBetSettingWarningMessage" xml:space="preserve">
     <value>Inputting Min Bet = Max Bet = Max Per Match = (Max Per Ball) = 0 means that you will not limit the bet setting of this account.&lt;br/&gt;In order to prevent members from playing the game, set the value to 0 / 0.1 / 0.1 / (0.1) for Min Bet / Max Bet / Max Per Match / (Max Per Ball).</value>
   </data>
+  <data name="thereisnodata" xml:space="preserve">
+    <value>There is no information available.</value>
+  </data>
+  <data name="UpdateSuspendSuccess" xml:space="preserve">
+    <value>The selected customer and his affected donwlines have been successfully updated.</value>
+  </data>
+  <data name="SuspendInfoMessage" xml:space="preserve">
+    <value>&lt;p&gt;- When a customer is suspended, all his downlines shall be suspended as well&lt;/p&gt;&lt;p&gt;- When a customer is unsuspended:&lt;/p&gt;&lt;p&gt;+ Only the downlines who were &lt;b&gt;indirectly &lt;/b&gt;suspended by upline shall be updated to unsuspend. You can click on number of affected downlines to view the list.&lt;/p&gt;&lt;p&gt;+ For the downlines who were &lt;b&gt;directly &lt;/b&gt;suspended by upline shall be kept, the current status shall not be updated. You can click on number of remain unchanged downline to view the list.&lt;/p&gt;&lt;p&gt;- Affected Donwlines: list of users whose status shall be changed after going to unsuspend upline&lt;/p&gt;&lt;p&gt;- Remain Unchanges Downlines: list of users whose status shall be kept after going to unsuspend upline&lt;/p&gt;</value>
+  </data>
 </root>
