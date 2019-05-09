@@ -231,11 +231,41 @@
             success: function (result) {
                 var bodyRows = [];
                 var rowCount = result.AffectedDownlines.length;
+                var startMergedRowIndex = 0;
+                var endMergedRowIndex = 0;
+                var prevLevel = '';
+                var currentLevel = '';
                 for (var i = 0 ; i < rowCount; i++) {
                     var row = { Columns: [] };
-                    row.Columns.push({ Name: 'Level', Value: result.AffectedDownlines[i].LevelName });
+                    currentLevel = result.AffectedDownlines[i].LevelName;
+                    endMergedRowIndex = i;
+                    if (prevLevel == currentLevel) {
+
+                    }
+                    else {
+                        if (startMergedRowIndex == endMergedRowIndex) {
+
+                        }
+                        else {
+                            bodyRows[startMergedRowIndex].Columns[0].MergeRowNumber = endMergedRowIndex - startMergedRowIndex;
+                            
+                        }
+
+                        startMergedRowIndex = endMergedRowIndex;
+                        row.Columns.push({ Name: 'Level', Value: result.AffectedDownlines[i].LevelName });
+                    }
+
                     row.Columns.push({ Name: 'Username', Value: result.AffectedDownlines[i].UserName });
                     bodyRows.push(row);
+                    prevLevel = currentLevel;
+                }
+
+                if (startMergedRowIndex == endMergedRowIndex) {
+
+                }
+                else {
+                    bodyRows[startMergedRowIndex].Columns[0].MergeRowNumber = endMergedRowIndex - startMergedRowIndex + 1;
+
                 }
 
                 var gridOptions =
@@ -248,6 +278,7 @@
                     showDistinctRow: false,
                     showPager: true,
                     customPager: true,
+                    gridExpandHeight: 200,
                     pagerOption: {
                         itemsPerPage: pageSize,
                         currentPage: pageIndex,
