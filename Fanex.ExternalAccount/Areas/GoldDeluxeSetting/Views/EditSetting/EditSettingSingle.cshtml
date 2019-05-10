@@ -27,55 +27,44 @@
                     @Model.Setting.Username
                 </td>
                 <td class="right bold info-lable">
-                    @GoldDeluxeLang.lblNickname
-                </td>
-                <td class="left info-value">                    
-                    @Model.Setting.NickName
-                </td>
-            </tr>
-            <tr>
-                <td class="right bold info-lable">
                     @GoldDeluxeLang.lblFirstName
                 </td>
                 <td class="left info-value">
                     {{SuperInfo.FirstName}}
                 </td>
+            </tr>
+            <tr>
                 <td class="right bold info-lable">
                     @GoldDeluxeLang.lblLastName
                 </td>
                 <td class="left info-value">
                     {{SuperInfo.LastName}}
                 </td>
-            </tr>
-            <tr>
                 <td class="right bold info-lable">
                     @GoldDeluxeLang.lblPhone
                 </td>
                 <td class="left info-value">
                     {{SuperInfo.Phone}}
                 </td>
+            </tr>
+            <tr>
                 <td class="right bold info-lable">
                     @GoldDeluxeLang.lblMobilePhone
                 </td>
                 <td class="left info-value">
                     {{SuperInfo.MobilePhone}}
                 </td>
-            </tr>
-            <tr>
                 <td class="right bold info-lable">
                     @GoldDeluxeLang.lblFax
                 </td>
                 <td class="left info-value">
                     {{SuperInfo.Fax}}
                 </td>
-                @if (Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Master
-                    || Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Super)
-                {
-                    <td class="right bold"></td>
-                    <td class="left"></td>
-                }
-                else
-                {
+            </tr>
+            @if (!(Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Master)
+                && !(Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Super))
+            {
+                <tr>
                     <td class="right bold info-lable">
                         @GoldDeluxeLang.ProductStatus
                     </td>
@@ -83,8 +72,10 @@
                         <input type="checkbox" data-ng-model="enableGoldDeluxe" data-ng-disabled="disableCheckBoxGoldDeluxe || $parent.isReadOnly" ng-change="updateDownlineStatus()" />
                         <label>@Model.Level.ToString()</label>
                     </td>
-                }
-            </tr>
+                    <td class="right bold info-lable"></td>
+                    <td class="left info-value"></td>
+                </tr>
+            }
         </table>
     </div>
     @Html.Partial("~/Areas/GoldDeluxeSetting/Views/EditSetting/Setting/PTAndCom.cshtml", Model)
