@@ -1,25 +1,25 @@
 ﻿namespace Fanex.ExternalAccount.ViewModel.Customer.Suspend
 {
+    using Fanex.ExternalAccount.DTO.Customer.Status;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+
     public class MultipleUpdateViewModel
     {
-        public int CustId { get; set; }
+        private readonly IEnumerable<CustomerSuspendStatusRow> _customerSuspendStatusList;
 
-        public int RoleId { get; set; }
+        public MultipleUpdateViewModel(int roleId, IEnumerable<CustomerSuspendStatusRow> customerSuspendStatusList)
+        {
+            RoleId = roleId;
+            _customerSuspendStatusList = customerSuspendStatusList;
+        }
 
-        public string UserName { get; set; }
+        public int RoleId { get; }
 
-        public bool Suspend { get; set; }
-
-        public int AffectedMaster { get; set; }
-
-        public int AffectedAgent { get; set; }
-
-        public int AffectedMember { get; set; }
-
-        public int RemainUnchangedMaster { get; set; }
-
-        public int RemainUnchangedAgent { get; set; }
-
-        public int RemainUnchangedMember { get; set; }
+        public ReadOnlyCollection<CustomerSuspendStatusRow> CustomerSuspendStatusList()
+        {
+            return _customerSuspendStatusList?.ToList()?.AsReadOnly();
+        }
     }
 }

@@ -6,6 +6,7 @@
     using DataAccess.Interface.Customer;
     using DTO;
     using DTO.Customer;
+    using DTO.Customer.Status;
     using Interface.Customer;
     using System.Collections.Generic;
     using System.Text;
@@ -47,7 +48,7 @@
         public SuspendedCustomerDetailViewModel GetSuspendDownlinesDetail(GetSuspendCustomerDetailInfoCriteria criteria)
             => dataAccess.GetSuspendDownlinesDetail(criteria);
 
-        public List<MultipleUpdateViewModel> GetMultipleSuspendCustomerViewModel(GetMultipleSuspendCustomerInfoCriteria criteria)
+        public List<CustomerSuspendStatusRow> GetMultipleSuspendCustomerViewModel(GetMultipleSuspendCustomerInfoCriteria criteria)
             => dataAccess.GetMultipleSuspendCustomerViewModel(criteria);
 
         public List<Result> SuspendMultipleCustomer(List<MultipleUpdateSuspendRequest> request, int userId, string ipv4)

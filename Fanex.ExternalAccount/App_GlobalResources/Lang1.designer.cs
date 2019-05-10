@@ -1896,6 +1896,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you want to proceed?.
+        /// </summary>
+        internal static string DoYouWantToProceed {
+            get {
+                return ResourceManager.GetString("DoYouWantToProceed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Win Place.
         /// </summary>
         internal static string EachWay {
@@ -9011,6 +9020,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status of {0} and all of his downlines shall be changed to Suspended. Warning, the customers can&apos;t place bet..
+        /// </summary>
+        internal static string SuspendMultipleMemberConfirmMessage {
+            get {
+                return ResourceManager.GetString("SuspendMultipleMemberConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status of {0} and all of his downlines shall be changed to Suspended. Warning, the customer and all of his downlines can&apos;t place bet..
+        /// </summary>
+        internal static string SuspendMultipleSMAConfirmMessage {
+            get {
+                return ResourceManager.GetString("SuspendMultipleSMAConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Swimming.
         /// </summary>
         internal static string swimming {
@@ -9575,6 +9602,24 @@ namespace Resources {
         internal static string Unknown {
             get {
                 return ResourceManager.GetString("Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status of {0} and his affected downlines shall be changed to Unsuspended..
+        /// </summary>
+        internal static string UnsuspendMultipleConfirmMessage {
+            get {
+                return ResourceManager.GetString("UnsuspendMultipleConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to change Suspend status for this customer? All affected downlines will be unsuspend as well..
+        /// </summary>
+        internal static string UnsuspendSingleConfirmMesssage {
+            get {
+                return ResourceManager.GetString("UnsuspendSingleConfirmMesssage", resourceCulture);
             }
         }
         

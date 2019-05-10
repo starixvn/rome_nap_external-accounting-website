@@ -163,15 +163,15 @@
             }
         }
 
-        public List<MultipleUpdateViewModel> GetMultipleSuspendCustomerViewModel(GetMultipleSuspendCustomerInfoCriteria criteria)
+        public List<CustomerSuspendStatusRow> GetMultipleSuspendCustomerViewModel(GetMultipleSuspendCustomerInfoCriteria criteria)
         {
-            var result = new List<MultipleUpdateViewModel>();
+            var result = new List<CustomerSuspendStatusRow>();
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 var reader = objDb.ExecuteReader(criteria.GetSpParams());
                 while (reader.Read())
                 {
-                    result.Add(new MultipleUpdateViewModel
+                    result.Add(new CustomerSuspendStatusRow
                     {
                         CustId = Utilities.Utils.ToInt32(reader["custid"]),
                         RoleId = criteria.RoleId,

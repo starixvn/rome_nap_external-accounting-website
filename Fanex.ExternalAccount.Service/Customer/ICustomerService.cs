@@ -4,6 +4,7 @@
     using DataAccess.Criteria.Customer.CustomerStatus;
     using DTO;
     using DTO.Customer;
+    using DTO.Customer.Status;
     using System.Collections.Generic;
     using ViewModel.Customer.Suspend;
 
@@ -29,7 +30,7 @@
 
         Result SuspendCustomer(UpdateSuspendCustomerCriteria criteria);
 
-        List<MultipleUpdateViewModel> GetMultipleSuspendCustomerViewModel(GetMultipleSuspendCustomerInfoCriteria criteria);
+        List<CustomerSuspendStatusRow> GetMultipleSuspendCustomerViewModel(GetMultipleSuspendCustomerInfoCriteria criteria);
 
         List<Result> SuspendMultipleCustomer(List<MultipleUpdateSuspendRequest> request, int userId, string ipv4);
     }

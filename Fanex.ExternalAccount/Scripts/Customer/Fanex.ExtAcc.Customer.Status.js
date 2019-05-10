@@ -4,45 +4,50 @@
     self.DOMElements;
     self.CustIdList;
     self.RoleId;
+    self.OldFormStatuses;
+    self.CurrentFormStatuses;
 
     self.clearMessage = function () {
         self.DOMElements.successMsg.empty().hide();
         self.DOMElements.errMsg.empty().hide();
     }
 
-    self.btnUnsuspend_OnClick = function () {
-        parent.Fanex.ExtAcc.BlockUI();
-        self.DOMElements.btnUnsuspend.attr("disabled", true);
-        self.clearMessage();
-        var params = {
-            custId: self.DOMElements.custId.val(),
-            suspended: false
-        };
+    self.btnUnsuspendSingle_OnClick = function () {
+        Fanex.ExtAcc.Form.ConfirmBox('Information', top.window.LanguageResources.UnsuspendSingleConfirmMesssage, 400, 180, null, function () {
+            parent.Fanex.ExtAcc.Form.Close(null, null, 'suspend-confirm-box');
+            parent.Fanex.ExtAcc.BlockUI();
+            self.DOMElements.btnUnsuspendSingle.attr("disabled", true);
+            self.clearMessage();
+            var params = {
+                custId: self.DOMElements.custId.val(),
+                suspended: false
+            };
 
-        $.ajax({
-            type: 'POST',
-            url: resolveClientUrl('Customer/UpdateSuspendSingle'),
-            dataType: "json",
-            data: params,
-            success: function (result) {
-                if (result.ErrorCode == 0) {
-                    self.DOMElements.successMsg.html(top.window.LanguageResources.UpdateSuspendSuccess).show();
-                    setTimeout(function () {
-                        parent.$('#windowPopup').dialog('close');
-                        parent.$('#windowPopup').dialog('destroy');
-                        top.window.frames['leftFrame'].src = top.window.frames['leftFrame'].src;
-                    }, 3000)
+            $.ajax({
+                type: 'POST',
+                url: resolveClientUrl('Customer/UpdateSuspendSingle'),
+                dataType: "json",
+                data: params,
+                success: function (result) {
+                    if (result.ErrorCode == 0) {
+                        self.DOMElements.successMsg.html(top.window.LanguageResources.UpdateSuspendSuccess).show();
+                        setTimeout(function () {
+                            parent.$('#windowPopup').dialog('close');
+                            parent.$('#windowPopup').dialog('destroy');
+                            top.window.frames['leftFrame'].src = top.window.frames['leftFrame'].src;
+                        }, 3000)
+                    }
+                    else {
+                        self.DOMElements.errMsg.html(result.ErrorMessage).show();
+                        self.DOMElements.btnUnsuspendSingle.removeAttr("disabled");
+                    }
+                },
+                complete: function () {
+                    self.DOMElements.btnUnsuspendSingle.removeAttr("disabled");
+                    parent.Fanex.ExtAcc.UnBlockUI();
                 }
-                else {
-                    self.DOMElements.errMsg.html(result.ErrorMessage).show();
-                    self.DOMElements.btnUnsuspend.removeAttr("disabled");
-                }
-            },
-            complete: function () {
-                self.DOMElements.btnUnsuspend.removeAttr("disabled");
-                parent.Fanex.ExtAcc.UnBlockUI();
-            }
-        });
+            });
+        }, null, 'suspend-confirm-box', false, null, false);
     };
 
     self.btnBack_OnClick = function () {
@@ -72,60 +77,115 @@
     };
 
     self.btnSuspendMultiple_OnClick = function () {
-        parent.Fanex.ExtAcc.BlockUI();
-        self.DOMElements.btnReset.attr("disabled", true);
-        self.DOMElements.btnSuspendMultiple.attr("disabled", true);
-        self.clearMessage();
-        var params = {
-            request: $('.button-suspend-status').map(function () {
-                var $this = $(this);
-                return { CustId: $this.attr('data-custid'), UserName: $this.attr('data-username'), Suspended: $this.hasClass('suspend-switch') };
-            }).get()
-        };
-
-        console.log(params);
-        $.ajax({
-            type: 'POST',
-            url: resolveClientUrl('Customer/UpdateSuspendMultiple'),
-            dataType: "json",
-            data: params,
-            success: function (result) {
-                for (var i = 0 ; i < result.length; i++) {
-                    if (result[i].IsSuccess) {
-                        self.DOMElements.successMsg.append('<p style="margin: 0px">' + result[i].ErrorMessage + '</p>').show();
-                    }
-                    else {
-                        self.DOMElements.errMsg.append('<p style="margin: 0px">' + result[i].ErrorMessage + '</p>').show();
-                    }
+        var confirmMessage = [];
+        var listSuspendCustomer = [];
+        var listUnsuspendMessage = [];
+        var listChangedCustomer = [];
+        for (var i = 0 ; i < self.CurrentFormStatuses.length; i++) {
+            if (self.CurrentFormStatuses[i].suspend != self.OldFormStatuses[i].suspend) {
+                if (self.CurrentFormStatuses[i].suspend) {
+                    listSuspendCustomer.push(self.CurrentFormStatuses[i].userName);
                 }
-            },
-            complete: function () {
-                self.DOMElements.btnReset.removeAttr("disabled");
-                self.DOMElements.btnSuspendMultiple.removeAttr("disabled");
-                parent.Fanex.ExtAcc.UnBlockUI();
+                else {
+                    listUnsuspendMessage.push(self.CurrentFormStatuses[i].userName);
+                }
             }
-        });
+        }
+
+        if (listSuspendCustomer.length > 0) {
+            confirmMessage.push('<p>');
+            confirmMessage.push((self.RoleId == 1 ? top.window.LanguageResources.SuspendMultipleMemberConfirmMessage : top.window.LanguageResources.SuspendMultipleSMAConfirmMessage)
+                .replace('{0}', listSuspendCustomer.join()));
+            confirmMessage.push('</p>');
+        }
+
+        if (listUnsuspendMessage.length > 0) {
+            confirmMessage.push('<p>');
+            confirmMessage.push(top.window.LanguageResources.UnsuspendMultipleConfirmMessage.replace('{0}', listUnsuspendMessage.join()));
+            confirmMessage.push('</p>');
+        }
+
+        confirmMessage.push('<p>');
+        confirmMessage.push(top.window.LanguageResources.DoYouWantToProceed);
+        confirmMessage.push('</p>');
+
+        Fanex.ExtAcc.Form.ConfirmBox('Information', confirmMessage.join(''), 'auto', 'auto', null, function () {
+            parent.Fanex.ExtAcc.Form.Close(null, null, 'suspend-confirm-box');
+            parent.Fanex.ExtAcc.BlockUI();
+            self.DOMElements.btnReset.attr("disabled", true);
+            self.DOMElements.btnSuspendMultiple.attr("disabled", true);
+            self.clearMessage();
+            var params = {
+                request: $('.button-suspend-status.is-changed').map(function () {
+                    var $this = $(this);
+                    return { CustId: $this.attr('data-custid'), UserName: $this.attr('data-username'), Suspended: $this.hasClass('suspend-switch') };
+                }).get()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: resolveClientUrl('Customer/UpdateSuspendMultiple'),
+                dataType: "json",
+                data: params,
+                success: function (result) {
+                    for (var i = 0 ; i < result.length; i++) {
+                        if (result[i].IsSuccess) {
+                            self.DOMElements.successMsg.append('<p style="margin: 0px">' + result[i].ErrorMessage + '</p>').show();
+                        }
+                        else {
+                            self.DOMElements.errMsg.append('<p style="margin: 0px">' + result[i].ErrorMessage + '</p>').show();
+                        }
+                    }
+                },
+                complete: function () {
+                    self.DOMElements.btnReset.removeAttr("disabled");
+                    self.DOMElements.btnSuspendMultiple.removeAttr("disabled");
+                    parent.Fanex.ExtAcc.UnBlockUI();
+                }
+            });
+        }, null, 'suspend-confirm-box', false, null, false);
     };
 
     self.btnSuspendStatus_OnClick = function () {
         var $this = $(this);
         var custId = $this.attr('data-custid');
         $this.toggleClass('suspend-switch unsuspend-switch');
-
+        $this.toggleClass('is-changed');
         if ($this.hasClass('suspend-switch')) {
             $this.html('  Suspended');
-            $('#row-remain-unchanged-all-' + custId).show();
-            $('#row-remain-unchanged-SMA-' + custId).hide();
-            $('#row-affected-all-' + custId).show();
-            $('#row-affected-SMA-' + custId).hide();
         }
         else {
             $this.html('Unsuspended');
-            $('#row-remain-unchanged-all-' + custId).hide();
-            $('#row-remain-unchanged-SMA-' + custId).show();
-            $('#row-affected-all-' + custId).hide();
-            $('#row-affected-SMA-' + custId).show();
         }
+
+        $('#row-remain-unchanged-empty-' + custId).toggle();
+        $('#row-remain-unchanged-SMA-' + custId).toggle();
+        $('#row-affected-empty-' + custId).toggle();
+        $('#row-affected-SMA-' + custId).toggle();
+        var currentCustomerStatusItem = self.CurrentFormStatuses.find(function (customerStatus) {
+            return customerStatus.custId == this;
+        }, custId);
+
+        currentCustomerStatusItem.suspend = !currentCustomerStatusItem.suspend;
+        if(self.IsFormChanged())
+        {
+            self.DOMElements.btnSuspendMultiple.removeAttr("disabled");
+            self.DOMElements.btnSuspendMultiple.removeClass("ui-state-disabled");
+        }
+        else {
+            self.DOMElements.btnSuspendMultiple.attr("disabled", "disabled");
+            self.DOMElements.btnSuspendMultiple.addClass("ui-state-disabled");
+        }
+    };
+
+    self.IsFormChanged = function () { 
+        for (var i = 0 ; i < self.CurrentFormStatuses.length; i++) {
+            if (self.CurrentFormStatuses[i].suspend != self.OldFormStatuses[i].suspend) {
+                return true;
+            }
+        }
+
+        return false;
     };
 
     self.btnSuspendAll_OnClick = function () {
@@ -148,7 +208,7 @@
         }
 
         self.DOMElements = {
-            btnUnsuspend: $('#btnUnsuspend'),
+            btnUnsuspendSingle: $('#btnUnsuspend'),
             custId: $('#custId'),
             successMsg: $('#successMsg'),
             errMsg: $('#errMsg'),
@@ -162,11 +222,19 @@
             btnSuspendStatus: $('.button-suspend-status'),
             btnSuspendAll: $('#button-suspend-all'),
             btnUnsuspendAll: $('#button-unsuspend-all'),
-            informationBox: $('#information-box')
+            informationBox: $('#information-box'),
+            tblCustSuspend: $('#tbl-cust-suspend'),
         }
 
-        self.DOMElements.btnUnsuspend.click(function () {
-            return self.btnUnsuspend_OnClick();
+        self.OldFormStatuses = []; self.CurrentFormStatuses = [];
+        $('.button-suspend-status', self.DOMElements.tblCustSuspend).each(function () {
+            var $this = $(this);
+            self.OldFormStatuses.push({ custId: $this.attr('data-custid'), userName: $this.attr('data-username'), suspend: $this.attr('data-suspend-status') == 'true' });
+            self.CurrentFormStatuses.push({ custId: $this.attr('data-custid'), userName: $this.attr('data-username'), suspend: $this.attr('data-suspend-status') == 'true' });
+        });
+
+        self.DOMElements.btnUnsuspendSingle.click(function () {
+            return self.btnUnsuspendSingle_OnClick();
         });
 
         self.DOMElements.btnBack.click(function () {
@@ -248,7 +316,7 @@
                         }
                         else {
                             bodyRows[startMergedRowIndex].Columns[0].MergeRowNumber = endMergedRowIndex - startMergedRowIndex;
-                            
+
                         }
 
                         startMergedRowIndex = endMergedRowIndex;

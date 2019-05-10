@@ -42,7 +42,7 @@
     using Customer = PTEngine.BusinessObjects.Customer;
 
     public class CustomerController : CustomerBase //DevSkim: ignore DS184626
-    { 
+    {
         private const string DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt";
         private readonly AgentService _agentService = new AgentService();
         private readonly CustomerService _customerService = new CustomerService();
@@ -680,7 +680,7 @@
             Policy = AuthenticateAction.AuthenticationType.Read)]
         public ActionResult MultipleSuspend(string custIdList, int roleId)
         {
-            return PartialViewBase(_customerService.GetMultipleSuspendCustomerViewModel(new GetMultipleSuspendCustomerInfoCriteria(custIdList, roleId)));
+            return PartialViewBase(new MultipleUpdateViewModel(roleId, _customerService.GetMultipleSuspendCustomerViewModel(new GetMultipleSuspendCustomerInfoCriteria(custIdList, roleId))));
         }
 
         [HttpPost]
@@ -689,7 +689,7 @@
         [AntiXSRFFilter]
         public JsonResult GetSuspendDownlinesDetail(int custId, bool isAffected, int downlineRoleId, int pageSize = 50, int pageIndex = 0)
         {
-            return Json(_customerService.GetSuspendDownlinesDetail(new GetSuspendCustomerDetailInfoCriteria(custId,isAffected,downlineRoleId, pageSize, pageIndex)));
+            return Json(_customerService.GetSuspendDownlinesDetail(new GetSuspendCustomerDetailInfoCriteria(custId, isAffected, downlineRoleId, pageSize, pageIndex)));
         }
 
         [HttpPost]
@@ -697,7 +697,7 @@
             Policy = AuthenticateAction.AuthenticationType.Host)]
         public JsonResult UpdateSuspendSingle(int custId, bool suspended)
         {
-            return Json(_customerService.SuspendCustomer(new UpdateSuspendCustomerCriteria(CurrentSession.UserId, custId, suspended,"E", CurrentContext.Ip4Address)));
+            return Json(_customerService.SuspendCustomer(new UpdateSuspendCustomerCriteria(CurrentSession.UserId, custId, suspended, "E", CurrentContext.Ip4Address)));
         }
 
         [HttpPost]
