@@ -77,39 +77,7 @@
     };
 
     self.btnSuspendMultiple_OnClick = function () {
-        var confirmMessage = [];
-        var listSuspendCustomer = [];
-        var listUnsuspendMessage = [];
-        var listChangedCustomer = [];
-        for (var i = 0 ; i < self.CurrentFormStatuses.length; i++) {
-            if (self.CurrentFormStatuses[i].suspend != self.OldFormStatuses[i].suspend) {
-                if (self.CurrentFormStatuses[i].suspend) {
-                    listSuspendCustomer.push(self.CurrentFormStatuses[i].userName);
-                }
-                else {
-                    listUnsuspendMessage.push(self.CurrentFormStatuses[i].userName);
-                }
-            }
-        }
-
-        if (listSuspendCustomer.length > 0) {
-            confirmMessage.push('<p>');
-            confirmMessage.push((self.RoleId == 1 ? top.window.LanguageResources.SuspendMultipleMemberConfirmMessage : top.window.LanguageResources.SuspendMultipleSMAConfirmMessage)
-                .replace('{0}', listSuspendCustomer.join()));
-            confirmMessage.push('</p>');
-        }
-
-        if (listUnsuspendMessage.length > 0) {
-            confirmMessage.push('<p>');
-            confirmMessage.push(top.window.LanguageResources.UnsuspendMultipleConfirmMessage.replace('{0}', listUnsuspendMessage.join()));
-            confirmMessage.push('</p>');
-        }
-
-        confirmMessage.push('<p>');
-        confirmMessage.push(top.window.LanguageResources.DoYouWantToProceed);
-        confirmMessage.push('</p>');
-
-        Fanex.ExtAcc.Form.ConfirmBox('Information', confirmMessage.join(''), 'auto', 'auto', null, function () {
+        Fanex.ExtAcc.Form.ConfirmBox('Information', top.window.LanguageResources.UnsuspendSingleConfirmMesssage, 'auto', 'auto', null, function () {
             parent.Fanex.ExtAcc.Form.Close(null, null, 'suspend-confirm-box');
             parent.Fanex.ExtAcc.BlockUI();
             self.DOMElements.btnReset.attr("disabled", true);
@@ -128,13 +96,24 @@
                 dataType: "json",
                 data: params,
                 success: function (result) {
+                    var isSuccessAll = true;
                     for (var i = 0 ; i < result.length; i++) {
                         if (result[i].IsSuccess) {
                             self.DOMElements.successMsg.append('<p style="margin: 0px">' + result[i].ErrorMessage + '</p>').show();
                         }
                         else {
                             self.DOMElements.errMsg.append('<p style="margin: 0px">' + result[i].ErrorMessage + '</p>').show();
+                            isSuccessAll = false;
                         }
+                    }
+
+                    if(isSuccessAll)
+                    {
+                        setTimeout(function () {
+                            parent.$('#windowPopup').dialog('close');
+                            parent.$('#windowPopup').dialog('destroy');
+                            Fanex.ExtAcc.Customer.CallBackCustomerList();
+                        }, 3000)
                     }
                 },
                 complete: function () {
@@ -167,8 +146,7 @@
         }, custId);
 
         currentCustomerStatusItem.suspend = !currentCustomerStatusItem.suspend;
-        if(self.IsFormChanged())
-        {
+        if (self.IsFormChanged()) {
             self.DOMElements.btnSuspendMultiple.removeAttr("disabled");
             self.DOMElements.btnSuspendMultiple.removeClass("ui-state-disabled");
         }
@@ -178,7 +156,7 @@
         }
     };
 
-    self.IsFormChanged = function () { 
+    self.IsFormChanged = function () {
         for (var i = 0 ; i < self.CurrentFormStatuses.length; i++) {
             if (self.CurrentFormStatuses[i].suspend != self.OldFormStatuses[i].suspend) {
                 return true;
@@ -307,16 +285,10 @@
                     var row = { Columns: [] };
                     currentLevel = result.AffectedDownlines[i].LevelName;
                     endMergedRowIndex = i;
-                    if (prevLevel == currentLevel) {
-
-                    }
-                    else {
-                        if (startMergedRowIndex == endMergedRowIndex) {
-
-                        }
-                        else {
-                            bodyRows[startMergedRowIndex].Columns[0].MergeRowNumber = endMergedRowIndex - startMergedRowIndex;
-
+                    row.Columns.push({ Name: 'No', Value: 0 });
+                    if (prevLevel != currentLevel) {
+                        if (startMergedRowIndex != endMergedRowIndex) {
+                            bodyRows[startMergedRowIndex].Columns[1].MergeRowNumber = endMergedRowIndex - startMergedRowIndex;
                         }
 
                         startMergedRowIndex = endMergedRowIndex;
@@ -328,29 +300,27 @@
                     prevLevel = currentLevel;
                 }
 
-                if (startMergedRowIndex == endMergedRowIndex) {
-
-                }
-                else {
-                    bodyRows[startMergedRowIndex].Columns[0].MergeRowNumber = endMergedRowIndex - startMergedRowIndex + 1;
-
+                if (startMergedRowIndex != endMergedRowIndex) {
+                    bodyRows[startMergedRowIndex].Columns[1].MergeRowNumber = endMergedRowIndex - startMergedRowIndex + 1;
                 }
 
                 var gridOptions =
                 {
                     columns: [
-                        { HeaderText: "Level", Width: 150, Name: "Level", HeaderAlign: "center" },
-                        { HeaderText: "Username", Width: 300, Name: "Username", HeaderAlign: "center" }
+                        { HeaderText: "No.", Width: 80, Name: "No", HeaderAlign: "center", CellAlign: "center" },
+                        { HeaderText: "Level", Width: 200, Name: "Level", HeaderAlign: "center" },
+                        { HeaderText: "Username", Width: 400, Name: "Username", HeaderAlign: "center" }
                     ],
                     bodyRows: bodyRows,
                     showDistinctRow: false,
+                    gridExpandHeight: 550,
+                    showNumberColumn: true,
                     showPager: true,
                     customPager: true,
-                    gridExpandHeight: 200,
                     pagerOption: {
                         itemsPerPage: pageSize,
                         currentPage: pageIndex,
-                        itemsPerPageArray: [50, 100, 150, 200],
+                        itemsPerPageArray: [50, 100, 200, 500],
                         pagerSelectCallBack: self.RerenderPagingDownlineDetailInfo,
                         totalItem: result.TotalRows
                     }
