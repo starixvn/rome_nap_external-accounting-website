@@ -211,7 +211,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
         if (!this.IsMultiple && this.IsFullInfo) {
             $('#arrowUpDown').remove();
 
-            Fanex.ExtAcc.Customer.ProcessConfirmSuspendedStatus();
             Fanex.ExtAcc.Customer.ProcessConfirmClosedStatus();
         }
 
@@ -424,7 +423,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 customer.credit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
                                 customer.fax = $('#fax').val().escapeHtml();
                                 customer.statusSetting.closed = document.getElementById('closed').checked;
-                                customer.statusSetting.suspended = document.getElementById('suspended').checked;
 
                                 if (!Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Validate())
                                     return;
@@ -609,7 +607,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 customer.memberMaxCredit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#memberCredit').val(), ',', ''));
                                 customer.fax = $('#fax').val().escapeHtml();
                                 customer.statusSetting.closed = document.getElementById('closed').checked;
-                                customer.statusSetting.suspended = document.getElementById('suspended').checked;
 
                                 if (!Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Validate())
                                     return;
@@ -780,7 +777,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                 customer.credit = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
                                 customer.fax = $('#fax').val().escapeHtml();
                                 customer.statusSetting.closed = document.getElementById('closed').checked;
-                                customer.statusSetting.suspended = document.getElementById('suspended').checked;
 
                                 if (!Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Validate())
                                     return;
@@ -887,7 +883,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         else {
                             if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
                                 customer.statusSetting.closed = document.getElementById('closed').checked;
-                                customer.statusSetting.suspended = document.getElementById('suspended').checked;
                             }
 
                             customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();
@@ -997,7 +992,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         else {
                             if (Fanex.ExtAcc.Customer.PTSetting.IsFullInfo) {
                                 customer.statusSetting.closed = document.getElementById('closed').checked;
-                                customer.statusSetting.suspended = document.getElementById('suspended').checked;
                             }
 
                             customer.ptSetting = Fanex.ExtAcc.Customer.PTSetting.ptGrid.Save();

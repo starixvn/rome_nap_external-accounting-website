@@ -6,8 +6,8 @@
 <div id="tab-main">
     <div id="successMsg" class="ui-helper-hidden successMsg"></div>
     <div id="errMsg" class="ui-helper-hidden errMsg"></div>
-    <div class="float_r"><span id="information-box" class="ml10 icon-alert-circle-outline"></span></div>
-    <div style="max-height: 491px; overflow-x: auto">
+    <div class="float_r clearBoth"><span id="information-box" class="ml10 icon-alert-circle-outline"></span></div>
+    <div class="clearBoth" style="max-height: 491px; overflow-x: auto">
         <table id="tbl-cust-suspend" class="table w100" cellpadding="2" cellspacing="0" border="1">
             <thead>
                 <tr>
@@ -23,14 +23,14 @@
                             Member
                             )
                         </th>
-                            <th rowspan="2">
-                                Remain Unchanges Downlines <br />
-                                (
-                                @(Model.RoleId >= Role.Super ? "Master/" : string.Empty)
-                                @(Model.RoleId >= Role.Master ? "Agent/" : string.Empty)
-                                Member
-                                )
-                            </th>
+                        <th rowspan="2">
+                            Remain Unchanges Downlines <br />
+                            (
+                            @(Model.RoleId >= Role.Super ? "Master/" : string.Empty)
+                            @(Model.RoleId >= Role.Master ? "Agent/" : string.Empty)
+                            Member
+                            )
+                        </th>
                     }
                 </tr>
                 <tr>
@@ -42,7 +42,7 @@
             </thead>
             <tbody>
                 @if (customerSuspendStatusList == null || customerSuspendStatusList.Count == 0)
-            {
+                {
                     <tr>
                         <td colspan="@(Model.RoleId != Role.Member ? "4" : "2")" class="red align-center">@Resources.Lang.thereisnodata</td>
                     </tr>
@@ -72,25 +72,25 @@
                                             if (row.RoleId >= Role.Super)
                                             {
                                                 <span class="@(row.AffectedMaster > 0 ? "dlLink" : string.Empty)"
-                                                      onclick="@(row.AffectedMaster > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId + ", true, " + Role.Master + ", 50, 0);") : string.Empty)">
+                                                      onclick="@(row.AffectedMaster > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId + ", '" + row.UserName +"', true, " + Role.Master + ", 50, 0);") : string.Empty)">
                                                     @row.AffectedMaster
                                                 </span>
-                                                    @Html.Raw("/")
+                                                @Html.Raw("/")
                                             }
 
                                             if (row.RoleId >= Role.Master)
                                             {
                                                 <span class="@(row.AffectedAgent > 0 ? "dlLink" : string.Empty)"
-                                                      onclick="@(row.AffectedAgent > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId + ", true, " + Role.Agent + ", 50, 0);") : string.Empty)">
+                                                      onclick="@(row.AffectedAgent > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId + ", '" + row.UserName +"', true, " + Role.Agent + ", 50, 0);") : string.Empty)">
                                                     @row.AffectedAgent
                                                 </span>
-                                                    @Html.Raw("/")
+                                                @Html.Raw("/")
                                             }
 
                                             if (row.RoleId >= Role.Agent)
                                             {
                                                 <span class="@(row.AffectedMember > 0 ? "dlLink" : string.Empty)"
-                                                      onclick="@(row.AffectedMember > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId + ", true, " + Role.Member + ", 50, 0);") : string.Empty)">
+                                                      onclick="@(row.AffectedMember > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId + ", '" + row.UserName +"', true, " + Role.Member + ", 50, 0);") : string.Empty)">
                                                     @row.AffectedMember
                                                 </span>
                                             }
@@ -102,43 +102,43 @@
                                     </span>
                                     <span id="row-affected-empty-@row.CustId"></span>
                                 </td>
-                                    <td class="text-center">
-                                        <span id="row-remain-unchanged-SMA-@row.CustId" class="ui-helper-hidden">
-                                            @if (row.Suspend)
+                                <td class="text-center">
+                                    <span id="row-remain-unchanged-SMA-@row.CustId" class="ui-helper-hidden">
+                                        @if (row.Suspend)
+                                        {
+                                            if (row.RoleId >= Role.Super)
                                             {
-                                                if (row.RoleId >= Role.Super)
-                                                {
-                                                    <span class="@(row.RemainUnchangedMaster > 0 ? "dlLink" : string.Empty)"
-                                                          onclick="@(row.RemainUnchangedMaster > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId + ", false, " + Role.Master + ", 50, 0);") : string.Empty)">
-                                                        @row.RemainUnchangedMaster
-                                                    </span>
-                                                    @Html.Raw("/")
-                                                }
-
-                                                if (row.RoleId >= Role.Master)
-                                                {
-                                                    <span class="@(row.RemainUnchangedAgent > 0 ? "dlLink" : string.Empty)"
-                                                          onclick="@(row.RemainUnchangedAgent > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId + ", false, " + Role.Agent + ", 50, 0);") : string.Empty)">
-                                                        @row.RemainUnchangedAgent
-                                                    </span>
-                                                    @Html.Raw("/")
-                                                }
-
-                                                if (row.RoleId >= Role.Agent)
-                                                {
-                                                    <span class="@(row.RemainUnchangedMember > 0 ? "dlLink" : string.Empty)"
-                                                          onclick="@(row.RemainUnchangedMember > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId + ", false, " + Role.Member + ", 50, 0);") : string.Empty)">
-                                                        @row.RemainUnchangedMember
-                                                    </span>
-                                                }
+                                                <span class="@(row.RemainUnchangedMaster > 0 ? "dlLink" : string.Empty)"
+                                                      onclick="@(row.RemainUnchangedMaster > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId + ", '" + row.UserName +"', false, " + Role.Master + ", 50, 0);") : string.Empty)">
+                                                    @row.RemainUnchangedMaster
+                                                </span>
+                                                @Html.Raw("/")
                                             }
-                                            else
+
+                                            if (row.RoleId >= Role.Master)
                                             {
-                                                @Html.Raw("All")
+                                                <span class="@(row.RemainUnchangedAgent > 0 ? "dlLink" : string.Empty)"
+                                                      onclick="@(row.RemainUnchangedAgent > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId+ ", '" + row.UserName +"', false, " + Role.Agent + ", 50, 0);") : string.Empty)">
+                                                    @row.RemainUnchangedAgent
+                                                </span>
+                                                @Html.Raw("/")
                                             }
-                                        </span>
-                                        <span id="row-remain-unchanged-empty-@row.CustId"></span>
-                                    </td>
+
+                                            if (row.RoleId >= Role.Agent)
+                                            {
+                                                <span class="@(row.RemainUnchangedMember > 0 ? "dlLink" : string.Empty)"
+                                                      onclick="@(row.RemainUnchangedMember > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId + ", '" + row.UserName +"', false, " + Role.Member + ", 50, 0);") : string.Empty)">
+                                                    @row.RemainUnchangedMember
+                                                </span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("All")
+                                        }
+                                    </span>
+                                    <span id="row-remain-unchanged-empty-@row.CustId"></span>
+                                </td>
                             }
                         </tr>
                     }
@@ -152,7 +152,8 @@
     </div>
     @Html.AntiForgeryToken()
 </div>
-<div id="tab-detail" class="ui-helper-hidden" style="width: 800px; height: 450px; z-index:100">
+<div id="tab-detail" class="ui-helper-hidden" style="z-index:100">
+    <span id="detail-header-title"></span>
     <div style="clear:both;"></div>
     <div id="gridContainer" class="grid-container">
         <div id="gridId" class="freegrid"></div>

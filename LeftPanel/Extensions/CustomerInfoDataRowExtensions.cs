@@ -17,6 +17,8 @@
 
         internal static bool SuspendedUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["upLineSuspend"]);
 
+        internal static bool IsDirectSuspended(this DataRow dataRow) => Utils.ToBoolean(dataRow["isDirectSuspend"]);
+
         internal static bool IsHidden(this DataRow dataRow) => Utils.ToBoolean(dataRow["IsHidden"]);
 
         internal static bool IsSync(this DataRow dataRow) => Utils.ToBoolean(dataRow["IsSync"]);

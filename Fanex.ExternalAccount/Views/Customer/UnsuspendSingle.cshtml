@@ -6,7 +6,7 @@
 <div id="tab-main">
     <div id="successMsg" class="ui-helper-hidden successMsg"></div>
     <div id="errMsg" class="ui-helper-hidden errMsg"></div>
-    <span id="header-title">List of downlines whose status are changed/unchanged after going to unsuspend @Model.UserName</span>
+    <span id="main-header-title">@string.Format(Resources.Lang.UnsuspendedTitleMain, Model.UserName)</span>
     <div class="float_r"><span id="information-box" class="ml10 icon-alert-circle-outline"></span></div>
     <table class="table w100" cellpadding="2" cellspacing="0" border="1">
         <thead>
@@ -31,13 +31,13 @@
                         <td>@row.LevelName</td>
                         <td class="text-right">
                             <span class="@(row.AffectedDownlines > 0 ? "dlLink" : string.Empty)"
-                                  onclick="@(row.AffectedDownlines > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + Model.CustId + ", true, " + @row.Level + ", 50, 0);") : string.Empty)">
+                                  onclick="@(row.AffectedDownlines > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + Model.CustId + ", '" + Model.UserName +"', true, " + @row.Level + ", 50, 0);") : string.Empty)">
                                 @row.AffectedDownlines
                             </span>
                         </td>
                         <td class="text-right">
                             <span class="@(row.RemainUnchangedDownlines > 0 ? "dlLink" : string.Empty)"
-                                  onclick="@(row.RemainUnchangedDownlines > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + Model.CustId + ", false, " + @row.Level + ", 50, 0);") : string.Empty)">
+                                  onclick="@(row.RemainUnchangedDownlines > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + Model.CustId + ", '" + Model.UserName +"', false, " + @row.Level + ", 50, 0);") : string.Empty)">
                                 @row.RemainUnchangedDownlines
                             </span>
                         </td>
@@ -52,7 +52,8 @@
     </div>
     @Html.AntiForgeryToken()
 </div>
-<div id="tab-detail" class="ui-helper-hidden" style="width: 800px; height: 450px; z-index:100">
+<div id="tab-detail" class="ui-helper-hidden">
+    <span id="detail-header-title"></span>
     <div style="clear:both;"></div>
     <div id="gridContainer" class="grid-container">
         <div id="gridId" class="freegrid"></div>

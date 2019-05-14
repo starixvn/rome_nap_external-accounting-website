@@ -51,7 +51,11 @@
     };
 
     self.btnBack_OnClick = function () {
-        self.DOMElements.tabDetail.fadeOut(function () { self.DOMElements.tabMain.fadeIn(); });
+        self.DOMElements.tabDetail.fadeOut(function () {
+            self.DOMElements.tabMain.fadeIn(function () {
+                parent.$('#windowPopup').dialog({ position: { my: "center", at: "center", of: top.window } });
+            });
+        });
     };
 
     self.btnReset_OnClick = function () {
@@ -97,7 +101,7 @@
                 data: params,
                 success: function (result) {
                     var isSuccessAll = true;
-                    for (var i = 0 ; i < result.length; i++) {
+                    for (var i = 0; i < result.length; i++) {
                         if (result[i].IsSuccess) {
                             self.DOMElements.successMsg.append('<p style="margin: 0px">' + result[i].ErrorMessage + '</p>').show();
                         }
@@ -107,8 +111,7 @@
                         }
                     }
 
-                    if(isSuccessAll)
-                    {
+                    if (isSuccessAll) {
                         setTimeout(function () {
                             parent.$('#windowPopup').dialog('close');
                             parent.$('#windowPopup').dialog('destroy');
@@ -157,7 +160,7 @@
     };
 
     self.IsFormChanged = function () {
-        for (var i = 0 ; i < self.CurrentFormStatuses.length; i++) {
+        for (var i = 0; i < self.CurrentFormStatuses.length; i++) {
             if (self.CurrentFormStatuses[i].suspend != self.OldFormStatuses[i].suspend) {
                 return true;
             }
@@ -202,6 +205,7 @@
             btnUnsuspendAll: $('#button-unsuspend-all'),
             informationBox: $('#information-box'),
             tblCustSuspend: $('#tbl-cust-suspend'),
+            detailHeaderTitle: $('#detail-header-title')
         }
 
         self.OldFormStatuses = []; self.CurrentFormStatuses = [];
@@ -253,11 +257,14 @@
     }
 
     self.RerenderPagingDownlineDetailInfo = function (currentPageIndex, itemsPerPage) {
-        self.GetDownlinesDetailInfo(self.cachedDownlinesDetailInfoData.custId, self.cachedDownlinesDetailInfoData.isAffected, self.cachedDownlinesDetailInfoData.downlineRoleId, itemsPerPage, currentPageIndex);
+        self.GetDownlinesDetailInfo(self.cachedDownlinesDetailInfoData.custId, self.cachedDownlinesDetailInfoData.userName, self.cachedDownlinesDetailInfoData.isAffected, self.cachedDownlinesDetailInfoData.downlineRoleId, itemsPerPage, currentPageIndex);
     }
 
-    self.GetDownlinesDetailInfo = function (custId, isAffected, downlineRoleId, pageSize, pageIndex) {
+    self.GetDownlinesDetailInfo = function (custId, userName, isAffected, downlineRoleId, pageSize, pageIndex) {
         parent.Fanex.ExtAcc.BlockUI();
+        self.DOMElements.detailHeaderTitle.html(isAffected ?
+            top.window.LanguageResources.UnsuspendedTitleAffectedDownlines.replace('{0}', userName)
+            : top.window.LanguageResources.UnsuspendedTitleRemainUnchangedDownlines.replace('{0}', userName));
         var params = {
             custId: custId,
             isAffected: isAffected,
@@ -267,6 +274,7 @@
         };
 
         self.cachedDownlinesDetailInfoData.custId = custId;
+        self.cachedDownlinesDetailInfoData.userName = userName;
         self.cachedDownlinesDetailInfoData.isAffected = isAffected;
         self.cachedDownlinesDetailInfoData.downlineRoleId = downlineRoleId;
         $.ajax({
@@ -281,7 +289,7 @@
                 var endMergedRowIndex = 0;
                 var prevLevel = '';
                 var currentLevel = '';
-                for (var i = 0 ; i < rowCount; i++) {
+                for (var i = 0; i < rowCount; i++) {
                     var row = { Columns: [] };
                     currentLevel = result.AffectedDownlines[i].LevelName;
                     endMergedRowIndex = i;
@@ -305,32 +313,32 @@
                 }
 
                 var gridOptions =
-                {
-                    columns: [
-                        { HeaderText: "No.", Width: 80, Name: "No", HeaderAlign: "center", CellAlign: "center" },
-                        { HeaderText: "Level", Width: 200, Name: "Level", HeaderAlign: "center" },
-                        { HeaderText: "Username", Width: 400, Name: "Username", HeaderAlign: "center" }
-                    ],
-                    bodyRows: bodyRows,
-                    showDistinctRow: false,
-                    gridExpandHeight: 550,
-                    showNumberColumn: true,
-                    showPager: true,
-                    customPager: true,
-                    pagerOption: {
-                        itemsPerPage: pageSize,
-                        currentPage: pageIndex,
-                        itemsPerPageArray: [50, 100, 200, 500],
-                        pagerSelectCallBack: self.RerenderPagingDownlineDetailInfo,
-                        totalItem: result.TotalRows
-                    }
-                };
+                    {
+                        columns: [
+                            { HeaderText: "No.", Width: 50, Name: "No", HeaderAlign: "center", CellAlign: "center" },
+                            { HeaderText: "Level", Width: 100, Name: "Level", HeaderAlign: "center" },
+                            { HeaderText: "Username", Width: 200, Name: "Username", HeaderAlign: "center" }
+                        ],
+                        bodyRows: bodyRows,
+                        showDistinctRow: false,
+                        gridExpandHeight: top.window.innerHeight / 3,
+                        showNumberColumn: true,
+                        showPager: true,
+                        customPager: true,
+                        pagerOption: {
+                            itemsPerPage: pageSize,
+                            currentPage: pageIndex,
+                            itemsPerPageArray: [50, 100, 200, 500],
+                            pagerSelectCallBack: self.RerenderPagingDownlineDetailInfo,
+                            totalItem: result.TotalRows
+                        }
+                    };
 
                 self.DOMElements.tabMain.fadeOut(function () {
                     self.DOMElements.tabDetail.fadeIn(function () {
-                        self.DOMElements.tabDetail.show();
                         self.DOMElements.gridContainer.show();
                         self.DOMElements.gridId.fanexGrid(gridOptions);
+                        parent.$('#windowPopup').dialog({ position: { my: "center", at: "center", of: top.window } });
                     });
                 });
             },

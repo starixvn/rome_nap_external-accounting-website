@@ -52,10 +52,6 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                 $('#closed').click(function (e) {
                     $this.Closed(document.getElementById('closed'), $this.currentStatusClose);
                 });
-
-                $('#suspended').click(function (e) {
-                    $this.Suspended(document.getElementById('suspended'), $this.currentStatusSuspend);
-                });
             }
 
             Fanex.Customer.CheckUser(4, customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', null, 'msgIcon');
