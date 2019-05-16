@@ -8,25 +8,23 @@
             <tr>
                 <td class="tdTitleLeft">@NGCasinoLang.lblUsername</td>
                 <td style="width: 35%"><span>{{CustomerModel.userName}}</span></td>
-                <td class="tdTitleRight">@NGCasinoLang.lblNickname</td>
-                <td class="noneBorderRight"><span>{{CustomerModel.userName2}}</span></td>
-            </tr>
-            <tr>
-                <td class="tdTitleLeft">@NGCasinoLang.lblFirstName</td>
+                <td class="tdTitleRight">@NGCasinoLang.lblFirstName</td>
                 <td><span>{{CustomerModel.firstName.decodeHtml()}}</span></td>
-                <td class="tdTitleRight">@NGCasinoLang.lblPhone</td>
+            </tr>
+            <tr>
+                <td class="tdTitleLeft">@NGCasinoLang.lblPhone</td>
                 <td class="noneBorderRight"><span>{{CustomerModel.phone.decodeHtml()}}</span></td>
-            </tr>
-            <tr>
-                <td class="tdTitleLeft">@NGCasinoLang.lblLastName</td>
+                <td class="tdTitleRight">@NGCasinoLang.lblLastName</td>
                 <td><span>{{CustomerModel.lastName.decodeHtml()}}</span></td>
-                <td class="tdTitleRight">@NGCasinoLang.lblMobilePhone</td>
-                <td class="noneBorderRight"><span>{{CustomerModel.mobilePhone.decodeHtml()}}</span></td>
             </tr>
             <tr>
-                <td class="tdTitleLeft">@NGCasinoLang.lblFax</td>
+                <td class="tdTitleLeft">@NGCasinoLang.lblMobilePhone</td>
+                <td class="noneBorderRight"><span>{{CustomerModel.mobilePhone.decodeHtml()}}</span></td>
+                <td class="tdTitleRight">@NGCasinoLang.lblFax</td>
                 <td><span>{{CustomerModel.fax.decodeHtml()}}</span></td>
-                <td class="tdTitleRight">@NGCasinoLang.ProductStatus</td>
+            </tr>
+            <tr>
+                <td class="tdTitleLeft">@NGCasinoLang.ProductStatus</td>
                 <td class="noneBorderRight">
                     <div style="float: left; height: 24px">
                         <input type="checkbox" id="chkEnable" style="margin-top: 5px"
@@ -42,6 +40,8 @@
                         </label>
                     </div>
                 </td>
+                <td class="tdTitleRight"></td>
+                <td><span></span></td>
             </tr>
         </table>
     </div>
