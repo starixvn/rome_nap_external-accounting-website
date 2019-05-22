@@ -136,12 +136,21 @@
     <Compile Include="Customer\PTModel.cs" />
     <Compile Include="Customer\PTVirtualSportsModel.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusViewModel.cs" />
+    <Compile Include="Customer\TransferConditionViewModel.cs" />
     <Compile Include="Extension\EASDisplayAttribute.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Shared\MenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
+      <Project>{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}</Project>
+      <Name>Core.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj">
+      <Project>{AA1EA660-0E91-4C46-8100-F39C6A0BFC0B}</Project>
+      <Name>Fanex.ExternalAccount.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
       <Project>{016F274C-1F76-450B-B80D-E7FB59BE6A2B}</Project>
       <Name>Fanex.ExternalAccount.Utilities</Name>
