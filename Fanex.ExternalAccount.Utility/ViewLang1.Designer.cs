@@ -19,7 +19,7 @@ namespace Fanex.ExternalAccount.Utilities {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ViewLang {
@@ -1070,7 +1070,7 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Keno.
+        ///   Looks up a localized string similar to RNG Keno.
         /// </summary>
         public static string Keno {
             get {
@@ -2096,7 +2096,7 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Daily Transfer setting has been applied to you by the upline. You are not allowed to adjust the Weekly Transfer Condition..
+        ///   Looks up a localized string similar to The Daily Transfer setting has been applied to this account by the upline. You are not allowed to adjust the Weekly Transfer Condition..
         /// </summary>
         public static string TransferConditionsWarning_Master {
             get {
@@ -2105,7 +2105,7 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Daily Transfer setting has been applied to you via the company automated transfer process. You are not allowed to adjust the Weekly Transfer Condition..
+        ///   Looks up a localized string similar to The Daily Transfer setting has been applied to this account via the company automated transfer process. You are not allowed to adjust the Weekly Transfer Condition..
         /// </summary>
         public static string TransferConditionsWarning_Super {
             get {
