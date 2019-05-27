@@ -63,13 +63,13 @@
 
     if (showKenoSetting == 'true') {
         items.keno = {
-            name: "Keno",
+            name: "RNG Keno",
             className: "iconViewEdit",
             callback: function () {
                 top.shouldCalculatePopupHeight = true;
                 Fanex.ExtAcc.Customer.IsMultiple = false;
                 Fanex.ExtAcc.Customer.IsFullInfo = true;
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditSuper?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Keno Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 880, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
+                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditSuper?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit RNG Keno Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 880, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
             }
         }
     }
