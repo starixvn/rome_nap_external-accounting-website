@@ -648,7 +648,7 @@
         var landscapeHeight = 250;
         var portraitHeight = isMobile.phone || isMobile.tablet ? 400 : 730;
         top.shouldCalculatePopupHeight = true;
-        $scope.EnableThirdpartyProduct(8, "Keno", 720, $scope.getPopupHeight(landscapeHeight, portraitHeight));
+        $scope.EnableThirdpartyProduct(8, "RNG Keno", 720, $scope.getPopupHeight(landscapeHeight, portraitHeight));
     };
 
     $scope.EnableColossusBets = function (enable, id, disabled) {
