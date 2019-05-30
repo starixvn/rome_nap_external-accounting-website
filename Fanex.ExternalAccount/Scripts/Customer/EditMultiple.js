@@ -84,12 +84,12 @@
 
         if (!this.HideKeno) {
             menuItems.keno = {
-                name: "Edit Multiple Keno",
+                name: "Edit Multiple RNG Keno",
                 className: "iconEnableEdit",
                 callback: function () {
                     top.shouldCalculatePopupHeight = true;
                     Fanex.ExtAcc.Form.ShowFrame(
-                        resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
+                        resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple RNG Keno Setting' : 'Edit RNG Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
                         900,
                         Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
                         false, null, 1);
@@ -196,12 +196,12 @@
 
         if (!this.HideKeno) {
             menuItems.keno = {
-                name: "Edit Multiple Keno",
+                name: "Edit Multiple RNG Keno",
                 className: "iconEnableEdit",
                 callback: function () {
                     top.shouldCalculatePopupHeight = true;
                     Fanex.ExtAcc.Form.ShowFrame(
-                        resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
+                        resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple RNG Keno Setting' : 'Edit RNG Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
                         900,
                         Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
                         false, null, 1);
@@ -380,43 +380,43 @@
 
         if (!this.HideKeno) {
             menuItems.keno = {
-                name: "Keno",
+                name: "RNG Keno",
                 className: "iconEnableEdit",
                 items: {
                     agentKN: {
-                        name: "Edit Multiple Keno",
+                        name: "Edit Multiple RNG Keno",
                         callback: function () {
                             top.shouldCalculatePopupHeight = true;
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
                             Fanex.ExtAcc.Form.ShowFrame(
-                                resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
+                                resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple RNG Keno Setting' : 'Edit RNG Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
                                 900,
                                 Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
                                 false, null, 1);
                         }
                     },
                     superKN: {
-                        name: "Super Edit Multiple Keno",
+                        name: "Super Edit Multiple RNG Keno",
                         callback: function () {
                             top.shouldCalculatePopupHeight = true;
                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
                             Fanex.ExtAcc.Form.ShowFrame(
-                                resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
+                                resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple RNG Keno Setting' : 'Edit RNG Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
                                 900,
                                 Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
                                 false, null, 1);
                         }
                     },
                     masterKN: {
-                        name: "Master Edit Multiple Keno",
+                        name: "Master Edit Multiple RNG Keno",
                         callback: function () {
                             top.shouldCalculatePopupHeight = true;
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = true;
                             Fanex.ExtAcc.Form.ShowFrame(
-                                resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple Keno Setting' : 'Edit Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
+                                resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custid=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId + '&isMultipleEdit=true'), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple RNG Keno Setting' : 'Edit RNG Keno Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
                                 900,
                                 Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
                                 false, null, 1);

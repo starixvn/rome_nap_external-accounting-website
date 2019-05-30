@@ -280,7 +280,7 @@
         {
             if (ProductSettings.IsShowKeno)
             {
-                details.Add(new ObjectInfo("Keno", "Keno"));
+                details.Add(new ObjectInfo("Keno", "RNG Keno"));
             }
         }
 
@@ -310,7 +310,7 @@
 
         internal static List<ObjectInfo> EditItems(DataRow nonDCSProductStatusRow)
             => !nonDCSProductStatusRow.HideKeno() ?
-            new List<ObjectInfo> { new ObjectInfo { Key = "EnableKeno", Text = "Enable Keno" } } :
+            new List<ObjectInfo> { new ObjectInfo { Key = "EnableKeno", Text = "Enable RNG Keno" } } :
             new List<ObjectInfo>();
 
 #pragma warning disable S1541 // Methods and properties should not be too complex
