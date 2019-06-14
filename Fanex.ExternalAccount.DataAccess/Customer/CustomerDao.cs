@@ -1,5 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
     using Base;
     using Common.Extensions;
     using Core.Shared;
@@ -11,9 +14,6 @@
     using DTO.Customer;
     using DTO.Customer.Status;
     using Interface.Customer;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
     using ViewModel.Customer.Suspend;
 
     public class CustomerDao : DAOBase, ICustomerDao
@@ -208,6 +208,15 @@
             }
 
             return result;
+        }
+
+        public void KickoutCustomer(KickoutCustomerCriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.AssignParamValues(criteria.GetSpParams());
+                db.ExecuteNonQuery();
+            }
         }
     }
 }

@@ -39,6 +39,9 @@
         public Result CheckNewCustomerIsReachLimitation(CheckNewCustomerLimitationCriteria criteria)
             => dataAccess.CheckNewCustomerIsReachLimitation(criteria);
 
+        public void KickoutCustomer(int custId, byte roleId, string ip)
+            => dataAccess.KickoutCustomer(new KickoutCustomerCriteria(custId, roleId, ip));
+            
         public SingleUpdateViewModel GetSingleUpdateSuspendViewModel(int custId, string userName)
             => new SingleUpdateViewModel(custId, userName, dataAccess.GetSingleUpdateSuspendAffectedDownlines(new GetSingleSuspendCustomerInfoCriteria(custId)));
 

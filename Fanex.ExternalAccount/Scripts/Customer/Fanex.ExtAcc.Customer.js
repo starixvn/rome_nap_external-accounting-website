@@ -383,14 +383,14 @@
             });
     },
 
-    ResetPwd: function (isMember) {
+    ResetPwd: function (roleId) {
         var errorMessage = "";
         var errorField;
 
         if (!Validators.validateInput($('#Password').val())) {
             errorField = $('#Password');
             errorMessage = 'Password is required';
-        } else if (!this.validatePassword($('#Password').val(), isMember)) {
+        } else if (!this.validatePassword($('#Password').val(), roleId === Fanex.ExtAcc.Customer.Member)) {
             errorField = $('#Password');
             errorMessage = 'Your password does not meet the minimum security requirement';
         } else if (!Validators.validateInput($('#confirmPwd').val())) {
@@ -411,7 +411,7 @@
         Fanex.ExtAcc.BlockUI();
 
         $.ajax({
-            url: resolveClientUrl('Customer/UpdatePassword/?custId=' + $('#CustId').val() + '&password=' + $('#Password').val()),
+            url: resolveClientUrl('Customer/UpdatePassword/?custId=' + $('#CustId').val() + '&password=' + $('#Password').val() + '&roleId=' + roleId),
             type: 'POST',
             data: Fanex.ExtAcc.Customer.GroupName()
         })

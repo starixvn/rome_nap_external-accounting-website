@@ -27,6 +27,8 @@
 
         Result CheckNewCustomerIsReachLimitation(CheckNewCustomerLimitationCriteria criteria);
 
+        void KickoutCustomer(KickoutCustomerCriteria criteria);
+        
         List<SingleUpdateAffectedDownline> GetSingleUpdateSuspendAffectedDownlines(GetSingleSuspendCustomerInfoCriteria criteria);
 
         Result SuspendCustomer(UpdateSuspendCustomerCriteria criteria);

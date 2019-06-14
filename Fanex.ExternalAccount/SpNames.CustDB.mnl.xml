@@ -167,6 +167,7 @@
     </Setting>
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerUpdPwd" SpName="Age_CustomerUpdPwd" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Age_OnUser_ForceKickedout" SpName="Age_OnUser_ForceKickedout" DbName="DBONUSER.ON_USER.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerUpdUserInfo" SpName="Age_CustomerUpdUserInfo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelSuperInfo" SpName="EAS_CustomerSelSuperInfo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerUpdSuperInfo" SpName="EAS_CustomerUpdSuperInfo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
