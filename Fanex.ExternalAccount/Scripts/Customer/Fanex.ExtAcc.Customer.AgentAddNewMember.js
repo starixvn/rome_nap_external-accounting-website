@@ -58,10 +58,6 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                 $('#closed').click(function (e) {
                     Fanex.ExtAcc.Customer.AgentAddNewMember.Closed(document.getElementById('closed'), $this.currentStatusClose);
                 });
-
-                $('#suspended').click(function (e) {
-                    Fanex.ExtAcc.Customer.AgentAddNewMember.Suspended(document.getElementById('suspended'), $this.currentStatusSuspend);
-                });
             }
 
             Fanex.Customer.CheckUser(2, customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', 'selectedThree', 'msgIcon');

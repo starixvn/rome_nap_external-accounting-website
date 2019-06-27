@@ -129,12 +129,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account\LoginModel.cs" />
+    <Compile Include="Customer\Suspend\MultipleUpdateSuspendRequest.cs" />
+    <Compile Include="Customer\Suspend\MultipleUpdateViewModel.cs" />
+    <Compile Include="Customer\Suspend\SingleUpdateViewModel.cs" />
     <Compile Include="Customer\CustInfo.cs" />
     <Compile Include="Customer\CustomerInfo.cs" />
     <Compile Include="Customer\CustomerModel.cs" />
     <Compile Include="Customer\IPInfo.cs" />
     <Compile Include="Customer\PTModel.cs" />
     <Compile Include="Customer\PTVirtualSportsModel.cs" />
+    <Compile Include="Customer\Suspend\SuspendedCustomerDetailViewModel.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusViewModel.cs" />
     <Compile Include="Customer\TransferConditionViewModel.cs" />
     <Compile Include="Extension\EASDisplayAttribute.cs" />
@@ -144,7 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
-      <Project>{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}</Project>
+      <Project>{05dd3a2f-f9ff-42e1-8d4e-d4f83e51ebf4}</Project>
       <Name>Core.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj">

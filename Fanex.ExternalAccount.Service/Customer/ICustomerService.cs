@@ -1,8 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Service.Interface.Customer
 {
     using DataAccess.Criteria.Customer;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.DTO.Customer;
+    using DataAccess.Criteria.Customer.CustomerStatus;
+    using DTO;
+    using DTO.Customer;
+    using DTO.Customer.Status;
+    using System.Collections.Generic;
+    using ViewModel.Customer.Suspend;
 
     public interface ICustomerService
     {
@@ -21,5 +25,13 @@
         Result ConfigDoubleComm(UpdateDoubleCommCriteria criteria);
 
         Result CheckNewCustomerIsReachLimitation(CheckNewCustomerLimitationCriteria criteria);
+
+        SingleUpdateViewModel GetSingleUpdateSuspendViewModel(int custId, string userName);
+
+        Result SuspendCustomer(UpdateSuspendCustomerCriteria criteria);
+
+        List<CustomerSuspendStatusRow> GetMultipleSuspendCustomerViewModel(GetMultipleSuspendCustomerInfoCriteria criteria);
+
+        List<Result> SuspendMultipleCustomer(List<MultipleUpdateSuspendRequest> request, int userId, string ipv4);
     }
 }

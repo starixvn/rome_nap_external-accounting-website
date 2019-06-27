@@ -922,50 +922,6 @@
         }
     },
 
-    ProcessConfirmSuspendedStatus: function (id) {
-        var currentLevel = this.CurrentLevel;
-        if (currentLevel != 4) {
-            var timeout = setTimeout(function () {
-                clearTimeout(timeout);
-                Fanex.ExtAcc.Customer.Suspended = document.getElementById(id ? id : 'suspended').checked;
-
-                $(id ? '#' + id : '#suspended').bind('click', function () {
-                    var checkbox = this;
-
-                    if (this.checked && !Fanex.ExtAcc.Customer.Suspended) {
-                        Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
-                            currentLevel == 1 ? Fanex.ExtAcc.Customer.MessageSuspendedMember : Fanex.ExtAcc.Customer.MessageSuspended,
-                            400,
-                            180,
-                            false,
-                            function () {
-                                Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
-                            },
-                            function () {
-                                checkbox.checked = false;
-                                Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
-                            },
-                            'confirmStatus');
-                    } else if (!this.checked && Fanex.ExtAcc.Customer.Suspended) {
-                        Fanex.ExtAcc.Form.ConfirmBox('Edit Status',
-                            currentLevel == 1 ? Fanex.ExtAcc.Customer.MessageUnSuspendedMember : Fanex.ExtAcc.Customer.MessageUnSuspended,
-                            400,
-                            180,
-                            false,
-                            function () {
-                                Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
-                            },
-                            function () {
-                                checkbox.checked = true;
-                                Fanex.ExtAcc.Form.Close(false, false, 'confirmStatus');
-                            },
-                            'confirmStatus');
-                    }
-                });
-            }, 1000);
-        }
-    },
-
     validatePassword: function (str, isMember) {
         return isMember ? this.validatePwdMember(str) : this.validatePwdAgent(str);
     },
@@ -1076,5 +1032,5 @@
         } else {
             customerLimitDate.addClass('hidden');
         }
-    }
+    },
 };

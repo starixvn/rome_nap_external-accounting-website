@@ -52,10 +52,6 @@ Fanex.ExtAcc.Customer.MasterAddNewAgent = {
                 $('#closed').click(function (e) {
                     $this.Closed(document.getElementById('closed'), $this.currentStatusClose);
                 });
-
-                $('#suspended').click(function (e) {
-                    $this.Suspended(document.getElementById('suspended'), $this.currentStatusSuspend);
-                });
             }
 
             Fanex.Customer.CheckUser(3, customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', null, 'msgIcon');

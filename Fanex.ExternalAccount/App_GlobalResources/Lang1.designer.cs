@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option or rebuild the Visual Studio project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Lang {
@@ -9002,6 +9002,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;- When a customer is suspended, all his downlines will be suspended as well&lt;/p&gt;&lt;p&gt;+ Only the downlines who were &lt;b&gt;indirectly &lt;/b&gt;suspended by upline will be unsuspended. You can click on the number of affected downlines to view the list&lt;/p&gt;&lt;p&gt;+ For the rest, their current status will not be changed. You can click on the number of remain unchanged downlines to view the list.&lt;/p&gt;&lt;p&gt;- Affected Downlines: list of users whose status will be changed after their upline is unsuspended.&lt;/p&gt;&lt;p&gt;- Remain Unchanged  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SuspendInfoMessage {
+            get {
+                return ResourceManager.GetString("SuspendInfoMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Swimming.
         /// </summary>
         internal static string swimming {
@@ -9070,6 +9079,15 @@ namespace Resources {
         internal static string tf {
             get {
                 return ResourceManager.GetString("tf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no information available..
+        /// </summary>
+        internal static string thereisnodata {
+            get {
+                return ResourceManager.GetString("thereisnodata", resourceCulture);
             }
         }
         
@@ -9561,6 +9579,42 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List of downlines whose status are changed after {0} is unsuspended..
+        /// </summary>
+        internal static string UnsuspendedTitleAffectedDownlines {
+            get {
+                return ResourceManager.GetString("UnsuspendedTitleAffectedDownlines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of downlines&apos; status after {0} is unsuspended..
+        /// </summary>
+        internal static string UnsuspendedTitleMain {
+            get {
+                return ResourceManager.GetString("UnsuspendedTitleMain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of downlines whose status are unchanged after {0} is unsuspended..
+        /// </summary>
+        internal static string UnsuspendedTitleRemainUnchangedDownlines {
+            get {
+                return ResourceManager.GetString("UnsuspendedTitleRemainUnchangedDownlines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to change Suspend status for this customer? All affected downlines will be unsuspend as well..
+        /// </summary>
+        internal static string UnsuspendSingleConfirmMesssage {
+            get {
+                return ResourceManager.GetString("UnsuspendSingleConfirmMesssage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
         internal static string update {
@@ -9629,6 +9683,15 @@ namespace Resources {
         internal static string updatesuccessfull {
             get {
                 return ResourceManager.GetString("updatesuccessfull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected customer and his affected donwlines have been successfully updated..
+        /// </summary>
+        internal static string UpdateSuspendSuccess {
+            get {
+                return ResourceManager.GetString("UpdateSuspendSuccess", resourceCulture);
             }
         }
         

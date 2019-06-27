@@ -99,19 +99,6 @@
             <div class="customerInfoBlock4">
                 <input name="closed" id="closed" type="checkbox" data-bind="checked: customer.statusSetting.closed, enable: (customer.statusSetting.uplineClosed || hasClose == 0) ? false : true, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" /></div>
         </div>
-        <div class="clear">
-            <div class="customerInfoBlock1">
-                <label for="suspended">
-                    @ViewLang.Suspended</label>
-            </div>
-            <div class="customerInfoBlock2">
-                <input name="suspended" id="suspended" type="checkbox" data-bind="checked: customer.statusSetting.suspended, enable: (customer.statusSetting.uplineSuspended || customer.statusSetting.uplineClosed || hasSuspend == 0) ? false : true, attr: { title: hasSuspend == 1 ? '' : 'You are not authorized on this function' }" />
-            </div>
-            <div class="customerInfoBlock3">
-            </div>
-            <div class="customerInfoBlock4NoBorderLeft">
-            </div>
-        </div>
     </div>
     <div id="commissionHeader" class="headerPositionTaking" style="padding: 0; float: left; width: 842px; border-bottom: 0; border-top: 1px solid #ccc">
     Commission</div>

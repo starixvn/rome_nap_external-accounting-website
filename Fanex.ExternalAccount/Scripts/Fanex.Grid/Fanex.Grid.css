@@ -403,7 +403,7 @@
     height: 28px;
     vertical-align: middle;
     position: absolute;
-    z-index: 999;
+    z-index: 999999999;
 }
 .freegrid .grid-pager-content
 {

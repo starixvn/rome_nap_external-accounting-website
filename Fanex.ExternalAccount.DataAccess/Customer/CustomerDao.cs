@@ -1,16 +1,20 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
 {
-    using System;
-    using System.Collections;
     using Base;
-    using Common;
     using Common.Extensions;
+    using Core.Shared;
     using Criteria.Customer;
+    using Criteria.Customer.CustomerStatus;
+    using Data;
     using Data.DNAide;
     using DTO;
     using DTO.Customer;
+    using DTO.Customer.Status;
     using Interface.Customer;
-    using Data;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using ViewModel.Customer.Suspend;
 
     public class CustomerDao : DAOBase, ICustomerDao
     {
@@ -108,6 +112,99 @@
                 var outputs = objDb.GetOuputParams();
                 result.ErrorCode = outputs["errcode"].ToString();
                 result.ErrorMessage = outputs["errmsg"].ToString();
+            }
+
+            return result;
+        }
+
+        public List<SingleUpdateAffectedDownline> GetSingleUpdateSuspendAffectedDownlines(GetSingleSuspendCustomerInfoCriteria criteria)
+        {
+            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var listAffectedDownline = new List<SingleUpdateAffectedDownline>();
+                objDb.AssignParamValues(criteria.GetSpParams());
+                var reader = objDb.ExecuteReader();
+                while (reader.Read())
+                {
+                    listAffectedDownline.Add(new SingleUpdateAffectedDownline(
+                        Utilities.Utils.ToInt32(reader["roleid"]),
+                        Utilities.Utils.ToInt32(reader["cntAffected"]),
+                        Utilities.Utils.ToInt32(reader["cntUnchanged"])));
+                }
+
+                return listAffectedDownline;
+            }
+        }
+
+        public Result SuspendCustomer(UpdateSuspendCustomerCriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.ExecuteNonQuery(criteria.GetSpParams());
+                var outputs = objDb.GetOuputParams();
+                return new Result(outputs["errcode"].ToString(), outputs["errmsg"].ToString());
+            }
+        }
+
+        public SuspendedCustomerDetailViewModel GetSuspendDownlinesDetail(GetSuspendCustomerDetailInfoCriteria criteria)
+        {
+            var listDownlines = new List<UnsuspendDownlineDetail>();
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var reader = objDb.ExecuteReader(criteria.GetSpParams());
+                while (reader.Read())
+                {
+                    listDownlines.Add(new UnsuspendDownlineDetail(Utilities.Utils.ToInt32(reader["roleid"]), Utilities.Utils.ToString(reader["username"])));
+                }
+
+                reader.Close();
+                var outputs = objDb.GetOuputParams();
+                return new SuspendedCustomerDetailViewModel(Utilities.Utils.ToInt32(outputs["totalrows"]), listDownlines);
+            }
+        }
+
+        public List<CustomerSuspendStatusRow> GetMultipleSuspendCustomerViewModel(GetMultipleSuspendCustomerInfoCriteria criteria)
+        {
+            var result = new List<CustomerSuspendStatusRow>();
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var reader = objDb.ExecuteReader(criteria.GetSpParams());
+                while (reader.Read())
+                {
+                    result.Add(new CustomerSuspendStatusRow
+                    {
+                        CustId = Utilities.Utils.ToInt32(reader["custid"]),
+                        RoleId = criteria.RoleId,
+                        UserName = Utilities.Utils.ToString(reader["username"]),
+                        Suspend = Utilities.Utils.ToBoolean(reader["suspended"])
+                    });
+                }
+
+                reader.NextResult();
+                while (reader.Read())
+                {
+                    var custid = Utilities.Utils.ToInt32(reader["custid"]);
+                    var row = result.FirstOrDefault(m => m.CustId == custid);
+                    if (row != null)
+                    {
+                        var roleid = Utilities.Utils.ToInt32(reader["roleid"]);
+                        switch(roleid)
+                        {
+                            case Role.Master:
+                                row.AffectedMaster = Utilities.Utils.ToInt32(reader["cntAffected"]);
+                                row.RemainUnchangedMaster = Utilities.Utils.ToInt32(reader["cntUnchanged"]);
+                                break;
+                            case Role.Agent:
+                                row.AffectedAgent = Utilities.Utils.ToInt32(reader["cntAffected"]);
+                                row.RemainUnchangedAgent = Utilities.Utils.ToInt32(reader["cntUnchanged"]);
+                                break;
+                            default:
+                                row.AffectedMember = Utilities.Utils.ToInt32(reader["cntAffected"]);
+                                row.RemainUnchangedMember = Utilities.Utils.ToInt32(reader["cntUnchanged"]);
+                                break;
+                        }
+                    }
+                }
             }
 
             return result;

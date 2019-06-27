@@ -60,21 +60,6 @@
                     clearCredit,
                     custName));
 
-        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer,
-            Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateSuspendCutomer(int custId, int uplineId, bool suspend)
-        {
-            var casinoCustomer = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-
-            if (casinoCustomer?.CasinoSync == true)
-            {
-                UpdateCasinoSuspended(custId, suspend);
-            }
-
-            return JsonBase(customerCommandService.SuspendCustomer(custId, suspend));
-        }
-
         [ExternalAccountAuthenticate(Function = eFunctions.AllowOutright,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]

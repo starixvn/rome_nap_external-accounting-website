@@ -1077,6 +1077,28 @@ div#contentSplitter > div#msg {
     color: #D45F12;
 }
 
+.suspend-switch {
+    background-image: url('../../images/suspend.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 5px 28px 5px 14px;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.unsuspend-switch {
+    background-image: url('../../images/Unsuspend.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 5px 5px 5px 21px;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
 .closed {
     color: #D12320;
 }

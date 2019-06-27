@@ -3508,4 +3508,25 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="SMAUnlimitedBetSettingWarningMessage" xml:space="preserve">
     <value>Inputting Min Bet = Max Bet = Max Per Match = (Max Per Ball) = 0 means that you will not limit the bet setting of this account.&lt;br/&gt;In order to prevent members from playing the game, set the value to 0 / 0.1 / 0.1 / (0.1) for Min Bet / Max Bet / Max Per Match / (Max Per Ball).</value>
   </data>
+  <data name="thereisnodata" xml:space="preserve">
+    <value>There is no information available.</value>
+  </data>
+  <data name="UpdateSuspendSuccess" xml:space="preserve">
+    <value>The selected customer and his affected donwlines have been successfully updated.</value>
+  </data>
+  <data name="SuspendInfoMessage" xml:space="preserve">
+    <value>&lt;p&gt;- When a customer is suspended, all his downlines will be suspended as well&lt;/p&gt;&lt;p&gt;+ Only the downlines who were &lt;b&gt;indirectly &lt;/b&gt;suspended by upline will be unsuspended. You can click on the number of affected downlines to view the list&lt;/p&gt;&lt;p&gt;+ For the rest, their current status will not be changed. You can click on the number of remain unchanged downlines to view the list.&lt;/p&gt;&lt;p&gt;- Affected Downlines: list of users whose status will be changed after their upline is unsuspended.&lt;/p&gt;&lt;p&gt;- Remain Unchanged Downlines: list of users whose status will be kept after their upline is unsuspended .&lt;/p&gt;</value>
+  </data>
+  <data name="UnsuspendSingleConfirmMesssage" xml:space="preserve">
+    <value>Are you sure you want to change Suspend status for this customer? All affected downlines will be unsuspend as well.</value>
+  </data>
+  <data name="UnsuspendedTitleAffectedDownlines" xml:space="preserve">
+    <value>List of downlines whose status are changed after {0} is unsuspended.</value>
+  </data>
+  <data name="UnsuspendedTitleMain" xml:space="preserve">
+    <value>List of downlines' status after {0} is unsuspended.</value>
+  </data>
+  <data name="UnsuspendedTitleRemainUnchangedDownlines" xml:space="preserve">
+    <value>List of downlines whose status are unchanged after {0} is unsuspended.</value>
+  </data>
 </root>

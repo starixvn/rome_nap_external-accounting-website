@@ -215,6 +215,10 @@
             if (nonProductStatusRow.SuspendedUpline())
             {
                 suspendedStatus = DisableStatus(suspendedStatus);
+                if (!nonProductStatusRow.IsDirectSuspended())
+                {
+                    suspendedStatus.Tooltip = "This account was indirectly suspended by upline";
+                }
             }
 
             return suspendedStatus;

@@ -194,9 +194,8 @@
       <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.2\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.4.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.4.6\lib\net40\Fanex.PTEngine.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.PTEngine, Version=1.0.4.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTEngine.1.0.4.7\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTSetting.BettypeReference, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTSetting.BettypeReference.1.0.0.2\lib\net461\Fanex.PTSetting.BettypeReference.dll</HintPath>
@@ -449,7 +448,6 @@
     <Content Include="Areas\Common\Views\Shared\Images\Loading.gif" />
     <Content Include="Areas\Common\Views\Shared\Scripts\Fanex.CustomerSetting.js" />
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\LeftPanel\Scripts\AjaxSetup.js" />
     <Content Include="Areas\CustomerSetting\Views\ThirdPartyProductStatus\Index.cshtml" />
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.js" />
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting.js" />
@@ -1387,6 +1385,7 @@
     <Content Include="bootstrap\Images\sorting_bg.gif" />
     <Content Include="bootstrap\Images\sorting_desc.gif" />
     <Content Include="bootstrap\Images\super-btn.png" />
+    <Content Include="assets\styles\images\suspend.png" />
     <Content Include="bootstrap\Images\tick.png" />
     <Content Include="bootstrap\Images\topmenu-bg.png" />
     <Content Include="bootstrap\Images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -1402,6 +1401,7 @@
     <Content Include="bootstrap\Images\ui-icons_454545_256x240.png" />
     <Content Include="bootstrap\Images\ui-icons_888888_256x240.png" />
     <Content Include="bootstrap\Images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="assets\styles\images\Unsuspend.png" />
     <Content Include="bootstrap\Images\view.png" />
     <Content Include="bootstrap\Images\white-top-bottom.gif" />
     <Content Include="bootstrap\Images\x5.gif" />
@@ -1625,6 +1625,7 @@
     <Content Include="Images\tick.png" />
     <Content Include="Images\x5.gif" />
     <Content Include="Scripts\aes.js" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Status.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.DataRange.js" />
     <Content Include="Scripts\Fanex.ExtAcc.EcHcUtil.js" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.OTP.js" />
@@ -2851,6 +2852,8 @@
     <Content Include="Views\Customer\LimitMemberCreation.cshtml" />
     <Content Include="Views\GroupConfiguration\Index.cshtml" />
     <Content Include="Views\Permission\Index.cshtml" />
+    <Content Include="Views\Customer\UnsuspendSingle.cshtml" />
+    <Content Include="Views\Customer\MultipleSuspend.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">

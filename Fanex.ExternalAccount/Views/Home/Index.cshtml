@@ -15,4 +15,12 @@
             localStorage.setItem("@(Model.Username + "_md")", "@(Model.ModifiedDate)");
         }
     });
+
+    var LanguageResources = {
+        UpdateSuspendSuccess: '@Resources.Lang.UpdateSuspendSuccess',
+        SuspendInfoMessage: '@Html.Raw(Resources.Lang.SuspendInfoMessage)',
+        UnsuspendSingleConfirmMesssage: '@Resources.Lang.UnsuspendSingleConfirmMesssage',
+        UnsuspendedTitleAffectedDownlines: '@Resources.Lang.UnsuspendedTitleAffectedDownlines',
+        UnsuspendedTitleRemainUnchangedDownlines: '@Resources.Lang.UnsuspendedTitleRemainUnchangedDownlines',
+    };
 </script>
