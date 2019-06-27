@@ -5,8 +5,7 @@
     using Utilities;
 
     public static class PersonalInfoDataRowExtensions
-    {
-        private const string ThisAccountWas = "This account was ";
+    {    
 
         internal static int CustId(this DataRow dataRow) => Utils.ToInt32(dataRow["custid"]);
 
@@ -30,27 +29,20 @@
 
         internal static string StatusTooltip(this DataRow dataRow, bool enabled, bool closed, bool suspended)
         {
-            var status = ThisAccountWas;
+            if (!enabled)
+            {
+                return "This account was disabled.";
+            }
 
             if (closed)
             {
                 var customerClosedReason = dataRow.CustomerClosedReason();
-                status = customerClosedReason.ClosedReason;
-            }
-
-            if (!enabled)
-            {
-                return status + "disabled";
-            }
-
-            if (closed)
-            {
-                return status;
-            }
+                return customerClosedReason.ClosedReason;
+            }          
 
             if (suspended)
             {
-                return status + "suspended";
+                return "This account was suspended.";
             }
 
             return string.Empty;
