@@ -588,7 +588,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult UpdatePassword(int custId, string password)
+        public ActionResult UpdatePassword(int custId, string password, byte roleId)
         {
             var result = _customerService.ResetPassword(
                 new ResetPasswordCriteria(
@@ -617,6 +617,15 @@
                     {
                         ExceptionHandler.Handle(ex);
                     }
+                }
+
+                try
+                {
+                    _customerService.KickoutCustomer(custId, roleId, CurrentContext.Ip4Address);
+                }
+                catch (Exception ex)
+                {
+                    ExceptionHandler.Handle(ex);
                 }
             }
 

@@ -155,6 +155,7 @@
   <ItemGroup>
     <Compile Include="Criteria\Customer\CheckNewCustomerLimitationCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckMemberCreationCriteria.cs" />
+    <Compile Include="Criteria\Customer\KickoutCustomerCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\GetMultipleSuspendCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\GetSingleSuspendCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\GetSuspendCustomerDetailInfoCriteria.cs" />

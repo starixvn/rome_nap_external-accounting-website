@@ -26,6 +26,8 @@
 
         Result CheckNewCustomerIsReachLimitation(CheckNewCustomerLimitationCriteria criteria);
 
+        void KickoutCustomer(int custId, byte roleId, string ip);
+        
         SingleUpdateViewModel GetSingleUpdateSuspendViewModel(int custId, string userName);
 
         Result SuspendCustomer(UpdateSuspendCustomerCriteria criteria);
