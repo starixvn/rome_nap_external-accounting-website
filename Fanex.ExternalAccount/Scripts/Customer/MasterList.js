@@ -509,12 +509,12 @@ Fanex.ExtAcc.Customer.GetMasterList = function (
 
     if (dataSource) {
         if (!(dataSource.records > 0 && eval(dataSource.rows)[0].IsMyanmarOdds)) {
-            this.DataFields.splice(15, 1);
+            this.DataFields.splice(14, 1);
         }
         else {
-            Fanex.ExtAcc.Customer.DataFields.splice(11, 1);
             Fanex.ExtAcc.Customer.DataFields.splice(10, 1);
             Fanex.ExtAcc.Customer.DataFields.splice(9, 1);
+            Fanex.ExtAcc.Customer.DataFields.splice(8, 1);
         }
 
         this.RenderMasterList(dataSource);
@@ -527,12 +527,12 @@ Fanex.ExtAcc.Customer.GetMasterList = function (
         })
         .success(function (result) {
             if (!(result.records > 0 && eval(result.rows)[0].IsMyanmarOdds)) {
-                Fanex.ExtAcc.Customer.DataFields.splice(15, 1);
+                Fanex.ExtAcc.Customer.DataFields.splice(14, 1);
             }
             else {
-                Fanex.ExtAcc.Customer.DataFields.splice(11, 1);
                 Fanex.ExtAcc.Customer.DataFields.splice(10, 1);
                 Fanex.ExtAcc.Customer.DataFields.splice(9, 1);
+                Fanex.ExtAcc.Customer.DataFields.splice(8, 1);
             }
 
             Fanex.ExtAcc.Customer.RenderMasterList(result);
