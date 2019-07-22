@@ -12,9 +12,7 @@
 
         public double Discount1x2 { get; set; }
 
-        public double Discountcs { get; set; }
-
-        public double Discountnumber { get; set; }
+        public double Discountcs { get; set; }       
 
         public double Groupa_max { get; set; }
 
@@ -26,8 +24,6 @@
 
         public double Discount1x2_max { get; set; }
 
-        public double Discountcs_max { get; set; }
-
-        public double Discountnumber_max { get; set; }
+        public double Discountcs_max { get; set; }       
     }
 }

@@ -23,17 +23,13 @@
 
         internal static double Discount1x2(this DataRow dataRow) => Utils.ToDouble(dataRow["discount1x2"]);
 
-        internal static double DiscountCasino(this DataRow dataRow) => Utils.ToDouble(dataRow["discountcs"]);
-
-        internal static double DiscountNumberGame(this DataRow dataRow) => Utils.ToDouble(dataRow["discountnumber"]);
+        internal static double DiscountCasino(this DataRow dataRow) => Utils.ToDouble(dataRow["discountcs"]);       
 
         internal static double PlayerDiscount(this DataRow dataRow) => Utils.ToDouble(dataRow["playerdiscount"]);
 
         internal static double PlayerDiscount1x2(this DataRow dataRow) => Utils.ToDouble(dataRow["playerdiscount1x2"]);
 
         internal static double PlayerDiscountCasino(this DataRow dataRow) => Utils.ToDouble(dataRow["playerdiscountcs"]);
-
-        internal static double PlayerDiscountNumberGame(this DataRow dataRow) => Utils.ToDouble(dataRow["playerdiscountnumber"]);
 
         internal static string LastLoginIP(this DataRow dataRow) => dataRow["lastloginip"].ToString();
 

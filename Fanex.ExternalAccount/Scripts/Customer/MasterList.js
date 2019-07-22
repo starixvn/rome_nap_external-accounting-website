@@ -486,12 +486,6 @@ Fanex.ExtAcc.Customer.GetMasterList = function (
         CellAlign: 'center',
         CustomAttr: ' title="Applies to all other bettypes" '
     }, {
-        HeaderText: 'Game',
-        Name: 'discountnumber',
-        Width: 60,
-        CellAlign: 'center',
-        CustomAttr: ' title="Number Game" '
-    }, {
         HeaderText: '% Odds',
         Name: 'discountmo',
         Width: 60,
@@ -620,9 +614,6 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
                 Name: 'discountcs',
                 Value: currentRow.discountcs
             }, {
-                Name: 'discountnumber',
-                Value: currentRow.discountnumber
-            }, {
                 Name: 'discountmo',
                 Value: currentRow.IsMyanmarOdds ? (currentRow.discountMyanmarOdds ? currentRow.discountMyanmarOdds : 0) : 'N/A'
             }, {
@@ -672,7 +663,7 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
         }, {
             HeaderText: 'Commission',
             Name: 'groupa',
-            MergeColNumber: (isMyanmarOdds ? 5 : 7)
+            MergeColNumber: (isMyanmarOdds ? 4 : 6)
         }, {
             HeaderText: 'Created Date',
             Name: 'createdate',
@@ -686,7 +677,7 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
 
     for (var i = 0; i < bodyRows.length; i++) {
         if (!isMyanmarOdds) {
-            bodyRows[i].Columns.splice(15, 1);
+            bodyRows[i].Columns.splice(14, 1);
         }
         else {
             bodyRows[i].Columns.splice(11, 1);

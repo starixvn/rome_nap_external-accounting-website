@@ -80,12 +80,10 @@
                     items.UserGroup(),
                     items.Discount(),
                     items.Discount1x2(),
-                    items.DiscountCasino(),
-                    items.DiscountNumberGame(),
+                    items.DiscountCasino(),                  
                     items.PlayerDiscount(),
                     items.PlayerDiscount1x2(),
                     items.PlayerDiscountCasino(),
-                    items.PlayerDiscountNumberGame(),
                     items.CreateDate(),
                     items.LastLoginIP()
                 };
@@ -127,7 +125,6 @@
                     items.GroupD(),
                     items.Discount1x2(),
                     items.DiscountCasino(),
-                    items.DiscountNumberGame(),
                     items.IsMyanmarOdds() ? items.DiscountMyanmarOdds() : "N/A"
                 };
 

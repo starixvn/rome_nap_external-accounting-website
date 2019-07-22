@@ -395,12 +395,6 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
         Width: 60,
         CustomAttr: ' title="Applies to all other bettypes" '
     }, {
-        HeaderText: 'Game',
-        Name: 'discountnumber',
-        CellAlign: 'center',
-        Width: 60,
-        CustomAttr: ' title="Number Game" '
-    }, {
         HeaderText: '% Odds',
         Name: 'discountmo',
         Width: 60,
@@ -425,12 +419,6 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
         Width: 60,
         CustomAttr: ' title="Applies to all other bettypes" '
     }, {
-        HeaderText: 'Game',
-        Name: 'playerdiscountnumber',
-        CellAlign: 'center',
-        Width: 60,
-        CustomAttr: ' title="Number Game" '
-    }, {
         HeaderText: '% Odds',
         Name: 'playerdiscountmo',
         Width: 60,
@@ -454,8 +442,8 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
 
     if (dataSource) {
         if (!(dataSource.records > 0 && eval(dataSource.rows)[0].IsMyanmarOdds)) {
-            this.DataFields.splice(14, 1);
-            this.DataFields.splice(18, 1);
+            this.DataFields.splice(13, 1);
+            this.DataFields.splice(17, 1);
         }
         this.RenderMemberList(dataSource);
     } else {
@@ -467,8 +455,8 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
         })
         .success(function (result) {
             if (!(result.records > 0 && eval(result.rows)[0].IsMyanmarOdds)) {
-                Fanex.ExtAcc.Customer.DataFields.splice(14, 1);
-                Fanex.ExtAcc.Customer.DataFields.splice(18, 1);
+                Fanex.ExtAcc.Customer.DataFields.splice(13, 1);
+                Fanex.ExtAcc.Customer.DataFields.splice(17, 1);
             }
             Fanex.ExtAcc.Customer.RenderMemberList(result);
         });
@@ -543,9 +531,6 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
                 Name: 'discountcs',
                 Value: currentRow.discountcs
             }, {
-                Name: 'discountnumber',
-                Value: currentRow.discountnumber
-            }, {
                 Name: 'discountmo',
                 Value: currentRow.IsMyanmarOdds ? (currentRow.discountMyanmarOdds ? currentRow.discountMyanmarOdds : 0) : 'N/A'
             }, {
@@ -557,9 +542,6 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
             }, {
                 Name: 'playerdiscountcs',
                 Value: currentRow.playerdiscountcs
-            }, {
-                Name: 'playerdiscountnumber',
-                Value: currentRow.playerdiscountnumber
             }, {
                 Name: 'playerdiscountmo',
                 Value: currentRow.IsMyanmarOdds ? (currentRow.playerdiscountMyanmarOdds ? currentRow.playerdiscountMyanmarOdds : 0) : 'N/A'
@@ -636,8 +618,8 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
 
     if (!isMyanmarOdds) {
         for (var i = 0; i < bodyRows.length; i++) {
-            bodyRows[i].Columns.splice(14, 1);
-            bodyRows[i].Columns.splice(18, 1);
+            bodyRows[i].Columns.splice(13, 1);
+            bodyRows[i].Columns.splice(17, 1);
         }
     }
 

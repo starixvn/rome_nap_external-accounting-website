@@ -496,12 +496,6 @@ Fanex.ExtAcc.Customer.GetAgentList = function (
         CellAlign: 'center',
         CustomAttr: ' title="Applies to all other bettypes" '
     }, {
-        HeaderText: 'Game',
-        Name: 'discountnumber',
-        Width: 60,
-        CellAlign: 'center',
-        CustomAttr: ' title="Number Game" '
-    }, {
         HeaderText: '% Odds',
         Name: 'discountmo',
         Width: 60,
@@ -642,9 +636,6 @@ Fanex.ExtAcc.Customer.RenderAgentList = function (dataSource) {
                 Name: 'discountcs',
                 Value: currentRow.discountcs
             }, {
-                Name: 'discountnumber',
-                Value: currentRow.discountnumber
-            }, {
                 Name: 'discountmo',
                 Value: currentRow.IsMyanmarOdds ? (currentRow.discountMyanmarOdds ? currentRow.discountMyanmarOdds : 0) : 'N/A'
             }, {
@@ -694,7 +685,7 @@ Fanex.ExtAcc.Customer.RenderAgentList = function (dataSource) {
         }, {
             HeaderText: 'Commission',
             Name: 'groupa',
-            MergeColNumber: (isMyanmarOdds ? 5 : 7)
+            MergeColNumber: (isMyanmarOdds ? 4 : 6)
         }, {
             HeaderText: 'Created Date',
             Name: 'createdate',
@@ -708,12 +699,12 @@ Fanex.ExtAcc.Customer.RenderAgentList = function (dataSource) {
 
     for (var i = 0; i < bodyRows.length; i++) {
         if (!isMyanmarOdds) {
-            bodyRows[i].Columns.splice(15, 1);
+            bodyRows[i].Columns.splice(14, 1);
         }
         else {
-            bodyRows[i].Columns.splice(11, 1);
             bodyRows[i].Columns.splice(10, 1);
             bodyRows[i].Columns.splice(9, 1);
+            bodyRows[i].Columns.splice(8, 1);
         }
     }
 
