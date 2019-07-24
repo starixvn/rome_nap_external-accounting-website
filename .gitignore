@@ -34,5 +34,5 @@ Fanex.ExternalAccount.Controllers/Fanex.ExternalAccount.Controllers.csproj.user
 
 _Chutzpah
 *.css
-
+*.sh
 */assets/bundles/**
