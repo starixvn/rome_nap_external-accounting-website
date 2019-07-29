@@ -1,10 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.DataAccesses
 {
-    using System.Collections.Generic;
-    using System.Data;
     using Criteria;
     using Data.DNAide;
     using DTO;
+    using Fanex.ExternalAccount.Module.LeftPanel.Models;
+    using System.Collections.Generic;
+    using System.Data;
     using ViewModels;
 
     public interface CustomerDataAccess
@@ -46,5 +47,9 @@
         Result ResetSecurityCode(int id, string code, bool force);        
 
         Result RemoveOTP(RemoveOtpCriteria criteria);
+
+        MemberBalanceInfoModel GetMemberBalanceModel(int custId);
+
+        decimal GetMemberOustanding(int custId);
     }
 }

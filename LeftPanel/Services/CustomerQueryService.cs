@@ -61,7 +61,9 @@
                 personalInfoDataSet,
                 customerDataAccess.GetLoginInfo(custId, groupName),
                 customerDataAccess.GetBalanceInfo(custId),
-                customerDataAccess.GetCustomerStatusInfo(custId));
+                customerDataAccess.GetCustomerStatusInfo(custId),
+                customerDataAccess.GetMemberBalanceModel(custId),
+                customerDataAccess.GetMemberOustanding(custId));
         }
 
         public OnlineList GetOnlineList(int custId)

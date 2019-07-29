@@ -154,7 +154,7 @@
     <Setting Key="EAS_CustomerSelAllInfo" SpName="EAS_CustomerSelAllInfo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelAllStatus" SpName="EAS_CustomerSelAllStatus" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelLoginInfo" SpName="EAS_CustomerSelLoginInfo" DbName="DBACC.bodb02.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerSelBalanceInfo" SpName="EAS_CustomerSelBalanceInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelBalanceInfo" SpName="EAS_CustomerSelBalanceInfo_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Customer List">
     <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
@@ -340,5 +340,9 @@
   </Function>
   <Function Name="Products">
     <Setting Key="Age_Rpt_GetProductList" SpName="Age_Rpt_GetProductList" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+  </Function>
+  <Function Name="Member Balance Info">
+    <Setting Key="Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel_xtest" DbName="DBTXN.BODB02.bodbExtAccNet" Plain="0" />
+   <Setting Key="Acc_OutstandingMemberSel" SpName="Acc_OutstandingMemberSel_xtest" DbName="DB042.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
 </Functions>

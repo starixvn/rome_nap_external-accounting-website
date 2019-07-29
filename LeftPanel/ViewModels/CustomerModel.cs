@@ -1,10 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
+    using Core.Shared;
+    using Extensions;
+    using Fanex.ExternalAccount.Module.LeftPanel.Models;
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using Core.Shared;
-    using Extensions;
 
     public class CustomerModel
     {
@@ -14,7 +15,9 @@
             DataSet balanceInfoDataset,
             DataSet customerStatusInfoDataset,
             bool isUpdateCredit, 
-            Func<string, bool> canViewVNIP)
+            Func<string, bool> canViewVNIP,
+            MemberBalanceInfoModel memberBalanceInfo,
+            decimal memberOustanding)
         {
             var custInfoRow = customerInfoDataset.Tables[0].Rows[0];
             var custStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];
@@ -23,7 +26,7 @@
             HasDownline = custStatusRow.HasDownline();
             UplineHasSecurityCode = custInfoRow.UplineHasSecurityCode();
             CurrencyId = cashRow.CurrencyId();
-            BalanceInfo = new BalanceInfo(isUpdateCredit, custInfoRow.RoleId(), cashRow);
+            BalanceInfo = new BalanceInfo(isUpdateCredit, custInfoRow.RoleId(), cashRow, memberBalanceInfo, memberOustanding);
             PersonalInfo = new PersonalInfo(custInfoRow);
             Login = GetLoginInfo(loginInfoDataset, canViewVNIP);
             DownlineList = new DownlineList();
