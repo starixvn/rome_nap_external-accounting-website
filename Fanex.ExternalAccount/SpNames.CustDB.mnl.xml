@@ -345,4 +345,8 @@
   <Function Name="Products">
     <Setting Key="Age_Rpt_GetProductList" SpName="Age_Rpt_GetProductList" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
   </Function>
+  <Function Name="Member Balance Info">
+    <Setting Key="Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_OutstandingMemberSel" SpName="Acc_OutstandingMemberSel" DbName="DB042.bodb02.bodbExtAccNet" Plain="0" />
+  </Function>
 </Functions>
