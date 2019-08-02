@@ -3,7 +3,6 @@
     using Core.Authorization;
     using Core.Shared;
     using Extensions;
-    using Fanex.ExternalAccount.Module.LeftPanel.Models;
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -19,7 +18,7 @@
             DataSet loginInfoDataset,
             DataSet balanceInfoDataset,
             DataSet customerStatusInfoDataset,
-            MemberBalanceInfoModel memberBalanceInfo,
+            decimal balance,
             decimal memberOustanding);
     }
 
@@ -44,7 +43,7 @@
             DataSet loginInfoDataset,
             DataSet balanceInfoDataset,
             DataSet customerStatusInfoDataset,
-            MemberBalanceInfoModel memberBalanceInfo,
+            decimal balance,
             decimal memberOustanding)
         {
             var personalInfoRow = personalInfoDataset.Tables[0].Rows[0];
@@ -58,7 +57,7 @@
                 customerStatusInfoDataset,
                 isUpdateCredit,
                 authorizationService.CanViewVNIP,
-                memberBalanceInfo,
+                balance,
                 memberOustanding);
 
             AssignSettingValue(customerStatusInfoDataset, roleId, customerModel);

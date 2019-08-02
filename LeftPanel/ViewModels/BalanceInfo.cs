@@ -2,7 +2,6 @@
 {
     using Core.Shared;
     using Extensions;
-    using Fanex.ExternalAccount.Module.LeftPanel.Models;
     using System.Collections.Generic;
     using System.Data;
 
@@ -12,7 +11,7 @@
             bool isUpdateCredit, 
             int roleId, 
             DataRow cashRow,
-            MemberBalanceInfoModel memberBalanceInfo,
+            decimal balance,
             decimal memberOustanding)
         {
             CurrencyId = ObjectInfo.CreateInstance("Currency Id", cashRow.CurrencyId());
@@ -20,7 +19,7 @@
 
             Balances = new List<ObjectInfo>
             {
-                ObjectInfo.CreateInstance("Total Cash", roleId.IsMember() ? memberBalanceInfo.Balance + memberOustanding : cashRow.TotalCash()),
+                ObjectInfo.CreateInstance("Total Cash", roleId.IsMember() ? balance + memberOustanding : cashRow.TotalCash()),
                 ObjectInfo.CreateInstance("Yesterday Cash", cashRow.YesterdayCash()),
                 ObjectInfo.CreateInstance("Outstanding", roleId.IsMember() ? memberOustanding : cashRow.Outstanding()),
                 ObjectInfo.CreateInstance("Given Credit", cashRow.Credit())

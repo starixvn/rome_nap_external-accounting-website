@@ -2,7 +2,6 @@
 {
     using Core.Shared;
     using Extensions;
-    using Fanex.ExternalAccount.Module.LeftPanel.Models;
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -16,7 +15,7 @@
             DataSet customerStatusInfoDataset,
             bool isUpdateCredit, 
             Func<string, bool> canViewVNIP,
-            MemberBalanceInfoModel memberBalanceInfo,
+            decimal balance,
             decimal memberOustanding)
         {
             var custInfoRow = customerInfoDataset.Tables[0].Rows[0];
@@ -26,7 +25,7 @@
             HasDownline = custStatusRow.HasDownline();
             UplineHasSecurityCode = custInfoRow.UplineHasSecurityCode();
             CurrencyId = cashRow.CurrencyId();
-            BalanceInfo = new BalanceInfo(isUpdateCredit, custInfoRow.RoleId(), cashRow, memberBalanceInfo, memberOustanding);
+            BalanceInfo = new BalanceInfo(isUpdateCredit, custInfoRow.RoleId(), cashRow, balance, memberOustanding);
             PersonalInfo = new PersonalInfo(custInfoRow);
             Login = GetLoginInfo(loginInfoDataset, canViewVNIP);
             DownlineList = new DownlineList();
