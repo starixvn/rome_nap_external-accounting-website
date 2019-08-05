@@ -30,23 +30,23 @@
     <ul id="tabs-list" class="tabs">
         @if ((int)ViewBag.CurrentLevel != Role.Member)
         {
-            <li id="tab1"><a href="#tabs-1">Sportsbook's Min PT</a></li>
+            <li id="tab1"><a class="height-auto" href="#tabs-1">Sportsbook's Min PT</a></li>
         }
 
         @if ((bool)ViewBag.SyncCasino)
         {
-            <li id="tab4"><a href="#tabs-4">Casino</a></li>
+            <li id="tab4"><a style="height: auto" href="#tabs-4">Casino</a></li>
         }
-        <li id="tab8"><a href="#tabs-8">Virtual Sports</a></li>
-        <li id="tab9"><a href="#tabs-9">RNG Keno</a></li>
-        <li id="tab10"><a href="#tabs-10">Gold Deluxe</a></li>
-        <li id="tab11"><a href="#tabs-11">Colossus Bets</a></li>
-        <li id="tab14"><a href="#tabs-14">Cricket</a></li>
+        <li id="tab8"><a class="height-auto" href="#tabs-8">Virtual Sports</a></li>
+        <li id="tab9"><a class="height-auto" href="#tabs-9">RNG Keno</a></li>
+        <li id="tab10"><a class="height-auto" href="#tabs-10">Gold Deluxe</a></li>
+        <li id="tab11"><a class="height-auto" href="#tabs-11">Colossus Bets</a></li>
+        <li id="tab14"><a class="height-auto" href="#tabs-14">Cricket</a></li>
 
         @foreach (var product in Model)
         {
             <li id="tab@(product.Id)" class="dynamic-setting-tab" data-product-id="@(product.Id)">
-                <a href="#tabs-@(product.Id)">
+                <a class="height-auto" href="#tabs-@(product.Id)">
                     @(product.Name)
                 </a>
             </li>
