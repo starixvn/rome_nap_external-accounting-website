@@ -371,12 +371,6 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
         CellAlign: 'center',
         CustomAttr: ' title="Applies to all other bettypes" '
     }, {
-        HeaderText: 'Game',
-        Name: 'discountnumber',
-        Width: 60,
-        CellAlign: 'center',
-        CustomAttr: ' title="Number Game" '
-    }, {
         HeaderText: '% Odds',
         Name: 'discountmo',
         Width: 60,
@@ -486,9 +480,6 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource, requestParam) {
             Name: 'discountcs',
             Value: currentRow.discountcs
         }, {
-            Name: 'discountnumber',
-            Value: currentRow.discountnumber
-        }, {
             Name: 'discountmo',
             Value: currentRow.IsMyanmarOdds ? (currentRow.discountMyanmarOdds ? currentRow.discountMyanmarOdds : 0) : 'N/A'
         }];
@@ -555,7 +546,7 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource, requestParam) {
         }, {
             HeaderText: 'Commission',
             Name: 'groupa',
-            MergeColNumber: 8
+            MergeColNumber: 7
         }]
     };
 
