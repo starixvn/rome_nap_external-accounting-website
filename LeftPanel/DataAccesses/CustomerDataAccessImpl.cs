@@ -12,9 +12,11 @@
     using Data.DNAide;
     using DTO;
     using Extensions;
+    using Fanex.ExternalAccount.Module.LeftPanel.Models;
     using Service.Impl.Customer.Casino;
     using Utilities;
     using ViewModels;
+    using FanexCommonConverter = Fanex.Common.Converter;
 
     public class CustomerDataAccessImpl : CustomerDataAccess
     {
@@ -414,6 +416,34 @@
                 var ds = db.ExecuteDataSet();
 
                 return ds?.Tables.Count > 0 ? ds.Tables[0] : null;
+            }
+        }
+
+        public MemberBalanceInfoModel GetMemberBalanceModel(int custId)
+        {
+            using (ObjectDb objdb = new ObjectDb("Acc_BalanceMemberSel", 180))
+            {
+                var param = new Hashtable();
+                param.Add("custid", custId);
+
+                objdb.AssignParamValues(param);
+                objdb.ExecuteNonQuery();
+                return new MemberBalanceInfoModel(
+                    FanexCommonConverter.ToDecimal(objdb.GetParameterValue("balance")),
+                    FanexCommonConverter.ToDecimal(objdb.GetParameterValue("netposition")));
+            }
+        }
+
+        public decimal GetMemberOustanding(int custId)
+        {
+            using (ObjectDb objdb = new ObjectDb("Acc_OutstandingMemberSel", 180))
+            {
+                var param = new Hashtable();
+                param.Add("custid", custId);
+
+                objdb.AssignParamValues(param);
+                objdb.ExecuteNonQuery();
+                return FanexCommonConverter.ToDecimal(objdb.GetParameterValue("outstanding"));
             }
         }
     }

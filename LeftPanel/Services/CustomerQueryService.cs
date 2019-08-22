@@ -4,6 +4,7 @@
     using Customers;
     using DataAccesses;
     using Extensions;
+    using Fanex.ExternalAccount.Core.Shared;
     using System.Collections.Generic;
     using System.Data;
     using ViewModels;
@@ -54,6 +55,8 @@
             }
 
             var custId = personalInfoDataSet.Tables[0].Rows[0].CustId();
+            var roleId = personalInfoDataSet.Tables[0].Rows[0].RoleId();
+
             return customerInfoQueryService.GetCustomerModel(
                 actorId, 
                 custName, 
@@ -61,7 +64,9 @@
                 personalInfoDataSet,
                 customerDataAccess.GetLoginInfo(custId, groupName),
                 customerDataAccess.GetBalanceInfo(custId),
-                customerDataAccess.GetCustomerStatusInfo(custId));
+                customerDataAccess.GetCustomerStatusInfo(custId),
+                roleId == Role.Member ? customerDataAccess.GetMemberBalanceModel(custId).Balance : 0,
+                roleId == Role.Member ? customerDataAccess.GetMemberOustanding(custId) : 0);
         }
 
         public OnlineList GetOnlineList(int custId)

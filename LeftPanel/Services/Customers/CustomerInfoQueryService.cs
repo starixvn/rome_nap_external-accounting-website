@@ -1,11 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Customers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
     using Core.Authorization;
     using Core.Shared;
     using Extensions;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
     using ViewModels;
 
     public interface CustomerInfoQueryService
@@ -17,7 +17,9 @@
             DataSet personalInfoDataset,
             DataSet loginInfoDataset,
             DataSet balanceInfoDataset,
-            DataSet customerStatusInfoDataset);
+            DataSet customerStatusInfoDataset,
+            decimal balance,
+            decimal memberOustanding);
     }
 
     public class CustomerInfoQueryServiceImpl : CustomerInfoQueryService
@@ -40,7 +42,9 @@
             DataSet personalInfoDataset,
             DataSet loginInfoDataset,
             DataSet balanceInfoDataset,
-            DataSet customerStatusInfoDataset)
+            DataSet customerStatusInfoDataset,
+            decimal balance,
+            decimal memberOustanding)
         {
             var personalInfoRow = personalInfoDataset.Tables[0].Rows[0];
             var roleId = personalInfoRow.RoleId();
@@ -52,7 +56,9 @@
                 balanceInfoDataset,
                 customerStatusInfoDataset,
                 isUpdateCredit,
-                authorizationService.CanViewVNIP);
+                authorizationService.CanViewVNIP,
+                balance,
+                memberOustanding);
 
             AssignSettingValue(customerStatusInfoDataset, roleId, customerModel);
 
