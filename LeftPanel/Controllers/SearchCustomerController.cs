@@ -43,6 +43,8 @@
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult Index(string groupName, string custName)
         {
+            // throw new System.Exception("Louis - Sentry Logging");
+
             var userId = CurrentSession.UserId;
             ViewBag.UserId = userId;
 

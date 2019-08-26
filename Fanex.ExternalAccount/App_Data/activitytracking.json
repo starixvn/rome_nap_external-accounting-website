@@ -5,6 +5,7 @@
   "enabledTrackAllRequests": false,
   "logCategory": "Activity-Tracking",
 
+  "trackProcessDuration": true,
   "trackingItems": [
     {
       "action": "test",
