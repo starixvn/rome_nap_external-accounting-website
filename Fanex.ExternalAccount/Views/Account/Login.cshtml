@@ -51,6 +51,10 @@
             <div class="row">
                 <button id="btnLogin" class="btnLogin">@ViewLang.LoginTitle</button>
             </div>
+
+            <div class="row">
+                @Html.Partial("~/Views/Domain/Index.cshtml")
+            </div>
         </div>
         @Html.Hidden("Code", Model.Code)
         @Html.AntiForgeryToken()
