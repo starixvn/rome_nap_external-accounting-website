@@ -81,7 +81,7 @@
             var message = string.Join(
                 "\r\n",
                 "\r\nUser connection information:",
-                $"Connection Speed: {speedKbps} kpbs",
+                $"Connection Speed: {speedKbps} kbps",
                 $"Browser: {request.Browser}",
                 $"Platform: {request.Platform}",
                 $"Domain: {request.DomainName}",

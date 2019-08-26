@@ -1,5 +1,9 @@
 ﻿@{
     Layout = null;
+
+    var interval = System.Web.Configuration.WebConfigurationManager.AppSettings["TrackConnectionSpeedIntervalMinutes"];
+    var trackConnectionSpeedInterval = string.IsNullOrWhiteSpace(interval) ? 0 :
+        Convert.ToInt32(interval) * 60 * 1000;
 }
 
 <!DOCTYPE html>
@@ -28,7 +32,10 @@
 
         function InitiateSpeedDetection() {
             ShowProgressMessage("Calculating your connection speed, please wait...");
-            window.setTimeout(MeasureConnectionSpeed, 1);
+            MeasureConnectionSpeed();
+            if (@trackConnectionSpeedInterval > 0) {
+                window.setInterval(MeasureConnectionSpeed, @trackConnectionSpeedInterval);
+            }
         };
 
         if (window.addEventListener) {
