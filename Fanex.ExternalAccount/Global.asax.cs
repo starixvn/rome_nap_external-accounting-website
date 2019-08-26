@@ -1,5 +1,11 @@
 ﻿namespace Fanex.ExternalAccount
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
     using CasinoLibrary.SBAgent;
@@ -8,20 +14,15 @@
     using Core.Filters;
     using CustomerSetting.Client40;
     using Data.Configuration;
+    using Fanex.ExternalAccount.ActivityTracking.Web;
     using Fanex.ExternalAccount.UI.Helpers;
+    using Fanex.Logging.Extensions.Database;
     using GoldDeluxe.CoreSetting.Mappings;
-    using Logging.Extensions.Database;
     using Logging.Extensions.Web;
     using Module.LeftPanel.ViewModels;
     using ONEbook.UM.Filters;
     using ProductStatus.Setting.Configuration;
     using Sunplus.Libraries.APILogger;
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Routing;
 
     public class MvcApplication : HttpApplication
     {
@@ -83,6 +84,7 @@
 
         protected void Application_Start()
         {
+            LoggingConfig.Init(new[] { "pass", "pwd", "security", "Password" }, getDbExceptionInfo: DatabaseInfoGetters.GetDbExceptionInfo);
             AreaRegistration.RegisterAllAreas();
             CustomerSettingRegistration.Init();
 
@@ -104,13 +106,6 @@
             defaultCaptchaManager.RefreshUrlFactory = RefreshUrlFactory;
 
             MvcHandler.DisableMvcResponseHeader = true;
-
-            ExceptionHandler
-                .UseConfig(new LoggingConfiguration()
-                .HideSensitiveInfo(GetRegexToHideSensitiveInfo())
-                .GetHttpHeaderInfo()
-                .GetHttpSessionInfo())
-                .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
 
             var productStatusConfig = new ProductStatusConfiguration()
                 .UseAuthorizeService(new ProductStatusAuthorizeService())
@@ -146,19 +141,5 @@
                 {"area", string.Empty},
                 {captchaManager.TokenParameterName, keyValuePair.Key}
             });
-
-        private static List<string> GetRegexToHideSensitiveInfo()
-        {
-            var result = new List<string>();
-            var sensitiveInfo = new[] { "pass", "pwd", "security", "Password" };
-
-            foreach (var info in sensitiveInfo)
-            {
-                result.Add($"(?:{info}=)(?<paramValue>[^&|^\\s]+)");
-                result.Add($"(\"{info}\":)(?<paramValue>[^,|^\r]+)");
-            }
-
-            return result;
-        }
     }
 }
