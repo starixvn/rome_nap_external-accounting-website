@@ -2850,7 +2850,7 @@
     <Content Include="Views\Permission\Index.cshtml" />
     <Content Include="Views\Customer\UnsuspendSingle.cshtml" />
     <Content Include="Views\Customer\MultipleSuspend.cshtml" />
-    <Content Include="Views\Domain\Index.cshtml" />
+    <Content Include="Views\Domain\SSO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">

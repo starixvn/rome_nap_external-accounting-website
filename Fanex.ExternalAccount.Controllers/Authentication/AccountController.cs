@@ -60,6 +60,36 @@
             });
         }
 
+        public ActionResult LoginSso(string url)
+        {
+            var pwd = _currentSession.HashPassword;
+            var code = _currentSession.Captcha;
+            var rawPassword = DecryptPassword(pwd, code);
+            
+            if (!_currentSession.IsAuthenticated ||
+                string.IsNullOrWhiteSpace(pwd) ||
+                string.IsNullOrWhiteSpace(code) ||
+                string.IsNullOrEmpty(rawPassword))
+            {
+                return Redirect(url);
+            }
+
+            return Redirect(string.Format("{0}/Account/SwitchLine?username={1}&pwd={2}&code={3}", url, _currentSession.UserName, pwd, code));
+        }
+        
+        public ActionResult SwitchLine(string username, string pwd, string code)
+        {
+            var rawPassword = DecryptPassword(pwd, code);
+            if (Request.UrlReferrer == null || 
+                string.IsNullOrWhiteSpace(Request.UrlReferrer.OriginalString) ||
+                string.IsNullOrWhiteSpace(rawPassword))
+            {
+                return RedirectToAction("Login");
+            }
+
+            return VerifyLoginCredential(new LoginModel { UserName = username, Password = pwd, Code = code }, rawPassword);
+        }
+
         [HttpPost]
         public ActionResult Login(LoginModel model)
         {
@@ -111,10 +141,16 @@
                 out custId,
                 out onuserId,
                 out hasMultipleGroupsPermission);
-
+            
             return result?.IsSuccess == true
                 ? LoginSuccessful(model, custId, onuserId, hasMultipleGroupsPermission, result.ResultData as Group)
                 : LoginFailed(model.UserName, result);
+        }
+
+        private void RegisterLoginInfo(string hashPwd, string code)
+        {
+            _currentSession.HashPassword = hashPwd;
+            _currentSession.Captcha = code;
         }
 
         private ActionResult LoginFailed(string failedUsername, Result result)
@@ -184,6 +220,7 @@
             FormsAuthentication.SetAuthCookie(model.UserName, false);
 
             SetUserSession(model, custId, onuserId, hasMultipleGroupsPermission, group);
+            RegisterLoginInfo(model.Password, model.Code);
 
             return RedirectOTPPage();
         }

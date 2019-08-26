@@ -1,0 +1,39 @@
+﻿@using System.Web.Configuration;
+@{
+    Layout = null;
+    var domains = WebConfigurationManager.AppSettings["Domains"].Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+    var currentDomain = Request.Headers["Host"] +
+        (Request.ApplicationPath.Equals("/", StringComparison.OrdinalIgnoreCase) ? string.Empty : Request.ApplicationPath);
+}
+@if (domains.Length > 0)
+{
+    <select id="switchLine" onchange="SwithLine()" style="background-color: #313c51; color: #fff; cursor: pointer">
+        <option>
+            Switch Line
+        </option>
+            @for (var i = 0; i < domains.Length; i++)
+            {
+                var domainName = domains[i].Split(';')[0];
+                var aliasName = domains[i].Split(';')[1];
+
+                domainName = domainName.IndexOf(currentDomain, StringComparison.OrdinalIgnoreCase) != -1 ? string.Empty : domainName;
+
+                var formatedDomain = domainName.StartsWith("http") ? domainName :
+                    string.IsNullOrWhiteSpace(domainName) ? string.Empty : "http://" + domainName;
+                if (!string.IsNullOrWhiteSpace(domainName))
+                {
+                    <option value="@formatedDomain">@aliasName</option>
+                }
+            }
+    </select>
+
+    <script>
+        function SwithLine() {
+            if (document.getElementById('switchLine').selectedIndex != 0) {
+                Fanex.ExtAcc.BlockUI();
+
+                location.href = '/Account/LoginSso?url=' + $('#switchLine').val();
+            }
+        }
+    </script>
+}

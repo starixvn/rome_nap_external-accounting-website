@@ -69,6 +69,7 @@
                     <li><span class="circle">@CurrentSession.Instance.UserName</span></li>
                     <li><span class="icon-lock-reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')" title="Reset Password"></span></li>
                     <li><span class="icon-logout" onclick="Fanex.ExtAcc.Account.Logout()" title="Log out"></span></li>
+                    <li>@Html.Partial("~/Views/Domain/SSO.cshtml")</li>
                 </ul>
             </div>
             <!-- For mobile -->
