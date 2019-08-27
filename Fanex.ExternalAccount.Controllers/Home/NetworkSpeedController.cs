@@ -54,6 +54,11 @@
             var adminUsername = CurrentSession.UserName;
             foreach (var groupId in CalculatingNWSpeedGroupIds)
             {
+                if (groupId == 0)
+                {
+                    return true;
+                }
+
                 if (groupId > 0 && CurrentSession.GroupId == groupId)
                 {
                     if (groupId == ITGroupId
