@@ -60,7 +60,7 @@
             });
         }
 
-        public ActionResult LoginSso(string url)
+        public ActionResult LoginSso(string url, string line)
         {
             var pwd = _currentSession.HashPassword;
             var code = _currentSession.Captcha;
@@ -74,10 +74,10 @@
                 return Redirect(url);
             }
 
-            return Redirect(string.Format("{0}/Account/SwitchLine?username={1}&pwd={2}&code={3}", url, _currentSession.UserName, pwd, code));
+            return Redirect(string.Format("{0}/Account/SwitchLine?username={1}&pwd={2}&code={3}&line={4}", url, _currentSession.UserName, pwd, code, line));
         }
         
-        public ActionResult SwitchLine(string username, string pwd, string code)
+        public ActionResult SwitchLine(string username, string pwd, string code, string line)
         {
             var rawPassword = DecryptPassword(pwd, code);
             if (Request.UrlReferrer == null || 
@@ -87,7 +87,7 @@
                 return RedirectToAction("Login");
             }
 
-            return VerifyLoginCredential(new LoginModel { UserName = username, Password = pwd, Code = code }, rawPassword);
+            return VerifyLoginCredential(new LoginModel { UserName = username, Password = pwd, Code = code, Line = line }, rawPassword);
         }
 
         [HttpPost]
@@ -147,10 +147,11 @@
                 : LoginFailed(model.UserName, result);
         }
 
-        private void RegisterLoginInfo(string hashPwd, string code)
+        private void RegisterLoginInfo(string hashPwd, string code, string line)
         {
             _currentSession.HashPassword = hashPwd;
             _currentSession.Captcha = code;
+            _currentSession.CurrentLine = line;
         }
 
         private ActionResult LoginFailed(string failedUsername, Result result)
@@ -220,7 +221,7 @@
             FormsAuthentication.SetAuthCookie(model.UserName, false);
 
             SetUserSession(model, custId, onuserId, hasMultipleGroupsPermission, group);
-            RegisterLoginInfo(model.Password, model.Code);
+            RegisterLoginInfo(model.Password, model.Code, model.Line);
 
             return RedirectOTPPage();
         }

@@ -86,6 +86,7 @@
             var message = string.Join(
                 "\r\n",
                 "\r\nUser connection information:",
+                $"Line: {new Core.Context.CurrentSession().CurrentLine}",
                 $"Connection Speed: {speedKbps} kbps",
                 $"Browser: {request.Browser}",
                 $"Platform: {request.Platform}",
