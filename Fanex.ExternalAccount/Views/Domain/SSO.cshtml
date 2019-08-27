@@ -32,7 +32,7 @@
             if (document.getElementById('switchLine').selectedIndex != 0) {
                 Fanex.ExtAcc.BlockUI();
 
-                location.href = '/Account/LoginSso?url=' + $('#switchLine').val();
+                location.href = '@Url.Content("~/Account/LoginSso?url=")' + $('#switchLine').val();
             }
         }
     </script>
