@@ -4,12 +4,22 @@
     var domains = WebConfigurationManager.AppSettings["Domains"].Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
     var currentDomain = Request.Headers["Host"] +
         (Request.ApplicationPath.Equals("/", StringComparison.OrdinalIgnoreCase) ? string.Empty : Request.ApplicationPath);
+
+    var currentLine = string.Empty;
+    foreach (var domain in domains)
+    {
+        if (domain.IndexOf(currentDomain) != -1)
+        {
+            currentLine = domain.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ElementAt(1);
+            break;
+        }
+    }
 }
 @if (domains.Length > 0)
 {
-    <select id="switchLine" onchange="javascript:switchLine()" style="background-color: #313c51; color: #fff; cursor: pointer">
+    <select id="switchLine" onchange="javascript:switchLine()" style="background-color: #313c51; color: #ffa500; cursor: pointer; font-weight: bold">
         <option>
-            Switch Line
+            @currentLine
         </option>
             @for (var i = 0; i < domains.Length; i++)
             {
@@ -22,7 +32,7 @@
                     string.IsNullOrWhiteSpace(domainName) ? string.Empty : "http://" + domainName;
                 if (!string.IsNullOrWhiteSpace(domainName))
                 {
-                    <option value="@formatedDomain">@aliasName</option>
+                    <option style="color: #fff; cursor: pointer" value="@formatedDomain">@aliasName</option>
                 }
             }
     </select>
