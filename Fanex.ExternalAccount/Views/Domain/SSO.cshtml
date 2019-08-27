@@ -7,7 +7,7 @@
 }
 @if (domains.Length > 0)
 {
-    <select id="switchLine" onchange="SwithLine()" style="background-color: #313c51; color: #fff; cursor: pointer">
+    <select id="switchLine" onchange="javascript:switchLine()" style="background-color: #313c51; color: #fff; cursor: pointer">
         <option>
             Switch Line
         </option>
@@ -28,11 +28,13 @@
     </select>
 
     <script>
-        function SwithLine() {
-            if (document.getElementById('switchLine').selectedIndex != 0) {
+        function switchLine() {
+            var selects = $("select[id=switchLine]");
+            var select = isMobile.phone || isMobile.tablet ? selects[1] : selects[0];
+            if (select.selectedIndex != 0) {
                 Fanex.ExtAcc.BlockUI();
 
-                location.href = '@Url.Content("~/Account/LoginSso?url=")' + $('#switchLine').val();
+                location.href = '@Url.Content("~/Account/LoginSso?url=")' + $(select).val();
             }
         }
     </script>
