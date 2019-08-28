@@ -1,21 +1,30 @@
 ﻿@using System.Web.Configuration;
+@using Fanex.ExternalAccount.Core.Context;
+@using Fanex.ExternalAccount.DTO.UserControl;
 @{
     Layout = null;
-    var domains = WebConfigurationManager.AppSettings["Domains"].Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+
+    string[] domains = null;
+    string currentLine = null;
     var currentDomain = Request.Headers["Host"] +
         (Request.ApplicationPath.Equals("/", StringComparison.OrdinalIgnoreCase) ? string.Empty : Request.ApplicationPath);
+    var supportSwitchLine = !Group.IsOfficeGroup(new CurrentSession().CurrencyGroup);
 
-    var currentLine = "Switch Line";
-    foreach (var domain in domains)
+    if (supportSwitchLine)
     {
-        if (domain.IndexOf(currentDomain) != -1)
+        domains = WebConfigurationManager.AppSettings["Domains"].Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (var domain in domains)
         {
-            currentLine = domain.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ElementAt(1);
-            break;
+            if (domain.IndexOf(currentDomain) != -1)
+            {
+                currentLine = domain.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ElementAt(1);
+                break;
+            }
         }
     }
 }
-@if (domains.Length > 0)
+@if (supportSwitchLine)
 {
     <select id="switchLine" onchange="javascript:switchLine()" style="background-color: #313c51; color: #ffa500; cursor: pointer; font-weight: bold">
         <option>

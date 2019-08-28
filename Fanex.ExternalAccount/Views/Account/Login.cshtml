@@ -10,7 +10,7 @@
     var currentDomain = Request.Headers["Host"] +
         (Request.ApplicationPath.Equals("/", StringComparison.OrdinalIgnoreCase) ? string.Empty : Request.ApplicationPath);
 
-    var currentLine = "Switch Line";
+    var currentLine = currentDomain;
     foreach (var domain in domains)
     {
         if (domain.IndexOf(currentDomain) != -1)
