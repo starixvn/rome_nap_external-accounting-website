@@ -147,13 +147,6 @@
                 : LoginFailed(model.UserName, result);
         }
 
-        private void RegisterLoginInfo(string hashPwd, string code, string line)
-        {
-            _currentSession.HashPassword = hashPwd;
-            _currentSession.Captcha = code;
-            _currentSession.CurrentLine = line;
-        }
-
         private ActionResult LoginFailed(string failedUsername, Result result)
         {
             UpdateLoginFailedAttempt(failedUsername);
@@ -215,13 +208,12 @@
             var denyAccessPublicDomain = IsDenyAccessPublicDomain(hasMultipleGroupsPermission);
             if (denyAccessPublicDomain)
             {
-                return View(new LoginModel(ViewLang.AccessDenyToPublicDomain));
+                return View("~/Views/Account/Login.cshtml", new LoginModel(ViewLang.AccessDenyToPublicDomain));
             }
 
             FormsAuthentication.SetAuthCookie(model.UserName, false);
 
             SetUserSession(model, custId, onuserId, hasMultipleGroupsPermission, group);
-            RegisterLoginInfo(model.Password, model.Code, model.Line);
 
             return RedirectOTPPage();
         }
@@ -331,6 +323,9 @@
             _currentSession.CurrencyGroup = group.GroupName;
             _currentSession.IsITAdmin = group.IsIT;
             _currentSession.FromSystem = 3;
+            _currentSession.Captcha = model.Code;
+            _currentSession.HashPassword = model.Password;
+            _currentSession.CurrentLine = model.Line;
         }
     }
 }
