@@ -125,8 +125,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.2\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoResources, Version=1.0.1.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoResources.1.0.1.5\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoResources.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoResources, Version=1.0.1.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoResources.1.0.1.7\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoResources.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=2.0.1.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoSetting.2.0.2.1\lib\net40\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
