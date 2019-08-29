@@ -89,38 +89,40 @@
             dataType: 'html',
             cache: false,
             success: function (data) {
-                if (data == -1 || isNaN(data)) {
-                    try {
-                        if (typeof Fanex.ExtAcc.Form != 'undefined') {
-                            if (document.getElementById('windowPopup')) {
-                                var tag = document.getElementById('windowPopup');
+                if (!Fanex.ExtAcc.IsSwitchLine) {
+                    if (data == -1 || isNaN(data)) {
+                        try {
+                            if (typeof Fanex.ExtAcc.Form != 'undefined') {
+                                if (document.getElementById('windowPopup')) {
+                                    var tag = document.getElementById('windowPopup');
 
-                                if (tag.tagName == "IFRAME") {
-                                    Fanex.ExtAcc.Form.Close();
-                                } else {
-                                    $('#windowPopup').html('<div>You have logged in from another session or your login session has expired!<div>'); // Prevent opening popup if any
+                                    if (tag.tagName == "IFRAME") {
+                                        Fanex.ExtAcc.Form.Close();
+                                    } else {
+                                        $('#windowPopup').html('<div>You have logged in from another session or your login session has expired!<div>'); // Prevent opening popup if any
+                                    }
                                 }
-                            }
 
-                            var timeout = setTimeout(function () {
-                                clearTimeout(timeout);
-                                Fanex.ExtAcc.Form.Alert('Session Expired', 'You have logged in from another session or your login session has expired!', 400, 150, null, function () {
-                                    location.href = resolveClientUrl('Account/LogOff');
+                                var timeout = setTimeout(function () {
+                                    clearTimeout(timeout);
+                                    Fanex.ExtAcc.Form.Alert('Session Expired', 'You have logged in from another session or your login session has expired!', 400, 150, null, function () {
+                                        location.href = resolveClientUrl('Account/LogOff');
+                                    }, 1000);
                                 }, 1000);
-                            }, 1000);
+                            }
+                        } catch (e) {
+                            top.location.href = resolveClientUrl('Account/LogOff');
                         }
-                    } catch (e) {
-                        top.location.href = resolveClientUrl('Account/LogOff');
                     }
-                }
-                else if (data == 2) {
-                    top.location.href = resolveClientUrl('Shared/Offline');
-                }
-                else if (data == 3) {
-                    top.location.href = resolveClientUrl('Shared/Error');
-                }
+                    else if (data == 2) {
+                        top.location.href = resolveClientUrl('Shared/Offline');
+                    }
+                    else if (data == 3) {
+                        top.location.href = resolveClientUrl('Shared/Error');
+                    }
 
-                Fanex.ExtAcc.Account.RecheckinXHR = null;
+                    Fanex.ExtAcc.Account.RecheckinXHR = null;
+                }
             },
             error: function (xhr, status, e) {
                 Fanex.ExtAcc.Account.RecheckinXHR = null;

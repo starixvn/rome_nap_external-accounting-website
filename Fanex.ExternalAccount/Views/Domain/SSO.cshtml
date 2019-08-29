@@ -51,6 +51,7 @@
             var selects = $("select[id=switchLine]");
             var select = isMobile.phone || isMobile.tablet ? selects[1] : selects[0];
             if (select.selectedIndex != 0) {
+                Fanex.ExtAcc.IsSwitchLine = true;
                 Fanex.ExtAcc.BlockUI();
 
                 location.href = '@Url.Content("~/Account/LoginSso?url=")' + $(select).val() + '&line=' + $(select).find('option:selected').text();
