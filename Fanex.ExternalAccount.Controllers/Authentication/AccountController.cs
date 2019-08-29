@@ -297,7 +297,7 @@
 
         private bool IsDenyAccessPublicDomain(bool hasMultipleGroupsPermission)
         {
-            string url = Request.Url.ToString();
+            string url = Request.Headers["Host"] + (Request.ApplicationPath.Length > 1 ? Request.ApplicationPath : string.Empty);
             var isPublicDomain = Config.PublicDomains.Any(url.Contains);
             return Config.IsRestrictAccessPublicDomain && isPublicDomain && hasMultipleGroupsPermission;
         }
