@@ -5,10 +5,10 @@
     Layout = null;
 
     string[] domains = null;
-    string currentLine = null;
     var currentDomain = Request.Headers["Host"] +
         (Request.ApplicationPath.Equals("/", StringComparison.OrdinalIgnoreCase) ? string.Empty : Request.ApplicationPath);
     var supportSwitchLine = !Group.IsOfficeGroup(new CurrentSession().CurrencyGroup);
+    string currentLine = currentDomain;
 
     if (supportSwitchLine)
     {
