@@ -81,7 +81,6 @@
         {
             var rawPassword = DecryptPassword(pwd, code);
             if (Request.UrlReferrer == null || 
-                string.IsNullOrWhiteSpace(Request.UrlReferrer.OriginalString) ||
                 string.IsNullOrWhiteSpace(rawPassword))
             {
                 return RedirectToAction("Login");
