@@ -21,21 +21,18 @@
         private readonly CachingService _cache;
         private readonly IGroupService _groupService;
         private readonly IFunctionService functionService;
-        private readonly ILoginService loginService;
 
         public GroupController(
             CachingService cache,
             IGroupService groupService,
-            IFunctionService functionService,
-            ILoginService loginService)
+            IFunctionService functionService)
         {
             _groupService = groupService ?? new GroupService();
             _cache = cache ?? new CachingService();
             this.functionService = functionService ?? new FunctionService();
-            this.loginService = loginService ?? new LoginService();
         }
 
-        public GroupController() : this(null, null, null, null)
+        public GroupController() : this(null, null, null)
         {
         }
 
