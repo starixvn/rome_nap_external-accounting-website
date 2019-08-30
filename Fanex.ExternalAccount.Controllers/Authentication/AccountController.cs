@@ -22,6 +22,7 @@
     using ViewModels;
     using CurrentContext = Core.Context.CurrentContext;
     using CurrentSession = Core.Context.CurrentSession;
+    using RSACryptoPad;
 
     public class AccountController : DefaultCaptchaController
     {
@@ -65,7 +66,7 @@
             var pwd = _currentSession.HashPassword;
             var code = _currentSession.Captcha;
             var rawPassword = DecryptPassword(pwd, code);
-            
+
             if (!_currentSession.IsAuthenticated ||
                 string.IsNullOrWhiteSpace(pwd) ||
                 string.IsNullOrWhiteSpace(code) ||
@@ -73,14 +74,41 @@
             {
                 return Redirect(url);
             }
+            
+            var path = Server.MapPath("~/IbcKeys/ibcpkey.snk");
+            var timeout = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff tt");
+            var parameter = string.Format("{0}&{1}&{2}&{3}&{4}", _currentSession.UserName, pwd, code, line, timeout);
+            parameter = new EncryptionThread().EncryptString(parameter, 1024, path);
 
-            return Redirect(string.Format("{0}/Account/SwitchLine?username={1}&pwd={2}&code={3}&line={4}", url, _currentSession.UserName, pwd, code, line));
+            Session.Clear();
+
+            return Redirect(string.Format("{0}/Account/SwitchLine?param={1}", url, parameter));
         }
         
-        public ActionResult SwitchLine(string username, string pwd, string code, string line)
+        public ActionResult SwitchLine(string param)
         {
+            var path = Server.MapPath("~/IbcKeys/ibckey.snk");
+            string parameter = null;
+            try
+            {
+                parameter = new EncryptionThread().DecryptString(param.Replace(' ', '+'), 1024, path);
+            }
+            catch
+            {
+                return RedirectToAction("Login");
+            }
+
+            var queries = parameter.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+            var username = queries[0];
+            var pwd = queries[1];
+            var code = queries[2];
+            var line = queries[3];
+            var timeout = queries[4];
+            var isTimeout = DateTime.Now.Subtract(Convert.ToDateTime(timeout)).TotalSeconds > 10;
             var rawPassword = DecryptPassword(pwd, code);
+
             if (Request.UrlReferrer == null || 
+                isTimeout ||
                 string.IsNullOrWhiteSpace(rawPassword))
             {
                 return RedirectToAction("Login");
