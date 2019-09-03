@@ -37,7 +37,7 @@
         public override void WriteBodyReport(ISheet resultSheet)
         {
             var dtr = _builder.Data.Rows;
-            var totalColumn = _builder.IsMyanmarOdds || _builder.RoleId.IsSuper() ? 16 : 15;
+            var totalColumn = _builder.IsMyanmarOdds || _builder.RoleId.IsSuper() ? 15 : 14;
             if (_builder.RoleId.IsSuper())
             {
                 totalColumn++;
@@ -50,7 +50,7 @@
             }
             else
             {
-                totalColumn = 20;
+                totalColumn = 18;
                 lastColumnIndex = FirstColumnIndex + totalColumn - 1;
                 WriteMemberReport(resultSheet, dtr, lastColumnIndex, _builder.IsMyanmarOdds);
             }
@@ -80,7 +80,7 @@
                     items.UserGroup(),
                     items.Discount(),
                     items.Discount1x2(),
-                    items.DiscountCasino(),                  
+                    items.DiscountCasino(),
                     items.PlayerDiscount(),
                     items.PlayerDiscount1x2(),
                     items.PlayerDiscountCasino(),
@@ -90,8 +90,8 @@
 
                 if (isMyanmarOdds)
                 {
-                    values.Insert(12, items.IsMyanmarOdds() ? items.DiscountMyanmarOdds() : "N/A");
-                    values.Insert(17, items.IsMyanmarOdds() ? items.PlayerDiscountMyanmarOdds() : "N/A");
+                    values.Insert(11, items.IsMyanmarOdds() ? items.DiscountMyanmarOdds() : "N/A");
+                    values.Insert(15, items.IsMyanmarOdds() ? items.PlayerDiscountMyanmarOdds() : "N/A");
                 }
 
                 resultSheet.GetRow(rowId).WriteCells(FirstColumnIndex, values);
@@ -147,7 +147,7 @@
             var newValues = values;
             if (_builder.RoleId.IsNotSuper())
             {
-                newValues.RemoveAt(13);
+                newValues.RemoveAt(12);
             }
 
             return newValues;
