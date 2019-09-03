@@ -37,5 +37,7 @@ namespace Fanex.ExternalAccount.ViewModel.Account
         public string LoginFailedMessage { get; set; }
 
         public bool InvalidOTP { get; set; }
+
+        public string Line { get; set; }
     }
 }

@@ -1,0 +1,61 @@
+﻿@using System.Web.Configuration;
+@using Fanex.ExternalAccount.Core.Context;
+@using Fanex.ExternalAccount.DTO.UserControl;
+@{
+    Layout = null;
+
+    string[] domains = null;
+    var currentDomain = Request.Headers["Host"] +
+        (Request.ApplicationPath.Equals("/", StringComparison.OrdinalIgnoreCase) ? string.Empty : Request.ApplicationPath);
+    var supportSwitchLine = !Group.IsOfficeGroup(new CurrentSession().CurrencyGroup);
+    string currentLine = currentDomain;
+
+    if (supportSwitchLine)
+    {
+        domains = WebConfigurationManager.AppSettings["Domains"].Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (var domain in domains)
+        {
+            if (domain.IndexOf(currentDomain) != -1)
+            {
+                currentLine = domain.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ElementAt(1);
+                break;
+            }
+        }
+    }
+}
+@if (supportSwitchLine)
+{
+    <select id="switchLine" onchange="javascript:switchLine()" style="background-color: #313c51; color: #ffa500; cursor: pointer; font-weight: bold">
+        <option>
+            @currentLine
+        </option>
+            @for (var i = 0; i < domains.Length; i++)
+            {
+                var domainName = domains[i].Split(';')[0];
+                var aliasName = domains[i].Split(';')[1];
+
+                domainName = domainName.IndexOf(currentDomain, StringComparison.OrdinalIgnoreCase) != -1 ? string.Empty : domainName;
+
+                var formatedDomain = domainName.StartsWith("http") ? domainName :
+                    string.IsNullOrWhiteSpace(domainName) ? string.Empty : "http://" + domainName;
+                if (!string.IsNullOrWhiteSpace(domainName))
+                {
+                    <option style="color: #fff" value="@formatedDomain">@aliasName</option>
+                }
+            }
+    </select>
+
+    <script>
+        function switchLine() {
+            var selects = $("select[id=switchLine]");
+            var select = isMobile.phone || isMobile.tablet ? selects[1] : selects[0];
+            if (select.selectedIndex != 0) {
+                Fanex.ExtAcc.IsSwitchLine = true;
+                Fanex.ExtAcc.BlockUI();
+
+                location.href = '@Url.Content("~/Account/LoginSso?url=")' + $(select).val() + '&line=' + $(select).find('option:selected').text();
+            }
+        }
+    </script>
+}

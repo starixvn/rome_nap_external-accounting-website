@@ -1,9 +1,24 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using CaptchaMvc.HtmlHelpers
+@using System.Web.Configuration
 @model Fanex.ExternalAccount.ViewModel.Account.LoginModel
 @{
     ViewBag.Title = ViewLang.LoginTitle;
     Layout = null;
+
+    var domains = WebConfigurationManager.AppSettings["Domains"].Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+    var currentDomain = Request.Headers["Host"] +
+        (Request.ApplicationPath.Equals("/", StringComparison.OrdinalIgnoreCase) ? string.Empty : Request.ApplicationPath);
+
+    var currentLine = currentDomain;
+    foreach (var domain in domains)
+    {
+        if (domain.IndexOf(currentDomain) != -1)
+        {
+            currentLine = domain.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ElementAt(1);
+            break;
+        }
+    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -53,6 +68,7 @@
             </div>
         </div>
         @Html.Hidden("Code", Model.Code)
+        @Html.Hidden("Line", currentLine)
         @Html.AntiForgeryToken()
     }
 

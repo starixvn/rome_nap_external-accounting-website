@@ -26,6 +26,8 @@
         public const string EASIsLogin = "EASIsLogin";
         public const string EASLoginAttempt = "_loginAttempt";
         public const string EASUserAttempt = "_userAttempt";
+        public const string EASHashPwd = "EASHashPwd";
+        public const string EASLine = "EASLine";
 
         public static ICurrentSession Instance => new CurrentSession();
 
@@ -183,6 +185,18 @@
             get { return CultureInfo.CurrentCulture.Name; }
 
             set { }
+        }
+
+        public string HashPassword
+        {
+            get { return HttpContext.Current.Session[EASHashPwd] as string; }
+            set { HttpContext.Current.Session[EASHashPwd] = value; }
+        }
+
+        public string CurrentLine
+        {
+            get { return HttpContext.Current.Session[EASLine] as string; }
+            set { HttpContext.Current.Session[EASLine] = value; }
         }
     }
 }

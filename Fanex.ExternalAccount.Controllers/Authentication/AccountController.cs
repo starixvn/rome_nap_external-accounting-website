@@ -22,6 +22,7 @@
     using ViewModels;
     using CurrentContext = Core.Context.CurrentContext;
     using CurrentSession = Core.Context.CurrentSession;
+    using RSACryptoPad;
 
     public class AccountController : DefaultCaptchaController
     {
@@ -58,6 +59,71 @@
                 LoginAttempt = _currentSession.LoginAttempt,
                 InvalidOTP = _currentSession.InvalidOTP
             });
+        }
+
+        public ActionResult LoginSso(string url, string line)
+        {
+            var pwd = _currentSession.HashPassword;
+            var code = _currentSession.Captcha;
+            var rawPassword = DecryptPassword(pwd, code);
+
+            if (!_currentSession.IsAuthenticated ||
+                string.IsNullOrWhiteSpace(pwd) ||
+                string.IsNullOrWhiteSpace(code) ||
+                string.IsNullOrEmpty(rawPassword))
+            {
+                return Redirect(url);
+            }
+            
+            var path = Server.MapPath("~/IbcKeys/ibcpkey.snk");
+            var timeout = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff tt");
+            var parameter = $"{_currentSession.UserName}&{pwd}&{code}&{line}&{timeout}";
+            parameter = new EncryptionThread().EncryptString(parameter, 1024, path);
+
+            var onuserId = _currentSession.OnUserId;
+            if (onuserId > 0)
+            {
+                SignOut(onuserId, _currentSession.UserName);
+            }
+
+            Session.Clear();
+
+            return Redirect($"{url}/Account/SwitchLine?param={parameter}");
+        }
+
+        public ActionResult SwitchLine(string param)
+        {
+            var path = Server.MapPath("~/IbcKeys/ibckey.snk");
+            var parameter = new EncryptionThread().DecryptString(param.Replace(' ', '+'), 1024, path);
+            var queries = parameter.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+            var username = queries[0];
+            var pwd = queries[1];
+            var code = queries[2];
+            var line = queries[3];
+            var timeout = queries[4];
+            var totalSeconds = DateTime.Now.Subtract(Convert.ToDateTime(timeout)).TotalSeconds;
+            var isTimeout = totalSeconds > 10;
+            var rawPassword = DecryptPassword(pwd, code);
+
+            if (Request.UrlReferrer == null)
+            {
+                ExceptionHandler.Handle(new Exception($"Switch line failed: call directly URL, username: {username}"), TraceEventType.Warning);
+                return RedirectToAction("Login");
+            }
+
+            if (isTimeout)
+            {
+                ExceptionHandler.Handle(new Exception($"Switch line reached limit timeout: {totalSeconds}s, username: {username}"), TraceEventType.Warning);
+                return RedirectToAction("Login");
+            }
+
+            if (string.IsNullOrWhiteSpace(rawPassword))
+            {
+                ExceptionHandler.Handle(new Exception($"Switch line failed: wrong param info"), TraceEventType.Warning);
+                return RedirectToAction("Login");
+            }
+
+            return VerifyLoginCredential(new LoginModel { UserName = username, Password = pwd, Code = code, Line = line }, rawPassword);
         }
 
         [HttpPost]
@@ -111,7 +177,7 @@
                 out custId,
                 out onuserId,
                 out hasMultipleGroupsPermission);
-
+            
             return result?.IsSuccess == true
                 ? LoginSuccessful(model, custId, onuserId, hasMultipleGroupsPermission, result.ResultData as Group)
                 : LoginFailed(model.UserName, result);
@@ -178,7 +244,7 @@
             var denyAccessPublicDomain = IsDenyAccessPublicDomain(hasMultipleGroupsPermission);
             if (denyAccessPublicDomain)
             {
-                return View(new LoginModel(ViewLang.AccessDenyToPublicDomain));
+                return View("~/Views/Account/Login.cshtml", new LoginModel(ViewLang.AccessDenyToPublicDomain));
             }
 
             FormsAuthentication.SetAuthCookie(model.UserName, false);
@@ -267,7 +333,7 @@
 
         private bool IsDenyAccessPublicDomain(bool hasMultipleGroupsPermission)
         {
-            string url = Request.Url.ToString();
+            string url = Request.Headers["Host"] + (Request.ApplicationPath.Length > 1 ? Request.ApplicationPath : string.Empty);
             var isPublicDomain = Config.PublicDomains.Any(url.Contains);
             return Config.IsRestrictAccessPublicDomain && isPublicDomain && hasMultipleGroupsPermission;
         }
@@ -293,6 +359,9 @@
             _currentSession.CurrencyGroup = group.GroupName;
             _currentSession.IsITAdmin = group.IsIT;
             _currentSession.FromSystem = 3;
+            _currentSession.Captcha = model.Code;
+            _currentSession.HashPassword = model.Password;
+            _currentSession.CurrentLine = model.Line;
         }
     }
 }

@@ -7,20 +7,21 @@
 @using Fanex.RemotingRef;
 
 @{
+    var authenService = AuthorizationServiceImpl.Instance;
     var isLocal = Request.IsLocal ? 1 : 0;
     var userId = CurrentSession.Instance.UserId;
-    var admins = AuthorizationServiceImpl.Instance.HasOpenSuperPermission(userId) ? new int[] { userId } : new int[] { };
-    var showBetSetting = AuthorizationServiceImpl.Instance.HasReadPermissionOnFunctions(AccountInfoProductConfiguration.VisibleBetSettingPermissions.Values, userId) ? 1 : 0;
+    var admins = authenService.HasOpenSuperPermission(userId) ? new int[] { userId } : new int[] { };
+    var showBetSetting = authenService.HasReadPermissionOnFunctions(AccountInfoProductConfiguration.VisibleBetSettingPermissions.Values, userId) ? 1 : 0;
     var allowAdminEditSuperStatus = JsonConvert.SerializeObject(admins, Formatting.None, new JsonSerializerSettings
     {
         ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
         NullValueHandling = NullValueHandling.Ignore
     });
-    var isUpdateCredit = AuthorizationServiceImpl.Instance.HasUpdateCreditPermission(userId) ? 1 : 0;
-    var hasClose = AuthorizationServiceImpl.Instance.HasCloseCustomerPermission(userId) ? 1 : 0;
-    var hasSuspend = AuthorizationServiceImpl.Instance.HasSuspendCustomerPermission(userId) ? 1 : 0;
-    var allowAutoPT = AuthorizationServiceImpl.Instance.HasAllowAutoMPTPermission(userId) ? 1 : 0;
-    var hasClearCredit = AuthorizationServiceImpl.Instance.HasClearCreditPermission(userId) ? 1 : 0;
+    var isUpdateCredit = authenService.HasUpdateCreditPermission(userId) ? 1 : 0;
+    var hasClose = authenService.HasCloseCustomerPermission(userId) ? 1 : 0;
+    var hasSuspend = authenService.HasSuspendCustomerPermission(userId) ? 1 : 0;
+    var allowAutoPT = authenService.HasAllowAutoMPTPermission(userId) ? 1 : 0;
+    var hasClearCredit = authenService.HasClearCreditPermission(userId) ? 1 : 0;
     var enableKeno = ProductSettings.IsShowKeno ? 1 : 0;
     var showKenoSetting = ProductSettings.ShowKenoSetting ? "true" : "false";
     var showGoldDeluxeSetting = ProductSettings.IsShowGoldDeluxe ? 1 : 0;
@@ -69,6 +70,7 @@
                     <li><span class="circle">@CurrentSession.Instance.UserName</span></li>
                     <li><span class="icon-lock-reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')" title="Reset Password"></span></li>
                     <li><span class="icon-logout" onclick="Fanex.ExtAcc.Account.Logout()" title="Log out"></span></li>
+                    <li>@Html.Partial("~/Views/Domain/SSO.cshtml")</li>
                 </ul>
             </div>
             <!-- For mobile -->
@@ -90,6 +92,7 @@
                 </div>
             </div>
             @Html.Action("_Menu", "Shared")
+            <div style="margin: 15px 0 0 57px">@Html.Partial("~/Views/Domain/SSO.cshtml")</div>
         </div>
 
         <div id='mainContent' class="main-content">

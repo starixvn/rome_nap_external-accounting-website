@@ -326,7 +326,10 @@
         {
             var domain = CurrentContext.DomainName
                 .Replace("www.", string.Empty)
-                .Replace("staging.", string.Empty);
+                .Replace("staging.", string.Empty)
+                .Replace("h1.", string.Empty)
+                .Replace("h2.", string.Empty)
+                .Replace("h3.", string.Empty);
             string url = Request.Url.ToString();
             var isPublicDomain = Config.PublicDomains.Any(url.Contains);
             domain = isPublicDomain ? domain : "focapts.com";
