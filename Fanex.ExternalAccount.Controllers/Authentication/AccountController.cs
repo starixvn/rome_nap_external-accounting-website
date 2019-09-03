@@ -80,26 +80,21 @@
             var parameter = $"{_currentSession.UserName}&{pwd}&{code}&{line}&{timeout}";
             parameter = new EncryptionThread().EncryptString(parameter, 1024, path);
 
+            var onuserId = _currentSession.OnUserId;
+            if (onuserId > 0)
+            {
+                SignOut(onuserId, _currentSession.UserName);
+            }
+
             Session.Clear();
 
             return Redirect($"{url}/Account/SwitchLine?param={parameter}");
         }
-        
+
         public ActionResult SwitchLine(string param)
         {
             var path = Server.MapPath("~/IbcKeys/ibckey.snk");
-            string parameter = null;
-            try
-            {
-                parameter = new EncryptionThread().DecryptString(param.Replace(' ', '+'), 1024, path);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex, TraceEventType.Warning);
-
-                return RedirectToAction("Login");
-            }
-
+            var parameter = new EncryptionThread().DecryptString(param.Replace(' ', '+'), 1024, path);
             var queries = parameter.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
             var username = queries[0];
             var pwd = queries[1];
@@ -110,25 +105,21 @@
             var isTimeout = totalSeconds > 10;
             var rawPassword = DecryptPassword(pwd, code);
 
-            if (Request.UrlReferrer == null || 
-                isTimeout ||
-                string.IsNullOrWhiteSpace(rawPassword))
+            if (Request.UrlReferrer == null)
             {
-                if (Request.UrlReferrer == null)
-                {
-                    ExceptionHandler.Handle(new Exception($"Switch line failed: call directly URL, username: {username}"), TraceEventType.Warning);
-                }
+                ExceptionHandler.Handle(new Exception($"Switch line failed: call directly URL, username: {username}"), TraceEventType.Warning);
+                return RedirectToAction("Login");
+            }
 
-                if (isTimeout)
-                {
-                    ExceptionHandler.Handle(new Exception($"Switch line reached limit timeout: {totalSeconds}s, username: {username}"), TraceEventType.Warning);
-                }
+            if (isTimeout)
+            {
+                ExceptionHandler.Handle(new Exception($"Switch line reached limit timeout: {totalSeconds}s, username: {username}"), TraceEventType.Warning);
+                return RedirectToAction("Login");
+            }
 
-                if (string.IsNullOrWhiteSpace(rawPassword))
-                {
-                    ExceptionHandler.Handle(new Exception($"Switch line failed: wrong param info"), TraceEventType.Warning);
-                }
-
+            if (string.IsNullOrWhiteSpace(rawPassword))
+            {
+                ExceptionHandler.Handle(new Exception($"Switch line failed: wrong param info"), TraceEventType.Warning);
                 return RedirectToAction("Login");
             }
 
