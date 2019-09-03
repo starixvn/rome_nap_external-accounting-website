@@ -24,7 +24,7 @@
         }
     }
 }
-@if (supportSwitchLine)
+@if (supportSwitchLine && domains.Length > 0)
 {
     <select id="switchLine" onchange="javascript:switchLine()" style="background-color: #313c51; color: #ffa500; cursor: pointer; font-weight: bold">
         <option>
