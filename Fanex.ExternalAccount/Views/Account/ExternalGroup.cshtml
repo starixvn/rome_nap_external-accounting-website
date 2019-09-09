@@ -97,6 +97,15 @@
         }
 
         var menuTitles = '{"ResetPwd" : "@ViewLang.ResetPassword", "CreateExistUser" : "@ViewLang.AddExistingUser", "CreateUser" : "@ViewLang.NewUser", "EditUser" : "@ViewLang.EditUserInfo", "Edit": "@ViewLang.EditMenu", "Activate": "@ViewLang.Activate", "Delete": "@ViewLang.Delete", "Create" : "@ViewLang.NewMenu", "Deactivate" : "@ViewLang.Deactivate", "EditGroup" : "@ViewLang.EditGroup", "EditFunction":"@ViewLang.EditFunction", "CreateFunction" : "@ViewLang.NewFunction"}';
+
+        function switchLine(select) {
+            if (select.selectedIndex != 0) {
+                Fanex.ExtAcc.IsSwitchLine = true;
+                Fanex.ExtAcc.BlockUI();
+
+                location.href = '@Url.Content("~/Account/LoginSso?url=")' + $(select).val() + '&line=' + $(select).find('option:selected').text();
+            }
+        }
     </script>
     @Fanex.ExternalAccount.Core.Helpers.GoogleAnalyticHepler.Render()
 </body>
