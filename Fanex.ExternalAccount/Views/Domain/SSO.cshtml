@@ -26,7 +26,7 @@
 }
 @if (supportSwitchLine && domains.Length > 0)
 {
-    <select id="switchLine" onchange="javascript:switchLine()" style="background-color: #313c51; color: #ffa500; cursor: pointer; font-weight: bold">
+    <select onchange="javascript:switchLine(this)" style="background-color: #313c51; color: #ffa500; cursor: pointer; font-weight: bold">
         <option>
             @currentLine
         </option>
@@ -45,17 +45,4 @@
                 }
             }
     </select>
-
-    <script>
-        function switchLine() {
-            var selects = $("select[id=switchLine]");
-            var select = isMobile.phone || isMobile.tablet ? selects[1] : selects[0];
-            if (select.selectedIndex != 0) {
-                Fanex.ExtAcc.IsSwitchLine = true;
-                Fanex.ExtAcc.BlockUI();
-
-                location.href = '@Url.Content("~/Account/LoginSso?url=")' + $(select).val() + '&line=' + $(select).find('option:selected').text();
-            }
-        }
-    </script>
 }

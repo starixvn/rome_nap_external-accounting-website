@@ -168,6 +168,15 @@
         });
 
         var titles = ['@ViewLang.EditPersonalInfo', '@ViewLang.editTransferCondition', '@ViewLang.confirmTransCondition', '@ViewLang.choonseDaily', '@ViewLang.chooseOneDay'];
+
+        function switchLine(select) {
+            if (select.selectedIndex != 0) {
+                Fanex.ExtAcc.IsSwitchLine = true;
+                Fanex.ExtAcc.BlockUI();
+
+                location.href = '@Url.Content("~/Account/LoginSso?url=")' + $(select).val() + '&line=' + $(select).find('option:selected').text();
+            }
+        }
     </script>
     @RenderSection("Scripts", false)
 
