@@ -455,6 +455,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Lang.resx</DependentUpon>
     </Compile>
+    <Content Include="App_Data\activitytracking.mnl.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
+    <Content Include="App_Data\activitytracking.production.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
+    <Content Include="App_Data\activitytracking.sit.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
+    <Content Include="App_Data\activitytracking.staging.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
+    <Content Include="App_Data\activitytracking.uat.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
     <Content Include="Areas\Common\Views\Authenticate\AccessDenied.cshtml" />
     <Content Include="Areas\Common\Views\Home\Index.cshtml" />
     <Content Include="Areas\Common\Views\Shared\Images\Loading.gif" />

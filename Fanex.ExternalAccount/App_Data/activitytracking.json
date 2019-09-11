@@ -3,7 +3,8 @@
   "system": "Ext",
   "environment": "LOCAL",
   "enabledTrackAllRequests": false,
-  "trackProcessDuration": true,
+  "logCategory": "Activity-Tracking",
+
   "trackingItems": [
     {
       "action": "test",
@@ -16,7 +17,31 @@
     {
       "action": "Search Customer",
       "urls": [
-        "CustomerSetting/LeftPanel/SearchCustomer"
+        "CustomerSetting/LeftPanel/SearchCustomer",
+        "Filter/GetSuggestedUserName",
+        "Customer/CustomerList",
+        "Customer/SuperListPost",
+        "Customer/MasterListPost",
+        "Customer/AgentListPost",
+        "Customer/MemberListPost"
+      ]
+    },
+    {
+      "action": "View Reports",
+      "urls": [
+        "Filter/ProductsList",
+        "DailyWinloss/Index",
+        "WinlossDetail/Index",
+        "PokerGamesWinloss/Index",
+        "PokerGamesWinLossDetail/GetData",
+        "DailyWinLoss/GetDailyWinLoss",
+        "WinLossDetail/GetData"
+      ]
+    },
+    {
+      "action": "View IP Info",
+      "urls": [
+        "Customer/ViewIP"
       ]
     }
   ]
