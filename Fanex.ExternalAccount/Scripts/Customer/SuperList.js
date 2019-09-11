@@ -432,6 +432,13 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource, requestParam) {
 
     this.DataSource = rows;
 
+    if (rowsLength > 0) {
+        $('#exporttoexcel').show();
+    }
+    else {
+        $('#exporttoexcel').hide();
+    }
+
     for (var i = 0; i < rowsLength; i++) {
         var currentRow = rows[i];
         var cssRow = !currentRow.enabled ? 'rowDisabled' : currentRow.closed ? Fanex.ExtAcc.Customer.GetClosedClassName(currentRow) : currentRow.suspended ? 'rowSuspended' : '';

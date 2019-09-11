@@ -20,7 +20,7 @@
                 <div id="userGroup" class="user-group pull-left">
                     <select id="customerStatus" class="usernameInput group">
                         <option value="-1">@ViewLang.All</option>
-                        <option value="1">@ViewLang.Open</option>
+                        <option value="1" selected>@ViewLang.Open</option>
                         <option value="3">@ViewLang.Suspended</option>
                         <option value="2">@ViewLang.Closed</option>
                         <option value="4">@ViewLang.Disabled</option>
@@ -35,7 +35,7 @@
                 <input id="btnSearch" type="button" value="Submit" class="btn -submit" onclick="Fanex.ExtAcc.Customer.Search()" />
             </div>
             <div class="form-group">
-                <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel"></span>
+                <span style="display: none" id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel"></span>
             </div>
         </div>
     </div>
@@ -100,7 +100,7 @@
     ];
 
     $(document).ready(function () {
-        $("#userGroup input").val($("#customerStatus")[0].options[0].text);
+        $("#userGroup input").val($("#customerStatus")[0].options[1].text);
         $("#userGroup input").attr("readonly", "true");
         $("#userGroup input").bind("click", function () {
             $(this).autocomplete("search", '');

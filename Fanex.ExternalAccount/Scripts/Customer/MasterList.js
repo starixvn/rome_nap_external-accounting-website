@@ -554,11 +554,15 @@ Fanex.ExtAcc.Customer.RenderMasterList = function (dataSource) {
     var rowsLength = rows.length;
 
     if (rowsLength > 0) {
+        $('#exporttoexcel').show();
+
         this.hasSecurityCode = rows[0].UplineHasSecurityCode || rows[0].HasSecurityCode;
 
         var firstMasterId = rows[0].custid;
         this.UplineProductSettings = this.GetProductSettings(dataSource.customerProductStatus[firstMasterId], true);
     } else {
+        $('#exporttoexcel').hide();
+
         this.UplineProductSettings = [];
     }
 
