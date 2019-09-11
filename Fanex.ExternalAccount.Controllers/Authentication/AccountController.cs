@@ -77,7 +77,9 @@
             
             var path = Server.MapPath("~/IbcKeys/ibcpkey.snk");
             var timeout = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff tt");
-            var parameter = $"{_currentSession.UserName}&{pwd}&{code}&{line}&{timeout}";
+            var username = _currentSession.UserName;
+            var fromLine = _currentSession.CurrentLine;
+            var parameter = $"{username}&{pwd}&{code}&{line}&{timeout}&{fromLine}";
             parameter = new EncryptionThread().EncryptString(parameter, 1024, path);
 
             var onuserId = _currentSession.OnUserId;
@@ -87,6 +89,8 @@
             }
 
             Session.Clear();
+
+            ExceptionHandler.Handle(new Exception($"Switching {fromLine} to {line}, username: {username}"), TraceEventType.Information);
 
             return Redirect($"{url}/Account/SwitchLine?param={parameter}");
         }
@@ -101,29 +105,30 @@
             var code = queries[2];
             var line = queries[3];
             var timeout = queries[4];
+            var fromLine = queries[5];
             var totalSeconds = DateTime.Now.Subtract(Convert.ToDateTime(timeout)).TotalSeconds;
             var isTimeout = totalSeconds > 10;
             var rawPassword = DecryptPassword(pwd, code);
 
             if (Request.UrlReferrer == null)
             {
-                ExceptionHandler.Handle(new Exception($"Switch line failed: call directly URL, username: {username}"), TraceEventType.Warning);
+                ExceptionHandler.Handle(new Exception($"Switched {fromLine} to {line} failed: call directly URL, username: {username}"), TraceEventType.Warning);
                 return RedirectToAction("Login");
             }
 
             if (isTimeout)
             {
-                ExceptionHandler.Handle(new Exception($"Switch line reached limit timeout: {totalSeconds}s, username: {username}"), TraceEventType.Warning);
+                ExceptionHandler.Handle(new Exception($"Switched {fromLine} to {line} reached limit timeout: {totalSeconds}s, username: {username}"), TraceEventType.Warning);
                 return RedirectToAction("Login");
             }
 
             if (string.IsNullOrWhiteSpace(rawPassword))
             {
-                ExceptionHandler.Handle(new Exception($"Switch line failed: wrong param info"), TraceEventType.Warning);
+                ExceptionHandler.Handle(new Exception($"Switched line failed: wrong param info"), TraceEventType.Warning);
                 return RedirectToAction("Login");
             }
 
-            return VerifyLoginCredential(new LoginModel { UserName = username, Password = pwd, Code = code, Line = line }, rawPassword);
+            return VerifyLoginCredential(new LoginModel { UserName = username, Password = pwd, Code = code, Line = line, FromLine = fromLine, TotalSeconds = totalSeconds }, rawPassword);
         }
 
         [HttpPost]
@@ -244,6 +249,11 @@
             var denyAccessPublicDomain = IsDenyAccessPublicDomain(hasMultipleGroupsPermission);
             if (denyAccessPublicDomain)
             {
+                if (!string.IsNullOrWhiteSpace(model.FromLine))
+                {
+                    ExceptionHandler.Handle(new Exception($"Switched {model.FromLine} to {model.Line} failed: {ViewLang.AccessDenyToPublicDomain}, username: {model.UserName}"), TraceEventType.Warning);
+                }
+                
                 return View("~/Views/Account/Login.cshtml", new LoginModel(ViewLang.AccessDenyToPublicDomain));
             }
 
@@ -251,7 +261,7 @@
 
             SetUserSession(model, custId, onuserId, hasMultipleGroupsPermission, group);
 
-            return RedirectOTPPage();
+            return RedirectOTPPage(model);
         }
 
         private void SetUMTokenForInternalAlphaLogin()
@@ -264,7 +274,7 @@
 
         private RedirectResult RedirectToHomePage() => Redirect("~/Home/Index/");
 
-        private RedirectResult RedirectOTPPage() => Redirect("~/OTP/Index/");
+        private RedirectToRouteResult RedirectOTPPage(LoginModel model) => RedirectToAction("Index", "OTP", model);
 
         private bool IsValidCaptcha()
         {

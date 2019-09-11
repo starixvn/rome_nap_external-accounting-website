@@ -39,5 +39,9 @@ namespace Fanex.ExternalAccount.ViewModel.Account
         public bool InvalidOTP { get; set; }
 
         public string Line { get; set; }
+
+        public string FromLine { get; set; }
+
+        public double TotalSeconds { get; set; }
     }
 }
