@@ -248,6 +248,9 @@
                 </BetType>
                 <BetType id="10" name="Outright" title="Outright" minWidth="90" resourcekey="lblOutRight" showRightBorder="true">
                 </BetType>
+                <BetType id="9999" name="Others"  resourcekey="OtherSport2" minWidth="90">
+                  <!--<RepresentativeForBetType id="14" name="First Goal/Last Goal" resourcekey="bettype14"/>-->
+                </BetType>
               </BetTypes>
             </BetTypeGroup>
           </BetTypeGroups>
