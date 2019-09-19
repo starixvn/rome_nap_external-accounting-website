@@ -41,7 +41,10 @@
 
         public ActionResult SaveResult(float speedKbps)
         {
-            if (speedKbps > 0 && CalculatingNWSpeedGroupIds.Any())
+            if (CurrentSession.IsLogin
+                && User.Identity.IsAuthenticated
+                && speedKbps > 0 
+                && CalculatingNWSpeedGroupIds.Any())
             {
                 LogUserInformation(speedKbps);
             }

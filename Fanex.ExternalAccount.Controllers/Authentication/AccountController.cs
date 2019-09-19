@@ -23,6 +23,7 @@
     using CurrentContext = Core.Context.CurrentContext;
     using CurrentSession = Core.Context.CurrentSession;
     using RSACryptoPad;
+    using System.Configuration;
 
     public class AccountController : DefaultCaptchaController
     {
@@ -90,7 +91,7 @@
 
             Session.Clear();
 
-            ExceptionHandler.Handle(new Exception($"Switching {fromLine} to {line}, username: {username}"), TraceEventType.Information);
+            WriteLogSwitchLine($"Switching {fromLine} to {line}, username: {username}", TraceEventType.Information);
 
             return Redirect($"{url}/Account/SwitchLine?param={parameter}");
         }
@@ -112,19 +113,19 @@
 
             if (Request.UrlReferrer == null)
             {
-                ExceptionHandler.Handle(new Exception($"Switched {fromLine} to {line} failed: call directly URL, username: {username}"), TraceEventType.Warning);
+                WriteLogSwitchLine($"Switched {fromLine} to {line} failed: call directly URL, username: {username}", TraceEventType.Warning);
                 return RedirectToAction("Login");
             }
 
             if (isTimeout)
             {
-                ExceptionHandler.Handle(new Exception($"Switched {fromLine} to {line} reached limit timeout: {totalSeconds}s, username: {username}"), TraceEventType.Warning);
+                WriteLogSwitchLine($"Switched {fromLine} to {line} reached limit timeout: {totalSeconds}s, username: {username}", TraceEventType.Warning);
                 return RedirectToAction("Login");
             }
 
             if (string.IsNullOrWhiteSpace(rawPassword))
             {
-                ExceptionHandler.Handle(new Exception($"Switched line failed: wrong param info"), TraceEventType.Warning);
+                WriteLogSwitchLine($"Switched line failed: wrong param info", TraceEventType.Warning);
                 return RedirectToAction("Login");
             }
 
@@ -251,7 +252,7 @@
             {
                 if (!string.IsNullOrWhiteSpace(model.FromLine))
                 {
-                    ExceptionHandler.Handle(new Exception($"Switched {model.FromLine} to {model.Line} failed: {ViewLang.AccessDenyToPublicDomain}, username: {model.UserName}"), TraceEventType.Warning);
+                    WriteLogSwitchLine($"Switched {model.FromLine} to {model.Line} failed: {ViewLang.AccessDenyToPublicDomain}, username: {model.UserName}", TraceEventType.Warning);
                 }
                 
                 return View("~/Views/Account/Login.cshtml", new LoginModel(ViewLang.AccessDenyToPublicDomain));
@@ -372,6 +373,14 @@
             _currentSession.Captcha = model.Code;
             _currentSession.HashPassword = model.Password;
             _currentSession.CurrentLine = model.Line;
+        }
+
+        private static void WriteLogSwitchLine(string message, System.Diagnostics.TraceEventType type)
+        {
+            if (ConfigurationManager.AppSettings["EnableWriteLogSwitchLine"] == "1")
+            {
+                ExceptionHandler.Handle(new Exception(message), type);
+            }
         }
     }
 }

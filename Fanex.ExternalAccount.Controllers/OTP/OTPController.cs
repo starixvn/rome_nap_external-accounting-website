@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
     using System;
+    using System.Configuration;
     using System.Diagnostics;
     using System.Web.Mvc;
     using System.Web.Security;
@@ -37,7 +38,7 @@
 
             if (!string.IsNullOrWhiteSpace(model?.FromLine))
             {
-                ExceptionHandler.Handle(new Exception($"Switched {model.FromLine} to {model.Line} and redirected to OTP page (user login by OTP) within {model.TotalSeconds}s, username: {model.UserName}"), TraceEventType.Information);
+                WriteLogSwitchLine($"Switched {model.FromLine} to {model.Line} and redirected to OTP page (user login by OTP) within {model.TotalSeconds}s, username: {model.UserName}", TraceEventType.Information);
             }
 
             return View(new CustomerOtpViewModel {
@@ -91,7 +92,7 @@
         {
             if (!string.IsNullOrWhiteSpace(model?.FromLine))
             {
-                ExceptionHandler.Handle(new Exception($"Switched {model.FromLine} to {model.Line} successfully within {model.TotalSeconds}s, username: {model.UserName}"), TraceEventType.Information);
+                WriteLogSwitchLine($"Switched {model.FromLine} to {model.Line} successfully within {model.TotalSeconds}s, username: {model.UserName}", TraceEventType.Information);
             }
 
             currentSession.IsLogin = true;
@@ -128,6 +129,14 @@
             currentSession.EnabledOTP = customerOtp.Enabled;
             currentSession.OTPSecretKey = customerOtp.SecretKey;
             currentSession.OTPModifiedDate = customerOtp.ModifiedDate;
+        }
+
+        private static void WriteLogSwitchLine(string message, System.Diagnostics.TraceEventType type)
+        {
+            if (ConfigurationManager.AppSettings["EnableWriteLogSwitchLine"] == "1")
+            {
+                ExceptionHandler.Handle(new Exception(message), type);
+            }
         }
     }
 }
