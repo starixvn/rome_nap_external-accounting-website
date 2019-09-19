@@ -442,7 +442,7 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
 
     if (dataSource) {
         if (!(dataSource.records > 0 && eval(dataSource.rows)[0].IsMyanmarOdds)) {
-            this.DataFields.splice(12, 1);
+            this.DataFields.splice(13, 1);
             this.DataFields.splice(16, 1);
         }
         this.RenderMemberList(dataSource);
@@ -455,7 +455,7 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
         })
         .success(function (result) {
             if (!(result.records > 0 && eval(result.rows)[0].IsMyanmarOdds)) {
-                Fanex.ExtAcc.Customer.DataFields.splice(12, 1);
+                Fanex.ExtAcc.Customer.DataFields.splice(13, 1);
                 Fanex.ExtAcc.Customer.DataFields.splice(16, 1);
             }
             Fanex.ExtAcc.Customer.RenderMemberList(result);
@@ -618,7 +618,7 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
 
     if (!isMyanmarOdds) {
         for (var i = 0; i < bodyRows.length; i++) {
-            bodyRows[i].Columns.splice(12, 1);
+            bodyRows[i].Columns.splice(13, 1);
             bodyRows[i].Columns.splice(16, 1);
         }
     }
