@@ -1,10 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
     using System;
+    using System.Configuration;
+    using System.Diagnostics;
     using System.Web.Mvc;
     using System.Web.Security;
     using Authentication;
     using Core.Context;
+    using Fanex.ExternalAccount.ViewModel.Account;
     using Logging.Extensions.Web;
     using Resources;
     using Service.OTP;
@@ -24,13 +27,18 @@
             customerOtpService = new CustomerOtpService();
         }
 
-        public ActionResult Index()
+        public ActionResult Index(LoginModel model)
         {
             SetUserOTPSession();
 
             if (!currentSession.EnabledOTP)
             {
-                return LoginSuccessful();
+                return LoginSuccessful(model);
+            }
+
+            if (!string.IsNullOrWhiteSpace(model?.FromLine))
+            {
+                WriteLogSwitchLine($"Switched {model.FromLine} to {model.Line} and redirected to OTP page (user login by OTP) within {model.TotalSeconds}s, username: {model.UserName}", TraceEventType.Information);
             }
 
             return View(new CustomerOtpViewModel {
@@ -80,8 +88,13 @@
 
         private RedirectResult RedirectToOTPPage() => Redirect("~/OTP/Index");
 
-        private RedirectResult LoginSuccessful()
+        private RedirectResult LoginSuccessful(LoginModel model = null)
         {
+            if (!string.IsNullOrWhiteSpace(model?.FromLine))
+            {
+                WriteLogSwitchLine($"Switched {model.FromLine} to {model.Line} successfully within {model.TotalSeconds}s, username: {model.UserName}", TraceEventType.Information);
+            }
+
             currentSession.IsLogin = true;
             currentSession.InvalidOTP = false;
 
@@ -116,6 +129,14 @@
             currentSession.EnabledOTP = customerOtp.Enabled;
             currentSession.OTPSecretKey = customerOtp.SecretKey;
             currentSession.OTPModifiedDate = customerOtp.ModifiedDate;
+        }
+
+        private static void WriteLogSwitchLine(string message, System.Diagnostics.TraceEventType type)
+        {
+            if (ConfigurationManager.AppSettings["EnableWriteLogSwitchLine"] == "1")
+            {
+                ExceptionHandler.Handle(new Exception(message), type);
+            }
         }
     }
 }

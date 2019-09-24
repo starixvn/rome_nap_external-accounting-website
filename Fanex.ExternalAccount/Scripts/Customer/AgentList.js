@@ -564,11 +564,15 @@ Fanex.ExtAcc.Customer.RenderAgentList = function (dataSource) {
     var rowsLength = rows.length;
 
     if (rowsLength > 0) {
+        $('#exporttoexcel').show();
+
         this.hasSecurityCode = rows[0].UplineHasSecurityCode || rows[0].HasSecurityCode;
 
         var firstAgentId = rows[0].custid;
         this.UplineProductSettings = this.GetProductSettings(dataSource.customerProductStatus[firstAgentId], true);
     } else {
+        $('#exporttoexcel').hide();
+
         this.UplineProductSettings = [];
     }
 
