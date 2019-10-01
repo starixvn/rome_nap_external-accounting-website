@@ -450,9 +450,9 @@
                     records = agents.Rows.Count,
                     rows = ret,
                     customerSetting.RoleId,
-                    SuperRecommend = customerSetting.SuperId,
-                    MasterRecommend = customerSetting.MasterId,
-                    Recommend = customerSetting.AgentId,
+                    srecommend = customerSetting.SuperId,
+                    mrecommend = customerSetting.MasterId,
+                    recommend = customerSetting.AgentId,
                     customerSetting.CustId,
                     customerSetting.HasSecurityCode,
                     customerProductStatus
