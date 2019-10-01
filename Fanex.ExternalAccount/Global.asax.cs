@@ -30,6 +30,7 @@
         {
             filters.Add(new CheckUMFilter());
             filters.Add(new CheckBelongingFilter());
+            filters.Add(new LogActionFilterAttribute());
         }
 
         public static void RegisterRoutes(RouteCollection routes)

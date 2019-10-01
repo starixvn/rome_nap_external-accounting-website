@@ -368,6 +368,7 @@
     <Compile Include="Context\ExternalAccountAuthenticateAttribute.cs" />
     <Compile Include="Context\ExtRequest.cs" />
     <Compile Include="Context\NoCaptchaSectionConfiguration.cs" />
+    <Compile Include="Filters\LogActionFilterAttribute.cs" />
     <Compile Include="Filters\CheckBelongingFilter.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GlobalSuppressions2.cs" />
