@@ -13,7 +13,6 @@
     {
         private const string Seperator = ", ";
         private const string ShowAll = "showAll";
-        private const string ShowPG = "showPG";
 
         private readonly Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter;
         private readonly IExtRequest extRequest;
@@ -43,8 +42,6 @@
         public DateTime todate { get; set; }
         public int viewlevel { get; set; }
 
-        public bool IncludePokerGames { get; set; }
-
         public bool IsSearch() => custId == 0;
 
         internal string GetProductIds()
@@ -66,11 +63,6 @@
                 }
             }
 
-            if (IncludePokerGames)
-            {
-                formatedProductIds.Add(ProductConstants.PokerGames);
-            }
-
             return string.Join(",", formatedProductIds);
         }
 
@@ -84,7 +76,7 @@
                 productList.ForEach(p =>
                 {
                     if (!p.Key.Equals(ShowAll, StringComparison.OrdinalIgnoreCase)
-                        && (o.Value || (IncludePokerGames && p.Key.Equals(ShowPG, StringComparison.OrdinalIgnoreCase)))
+                        && o.Value
                         && o.Key.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
                     {
                         formatedProducts += p.Value + Seperator;

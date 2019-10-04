@@ -13,16 +13,16 @@
             _dir = HttpContext.Current.Server.MapPath("~/ExcelTemplates/Customer");
         }
 
-        public string CustomerListPath(int roleId, bool isMyanmarOdds = false)
+        public string CustomerListPath(int roleId)
         {
             switch (roleId)
             {
                 case Role.Member:
-                    return Path.Combine(_dir, (isMyanmarOdds ? "MemberListMO.xls" : "MemberList.xls"));
+                    return Path.Combine(_dir, "MemberList.xls");
                 case Role.Super:
                     return Path.Combine(_dir, "SuperList.xls");
                 default:
-                    return Path.Combine(_dir, (isMyanmarOdds ? "CustomerListMO.xls" : "CustomerList.xls"));
+                    return Path.Combine(_dir, "CustomerList.xls");
             }
         }
     }

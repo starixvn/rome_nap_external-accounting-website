@@ -99,7 +99,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.4.8\lib\net40\Fanex.PTEngine.dll</HintPath>
+      <HintPath>..\packages\Fanex.PTEngine.1.0.4.9-RemoveInactiveProducts\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Gma.QrCodeNet.Encoding, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\QrCode.Net.0.4.0.0\lib\net45\Gma.QrCodeNet.Encoding.dll</HintPath>
@@ -196,11 +196,8 @@
     <Compile Include="OTP\CustomerOtpService.cs" />
     <Compile Include="Products\ProductService.cs" />
     <Compile Include="Report\IReportService.cs" />
-    <Compile Include="Report\PokerGamesWinLossDetailRequests.cs" />
     <Compile Include="Report\WinLossDetailRequests.cs" />
-    <Compile Include="Report\PokerGamesWinLossDetailService.cs" />
     <Compile Include="Report\WinLossDetailService.cs" />
-    <Compile Include="Report\PokerGamesWinLossDetailServiceImpl.cs" />
     <Compile Include="Report\WinLossDetailServiceImpl.cs" />
     <Compile Include="Statement\IStatementService.cs" />
     <Compile Include="Statement\StatementService.cs" />

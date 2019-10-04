@@ -2,15 +2,12 @@
     custId,
     title,
     hideGoldDeluxe,
-    hideColossusBets,
-    hideCricket,
     productSettingsJson) {
     this.TransferCondition = false;
     this.UserId = custId;
     this.TitleEditInfo = unescape(title);
     this.CurrentLevel = this.Super;
     this.HideGoldDeluxe = hideGoldDeluxe;
-    this.HideCricket = hideCricket;
     var productSettings = JSON.parse(unescape(productSettingsJson));
 
     this.ResetFlags();
@@ -88,25 +85,6 @@
 
             }
         }
-    }
-
-    if (showColossusBets == 1 && !hideColossusBets) {
-        items.colossusBets = {
-            name: "Colossus Bets",
-            className: "iconViewEdit",
-            callback: function () {
-                top.shouldCalculatePopupHeight = true;
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 400) : 400;
-                url = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&isMultipleEdit=0&userId=" + parent.userId + "&roleId=4&groupName=" + parent.$('#selectedGroupName').html();
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Colossus Bets Setting <font color="#6dcff6">' + title + '</font>', 900, height, false, false, 1);
-            }
-        }
-    }
-
-    if (!this.HideCricket) {
-        addEditProductSuperContextMenuItem(20, 'cricket', 'Cricket');
     }
 
     for (var i = 0, max = productSettings.length; i < max; i++) {
@@ -280,9 +258,7 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
                 + cellValue.synccasino + ","
                 + hideKeno + ","
                 + cellValue.HideVirtualSports + ","
-                + cellValue.HideGoldDeluxe + ","
-                + cellValue.HideColossusBet + ","
-                + cellValue.HideCricket + ")";
+                + cellValue.HideGoldDeluxe + ")";
 
             var len = cellValue.username.length;
             var title = len >= 15 ? ' title="' + cellValue.username + '"' : '';
@@ -298,9 +274,7 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
             var func = "javascript:Fanex.ExtAcc.Customer.ShowEditSuper("
                 + cellValue.custid + ",'"
                 + escape(cellValue.username) + "',"
-                + cellValue.HideGoldDeluxe + ","
-                + cellValue.HideColossusBet + ","
-                + cellValue.HideCricket + ",'"
+                + cellValue.HideGoldDeluxe + ", '"
                 + escape(JSON.stringify(cellValue.productSettings)) + "')";
 
             return '<div onclick="' + func + '" id="edit-' + cellValue.custid + '" class="editInfo"></div>';
@@ -370,12 +344,6 @@ Fanex.ExtAcc.Customer.GetSuperList = function (custId, dataSource) {
         Width: 60,
         CellAlign: 'center',
         CustomAttr: ' title="Applies to all other bettypes" '
-    }, {
-        HeaderText: '% Odds',
-        Name: 'discountmo',
-        Width: 60,
-        CellAlign: 'center',
-        CustomAttr: ' title="Myanmar Odds" '
     }];
 
     this.DataFields.push({
@@ -486,9 +454,6 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource, requestParam) {
         }, {
             Name: 'discountcs',
             Value: currentRow.discountcs
-        }, {
-            Name: 'discountmo',
-            Value: currentRow.IsMyanmarOdds ? (currentRow.discountMyanmarOdds ? currentRow.discountMyanmarOdds : 0) : 'N/A'
         }];
 
         var dateLimit = currentRow.MinDate
@@ -553,7 +518,7 @@ Fanex.ExtAcc.Customer.RenderSuperList = function (dataSource, requestParam) {
         }, {
             HeaderText: 'Commission',
             Name: 'groupa',
-            MergeColNumber: 7
+            MergeColNumber: 6
         }]
     };
 

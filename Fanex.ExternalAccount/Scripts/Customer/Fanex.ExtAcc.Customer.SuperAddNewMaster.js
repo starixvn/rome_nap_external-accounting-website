@@ -33,168 +33,157 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
             dataType: 'json',
             type: 'post'
         })
-        .success(function (result) {
-            if (result.customer.bettingLimit.bettingLimitItems.length == 0) {
-                Fanex.ExtAcc.UnBlockUI();
-                Fanex.ExtAcc.Form.Close();
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-                    Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
-                }, 1000);
+            .success(function (result) {
+                if (result.customer.bettingLimit.bettingLimitItems.length == 0) {
+                    Fanex.ExtAcc.UnBlockUI();
+                    Fanex.ExtAcc.Form.Close();
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
+                    }, 1000);
 
-                return;
-            }
-
-            customer = $this.customer = result.customer;
-            context = result.context;
-
-            if (context.targetCustId > 0) {
-                $('#closed').click(function (e) {
-                    $this.Closed(document.getElementById('closed'), $this.currentStatusClose);
-                });
-            }
-
-            Fanex.Customer.CheckUser(4, customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', null, 'msgIcon');
-            Fanex.Customer.CheckUser(4, customer.userName, 'selectedTwo', 'selectedOne', 'selectedTwo', null, 'msgIcon');
-
-            Fanex.PTEngine.CURRENT_CONTEXT = context;
-            Fanex.PTEngine.CURRENT_CONTEXT.ia3 = false;
-
-            var isChangeM3 = false;
-            var isShowPopUpSetPTMember = false;
-            var newValueMemberPT = "";
-            var oldPTSetting = Fanex.copy(customer.ptSetting);
-
-            var ptGrid = new Fanex.PTEngine.PTGrid(customer.ptSetting);
-            ptGrid.Render(document.getElementById('ptContainer'));
-
-            var bettingLimit = new Fanex.PTEngine.BettingLimit(customer.bettingLimit)
-            bettingLimit.Render(document.getElementById('bettingLimitContainer'));
-
-            /* Render Commission to selected*/
-            var commission = customer.commissionSetting;
-            Fanex.PTEngine.PT_SetSelect($("#groupA")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
-            Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
-            Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);          
-
-            if (customer.commissionSetting.isMyanmarOdds) {
-                Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
-                
-                var groups = $('.group');
-                for (var i = 0; i < groups.length; i++) {
-                    groups[i].remove();
+                    return;
                 }
-            }
-            else {
-                $("#discountMyanmar").remove();
+
+                customer = $this.customer = result.customer;
+                context = result.context;
+
+                if (context.targetCustId > 0) {
+                    $('#closed').click(function (e) {
+                        $this.Closed(document.getElementById('closed'), $this.currentStatusClose);
+                    });
+                }
+
+                Fanex.Customer.CheckUser(4, customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', null, 'msgIcon');
+                Fanex.Customer.CheckUser(4, customer.userName, 'selectedTwo', 'selectedOne', 'selectedTwo', null, 'msgIcon');
+
+                Fanex.PTEngine.CURRENT_CONTEXT = context;
+                Fanex.PTEngine.CURRENT_CONTEXT.ia3 = false;
+
+                var isChangeM3 = false;
+                var isShowPopUpSetPTMember = false;
+                var newValueMemberPT = "";
+                var oldPTSetting = Fanex.copy(customer.ptSetting);
+
+                var ptGrid = new Fanex.PTEngine.PTGrid(customer.ptSetting);
+                ptGrid.Render(document.getElementById('ptContainer'));
+
+                var bettingLimit = new Fanex.PTEngine.BettingLimit(customer.bettingLimit)
+                bettingLimit.Render(document.getElementById('bettingLimitContainer'));
+
+                /* Render Commission to selected*/
+                var commission = customer.commissionSetting;
+                Fanex.PTEngine.PT_SetSelect($("#groupA")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
+                Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
+                Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
+
                 Fanex.PTEngine.PT_SetSelect($("#groupB")[0], 0, commission.groupBMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupB);
                 Fanex.PTEngine.PT_SetSelect($("#groupC")[0], 0, commission.groupCMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupC);
                 Fanex.PTEngine.PT_SetSelect($("#groupD")[0], 0, commission.groupDMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupD);
-            }
 
-            Fanex.Customer.SetNextCustomer(document.getElementById("selectedOne"), document.getElementById("selectedTwo"), null, customer.newUserName);
+                Fanex.Customer.SetNextCustomer(document.getElementById("selectedOne"), document.getElementById("selectedTwo"), null, customer.newUserName);
 
-            // For Check Edit Postion Taking
-            if (context.targetCustId > 0) {
-                $this.currentStatusClose = customer.statusSetting.closed;
-                $this.currentStatusSuspend = customer.statusSetting.suspended;
-                $("#minCreditId").attr("class", "");
-                customer.minCreditTemp = String.prototype.FormatNumber(customer.minCredit);
-                $('#allowautoptId').css('display', 'none');
-            }
-            else {
-                $("#minCreditId").attr("class", "hide");
-                $('#closedId').css('display', 'none');
-                customer.minCreditTemp = 0;
-            }
-
-            var CustomerModel = function (customer) {
-                var uplineUserName = customer.userName;
-
-                // Check Transfer condition
-                displayTransferCondition = Fanex.Customer.DisplayTransferCondition(customer.transferOption);
-
-                // Super allow master using auto master PT
-                customer.statusSetting.disableAutoMPT = ko.observable(true);
-
-                // Set label MaxCredit
-                customer.maxCreditTemp = String.prototype.FormatNumber(customer.maxCredit);
-                customer.credit = String.prototype.FormatNumber(customer.credit);
-
-                this.saveCustomer = function () {
-                    $('#contentSplitter').scrollTop(0);
-                    if (!Fanex.Customer.CheckInfoValue()) return;
-                    if (!bettingLimit.Validate()) return;
-
-                    if (typeof (customer.statusSetting.disableAutoMPT) == 'function')
-                        customer.statusSetting.disableAutoMPT = customer.statusSetting.disableAutoMPT();
-                    else
-                        customer.statusSetting.disableAutoMPT = customer.statusSetting.disableAutoMPT;
-
-                    var max = parseFloat(Fanex.ExtAcc.ReplaceAll($('#maxCredit').text(), ',', ''));
-                    var cur = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
-
-                    if (cur > max) {
-                        Validators.show($('#credit').get(0), 'Master Max Credit must be less than or equals to ' + $('#maxCredit').text());
-                        return;
-                    }
-
-                    // Set value to transfer option
-                    customer.transferOption = Fanex.Customer.TransferOption(customer.transferOption);
-                    customer.commissionSetting = Fanex.Customer.SetValueCommissionSettings(customer.commissionSetting);
-                    customer.credit = Fanex.RoundNumber(parseFloat($("#credit").val(), true), 1); // Fix bug for IE7
-
-                    // For Check Edit Postion Taking
-                    if (context.targetCustId == 0) {
-                        // Set next to userName
-                        customer.userName = uplineUserName + Fanex.Customer.SetAutoUserName();
-                    }
-
-                    // EscapeHTML String
-                    customer.firstName = customer.firstName.escapeHtml().encodeHtml();
-                    customer.lastName = customer.lastName.escapeHtml().encodeHtml();
-                    customer.phone = customer.phone.escapeHtml().encodeHtml();
-                    customer.mobilePhone = customer.mobilePhone.escapeHtml().encodeHtml();
-                    customer.fax = customer.fax.escapeHtml().encodeHtml();
-
-                    if (ptGrid) {
-                        customer.ptSetting = ptGrid.Save();
-                        customer.bettingLimit = bettingLimit.Save();
-
-                        var text = JSON.stringify(customer);
-                        var para = {
-                            custId: 0,
-                            parentId: $('#parentId').val(),
-                            txtCustomerObject: text,
-                            groupName: $('#selectedGroupName').html()
-                        };
-                    }
-
-                    Fanex.ExtAcc.BlockUI();
-                    $.ajax({
-                        url: resolveClientUrl('Customer/SuperAddNewMasterPost'),
-                        data: para,
-                        dataType: 'json',
-                        type: 'post'
-                    })
-                    .success(function (result) {
-                        if (result.errorCode == 0) {
-                            Fanex.ExtAcc.LoadMainFrame(resolveClientUrl("Customer/Settings/3/" + result.custId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val()));
-                        }
-                        else {
-                            Fanex.ExtAcc.UnBlockUI();
-
-                            $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.errorMessage.formatErrorMessage());
-                        }
-                    });
+                // For Check Edit Postion Taking
+                if (context.targetCustId > 0) {
+                    $this.currentStatusClose = customer.statusSetting.closed;
+                    $this.currentStatusSuspend = customer.statusSetting.suspended;
+                    $("#minCreditId").attr("class", "");
+                    customer.minCreditTemp = String.prototype.FormatNumber(customer.minCredit);
+                    $('#allowautoptId').css('display', 'none');
                 }
-            }
+                else {
+                    $("#minCreditId").attr("class", "hide");
+                    $('#closedId').css('display', 'none');
+                    customer.minCreditTemp = 0;
+                }
 
-            ko.applyBindings(new CustomerModel(customer));
+                var CustomerModel = function (customer) {
+                    var uplineUserName = customer.userName;
 
-            Fanex.ExtAcc.UnBlockUI();
-        });
+                    // Check Transfer condition
+                    displayTransferCondition = Fanex.Customer.DisplayTransferCondition(customer.transferOption);
+
+                    // Super allow master using auto master PT
+                    customer.statusSetting.disableAutoMPT = ko.observable(true);
+
+                    // Set label MaxCredit
+                    customer.maxCreditTemp = String.prototype.FormatNumber(customer.maxCredit);
+                    customer.credit = String.prototype.FormatNumber(customer.credit);
+
+                    this.saveCustomer = function () {
+                        $('#contentSplitter').scrollTop(0);
+                        if (!Fanex.Customer.CheckInfoValue()) return;
+                        if (!bettingLimit.Validate()) return;
+
+                        if (typeof (customer.statusSetting.disableAutoMPT) == 'function')
+                            customer.statusSetting.disableAutoMPT = customer.statusSetting.disableAutoMPT();
+                        else
+                            customer.statusSetting.disableAutoMPT = customer.statusSetting.disableAutoMPT;
+
+                        var max = parseFloat(Fanex.ExtAcc.ReplaceAll($('#maxCredit').text(), ',', ''));
+                        var cur = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
+
+                        if (cur > max) {
+                            Validators.show($('#credit').get(0), 'Master Max Credit must be less than or equals to ' + $('#maxCredit').text());
+                            return;
+                        }
+
+                        // Set value to transfer option
+                        customer.transferOption = Fanex.Customer.TransferOption(customer.transferOption);
+                        customer.commissionSetting = Fanex.Customer.SetValueCommissionSettings(customer.commissionSetting);
+                        customer.credit = Fanex.RoundNumber(parseFloat($("#credit").val(), true), 1); // Fix bug for IE7
+
+                        // For Check Edit Postion Taking
+                        if (context.targetCustId == 0) {
+                            // Set next to userName
+                            customer.userName = uplineUserName + Fanex.Customer.SetAutoUserName();
+                        }
+
+                        // EscapeHTML String
+                        customer.firstName = customer.firstName.escapeHtml().encodeHtml();
+                        customer.lastName = customer.lastName.escapeHtml().encodeHtml();
+                        customer.phone = customer.phone.escapeHtml().encodeHtml();
+                        customer.mobilePhone = customer.mobilePhone.escapeHtml().encodeHtml();
+                        customer.fax = customer.fax.escapeHtml().encodeHtml();
+
+                        if (ptGrid) {
+                            customer.ptSetting = ptGrid.Save();
+                            customer.bettingLimit = bettingLimit.Save();
+
+                            var text = JSON.stringify(customer);
+                            var para = {
+                                custId: 0,
+                                parentId: $('#parentId').val(),
+                                txtCustomerObject: text,
+                                groupName: $('#selectedGroupName').html()
+                            };
+                        }
+
+                        Fanex.ExtAcc.BlockUI();
+                        $.ajax({
+                            url: resolveClientUrl('Customer/SuperAddNewMasterPost'),
+                            data: para,
+                            dataType: 'json',
+                            type: 'post'
+                        })
+                            .success(function (result) {
+                                if (result.errorCode == 0) {
+                                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl("Customer/Settings/3/" + result.custId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val()));
+                                }
+                                else {
+                                    Fanex.ExtAcc.UnBlockUI();
+
+                                    $('#errMsg').css('display', 'block');
+                                    $('#errMsg').html(result.errorMessage.formatErrorMessage());
+                                }
+                            });
+                    }
+                }
+
+                ko.applyBindings(new CustomerModel(customer));
+
+                Fanex.ExtAcc.UnBlockUI();
+            });
     },
 
     // Check or UnCheck Close Status

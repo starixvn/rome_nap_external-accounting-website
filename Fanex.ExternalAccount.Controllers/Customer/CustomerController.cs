@@ -327,8 +327,6 @@
             ViewBag.HideVirtualSports = (bool)result.Rows[0]["HideVirtualSports"];
             ViewBag.HideKeno = (bool)result.Rows[0]["HideKeno"] || !ProductSettings.ShowKenoSetting;
             ViewBag.HideGoldDeluxe = (bool)result.Rows[0]["HideGoldDeluxe"] || !ProductSettings.IsShowGoldDeluxe;
-            ViewBag.HideColossusBets = (bool)result.Rows[0]["HideColossusBet"] || !ProductSettings.IsShowColossusBets;
-            ViewBag.HideCricket = Converter.ToBool(result.Rows[0]["HideCricket"]) || !ProductSettings.IsShowCricket;
             var visibledProducts = GetVisibledProducts(id, custId);
 
             return PartialViewBase(visibledProducts);
@@ -666,8 +664,6 @@
                 false,
                 status,
                 Convert.ToInt32(customerSetting.RoleId),
-                customers?.Rows.Count > 0
-                && (customers.Rows[0].ToBoolean("ismyanmarodds") || customerSetting.RoleId.IsSuper()),
                 withDataLimited.HasValue && withDataLimited.Value);
             var excelStream = builder.Build();
             var fileName = $"{status}{customerSetting.RoleId.DisplayRoleName()}List{DateTime.Now.ToString("yyyyMMdd")}.xls";

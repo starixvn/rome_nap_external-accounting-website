@@ -268,11 +268,10 @@
                 new CheckCustomerIsSpecialSiteCriteria { UserName = username });
         }
 
-        protected static List<KeyValuePair<string, string>> GetProductList(IEnumerable<int> excludeProductIds, bool isHideInactiveProduct = true)
+        protected static List<KeyValuePair<string, string>> GetProductList()
         {
             return new ProductListAuthorization()
-                .GetProductList(isHideInactiveProduct)
-                .Where(product => !excludeProductIds.Contains(product.ProductId))
+                .GetProductList()
                 .Select(product => new KeyValuePair<string, string>(product.Id, product.ProductText))
                 .ToList();
         }

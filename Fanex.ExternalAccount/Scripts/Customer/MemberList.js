@@ -11,10 +11,6 @@
     disableKeno,
     isHideGoldDeluxe,
     disableGoldDeluxe,
-    isHideColossusBets,
-    disableColossusBets,
-    isHideCricket,
-    disableCricket,
     productSettingsJson) {
     this.TransferCondition = transferCondition;
     this.UserId = custId;
@@ -23,8 +19,6 @@
     this.HideVirtualSports = hideVirtualSport;
     this.HideKeno = showKenoSetting == 'false' || isHideKeno;
     this.HideGoldDeluxe = showGoldDeluxeSetting == 0 || isHideGoldDeluxe;
-    this.HideColossusBet = showColossusBets == 0 || isHideColossusBets;
-    this.HideCricket = showCricket == 0 || isHideCricket;
     var productSettings = JSON.parse(unescape(productSettingsJson));
 
     this.ResetFlags();
@@ -143,26 +137,6 @@
         };
     }
 
-    if (!this.HideColossusBet) {
-        has3rdParty = true;
-
-        itemsMember.colossusBets = {
-            name: "Colossus Bets",
-            className: disableColossusBets == true ? "iconDisableEdit" : "iconEnableEdit",
-            callback: function () {
-                var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 400) : 400;
-                Fanex.ExtAcc.Customer.UserId = custId;
-                Fanex.ExtAcc.Customer.IsMultiple = false;
-                url = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&recommend=" + Fanex.ExtAcc.Customer.agentId + "&isMultipleEdit=0&userId=" + parent.userId + "&roleId=1&groupName=" + parent.$('#selectedGroupName').html();
-                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit ColossusBets <font color="#6dcff6">' + title + '</font>', 900, height, false, false, 1);
-            }
-        };
-    }
-
-    if (!this.HideCricket) {
-        addEditProductMemberContextMenuItem(20, 'cricket', 'Cricket', disableCricket);
-    }
-
     for (var i = 0, max = productSettings.length; i < max; i++) {
         has3rdParty = true;
         var productSetting = productSettings[i];
@@ -226,9 +200,7 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
     agentSyncCasino,
     isHideKeno,
     isHideVirtualSport,
-    isHideGoldDeluxe,
-    isHideColossusBets,
-    isHideCricket) {
+    isHideGoldDeluxe) {
     Fanex.ExtAcc.BlockUI();
 
     this.agentId = recommend;
@@ -239,8 +211,6 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
     this.HideKeno = showKenoSetting == 'false' || isHideKeno;
     this.HideVirtualSports = isHideVirtualSport;
     this.HideGoldDeluxe = isHideGoldDeluxe;
-    this.HideColossusBet = isHideColossusBets
-    this.HideCricket = isHideCricket;
 
     this.AllbetSyncIdList = [];
     this.AllbetSyncList = [];
@@ -307,8 +277,6 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
             var title = escape(cellValue.username);
             var hideKeno = showKenoSetting == 'false' || cellValue.HideKeno == true;
             var hideGoldDeluxe = showGoldDeluxeSetting == 0 || !cellValue.SyncGoldDeluxeUpline;
-            var hideColossusBets = showColossusBets == 0 || cellValue.HideColossusBet || isHideColossusBets;
-            var hideCricket = showCricket == 0 || cellValue.HideCricket || isHideCricket || !cellValue.IsIMBC;
 
             var func = "javascript:Fanex.ExtAcc.Customer.ShowEditMember("
                 + cellValue.custid + ",'"
@@ -322,11 +290,7 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
                 + hideKeno + ","
                 + cellValue.DisableKeno + ","
                 + hideGoldDeluxe + ","
-                + cellValue.DisableGoldDeluxe + ","
-                + hideColossusBets + ","
-                + cellValue.DisableColossusBet + ","
-                + hideCricket + ","
-                + cellValue.DisableCricket + ",'"
+                + cellValue.DisableGoldDeluxe + ", '"
                 + escape(JSON.stringify(cellValue.productSettings)) + "')";
 
             return '<div onclick="' + func + '" id="edit-' + cellValue.custid + '" class="editMember"></div>';
@@ -395,12 +359,6 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
         Width: 60,
         CustomAttr: ' title="Applies to all other bettypes" '
     }, {
-        HeaderText: '% Odds',
-        Name: 'discountmo',
-        Width: 60,
-        CellAlign: 'center',
-        CustomAttr: ' title="Myanmar Odds" '
-    }, {
         HeaderText: 'Group',
         Name: 'playerdiscount',
         CellAlign: 'center',
@@ -419,12 +377,6 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
         Width: 60,
         CustomAttr: ' title="Applies to all other bettypes" '
     }, {
-        HeaderText: '% Odds',
-        Name: 'playerdiscountmo',
-        Width: 60,
-        CellAlign: 'center',
-        CustomAttr: ' title="Myanmar Odds" '
-    }, {
         HeaderText: 'Created Date',
         Name: 'createdate',
         CellAlign: 'center',
@@ -441,10 +393,6 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
     }];
 
     if (dataSource) {
-        if (!(dataSource.records > 0 && eval(dataSource.rows)[0].IsMyanmarOdds)) {
-            this.DataFields.splice(13, 1);
-            this.DataFields.splice(16, 1);
-        }
         this.RenderMemberList(dataSource);
     } else {
         $.ajax({
@@ -454,10 +402,6 @@ Fanex.ExtAcc.Customer.GetMemberList = function (
             type: 'post'
         })
         .success(function (result) {
-            if (!(result.records > 0 && eval(result.rows)[0].IsMyanmarOdds)) {
-                Fanex.ExtAcc.Customer.DataFields.splice(13, 1);
-                Fanex.ExtAcc.Customer.DataFields.splice(16, 1);
-            }
             Fanex.ExtAcc.Customer.RenderMemberList(result);
         });
     }
@@ -487,7 +431,6 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
     }
 
     this.DataSource = rows;
-    var isMyanmarOdds = rowsLength > 0 ? rows[0].IsMyanmarOdds : false;
     for (var i = 0; i < rowsLength; i++) {
         var currentRow = rows[i];
         var cssRow = !currentRow.enabled ? 'rowDisabled' : currentRow.closed ? Fanex.ExtAcc.Customer.GetClosedClassName(currentRow) : currentRow.suspended ? 'rowSuspended' : '';
@@ -535,9 +478,6 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
                 Name: 'discountcs',
                 Value: currentRow.discountcs
             }, {
-                Name: 'discountmo',
-                Value: currentRow.IsMyanmarOdds ? (currentRow.discountMyanmarOdds ? currentRow.discountMyanmarOdds : 0) : 'N/A'
-            }, {
                 Name: 'playerdiscount',
                 Value: currentRow.playerdiscount
             }, {
@@ -546,9 +486,6 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
             }, {
                 Name: 'playerdiscountcs',
                 Value: currentRow.playerdiscountcs
-            }, {
-                Name: 'playerdiscountmo',
-                Value: currentRow.IsMyanmarOdds ? (currentRow.playerdiscountMyanmarOdds ? currentRow.playerdiscountMyanmarOdds : 0) : 'N/A'
             }, {
                 Name: 'createdate',
                 Value: currentRow.createdate
@@ -604,11 +541,11 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
         }, {
             HeaderText: 'Agent Commission',
             Name: 'discount',
-            MergeColNumber: (isMyanmarOdds ? 4 : 3)
+            MergeColNumber: 3
         }, {
             HeaderText: 'Player Commission',
             Name: 'playerdiscount',
-            MergeColNumber: (isMyanmarOdds ? 4 : 3)
+            MergeColNumber: 3
         }, {
             HeaderText: 'Created Date',
             Name: 'createdate',
@@ -619,13 +556,6 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
             MergeRowNumber: 2
         }]
     }]
-
-    if (!isMyanmarOdds) {
-        for (var i = 0; i < bodyRows.length; i++) {
-            bodyRows[i].Columns.splice(13, 1);
-            bodyRows[i].Columns.splice(16, 1);
-        }
-    }
 
     var currentPage = 0;
     currentPage = (rowsLength <= Fanex.ExtAcc.Customer.ItemsPerPage || (parseInt(rowsLength / Fanex.ExtAcc.Customer.ItemsPerPage) < Fanex.ExtAcc.Customer.CurrentPage)) ? 0 : Fanex.ExtAcc.Customer.CurrentPage;
@@ -679,9 +609,7 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
         + Fanex.ExtAcc.Customer.superSyncCasino + ','
         + Fanex.ExtAcc.Customer.HideKeno + ','
         + Fanex.ExtAcc.Customer.HideVirtualSports + ','
-        + Fanex.ExtAcc.Customer.HideGoldDeluxe + ','
-        + Fanex.ExtAcc.Customer.HideColossusBet + ','
-        + Fanex.ExtAcc.Customer.HideCricket + ')">' + 'Master' + '</a>';
+        + Fanex.ExtAcc.Customer.HideGoldDeluxe + ')">' + 'Master' + '</a>';
     var linkAgent = '<a href="' + "javascript:Fanex.ExtAcc.Customer.GetAgentList("
         + Fanex.ExtAcc.Customer.masterId + ','
         + Fanex.ExtAcc.Customer.AllowDoubleCommAgent + ','
@@ -689,9 +617,7 @@ Fanex.ExtAcc.Customer.RenderMemberList = function (dataSource) {
         + Fanex.ExtAcc.Customer.masterSyncCasino + ','
         + Fanex.ExtAcc.Customer.HideKeno + ','
         + Fanex.ExtAcc.Customer.HideVirtualSports + ','
-        + Fanex.ExtAcc.Customer.HideGoldDeluxe + ','
-        + Fanex.ExtAcc.Customer.HideColossusBet + ','
-        + Fanex.ExtAcc.Customer.HideCricket + ')">' + 'Agent' + '</a>';
+        + Fanex.ExtAcc.Customer.HideGoldDeluxe + ')">' + 'Agent' + '</a>';
 
     $('#breadcrumbs').append('<div class="level-line"></div><div style="float:left">' + linkSuper + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div class="level-active">' + linkAgent + '</div>');
 

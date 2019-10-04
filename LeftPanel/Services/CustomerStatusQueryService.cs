@@ -112,8 +112,6 @@
             SetCasinoStatus(custStatus, statusRow);
             SetVirtualSportsStatus(custStatus, statusRow);
             SetKenoStatus(custStatus, statusRow);
-            SetCricketStatus(custStatus, statusRow);
-            SetColossusBetsStatus(custStatus, statusRow);
             SetGoldDeluxeStatus(custStatus, statusRow);
 
             foreach (var productStatus in transformToProductStatusMapping(statusRow, false))
@@ -142,14 +140,6 @@
 
         private static void SetNumberGameStatus(CustomerStatus custStatus, DataRow statusRow)
             => custStatus.DisableNumberGame = statusRow.DisableNumberGame();
-
-        private static void SetColossusBetsStatus(CustomerStatus custStatus, DataRow statusRow)
-            => custStatus.HideColossusBets = !ProductSettings.IsShowColossusBets || statusRow.HideColossusBet();
-
-        private static void SetCricketStatus(CustomerStatus custStatus, DataRow statusRow)
-            => custStatus.HideCricket = statusRow.HideCricket()
-                                        || !ProductSettings.IsShowCricket
-                                        || !statusRow.IsIMBC();
 
         private static void SetCasinoStatus(CustomerStatus custStatus, DataRow statusRow)
         {
@@ -189,7 +179,6 @@
                 DisableCasino = uplineRow.DisableCasino(),
                 DisableGoldDeluxe = uplineRow.DisableGoldDeluxe(),
                 HideGoldDeluxe = uplineRow.HideGoldDeluxe() || !ProductSettings.IsShowGoldDeluxe,
-                DisableColossusBets = uplineRow.DisableColossusBet(),
                 Closed = uplineRow.Closed(),
                 Suspended = uplineRow.Suspended(),
                 HideVirtualSports = uplineRow.HideVirtualSports(),

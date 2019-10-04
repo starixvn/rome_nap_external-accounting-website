@@ -21,12 +21,8 @@ Fanex.ExtAcc.WinLossDetail = {
     fixedsortlist: new Array(),
     url: resolveClientUrl("WinLossDetail/GetData"),
     viewlevel: 5,
-    includePokerGames: false,
     dataSource: [],
     $this: null,
-
-    showPokerGames: false,
-
     SetRange: function () {
         return {
             minDate: new Date($("#MinDate").val()),
@@ -143,10 +139,10 @@ Fanex.ExtAcc.WinLossDetail = {
             context: $this,
             url: resolveClientUrl("Filter/ProductsList"),
             type: "GET",
-            data: { isHideInactiveProduct: isHide, groupName: this.groupName },
+            data: { groupName: this.groupName },
             dataType: "json",
             cache: false,
-            success: function (result) {                
+            success: function (result) {
                 var productList = '<option value="' + 'showAll' + '" selected="selected">' + 'All' + "</option>";
                 $.each(result, function (i) {
                     productList += '<option value="' + result[i].Key + '" selected="selected">' + result[i].Value + "</option>";
@@ -246,9 +242,12 @@ Fanex.ExtAcc.WinLossDetail = {
 
         $("#exporttoexcel").click(function () {
             Fanex.ExtAcc.WinLossDetail.getParameterProducts();
-            var params = "fromdate=" + $this.fromdate + "&todate=" + $this.todate + "&viewlevel=" + $this.viewlevel +
-            "&custid=" + $this.custId + "&groupname=" + $this.groupName + "&username=" + Fanex.ExtAcc.WinLossDetail.username
-            + "&includepokergames=" + $this.includePokerGames;
+            var params = "fromdate=" + $this.fromdate +
+                "&todate=" + $this.todate +
+                "&viewlevel=" + $this.viewlevel +
+                "&custid=" + $this.custId +
+                "&groupname=" + $this.groupName +
+                "&username=" + Fanex.ExtAcc.WinLossDetail.username;
             var url = resolveClientUrl("WinLossDetail/ExportWinLossDetailToExcel?") + params + Fanex.ExtAcc.WinLossDetail.parameterProducts;
 
             top.exportExcel(url, document);
@@ -359,8 +358,8 @@ Fanex.ExtAcc.WinLossDetail = {
 
         var func = "javascript: Fanex.ExtAcc.WinLossDetail.GetDownlineWinLossDetail('" + cell.Value.CustId + "')";
         return html = '<div style="line-height: 22px; text-align: left;">' +
-                            '<a class="text-truncate" style="text-decoration: none; margin: 0" href="' + func + '" title="' + cell.Value.Username + '">' + cell.Value.Username + '</a>' +
-                        '</div>';
+            '<a class="text-truncate" style="text-decoration: none; margin: 0" href="' + func + '" title="' + cell.Value.Username + '">' + cell.Value.Username + '</a>' +
+            '</div>';
     },
     CustomUsernameSortFunction: function (cell1Value, cell2Value, sortDirection) {
         if (sortDirection == 'asc') {
@@ -476,9 +475,9 @@ Fanex.ExtAcc.WinLossDetail = {
         }
 
         var level = $this.viewlevel == 4 ? "Super" :
-             $this.viewlevel == 3 ? "Master" :
-              $this.viewlevel == 2 ? "Agent" :
-              "Member";
+            $this.viewlevel == 3 ? "Master" :
+                $this.viewlevel == 2 ? "Agent" :
+                    "Member";
 
         var numberOfFrozenColumn = 3;
         var widthDevice = top.$(top.window).width();
@@ -512,11 +511,11 @@ Fanex.ExtAcc.WinLossDetail = {
             showDistinctRow: false,
             allowTruncate: true,
             sortOption:
-            {
-                afterGridSorted: function (rows) {
-                    return $this.customsortfunc(rows);
-                }
-            },
+                {
+                    afterGridSorted: function (rows) {
+                        return $this.customsortfunc(rows);
+                    }
+                },
             numOfPaddingForGridExpandHeight: 40
         };
 
@@ -545,58 +544,58 @@ Fanex.ExtAcc.WinLossDetail = {
             if (this.viewlevel == 1) {
                 bodyData.push({
                     Columns: [
-                    { Name: "Username", Value: this.dataSource[i] },
-                    { Name: "Turnover", Value: this.dataSource[i].Turnover },
-                    { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
-                    { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
-                    { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
-                    { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
-                    { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
-                    { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
-                    { Name: "AgComm", Value: this.dataSource[i].AgComm },
-                    { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
-                    { Name: "Company", Value: this.dataSource[i].Company }
+                        { Name: "Username", Value: this.dataSource[i] },
+                        { Name: "Turnover", Value: this.dataSource[i].Turnover },
+                        { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
+                        { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
+                        { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
+                        { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
+                        { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
+                        { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
+                        { Name: "AgComm", Value: this.dataSource[i].AgComm },
+                        { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
+                        { Name: "Company", Value: this.dataSource[i].Company }
                     ]
                 })
             } else if (this.viewlevel == 2) {
                 bodyData.push({
                     Columns: [
-                    { Name: "Username", Value: this.dataSource[i] },
-                    { Name: "Turnover", Value: this.dataSource[i].Turnover },
-                    { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
-                    { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
-                    { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
-                    { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
-                    { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
-                    { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
-                    { Name: "AgComm", Value: this.dataSource[i].AgComm },
-                    { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
-                    { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
-                    { Name: "MAgComm", Value: this.dataSource[i].MAgComm },
-                    { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
-                    { Name: "Company", Value: this.dataSource[i].Company }
+                        { Name: "Username", Value: this.dataSource[i] },
+                        { Name: "Turnover", Value: this.dataSource[i].Turnover },
+                        { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
+                        { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
+                        { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
+                        { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
+                        { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
+                        { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
+                        { Name: "AgComm", Value: this.dataSource[i].AgComm },
+                        { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
+                        { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
+                        { Name: "MAgComm", Value: this.dataSource[i].MAgComm },
+                        { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
+                        { Name: "Company", Value: this.dataSource[i].Company }
                     ]
                 })
             } else {
                 bodyData.push({
                     Columns: [
-                    { Name: "Username", Value: this.dataSource[i] },
-                    { Name: "Turnover", Value: this.dataSource[i].Turnover },
-                    { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
-                    { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
-                    { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
-                    { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
-                    { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
-                    { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
-                    { Name: "AgComm", Value: this.dataSource[i].AgComm },
-                    { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
-                    { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
-                    { Name: "MAgComm", Value: this.dataSource[i].MAgComm },
-                    { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
-                    { Name: "SAgWinlost", Value: this.dataSource[i].SAgWinlost },
-                    { Name: "SAgComm", Value: this.dataSource[i].SAgComm },
-                    { Name: "SAgTotal", Value: this.dataSource[i].SAgTotal },
-                    { Name: "Company", Value: this.dataSource[i].Company }
+                        { Name: "Username", Value: this.dataSource[i] },
+                        { Name: "Turnover", Value: this.dataSource[i].Turnover },
+                        { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
+                        { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
+                        { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
+                        { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
+                        { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
+                        { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
+                        { Name: "AgComm", Value: this.dataSource[i].AgComm },
+                        { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
+                        { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
+                        { Name: "MAgComm", Value: this.dataSource[i].MAgComm },
+                        { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
+                        { Name: "SAgWinlost", Value: this.dataSource[i].SAgWinlost },
+                        { Name: "SAgComm", Value: this.dataSource[i].SAgComm },
+                        { Name: "SAgTotal", Value: this.dataSource[i].SAgTotal },
+                        { Name: "Company", Value: this.dataSource[i].Company }
                     ]
                 })
             }
@@ -761,7 +760,6 @@ Fanex.ExtAcc.WinLossDetail = {
         this.custId = 0;
         this.username = '';
         this.viewlevel = 4;
-        this.includePokerGames = false;
     },
     GetFromDateToDate: function () {
         if ($(".from-to-date").css('display') != 'none') {
@@ -777,7 +775,6 @@ Fanex.ExtAcc.WinLossDetail = {
         this.username = !username ? "" : username;
         this.GetFromDateToDate();
         this.groupName = $("#selectedGroupName").html();
-        this.includePokerGames = $('#chkIncludePokerGames').is(":checked");
 
         var dateInfo;
         if (this.fromdate == this.todate) {
@@ -789,16 +786,15 @@ Fanex.ExtAcc.WinLossDetail = {
 
         $this.getParameterProducts();
         var parameterUrl = "?groupname=" + this.groupName
-                            + "&srecommend=" + this.srecommend
-                            + "&mrecommend=" + this.mrecommend
-                            + "&recommend=" + this.recommend
-                            + "&custid=" + this.custId
-                            + "&username=" + Fanex.ExtAcc.ReplaceAll(this.viewlevel == 5 ? "" : this.username, "&", "")
-                            + "&fromdate=" + this.fromdate
-                            + "&todate=" + this.todate
-                            + "&viewlevel=" + this.viewlevel
-                            + "&includepokergames=" + this.includePokerGames
-                            + this.parameterProducts;
+            + "&srecommend=" + this.srecommend
+            + "&mrecommend=" + this.mrecommend
+            + "&recommend=" + this.recommend
+            + "&custid=" + this.custId
+            + "&username=" + Fanex.ExtAcc.ReplaceAll(this.viewlevel == 5 ? "" : this.username, "&", "")
+            + "&fromdate=" + this.fromdate
+            + "&todate=" + this.todate
+            + "&viewlevel=" + this.viewlevel
+            + this.parameterProducts;
 
         Fanex.ExtAcc.BlockUI();
 
@@ -870,22 +866,6 @@ Fanex.ExtAcc.WinLossDetail = {
                                 "<br/>" +
                                 "<br/>" +
                                 "- For AllBet, Net Turnover is total valid bets that we use to compute commission.";
-                            height += 50;
-                        }
-
-                        if (data.tooltips.showPokerGames) {
-                            message +=
-                                    "<br/>" +
-                                    "<br/>" +
-                                    "- Turnover and Net Turnover of Poker Games are the buy-in/top up amount on table.";
-                            height += 50;
-                        }
-
-                        if (data.tooltips.showBullfighting) {
-                            message +=
-                                    "<br/>" +
-                                    "<br/>" +
-                                    "- For Bullfighting, Net Turnover is Turnover which excludes the draw tickets.";
                             height += 50;
                         }
 

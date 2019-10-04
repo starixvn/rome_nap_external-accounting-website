@@ -19,7 +19,7 @@ namespace Fanex.ExternalAccount.Utilities {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ViewLang {
@@ -997,15 +997,6 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hide on Win Loss Detail report.
-        /// </summary>
-        public static string HideInactiveProduct {
-            get {
-                return ResourceManager.GetString("HideInactiveProduct", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {
@@ -1038,15 +1029,6 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string InactiveUser {
             get {
                 return ResourceManager.GetString("InactiveUser", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Include Poker Games.
-        /// </summary>
-        public static string IncludePokerGames {
-            get {
-                return ResourceManager.GetString("IncludePokerGames", resourceCulture);
             }
         }
         
@@ -1457,15 +1439,6 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This checkbox is used for inactive products whose statistics is hidden on current mode but still showing on history mode.
-        /// </summary>
-        public static string NoteHideInactiveProduct {
-            get {
-                return ResourceManager.GetString("NoteHideInactiveProduct", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Data is up to 3 months. For more historical data, please click.
         /// </summary>
         public static string NoteViewHistory {
@@ -1651,15 +1624,6 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string Phone {
             get {
                 return ResourceManager.GetString("Phone", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Poker.
-        /// </summary>
-        public static string Poker {
-            get {
-                return ResourceManager.GetString("Poker", resourceCulture);
             }
         }
         

@@ -10,9 +10,9 @@ Fanex.ExtAcc.GroupConfiguration = {
     Init: function () {
         $this = this;
         $('#tabs').tabs();
-        
+
         $("#productIds").combobox({
-            selected: function (event, ui) {               
+            selected: function (event, ui) {
                 $this.RenderDataByProduct();
             }
         });
@@ -22,7 +22,7 @@ Fanex.ExtAcc.GroupConfiguration = {
                 $this.RenderDataByGroup();
             }
         });
-        $("#productlist input").val($("#productIds")[0].options[0].text);        
+        $("#productlist input").val($("#productIds")[0].options[0].text);
         $("#productlist input").attr("readonly", "true");
         $("#productlist input").bind("click", function () {
             $(this).autocomplete("search", '');
@@ -44,7 +44,7 @@ Fanex.ExtAcc.GroupConfiguration = {
         $this.RenderDataByProduct();
     },
 
-    UpdateDataByProduct: function(){
+    UpdateDataByProduct: function () {
         Fanex.ExtAcc.BlockUI();
         var products = $this.GetDataByProduct();
         $.ajax({
@@ -65,7 +65,7 @@ Fanex.ExtAcc.GroupConfiguration = {
         });
     },
 
-    UpdateDataByGroup: function(){
+    UpdateDataByGroup: function () {
         Fanex.ExtAcc.BlockUI();
         var groups = $this.GetDataByGroup();
         $.ajax({
@@ -129,12 +129,8 @@ Fanex.ExtAcc.GroupConfiguration = {
             data: { ProductId: $("#productIds").val() },
             type: 'POST'
         }).success(function (data) {
-            var isHideInactive = data[0].IsHideInactiveProduct;
-            $("#chk-hideInactiveProduct").prop('checked', isHideInactive);
-            
             var bodyRows = [];
-
-            for (var i = 0; i < data.length; i++) {                
+            for (var i = 0; i < data.length; i++) {
                 bodyRows.push({
                     Columns: [
                         { Name: 'GroupName', Value: data[i] },
@@ -188,9 +184,7 @@ Fanex.ExtAcc.GroupConfiguration = {
             data: { GroupId: $("#groupIds").val() },
             type: 'POST'
         }).success(function (data) {
-
             var bodyRows = [];
-
             for (var i = 0; i < data.length; i++) {
                 bodyRows.push({
                     Columns: [
@@ -269,7 +263,7 @@ Fanex.ExtAcc.GroupConfiguration = {
         } else {
             $(element).attr('class', 'menuActive')
         }
-    }   
+    }
 }
 
 $(document).ready(function () {

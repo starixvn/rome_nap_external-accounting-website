@@ -1,21 +1,20 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Report
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
     using Caching;
     using DataAccess.Impl.Report;
     using DataAccess.Interface.Report;
     using DTO.Customer;
     using DTO.Report;
     using Interface.Report;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
     using Utilities;
 
     public class ReportService : IReportService
     {
         private const string BalanceUpDayKey = "SUNPLUS.AGENT.MODEL.BL.REPORTS.BALANCEUPDAY";
-        private const string ExcludeProductIdsCacheKey = "Fanex.ExternalAccount.Service.Impl.Report.ExcludeProductIds";
 
         private static readonly ICache Cache = CacheService.CreateInstance(CacheType.MemoryCache);
 
@@ -39,25 +38,25 @@
         public List<SuggestedUserName> GetSuggestedUserName(int custId, string username, string groupName)
             => _reportDao.EAS_CustomerSelUserSearch(custId, username, groupName);
 
-        public List<DailyWinLoss> GetDailyWinLoss(DateTime winlostDate, int custId, string groupName, string excludeProductIds)
+        public List<DailyWinLoss> GetDailyWinLoss(DateTime winlostDate, int custId, string groupName)
             => CheckConstraintMoveBetsDay(winlostDate)
-                ? _reportDao.EAS_Rpt_WinLossDaily_Com(winlostDate, custId, groupName, excludeProductIds)
-                : _reportDao.EAS_Rpt_WinLossDaily_Com14(winlostDate, custId, groupName, excludeProductIds);
+                ? _reportDao.EAS_Rpt_WinLossDaily_Com(winlostDate, custId, groupName)
+                : _reportDao.EAS_Rpt_WinLossDaily_Com14(winlostDate, custId, groupName);
 
-        public List<DailyWinLoss> GetDailyWinLossSuper(DateTime winlostDate, int custId, int masterId, string excludeProductIds)
+        public List<DailyWinLoss> GetDailyWinLossSuper(DateTime winlostDate, int custId, int masterId)
             => CheckConstraintMoveBetsDay(winlostDate)
-                ? _reportDao.EAS_Rpt_WinLossDaily_SAg(winlostDate, custId, masterId, excludeProductIds)
-                : _reportDao.EAS_Rpt_WinLossDaily_SAg14(winlostDate, custId, masterId, excludeProductIds);
+                ? _reportDao.EAS_Rpt_WinLossDaily_SAg(winlostDate, custId, masterId)
+                : _reportDao.EAS_Rpt_WinLossDaily_SAg14(winlostDate, custId, masterId);
 
-        public List<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId, string excludeProductIds)
+        public List<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId)
             => CheckConstraintMoveBetsDay(winlostDate)
-                ? _reportDao.EAS_Rpt_WinLossDaily_MAg(winlostDate, custId, agentId, excludeProductIds)
-                : _reportDao.EAS_Rpt_WinLossDaily_MAg14(winlostDate, custId, agentId, excludeProductIds);
+                ? _reportDao.EAS_Rpt_WinLossDaily_MAg(winlostDate, custId, agentId)
+                : _reportDao.EAS_Rpt_WinLossDaily_MAg14(winlostDate, custId, agentId);
 
-        public List<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId, string excludeProductIds)
+        public List<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId)
             => CheckConstraintMoveBetsDay(winlostDate)
-                ? _reportDao.EAS_Rpt_WinLossDaily_Ag(winlostDate, custId, memberId, excludeProductIds)
-                : _reportDao.EAS_Rpt_WinLossDaily_Ag14(winlostDate, custId, memberId, excludeProductIds);
+                ? _reportDao.EAS_Rpt_WinLossDaily_Ag(winlostDate, custId, memberId)
+                : _reportDao.EAS_Rpt_WinLossDaily_Ag14(winlostDate, custId, memberId);
 
         public List<WinLossDetail> GetSuperWinLossDetail(
             string groupname,
@@ -94,34 +93,6 @@
         public ArrayList GetSortingOrderList(string groupname)
             => _reportDao.EAS_Rpt_WinLossDaily_SortingOrder(groupname);
 
-        public List<PokerGamesWinLossDetail> GetSuperPokerGamesWinLossDetail(
-           string groupname,
-           int custId,
-           DateTime fromDate,
-           DateTime toDate)
-           => _reportDao.EAS_Rpt_WinLossDetailPokerGames_Com(groupname, custId, fromDate, toDate, BalanceUpDate, MoveBetsDate);
-
-        public List<PokerGamesWinLossDetail> GetMasterPokerGamesWinLossDetail(
-            int custId,
-            int masterId,
-            DateTime fromDate,
-            DateTime toDate)
-            => _reportDao.EAS_Rpt_WinLossDetailPokerGames_SAg(custId, masterId, fromDate, toDate, BalanceUpDate, MoveBetsDate);
-
-        public List<PokerGamesWinLossDetailMAg> GetAgentPokerGamesWinLossDetail(
-            int custId,
-            int agentId,
-            DateTime fromDate,
-            DateTime toDate)
-            => _reportDao.EAS_Rpt_WinLossDetailPokerGames_MAg(custId, agentId, fromDate, toDate, BalanceUpDate, MoveBetsDate);
-
-        public List<PokerGamesWinLossDetailAg> GetMemberPokerGamesWinLossDetail(
-            int custId,
-            int memberId,
-            DateTime fromDate,
-            DateTime toDate)
-            => _reportDao.EAS_Rpt_WinLossDetailPokerGames_Ag(custId, memberId, fromDate, toDate, BalanceUpDate, MoveBetsDate);
-
         public static DataTable GetBalanceUpDay()
         {
             var balanceUpDay = Cache.Get<DataTable>(BalanceUpDayKey);
@@ -136,19 +107,6 @@
             }
 
             return balanceUpDay;
-        }
-
-        public IEnumerable<int> GetExcludeProductIds(string groupName)
-        {
-            var excludeProductIds = Cache.Get<IEnumerable<int>>($"{ExcludeProductIdsCacheKey}.{groupName}");
-
-            if (excludeProductIds == null)
-            {
-                excludeProductIds = _reportDao.GetExcludeProductIds(groupName);
-                Cache.Set($"{ExcludeProductIdsCacheKey}.{groupName}", excludeProductIds, DateTime.Now.AddMinutes(5));
-            }
-
-            return excludeProductIds;
         }
 
         private static bool CheckConstraintMoveBetsDay(DateTime fromDate)

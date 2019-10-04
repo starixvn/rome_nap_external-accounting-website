@@ -591,9 +591,6 @@
   <data name="NumberGame" xml:space="preserve">
     <value>Number Game</value>
   </data>
-  <data name="Poker" xml:space="preserve">
-    <value>Poker</value>
-  </data>
   <data name="Sportsbook" xml:space="preserve">
     <value>Sportsbook</value>
   </data>
@@ -820,9 +817,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="CustomersWithDataLimited" xml:space="preserve">
     <value>Customers with data limited</value>
   </data>
-  <data name="IncludePokerGames" xml:space="preserve">
-    <value>Include Poker Games</value>
-  </data>
   <data name="PermissionFrom" xml:space="preserve">
     <value>Permission From</value>
   </data>
@@ -831,12 +825,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="UpdateSuccessfully" xml:space="preserve">
     <value>Update successfully!</value>
-  </data>
-  <data name="HideInactiveProduct" xml:space="preserve">
-    <value>Hide on Win Loss Detail report</value>
-  </data>
-  <data name="NoteHideInactiveProduct" xml:space="preserve">
-    <value>This checkbox is used for inactive products whose statistics is hidden on current mode but still showing on history mode</value>
   </data>
   <data name="ProductList" xml:space="preserve">
     <value>Product list</value>

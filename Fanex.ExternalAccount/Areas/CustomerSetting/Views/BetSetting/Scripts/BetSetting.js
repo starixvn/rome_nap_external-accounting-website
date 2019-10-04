@@ -76,7 +76,6 @@ function LoadLottery() {
     }, 1000);
 };
 
-// From Bullfighting=30 to later on we SHOULD use this function. 
 function LoadProduct(productId) {
     Fanex.CustomerSetting.Core.BlockUI();
     var url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=" + productId + "&customerId=" + custId + "&sssss=v&customerLevel=4&isreadonly=false&groupName=" + parent.$('#selectedGroupName').html() + '&v=0001');

@@ -653,15 +653,6 @@
         $scope.EnableThirdpartyProduct(8, "RNG Keno", 720, $scope.getPopupHeight(landscapeHeight, portraitHeight));
     };
 
-    $scope.EnableColossusBets = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-        top.shouldCalculatePopupHeight = false;
-        document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(15, "Colossus Bets");
-    };
-
     $scope.EnableFishingWorld = function (enable, id, disabled) {
         if (disabled) {
             return;
@@ -692,15 +683,6 @@
         $scope.EnableThirdpartyProduct(21, "Allbet", 800, 350);
     };
 
-    $scope.EnablePokerGames = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(33, "Poker Games", 720, 430);
-    };
-
     $scope.EnableVoidBridge = function (enable, id, disabled) {
         if (disabled) {
             return;
@@ -729,26 +711,6 @@
         top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(28, "Lottery");
-    };
-
-    $scope.EnableLucky3 = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(26, "Lucky 3");
-    };
-
-    $scope.EnableBullfighting = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(30, "Bullfighting");
     };
 
     $scope.EnableDCS = function (productId, productName, enable, id, productText, width, height) {
@@ -966,10 +928,6 @@
         $scope.RenderSupeOnMemberDCS(16);
     };
 
-    $scope.SuperCricket = function () {
-        $scope.RenderSupeOnMemberDCS(20);
-    };
-
     $scope.SuperAllbet = function () {
         $scope.RenderSupeOnMemberDCS(21);
     };
@@ -990,18 +948,6 @@
         $scope.RenderSupeOnMemberDCS(28);
     };
 
-    $scope.SuperLucky3 = function () {
-        $scope.RenderSupeOnMemberDCS(26);
-    };
-
-    $scope.SuperBullfighting = function () {
-        $scope.RenderSupeOnMemberDCS(30);
-    };
-
-    $scope.SuperPokerGames = function () {
-        $scope.RenderSupeOnMemberDCS(33);
-    };
-
     $scope.RenderSupeOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=' + productId + '&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
@@ -1009,10 +955,6 @@
 
     $scope.MasterSportsbook2 = function () {
         $scope.RenderMasterOnMemberDCS(16);
-    };
-
-    $scope.MasterCricket = function () {
-        $scope.RenderMasterOnMemberDCS(20);
     };
 
     $scope.MasterAllbet = function () {
@@ -1033,18 +975,6 @@
 
     $scope.MasterLottery = function () {
         $scope.RenderMasterOnMemberDCS(28);
-    };
-
-    $scope.MasterLucky3 = function () {
-        $scope.RenderMasterOnMemberDCS(26);
-    };
-
-    $scope.MasterBullfighting = function () {
-        $scope.RenderMasterOnMemberDCS(30);
-    };
-
-    $scope.MasterPokerGames = function () {
-        $scope.RenderMasterOnMemberDCS(33);
     };
 
     $scope.RenderMasterOnMemberDCS = function (productId) {

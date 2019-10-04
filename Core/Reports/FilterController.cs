@@ -28,7 +28,7 @@
         {
             var list = new List<KeyValuePair<string, bool>>();
 
-            foreach (var product in GetProductList(Enumerable.Empty<int>()))
+            foreach (var product in GetProductList())
             {
                 if (!product.Key.Equals("showAll", StringComparison.CurrentCultureIgnoreCase))
                 {
@@ -40,11 +40,9 @@
             return list;
         }
 
-        public ActionResult ProductsList(bool isHideInactiveProduct)
+        public ActionResult ProductsList()
         {
-            var excludeProductIds = reportService.GetExcludeProductIds(ExtRequest.GetGroupName());
-
-            return JsonBase(GetProductList(excludeProductIds, isHideInactiveProduct), new JsonSerializerSettings());
+            return JsonBase(GetProductList(), new JsonSerializerSettings());
         }
 
         public ActionResult GetSuggestedUserName()

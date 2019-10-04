@@ -150,9 +150,6 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Products\ProductDto.cs" />
     <Compile Include="Products\ProductStatusDto.cs" />
-    <Compile Include="Report\PokerGamesWinLossDetail.cs" />
-    <Compile Include="Report\PokerGamesWinLossDetailAg.cs" />
-    <Compile Include="Report\PokerGamesWinLossDetailMAg.cs" />
     <Compile Include="Statement\Statement.cs" />
     <Compile Include="RecheckinStatus.cs" />
     <Compile Include="GroupCurrency.cs" />

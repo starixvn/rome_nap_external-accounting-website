@@ -25,7 +25,7 @@
                     + "&sRecommend=" + parent.Fanex.ExtAcc.Customer.superId + "&mRecommend=" + parent.Fanex.ExtAcc.Customer.masterId + "&recommend=" + parent.Fanex.ExtAcc.Customer.agentId + "&custId=" + parent.Fanex.ExtAcc.Customer.custId
                     + "&roleId=" + parent.Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username;
 
-                    if (parent.Fanex.ExtAcc.Customer.CurrentLevel == parent.Fanex.ExtAcc.Customer.Super) {
+                    if (parent.Fanex.ExtAcc.Customer.CurrentLevel === parent.Fanex.ExtAcc.Customer.Super) {
                         params += "&withDataLimited=" + parent.$("#chk-show-limit-date").is(":checked");
                     }
 
@@ -34,9 +34,9 @@
                 });
 
                 parent.$('#txtUserName').keypress(function (e) {
-                    if (typeof e == 'undefined') e = window.event;
-                    var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
-                    if (key == 13) {
+                    if (typeof e === 'undefined') e = window.event;
+                    var key = (typeof e.keyCode === 'undefined') ? e.which : e.keyCode;
+                    if (key === 13) {
                         parent.Fanex.ExtAcc.Customer.Search(false);
 
                         return true;
@@ -56,19 +56,14 @@
                 var isHideKeno = true;
                 var isHideVirtualSport = true;
                 var isHideGoldDeluxe = true;
-                var isHideColossusBets = true;
-                var isHideCricket = true;
                 var isHideAllbet = true;
                 var isHideVoidbridge = true;
                 var isHideNG2 = true;
                 var isHideFishingWorld = true;
                 var isHideLottery = true;
-                var isHideLucky3 = true;
-                var isHideBullfighting = true;
-                var isHidePokerGames = true;
 
                 for (var i = 0; i < $scope.model.setting.enableItems.length; i++) {
-                    if ($scope.model.setting.enableItems[i].key == 'DoubleComm') {
+                    if ($scope.model.setting.enableItems[i].key === 'DoubleComm') {
                         allowDoubleComm = $scope.model.setting.enableItems[i].value;
 
                         break;
@@ -76,59 +71,40 @@
                 }
 
                 for (var i = 0; i < $scope.model.setting.syncItems.length; i++) {
-                    if ($scope.model.setting.syncItems[i].key == 'SyncCasino') {
+                    if ($scope.model.setting.syncItems[i].key === 'SyncCasino') {
                         syncCasino = $scope.model.setting.syncItems[i].value;
                     }
 
-                    if ($scope.model.setting.syncItems[i].key == 'HideAllbet') {
+                    if ($scope.model.setting.syncItems[i].key === 'HideAllbet') {
                         isHideAllbet = $scope.model.setting.syncItems[i].value;
                     }
 
-                    if ($scope.model.setting.syncItems[i].key == 'HideVoidbridge') {
+                    if ($scope.model.setting.syncItems[i].key === 'HideVoidbridge') {
                         isHideVoidbridge = $scope.model.setting.syncItems[i].value;
                     }
 
-                    if ($scope.model.setting.syncItems[i].key == 'HideNG2') {
+                    if ($scope.model.setting.syncItems[i].key === 'HideNG2') {
                         isHideNG2 = $scope.model.setting.syncItems[i].value;
                     }
 
-                    if ($scope.model.setting.syncItems[i].key == 'HideFishingWorld') {
+                    if ($scope.model.setting.syncItems[i].key === 'HideFishingWorld') {
                         isHideFishingWorld = $scope.model.setting.syncItems[i].value;
                     }
 
-                    if ($scope.model.setting.syncItems[i].key == 'HideLottery') {
+                    if ($scope.model.setting.syncItems[i].key === 'HideLottery') {
                         isHideLottery = $scope.model.setting.syncItems[i].value;
-                    }
-
-                    if ($scope.model.setting.syncItems[i].key == 'HideLucky3') {
-                        isHideLucky3 = $scope.model.setting.syncItems[i].value;
-                    }
-
-                    if ($scope.model.setting.syncItems[i].key == 'HideBullfighting') {
-                        isHideBullfighting = $scope.model.setting.syncItems[i].value;
-                    }
-
-                    if ($scope.model.setting.syncItems[i].key == 'HidePokerGames') {
-                        isHidePokerGames = $scope.model.setting.syncItems[i].value;
                     }
                 }
 
                 for (var i = 0; i < $scope.model.setting.details.length; i++) {
-                    if ($scope.model.setting.details[i].key == 'Keno') {
+                    if ($scope.model.setting.details[i].key === 'Keno') {
                         isHideKeno = false;
                     }
-                    if ($scope.model.setting.details[i].key == 'VirtualSports') {
+                    if ($scope.model.setting.details[i].key === 'VirtualSports') {
                         isHideVirtualSport = false;
                     }
-                    if ($scope.model.setting.details[i].key == 'GoldDeluxe') {
+                    if ($scope.model.setting.details[i].key === 'GoldDeluxe') {
                         isHideGoldDeluxe = false;
-                    }
-                    if ($scope.model.setting.details[i].key == 'ColossusBets') {
-                        isHideColossusBets = false;
-                    }                   
-
-                    if ($scope.model.setting.details[i].key == 'Cricket') {
-                        isHideCricket = false;
                     }
                 }
 
@@ -136,13 +112,13 @@
                 parent.Fanex.ExtAcc.Customer.bindOrientationChange();
                 switch (roleId) {
                     case 4:
-                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting, isHidePokerGames);
+                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery);
                         break;
                     case 3:
-                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting, isHidePokerGames);
+                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery);
                         break;
                     case 2:
-                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideColossusBets, isHideCricket, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery, isHideLucky3, isHideBullfighting, isHidePokerGames);
+                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery);
                         break;
                     default:
                         break;
@@ -158,7 +134,7 @@
     $scope.PT = function () {
         parent.Fanex.ExtAcc.Customer.CurrentLevel = $scope.model.personalInfo.roleId.value;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = parent.Fanex.ExtAcc.Customer.agentId = $scope.model.personalInfo.roleId.value == 4 ? userId : $scope.model.personalInfo.uplineId.value;
+        parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = parent.Fanex.ExtAcc.Customer.agentId = $scope.model.personalInfo.roleId.value === 4 ? userId : $scope.model.personalInfo.uplineId.value;
 
         parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
         parent.Fanex.ExtAcc.Customer.isSuperEditAgent = false;
@@ -200,7 +176,7 @@
                 break;
         }
 
-        if (url != '') {
+        if (url !== '') {
             parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupname=' + parent.$('#selectedGroupName').html());
         }
 
@@ -226,7 +202,7 @@
 
         var roleId = $scope.model.personalInfo.roleId.value;
         var custId = $scope.model.personalInfo.custId.value;
-        var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
+        var uplineId = roleId === 4 ? userId : $scope.model.personalInfo.uplineId.value;
         var url = '';
         switch (roleId) {
             case 4:
@@ -257,7 +233,7 @@
 
         var roleId = $scope.model.personalInfo.roleId.value;
         var custId = $scope.model.personalInfo.custId.value;
-        var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
+        var uplineId = roleId === 4 ? userId : $scope.model.personalInfo.uplineId.value;
         var url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?actorId=" + parent.userId + "&custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html();
         switch (roleId) {
             case 4:
@@ -281,42 +257,8 @@
         $scope.collapseSidebar();
     };
 
-    $scope.ColossusBets = function () {
-        $scope.ResetGlobalValue();
-
-        var roleId = $scope.model.personalInfo.roleId.value;
-        var custId = $scope.model.personalInfo.custId.value;
-        var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
-        var url = parent.resolveClientUrl('customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=' + custId + '&isMultipleEdit=0&userId=' + parent.userId + '&roleId=' + roleId + '&groupName=' + parent.$('#selectedGroupName').html());
-
-        switch (roleId) {
-            case 4:
-                break;
-            case 3:
-                url += "&srecommend=" + uplineId;
-                break;
-            case 2:
-                url += "&mrecommend=" + uplineId;
-                break;
-            case 1:
-                url += "&recommend=" + uplineId;
-                break;
-            default:
-                break;
-        }
-
-        parent.Fanex.ExtAcc.LoadMainIFrame(url);
-
-        $scope.collapseSidebar();
-    };
-
     $scope.Sportsbook2 = function () {
         $scope.RenderDCS(16);
-        $scope.collapseSidebar();
-    };
-
-    $scope.Cricket = function () {
-        $scope.RenderDCS(20);
         $scope.collapseSidebar();
     };
 
@@ -345,27 +287,12 @@
         $scope.collapseSidebar();
     };
 
-    $scope.Lucky3 = function () {
-        $scope.RenderDCS(26);
-        $scope.collapseSidebar();
-    };
-
-    $scope.Bullfighting = function () {
-        $scope.RenderDCS(30);
-        $scope.collapseSidebar();
-    };
-
-    $scope.PokerGames = function () {
-        $scope.RenderDCS(33);
-        $scope.collapseSidebar();
-    };
-
     $scope.RenderDCS = function (productId) {
         $scope.ResetGlobalValue();
 
         var roleId = $scope.model.personalInfo.roleId.value;
         var custId = $scope.model.personalInfo.custId.value;
-        var uplineId = roleId == 4 ? userId : $scope.model.personalInfo.uplineId.value;
+        var uplineId = roleId === 4 ? userId : $scope.model.personalInfo.uplineId.value;
         var url = "DCS/ViewCustomerSetting?language=en-US&productId=" + productId + "&customerId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html();
         switch (roleId) {
             case 4:

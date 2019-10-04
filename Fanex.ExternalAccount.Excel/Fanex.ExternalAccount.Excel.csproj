@@ -101,14 +101,6 @@
     <Compile Include="Extensions\CustomerInfoDataRowExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IReportBuilder.cs" />
-    <Compile Include="Reports\PokerGamesWinLossDetail\AgentPokerGamesWinLossDetailReportBuilder.cs" />
-    <Compile Include="Reports\PokerGamesWinLossDetail\IPokerGamesWinLossDetailReportBuilder.cs" />
-    <Compile Include="Reports\PokerGamesWinLossDetail\MemberPokerGamesWinLossDetailReportBuilder.cs" />
-    <Compile Include="Reports\PokerGamesWinLossDetail\TemplateSettings.cs" />
-    <Compile Include="Reports\PokerGamesWinLossDetail\PokerGamesWinLossDetailReport.cs" />
-    <Compile Include="Reports\PokerGamesWinLossDetail\PokerGamesWinLossDetailReportAg.cs" />
-    <Compile Include="Reports\PokerGamesWinLossDetail\PokerGamesWinLossDetailReportBuilder.cs" />
-    <Compile Include="Reports\PokerGamesWinLossDetail\PokerGamesWinLossDetailReportMAg.cs" />
     <Compile Include="Reports\WinLossDetail\IWinLossDetailReportBuilder.cs" />
     <Compile Include="Statement\StatementPage\StatementPage.cs" />
     <Compile Include="Statement\StatementPage\StatementPageBuilder.cs" />

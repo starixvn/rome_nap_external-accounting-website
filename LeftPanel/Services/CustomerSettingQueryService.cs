@@ -73,7 +73,6 @@
             AddVirtualSportsStatus(table3rdDCS, enableItems);
             AddDoubleCommStatus(nonProductStatusRow, enableItems);
             AddESportsStatus(table3rdDCS, enableItems);
-            AddColossusBetsStatus(nonDCSProductStatusRow, enableItems);
             AddGoldDeluxeStatus(nonDCSProductStatusRow, enableItems);
 
             return enableItems;
@@ -113,25 +112,6 @@
             }
 
             enableItems.Add(goldDeluxeStatus);
-        }
-
-        private static void AddColossusBetsStatus(DataRow nonDCSProductStatusRow, ICollection<ObjectInfo> enableItems)
-        {
-            if (!ProductSettings.IsShowColossusBets || nonDCSProductStatusRow.HideColossusBet())
-            {
-                return;
-            }
-
-            var colossusBetsStatus = new ObjectInfo("EnableColossusBets", nonDCSProductStatusRow.EnableColossusBet(),
-                "Colossus Bets",
-                "Enable Colossus Bets");
-
-            if (nonDCSProductStatusRow.DisableColossusBetUpline())
-            {
-                colossusBetsStatus = DisableStatus(colossusBetsStatus);
-            }
-
-            enableItems.Add(colossusBetsStatus);
         }
 
         private void AddESportsStatus(DataTable table3rdDCS, List<ObjectInfo> enableItems)
@@ -256,9 +236,6 @@
             AddVirtualSportsEditLink(table3rdDCS, details);
             AddKenoEditLink(details);
             AddGoldDeluxeEditLink(nonDCSProductStatusRow, details);
-            AddColossusBetsEditLink(nonDCSProductStatusRow, details);
-            AddCricketEditLink(table3rdDCS, details);
-
             return details;
         }
 
@@ -272,27 +249,11 @@
             }
         }
 
-        private void AddCricketEditLink(DataTable table3rdDCS, ICollection<ObjectInfo> details)
-        {
-            if (!table3rdDCS.IsProductHidden(ProductConstants.Cricket) && ProductSettings.IsShowCricket && _site == "IMBC")
-            {
-                details.Add(new ObjectInfo("Cricket", "Cricket"));
-            }
-        }
-
         private static void AddKenoEditLink(List<ObjectInfo> details)
         {
             if (ProductSettings.IsShowKeno)
             {
                 details.Add(new ObjectInfo("Keno", "RNG Keno"));
-            }
-        }
-
-        private static void AddColossusBetsEditLink(DataRow nonProductStatusRow, ICollection<ObjectInfo> details)
-        {
-            if (ProductSettings.IsShowColossusBets && !nonProductStatusRow.HideColossusBet())
-            {
-                details.Add(new ObjectInfo("ColossusBets", "Colossus Bets"));
             }
         }
 

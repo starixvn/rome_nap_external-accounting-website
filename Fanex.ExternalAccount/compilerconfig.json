@@ -16,10 +16,6 @@
     "inputFile": "assets/styles/pages/reports/winloss-detail.scss"
   },
   {
-    "outputFile": "assets/styles/pages/reports/pokergames-winloss-detail.css",
-    "inputFile": "assets/styles/pages/reports/pokergames-winloss-detail.scss"
-  },
-  {
     "outputFile": "assets/styles/pages/reports/daily-winloss.css",
     "inputFile": "assets/styles/pages/reports/daily-winloss.scss"
   },
@@ -70,10 +66,6 @@
   {
     "outputFile": "assets/styles/pages/customer/gold-deluxe-setting.css",
     "inputFile": "assets/styles/pages/customer/gold-deluxe-setting.scss"
-  },
-  {
-    "outputFile": "assets/styles/pages/customer/colossusbet-setting.css",
-    "inputFile": "assets/styles/pages/customer/colossusbet-setting.scss"
   },
   {
     "outputFile": "assets/styles/pages/admin/product.css",

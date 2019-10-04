@@ -1,5 +1,4 @@
 ﻿@using Fanex.ExternalAccount.Utilities
-@model bool
 @{
     ViewBag.Title = "Win Loss Detail";
     Layout = null;
@@ -80,13 +79,6 @@
                 <select name="GroupProducts" id="GroupProducts" multiple="multiple" style="display: none"></select>
             </div>
         </div>
-        @if (Model)
-            {
-            <div class="form-group">
-                <input type="checkbox" id="chkIncludePokerGames" value="" />
-                <label>@ViewLang.IncludePokerGames</label>
-            </div>
-        }
         <div class="form-group">
             <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
         </div>

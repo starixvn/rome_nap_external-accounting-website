@@ -15,9 +15,6 @@
                 [ProductConstants.NG2] = new Product(ProductConstants.NG2, "NG2", true),
                 [ProductConstants.FishingWorld] = new Product(ProductConstants.FishingWorld, "Fishing World"),
                 [ProductConstants.Lottery] = new Product(ProductConstants.Lottery, "Lottery"),
-                [ProductConstants.Lucky3] = new Product(ProductConstants.Lucky3, "Lucky 3"),
-                [ProductConstants.BullFighting] = new Product(ProductConstants.BullFighting, "Bullfighting"),
-                [ProductConstants.PokerGames] = new Product(ProductConstants.PokerGames, "Poker Games"),
                 [ProductConstants.Sportsbook2] = new Product(ProductConstants.Sportsbook2, "Sportsbook 2")
             };
 
@@ -26,10 +23,6 @@
         public static bool IsShowKeno => IsShowProduct(ProductConstants.Keno);
 
         public static bool ShowKenoSetting => Configs["ShowKenoSetting"] == "true";
-
-        public static bool IsShowColossusBets => IsShowProduct(ProductConstants.ColossusBets);
-
-        public static bool IsShowCricket => IsShowProduct(ProductConstants.Cricket);
 
         public static bool IsShowAllbet => IsShowProduct(ProductConstants.AllBet);
 
@@ -41,13 +34,7 @@
 
         public static bool IsShowLottery => IsShowProduct(ProductConstants.Lottery);
 
-        public static bool IsShowLucky3 => IsShowProduct(ProductConstants.Lucky3);
-
         public static bool HideEsports => ToBoolean(Configs["HideEsports"]);
-
-        public static bool IsShowBullfighting => IsShowProduct(ProductConstants.BullFighting);
-
-        public static bool IsShowPokerGames => IsShowProduct(ProductConstants.PokerGames);
 
         internal static NameValueCollection Configs { get; set; } = ConfigurationManager.AppSettings;
 

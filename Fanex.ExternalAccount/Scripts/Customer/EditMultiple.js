@@ -109,29 +109,8 @@
             productIds.push(12);
         }
 
-        if (!this.HideColossusBet) {
-            menuItems.colossusBets = {
-                name: "Edit Multiple ColossusBets",
-                className: "iconEnableEdit",
-                callback: function () {
-                    top.shouldCalculatePopupHeight = true;
-                    url = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&srecommend=" + Fanex.ExtAcc.Customer.superId + "&isMultipleEdit=1&userId=" + parent.userId + "&roleId=3&groupName=" + parent.$('#selectedGroupName').html();
-                    Fanex.ExtAcc.Form.ShowFrame(
-                        resolveClientUrl(url), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple ColossusBets Setting' : 'Edit ColossusBets Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
-                        900,
-                        Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
-                        false, null, 1);
-                }
-            };
-            productIds.push(15);
-        }
-
         if (!this.HideSportsbook2) {
             addSuperEditMultipleMastersMenuItem(16, 'Sportsbook 2');
-        }
-
-        if (!this.HideCricket) {
-            addSuperEditMultipleMastersMenuItem(20, 'Cricket');
         }
 
         for (var i = 0, max = this.UplineProductSettings.length; i < max; i++) {
@@ -221,29 +200,8 @@
             productIds.push(12);
         }
 
-        if (!this.HideColossusBet) {
-            menuItems.colossusBets = {
-                name: "Edit Multiple ColossusBets",
-                className: "iconEnableEdit",
-                callback: function () {
-                    top.shouldCalculatePopupHeight = true;
-                    url = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&mrecommend=" + Fanex.ExtAcc.Customer.masterId + "&isMultipleEdit=1&userId=" + parent.userId + "&roleId=2&groupName=" + parent.$('#selectedGroupName').html();
-                    Fanex.ExtAcc.Form.ShowFrame(
-                        resolveClientUrl(url), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple ColossusBets Setting' : 'Edit ColossusBets Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
-                        900,
-                        Fanex.ExtAcc.Customer.GetPopupHeight(270, 400),
-                        false, null, 1);
-                }
-            };
-            productIds.push(15);
-        }
-
         if (!this.HideSportsbook2) {
             addMasterEditMultipleAgentsMenuItem(16, 'Sportsbook 2');
-        }
-
-        if (!this.HideCricket) {
-            addMasterEditMultipleAgentsMenuItem(20, 'Cricket');
         }
 
         for (var i = 0, max = this.UplineProductSettings.length; i < max; i++) {
@@ -461,29 +419,8 @@
             productIds.push(12);
         }
 
-        if (!this.HideColossusBet) {
-            menuItems.colossusBets = {
-                name: "Edit Multiple ColossusBets",
-                className: "iconEnableEdit",
-                callback: function () {
-                    top.shouldCalculatePopupHeight = true;
-                    url = "customersetting/ColossusBetSetting/ColossusBetSetting/EditSetting?custid=" + Fanex.ExtAcc.Customer.UserId + "&recommend=" + Fanex.ExtAcc.Customer.agentId + "&isMultipleEdit=1&userId=" + parent.userId + "&roleId=1&groupName=" + parent.$('#selectedGroupName').html();
-                    Fanex.ExtAcc.Form.ShowFrame(
-                        resolveClientUrl(url), Fanex.ExtAcc.Customer.IsMultiple ? 'Edit Multiple ColossusBets Setting' : 'Edit ColossusBets Setting <font color="#6dcff6">' + ret.Names[0] + '</font>',
-                        900,
-                        Fanex.ExtAcc.Customer.GetPopupHeight(270, 400),
-                        false, null, 1);
-                }
-            };
-            productIds.push(15);
-        }
-
         if (!this.HideSportsbook2) {
             addUplineEditMemberMenuItems(16, 'Sportsbook 2');
-        }
-
-        if (!this.HideCricket) {
-            addUplineEditMemberMenuItems(20, 'Cricket');
         }
 
         for (var i = 0, max = this.UplineProductSettings.length; i < max; i++) {
@@ -515,15 +452,15 @@
             }
         }
     }
-    
+
     menuItems.suspend = {
-            name: "Edit Multiple Suspend Status",
-            className: "iconEnableEdit",
-            callback: function (key, opt) {
-                top.shouldCalculatePopupHeight = false;
-                var url = resolveClientUrl('Customer/MultipleSuspend?custIdList=' + Fanex.ExtAcc.Customer.IdsAndNames().Ids + '&roleid=' + Fanex.ExtAcc.Customer.CurrentLevel);
-                Fanex.ExtAcc.Customer.Status.ViewSuspendMultiple(Fanex.ExtAcc.Customer.IdsAndNames().Ids, Fanex.ExtAcc.Customer.CurrentLevel);
-            }
+        name: "Edit Multiple Suspend Status",
+        className: "iconEnableEdit",
+        callback: function (key, opt) {
+            top.shouldCalculatePopupHeight = false;
+            var url = resolveClientUrl('Customer/MultipleSuspend?custIdList=' + Fanex.ExtAcc.Customer.IdsAndNames().Ids + '&roleid=' + Fanex.ExtAcc.Customer.CurrentLevel);
+            Fanex.ExtAcc.Customer.Status.ViewSuspendMultiple(Fanex.ExtAcc.Customer.IdsAndNames().Ids, Fanex.ExtAcc.Customer.CurrentLevel);
+        }
     }
 
     if ($.contextMenu) $.contextMenu('destroy');
@@ -807,53 +744,53 @@ Fanex.ExtAcc.Customer.ConfigMultipleDoubleComm = function (custids, allow, index
             groupName: Fanex.ExtAcc.Customer.GroupName().groupName
         }
     })
-    .success(function (result) {
-        if (result.errorCode && result.errorCode == '1') {
-            Fanex.ExtAcc.UnBlockUI();
-            Fanex.ExtAcc.Form.Alert('Error', result.errorMessage, 400, 150, 'alert');
-            Fanex.ExtAcc.Form.Close();
-        } else {
-            if (!result.isSuccess) {
-                Fanex.ExtAcc.Customer.MultipleDblCommError += (result.errorCode == '600' ? ('Account ' + Fanex.ExtAcc.Customer.Names()[current] + ' was disableed<br />') : (result.errorMessage + '<br/>'));
+        .success(function (result) {
+            if (result.errorCode && result.errorCode == '1') {
+                Fanex.ExtAcc.UnBlockUI();
+                Fanex.ExtAcc.Form.Alert('Error', result.errorMessage, 400, 150, 'alert');
+                Fanex.ExtAcc.Form.Close();
+            } else {
+                if (!result.isSuccess) {
+                    Fanex.ExtAcc.Customer.MultipleDblCommError += (result.errorCode == '600' ? ('Account ' + Fanex.ExtAcc.Customer.Names()[current] + ' was disableed<br />') : (result.errorMessage + '<br/>'));
+                }
+
+                if (current == len) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        Fanex.ExtAcc.Form.Close();
+                        Fanex.ExtAcc.UnBlockUI();
+
+                        if (Fanex.ExtAcc.Customer.MultipleDblCommError != '') {
+                            Fanex.ExtAcc.Form.Alert('Error', Fanex.ExtAcc.Customer.MultipleDblCommError.formatErrorMessage(), 300, 150, 'alert');
+                        }
+
+                        Fanex.ExtAcc.Customer.CallBackCustomerList();
+
+                    }, 2000);
+                }
+
+                current++;
+
+                if (current <= len) {
+                    Fanex.ExtAcc.Customer.ConfigMultipleDoubleComm(custids, allow, current);
+                }
+            }
+        })
+        .error(function (xhr, status, err) {
+            if (typeof console != 'undefined') {
+                console.log(err);
             }
 
-            if (current == len) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-                    Fanex.ExtAcc.Form.Close();
-                    Fanex.ExtAcc.UnBlockUI();
-
-                    if (Fanex.ExtAcc.Customer.MultipleDblCommError != '') {
-                        Fanex.ExtAcc.Form.Alert('Error', Fanex.ExtAcc.Customer.MultipleDblCommError.formatErrorMessage(), 300, 150, 'alert');
-                    }
-
-                    Fanex.ExtAcc.Customer.CallBackCustomerList();
-
-                }, 2000);
-            }
+            Fanex.ExtAcc.Customer.MultipleDblCommError += err + '<br/>';
 
             current++;
 
             if (current <= len) {
                 Fanex.ExtAcc.Customer.ConfigMultipleDoubleComm(custids, allow, current);
             }
-        }
-    })
-    .error(function (xhr, status, err) {
-        if (typeof console != 'undefined') {
-            console.log(err);
-        }
 
-        Fanex.ExtAcc.Customer.MultipleDblCommError += err + '<br/>';
-
-        current++;
-
-        if (current <= len) {
-            Fanex.ExtAcc.Customer.ConfigMultipleDoubleComm(custids, allow, current);
-        }
-
-        Fanex.ExtAcc.UnBlockUI();
-    });
+            Fanex.ExtAcc.UnBlockUI();
+        });
 };
 
 Fanex.ExtAcc.Customer.EditDCS_CheckUnSyncedProducts = function (customerIds, productId) {

@@ -33,12 +33,6 @@
 
         internal static string LastLoginIP(this DataRow dataRow) => dataRow["lastloginip"].ToString();
 
-        internal static bool IsMyanmarOdds(this DataRow dataRow) => Utils.ToBoolean(dataRow["ismyanmarodds"]);
-
-        internal static string DiscountMyanmarOdds(this DataRow dataRow) => Utils.ToDouble(dataRow["discountmyanmarodds"]).ToString(CultureInfo.InvariantCulture);
-
-        internal static string PlayerDiscountMyanmarOdds(this DataRow dataRow) => Utils.ToDouble(dataRow["playerdiscountmyanmarodds"]).ToString(CultureInfo.InvariantCulture);
-
         internal static string CreateDate(this DataRow dataRow) => $"{dataRow["createdate"]:MM/dd/yyyy HH:mm:ss tt}";
 
         internal static double GroupA(this DataRow dataRow) => Utils.ToDouble(dataRow["groupa"]);

@@ -122,10 +122,6 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.5\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.ColossusBetSetting, Version=2.0.1.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.ColossusBetSetting.2.0.1.4\lib\net40\Fanex.CustomerSetting.Module.ColossusBetSetting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.2\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
       <Private>True</Private>
@@ -194,11 +190,11 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.2.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.2.1\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.2.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.2.2-RemoveInactiveProduct2b001\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.4.8\lib\net40\Fanex.PTEngine.dll</HintPath>
+      <HintPath>..\packages\Fanex.PTEngine.1.0.4.9-RemoveInactiveProducts\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTSetting.BettypeReference, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTSetting.BettypeReference.1.0.0.2\lib\net461\Fanex.PTSetting.BettypeReference.dll</HintPath>
@@ -558,107 +554,6 @@
     <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\ViewAgentController.js" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Styles\Casino.css" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Super\EditSuper.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Scripts\controllers\cashInShare.controller.js" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Scripts\controllers\commission.controller.js" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Scripts\controllers\main.controller.js" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Scripts\controllers\status.controller.js" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Scripts\directives\commonDirective.js" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Scripts\repositories\repositories.js" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Scripts\services\commonService.js" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Scripts\Tipsy\Images\pointer.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Scripts\Tipsy\jquery.tipsy.js" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Scripts\Tipsy\tipsy.css" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\External\Images\btn-bgsubmit-disabled.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\External\Images\btn-bgsubmit-hover.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\External\Images\btn-bgsubmit-original.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\External\Images\successgroup.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\External\Images\warninggroup.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\accessDenied.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\back.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Banner\bg_banner.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Banner\bg_head_tb.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Banner\bg_menu.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Banner\down.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Banner\down_up.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Banner\icn_user.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Banner\in.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Banner\left_right.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Banner\logo.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Banner\L_main_btn.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Banner\out.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Banner\right_left.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Banner\R_main_btn.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Banner\up.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Banner\up_down.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\bgHeader.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\bg_checkbox.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\bg_head_tb.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\btUpdateL.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\btUpdateR.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Buttons\bgred1_btn.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Buttons\bgred_btn.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Buttons\bg_btn.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Buttons\check.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Buttons\checked-icon.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Buttons\check_hover.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Buttons\icn_date.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Buttons\uncheck.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Buttons\uncheck_hover.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Buttons\unverify-icon.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\calendar1.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\close.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\copyChecked.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\copyUnChecked.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\C_content_tab.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\dec1.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\dec1_disable.jpg" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\dec2.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\dec2_disable.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\dec3.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\dec3_disable.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\dec4.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\dec4_disable.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\email.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\emsg_1_1.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\emsg_1_2.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\emsg_1_3.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\emsg_2_1.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\emsg_2_2.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\emsg_3_1.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\emsg_3_2.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\emsg_3_3.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\error.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\excel.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\folder.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\help.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\icn_add.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\icn_del.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\icn_edit.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\icn_top.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\icn_view.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\ico1.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\ico_clear.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\ico_login1.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\ico_login2.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\ico_warning.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\loading51.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\L_content_tab.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\opened_folder.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\ptL.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\ptR.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\ptRp.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\ptR_down.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\refresh_icon.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\R_content_tab.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Save.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Save1.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\save_s.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\sorting_asc.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\sorting_bg.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\sorting_desc.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\sucess.gif" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\undo.png" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Images\Update.png" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Readme.txt" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Scripts\EnableStatus.js" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Scripts\EnableStatus.js" />
@@ -984,10 +879,6 @@
     <Content Include="assets\bundles\otp\otp.min.js">
       <DependentUpon>otp.js</DependentUpon>
     </Content>
-    <Content Include="assets\bundles\pokergames-winlossdetail\index.js" />
-    <Content Include="assets\bundles\pokergames-winlossdetail\index.min.js">
-      <DependentUpon>index.js</DependentUpon>
-    </Content>
     <Content Include="assets\bundles\statement\index.js" />
     <Content Include="assets\bundles\statement\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -1093,8 +984,6 @@
     <Content Include="assets\styles\pages\customer\casino.min.css">
       <DependentUpon>casino.css</DependentUpon>
     </Content>
-    <Content Include="assets\styles\pages\customer\colossusbet-setting.css" />
-    <Content Include="assets\styles\pages\customer\colossusbet-setting.min.css" />
     <Content Include="assets\styles\pages\customer\customer-setting.css">
       <DependentUpon>customer-setting.scss</DependentUpon>
     </Content>
@@ -1145,12 +1034,6 @@
     </Content>
     <Content Include="assets\styles\pages\reports\daily-winloss.min.css">
       <DependentUpon>daily-winloss.css</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\reports\pokergames-winloss-detail.css">
-      <DependentUpon>pokergames-winloss-detail.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\reports\pokergames-winloss-detail.min.css">
-      <DependentUpon>pokergames-winloss-detail.scss</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\reports\winloss-detail.css">
       <DependentUpon>winloss-detail.scss</DependentUpon>
@@ -1714,7 +1597,6 @@
     <Content Include="Scripts\Manage\Fanex.ExtAcc.Permission.js" />
     <Content Include="Scripts\MultiSelect\select2.css" />
     <Content Include="Scripts\MultiSelect\select2.js" />
-    <Content Include="Scripts\Reports\Fanex.ExtAcc.PokerGamesWinLossDetail.js" />
     <Content Include="Scripts\_Libs\jQuery\classList.js" />
     <Content Include="Scripts\_Libs\jQuery\Core\jquery.js" />
     <Content Include="Scripts\_Libs\jQuery\Countdown\jquery.countdown.css" />
@@ -2505,16 +2387,6 @@
     <Content Include="Areas\Common\Views\Web.config" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Shared\_Layout.cshtml" />
     <Content Include="App_Data\activitytracking.json" />
-    <None Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Document.doc" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\ColossusBet-setting.less" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Common.less" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\External\theme-color.less" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Styles\Variables.less" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Views\Index.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Views\_CashInShare.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Views\_Commission.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Views\_CustomerInfor.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\ColossusBet\Setting\Views\_Status.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Styles\EnableStatus.less" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Templates\Products.config">
@@ -2524,7 +2396,9 @@
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Styles\EnableStatus.less" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Styles\NAP\variables.less" />
-    <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Templates\Products.config" />
+    <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Templates\Products.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Templates\Template.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -2714,28 +2588,9 @@
     <Content Include="assets\styles\pages\reports\winloss-detail.scss" />
     <Content Include="bundleconfig.json" />
     <Content Include="assets\styles\pages\account\security-code.scss" />
-    <Content Include="assets\bundles\common.min.js.map">
-      <DependentUpon>common.min.js</DependentUpon>
-    </Content>
     <Content Include="assets\styles\pages\customer\gold-deluxe-setting.scss" />
-    <Content Include="assets\bundles\login\login.min.js.map">
-      <DependentUpon>login.min.js</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\customer\colossusbet-setting.scss" />
     <Content Include="assets\styles\pages\customer\_common.scss" />
     <Content Include="assets\styles\pages\customer\_theme-color.scss" />
-    <Content Include="assets\bundles\choosegroup\choosegroup.min.js.map">
-      <DependentUpon>choosegroup.min.js</DependentUpon>
-    </Content>
-    <Content Include="assets\bundles\winlossdetail\index.min.js.map">
-      <DependentUpon>index.min.js</DependentUpon>
-    </Content>
-    <Content Include="assets\bundles\dailywinloss\index.min.js.map">
-      <DependentUpon>index.min.js</DependentUpon>
-    </Content>
-    <Content Include="assets\bundles\statement\index.min.js.map">
-      <DependentUpon>index.min.js</DependentUpon>
-    </Content>
     <Content Include="Areas\ProductStatusSetting\Views\web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2743,21 +2598,39 @@
     <Content Include="Areas\ProductStatusSetting\Views\Multiple\Index.cshtml" />
     <Content Include="Areas\ProductStatusSetting\Views\Multiple\MultiplePartialView.cshtml" />
     <Content Include="Areas\ProductStatusSetting\Views\Single\Index.cshtml" />
+    <Content Include="Areas\ProductStatusSetting\Views\Simple\Index.cshtml" />
+    <Content Include="Areas\ProductStatusSetting\Styles\font\AlphaAdmin\AlphaAdmin.ttf" />
+    <Content Include="assets\styles\pages\admin\product.scss" />
+    <Content Include="assets\bundles\login\login.min.js.map">
+      <DependentUpon>login.min.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\otp\otp.min.js.map">
       <DependentUpon>otp.min.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\home\home.min.js.map">
       <DependentUpon>home.min.js</DependentUpon>
     </Content>
-    <Content Include="assets\bundles\data-range\index.min.js.map" />
-    <Content Include="assets\bundles\pokergames-winlossdetail\index.min.js.map" />
-    <Content Include="assets\styles\pages\reports\pokergames-winloss-detail.scss" />
-    <Content Include="Areas\ProductStatusSetting\Views\Simple\Index.cshtml" />
-    <Content Include="Areas\ProductStatusSetting\Styles\font\AlphaAdmin\AlphaAdmin.ttf" />
+    <Content Include="assets\bundles\common.min.js.map">
+      <DependentUpon>common.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\choosegroup\choosegroup.min.js.map">
+      <DependentUpon>choosegroup.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\dailywinloss\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\statement\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\data-range\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\casino\index.min.js.map">
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
-    <Content Include="assets\styles\pages\admin\product.scss" />
+    <Content Include="assets\bundles\winlossdetail\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2814,8 +2687,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="deployment.ignore" />
-    <Content Include="ExcelTemplates\Customer\CustomerListMO.xls" />
-    <Content Include="ExcelTemplates\Customer\MemberListMO.xls" />
     <Content Include="IbcKeys\ibckey.snk" />
     <Content Include="NumberGame2Section.config" />
     <Content Include="Fanex.ExternalAccount.UI.ruleset" />
@@ -2874,7 +2745,6 @@
     <Content Include="Views\OTP\Index.cshtml" />
     <Content Include="Views\DataRange\Index.cshtml" />
     <Content Include="Views\MainSuper\EditInfo.cshtml" />
-    <Content Include="Views\PokerGamesWinLossDetail\Index.cshtml" />
     <Content Include="Views\Customer\LimitMemberCreation.cshtml" />
     <Content Include="Views\GroupConfiguration\Index.cshtml" />
     <Content Include="Views\Permission\Index.cshtml" />
@@ -2951,6 +2821,7 @@
     <Content Include="App_GlobalResources\Error.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Error1.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>

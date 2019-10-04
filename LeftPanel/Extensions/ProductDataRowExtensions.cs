@@ -31,23 +31,11 @@
 
         internal static bool EnableDoubleCommUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineDoubleCommLosing"], true);
 
-        internal static bool DisableColossusBetUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineDisableColossusBet"]);
-
-        internal static bool DisableColossusBet(this DataRow dataRow) => Utils.ToBoolean(dataRow["DisableColossusBet"]);
-
-        internal static bool EnableColossusBet(this DataRow dataRow) => !dataRow.DisableColossusBet();
-
         internal static bool EnableGoldDeluxe(this DataRow dataRow) => !Utils.ToBoolean(dataRow["DisableGoldDeluxe"]);
 
-        internal static bool IsSyncedCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncCasino"]);        
+        internal static bool IsSyncedCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncCasino"]);
 
         internal static bool DisableTransfer(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableTransfer"]);
-
-        internal static bool HideColossusBet(this DataRow dataRow) => Utils.ToBoolean(dataRow["HideColossusBet"]);
-
-        internal static bool HideCricket(this DataRow dataRow) => Utils.ToBoolean(dataRow["HideCricket"]);
-
-        internal static bool IsIMBC(this DataRow dataRow) => Utils.ToBoolean(dataRow["IsIMBC"]);        
 
         internal static bool SyncCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncCasino"]);
 

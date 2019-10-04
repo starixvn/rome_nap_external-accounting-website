@@ -32,7 +32,7 @@
 
         public bool Suspended { get; set; }
 
-        public bool HideVirtualSports { get; set; }               
+        public bool HideVirtualSports { get; set; }
 
         public bool HideKeno { get; set; }
 
@@ -42,21 +42,11 @@
 
         public bool HideGoldDeluxe { get; set; }
 
-        public bool DisableColossusBets { get; set; }
-
-        public bool HideColossusBets { get; set; }
-
         public bool DisableSportsbook2 { get; set; }
 
         public bool HideSportsbook2 { get; set; }
-        
-        public bool HideCricket { get; set; }
 
         public bool SyncGoldDeluxeDownlines { get; set; }
-
-        public bool SyncBullfighting { get; set; }
-
-        public bool SyncBullfightingDownlines { get; set; }
 
         public Dictionary<int, ProductStatus> ProductStatusDic { get; set; }
     }
