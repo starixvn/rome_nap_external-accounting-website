@@ -113,7 +113,7 @@ function CustomerController($scope, $element) {
         $.ajax({
             url: toUrl('CasinoCustomer/GetCurrentWinLimit'),
             data: {
-                id: $scope.CustomerModel.iBCCustID,
+                id: $scope.CustomerModel.ibcCustID,
                 groupName: parent.$('#selectedGroupName').html()
             }
         }).success(function (result) {
