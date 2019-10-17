@@ -195,9 +195,8 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.2\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.2.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.2.1\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTEngine.1.0.4.8\lib\net40\Fanex.PTEngine.dll</HintPath>
