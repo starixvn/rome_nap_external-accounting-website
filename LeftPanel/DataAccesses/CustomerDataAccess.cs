@@ -18,8 +18,6 @@
 
         DataSet GetBalanceInfo(int custId);
 
-        DataSet GetCustomerInfo(string username, string groupName);
-
         DataTable EAS_CustomerSelUserInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
 
         Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit);

@@ -328,7 +328,6 @@
     <Compile Include="Requests\DrillDownWinLossDetailRequest.cs" />
     <Compile Include="Requests\SearchWinLossDetailRequest.cs" />
     <Compile Include="Requests\WinLossDetailRequest.cs" />
-    <Compile Include="Statement\StatementController.cs" />
     <Compile Include="UserControl\FunctionController.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>

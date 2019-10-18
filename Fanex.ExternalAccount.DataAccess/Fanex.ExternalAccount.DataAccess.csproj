@@ -193,8 +193,6 @@
     <Compile Include="Products\GetProductsCriteria.cs" />
     <Compile Include="Report\IReportDAO.cs" />
     <Compile Include="Report\ReportDao.cs" />
-    <Compile Include="Statement\IStatementDAO.cs" />
-    <Compile Include="Statement\StatementDao.cs" />
     <Compile Include="UserControl\FunctionDao.cs" />
     <Compile Include="UserControl\GroupConfigurationDAO.cs" />
     <Compile Include="UserControl\GroupDao.cs" />
