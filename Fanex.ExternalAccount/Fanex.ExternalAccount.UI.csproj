@@ -117,9 +117,8 @@
       <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.2.0.3\lib\net461\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.3.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.5\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.3.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.8-RemoveInactiveProduct001\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.3-beta1\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
