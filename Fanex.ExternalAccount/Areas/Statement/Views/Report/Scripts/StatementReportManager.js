@@ -30,7 +30,8 @@ var StatementReportManager = function () {
     self.cachedData = {
         statementReportCriteria: null,
         statementReport: null,
-        viewBetListFunction: null
+        viewBetListFunction: null,
+        hasPermission: true
     };
     self.initFunction = function (completeRenderStatementReport, openPopup, viewBetListFunction) {
         self.eventFunction.completeRenderStatementReport = completeRenderStatementReport;
@@ -99,7 +100,14 @@ var StatementReportManager = function () {
         self.cachedData.statementReportCriteria.custId = rs.CustomerId;
         self.cachedData.statementReportCriteria.roleId = rs.RoleId;
 
+        if (self.cachedData.statementReportCriteria.custId == 0) {
+            self.cachedData.hasPermission = false;
+            self.showAccessDenied();
+            return;
+        }
+
         var criteria = self.cachedData.statementReportCriteria;
+        self.cachedData.hasPermission = true;
         if (criteria.roleId === self.Enums.RoleId.Member) {
             self.getMemberStatementReport(criteria);
         } else {
@@ -257,7 +265,27 @@ var StatementReportManager = function () {
         if (self.eventFunction.completeRenderStatementReport) {
             self.eventFunction.completeRenderStatementReport();
         }
+
+        self.removeAccessDenied();
     };
+
+    self.showAccessDenied = function () {
+        var elem = $('<div class="errMsg"/>')
+            .html('You don\'t have permission to access.')
+            .width($('#GridContainer').width())
+            .css('margin-top', 5);
+        $('.errMsg').remove();
+        $('#mainGrid').append(elem);
+        $('#exporttoexcel').hide();
+        $.unblockUI();
+    };
+
+    self.removeAccessDenied = function () {
+        $('.errMsg').remove();
+        $('#exporttoexcel').show();
+        $.unblockUI();
+    };
+
     self.getColumnTransferAmount = function (statement, rowIndex) {
         var isNegative = statement.TransferAmount.HasData && parseFloat(statement.TransferAmount.Value) < 0;
         return '<div class="' +
@@ -475,6 +503,8 @@ var StatementReportManager = function () {
         if (self.eventFunction.completeRenderStatementReport) {
             self.eventFunction.completeRenderStatementReport();
         }
+
+        self.removeAccessDenied();
     };
 
     self.bindGridEvent = function () {
@@ -540,6 +570,11 @@ var StatementReportManager = function () {
     };
 
     self.exportStatementReport = function (criteria) {
+        if (!self.cachedData.hasPermission) {
+            self.showAccessDenied();
+            return;
+        }
+
         var url = domain;
         if (criteria.roleId === self.Enums.RoleId.Member) {
             url += 'NapStatement/StatementReport/ExportMemberStatement?';
