@@ -198,6 +198,8 @@
     <Compile Include="Report\WinLossDetailRequests.cs" />
     <Compile Include="Report\WinLossDetailService.cs" />
     <Compile Include="Report\WinLossDetailServiceImpl.cs" />
+    <Compile Include="Statement\IStatementService.cs" />
+    <Compile Include="Statement\StatementService.cs" />
     <Compile Include="Customer\MemberService.cs" />
     <Compile Include="Customer\AgentService.cs" />
     <Compile Include="Customer\MasterService.cs" />
