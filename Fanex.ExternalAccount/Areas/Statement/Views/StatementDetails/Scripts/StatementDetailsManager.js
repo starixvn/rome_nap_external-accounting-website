@@ -111,11 +111,22 @@ var StatementDetailsManager = function () {
                     top.exportExcel(url, document);
                 }
             },
-            showFooter: true
+            showFooter: true,
+            iOSLastColumnPaddingRight: isIOS12() ? 0 : 15,
         };
 
         $('#transfer-details-container').fanexGrid(gridOptions);
     };
+
+    function isIOS12() {
+        if (/iP(hone|od|ad)/.test(navigator.platform)) {
+            // supports iOS 2.0 and later: <http://bit.ly/TJjs1V>
+            var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+            return parseInt(v[1], 10) === 12;
+        }
+
+        return false;
+    }
 };
 
 var statementDetailsManager = new StatementDetailsManager();
