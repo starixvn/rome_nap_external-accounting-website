@@ -30,7 +30,8 @@ var StatementReportManager = function () {
     self.cachedData = {
         statementReportCriteria: null,
         statementReport: null,
-        viewBetListFunction: null
+        viewBetListFunction: null,
+        hasPermission: true
     };
     self.initFunction = function (completeRenderStatementReport, openPopup, viewBetListFunction) {
         self.eventFunction.completeRenderStatementReport = completeRenderStatementReport;
@@ -40,8 +41,8 @@ var StatementReportManager = function () {
 
     self.getPopupHeight = function () {
         var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
-             self.landscapeHeight :
-             self.portraitHeight;
+            self.landscapeHeight :
+            self.portraitHeight;
 
         return height;
     }
@@ -99,7 +100,14 @@ var StatementReportManager = function () {
         self.cachedData.statementReportCriteria.custId = rs.CustomerId;
         self.cachedData.statementReportCriteria.roleId = rs.RoleId;
 
+        if (self.cachedData.statementReportCriteria.custId == 0) {
+            self.cachedData.hasPermission = false;
+            self.showAccessDenied();
+            return;
+        }
+
         var criteria = self.cachedData.statementReportCriteria;
+        self.cachedData.hasPermission = true;
         if (criteria.roleId === self.Enums.RoleId.Member) {
             self.getMemberStatementReport(criteria);
         } else {
@@ -122,46 +130,46 @@ var StatementReportManager = function () {
                 var statement = rs.StatementList[i];
                 var currentRow = {
                     Columns: [{ Name: "ColDate", Value: statement.StatementDateString },
-                        {
-                            Name: "ColOpeningBalance",
-                            Value: statement.OpeningBalance.HasData ?
-                                statement.OpeningBalance.Value :
-                                statementResources.Symbol_NoData,
-                            TdClass: previousStatement &&
-                                previousStatement.AccumulatedTotal.Value !== statement.OpeningBalance.Value ?
-                                "note-opening-balance" :
-                                ""
-                        },
-                        {
-                            Name: "ColTurnover",
-                            Value: statement.Turnover.HasData ?
-                                statement.Turnover.Value :
-                                statementResources.Symbol_NoData
-                        },
-                        {
-                            Name: "ColWinLoss",
-                            Value: statement.WinLoss.HasData ?
-                               ('<div class="' + (statement.WinLoss.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
-                                    numeral(statement.WinLoss.Value).format(self.Constants.Format.Number.TwoDecimal) +
+                    {
+                        Name: "ColOpeningBalance",
+                        Value: statement.OpeningBalance.HasData ?
+                            statement.OpeningBalance.Value :
+                            statementResources.Symbol_NoData,
+                        TdClass: previousStatement &&
+                            previousStatement.AccumulatedTotal.Value !== statement.OpeningBalance.Value ?
+                            "note-opening-balance" :
+                            ""
+                    },
+                    {
+                        Name: "ColTurnover",
+                        Value: statement.Turnover.HasData ?
+                            statement.Turnover.Value :
+                            statementResources.Symbol_NoData
+                    },
+                    {
+                        Name: "ColWinLoss",
+                        Value: statement.WinLoss.HasData ?
+                            ('<div class="' + (statement.WinLoss.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                                numeral(statement.WinLoss.Value).format(self.Constants.Format.Number.TwoDecimal) +
                                 '</div>') :
-                                statementResources.Symbol_NoData
-                        },
-                        {
-                            Name: "ColCommission",
-                            Value: statement.Commission.HasData ?
-                                statement.Commission.Value.toFixed(2) :
-                                statementResources.Symbol_NoData
-                        },
-                        {
-                            Name: "ColTransferAmount",
-                            Value: self.getColumnTransferAmount(statement, i)
-                        },
-                        {
-                            Name: "ColAccumulatedTotal",
-                            Value: statement.AccumulatedTotal.HasData ?
-                                statement.AccumulatedTotal.Value :
-                                statementResources.Symbol_NoData
-                        }]
+                            statementResources.Symbol_NoData
+                    },
+                    {
+                        Name: "ColCommission",
+                        Value: statement.Commission.HasData ?
+                            statement.Commission.Value.toFixed(2) :
+                            statementResources.Symbol_NoData
+                    },
+                    {
+                        Name: "ColTransferAmount",
+                        Value: self.getColumnTransferAmount(statement, i)
+                    },
+                    {
+                        Name: "ColAccumulatedTotal",
+                        Value: statement.AccumulatedTotal.HasData ?
+                            statement.AccumulatedTotal.Value :
+                            statementResources.Symbol_NoData
+                    }]
                 };
 
                 bodyData.push(currentRow);
@@ -221,7 +229,7 @@ var StatementReportManager = function () {
             },
             {
                 HeaderText: statementResources.Accumulated_Total,
-                Width: 120,
+                Width: 140,
                 Name: "ColAccumulatedTotal",
                 HeaderAlign: "center",
                 CellAlign: "right",
@@ -239,6 +247,7 @@ var StatementReportManager = function () {
             showHighlightRow: false,
             showPager: true,
             customPager: false,
+            iOSLastColumnPaddingRight: iOSversion() === 12 ? 0 : 15,
             pagerOption: {
                 itemsPerPage: 50,
                 maxItemsPerPage: 500,
@@ -257,17 +266,37 @@ var StatementReportManager = function () {
         if (self.eventFunction.completeRenderStatementReport) {
             self.eventFunction.completeRenderStatementReport();
         }
+
+        self.removeAccessDenied();
     };
+
+    self.showAccessDenied = function () {
+        var elem = $('<div class="errMsg"/>')
+            .html('You don\'t have permission to access.')
+            .width($('#GridContainer').width())
+            .css('margin-top', 5);
+        $('.errMsg').remove();
+        $('#mainGrid').append(elem);
+        $('#exporttoexcel').hide();
+        $.unblockUI();
+    };
+
+    self.removeAccessDenied = function () {
+        $('.errMsg').remove();
+        $('#exporttoexcel').show();
+        $.unblockUI();
+    };
+
     self.getColumnTransferAmount = function (statement, rowIndex) {
         var isNegative = statement.TransferAmount.HasData && parseFloat(statement.TransferAmount.Value) < 0;
         return '<div class="' +
-                    (statement.TransferAmount.HasData ? 'column-transfer-amount' : '') +
-                    (isNegative ? ' format-negative' : '') + '" ' +
-                    (' data-rowindex="' + rowIndex + '"') + '>' +
-                    (statement.TransferAmount.HasData ?
-                        numeral(statement.TransferAmount.Value).format(self.Constants.Format.Number.TwoDecimal) :
-                        statementResources.Symbol_NoData) +
-                '</div>';
+            (statement.TransferAmount.HasData ? 'column-transfer-amount' : '') +
+            (isNegative ? ' format-negative' : '') + '" ' +
+            (' data-rowindex="' + rowIndex + '"') + '>' +
+            (statement.TransferAmount.HasData ?
+                numeral(statement.TransferAmount.Value).format(self.Constants.Format.Number.TwoDecimal) :
+                statementResources.Symbol_NoData) +
+            '</div>';
     };
 
     self.getMemberStatementReport = function (criteria) {
@@ -310,25 +339,25 @@ var StatementReportManager = function () {
                         {
                             Name: "ColVoid_Cancelled",
                             Value: statement.VoidCancelled.HasData ?
-                               ('<div class="' + (statement.VoidCancelled.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                                ('<div class="' + (statement.VoidCancelled.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
                                     numeral(statement.VoidCancelled.Value).format(self.Constants.Format.Number.TwoDecimal) +
-                                '</div>') :
+                                    '</div>') :
                                 statementResources.Symbol_NoData
                         },
                         {
                             Name: "ColOutstanding",
                             Value: statement.Outstanding.HasData ?
-                               ('<div class="' + (statement.Outstanding.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                                ('<div class="' + (statement.Outstanding.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
                                     numeral(statement.Outstanding.Value).format(self.Constants.Format.Number.TwoDecimal) +
-                                '</div>') :
+                                    '</div>') :
                                 statementResources.Symbol_NoData
                         },
                         {
                             Name: "ColWinLoss",
                             Value: statement.WinLoss.HasData ?
-                               ('<div class="' + (statement.WinLoss.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                                ('<div class="' + (statement.WinLoss.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
                                     numeral(statement.WinLoss.Value).format(self.Constants.Format.Number.TwoDecimal) +
-                                '</div>') :
+                                    '</div>') :
                                 statementResources.Symbol_NoData
                         },
                         {
@@ -340,9 +369,9 @@ var StatementReportManager = function () {
                         {
                             Name: "ColGrandPrize",
                             Value: statement.GrandPrize.HasData ?
-                                 ('<div class="column-grandprize ' + (statement.GrandPrize.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
-                                 numeral(statement.GrandPrize.Value).format(self.Constants.Format.Number.TwoDecimal) +
-                                '</div>') :
+                                ('<div class="column-grandprize ' + (statement.GrandPrize.Value < 0 ? 'format-negative' : '') + '"' + dataRowIndex + '>' +
+                                    numeral(statement.GrandPrize.Value).format(self.Constants.Format.Number.TwoDecimal) +
+                                    '</div>') :
                                 statementResources.Symbol_NoData
                         },
                         {
@@ -457,6 +486,7 @@ var StatementReportManager = function () {
             showHighlightRow: false,
             showPager: true,
             customPager: false,
+            iOSLastColumnPaddingRight: iOSversion() === 12 ? 0 : 15,
             pagerOption: {
                 itemsPerPage: 50,
                 maxItemsPerPage: 500,
@@ -475,6 +505,8 @@ var StatementReportManager = function () {
         if (self.eventFunction.completeRenderStatementReport) {
             self.eventFunction.completeRenderStatementReport();
         }
+
+        self.removeAccessDenied();
     };
 
     self.bindGridEvent = function () {
@@ -540,6 +572,11 @@ var StatementReportManager = function () {
     };
 
     self.exportStatementReport = function (criteria) {
+        if (!self.cachedData.hasPermission) {
+            self.showAccessDenied();
+            return;
+        }
+
         var url = domain;
         if (criteria.roleId === self.Enums.RoleId.Member) {
             url += 'NapStatement/StatementReport/ExportMemberStatement?';
@@ -551,5 +588,13 @@ var StatementReportManager = function () {
 
         return url;
     };
+
+    function iOSversion() {
+        if (/iP(hone|od|ad)/.test(navigator.platform)) {
+            // supports iOS 2.0 and later: <http://bit.ly/TJjs1V>
+            var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+            return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
+        }
+    }
 };
 var statementReportManager = new StatementReportManager();
