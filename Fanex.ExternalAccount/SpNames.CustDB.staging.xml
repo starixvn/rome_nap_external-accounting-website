@@ -108,6 +108,7 @@
     <Setting Key="EAS_UserPolicyUpdMultiple" SpName="EAS_UserPolicyUpdMultiple" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Left Panel">
+    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelList" SpName="Acc_CustomerSelList" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="DBONUSER.ON_USER.bodbExtAccNet" Plain="0" />
