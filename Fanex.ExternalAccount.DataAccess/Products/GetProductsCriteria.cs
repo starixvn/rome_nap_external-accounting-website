@@ -4,7 +4,7 @@
 
     public class GetProductsCriteria : CriteriaBase
     {
-        public override string GetSettingKey() => "Age_Rpt_GetProductList";
+        public override string GetSettingKey() => "EAS_GetProductList";
 
         public override bool IsValid() => true;
     }
