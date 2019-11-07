@@ -11,10 +11,9 @@
     using CustomerSetting.Security.Authenticate;
     using DataAccesses;
     using DTO;
-    using IBCUtils;
     using Logging.Extensions.Web;
-    using Security;
     using Service.Impl.Customer.Casino;
+    using Sunplus.Agent.Utilities;
     using Utilities;
 
     public interface CustomerCommandService
@@ -45,15 +44,18 @@
         private readonly ICasinoManager casinoManager;
 
         private readonly CustomerDataAccess customerDataAccess;
+        private readonly Encryptor encryptor;
 
         public CustomerCommandServiceImpl(
             CustomerDataAccess customerDataAccess = null,
             ICasinoManager casinoManager = null,
-            AuthorizationService authorizationService = null)
+            AuthorizationService authorizationService = null,
+            Encryptor encryptor = null)
         {
             this.customerDataAccess = customerDataAccess ?? new CustomerDataAccessImpl();
             this.casinoManager = casinoManager ?? new CasinoManager();
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
+            this.encryptor = encryptor ?? new EncryptorImpl();
         }
 
         public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
@@ -122,15 +124,15 @@
 
         public Result UpdateSecurityCode(int custId, string code, bool force, int roleId)
         {
-            var hashCode = Encryption.CfsEnCode(code);
+            var hashCode = encryptor.CfsEnCode(code);
 
             if (!roleId.IsNotMember())
             {
                 return customerDataAccess.ResetSecurityCode(custId, hashCode, force || roleId.IsNotSuper());
             }
 
-            var md5 = Cryptography.ComputeHash("MD5", custId.ToString(), Salt); //DevSkim: ignore DS126858
-            hashCode = Cryptography.ComputeHash("SHA1", code, md5); //DevSkim: ignore DS126858
+            var md5 = encryptor.ComputeHash("MD5", custId.ToString(), Salt); //DevSkim: ignore DS126858
+            hashCode = encryptor.ComputeHash("SHA1", code, md5); //DevSkim: ignore DS126858
 
             return customerDataAccess.ResetSecurityCode(custId, hashCode, force || roleId.IsNotSuper());
         }
