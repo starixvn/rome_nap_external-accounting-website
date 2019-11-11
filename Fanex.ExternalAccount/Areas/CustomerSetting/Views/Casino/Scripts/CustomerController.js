@@ -220,7 +220,7 @@ function CustomerController($scope, $element) {
     var UpdateWinLossMessage = '';
     var HasError = false;
     var ProcessUpdateWinLossLimit = function (index, custIds, usernames, winLossLimit, syncStatuses) {
-        var custId = index == null ? $scope.CustomerModel.iBCCustID : custIds[index];
+        var custId = index == null ? $scope.CustomerModel.ibcCustID : custIds[index];
         var username = index == null ? $scope.CustomerModel.userName : usernames[index];
         if (index != null && index >= custIds.length) {
             $('#errMsg')
