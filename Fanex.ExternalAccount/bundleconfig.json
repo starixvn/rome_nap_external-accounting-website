@@ -59,7 +59,6 @@
       "assets/styles/pages/statement/statement.css",
       "assets/styles/pages/reports/daily-winloss.css",
       "assets/styles/pages/reports/winloss-detail.css",
-      "assets/styles/pages/reports/pokergames-winloss-detail.css",
       "assets/styles/pages/customer/pt-engine.css",
       "assets/styles/pages/admin/product.css"
     ],
@@ -165,15 +164,6 @@
     "outputFileName": "assets/bundles/data-range/index.js",
     "inputFiles": [
       "Scripts/Customer/Fanex.ExtAcc.DataRange.js"
-    ],
-    "sourceMap": true
-  },
-  {
-    "outputFileName": "assets/bundles/pokergames-winlossdetail/index.js",
-    "inputFiles": [
-      "Scripts/monthPicker/monPickr-0.0.1.js",
-      "Scripts/Combobox/Combobox.js",
-      "Scripts/Reports/Fanex.ExtAcc.PokerGamesWinLossDetail.js"
     ],
     "sourceMap": true
   },

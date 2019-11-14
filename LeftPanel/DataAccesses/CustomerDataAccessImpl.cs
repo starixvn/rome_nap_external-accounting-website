@@ -63,20 +63,6 @@
             return DbHelper.ExecuteDataSet("EAS_CustomerSelBalanceInfo", param);
         }
 
-        public DataSet GetCustomerInfo(string username, string groupName)
-        {
-            var customerInfo = EAS_CustomerSelUserInfo(groupName, 0, username, true);
-
-            if (customerInfo != null && customerInfo.Rows.Count != 0)
-            {
-                var param = new Hashtable { { "username", username } };
-
-                return DbHelper.ExecuteDataSet("Acc_CustomerSelAllInfo", param);
-            }
-
-            return null;
-        }
-
         public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
         {
             using (var objDb = new ObjectDb("Acc_CustomerUpdCredit"))

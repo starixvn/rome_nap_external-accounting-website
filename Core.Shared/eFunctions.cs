@@ -15,7 +15,6 @@
         public const string GrantPermission = "GrantPermission";
         public const string DailyWinloss = "DailyWinloss";
         public const string WinlossDetail = "WinlossDetail";
-        public const string PokerGamesWinLossDetail = "PokerGamesWinLossDetail";
 
         public const string Statement = "Statement";
         public const string EnableGoldDeluxe = "EnableGoldDeluxe";
@@ -51,10 +50,8 @@
         public const string KenoBetting = "KenoBetting";
         public const string OpenSuper = "OpenSuper";
         public const string Sportsbook2Setting = "Sportsbook2Setting";
-        public const string CricketSetting = "CricketSetting";
         public const string AllbetSetting = "AllbetSetting";
         public const string AllbetBetting = "AllbetBetting";
-        public const string CricketBetting = "CricketBetting";
         public const string Sportsbook2Betting = "Sportsbook2Betting";
         public const string VoidbridgeBetting = "VoidbridgeBetting";
         public const string VoidbridgeSetting = "VoidbridgeSetting";
@@ -64,7 +61,5 @@
         public const string FishingWorldSetting = "FishingWorldSetting";
         public const string LotteryBetting = "LotteryBetting";
         public const string LotterySetting = "LotterySetting";
-        public const string Lucky3Setting = "Lucky3Setting";
-        public const string BullfightingBetting = "BullfightingBetting";
     }
 }

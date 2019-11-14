@@ -43,77 +43,51 @@ Fanex.ExtAcc.Customer.Commission = {
             dataType: 'json',
             type: 'post'
         })
-        .success(function (result) {
-            if (result.errorCode && result.errorCode == "1") {
+            .success(function (result) {
+                if (result.errorCode && result.errorCode == "1") {
+                    Fanex.ExtAcc.UnBlockUI();
+                    Fanex.ExtAcc.Form.Close();
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
+                    }, 1000);
+
+                    return;
+                }
+
+                if (!result.context.targetCustId) {
+                    Fanex.ExtAcc.UnBlockUI();
+                    Fanex.ExtAcc.Form.Close();
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
+                    }, 1000);
+
+                    return;
+                }
+
+                commission = result.commission;
+                var context = result.context;
+                if (context.roleId == 1) {
+                    $("#textBoxDiscountAsian").val(commission.discount);
+                    $("#textBoxDiscount1x2").val(commission.discount1x2);
+                    $("#textBoxDiscountCS").val(commission.discountCS);
+
+                    Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.discount, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount);
+                    Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount1x2);
+                    Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);
+                }
+                else {
+                    Fanex.PTEngine.PT_SetSelect($("#groupA")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
+                    Fanex.PTEngine.PT_SetSelect($("#groupB")[0], 0, commission.groupBMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupB);
+                    Fanex.PTEngine.PT_SetSelect($("#groupC")[0], 0, commission.groupCMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupC);
+                    Fanex.PTEngine.PT_SetSelect($("#groupD")[0], 0, commission.groupDMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupD);
+                    Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
+                    Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
+                }
+
                 Fanex.ExtAcc.UnBlockUI();
-                Fanex.ExtAcc.Form.Close();
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-                    Fanex.ExtAcc.Form.Alert('Error', result.errorMessage.formatErrorMessage(), 450, 150);
-                }, 1000);
-
-                return;
-            }
-
-            if (!result.context.targetCustId) {
-                Fanex.ExtAcc.UnBlockUI();
-                Fanex.ExtAcc.Form.Close();
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-                    Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
-                }, 1000);
-
-                return;
-            }
-
-            commission = result.commission;
-            var context = result.context;
-            if (context.roleId == 1) {
-                $("#textBoxDiscountAsian").val(commission.discount);
-                $("#textBoxDiscount1x2").val(commission.discount1x2);
-                $("#textBoxDiscountCS").val(commission.discountCS);            
-
-                if (commission.isMyanmarOdds) {
-                    $("#textBoxDiscountMyanmarOdds").val(commission.discountMyanmarOdds);
-                }
-                else {
-                    $('#discountMyanmar').hide();
-                }
-
-                Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.discount, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount);
-                Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount1x2);
-                Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);                 
-                if (commission.isMyanmarOdds) {
-                    Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOdds, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountMyanmarOdds);
-                }
-                else {
-                    $('#discountMyanmar').hide();
-                }
-            }
-            else {
-                Fanex.PTEngine.PT_SetSelect($("#groupA")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
-                Fanex.PTEngine.PT_SetSelect($("#groupB")[0], 0, commission.groupBMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupB);
-                Fanex.PTEngine.PT_SetSelect($("#groupC")[0], 0, commission.groupCMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupC);
-                Fanex.PTEngine.PT_SetSelect($("#groupD")[0], 0, commission.groupDMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupD);
-                Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
-                Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
-                             
-
-                if (commission.isMyanmarOdds) {
-                    Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
-
-                    var groups = $('.group');
-                    for (var i = 0; i < groups.length; i++) {
-                        groups[i].remove();
-                    }
-                }
-                else {
-                    $('#discountMyanmar').hide();
-                }
-            }
-
-            Fanex.ExtAcc.UnBlockUI();
-        });
+            });
     },
 
     UpdateCommission: function () {
@@ -124,22 +98,15 @@ Fanex.ExtAcc.Customer.Commission = {
             if ($this.currentLevel == 1) {
                 commission.playerDiscount = $("#discountAsian").val();
                 commission.playerDiscount1x2 = $("#discount1x2").val();
-                commission.playerDiscountCs = $("#discountCS").val();               
-                if (commission.isMyanmarOdds)
-                    commission.playerDiscountMyanmarOdds = $("#discountMyanmarOdds").val();
+                commission.playerDiscountCs = $("#discountCS").val();
             }
             else {
                 commission.groupA = $("#groupA").val();
                 commission.discount1x2 = $("#discount1x2").val();
                 commission.discountCS = $("#discountCS").val();
-             
-                if (commission.isMyanmarOdds)
-                    commission.discountMyanmarOdds = $("#discountMyanmarOdds").val();
-                else {
-                    commission.groupB = $("#groupB").val();
-                    commission.groupC = $("#groupC").val();
-                    commission.groupD = $("#groupD").val();
-                }
+                commission.groupB = $("#groupB").val();
+                commission.groupC = $("#groupC").val();
+                commission.groupD = $("#groupD").val();
             }
 
             var text = JSON.stringify(commission);
@@ -158,21 +125,21 @@ Fanex.ExtAcc.Customer.Commission = {
             dataType: 'json',
             type: 'post'
         })
-        .success(function (result) {
-            if (result.errorCode == 0) {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-                    Fanex.ExtAcc.Customer.CallBackCustomerList();
-                    Fanex.ExtAcc.Form.Close(false);
-                }, 2000);
-            }
-            else {
-                Fanex.ExtAcc.UnBlockUI();
+            .success(function (result) {
+                if (result.errorCode == 0) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        Fanex.ExtAcc.Customer.CallBackCustomerList();
+                        Fanex.ExtAcc.Form.Close(false);
+                    }, 2000);
+                }
+                else {
+                    Fanex.ExtAcc.UnBlockUI();
 
-                $('#errMsg').css('display', 'block');
-                $('#errMsg').html(result.errorMessage.formatErrorMessage());
-            }
-        });
+                    $('#errMsg').css('display', 'block');
+                    $('#errMsg').html(result.errorMessage.formatErrorMessage());
+                }
+            });
     }
 }
 

@@ -17,7 +17,7 @@
 
         public static IEnumerable<KeyValuePair<int, string>> GetCustomerProductList()
             => new ProductListAuthorization()
-                .GetProductList(true)
+                .GetProductList()
                 .Where(product => !UnsupportProductStatus.Any(i => i == product.ProductId))
                 .Select(product => new KeyValuePair<int, string>(
                     product.ProductId, 

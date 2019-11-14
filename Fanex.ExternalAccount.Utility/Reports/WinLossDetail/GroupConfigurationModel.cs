@@ -53,16 +53,6 @@
             }
         }
 
-        public bool IsHideInactiveProduct
-        {
-            get
-            {
-                var product = ProductsConfiguration.Instance.ProductCollection.FirstOrDefault(i => i.ProductId == ProductId);
-
-                return product != null && product.IsHideInactiveProduct;
-            }
-        }
-
         public bool IsSpecial
         {
             get

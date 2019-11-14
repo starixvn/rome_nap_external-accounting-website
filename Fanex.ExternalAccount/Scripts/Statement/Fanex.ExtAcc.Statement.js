@@ -9,7 +9,7 @@ Fanex.ExtAcc.Statement = {
     username: $('#username').val(),
     fromdate: new Date(),
     todate: new Date(),
-    url: resolveClientUrl('Statement/GetStatement'),
+    url: '',
     dataSource: [],
     $this: null,
     SetRange: function () {

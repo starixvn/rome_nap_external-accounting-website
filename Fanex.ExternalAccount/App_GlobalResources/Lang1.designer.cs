@@ -1581,15 +1581,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cricket.
-        /// </summary>
-        internal static string cricket {
-            get {
-                return ResourceManager.GetString("cricket", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to C.Sheet.
         /// </summary>
         internal static string CSheet {

@@ -37,12 +37,7 @@
         public override void WriteBodyReport(ISheet resultSheet)
         {
             var dtr = _builder.Data.Rows;
-            var totalColumn = _builder.IsMyanmarOdds || _builder.RoleId.IsSuper() ? 15 : 14;
-            if (_builder.RoleId.IsSuper())
-            {
-                totalColumn++;
-            }
-
+            var totalColumn = _builder.RoleId.IsSuper() ? 15 : 14;
             var lastColumnIndex = FirstColumnIndex + totalColumn - 1;
             if (_builder.RoleId.IsNotMember())
             {
@@ -52,15 +47,14 @@
             {
                 totalColumn = 18;
                 lastColumnIndex = FirstColumnIndex + totalColumn - 1;
-                WriteMemberReport(resultSheet, dtr, lastColumnIndex, _builder.IsMyanmarOdds);
+                WriteMemberReport(resultSheet, dtr, lastColumnIndex);
             }
         }
 
         private void WriteMemberReport(
             ISheet resultSheet,
             DataRowCollection dtr,
-            int lastColumnIndex,
-            bool isMyanmarOdds = false)
+            int lastColumnIndex)
         {
             var id = 1;
             var rowId = 3;
@@ -87,12 +81,6 @@
                     items.CreateDate(),
                     items.LastLoginIP()
                 };
-
-                if (isMyanmarOdds)
-                {
-                    values.Insert(11, items.IsMyanmarOdds() ? items.DiscountMyanmarOdds() : "N/A");
-                    values.Insert(15, items.IsMyanmarOdds() ? items.PlayerDiscountMyanmarOdds() : "N/A");
-                }
 
                 resultSheet.GetRow(rowId).WriteCells(FirstColumnIndex, values);
 
@@ -124,8 +112,7 @@
                     items.GroupC(),
                     items.GroupD(),
                     items.Discount1x2(),
-                    items.DiscountCasino(),
-                    items.IsMyanmarOdds() ? items.DiscountMyanmarOdds() : "N/A"
+                    items.DiscountCasino()
                 };
 
                 if (_builder.RoleId.IsSuper())
@@ -135,22 +122,10 @@
 
                 values.Add(items.CreateDate());
                 values.Add(items.LastLoginIP());
-                values = RemoveOddsColumn(values);
                 resultSheet.GetRow(rowId).WriteCells(FirstColumnIndex, values);
                 id++;
                 rowId++;
             }
-        }
-
-        private List<object> RemoveOddsColumn(List<object> values)
-        {
-            var newValues = values;
-            if (_builder.RoleId.IsNotSuper())
-            {
-                newValues.RemoveAt(12);
-            }
-
-            return newValues;
         }
 
         private string SetBackgroundRow(

@@ -64,15 +64,6 @@
 
         private bool GetDisabledStatus(DataRow dataRow)
         {
-            if (ProductId == ProductConstants.PokerGames)
-            {
-                return dataRow.ToInt32($"DisablePokerGames1401")
-                       + dataRow.ToInt32($"DisablePokerGames1402")
-                       + dataRow.ToInt32($"DisablePokerGames1403")
-                       + dataRow.ToInt32($"DisablePokerGames1404")
-                       + dataRow.ToInt32($"DisablePokerGames1405") > 0;
-            }
-
             if (ProductId == ProductConstants.Sportsbook2)
             {
                 return dataRow.ToBoolean($"DisableEsports") && dataRow.ToBoolean($"DisableMuayThai");

@@ -72,17 +72,21 @@
     <Reference Include="CasinoUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CasinoLibrary.2.0.3.38621\lib\net40\CasinoUtility.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
+    <Reference Include="Couchbase, Version=1.2.6.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CouchbaseNetClient.1.2.6.3\lib\net40\Couchbase.dll</HintPath>
+    </Reference>
+    <Reference Include="Enyim.Caching, Version=2.12.0.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CouchbaseNetClient.1.2.6.3\lib\net40\Enyim.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.3.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.5\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.3.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Fanex.CustomerSetting.Module.Casino.2.0.3.8\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.2\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.3\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=2.0.1.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Fanex.CustomerSetting.Module.Keno.KenoSetting.2.0.2.1\lib\net40\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
@@ -115,7 +119,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.4.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.PTEngine.1.0.4.8\lib\net40\Fanex.PTEngine.dll</HintPath>
+      <HintPath>..\..\packages\Fanex.PTEngine.1.0.4.9\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation, Version=3.2.0.0, Culture=neutral, PublicKeyToken=a82054b837897c66, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FluentValidation.3.2.0.0\lib\Net40\FluentValidation.dll</HintPath>
@@ -211,9 +215,8 @@
       <HintPath>..\..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sunplus.Agent.Utilities, Version=3.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Sunplus.Agent.Utilities.3.0.0.2\lib\net40\Sunplus.Agent.Utilities.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Sunplus.Agent.Utilities, Version=3.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Sunplus.Agent.Utilities.3.0.0.7\lib\net40\Sunplus.Agent.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Sunplus.Libraries.AOP.1.0.4218.28561\lib\net40\Sunplus.Libraries.AOP.dll</HintPath>

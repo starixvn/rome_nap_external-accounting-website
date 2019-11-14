@@ -32,8 +32,6 @@
             ToolTipsProducts = new
             {
                 showAllbet = this.groupConfigurationService.IsShowByProductAndGroup(ProductConstants.AllBet, this.currentSession.CurrencyGroup),
-                showPokerGames = this.groupConfigurationService.IsShowByProductAndGroup(ProductConstants.PokerGames, this.currentSession.CurrencyGroup),
-                showBullfighting = this.groupConfigurationService.IsShowByProductAndGroup(ProductConstants.BullFighting, this.currentSession.CurrencyGroup),
             };
         }
 
@@ -42,7 +40,7 @@
         }
 
         public ActionResult Index()
-            => View(IsShowIncludePokerGames());
+            => View();
 
         [AntiXSRFFilter]
         public ActionResult GetData(WinLossDetailRequest request)
@@ -91,10 +89,7 @@
                     }
             }
 
-            var excludeProductIds = reportService.GetExcludeProductIds(ExtRequest.GetGroupName())
-                .Where(p => !(p == ProductConstants.PokerGames && request.IncludePokerGames));
-
-            var formatedProducts = request.GetProductNames(GetProductList(excludeProductIds));
+            var formatedProducts = request.GetProductNames(GetProductList());
             var memoryStream = builder.Build(formatedProducts);
 
             if (memoryStream != null)

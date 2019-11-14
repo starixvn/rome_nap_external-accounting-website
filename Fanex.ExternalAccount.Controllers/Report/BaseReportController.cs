@@ -23,9 +23,5 @@
             this.reportService = reportService ?? new ReportService();
             this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
         }
-
-        protected bool IsShowIncludePokerGames()
-            => groupConfigurationService.IsShowByProductAndGroup(ProductConstants.PokerGames, currentSession.CurrencyGroup) &&
-            reportService.GetExcludeProductIds(currentSession.CurrencyGroup).Contains(ProductConstants.PokerGames);
     }
 }

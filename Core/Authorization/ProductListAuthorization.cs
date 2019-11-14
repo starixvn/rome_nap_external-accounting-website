@@ -1,10 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization
 {
-    using System;
-    using System.Linq;
-
-    using System.Collections.Generic;
-    using Context;
     using CustomerSetting.Module.Core.Criteria;
     using CustomerSetting.Module.Core.Models;
     using CustomerSetting.Module.Core.Services.Impl;
@@ -13,7 +8,8 @@
     using DataAccess.Criteria.GroupConfiguration;
     using DTO.UserControl;
     using Service.UserControl;
-    using Shared;
+    using System.Collections.Generic;
+    using System.Linq;
     using Utilities.Reports.WinLossDetail;
 
     public class ProductListAuthorization
@@ -35,7 +31,7 @@
             this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
         }
 
-        public IEnumerable<GroupConfigurationModel> GetProductList(bool isHideInactiveProduct)
+        public IEnumerable<GroupConfigurationModel> GetProductList()
         {
             var custId = currentSession.CustId;
 
@@ -52,9 +48,7 @@
             {
                 if (!showedProductList.Any(i => i.ProductId == product.ProductId) && product.IsShow && !string.IsNullOrEmpty(product.Id))
                 {
-                    if ((isHideInactiveProduct && product.IsHideInactiveProduct)
-                        || (product.IsSpecial
-                        && AdminDoesNotHavePermissionOnSpecialProduct(checkIsInternalAdminResult, isAuthorized)))
+                    if ((product.IsSpecial && AdminDoesNotHavePermissionOnSpecialProduct(checkIsInternalAdminResult, isAuthorized)))
                     {
                         continue;
                     }

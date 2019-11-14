@@ -44,8 +44,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
+    <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
@@ -150,9 +150,6 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Products\ProductDto.cs" />
     <Compile Include="Products\ProductStatusDto.cs" />
-    <Compile Include="Report\PokerGamesWinLossDetail.cs" />
-    <Compile Include="Report\PokerGamesWinLossDetailAg.cs" />
-    <Compile Include="Report\PokerGamesWinLossDetailMAg.cs" />
     <Compile Include="Statement\Statement.cs" />
     <Compile Include="RecheckinStatus.cs" />
     <Compile Include="GroupCurrency.cs" />

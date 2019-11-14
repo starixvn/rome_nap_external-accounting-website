@@ -1,5 +1,5 @@
 ﻿/// <reference path="../_references.js" />
-if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
+if (typeof Fanex === 'undefined' || typeof Fanex.ExtAcc === 'undefined') {
     alert("Fanex.ExtAcc.js module is required!")
 }
 
@@ -18,7 +18,6 @@ Fanex.ExtAcc.DailyWinLoss = {
     date: new Date(),
     url: resolveClientUrl('DailyWinLoss/GetDailyWinLoss'),
     viewlevel: 5,
-    includePokerGames: false,
     hidedMargin: false,
     dataSource: [],
     $this: null,
@@ -62,15 +61,14 @@ Fanex.ExtAcc.DailyWinLoss = {
                 + "&viewlevel=" + ($this.viewlevel + 1)
                 + '&custid=' + $this.custId
                 + '&groupname=' + $this.groupName
-                + '&username=' + $this.username
-                + '&includepokergames=' + $this.includePokerGames;
+                + '&username=' + $this.username;
 
             var url = resolveClientUrl("DailyWinLoss/GetExportToExcel?") + params;
             top.exportExcel(url, document);
         });
 
         $('#tabSuper').click(function (e) {
-            if ($this.supername != '') {
+            if ($this.supername !== '') {
                 $this.ResetParameters();
                 $this.username = $this.supername;
                 $this.Databind();
@@ -78,7 +76,7 @@ Fanex.ExtAcc.DailyWinLoss = {
             else {
                 $this.viewlevel = 5;
                 $this.custId = 0;
-                $this.srecommend = $("#txtUserName").val() == '' ? 0 : $this.srecommend;
+                $this.srecommend = $("#txtUserName").val() === '' ? 0 : $this.srecommend;
                 //$("#txtUserName").val('');
                 $this.username = '';
                 $this.ToggleTabs('none', 'none', 'none', 4);
@@ -87,7 +85,7 @@ Fanex.ExtAcc.DailyWinLoss = {
         });
 
         $('#tabMaster').click(function (e) {
-            if ($this.mastername != '') {
+            if ($this.mastername !== '') {
                 $this.ResetParameters();
                 $this.username = $this.mastername;
                 $this.Databind();
@@ -103,7 +101,7 @@ Fanex.ExtAcc.DailyWinLoss = {
         });
 
         $('#tabAgent').click(function (e) {
-            if ($this.agentname != '') {
+            if ($this.agentname !== '') {
                 $this.ResetParameters();
                 $this.username = $this.agentname;
                 $this.Databind();
@@ -121,9 +119,9 @@ Fanex.ExtAcc.DailyWinLoss = {
         $this.groupName = $('#selectedGroupName').html();
 
         $('#txtUserName').keypress(function (e) {
-            if (typeof e == 'undefined') e = window.event;
-            var key = (typeof e.keyCode == 'undefined') ? e.which : e.keyCode;
-            if (key == 13) {
+            if (typeof e === 'undefined') e = window.event;
+            var key = (typeof e.keyCode === 'undefined') ? e.which : e.keyCode;
+            if (key === 13) {
                 $this.CallSubmit();
                 return true;
             } else {
@@ -159,16 +157,16 @@ Fanex.ExtAcc.DailyWinLoss = {
         $('#tabSuper').css('display', statusSAg);
         $('#tabMaster').css('display', statusMAg);
         $('#tabAgent').css('display', statusAg);
-        if (status == 1) {
+        if (status === 1) {
             $('#SelectedLevel').html('Member');
         }
-        else if (status == 2) {
+        else if (status === 2) {
             $('#SelectedLevel').html('Agent');
         }
-        else if (status == 3) {
+        else if (status === 3) {
             $('#SelectedLevel').html('Master');
         }
-        else if (status == 4) {
+        else if (status === 4) {
             $('#SelectedLevel').html('Super');
         }
     },
@@ -177,12 +175,12 @@ Fanex.ExtAcc.DailyWinLoss = {
             this.srecommend = this.custId;
             this.ToggleTabs('none', 'none', 'none', 4);
             $('.level-line').css('display', 'none');
-        } else if (this.viewlevel == 3) {
+        } else if (this.viewlevel === 3) {
             this.mrecommend = this.custId;
             this.ToggleTabs('block', 'none', 'none', 3);
             $("#tabSuper").attr("class", "tabActiveSuper");
             $('.level-line').css('display', 'block');
-        } else if (this.viewlevel == 2) {
+        } else if (this.viewlevel === 2) {
             this.recommend = this.custId;
             this.ToggleTabs('block', 'block', 'none', 2);
             $("#tabSuper").attr("class", "tabDisableSuper");
@@ -210,7 +208,6 @@ Fanex.ExtAcc.DailyWinLoss = {
         this.custId = 0;
         this.username = '';
         this.viewlevel = 4;
-        this.includePokerGames = false;
     },
 
     resizeReportGrid: function () {
@@ -223,14 +220,14 @@ Fanex.ExtAcc.DailyWinLoss = {
         value1 = String(value1).replace(/,/g, '');
         value2 = String(value2).replace(/,/g, '');
 
-        if (value2 == 0 || value2 == '0.00') {
+        if (value2 === 0 || value2 === '0.00') {
             return '0.00';
         }
 
         return numeral(parseFloat(value1) / parseFloat(value2) * 100).format('0,0.00');
     },
     RenderUsernameColumn: function (cell) {
-        if (cell == null || cell.Value.Username == 'Grand Total' || $this.viewlevel < 2) {
+        if (cell === null || cell.Value.Username === 'Grand Total' || $this.viewlevel < 2) {
             return '<div class="text-truncate" style="line-height: 22px; text-align: left; padding-left: 3px" title="' + cell.Value.Username + '">' + cell.Value.Username + '</div>';
         }
 
@@ -274,9 +271,9 @@ Fanex.ExtAcc.DailyWinLoss = {
                                         </label>\
                                    </div>';
 
-        var level = $this.viewlevel == 4 ? "Super" :
-             $this.viewlevel == 3 ? "Master" :
-              $this.viewlevel == 2 ? "Agent" :
+        var level = $this.viewlevel === 4 ? "Super" :
+             $this.viewlevel === 3 ? "Master" :
+              $this.viewlevel === 2 ? "Agent" :
               "Member";
 
         var numberOfFrozenColumn = 3;
@@ -286,10 +283,6 @@ Fanex.ExtAcc.DailyWinLoss = {
         }
 
         var totalTurnoverHeader = "Total Turnover";
-        if ($this.tooltips.showPokerGames) {
-            totalTurnoverHeader += "&nbsp;<span id=\"total-turnover\" class=\"bet-type-detail-icon\"></span>";
-        }
-
         var gridOption = {
             customizeHeader: true,
             groupHeaderRows: [
@@ -423,16 +416,6 @@ Fanex.ExtAcc.DailyWinLoss = {
         $('.toggle-margin').click($this.showHideMarginColumns);
 
         workaroundForGridOnPhone();
-        if ($this.tooltips.showPokerGames) {
-            $("#total-turnover").bind("click",
-                function () {
-                    var message = "- Turnover of Poker Games are the buy-in/top up amount on table.";
-                    var height = 150;
-
-                    Fanex.ExtAcc.Form.Alert("Turnover Information", message, 430, height);
-                    return false;
-                });
-        }
     },
     showHideMarginColumns: function () {
         if ($this.hidedMargin) {
@@ -450,24 +433,20 @@ Fanex.ExtAcc.DailyWinLoss = {
         $('.toggle-margin').click($this.showHideMarginColumns);
     },
     Databind: function () {
-        if ($("#txtUserName").val() != '') {
+        if ($("#txtUserName").val() !== '') {
             this.username = Fanex.encodeHtml($("#txtUserName").val());
         }
 
         this.date = $('#dtpWinLossDate').val();
         $("#DateValueInfo").html(this.date);
-
-        this.includePokerGames = $('#chkIncludePokerGames').is(":checked");
-
         var parameterUrl = "?groupname=" + this.groupName
                             + "&srecommend=" + this.srecommend
                             + "&mrecommend=" + this.mrecommend
                             + "&recommend=" + this.recommend
                             + "&custid=" + this.custId
-                            + "&username=" + Fanex.ExtAcc.ReplaceAll(this.viewlevel == 5 ? '' : this.username, '&', '')
+                            + "&username=" + Fanex.ExtAcc.ReplaceAll(this.viewlevel === 5 ? '' : this.username, '&', '')
                             + "&date=" + this.date
-                            + "&viewlevel=" + this.viewlevel
-                            + "&includepokergames=" + this.includePokerGames;
+                            + "&viewlevel=" + this.viewlevel;
 
         Fanex.ExtAcc.BlockUI();
         $.ajax({
@@ -488,18 +467,18 @@ Fanex.ExtAcc.DailyWinLoss = {
                 $this.tooltips = data.tooltips;
                 $this.totalRows = data.rows.length;
                 $this.viewlevel = data.viewlevel;
-                if ($this.viewlevel == 3) {
+                if ($this.viewlevel === 3) {
                     $this.srecommend = data.srecommend;
-                } else if ($this.viewlevel == 2) {
+                } else if ($this.viewlevel === 2) {
                     $this.srecommend = data.srecommend;
                     $this.mrecommend = data.mrecommend;
-                } else if ($this.viewlevel == 1) {
+                } else if ($this.viewlevel === 1) {
                     $this.srecommend = data.srecommend;
                     $this.mrecommend = data.mrecommend;
                     $this.recommend = data.recommend;
                 }
 
-                if ($this.custId == 0) {
+                if ($this.custId === 0) {
                     $this.supername = data.supername;
                     $this.mastername = data.mastername;
                     $this.agentname = data.agentname;

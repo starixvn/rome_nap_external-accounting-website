@@ -7,17 +7,12 @@
     var HideVirtualSports = ViewBag.HideVirtualSports;
     var HideKeno = ViewBag.HideKeno;
     var HideGoldDeluxe = ViewBag.HideGoldDeluxe;
-    var HideColossusBets = ViewBag.HideColossusBets;
-
-    var HideCricket = ViewBag.HideCricket;
     var status = new
     {
         syncCasino = SyncCasino,
         hideVirtualSports = HideVirtualSports,
         hideKeno = HideKeno,
-        hideGoldDeluxe = HideGoldDeluxe,
-        hideColossusBets = HideColossusBets,
-        hideCricket = HideCricket
+        hideGoldDeluxe = HideGoldDeluxe
     };
     var statusJSON = JsonConvert.SerializeObject(status, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
 }
@@ -40,8 +35,6 @@
         <li id="tab8"><a class="height-auto" href="#tabs-8">Virtual Sports</a></li>
         <li id="tab9"><a class="height-auto" href="#tabs-9">RNG Keno</a></li>
         <li id="tab10"><a class="height-auto" href="#tabs-10">Gold Deluxe</a></li>
-        <li id="tab11"><a class="height-auto" href="#tabs-11">Colossus Bets</a></li>
-        <li id="tab14"><a class="height-auto" href="#tabs-14">Cricket</a></li>
 
         @foreach (var product in Model)
         {
@@ -82,19 +75,6 @@
             <iframe id="goldDeluxeFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
         </div>
     }
-    @if (!HideColossusBets)
-    {
-        <div id="tabs-11" class="divTab" style="padding: 0px">
-            <iframe id="colossusBetsFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-        </div>
-    }   
-
-    @if (!HideCricket)
-    {
-        <div id="tabs-14" class="divTab" style="padding: 0px">
-            <iframe id="cricketFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-        </div>
-    }
 
     @foreach (var product in Model)
     {
@@ -130,8 +110,6 @@
     Fanex.ExtAcc.Customer.HideVirtualSports = custStatus.hideVirtualSports;
     Fanex.ExtAcc.Customer.HideKeno = custStatus.hideKeno;
     Fanex.ExtAcc.Customer.HideGoldDeluxe = custStatus.hideGoldDeluxe;
-    Fanex.ExtAcc.Customer.HideColossusBets = custStatus.hideColossusBets;
-    Fanex.ExtAcc.Customer.HideCricket = custStatus.hideCricket;
     Fanex.ExtAcc.Customer.isSuperEditAgent = Fanex.ExtAcc.Customer.isSuperEditMember = Fanex.ExtAcc.Customer.isMasterEditMember = false;
     Fanex.ExtAcc.Customer.CurrentLevel = parseInt(Fanex.ExtAcc.Customer.CurrentLevel);
 
