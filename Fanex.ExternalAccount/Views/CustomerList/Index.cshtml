@@ -1,0 +1,113 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@using Fanex.PTEngine
+<div id="customerList">
+    <div class="page-title">
+        <div class="wlDetail">
+            Customer List
+        </div>
+        <div id="breadcrumbs">
+        </div>
+        <span class="icon-filter active"></span>
+    </div>
+    <div id="searchBar" class="search-form filterbox filter-winloss-detail">
+        <div class="searchBar">
+            <div class="form-group">
+                <div class="label">@ViewLang.Username</div>
+                <input id="txtUserName" type="text" class="usernameInput" autocomplete="off" />
+            </div>
+            <div class="form-group">
+                <div class="label">@ViewLang.Status</div>
+                <div id="userGroup" class="user-group pull-left">
+                    <select id="customerStatus" class="usernameInput group">
+                        <option value="-1">@ViewLang.All</option>
+                        <option value="1" selected>@ViewLang.Open</option>
+                        <option value="3">@ViewLang.Suspended</option>
+                        <option value="2">@ViewLang.Closed</option>
+                        <option value="4">@ViewLang.Disabled</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group hidden customer-limit-date">
+                <input id="chk-show-limit-date" type="checkbox" />
+                <div class="label lbl-show-limit-date">@ViewLang.CustomersWithDataLimited</div>
+            </div>
+            <div class="form-group">
+                <input id="btnSearch" type="button" value="Submit" class="btn -submit" onclick="Fanex.ExtAcc.Customer.Search()" />
+            </div>
+            <div class="form-group">
+                <span style="display: none" id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel"></span>
+            </div>
+        </div>
+    </div>
+    <div class="bgTitle titleSearch">
+        <div class="pull-left searchBar">
+            <span class="text-select">@ViewLang.Select:</span>
+            <span class="status-select" onclick="Fanex.ExtAcc.Customer.SelectAll('menuActive')">@ViewLang.All</span>
+            <span class="character">
+                |
+            </span>
+            <span class="status-select" onclick="Fanex.ExtAcc.Customer.SelectAll('menuInactive')">@ViewLang.None</span>
+        </div>
+    </div>
+    <div id="customerListGrid">
+        <div id="jqgrid" class="removeRadius freegrid content-grid">
+        </div>
+        <div id="msgNoinfo">
+            There is no data.
+        </div>
+    </div>
+    @Html.AntiForgeryToken()
+</div>
+<form id="targetForm" method="post" target="windowPopup" action="">
+    <input type="hidden" id="uplineId" name="uplineId" value="" />
+    <input type="hidden" id="parentId" name="parentId" value="" />
+    <input type="hidden" id="customerIds" name="customerIds" value="" />
+    <input type="hidden" id="customerNames" name="customerNames" value="" />
+    <input type="hidden" id="syncStatuses" name="syncStatuses" value="" />
+    <input type="hidden" id="usernames" name="usernames" value="" />
+    <input type="hidden" id="uplineLevel" name="uplineLevel" value="" />
+    <input type="hidden" id="customerLevel" name="customerLevel" value="" />
+    <input type="hidden" id="actorId" name="actorId" value="" />
+    <input type="hidden" id="actorIdUsername" name="actorIdUsername" value="" />
+    <input type="hidden" id="subAccId" name="subAccId" value="" />
+    <input type="hidden" id="language" name="language" value="" />
+    <input type="hidden" id="groupName" name="groupName" value="" />
+    <input type="hidden" id="productId" name="productId" value="" />
+    <input type="hidden" id="customerId" name="customerId" value="" />
+    <input type="hidden" id="isMultiple" name="isMultiple" value="false" />
+    <input type="hidden" id="IsReadOnly" name="IsReadOnly" value="false" />
+    <input type="hidden" id="formType" name="formType" value="1" />
+    <input type="hidden" id="isForcingMode" name="isForcingMode" value="false" />
+</form>
+<form id="targetProductStatusSettingForm" method="post" target="windowPopup" action="" class="hide">
+    <input type="hidden" id="productIds" name="productIds" value="" />
+    <input type="hidden" id="custIds" name="custIds" value="" />
+    <input type="hidden" id="custNames" name="custNames" value="" />
+    <input type="hidden" id="custRole" name="custRole" value="" />
+</form>
+<script type="text/javascript">
+    $('#customerStatus').combobox();
+    Fanex.ExtAcc.Customer.dataTexts = [
+        '@ViewLang.Username',
+        '@ViewLang.Firstname',
+        '@ViewLang.Lastname',
+        '@ViewLang.GroupName',
+        '@ViewLang.Creator',
+        '@ViewLang.CreatedDate',
+        '@ViewLang.Permission',
+        '@ViewLang.Active',
+        '@ViewLang.Password',
+    ];
+
+    $(document).ready(function () {
+        $("#userGroup input").val($("#customerStatus")[0].options[1].text);
+        $("#userGroup input").attr("readonly", "true");
+        $("#userGroup input").bind("click", function () {
+            $(this).autocomplete("search", '');
+        });
+    });
+
+    window.actionAfterUpdatedGoldDeluxeSettingMultiple = function () {
+        document.getElementById("targetForm").submit();
+    };
+</script>
