@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer
 {
+    using Fanex.ExternalAccount.Core.Shared;
     using Fanex.NAP.Framework.Data;
 
     public class CheckNewCustomerLimitationCriteria : CriteriaBase
@@ -21,6 +22,6 @@
             => "Age_CustomerCheckReachDownline";
 
         public override bool IsValid()
-            => CustId > 0 && RoleId > 0 && RoleId < 5;
+            => CustId > 0 && RoleId > 0 && RoleId < Role.Group;
     }
 }

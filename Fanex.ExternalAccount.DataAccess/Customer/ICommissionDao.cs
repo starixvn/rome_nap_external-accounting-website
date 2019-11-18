@@ -1,7 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Interface.Customer
 {
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.DTO.Customer;
     using Fanex.PTEngine.BusinessObjects;
 
     public interface ICommissionDao

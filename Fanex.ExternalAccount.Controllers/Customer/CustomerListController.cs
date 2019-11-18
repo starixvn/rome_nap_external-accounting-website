@@ -5,11 +5,6 @@
 
     public class CustomerListController: CustomerBase
     {
-        public CustomerListController()
-        {
-
-        }
-
         public ActionResult Index() => PartialViewBase();
 
         public ActionResult GetSuperList()

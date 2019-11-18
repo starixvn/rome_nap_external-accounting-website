@@ -1,7 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
     using CasinoLibrary.Model.UserException;
-    using Common;
     using Core.Authorization;
     using Core.Base;
     using Core.Context;
@@ -9,7 +8,6 @@
     using CustomerSetting.Security.Authenticate;
     using DataAccess.Criteria.Customer;
     using DataAccess.Criteria.Customer.CustomerStatus;
-    using DTO;
     using DTO.Customer;
     using Excel.Customer.CustomerListPage;
     using Fanex.ExternalAccount.Module.LeftPanel;
@@ -133,7 +131,9 @@
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 UpdateCasinoStatus(masterId, result, customer);
+#pragma warning disable S109 // Magic numbers should not be used
                 Thread.Sleep(3000);
+#pragma warning restore S109 // Magic numbers should not be used
                 AutoInsertNG2Product(masterId, customer.UserName, RoleId.Master, parentId, SiteId.NAP,
                     customer.CurrencyId);
                 AutoInsertCasinoPost(masterId, parentId);
@@ -214,7 +214,9 @@
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 UpdateCasinoStatus(agentId, result, customer);
+#pragma warning disable S109 // Magic numbers should not be used
                 Thread.Sleep(3000);
+#pragma warning restore S109 // Magic numbers should not be used
                 AutoInsertNG2Product(agentId, customer.UserName, RoleId.Agent, parentId, SiteId.NAP,
                     customer.CurrencyId);
 
@@ -302,7 +304,9 @@
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 UpdateCasinoStatus(memberId, result, customer);
+#pragma warning disable S109 // Magic numbers should not be used
                 Thread.Sleep(3000);
+#pragma warning restore S109 // Magic numbers should not be used
                 AutoInsertNG2Product(memberId, customer.UserName, RoleId.Member, parentId, SiteId.NAP,
                     customer.CurrencyId);
 
@@ -605,7 +609,7 @@
                     try
                     {
                         cust.UpdateCustPwd(custId, Encryption.CfsEnCode(password), CurrentContext.Ip4Address,
-                            CurrentSession.UserId, CurrentSession.UserName, 3);
+                            CurrentSession.UserId, CurrentSession.UserName, CurrentSession.FromSystem);
                     }
                     catch (ErrorException casinoEx)
                     {
@@ -649,11 +653,13 @@
             {
                 status = enabled == false
                     ? "Disabled"
+#pragma warning disable S3358 // Ternary operators should not be nested
                     : closed == true
                         ? "Closed"
                         : suspended == true
                             ? "Suspended"
                             : "Open";
+#pragma warning restore S3358 // Ternary operators should not be nested
             }
 
             var viewSpecialIPPermission = AuthorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP);

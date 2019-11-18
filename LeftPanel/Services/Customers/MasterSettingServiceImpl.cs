@@ -13,11 +13,10 @@
         public MasterSettingServiceImpl(
             int userId,
             int roleId,
-            string site,
             IEnumerable<ProductSettingElement> productSettingElements = null,
             AuthorizationService authorizationService = null,
             Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null)
-            : base(userId, roleId, site, productSettingElements, authorizationService, hiddenAndSyncItemsCreator)
+            : base(userId, roleId, productSettingElements, authorizationService, hiddenAndSyncItemsCreator)
         { }
 
         public override Setting GetSetting(DataSet customerStatusInfoDataset)
@@ -25,7 +24,9 @@
             var setting = base.GetSetting(customerStatusInfoDataset);
 
             var nonProductStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];
+#pragma warning disable S109 // Magic numbers should not be used
             setting.EnableItems.Insert(2, new ObjectInfo("AutoPT", nonProductStatusRow.EnableAutoMasterPT(), "Allow Auto PT"));
+#pragma warning restore S109 // Magic numbers should not be used
 
             return setting;
         }

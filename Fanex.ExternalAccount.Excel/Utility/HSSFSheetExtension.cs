@@ -108,7 +108,9 @@
 
         private static CellRangeAddress FindSourceRange(ISheet sourceSheet, ICell oldCell)
         {
+#pragma warning disable S3353 // Unchanged local variables should be "const"
             CellRangeAddress sourceRange = null;
+#pragma warning restore S3353 // Unchanged local variables should be "const"
             for (var j = 0; j < sourceSheet.NumMergedRegions; j++)
             {
                 var range = sourceSheet.GetMergedRegion(j);

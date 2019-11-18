@@ -32,10 +32,12 @@
 
             var minDate = dataTable.Rows[0]["MinDate"];
             var limitDays = dataTable.Rows[0]["LimitDays"];
+#pragma warning disable S3358 // Ternary operators should not be nested
             var type = minDate != DBNull.Value
                 ? CustomerDataRangeType.MinDate
                 : limitDays != DBNull.Value && Converter.ToInt(limitDays) != 0 ? CustomerDataRangeType.TimePeriod
                 : CustomerDataRangeType.None;
+#pragma warning restore S3358 // Ternary operators should not be nested
 
             return new CustomerDataRange
             {

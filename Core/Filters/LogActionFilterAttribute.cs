@@ -2,9 +2,7 @@
 {
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Core.Shared;
-    using Fanex.Logging.Extensions.Web;
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Globalization;
     using System.Threading;

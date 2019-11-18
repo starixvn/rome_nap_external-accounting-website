@@ -41,7 +41,7 @@
 
         public DataTable HideSpecialIP(DataTable table, bool viewSpecialIPPermission)
         {
-            var fieldName = "lastloginip";
+            const string fieldName = "lastloginip";
             if (ReferenceEquals(null, table) ||
                 table.Rows.Count == 0 ||
                 !table.Columns.Contains(fieldName) ||

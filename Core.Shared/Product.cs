@@ -25,9 +25,11 @@ namespace Fanex.ExternalAccount.Core.Shared
             Id = productId;
             Key = string.IsNullOrWhiteSpace(productName)
                 ? string.Empty
+#pragma warning disable S3358 // Ternary operators should not be nested
                 : string.IsNullOrWhiteSpace(substituteProductKey) 
                     ? productName.Replace(" ", string.Empty) 
                     : substituteProductKey;
+#pragma warning restore S3358 // Ternary operators should not be nested
             Name = isGetNameFromRemotingRef
                 ? _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en-US", productName)
                 : productName;

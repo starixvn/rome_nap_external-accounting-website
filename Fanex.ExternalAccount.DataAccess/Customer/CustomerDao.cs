@@ -25,7 +25,9 @@
                 return false;
             }
 
+#pragma warning disable S1192 // String literals should not be duplicated
             var parameters = new Hashtable { { "username", userName }, { "isexists", false } };
+#pragma warning restore S1192 // String literals should not be duplicated
 
             var result = DbHelper.ExecuteDbResult("Age_CustomerCheckExists", parameters);
 
@@ -34,7 +36,9 @@
 
         public Customer UserInfo(int custId)
         {
+#pragma warning disable S1192 // String literals should not be duplicated
             var param = new Hashtable { { "custid", custId } };
+#pragma warning restore S1192 // String literals should not be duplicated
 
             using (var reader = ExecDataReader("Age_CustomerSelUserInfo", param))
             {
@@ -43,7 +47,9 @@
                     return new Customer
                     {
                         CustId = reader.ToInt("custid"),
+#pragma warning disable S1192 // String literals should not be duplicated
                         RoleId = reader.ToInt("roleid"),
+#pragma warning restore S1192 // String literals should not be duplicated
                         Username = reader.ToString("username"),
                         FirstName = reader.ToString("firstname"),
                         LastName = reader.ToString("lastname"),
@@ -90,7 +96,9 @@
         {
             var result = DbHelper.ExecuteDbResult(criteria.GetSettingKey(), criteria.GetSpParams());
 
+#pragma warning disable S1192 // String literals should not be duplicated
             return new Result(result.Outputs["errcode"].ToString(), result.Outputs["errmsg"].ToString(),
+#pragma warning restore S1192 // String literals should not be duplicated
                 result.ResultSet);
         }
 
@@ -128,8 +136,10 @@
                 {
                     listAffectedDownline.Add(new SingleUpdateAffectedDownline(
                         Utilities.Utils.ToInt32(reader["roleid"]),
+#pragma warning disable S1192 // String literals should not be duplicated
                         Utilities.Utils.ToInt32(reader["cntAffected"]),
                         Utilities.Utils.ToInt32(reader["cntUnchanged"])));
+#pragma warning restore S1192 // String literals should not be duplicated
                 }
 
                 return listAffectedDownline;

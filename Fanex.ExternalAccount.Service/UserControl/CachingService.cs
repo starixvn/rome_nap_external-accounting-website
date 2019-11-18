@@ -21,7 +21,9 @@
                 result = this._menuDao.GetMenuByUserId(userId);
                 if (result != null)
                 {
+#pragma warning disable S109 // Magic numbers should not be used
                     UserCache.Set<UserCache>(userId.ToString(), result, DateTime.Now.AddSeconds(30));
+#pragma warning restore S109 // Magic numbers should not be used
                 }
             }
 

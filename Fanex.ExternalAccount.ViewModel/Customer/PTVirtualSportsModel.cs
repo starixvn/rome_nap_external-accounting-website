@@ -1,10 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.ViewModel.Customer
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     public class PTVirtualSportsModel
     {
         public int CustId { get; set; }

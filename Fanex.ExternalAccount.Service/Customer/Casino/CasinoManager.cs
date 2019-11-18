@@ -48,6 +48,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
 
     public class CasinoManager : ICasinoManager
     {
+        private const int CasinoExternalSystemCode = 3;
         private static readonly CasinoManager instance = new CasinoManager();
         private readonly CasinoDao casinoDao = new CasinoDao();
 
@@ -106,7 +107,7 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
 
             var cust = new CasinoLibrary.SBAgent.Customer();
             return cust.UpdateCustEnableCasino(custid, !disabledCS, isUpdDownline, ip, userId,
-                subAccId == 0 ? username : subUsername, 3);
+                subAccId == 0 ? username : subUsername, CasinoExternalSystemCode);
         }
 
         public CasinoCustomer GetCustInfoIBC(int custid, int uplineId)

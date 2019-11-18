@@ -2,7 +2,6 @@
 {
     using System;
     using System.Data;
-    using System.Globalization;
     using Utilities;
 
     public static class CustomerInfoDataRowExtensions

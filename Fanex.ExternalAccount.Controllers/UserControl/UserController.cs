@@ -1,11 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.UserControl
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
     using Core.Authorization;
     using Core.Base;
     using Core.Context;
@@ -18,11 +12,17 @@
     using Service.Impl.UserControl;
     using Service.Interface.Login;
     using Service.Interface.UserControl;
-    using Utilities;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
     using Tarus.Infrastructure.Configurations.InternalLogin;
+    using Utilities;
 
     public class UserController : BaseController
     {
+        private const int DwKeySize = 1024;
         private readonly CachingService _cache = new CachingService();
         private readonly IUserService _userService = new UserService();
         private readonly IGroupService groupService = new GroupService();
@@ -117,22 +117,7 @@
         [AntiXSRFFilter]
         public ActionResult AddUser()
         {
-            var model = new User();
-            var groups = groupService.GetListGroup();
-            if (CurrentSession.IsITAdmin)
-            {
-                ViewBag.GroupList = groups;
-            }
-            else if (CurrentSession.IsInternalAdmin)
-            {
-                ViewBag.GroupList = groups.Where(o => !Group.IsITGroup(o.GroupID));
-            }
-            else
-            {
-                ViewBag.GroupList = groups.Where(o => o.GroupName == CurrentSession.CurrencyGroup);
-            }
-
-            return PartialViewBase(model);
+            return PartialViewBase(GetUserModel());
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
@@ -140,22 +125,7 @@
         [AntiXSRFFilter]
         public ActionResult AddExistUser()
         {
-            var model = new User();
-            var groups = groupService.GetListGroup();
-            if (CurrentSession.IsITAdmin)
-            {
-                ViewBag.GroupList = groups;
-            }
-            else if (CurrentSession.IsInternalAdmin)
-            {
-                ViewBag.GroupList = groups.Where(o => !Group.IsITGroup(o.GroupID));
-            }
-            else
-            {
-                ViewBag.GroupList = groups.Where(o => o.GroupName == CurrentSession.CurrencyGroup);
-            }
-
-            return PartialViewBase(model);
+            return PartialViewBase(GetUserModel());
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
@@ -311,7 +281,7 @@
                     var encryption = new EncryptionThread();
                     var param = string.Join("&", username, CurrentSession.UserId, loginService.GetDbTime().Ticks,
                         "NAPEXT");
-                    param = encryption.EncryptString(param, 1024, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
+                    param = encryption.EncryptString(param, DwKeySize, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
 
                     url =
                         $"{GetInternalLoginUrl(checkCustomerBelongToSpecialSiteResult.Site)}" +
@@ -360,6 +330,26 @@
             var model = _userService.GetUserById(id);
             ViewBag.IsInternalAdmin = loginService.CheckExternalGroup(id, null, eFunctions.ExternalGroup);
             return PartialViewBase(model);
+        }
+
+        private User GetUserModel()
+        {
+            var model = new User();
+            var groups = groupService.GetListGroup();
+            if (CurrentSession.IsITAdmin)
+            {
+                ViewBag.GroupList = groups;
+            }
+            else if (CurrentSession.IsInternalAdmin)
+            {
+                ViewBag.GroupList = groups.Where(o => !Group.IsITGroup(o.GroupID));
+            }
+            else
+            {
+                ViewBag.GroupList = groups.Where(o => o.GroupName == CurrentSession.CurrencyGroup);
+            }
+
+            return model;
         }
     }
 }

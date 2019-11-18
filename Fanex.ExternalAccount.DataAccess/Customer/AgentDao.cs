@@ -43,6 +43,7 @@
             {
                 return new Transfer
                 {
+#pragma warning disable S109 // Magic numbers should not be used
                     Weekly = Convert.ToBoolean(int.Parse(transferOption[7].ToString())),
                     Mon = Convert.ToBoolean(int.Parse(transferOption[1].ToString())),
                     Wed = Convert.ToBoolean(int.Parse(transferOption[3].ToString())),
@@ -50,6 +51,7 @@
                     Fri = Convert.ToBoolean(int.Parse(transferOption[5].ToString())),
                     Sat = Convert.ToBoolean(int.Parse(transferOption[6].ToString())),
                     Sun = Convert.ToBoolean(int.Parse(transferOption[0].ToString()))
+#pragma warning restore S109 // Magic numbers should not be used
                 };
             }
 

@@ -23,7 +23,9 @@
             var param = new Hashtable
             {
                 {"srecommend", recommend},
+#pragma warning disable S1192 // String literals should not be duplicated
                 {"custid", custId},
+#pragma warning restore S1192 // String literals should not be duplicated
                 {"enabled", enabled},
                 {"closed", closed},
                 {"suspended", suspended},
@@ -52,6 +54,7 @@
             {
                 return new Transfer
                 {
+#pragma warning disable S109 // Magic numbers should not be used
                     Weekly = Convert.ToBoolean(int.Parse(transferOption[7].ToString())),
                     Mon = Convert.ToBoolean(int.Parse(transferOption[1].ToString())),
                     Tue = Convert.ToBoolean(int.Parse(transferOption[2].ToString())),
@@ -60,6 +63,7 @@
                     Fri = Convert.ToBoolean(int.Parse(transferOption[5].ToString())),
                     Sat = Convert.ToBoolean(int.Parse(transferOption[6].ToString())),
                     Sun = Convert.ToBoolean(int.Parse(transferOption[0].ToString()))
+#pragma warning restore S109 // Magic numbers should not be used
                 };
             }
 

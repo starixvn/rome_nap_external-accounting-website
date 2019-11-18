@@ -10,6 +10,7 @@
 
     public static class CaptchaUtil
     {
+#pragma warning disable S109 // Magic numbers should not be used
         public static string GetValiationImage(ControllerContext context)
         {
             var bmp = new Bitmap(100, 30);
@@ -26,6 +27,7 @@
             var bytes = stream.ToArray();
             return Convert.ToBase64String(bytes);
         }
+#pragma warning restore S109 // Magic numbers should not be used
 
         public static string GetCaptchaString(int length)
         {

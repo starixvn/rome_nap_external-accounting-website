@@ -24,12 +24,14 @@
                     {
                         result.Add(new Group
                         {
+#pragma warning disable S1192 // String literals should not be duplicated
                             GroupID = reader.ToInt("GroupID"),
                             GroupName = reader.ToString("GroupName"),
                             NoUsers = reader.ToInt("NoUsers"),
                             Description = reader.ToString("Description"),
                             Creator = reader.ToString("Creator"),
                             CreatedDate = reader.ToString("CreatedDate")
+#pragma warning restore S1192 // String literals should not be duplicated
                         });
                     }
                 }
@@ -135,7 +137,9 @@
         {
             using (var db = new ObjectDb("EAS_GroupInfoIns"))
             {
+#pragma warning disable S1192 // String literals should not be duplicated
                 db.AddInParameter("UserID", DbType.Int32, custId);
+#pragma warning restore S1192 // String literals should not be duplicated
                 db.AddInParameter("GroupName", DbType.String, groupName);
                 db.AddInParameter("Description", DbType.String, description);
                 db.AddInParameter("IP", DbType.String, ip);

@@ -29,7 +29,9 @@
                 db.AddInParameter("IP", DbType.String, ip);
                 db.AddInParameter("AssigedGroupIDs", DbType.String, assignedGroupIDs);
 
+#pragma warning disable S1192 // String literals should not be duplicated
                 db.AddOutParameter("FuncId", DbType.Int32, sizeof(int));
+#pragma warning restore S1192 // String literals should not be duplicated
 
                 AddResultParams(db.Database, db.DbCommand);
 
@@ -93,7 +95,9 @@
                     }
                 }
 
+#pragma warning disable S1168 // Empty arrays and collections should be returned instead of null
                 return null;
+#pragma warning restore S1168 // Empty arrays and collections should be returned instead of null
             }
         }
 

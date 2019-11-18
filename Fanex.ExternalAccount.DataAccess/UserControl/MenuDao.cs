@@ -26,6 +26,7 @@
                         {
                             result.Add(new Menu
                             {
+#pragma warning disable S1192 // String literals should not be duplicated
                                 MenuId = reader.ToInt32("MenuId"),
                                 MenuName = reader.ToString("MenuName"),
                                 MenuDesc = reader.ToString("MenuDesc"),
@@ -37,6 +38,7 @@
                                 DisplayOrder = reader.ToInt32("DisplayOrder"),
                                 ModifiedDate = reader.ToString("ModifiedDate"),
                                 IsActive = reader.ToBoolean("Active")
+#pragma warning restore S1192 // String literals should not be duplicated
                             });
                         }
 
@@ -44,7 +46,9 @@
                     }
                 }
 
+#pragma warning disable S1168 // Empty arrays and collections should be returned instead of null
                 return null;
+#pragma warning restore S1168 // Empty arrays and collections should be returned instead of null
             }
         }
 
@@ -52,10 +56,14 @@
         {
             using (var db = new ObjectDb("EAS_MenuSelByUserID"))
             {
+#pragma warning disable S1192 // String literals should not be duplicated
                 db.AddInParameter("UserID", DbType.Int32, userId);
+#pragma warning restore S1192 // String literals should not be duplicated
                 using (var ds = db.ExecuteDataSet())
                 {
+#pragma warning disable S109 // Magic numbers should not be used
                     if (ds?.Tables.Count == 2)
+#pragma warning restore S109 // Magic numbers should not be used
                     {
                         var menu = ds.Tables[0];
                         var func = ds.Tables[1];

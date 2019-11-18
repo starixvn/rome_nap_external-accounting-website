@@ -27,6 +27,8 @@
 
     public class AccountController : DefaultCaptchaController
     {
+        private const int CaptchaLength = 4;
+        private const string LoginActionName = "Login";
         private readonly ICurrentContext _currentContext;
         private readonly CurrentSession _currentSession;
         private readonly NoCaptchaSectionConfiguration _nocaptcha;
@@ -52,7 +54,7 @@
 
             SetUMTokenForInternalAlphaLogin();
 
-            Encryptor.RandomCaptcha = CaptchaUtil.GetCaptchaString(4);
+            Encryptor.RandomCaptcha = CaptchaUtil.GetCaptchaString(CaptchaLength);
 
             return View(new LoginModel
             {
@@ -60,6 +62,30 @@
                 LoginAttempt = _currentSession.LoginAttempt,
                 InvalidOTP = _currentSession.InvalidOTP
             });
+        }
+
+        [HttpPost]
+        public ActionResult Login(LoginModel model)
+        {
+            if (!AntiXSRFUtil.ValidateAntiXSRF(Request, model.__RequestVerificationToken))
+            {
+                return View(new LoginModel(ViewLang.ExpiredLoginSession));
+            }
+
+            var rawPassword = DecryptPassword(model.Password, model.Code);
+            if (string.IsNullOrEmpty(rawPassword))
+            {
+                return View(new LoginModel(ViewLang.LoginNetworkError));
+            }
+
+            if (!IsDisabledCaptcha(model)
+                && IsRequiredCaptcha(model.UserName)
+                && !IsValidCaptcha())
+            {
+                return CreateWrongValidationCaptchaView(model);
+            }
+
+            return VerifyLoginCredential(model, rawPassword);
         }
 
         public ActionResult LoginSso(string url, string line)
@@ -81,7 +107,9 @@
             var username = _currentSession.UserName;
             var fromLine = _currentSession.CurrentLine;
             var parameter = $"{username}&{pwd}&{code}&{line}&{timeout}&{fromLine}";
+#pragma warning disable S109 // Magic numbers should not be used
             parameter = new EncryptionThread().EncryptString(parameter, 1024, path);
+#pragma warning restore S109 // Magic numbers should not be used
 
             var onuserId = _currentSession.OnUserId;
             if (onuserId > 0)
@@ -114,46 +142,22 @@
             if (Request.UrlReferrer == null)
             {
                 WriteLogSwitchLine($"Switched {fromLine} to {line} failed: call directly URL, username: {username}", TraceEventType.Warning);
-                return RedirectToAction("Login");
+                return RedirectToAction(LoginActionName);
             }
 
             if (isTimeout)
             {
                 WriteLogSwitchLine($"Switched {fromLine} to {line} reached limit timeout: {totalSeconds}s, username: {username}", TraceEventType.Warning);
-                return RedirectToAction("Login");
+                return RedirectToAction(LoginActionName);
             }
 
             if (string.IsNullOrWhiteSpace(rawPassword))
             {
                 WriteLogSwitchLine($"Switched line failed: wrong param info", TraceEventType.Warning);
-                return RedirectToAction("Login");
+                return RedirectToAction(LoginActionName);
             }
 
             return VerifyLoginCredential(new LoginModel { UserName = username, Password = pwd, Code = code, Line = line, FromLine = fromLine, TotalSeconds = totalSeconds }, rawPassword);
-        }
-
-        [HttpPost]
-        public ActionResult Login(LoginModel model)
-        {
-            if (!AntiXSRFUtil.ValidateAntiXSRF(Request, model.__RequestVerificationToken))
-            {
-                return View(new LoginModel(ViewLang.ExpiredLoginSession));
-            }
-
-            var rawPassword = DecryptPassword(model.Password, model.Code);
-            if (string.IsNullOrEmpty(rawPassword))
-            {
-                return View(new LoginModel(ViewLang.LoginNetworkError));
-            }
-
-            if (!IsDisabledCaptcha(model)
-                && IsRequiredCaptcha(model.UserName)
-                && !IsValidCaptcha())
-            {
-                return CreateWrongValidationCaptchaView(model);
-            }
-
-            return VerifyLoginCredential(model, rawPassword);
         }
 
         private ActionResult CreateWrongValidationCaptchaView(LoginModel model) => View(
@@ -306,7 +310,7 @@
             Session.Abandon();
             FormsAuthentication.SignOut();
 
-            return RedirectToAction("Login");
+            return RedirectToAction(LoginActionName);
         }
 
         [HttpGet]
@@ -369,7 +373,8 @@
             _currentSession.GroupId = group.GroupID;
             _currentSession.CurrencyGroup = group.GroupName;
             _currentSession.IsITAdmin = group.IsIT;
-            _currentSession.FromSystem = 3;
+            const int CasinoExternalSystemCode = 3;
+            _currentSession.FromSystem = CasinoExternalSystemCode;
             _currentSession.Captcha = model.Code;
             _currentSession.HashPassword = model.Password;
             _currentSession.CurrentLine = model.Line;

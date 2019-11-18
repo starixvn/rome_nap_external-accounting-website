@@ -49,7 +49,7 @@
             var personalInfoRow = personalInfoDataset.Tables[0].Rows[0];
             var roleId = personalInfoRow.RoleId();
             var isUpdateCredit = authorizationService.HasUpdateCreditPermission(actorId);
-            InstanceSettingService(roleId, actorId, personalInfoRow.Site());
+            InstanceSettingService(roleId, actorId);
             var customerModel = new CustomerModel(
                 personalInfoDataset,
                 loginInfoDataset,
@@ -65,14 +65,14 @@
             return customerModel;
         }
 
-        private void InstanceSettingService(int roleId, int userId, string site)
+        private void InstanceSettingService(int roleId, int userId)
         {
             settingServices = new Dictionary<int, CustomerSettingQueryService>
             {
-                [Role.Super] = new SuperSettingServiceImpl(userId, roleId, site),
-                [Role.Master] = new MasterSettingServiceImpl(userId, roleId, site),
-                [Role.Agent] = new CustomerSettingServiceImpl(userId, roleId, site),
-                [Role.Member] = new MemberSettingServiceImpl(userId, roleId, site)
+                [Role.Super] = new SuperSettingServiceImpl(userId, roleId),
+                [Role.Master] = new MasterSettingServiceImpl(userId, roleId),
+                [Role.Agent] = new CustomerSettingServiceImpl(userId, roleId),
+                [Role.Member] = new MemberSettingServiceImpl(userId, roleId)
             };
         }
 

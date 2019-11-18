@@ -1,8 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Extensions
 {
-    using System;
     using System.Data;
-    using Core.Shared;
     using Utilities;
 
     public static class LoginInfoDataRowExtensions

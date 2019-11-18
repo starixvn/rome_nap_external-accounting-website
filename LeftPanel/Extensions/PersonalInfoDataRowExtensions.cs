@@ -58,7 +58,9 @@
                 closedReason = customerClosedReason.ClassName;
             }
 
+#pragma warning disable S3358 // Ternary operators should not be nested
             return !enabled ? "disabled" : closed ? closedReason : suspended ? "suspended" : string.Empty;
+#pragma warning restore S3358 // Ternary operators should not be nested
         }
     }
 }

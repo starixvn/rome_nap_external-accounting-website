@@ -48,6 +48,7 @@
             foreach (var item in _builder.Data)
             {
                 var isText = false;
+#pragma warning disable S109 // Magic numbers should not be used
 
                 resultSheet.CopyRow(TemplateSheet, index % 2 == 0 ? OddRowIndex : EvenRowIndex, toRowId, FirstColumnIndex, LastColumnIndex);
 
@@ -56,6 +57,7 @@
                 {
                     isText = true;
                     if (Math.Abs(accumulatedTotal - item.TotalAmt) < 0.00001 || index == 0)
+#pragma warning restore S109 // Magic numbers should not be used
                     {
                         ballanceResult = "OK";
                     }

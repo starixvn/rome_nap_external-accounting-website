@@ -1,10 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.GroupConfiguration
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Text;
     using NAP.Framework.Data;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
 
     public class UpdateGroupConfigurationCriteria : CriteriaBase
     {

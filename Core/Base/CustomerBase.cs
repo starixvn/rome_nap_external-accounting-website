@@ -27,6 +27,7 @@
     public class CustomerBase : BaseController
     {
         private const string CasinoNo = "01";
+        private const int ErrorCode_Error = 999;
         private readonly IReportService _report = new ReportService();
         protected readonly ProductStatusService productStatusService = new ProductStatusServiceImpl();
 
@@ -65,7 +66,7 @@
                         CurrentContext.Ip4Address,
                         uplineId,
                         CurrentSession.UserName,
-                        FromSystem);
+                        CurrentSession.FromSystem);
 
                     if (isSuccess)
                     {
@@ -75,7 +76,7 @@
                     else
                     {
                         new Customer().RemoveAccount(custInfo.UserName, CurrentContext.Ip4Address,
-                            CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                            CurrentSession.UserId, CurrentSession.UserName, CurrentSession.FromSystem);
                     }
                 }
 
@@ -84,14 +85,14 @@
             catch (ErrorException casinoEx)
             {
                 ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
-                return new Result(999, casinoEx.Message);
+                return new Result(ErrorCode_Error, casinoEx.Message);
             }
             catch (Exception ex)
             {
                 ExceptionHandler.Handle(ex);
             }
 
-            return new Result(999, string.Empty);
+            return new Result(ErrorCode_Error, string.Empty);
         }
 
         protected Module.NG2.Entities.Result AutoInsertNG2Product(int custId, string username, RoleId roleId,

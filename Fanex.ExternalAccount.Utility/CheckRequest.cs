@@ -6,9 +6,11 @@
 
     public abstract class CheckRequest
     {
+#pragma warning disable S109 // Magic numbers should not be used
         protected DateTime MinReportDate { get; set; } = new DateTime(DateTime.Today.AddMonths(-3).Year, DateTime.Today.AddMonths(-3).Month, 1);
 
         protected DateTime MaxReportDate { get; set; } = DateTime.Today.AddDays(7);
+#pragma warning restore S109 // Magic numbers should not be used
 
         public static int GetIntRequest(string name, int defaultValue)
         {

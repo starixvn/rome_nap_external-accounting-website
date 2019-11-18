@@ -1,9 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using Core.Authorization;
     using Core.Shared;
     using CustomerSetting.Module.Keno.KenoSetting.Configurations;
     using DataAccesses;
@@ -11,6 +7,9 @@
     using Models;
     using Service.Impl.Customer;
     using Service.Interface.Customer;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
     using ViewModels;
     using static Core.Shared.ProductConstants;
 

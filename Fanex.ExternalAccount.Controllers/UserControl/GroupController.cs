@@ -1,20 +1,18 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.UserControl
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
     using DTO.UserControl;
     using Newtonsoft.Json;
-    using Service.Impl.Login;
     using Service.Impl.UserControl;
-    using Service.Interface.Login;
     using Service.Interface.UserControl;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
 
     public class GroupController : BaseController
     {

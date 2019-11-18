@@ -21,16 +21,14 @@
         private readonly AuthorizationService authorizationService;
         private readonly int _roleId;
         protected readonly int _userId;
-        private readonly string _site;
 
-        public CustomerSettingServiceImpl(int userId, int roleId, string site,
+        public CustomerSettingServiceImpl(int userId, int roleId,
             IEnumerable<ProductSettingElement> productSettingElements = null,
             AuthorizationService authorizationService = null,
             Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null)
         {
             _roleId = roleId;
             _userId = userId;
-            _site = site;
             this.productSettingElements = productSettingElements ?? AccountInfoProductConfiguration.ProductSettingParamList;
             this.hiddenAndSyncItemsCreator = hiddenAndSyncItemsCreator ?? AccountInfoProductConfiguration.CreateSyncAndHiddenItems;
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
@@ -242,7 +240,7 @@
         private void AddVirtualSportsEditLink(DataTable table3rdDCS, ICollection<ObjectInfo> details)
         {
             if (_roleId.IsMember() ?
-                !table3rdDCS.IsProductHiddenUpline(ProductConstants.VirtualSports):
+                !table3rdDCS.IsProductHiddenUpline(ProductConstants.VirtualSports) :
                 !table3rdDCS.IsProductHidden(ProductConstants.VirtualSports))
             {
                 details.Add(new ObjectInfo("VirtualSports", "Virtual Sports"));
@@ -358,9 +356,11 @@
             enableItem.Disabled = true;
             enableItem.Tooltip = enableItem.Key.Equals("Closed", StringComparison.OrdinalIgnoreCase)
                 ? "Upline has been closed"
+#pragma warning disable S3358 // Ternary operators should not be nested
                 : enableItem.Key.Equals("Suspended", StringComparison.OrdinalIgnoreCase)
                     ? "Upline has been suspended"
                     : "Upline has been disabled";
+#pragma warning restore S3358 // Ternary operators should not be nested
 
             return enableItem;
         }

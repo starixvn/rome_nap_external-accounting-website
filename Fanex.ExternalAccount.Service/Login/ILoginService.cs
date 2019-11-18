@@ -1,9 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Service.Interface.Login
 {
-    using System;
-    using System.Collections.Generic;
     using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.DTO.UserControl;
+    using System;
 
     public interface ILoginService
     {

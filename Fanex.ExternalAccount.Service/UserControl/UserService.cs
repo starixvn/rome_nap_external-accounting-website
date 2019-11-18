@@ -1,13 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.UserControl
 {
-    using System.Collections.Generic;
-    using DataAccess.Impl.Login;
     using DataAccess.Impl.UserControl;
-    using DataAccess.Interface.Login;
     using DataAccess.Interface.UserControl;
     using DTO;
     using DTO.UserControl;
     using Interface.UserControl;
+    using System.Collections.Generic;
 
     public class UserService : IUserService
     {

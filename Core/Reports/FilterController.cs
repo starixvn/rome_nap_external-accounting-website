@@ -1,14 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.Core.Reports
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Web.Mvc;
     using Base;
     using Newtonsoft.Json;
     using Service.Impl.Report;
     using Service.Interface.Report;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Web.Mvc;
     using Utilities;
 
     public class FilterController : BaseController

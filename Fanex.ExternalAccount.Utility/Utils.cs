@@ -1,13 +1,14 @@
 ﻿namespace Fanex.ExternalAccount.Utilities
 {
+    using DTO;
     using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
     using System.Net;
     using System.Web;
-    using DTO;
 
+#pragma warning disable S109 // Magic numbers should not be used
     public static class Utils
     {
         public static bool IsExistedInList(this IEnumerable<IPRange> ipList, string ip)
@@ -23,7 +24,7 @@
             if (IsValidIpAddress(ip))
             {
                 var strArray = ip.Split('.');
-                num = (((double.Parse(strArray[0]) * 16777216.0) + (double.Parse(strArray[1]) * 65536.0)) +
+                num = (((double.Parse(strArray[0]) * 16_777_216.0) + (double.Parse(strArray[1]) * 65_536.0)) +
                     (double.Parse(strArray[2]) * 256.0)) + double.Parse(strArray[3]);
             }
 
@@ -150,6 +151,14 @@
             return val;
         }
 
+        public static string ToStringFormat(this decimal obj, int prec = 2)
+        {
+            var ret = decimal.Round(obj, prec);
+            var valRet = ret.ToString("#,##0.########");
+
+            return ret < 0.0m ? "<font color=\"red\">" + valRet + "</font>" : valRet;
+        }
+
         public static int ToInt32(object value)
         {
             if (IsEmptyData(value))
@@ -175,14 +184,6 @@
             return val;
         }
 
-        public static string ToStringFormat(this decimal obj, int prec = 2)
-        {
-            var ret = decimal.Round(obj, prec);
-            var valRet = ret.ToString("#,##0.########");
-
-            return ret < 0.0m ? "<font color=\"red\">" + valRet + "</font>" : valRet;
-        }
-
         public static int ToInt32(this IDataReader obj, string fieldName)
             => ToInt32(obj[fieldName]);
 
@@ -195,11 +196,11 @@
         public static string DecodeHtml(this string str)
             => HttpUtility.HtmlDecode(str);
 
-        public static string EncodeHtml(this string str)
-            => HttpUtility.HtmlEncode(str);
-
         public static string DecodeHtml(this DataRow obj, string fieldName)
             => HttpUtility.HtmlDecode(obj.ToString(fieldName));
+
+        public static string EncodeHtml(this string str)
+            => HttpUtility.HtmlEncode(str);
 
         public static string EncodeHtml(this DataRow obj, string fieldName)
             => HttpUtility.HtmlEncode(obj.ToString(fieldName));
@@ -208,6 +209,7 @@
             => date.Equals(DateTime.MinValue) ? string.Empty : date.ToString(format);
         private static bool IsEmptyData(object value) =>
             value == null || value == DBNull.Value || value.ToString()?.Length == 0;
-        
+
     }
+#pragma warning restore S109 // Magic numbers should not be used
 }

@@ -1,10 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.DataAccesses
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Web;
     using Core.Context;
     using Core.Shared;
     using Criteria;
@@ -13,11 +8,16 @@
     using DTO;
     using Extensions;
     using Fanex.ExternalAccount.Module.LeftPanel.Models;
-    using Service.Impl.Customer.Casino;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Web;
     using Utilities;
     using ViewModels;
     using FanexCommonConverter = Fanex.Common.Converter;
 
+#pragma warning disable S1192 // String literals should not be duplicated
     public class CustomerDataAccessImpl : CustomerDataAccess
     {
         public DataSet GetPersonalInfo(string username, string groupName, int userId)
@@ -284,8 +284,10 @@
                 objDb.AddInParameter("Language", DbType.String, "En");
                 objDb.AddInParameter("IP", DbType.String, CurrentContext.Instance.Ip4Address);
                 objDb.AddInParameter("system", DbType.String, "EXTERNAL");
+#pragma warning disable S109 // Magic numbers should not be used
                 objDb.AddOutParameter("ErrCode", DbType.Int32, 8);
                 objDb.AddOutParameter("ErrMsg", DbType.String, 1000);
+#pragma warning restore S109 // Magic numbers should not be used
                 objDb.ExecuteNonQuery();
 
                 var outputParams = objDb.GetOuputParams();
@@ -433,4 +435,5 @@
             }
         }
     }
+#pragma warning restore S1192 // String literals should not be duplicated
 }

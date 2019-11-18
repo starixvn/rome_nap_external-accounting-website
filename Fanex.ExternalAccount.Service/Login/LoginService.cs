@@ -1,15 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Login
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Common.Helper;
     using DataAccess.Impl.Login;
     using DataAccess.Interface.Login;
     using DTO;
-    using DTO.UserControl;
     using Interface.Login;
     using Interface.UserControl;
+    using System;
     using UserControl;
 
     public class LoginService : ILoginService
@@ -43,7 +40,9 @@
             {
                 _loginDao.Checkin(custId, request.NetSessionId, request.IP, out onuserId);
 
+#pragma warning disable S109 // Magic numbers should not be used
                 hasMultipleGroupsPermission = _loginDao.CheckExternalGroup(custId, 11, "ExternalGroup");
+#pragma warning restore S109 // Magic numbers should not be used
 
                 result.ResultData = groupService.GetGroupById((int)result.ResultData);
             }

@@ -12,6 +12,9 @@
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
+        private const int SystemCode_ExternalNapBetSetting  = 5;
+        private const int SystemCode_ExternalNap = 4;
+
         public override bool VerifyQueryPermission(PermissionContext permissionContext) =>
             AllowRead(permissionContext);
 
@@ -47,7 +50,7 @@
                 HttpContext.Current.Request.UrlReferrer != null
                 && (pathAndQuery.Contains("customersetting/betsetting")
                     || pathAndQuery.Contains("sssss=v"))
-                    ? (byte) 5
+                    ? (byte)SystemCode_ExternalNapBetSetting 
                     : settingContext.System;
 
             return settingContext;
@@ -68,7 +71,7 @@
             var authenticationService = new ExternalAccountAuthenticateAttribute();
             var productName = GetProductName(permissionContext);
 
-            return (!isSuper || permissionContext.System != 4)
+            return (!isSuper || permissionContext.System != SystemCode_ExternalNap)
                    && (string.IsNullOrWhiteSpace(productName)
                        || authenticationService.AllowUpdateByAuthenticationParam(productName));
         }
@@ -112,7 +115,9 @@
 
                 if (regexMatch.Success)
                 {
+#pragma warning disable S109 // Magic numbers should not be used
                     val = Regex.Replace(regexMatch.Groups[2].ToString(), @"[^a-zA-Z0-9_.]+", string.Empty,
+#pragma warning restore S109 // Magic numbers should not be used
                         RegexOptions.Compiled);
                 }
             }
@@ -122,7 +127,7 @@
             return GetProductFunction(productId, permissionContext.System);
         }
 
-        private static string GetProductFunction(int productId, byte systemId = 4) => systemId == 4
+        private static string GetProductFunction(int productId, byte systemId = SystemCode_ExternalNap) => systemId == SystemCode_ExternalNap
             ? Enum.GetName(typeof(ProductSettingDcsFunction), productId)
             : Enum.GetName(typeof(ProductBettingLimitDcsFunction), productId);
     }

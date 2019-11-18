@@ -84,13 +84,17 @@
 
             if (successUpdateSuspendedList.Length > 0)
             {
+#pragma warning disable S109 // Magic numbers should not be used
                 successUpdateSuspendedList.Length -= 2;
+#pragma warning restore S109 // Magic numbers should not be used
                 result.Insert(0, new Result(0, $"Status of {successUpdateSuspendedList.ToString()} and their affected downlines have been successfully updated to Suspended."));
             }
 
             if (successUpdateUnsuspendedList.Length > 0)
             {
+#pragma warning disable S109 // Magic numbers should not be used
                 successUpdateUnsuspendedList.Length -= 2;
+#pragma warning restore S109 // Magic numbers should not be used
                 result.Insert(0, new Result(0, $"Status of {successUpdateUnsuspendedList.ToString()} and their affected downlines have been successfully updated to Unsuspended."));
             }
 

@@ -43,7 +43,9 @@
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
+#pragma warning disable S1192 // String literals should not be duplicated
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+#pragma warning restore S1192 // String literals should not be duplicated
 
             routes.MapRoute(
                 "Default2",

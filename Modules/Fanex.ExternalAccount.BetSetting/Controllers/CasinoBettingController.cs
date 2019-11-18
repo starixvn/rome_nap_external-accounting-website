@@ -53,7 +53,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
                     SettingModel = settingModel
                 };
             }
-            catch (Exception ex)
+            catch
             {
                 model = null;
             }

@@ -45,7 +45,9 @@
             }
             else
             {
+#pragma warning disable S109 // Magic numbers should not be used
                 totalColumn = 18;
+#pragma warning restore S109 // Magic numbers should not be used
                 lastColumnIndex = FirstColumnIndex + totalColumn - 1;
                 WriteMemberReport(resultSheet, dtr, lastColumnIndex);
             }
@@ -135,9 +137,11 @@
             DataRow items)
         {
             var custStatus = !items.Enabled() ? "disabled"
+#pragma warning disable S3358 // Ternary operators should not be nested
                 : items.Closed() ? "closed"
                 : items.Suspended() ? "suspended"
                 : "open";
+#pragma warning restore S3358 // Ternary operators should not be nested
 
             var rowIdFromStatus = new Dictionary<string, int> { { "open", 1 }, { "suspended", 3 }, { "disabled", 7 } };
             var rowIdFromCloseStatus = new Dictionary<byte, int> { { 1, 11 }, { 2, 13 }, { 3, 15 } };
