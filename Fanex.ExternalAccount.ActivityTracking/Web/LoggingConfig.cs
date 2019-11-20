@@ -46,7 +46,7 @@
             LogManager.SetDefaultLogCategory(logDefaultCategory).Use(logEngines);
 
             var regexSensitiveInfo = GetRegexToHideSensitiveInfo(sensitiveInfo ?? Enumerable.Empty<string>());
-            LoggingConfiguration = LoggingConfiguration.GetHttpHeaderInfo().HideSensitiveInfo(regexSensitiveInfo);
+            LoggingConfiguration = LoggingConfiguration.GetHttpHeaderInfo().GetHttpSessionInfo().HideSensitiveInfo(regexSensitiveInfo);
             if (getDbExceptionInfo != null)
             {
                 LoggingConfiguration = LoggingConfiguration.UseGetDbExceptionInfo(getDbExceptionInfo);
