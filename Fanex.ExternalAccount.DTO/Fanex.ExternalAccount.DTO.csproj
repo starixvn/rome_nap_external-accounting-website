@@ -136,6 +136,8 @@
     <Compile Include="Customer\Commission.cs" />
     <Compile Include="Customer\Casino\CasinoCustomer.cs" />
     <Compile Include="Customer\CustomerInfo.cs" />
+    <Compile Include="Customer\CustomerList\CustomerListDTO.cs" />
+    <Compile Include="Customer\CustomerList\CustomerStatusDTO.cs" />
     <Compile Include="Customer\Status\CustomerSuspendStatusRow.cs" />
     <Compile Include="Customer\Status\SingleUpdateAffectedDownline.cs" />
     <Compile Include="Customer\Status\UnsuspendDownlineDetail.cs" />

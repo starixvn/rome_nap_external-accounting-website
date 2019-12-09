@@ -109,9 +109,9 @@
         }
 
         public static bool ToBoolean(this DataRow obj, string fieldName, bool defaultValue = false)
-            => ToBoolean(obj.Table.Columns.Contains(fieldName) 
+            => ToBoolean(obj.Table.Columns.Contains(fieldName)
                 ? obj[fieldName]
-                : null, 
+                : null,
                 defaultValue);
 
         public static string ToString(object value)
@@ -151,12 +151,51 @@
             return val;
         }
 
+        public static DateTime? ToNullAbleDateTime(object value)
+        {
+            if (IsEmptyData(value))
+            {
+                return null;
+            }
+
+            DateTime val;
+
+            DateTime.TryParse(value.ToString(), out val);
+
+            return val;
+        }
+
         public static string ToStringFormat(this decimal obj, int prec = 2)
         {
             var ret = decimal.Round(obj, prec);
             var valRet = ret.ToString("#,##0.########");
 
             return ret < 0.0m ? "<font color=\"red\">" + valRet + "</font>" : valRet;
+        }
+
+        public static byte ToByte(object value)
+        {
+            if (IsEmptyData(value))
+            {
+                return 0;
+            }
+
+            byte val;
+
+            if (value is decimal || value is double)
+            {
+                val = Convert.ToByte(value);
+            }
+            else if (value is bool)
+            {
+                val = (bool)value ? (byte)1 : (byte)0;
+            }
+            else
+            {
+                byte.TryParse(value.ToString(), out val);
+            }
+
+            return val;
         }
 
         public static int ToInt32(object value)
@@ -207,8 +246,21 @@
 
         public static string ToStringExt(this DateTime date, string format = "MM/dd/yyyy HH:mm:ss tt")
             => date.Equals(DateTime.MinValue) ? string.Empty : date.ToString(format);
+
         private static bool IsEmptyData(object value) =>
             value == null || value == DBNull.Value || value.ToString()?.Length == 0;
+
+        public static bool HasColumn(IDataRecord dataReader, string columnName)
+        {
+            for (int i = 0; i < dataReader.FieldCount; i++)
+            {
+                if (dataReader.GetName(i).Equals(columnName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
     }
 #pragma warning restore S109 // Magic numbers should not be used

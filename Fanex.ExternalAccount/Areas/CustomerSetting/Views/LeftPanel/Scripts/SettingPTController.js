@@ -3,9 +3,9 @@
 
     $scope.GetCustomerList = function () {
         var roleId = $scope.model.personalInfo.roleId.value;
-        var custId = $scope.model.personalInfo.custId.value;        
+        var custId = $scope.model.personalInfo.custId.value;
         if (!parent.document.getElementById('customerListGrid')) {
-            parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('Customer/CustomerList'), undefined, true);
+            parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('CustomerList/Index') + '?custid=' + custId + '&roleId=' + roleId, undefined, true);
         }
         var interval = setInterval(function () {
             if (parent.document.getElementById('customerListGrid')) {
@@ -21,9 +21,9 @@
                     var data = parent.Fanex.ExtAcc.Customer.GetParams();
 
                     var params = "groupName=" + data.groupName
-                    + "&enabled=" + data.enabled + "&closed=" + data.closed + "&suspended=" + data.suspended
-                    + "&sRecommend=" + parent.Fanex.ExtAcc.Customer.superId + "&mRecommend=" + parent.Fanex.ExtAcc.Customer.masterId + "&recommend=" + parent.Fanex.ExtAcc.Customer.agentId + "&custId=" + parent.Fanex.ExtAcc.Customer.custId
-                    + "&roleId=" + parent.Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username;
+                        + "&enabled=" + data.enabled + "&closed=" + data.closed + "&suspended=" + data.suspended
+                        + "&sRecommend=" + parent.Fanex.ExtAcc.Customer.superId + "&mRecommend=" + parent.Fanex.ExtAcc.Customer.masterId + "&recommend=" + parent.Fanex.ExtAcc.Customer.agentId + "&custId=" + parent.Fanex.ExtAcc.Customer.custId
+                        + "&roleId=" + parent.Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username;
 
                     if (parent.Fanex.ExtAcc.Customer.CurrentLevel === parent.Fanex.ExtAcc.Customer.Super) {
                         params += "&withDataLimited=" + parent.$("#chk-show-limit-date").is(":checked");
@@ -110,19 +110,7 @@
 
                 parent.$(".icon-filter").off('click').on('click', parent.Fanex.ExtAcc.Customer.showHideFilter);
                 parent.Fanex.ExtAcc.Customer.bindOrientationChange();
-                switch (roleId) {
-                    case 4:
-                        parent.Fanex.ExtAcc.Customer.GetMasterList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery);
-                        break;
-                    case 3:
-                        parent.Fanex.ExtAcc.Customer.GetAgentList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery);
-                        break;
-                    case 2:
-                        parent.Fanex.ExtAcc.Customer.GetMemberList(custId, allowDoubleComm, null, null, syncCasino, isHideKeno, isHideVirtualSport, isHideGoldDeluxe, isHideAllbet, isHideVoidbridge, isHideNG2, isHideFishingWorld, isHideLottery);
-                        break;
-                    default:
-                        break;
-                }
+                parent.Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(custId, roleId, 50, 1);
             }
         }, 100);
     };
@@ -146,8 +134,8 @@
 
     $scope.getPopupHeight = function () {
         var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
-             $scope.landscapeHeight :
-             $scope.portraitHeight;
+            $scope.landscapeHeight :
+            $scope.portraitHeight;
 
         return height;
     };

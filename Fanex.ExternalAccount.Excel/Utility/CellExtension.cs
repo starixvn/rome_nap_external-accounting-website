@@ -33,7 +33,7 @@
                 }
                 else if (value is decimal)
                 {
-                    SetCellValue(cell, (object)(decimal)value);
+                    cell.SetCellValue((decimal)value);
                 }
                 else if (value is bool)
                 {

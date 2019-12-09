@@ -9,7 +9,6 @@
     using DataAccess.Criteria.Customer;
     using DataAccess.Criteria.Customer.CustomerStatus;
     using DTO.Customer;
-    using Excel.Customer.CustomerListPage;
     using Fanex.ExternalAccount.Module.LeftPanel;
     using Fanex.Module.NG2.Entities;
     using IBCUtils;
@@ -632,49 +631,6 @@
             }
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, result.IsSuccess });
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
-        public void GetExportToExcel(
-            string groupName,
-            bool? enabled = null,
-            bool? closed = null,
-            bool? suspended = null,
-            string username = null,
-            bool? withDataLimited = null)
-        {
-            var customerSetting = BuildCustomerSetting(username);
-
-            var customers = GetCustomerList(ExtRequest.GetGroupName(groupName), enabled, closed, suspended, customerSetting, withDataLimited);
-            TransformToCustomerProductStatusList(customers);
-
-            var status = string.Empty;
-            if (enabled != null || closed != null || suspended != null)
-            {
-                status = enabled == false
-                    ? "Disabled"
-#pragma warning disable S3358 // Ternary operators should not be nested
-                    : closed == true
-                        ? "Closed"
-                        : suspended == true
-                            ? "Suspended"
-                            : "Open";
-#pragma warning restore S3358 // Ternary operators should not be nested
-            }
-
-            var viewSpecialIPPermission = AuthorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP);
-            var newCustomers = ipInformationService.HideSpecialIP(customers, viewSpecialIPPermission);
-
-            var builder = new CustomerListPageBuilder(
-                newCustomers,
-                false,
-                status,
-                Convert.ToInt32(customerSetting.RoleId),
-                withDataLimited.HasValue && withDataLimited.Value);
-            var excelStream = builder.Build();
-            var fileName = $"{status}{customerSetting.RoleId.DisplayRoleName()}List{DateTime.Now.ToString("yyyyMMdd")}.xls";
-
-            ExportToExcel(excelStream, fileName);
         }
 
         public ActionResult AccessDenied() => ActionDenied(Request);

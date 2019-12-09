@@ -148,6 +148,12 @@
   <ItemGroup>
     <Compile Include="Criteria\Customer\CheckNewCustomerLimitationCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckMemberCreationCriteria.cs" />
+    <Compile Include="Criteria\Customer\CustomerList\GetCustomerAllStatusCriteria.cs" />
+    <Compile Include="Criteria\Customer\CustomerList\SearchMemberListCriteria.cs" />
+    <Compile Include="Criteria\Customer\CustomerList\SearchCustomerListBaseCriteria.cs" />
+    <Compile Include="Criteria\Customer\CustomerList\SearchAgentListCriteria.cs" />
+    <Compile Include="Criteria\Customer\CustomerList\SearchMasterListCriteria.cs" />
+    <Compile Include="Criteria\Customer\CustomerList\SearchSuperListCriteria.cs" />
     <Compile Include="Criteria\Customer\KickoutCustomerCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\GetMultipleSuspendCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\GetSingleSuspendCustomerInfoCriteria.cs" />
@@ -168,6 +174,7 @@
     <Compile Include="Criteria\UserControl\GetUserPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateMultipleGroupPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateMultipleUserPolicyCriteria.cs" />
+    <Compile Include="Customer\CustomerList\CustomerListDao.cs" />
     <Compile Include="Customer\IAgentDao.cs" />
     <Compile Include="Customer\ICommissionDao.cs" />
     <Compile Include="Customer\ICustomerDao.cs" />
@@ -236,6 +243,7 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

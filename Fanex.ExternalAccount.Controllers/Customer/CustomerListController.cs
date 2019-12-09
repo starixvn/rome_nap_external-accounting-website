@@ -1,35 +1,86 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using Fanex.ExternalAccount.Controllers.Requests.CustomerList;
+    using Fanex.ExternalAccount.Core.Authorization;
     using Fanex.ExternalAccount.Core.Base;
+    using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Core.Shared;
+    using Fanex.ExternalAccount.Excel.Customer.CustomerListPage;
+    using Fanex.ExternalAccount.Service.Customer.CustomerList;
+    using Fanex.ExternalAccount.Service.Customer.CustomerList.Params;
+    using Fanex.ExternalAccount.ViewModel.Customer.CustomerList;
+    using System;
     using System.Web.Mvc;
+    using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
 
-    public class CustomerListController: CustomerBase
+    public class CustomerListController : CustomerBase
     {
-        public ActionResult Index() => PartialViewBase();
+        private readonly ICustomerListService _customerListService;
+        private readonly AuthorizationService _authorizationService;
+        private const int DefaultPageSize = 50;
 
-        public ActionResult GetSuperList()
+        public CustomerListController() : this(null, null) { }
+
+        public CustomerListController(ICustomerListService customerListService, AuthorizationService authorizationService)
         {
-            return View();
+            _customerListService = customerListService ?? new CustomerListService();
+            _authorizationService = authorizationService ?? new AuthorizationServiceImpl();
         }
 
-        public ActionResult GetMasterList()
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
+        public ActionResult Index(int? custId, int? roleId) => PartialViewBase(new CustomerListViewModel { CustId = custId, RoleId = roleId });
+
+        [HttpPost]
+        public JsonResult Seach(SeachCustomerListRequest request)
         {
-            return View();
+            return Json(_customerListService.Search(new SearchCustomerListParams
+            {
+                GroupName = request.GroupName,
+                IsDataLimited = request.IsShowSuperLimitDate ?? false,
+                UplineId = request.UplineId ?? 0,
+                UplineRoleId = request.UplineRoleId ?? 0,
+                Status = request.Status ?? 0,
+                UserId = CurrentSession.UserId,
+                UserName = request.UserName,
+                PageIndex = request.PageIndex ?? 1,
+                PageSize = request.PageSize ?? DefaultPageSize
+            }, _authorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP)));
         }
 
-        public ActionResult GetAgentList()
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
+        public JsonResult GetCustomerStatus(int custId)
         {
-            return View();
+            return Json(_customerListService.GetCustomerAllStatus(custId));
         }
 
-        public ActionResult GetMemberList()
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
+        public void GetExportToExcel(SeachCustomerListRequest request)
         {
-            return View();
-        }
+            var status = request.GetStatusString();
+            var roleId = request.UplineRoleId.HasValue ? request.UplineRoleId.Value - 1 : 4;
+            var customerList = _customerListService.Search(new SearchCustomerListParams
+            {
+                GroupName = request.GroupName,
+                IsDataLimited = request.IsShowSuperLimitDate ?? false,
+                UplineId = request.UplineId ?? 0,
+                UplineRoleId = request.UplineRoleId ?? 0,
+                Status = request.Status ?? 0,
+                UserId = CurrentSession.UserId,
+                UserName = request.UserName,
+                PageIndex = 1,
+                PageSize = Int32.MaxValue - 1
+            }, _authorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP));
 
-        public JsonResult GetCustomerInfo(int custId)
-        {
-            return Json(base.GetCustomerInfo(custId, CurrentSession.CurrencyGroup));
+            var builder = new CustomerListPageBuilder(
+                customerList.CustomerList,
+                false,
+                status,
+                roleId,
+                request.IsShowSuperLimitDate ?? false);
+            var excelStream = builder.Build();
+            var fileName = $"{status}{roleId.DisplayRoleName()}List{DateTime.Now.ToString("yyyyMMdd")}.xls";
+
+            ExportToExcel(excelStream, fileName);
         }
     }
 }

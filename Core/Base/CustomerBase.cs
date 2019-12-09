@@ -1,17 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Core.Base
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using System.Web.Mvc;
     using CasinoLibrary.Model.UserException;
-    using Data;
-    using Data.DNAide;
     using Logging.Extensions.Web;
     using Module.NG2.Entities;
     using Module.NG2.Services;
@@ -19,6 +8,9 @@
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.Products;
+    using System;
+    using System.Diagnostics;
+    using System.Web.Mvc;
     using Utilities;
     using ViewModel.Customer;
     using Customer = CasinoLibrary.SBAgent.Customer;

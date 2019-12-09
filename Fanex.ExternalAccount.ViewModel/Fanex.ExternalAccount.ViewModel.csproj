@@ -128,6 +128,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account\LoginModel.cs" />
+    <Compile Include="Customer\CustomerList\CustomerListViewModel.cs" />
+    <Compile Include="Customer\CustomerList\CustomerStatusViewModel.cs" />
+    <Compile Include="Customer\CustomerList\SearchCustomerListViewModel.cs" />
     <Compile Include="Customer\Suspend\MultipleUpdateSuspendRequest.cs" />
     <Compile Include="Customer\Suspend\MultipleUpdateViewModel.cs" />
     <Compile Include="Customer\Suspend\SingleUpdateViewModel.cs" />
