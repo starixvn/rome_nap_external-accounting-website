@@ -33,6 +33,14 @@
             var _this = Fanex.ExtAcc.Customer.CustomerList;
             _this.SubmitSearch(_this.cachedParams.uplineId, _this.cachedParams.uplineRoleId, 50, 1)
         });
+
+        this.DOMElements.txtUsername.keypress(function (e) {
+            var _this = Fanex.ExtAcc.Customer.CustomerList;
+            var code = e.keyCode ? e.keyCode : e.which;
+            if (code == 13) {
+                _this.DOMElements.btnSearch.click()
+            } 
+        });
     },
 
     SubmitSearch: function (uplineId, uplineRoleId, pageSize, pageIndex) {
