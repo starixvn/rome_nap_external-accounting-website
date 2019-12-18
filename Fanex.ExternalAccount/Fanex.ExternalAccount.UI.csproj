@@ -2359,7 +2359,6 @@
     <Content Include="Configurations\appSettings.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Customer\CustomerList.cshtml" />
     <Content Include="Configurations\connectionStrings.config">
       <SubType>Designer</SubType>
     </Content>

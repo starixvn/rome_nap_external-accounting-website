@@ -25,7 +25,7 @@
 
         internal static bool UplineHasSecurityCode(this DataRow dataRow) => Utils.ToBoolean(dataRow["UplineHasSecurityCode"]);
 
-        internal static decimal Credit(this DataRow dataRow) => Utils.ToDecimal(dataRow["credit"]);
+        internal static decimal Credit(this DataRow dataRow) => Utils.ToDecimal(dataRow["credit"]).Format();
 
         internal static string StatusTooltip(this DataRow dataRow, bool enabled, bool closed, bool suspended)
         {

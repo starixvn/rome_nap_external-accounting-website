@@ -40,6 +40,7 @@
                 var reader = objDb.ExecuteReader(criteria.GetSpParams());
                 while (reader.Read())
                 {
+                    const int decimalPrecision = 4;
                     result.CustomerList.Add(new CustomerListDTO
                     {
                         CustId = Utils.ToInt32(reader["CustId"]),
@@ -47,15 +48,15 @@
                         Closed = Utils.ToBoolean(reader["Closed"]),
                         ClosedReason = Utils.ToByte(reader["ClosedReason"]),
                         CreateDate = Utils.ToDateTime(reader["CreateDate"]),
-                        Discount1x2 = Utils.ToInt32(reader["Discount1x2"]),
-                        DiscountCS = Utils.ToInt32(reader["DiscountCS"]),
+                        Discount1x2 = Utils.ToDecimal(reader["Discount1x2"]).Format(decimalPrecision),
+                        DiscountCS = Utils.ToDecimal(reader["DiscountCS"]).Format(decimalPrecision),
                         DoubleCommLosing = Utils.ToBoolean(reader["DoubleCommLosing"]),
                         Enabled = Utils.ToBoolean(reader["Enabled"]),
                         FirstName = Utils.ToString(reader["FirstName"]),
-                        GroupA = Utils.HasColumn(reader, "GroupA") ? Utils.ToInt32(reader["GroupA"]) : 0,
-                        GroupB = Utils.HasColumn(reader, "GroupB") ? Utils.ToInt32(reader["GroupB"]) : 0,
-                        GroupC = Utils.HasColumn(reader, "GroupC") ? Utils.ToInt32(reader["GroupC"]) : 0,
-                        GroupD = Utils.HasColumn(reader, "GroupD") ? Utils.ToInt32(reader["GroupD"]) : 0,
+                        GroupA = Utils.HasColumn(reader, "GroupA") ? Utils.ToDecimal(reader["GroupA"]).Format(decimalPrecision) : 0m,
+                        GroupB = Utils.HasColumn(reader, "GroupB") ? Utils.ToDecimal(reader["GroupB"]).Format(decimalPrecision) : 0m,
+                        GroupC = Utils.HasColumn(reader, "GroupC") ? Utils.ToDecimal(reader["GroupC"]).Format(decimalPrecision) : 0m,
+                        GroupD = Utils.HasColumn(reader, "GroupD") ? Utils.ToDecimal(reader["GroupD"]).Format(decimalPrecision) : 0m,
                         LastLoginIP = Utils.ToString(reader["LastLoginIP"]),
                         LastName = Utils.ToString(reader["LastName"]),
                         LimitDays = Utils.HasColumn(reader, "LimitDays") ? Utils.ToInt32(reader["LimitDays"]) : 0,
@@ -65,10 +66,10 @@
                         Suspended = Utils.ToBoolean(reader["Suspended"]),
                         UplineDoubleCommLosing = Utils.ToBoolean(reader["UplineDoubleCommLosing"]),
                         UserGroup = Utils.HasColumn(reader, "ugroup") ? Utils.ToString(reader["ugroup"]) : null,
-                        Discount = Utils.HasColumn(reader, "Discount") ? Utils.ToDecimal(reader["Discount"]) : 0,
-                        PlayerDiscount= Utils.HasColumn(reader, "PlayerDiscount") ? Utils.ToDecimal(reader["PlayerDiscount"]) : 0,
-                        PlayerDiscount1x2 = Utils.HasColumn(reader, "PlayerDiscount1x2") ? Utils.ToDecimal(reader["PlayerDiscount1x2"]) : 0,
-                        PlayerDiscountCS = Utils.HasColumn(reader, "PlayerDiscountCS") ? Utils.ToDecimal(reader["PlayerDiscountCS"]) : 0
+                        Discount = Utils.HasColumn(reader, "Discount") ? Utils.ToDecimal(reader["Discount"]).Format(decimalPrecision) : 0,
+                        PlayerDiscount= Utils.HasColumn(reader, "PlayerDiscount") ? Utils.ToDecimal(reader["PlayerDiscount"]).Format(decimalPrecision) : 0m,
+                        PlayerDiscount1x2 = Utils.HasColumn(reader, "PlayerDiscount1x2") ? Utils.ToDecimal(reader["PlayerDiscount1x2"]).Format(decimalPrecision) : 0m,
+                        PlayerDiscountCS = Utils.HasColumn(reader, "PlayerDiscountCS") ? Utils.ToDecimal(reader["PlayerDiscountCS"]).Format(decimalPrecision) : 0m
                     });
                 }
 

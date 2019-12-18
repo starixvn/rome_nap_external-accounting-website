@@ -69,7 +69,7 @@
             decimal val;
             decimal.TryParse(value.ToString(), out val);
 
-            return val.Format() == -0.00m ? 0.0m : val;
+            return val;
         }
 
         public static decimal ToDecimal(this IDataReader obj, string fieldName)

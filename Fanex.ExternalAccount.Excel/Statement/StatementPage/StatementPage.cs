@@ -64,7 +64,7 @@
                     else
                     {
                         accumulatedTotal -= item.TotalAmt;
-                        ballanceResult = "NOT EQUAL \nDiff: " + Utils.ToDecimal(accumulatedTotal);
+                        ballanceResult = "NOT EQUAL \nDiff: " + Utils.ToDecimal(accumulatedTotal).Format();
                     }
                 }
                 else

@@ -1,4 +1,9 @@
-﻿Fanex.ExtAcc.Customer.CustomerList = {
+﻿// tag for later search :D
+// Fanex.ExtAcc.Customer.CustomerList.SingleEditSuper 
+// Fanex.ExtAcc.Customer.CustomerList.SingleEditMaster
+// Fanex.ExtAcc.Customer.CustomerList.SingleEditAgent
+// Fanex.ExtAcc.Customer.CustomerList.SingleEditMember
+Fanex.ExtAcc.Customer.CustomerList = {
     DOMElements: {},
 
     cachedParams: {
@@ -39,7 +44,7 @@
             var code = e.keyCode ? e.keyCode : e.which;
             if (code == 13) {
                 _this.DOMElements.btnSearch.click()
-            } 
+            }
         });
     },
 
@@ -181,11 +186,6 @@
         columns.push({
             HeaderText: 'Edit', Name: 'Edit', Width: 30,
             CustomCellRender: function (cell) {
-                // tag for later search :D
-                // Fanex.ExtAcc.Customer.CustomerList.SingleEditSuper 
-                // Fanex.ExtAcc.Customer.CustomerList.SingleEditMaster
-                // Fanex.ExtAcc.Customer.CustomerList.SingleEditAgent
-                // Fanex.ExtAcc.Customer.CustomerList.SingleEditMember
                 return '<div onclick="javascript:Fanex.ExtAcc.Customer.CustomerList.SingleEdit' + Fanex.ExtAcc.Customer.RoleNameConst[cell.Value.RoleId] + '(' + cell.Value.CustId + ', \'' + cell.Value.UserName + '\')" id="edit-' + cell.Value.CustId + '" class="editInfo"></div>';
             }
         });
@@ -272,7 +272,7 @@
         columns.push(!isMemberList ? { Name: 'groupc', Value: currentRow.GroupC } : undefined);
         columns.push(!isMemberList ? { Name: 'groupd', Value: currentRow.GroupD } : undefined);
         columns.push(!isMemberList ? { Name: 'discount1x2', Value: currentRow.Discount1x2 } : undefined);
-        columns.push(!isMemberList ? { Name: 'discountcs', Value: currentRow.Discountcs } : undefined);
+        columns.push(!isMemberList ? { Name: 'discountcs', Value: currentRow.DiscountCS } : undefined);
 
         columns.push(isMemberList ? { Name: 'ugroup', Value: currentRow.UserGroup } : undefined);
         columns.push(isMemberList ? { Name: 'discount', Value: currentRow.Discount } : undefined);
