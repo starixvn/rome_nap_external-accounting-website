@@ -113,6 +113,8 @@ Fanex.ExtAcc.Customer.CustomerList = {
                     itemsPerPage: pageSize,
                     pagerSelectCallBack: function (currentPageIndex, itemsPerPage) {
                         Fanex.ExtAcc.Customer.DisableMultipleContextMenu();
+                        _this.cachedParams.pageSize = itemsPerPage;
+                        _this.cachedParams.pageIndex = currentPageIndex + 1;
                         _this.SubmitSearch(uplineId, uplineRoleId, itemsPerPage, currentPageIndex + 1);
                     }
                 },

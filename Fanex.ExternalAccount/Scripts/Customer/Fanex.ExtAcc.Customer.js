@@ -442,15 +442,8 @@
     },
 
     CallBackCustomerList: function () {
-        if (this.CurrentLevel == this.Super) {
-            Fanex.ExtAcc.Customer.GetSuperList(this.custId);
-        } else if (this.CurrentLevel == this.Master) {
-            Fanex.ExtAcc.Customer.GetMasterList(this.superId, this.AllowDoubleComm, this.custId, null, this.superSyncCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe);
-        } else if (this.CurrentLevel == this.Agent) {
-            Fanex.ExtAcc.Customer.GetAgentList(this.masterId, this.AllowDoubleComm, this.custId, null, this.masterSyncCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe);
-        } else {
-            Fanex.ExtAcc.Customer.GetMemberList(this.agentId, this.AllowDoubleComm, this.custId, null, this.agentSyncCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe);
-        }
+        var _this = Fanex.ExtAcc.Customer.CustomerList;
+        _this.SubmitSearch(_this.cachedParams.uplineId, _this.cachedParams.uplineRoleId, _this.cachedParams.pageSize, _this.cachedParams.pageIndex);
     },
 
     ConfigDoubleComm: function (custid, isSuper) {
