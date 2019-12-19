@@ -57,7 +57,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         Fanex.ExtAcc.Customer.agentId = uplineRoleId == Fanex.ExtAcc.Customer.Agent ? uplineId : Fanex.ExtAcc.Customer.agentId;
         var params = {
             groupName: $('#selectedGroupName').html() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
-            userName: this.DOMElements.txtUsername.val(),
+            userName: Fanex.encodeHtml(this.DOMElements.txtUsername.val()),
             status: this.DOMElements.selStatus.val(),
             uplineRoleId: uplineRoleId,
             isShowSuperLimitDate: this.DOMElements.chkShowSuperLimitDate.is(":checked"),
@@ -156,7 +156,6 @@ Fanex.ExtAcc.Customer.CustomerList = {
                     top.exportExcel(resolveClientUrl("CustomerList/GetExportToExcel?") + top.serialize(params), document);
                 });
             }
-
         }).always(function () { Fanex.ExtAcc.UnBlockUI(); });
     },
 
