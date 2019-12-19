@@ -4,115 +4,12 @@
     $scope.GetCustomerList = function () {
         var roleId = $scope.model.personalInfo.roleId.value;
         var custId = $scope.model.personalInfo.custId.value;
-        if (!parent.document.getElementById('customerListGrid')) {
-            parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('CustomerList/Index') + '?custid=' + custId + '&roleId=' + roleId, undefined, true);
-        }
-        var interval = setInterval(function () {
-            if (parent.document.getElementById('customerListGrid')) {
-                clearInterval(interval);
-
-                parent.Fanex.ExtAcc.InitSuggestion();
-
-                parent.$('#exporttoexcel').unbind('click');
-                parent.$('#txtUserName').unbind('keypress');
-                parent.$('#txtUserName').unbind('keyup');
-
-                parent.$('#exporttoexcel').click(function () {
-                    var data = parent.Fanex.ExtAcc.Customer.GetParams();
-
-                    var params = "groupName=" + data.groupName
-                        + "&enabled=" + data.enabled + "&closed=" + data.closed + "&suspended=" + data.suspended
-                        + "&sRecommend=" + parent.Fanex.ExtAcc.Customer.superId + "&mRecommend=" + parent.Fanex.ExtAcc.Customer.masterId + "&recommend=" + parent.Fanex.ExtAcc.Customer.agentId + "&custId=" + parent.Fanex.ExtAcc.Customer.custId
-                        + "&roleId=" + parent.Fanex.ExtAcc.Customer.CurrentLevel + "&username=" + data.username;
-
-                    if (parent.Fanex.ExtAcc.Customer.CurrentLevel === parent.Fanex.ExtAcc.Customer.Super) {
-                        params += "&withDataLimited=" + parent.$("#chk-show-limit-date").is(":checked");
-                    }
-
-                    var url = parent.resolveClientUrl("Customer/GetExportToExcel?") + params;
-                    top.exportExcel(url, document);
-                });
-
-                parent.$('#txtUserName').keypress(function (e) {
-                    if (typeof e === 'undefined') e = window.event;
-                    var key = (typeof e.keyCode === 'undefined') ? e.which : e.keyCode;
-                    if (key === 13) {
-                        parent.Fanex.ExtAcc.Customer.Search(false);
-
-                        return true;
-                    } else {
-                        return true;
-                    }
-                });
-
-                parent.$('#txtUserName').keyup(function (e) {
-                    if (parent.$('#txtUserName').val().length > 1) {
-                        parent.Fanex.ExtAcc.InitSuggestion();
-                    }
-                });
-
-                var allowDoubleComm = false;
-                var syncCasino = false;
-                var isHideKeno = true;
-                var isHideVirtualSport = true;
-                var isHideGoldDeluxe = true;
-                var isHideAllbet = true;
-                var isHideVoidbridge = true;
-                var isHideNG2 = true;
-                var isHideFishingWorld = true;
-                var isHideLottery = true;
-
-                for (var i = 0; i < $scope.model.setting.enableItems.length; i++) {
-                    if ($scope.model.setting.enableItems[i].key === 'DoubleComm') {
-                        allowDoubleComm = $scope.model.setting.enableItems[i].value;
-
-                        break;
-                    }
-                }
-
-                for (var i = 0; i < $scope.model.setting.syncItems.length; i++) {
-                    if ($scope.model.setting.syncItems[i].key === 'SyncCasino') {
-                        syncCasino = $scope.model.setting.syncItems[i].value;
-                    }
-
-                    if ($scope.model.setting.syncItems[i].key === 'HideAllbet') {
-                        isHideAllbet = $scope.model.setting.syncItems[i].value;
-                    }
-
-                    if ($scope.model.setting.syncItems[i].key === 'HideVoidbridge') {
-                        isHideVoidbridge = $scope.model.setting.syncItems[i].value;
-                    }
-
-                    if ($scope.model.setting.syncItems[i].key === 'HideNG2') {
-                        isHideNG2 = $scope.model.setting.syncItems[i].value;
-                    }
-
-                    if ($scope.model.setting.syncItems[i].key === 'HideFishingWorld') {
-                        isHideFishingWorld = $scope.model.setting.syncItems[i].value;
-                    }
-
-                    if ($scope.model.setting.syncItems[i].key === 'HideLottery') {
-                        isHideLottery = $scope.model.setting.syncItems[i].value;
-                    }
-                }
-
-                for (var i = 0; i < $scope.model.setting.details.length; i++) {
-                    if ($scope.model.setting.details[i].key === 'Keno') {
-                        isHideKeno = false;
-                    }
-                    if ($scope.model.setting.details[i].key === 'VirtualSports') {
-                        isHideVirtualSport = false;
-                    }
-                    if ($scope.model.setting.details[i].key === 'GoldDeluxe') {
-                        isHideGoldDeluxe = false;
-                    }
-                }
-
-                parent.$(".icon-filter").off('click').on('click', parent.Fanex.ExtAcc.Customer.showHideFilter);
-                parent.Fanex.ExtAcc.Customer.bindOrientationChange();
-                parent.Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(custId, roleId, 50, 1);
-            }
-        }, 100);
+        parent.Fanex.ExtAcc.Customer.CustomerList.cachedParams.breadcrumbs = {
+            SuperId: $scope.model.personalInfo.downlines[0] ? $scope.model.personalInfo.downlines[0].key : 0,
+            MasterId: $scope.model.personalInfo.downlines[1] ? $scope.model.personalInfo.downlines[1].key : 0,
+            AgentId: $scope.model.personalInfo.downlines[2] ? $scope.model.personalInfo.downlines[2].key : 0
+        };
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('CustomerList/Index') + '?custid=' + custId + '&roleId=' + roleId, null, false, true);
     };
 
     $scope.GetStatementList = function (custId) {
