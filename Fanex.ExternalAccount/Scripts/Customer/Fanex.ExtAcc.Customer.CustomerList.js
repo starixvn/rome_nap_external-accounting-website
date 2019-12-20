@@ -71,7 +71,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         Fanex.ExtAcc.Customer.agentId = uplineRoleId == Fanex.ExtAcc.Customer.Agent ? uplineId : Fanex.ExtAcc.Customer.agentId;
         var params = {
             groupName: $('#selectedGroupName').html() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
-            userName: Fanex.encodeHtml(this.DOMElements.txtUsername.val()),
+            userName: Fanex.encodeHtml(encodeURIComponent($.trim(this.DOMElements.txtUsername.val()).replace(/_/g, '%'))),
             status: this.DOMElements.selStatus.val(),
             uplineRoleId: uplineRoleId,
             isShowSuperLimitDate: this.DOMElements.chkShowSuperLimitDate.is(":checked"),
