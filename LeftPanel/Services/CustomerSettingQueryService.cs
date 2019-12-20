@@ -188,7 +188,7 @@
 
         private static ObjectInfo SuspendedStatus(DataRow nonProductStatusRow)
         {
-            var suspendedStatus = new ObjectInfo("Suspended", nonProductStatusRow.Suspended(), "Suspened");
+            var suspendedStatus = new ObjectInfo("Suspended", nonProductStatusRow.Suspended(), "Suspended");
 
             if (nonProductStatusRow.SuspendedUpline())
             {
