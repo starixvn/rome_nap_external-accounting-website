@@ -11,7 +11,9 @@ Fanex.ExtAcc.Customer.CustomerList = {
             SuperId: 0,
             MasterId: 0,
             AgentId: 0
-        }
+        },
+        pageSize: 50,
+        pageIndex: 1
     },
 
     Init: function (uplineId, uplineRoleId) {
@@ -36,7 +38,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
     BindingEvents: function () {
         this.DOMElements.btnSearch.off().click(function () {
             var _this = Fanex.ExtAcc.Customer.CustomerList;
-            _this.SubmitSearch(_this.cachedParams.uplineId, _this.cachedParams.uplineRoleId, 50, 1)
+            _this.SubmitSearch(_this.cachedParams.uplineId, _this.cachedParams.uplineRoleId)
         });
 
         this.DOMElements.txtUsername.keypress(function (e) {
@@ -48,7 +50,11 @@ Fanex.ExtAcc.Customer.CustomerList = {
         });
     },
 
-    SubmitSearch: function (uplineId, uplineRoleId, pageSize, pageIndex) {
+    SubmitSearch: function (uplineId, uplineRoleId) {
+        var _this = Fanex.ExtAcc.Customer.CustomerList;
+        var pageSize = _this.cachedParams.pageSize;
+        var pageIndex = _this.cachedParams.pageIndex;
+
         Fanex.ExtAcc.BlockUI();
         Fanex.ExtAcc.Customer.CurrentLevel = uplineRoleId == null ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1;
         this.DOMElements.divSuperLimitDate.toggle(uplineRoleId == null || uplineRoleId == '');
@@ -63,7 +69,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
             isShowSuperLimitDate: this.DOMElements.chkShowSuperLimitDate.is(":checked"),
             uplineId: uplineId,
             pageSize: pageSize,
-            pageIndex: pageIndex
+            pageIndex: pageIndex + 1
         };
 
         $.post(resolveClientUrl('CustomerList/Seach'), params, function (result) {
@@ -78,6 +84,9 @@ Fanex.ExtAcc.Customer.CustomerList = {
             }
             var bodyRows = [];
             var rowLength = result.CustomerList.length;
+            pageIndex = parseInt(result.TotalRows / _this.cachedParams.pageSize) < _this.cachedParams.pageIndex ?
+                0 : _this.cachedParams.pageIndex;
+
             for (var i = 0; i < rowLength; i++) {
                 var currentRow = result.CustomerList[i];
                 var cssRow = !currentRow.Enabled ? 'rowDisabled' : currentRow.Closed ? Fanex.ExtAcc.Customer.GetClosedClassName(currentRow) : currentRow.Suspended ? 'rowSuspended' : '';
@@ -108,14 +117,14 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 showNumberColumn: true,
                 pagerOption: {
                     itemsPerPageArray: [50, 100, 500],
-                    currentPage: pageIndex - 1,
+                    currentPage: pageIndex,
                     totalItem: result.TotalRows,
                     itemsPerPage: pageSize,
                     pagerSelectCallBack: function (currentPageIndex, itemsPerPage) {
                         Fanex.ExtAcc.Customer.DisableMultipleContextMenu();
+                        _this.cachedParams.pageIndex = currentPageIndex;
                         _this.cachedParams.pageSize = itemsPerPage;
-                        _this.cachedParams.pageIndex = currentPageIndex + 1;
-                        _this.SubmitSearch(uplineId, uplineRoleId, itemsPerPage, currentPageIndex + 1);
+                        _this.SubmitSearch(uplineId, uplineRoleId);
                     }
                 },
                 marginRight: 12,
@@ -176,7 +185,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push({
             HeaderText: 'Username', Name: 'username', Width: 100,
             CustomCellRender: function (cell) {
-                var func = 'javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + cell.Value.CustId + ', ' + (uplineRoleId == null || uplineRoleId == '' ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1) + ', 50, 1)';
+                var func = 'javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + cell.Value.CustId + ', ' + (uplineRoleId == null || uplineRoleId == '' ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1) + ')';
                 var len = cell.Value.UserName.length;
                 var title = len >= 15 ? ' title="' + cell.Value.UserName + '"' : '';
                 return uplineRoleId == Fanex.ExtAcc.Customer.Agent ?
@@ -258,7 +267,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         var columns = [];
         var isSuperList = uplineRoleId == null || uplineRoleId == '';
         var isMemberList = uplineRoleId == Fanex.ExtAcc.Customer.Agent;
-        columns.push({ Name: 'RowNumber', Value: currentIndex + pageSize * pageIndex });
+        columns.push({ Name: 'RowNumber', Value: currentIndex + pageSize * (pageIndex + 1) });
         columns.push({ Name: 'Check', Value: currentRow });
         columns.push({ Name: 'username', Value: currentRow });
         columns.push({ Name: 'Edit', Value: currentRow });
@@ -291,6 +300,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
     },
     RenderBreadScrumbs: function (uplineId, uplineRoleId) {
         var _breadScrumbs = this.cachedParams.breadcrumbs;
+        var _this = this;
         if (uplineRoleId == null) {
             this.DOMElements.breadcrumbs.html('');
             return;
@@ -300,9 +310,9 @@ Fanex.ExtAcc.Customer.CustomerList = {
             _breadScrumbs.MasterId = uplineId;
         }
 
-        var linkSuper = '<a href="javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(null, null, 50, 1)">Super</a>';
-        var linkMaster = '<a href="javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + _breadScrumbs.SuperId + ', 4, 50, 1)">Master</a>';
-        var linkAgent = '<a href="javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + _breadScrumbs.MasterId + ', 3, 50, 1)">Agent</a>';
+        var linkSuper = '<a href="javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(null, null)">Super</a>';
+        var linkMaster = '<a href="javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + _breadScrumbs.SuperId + ', 4)">Master</a>';
+        var linkAgent = '<a href="javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + _breadScrumbs.MasterId + ', 3)">Agent</a>';
         if (uplineRoleId == 4)
             this.DOMElements.breadcrumbs.html('<div class="level-line"></div><div class="level-active">' + linkSuper + '</div>');
         else if (uplineRoleId == 3)
