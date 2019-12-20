@@ -294,7 +294,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
 
         columns.push(isSuperList ? { Name: 'DateLimit', Value: currentRow.MinDate ? moment(currentRow.MinDate).format("MM/DD/YYYY") : currentRow.LimitDays != "" ? currentRow.LimitDays : "" } : undefined);
 
-        columns.push({ Name: 'createdate', Value: currentRow.CreateDate });
+        columns.push({ Name: 'createdate', Value: currentRow.CreateDate, FormatDateTime: 'MM/DD/YYYY hh:mm:ss A' });
         columns.push({ Name: 'lastloginip', Value: currentRow.LastLoginIP });
         return columns.filter(function (item) { return item !== undefined });
     },
