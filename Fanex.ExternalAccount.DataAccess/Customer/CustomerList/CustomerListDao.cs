@@ -6,9 +6,8 @@
     using Fanex.ExternalAccount.DataAccess.Criteria.Customer.CustomerList;
     using Fanex.ExternalAccount.DTO.Customer.CustomerList;
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.ExternalAccount.ViewModel.Customer.CustomerList;
     using Fanex.NAP.Framework.Data;
-    using System.Linq;
+    using System;
 
     public interface ICustomerListDao
     {
@@ -47,7 +46,7 @@
                         UserName = Utils.ToString(reader["UserName"]),
                         Closed = Utils.ToBoolean(reader["Closed"]),
                         ClosedReason = Utils.ToByte(reader["ClosedReason"]),
-                        CreateDate = Utils.ToDateTime(reader["CreateDate"]),
+                        CreateDate = Utils.ToStringExt(Utils.ToDateTime(reader["CreateDate"])),
                         Discount1x2 = Utils.ToDecimal(reader["Discount1x2"]).Format(decimalPrecision),
                         DiscountCS = Utils.ToDecimal(reader["DiscountCS"]).Format(decimalPrecision),
                         DoubleCommLosing = Utils.ToBoolean(reader["DoubleCommLosing"]),
@@ -60,20 +59,21 @@
                         LastLoginIP = Utils.ToString(reader["LastLoginIP"]),
                         LastName = Utils.ToString(reader["LastName"]),
                         LimitDays = Utils.HasColumn(reader, "LimitDays") ? Utils.ToInt32(reader["LimitDays"]) : 0,
-                        MinDate = Utils.HasColumn(reader, "MinDate") ? Utils.ToNullAbleDateTime(reader["MinDate"]) : null,
+                        MinDate = Utils.ToStringExt(Utils.HasColumn(reader, "MinDate") ? Utils.ToDateTime(reader["MinDate"]) : DateTime.MinValue),
                         NickName = Utils.HasColumn(reader, "NickName") ? Utils.ToString(reader["NickName"]) : null,
                         RoleId = Utils.ToInt32(reader["RoleId"]),
                         Suspended = Utils.ToBoolean(reader["Suspended"]),
                         UplineDoubleCommLosing = Utils.ToBoolean(reader["UplineDoubleCommLosing"]),
                         UserGroup = Utils.HasColumn(reader, "ugroup") ? Utils.ToString(reader["ugroup"]) : null,
                         Discount = Utils.HasColumn(reader, "Discount") ? Utils.ToDecimal(reader["Discount"]).Format(decimalPrecision) : 0,
-                        PlayerDiscount= Utils.HasColumn(reader, "PlayerDiscount") ? Utils.ToDecimal(reader["PlayerDiscount"]).Format(decimalPrecision) : 0m,
+                        PlayerDiscount = Utils.HasColumn(reader, "PlayerDiscount") ? Utils.ToDecimal(reader["PlayerDiscount"]).Format(decimalPrecision) : 0m,
                         PlayerDiscount1x2 = Utils.HasColumn(reader, "PlayerDiscount1x2") ? Utils.ToDecimal(reader["PlayerDiscount1x2"]).Format(decimalPrecision) : 0m,
                         PlayerDiscountCS = Utils.HasColumn(reader, "PlayerDiscountCS") ? Utils.ToDecimal(reader["PlayerDiscountCS"]).Format(decimalPrecision) : 0m
                     });
                 }
 
                 reader.Close();
+                result.PageIndex = Utils.ToInt32(objDb.GetOuputParams()["pageindex"]);
                 result.TotalRows = Utils.ToInt32(objDb.GetOuputParams()["totalrows"]);
             }
 

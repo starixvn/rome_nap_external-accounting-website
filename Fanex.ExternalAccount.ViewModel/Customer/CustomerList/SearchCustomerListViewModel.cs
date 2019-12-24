@@ -7,6 +7,8 @@
     {
         public List<CustomerListDTO> CustomerList { get; set; }
 
+        public int PageIndex { get; set; }
+
         public int TotalRows { get; set; }
 
         public SearchCustomerListViewModel()

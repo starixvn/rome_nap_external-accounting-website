@@ -16,7 +16,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         pageIndex: 0,
         uplineId: 0,
         uplineRoleId: 0,
-        previousStatus: "1"
+        previousParams: null,
     },
 
     Init: function (uplineId, uplineRoleId) {
@@ -41,13 +41,13 @@ Fanex.ExtAcc.Customer.CustomerList = {
     BindingEvents: function () {
         this.DOMElements.btnSearch.off().click(function () {
             var _this = Fanex.ExtAcc.Customer.CustomerList;
-            _this.SubmitSearch(_this.cachedParams.uplineId, _this.cachedParams.uplineRoleId)
+            _this.SubmitSearch(_this.cachedParams.uplineId, _this.cachedParams.uplineRoleId, undefined, 0);
         });
 
         this.DOMElements.txtUsername.keypress(function (e) {
             var _this = Fanex.ExtAcc.Customer.CustomerList;
             var code = e.keyCode ? e.keyCode : e.which;
-            if (code == 13) {
+            if (code === 13) {
                 _this.DOMElements.btnSearch.click()
             }
         });
@@ -55,23 +55,22 @@ Fanex.ExtAcc.Customer.CustomerList = {
 
     SubmitSearch: function (uplineId, uplineRoleId, itemsPerPage, currentIndex) {
         var _this = Fanex.ExtAcc.Customer.CustomerList;
-        var pageSize = itemsPerPage != null && itemsPerPage != 'undefined' ? itemsPerPage : _this.cachedParams.pageSize;
-        var pageIndex = currentIndex != null && currentIndex != 'undefined' ? currentIndex : _this.cachedParams.pageIndex;
-
-        pageIndex = _this.cachedParams.previousStatus !== this.DOMElements.selStatus.val() ? 0 : pageIndex;
+        var pageSize = !isNullOrUndefined(itemsPerPage) ? itemsPerPage : _this.cachedParams.pageSize;
+        var pageIndex = !isNullOrUndefined(currentIndex) ? currentIndex : _this.cachedParams.pageIndex;
+        var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
 
         _this.cachedParams.pageIndex = pageIndex;
         _this.cachedParams.pageSize = pageSize;
 
         Fanex.ExtAcc.BlockUI();
-        Fanex.ExtAcc.Customer.CurrentLevel = uplineRoleId == null ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1;
-        this.DOMElements.divSuperLimitDate.toggle(uplineRoleId == null || uplineRoleId == '');
-        Fanex.ExtAcc.Customer.superId = uplineRoleId == Fanex.ExtAcc.Customer.Super ? uplineId : Fanex.ExtAcc.Customer.superId;
-        Fanex.ExtAcc.Customer.masterId = uplineRoleId == Fanex.ExtAcc.Customer.Master ? uplineId : Fanex.ExtAcc.Customer.masterId;
-        Fanex.ExtAcc.Customer.agentId = uplineRoleId == Fanex.ExtAcc.Customer.Agent ? uplineId : Fanex.ExtAcc.Customer.agentId;
+        Fanex.ExtAcc.Customer.CurrentLevel = isSuperList ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1;
+        this.DOMElements.divSuperLimitDate.toggle(isSuperList);
+        Fanex.ExtAcc.Customer.superId = uplineRoleId === Fanex.ExtAcc.Customer.Super ? uplineId : Fanex.ExtAcc.Customer.superId;
+        Fanex.ExtAcc.Customer.masterId = uplineRoleId === Fanex.ExtAcc.Customer.Master ? uplineId : Fanex.ExtAcc.Customer.masterId;
+        Fanex.ExtAcc.Customer.agentId = uplineRoleId === Fanex.ExtAcc.Customer.Agent ? uplineId : Fanex.ExtAcc.Customer.agentId;
         var params = {
-            groupName: $('#selectedGroupName').html() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
-            userName: Fanex.encodeHtml(encodeURIComponent($.trim(this.DOMElements.txtUsername.val()).replace(/_/g, '%'))),
+            groupName: $('#selectedGroupName').html() === '' ? 'ACCDDD' : $('#selectedGroupName').html(),
+            userName: this.DOMElements.txtUsername.val().replace(/[^a-zA-Z0-9]/g, ""),
             status: this.DOMElements.selStatus.val(),
             uplineRoleId: uplineRoleId,
             isShowSuperLimitDate: this.DOMElements.chkShowSuperLimitDate.is(":checked"),
@@ -80,12 +79,21 @@ Fanex.ExtAcc.Customer.CustomerList = {
             pageIndex: pageIndex + 1
         };
 
+        _this.cachedParams.previousParams = params;
+        _this.Search(params);
+    },
+
+    ReloadAfterEdit: function () {
+        var _this = Fanex.ExtAcc.Customer.CustomerList;
+        _this.Search(_this.cachedParams.previousParams);
+    },
+
+    Search: function (params) {
         $.post(resolveClientUrl('CustomerList/Seach'), params, function (result) {
             var _this = Fanex.ExtAcc.Customer.CustomerList;
-            var isMemberList = uplineRoleId == Fanex.ExtAcc.Customer.Agent;
-            _this.cachedParams.uplineId = uplineId;
-            _this.cachedParams.uplineRoleId = uplineRoleId;
-            _this.cachedParams.previousStatus = params.status;
+            var isSuperList = isNullOrUndefinedOrEmpty(params.uplineRoleId);
+            _this.cachedParams.uplineId = params.uplineId;
+            _this.cachedParams.uplineRoleId = params.uplineRoleId;
             var numberOfFrozenColumn = 6;
             var widthDevice = top.$(top.window).width();
             if (widthDevice <= 768) {
@@ -93,17 +101,14 @@ Fanex.ExtAcc.Customer.CustomerList = {
             }
             var bodyRows = [];
             var rowLength = result.CustomerList.length;
-            pageIndex = parseInt(result.TotalRows / _this.cachedParams.pageSize) < _this.cachedParams.pageIndex ?
-                0 : _this.cachedParams.pageIndex;
-
             for (var i = 0; i < rowLength; i++) {
                 var currentRow = result.CustomerList[i];
                 var cssRow = !currentRow.Enabled ? 'rowDisabled' : currentRow.Closed ? Fanex.ExtAcc.Customer.GetClosedClassName(currentRow) : currentRow.Suspended ? 'rowSuspended' : '';
-                var dateLimit = currentRow.MinDate
-                    ? moment(currentRow.MinDate).format("MM/DD/YYYY")
-                    : currentRow.LimitDays != "" ? currentRow.LimitDays
+                var dateLimit = !isNullOrUndefinedOrEmpty(currentRow.MinDate)
+                    ? currentRow.MinDate
+                    : currentRow.LimitDays !== "" ? currentRow.LimitDays
                         : "";
-                var columns = _this.GetGridBodyRows(currentRow, i, pageSize, pageIndex, uplineRoleId);
+                var columns = _this.GetGridBodyRows(currentRow, i, params.pageSize, params.pageIndex - 1, params.uplineRoleId);
                 bodyRows.push({
                     Columns: columns,
                     CssClass: cssRow
@@ -111,8 +116,8 @@ Fanex.ExtAcc.Customer.CustomerList = {
             }
 
             gridOptions = {
-                groupHeaderRows: _this.GetGridGroupHeader(uplineRoleId),
-                columns: _this.GetGridHeader(uplineRoleId),
+                groupHeaderRows: _this.GetGridGroupHeader(params.uplineRoleId),
+                columns: _this.GetGridHeader(params.uplineRoleId),
                 bodyRows: bodyRows,
                 autoCalculateGridExpandHeight: true,
                 numberOfFrozenColumn: numberOfFrozenColumn,
@@ -126,14 +131,14 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 showNumberColumn: true,
                 pagerOption: {
                     itemsPerPageArray: [50, 100, 500],
-                    currentPage: pageIndex,
+                    currentPage: result.PageIndex - 1,
                     totalItem: result.TotalRows,
-                    itemsPerPage: pageSize,
+                    itemsPerPage: params.pageSize,
                     pagerSelectCallBack: function (currentPageIndex, itemsPerPage) {
                         Fanex.ExtAcc.Customer.DisableMultipleContextMenu();
                         _this.cachedParams.pageIndex = currentPageIndex;
-                        _this.cachedParams.pageSize = itemsPerPage;                        
-                        _this.SubmitSearch(uplineId, uplineRoleId);
+                        _this.cachedParams.pageSize = itemsPerPage;
+                        _this.SubmitSearch(params.uplineId, params.uplineRoleId);
                     }
                 },
                 marginRight: 12,
@@ -141,7 +146,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 allowTruncate: true
             };
 
-            if (bodyRows.length == 0) {
+            if (bodyRows.length === 0) {
                 _this.DOMElements.msgNoinfo.css('display', 'block');
                 _this.DOMElements.jqgrid.css('display', 'none');
                 _this.DOMElements.icoExportExcel.css('display', 'none');
@@ -158,12 +163,12 @@ Fanex.ExtAcc.Customer.CustomerList = {
             _this.DOMElements.editMult.attr('style', 'cursor: default !important');
             _this.DOMElements.editMult.attr('onclick', '');
             _this.DOMElements.editMult.contextMenu(false);
-            _this.RenderBreadScrumbs(uplineId, uplineRoleId);
+            _this.RenderBreadScrumbs(params.uplineId, params.uplineRoleId);
             _this.DOMElements.icoExportExcel.off()
             if (bodyRows.length > 0) {
                 _this.DOMElements.icoExportExcel.click(function () {
                     var params = {
-                        groupName: $('#selectedGroupName').html() == '' ? 'ACCDDD' : $('#selectedGroupName').html(),
+                        groupName: $('#selectedGroupName').html() === '' ? 'ACCDDD' : $('#selectedGroupName').html(),
                         userName: _this.DOMElements.txtUsername.val(),
                         status: _this.DOMElements.selStatus.val(),
                         uplineRoleId: _this.cachedParams.uplineRoleId,
@@ -173,14 +178,19 @@ Fanex.ExtAcc.Customer.CustomerList = {
 
                     top.exportExcel(resolveClientUrl("CustomerList/GetExportToExcel?") + top.serialize(params), document);
                 });
+
+                var firstCustId = result.CustomerList[0].CustId;
+                $.post(resolveClientUrl('CustomerList/GetCustomerStatus'), { custId: firstCustId }, function (custStatusResult) {
+                    Fanex.ExtAcc.Customer.UplineProductSettings = Fanex.ExtAcc.Customer.GetProductSettings(custStatusResult, !isSuperList);
+                });
             }
         }).always(function () { Fanex.ExtAcc.UnBlockUI(); });
     },
 
     GetGridHeader: function (uplineRoleId) {
         var columns = [];
-        var isSuperList = uplineRoleId == null || uplineRoleId == '';
-        var isMemberList = uplineRoleId == Fanex.ExtAcc.Customer.Agent;
+        var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
+        var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
         columns.push({ HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' });
         columns.push({
             HeaderText: '', Name: 'Check', Width: 30, CellAlign: 'center',
@@ -194,10 +204,10 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push({
             HeaderText: 'Username', Name: 'username', Width: 100,
             CustomCellRender: function (cell) {
-                var func = 'javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + cell.Value.CustId + ', ' + (uplineRoleId == null || uplineRoleId == '' ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1) + ', 50, 0)';
+                var func = 'javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + cell.Value.CustId + ', ' + (isNullOrUndefinedOrEmpty(uplineRoleId) ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1) + ', 50, 0)';
                 var len = cell.Value.UserName.length;
                 var title = len >= 15 ? ' title="' + cell.Value.UserName + '"' : '';
-                return uplineRoleId == Fanex.ExtAcc.Customer.Agent ?
+                return uplineRoleId === Fanex.ExtAcc.Customer.Agent ?
                     '<div' + title + '>' + cell.Value.UserName + '</div>' :
                     '<div' + title + '><a id="usr-' + cell.Value.CustId + '" href="' + func + '">' + cell.Value.UserName + '</a></div>';
             }
@@ -217,7 +227,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push({
             HeaderText: 'Double Comm', Name: 'DoubleCommLosing', Width: 80,
             CustomCellRender: function (cell) {
-                return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.CustId + ', ' + (cell.Value.RoleId == Fanex.ExtAcc.Customer.Super) + ')" id="dbl-' + cell.Value.CustId + '" class="' + (cell.Value.DoubleCommLosing ? 'allowDblComm' : 'disallowDblComm') + '"></div>';
+                return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.CustId + ', ' + (cell.Value.RoleId === Fanex.ExtAcc.Customer.Super) + ')" id="dbl-' + cell.Value.CustId + '" class="' + (cell.Value.DoubleCommLosing ? 'allowDblComm' : 'disallowDblComm') + '"></div>';
             }
         });
         columns.push(isMemberList ? { HeaderText: 'Nickname', Name: 'NickName', Width: 120 } : undefined);
@@ -240,7 +250,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push(!isMemberList ? { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all other bettypes" ' } : undefined);
 
         columns.push(isSuperList ? { HeaderText: 'Data Available', Name: 'DateLimit', CellAlign: 'center', Width: 100 } : undefined);
-        columns.push({ HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 160, FormatDateTime: 'MM/DD/YYYY hh:mm:ss A' });
+        columns.push({ HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 160 });
         columns.push({
             HeaderText: 'Login IP', Name: 'lastloginip', CellAlign: 'center', Width: 100,
             CustomCellRender: function (cell) {
@@ -251,8 +261,8 @@ Fanex.ExtAcc.Customer.CustomerList = {
         return columns.filter(function (item) { return item !== undefined });
     },
     GetGridGroupHeader: function (uplineRoleId) {
-        var isSuperList = uplineRoleId == null || uplineRoleId == '';
-        var isMemberList = uplineRoleId == Fanex.ExtAcc.Customer.Agent;
+        var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
+        var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
         var columns = [];
         columns.push({ HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 });
         columns.push({ HeaderText: '', Name: 'Check', MergeRowNumber: 2 });
@@ -274,9 +284,9 @@ Fanex.ExtAcc.Customer.CustomerList = {
     },
     GetGridBodyRows: function (currentRow, currentIndex, pageSize, pageIndex, uplineRoleId) {
         var columns = [];
-        var isSuperList = uplineRoleId == null || uplineRoleId == '';
-        var isMemberList = uplineRoleId == Fanex.ExtAcc.Customer.Agent;
-        columns.push({ Name: 'RowNumber', Value: currentIndex + pageSize * (pageIndex + 1) });
+        var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
+        var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
+        columns.push({ Name: 'RowNumber', Value: currentIndex + pageSize * (pageIndex) });
         columns.push({ Name: 'Check', Value: currentRow });
         columns.push({ Name: 'username', Value: currentRow });
         columns.push({ Name: 'Edit', Value: currentRow });
@@ -301,7 +311,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push(isMemberList ? { Name: 'playerdiscount1x2', Value: currentRow.PlayerDiscount1x2 } : undefined);
         columns.push(isMemberList ? { Name: 'playerdiscountcs', Value: currentRow.PlayerDiscountCS } : undefined);
 
-        columns.push(isSuperList ? { Name: 'DateLimit', Value: currentRow.MinDate ? moment(currentRow.MinDate).format("MM/DD/YYYY") : currentRow.LimitDays != "" ? currentRow.LimitDays : "" } : undefined);
+        columns.push(isSuperList ? { Name: 'DateLimit', Value: currentRow.MinDate ? moment(currentRow.MinDate).format("MM/DD/YYYY") : currentRow.LimitDays !== "" ? currentRow.LimitDays : "" } : undefined);
 
         columns.push({ Name: 'createdate', Value: currentRow.CreateDate, FormatDateTime: 'MM/DD/YYYY hh:mm:ss A' });
         columns.push({ Name: 'lastloginip', Value: currentRow.LastLoginIP });
@@ -310,23 +320,23 @@ Fanex.ExtAcc.Customer.CustomerList = {
     RenderBreadScrumbs: function (uplineId, uplineRoleId) {
         var _breadScrumbs = this.cachedParams.breadcrumbs;
         var _this = this;
-        if (uplineRoleId == null) {
+        if (isNullOrUndefined(uplineRoleId)) {
             this.DOMElements.breadcrumbs.html('');
             return;
-        } else if (uplineRoleId == Fanex.ExtAcc.Customer.Super) {
+        } else if (uplineRoleId === Fanex.ExtAcc.Customer.Super) {
             _breadScrumbs.SuperId = uplineId;
-        } else if (uplineRoleId == Fanex.ExtAcc.Customer.Master) {
+        } else if (uplineRoleId === Fanex.ExtAcc.Customer.Master) {
             _breadScrumbs.MasterId = uplineId;
         }
 
-        var linkSuper = '<a href="javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(null, null, 50, 0)">Super</a>';
-        var linkMaster = '<a href="javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + _breadScrumbs.SuperId + ', 4, 50, 0)">Master</a>';
-        var linkAgent = '<a href="javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + _breadScrumbs.MasterId + ', 3, 50, 0)">Agent</a>';
-        if (uplineRoleId == 4)
+        var linkSuper = '<a href="javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(null, null, null, 0)">Super</a>';
+        var linkMaster = '<a href="javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + _breadScrumbs.SuperId + ', 4, null, 0)">Master</a>';
+        var linkAgent = '<a href="javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + _breadScrumbs.MasterId + ', 3, null, 0)">Agent</a>';
+        if (uplineRoleId === 4)
             this.DOMElements.breadcrumbs.html('<div class="level-line"></div><div class="level-active">' + linkSuper + '</div>');
-        else if (uplineRoleId == 3)
+        else if (uplineRoleId === 3)
             this.DOMElements.breadcrumbs.html('<div class="level-line"></div><div style="float:left">' + linkSuper + '</div><div class="viewNext">&nbsp;</div><div class="level-active">' + linkMaster + '</div>');
-        else if (uplineRoleId == 2)
+        else if (uplineRoleId === 2)
             this.DOMElements.breadcrumbs.html('<div class="level-line"></div><div style="float:left">' + linkSuper + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div class="level-active">' + linkAgent + '</div>');
     },
 }

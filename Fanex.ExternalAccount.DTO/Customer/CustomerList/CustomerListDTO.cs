@@ -22,7 +22,7 @@
 
         public string LastName { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public string CreateDate { get; set; }
 
         public string LastLoginIP { get; set; }
 
@@ -32,7 +32,7 @@
 
         public int? LimitDays { get; set; }
 
-        public DateTime? MinDate { get; set; }
+        public string MinDate { get; set; }
 
         public decimal GroupA { get; set; }
 

@@ -443,7 +443,7 @@
 
     CallBackCustomerList: function () {
         var _this = Fanex.ExtAcc.Customer.CustomerList;
-        _this.SubmitSearch(_this.cachedParams.uplineId, _this.cachedParams.uplineRoleId, _this.cachedParams.pageSize, _this.cachedParams.pageIndex);
+        _this.ReloadAfterEdit();
     },
 
     ConfigDoubleComm: function (custid, isSuper) {
@@ -975,9 +975,15 @@
 
         for (var i = 0, max = siteLevelProducts.length; i < max; i++) {
             var currentSiteProduct = siteLevelProducts[i];
-            var currentProduct = customerProductStatus[currentSiteProduct.Id];
-            var isShow = isCheckUpline ? currentProduct.upline.isShow : currentProduct.isShow;
-            if (isShow) {
+            var currentProduct;
+            for (var j = 0, customerProductStatusLength = customerProductStatus.DCSProductsSetting.length; j < customerProductStatusLength; j++) {
+                var currentCustomerProductStatus = customerProductStatus.DCSProductsSetting[j];
+                if (currentSiteProduct.Id === currentCustomerProductStatus.ProductID) {
+                    currentProduct = currentCustomerProductStatus
+                }
+            }
+
+            if (!currentProduct.IsHidden) {
                 productSettings.push({
                     productId: currentSiteProduct.Id,
                     productKey: currentSiteProduct.Key,

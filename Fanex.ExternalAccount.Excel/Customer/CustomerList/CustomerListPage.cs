@@ -78,7 +78,7 @@
                     item.PlayerDiscount,
                     item.PlayerDiscount1x2,
                     item.PlayerDiscountCS,
-                    item.CreateDate.ToString("MM/dd/yyyy HH:mm:ss tt"),
+                    item.CreateDate,
                     item.LastLoginIP
                 };
 
@@ -117,10 +117,10 @@
 
                 if (_builder.RoleId.IsSuper())
                 {
-                    values.Add(item.LimitDays?.ToString() ?? item.MinDate?.ToString("MM/dd/yyyy") ?? string.Empty);
+                    values.Add(item.LimitDays?.ToString() ?? item.MinDate);
                 }
 
-                values.Add(item.CreateDate.ToString("MM/dd/yyyy HH:mm:ss tt"));
+                values.Add(item.CreateDate);
                 values.Add(item.LastLoginIP);
                 resultSheet.GetRow(rowId).WriteCells(FirstColumnIndex, values);
                 id++;
