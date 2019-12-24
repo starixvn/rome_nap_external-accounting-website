@@ -61,5 +61,8 @@
         public const string FishingWorldSetting = "FishingWorldSetting";
         public const string LotteryBetting = "LotteryBetting";
         public const string LotterySetting = "LotterySetting";
+
+        public const string VirtualGamesBetting = "VirtualGamesBetting";
+        public const string VirtualGamesSetting = "VirtualGamesSetting";
     }
 }

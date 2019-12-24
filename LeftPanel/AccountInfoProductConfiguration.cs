@@ -19,6 +19,7 @@
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.FishingWorld], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Lottery], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Sportsbook2], StatusType.OnlyDetail),
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.VirtualGames], StatusType.Checkbox),
             };
 
         public static readonly IReadOnlyDictionary<int, string> VisibleBetSettingPermissions =
@@ -32,7 +33,8 @@
                 {ProductConstants.AllBet, eFunctions.AllbetBetting},
                 {ProductConstants.VoidBridge, eFunctions.VoidbridgeBetting},
                 {ProductConstants.NG2, eFunctions.NG2Betting},
-                {ProductConstants.Lottery, eFunctions.LotteryBetting}
+                {ProductConstants.Lottery, eFunctions.LotteryBetting},
+                {ProductConstants.VirtualGames, eFunctions.VirtualGamesBetting}
             };
 
         // Get Product status from data, convert to standard structure
@@ -44,7 +46,8 @@
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.NG2], statusRow, isSetUplineStatus: isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.VoidBridge], statusRow, false, isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.AllBet], statusRow, false, isSetUplineStatus),
-                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Sportsbook2], statusRow, isSetUplineStatus:isSetUplineStatus)
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Sportsbook2], statusRow, isSetUplineStatus:isSetUplineStatus),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.VirtualGames], statusRow, isSetUplineStatus:isSetUplineStatus)
             };
 
         public static List<ObjectInfo> CreateSyncAndHiddenItems(DataRow nonDCSProductStatusRow,DataTable dcsProductStatusTable)
@@ -56,6 +59,7 @@
                 new ObjectInfo("HideNG2", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.NG2)),
                 new ObjectInfo("HideFishingWorld", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.FishingWorld)),
                 new ObjectInfo("HideLottery", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.Lottery)),
+                new ObjectInfo("HideVirtualGames", dcsProductStatusTable.IsProductHidden(ProductConstants.VirtualGames)),
             };
     }
 }

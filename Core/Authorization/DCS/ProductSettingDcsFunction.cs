@@ -8,6 +8,7 @@
         NG2Setting = 23,
         FishingWorldSetting = 24,
         LotterySetting = 28,
-        VirtualSports = 5
+        VirtualSports = 5,
+        VirtualGamesSetting = 38
     }
 }
