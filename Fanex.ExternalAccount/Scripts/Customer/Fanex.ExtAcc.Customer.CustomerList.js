@@ -70,7 +70,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         Fanex.ExtAcc.Customer.agentId = uplineRoleId === Fanex.ExtAcc.Customer.Agent ? uplineId : Fanex.ExtAcc.Customer.agentId;
         var params = {
             groupName: $('#selectedGroupName').html() === '' ? 'ACCDDD' : $('#selectedGroupName').html(),
-            userName: this.DOMElements.txtUsername.val().replace(/[^a-zA-Z0-9]/g, ""),
+            userName: Fanex.encodeHtml(encodeURIComponent($.trim(this.DOMElements.txtUsername.val()))).replace(/[^a-zA-Z0-9~!*()-._]/g, ""),
             status: this.DOMElements.selStatus.val(),
             uplineRoleId: uplineRoleId,
             isShowSuperLimitDate: this.DOMElements.chkShowSuperLimitDate.is(":checked"),
@@ -180,7 +180,12 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 });
 
                 var firstCustId = result.CustomerList[0].CustId;
+                Fanex.ExtAcc.Customer.AllowDoubleComm = result.CustomerList[0].DoubleCommLosing;
                 $.post(resolveClientUrl('CustomerList/GetCustomerStatus'), { custId: firstCustId }, function (custStatusResult) {
+                    Fanex.ExtAcc.Customer.HideGoldDeluxe = custStatusResult.HideGoldDeluxe;
+                    Fanex.ExtAcc.Customer.HideKeno = custStatusResult.HideKeno;
+                    Fanex.ExtAcc.Customer.HideVirtualSports = custStatusResult.HideVirtualSports;
+                    Fanex.ExtAcc.Customer.UplineSyncCasino = custStatusResult.UplineSyncedCasino;
                     Fanex.ExtAcc.Customer.UplineProductSettings = Fanex.ExtAcc.Customer.GetProductSettings(custStatusResult, !isSuperList);
                 });
             }
@@ -204,7 +209,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push({
             HeaderText: 'Username', Name: 'username', Width: 100,
             CustomCellRender: function (cell) {
-                var func = 'javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + cell.Value.CustId + ', ' + (isNullOrUndefinedOrEmpty(uplineRoleId) ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1) + ', 50, 0)';
+                var func = 'javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + cell.Value.CustId + ', ' + (isNullOrUndefinedOrEmpty(uplineRoleId) ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1) + ', null, 0)';
                 var len = cell.Value.UserName.length;
                 var title = len >= 15 ? ' title="' + cell.Value.UserName + '"' : '';
                 return uplineRoleId === Fanex.ExtAcc.Customer.Agent ?

@@ -12,7 +12,7 @@
 
     public static class BetSettingProductIntegration
     {
-        private static readonly int[] BetSettingTabProductConfigs = new []
+        private static readonly int[] BetSettingTabProductConfigs = new[]
         {
             ProductConstants.AllBet,
             ProductConstants.VoidBridge,
@@ -27,13 +27,13 @@
         {
             var customerStatus = customerListService.GetCustomerAllStatus(custId);
             var visibleProductTabs = new List<Product>();
-
+            int index = 0;
             foreach (var product in customerStatus.DCSProductsSetting)
             {
                 if (Array.Exists(BetSettingTabProductConfigs, element => element == product.ProductID)
                     && !product.IsHidden && product.IsSynced)
                 {
-                    visibleProductTabs.Add(new Product(product.ProductID, product.ProductName));
+                    visibleProductTabs.Add(new Product(index++, product.ProductID, product.ProductName));
                 }
             }
 

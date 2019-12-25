@@ -17,11 +17,13 @@ namespace Fanex.ExternalAccount.Core.Shared
         }
 
         public Product(
+            int index,
             int productId,
             string productName,
             bool isGetNameFromRemotingRef = false,
             string substituteProductKey = null):this(new RemotingRefService())
         {
+            Index = index;
             Id = productId;
             Key = string.IsNullOrWhiteSpace(productName)
                 ? string.Empty
@@ -40,6 +42,8 @@ namespace Fanex.ExternalAccount.Core.Shared
         public string Name { get; protected set; }
 
         public string Key { get; protected set; }
+
+        public int Index { get; protected set; }
 
         public bool IsShow => ProductSettings.IsShowProduct(Id);
     }

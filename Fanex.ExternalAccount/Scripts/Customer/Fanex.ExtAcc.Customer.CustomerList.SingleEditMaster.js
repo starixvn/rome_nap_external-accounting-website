@@ -161,7 +161,7 @@
                         }
                     };
 
-                    if (result.HasSecurityCode) {
+                    if (result.HasSecurityCode || result.UplineHasSecurityCode) {
                         var self = this;
                         items.securityCode = {
                             name: "Security Code",

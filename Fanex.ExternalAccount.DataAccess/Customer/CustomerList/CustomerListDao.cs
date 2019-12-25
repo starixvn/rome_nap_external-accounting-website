@@ -8,6 +8,7 @@
     using Fanex.ExternalAccount.Utilities;
     using Fanex.NAP.Framework.Data;
     using System;
+    using System.Linq;
 
     public interface ICustomerListDao
     {
@@ -132,6 +133,7 @@
                     }
                 }
 
+                result.DCSProductsSetting = result.DCSProductsSetting.OrderBy(item => ProductSettings.SiteProducts[item.ProductID].Index).ToList();
                 return result;
             }
         }
