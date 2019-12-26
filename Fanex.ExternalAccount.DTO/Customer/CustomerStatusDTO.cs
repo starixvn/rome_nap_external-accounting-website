@@ -37,17 +37,24 @@ namespace Fanex.ExternalAccount.DTO.Customer
             DCSProductsSetting = new List<CustomerStatusDCS>();
         }
 
-        public bool IsDCSProductExisted(int productId)
+        public int GetIndexOfDCSProduct(int productId)
         {
-            foreach(CustomerStatusDCS product in DCSProductsSetting)
+            var productCount = DCSProductsSetting.Count;
+            for (int i = 0; i < productCount; i++)
             {
+                var product = DCSProductsSetting[i];
                 if (product.ProductID == productId)
                 {
-                    return true;
+                    return i;
                 }
             }
 
-            return false;
+            return 0;
+        }
+
+        public bool IsDCSProductExisted(int productId)
+        {
+            return GetIndexOfDCSProduct(productId) > 0;
         }
     }
 

@@ -199,7 +199,7 @@
                     if (row != null)
                     {
                         var roleid = Utilities.Utils.ToInt32(reader["roleid"]);
-                        switch(roleid)
+                        switch (roleid)
                         {
                             case Role.Master:
                                 row.AffectedMaster = Utilities.Utils.ToInt32(reader["cntAffected"]);
@@ -230,11 +230,17 @@
             }
         }
 
+#pragma warning disable S1192 // String literals should not be duplicated
+#pragma warning disable S3776 // Cognitive Complexity of methods should not be too high
+#pragma warning disable S1541 // Methods and properties should not be too complex
         public CustomerStatusDTO GetCustomerAllStatus(GetCustomerAllStatusCriteria criteria)
+#pragma warning restore S1541 // Methods and properties should not be too complex
+#pragma warning restore S3776 // Cognitive Complexity of methods should not be too high
         {
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 var result = new CustomerStatusDTO();
+                CustomerStatusDCS sportsbook2 = null;
                 var reader = objDb.ExecuteReader(criteria.GetSpParams());
                 if (reader.Read())
                 {
@@ -267,6 +273,30 @@
                         continue;
                     }
 
+                    if (productId == ProductConstants.Sportsbook2)
+                    {
+                        if (sportsbook2 == null)
+                        {
+                            sportsbook2 = new CustomerStatusDCS
+                            {
+                                ProductID = productId,
+                                ProductName = ProductSettings.SiteProducts[productId]?.Name,
+                                IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
+                                IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
+                                IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
+                                IsSynced = Utils.ToBoolean(reader["isSync"]),
+                                IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
+                            };
+                        }
+                        else
+                        {
+                            sportsbook2.IsDisabled = sportsbook2.IsDisabled && Utils.ToBoolean(reader["isDisabled"]);
+                            sportsbook2.IsSynced = sportsbook2.IsSynced && Utils.ToBoolean(reader["isSync"]);
+                        }
+
+                        continue;
+                    }
+
                     if (!result.IsDCSProductExisted(productId))
                     {
                         result.DCSProductsSetting.Add(new CustomerStatusDCS
@@ -282,9 +312,10 @@
                     }
                 }
 
-                result.DCSProductsSetting = result.DCSProductsSetting.OrderBy(item => ProductSettings.SiteProducts[item.ProductID].Index).ToList();
+                result.DCSProductsSetting.Add(sportsbook2);
                 return result;
             }
         }
+#pragma warning restore S1192 // String literals should not be duplicated
     }
 }

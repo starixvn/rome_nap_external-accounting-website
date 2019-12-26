@@ -120,7 +120,7 @@
             addSuperEditMultipleMastersMenuItem(productSetting.productId, productSetting.productName);
         }
 
-        if (this.AllowDoubleCommMaster) {
+        if (this.AllowDoubleComm) {
             menuItems.doubleComm = {
                 name: "Edit Multiple Double Comm",
                 className: "iconEnableEdit",
@@ -211,7 +211,7 @@
             addMasterEditMultipleAgentsMenuItem(productSetting.productId, productSetting.productName);
         }
 
-        if (this.AllowDoubleCommAgent) {
+        if (this.AllowDoubleComm) {
             menuItems.doubleComm = {
                 name: "Edit Multiple Double Comm",
                 className: "iconEnableEdit",

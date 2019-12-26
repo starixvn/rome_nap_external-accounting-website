@@ -164,7 +164,8 @@ Fanex.ExtAcc.Customer.CustomerList = {
             _this.DOMElements.editMult.attr('onclick', '');
             _this.DOMElements.editMult.contextMenu(false);
             _this.RenderBreadScrumbs(params.uplineId, params.uplineRoleId);
-            _this.DOMElements.icoExportExcel.off()
+            _this.DOMElements.icoExportExcel.off();
+            $('#editMult').contextMenu(false);
             if (bodyRows.length > 0) {
                 _this.DOMElements.icoExportExcel.click(function () {
                     var params = {
@@ -180,7 +181,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 });
 
                 var firstCustId = result.CustomerList[0].CustId;
-                Fanex.ExtAcc.Customer.AllowDoubleComm = result.CustomerList[0].DoubleCommLosing;
+                Fanex.ExtAcc.Customer.AllowDoubleComm = result.CustomerList[0].UplineDoubleCommLosing;
                 $.post(resolveClientUrl('CustomerList/GetCustomerStatus'), { custId: firstCustId }, function (custStatusResult) {
                     Fanex.ExtAcc.Customer.HideGoldDeluxe = custStatusResult.HideGoldDeluxe;
                     Fanex.ExtAcc.Customer.HideKeno = custStatusResult.HideKeno;
