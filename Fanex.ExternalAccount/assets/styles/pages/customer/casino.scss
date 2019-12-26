@@ -1,4 +1,10 @@
-﻿.tableInfo {
+﻿@font-face {
+    font-family: 'Tahoma Custom';
+    src: url('../../fonts/AlphaAdmin/fonts/Tahoma Regular font.ttf?3d71m2#iefix') format('truetype'), url('../../fonts/AlphaAdmin/fonts/TAHOMA_0.ttf?3d71m2') format('truetype'), url('../../fonts/AlphaAdmin/fonts/TAHOMAB0.ttf?3d71m2') format('truetype'), url('../../fonts/AlphaAdmin/fonts/TAHOMABD.ttf?3d71m2') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+.tableInfo {
     border: none;
     border-color: #ccc;
     border-collapse: collapse;

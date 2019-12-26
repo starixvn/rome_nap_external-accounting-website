@@ -4,149 +4,151 @@
 @import "common";
 @import "theme-color";
 
+@font-face {
+    font-family: 'Tahoma Custom';
+    src: url('../../fonts/AlphaAdmin/fonts/Tahoma Regular font.ttf?3d71m2#iefix') format('truetype'), url('../../fonts/AlphaAdmin/fonts/TAHOMA_0.ttf?3d71m2') format('truetype'), url('../../fonts/AlphaAdmin/fonts/TAHOMAB0.ttf?3d71m2') format('truetype'), url('../../fonts/AlphaAdmin/fonts/TAHOMABD.ttf?3d71m2') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Tahoma Custom', Tahoma, Arial, Helvetica, sans-serif;
     font-size: 11px;
     background: #fff;
 }
 
 
-.content
-{
-	margin-top: 5px;
-	table
-	{
-		border-collapse: collapse;
-	}
-	.header
-	{
-		color: black;
-		height: 20px;
-		line-height: 18px;
-	}
-	.formatCol
-	{
-		border-top: none;
-		height: 20px;
-	    padding: 0 2px;
-		line-height: 18px;
-	}
-	.dailyCol
-	{
-		padding: 1px 0;
-	}
-	.lastCol
-	{
-		border-right: none;
-	}
-	select, input[type="text"]
-	{
-		border: 1px solid #818181;
-		font-size: 11px; 
-	}
-	select{
-		width: 60px;
-	}
-	.chb
-	{
-		position: relative;
-		top: 2px;
-	}
-	label
-	{
-		.chbAuto
-		{
-			margin-top: 1px;
-		}
-	}
-	#numberLimit
-	{
-		margin-left: 165px;
-	}
-	.btnUpdate, .btnUpdateDisabled
-	{
-		margin-top: 5px;
-		border: none;
-	}
-	.btnSave
-	{
-		background: url("Images/save_s.png") 0px ;
-		border: 0 solid red;
-		cursor: pointer;
-		height: 20px;
-		margin: 0 2px;
-		cursor: pointer;
-		padding-left: 6px;
-		padding-right: 6px;
-		width: 20px;
-		float: right;
-	}
-	.btnSaveDisabled
-	{
-		background: url("Images/save_s.png") 105px 0px;
-		border: 0 solid red;
-		height: 20px;
-		cursor: pointer;
-		margin: 0 2px;
-		padding-left: 6px;
-		padding-right: 6px;
-		width: 20px;
-		float: right;
-	}
+.content {
+    margin-top: 5px;
 
-	.btnUnCopyAll
-	{
-		background: url("Images/copyUnChecked.png") no-repeat right top ;
-		border: 0 solid red;
-		cursor: pointer;
-		cursor: pointer;
-		height: 20px;
-		margin: 0 2px;
-		padding-left: 6px;
-		padding-right: 6px;
-		width: 20px;
-	}
-	.btnCopyAll
-	{
-		background: url("Images/copyChecked.png") no-repeat right top;
-		border: 0 solid red;
-		cursor: pointer;
-		height: 20px;
-		margin: 0 2px;
-		padding-left: 6px;
-		padding-right: 6px;
-		width: 20px;
-	}
+    table {
+        border-collapse: collapse;
+    }
 
-	.divInline
-	{
-		display: inline-block;	
-	}
-	.textHeader
-	{
-		float: left;
-	}
-	.invalidValue
-	{
-		background-color: #FF7700;
-		color: #FFFFFF;
-	}
-	.betTypeInactive {
-		background-color: #DDDDDD !important;
-		cursor: default;
-	}
-	.inputDisabled {
-		background-color: #F0F0F0 !important;
-		color: #818181;
-	}
-}
-.eq-ie7
-{
-	.col240
-	{
-		width: 252px;
-	}
+    .header {
+        color: black;
+        height: 20px;
+        line-height: 18px;
+    }
+
+    .formatCol {
+        border-top: none;
+        height: 20px;
+        padding: 0 2px;
+        line-height: 18px;
+    }
+
+    .dailyCol {
+        padding: 1px 0;
+    }
+
+    .lastCol {
+        border-right: none;
+    }
+
+    select, input[type="text"] {
+        border: 1px solid #818181;
+        font-size: 11px;
+    }
+
+    select {
+        width: 60px;
+    }
+
+    .chb {
+        position: relative;
+        top: 2px;
+    }
+
+    label {
+        .chbAuto {
+            margin-top: 1px;
+        }
+    }
+
+    #numberLimit {
+        margin-left: 165px;
+    }
+
+    .btnUpdate, .btnUpdateDisabled {
+        margin-top: 5px;
+        border: none;
+    }
+
+    .btnSave {
+        background: url("Images/save_s.png") 0px;
+        border: 0 solid red;
+        cursor: pointer;
+        height: 20px;
+        margin: 0 2px;
+        cursor: pointer;
+        padding-left: 6px;
+        padding-right: 6px;
+        width: 20px;
+        float: right;
+    }
+
+    .btnSaveDisabled {
+        background: url("Images/save_s.png") 105px 0px;
+        border: 0 solid red;
+        height: 20px;
+        cursor: pointer;
+        margin: 0 2px;
+        padding-left: 6px;
+        padding-right: 6px;
+        width: 20px;
+        float: right;
+    }
+
+    .btnUnCopyAll {
+        background: url("Images/copyUnChecked.png") no-repeat right top;
+        border: 0 solid red;
+        cursor: pointer;
+        cursor: pointer;
+        height: 20px;
+        margin: 0 2px;
+        padding-left: 6px;
+        padding-right: 6px;
+        width: 20px;
+    }
+
+    .btnCopyAll {
+        background: url("Images/copyChecked.png") no-repeat right top;
+        border: 0 solid red;
+        cursor: pointer;
+        height: 20px;
+        margin: 0 2px;
+        padding-left: 6px;
+        padding-right: 6px;
+        width: 20px;
+    }
+
+    .divInline {
+        display: inline-block;
+    }
+
+    .textHeader {
+        float: left;
+    }
+
+    .invalidValue {
+        background-color: #FF7700;
+        color: #FFFFFF;
+    }
+
+    .betTypeInactive {
+        background-color: #DDDDDD !important;
+        cursor: default;
+    }
+
+    .inputDisabled {
+        background-color: #F0F0F0 !important;
+        color: #818181;
+    }
 }
 
-
+.eq-ie7 {
+    .col240 {
+        width: 252px;
+    }
+}

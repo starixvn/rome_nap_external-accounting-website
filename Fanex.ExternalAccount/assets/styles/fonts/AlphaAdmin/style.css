@@ -8,7 +8,12 @@
   font-weight: normal;
   font-style: normal;
 }
-
+@font-face {
+    font-family: 'Tahoma Custom';
+    src: url('fonts/Tahoma Regular font.ttf?3d71m2#iefix') format('truetype'), url('fonts/TAHOMA_0.ttf?3d71m2') format('truetype'), url('fonts/TAHOMAB0.ttf?3d71m2') format('truetype'), url('fonts/TAHOMABD.ttf?3d71m2') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'AlphaAdmin' !important;
