@@ -4,8 +4,8 @@
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DataAccess.Criteria.Customer.CustomerList;
     using Fanex.ExternalAccount.DataAccess.Customer.CustomerList;
-    using Fanex.ExternalAccount.DTO.Customer.CustomerList;
     using Fanex.ExternalAccount.Service.Customer.CustomerList.Params;
+    using Fanex.ExternalAccount.Utilities;
 
     public interface ICustomerListService
     {
@@ -16,11 +16,33 @@
     {
         private readonly ICustomerListDao _customerListDao;
 
-        public CustomerListService() : this(null) { }
+        private readonly IIPInformatonService _IPInformatonService;
 
-        public CustomerListService(ICustomerListDao customerListDao) => _customerListDao = customerListDao ?? new CustomerListDao();
+        public CustomerListService() : this(null, null) { }
 
-        public SearchCustomerListViewModel Search(SearchCustomerListParams parameters, bool IsViewIPVN)=> _customerListDao.SearchCustomerList(GetSearchCriteria(parameters),IsViewIPVN);
+        public CustomerListService(ICustomerListDao customerListDao, IIPInformatonService ipInformatonService)
+        {
+            _IPInformatonService = ipInformatonService ?? new IPInformationService();
+            _customerListDao = customerListDao ?? new CustomerListDao();
+        }
+
+        public SearchCustomerListViewModel Search(SearchCustomerListParams parameters, bool IsViewIPVN)
+        {
+            var result = _customerListDao.SearchCustomerList(GetSearchCriteria(parameters));
+            if (!IsViewIPVN)
+            {
+                var specialIPList = _IPInformatonService.GetSpecialIPs();
+                foreach (var item in result.CustomerList)
+                {
+                    if (!string.IsNullOrWhiteSpace(item.LastLoginIP) && specialIPList.IsExistedInList(item.LastLoginIP))
+                    {
+                        item.LastLoginIP = string.Empty;
+                    }
+                }
+            }
+
+            return result;
+        }
 
         private SearchCustomerListBaseCriteria GetSearchCriteria(SearchCustomerListParams parameters)
         {
