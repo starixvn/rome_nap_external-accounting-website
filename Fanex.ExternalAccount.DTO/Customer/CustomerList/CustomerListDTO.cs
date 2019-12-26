@@ -1,7 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.DTO.Customer.CustomerList
 {
-    using System;
-
     public class CustomerListDTO
     {
         public int CustId { get; set; }

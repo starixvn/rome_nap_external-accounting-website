@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Fanex.ExternalAccount.DTO.Customer.CustomerList
+namespace Fanex.ExternalAccount.DTO.Customer
 {
     public class CustomerStatusDTO
     {

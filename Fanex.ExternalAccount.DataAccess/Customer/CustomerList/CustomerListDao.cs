@@ -13,8 +13,6 @@
     public interface ICustomerListDao
     {
         SearchCustomerListViewModel SearchCustomerList(SearchCustomerListBaseCriteria criteria, bool IsViewIPVN);
-
-        CustomerStatusDTO GetCustomerAllStatus(GetCustomerAllStatusCriteria criteria);
     }
 
     public class CustomerListDao : ICustomerListDao
@@ -79,63 +77,6 @@
             }
 
             return result;
-        }
-
-        public CustomerStatusDTO GetCustomerAllStatus(GetCustomerAllStatusCriteria criteria)
-        {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                var result = new CustomerStatusDTO();
-                var reader = objDb.ExecuteReader(criteria.GetSpParams());
-                if (reader.Read())
-                {
-                    result.HasSecurityCode = Utils.ToBoolean(reader["HasSecurityCode"]);
-                    result.UplineHasSecurityCode = Utils.ToBoolean(reader["UplineHasSecurityCode"]);
-                    result.DisableTransfer = Utils.ToBoolean(reader["DisableTransfer"]);
-                }
-
-                reader.NextResult();
-                if (reader.Read())
-                {
-                    result.SyncedCasino = Utils.ToBoolean(reader["SyncCasino"]);
-                    result.UplineSyncedCasino = Utils.ToBoolean(reader["uplineSyncCasino"]);
-                    result.DisableCasino = Utils.ToBoolean(reader["DisableCasino"]);
-                    result.HideGoldDeluxe = !ProductSettings.IsShowGoldDeluxe || Utils.ToBoolean(reader["HideGoldDeluxe"]);
-                    result.DisableGoldDeluxe = Utils.ToBoolean(reader["DisableGoldDeluxe"]);
-                    result.UplineHideGoldDeluxe = Utils.ToBoolean(reader["uplineHideGoldDeluxe"]);
-                    result.HideKeno = !ProductSettings.IsShowKeno || Utils.ToBoolean(reader["HideKeno"]);
-                    result.DisableKeno = Utils.ToBoolean(reader["DisableKeno"]);
-                }
-
-                reader.NextResult();
-                while (reader.Read())
-                {
-                    int productId = Utils.ToInt32(reader["ProductID"]);
-                    if (productId == ProductConstants.VirtualSports)
-                    {
-                        result.HideVirtualSport = Utils.ToBoolean(reader["isHidden"]);
-                        result.DisableVirtualSport = Utils.ToBoolean(reader["isDisabled"]);
-                        continue;
-                    }
-
-                    if (!result.IsDCSProductExisted(productId))
-                    {
-                        result.DCSProductsSetting.Add(new CustomerStatusDCS
-                        {
-                            ProductID = productId,
-                            ProductName = ProductSettings.SiteProducts[productId]?.Name,
-                            IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
-                            IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
-                            IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
-                            IsSynced = Utils.ToBoolean(reader["isSync"]),
-                            IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
-                        });
-                    }
-                }
-
-                result.DCSProductsSetting = result.DCSProductsSetting.OrderBy(item => ProductSettings.SiteProducts[item.ProductID].Index).ToList();
-                return result;
-            }
         }
     }
 }

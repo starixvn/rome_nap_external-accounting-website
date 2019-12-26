@@ -148,7 +148,7 @@
   <ItemGroup>
     <Compile Include="Criteria\Customer\CheckNewCustomerLimitationCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckMemberCreationCriteria.cs" />
-    <Compile Include="Criteria\Customer\CustomerList\GetCustomerAllStatusCriteria.cs" />
+    <Compile Include="Criteria\Customer\GetCustomerAllStatusCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerList\SearchMemberListCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerList\SearchCustomerListBaseCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerList\SearchAgentListCriteria.cs" />
@@ -189,7 +189,6 @@
     <Compile Include="Customer\Casino\CasinoDao.cs" />
     <Compile Include="Customer\CommissionDao.cs" />
     <Compile Include="Customer\CustomerDao.cs" />
-    <Compile Include="Customer\MemberDao.cs" />
     <Compile Include="Customer\AgentDao.cs" />
     <Compile Include="Customer\MasterDao.cs" />
     <Compile Include="Customer\SuperDao.cs" />

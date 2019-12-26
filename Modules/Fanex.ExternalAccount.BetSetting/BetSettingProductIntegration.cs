@@ -8,6 +8,7 @@
     using ExternalAccount.Core.Shared;
     using ExternalAccount.Module.LeftPanel.Services;
     using Fanex.ExternalAccount.Service.Customer.CustomerList;
+    using Fanex.ExternalAccount.Service.Impl.Customer;
     using ViewModels;
 
     public static class BetSettingProductIntegration
@@ -21,11 +22,11 @@
             ProductConstants.Sportsbook2
         };
 
-        private static CustomerListService customerListService = new CustomerListService();
+        private static CustomerService customerService = new CustomerService();
 
         public static IList<Product> GetVisibledBetSettingTabs(int custId)
         {
-            var customerStatus = customerListService.GetCustomerAllStatus(custId);
+            var customerStatus = customerService.GetCustomerAllStatus(custId);
             var visibleProductTabs = new List<Product>();
             int index = 0;
             foreach (var product in customerStatus.DCSProductsSetting)

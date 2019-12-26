@@ -15,8 +15,11 @@
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerDao dataAccess;
+        public CustomerService() : this(null)
+        {
+        }
 
-        public CustomerService(ICustomerDao dataAccess = null)
+        public CustomerService(ICustomerDao dataAccess)
         {
             this.dataAccess = dataAccess ?? new CustomerDao();
         }
@@ -25,6 +28,7 @@
             => dataAccess.IsValidUsername(userName, uplineId);
 
         public Customer UserInfo(int custId) => dataAccess.UserInfo(custId);
+        public CustomerStatusDTO GetCustomerAllStatus(int custId) => dataAccess.GetCustomerAllStatus(new GetCustomerAllStatusCriteria { CustId = custId });
 
         public Result EditUserInfo(Customer customer, string ip, int userId, int subAccId, string language)
             => dataAccess.EditUserInfo(customer, ip, userId, subAccId, language);
@@ -41,7 +45,7 @@
 
         public void KickoutCustomer(int custId, byte roleId, string ip)
             => dataAccess.KickoutCustomer(new KickoutCustomerCriteria(custId, roleId, ip));
-            
+
         public SingleUpdateViewModel GetSingleUpdateSuspendViewModel(int custId, string userName)
             => new SingleUpdateViewModel(custId, userName, dataAccess.GetSingleUpdateSuspendAffectedDownlines(new GetSingleSuspendCustomerInfoCriteria(custId)));
 
@@ -63,9 +67,9 @@
             {
                 var criteria = new UpdateSuspendCustomerCriteria(userId, requestItem.CustId, requestItem.Suspended, "E", ipv4);
                 var preResult = dataAccess.SuspendCustomer(criteria);
-                if(preResult.IsSuccess)
+                if (preResult.IsSuccess)
                 {
-                    if(requestItem.Suspended)
+                    if (requestItem.Suspended)
                     {
                         successUpdateSuspendedList.Append(requestItem.UserName);
                         successUpdateSuspendedList.Append(", ");

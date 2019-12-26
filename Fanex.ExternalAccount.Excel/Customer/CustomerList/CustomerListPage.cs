@@ -146,13 +146,7 @@
             var closedReason = item.ClosedReason;
 
             var fromRowId = 5;
-            if (rowIdFromStatus.ContainsKey(custStatus))
-            {
-                fromRowId = rowIdFromStatus[custStatus];
-            }
-            {
-                fromRowId = rowIdFromCloseStatus.ContainsKey(closedReason) ? rowIdFromCloseStatus[closedReason] : fromRowId;
-            }
+            fromRowId = rowIdFromStatus.ContainsKey(custStatus) ? rowIdFromStatus[custStatus] : rowIdFromCloseStatus.ContainsKey(closedReason) ? rowIdFromCloseStatus[closedReason] : fromRowId;
 
             resultSheet.CopyRow(TemplateSheet, fromRowId, rowId, FirstColumnIndex, lastColumnIndex);
 

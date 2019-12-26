@@ -35,5 +35,7 @@
         List<CustomerSuspendStatusRow> GetMultipleSuspendCustomerViewModel(GetMultipleSuspendCustomerInfoCriteria criteria);
 
         List<Result> SuspendMultipleCustomer(List<MultipleUpdateSuspendRequest> request, int userId, string ipv4);
+
+        CustomerStatusDTO GetCustomerAllStatus(int custId);
     }
 }

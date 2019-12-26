@@ -8,23 +8,16 @@
     using CustomerSetting.Security.Authenticate;
     using DataAccess.Criteria.Customer;
     using DataAccess.Criteria.Customer.CustomerStatus;
-    using DTO.Customer;
-    using Fanex.ExternalAccount.Module.LeftPanel;
     using Fanex.Module.NG2.Entities;
     using IBCUtils;
     using Logging.Extensions.Web;
-    using Module.LeftPanel.Models;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
     using PTEngine.BusinessObjects;
     using Service;
     using Service.Impl.Customer;
     using Service.Impl.Customer.Casino;
-    using Service.Impl.Report;
-    using Service.Interface.Report;
     using System;
     using System.Collections.Generic;
-    using System.Data;
     using System.Diagnostics;
     using System.Globalization;
     using System.Linq;
@@ -40,14 +33,11 @@
 
     public class CustomerController : CustomerBase //DevSkim: ignore DS184626
     {
-        private const string DateTimeFormat = "MM/dd/yyyy HH:mm:ss tt";
         private readonly AgentService _agentService = new AgentService();
         private readonly CustomerService _customerService = new CustomerService();
         private readonly PTEngine.Services.ICustomerService ptCustomerService = new PTEngine.Services.CustomerService();
         private readonly MasterService _masterService = new MasterService();
-        private readonly MemberService _memberService = new MemberService();
         private readonly SuperService _superService = new SuperService();
-        private readonly IReportService reportService = new ReportService();
         private readonly IIPInformatonService ipInformationService = new IPInformationService();
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
@@ -320,16 +310,14 @@
 
         public ActionResult Settings(int id, int custId, int uplineId, string userName, string groupName)
         {
-            var customerSetting = GetLineInfo(ExtRequest.GetGroupName(groupName), userName);
-            var result = GetCustomerList(ExtRequest.GetGroupName(groupName), null, null, null, customerSetting);
-
+            var custStatus = _customerService.GetCustomerAllStatus(custId);
             ViewBag.CurrentLevel = id;
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
-            ViewBag.SyncCasino = (bool)result.Rows[0]["SyncCasino"];
-            ViewBag.HideVirtualSports = (bool)result.Rows[0]["HideVirtualSports"];
-            ViewBag.HideKeno = (bool)result.Rows[0]["HideKeno"] || !ProductSettings.ShowKenoSetting;
-            ViewBag.HideGoldDeluxe = (bool)result.Rows[0]["HideGoldDeluxe"] || !ProductSettings.IsShowGoldDeluxe;
+            ViewBag.SyncCasino = custStatus.SyncedCasino;
+            ViewBag.HideVirtualSports = custStatus.HideVirtualSport;
+            ViewBag.HideKeno = custStatus.HideKeno;
+            ViewBag.HideGoldDeluxe = custStatus.HideGoldDeluxe;
             var visibledProducts = GetVisibledProducts(id, custId);
 
             return PartialViewBase(visibledProducts);
@@ -353,136 +341,6 @@
             }
 
             return visibledProducts;
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
-        [AntiXSRFFilter]
-        public ActionResult SearchListPost(
-            string groupName,
-            bool? enabled = null,
-            bool? closed = null,
-            bool? suspended = null,
-            string username = null,
-            bool? withDataLimited = null)
-        {
-            var lineInfo = GetLineInfo(ExtRequest.GetGroupName(groupName), username, BuildCustomerSetting(username));
-            var customers = GetCustomerList(ExtRequest.GetGroupName(groupName), enabled, closed, suspended, lineInfo, withDataLimited);
-            var customerProductStatus = TransformToCustomerProductStatusList(customers);
-            var customers2String = Customers2Json(customers);
-
-            var hasCustomerData = customers.Rows.Count != 0;
-            var syncCasino = hasCustomerData && customers.Rows[0].ToBoolean("syncCasino");
-            var allowDoubleComm = hasCustomerData && customers.Rows[0].ToBoolean(lineInfo.RoleId == Role.Super ? "doubleCommLosing" : "doubleCommLosingUpline");
-
-            return JsonBase(
-                new
-                {
-                    records = customers?.Rows.Count ?? 0,
-                    rows = customers2String,
-                    lineInfo.RoleId,
-                    srecommend = lineInfo.SuperId,
-                    mrecommend = lineInfo.MasterId,
-                    recommend = lineInfo.AgentId,
-                    lineInfo.CustId,
-                    syncCasino,
-                    allowDoubleComm,
-                    customerProductStatus
-                });
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
-        [AntiXSRFFilter]
-        public ActionResult SuperListPost(
-            string groupName,
-            int? custId = null,
-            bool? enabled = null,
-            bool? closed = null,
-            bool? suspended = null,
-            bool? withDataLimited = null)
-        {
-            var supers = _superService.GetData(CurrentSession.UserId, ExtRequest.GetGroupName(groupName), custId, enabled, closed, suspended, withDataLimited);
-            var customerProductStatus = TransformToCustomerProductStatusList(supers);
-            var supers2Json = Customers2Json(supers);
-
-            return JsonBase(new { records = supers.Rows.Count, rows = supers2Json, customerProductStatus });
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
-        [AntiXSRFFilter]
-        public ActionResult MasterListPost(int? srecommend = null, int? custId = null, bool? enabled = null,
-            bool? closed = null, bool? suspended = null)
-        {
-            var masters = _masterService.GetData(CurrentSession.UserId, srecommend, custId, enabled, closed, suspended);
-            var superId = Utils.ToInt32(srecommend);
-            var customerSetting = reportService.SearchCustomerInfo(ExtRequest.GetGroupName(), superId, null, isGetUplineInfo: true);
-            var customerProductStatus = TransformToCustomerProductStatusList(masters);
-            var master2Json = Customers2Json(masters);
-
-            return JsonBase(
-                new
-                {
-                    records = masters.Rows.Count,
-                    rows = master2Json,
-                    customerSetting.RoleId,
-                    srecommend = customerSetting.SuperId,
-                    mrecommend = customerSetting.MasterId,
-                    recommend = customerSetting.AgentId,
-                    customerSetting.CustId,
-                    customerSetting.HasSecurityCode,
-                    customerProductStatus
-                });
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
-        [AntiXSRFFilter]
-        public ActionResult AgentListPost(int? mrecommend = null, int? custId = null, bool? enabled = null,
-            bool? closed = null, bool? suspended = null)
-        {
-            var agents = _agentService.GetData(CurrentSession.UserId, mrecommend, custId, enabled, closed, suspended);
-
-            var masterId = Utils.ToInt32(mrecommend);
-            var customerSetting = reportService.SearchCustomerInfo(ExtRequest.GetGroupName(), masterId, null, isGetUplineInfo: true);
-            var customerProductStatus = TransformToCustomerProductStatusList(agents);
-            var ret = Customers2Json(agents);
-
-            return JsonBase(
-                new
-                {
-                    records = agents.Rows.Count,
-                    rows = ret,
-                    customerSetting.RoleId,
-                    srecommend = customerSetting.SuperId,
-                    mrecommend = customerSetting.MasterId,
-                    recommend = customerSetting.AgentId,
-                    customerSetting.CustId,
-                    customerSetting.HasSecurityCode,
-                    customerProductStatus
-                });
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
-        [AntiXSRFFilter]
-        public ActionResult MemberListPost(string groupName, int? recommend = null, int? custId = null, bool? enabled = null,
-            bool? closed = null, bool? suspended = null)
-        {
-            var members = _memberService.GetData(CurrentSession.UserId, ExtRequest.GetGroupName(groupName), recommend, custId, enabled, closed, suspended);
-            var agentId = Utils.ToInt32(recommend);
-            var customerSetting = reportService.SearchCustomerInfo(ExtRequest.GetGroupName(groupName), agentId, null, isGetUplineInfo: true);
-            var customerProductStatus = TransformToCustomerProductStatusList(members);
-            var member2Json = Customers2Json(members);
-
-            return JsonBase(
-                new
-                {
-                    records = members.Rows.Count,
-                    rows = member2Json,
-                    customerSetting.RoleId,
-                    srecommend = customerSetting.SuperId,
-                    mrecommend = customerSetting.MasterId,
-                    recommend = customerSetting.AgentId,
-                    customerSetting.CustId,
-                    customerProductStatus
-                });
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
@@ -673,111 +531,6 @@
         public JsonResult UpdateSuspendMultiple(List<MultipleUpdateSuspendRequest> request)
         {
             return Json(_customerService.SuspendMultipleCustomer(request, CurrentSession.UserId, CurrentContext.Ip4Address));
-        }
-
-        private DataTable GetCustomerList(
-            string groupName,
-            bool? enabled,
-            bool? closed,
-            bool? suspended,
-            LineInfo lineInfo,
-            bool? withDataLimited = null)
-        {
-            int? id = null;
-            DataTable result;
-
-            switch (lineInfo.RoleId)
-            {
-                case Role.Super:
-                    result = _superService.GetData(CurrentSession.UserId, groupName, lineInfo.CustId == 0
-                        ? id
-                        : lineInfo.CustId, enabled, closed, suspended, withDataLimited);
-                    break;
-
-                case Role.Master:
-                    result = _masterService.GetData(CurrentSession.UserId, lineInfo.SuperId, lineInfo.CustId == 0
-                        ? id
-                        : lineInfo.CustId, enabled, closed, suspended);
-                    break;
-
-                case Role.Agent:
-                    result = _agentService.GetData(CurrentSession.UserId, lineInfo.MasterId, lineInfo.CustId == 0
-                        ? id
-                        : lineInfo.CustId, enabled, closed, suspended);
-                    break;
-
-                default:
-                    result = _memberService.GetData(CurrentSession.UserId, groupName, lineInfo.AgentId, lineInfo.CustId == 0
-                        ? id
-                        : lineInfo.CustId, enabled, closed, suspended);
-                    break;
-            }
-
-            return result;
-        }
-
-        private LineInfo BuildCustomerSetting(string username)
-            => new LineInfo
-            {
-                RoleId = Utils.ToInt32(Request["roleId"]),
-                SuperId = Utils.ToInt32(Request["srecommend"]),
-                MasterId = Utils.ToInt32(Request["mrecommend"]),
-                AgentId = Utils.ToInt32(Request["recommend"]),
-                CustId = string.IsNullOrWhiteSpace(username) ? 0 : Utils.ToInt32(Request["custId"])
-            };
-
-        private LineInfo GetLineInfo(string groupName, string userName, LineInfo defaultValue = null)
-        {
-            var customerInfo = reportService.GetCustomerInfo(groupName, 0, userName, isGetUplineInfo: true);
-            if (customerInfo != null)
-            {
-                return new LineInfo
-                {
-                    RoleId = Utils.ToInt32(customerInfo.Rows[0]["roleid"]),
-                    SuperId = Utils.ToInt32(customerInfo.Rows[0]["srecommend"]),
-                    MasterId = Utils.ToInt32(customerInfo.Rows[0]["mrecommend"]),
-                    AgentId = Utils.ToInt32(customerInfo.Rows[0]["recommend"]),
-                    CustId = Utils.ToInt32(customerInfo.Rows[0]["custid"])
-                };
-            }
-
-            return string.IsNullOrWhiteSpace(userName) ? defaultValue ?? new LineInfo() : new LineInfo();
-        }
-
-        private static IDictionary<int, IDictionary<int, ProductStatus>> TransformToCustomerProductStatusList(DataTable dataTable)
-        {
-            int custId;
-            IDictionary<int, ProductStatus> customerProductStatus;
-            var customerProductStatusList = new Dictionary<int, IDictionary<int, ProductStatus>>();
-
-            var customerList = dataTable.AsEnumerable().ToList();
-
-            foreach (var customerRow in customerList)
-            {
-                customerRow["DisableAllBet"] = customerRow.Field<bool>("DisableAllBet");
-                custId = customerRow.Field<int>("custid");
-                customerProductStatus = new Dictionary<int, ProductStatus>();
-
-                foreach (var productStatus in AccountInfoProductConfiguration.TransformToProductStatus(customerRow, true))
-                {
-                    customerProductStatus.Add(productStatus.ProductId, productStatus);
-                }
-
-                customerProductStatusList.Add(custId, customerProductStatus);
-            }
-
-            return customerProductStatusList;
-        }
-
-        private string Customers2Json(DataTable customers)
-        {
-            var viewSpecialIPPermission = AuthorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP);
-            var newCustomers = ipInformationService.HideSpecialIP(customers, viewSpecialIPPermission);
-
-            return JsonConvert.SerializeObject(
-                newCustomers,
-                Formatting.None,
-                new IsoDateTimeConverter { DateTimeFormat = DateTimeFormat });
         }
 
         private ActionResult LimitationPage(string message)

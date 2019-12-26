@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
     using Base;
     using Common.Extensions;
     using Core.Shared;
@@ -13,7 +10,11 @@
     using DTO;
     using DTO.Customer;
     using DTO.Customer.Status;
+    using Fanex.ExternalAccount.Utilities;
     using Interface.Customer;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
     using ViewModel.Customer.Suspend;
 
     public class CustomerDao : DAOBase, ICustomerDao
@@ -50,15 +51,15 @@
 #pragma warning disable S1192 // String literals should not be duplicated
                         RoleId = reader.ToInt("roleid"),
 #pragma warning restore S1192 // String literals should not be duplicated
-                        Username = reader.ToString("username"),
-                        FirstName = reader.ToString("firstname"),
-                        LastName = reader.ToString("lastname"),
-                        MobilePhone = reader.ToString("mobilephone"),
-                        Phone = reader.ToString("phone"),
-                        Email = reader.ToString("email"),
-                        Fax = reader.ToString("fax"),
+                        Username = Utils.ToString(reader["username"]),
+                        FirstName = Utils.ToString(reader["firstname"]),
+                        LastName = Utils.ToString(reader["lastname"]),
+                        MobilePhone = Utils.ToString(reader["mobilephone"]),
+                        Phone = Utils.ToString(reader["phone"]),
+                        Email = Utils.ToString(reader["email"]),
+                        Fax = Utils.ToString(reader["fax"]),
 
-                        Remark = reader.ToString("remark")
+                        Remark = Utils.ToString(reader["remark"])
                     };
                 }
 
@@ -226,6 +227,63 @@
             {
                 db.AssignParamValues(criteria.GetSpParams());
                 db.ExecuteNonQuery();
+            }
+        }
+
+        public CustomerStatusDTO GetCustomerAllStatus(GetCustomerAllStatusCriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var result = new CustomerStatusDTO();
+                var reader = objDb.ExecuteReader(criteria.GetSpParams());
+                if (reader.Read())
+                {
+                    result.HasSecurityCode = Utils.ToBoolean(reader["HasSecurityCode"]);
+                    result.UplineHasSecurityCode = Utils.ToBoolean(reader["UplineHasSecurityCode"]);
+                    result.DisableTransfer = Utils.ToBoolean(reader["DisableTransfer"]);
+                }
+
+                reader.NextResult();
+                if (reader.Read())
+                {
+                    result.SyncedCasino = Utils.ToBoolean(reader["SyncCasino"]);
+                    result.UplineSyncedCasino = Utils.ToBoolean(reader["uplineSyncCasino"]);
+                    result.DisableCasino = Utils.ToBoolean(reader["DisableCasino"]);
+                    result.HideGoldDeluxe = !ProductSettings.IsShowGoldDeluxe || Utils.ToBoolean(reader["HideGoldDeluxe"]);
+                    result.DisableGoldDeluxe = Utils.ToBoolean(reader["DisableGoldDeluxe"]);
+                    result.UplineHideGoldDeluxe = Utils.ToBoolean(reader["uplineHideGoldDeluxe"]);
+                    result.HideKeno = !ProductSettings.IsShowKeno || Utils.ToBoolean(reader["HideKeno"]);
+                    result.DisableKeno = Utils.ToBoolean(reader["DisableKeno"]);
+                }
+
+                reader.NextResult();
+                while (reader.Read())
+                {
+                    int productId = Utils.ToInt32(reader["ProductID"]);
+                    if (productId == ProductConstants.VirtualSports)
+                    {
+                        result.HideVirtualSport = Utils.ToBoolean(reader["isHidden"]);
+                        result.DisableVirtualSport = Utils.ToBoolean(reader["isDisabled"]);
+                        continue;
+                    }
+
+                    if (!result.IsDCSProductExisted(productId))
+                    {
+                        result.DCSProductsSetting.Add(new CustomerStatusDCS
+                        {
+                            ProductID = productId,
+                            ProductName = ProductSettings.SiteProducts[productId]?.Name,
+                            IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
+                            IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
+                            IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
+                            IsSynced = Utils.ToBoolean(reader["isSync"]),
+                            IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
+                        });
+                    }
+                }
+
+                result.DCSProductsSetting = result.DCSProductsSetting.OrderBy(item => ProductSettings.SiteProducts[item.ProductID].Index).ToList();
+                return result;
             }
         }
     }

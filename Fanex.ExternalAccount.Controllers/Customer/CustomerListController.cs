@@ -8,6 +8,8 @@
     using Fanex.ExternalAccount.Excel.Customer.CustomerListPage;
     using Fanex.ExternalAccount.Service.Customer.CustomerList;
     using Fanex.ExternalAccount.Service.Customer.CustomerList.Params;
+    using Fanex.ExternalAccount.Service.Impl.Customer;
+    using Fanex.ExternalAccount.Service.Interface.Customer;
     using Fanex.ExternalAccount.ViewModel.Customer.CustomerList;
     using System;
     using System.Web.Mvc;
@@ -16,13 +18,15 @@
     public class CustomerListController : CustomerBase
     {
         private readonly ICustomerListService _customerListService;
+        private readonly ICustomerService _customerService;
         private readonly AuthorizationService _authorizationService;
         private const int DefaultPageSize = 50;
 
-        public CustomerListController() : this(null, null) { }
+        public CustomerListController() : this(null, null, null) { }
 
-        public CustomerListController(ICustomerListService customerListService, AuthorizationService authorizationService)
+        public CustomerListController(ICustomerService customerService, ICustomerListService customerListService, AuthorizationService authorizationService)
         {
+            _customerService = customerService ?? new CustomerService();
             _customerListService = customerListService ?? new CustomerListService();
             _authorizationService = authorizationService ?? new AuthorizationServiceImpl();
         }
@@ -50,7 +54,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public JsonResult GetCustomerStatus(int custId)
         {
-            return Json(_customerListService.GetCustomerAllStatus(custId));
+            return Json(_customerService.GetCustomerAllStatus(custId));
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]

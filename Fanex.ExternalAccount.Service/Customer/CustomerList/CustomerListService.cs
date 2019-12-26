@@ -10,8 +10,6 @@
     public interface ICustomerListService
     {
         SearchCustomerListViewModel Search(SearchCustomerListParams parameters, bool IsViewIPVN);
-
-        CustomerStatusDTO GetCustomerAllStatus(int custId);
     }
 
     public class CustomerListService : ICustomerListService
@@ -23,8 +21,6 @@
         public CustomerListService(ICustomerListDao customerListDao) => _customerListDao = customerListDao ?? new CustomerListDao();
 
         public SearchCustomerListViewModel Search(SearchCustomerListParams parameters, bool IsViewIPVN)=> _customerListDao.SearchCustomerList(GetSearchCriteria(parameters),IsViewIPVN);
-
-        public CustomerStatusDTO GetCustomerAllStatus(int custId) => _customerListDao.GetCustomerAllStatus(new GetCustomerAllStatusCriteria { CustId = custId });
 
         private SearchCustomerListBaseCriteria GetSearchCriteria(SearchCustomerListParams parameters)
         {

@@ -1,4 +1,4 @@
-﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.CustomerList
+﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer
 {
     using Fanex.NAP.Framework.Data;
 

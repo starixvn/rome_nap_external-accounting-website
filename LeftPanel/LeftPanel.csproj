@@ -256,7 +256,6 @@
     <Compile Include="DataAccesses\CustomerDataAccessImpl.cs" />
     <Compile Include="DataAccesses\CustomerDataAccess.cs" />
     <Compile Include="Services\CustomerCommandService.cs" />
-    <Compile Include="Services\CustomerStatusQueryService.cs" />
     <Compile Include="Services\Customers\CustomerInfoQueryService.cs" />
     <Compile Include="Services\Customers\MasterSettingServiceImpl.cs" />
     <Compile Include="Services\Customers\MemberSettingServiceImpl.cs" />

@@ -8,9 +8,6 @@
 
     public interface ISuperService
     {
-        DataTable GetData(int? userId, string groupName, int? custId = null, bool? enabled = null,
-            bool? closed = null, bool? suspended = null, bool? withDataLimited = null);
-
         CustomerInfo GetSuperInfo(int superId);
 
         DTO.Result UpdateSuperInfo(UpdateSuperInfoCriteria criteria);

@@ -16,16 +16,6 @@
         private readonly ISuperDao _dao = new SuperDao();
         private readonly PTEngine.Services.ICustomerService customerService = new PTEngine.Services.CustomerService();
 
-        public DataTable GetData(
-            int? userId,
-            string groupName,
-            int? custId = null,
-            bool? enabled = null,
-            bool? closed = null,
-            bool? suspended = null,
-            bool? withDataLimited = null)
-            => _dao.GetData(userId, groupName, custId, enabled, closed, suspended, withDataLimited);
-
         public CustomerInfo GetSuperInfo(int superId)
             => dynamicRepository.Get<CustomerInfo>(new GetSuperInfoCriteria(superId));
 
