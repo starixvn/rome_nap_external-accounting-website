@@ -2623,6 +2623,14 @@
     <Content Include="assets\bundles\winlossdetail\index.min.js.map">
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
+    <Content Include="assets\styles\fonts\AlphaAdmin\fonts\Tahoma Regular font.ttf" />
+    <Content Include="assets\styles\fonts\AlphaAdmin\fonts\TAHOMAB0.TTF" />
+    <Content Include="assets\styles\fonts\AlphaAdmin\fonts\TAHOMABD.TTF" />
+    <Content Include="assets\styles\fonts\AlphaAdmin\fonts\TAHOMA_0.TTF" />
+    <Content Include="Areas\ProductStatusSetting\Styles\font\AlphaAdmin\Tahoma Regular font.ttf" />
+    <Content Include="Areas\ProductStatusSetting\Styles\font\AlphaAdmin\TAHOMAB0.TTF" />
+    <Content Include="Areas\ProductStatusSetting\Styles\font\AlphaAdmin\TAHOMABD.TTF" />
+    <Content Include="Areas\ProductStatusSetting\Styles\font\AlphaAdmin\TAHOMA_0.TTF" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

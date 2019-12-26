@@ -140,41 +140,47 @@ span.selectedMonth {
 }
 
 .monPickrWrapParent .monPickrWrap {
-    font-family: Arial, sans-serif;
+    font-family: 'Tahoma Custom', Tahoma, Arial, Helvetica, sans-serif;
     position: relative !important;
     border-radius: 0 !important;
     border: none;
     background: initial;
+
     &:hover {
         box-shadow: none;
     }
+
     .monPickr {
         height: unset;
         padding: 5px 2px;
         border-radius: 0 !important;
         background: #fff;
         border: 1px solid #a6a6a6;
+
         .prev:before, .next:before {
             font-family: 'AlphaAdmin';
             font-size: 20px;
             color: #000;
         }
+
         .prev {
             background: none;
+
             &:before {
                 content: '\e932';
             }
         }
+
         .next {
             background: none;
             top: 4px;
             right: 6px;
             left: unset;
+
             &:before {
                 content: '\e931';
             }
-        }   
-        
+        }
     }
 }
 

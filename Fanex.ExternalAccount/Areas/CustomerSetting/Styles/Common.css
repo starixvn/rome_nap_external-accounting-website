@@ -1,4 +1,11 @@
-﻿html,body
+﻿@font-face {
+    font-family: 'Tahoma Custom';
+    src: url('../../../assets/styles/fonts/AlphaAdmin/fonts/Tahoma Regular font.ttf?3d71m2#iefix') format('truetype'), url('../../../assets/styles/fonts/AlphaAdmin/fonts/TAHOMA_0.ttf?3d71m2') format('truetype'), url('../../../assets/styles/fonts/AlphaAdmin/fonts/TAHOMAB0.ttf?3d71m2') format('truetype'), url('../../../assets/styles/fonts/AlphaAdmin/fonts/TAHOMABD.ttf?3d71m2') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html,body
 {
      padding: 0 !important;
 }
@@ -157,11 +164,10 @@ input[type=text]
 	background: url(data:image/jpg;base64,/9j/4AAQSkZJRgABAgAAZABkAAD/7AARRHVja3kAAQAEAAAAZAAA/+4ADkFkb2JlAGTAAAAAAf/bAIQAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQICAgICAgICAgICAwMDAwMDAwMDAwEBAQEBAQECAQECAgIBAgIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD/8AAEQgAEQARAwERAAIRAQMRAf/EAHoAAAMBAQAAAAAAAAAAAAAAAAgJCgcLAQADAQEAAAAAAAAAAAAAAAAAAQIDBRAAAQQCAAIEDwEAAAAAAAAABAIDBQYBBwAIEhQVCRETtNQ1VXWV1Ra2d5c4WBkRAQACAAUFAAAAAAAAAAAAAAABESExQXECUaHBEjL/2gAMAwEAAhEDEQA/AH+0uFavNGotnLrURPGXaLS65NSzMMSRIyoFcg7FaJGYkpRfTEFjQJxoww4xbQrI6luLcS207lERERGGRs32/qCrxAF5yfVtYOylTO2ZGgx3ZAzcjZytOwmbVs0qrnJgkMAppNU6Mq45IERbxLKkoBwQZjLCXQSnf6A8zf8ARG4fyNa/inEenDpHYXJ2pveK2SF5adUa3Kt8o7Ew1FrOCRH52Xe8dlFUpwTMBICPSLkeqIq5lXSsAXq6epEOvqxnwqxhF6EEHdve3A2EjbhTVHV2zarRzH2DXL6LphURSA+aWl41ns6KucX8r5M2HmFoQ7OKy+CbWMRk1hw05uUGWmObLNNR2vYPVcv7vP8AN+FYrcXHeDfthzJfe3ZX1bL8Tw+I28CcwBQ/p6L9rheWNcaaE6PHHPbv/9k=) repeat-x scroll center top transparent;
 }
 
-html, body
-{
-	font-size: 11px;
-	color: #444;
-	font-family: Tahoma, Helvetica, Arial, sans-serif;
+html, body {
+    font-size: 11px;
+    color: #444;
+    font-family: 'Tahoma Custom',Tahoma, Helvetica, Arial, sans-serif;
 }
 div#settingContainer,div.custInfo
 {
@@ -348,10 +354,9 @@ select,.select
 	max-height: 180px;
 	overflow: auto;
 }
-.ui-widget
-{
+.ui-widget {
     font-size: 10px;
-    font-family: Tahoma,Helvetica,Arial,sans-serif;
+    font-family: 'Tahoma Custom',Tahoma,Helvetica,Arial,sans-serif;
 }
 .ui-widget-header
 {
@@ -423,6 +428,5 @@ input[type="text"]
 	border: 1px solid #d2a243;
 	padding: 5px 30px;
 	overflow: auto;
-	font-family: Tahoma !important;
     color: #ff5411;
 }

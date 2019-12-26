@@ -70,5 +70,9 @@
   {
     "outputFile": "assets/styles/pages/admin/product.css",
     "inputFile": "assets/styles/pages/admin/product.scss"
+  },
+  {
+    "outputFile": "assets/styles/base/_alpha-admin-fonts.css",
+    "inputFile": "assets/styles/base/_alpha-admin-fonts.scss"
   }
 ]

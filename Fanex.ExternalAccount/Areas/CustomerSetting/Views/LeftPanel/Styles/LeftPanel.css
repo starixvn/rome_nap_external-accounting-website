@@ -161,7 +161,7 @@ div {
     }
 
 .ui-widget {
-    font-family: Tahoma,Helvetica,Arial,sans-serif;
+    font-family: 'Tahoma Custom',Tahoma,Helvetica,Arial,sans-serif;
 }
 
 .settingTitle {
