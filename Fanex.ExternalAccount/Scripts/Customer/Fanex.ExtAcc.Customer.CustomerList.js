@@ -337,11 +337,11 @@ Fanex.ExtAcc.Customer.CustomerList = {
         var linkSuper = '<a href="javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(null, null, null, 0)">Super</a>';
         var linkMaster = '<a href="javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + _breadScrumbs.SuperId + ', 4, null, 0)">Master</a>';
         var linkAgent = '<a href="javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + _breadScrumbs.MasterId + ', 3, null, 0)">Agent</a>';
-        if (uplineRoleId === 4)
+        if (uplineRoleId == Fanex.ExtAcc.Customer.Super)
             this.DOMElements.breadcrumbs.html('<div class="level-line"></div><div class="level-active">' + linkSuper + '</div>');
-        else if (uplineRoleId === 3)
+        else if (uplineRoleId == Fanex.ExtAcc.Customer.Master)
             this.DOMElements.breadcrumbs.html('<div class="level-line"></div><div style="float:left">' + linkSuper + '</div><div class="viewNext">&nbsp;</div><div class="level-active">' + linkMaster + '</div>');
-        else if (uplineRoleId === 2)
+        else if (uplineRoleId == Fanex.ExtAcc.Customer.Agent)
             this.DOMElements.breadcrumbs.html('<div class="level-line"></div><div style="float:left">' + linkSuper + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div class="level-active">' + linkAgent + '</div>');
     },
 }
