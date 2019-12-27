@@ -9,6 +9,10 @@
             MasterId: $scope.model.personalInfo.downlines[1] ? $scope.model.personalInfo.downlines[1].key : 0,
             AgentId: $scope.model.personalInfo.downlines[2] ? $scope.model.personalInfo.downlines[2].key : 0
         };
+
+        parent.Fanex.ExtAcc.Customer.superId = $scope.model.personalInfo.downlines[0] ? $scope.model.personalInfo.downlines[0].key : 0;
+        parent.Fanex.ExtAcc.Customer.masterId= $scope.model.personalInfo.downlines[1] ? $scope.model.personalInfo.downlines[1].key : 0;
+        parent.Fanex.ExtAcc.Customer.agentId= $scope.model.personalInfo.downlines[2] ? $scope.model.personalInfo.downlines[2].key : 0;
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('CustomerList/Index') + '?custid=' + custId + '&roleId=' + roleId, null, false, true);
     };
 
