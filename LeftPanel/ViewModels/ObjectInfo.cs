@@ -15,7 +15,7 @@
                 throw new ArgumentNullException(nameof(key));
             }
 
-            if (ReferenceEquals(null, value))
+            if (value is null)
             {
                 throw new ArgumentNullException(nameof(value));
             }

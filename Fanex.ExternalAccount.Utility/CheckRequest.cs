@@ -20,9 +20,7 @@
                 return defaultValue;
             }
 
-            int value;
-
-            return !int.TryParse(request[name], out value) ? defaultValue : value;
+            return !int.TryParse(request[name], out int value) ? defaultValue : value;
         }
 
         public static DateTime GetDateTimeRequest(string name, DateTime defaultValue)
@@ -33,9 +31,7 @@
                 return defaultValue;
             }
 
-            DateTime value;
-
-            return !DateTime.TryParse(request[name], out value) ? defaultValue : value;
+            return !DateTime.TryParse(request[name], out DateTime value) ? defaultValue : value;
         }
 
         public static bool GetBooleanRequest(string name, bool defaultValue)

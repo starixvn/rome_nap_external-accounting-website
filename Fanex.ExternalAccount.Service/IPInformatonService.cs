@@ -1,12 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Service
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
     using Fanex.ExternalAccount.DataAccess.Criteria.IPInformation;
     using Fanex.ExternalAccount.DTO;
     using Fanex.NAP.Framework.Data;
-    using Utilities;
+    using System;
+    using System.Collections.Generic;
 
     public interface IIPInformatonService
     {

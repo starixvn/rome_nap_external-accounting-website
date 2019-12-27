@@ -411,8 +411,10 @@
         {
             using (ObjectDb objdb = new ObjectDb("Acc_BalanceMemberSel", 180))
             {
-                var param = new Hashtable();
-                param.Add("custid", custId);
+                var param = new Hashtable
+                {
+                    { "custid", custId }
+                };
 
                 objdb.AssignParamValues(param);
                 objdb.ExecuteNonQuery();
@@ -426,8 +428,10 @@
         {
             using (ObjectDb objdb = new ObjectDb("Acc_OutstandingMemberSel", 180))
             {
-                var param = new Hashtable();
-                param.Add("custid", custId);
+                var param = new Hashtable
+                {
+                    { "custid", custId }
+                };
 
                 objdb.AssignParamValues(param);
                 objdb.ExecuteNonQuery();

@@ -114,9 +114,7 @@
                 SystemId = (byte)Config.SystemId
             };
 
-            int masterId;
-            var result = ptCustomerService.AddNewMaster(customer, requestContext, out masterId);
-
+            var result = ptCustomerService.AddNewMaster(customer, requestContext, out int masterId);
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
                 UpdateCasinoStatus(masterId, result, customer);
@@ -197,8 +195,7 @@
                 SystemId = (byte)Config.SystemId
             };
 
-            int agentId;
-            var result = ptCustomerService.AddNewAgent(customer, requestContext, out agentId);
+            var result = ptCustomerService.AddNewAgent(customer, requestContext, out int agentId);
 
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
@@ -287,8 +284,7 @@
                 SystemId = (byte)Config.SystemId
             };
 
-            int memberId;
-            var result = ptCustomerService.AddNewMember(customer, requestContext, out memberId);
+            var result = ptCustomerService.AddNewMember(customer, requestContext, out int memberId);
 
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {

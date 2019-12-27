@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Controllers.Requests.CustomerList;
     using Fanex.ExternalAccount.Core.Authorization;
     using Fanex.ExternalAccount.Core.Base;
@@ -35,6 +36,8 @@
         public ActionResult Index(int? custId, int? roleId) => PartialViewBase(new CustomerListViewModel { CustId = custId, RoleId = roleId });
 
         [HttpPost]
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public JsonResult Seach(SeachCustomerListRequest request)
         {
             return Json(_customerListService.Search(new SearchCustomerListParams
@@ -52,6 +55,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
+        [AntiXSRFFilter]
         public JsonResult GetCustomerStatus(int custId)
         {
             return Json(_customerService.GetCustomerAllStatus(custId));

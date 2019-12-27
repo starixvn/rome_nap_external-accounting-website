@@ -33,9 +33,7 @@
 
         public static bool IsValidIpAddress(string ip)
         {
-            IPAddress address;
-
-            return IPAddress.TryParse(ip, out address) && !ip.Equals("::1", StringComparison.OrdinalIgnoreCase);
+            return IPAddress.TryParse(ip, out IPAddress address) && !ip.Equals("::1", StringComparison.OrdinalIgnoreCase);
         }
 
         public static string FormatDateOptionalTime(object dt)
@@ -66,8 +64,7 @@
                 return 0.0m;
             }
 
-            decimal val;
-            decimal.TryParse(value.ToString(), out val);
+            decimal.TryParse(value.ToString(), out decimal val);
 
             return val;
         }
@@ -87,10 +84,7 @@
                 return true;
             }
 
-            bool val;
-
-            bool.TryParse(value.ToString(), out val);
-
+            bool.TryParse(value.ToString(), out bool val);
             return val;
         }
 
@@ -101,10 +95,7 @@
                 return defaultValue;
             }
 
-            bool val;
-
-            bool.TryParse(obj[fieldName].ToString(), out val);
-
+            bool.TryParse(obj[fieldName].ToString(), out bool val);
             return val;
         }
 
@@ -130,9 +121,8 @@
                 return 0.0d;
             }
 
-            double val;
 
-            double.TryParse(value.ToString(), out val);
+            double.TryParse(value.ToString(), out double val);
 
             return val;
         }
@@ -144,10 +134,7 @@
                 return DateTime.MinValue;
             }
 
-            DateTime val;
-
-            DateTime.TryParse(value.ToString(), out val);
-
+            DateTime.TryParse(value.ToString(), out DateTime val);
             return val;
         }
 
@@ -158,10 +145,7 @@
                 return null;
             }
 
-            DateTime val;
-
-            DateTime.TryParse(value.ToString(), out val);
-
+            DateTime.TryParse(value.ToString(), out DateTime val);
             return val;
         }
 

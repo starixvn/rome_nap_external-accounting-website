@@ -17,13 +17,13 @@
 
     public class CustomerListDao : ICustomerListDao
     {
-        private IDynamicRepository dynamicRepository { get; set; }
+        private IDynamicRepository _dynamicRepository { get; set; }
 
         public CustomerListDao() : this(null) { }
 
         public CustomerListDao(IDynamicRepository repository)
         {
-            dynamicRepository = repository ?? new DynamicRepository();
+            _dynamicRepository = repository ?? new DynamicRepository();
         }
 
 #pragma warning disable S1541 // Methods and properties should not be too complex

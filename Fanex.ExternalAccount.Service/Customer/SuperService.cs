@@ -1,10 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Customer
 {
-    using System.Data;
     using DataAccess.Criteria.Customer;
     using DataAccess.Impl.Customer;
     using DataAccess.Interface.Customer;
-    using DTO;
     using DTO.Customer;
     using Interface.Customer;
     using NAP.Framework.Data;

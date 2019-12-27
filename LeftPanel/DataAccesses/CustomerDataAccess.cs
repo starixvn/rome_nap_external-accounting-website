@@ -8,7 +8,9 @@
     using System.Data;
     using ViewModels;
 
+#pragma warning disable IDE1006 // Naming Styles
     public interface CustomerDataAccess
+#pragma warning restore IDE1006 // Naming Styles
     {
         DataSet GetPersonalInfo(string username, string groupName, int userId);
 

@@ -128,6 +128,7 @@
             }
         }
 
+#pragma warning disable S3358 // Ternary operators should not be nested
         private string SetBackgroundRow(
             ISheet resultSheet,
             int rowId,
@@ -135,11 +136,9 @@
             CustomerListDTO item)
         {
             var custStatus = !item.Enabled ? "disabled"
-#pragma warning disable S3358 // Ternary operators should not be nested
                 : item.Closed ? "closed"
                 : item.Suspended ? "suspended"
                 : "open";
-#pragma warning restore S3358 // Ternary operators should not be nested
 
             var rowIdFromStatus = new Dictionary<string, int> { { "open", 1 }, { "suspended", 3 }, { "disabled", 7 } };
             var rowIdFromCloseStatus = new Dictionary<byte, int> { { 1, 11 }, { 2, 13 }, { 3, 15 } };
@@ -152,6 +151,7 @@
 
             return custStatus;
         }
+#pragma warning restore S3358 // Ternary operators should not be nested
 
         public override void BuildMainTitle(ISheet resultSheet)
         {

@@ -79,9 +79,8 @@ namespace Fanex.ExternalAccount.Service.Impl.Customer.Casino
             string username,
             string subUsername)
         {
-            string errMsg;
             return UpdateCSStatus(custid, syncCS, disabledCS, isUpdDownline, userId, ip, subAccId, lang, username,
-                subUsername, out errMsg);
+                subUsername, out string errMsg);
         }
 
         public bool UpdateCSStatus(

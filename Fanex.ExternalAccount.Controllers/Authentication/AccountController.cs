@@ -176,18 +176,14 @@
 
         private ActionResult VerifyLoginCredential(LoginModel model, string rawPassword)
         {
-            int custId;
-            int onuserId;
-            bool hasMultipleGroupsPermission;
-
             var result = _userService.Login(
                 model.UserName,
                 rawPassword,
                     RequestHelper.GetRequestInfo(model.BrowserSize),
-                out custId,
-                out onuserId,
-                out hasMultipleGroupsPermission);
-            
+                out int custId,
+                out int onuserId,
+                out bool hasMultipleGroupsPermission);
+
             return result?.IsSuccess == true
                 ? LoginSuccessful(model, custId, onuserId, hasMultipleGroupsPermission, result.ResultData as Group)
                 : LoginFailed(model.UserName, result);
