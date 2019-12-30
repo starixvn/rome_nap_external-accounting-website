@@ -204,7 +204,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 return '<div id="editMult" class="editMult"></div>';
             },
             CustomCellRender: function (cell) {
-                return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.CustId + '" data-username="' + cell.Value.UserName + '" class="menuInactive"></div>';
+                return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.CustId + '" data-username="' + cell.Value.UserName + '" data-sync-casino=' + cell.Value.SyncCasino + ' class="menuInactive"></div>';
             }
         });
         columns.push({

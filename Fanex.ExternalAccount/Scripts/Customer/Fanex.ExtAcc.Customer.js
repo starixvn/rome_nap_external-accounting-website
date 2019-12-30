@@ -753,9 +753,7 @@
                 custids.push(divs[i].id);
                 this.CustIds += divs[i].id + ',';
                 this.Usernames += divs.eq(i).attr('data-username') + ', ';
-                if (custids.length > 1) {
-                    this.RnGCasinoStatuses.push('1');
-                }
+                this.RnGCasinoStatuses.push(divs.eq(i).attr('data-sync-casino') == 'true' ? '1' : '0');
             }
         }
 
