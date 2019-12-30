@@ -2,13 +2,11 @@
 {
     using Fanex.Data;
     using Fanex.ExternalAccount.Controllers.ViewModels.CustomerList;
-    using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DataAccess.Criteria.Customer.CustomerList;
     using Fanex.ExternalAccount.DTO.Customer.CustomerList;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.NAP.Framework.Data;
     using System;
-    using System.Linq;
 
     public interface ICustomerListDao
     {
