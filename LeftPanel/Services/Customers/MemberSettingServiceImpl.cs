@@ -14,12 +14,11 @@
 
         public MemberSettingServiceImpl(
             int userId, 
-            int roleId, 
-            string site, 
+            int roleId,
             IEnumerable<ProductSettingElement> productSettingElements = null,
             AuthorizationService authorizationService = null, 
             Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null) 
-            : base(userId, roleId, site, productSettingElements, authorizationService, hiddenAndSyncItemsCreator)
+            : base(userId, roleId, productSettingElements, authorizationService, hiddenAndSyncItemsCreator)
         { }
 
         public override Setting GetSetting(DataSet customerStatusInfoDataset)

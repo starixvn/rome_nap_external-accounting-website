@@ -21,13 +21,12 @@
             var custInfoRow = customerInfoDataset.Tables[0].Rows[0];
             var custStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];
             var cashRow = balanceInfoDataset.Tables[0].Rows[0];
-
             HasDownline = custStatusRow.HasDownline();
             UplineHasSecurityCode = custInfoRow.UplineHasSecurityCode();
             CurrencyId = cashRow.CurrencyId();
             BalanceInfo = new BalanceInfo(isUpdateCredit, custInfoRow.RoleId(), cashRow, balance, memberOustanding);
             PersonalInfo = new PersonalInfo(custInfoRow);
-            Login = GetLoginInfo(loginInfoDataset, canViewVNIP);
+            Login = GetLoginInfo(loginInfoDataset, canViewVNIP, cashRow.LastTxn());
             DownlineList = new DownlineList();
             OnlineList = new OnlineList();
         }
@@ -50,7 +49,7 @@
 
         public bool UplineHasSecurityCode { get; set; }
 
-        internal List<ObjectInfo> GetLoginInfo(DataSet loginInfoDataset, Func<string, bool> canViewVNIP)
+        internal List<ObjectInfo> GetLoginInfo(DataSet loginInfoDataset, Func<string, bool> canViewVNIP, string lastTxn)
         {
             var loginInfoDataRow = loginInfoDataset.Tables[0].Rows[0];
             var roleId = loginInfoDataRow.RoleId();
@@ -66,7 +65,7 @@
                 ObjectInfo.CreateInstance("Last Login", loginInfoDataRow.LastLoggedIn()),
                 new ObjectInfo
                 {
-                    Value =  loginInfoDataRow.LastTxn(),
+                    Value =  lastTxn,
                     Text = "Last Txn",
                     Tooltip = "Last Transaction"
                 },

@@ -1527,16 +1527,17 @@
     <Content Include="Images\tick.png" />
     <Content Include="Images\x5.gif" />
     <Content Include="Scripts\aes.js" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.CustomerList.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Status.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.DataRange.js" />
     <Content Include="Scripts\Fanex.ExtAcc.EcHcUtil.js" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.OTP.js" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.Account.js" />
-    <Content Include="Scripts\Customer\EditMultiple.js" />
-    <Content Include="Scripts\Customer\MemberList.js" />
-    <Content Include="Scripts\Customer\AgentList.js" />
-    <Content Include="Scripts\Customer\MasterList.js" />
-    <Content Include="Scripts\Customer\SuperList.js" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.EditMultiple.js" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.CustomerList.SingleEditMember.js" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.CustomerList.SingleEditAgent.js" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.CustomerList.SingleEditMaster.js" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.CustomerList.SingleEditSuper.js" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid.css" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid.js" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Pagination.css" />
@@ -2339,7 +2340,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.dll" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\Offline.cshtml" />
@@ -2354,7 +2359,6 @@
     <Content Include="Configurations\appSettings.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Customer\CustomerList.cshtml" />
     <Content Include="Configurations\connectionStrings.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2751,6 +2755,7 @@
     <Content Include="Views\Customer\UnsuspendSingle.cshtml" />
     <Content Include="Views\Customer\MultipleSuspend.cshtml" />
     <Content Include="Views\Domain\SSO.cshtml" />
+    <Content Include="Views\CustomerList\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
@@ -2830,11 +2835,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\Google.Protobuf.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.CSharp.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

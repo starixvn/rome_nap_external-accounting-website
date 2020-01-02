@@ -19,8 +19,7 @@
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            var configElement = element as ProductElementConfiguration;
-            if (configElement != null)
+            if (element is ProductElementConfiguration configElement)
             {
                 return configElement.Id;
             }

@@ -1,10 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Core.Context
 {
-    using System.Globalization;
-    using System.Net;
-    using System.Web;
     using CustomerSetting.Module.Core.Web;
     using Service;
+    using System.Globalization;
+    using System.Web;
 
     public class CurrentContext : ICurrentContext
     {

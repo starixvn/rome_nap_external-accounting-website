@@ -10,12 +10,12 @@
         public static readonly IReadOnlyDictionary<int, Product> SiteProducts
             = new Dictionary<int, Product>
             {
-                [ProductConstants.AllBet] = new Product(ProductConstants.AllBet, "Allbet"),
-                [ProductConstants.VoidBridge] = new Product(ProductConstants.VoidBridge, "Macau Games", substituteProductKey: "VoidBridge"),
-                [ProductConstants.NG2] = new Product(ProductConstants.NG2, "NG2", true),
-                [ProductConstants.FishingWorld] = new Product(ProductConstants.FishingWorld, "Fishing World"),
-                [ProductConstants.Lottery] = new Product(ProductConstants.Lottery, "Lottery"),
-                [ProductConstants.Sportsbook2] = new Product(ProductConstants.Sportsbook2, "Sportsbook 2")
+                [ProductConstants.AllBet] = new Product(0, ProductConstants.AllBet, "Allbet"),
+                [ProductConstants.VoidBridge] = new Product(1,ProductConstants.VoidBridge, "Macau Games", substituteProductKey: "VoidBridge"),
+                [ProductConstants.NG2] = new Product(2, ProductConstants.NG2, "NG2", true),
+                [ProductConstants.FishingWorld] = new Product(3, ProductConstants.FishingWorld, "Fishing World"),
+                [ProductConstants.Lottery] = new Product(4, ProductConstants.Lottery, "Lottery"),
+                [ProductConstants.Sportsbook2] = new Product(5, ProductConstants.Sportsbook2, "Sportsbook 2")
             };
 
         public static bool IsShowGoldDeluxe => IsShowProduct(ProductConstants.GoldDeluxe);

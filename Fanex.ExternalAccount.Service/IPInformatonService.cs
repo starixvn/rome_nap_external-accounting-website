@@ -1,18 +1,18 @@
 ﻿namespace Fanex.ExternalAccount.Service
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
     using Fanex.ExternalAccount.DataAccess.Criteria.IPInformation;
     using Fanex.ExternalAccount.DTO;
     using Fanex.NAP.Framework.Data;
-    using Utilities;
+    using System;
+    using System.Collections.Generic;
 
     public interface IIPInformatonService
     {
         IPInformation GetFromIP(string ip);
+
         bool IsSpecialIP(string ip);
-        DataTable HideSpecialIP(DataTable table, bool viewSpecialIPPermission);
+
+        IEnumerable<IPRange> GetSpecialIPs();
     }
 
     public class IPInformationService : IIPInformatonService
@@ -39,31 +39,7 @@
             return ipInformation != null && ipInformation.CountryShort.Equals("vn", StringComparison.CurrentCultureIgnoreCase);
         }
 
-        public DataTable HideSpecialIP(DataTable table, bool viewSpecialIPPermission)
-        {
-            var fieldName = "lastloginip";
-            if (ReferenceEquals(null, table) ||
-                table.Rows.Count == 0 ||
-                !table.Columns.Contains(fieldName) ||
-                viewSpecialIPPermission)
-            {
-                return table;
-            }
-
-            var specialIPList = GetSpecialIP();
-            foreach (DataRow row in table.Rows)
-            {
-                var ip = row.ToString(fieldName);                
-                if (!string.IsNullOrWhiteSpace(ip) && specialIPList.IsExistedInList(ip))
-                {
-                    row[fieldName] = string.Empty;
-                }
-            }
-
-            return table;
-        }
-
-        private IEnumerable<IPRange> GetSpecialIP()
+        public IEnumerable<IPRange> GetSpecialIPs()
             => dynamicRepository.Fetch<IPRange>(new GetAllSpecialIPCriteria());
     }
 }

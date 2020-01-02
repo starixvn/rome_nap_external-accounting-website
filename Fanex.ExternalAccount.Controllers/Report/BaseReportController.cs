@@ -1,8 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
-    using System.Linq;
     using Core.Base;
-    using Core.Shared;
     using CustomerSetting.Module.Core.Web;
     using Service.Impl.Report;
     using Service.Interface.Report;

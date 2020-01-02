@@ -311,6 +311,7 @@
     <Compile Include="Authentication\AccountController.cs" />
     <Compile Include="Authentication\AntiXSRFUtil.cs" />
     <Compile Include="Authentication\CaptchaUtil.cs" />
+    <Compile Include="Customer\CustomerListController.cs" />
     <Compile Include="Customer\MainSuperController.cs" />
     <Compile Include="Customer\CustomerController.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusController.cs" />
@@ -323,6 +324,7 @@
     <Compile Include="Home\NetworkSpeedController.cs" />
     <Compile Include="OTP\OTPController.cs" />
     <Compile Include="Report\BaseReportController.cs" />
+    <Compile Include="Requests\CustomerList\SeachCustomerListRequest.cs" />
     <Compile Include="Requests\DrillDownWinLossDetailRequest.cs" />
     <Compile Include="Requests\SearchWinLossDetailRequest.cs" />
     <Compile Include="Requests\WinLossDetailRequest.cs" />
@@ -415,12 +417,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\Google.Protobuf.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.CSharp.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.dll" />
+    <Content Include="Areas\Logs\APILoggerSpNames.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Logs\APILoggerSpNames.xml" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

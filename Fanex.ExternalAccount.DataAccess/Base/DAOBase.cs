@@ -14,8 +14,10 @@
 
         public static void AddResultParams(Database db, DbCommand command)
         {
+#pragma warning disable S109 // Magic numbers should not be used
             db.AddOutParameter(command, "ErrCode", DbType.String, 300);
             db.AddOutParameter(command, "ErrMsg", DbType.String, 4000);
+#pragma warning restore S109 // Magic numbers should not be used
         }
 
         public Result GetResultParams(Database db, DbCommand command)

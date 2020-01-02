@@ -36,12 +36,11 @@
 
         private bool HasPermission(AuthorizationContext filterContext, AuthenticateAction.AuthenticationType role)
         {
-            int productId;
             var productIdParam = role == AuthenticateAction.AuthenticationType.Read
                 ? filterContext.HttpContext.Request["productid"]
                 : GetActionParameterValue(filterContext.Controller.ValueProvider, "productid");
 
-            if (int.TryParse(productIdParam, out productId))
+            if (int.TryParse(productIdParam, out int productId))
             {
                 var enableFunction = Enum.GetName(typeof(EnableStatusProductFunction), productId);
                 var hasPermission = role == AuthenticateAction.AuthenticationType.Read

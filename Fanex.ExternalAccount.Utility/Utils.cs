@@ -1,13 +1,14 @@
 ﻿namespace Fanex.ExternalAccount.Utilities
 {
+    using DTO;
     using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
     using System.Net;
     using System.Web;
-    using DTO;
 
+#pragma warning disable S109 // Magic numbers should not be used
     public static class Utils
     {
         public static bool IsExistedInList(this IEnumerable<IPRange> ipList, string ip)
@@ -23,7 +24,7 @@
             if (IsValidIpAddress(ip))
             {
                 var strArray = ip.Split('.');
-                num = (((double.Parse(strArray[0]) * 16777216.0) + (double.Parse(strArray[1]) * 65536.0)) +
+                num = (((double.Parse(strArray[0]) * 16_777_216.0) + (double.Parse(strArray[1]) * 65_536.0)) +
                     (double.Parse(strArray[2]) * 256.0)) + double.Parse(strArray[3]);
             }
 
@@ -32,9 +33,7 @@
 
         public static bool IsValidIpAddress(string ip)
         {
-            IPAddress address;
-
-            return IPAddress.TryParse(ip, out address) && !ip.Equals("::1", StringComparison.OrdinalIgnoreCase);
+            return IPAddress.TryParse(ip, out IPAddress address) && !ip.Equals("::1", StringComparison.OrdinalIgnoreCase);
         }
 
         public static string FormatDateOptionalTime(object dt)
@@ -65,10 +64,9 @@
                 return 0.0m;
             }
 
-            decimal val;
-            decimal.TryParse(value.ToString(), out val);
+            decimal.TryParse(value.ToString(), out decimal val);
 
-            return val.Format() == -0.00m ? 0.0m : val;
+            return val;
         }
 
         public static decimal ToDecimal(this IDataReader obj, string fieldName)
@@ -86,10 +84,7 @@
                 return true;
             }
 
-            bool val;
-
-            bool.TryParse(value.ToString(), out val);
-
+            bool.TryParse(value.ToString(), out bool val);
             return val;
         }
 
@@ -100,17 +95,14 @@
                 return defaultValue;
             }
 
-            bool val;
-
-            bool.TryParse(obj[fieldName].ToString(), out val);
-
+            bool.TryParse(obj[fieldName].ToString(), out bool val);
             return val;
         }
 
         public static bool ToBoolean(this DataRow obj, string fieldName, bool defaultValue = false)
-            => ToBoolean(obj.Table.Columns.Contains(fieldName) 
+            => ToBoolean(obj.Table.Columns.Contains(fieldName)
                 ? obj[fieldName]
-                : null, 
+                : null,
                 defaultValue);
 
         public static string ToString(object value)
@@ -129,9 +121,8 @@
                 return 0.0d;
             }
 
-            double val;
 
-            double.TryParse(value.ToString(), out val);
+            double.TryParse(value.ToString(), out double val);
 
             return val;
         }
@@ -143,9 +134,50 @@
                 return DateTime.MinValue;
             }
 
-            DateTime val;
+            DateTime.TryParse(value.ToString(), out DateTime val);
+            return val;
+        }
 
-            DateTime.TryParse(value.ToString(), out val);
+        public static DateTime? ToNullAbleDateTime(object value)
+        {
+            if (IsEmptyData(value))
+            {
+                return null;
+            }
+
+            DateTime.TryParse(value.ToString(), out DateTime val);
+            return val;
+        }
+
+        public static string ToStringFormat(this decimal obj, int prec = 2)
+        {
+            var ret = decimal.Round(obj, prec);
+            var valRet = ret.ToString("#,##0.########");
+
+            return ret < 0.0m ? "<font color=\"red\">" + valRet + "</font>" : valRet;
+        }
+
+        public static byte ToByte(object value)
+        {
+            if (IsEmptyData(value))
+            {
+                return 0;
+            }
+
+            byte val;
+
+            if (value is decimal || value is double)
+            {
+                val = Convert.ToByte(value);
+            }
+            else if (value is bool)
+            {
+                val = (bool)value ? (byte)1 : (byte)0;
+            }
+            else
+            {
+                byte.TryParse(value.ToString(), out val);
+            }
 
             return val;
         }
@@ -175,14 +207,6 @@
             return val;
         }
 
-        public static string ToStringFormat(this decimal obj, int prec = 2)
-        {
-            var ret = decimal.Round(obj, prec);
-            var valRet = ret.ToString("#,##0.########");
-
-            return ret < 0.0m ? "<font color=\"red\">" + valRet + "</font>" : valRet;
-        }
-
         public static int ToInt32(this IDataReader obj, string fieldName)
             => ToInt32(obj[fieldName]);
 
@@ -195,19 +219,33 @@
         public static string DecodeHtml(this string str)
             => HttpUtility.HtmlDecode(str);
 
-        public static string EncodeHtml(this string str)
-            => HttpUtility.HtmlEncode(str);
-
         public static string DecodeHtml(this DataRow obj, string fieldName)
             => HttpUtility.HtmlDecode(obj.ToString(fieldName));
+
+        public static string EncodeHtml(this string str)
+            => HttpUtility.HtmlEncode(str);
 
         public static string EncodeHtml(this DataRow obj, string fieldName)
             => HttpUtility.HtmlEncode(obj.ToString(fieldName));
 
         public static string ToStringExt(this DateTime date, string format = "MM/dd/yyyy HH:mm:ss tt")
             => date.Equals(DateTime.MinValue) ? string.Empty : date.ToString(format);
+
         private static bool IsEmptyData(object value) =>
             value == null || value == DBNull.Value || value.ToString()?.Length == 0;
-        
+
+        public static bool HasColumn(IDataRecord dataReader, string columnName)
+        {
+            for (int i = 0; i < dataReader.FieldCount; i++)
+            {
+                if (dataReader.GetName(i).Equals(columnName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
+#pragma warning restore S109 // Magic numbers should not be used
 }

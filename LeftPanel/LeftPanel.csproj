@@ -256,7 +256,6 @@
     <Compile Include="DataAccesses\CustomerDataAccessImpl.cs" />
     <Compile Include="DataAccesses\CustomerDataAccess.cs" />
     <Compile Include="Services\CustomerCommandService.cs" />
-    <Compile Include="Services\CustomerStatusQueryService.cs" />
     <Compile Include="Services\Customers\CustomerInfoQueryService.cs" />
     <Compile Include="Services\Customers\MasterSettingServiceImpl.cs" />
     <Compile Include="Services\Customers\MemberSettingServiceImpl.cs" />
@@ -277,7 +276,11 @@
     <Compile Include="ViewModels\Setting.cs" />
     <Compile Include="ViewModels\MasterAgentUsedCreditItem.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.dll" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="LeftPanel.ruleset" />
@@ -309,11 +312,6 @@
       <Project>{016F274C-1F76-450B-B80D-E7FB59BE6A2B}</Project>
       <Name>Fanex.ExternalAccount.Utilities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\Google.Protobuf.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.CSharp.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

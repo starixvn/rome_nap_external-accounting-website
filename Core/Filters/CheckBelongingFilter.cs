@@ -1,10 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Core.Filters
 {
+    using Fanex.ExternalAccount.Core.Authorization;
     using System;
     using System.Web;
     using System.Web.Mvc;
-    using System.Web.Security;
-    using Fanex.ExternalAccount.Core.Authorization;
 
     [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
     public class CheckBelongingFilter : AuthorizeAttribute

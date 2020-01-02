@@ -1,15 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Core.Base
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.SessionState;
     using Authorization;
     using CasinoLibrary.Model.UserException;
     using Context;
@@ -22,9 +12,17 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using PTEngine.BusinessObjects;
-    using RemotingRef;
     using Service.Impl.Customer.Casino;
     using Shared;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.SessionState;
     using Utilities;
     using CurrentContext = Context.CurrentContext;
     using CurrentSession = Context.CurrentSession;
@@ -34,9 +32,6 @@
     public class BaseController : Controller
     {
         protected const string SiteName = "ExtAcc";
-
-        protected const int FromSystem = 3;
-
         protected const string UAT = "UAT";
         protected const string PRO = "LIVE";
         private readonly ICurrentContext currentContext;
@@ -112,7 +107,7 @@
                     AuthenticateAction.AuthenticationType.Host))
                 {
                     cust.UpdateCustClosed(custId, customer.StatusSetting.Closed, CurrentContext.Ip4Address,
-                        CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                        CurrentSession.UserId, CurrentSession.UserName, CurrentSession.FromSystem);
                 }
 
                 if (isMult)
@@ -126,7 +121,7 @@
                     AuthenticateAction.AuthenticationType.Host))
                 {
                     cust.UpdateCustSuspend(custId, customer.StatusSetting.Suspended, CurrentContext.Ip4Address,
-                        CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                        CurrentSession.UserId, CurrentSession.UserName, CurrentSession.FromSystem);
                 }
             }
             catch (Exception ex)
@@ -146,7 +141,7 @@
                     AuthenticateAction.AuthenticationType.Host))
                 {
                     cust.UpdateCustClosed(custId, closed, CurrentContext.Ip4Address, CurrentSession.UserId,
-                        CurrentSession.UserName, FromSystem);
+                        CurrentSession.UserName, CurrentSession.FromSystem);
                 }
 
                 if (AuthorizationService.IsAuthorized(
@@ -155,7 +150,7 @@
                     AuthenticateAction.AuthenticationType.Host))
                 {
                     cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId,
-                        CurrentSession.UserName, FromSystem);
+                        CurrentSession.UserName, CurrentSession.FromSystem);
                 }
             }
             catch (Exception ex)
@@ -175,7 +170,7 @@
                     AuthenticateAction.AuthenticationType.Host))
                 {
                     cust.UpdateCustClosed(custId, closed, CurrentContext.Ip4Address, CurrentSession.UserId,
-                        CurrentSession.UserName, FromSystem);
+                        CurrentSession.UserName, CurrentSession.FromSystem);
                 }
             }
             catch (ErrorException casinoEx)
@@ -199,7 +194,7 @@
                     AuthenticateAction.AuthenticationType.Host))
                 {
                     cust.UpdateCustSuspend(custId, suspended, CurrentContext.Ip4Address, CurrentSession.UserId,
-                        CurrentSession.UserName, FromSystem);
+                        CurrentSession.UserName, CurrentSession.FromSystem);
                 }
             }
             catch (ErrorException casinoEx)

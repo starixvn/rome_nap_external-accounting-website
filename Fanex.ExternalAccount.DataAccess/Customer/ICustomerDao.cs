@@ -36,5 +36,7 @@
         SuspendedCustomerDetailViewModel GetSuspendDownlinesDetail(GetSuspendCustomerDetailInfoCriteria criteria);
 
         List<CustomerSuspendStatusRow> GetMultipleSuspendCustomerViewModel(GetMultipleSuspendCustomerInfoCriteria criteria);
+
+        CustomerStatusDTO GetCustomerAllStatus(GetCustomerAllStatusCriteria criteria);
     }
 }

@@ -21,11 +21,15 @@
             {
                 if (custId != 0)
                 {
+#pragma warning disable S1192 // String literals should not be duplicated
                     db.AddInParameter("custid", DbType.Int32, custId);
+#pragma warning restore S1192 // String literals should not be duplicated
                 }
 
                 db.AddInParameter("groupname", DbType.String, groupname);
+#pragma warning disable S1192 // String literals should not be duplicated
                 db.AddInParameter("username", DbType.String, userName);
+#pragma warning restore S1192 // String literals should not be duplicated
                 db.AddInParameter("isgetuplineinfo", DbType.Boolean, isGetUplineInfo);
 
                 var ds = db.ExecuteDataSet();
@@ -120,7 +124,9 @@
         {
             var parameters = new Hashtable
             {
+#pragma warning disable S1192 // String literals should not be duplicated
                 {"winlostdate", winlostDate},
+#pragma warning restore S1192 // String literals should not be duplicated
                 {"groupname", groupname}
             };
 
@@ -254,11 +260,13 @@
         {
             var parameters = new Hashtable
             {
+#pragma warning disable S1192 // String literals should not be duplicated
                 {"groupname", groupname},
                 {"fromdate", fromDate},
                 {"todate", toDate},
                 {"balanceupday", balanceUpDay},
                 {"productids", productIds}
+#pragma warning restore S1192 // String literals should not be duplicated
             };
 
             if (custId != 0)
@@ -390,6 +398,7 @@
             MemberWinlost = reader.ToDouble("MemberWinlost"),
             PlayerComm = reader.ToDouble("PlayerComm"),
             MemberTotal = reader.ToDouble("MemberTotal"),
+#pragma warning disable S1192 // String literals should not be duplicated
             AgWinlost = reader.ToDouble("AgWinlost"),
             AgComm = reader.ToDouble("AgComm"),
             AgTotal = reader.ToDouble("AgTotal"),
@@ -400,6 +409,7 @@
             SAgComm = reader.ToDouble("SAgComm"),
             SAgTotal = reader.ToDouble("SAgTotal"),
             Company = reader.ToDouble("Company")
+#pragma warning restore S1192 // String literals should not be duplicated
         };
 
         private List<WinLossDetailMAg> GetCommonWinLossDetailMAg(string spname, Hashtable parameters)
@@ -519,6 +529,8 @@
                 No = num,
                 CustId = reader.ToInt("custid"),
                 Username = reader.To<string>("username"),
+#pragma warning disable S1192 // String literals should not be duplicated
+#pragma warning disable S109 // Magic numbers should not be used
                 TotalTO = reader.ToDouble("totalTO"),
                 ComTO = reader.ToDouble("ComTO"),
                 ComTOPercent = !reader.ToDouble("totalTO").Equals(0)
@@ -552,6 +564,8 @@
                 AgWinlostPercent = !reader.ToDouble("AgTO").Equals(0)
                 ? reader.ToDouble("AgWinlost") * 100 / reader.ToDouble("AgTO")
                 : 0
+#pragma warning restore S109 // Magic numbers should not be used
+#pragma warning restore S1192 // String literals should not be duplicated
             };
     }
 }

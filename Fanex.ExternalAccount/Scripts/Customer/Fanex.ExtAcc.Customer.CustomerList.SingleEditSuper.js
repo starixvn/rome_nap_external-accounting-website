@@ -1,0 +1,196 @@
+﻿Fanex.ExtAcc.Customer.CustomerList.SingleEditSuper = function (custId, title) {
+    if ($.contextMenu) $.contextMenu('destroy');
+    $.contextMenu({
+        selector: '.editInfo',
+        trigger: "left",
+        ignoreRightClick: true,
+        autoHide: true,
+        build: function ($triggerElement, e) {
+            var items;
+            $.ajax({
+                type: 'POST',
+                url: resolveClientUrl('CustomerList/GetCustomerStatus'),
+                data: { custId: custId },
+                dataType: 'json',
+                async: false,
+                success: function (result) {
+                    Fanex.ExtAcc.Customer.TransferCondition = false;
+                    Fanex.ExtAcc.Customer.UserId = custId;
+                    Fanex.ExtAcc.Customer.TitleEditInfo = unescape(title);
+                    Fanex.ExtAcc.Customer.CurrentLevel = Fanex.ExtAcc.Customer.Super;
+                    Fanex.ExtAcc.Customer.ResetFlags();
+                    top.shouldCalculatePopupHeight = true;
+                    items = {
+                        sportbook: {
+                            name: "Sportsbook",
+                            className: "iconViewEdit",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.IsFullInfo = true;
+                                Fanex.ExtAcc.Form.Show(
+                                    resolveClientUrl('SportsbookSetting/EditMultiplePT' + '/?roleId=4&groupName=' + $('#selectedGroupName').html() + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                                    900, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
+
+                            }
+                        },
+                        separator1: "-----",
+                        casino: {
+                            name: "Casino",
+                            className: "iconViewEdit",
+                            callback: function () {
+                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Super/EditSuper?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=0&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 1150, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, null, 1);
+                            }
+                        }
+                    }
+
+                    function addEditProductSuperContextMenuItem(productId, productKey, productName) {
+                        items[productKey] = {
+                            name: productName,
+                            className: "iconViewEdit",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.IsFullInfo = true;
+                                Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(
+                                    Fanex.ExtAcc.Customer.UserId,
+                                    5,
+                                    4,
+                                    productId,
+                                    productName);
+                            }
+                        }
+                    }
+
+                    addEditProductSuperContextMenuItem(5, 'Product-5', 'Virtual Sports');
+
+                    if (showKenoSetting == 'true') {
+                        items.keno = {
+                            name: "RNG Keno",
+                            className: "iconViewEdit",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.IsFullInfo = true;
+                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditSuper?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit RNG Keno Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 880, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
+                            }
+                        }
+                    }
+
+                    if (!result.UplineHideGoldDeluxe) {
+                        items.goldDeluxe = {
+                            name: "Gold Deluxe",
+                            className: "iconViewEdit",
+                            callback: function () {
+                                Fanex.ExtAcc.Customer.IsFullInfo = true;
+                                var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 400) : 400;
+                                url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=0&uplineId=0&formType=2&level=4" + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + parent.$('#selectedGroupName').html();
+                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Gold Deluxe Setting <font color="#6dcff6">' + title + '</font>', 900, height, false, false, 1);
+
+                            }
+                        }
+                    }
+
+                    for (var i = 0, max = result.DCSProductsSetting.length; i < max; i++) {
+                        var productSetting = result.DCSProductsSetting[i];
+                        if (!productSetting.IsHidden && productSetting.IsSyncedUpline) {
+                            addEditProductSuperContextMenuItem(productSetting.ProductID, 'Product-' + productSetting.ProductID, productSetting.ProductName);
+                        }
+                    }
+
+                    items.separator4 = "-----";
+
+                    items.editInfo = {
+                        name: "Edit Info",
+                        height: 25,
+                        className: "iconEnableEdit editInfoBg",
+                        callback: function (key, opt) {
+                            var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 480) : 500;
+                            Fanex.ExtAcc.Form.Show(
+                                resolveClientUrl('MainSuper/EditInfo/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[0] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                                500,
+                                height,
+                                false);
+                        }
+                    };
+
+                    items.changePassword = {
+                        name: "Reset Password",
+                        className: "iconEnableEdit editInfoBg",
+                        callback: function (key, opt) {
+                            var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 400) : 400;
+                            Fanex.ExtAcc.Form.Show(
+                                resolveClientUrl('Customer/ResetPassword/?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Reset password: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                                415,
+                                height,
+                                false,
+                                false);
+                        }
+                    };
+
+                    var self = this;
+                    items.securityCode = {
+                        name: "Security Code",
+                        className: "iconEnableEdit editInfoBg",
+                        callback: function (key, opt) {
+                            var params = {
+                                custId: Fanex.ExtAcc.Customer.UserId,
+                                roleId: 4,
+                                username: Fanex.ExtAcc.Customer.TitleEditInfo,
+                                groupName: Fanex.ExtAcc.Customer.GroupName().groupName
+                            };
+                            var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 480) : 500;
+                            Fanex.ExtAcc.Form.ShowFrame(
+                                resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetSecurityCode?' + $.param(params)),
+                                'Reset security code: <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                                650,
+                                height,
+                                false,
+                                false);
+                        }
+                    };
+
+                    items.transferCondition = {
+                        name: "Transfer Condition",
+                        className: "iconEnableEdit editInfoBg",
+                        callback: function (key, opt) {
+                            top.shouldCalculatePopupHeight = false;
+                            Fanex.ExtAcc.Form.Show(
+                                resolveClientUrl('Customer/EditTransferCondition/?roleId=4&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), titles[1] + ': <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                                600,
+                                300,
+                                false,
+                                false,
+                                1);
+                        }
+                    };
+
+                    if (showBetSetting == '1') {
+                        items.betSetting = {
+                            name: "Edit Betting Limit",
+                            className: "iconEnableEdit editInfoBg",
+                            callback: function (key, opt) {
+                                Fanex.ExtAcc.Form.ShowFrame(
+                                    resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.UserId + '&userId=' + userId + '&groupName=' + $('#selectedGroupName').html()), 'Edit Bet Setting',
+                                    900,
+                                    Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+                                    false,
+                                    null, 1);
+                            }
+                        };
+                    }
+
+                    items.customerDataRange = {
+                        name: "Edit Data Range",
+                        className: "iconEnableEdit editInfoBg",
+                        callback: function (key, opt) {
+                            top.shouldCalculatePopupHeight = false;
+                            var url = resolveClientUrl('DataRange/Index?custIds=' + Fanex.ExtAcc.Customer.UserId);
+                            Fanex.ExtAcc.Form.Show(url, 'Edit Data Range For <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 400, 170, false, null, 1);
+                        }
+                    };
+                }
+            });
+
+            return {
+                ignoreRightClick: true,
+                autoHide: true,
+                items: items
+            }
+        }
+    });
+};

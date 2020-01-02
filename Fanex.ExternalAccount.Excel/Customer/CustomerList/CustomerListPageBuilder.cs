@@ -1,11 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
 {
-    using System.Data;
+    using Fanex.ExternalAccount.DTO.Customer.CustomerList;
+    using System.Collections.Generic;
     using System.IO;
 
     public class CustomerListPageBuilder
     {
-        public CustomerListPageBuilder(DataTable customerList, bool isBold, string status, int roleId, bool withDataLimited = false)
+        public CustomerListPageBuilder(List<CustomerListDTO> customerList, bool isBold, string status, int roleId, bool withDataLimited = false)
         {
             Status = status;
             RoleId = roleId;
@@ -14,7 +15,7 @@
             WithDataLimited = withDataLimited;
         }
 
-        public DataTable Data { get; }
+        public List<CustomerListDTO> Data { get; }
 
         public bool IsBold { get; }
 

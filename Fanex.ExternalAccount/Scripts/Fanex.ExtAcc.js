@@ -182,21 +182,21 @@ Fanex.ExtAcc = {
                 }
             }
         })
-        .error(function (data) {
-            Fanex.ExtAcc.UnBlockUI();
-            if (data.errorCode) {
-                $('#contentSplitter').html(data.errorMessage.formatErrorMessage());
-            } else {
-                $('#contentSplitter').html(data.responseText).show();
-            }
-        })
-        .done(function (data) {
-            $('#contentSplitter').ready(function () {
-                //$('#contentSplitter').height($('#mainContent').height() - 20);
-                $('#contentSplitter').show();
+            .error(function (data) {
+                Fanex.ExtAcc.UnBlockUI();
+                if (data.errorCode) {
+                    $('#contentSplitter').html(data.errorMessage.formatErrorMessage());
+                } else {
+                    $('#contentSplitter').html(data.responseText).show();
+                }
+            })
+            .done(function (data) {
+                $('#contentSplitter').ready(function () {
+                    //$('#contentSplitter').height($('#mainContent').height() - 20);
+                    $('#contentSplitter').show();
 
+                });
             });
-        });
     },
 
     FormatNumber: function (number) { // Format a number to 1,234,567.89
@@ -319,22 +319,22 @@ Fanex.ExtAcc = {
         var id = typeof txtUserName == 'undefined' ? '#txtUserName' : '#' + txtUserName;
 
         this.SuggestionXHR = $.ajax(resolveClientUrl("Filter/GetSuggestedUserName?username=" + Fanex.encodeHtml($(id).val()) + "&groupname=" + groupName))
-        .success(function (data) {
-            var source = [];
+            .success(function (data) {
+                var source = [];
 
-            $.each(data, function (i) {
-                source.push(data[i].Username);
+                $.each(data, function (i) {
+                    source.push(data[i].Username);
+                });
+
+                $(id).autocomplete({
+                    source: source
+                });
+
+                Fanex.ExtAcc.SuggestionXHR = null;
+            })
+            .error(function (xhr, status, err) {
+                Fanex.ExtAcc.SuggestionXHR = null;
             });
-
-            $(id).autocomplete({
-                source: source
-            });
-
-            Fanex.ExtAcc.SuggestionXHR = null;
-        })
-        .error(function (xhr, status, err) {
-            Fanex.ExtAcc.SuggestionXHR = null;
-        });
     },
 
     Init: function () {
@@ -738,7 +738,7 @@ function setCaret(oField, iCaretPos) {
         oSel.moveEnd('character', iCaretPos - oField.value.length);
         oSel.select();
     }
-        // Firefox support
+    // Firefox support
     else if (oField.selectionStart || oField.selectionStart == '0') {
         oField.selectionStart = iCaretPos;
         oField.selectionEnd = iCaretPos;
@@ -757,7 +757,7 @@ function getCaret(oField) {
         oSel.moveStart('character', -oField.value.length);
         iCaretPos = oSel.text.length;
     }
-        // Firefox support
+    // Firefox support
     else if (oField.selectionStart || oField.selectionStart == '0')
         iCaretPos = oField.selectionStart;
     // Return results
@@ -777,7 +777,7 @@ String.prototype.formatFloat = function () {
     number = Math.floor(number * 100 + 0.50000000001);
     number = Math.floor(number / 100).toString();
 
-    for (var i = 0; i < Math.floor((number.length - (1 + i)) / 3) ; i++) {
+    for (var i = 0; i < Math.floor((number.length - (1 + i)) / 3); i++) {
         number = number.substring(0, number.length - (4 * i + 3)) + ',' + number.substring(number.length - (4 * i + 3));
     }
 
@@ -788,7 +788,7 @@ String.prototype.toFixed = function (precision, optionals) {
     var value = parseFloat(this);
 
     var power = Math.pow(10, precision),
-            output;
+        output;
 
     // Multiply up by precision, round accurately, then divide and use native toFixed():
     output = (Math.round(value * power) / power).toFixed(precision);
@@ -887,23 +887,32 @@ function workaroundForGridOnPhone() {
             $('#jqgrid .grid-container')
                 .unbind('scroll.workaround.grid')
                 .bind('scroll.workaround.grid',
-                function () {
-                    var firstHeaderColumn = $("#jqgrid .row-headers-background table tr th div.table-cell").first();
-                    var firstHeaderColumnTop = $("#jqgrid .free-top-left table tr th div.table-cell").first();
-                    if (firstHeaderColumn && firstHeaderColumnTop) {
-                        var currentWidth = firstHeaderColumnTop.width();
-                        firstHeaderColumn.width(currentWidth + 1).width(currentWidth - 1);
-                    }
-                });
+                    function () {
+                        var firstHeaderColumn = $("#jqgrid .row-headers-background table tr th div.table-cell").first();
+                        var firstHeaderColumnTop = $("#jqgrid .free-top-left table tr th div.table-cell").first();
+                        if (firstHeaderColumn && firstHeaderColumnTop) {
+                            var currentWidth = firstHeaderColumnTop.width();
+                            firstHeaderColumn.width(currentWidth + 1).width(currentWidth - 1);
+                        }
+                    });
         }
 
         $(window)
             .unbind('orientationchange.grid')
             .bind('orientationchange.grid',
-            function (event) {
-                setTimeout(function () {
-                    $('#jqgrid').fanexGrid("resizeHeight", $(window).height() - 70);
-                }, 300);
-            });
+                function (event) {
+                    setTimeout(function () {
+                        $('#jqgrid').fanexGrid("resizeHeight", $(window).height() - 70);
+                    }, 300);
+                });
     }
+}
+
+function isNullOrUndefined(obj) {
+    return obj == null;
+}
+
+function isNullOrUndefinedOrEmpty(obj) {
+    obj = obj === '' ? null : obj;
+    return isNullOrUndefined(obj);
 }

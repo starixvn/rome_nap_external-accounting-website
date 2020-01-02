@@ -8,7 +8,9 @@
     public static class Config
     {
         public static DateTime WinlostDate
+#pragma warning disable S109 // Magic numbers should not be used
             => HttpContext.Current.IsDebuggingEnabled ? new DateTime(2012, 11, 6).Date : DateTime.Now.AddDays(-1).Date;
+#pragma warning restore S109 // Magic numbers should not be used
 
         public static bool IsTest => Utils.ToBoolean(GetValue("IsTest"));
 

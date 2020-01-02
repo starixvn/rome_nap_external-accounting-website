@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using System.Web.Security;
     using Core.Context;
     using DTO;
     using Fanex.ExternalAccount.Core.Base;
@@ -110,7 +111,12 @@
                 try
                 {
                     var isKickOut = _loginService.IsKickedOut(onuserId);
-                    if (!isKickOut)
+                    if (isKickOut)
+                    {
+                        Session.Abandon();
+                        FormsAuthentication.SignOut();
+                    }
+                    else
                     {
                         return RecheckinStatus.Continue;
                     }

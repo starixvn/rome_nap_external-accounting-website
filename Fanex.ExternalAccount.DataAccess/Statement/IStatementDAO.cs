@@ -1,10 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Interface.Statement
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
     using Fanex.ExternalAccount.DTO.Statement;
+    using System;
+    using System.Collections.Generic;
 
     public interface IStatementDao
     {

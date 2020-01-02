@@ -19,10 +19,10 @@
             {
                 switch (Level)
                 {
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
+                    case Role.Member:
+                    case Role.Agent:
+                    case Role.Master:
+                    case Role.Super:
                         return Role.DisplayRoleName(Level);
                     default:
                         return "Total";

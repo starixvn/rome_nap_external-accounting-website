@@ -178,6 +178,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Customer\CustomerList\CustomerListService.cs" />
+    <Compile Include="Customer\CustomerList\Params\SearchCustomerListParams.cs" />
     <Compile Include="Customer\IAgentService.cs" />
     <Compile Include="Customer\ICommissionService.cs" />
     <Compile Include="Customer\ICustomerService.cs" />
@@ -200,7 +202,6 @@
     <Compile Include="Report\WinLossDetailServiceImpl.cs" />
     <Compile Include="Statement\IStatementService.cs" />
     <Compile Include="Statement\StatementService.cs" />
-    <Compile Include="Customer\MemberService.cs" />
     <Compile Include="Customer\AgentService.cs" />
     <Compile Include="Customer\MasterService.cs" />
     <Compile Include="Customer\CustomerService.cs" />
@@ -251,11 +252,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\Google.Protobuf.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.CSharp.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

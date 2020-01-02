@@ -3,6 +3,7 @@
     using System.Web;
     using Fanex.ExternalAccount.Core.Context;
 
+#pragma warning disable S2325 // Methods and properties that don't access instance data should be static
     public class ExtUserSession : Fanex.ActivityTracking.Models.IUserSession
     {
         public int AdminId => CurrentSession.Instance.UserId;
@@ -25,4 +26,5 @@
 
         public string CurrencyName => CurrentSession.Instance.CurrencyGroup;
     }
+#pragma warning restore S2325 // Methods and properties that don't access instance data should be static
 }

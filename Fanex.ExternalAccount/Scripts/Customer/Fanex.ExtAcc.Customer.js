@@ -1,4 +1,5 @@
 ﻿Fanex.ExtAcc.Customer = {
+    RoleNameConst: ['', 'Member', 'Agent', 'Master', 'Super'],
     DataFields: null,
     DataSource: null,
 
@@ -441,15 +442,8 @@
     },
 
     CallBackCustomerList: function () {
-        if (this.CurrentLevel == this.Super) {
-            Fanex.ExtAcc.Customer.GetSuperList(this.custId);
-        } else if (this.CurrentLevel == this.Master) {
-            Fanex.ExtAcc.Customer.GetMasterList(this.superId, this.AllowDoubleComm, this.custId, null, this.superSyncCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe);
-        } else if (this.CurrentLevel == this.Agent) {
-            Fanex.ExtAcc.Customer.GetAgentList(this.masterId, this.AllowDoubleComm, this.custId, null, this.masterSyncCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe);
-        } else {
-            Fanex.ExtAcc.Customer.GetMemberList(this.agentId, this.AllowDoubleComm, this.custId, null, this.agentSyncCasino, this.HideKeno, this.HideVirtualSports, this.HideGoldDeluxe);
-        }
+        var _this = Fanex.ExtAcc.Customer.CustomerList;
+        _this.ReloadAfterEdit();
     },
 
     ConfigDoubleComm: function (custid, isSuper) {
@@ -688,43 +682,43 @@
             dataType: 'json',
             type: 'post'
         })
-        .success(function (result) {
-            var rows = $.parseJSON(result.rows);
+            .success(function (result) {
+                var rows = $.parseJSON(result.rows);
 
-            Fanex.ExtAcc.Customer.DataSource = rows;
+                Fanex.ExtAcc.Customer.DataSource = rows;
 
-            if (result.roleId != 0 && rows.length > 0) {
-                var custId = rows[0].custid;
+                if (result.roleId != 0 && rows.length > 0) {
+                    var custId = rows[0].custid;
 
-                Fanex.ExtAcc.Customer.directSuperId = result.srecommend;
-                Fanex.ExtAcc.Customer.directMasterId = result.mrecommend;
-                Fanex.ExtAcc.Customer.directAgentId = result.recommend;
-                Fanex.ExtAcc.Customer.custId = Fanex.ExtAcc.Customer.UserId = result.custId;
-                Fanex.ExtAcc.Customer.AllowDoubleComm = result.allowDoubleComm;
-                Fanex.ExtAcc.Customer.HideGoldDeluxe = rows[0].HideGoldDeluxe;
-                Fanex.ExtAcc.Customer.HideKeno = rows[0].HideKeno;
-                Fanex.ExtAcc.Customer.HideVirtualSports = rows[0].HideVirtualSports;
+                    Fanex.ExtAcc.Customer.directSuperId = result.srecommend;
+                    Fanex.ExtAcc.Customer.directMasterId = result.mrecommend;
+                    Fanex.ExtAcc.Customer.directAgentId = result.recommend;
+                    Fanex.ExtAcc.Customer.custId = Fanex.ExtAcc.Customer.UserId = result.custId;
+                    Fanex.ExtAcc.Customer.AllowDoubleComm = result.allowDoubleComm;
+                    Fanex.ExtAcc.Customer.HideGoldDeluxe = rows[0].HideGoldDeluxe;
+                    Fanex.ExtAcc.Customer.HideKeno = rows[0].HideKeno;
+                    Fanex.ExtAcc.Customer.HideVirtualSports = rows[0].HideVirtualSports;
 
-                if (result.roleId == 4) {
-                    Fanex.ExtAcc.Customer.GetSuperList(rows[0].custid, result);
-                } else if (result.roleId == 3) {
-                    Fanex.ExtAcc.Customer.superSyncCasino = result.syncCasino;
-                    Fanex.ExtAcc.Customer.GetMasterList(result.srecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe);
-                } else if (result.roleId == 2) {
-                    Fanex.ExtAcc.Customer.masterSyncCasino = result.syncCasino;
-                    Fanex.ExtAcc.Customer.GetAgentList(result.mrecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe);
+                    if (result.roleId == 4) {
+                        Fanex.ExtAcc.Customer.GetSuperList(rows[0].custid, result);
+                    } else if (result.roleId == 3) {
+                        Fanex.ExtAcc.Customer.superSyncCasino = result.syncCasino;
+                        Fanex.ExtAcc.Customer.GetMasterList(result.srecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe);
+                    } else if (result.roleId == 2) {
+                        Fanex.ExtAcc.Customer.masterSyncCasino = result.syncCasino;
+                        Fanex.ExtAcc.Customer.GetAgentList(result.mrecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe);
+                    } else {
+                        Fanex.ExtAcc.Customer.agentSyncCasino = result.syncCasino;
+                        Fanex.ExtAcc.Customer.GetMemberList(result.recommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe);
+                    }
                 } else {
-                    Fanex.ExtAcc.Customer.agentSyncCasino = result.syncCasino;
-                    Fanex.ExtAcc.Customer.GetMemberList(result.recommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe);
-                }
-            } else {
-                $('#msgNoinfo').css('display', 'block');
-                $('#jqgrid').css('display', 'none');
-                $('#exporttoexcel').css('display', 'none');
+                    $('#msgNoinfo').css('display', 'block');
+                    $('#jqgrid').css('display', 'none');
+                    $('#exporttoexcel').css('display', 'none');
 
-                Fanex.ExtAcc.UnBlockUI();
-            }
-        });
+                    Fanex.ExtAcc.UnBlockUI();
+                }
+            });
     },
 
     AppendInputToForm: function (id, name, value, targetForm) {
@@ -750,48 +744,21 @@
 
     IdsAndNames: function () {
         var custids = [];
-        var divs = $('div');
-
+        var divs = $('div.menuActive');
         this.Usernames = '';
         this.CustIds = '';
         this.RnGCasinoStatuses = [];
-
         for (var i = 0; i < divs.length; i++) {
-            if (divs[i].className == 'menuActive' && !custids.contains(divs[i].id)) {
+            if (!custids.contains(divs[i].id)) {
                 custids.push(divs[i].id);
-
                 this.CustIds += divs[i].id + ',';
+                this.Usernames += divs.eq(i).attr('data-username') + ', ';
+                this.RnGCasinoStatuses.push(divs.eq(i).attr('data-sync-casino') == 'true' ? '1' : '0');
             }
         }
 
         this.UserId = parseInt(custids[0]);
-
-        if (custids.length == 1) {
-            for (var i = 0; i < this.DataSource.length; i++) {
-                if (this.DataSource[i].custid == parseInt(custids[0])) {
-                    this.Usernames = this.DataSource[i].username + ', ';
-
-                    break;
-                }
-            }
-
-            this.IsMultiple = false;
-        } else {
-            for (var i = 0; i < this.DataSource.length; i++) {
-                var row = this.DataSource[i];
-
-                for (var j = 0; j < custids.length; j++) {
-                    if (custids[j] == row.custid) {
-                        this.Usernames += row.username + ', ';
-                        this.RnGCasinoStatuses.push(row.synccasino ? '1' : '0');
-                        continue;
-                    }
-                }
-            }
-
-            this.IsMultiple = true;
-        }
-
+        this.IsMultiple = custids.length > 1;
         return {
             Ids: this.Ids(),
             Names: this.Names()
@@ -1006,9 +973,15 @@
 
         for (var i = 0, max = siteLevelProducts.length; i < max; i++) {
             var currentSiteProduct = siteLevelProducts[i];
-            var currentProduct = customerProductStatus[currentSiteProduct.Id];
-            var isShow = isCheckUpline ? currentProduct.upline.isShow : currentProduct.isShow;
-            if (isShow) {
+            var currentProduct;
+            for (var j = 0, customerProductStatusLength = customerProductStatus.DCSProductsSetting.length; j < customerProductStatusLength; j++) {
+                var currentCustomerProductStatus = customerProductStatus.DCSProductsSetting[j];
+                if (currentSiteProduct.Id === currentCustomerProductStatus.ProductID) {
+                    currentProduct = currentCustomerProductStatus
+                }
+            }
+
+            if (!currentProduct.IsHidden) {
                 productSettings.push({
                     productId: currentSiteProduct.Id,
                     productKey: currentSiteProduct.Key,
@@ -1020,14 +993,5 @@
         }
 
         return productSettings;
-    },
-
-    ShowCustomerLimitDateFilter: function () {
-        var customerLimitDate = parent.$('.customer-limit-date');
-        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Super) {
-            customerLimitDate.removeClass('hidden');
-        } else {
-            customerLimitDate.addClass('hidden');
-        }
-    },
+    }
 };

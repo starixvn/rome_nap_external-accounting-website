@@ -9,7 +9,9 @@
     using System.Data;
     using ViewModels;
 
+#pragma warning disable IDE1006 // Naming Styles
     public interface CustomerQueryService
+#pragma warning restore IDE1006 // Naming Styles
     {
         CustomerModel SearchCustomer(int actorId, string custName, string groupName);
 

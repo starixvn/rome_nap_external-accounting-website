@@ -1,13 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 {
-    using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
-    using Service.Impl.Customer.Casino;
     using Services;
+    using System.Web.Mvc;
 
     public class UpdateCustomerController : BaseController
     {

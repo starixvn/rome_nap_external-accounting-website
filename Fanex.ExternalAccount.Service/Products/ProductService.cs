@@ -1,12 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Service.Products
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Caching;
     using DTO.Products;
     using Fanex.ExternalAccount.DataAccess.Products;
     using Fanex.NAP.Framework.Data;
+    using System;
+    using System.Collections.Generic;
 
     public interface IProductService
     {
@@ -30,7 +29,7 @@
 
         public IEnumerable<ProductDto> GetAllProducts()
         {
-            var key = "Fanex.NAP.External.Site.AllProducts";
+            const string key = "Fanex.NAP.External.Site.AllProducts";
             var result = Cache.Get<IEnumerable<ProductDto>>(key);
 
             if (result == null)

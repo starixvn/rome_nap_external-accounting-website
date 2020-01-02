@@ -20,6 +20,7 @@
         private readonly CurrentSession currentSession;
 
         private const int LimitedFailure = 5;
+        private const int CaptchaLength = 4;
 
         public OTPController()
         {
@@ -124,7 +125,7 @@
         {
             var customerOtp = customerOtpService.GetCustomerOtpDto(currentSession.CustId);
 
-            Encryptor.RandomCaptcha = CaptchaUtil.GetCaptchaString(4);
+            Encryptor.RandomCaptcha = CaptchaUtil.GetCaptchaString(CaptchaLength);
             currentSession.OTPEncryptCode = Encryptor.RandomCaptcha;
             currentSession.EnabledOTP = customerOtp.Enabled;
             currentSession.OTPSecretKey = customerOtp.SecretKey;

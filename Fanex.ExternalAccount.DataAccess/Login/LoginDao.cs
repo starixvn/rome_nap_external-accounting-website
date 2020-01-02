@@ -1,17 +1,14 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Login
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
     using Base;
     using Common;
-    using Common.Extensions;
     using Data;
     using Data.DNAide;
     using DTO;
-    using DTO.UserControl;
     using Interface.Login;
+    using System;
+    using System.Collections;
+    using System.Data;
 
     public class LoginDao : DAOBase, ILoginDao
     {
@@ -40,7 +37,9 @@
                 db.AddInParameter("Platform", DbType.String, platForm);
                 db.AddOutParameter("Custid", DbType.Int32, sizeof(int));
                 db.AddOutParameter("ErrCode", DbType.Int32, sizeof(int));
+#pragma warning disable S109 // Magic numbers should not be used
                 db.AddOutParameter("ErrMsg", DbType.String, 200);
+#pragma warning restore S109 // Magic numbers should not be used
                 db.AddOutParameter("GroupID", DbType.Int32, sizeof(int));
 
                 db.ExecuteNonQuery();

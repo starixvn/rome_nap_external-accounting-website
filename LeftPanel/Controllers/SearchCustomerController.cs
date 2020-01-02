@@ -43,8 +43,6 @@
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult Index(string groupName, string custName)
         {
-            // throw new System.Exception("Louis - Sentry Logging");
-
             var userId = CurrentSession.UserId;
             ViewBag.UserId = userId;
 
@@ -126,7 +124,9 @@
         [HttpPost]
         [AntiXSRFFilter]
         public ActionResult GetDownlineList(int custId, int pageIndex)
+#pragma warning disable S109 // Magic numbers should not be used
             => JsonBase(customerQueryService.GetDownlineList(custId, 100, pageIndex));
+#pragma warning restore S109 // Magic numbers should not be used
 
         [HttpGet]
         [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP,

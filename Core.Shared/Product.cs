@@ -17,17 +17,21 @@ namespace Fanex.ExternalAccount.Core.Shared
         }
 
         public Product(
+            int index,
             int productId,
             string productName,
             bool isGetNameFromRemotingRef = false,
             string substituteProductKey = null):this(new RemotingRefService())
         {
+            Index = index;
             Id = productId;
             Key = string.IsNullOrWhiteSpace(productName)
                 ? string.Empty
+#pragma warning disable S3358 // Ternary operators should not be nested
                 : string.IsNullOrWhiteSpace(substituteProductKey) 
                     ? productName.Replace(" ", string.Empty) 
                     : substituteProductKey;
+#pragma warning restore S3358 // Ternary operators should not be nested
             Name = isGetNameFromRemotingRef
                 ? _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en-US", productName)
                 : productName;
@@ -38,6 +42,8 @@ namespace Fanex.ExternalAccount.Core.Shared
         public string Name { get; protected set; }
 
         public string Key { get; protected set; }
+
+        public int Index { get; protected set; }
 
         public bool IsShow => ProductSettings.IsShowProduct(Id);
     }

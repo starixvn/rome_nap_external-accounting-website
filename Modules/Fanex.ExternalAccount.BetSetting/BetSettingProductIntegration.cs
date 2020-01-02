@@ -7,34 +7,34 @@
     using System.Threading.Tasks;
     using ExternalAccount.Core.Shared;
     using ExternalAccount.Module.LeftPanel.Services;
+    using Fanex.ExternalAccount.Service.Customer.CustomerList;
+    using Fanex.ExternalAccount.Service.Impl.Customer;
     using ViewModels;
 
     public static class BetSettingProductIntegration
     {
-        private static readonly IReadOnlyList<Product> BetSettingTabProductConfigs = new List<Product>
+        private static readonly int[] BetSettingTabProductConfigs = new[]
         {
-            ProductSettings.SiteProducts[ProductConstants.AllBet],
-            ProductSettings.SiteProducts[ProductConstants.VoidBridge],
-            ProductSettings.SiteProducts[ProductConstants.NG2],
-            ProductSettings.SiteProducts[ProductConstants.Lottery],
-            ProductSettings.SiteProducts[ProductConstants.Sportsbook2]
+            ProductConstants.AllBet,
+            ProductConstants.VoidBridge,
+            ProductConstants.NG2,
+            ProductConstants.Lottery,
+            ProductConstants.Sportsbook2
         };
 
-        private static CustomerStatusQueryService customerStatusService = new CustomerStatusServiceImpl();
+        private static CustomerService customerService = new CustomerService();
 
-        public static IList<Product> GetVisibledBetSettingTabs(int userId, string siteName, string custName)
+        public static IList<Product> GetVisibledBetSettingTabs(int custId)
         {
-            var customerStatus = customerStatusService.GetCustomerStatus(
-                userId,
-                siteName,
-                custName).ProductStatusDic;
+            var customerStatus = customerService.GetCustomerAllStatus(custId);
             var visibleProductTabs = new List<Product>();
-
-            foreach (var productTab in BetSettingTabProductConfigs)
+            int index = 0;
+            foreach (var product in customerStatus.DCSProductsSetting)
             {
-                if(customerStatus[productTab.Id].IsShow)
+                if (Array.Exists(BetSettingTabProductConfigs, element => element == product.ProductID)
+                    && !product.IsHidden && product.IsSynced)
                 {
-                    visibleProductTabs.Add(productTab);
+                    visibleProductTabs.Add(new Product(index++, product.ProductID, product.ProductName));
                 }
             }
 

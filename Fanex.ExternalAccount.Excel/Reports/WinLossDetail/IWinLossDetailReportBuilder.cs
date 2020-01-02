@@ -1,6 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
 {
-    using System.Collections.Generic;
     using System.IO;
 
     public interface IWinLossDetailReportBuilder

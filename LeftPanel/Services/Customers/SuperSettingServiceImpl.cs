@@ -1,11 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services.Customers
 {
+    using Core.Authorization;
     using System.Collections.Generic;
     using System.Data;
-    using Core.Authorization;
-    using DataAccess.Criteria.Customer;
-    using DTO.Customer;
-    using NAP.Framework.Data;
     using ViewModels;
 
     public class SuperSettingServiceImpl : CustomerSettingServiceImpl
@@ -17,10 +14,9 @@
         public SuperSettingServiceImpl(
             int userId,
             int roleId,
-            string site,
             AuthorizationService authorizationService = null,
             IReadOnlyDictionary<int, string> visibleBetSettingPermissions = null)
-            : base(userId, roleId, site)
+            : base(userId, roleId)
         {
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
             this.visibleBetSettingPermissions = visibleBetSettingPermissions ?? AccountInfoProductConfiguration.VisibleBetSettingPermissions;
@@ -33,7 +29,9 @@
             if (authorizationService.HasReadPermissionOnFunctions(
                 visibleBetSettingPermissions.Values, _userId))
             {
+#pragma warning disable S109 // Magic numbers should not be used
                 setting.Details.Insert(2, new ObjectInfo("BetSetting", "Betting Limit"));
+#pragma warning restore S109 // Magic numbers should not be used
             }
 
             setting.Details.Add(new ObjectInfo("DataRange", "Data Range"));

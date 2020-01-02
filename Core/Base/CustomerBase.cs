@@ -1,17 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Core.Base
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using System.Web.Mvc;
     using CasinoLibrary.Model.UserException;
-    using Data;
-    using Data.DNAide;
     using Logging.Extensions.Web;
     using Module.NG2.Entities;
     using Module.NG2.Services;
@@ -19,6 +8,9 @@
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.Products;
+    using System;
+    using System.Diagnostics;
+    using System.Web.Mvc;
     using Utilities;
     using ViewModel.Customer;
     using Customer = CasinoLibrary.SBAgent.Customer;
@@ -27,6 +19,7 @@
     public class CustomerBase : BaseController
     {
         private const string CasinoNo = "01";
+        private const int ErrorCode_Error = 999;
         private readonly IReportService _report = new ReportService();
         protected readonly ProductStatusService productStatusService = new ProductStatusServiceImpl();
 
@@ -65,7 +58,7 @@
                         CurrentContext.Ip4Address,
                         uplineId,
                         CurrentSession.UserName,
-                        FromSystem);
+                        CurrentSession.FromSystem);
 
                     if (isSuccess)
                     {
@@ -75,7 +68,7 @@
                     else
                     {
                         new Customer().RemoveAccount(custInfo.UserName, CurrentContext.Ip4Address,
-                            CurrentSession.UserId, CurrentSession.UserName, FromSystem);
+                            CurrentSession.UserId, CurrentSession.UserName, CurrentSession.FromSystem);
                     }
                 }
 
@@ -84,14 +77,14 @@
             catch (ErrorException casinoEx)
             {
                 ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
-                return new Result(999, casinoEx.Message);
+                return new Result(ErrorCode_Error, casinoEx.Message);
             }
             catch (Exception ex)
             {
                 ExceptionHandler.Handle(ex);
             }
 
-            return new Result(999, string.Empty);
+            return new Result(ErrorCode_Error, string.Empty);
         }
 
         protected Module.NG2.Entities.Result AutoInsertNG2Product(int custId, string username, RoleId roleId,

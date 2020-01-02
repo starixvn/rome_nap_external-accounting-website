@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
@@ -13,6 +10,8 @@
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.UserControl;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]

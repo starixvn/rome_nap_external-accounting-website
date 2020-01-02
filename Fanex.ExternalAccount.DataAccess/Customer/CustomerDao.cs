@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
     using Base;
     using Common.Extensions;
     using Core.Shared;
@@ -13,7 +10,11 @@
     using DTO;
     using DTO.Customer;
     using DTO.Customer.Status;
+    using Fanex.ExternalAccount.Utilities;
     using Interface.Customer;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
     using ViewModel.Customer.Suspend;
 
     public class CustomerDao : DAOBase, ICustomerDao
@@ -25,7 +26,9 @@
                 return false;
             }
 
+#pragma warning disable S1192 // String literals should not be duplicated
             var parameters = new Hashtable { { "username", userName }, { "isexists", false } };
+#pragma warning restore S1192 // String literals should not be duplicated
 
             var result = DbHelper.ExecuteDbResult("Age_CustomerCheckExists", parameters);
 
@@ -34,7 +37,9 @@
 
         public Customer UserInfo(int custId)
         {
+#pragma warning disable S1192 // String literals should not be duplicated
             var param = new Hashtable { { "custid", custId } };
+#pragma warning restore S1192 // String literals should not be duplicated
 
             using (var reader = ExecDataReader("Age_CustomerSelUserInfo", param))
             {
@@ -43,16 +48,18 @@
                     return new Customer
                     {
                         CustId = reader.ToInt("custid"),
+#pragma warning disable S1192 // String literals should not be duplicated
                         RoleId = reader.ToInt("roleid"),
-                        Username = reader.ToString("username"),
-                        FirstName = reader.ToString("firstname"),
-                        LastName = reader.ToString("lastname"),
-                        MobilePhone = reader.ToString("mobilephone"),
-                        Phone = reader.ToString("phone"),
-                        Email = reader.ToString("email"),
-                        Fax = reader.ToString("fax"),
+#pragma warning restore S1192 // String literals should not be duplicated
+                        Username = Utils.ToString(reader["username"]),
+                        FirstName = Utils.ToString(reader["firstname"]),
+                        LastName = Utils.ToString(reader["lastname"]),
+                        MobilePhone = Utils.ToString(reader["mobilephone"]),
+                        Phone = Utils.ToString(reader["phone"]),
+                        Email = Utils.ToString(reader["email"]),
+                        Fax = Utils.ToString(reader["fax"]),
 
-                        Remark = reader.ToString("remark")
+                        Remark = Utils.ToString(reader["remark"])
                     };
                 }
 
@@ -90,7 +97,9 @@
         {
             var result = DbHelper.ExecuteDbResult(criteria.GetSettingKey(), criteria.GetSpParams());
 
+#pragma warning disable S1192 // String literals should not be duplicated
             return new Result(result.Outputs["errcode"].ToString(), result.Outputs["errmsg"].ToString(),
+#pragma warning restore S1192 // String literals should not be duplicated
                 result.ResultSet);
         }
 
@@ -128,8 +137,10 @@
                 {
                     listAffectedDownline.Add(new SingleUpdateAffectedDownline(
                         Utilities.Utils.ToInt32(reader["roleid"]),
+#pragma warning disable S1192 // String literals should not be duplicated
                         Utilities.Utils.ToInt32(reader["cntAffected"]),
                         Utilities.Utils.ToInt32(reader["cntUnchanged"])));
+#pragma warning restore S1192 // String literals should not be duplicated
                 }
 
                 return listAffectedDownline;
@@ -188,7 +199,7 @@
                     if (row != null)
                     {
                         var roleid = Utilities.Utils.ToInt32(reader["roleid"]);
-                        switch(roleid)
+                        switch (roleid)
                         {
                             case Role.Master:
                                 row.AffectedMaster = Utilities.Utils.ToInt32(reader["cntAffected"]);
@@ -218,5 +229,93 @@
                 db.ExecuteNonQuery();
             }
         }
+
+#pragma warning disable S1192 // String literals should not be duplicated
+#pragma warning disable S3776 // Cognitive Complexity of methods should not be too high
+#pragma warning disable S1541 // Methods and properties should not be too complex
+        public CustomerStatusDTO GetCustomerAllStatus(GetCustomerAllStatusCriteria criteria)
+#pragma warning restore S1541 // Methods and properties should not be too complex
+#pragma warning restore S3776 // Cognitive Complexity of methods should not be too high
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var result = new CustomerStatusDTO();
+                CustomerStatusDCS sportsbook2 = null;
+                var reader = objDb.ExecuteReader(criteria.GetSpParams());
+                if (reader.Read())
+                {
+                    result.HasSecurityCode = Utils.ToBoolean(reader["HasSecurityCode"]);
+                    result.UplineHasSecurityCode = Utils.ToBoolean(reader["UplineHasSecurityCode"]);
+                    result.DisableTransfer = Utils.ToBoolean(reader["DisableTransfer"]);
+                }
+
+                reader.NextResult();
+                if (reader.Read())
+                {
+                    result.SyncedCasino = Utils.ToBoolean(reader["SyncCasino"]);
+                    result.UplineSyncedCasino = Utils.ToBoolean(reader["uplineSyncCasino"]);
+                    result.DisableCasino = Utils.ToBoolean(reader["DisableCasino"]);
+                    result.HideGoldDeluxe = !ProductSettings.IsShowGoldDeluxe || Utils.ToBoolean(reader["HideGoldDeluxe"]);
+                    result.DisableGoldDeluxe = Utils.ToBoolean(reader["DisableGoldDeluxe"]);
+                    result.UplineHideGoldDeluxe = Utils.ToBoolean(reader["uplineHideGoldDeluxe"]);
+                    result.HideKeno = !ProductSettings.IsShowKeno || Utils.ToBoolean(reader["HideKeno"]);
+                    result.DisableKeno = Utils.ToBoolean(reader["DisableKeno"]);
+                }
+
+                reader.NextResult();
+                while (reader.Read())
+                {
+                    int productId = Utils.ToInt32(reader["ProductID"]);
+                    if (productId == ProductConstants.VirtualSports)
+                    {
+                        result.HideVirtualSport = Utils.ToBoolean(reader["isHidden"]);
+                        result.DisableVirtualSport = Utils.ToBoolean(reader["isDisabled"]);
+                        continue;
+                    }
+
+                    if (productId == ProductConstants.Sportsbook2)
+                    {
+                        if (sportsbook2 == null)
+                        {
+                            sportsbook2 = new CustomerStatusDCS
+                            {
+                                ProductID = productId,
+                                ProductName = ProductSettings.SiteProducts[productId]?.Name,
+                                IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
+                                IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
+                                IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
+                                IsSynced = Utils.ToBoolean(reader["isSync"]),
+                                IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
+                            };
+                        }
+                        else
+                        {
+                            sportsbook2.IsDisabled = sportsbook2.IsDisabled && Utils.ToBoolean(reader["isDisabled"]);
+                            sportsbook2.IsSynced = sportsbook2.IsSynced && Utils.ToBoolean(reader["isSync"]);
+                        }
+
+                        continue;
+                    }
+
+                    if (!result.IsDCSProductExisted(productId))
+                    {
+                        result.DCSProductsSetting.Add(new CustomerStatusDCS
+                        {
+                            ProductID = productId,
+                            ProductName = ProductSettings.SiteProducts[productId]?.Name,
+                            IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
+                            IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
+                            IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
+                            IsSynced = Utils.ToBoolean(reader["isSync"]),
+                            IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
+                        });
+                    }
+                }
+
+                result.DCSProductsSetting.Add(sportsbook2);
+                return result;
+            }
+        }
+#pragma warning restore S1192 // String literals should not be duplicated
     }
 }

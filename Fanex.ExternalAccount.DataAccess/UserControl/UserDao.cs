@@ -11,6 +11,7 @@
     using DTO.UserControl;
     using Interface.UserControl;
 
+#pragma warning disable S1192 // String literals should not be duplicated
     public class UserDao : DAOBase, IUserDao
     {
         public IEnumerable<User> GetListUsers(string userName, int? groupId)
@@ -227,4 +228,5 @@
             }
         }
     }
+#pragma warning restore S1192 // String literals should not be duplicated
 }

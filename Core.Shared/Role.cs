@@ -87,7 +87,7 @@
         [DebuggerStepThrough]
         private static void EnsureRoleIsInRange(int role)
         {
-            if (role < 1 || role > 5)
+            if (role < Member || role > Group)
             {
                 throw new ArgumentOutOfRangeException(nameof(role));
             }

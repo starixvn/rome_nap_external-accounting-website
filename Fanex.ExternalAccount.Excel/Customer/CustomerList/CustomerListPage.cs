@@ -1,11 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
 {
-    using System.Collections.Generic;
-    using System.Data;
     using Core.Shared;
-    using Extensions;
+    using Fanex.ExternalAccount.DTO.Customer.CustomerList;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using System.Collections.Generic;
     using Utility;
 
     internal class CustomerListPage : TemplateReport, IReportBuilder
@@ -36,50 +35,51 @@
 
         public override void WriteBodyReport(ISheet resultSheet)
         {
-            var dtr = _builder.Data.Rows;
             var totalColumn = _builder.RoleId.IsSuper() ? 15 : 14;
             var lastColumnIndex = FirstColumnIndex + totalColumn - 1;
             if (_builder.RoleId.IsNotMember())
             {
-                WriteOthersReport(resultSheet, dtr, lastColumnIndex);
+                WriteOthersReport(resultSheet, _builder.Data, lastColumnIndex);
             }
             else
             {
+#pragma warning disable S109 // Magic numbers should not be used
                 totalColumn = 18;
+#pragma warning restore S109 // Magic numbers should not be used
                 lastColumnIndex = FirstColumnIndex + totalColumn - 1;
-                WriteMemberReport(resultSheet, dtr, lastColumnIndex);
+                WriteMemberReport(resultSheet, _builder.Data, lastColumnIndex);
             }
         }
 
         private void WriteMemberReport(
             ISheet resultSheet,
-            DataRowCollection dtr,
+            List<CustomerListDTO> data,
             int lastColumnIndex)
         {
             var id = 1;
             var rowId = 3;
-            foreach (DataRow items in dtr)
+            foreach (CustomerListDTO item in data)
             {
-                var custStatus = SetBackgroundRow(resultSheet, rowId, lastColumnIndex, items);
+                var custStatus = SetBackgroundRow(resultSheet, rowId, lastColumnIndex, item);
 
                 var values = new List<object>
                 {
                     id,
-                    items.Username(),
+                    item.UserName,
                     custStatus,
-                    items.DoubleCommLosing() ? "ON" : "OFF",
-                    items.NickName(),
-                    items.FirstName(),
-                    items.LastName(),
-                    items.UserGroup(),
-                    items.Discount(),
-                    items.Discount1x2(),
-                    items.DiscountCasino(),
-                    items.PlayerDiscount(),
-                    items.PlayerDiscount1x2(),
-                    items.PlayerDiscountCasino(),
-                    items.CreateDate(),
-                    items.LastLoginIP()
+                    item.DoubleCommLosing ? "ON" : "OFF",
+                    item.NickName,
+                    item.FirstName,
+                    item.LastName,
+                    item.UserGroup,
+                    item.Discount,
+                    item.Discount1x2,
+                    item.DiscountCS,
+                    item.PlayerDiscount,
+                    item.PlayerDiscount1x2,
+                    item.PlayerDiscountCS,
+                    item.CreateDate,
+                    item.LastLoginIP
                 };
 
                 resultSheet.GetRow(rowId).WriteCells(FirstColumnIndex, values);
@@ -91,71 +91,67 @@
 
         private void WriteOthersReport(
             ISheet resultSheet,
-            DataRowCollection dtr,
+            List<CustomerListDTO> data,
             int lastColumnIndex)
         {
             var id = 1;
             var rowId = 3;
-            foreach (DataRow items in dtr)
+            foreach (CustomerListDTO item in data)
             {
-                var custStatus = SetBackgroundRow(resultSheet, rowId, lastColumnIndex, items);
+                var custStatus = SetBackgroundRow(resultSheet, rowId, lastColumnIndex, item);
                 var values = new List<object>
                 {
                     id,
-                    items.Username(),
+                    item.UserName,
                     custStatus,
-                    items.DoubleCommLosing() ? "ALLOWED" : "DISALLOWED",
-                    items.FirstName(),
-                    items.LastName(),
-                    items.GroupA(),
-                    items.GroupB(),
-                    items.GroupC(),
-                    items.GroupD(),
-                    items.Discount1x2(),
-                    items.DiscountCasino()
+                    item.DoubleCommLosing ? "ALLOWED" : "DISALLOWED",
+                    item.FirstName,
+                    item.LastName,
+                    item.GroupA,
+                    item.GroupB,
+                    item.GroupC,
+                    item.GroupD,
+                    item.Discount1x2,
+                    item.DiscountCS
                 };
 
                 if (_builder.RoleId.IsSuper())
                 {
-                    values.Add(items.LimitDays()?.ToString() ?? items.MinDate() ?? string.Empty);
+                    values.Add(item.LimitDays?.ToString() ?? item.MinDate);
                 }
 
-                values.Add(items.CreateDate());
-                values.Add(items.LastLoginIP());
+                values.Add(item.CreateDate);
+                values.Add(item.LastLoginIP);
                 resultSheet.GetRow(rowId).WriteCells(FirstColumnIndex, values);
                 id++;
                 rowId++;
             }
         }
 
+#pragma warning disable S3358 // Ternary operators should not be nested
         private string SetBackgroundRow(
             ISheet resultSheet,
             int rowId,
             int lastColumnIndex,
-            DataRow items)
+            CustomerListDTO item)
         {
-            var custStatus = !items.Enabled() ? "disabled"
-                : items.Closed() ? "closed"
-                : items.Suspended() ? "suspended"
+            var custStatus = !item.Enabled ? "disabled"
+                : item.Closed ? "closed"
+                : item.Suspended ? "suspended"
                 : "open";
 
             var rowIdFromStatus = new Dictionary<string, int> { { "open", 1 }, { "suspended", 3 }, { "disabled", 7 } };
             var rowIdFromCloseStatus = new Dictionary<byte, int> { { 1, 11 }, { 2, 13 }, { 3, 15 } };
-            var closedReason = items.ClosedReason();
+            var closedReason = item.ClosedReason;
 
             var fromRowId = 5;
-            if (rowIdFromStatus.ContainsKey(custStatus))
-            {
-                fromRowId = rowIdFromStatus[custStatus];
-            }
-            {
-                fromRowId = rowIdFromCloseStatus.ContainsKey(closedReason) ? rowIdFromCloseStatus[closedReason] : fromRowId;
-            }
+            fromRowId = rowIdFromStatus.ContainsKey(custStatus) ? rowIdFromStatus[custStatus] : rowIdFromCloseStatus.ContainsKey(closedReason) ? rowIdFromCloseStatus[closedReason] : fromRowId;
 
             resultSheet.CopyRow(TemplateSheet, fromRowId, rowId, FirstColumnIndex, lastColumnIndex);
 
             return custStatus;
         }
+#pragma warning restore S3358 // Ternary operators should not be nested
 
         public override void BuildMainTitle(ISheet resultSheet)
         {

@@ -40,7 +40,8 @@
                 }
             }
         };
-    } else if (this.CurrentLevel == this.Master) {
+    }
+    else if (this.CurrentLevel == this.Master) {
         menuItems = {
             sportbook: {
                 name: "Edit Multiple Sportsbook",
@@ -55,7 +56,7 @@
         // Number Game
         productIds.push(3);
 
-        if (this.superSyncCasino) {
+        if (this.UplineSyncCasino) {
             menuItems.casino = {
                 name: "Edit Multiple Casino",
                 className: "iconEnableEdit",
@@ -119,7 +120,7 @@
             addSuperEditMultipleMastersMenuItem(productSetting.productId, productSetting.productName);
         }
 
-        if (this.AllowDoubleCommMaster) {
+        if (this.AllowDoubleComm) {
             menuItems.doubleComm = {
                 name: "Edit Multiple Double Comm",
                 className: "iconEnableEdit",
@@ -146,7 +147,7 @@
         // Number Game
         productIds.push(3);
 
-        if (this.masterSyncCasino) {
+        if (this.UplineSyncCasino) {
             menuItems.casino = {
                 name: "Edit Multiple Casino",
                 className: "iconEnableEdit",
@@ -210,7 +211,7 @@
             addMasterEditMultipleAgentsMenuItem(productSetting.productId, productSetting.productName);
         }
 
-        if (this.AllowDoubleCommAgent) {
+        if (this.AllowDoubleComm) {
             menuItems.doubleComm = {
                 name: "Edit Multiple Double Comm",
                 className: "iconEnableEdit",
@@ -260,7 +261,7 @@
         // Number Game
         productIds.push(3);
 
-        if (this.agentSyncCasino) {
+        if (this.UplineSyncCasino) {
             menuItems.casino = {
                 name: "Casino",
                 className: "iconEnableEdit",

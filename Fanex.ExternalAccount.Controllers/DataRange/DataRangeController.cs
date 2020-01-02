@@ -1,12 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.DataRange
 {
-    using System.Web.Mvc;
-    using Common;
     using Core.Base;
     using Core.Shared;
     using DataAccess.Criteria.DataRange;
     using DTO.DataRange;
     using Service.DataRange;
+    using System.Web.Mvc;
     using ViewModels;
 
     public class DataRangeController : BaseController

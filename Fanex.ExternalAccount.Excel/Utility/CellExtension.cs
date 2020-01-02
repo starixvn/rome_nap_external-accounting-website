@@ -14,8 +14,7 @@
             }
             else
             {
-                var newString = value as string;
-                if (newString != null)
+                if (value is string newString)
                 {
                     cell.SetCellValue(newString);
                 }
@@ -33,7 +32,7 @@
                 }
                 else if (value is decimal)
                 {
-                    SetCellValue(cell, (object)(decimal)value);
+                    cell.SetCellValue((decimal)value);
                 }
                 else if (value is bool)
                 {
@@ -45,8 +44,7 @@
                 }
                 else
                 {
-                    var newValue = value as IRichTextString;
-                    if (newValue != null)
+                    if (value is IRichTextString newValue)
                     {
                         cell.SetCellValue(newValue);
                     }
