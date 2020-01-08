@@ -85,5 +85,9 @@
     <input type="hidden" id="custRole" name="custRole" value="" />
 </form>
 <script>
+    window.actionAfterUpdatedGoldDeluxeSettingMultiple = function () {
+        document.getElementById("targetForm").submit();
+    };
+
     Fanex.ExtAcc.Customer.CustomerList.Init(@Html.Raw(Json.Encode(Model.CustId)), @Html.Raw(Json.Encode(Model.RoleId)));
 </script>
