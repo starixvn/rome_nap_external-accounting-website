@@ -13,13 +13,13 @@
     min-height: 40px;
     background-color: #313c51;
     height: auto;
-    transition: all .01s ease-out .2s;   
+    transition: all .01s ease-out .2s;
 
     @media screen and (min-device-width: 768px) {
         min-height: 60px;
     }
 
-     @media screen and (min-device-width: 1300px) {
+    @media screen and (min-device-width: 1300px) {
         min-width: 800px;
     }
 
@@ -31,21 +31,50 @@
         cursor: pointer;
         position: relative;
         top: 6px;
-        @media screen and (min-device-width: 768px) { 
+
+        @media screen and (min-device-width: 768px) {
             position: relative;
             top: 16px;
         }
-         
     }
 
     .icon-nav {
-        position: absolute;    
+        position: absolute;
         right: 16px;
         top: 13px;
-        @media screen and (min-device-width: 768px) { 
+
+        @media screen and (min-device-width: 768px) {
             top: 23px;
         }
     }
+
+    .env {
+        color: #ffffff;
+        font-family: Tahoma;
+        font-size: 12px;
+        text-align: left;       
+        text-transform: uppercase;
+        font-weight: bold;
+        position:absolute;
+        margin-left:10px;
+        margin-top:38px;
+    }
+}
+
+.dev {
+    background-color: #3d758a;
+}
+
+.sit {
+    background-color: #3d8a3f;
+}
+
+.uat {
+    background-color: #f48320;
+}
+
+.mnl {
+    background-color: #e5101d;
 }
 
 /* Icons */
