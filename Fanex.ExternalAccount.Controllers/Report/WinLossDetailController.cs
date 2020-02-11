@@ -18,7 +18,6 @@
     public class WinLossDetailController : BaseReportController
     {
         private readonly WinLossDetailService winLossDetailService;
-        private readonly dynamic ToolTipsProducts;
 
         public WinLossDetailController(
             ICurrentSession currentSession,
@@ -28,10 +27,6 @@
             : base(currentSession, reportService, groupConfigurationService)
         {
             this.winLossDetailService = winLossDetailService ?? new WinLossDetailServiceImpl();
-            ToolTipsProducts = new
-            {
-                showAllbet = this.groupConfigurationService.IsShowByProductAndGroup(ProductConstants.AllBet, this.currentSession.CurrencyGroup),
-            };
         }
 
         public WinLossDetailController() : this(null, null, null, null)
@@ -100,11 +95,16 @@
 
         private dynamic GetDataFromDB(WinLossDetailRequest request)
         {
+            var toolTipsProducts = new
+            {
+                showAllbet = this.groupConfigurationService.IsShowByProductAndGroup(ProductConstants.AllBet, this.currentSession.CurrencyGroup),
+            };
+
             return request.IsSearch()
                 ? winLossDetailService.SearchWinLossDetail(
-                    new SearchWinLossDetailRequest(request, ToolTipsProducts))
+                    new SearchWinLossDetailRequest(request, toolTipsProducts))
                 : winLossDetailService.DrillDownWinLossDetail(
-                    new DrillDownWinLossDetailRequest(request, ToolTipsProducts));
+                    new DrillDownWinLossDetailRequest(request, toolTipsProducts));
         }
     }
 
