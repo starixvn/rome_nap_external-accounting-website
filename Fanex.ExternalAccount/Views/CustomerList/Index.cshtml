@@ -1,6 +1,9 @@
 ﻿@using Fanex.ExternalAccount.Utilities
-@using Fanex.PTEngine
+@using Fanex.ExternalAccount.Core.Context;
 @model Fanex.ExternalAccount.ViewModel.Customer.CustomerList.CustomerListViewModel
+    @{ 
+        var currentSession = new CurrentSession();
+    }
 <div id="customerList">
     <div class="page-title">
         <div class="wlDetail">
@@ -90,4 +93,5 @@
     };
 
     Fanex.ExtAcc.Customer.CustomerList.Init(@Html.Raw(Json.Encode(Model.CustId)), @Html.Raw(Json.Encode(Model.RoleId)));
+    var isBelongToSpecialGroups = @Json.Encode(currentSession.IsBelongToSpecialGroups);
 </script>

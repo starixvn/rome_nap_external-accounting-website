@@ -2,6 +2,7 @@
 {
     using Core.Authorization;
     using Extensions;
+    using Fanex.ExternalAccount.Core.Context;
     using Models;
     using System;
     using System.Collections.Generic;
@@ -15,8 +16,9 @@
             int roleId,
             IEnumerable<ProductSettingElement> productSettingElements = null,
             AuthorizationService authorizationService = null,
+            CurrentSession currentSession = null,
             Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null)
-            : base(userId, roleId, productSettingElements, authorizationService, hiddenAndSyncItemsCreator)
+            : base(userId, roleId, productSettingElements, authorizationService, currentSession, hiddenAndSyncItemsCreator)
         { }
 
         public override Setting GetSetting(DataSet customerStatusInfoDataset)

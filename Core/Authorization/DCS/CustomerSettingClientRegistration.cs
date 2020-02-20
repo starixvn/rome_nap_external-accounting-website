@@ -1,19 +1,20 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization.DCS
 {
-    using System;
-    using System.Globalization;
-    using System.Text.RegularExpressions;
-    using System.Web;
     using Context;
     using CustomerSetting.Client40;
     using CustomerSetting.Client40.Models;
     using Shared;
+    using System;
+    using System.Globalization;
+    using System.Text.RegularExpressions;
+    using System.Web;
     using Utilities;
 
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
-        private const int SystemCode_ExternalNapBetSetting  = 5;
-        private const int SystemCode_ExternalNap = 4;
+        private const byte SystemCode_ExternalNapBetSetting = 5;
+        private const byte SystemCode_ExternalNapSpecialSite = 8;
+        private const byte SystemCode_ExternalNap = 4;
 
         public override bool VerifyQueryPermission(PermissionContext permissionContext) =>
             AllowRead(permissionContext);
@@ -43,17 +44,35 @@
                 return settingContext;
             }
 
-            var pathAndQuery =
-                HttpContext.Current.Request.UrlReferrer.PathAndQuery.ToLower(CultureInfo.InvariantCulture);
-
-            settingContext.System =
-                HttpContext.Current.Request.UrlReferrer != null
-                && (pathAndQuery.Contains("customersetting/betsetting")
-                    || pathAndQuery.Contains("sssss=v"))
-                    ? (byte)SystemCode_ExternalNapBetSetting 
-                    : settingContext.System;
+            settingContext.System = GetSystemCode(currentSession);
 
             return settingContext;
+        }
+
+        private byte GetSystemCode(CurrentSession currentSession)
+        {
+            if (IsBetSettingFunction())
+            {
+                return SystemCode_ExternalNapBetSetting;
+            }
+
+            if (currentSession.IsBelongToSpecialGroups)
+            {
+                return SystemCode_ExternalNapSpecialSite;
+            }
+
+            return SystemCode_ExternalNap;
+        }
+
+#pragma warning disable S2325 // Methods and properties that don't access instance data should be static
+        private bool IsBetSettingFunction()
+#pragma warning restore S2325 // Methods and properties that don't access instance data should be static
+        {
+            var pathAndQuery =
+               HttpContext.Current.Request.UrlReferrer.PathAndQuery.ToLower(CultureInfo.InvariantCulture);
+            return HttpContext.Current.Request.UrlReferrer != null
+                && (pathAndQuery.Contains("customersetting/betsetting")
+                    || pathAndQuery.Contains("sssss=v"));
         }
 
         private static bool AllowRead(PermissionContext permissionContext)

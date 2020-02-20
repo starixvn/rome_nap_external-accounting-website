@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Configuration;
+    using System.Linq;
     using System.Web;
 
     public static class Config
@@ -95,6 +96,11 @@
             {
                 return GetValue("IgnoreRecheckinCustomers");
             }
+        }
+
+        public static string[] SpecialGroups()
+        {
+            return GetValue("SpecialGroups").Split(',').Select(g => g.Trim()).ToArray();
         }
 
         private static string GetValue(string key) => ConfigurationManager.AppSettings[key];

@@ -1,36 +1,51 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization.ProductStatus
 {
     using System;
+    using System.Linq;
     using System.Web.Mvc;
     using Context;
     using CustomerSetting.Security.Authenticate;
     using Fanex.ProductStatus.Setting.Services;
+    using CurrentSession = Fanex.ExternalAccount.Core.Context.CurrentSession;
 
     public class ProductStatusAuthorizeService : IProductStatusAuthorizeService
     {
         private readonly ExternalAccountAuthenticateAttribute _authenticationService;
         private readonly AuthorizationService _authorization;
+        private readonly CurrentSession _currentSession;
 
         public ProductStatusAuthorizeService()
-            : this(null, null)
+            : this(null, null, null)
         {
         }
 
         public ProductStatusAuthorizeService(
             ExternalAccountAuthenticateAttribute authenticationService,
-            AuthorizationService authorization)
+            AuthorizationService authorization,
+            CurrentSession currentSession)
         {
             _authenticationService = authenticationService ?? new ExternalAccountAuthenticateAttribute();
             _authorization = authorization ?? new AuthorizationServiceImpl();
+            _currentSession = currentSession ?? new CurrentSession();
         }
 
         public bool CanView(AuthorizationContext filterContext)
         {
+            if(_currentSession.IsBelongToSpecialGroups)
+            {
+                return false;
+            }
+
             return HasPermission(filterContext, AuthenticateAction.AuthenticationType.Read);
         }
 
         public bool CanUpdate(AuthorizationContext filterContext)
         {
+            if (_currentSession.IsBelongToSpecialGroups)
+            {
+                return false;
+            }
+
             return HasPermission(filterContext, AuthenticateAction.AuthenticationType.Host);
         }
 

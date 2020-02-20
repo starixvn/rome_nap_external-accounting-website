@@ -3,6 +3,7 @@
     using Core.Authorization;
     using Core.Shared;
     using Extensions;
+    using Fanex.ExternalAccount.Core.Context;
     using Models;
     using System;
     using System.Collections.Generic;
@@ -19,12 +20,14 @@
         private readonly IEnumerable<ProductSettingElement> productSettingElements;
         private readonly Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator;
         private readonly AuthorizationService authorizationService;
+        private readonly CurrentSession currentSession;
         private readonly int _roleId;
         protected readonly int _userId;
 
         public CustomerSettingServiceImpl(int userId, int roleId,
             IEnumerable<ProductSettingElement> productSettingElements = null,
             AuthorizationService authorizationService = null,
+            CurrentSession currentSession = null,
             Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null)
         {
             _roleId = roleId;
@@ -32,6 +35,7 @@
             this.productSettingElements = productSettingElements ?? AccountInfoProductConfiguration.ProductSettingParamList;
             this.hiddenAndSyncItemsCreator = hiddenAndSyncItemsCreator ?? AccountInfoProductConfiguration.CreateSyncAndHiddenItems;
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
+            this.currentSession = currentSession ?? new CurrentSession();
         }
 
         public virtual Setting GetSetting(DataSet customerStatusInfoDataset)
@@ -66,12 +70,19 @@
                 OutrightStatus(nonProductStatusRow)
             };
 
-            AddCasinoStatus(nonDCSProductStatusRow, enableItems);
-            AddNumberGameStatus(nonDCSProductStatusRow, enableItems);
-            AddVirtualSportsStatus(table3rdDCS, enableItems);
+            if (!this.currentSession.IsBelongToSpecialGroups)
+            {
+                AddCasinoStatus(nonDCSProductStatusRow, enableItems);
+                AddNumberGameStatus(nonDCSProductStatusRow, enableItems);
+                AddVirtualSportsStatus(table3rdDCS, enableItems);
+            }
+
             AddDoubleCommStatus(nonProductStatusRow, enableItems);
             AddESportsStatus(table3rdDCS, enableItems);
-            AddGoldDeluxeStatus(nonDCSProductStatusRow, enableItems);
+            if (!this.currentSession.IsBelongToSpecialGroups)
+            {
+                AddGoldDeluxeStatus(nonDCSProductStatusRow, enableItems);
+            }
 
             return enableItems;
         }
@@ -315,7 +326,10 @@
                 return setting;
             }
 
-            AddEditStatusItem(setting, productStatusTable, productElement, isUplineDisabled);
+            if (!this.currentSession.IsBelongToSpecialGroups)
+            {
+                AddEditStatusItem(setting, productStatusTable, productElement, isUplineDisabled);
+            }
 
             return setting;
         }
