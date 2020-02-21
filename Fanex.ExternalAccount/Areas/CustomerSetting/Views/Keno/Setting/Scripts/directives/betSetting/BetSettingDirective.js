@@ -6,8 +6,8 @@ KenoModule.directive('betSettingElement', ['$templateCache', function ($template
         priority: 1,
         $scope: {},
         templateUrl: $templateCache.get('betSettingTemplate'),
-        controller: ['$scope', '$filter', '$parse',
-            function ($scope, $filter, $parse) {
+        controller: ['$scope', '$filter', '$parse', '$window',
+            function ($scope, $filter, $parse, $window) {
                 $scope.originalBetSetting = angular.copy($scope.betSetting);
                 $scope.MAX_VALUE = Math.pow(2, 53);
                 $scope.valids = {
@@ -18,6 +18,7 @@ KenoModule.directive('betSettingElement', ['$templateCache', function ($template
 
                 $scope.unlimited = false;
                 $scope.notAllowPlaceBets = false;
+                $scope.isBelongToSpecialGroups = $window.isBelongToSpecialGroups;
 
                 $scope.isDownlinechkDisabled = true;
 

@@ -1,5 +1,8 @@
 ﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
-
+@{
+    var kenoSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
+    var isBelongToSpecialGroups = kenoSession.IsBelongToSpecialGroups;
+}
 <table class="tableColor tableWidth" ng-controller="betSettingController">
     <thead>
         <tr>
@@ -8,9 +11,12 @@
             <td colspan="3" class="header c b">
                 <span>@LayoutTexts.BetSetting</span>
             </td>
-            <td class="header c b">
-                <span>@LayoutTexts.ProductStatus</span>
-            </td>
+            @if (!isBelongToSpecialGroups)
+            {
+                <td class="header c b">
+                    <span>@LayoutTexts.ProductStatus</span>
+                </td>
+            }
         </tr>
         <tr>
             <td class="betSetting col21percent formatCol">
@@ -24,9 +30,12 @@
             <td class="formatCol c b betSetting col21percent">
                 <span>@LayoutTexts.MaxPerMatch</span>
             </td>
-             <td class="betSetting c b formatCol">
-                 <span>@LayoutTexts.Member</span>
-             </td>
+            @if (!isBelongToSpecialGroups)
+            {
+                 <td class="betSetting c b formatCol">
+                     <span>@LayoutTexts.Member</span>
+                 </td>
+            }
         </tr>
     </thead>
     <tbody>
@@ -43,9 +52,12 @@
             <td class="c formatCol ">
                 <span ng-bind="betSetting.maxPerMatch | number : 0"></span>
             </td>
-            <td class="formatCol c ">
-                <input ng-disabled="true " type="checkbox" ng-model="betSetting.isEnabled" />
-            </td>
+            @if (!isBelongToSpecialGroups)
+            {
+                <td class="formatCol c ">
+                    <input ng-disabled="true " type="checkbox" ng-model="betSetting.isEnabled" />
+                </td>
+            }
         </tr>
     </tbody>
 </table>

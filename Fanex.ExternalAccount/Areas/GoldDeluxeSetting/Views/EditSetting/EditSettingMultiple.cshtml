@@ -22,7 +22,8 @@
                     </td>
                 </tr>
                 @if (Model.Level == CustomerLevel.Member
-                    && Model.UpLineLevel == CustomerLevel.Agent)
+                    && Model.UpLineLevel == CustomerLevel.Agent
+                    && Fanex.GoldDeluxe.CoreSetting.Web.WebHelper.IsCustomerNotBelongToSpecialSites())
                 {
                     <tr>
                         <td class="right">

@@ -1,5 +1,8 @@
 ﻿@using Fanex.CustomerSetting.Module.Keno.Resources;
-
+@{
+    var kenoSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
+    var isBelongToSpecialGroups = kenoSession.IsBelongToSpecialGroups;
+}
 <table class="tableColor tableWidth" ng-controller="betSettingController">
     <thead>
         <tr>
@@ -7,14 +10,17 @@
             <td colspan="3" class="header c b">
                 <span>@LayoutTexts.BetSetting</span>
             </td>
-            <td colspan="2" class="header c b">
-                <span ng-model="statusCopyAll.isCopiedAll" ng-click="copyAllStatus(!statusCopyAll.isCopiedAll, betSettingList[0].betTypeId)"
-                       ng-class="{'btnCopyAll' : statusCopyAll.isCopiedAll, 'btnUnCopyAll' : !statusCopyAll.isCopiedAll}"
-                       title="@LayoutTexts.lblCopyAllStatus"></span>
-                <span>@LayoutTexts.ProductStatus</span>
-                <input ng-class-name="btnSave" check-disable-element ng-model="$parent.isBetSettingPartial"
-                       data-ng-show="roleId < 4" ng-click="!$parent.isBetSettingPartial||updated(true, 'BetSetting')" type="button" title="@LayoutTexts.Update" />
-            </td>
+            @if (!isBelongToSpecialGroups)
+            {
+                <td colspan="2" class="header c b">
+                    <span ng-model="statusCopyAll.isCopiedAll" ng-click="copyAllStatus(!statusCopyAll.isCopiedAll, betSettingList[0].betTypeId)"
+                          ng-class="{'btnCopyAll' : statusCopyAll.isCopiedAll, 'btnUnCopyAll' : !statusCopyAll.isCopiedAll}"
+                          title="@LayoutTexts.lblCopyAllStatus"></span>
+                    <span>@LayoutTexts.ProductStatus</span>
+                    <input ng-class-name="btnSave" check-disable-element ng-model="$parent.isBetSettingPartial"
+                           data-ng-show="roleId < 4" ng-click="!$parent.isBetSettingPartial||updated(true, 'BetSetting')" type="button" title="@LayoutTexts.Update" />
+                </td>
+            }
         </tr>
         <tr>
             <td class="formatCol c b header col23percent">
@@ -26,12 +32,15 @@
             <td class="formatCol c b header col23percent">
                 <span>@LayoutTexts.MaxPerMatch</span>
             </td>
-            <td class=" formatCol c b header " ng-switch="roleId">
-                <span class="col8percent" ng-switch-when="4">@LayoutTexts.Super </span>
-                <span class="col8percent" ng-switch-when="3">@LayoutTexts.Master </span>
-                <span class="col8percent" ng-switch-when="2">@LayoutTexts.Agent </span>
-                <span class="col17percent" ng-switch-default>@LayoutTexts.Member</span>
-            </td>
+            @if (!isBelongToSpecialGroups)
+            {
+                <td class=" formatCol c b header " ng-switch="roleId">
+                    <span class="col8percent" ng-switch-when="4">@LayoutTexts.Super </span>
+                    <span class="col8percent" ng-switch-when="3">@LayoutTexts.Master </span>
+                    <span class="col8percent" ng-switch-when="2">@LayoutTexts.Agent </span>
+                    <span class="col17percent" ng-switch-default>@LayoutTexts.Member</span>
+                </td>
+            }
         </tr>
     </thead>
     <tbody>

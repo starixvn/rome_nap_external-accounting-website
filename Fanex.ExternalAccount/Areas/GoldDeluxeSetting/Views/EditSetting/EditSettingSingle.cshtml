@@ -62,7 +62,8 @@
                 </td>
             </tr>
             @if (!(Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Master)
-                && !(Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Super))
+                && !(Model.Level == CustomerLevel.Member && Model.UpLineLevel == CustomerLevel.Super)
+                && Fanex.GoldDeluxe.CoreSetting.Web.WebHelper.IsCustomerNotBelongToSpecialSites())
             {
                 <tr>
                     <td class="right bold info-lable">
