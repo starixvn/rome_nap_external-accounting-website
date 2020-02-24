@@ -146,7 +146,7 @@
             return GetProductFunction(productId, permissionContext.System);
         }
 
-        private static string GetProductFunction(int productId, byte systemId = SystemCode_ExternalNap) => systemId == SystemCode_ExternalNap
+        private static string GetProductFunction(int productId, byte systemId = SystemCode_ExternalNap) => systemId == SystemCode_ExternalNap || systemId == SystemCode_ExternalNapSpecialSite
             ? Enum.GetName(typeof(ProductSettingDcsFunction), productId)
             : Enum.GetName(typeof(ProductBettingLimitDcsFunction), productId);
     }

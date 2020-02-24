@@ -13,6 +13,7 @@
         private readonly ExternalAccountAuthenticateAttribute _authenticationService;
         private readonly AuthorizationService _authorization;
         private readonly CurrentSession _currentSession;
+        private readonly int eSportId = 16;
 
         public ProductStatusAuthorizeService()
             : this(null, null, null)
@@ -30,14 +31,10 @@
         }
 
         public bool CanView(AuthorizationContext filterContext)
-        {
-            if(_currentSession.IsBelongToSpecialGroups)
-            {
-                return false;
-            }
-
-            return HasPermission(filterContext, AuthenticateAction.AuthenticationType.Read);
-        }
+            => !(int.TryParse(filterContext.HttpContext.Request["productid"], out int productId)
+                && productId != eSportId
+                && _currentSession.IsBelongToSpecialGroups) 
+                && HasPermission(filterContext, AuthenticateAction.AuthenticationType.Read);
 
         public bool CanUpdate(AuthorizationContext filterContext)
         {
