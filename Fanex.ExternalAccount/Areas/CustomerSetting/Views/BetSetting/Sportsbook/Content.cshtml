@@ -2,6 +2,7 @@
 @using Fanex.CustomerSetting.Module.Core
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
+@using Fanex.ExternalAccount.Core.Context
 @model IBettingLimit<BettingLimitItem>
 @{
     var bettingLimit = JsonConvert.SerializeObject(Model, Formatting.None, new JsonSerializerSettings
@@ -13,6 +14,7 @@
     var uplineId = Utils.ToInt32(Request["uplineId"]);
     var userId = Utils.ToInt32(Request["userId"]);
     var siteName = Request["groupName"];
+    var session = CurrentSession.Instance;
 }
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
@@ -29,7 +31,9 @@
         @Resources.Lang.NoteBetSetting
     </div>
     <div class="noteMsg" style="margin: 5px 0">
-        @Html.Raw(Resources.Lang.SMAUnlimitedBetSettingWarningMessage)
+        @(session.IsBelongToSpecialGroups ? 
+            Html.Raw(Resources.Lang.SMAUnlimitedBetSettingWarningMessageDirectionV3) : 
+            Html.Raw(Resources.Lang.SMAUnlimitedBetSettingWarningMessage))
     </div>
     <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
         <tr>
@@ -79,13 +83,13 @@
                         </td>
                         <td class="noneBorderBottom noneBorderRight">
                             <input data-ng-show="betting.id == 161" style="text-align: right" id="txt{{betting.resourceKey}}MaxPerBall1" class="BettingLimitTextBox9" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" data-ng-init="betting.showmaxPerBallMax = betting.maxPerBallMax > 0; betting.maxPerBallFormated = betting.maxPerBall.formatNumber()" type="text" class="BettingLimitTextBox" data-ng-model="betting.maxPerBallFormated" data-ng-change="betting.maxPerBall = betting.maxPerBallFormated.replaceAll(',', '').formatNumber()" />
-                            <span  data-ng-show="betting.showmaxPerBallMax"><={{betting.maxPerBallMax.formatNumber()}}</span>
+                            <span data-ng-show="betting.showmaxPerBallMax"><={{betting.maxPerBallMax.formatNumber()}}</span>
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
-        
+
     </table>
     <div style="text-align: right">
         <input class="btn -submit buttonPopup" type="button" value="Submit" />

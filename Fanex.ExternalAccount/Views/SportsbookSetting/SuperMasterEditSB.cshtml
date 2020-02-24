@@ -1,7 +1,11 @@
 ﻿@using Fanex.PTEngine
-<link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css"/>
-<link href="@Url.Content("~/Scripts/ContextMenu/jquery.contextMenu.css")" rel="stylesheet" type="text/css"/>
-<link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css"/>
+@using Fanex.ExternalAccount.Core.Context
+@{
+    var session = CurrentSession.Instance;
+}
+<link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Scripts/ContextMenu/jquery.contextMenu.css")" rel="stylesheet" type="text/css" />
+<link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/assets/styles/pages/customer/pt-engine.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/assets/styles/pages/customer/customer-setting.css")" rel="stylesheet" type="text/css" />
 <div style="width: 852px; margin: 2px">
@@ -18,7 +22,9 @@
         @Resources.Lang.NoteSportsbookSetting
     </div>
     <div class="noteMsg">
-        @Resources.Lang.MemberUnlimitedBetSettingWarningMessage
+        @(session.IsBelongToSpecialGroups ?
+                Resources.Lang.MemberUnlimitedBetSettingWarningMessageDirectionV3 :
+                Resources.Lang.MemberUnlimitedBetSettingWarningMessage)
     </div>
     <div id="custInfo" class="customerInfo" style="width: 850px">
         <div class="headerTab" style="border-bottom: 0px">
@@ -207,7 +213,7 @@
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.BettingLimit.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.PTSetting.js")" type="text/javascript"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member) {
             $('#tblMasterAgent').remove();
         } else {

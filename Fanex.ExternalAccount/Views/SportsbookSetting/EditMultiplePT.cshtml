@@ -1,8 +1,10 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using Fanex.PTEngine
+@using Fanex.ExternalAccount.Core.Context
 @{
     var roleId = Utils.ToInt32(Request["roleId"]);
     var actionName = roleId.IsNotMember() ? "EditCommission" : "EditCommissionMember";
+    var session = CurrentSession.Instance;
 }
 <link href="@Url.Content("~/assets/styles/pages/customer/pt-engine.css")" rel="stylesheet" type="text/css" />
 <div style="margin: 2px 0 0 2px; width: 852px;">
@@ -13,13 +15,15 @@
     <div id="names" style="display: none;" class="names">
     </div>
     <div class="floatR">
-    <input id="buttonPopup" class="btn -submit buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
+        <input id="buttonPopup" class="btn -submit buttonPopup btnTop" type="button" value="Submit" data-bind='click: saveCustomer' />
     </div>
     <div class="noteMsg">
         @Resources.Lang.NoteSportsbookSetting
     </div>
     <div class="noteMsg">
-        @Html.Raw(roleId.IsMember() ? Resources.Lang.MemberUnlimitedBetSettingWarningMessage : Resources.Lang.SMAUnlimitedBetSettingWarningMessage)
+        @Html.Raw(roleId.IsMember() ?
+            (session.IsBelongToSpecialGroups ? Resources.Lang.MemberUnlimitedBetSettingWarningMessageDirectionV3: Resources.Lang.MemberUnlimitedBetSettingWarningMessage) :
+            (session.IsBelongToSpecialGroups ? Resources.Lang.SMAUnlimitedBetSettingWarningMessageDirectionV3 : Resources.Lang.SMAUnlimitedBetSettingWarningMessage))
     </div>
     <div id="custInfo" class="customerInfo">
         <div class="headerTab" style="border-bottom: 0px">
@@ -207,7 +211,7 @@
         </div>
     </div>
     <div class="floatR">
-    <input id="buttonPopup2" class="btn -submit buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
+        <input id="buttonPopup2" class="btn -submit buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
     </div>
     @Html.AntiForgeryToken()
 </div>

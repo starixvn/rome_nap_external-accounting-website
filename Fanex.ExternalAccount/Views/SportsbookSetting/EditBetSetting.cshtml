@@ -1,4 +1,8 @@
 ﻿@using Fanex.PTEngine
+@using Fanex.ExternalAccount.Core.Context
+@{
+    var session = CurrentSession.Instance;
+}
 <div>
     <table width="100%" border="0" cellpadding="2">
         <tr>
@@ -17,7 +21,9 @@
         <tr>
             <td>
                 <div class="noteMsg">
-                    @Html.Raw(Request["roleid"] == "1" ? Resources.Lang.MemberUnlimitedBetSettingWarningMessage : Resources.Lang.SMAUnlimitedBetSettingWarningMessage)
+                    @Html.Raw(Request["roleid"] == "1" ?
+                        (session.IsBelongToSpecialGroups ? Resources.Lang.MemberUnlimitedBetSettingWarningMessageDirectionV3 : Resources.Lang.MemberUnlimitedBetSettingWarningMessage) :
+                        (session.IsBelongToSpecialGroups ? Resources.Lang.SMAUnlimitedBetSettingWarningMessageDirectionV3 : Resources.Lang.SMAUnlimitedBetSettingWarningMessage))
                 </div>
             </td>
         </tr>

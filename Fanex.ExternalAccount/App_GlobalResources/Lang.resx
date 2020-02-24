@@ -3500,9 +3500,15 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
     <value>For E-Sports' Bet Settings, please use Sportsbook 2 instead</value>
   </data>
   <data name="MemberUnlimitedBetSettingWarningMessage" xml:space="preserve">
-    <value>Inputting 0 / 0 / 0 for Min Bet / Max Bet / will prevent members from playing the game (for Sportsbook only).</value>
+    <value>Inputting 0 / 0 / 0 / (0) for Min Bet / Max Bet / Max Per Match / (Max Per Ball) will prevent members from playing the game.</value>
   </data>
   <data name="SMAUnlimitedBetSettingWarningMessage" xml:space="preserve">
+    <value>Inputting Min Bet = Max Bet = Max Per Match = (Max Per Ball) = 0 means that you will not limit the bet setting of this account.&lt;br/&gt;In order to prevent members from playing the game, set the value to 0 / 0.1 / 0.1 / (0.1) for Min Bet / Max Bet / Max Per Match / (Max Per Ball).</value>
+  </data>
+  <data name="MemberUnlimitedBetSettingWarningMessageDirectionV3" xml:space="preserve">
+    <value>Inputting 0 / 0 / 0 for Min Bet / Max Bet / will prevent members from playing the game (for Sportsbook only).</value>
+  </data>
+  <data name="SMAUnlimitedBetSettingWarningMessageDirectionV3" xml:space="preserve">
     <value>Inputting Min Bet = Max Bet = Max Per Match = 0 means that you will not limit the bet setting of this account.&lt;br/&gt;In order to prevent members from playing the game, set the value to 0 / 0.1 / 0.1 for Min Bet / Max Bet / Max Per Match (for Sportsbook only).</value>
   </data>
   <data name="thereisnodata" xml:space="preserve">
