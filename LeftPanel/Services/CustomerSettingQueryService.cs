@@ -46,7 +46,7 @@
             (
                 EnableItems(customerStatusInfoDataset),
                 hiddenAndSyncItemsCreator(nonDCSProductStatusRow, table3rdDCS),
-                EditItems(nonDCSProductStatusRow),
+                EnableKenoItem(nonDCSProductStatusRow),
                 Details(customerStatusInfoDataset)
             );
 
@@ -282,8 +282,8 @@
             }
         }
 
-        internal static List<ObjectInfo> EditItems(DataRow nonDCSProductStatusRow)
-            => !nonDCSProductStatusRow.HideKeno() ?
+        internal List<ObjectInfo> EnableKenoItem(DataRow nonDCSProductStatusRow)
+            => (!nonDCSProductStatusRow.HideKeno() && !this.currentSession.IsBelongToSpecialGroups) ?
             new List<ObjectInfo> { new ObjectInfo { Key = "EnableKeno", Text = "Enable RNG Keno" } } :
             new List<ObjectInfo>();
 
