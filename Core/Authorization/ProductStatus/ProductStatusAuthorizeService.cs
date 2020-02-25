@@ -31,29 +31,24 @@
         }
 
         public bool CanView(AuthorizationContext filterContext)
-            => !(int.TryParse(filterContext.HttpContext.Request["productid"], out int productId)
-                && productId != eSportId
-                && _currentSession.IsBelongToSpecialGroups) 
-                && HasPermission(filterContext, AuthenticateAction.AuthenticationType.Read);
+            => HasPermission(filterContext, AuthenticateAction.AuthenticationType.Read);
 
         public bool CanUpdate(AuthorizationContext filterContext)
-        {
-            if (_currentSession.IsBelongToSpecialGroups)
-            {
-                return false;
-            }
-
-            return HasPermission(filterContext, AuthenticateAction.AuthenticationType.Host);
-        }
+            => HasPermission(filterContext, AuthenticateAction.AuthenticationType.Host);
 
         private bool HasPermission(AuthorizationContext filterContext, AuthenticateAction.AuthenticationType role)
         {
             var productIdParam = role == AuthenticateAction.AuthenticationType.Read
                 ? filterContext.HttpContext.Request["productid"]
-                : GetActionParameterValue(filterContext.Controller.ValueProvider, "productid");
+                : GetActionParameterValue(filterContext.Controller.ValueProvider, "productid");          
 
             if (int.TryParse(productIdParam, out int productId))
             {
+                if (_currentSession.IsBelongToSpecialGroups && productId != eSportId)
+                {
+                    return false;
+                }
+
                 var enableFunction = Enum.GetName(typeof(EnableStatusProductFunction), productId);
                 var hasPermission = role == AuthenticateAction.AuthenticationType.Read
                     ? _authenticationService.AllowReadByAuthenticationParam(enableFunction)
