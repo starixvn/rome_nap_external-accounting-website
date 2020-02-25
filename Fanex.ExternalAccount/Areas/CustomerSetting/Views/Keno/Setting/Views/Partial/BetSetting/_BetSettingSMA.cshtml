@@ -9,6 +9,10 @@
             <td rowspan="2" class="header col15percent"></td>
             <td colspan="3" class="header c b">
                 <span>@LayoutTexts.BetSetting</span>
+                @if (isBelongToSpecialGroups) {
+                    <input ng-class-name="btnSave" check-disable-element ng-model="$parent.isBetSettingPartial"
+                       data-ng-show="roleId < 4" ng-click="!$parent.isBetSettingPartial||updated(true, 'BetSetting')" type="button" title="@LayoutTexts.Update" />
+                }
             </td>
             @if (!isBelongToSpecialGroups)
             {
