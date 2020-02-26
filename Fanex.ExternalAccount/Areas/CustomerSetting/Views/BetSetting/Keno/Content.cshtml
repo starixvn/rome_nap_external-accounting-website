@@ -11,6 +11,8 @@
     var uplineId = Utils.ToInt32(Request["uplineId"]);
     var userId = Utils.ToInt32(Request["userId"]);
     var siteName = Request["groupName"];
+
+    var kenoSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
 }
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
@@ -19,7 +21,10 @@
 <div id="ng-app" ng-app="bettingApp" ng-controller="Fanex.CustomerSetting.Betting.Keno" ng-init="Init()" style="width: 815px; display: none">
     <div id="errMsg" style="display: none" class="errMsg">
     </div>
-    <div class="errMsg" style="color: #ff5411">@Html.Raw(Fanex.CustomerSetting.Module.Keno.Resources.LayoutTexts.SMAUnlimitedBetSettingWarningMessage)</div>
+    @if (!kenoSession.IsBelongToSpecialGroups)
+    {
+        <div class="errMsg" style="color: #ff5411">@Html.Raw(Fanex.CustomerSetting.Module.Keno.Resources.LayoutTexts.SMAUnlimitedBetSettingWarningMessage)</div>
+    }
     <div class="title C bold header">
         Update Bet Setting: @ViewBag.Username
     </div>
