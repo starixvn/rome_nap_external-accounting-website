@@ -13,6 +13,7 @@
     public class CustomerSettingClientRegistration : CustomerSettingRegistration
     {
         private const byte SystemCode_ExternalNapBetSetting = 5;
+        private const byte SystemCode_ExternalNapBetSettingSpecialSite = 9;
         private const byte SystemCode_ExternalNapSpecialSite = 8;
         private const byte SystemCode_ExternalNap = 4;
 
@@ -53,7 +54,7 @@
         {
             if (IsBetSettingFunction())
             {
-                return SystemCode_ExternalNapBetSetting;
+                return currentSession.IsBelongToSpecialGroups ? SystemCode_ExternalNapBetSettingSpecialSite : SystemCode_ExternalNapBetSetting;
             }
 
             if (currentSession.IsBelongToSpecialGroups)
