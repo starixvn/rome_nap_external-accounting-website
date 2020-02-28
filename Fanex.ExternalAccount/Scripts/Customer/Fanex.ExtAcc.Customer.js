@@ -52,8 +52,8 @@
     Usernames: '',
     CustIds: '',
 
-    AllbetSyncList: [],
-    AllbetSyncIdList: [],
+    LiveCasinoSyncList: [],
+    LiveCasinoSyncIdList: [],
 
     VoidbridgeSyncList: [],
     VoidbridgeSyncIdList: [],
@@ -506,9 +506,9 @@
             $('#editMult').attr('onclick', 'javascript:Fanex.ExtAcc.Customer.EditMultiple(this)');
             $('#editMult').contextMenu(true);
 
-            if ($(div).attr('sync-allbet') == 'true' && !Fanex.ExtAcc.Customer.AllbetSyncIdList.contains($(div).attr('id'))) {
-                Fanex.ExtAcc.Customer.AllbetSyncIdList.push($(div).attr('id'));
-                Fanex.ExtAcc.Customer.AllbetSyncList.push($(div).attr('name'));
+            if ($(div).attr('sync-livecasino') == 'true' && !Fanex.ExtAcc.Customer.LiveCasinoSyncIdList.contains($(div).attr('id'))) {
+                Fanex.ExtAcc.Customer.LiveCasinoSyncIdList.push($(div).attr('id'));
+                Fanex.ExtAcc.Customer.LiveCasinoSyncList.push($(div).attr('name'));
             }
 
             if ($(div).attr('sync-voidbridge') == 'true' && !Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.contains($(div).attr('id'))) {
@@ -531,9 +531,9 @@
             $('#editMult').attr('onclick', '');
             $('#editMult').contextMenu(false);
 
-            if ($(div).attr('sync-allbet') == 'true') {
-                Fanex.ExtAcc.Customer.AllbetSyncIdList.pop($(div).attr('id'));
-                Fanex.ExtAcc.Customer.AllbetSyncList.pop($(div).attr('name'));
+            if ($(div).attr('sync-livecasino') == 'true') {
+                Fanex.ExtAcc.Customer.LiveCasinoSyncIdList.pop($(div).attr('id'));
+                Fanex.ExtAcc.Customer.LiveCasinoSyncList.pop($(div).attr('name'));
             }
 
             if ($(div).attr('sync-voidbridge') == 'true') {
@@ -588,13 +588,13 @@
             if (divs[i].id && (divs[i].className == 'menuActive' || divs[i].className == 'menuInactive')) {
                 divs[i].className = className;
 
-                if ($(divs[i]).attr('sync-allbet') == 'true' && divs[i].className == 'menuActive' && !Fanex.ExtAcc.Customer.AllbetSyncIdList.contains($(divs[i]).attr('id'))) {
-                    Fanex.ExtAcc.Customer.AllbetSyncIdList.push($(divs[i]).attr('id'));
-                    Fanex.ExtAcc.Customer.AllbetSyncList.push($(divs[i]).attr('name'));
+                if ($(divs[i]).attr('sync-livecasino') == 'true' && divs[i].className == 'menuActive' && !Fanex.ExtAcc.Customer.LiveCasinoSyncIdList.contains($(divs[i]).attr('id'))) {
+                    Fanex.ExtAcc.Customer.LiveCasinoSyncIdList.push($(divs[i]).attr('id'));
+                    Fanex.ExtAcc.Customer.LiveCasinoSyncList.push($(divs[i]).attr('name'));
                 }
-                else if ($(divs[i]).attr('sync-allbet') == 'true' && divs[i].className == 'menuInactive') {
-                    Fanex.ExtAcc.Customer.AllbetSyncIdList.pop($(divs[i]).attr('id'));
-                    Fanex.ExtAcc.Customer.AllbetSyncList.pop($(divs[i]).attr('name'));
+                else if ($(divs[i]).attr('sync-livecasino') == 'true' && divs[i].className == 'menuInactive') {
+                    Fanex.ExtAcc.Customer.LiveCasinoSyncIdList.pop($(divs[i]).attr('id'));
+                    Fanex.ExtAcc.Customer.LiveCasinoSyncList.pop($(divs[i]).attr('name'));
                 }
 
                 if ($(divs[i]).attr('sync-voidbridge') == 'true' && divs[i].className == 'menuActive' && !Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.contains($(divs[i]).attr('id'))) {
@@ -915,7 +915,7 @@
         var row = cell.Value;
         var unsyncedProductIds = [];
         var dcsProducts = [
-            { id: 21, name: "AllBet" },
+            { id: 41, name: "LiveCasino" },
             { id: 22, name: "VoidBridge" }
         ];
 

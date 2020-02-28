@@ -674,13 +674,13 @@
     };
 
 
-    $scope.EnableAllbet = function (enable, id, disabled) {
+    $scope.EnableLiveCasino = function (enable, id, disabled) {
         if (disabled) {
             return;
         }
 
         top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(21, "Allbet", 800, 350);
+        $scope.EnableThirdpartyProduct(41, "Live Casino", 800, 350);
     };
 
     $scope.EnableVoidBridge = function (enable, id, disabled) {
@@ -947,8 +947,8 @@
         $scope.RenderSupeOnMemberDCS(16);
     };
 
-    $scope.SuperAllbet = function () {
-        $scope.RenderSupeOnMemberDCS(21);
+    $scope.SuperLiveCasino = function () {
+        $scope.RenderSupeOnMemberDCS(41);
     };
 
     $scope.SuperVoidBridge = function () {
@@ -984,8 +984,8 @@
         $scope.RenderMasterOnMemberDCS(16);
     };
 
-    $scope.MasterAllbet = function () {
-        $scope.RenderMasterOnMemberDCS(21);
+    $scope.MasterLiveCasino = function () {
+        $scope.RenderMasterOnMemberDCS(41);
     };
 
     $scope.MasterVoidBridge = function () {

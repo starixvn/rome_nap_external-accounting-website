@@ -11,6 +11,8 @@
         public const int RNGCasino = 6;
         public const int ProgressiveBonus = 10;
         public const int AllBet = 21;
+        public const int SAGaming = 39;
+        public const int LiveCasino = 41;
         public const int VoidBridge = 22;  // Real name is Macau Game
         public const int NG2 = 23;
         public const int FishingWorld = 24;

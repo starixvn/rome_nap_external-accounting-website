@@ -3,7 +3,7 @@
     public enum ProductSettingDcsFunction
     {
         Sportsbook2Setting = 16,
-        AllbetSetting = 21,
+        LiveCasinoSetting = 41,
         VoidbridgeSetting = 22,
         NG2Setting = 23,
         FishingWorldSetting = 24,

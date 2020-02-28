@@ -15,7 +15,7 @@
     {
         private static readonly int[] BetSettingTabProductConfigs = new[]
         {
-            ProductConstants.AllBet,
+            ProductConstants.LiveCasino,
             ProductConstants.VoidBridge,
             ProductConstants.NG2,
             ProductConstants.Lottery,
