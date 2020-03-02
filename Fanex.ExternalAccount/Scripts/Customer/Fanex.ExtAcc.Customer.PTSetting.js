@@ -366,7 +366,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                             if (Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
                                 updateParameters = getUpdateParamaters();
 
-                                if (!Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Validate())
+                                if (!Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Validate(result.defaultMinBetValue))
                                     return;
 
                                 if (!customer.statusSetting.uplineClosed && document.getElementById('status').checked)
@@ -414,7 +414,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                     customer.fax = $('#fax').val().escapeHtml();
                                     customer.statusSetting.closed = document.getElementById('closed').checked;
 
-                                    if (!Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Validate())
+                                    if (!Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Validate(result.defaultMinBetValue))
                                         return;
 
                                     customer.bettingLimit = Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Save();
