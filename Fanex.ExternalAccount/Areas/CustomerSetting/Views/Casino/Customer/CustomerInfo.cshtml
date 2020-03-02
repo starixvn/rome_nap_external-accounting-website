@@ -4,7 +4,7 @@
     var isBelongToSpecialGroups = casinoSession.IsBelongToSpecialGroups;
 }
 <div class="custInfo" data-ng-controller="CustomerController">
-    <div class="headerPositionTaking noneBorderLR custInfoHeader" id="headerUserInfo">
+    <div class="headerPositionTaking noneBorderLR custInfoHeader" id="@(isBelongToSpecialGroups ? "headerUserInfo" : string.Empty)">
         @NGCasinoLang.lblCustomerInformation
     </div>
     <div id="userInfo">
