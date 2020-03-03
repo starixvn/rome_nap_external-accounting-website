@@ -81,7 +81,8 @@
     var uplineId = parseInt('@uplineId');
     var userId = parseInt('@userId');
     var siteName = '@siteName';
-    var syncCasino = '@ViewBag.SyncCasino';    
+    var syncCasino = '@ViewBag.SyncCasino';
+    var defaultMinBetValue = @ViewBag.DefaultMinBetValue;
 
     function toUrl(relativeUrl) {
         return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;

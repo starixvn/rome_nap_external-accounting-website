@@ -58,8 +58,9 @@
             };
 
             var bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            var defaultMinBetValue = GetDefaultMinBetValue();
 
-            return JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
+            return JsonBase(new { betting = bettingLimit, context = currentContext, defaultMinBetValue }, settings);
         }
 
         [AntiXSRFFilter]
@@ -80,11 +81,13 @@
             };
 
             var bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            var defaultMinBetValue = GetDefaultMinBetValue();
 
             return JsonBase(new
             {
                 betting = bettingLimit,
-                context = currentContext
+                context = currentContext,
+                defaultMinBetValue
             });
         }
 
@@ -106,8 +109,9 @@
             };
 
             var bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            var defaultMinBetValue = GetDefaultMinBetValue();
 
-            return JsonBase(new { betting = bettingLimit, context = currentContext });
+            return JsonBase(new { betting = bettingLimit, context = currentContext, defaultMinBetValue });
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
