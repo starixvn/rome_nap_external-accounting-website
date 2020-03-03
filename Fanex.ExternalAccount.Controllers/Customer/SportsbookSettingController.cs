@@ -310,8 +310,9 @@
             };
 
             var customer = customerService.GetCustomerForMasterEditAgent(context);
+            var defaultMinBetValue = GetDefaultMinBetValue();
 
-            return JsonBase(new { context, customer });
+            return JsonBase(new { context, customer, defaultMinBetValue });
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
@@ -369,8 +370,9 @@
             };
 
             var customer = customerService.GetCustomerForAgentUpdateMember(context);
+            var defaultMinBetValue = GetDefaultMinBetValue();
 
-            return JsonBase(new { context, customer });
+            return JsonBase(new { context, customer, defaultMinBetValue });
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
@@ -713,8 +715,5 @@
 
             return param;
         }
-
-        private int GetDefaultMinBetValue()
-            => CurrentSession.IsBelongToSpecialGroups ? 1 : 0;
     }
 }

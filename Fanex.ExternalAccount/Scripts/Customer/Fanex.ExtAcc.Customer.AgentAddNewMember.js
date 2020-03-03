@@ -106,7 +106,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                 this.saveCustomer = function () {
                     $('#contentSplitter').scrollTop(0);
                     if (!Fanex.Customer.CheckInfoValue(true)) return;
-                    if (!bettingLimit.Validate()) return;
+                    if (!bettingLimit.Validate(result.defaultMinBetValue)) return;
 
                     // For Check Edit Postion Taking
                     if (context.targetCustId == 0) {
