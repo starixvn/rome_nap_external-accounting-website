@@ -30,6 +30,7 @@
     }
 
     if (IsMultiple) {
+        jQuery('#headerUserInfo').remove();
         jQuery('#userInfo').remove();
         $('#statusInfo').attr('style', 'display: block');
 

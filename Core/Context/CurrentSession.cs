@@ -1,6 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Core.Context
 {
+    using System;
     using System.Globalization;
+    using System.Linq;
     using System.Web;
     using CustomerSetting.Module.Core.Web;
     using Utilities;
@@ -110,13 +112,15 @@
             set { HttpContext.Current.Session[EASCurrencyGroup] = value; }
         }
 
+        public bool IsBelongToSpecialGroups => Config.SpecialGroups().Contains(CurrencyGroup, StringComparer.CurrentCultureIgnoreCase);
+
         public bool InvalidOTP
         {
             get { return Utils.ToBoolean(HttpContext.Current.Session[EASInvalidOTP]); }
 
             set { HttpContext.Current.Session[EASInvalidOTP] = value; }
         }
-        
+
         public string OTPEncryptCode
         {
             get { return Utils.ToString(HttpContext.Current.Session[EASOTPEncryptCode]); }
@@ -130,7 +134,7 @@
 
             set { HttpContext.Current.Session[EASOTPFailedCounter] = value; }
         }
-        
+
         public bool EnabledOTP
         {
             get { return Utils.ToBoolean(HttpContext.Current.Session[EASEnabledOTP]); }

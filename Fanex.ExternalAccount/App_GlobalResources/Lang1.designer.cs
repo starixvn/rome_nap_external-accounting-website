@@ -6632,6 +6632,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inputting 0 / 0 / 0 for Min Bet / Max Bet / will prevent members from playing the game (for Sportsbook only)..
+        /// </summary>
+        internal static string MemberUnlimitedBetSettingWarningMessageDirectionV3 {
+            get {
+                return ResourceManager.GetString("MemberUnlimitedBetSettingWarningMessageDirectionV3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Member Win.
         /// </summary>
         internal static string memberwin {
@@ -8574,6 +8583,15 @@ namespace Resources {
         internal static string SMAUnlimitedBetSettingWarningMessage {
             get {
                 return ResourceManager.GetString("SMAUnlimitedBetSettingWarningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inputting Min Bet = Max Bet = Max Per Match = 0 means that you will not limit the bet setting of this account.&lt;br/&gt;In order to prevent members from playing the game, set the value to 0 / 0.1 / 0.1 for Min Bet / Max Bet / Max Per Match (for Sportsbook only)..
+        /// </summary>
+        internal static string SMAUnlimitedBetSettingWarningMessageDirectionV3 {
+            get {
+                return ResourceManager.GetString("SMAUnlimitedBetSettingWarningMessageDirectionV3", resourceCulture);
             }
         }
         

@@ -1,7 +1,9 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using Fanex.PTEngine
+@using Fanex.ExternalAccount.Core.Context
 @{
     var parentUsername = Request["username"] ?? Request["groupname"];
+    var session = CurrentSession.Instance;
 }
 <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/assets/styles/pages/customer/pt-engine.css")" rel="stylesheet" type="text/css" />
@@ -20,7 +22,9 @@
         @Resources.Lang.NoteSportsbookSetting
     </div>
     <div class="noteMsg">
-        @Html.Raw(Resources.Lang.SMAUnlimitedBetSettingWarningMessage)
+        @(session.IsBelongToSpecialGroups ?
+                    Html.Raw(Resources.Lang.SMAUnlimitedBetSettingWarningMessageDirectionV3) :
+                    Html.Raw(Resources.Lang.SMAUnlimitedBetSettingWarningMessage))
     </div>
     <div class="customerInfo clear">
         <div class="headerTab">

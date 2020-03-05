@@ -12,32 +12,34 @@
     var productIds = [];
 
     if (this.CurrentLevel == this.Super) {
-        menuItems = {
-            doubleComm: {
-                name: "Edit Multiple Double Comm",
-                className: "iconEnableEdit",
-                callback: function (key, opt) {
-                    top.shouldCalculatePopupHeight = false;
-                    Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm?id=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName),
-                        'Edit Multiple Double Commission For Losing Tickets',
-                        430, 150, false, false, 1);
-                }
-            },
-            productStatusSetting: {
+        menuItems.doubleComm = {
+            name: "Edit Multiple Double Comm",
+            className: "iconEnableEdit",
+            callback: function (key, opt) {
+                top.shouldCalculatePopupHeight = false;
+                Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/ConfigMultipleDoubleComm?id=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName),
+                    'Edit Multiple Double Commission For Losing Tickets',
+                    430, 150, false, false, 1);
+            }
+        };
+
+        if (!isBelongToSpecialGroups) {
+            menuItems.productStatusSetting = {
                 name: "Edit Multiple Product Status",
                 className: "iconEnableEdit",
                 callback: function (key, opt) {
                     Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus(productIds);
                 }
-            },
-            dataRange: {
-                name: "Edit Multiple Data Range",
-                className: "iconEnableEdit",
-                callback: function (key, opt) {
-                    top.shouldCalculatePopupHeight = false;
-                    var url = resolveClientUrl('DataRange/Index?custIds=' + Fanex.ExtAcc.Customer.IdsAndNames().Ids);
-                    Fanex.ExtAcc.Form.Show(url, 'Edit Multiple Data Range For Customer(s)', 400, 170, false, false, 1);
-                }
+            };
+        }
+
+        menuItems.dataRange = {
+            name: "Edit Multiple Data Range",
+            className: "iconEnableEdit",
+            callback: function (key, opt) {
+                top.shouldCalculatePopupHeight = false;
+                var url = resolveClientUrl('DataRange/Index?custIds=' + Fanex.ExtAcc.Customer.IdsAndNames().Ids);
+                Fanex.ExtAcc.Form.Show(url, 'Edit Multiple Data Range For Customer(s)', 400, 170, false, false, 1);
             }
         };
     }
@@ -444,7 +446,7 @@
         }
     }
 
-    if (productIds.length !== 0) {
+    if (!isBelongToSpecialGroups && productIds.length !== 0) {
         menuItems.productStatusSetting = {
             name: "Edit Multiple Product Status",
             className: "iconEnableEdit",

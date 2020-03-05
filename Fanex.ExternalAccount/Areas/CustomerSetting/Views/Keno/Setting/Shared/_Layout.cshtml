@@ -26,7 +26,10 @@
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
             NullValueHandling = NullValueHandling.Ignore
-        }); 
+        });
+
+        var kenoSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
+        var isBelongToSpecialGroups = kenoSession.IsBelongToSpecialGroups;
     }
 </head>
 <body>
@@ -39,7 +42,10 @@
         </div>
         <div id="names" style="display: none; width: 829px;" class="names">
         </div>
-        <div class="errMsg" style="color: #ff5411">@Html.Raw(Role.IsMember(Model.CustomerInformation.RoleId) ? LayoutTexts.MemberUnlimitedBetSettingWarningMessage : LayoutTexts.SMAUnlimitedBetSettingWarningMessage)</div>
+        @if (!isBelongToSpecialGroups)
+        {
+            <div class="errMsg" style="color: #ff5411">@Html.Raw(Role.IsMember(Model.CustomerInformation.RoleId) ? LayoutTexts.MemberUnlimitedBetSettingWarningMessage : LayoutTexts.SMAUnlimitedBetSettingWarningMessage)</div>
+        }
         @Html.Partial("~/Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/CustomerInfo/_Information.cshtml")
         @RenderBody()
         @Html.AntiForgeryToken()
@@ -94,6 +100,7 @@
     var custids;
     var usernames;
     var isMultipleEdit;
+    var isBelongToSpecialGroups = @isBelongToSpecialGroups.ToString().ToLowerInvariant();
 
     if(parent.Fanex.ExtAcc.Customer.IsMultiple) {
         InitMultipleEditInformation();

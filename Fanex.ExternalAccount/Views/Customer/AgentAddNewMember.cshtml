@@ -1,7 +1,9 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using Fanex.PTEngine
+@using Fanex.ExternalAccount.Core.Context
 @{
     var parentUsername = Request["username"] ?? Request["groupname"];
+    var session = CurrentSession.Instance;
 }
 <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/assets/styles/pages/customer/pt-engine.css")" rel="stylesheet" type="text/css" />
@@ -20,88 +22,105 @@
         @Resources.Lang.NoteSportsbookSetting
     </div>
     <div class="noteMsg">
-        @Resources.Lang.MemberUnlimitedBetSettingWarningMessage
+        @(session.IsBelongToSpecialGroups ? Resources.Lang.MemberUnlimitedBetSettingWarningMessageDirectionV3 : Resources.Lang.MemberUnlimitedBetSettingWarningMessage)
     </div>
     <div class="customerInfo clear">
         <div class="headerTab">
-            @ViewLang.generalInformation</div>
+            @ViewLang.generalInformation
+        </div>
         <div class="clear">
             <div class="customerInfoBlock1 bdt0">
-                @ViewLang.Username</div>
+                @ViewLang.Username
+            </div>
             <div class="customerInfoBlock2 bdt0">
                 <b><span data-bind="text: customer.userName"></span></b>
-                <select id="selectedOne" name="selectedOne">
-                </select>
-                <select id="selectedTwo" name="selectedTwo">
-                </select>
-                <select id="selectedThree" name="selectedThree">
-                </select>
+                <select id="selectedOne" name="selectedOne"></select>
+                <select id="selectedTwo" name="selectedTwo"></select>
+                <select id="selectedThree" name="selectedThree"></select>
                 <span id="msgIcon"></span>
             </div>
             <div class="customerInfoBlock3 bdt0">
-                @ViewLang.Password</div>
+                @ViewLang.Password
+            </div>
             <div class="customerInfoBlock4 bdt0" id="divPassword">
                 <div class="float_l">
                     <input id="password" autocomplete="off" class="textBoxInfo" type="password" data-bind="value: customer.password"
-                        onkeyup="return Fanex.Customer.CheckPassword(this, 'spnNewPwdIcon', true);" maxlength="50" /></div>
+                           onkeyup="return Fanex.Customer.CheckPassword(this, 'spnNewPwdIcon', true);" maxlength="50" />
+                </div>
                 <div class="float_l pt3">
-                    <span id="spnNewPwdIcon">&nbsp;</span></div>
+                    <span id="spnNewPwdIcon">&nbsp;</span>
+                </div>
             </div>
         </div>
         <div class="clear">
             <div class="customerInfoBlock1">
-                @ViewLang.Firstname</div>
+                @ViewLang.Firstname
+            </div>
             <div class="customerInfoBlock2">
                 <input id="firstName" type="text" class="textBoxInfo" data-bind="value: customer.firstName"
-                    maxlength="50" /></div>
+                       maxlength="50" />
+            </div>
             <div class="customerInfoBlock3">
-                @ViewLang.Lastname</div>
+                @ViewLang.Lastname
+            </div>
             <div class="customerInfoBlock4">
                 <input id="lastName" type="text" class="textBoxInfo" data-bind="value: customer.lastName"
-                    maxlength="50" /></div>
+                       maxlength="50" />
+            </div>
         </div>
         <div class="clear">
             <div class="customerInfoBlock1">
-                @ViewLang.Phone</div>
+                @ViewLang.Phone
+            </div>
             <div class="customerInfoBlock2">
                 <input id="phone" type="text" class="textBoxInfo" data-bind="value: customer.phone"
-                    maxlength="50" /></div>
+                       maxlength="50" />
+            </div>
             <div class="customerInfoBlock3">
-                @ViewLang.MobilePhone</div>
+                @ViewLang.MobilePhone
+            </div>
             <div class="customerInfoBlock4">
                 <input id="mobilePhone" type="text" class="textBoxInfo" data-bind="value: customer.mobilePhone"
-                    maxlength="50" /></div>
+                       maxlength="50" />
+            </div>
         </div>
         <div class="clear">
             <div class="customerInfoBlock1">
-                @ViewLang.givencredit</div>
+                @ViewLang.givencredit
+            </div>
             <div class="customerInfoBlock2">
                 <input type="text" id="credit" onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this, true)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this, true)" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.FormatNumber(customer.credit), enable: isUpdateCredit == 1, attr: { title: isUpdateCredit == 1 ? '' : 'You are not authorized on this function'}" />
                 <span class="hide">&gt;=<span data-bind="text: customer.minCredit" id="minCredit"></span></span>
                 <= <span data-bind="text: Fanex.ExtAcc.FormatNumber(customer.agentMaxCreditTemp)" id="maxCredit"></span>
             </div>
             <div class="customerInfoBlock3">
-                @ViewLang.Fax</div>
+                @ViewLang.Fax
+            </div>
             <div class="customerInfoBlock4">
-                <input id="fax" type="text" class="textBoxInfo" data-bind="value: customer.fax" maxlength="50" /></div>
+                <input id="fax" type="text" class="textBoxInfo" data-bind="value: customer.fax" maxlength="50" />
+            </div>
         </div>
         <div class="clear">
             <div class="customerInfoBlock1">
-                @ViewLang.Group</div>
+                @ViewLang.Group
+            </div>
             <div class="customerInfoBlock2">
-                <select id="group" name="group">
-                </select>
+                <select id="group" name="group"></select>
                 <span data-bind="text: customer.group"></span>
             </div>
             <div class="customerInfoBlock3">
                 <label for="closed">
-                    @ViewLang.Closed</label></div>
+                    @ViewLang.Closed
+                </label>
+            </div>
             <div class="customerInfoBlock4">
-                <input name="closed" id="closed" type="checkbox" data-bind="checked: customer.statusSetting.closed, enable: (customer.statusSetting.uplineClosed || hasClose == 0) ? false : true, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" /></div>
+                <input name="closed" id="closed" type="checkbox" data-bind="checked: customer.statusSetting.closed, enable: (customer.statusSetting.uplineClosed || hasClose == 0) ? false : true, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
+            </div>
         </div>
     </div>
     <div id="commissionHeader" class="headerPositionTaking" style="padding: 0; float: left; width: 842px; border-bottom: 0; border-top: 1px solid #ccc">
-    Commission</div>
+        Commission
+    </div>
     <div class="positionTaking" style="padding: 0; float: left; width: 841px">
         <div style="margin: 0px">
             @Html.Action("EditCommissionMember", "SportsbookSetting")
@@ -111,7 +130,8 @@
     </div>
     <br />
     <div class="headerBetSetting">
-        @ViewLang.BetSetting</div>
+        @ViewLang.BetSetting
+    </div>
     <div id="bettingLimitContainer">
     </div>
     <br />

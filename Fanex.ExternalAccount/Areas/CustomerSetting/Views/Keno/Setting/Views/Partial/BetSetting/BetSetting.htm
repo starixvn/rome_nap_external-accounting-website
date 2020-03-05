@@ -23,7 +23,7 @@
     <span ng-switch="roleId < 4" ng-model="betSetting.upline.maxPerMatch"
         bet-setting-constrain="2"></span>    
 </td>
-<td class="formatCol c" ng-class="{'betTypeInactive': statusCopyAll.isCopiedAll && $index != 0}">
+<td class="formatCol c" ng-class="{'betTypeInactive': statusCopyAll.isCopiedAll && $index != 0}" ng-hide="isBelongToSpecialGroups">
     <input ng-disabled="(statusCopyAll.isCopiedAll && $index != 0) || !betSetting.upline.isEnabled " type="checkbox"
         ng-model="betSetting.isEnabled" />
 </td>

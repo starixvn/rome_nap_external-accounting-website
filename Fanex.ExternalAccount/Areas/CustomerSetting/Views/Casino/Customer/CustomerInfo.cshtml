@@ -1,6 +1,10 @@
 ﻿@using Fanex.CustomerSetting.Module.Casino.Resources
+@{
+    var casinoSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
+    var isBelongToSpecialGroups = casinoSession.IsBelongToSpecialGroups;
+}
 <div class="custInfo" data-ng-controller="CustomerController">
-    <div class="headerPositionTaking noneBorderLR custInfoHeader">
+    <div class="headerPositionTaking noneBorderLR custInfoHeader" id="@(isBelongToSpecialGroups ? "headerUserInfo" : string.Empty)">
         @NGCasinoLang.lblCustomerInformation
     </div>
     <div id="userInfo">
@@ -23,41 +27,47 @@
                 <td class="tdTitleRight">@NGCasinoLang.lblFax</td>
                 <td><span>{{CustomerModel.fax.decodeHtml()}}</span></td>
             </tr>
-            <tr>
-                <td class="tdTitleLeft">@NGCasinoLang.ProductStatus</td>
-                <td class="noneBorderRight">
-                    <div style="float: left; height: 24px">
-                        <input type="checkbox" id="chkEnable" style="margin-top: 5px"
-                               data-ng-init="CustomerModel.originalCasinoEnabled = !CustomerModel.casinoDisabled; CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && (CustomerModel.casinoSync || !CustomerModel.uplineDisabledCasino)"
-                               data-ng-model="CustomerModel.casinoEnabled"
-                               data-ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled;"
-                               data-ng-disabled="CustomerModel.uplineDisabledCasino" />
-                        <label for="chkEnable" ng-switch="{{CustomerModel.roleId}}">
-                            <span ng-switch-when="4">@NGCasinoLang.Super</span>
-                            <span ng-switch-when="3">@NGCasinoLang.Master</span>
-                            <span ng-switch-when="2">@NGCasinoLang.Agent</span>
-                            <span ng-switch-default>@NGCasinoLang.Member</span>
-                        </label>
-                    </div>
-                </td>
-                <td class="tdTitleRight"></td>
-                <td><span></span></td>
-            </tr>
+            @if (!isBelongToSpecialGroups)
+            {
+                <tr>
+                    <td class="tdTitleLeft">@NGCasinoLang.ProductStatus</td>
+                    <td class="noneBorderRight">
+                        <div style="float: left; height: 24px">
+                            <input type="checkbox" id="chkEnable" style="margin-top: 5px"
+                                   data-ng-init="CustomerModel.originalCasinoEnabled = !CustomerModel.casinoDisabled; CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && (CustomerModel.casinoSync || !CustomerModel.uplineDisabledCasino)"
+                                   data-ng-model="CustomerModel.casinoEnabled"
+                                   data-ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled;"
+                                   data-ng-disabled="CustomerModel.uplineDisabledCasino" />
+                            <label for="chkEnable" ng-switch="{{CustomerModel.roleId}}">
+                                <span ng-switch-when="4">@NGCasinoLang.Super</span>
+                                <span ng-switch-when="3">@NGCasinoLang.Master</span>
+                                <span ng-switch-when="2">@NGCasinoLang.Agent</span>
+                                <span ng-switch-default>@NGCasinoLang.Member</span>
+                            </label>
+                        </div>
+                    </td>
+                    <td class="tdTitleRight"></td>
+                    <td><span></span></td>
+                </tr>
+            }
         </table>
     </div>
-    <div id="statusInfo" class="statusInfo">
-        <input type="checkbox" id="chkEnable" style="margin-top: 5px"
-               data-ng-init="CustomerModel.originalCasinoEnabled = !CustomerModel.casinoDisabled; CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && (CustomerModel.casinoSync || !CustomerModel.uplineDisabledCasino)"
-               data-ng-model="CustomerModel.casinoEnabled"
-                data-ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled;"
-               data-ng-disabled="CustomerModel.uplineDisabledCasino" />
-        <label for="chkEnable" ng-switch="{{CustomerModel.roleId}}">
-            <span ng-switch-when="4">@NGCasinoLang.Super</span>
-            <span ng-switch-when="3">@NGCasinoLang.Master</span>
-            <span ng-switch-when="2">@NGCasinoLang.Agent</span>
-            <span ng-switch-default>@NGCasinoLang.Member</span>
-        </label>
-    </div>
+    @if (!isBelongToSpecialGroups)
+    {
+        <div id="statusInfo" class="statusInfo">
+            <input type="checkbox" id="chkEnable" style="margin-top: 5px"
+                   data-ng-init="CustomerModel.originalCasinoEnabled = !CustomerModel.casinoDisabled; CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && (CustomerModel.casinoSync || !CustomerModel.uplineDisabledCasino)"
+                   data-ng-model="CustomerModel.casinoEnabled"
+                   data-ng-change="CustomerModel.casinoDisabled = !CustomerModel.casinoEnabled;"
+                   data-ng-disabled="CustomerModel.uplineDisabledCasino" />
+            <label for="chkEnable" ng-switch="{{CustomerModel.roleId}}">
+                <span ng-switch-when="4">@NGCasinoLang.Super</span>
+                <span ng-switch-when="3">@NGCasinoLang.Master</span>
+                <span ng-switch-when="2">@NGCasinoLang.Agent</span>
+                <span ng-switch-default>@NGCasinoLang.Member</span>
+            </label>
+        </div>
+    }
     <div class="headerPositionTaking noneBorderLR noneBorderBottom">
         <span data-ng-bind="CustomerModel.roleId != 1 ? '@NGCasinoLang.lblMemberWinLimit' : '@NGCasinoLang.lblMemberWinLossLimit'"></span>
         <div title="Update" data-ng-click="SaveCurrentWinLimit()" data-ng-show="CustomerModel.casinoSync && !IsCrossLine && CustomerModel.roleId < 4" class="btnSave"></div>
