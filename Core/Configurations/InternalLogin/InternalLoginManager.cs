@@ -10,12 +10,16 @@
         public static string GetInternalLoginUrl(string site)
         {
             var internalUrlSection = ConfigurationManager.GetSection("InternalUrlSection") as InternalUrlSection;
-            var culture = System.Threading.Thread.CurrentThread.CurrentCulture;
+            site = site.Trim();
             foreach (InternalUrlElement element in internalUrlSection.InternalUrlCollection)
             {
-                if (culture.CompareInfo.IndexOf(element.Sites, site, CompareOptions.IgnoreCase) >= 0)
+                string[] configSites = element.Sites.Split(',');
+                foreach (var configSite in configSites)
                 {
-                    return element.Url;
+                    if (configSite.Trim().Equals(site))
+                    {
+                        return element.Url;
+                    }
                 }
             }
 
