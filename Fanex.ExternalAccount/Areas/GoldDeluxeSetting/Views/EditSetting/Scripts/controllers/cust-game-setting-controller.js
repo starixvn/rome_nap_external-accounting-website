@@ -8,6 +8,9 @@
             'use strict';
             $scope.gameSetting = fanex.cloneObject(settingViewModel.Setting.GameSetting);
             var uplineUncheckedAllMsg = '';
+            $scope.init = function () {
+                $scope.checkShowWarningUncheckedAll();
+            };
 
             $scope.getGameSetting = function () {
                 if (settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member) {

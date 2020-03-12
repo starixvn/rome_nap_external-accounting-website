@@ -22,7 +22,7 @@
             $scope.isUpdateGameSettingPartial = $scope.isUpdateWinLimitPartial;
             $scope.isEditMember = settingViewModel.Level != 2 && settingViewModel.Level != 3;
             $scope.validateAndUpdateSetting = function (updateType) {
-                if (isBelongToSpecialGroups && scope.mainResult.Warning !== undefined && scope.mainResult.Warning.IsShow) {
+                if (isBelongToSpecialGroups && $scope.mainResult.Warning !== undefined && $scope.mainResult.Warning.IsShow) {
                     return;
                 }
 
@@ -77,7 +77,6 @@
                     }, fanex.goldDeluxeSetting.TIME_OUT_SHOW_MESSAGE);
                 }
             };
-            
             $('#tblSetting').show();
         }
     ]);
