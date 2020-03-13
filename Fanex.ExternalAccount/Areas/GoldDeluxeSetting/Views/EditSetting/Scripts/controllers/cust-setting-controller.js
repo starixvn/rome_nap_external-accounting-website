@@ -22,6 +22,10 @@
             $scope.isUpdateGameSettingPartial = $scope.isUpdateWinLimitPartial;
             $scope.isEditMember = settingViewModel.Level != 2 && settingViewModel.Level != 3;
             $scope.validateAndUpdateSetting = function (updateType) {
+                if (isBelongToSpecialGroups && $scope.mainResult.Warning !== undefined && $scope.mainResult.Warning.IsShow) {
+                    return;
+                }
+
                 $scope.isUpdateAllSetting = true;
                 var ptAndComScope = angular.element('[data-ng-controller="PtAndComSettingController"]').scope();
 
@@ -73,7 +77,6 @@
                     }, fanex.goldDeluxeSetting.TIME_OUT_SHOW_MESSAGE);
                 }
             };
-            
             $('#tblSetting').show();
         }
     ]);

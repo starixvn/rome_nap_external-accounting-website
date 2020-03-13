@@ -270,5 +270,8 @@
                 .Select(product => new KeyValuePair<string, string>(product.Id, product.ProductText))
                 .ToList();
         }
+
+        protected int GetDefaultMinBetValue()
+            => CurrentSession.IsBelongToSpecialGroups ? 1 : 0;
     }
 }

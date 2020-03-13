@@ -215,7 +215,7 @@ Fanex.CustomerSetting.Betting.Keno.Update = function (ondone) {
         var min = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll(bet.minBetFormated, ',', ''));
         var max = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll(bet.maxBetFormated, ',', ''));
         var maxPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll(bet.maxPerMatchFormated, ',', ''));
-        var minMin = bet.upline.minBet;
+        var minMin = bet.upline.minBet || defaultMinBetValue;
         var maxMax = bet.upline.maxBet;
         var maxPerMatchMax = bet.upline.maxPerMatch;
 

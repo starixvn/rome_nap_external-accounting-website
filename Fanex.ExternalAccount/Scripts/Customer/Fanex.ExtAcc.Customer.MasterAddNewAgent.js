@@ -110,7 +110,7 @@ Fanex.ExtAcc.Customer.MasterAddNewAgent = {
                     this.saveCustomer = function () {
                         $('#contentSplitter').scrollTop(0);
                         if (!Fanex.Customer.CheckInfoValue()) return;
-                        if (!bettingLimit.Validate()) return;
+                        if (!bettingLimit.Validate(result.defaultMinBetValue)) return;
 
                         var max = parseFloat(Fanex.ExtAcc.ReplaceAll($('#maxCredit').text(), ',', ''));
                         var cur = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));

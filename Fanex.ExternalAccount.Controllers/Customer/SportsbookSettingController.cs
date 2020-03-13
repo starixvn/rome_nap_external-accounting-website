@@ -58,8 +58,9 @@
             };
 
             var bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            var defaultMinBetValue = GetDefaultMinBetValue();
 
-            return JsonBase(new { betting = bettingLimit, context = currentContext }, settings);
+            return JsonBase(new { betting = bettingLimit, context = currentContext, defaultMinBetValue }, settings);
         }
 
         [AntiXSRFFilter]
@@ -80,11 +81,13 @@
             };
 
             var bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            var defaultMinBetValue = GetDefaultMinBetValue();
 
             return JsonBase(new
             {
                 betting = bettingLimit,
-                context = currentContext
+                context = currentContext,
+                defaultMinBetValue
             });
         }
 
@@ -106,8 +109,9 @@
             };
 
             var bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            var defaultMinBetValue = GetDefaultMinBetValue();
 
-            return JsonBase(new { betting = bettingLimit, context = currentContext });
+            return JsonBase(new { betting = bettingLimit, context = currentContext, defaultMinBetValue });
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
@@ -250,8 +254,9 @@
             };
 
             var customer = customerService.GetCustomerForSuperEditMaster(context);
+            var defaultMinBetValue = GetDefaultMinBetValue();
 
-            return JsonBase(new { context, customer });
+            return JsonBase(new { context, customer, defaultMinBetValue });
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
@@ -309,8 +314,9 @@
             };
 
             var customer = customerService.GetCustomerForMasterEditAgent(context);
+            var defaultMinBetValue = GetDefaultMinBetValue();
 
-            return JsonBase(new { context, customer });
+            return JsonBase(new { context, customer, defaultMinBetValue });
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
@@ -368,8 +374,9 @@
             };
 
             var customer = customerService.GetCustomerForAgentUpdateMember(context);
+            var defaultMinBetValue = GetDefaultMinBetValue();
 
-            return JsonBase(new { context, customer });
+            return JsonBase(new { context, customer, defaultMinBetValue });
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]

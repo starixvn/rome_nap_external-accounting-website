@@ -95,6 +95,7 @@
 <script src="@Url.Content("~/Areas/CustomerSetting/Views/Casino/Scripts/ViewAgentController.js")" type="text/javascript"></script>
 <script type="text/javascript">
     var customerSetting = $.parseJSON(Fanex.CustomerSetting.Core.DecodeHtml('@settingModel'));
+    var isBelongToSpecialGroups = @Json.Encode(CurrentSession.Instance.IsBelongToSpecialGroups);
     var casinoController = new CasinoController(uplineId, '');
 
     $(document).ready(function () {

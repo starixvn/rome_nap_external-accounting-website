@@ -113,7 +113,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                     this.saveCustomer = function () {
                         $('#contentSplitter').scrollTop(0);
                         if (!Fanex.Customer.CheckInfoValue()) return;
-                        if (!bettingLimit.Validate()) return;
+                        if (!bettingLimit.Validate(result.defaultMinBetValue)) return;
 
                         if (typeof (customer.statusSetting.disableAutoMPT) == 'function')
                             customer.statusSetting.disableAutoMPT = customer.statusSetting.disableAutoMPT();

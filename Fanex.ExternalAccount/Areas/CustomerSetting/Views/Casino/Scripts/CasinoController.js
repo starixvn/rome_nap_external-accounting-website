@@ -1,5 +1,5 @@
-﻿function CasinoController(userId, username, isMultiple, custIds, usernames, syncStatuses) {  
-    
+﻿function CasinoController(userId, username, isMultiple, custIds, usernames, syncStatuses) {
+
     var isAutoReset = customerModel.isAutoReset;
     var CustomerModel = customerModel;
     var SettingModel = customerSetting;
@@ -12,7 +12,7 @@
     var SuccessMessage = '';
     var actionName = '';
     CustomerModel.casinoEnabled = CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && (CustomerModel.casinoSync || !CustomerModel.uplineDisabledCasino);
-  
+
     if (isMultiple) {
         if (!custIds) {
             alert('Please input custIds parameter is array');
@@ -66,6 +66,25 @@
             return;
         }
 
+        var checkedCheckBoxCount = 0;
+        if (isBelongToSpecialGroups) {
+            $('tr[data-ng-controller="GameTypeController"] > td:odd').each(function () {
+                checkedCheckBoxCount = 0;
+                var $checkBoxes = $(this).find('input');
+                $checkBoxes.each(function () {
+                    checkedCheckBoxCount += $(this).is(":checked") ? 1 : 0;
+                });
+
+                if (checkedCheckBoxCount === 0) {
+                    Validators.show($checkBoxes.get(0), 'Each bet type must have at least one Bet Limit value to be selected.', undefined, undefined, 1500);
+                    return false; //break each loop
+                }
+            });
+
+
+            if (checkedCheckBoxCount === 0)
+                return;
+        }
         //if (isNaN(cur) || cur < min || (max != 0 && cur > max)) {
         //    Validators.show($('#maxTransfer').get(0), 'Member Max Transfer Credit must be between ' + $('#minCredit').html() + ' and ' + $('#maxCredit').html(), undefined, undefined, 1500);
         //    return;
@@ -115,7 +134,7 @@
     };
 
     var ProcessUpdate = function (custIdIndex, ondone) {
-        CustomerModel.isAutoReset = isAutoReset;      
+        CustomerModel.isAutoReset = isAutoReset;
         var isSync = SyncStatuses[custIdIndex] == 1 ? true : false;
         CustomerModel.casinoSync = custIdIndex == null ? CustomerModel.casinoSync : isSync;
         var data = {
@@ -138,47 +157,15 @@
             type: 'post',
             dataType: 'json'
         })
-        .success(function (result) {
-            if (result.errorCode != 0) {
-                ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ":</font><br />" + result.errorMessage.formatErrorMessage() + '<br /><br />';
-            }
-            else {
-                SuccessMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ':</font><br /><font color="Blue">Updated successfully</font><br /><br />';
-            }
-
-            if (!IsMultiple) {
-                if (ErrorMessage != '') {
-                    $('#errMsg').html(ErrorMessage + SuccessMessage);
-                    $('#errMsg').show();
-
-                    if (typeof ondone == 'function') {
-                        ondone(1, ErrorMessage + SuccessMessage);
-                    }
-
-                    ErrorMessage = '';
-                    SuccessMessage = '';
-                    Fanex.CustomerSetting.Core.UnBlockUI();
-
-                    return false;
+            .success(function (result) {
+                if (result.errorCode != 0) {
+                    ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ":</font><br />" + result.errorMessage.formatErrorMessage() + '<br /><br />';
                 }
                 else {
-                    $('#errMsg').attr('class', 'successMsg');
-                    $('#errMsg').html(SuccessMessage);
-                    $('#errMsg').show();
-
-                    if (typeof ondone == 'function') {
-                        ondone(0, SuccessMessage);
-                    }
-
-                    ErrorMessage = '';
-                    SuccessMessage = '';
-                    Fanex.CustomerSetting.Core.UnBlockUI();
-
-                    return true;
+                    SuccessMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ':</font><br /><font color="Blue">Updated successfully</font><br /><br />';
                 }
-            }
-            else {
-                if (custIdIndex == CustIds.length - 1) {
+
+                if (!IsMultiple) {
                     if (ErrorMessage != '') {
                         $('#errMsg').html(ErrorMessage + SuccessMessage);
                         $('#errMsg').show();
@@ -210,33 +197,50 @@
                     }
                 }
                 else {
-                    ProcessUpdate(++custIdIndex, ondone);
+                    if (custIdIndex == CustIds.length - 1) {
+                        if (ErrorMessage != '') {
+                            $('#errMsg').html(ErrorMessage + SuccessMessage);
+                            $('#errMsg').show();
+
+                            if (typeof ondone == 'function') {
+                                ondone(1, ErrorMessage + SuccessMessage);
+                            }
+
+                            ErrorMessage = '';
+                            SuccessMessage = '';
+                            Fanex.CustomerSetting.Core.UnBlockUI();
+
+                            return false;
+                        }
+                        else {
+                            $('#errMsg').attr('class', 'successMsg');
+                            $('#errMsg').html(SuccessMessage);
+                            $('#errMsg').show();
+
+                            if (typeof ondone == 'function') {
+                                ondone(0, SuccessMessage);
+                            }
+
+                            ErrorMessage = '';
+                            SuccessMessage = '';
+                            Fanex.CustomerSetting.Core.UnBlockUI();
+
+                            return true;
+                        }
+                    }
+                    else {
+                        ProcessUpdate(++custIdIndex, ondone);
+                    }
                 }
-            }
-        })
-        .error(function (response) {
-            ErrorMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + data.username + ":</font><br /><font color='red'> Not casino's Customer. </font></div>";
-            if (!IsMultiple) {
-                $('#errMsg').html(ErrorMessage + SuccessMessage);
-                $('#errMsg').show();
-
-                if (typeof ondone == 'function') {
-                    ondone(1, ErrorMessage + SuccessMessage);
-                }
-
-                ErrorMessage = '';
-                SuccessMessage = '';
-                Fanex.CustomerSetting.Core.UnBlockUI();
-
-                return false;
-            }
-            else {
-                if (custIdIndex == CustIds.length - 1) {
-                    $('#errMsg').attr('class', 'errMsg').html(ErrorMessage + SuccessMessage);
+            })
+            .error(function (response) {
+                ErrorMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + data.username + ":</font><br /><font color='red'> Not casino's Customer. </font></div>";
+                if (!IsMultiple) {
+                    $('#errMsg').html(ErrorMessage + SuccessMessage);
                     $('#errMsg').show();
 
                     if (typeof ondone == 'function') {
-                        ondone(1, ErrorMessage);
+                        ondone(1, ErrorMessage + SuccessMessage);
                     }
 
                     ErrorMessage = '';
@@ -246,9 +250,24 @@
                     return false;
                 }
                 else {
-                    ProcessUpdate(++custIdIndex, ondone);
+                    if (custIdIndex == CustIds.length - 1) {
+                        $('#errMsg').attr('class', 'errMsg').html(ErrorMessage + SuccessMessage);
+                        $('#errMsg').show();
+
+                        if (typeof ondone == 'function') {
+                            ondone(1, ErrorMessage);
+                        }
+
+                        ErrorMessage = '';
+                        SuccessMessage = '';
+                        Fanex.CustomerSetting.Core.UnBlockUI();
+
+                        return false;
+                    }
+                    else {
+                        ProcessUpdate(++custIdIndex, ondone);
+                    }
                 }
-            }
-        });
+            });
     }
 }

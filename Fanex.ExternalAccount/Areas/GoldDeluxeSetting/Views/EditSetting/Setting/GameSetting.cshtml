@@ -1,6 +1,7 @@
 ﻿@model EditSettingViewModel
 <div id="tblGameSetting" class="pt-container col-xs-12"
-     data-ng-controller="CustGameSettingController">
+     data-ng-controller="CustGameSettingController"
+     data-ng-init="init()">
     <div class="pt-title">
         <span class="pt-title-text">@GoldDeluxeLang.lblGameSetting</span> <span data-ng-click="updateGameSetting()"
                                                                                 data-ng-if="!$parent.isReadOnly && $parent.isUpdateGameSettingPartial" class="btn-save-partial" title="@GoldDeluxeLang.lblUpdate"></span>
