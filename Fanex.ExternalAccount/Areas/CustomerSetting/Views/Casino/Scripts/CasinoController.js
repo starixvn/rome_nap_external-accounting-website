@@ -80,10 +80,11 @@
                     return false; //break each loop
                 }
             });
-        }
 
-        if (checkedCheckBoxCount === 0)
-            return;
+
+            if (checkedCheckBoxCount === 0)
+                return;
+        }
         //if (isNaN(cur) || cur < min || (max != 0 && cur > max)) {
         //    Validators.show($('#maxTransfer').get(0), 'Member Max Transfer Credit must be between ' + $('#minCredit').html() + ' and ' + $('#maxCredit').html(), undefined, undefined, 1500);
         //    return;
