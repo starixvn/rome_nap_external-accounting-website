@@ -66,25 +66,12 @@
             return;
         }
 
-        var checkedCheckBoxCount = 0;
-        if (isBelongToSpecialGroups) {
-            $('tr[data-ng-controller="GameTypeController"] > td:odd').each(function () {
-                checkedCheckBoxCount = 0;
-                var $checkBoxes = $(this).find('input');
-                $checkBoxes.each(function () {
-                    checkedCheckBoxCount += $(this).is(":checked") ? 1 : 0;
-                });
-
-                if (checkedCheckBoxCount === 0) {
-                    Validators.show($checkBoxes.get(0), 'Each bet type must have at least one Bet Limit value to be selected.', undefined, undefined, 1500);
-                    return false; //break each loop
-                }
-            });
-
-
-            if (checkedCheckBoxCount === 0)
-                return;
+        var stakeLevelCheckboxes = $('.chk-stake-level');
+        if (isBelongToSpecialGroups && $('input:checked', stakeLevelCheckboxes).length === 0) {
+            Validators.show(stakeLevelCheckboxes.get(0), 'Each bet type must have at least one Bet Limit value to be selected.', undefined, undefined, 3000);
+            return;
         }
+
         //if (isNaN(cur) || cur < min || (max != 0 && cur > max)) {
         //    Validators.show($('#maxTransfer').get(0), 'Member Max Transfer Credit must be between ' + $('#minCredit').html() + ' and ' + $('#maxCredit').html(), undefined, undefined, 1500);
         //    return;

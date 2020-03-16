@@ -18,6 +18,12 @@ Fanex.CustomerSetting.Betting.Casino = function ($scope, $element) {
 Fanex.CustomerSetting.Betting.Casino.Update = function (ondone) {
     $(document).scrollTop(0);  
 
+    var stakeLevelCheckboxes = $('.chk-stake-level');
+    if (isBelongToSpecialGroups && $('input:checked', stakeLevelCheckboxes).length === 0) {
+        Validators.show(stakeLevelCheckboxes.get(0), 'Each bet type must have at least one Bet Limit value to be selected.', undefined, undefined, 3000);
+        return;
+    }
+
     Fanex.CustomerSetting.Core.BlockUI();
 
     $.ajax({

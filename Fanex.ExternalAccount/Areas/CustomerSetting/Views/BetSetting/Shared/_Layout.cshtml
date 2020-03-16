@@ -19,45 +19,45 @@
 }
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-        <meta charset="utf-8">
-        <title></title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="" name="description">
-        <meta content="" name="author">       
-        <link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
-    </head>
-    <body>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    <link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
     <div id="tabs" style="float: left; width: 870px; border: none">
         <ul class="tabs">
             <li id="tab1" onclick="LoadSB()"><a href="#tabs-1">Sportsbook</a></li>
-            <li id="tab5" onclick="LoadVirtualSports()"><a href="#tabs-5">Virtual Sports</a></li>            
+            <li id="tab5" onclick="LoadVirtualSports()"><a href="#tabs-5">Virtual Sports</a></li>
             <li id="tab6" onclick="LoadCasino()"><a href="#tabs-6">Casino</a></li>
             <li id="tab8" onclick="LoadKeno()"><a href="#tabs-8">RNG Keno</a></li>
             <li id="tab12" onclick="LoadGoldDeluxe()"><a href="#tabs-12">Gold Deluxe</a></li>
 
             @foreach (var tab in visibleTabs)
             {
-                <li id="tab@(tab.Id)" 
+                <li id="tab@(tab.Id)"
                     onclick="LoadProduct(@(tab.Id))">
                     <a href="#tabs-@(tab.Id)">@(tab.Name)</a>
                 </li>
             }
         </ul>
-        <div id = "tabs-1" >
-            @RenderSection("Sportsbook", false)
+        <div id="tabs-1">
+        @RenderSection("Sportsbook", false)
         </div>
-        
-        <div id = "tabs-5" >
-	        <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
-            <div><iframe id = "product-5" width="100%" height="450px" frameborder="0" src=""></iframe></div>
+
+        <div id="tabs-5">
+        <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
+        <div><iframe id="product-5" width="100%" height="450px" frameborder="0" src=""></iframe></div>
         </div>
         <div id="tabs-6">
             @RenderSection("Casino", false)
         </div>
-        <div id = "tabs-8" >
-            @RenderSection("Keno", false)
+        <div id="tabs-8">
+        @RenderSection("Keno", false)
         </div>
         <div id="tabs-12">
             @RenderSection("GoldDeluxe", false)
@@ -72,7 +72,7 @@
                 <div><iframe id="product-@(tab.Id)" width="100%" height="500px" frameborder="0" src=""></iframe></div>
             </div>
         }
-</div>                        
+    </div>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery-ui-1.9.1.min.js")" type="text/javascript"></script>
@@ -87,7 +87,7 @@
         $(document).ready(function () {
             var url = document.URL.toLowerCase();
             var index = url.indexOf('sportsbook') != -1 ? 0 :
-                url.indexOf('virtualsportsbetting') != -1 ? 1 :                
+                url.indexOf('virtualsportsbetting') != -1 ? 1 :
                 url.indexOf('casinobetting') != -1 ? 2 :
                 url.indexOf('kenobetting') != -1 ? 3 :
                 url.indexOf('golddeluxebetting') != -1 ? 4 :
@@ -112,7 +112,7 @@
                     --index;
                 }
             }
-            
+
             if (custInfo.hideGoldDeluxe)
             {
                 $('#tab12').remove();
@@ -130,7 +130,8 @@
         var userId = parseInt('@userId');
         var siteName = '@siteName';
     </script>
-        @Fanex.ExternalAccount.Core.Helpers.GoogleAnalyticHepler.Render()
-        @Fanex.ExternalAccount.Core.Helpers.TrackJSHelper.Render()
-    </body>
+    @RenderSection("Scripts", false);
+    @Fanex.ExternalAccount.Core.Helpers.GoogleAnalyticHepler.Render()
+    @Fanex.ExternalAccount.Core.Helpers.TrackJSHelper.Render()
+</body>
 </html>
