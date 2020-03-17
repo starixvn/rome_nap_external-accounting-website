@@ -30,6 +30,10 @@
 
                 var custInfoScope = angular.element('[data-ng-controller="CustomerInfoController"]').scope();
 
+                if (isBelongToSpecialGroups && $scope.mainResult.Warning !== undefined && $scope.mainResult.Warning.IsShow) {
+                    return;
+                }
+
                 customerGameSettingService.updateGameSetting($scope.getGameSetting(), $scope.$parent);
             };
 
