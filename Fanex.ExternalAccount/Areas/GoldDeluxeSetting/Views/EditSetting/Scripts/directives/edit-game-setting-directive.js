@@ -46,7 +46,7 @@ fanex.goldDeluxeSetting.directive('editGameSetting', [
                             }
                         });
 
-                        var message = language.getString('WarningUncheckAllStakeLevelMsg');
+                        var message = language.getString(isBelongToSpecialGroups ?'WarningUncheckAllStakeLevelMsg_DirectionV3':'WarningUncheckAllStakeLevelMsg');
                         $scope.$parent.mainResult.Warning = {
                             IsShow: isShowWarning,
                             Message: message

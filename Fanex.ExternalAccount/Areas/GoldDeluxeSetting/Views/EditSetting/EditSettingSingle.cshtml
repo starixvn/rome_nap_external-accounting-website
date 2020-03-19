@@ -1,13 +1,15 @@
-﻿@using Fanex.ExternalAccount.Core.Shared
+﻿@using Fanex.ExternalAccount.Core.Context
 @{
     Layout = "~/Areas/GoldDeluxeSetting/Views/EditSetting/_EditSetting.cshtml";
     ViewBag.Title = GoldDeluxeLang.lblEditGoldDeluxe;
+    var session = CurrentSession.Instance;
 }
 @model EditSettingViewModel
 @section modeldata
 {
     <script type="text/javascript">
         @(Html.ToJavascriptObject(Model, "settingViewModel"))
+        @(Html.ToJavascriptObject(session.IsBelongToSpecialGroups, "isBelongToSpecialGroups"))
     </script>
 }
 @section Customer

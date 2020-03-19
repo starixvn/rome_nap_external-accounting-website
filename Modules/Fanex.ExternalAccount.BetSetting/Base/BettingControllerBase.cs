@@ -1,12 +1,13 @@
 namespace Fanex.CustomerSetting.Module.BetSetting.Base
 {
+    using Casino.Services.Impl;
+    using Casino.Services.Interface;
+    using Core.Web.Controllers;
+    using Fanex.ExternalAccount.Core.Context;
+    using Keno.KenoSetting.Services;
     using Services.Impl;
     using Services.Interface;
     using ViewModels;
-    using Casino.Services.Impl;
-    using Core.Web.Controllers;
-    using Keno.KenoSetting.Services;
-    using Casino.Services.Interface;
 
     public class BettingControllerBase : BaseController
     {
@@ -31,5 +32,8 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Base
 
             return customer;
         }
+
+        protected int GetDefaultMinBetValue()
+            => CurrentSession.Instance.IsBelongToSpecialGroups ? 1 : 0;
     }
 }

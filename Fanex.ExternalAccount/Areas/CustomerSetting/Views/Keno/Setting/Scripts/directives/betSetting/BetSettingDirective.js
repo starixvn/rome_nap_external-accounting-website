@@ -19,6 +19,7 @@ KenoModule.directive('betSettingElement', ['$templateCache', function ($template
                 $scope.unlimited = false;
                 $scope.notAllowPlaceBets = false;
                 $scope.isBelongToSpecialGroups = $window.isBelongToSpecialGroups;
+                $scope.minMinBetValue = $window.isBelongToSpecialGroups ? 1 : 0;
 
                 $scope.isDownlinechkDisabled = true;
 
@@ -45,7 +46,7 @@ KenoModule.directive('betSettingElement', ['$templateCache', function ($template
                 }
 
                 $scope.formatNumber = function (value) {
-                if (value.toString().endsWith(".")) {
+                    if (value.toString().endsWith(".")) {
                         return value;
                     }
 
@@ -69,9 +70,9 @@ KenoModule.directive('betSettingElement', ['$templateCache', function ($template
                     });
                 }
 
-               $scope.$watch('[betSetting.minBet,betSetting.maxBet,betSetting.maxPerMatch,valids]', function () {
-                    $scope.unlimited = $scope.betSetting.minBet == 0 && $scope.betSetting.maxBet == 0 && $scope.betSetting.maxPerMatch == 0;
-                    $scope.notAllowPlaceBets = $scope.betSetting.minBet == 0 && $scope.betSetting.maxBet == 0.1 && $scope.betSetting.maxPerMatch == 0.1;
+                $scope.$watch('[betSetting.minBet,betSetting.maxBet,betSetting.maxPerMatch,valids]', function () {
+                    $scope.unlimited = $scope.betSetting.minBet == $scope.minMinBetValue && $scope.betSetting.maxBet == 0 && $scope.betSetting.maxPerMatch == 0;
+                    $scope.notAllowPlaceBets = $scope.betSetting.minBet == $scope.minMinBetValue && $scope.betSetting.maxBet == 0.1 && $scope.betSetting.maxPerMatch == 0.1;
 
                     $scope.betSetting.isValid = ($scope.valids.minBet && $scope.valids.maxBet && $scope.valids.maxPerMatch)
                         || $scope.unlimited

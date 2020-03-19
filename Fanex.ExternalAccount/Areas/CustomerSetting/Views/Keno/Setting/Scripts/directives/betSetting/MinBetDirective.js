@@ -1,12 +1,13 @@
 ﻿"use strict";
 
-KenoModule.directive('minBetInput', ['$filter', '$parse', 'commonService',
-    function ($filter, $parse, commonService) {
+KenoModule.directive('minBetInput', ['$filter', '$window', '$parse', 'commonService',
+    function ($filter, $window, $parse, commonService) {
         return {
             require: '^ngModel',
             link: function ($scope, element, attrs, ctrl) {
                 if (!ctrl) return;
 
+                $scope.defaultMinBetValue = $window.isBelongToSpecialGroups ? 1 : 0;
                 $scope.formatInput(element, ctrl);
 
                 $scope.$on('inputDisabledChecking', function (event) {
@@ -17,6 +18,13 @@ KenoModule.directive('minBetInput', ['$filter', '$parse', 'commonService',
                     var modelValue = isNaN(ctrl.$modelValue) == true ? $scope.betSetting.minBet : parseFloat(ctrl.$modelValue);
                     var minValue = $scope.betSetting.upline.minBet;
                     var maxValue = $scope.betSetting.maxBet;
+
+                    if ($scope.defaultMinBetValue && modelValue < $scope.defaultMinBetValue) {
+                        commonService.createTooltip(element, $scope.betSetting.betTypeName + " - " + resources.lblMinBet + " " + resources.greater_than + " " + $scope.defaultMinBetValue);
+                        $scope.valids.minBet = false;
+                        element.addClass('invalidValue');
+                        return false;
+                    }
 
                     if (!$scope.notAllowPlaceBets && !$scope.unlimited
                         && modelValue < minValue && minValue < $scope.MAX_VALUE) {

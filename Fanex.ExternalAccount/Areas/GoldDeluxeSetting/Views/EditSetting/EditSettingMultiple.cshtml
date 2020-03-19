@@ -1,6 +1,8 @@
-﻿@{
+﻿@using Fanex.ExternalAccount.Core.Context
+@{
     Layout = "~/Areas/GoldDeluxeSetting/Views/EditSetting/_EditSetting.cshtml";
     ViewBag.Title = GoldDeluxeLang.lblEditMultipleGoldDeluxe;
+    var session = CurrentSession.Instance;
 }
 @model EditSettingMultipleViewModel
 
@@ -8,6 +10,7 @@
 {
     <script type="text/javascript">
         @(Html.ToJavascriptObject(Model, "settingViewModel"))
+        @(Html.ToJavascriptObject(session.IsBelongToSpecialGroups, "isBelongToSpecialGroups"))
     </script>
 }
 

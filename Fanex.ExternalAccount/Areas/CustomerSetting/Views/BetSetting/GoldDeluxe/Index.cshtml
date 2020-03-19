@@ -10,6 +10,10 @@
 
 }
 @section GoldDeluxe{
-    <iframe id="product-12"  width="100%" height="250px" frameborder="0" src="@Url.Content(url)">
-    </iframe>
+    <iframe id="product-12" width="100%" height="250px" frameborder="0" src="@Url.Content(url)"></iframe>
+}
+@section Scripts{
+    <script type="text/javascript">
+        var isBelongToSpecialGroups = @Json.Encode(Fanex.ExternalAccount.Core.Context.CurrentSession.Instance.IsBelongToSpecialGroups);
+    </script>
 }

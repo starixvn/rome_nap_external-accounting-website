@@ -12,6 +12,7 @@
         EnableVoidbridge = 22,
         EnableNG2 = 23,
         EnableFishingWorld = 24,
-        EnableLottery = 28
+        EnableLottery = 28,
+        EnableVirtualGames = 38,
     }
 }

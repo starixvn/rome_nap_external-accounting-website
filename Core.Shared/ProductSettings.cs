@@ -15,7 +15,8 @@
                 [ProductConstants.NG2] = new Product(2, ProductConstants.NG2, "NG2", true),
                 [ProductConstants.FishingWorld] = new Product(3, ProductConstants.FishingWorld, "Fishing World"),
                 [ProductConstants.Lottery] = new Product(4, ProductConstants.Lottery, "Lottery"),
-                [ProductConstants.Sportsbook2] = new Product(5, ProductConstants.Sportsbook2, "Sportsbook 2")
+                [ProductConstants.Sportsbook2] = new Product(5, ProductConstants.Sportsbook2, "Sportsbook 2"),
+                [ProductConstants.VirtualGames] = new Product(6, ProductConstants.VirtualGames, "Virtual Games")
             };
 
         public static bool IsShowGoldDeluxe => IsShowProduct(ProductConstants.GoldDeluxe);

@@ -87,8 +87,9 @@
 
             var customer = ptCustomerService.GetCustomerForAddNewMaster(context);
             customer.CurrencyId = parentCurrencyId;
+            var defaultMinBetValue = GetDefaultMinBetValue();
 
-            return JsonBase(new { context, customer });
+            return JsonBase(new { context, customer, defaultMinBetValue });
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Host)]
@@ -168,8 +169,9 @@
 
             var customer = ptCustomerService.GetCustomerForAddNewAgent(context);
             customer.CurrencyId = parentCurrencyId;
+            var defaultMinBetValue = GetDefaultMinBetValue();
 
-            return JsonBase(new { context, customer });
+            return JsonBase(new { context, customer, defaultMinBetValue });
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Host)]
@@ -257,8 +259,9 @@
 
             var customer = ptCustomerService.GetCustomerForAddNewMember(context);
             customer.CurrencyId = parentCurrencyId;
+            var defaultMinBetValue = GetDefaultMinBetValue();
 
-            return JsonBase(new { context, customer });
+            return JsonBase(new { context, customer, defaultMinBetValue });
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Host)]

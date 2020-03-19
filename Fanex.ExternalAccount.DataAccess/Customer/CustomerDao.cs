@@ -302,7 +302,7 @@
                         result.DCSProductsSetting.Add(new CustomerStatusDCS
                         {
                             ProductID = productId,
-                            ProductName = ProductSettings.SiteProducts[productId]?.Name,
+                            ProductName = ProductSettings.SiteProducts.ContainsKey(productId) ? ProductSettings.SiteProducts[productId].Name : string.Empty,
                             IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
                             IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
                             IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),

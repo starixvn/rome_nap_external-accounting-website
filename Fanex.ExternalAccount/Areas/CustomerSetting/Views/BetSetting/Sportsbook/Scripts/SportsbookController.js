@@ -323,7 +323,8 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
     var length = bettings.length;
 
     this.IsValid = function (min, max, maxPerMatch, minMin, maxMax, maxPerMatchMax, betting, isNumberGame, maxPerBall, maxPerBallMax) {
-        var subFix = isNumberGame ? '1' : '';
+        var isNumberGameOrHappy5 = betting.id === 161 || betting.id === 164;
+        var subFix = isNumberGameOrHappy5 ? '1' : '';
 
         if (isNaN(min)) {
             Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet should be a value', undefined, undefined, 3000);
@@ -387,6 +388,12 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
 
         if (isNumberGame && maxPerBallMax != 0 && maxPerBall > maxPerBallMax) {
             Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - Max Per Ball should be less than or equals to ' + maxPerBallMax.formatNumber(), undefined, undefined, 3000);
+
+            return false;
+        }
+
+        if (isNumberGameOrHappy5 && defaultMinBetValue && min < defaultMinBetValue) {
+            Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet should be greater than or equals to ' + defaultMinBetValue.formatNumber(), undefined, undefined, 3000);
 
             return false;
         }

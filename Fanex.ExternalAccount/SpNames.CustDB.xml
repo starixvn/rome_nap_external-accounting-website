@@ -1,4 +1,5 @@
-﻿<Functions>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Functions>
   <Function Name="PT Setting Information">
     <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
@@ -192,7 +193,6 @@
     <Setting Key="Age_CustomerUpdAgentComm" SpName="Age_CustomerUpdAgentComm" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerUpdUserComm" SpName="Age_CustomerUpdUserComm" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
-
   <Function Name="Casino">
     <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="dblog" IgnoreImport="true" />
   </Function>
@@ -287,7 +287,7 @@
     <Setting Key="EAS_CustomerDateLimitSel" SpName="EAS_CustomerDateLimitSel" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
   <Function Name="Products">
-    <Setting Key="EAS_GetProductList" SpName="EAS_GetProductList" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0"/>
+    <Setting Key="EAS_GetProductList" SpName="EAS_GetProductList" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Member Balance Info">
     <Setting Key="Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.bodbExtAccNet" Plain="0" />

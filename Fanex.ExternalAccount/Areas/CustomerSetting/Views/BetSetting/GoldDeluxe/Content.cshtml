@@ -15,14 +15,15 @@
 }
 @model EditSettingViewModel
 <link type="text/css" rel="Stylesheet" href="@Url.Content("~/areas/GoldDeluxeSetting/content/bootstrap.css")" />
-<link type="text/css" rel="Stylesheet" href="@Url.Content("~/assets/styles/pages/customer/gold-deluxe-setting.css")?v=1" />
+<link type="text/css" rel="Stylesheet" href="@Url.Content("~/assets/styles/pages/customer/gold-deluxe-setting.css")" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/GoldDeluxe/Styles/BettingLimiteGoldDeluxe.css")" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
     @(Html.ToJavascriptObject(Model, "settingViewModel"))
-       var currentLaguageKey = '@(currentLangaugeKey)';
+    @(Html.ToJavascriptObject(Fanex.ExternalAccount.Core.Context.CurrentSession.Instance.IsBelongToSpecialGroups, "isBelongToSpecialGroups"))
+    var currentLaguageKey = '@(currentLangaugeKey)';
 </script>
 <div id="tblSetting" data-ng-app="fanex.goldDeluxeSetting" data-ng-controller="CustomerSettingController"
-    style="display: none;" class="edit-setting-gold-deluxe">
+     style="display: none;" class="edit-setting-gold-deluxe">
     <div id="updatedResult" class="updated-result col-xs-12" data-ng-show="mainResult.CommandResultsList.length > 0">
         <div class="main-message-icon" data-ng-class="{'main-icon-success': mainResult.IsSuccessful,'main-icon-error': !mainResult.IsSuccessful}">
         </div>
@@ -33,10 +34,10 @@
                 </div>
                 <div class="sub-message" data-ng-repeat="result in subResult.Results">
                     <div class="sub-message-icon" data-ng-class="{'sub-icon-success': result.IsSuccessful,'sub-icon-error': !result.IsSuccessful}"
-                        data-ng-show="!mainResult.isUnAuthorized">
+                         data-ng-show="!mainResult.isUnAuthorized">
                     </div>
                     <div class="message-content" data-ng-class="{'message-content-success': result.IsSuccessful,'message-content-error': !result.IsSuccessful, 'message-content-unauthorized': mainResult.isUnAuthorized}"
-                        data-ng-bind-html="result.Message">
+                         data-ng-bind-html="result.Message">
                     </div>
                 </div>
             </div>
@@ -62,46 +63,46 @@
         <div class="pt-title">
             <span class="pt-title-text">@GoldDeluxeLang.lblGameSetting</span>
         </div>
-       <table class="game-setting">
-        <thead>
-            <tr>
-                <td class="col-xs-3 right bold">
-                    @GoldDeluxeLang.lblGameType
-                </td>
-                <td class="col-xs-9 left bold">
-                    @GoldDeluxeLang.lblBettingLimit
-                </td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr data-ng-repeat="itemGameType in gameSetting">
-                <td class="right game-setting-name">
-                    {{itemGameType.Name}}
-                </td>
-                <td class="betting-limit-container">
-                    <span data-ng-repeat="betLimitItem in itemGameType.BettingLimit" class="betting-limit-item">
-                        <br data-ng-show="{{$index % 6 == 0 && $index > 0}}" />
-                        @if (Model.Level != CustomerLevel.Member)
-                        {
-                            <label class="checkbox-inline betting-limit-label">
-                                <input id="betLimit{{betLimitItem.Id}}" type="checkbox" data-ng-model="betLimitItem.IsChecked"
-                                       data-ng-disabled="$parent.isReadOnly" data-ng-change="checkShowWarningUncheckedAll()" />
-                                {{betLimitItem.Range}}
-                            </label>
-                        }
-                        else
-                        {
-                            <label class="radio-inline betting-limit-label">
-                                <input id="betLimit{{betLimitItem.Id}}" type="radio" name="{{itemGameType.Name}}" data-ng-model="itemGameType.CheckedStakeLevelId"
-                                       data-ng-disabled="$parent.isReadOnly" value="{{betLimitItem.Id}}" />
-                                {{betLimitItem.Range}}
-                            </label>
-                        }
-                    </span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="game-setting">
+            <thead>
+                <tr>
+                    <td class="col-xs-3 right bold">
+                        @GoldDeluxeLang.lblGameType
+                    </td>
+                    <td class="col-xs-9 left bold">
+                        @GoldDeluxeLang.lblBettingLimit
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="itemGameType in gameSetting">
+                    <td class="right game-setting-name">
+                        {{itemGameType.Name}}
+                    </td>
+                    <td class="betting-limit-container">
+                        <span data-ng-repeat="betLimitItem in itemGameType.BettingLimit" class="betting-limit-item">
+                            <br data-ng-show="{{$index % 6 == 0 && $index > 0}}" />
+                            @if (Model.Level != CustomerLevel.Member)
+                            {
+                                <label class="checkbox-inline betting-limit-label">
+                                    <input id="betLimit{{betLimitItem.Id}}" type="checkbox" data-ng-model="betLimitItem.IsChecked"
+                                           data-ng-disabled="$parent.isReadOnly" data-ng-change="checkShowWarningUncheckedAll()" />
+                                    {{betLimitItem.Range}}
+                                </label>
+                            }
+                            else
+                            {
+                                <label class="radio-inline betting-limit-label">
+                                    <input id="betLimit{{betLimitItem.Id}}" type="radio" name="{{itemGameType.Name}}" data-ng-model="itemGameType.CheckedStakeLevelId"
+                                           data-ng-disabled="$parent.isReadOnly" value="{{betLimitItem.Id}}" />
+                                    {{betLimitItem.Range}}
+                                </label>
+                            }
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <div class="update-setting">
             <input type="button" class="btn -submit update-setting-ext-acc-submit" data-ng-click="updateGameSetting()" title="@GoldDeluxeLang.lblSubmit"
                    value="@GoldDeluxeLang.lblSubmit" data-ng-show="!isReadOnly" />
@@ -140,7 +141,7 @@
     var uplineId = parseInt('@uplineId');
     var userId = parseInt('@userId');
     var siteName = '@siteName';
-    var syncCasino = '@ViewBag.SyncCasino';    
+    var syncCasino = '@ViewBag.SyncCasino';
 
     function toUrl(relativeUrl) {
         return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
@@ -150,7 +151,7 @@
         if (syncCasino == 'False') {
             $('#tab6').remove();
         }
-        
+
         $('#tab8').addClass('ui-tabs-active ui-state-active');
         $('#tab1').removeClass('ui-tabs-active ui-state-active');
         $('#tab2').removeClass('ui-tabs-active ui-state-active');

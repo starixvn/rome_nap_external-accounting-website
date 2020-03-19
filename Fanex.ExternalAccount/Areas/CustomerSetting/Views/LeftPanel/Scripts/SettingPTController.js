@@ -176,6 +176,11 @@
         $scope.collapseSidebar();
     };
 
+    $scope.VirtualGames = function () {
+        $scope.RenderDCS(38);
+        $scope.collapseSidebar();
+    };
+
     $scope.RenderDCS = function (productId) {
         $scope.ResetGlobalValue();
 

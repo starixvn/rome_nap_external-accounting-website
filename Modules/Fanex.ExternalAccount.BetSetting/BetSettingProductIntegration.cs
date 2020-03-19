@@ -19,7 +19,8 @@
             ProductConstants.VoidBridge,
             ProductConstants.NG2,
             ProductConstants.Lottery,
-            ProductConstants.Sportsbook2
+            ProductConstants.Sportsbook2,
+            ProductConstants.VirtualGames
         };
 
         private static CustomerService customerService = new CustomerService();

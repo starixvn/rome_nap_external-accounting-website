@@ -53,7 +53,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
             var BetSettingModel = function () {
                 this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
-                    if (!bettingLimit.Validate()) return;
+                    if (!bettingLimit.Validate(result.defaultMinBetValue)) return;
 
                     Fanex.ExtAcc.BlockUI();
 
@@ -136,7 +136,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
             var BetSettingModel = function () {
                 this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
-                    if (!bettingLimit.Validate()) return;
+                    if (!bettingLimit.Validate(result.defaultMinBetValue)) return;
 
                     Fanex.ExtAcc.BlockUI();
 
@@ -217,7 +217,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
             var BetSettingModel = function () {
                 this.saveCustomer = function () {
                     $('#windowPopup').scrollTop(0);
-                    if (!bettingLimit.Validate()) return;
+                    if (!bettingLimit.Validate(result.defaultMinBetValue)) return;
 
                     Fanex.ExtAcc.BlockUI();
 

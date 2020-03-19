@@ -8,6 +8,9 @@
             'use strict';
             $scope.gameSetting = fanex.cloneObject(settingViewModel.Setting.GameSetting);
             var uplineUncheckedAllMsg = '';
+            $scope.init = function () {
+                $scope.checkShowWarningUncheckedAll();
+            };
 
             $scope.getGameSetting = function () {
                 if (settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member) {
@@ -26,6 +29,10 @@
             $scope.updateGameSetting = function () {
 
                 var custInfoScope = angular.element('[data-ng-controller="CustomerInfoController"]').scope();
+
+                if (isBelongToSpecialGroups && $scope.mainResult.Warning !== undefined && $scope.mainResult.Warning.IsShow) {
+                    return;
+                }
 
                 customerGameSettingService.updateGameSetting($scope.getGameSetting(), $scope.$parent);
             };
@@ -47,7 +54,7 @@
                     }
                 });
 
-                var message = language.getString('WarningUncheckAllStakeLevelMsg');
+                var message = language.getString(isBelongToSpecialGroups ? 'WarningUncheckAllStakeLevelMsg_DirectionV3' :'WarningUncheckAllStakeLevelMsg');
                 $scope.$parent.mainResult.Warning = {
                     IsShow: isShowWarning,
                     Message: message
