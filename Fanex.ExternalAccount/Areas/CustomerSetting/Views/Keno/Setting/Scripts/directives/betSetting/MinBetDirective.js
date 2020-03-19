@@ -20,7 +20,7 @@ KenoModule.directive('minBetInput', ['$filter', '$window', '$parse', 'commonServ
                     var maxValue = $scope.betSetting.maxBet;
 
                     if ($scope.defaultMinBetValue && modelValue < $scope.defaultMinBetValue) {
-                        commonService.createTooltip(element, $scope.betSetting.betTypeName + " - " + resources.lblMinBet + " " + resources.greater_than + " " + $scope.defaultMinBetValue);
+                        commonService.createTooltip(element, $scope.betSetting.betTypeName + " - Min Bet " + resources.greater_than + " " + $scope.defaultMinBetValue);
                         $scope.valids.minBet = false;
                         element.addClass('invalidValue');
                         return false;
