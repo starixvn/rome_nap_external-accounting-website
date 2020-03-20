@@ -181,6 +181,11 @@
         $scope.collapseSidebar();
     };
 
+    $scope.Sabaclub = function () {
+        $scope.RenderDCS(42);
+        $scope.collapseSidebar();
+    };
+
     $scope.RenderDCS = function (productId) {
         $scope.ResetGlobalValue();
 
