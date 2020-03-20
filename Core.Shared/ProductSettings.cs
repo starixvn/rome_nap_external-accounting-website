@@ -16,7 +16,8 @@
                 [ProductConstants.FishingWorld] = new Product(3, ProductConstants.FishingWorld, "Fishing World"),
                 [ProductConstants.Lottery] = new Product(4, ProductConstants.Lottery, "Lottery"),
                 [ProductConstants.Sportsbook2] = new Product(5, ProductConstants.Sportsbook2, "Sportsbook 2"),
-                [ProductConstants.VirtualGames] = new Product(6, ProductConstants.VirtualGames, "Virtual Games")
+                [ProductConstants.VirtualGames] = new Product(6, ProductConstants.VirtualGames, "Virtual Games"),
+                [ProductConstants.Sabaclub] = new Product(7, ProductConstants.Sabaclub, "Saba.club")
             };
 
         public static bool IsShowGoldDeluxe => IsShowProduct(ProductConstants.GoldDeluxe);
@@ -36,6 +37,8 @@
         public static bool IsShowLottery => IsShowProduct(ProductConstants.Lottery);
 
         public static bool HideEsports => ToBoolean(Configs["HideEsports"]);
+
+        public static bool IsShowSabaclub => IsShowProduct(ProductConstants.Sabaclub);
 
         internal static NameValueCollection Configs { get; set; } = ConfigurationManager.AppSettings;
 

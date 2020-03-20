@@ -9,6 +9,7 @@
         FishingWorldSetting = 24,
         LotterySetting = 28,
         VirtualSports = 5,
-        VirtualGamesSetting = 38
+        VirtualGamesSetting = 38,
+        SabaclubSetting = 42
     }
 }
