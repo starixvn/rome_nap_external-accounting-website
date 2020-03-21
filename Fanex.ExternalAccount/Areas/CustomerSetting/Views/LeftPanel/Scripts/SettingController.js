@@ -729,7 +729,6 @@
         }
 
         top.shouldCalculatePopupHeight = false;
-        document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(42, "Saba.club");
     };
 
