@@ -16,6 +16,7 @@
                 [ProductConstants.NG2] = new Product(3, ProductConstants.NG2, "NG2", true),
                 [ProductConstants.FishingWorld] = new Product(4, ProductConstants.FishingWorld, "Fishing World"),
                 [ProductConstants.Lottery] = new Product(5, ProductConstants.Lottery, "Lottery"),
+                [ProductConstants.Sportsbook2] = new Product(5, ProductConstants.Sportsbook2, "Sportsbook 2"),
                 [ProductConstants.VirtualGames] = new Product(6, ProductConstants.VirtualGames, "Virtual Games"),
                 [ProductConstants.Sabaclub] = new Product(7, ProductConstants.Sabaclub, "Saba.club")
             };
