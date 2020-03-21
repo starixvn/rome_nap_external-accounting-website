@@ -20,7 +20,8 @@
             ProductConstants.NG2,
             ProductConstants.Lottery,
             ProductConstants.Sportsbook2,
-            ProductConstants.VirtualGames
+            ProductConstants.VirtualGames,
+            ProductConstants.Sabaclub
         };
 
         private static CustomerService customerService = new CustomerService();
