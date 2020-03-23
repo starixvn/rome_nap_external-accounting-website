@@ -39,12 +39,12 @@
                             <table class="tableInfo" border="0" cellpadding="0" cellspacing="0">
                                 <tr data-ng-repeat="gameType in gameKind.gameTypes">
                                     <td class="widthGameTypeTitle noneBorderLeft noneBorderTop">{{gameType.gameTypeName}}</td>
-                                    <td class="noneBorderLeft noneBorderTop">
+                                    <td class="noneBorderLeft noneBorderTop stake-level">
                                         <div class="floatLeft">
                                             <div class="floatLeft">Betting Limit:&nbsp;</div>
                                             <div class="floatLeft" data-ng-repeat="betting in gameType.bettingLimits">
                                                 <div class="floatLeft">
-                                                    <input type="checkbox" data-ng-model="betting.isChecked" class="chk-stake-level" /><span>{{betting.stakeLevelName}}</span>
+                                                    <input type="checkbox" data-ng-model="betting.isChecked" /><span>{{betting.stakeLevelName}}</span>
                                                 </div>
                                             </div>
                                         </div>

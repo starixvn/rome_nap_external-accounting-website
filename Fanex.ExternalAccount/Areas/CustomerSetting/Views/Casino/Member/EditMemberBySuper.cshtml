@@ -108,10 +108,10 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="4" class="noneBorderRight">
+                                                    <td colspan="4" class="noneBorderRight stake-level">
                                                         <span>@NGCasinoLang.lblBettingLimit: </span><span data-ng-controller="BettingLimitController"
                                                             data-ng-repeat="stake in gameType.bettingLimits">
-                                                            <input disabled ="disabled" type="checkbox" data-ng-model="stake.isChecked" class="chk-stake-level" /><span>{{stake.stakeLevelName}}</span>
+                                                            <input disabled ="disabled" type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -125,10 +125,10 @@
                                         <td class="gameTypeWidth R noneBorderL">
                                             {{gameType.gameTypeName}}
                                         </td>
-                                        <td colspan="4" class="noneBorderR">
+                                        <td colspan="4" class="noneBorderR stake-level">
                                             <span>@NGCasinoLang.lblBettingLimit: </span><span data-ng-controller="BettingLimitController"
                                                 data-ng-repeat="stake in gameType.bettingLimits">
-                                                <input disabled ="disabled" type="checkbox" data-ng-model="stake.isChecked" class="chk-stake-level" /><span>{{stake.stakeLevelName}}</span>
+                                                <input disabled ="disabled" type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
                                             </span>
                                         </td>
                                     </tr>
