@@ -20,7 +20,7 @@
                 throw new ArgumentNullException(nameof(value));
             }
 
-            Key = key.Replace(".", string.Empty).Replace("-", string.Empty);
+            Key = key;
             Value = value;
         }
 

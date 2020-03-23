@@ -981,7 +981,7 @@
                 }
             }
 
-            if (!currentProduct.IsHidden) {
+            if (currentProduct && !currentProduct.IsHidden) {
                 productSettings.push({
                     productId: currentSiteProduct.Id,
                     productKey: currentSiteProduct.Key,

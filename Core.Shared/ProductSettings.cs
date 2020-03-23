@@ -38,8 +38,6 @@
 
         public static bool HideEsports => ToBoolean(Configs["HideEsports"]);
 
-        public static bool IsShowSabaclub => IsShowProduct(ProductConstants.Sabaclub);
-
         internal static NameValueCollection Configs { get; set; } = ConfigurationManager.AppSettings;
 
         public static bool IsShowProduct(int productId) => ToBoolean(Configs[$"IsShowProduct-{productId}"]);
