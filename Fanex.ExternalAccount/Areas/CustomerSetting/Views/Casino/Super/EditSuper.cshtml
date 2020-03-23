@@ -99,10 +99,10 @@
                                                 <td class="gameTypeWidth R noneBorderL noneBorderT" data-ng-hide="customer.isUnchecked == false">
                                                     {{gameType.gameTypeName}}
                                                 </td>
-                                                <td colspan="3" class="noneBorderRight noneBorderT">
+                                                <td colspan="3" class="noneBorderRight noneBorderT stake-level">
                                                     <span>@NGCasinoLang.lblBettingLimit: </span>
                                                     <span data-ng-controller="BettingLimitController" data-ng-repeat="stake in gameType.bettingLimits">
-                                                        <input type="checkbox" data-ng-model="stake.isChecked" class="chk-stake-level" /><span>{{stake.stakeLevelName}}</span>
+                                                        <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -116,7 +116,7 @@
                                     <td class="gameTypeWidth R noneBorderL">
                                         {{gameType.gameTypeName}}
                                     </td>
-                                    <td colspan="5" class="noneBorderR">
+                                    <td colspan="5" class="noneBorderR stake-level">
                                         <span>@NGCasinoLang.lblBettingLimit: </span>
                                         <span data-ng-controller="BettingLimitController" data-ng-repeat="stake in gameType.bettingLimits" >
                                             <input type="checkbox" data-ng-model="stake.isChecked" /><span>{{stake.stakeLevelName}}</span>

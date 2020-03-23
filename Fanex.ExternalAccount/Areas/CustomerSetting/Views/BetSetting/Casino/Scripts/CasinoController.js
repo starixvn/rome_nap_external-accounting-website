@@ -16,12 +16,21 @@ Fanex.CustomerSetting.Betting.Casino = function ($scope, $element) {
 };
 
 Fanex.CustomerSetting.Betting.Casino.Update = function (ondone) {
-    $(document).scrollTop(0);  
+    $(document).scrollTop(0);
 
-    var stakeLevelCheckboxes = $('.chk-stake-level');
-    if (isBelongToSpecialGroups && $('input:checked', stakeLevelCheckboxes).length === 0) {
-        Validators.show(stakeLevelCheckboxes.get(0), 'Each bet type must have at least one Bet Limit value to be selected.', undefined, undefined, 3000);
-        return;
+    if (isBelongToSpecialGroups) {
+        var isValidBetLimit = true;
+        $('.stake-level').each(function () {
+            var $checkBoxes = $('input[type=checkbox]', $(this));
+            if ($('input[type=checkbox]:checked', $(this)).length === 0) {
+                Validators.show($checkBoxes.get(0), 'Each bet type must have at least one Bet Limit value to be selected.', undefined, undefined, 1500);
+                isValidBetLimit = false;
+                return false; //break each loop
+            }
+        });
+
+        if (!isValidBetLimit)
+            return;
     }
 
     Fanex.CustomerSetting.Core.BlockUI();
