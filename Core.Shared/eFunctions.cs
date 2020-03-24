@@ -64,5 +64,6 @@
 
         public const string VirtualGamesBetting = "VirtualGamesBetting";
         public const string VirtualGamesSetting = "VirtualGamesSetting";
+        public const string SabaclubSetting = "SabaclubSetting";
     }
 }

@@ -723,6 +723,15 @@
         $scope.EnableThirdpartyProduct(38, "Virtual Games");
     };
 
+    $scope.EnableSabaclub = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
+        top.shouldCalculatePopupHeight = false;
+        $scope.EnableThirdpartyProduct(42, "Saba.club");
+    };
+
     $scope.EnableDCS = function (productId, productName, enable, id, productText, width, height) {
         var url_SELECT = productId == 24 ? 'customersetting/enablestatus/productstatus/GetProductStatusNotAllowDisabledDownline?' : 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
@@ -962,6 +971,10 @@
         $scope.RenderSupeOnMemberDCS(38);
     };
 
+    $scope.SuperSabaclub = function () {
+        $scope.RenderSupeOnMemberDCS(42);
+    };
+
     $scope.RenderSupeOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=' + productId + '&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
@@ -993,6 +1006,10 @@
 
     $scope.MasterVirtualGames = function () {
         $scope.RenderMasterOnMemberDCS(38);
+    };
+
+    $scope.MasterSabaclub = function () {
+        $scope.RenderMasterOnMemberDCS(42);
     };
 
     $scope.RenderMasterOnMemberDCS = function (productId) {

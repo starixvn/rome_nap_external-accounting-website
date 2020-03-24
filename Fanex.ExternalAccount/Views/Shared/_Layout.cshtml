@@ -32,9 +32,9 @@
     var showFishingWorld = ProductSettings.IsShowFishingWorld ? 1 : 0;
     var showLottery = ProductSettings.IsShowLottery ? 1 : 0;
     var ng2Text = new RemotingRefService().GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
-    var products = JsonConvert.SerializeObject(ProductSettings.SiteProducts.Values);  
+    var products = JsonConvert.SerializeObject(ProductSettings.SiteProducts.Values);
     string Env = ConfigurationManager.AppSettings["EnvTheme"].ToString();
-    
+
 }
 <!DOCTYPE html>
 <html lang="en">

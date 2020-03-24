@@ -16,5 +16,7 @@
         public const int FishingWorld = 24;
         public const int Lottery = 28;
         public const int VirtualGames = 38;
+
+        public const int Sabaclub = 42;
     }
 }

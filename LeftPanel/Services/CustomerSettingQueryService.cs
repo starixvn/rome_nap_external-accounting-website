@@ -380,7 +380,7 @@
         }
 
         internal static ObjectInfo GetEditSettingLink(string productNameNoSpace, string productName)
-            => new ObjectInfo { Key = productNameNoSpace, Value = $"{productName}" };
+            => new ObjectInfo { Key = productNameNoSpace.FormatProductName(), Value = $"{productName}" };
 
         internal static bool IsProductVisibledToSite(DataTable productStatusTable, int productId)
             => productStatusTable.Select($"ProductID = {productId}").Length > 0
@@ -389,7 +389,7 @@
         internal static ObjectInfo CreateEnableLinkItem(string productNameNoSpace, string name)
             => new ObjectInfo
             {
-                Key = $"Enable{productNameNoSpace}",
+                Key = $"Enable{productNameNoSpace.FormatProductName()}",
                 Text = $"Enable {name}"
             };
 
@@ -399,10 +399,16 @@
             string name)
             => new ObjectInfo
             {
-                Key = $"Enable{productNameNoSpace}",
+                Key = $"Enable{productNameNoSpace.FormatProductName()}",
                 Value = !isDisabled,
                 Text = name,
                 Tooltip = $"Enable {name}"
             };
+    }
+
+    internal static class FormatProductNameExtension
+    {
+        public static string FormatProductName(this string productName)
+            => productName.Replace(".", string.Empty).Replace("-", string.Empty);
     }
 }

@@ -8,6 +8,7 @@
         NG2Betting = 23,
         FishingWorldBetting = 24,
         LotteryBetting = 28,
-        VirtualSportsBetting = 5
+        VirtualSportsBetting = 5,
+        SabaclubBetting = 42
     }
 }
