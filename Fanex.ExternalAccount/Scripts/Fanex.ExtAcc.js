@@ -66,7 +66,7 @@ String.prototype.formatErrorMessage = function () {
     var subMsg = msg.substring(indexOfEndParenthesis + 1, msg.length);
 
     var tmp = msg.substring(indexOfStartParenthesis, indexOfStartParenthesis + 4);
-    var hasUsername = preMsg.indexOf(':') != -1;
+    var hasUsername = preMsg.indexOf(':') != -1 && preMsg.indexOf('GMT+8') != -1;
     var username = '';
 
     if ($.isNumeric(orgMsg.substring(1, orgMsg.length - 1))) {
