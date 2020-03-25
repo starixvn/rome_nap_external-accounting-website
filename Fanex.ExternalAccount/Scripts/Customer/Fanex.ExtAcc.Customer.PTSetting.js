@@ -1156,7 +1156,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
     },
 
     GenerateCheckBoxPositionTaking: function () {
-        var ignoreCopySports = [161]
+        var ignoreCopySports = [161];
         var j = 0;
         var timeout = setTimeout(function () {
             clearTimeout(timeout);
