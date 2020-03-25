@@ -117,7 +117,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.5.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.PTEngine.1.0.5.1-Beta1\lib\net40\Fanex.PTEngine.dll</HintPath>
+      <HintPath>..\..\packages\Fanex.PTEngine.1.0.5.1\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation, Version=3.2.0.0, Culture=neutral, PublicKeyToken=a82054b837897c66, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FluentValidation.3.2.0.0\lib\Net40\FluentValidation.dll</HintPath>
