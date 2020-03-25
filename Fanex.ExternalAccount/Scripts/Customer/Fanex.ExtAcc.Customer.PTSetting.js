@@ -82,6 +82,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
     Init: function () {
         // Extend some methods of PTEngine Core.js
         extendPTEngine();
+        
 
         if (this.IsFullInfo) {
             var interval = setInterval(function () {
@@ -2240,6 +2241,7 @@ function initPositionTaking() {
     var cloneFromSoccer = sportTypes[0].cloneButton;
     var cloneFromBasketball = sportTypes[1].cloneButton;
     var editBasketball = sportTypes[1].editButton;
+    var ignoreCopySports = [161];
     var copiedItemSoccer = {
         sportId: 1,
         id: 1,
@@ -2281,25 +2283,27 @@ function initPositionTaking() {
             }
 
             for (var i = 0; i < count; i++) {
-                if (cloneFromSoccer.firstChild.checked) {
-                    if (i > 0) {
+                if (!ignoreCopySports.includes(sportTypes[i].id)) {
+                    if (cloneFromSoccer.firstChild.checked) {
+                        if (i > 0) {
+                            var id = 'positionTaking' + i;
+                            document.getElementById(id).checked = false;
+                            document.getElementById(id).disabled = true;
+                            //disableSportType(i, true);
+                        }
+
+                        sportTypes[i].Inactive(Fanex.copy(copiedItemSoccer));
+                    }
+                    else if (i > 0) {
                         var id = 'positionTaking' + i;
-                        document.getElementById(id).checked = false;
-                        document.getElementById(id).disabled = true;
-                        //disableSportType(i, true);
+                        document.getElementById(id).disabled = false;
+                        // disableSportType(i, true);
                     }
 
-                    sportTypes[i].Inactive(Fanex.copy(copiedItemSoccer));
-                }
-                else if (i > 0) {
-                    var id = 'positionTaking' + i;
-                    document.getElementById(id).disabled = false;
-                    // disableSportType(i, true);
-                }
-
-                if (i > 1) {
-                    sportTypes[i].cloneButton.className = cloneFromSoccer.firstChild.checked ? "PTSportEdit" : "PTSportCopiedInactive";
-                    sportTypes[i].cloneButton.title = cloneFromSoccer.firstChild.checked ? Language.EDIT : String.Empty;
+                    if (i > 1) {
+                        sportTypes[i].cloneButton.className = cloneFromSoccer.firstChild.checked ? "PTSportEdit" : "PTSportCopiedInactive";
+                        sportTypes[i].cloneButton.title = cloneFromSoccer.firstChild.checked ? Language.EDIT : String.Empty;
+                    }
                 }
             };
 
@@ -2338,24 +2342,26 @@ function initPositionTaking() {
             }
 
             for (var i = 1; i < count; i++) {
-                if (cloneFromBasketball.firstChild.checked) {
-                    // disableSportType(i, true);
-                    sportTypes[i].Inactive(Fanex.copy(copiedItemBasketball));
-                    if (i > 1) {
-                        var id = 'positionTaking' + i;
-                        document.getElementById(id).checked = false;
-                        document.getElementById(id).disabled = true;
+                if (!ignoreCopySports.includes(sportTypes[i].id)) {
+                    if (cloneFromBasketball.firstChild.checked) {
+                        // disableSportType(i, true);
+                        sportTypes[i].Inactive(Fanex.copy(copiedItemBasketball));
+                        if (i > 1) {
+                            var id = 'positionTaking' + i;
+                            document.getElementById(id).checked = false;
+                            document.getElementById(id).disabled = true;
+                        }
                     }
-                }
-                else if (i > 1) {
-                    var id = 'positionTaking' + i;
-                    document.getElementById(id).disabled = false;
-                }
+                    else if (i > 1) {
+                        var id = 'positionTaking' + i;
+                        document.getElementById(id).disabled = false;
+                    }
 
-                if (i > 1) {
-                    sportTypes[i].cloneButton.className = cloneFromBasketball.firstChild.checked ? "PTSportEdit" : "PTSportCopiedInactive";
-                    sportTypes[i].cloneButton.title = cloneFromBasketball.firstChild.checked ? Language.EDIT : String.Empty;
-                    // disableSportType(i, true);
+                    if (i > 1) {
+                        sportTypes[i].cloneButton.className = cloneFromBasketball.firstChild.checked ? "PTSportEdit" : "PTSportCopiedInactive";
+                        sportTypes[i].cloneButton.title = cloneFromBasketball.firstChild.checked ? Language.EDIT : String.Empty;
+                        // disableSportType(i, true);
+                    }
                 }
             };
 
