@@ -81,8 +81,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
     Init: function () {
         // Extend some methods of PTEngine Core.js
-        extendPTEngine();
-        
+        extendPTEngine();        
 
         if (this.IsFullInfo) {
             var interval = setInterval(function () {
@@ -1157,12 +1156,13 @@ Fanex.ExtAcc.Customer.PTSetting = {
     },
 
     GenerateCheckBoxPositionTaking: function () {
+        var ignoreCopySports = [161]
         var j = 0;
         var timeout = setTimeout(function () {
             clearTimeout(timeout);
             var doc = document.getElementById('ptContainer');
-
-            for (var i = 0; i < Fanex.ExtAcc.Customer.PTSetting.ptGrid.items.length; i++) {
+            var sportTypes = Fanex.ExtAcc.Customer.PTSetting.ptGrid.items;
+            for (var i = 0; i < sportTypes.length; i++) {
                 var checkBox = document.createElement('input');
                 checkBox.setAttribute('type', 'checkbox');
                 checkBox.setAttribute('value', 'checkbox');
@@ -1177,39 +1177,41 @@ Fanex.ExtAcc.Customer.PTSetting = {
                     }
                     else {
                         disableSportType(id, true);
-                        var cloneFromSoccer = items[0].cloneButton;
-                        var cloneFromBasketball = items[1].cloneButton;
-                        cloneFromSoccer.parent.copiedItem = null;
-                        cloneFromBasketball.parent.copiedItem = null;
-                        if (cloneFromSoccer.firstChild.checked) {
-                            cloneFromSoccer.firstChild.checked = false;
-                            cloneFromSoccer.className = "PTSportCopied";
-                            for (var i = 1; i < items.length; i++) {
-                                var idPT = 'positionTaking' + i;
-                                if (i > 1) {
+                        if (!ignoreCopySports.includes(sportTypes[i].id)) {
+                            var cloneFromSoccer = items[0].cloneButton;
+                            var cloneFromBasketball = items[1].cloneButton;
+                            cloneFromSoccer.parent.copiedItem = null;
+                            cloneFromBasketball.parent.copiedItem = null;
+                            if (cloneFromSoccer.firstChild.checked) {
+                                cloneFromSoccer.firstChild.checked = false;
+                                cloneFromSoccer.className = "PTSportCopied";
+                                for (var i = 1; i < items.length; i++) {
+                                    var idPT = 'positionTaking' + i;
+                                    if (i > 1) {
+                                        items[i].cloneButton.className = "PTSportCopiedInactive";
+                                        items[i].cloneButton.title = String.Empty;
+                                    }
+
+                                    document.getElementById(idPT).disabled = false;
+                                    disableSportType(i, true);
+                                };
+
+                                items[1].editButton.className = "PTSportCopiedInactive";
+                                items[1].editButton.title = String.Empty;
+                            }
+
+                            if (cloneFromBasketball.firstChild.checked) {
+                                cloneFromBasketball.firstChild.checked = false;
+                                cloneFromBasketball.className = "PTSportCopied";
+                                for (var i = 2; i < items.length; i++) {
                                     items[i].cloneButton.className = "PTSportCopiedInactive";
                                     items[i].cloneButton.title = String.Empty;
-                                }
 
-                                document.getElementById(idPT).disabled = false;
-                                disableSportType(i, true);
-                            };
-
-                            items[1].editButton.className = "PTSportCopiedInactive";
-                            items[1].editButton.title = String.Empty;
-                        }
-
-                        if (cloneFromBasketball.firstChild.checked) {
-                            cloneFromBasketball.firstChild.checked = false;
-                            cloneFromBasketball.className = "PTSportCopied";
-                            for (var i = 2; i < items.length; i++) {
-                                items[i].cloneButton.className = "PTSportCopiedInactive";
-                                items[i].cloneButton.title = String.Empty;
-
-                                var idPT = 'positionTaking' + i;
-                                document.getElementById(idPT).disabled = false;
-                                disableSportType(i, true);
-                            };
+                                    var idPT = 'positionTaking' + i;
+                                    document.getElementById(idPT).disabled = false;
+                                    disableSportType(i, true);
+                                };
+                            }
                         }
                     }
 
