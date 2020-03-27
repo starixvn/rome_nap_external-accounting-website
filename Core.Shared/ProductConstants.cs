@@ -21,5 +21,6 @@
         public const int VirtualGames = 38;
 
         public const int Sabaclub = 42;
+        public const int DummyProductIdForAllbet_SAGaming_SexyGaming = 41;
     }
 }
