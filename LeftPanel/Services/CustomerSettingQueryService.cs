@@ -55,6 +55,9 @@
                 setting = AddProductSetting(setting, table3rdDCS, productSettingParam);
             }
 
+            AddLiveCasinoStatus(table3rdDCS, setting.EditItems);
+            AddLiveCasinoLink(table3rdDCS, setting.Details);
+
             return setting;
         }
 
@@ -140,6 +143,52 @@
             }
 
             enableItems.Add(eSportsStatus);
+        }
+
+        private void AddLiveCasinoStatus(DataTable table3rdDCS, List<ObjectInfo> editItems)
+        {
+            if (!ProductSettings.IsShowLiveCasino)
+            {
+                return;
+            }
+            var disable = false;
+            var disableUpline = false;
+            foreach (var sporttype in table3rdDCS.Select($"ProductID = {ProductConstants.LiveCasino}"))
+            {
+                disable = disable || sporttype.IsDisabled();
+                disableUpline = disableUpline || sporttype.IsDisabledUpline();
+            }
+
+            var eSportsStatus =
+                new ObjectInfo("EnableLiveCasino", "Enable Live Casino", "Enable Live Casino");
+
+            if (disableUpline)
+            {
+                eSportsStatus = DisableStatus(eSportsStatus);
+            }
+
+            editItems.Add(eSportsStatus);
+        }
+
+        private void AddLiveCasinoLink(DataTable table3rdDCS, List<ObjectInfo> editLinks)
+        {
+            if (!ProductSettings.IsShowLiveCasino)
+            {
+                return;
+            }
+            var isHideUpline = false;
+            foreach (var sporttype in table3rdDCS.Select($"ProductID = {ProductConstants.LiveCasino}"))
+            {
+                isHideUpline = isHideUpline || sporttype.IsHiddenUpline();
+            }
+
+            var eSportsStatus =
+                new ObjectInfo("LiveCasino", "Live Casino");
+
+            if (_roleId.IsSuper() || isHideUpline)
+            {
+                editLinks.Add(eSportsStatus);
+            }            
         }
 
         private static void AddDoubleCommStatus(DataRow nonProductStatusRow, ICollection<ObjectInfo> enableItems)
@@ -294,7 +343,8 @@
             DataTable productStatusTable,
             ProductSettingElement productElement)
         {
-            if (!IsProductVisibledToSite(productStatusTable, productElement.Id))
+            if (!IsProductVisibledToSite(productStatusTable, productElement.Id) ||
+                productElement.Id == ProductConstants.LiveCasino)
             {
                 return setting;
             }
