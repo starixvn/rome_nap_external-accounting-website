@@ -181,15 +181,17 @@
                 return;
             }
             var isHideUpline = false;
+			var isHide = false;
             foreach (var sporttype in table3rdDCS.Select($"ProductID = {ProductConstants.LiveCasino}"))
             {
                 isHideUpline = isHideUpline || sporttype.IsHiddenUpline();
+				isHide = isHide || sporttype.IsHidden();
             }
 
             var eSportsStatus =
                 new ObjectInfo("LiveCasino", "Live Casino");
 
-            if (_roleId.IsSuper() || isHideUpline)
+            if ((!isHide && _roleId.IsSuper()) || !isHideUpline)
             {
                 editLinks.Add(eSportsStatus);
             }            
