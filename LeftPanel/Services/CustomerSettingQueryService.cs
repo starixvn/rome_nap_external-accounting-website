@@ -55,7 +55,11 @@
                 setting = AddProductSetting(setting, table3rdDCS, productSettingParam);
             }
 
-            AddLiveCasinoStatus(table3rdDCS, setting.EditItems);
+            if (!this.currentSession.IsBelongToSpecialGroups)
+            {
+                AddLiveCasinoStatus(table3rdDCS, setting.EditItems);
+            }
+
             AddLiveCasinoLink(table3rdDCS, setting.Details);
 
             return setting;
