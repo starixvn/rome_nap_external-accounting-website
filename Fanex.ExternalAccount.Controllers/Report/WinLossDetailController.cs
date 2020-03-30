@@ -97,7 +97,10 @@
         {
             var toolTipsProducts = new
             {
-                showAllbet = this.groupConfigurationService.IsShowByProductAndGroup(ProductConstants.AllBet, this.currentSession.CurrencyGroup),
+                showLiveCasino = 
+                    this.groupConfigurationService.IsShowByProductAndGroup(ProductConstants.AllBet, this.currentSession.CurrencyGroup) ||
+                    this.groupConfigurationService.IsShowByProductAndGroup(ProductConstants.SAGaming, this.currentSession.CurrencyGroup)||
+                    this.groupConfigurationService.IsShowByProductAndGroup(ProductConstants.SexyGaming, this.currentSession.CurrencyGroup),
             };
 
             return request.IsSearch()

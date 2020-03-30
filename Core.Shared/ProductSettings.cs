@@ -11,10 +11,11 @@
             = new Dictionary<int, Product>
             {
                 [ProductConstants.AllBet] = new Product(0, ProductConstants.AllBet, "Allbet"),
-                [ProductConstants.VoidBridge] = new Product(1,ProductConstants.VoidBridge, "Macau Games", substituteProductKey: "VoidBridge"),
-                [ProductConstants.NG2] = new Product(2, ProductConstants.NG2, "NG2", true),
-                [ProductConstants.FishingWorld] = new Product(3, ProductConstants.FishingWorld, "Fishing World"),
-                [ProductConstants.Lottery] = new Product(4, ProductConstants.Lottery, "Lottery"),
+                [ProductConstants.LiveCasino] = new Product(1, ProductConstants.LiveCasino, "Live Casino"),
+                [ProductConstants.VoidBridge] = new Product(2,ProductConstants.VoidBridge, "Macau Games", substituteProductKey: "VoidBridge"),
+                [ProductConstants.NG2] = new Product(3, ProductConstants.NG2, "NG2", true),
+                [ProductConstants.FishingWorld] = new Product(4, ProductConstants.FishingWorld, "Fishing World"),
+                [ProductConstants.Lottery] = new Product(5, ProductConstants.Lottery, "Lottery"),
                 [ProductConstants.Sportsbook2] = new Product(5, ProductConstants.Sportsbook2, "Sportsbook 2"),
                 [ProductConstants.VirtualGames] = new Product(6, ProductConstants.VirtualGames, "Virtual Games"),
                 [ProductConstants.Sabaclub] = new Product(7, ProductConstants.Sabaclub, "Saba.club")
@@ -26,7 +27,7 @@
 
         public static bool ShowKenoSetting => Configs["ShowKenoSetting"] == "true";
 
-        public static bool IsShowAllbet => IsShowProduct(ProductConstants.AllBet);
+        public static bool IsShowLiveCasino => IsShowProduct(ProductConstants.LiveCasino);
 
         public static bool IsShowVoidBridge => IsShowProduct(ProductConstants.VoidBridge);
 

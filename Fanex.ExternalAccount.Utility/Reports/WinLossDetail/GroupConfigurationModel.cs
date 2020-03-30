@@ -7,11 +7,11 @@
     {
         private readonly IRemotingRefService remotingRefService;
 
-        protected GroupConfigurationModel(): this(null)
+        public GroupConfigurationModel(): this(null)
         {
         }
 
-        protected GroupConfigurationModel(IRemotingRefService remotingRefService)
+        public GroupConfigurationModel(IRemotingRefService remotingRefService)
         {
             this.remotingRefService = remotingRefService ?? new RemotingRefService();
         }

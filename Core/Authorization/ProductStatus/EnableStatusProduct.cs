@@ -8,7 +8,7 @@
         Keno = 8,
         EnableGoldDeluxe = 12,
         EnableESports = 16,
-        EnableAllbet = 21,
+        EnableLiveCasino = 41,
         EnableVoidbridge = 22,
         EnableNG2 = 23,
         EnableFishingWorld = 24,

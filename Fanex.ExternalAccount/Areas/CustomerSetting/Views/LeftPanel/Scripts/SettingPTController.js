@@ -151,8 +151,8 @@
         $scope.collapseSidebar();
     };
 
-    $scope.Allbet = function () {
-        $scope.RenderDCS(21);
+    $scope.LiveCasino = function () {
+        $scope.RenderDCS(41);
         $scope.collapseSidebar();
     };
 

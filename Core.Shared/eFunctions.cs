@@ -50,8 +50,8 @@
         public const string KenoBetting = "KenoBetting";
         public const string OpenSuper = "OpenSuper";
         public const string Sportsbook2Setting = "Sportsbook2Setting";
-        public const string AllbetSetting = "AllbetSetting";
-        public const string AllbetBetting = "AllbetBetting";
+        public const string LiveCasinoSetting = "LiveCasinoSetting";
+        public const string LiveCasinoBetting = "LiveCasinoBetting";
         public const string Sportsbook2Betting = "Sportsbook2Betting";
         public const string VoidbridgeBetting = "VoidbridgeBetting";
         public const string VoidbridgeSetting = "VoidbridgeSetting";
