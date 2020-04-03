@@ -293,4 +293,7 @@
     <Setting Key="Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_OutstandingMemberSel" SpName="Acc_OutstandingMemberSel" DbName="DB042.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
+  <Function Name="SearchCopy">
+    <Setting Key="Acc_CustomerUplineUserNameSel" SpName="Acc_CustomerUplineUserNameSel" DbName="DBCust.CustDB.bodbExtAccNet" />
+  </Function>
 </Functions>

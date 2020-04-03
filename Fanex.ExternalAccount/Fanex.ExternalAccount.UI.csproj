@@ -871,6 +871,10 @@
     <Content Include="assets\bundles\otp\otp.min.js">
       <DependentUpon>otp.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\searchandcopy\index.js" />
+    <Content Include="assets\bundles\searchandcopy\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\statement\index.js" />
     <Content Include="assets\bundles\statement\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -898,6 +902,9 @@
     <Content Include="assets\js\libs\raven\raven.min.js" />
     <Content Include="assets\styles\base\normalize.css" />
     <Content Include="assets\styles\base\Validators.css" />
+    <Content Include="assets\styles\base\_alpha-admin-fonts.css">
+      <DependentUpon>_alpha-admin-fonts.scss</DependentUpon>
+    </Content>
     <Content Include="assets\styles\fonts\AlphaAdmin\demo-files\demo.css" />
     <Content Include="assets\styles\fonts\AlphaAdmin\demo-files\demo.js" />
     <Content Include="assets\styles\fonts\AlphaAdmin\demo.html" />
@@ -1032,6 +1039,12 @@
     </Content>
     <Content Include="assets\styles\pages\reports\winloss-detail.min.css">
       <DependentUpon>winloss-detail.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\searchandcopy\index.css">
+      <DependentUpon>index.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\searchandcopy\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\statement\guideline.css">
       <DependentUpon>guideline.scss</DependentUpon>
@@ -1524,6 +1537,7 @@
     <Content Include="Content\um.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
+    <Content Include="assets\styles\images\bgSteps.png" />
     <Content Include="Images\tick.png" />
     <Content Include="Images\x5.gif" />
     <Content Include="Scripts\aes.js" />
@@ -1590,6 +1604,7 @@
     <Content Include="Scripts\Manage\Fanex.ExtAcc.Permission.js" />
     <Content Include="Scripts\MultiSelect\select2.css" />
     <Content Include="Scripts\MultiSelect\select2.js" />
+    <Content Include="Scripts\SearchAndCopy\Fanex.ExtAcc.SearchAndCopy.js" />
     <Content Include="Scripts\_Libs\jQuery\classList.js" />
     <Content Include="Scripts\_Libs\jQuery\Core\jquery.js" />
     <Content Include="Scripts\_Libs\jQuery\Countdown\jquery.countdown.css" />
@@ -2402,6 +2417,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\OTP\Index.cshtml" />
+    <Content Include="Views\SearchAndCopy\Super.cshtml" />
     <None Include="Areas\GoldDeluxeSetting\Content\bootstrap.css.map" />
     <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
@@ -2635,6 +2651,10 @@
     <Content Include="Areas\ProductStatusSetting\Styles\font\AlphaAdmin\TAHOMAB0.TTF" />
     <Content Include="Areas\ProductStatusSetting\Styles\font\AlphaAdmin\TAHOMABD.TTF" />
     <Content Include="Areas\ProductStatusSetting\Styles\font\AlphaAdmin\TAHOMA_0.TTF" />
+    <Content Include="assets\bundles\searchandcopy\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\searchandcopy\index.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2790,6 +2810,10 @@
       <Project>{825f3ea3-33ae-4427-91b5-9d30d9fefa3a}</Project>
       <Name>Fanex.ExternalAccount.Resources</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.SearchAndCopy\Fanex.ExternalAccount.SearchAndCopy.csproj">
+      <Project>{21d80cc8-2307-4117-b3f9-3825bb0c71ac}</Project>
+      <Name>Fanex.ExternalAccount.SearchAndCopy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Service\Fanex.ExternalAccount.Service.csproj">
       <Project>{D172255E-6B0A-4602-B22C-8A4BABA84D07}</Project>
       <Name>Fanex.ExternalAccount.Service</Name>
@@ -2836,6 +2860,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
