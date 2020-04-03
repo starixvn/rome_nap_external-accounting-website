@@ -85,9 +85,9 @@
             }
 
             AddDoubleCommStatus(nonProductStatusRow, enableItems);
-            AddESportsStatus(table3rdDCS, enableItems);
             if (!this.currentSession.IsBelongToSpecialGroups)
             {
+                AddESportsStatus(table3rdDCS, enableItems);
                 AddGoldDeluxeStatus(nonDCSProductStatusRow, enableItems);
             }
 
@@ -181,11 +181,11 @@
                 return;
             }
             var isHideUpline = false;
-			var isHide = false;
+            var isHide = false;
             foreach (var sporttype in table3rdDCS.Select($"ProductID = {ProductConstants.LiveCasino}"))
             {
                 isHideUpline = isHideUpline || sporttype.IsHiddenUpline();
-				isHide = isHide || sporttype.IsHidden();
+                isHide = isHide || sporttype.IsHidden();
             }
 
             var eSportsStatus =
@@ -194,7 +194,7 @@
             if ((!isHide && _roleId.IsSuper()) || !isHideUpline)
             {
                 editLinks.Add(eSportsStatus);
-            }            
+            }
         }
 
         private static void AddDoubleCommStatus(DataRow nonProductStatusRow, ICollection<ObjectInfo> enableItems)
