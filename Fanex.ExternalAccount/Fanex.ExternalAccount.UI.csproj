@@ -911,6 +911,7 @@
     <Content Include="assets\styles\fonts\AlphaAdmin\fonts\AlphaAdmin.svg" />
     <Content Include="assets\styles\fonts\AlphaAdmin\Read Me.txt" />
     <Content Include="assets\styles\fonts\AlphaAdmin\style.css" />
+    <Content Include="assets\styles\images\ajax-loader.gif" />
     <Content Include="assets\styles\images\arrow-down-icn.png" />
     <Content Include="assets\styles\images\arrow-icn-right.png" />
     <Content Include="assets\styles\images\arrow-icn.png" />

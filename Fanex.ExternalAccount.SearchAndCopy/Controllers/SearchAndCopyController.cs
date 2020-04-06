@@ -39,9 +39,10 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult SuperPost()
+        public JsonResult SuperPost(CloneSettingRequest request)
         {
-            return PartialViewBase();
+            var result = searchAndCopyService.CloneSetting(request);
+            return Json(result);
         }
     }
 }

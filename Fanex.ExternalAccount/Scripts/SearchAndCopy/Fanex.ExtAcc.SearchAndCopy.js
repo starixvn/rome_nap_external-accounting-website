@@ -23,7 +23,7 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         $txtFax,
         $txtMaxCredit,
         passwordTemplate,
-        step2TabIsMouseOver = false;
+        existingUsername;
 
     function Init() {
         $.ajaxSetup({
@@ -70,12 +70,6 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
 
             GotoStep1();
         });
-        $step2Tab.mouseover(function () {
-            step2TabIsMouseOver = true;
-        });
-        $step2Tab.mouseout(function () {
-            step2TabIsMouseOver = false;
-        });
         $step2Tab.click(function () {
             if ($step1Tab.hasClass('step2-active')) {
                 return;
@@ -119,17 +113,28 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
             return;
         }
 
+        Fanex.ExtAcc.BlockUI();
         var requestParams = {
             username: username,
             password: password,
-            firstName: $txtFirstName.val(),
-            lastName: $txtLastName.val(),
-            phone: $txtPhone.val(),
-            mobilePhone: $txtMobilePhone.val(),
-            fax: $txtFax.val(),
-            maxCredit: maxCredit
+            firstName: $.trim($txtFirstName.val()),
+            lastName: $.trim($txtLastName.val()),
+            phone: $.trim($txtPhone.val()),
+            mobilePhone: $.trim($txtMobilePhone.val()),
+            fax: $.trim($txtFax.val()),
+            credit: maxCredit,
+            existingUsername: existingUsername
         };
-        console.log(requestParams);
+        $.post(resolveClientUrl('SearchAndCopy/SuperPost'), requestParams, function (result) {
+            if (!result.IsSuccess) {
+                ShowErrorMessage(result.ErrorMessage);
+                return;
+            }
+
+            ShowSuccessMessage("Created Super Successfully !");
+        }).always(function () {
+            Fanex.ExtAcc.UnBlockUI();
+        });
     }
 
     function GotoStep1() {
@@ -175,10 +180,6 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
     }
 
     function UsernameBlur() {
-        if (step2TabIsMouseOver) {
-            return;
-        }
-
         SearchCustomer();
     }
 
@@ -196,12 +197,14 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
             return;
         }
 
-        Fanex.ExtAcc.BlockUI();
         var searchParams = {
             username: username
         };
+        $usernameMessage.removeClass();
+        $usernameMessage.addClass('loadingWarning');
+        $usernameMessage.show();
         $.post(resolveClientUrl('SearchAndCopy/SearchCustomer'), searchParams, function (result) {
-            $usernameMessage.show();
+            $usernameMessage.removeClass();
             if (!result || !result.CustId) {
                 $username.addClass('invalid');
                 $usernameMessage.addClass('errorWarning');
@@ -209,12 +212,11 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
                 return;
             }
 
+            existingUsername = username;
             $usernameMessage.addClass('successWarning');
             if (callback) {
                 callback();
             }
-        }).always(function () {
-            Fanex.ExtAcc.UnBlockUI();
         });
     }
 

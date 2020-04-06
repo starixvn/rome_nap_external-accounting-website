@@ -18,5 +18,7 @@
         public string Username { get; private set; }
 
         public int RoleId { get; private set; }
+
+        public bool IsExistGroup { get; private set; }
     }
 }

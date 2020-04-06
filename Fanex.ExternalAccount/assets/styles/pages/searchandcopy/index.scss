@@ -103,4 +103,11 @@
     input.invalid {
         border-color: #f00;
     }
+
+    .loadingWarning {
+        width: 16px;
+        height: 16px;
+        display: inline-block !important;
+        background: url("../../images/ajax-loader.gif");
+    }
 }

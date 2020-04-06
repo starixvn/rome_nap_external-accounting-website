@@ -4,15 +4,18 @@
 
     public class SearchCustomerCriteria : CriteriaBase
     {
-        public SearchCustomerCriteria(string username)
+        public SearchCustomerCriteria(string username, string groupName)
         {
             Username = username;
+            GroupName = groupName;
         }
 
         public string Username { get; }
 
-        public override string GetSettingKey() => "Acc_CustomerUplineUserNameSel";
+        public string GroupName { get; }
 
-        public override bool IsValid() => true;
+        public override string GetSettingKey() => "EAS_CustomerUplineUserNameSel";
+
+        public override bool IsValid() => !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(GroupName);
     }
 }

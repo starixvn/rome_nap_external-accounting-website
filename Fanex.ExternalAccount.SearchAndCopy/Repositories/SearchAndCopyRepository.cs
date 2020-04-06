@@ -1,13 +1,20 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Repositories
 {
+    using Fanex.Data;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.SearchAndCopy.Criteria;
     using Fanex.ExternalAccount.SearchAndCopy.Models;
     using Fanex.NAP.Framework.Data;
     using System.Collections.Generic;
+    using System.Linq;
 
     public interface ISearchAndCopyRepository
     {
-        IEnumerable<SearchCustomerModel> SearchCustomer(string username);
+        IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName);
+
+        Result CloneSettingComm(CloneSettingComCriteria criteria);
+
+        Result CloneSettingExtraPT(CloneSettingExtraPTCriteria criteria);
     }
 
     public class SearchAndCopyRepository : ISearchAndCopyRepository
@@ -24,10 +31,56 @@
             this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public IEnumerable<SearchCustomerModel> SearchCustomer(string username)
+        public IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName)
         {
-            var criteria = new SearchCustomerCriteria(username);
+            var criteria = new SearchCustomerCriteria(username, groupName);
+            if (!criteria.IsValid())
+            {
+                return Enumerable.Empty<SearchCustomerModel>();
+            }
+
             return dynamicRepository.Fetch<SearchCustomerModel>(criteria);
+        }
+
+        public Result CloneSettingComm(CloneSettingComCriteria criteria)
+        {
+            if (!criteria.IsValid())
+            {
+                return new Result(1, "Invalid operation");
+            }
+
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                objDb.ExecuteNonQuery();
+                var outputs = objDb.GetOuputParams();
+                return new Result
+                {
+                    ErrorCode = outputs["errcode"].ToString(),
+                    ErrorMessage = outputs["errmsg"].ToString(),
+                    ResultData = outputs["custid"].ToString()
+                };
+            }
+        }
+
+        public Result CloneSettingExtraPT(CloneSettingExtraPTCriteria criteria)
+        {
+            if (!criteria.IsValid())
+            {
+                return new Result(1, "Invalid operation");
+            }
+
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                objDb.ExecuteNonQuery();
+                var outputs = objDb.GetOuputParams();
+                return new Result
+                {
+                    ErrorCode = outputs["errcode"].ToString(),
+                    ErrorMessage = outputs["errmsg"].ToString()
+                };
+            }
         }
     }
 }

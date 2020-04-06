@@ -43,6 +43,9 @@
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="IBCUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IBCUtils.1.0.0.1\lib\net40\IBCUtils.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
     </Reference>
@@ -90,7 +93,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SearchAndCopyController.cs" />
+    <Compile Include="Criteria\CloneSettingComCriteria.cs" />
+    <Compile Include="Criteria\CloneSettingExtraPTCriteria.cs" />
     <Compile Include="Criteria\SearchCustomerCriteria.cs" />
+    <Compile Include="Requests\CloneSettingRequest.cs" />
     <Compile Include="Models\SearchCustomerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\SearchAndCopyRepository.cs" />
@@ -109,6 +115,10 @@
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{3521a845-d2bf-4916-b02c-0b0e02f774db}</Project>
       <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj">
+      <Project>{AA1EA660-0E91-4C46-8100-F39C6A0BFC0B}</Project>
+      <Name>Fanex.ExternalAccount.DTO</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
