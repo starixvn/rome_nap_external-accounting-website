@@ -841,4 +841,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="TransferConditionsWarning_Master" xml:space="preserve">
     <value>The Daily Transfer setting has been applied to this account by the upline. You are not allowed to adjust the Weekly Transfer Condition.</value>
   </data>
+  <data name="Tooltip_NetTurnover_LiveCasino" xml:space="preserve">
+    <value>- For {0}, Net Turnover is total valid bets that we use to compute commission.</value>
+  </data>
 </root>

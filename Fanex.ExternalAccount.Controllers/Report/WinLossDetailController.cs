@@ -1,17 +1,20 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
     using DTO.Report;
     using Excel.Reports.WinLossDetailReport;
+    using Fanex.ExternalAccount.Utilities;
+    using Fanex.ExternalAccount.Utilities.Reports.WinLossDetail;
     using Requests;
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.UserControl;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -97,10 +100,7 @@
         {
             var toolTipsProducts = new
             {
-                showLiveCasino = 
-                    this.groupConfigurationService.IsShowByProductAndGroup(ProductConstants.AllBet, this.currentSession.CurrencyGroup) ||
-                    this.groupConfigurationService.IsShowByProductAndGroup(ProductConstants.SAGaming, this.currentSession.CurrencyGroup)||
-                    this.groupConfigurationService.IsShowByProductAndGroup(ProductConstants.SexyGaming, this.currentSession.CurrencyGroup),
+                liveCasino = BuildTooltipsForLiveCasino()
             };
 
             return request.IsSearch()
@@ -108,6 +108,28 @@
                     new SearchWinLossDetailRequest(request, toolTipsProducts))
                 : winLossDetailService.DrillDownWinLossDetail(
                     new DrillDownWinLossDetailRequest(request, toolTipsProducts));
+        }
+
+        private string BuildTooltipsForLiveCasino()
+        {
+            var liveCasino = new List<GroupConfigurationModel>
+            {
+                new GroupConfigurationModel{ProductId=ProductConstants.AllBet,ProductName="AllBet"},
+                new GroupConfigurationModel{ProductId=ProductConstants.SexyGaming,ProductName="Sexy Gaming"},
+                new GroupConfigurationModel{ProductId=ProductConstants.SAGaming,ProductName="SA Gaming"},
+            };
+
+            var offeredLiveCasino = liveCasino.Where(
+                i => this.groupConfigurationService.IsShowByProductAndGroup(i.ProductId, this.currentSession.CurrencyGroup));
+
+            if (offeredLiveCasino != null && offeredLiveCasino.Any())
+            {
+                var liveCasinoName = string.Join(", ", offeredLiveCasino.Select(i => i.ProductName));
+
+                return string.Format(ViewLang.Tooltip_NetTurnover_LiveCasino, liveCasinoName);
+            }
+
+            return string.Empty;
         }
     }
 
