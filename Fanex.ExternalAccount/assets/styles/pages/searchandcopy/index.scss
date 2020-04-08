@@ -96,10 +96,6 @@
         }
     }
 
-    #msg_content {
-        margin: 10px 0;
-    }
-
     input.invalid {
         border-color: #f00;
     }
@@ -109,5 +105,24 @@
         height: 16px;
         display: inline-block !important;
         background: url("../../images/ajax-loader.gif");
+    }
+
+    .d-inline-block {
+        display: inline-block;
+    }
+
+    #validation_message {
+        margin: 10px 0;
+        padding: 5px 0 5px 30px;
+
+        &.error {
+            color: #D8000C;
+            background: 4px 4px no-repeat url(../../images/error.png) #FFBABA;
+        }
+
+        &.success {
+            color: #4F8A10;
+            background: 4px 4px no-repeat url(../../images/success.gif) #DFF2BF;
+        }
     }
 }

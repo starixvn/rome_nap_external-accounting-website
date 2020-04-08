@@ -293,7 +293,7 @@
     <Setting Key="Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_OutstandingMemberSel" SpName="Acc_OutstandingMemberSel" DbName="DB042.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
-  <Function Name="SearchCopy">
+  <Function Name="Search And Copy">
     <Setting Key="EAS_CustomerUplineUserNameSel" SpName="EAS_CustomerUplineUserNameSel" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="EAS_CustomerInsMember_CloneSetting_Com" SpName="EAS_CustomerInsMember_CloneSetting_Com" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="EAS_CustomerInsMember_CloneSetting_ExtraPT" SpName="EAS_CustomerInsMember_CloneSetting_ExtraPT" DbName="DBCust.CustDB.bodbExtAccNet" />

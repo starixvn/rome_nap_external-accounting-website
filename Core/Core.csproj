@@ -357,6 +357,7 @@
     <Compile Include="Filters\CheckBelongingFilter.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GlobalSuppressions2.cs" />
+    <Compile Include="Helpers\MvcHelpers.cs" />
     <Compile Include="Helpers\RequestHelper.cs" />
     <Compile Include="Helpers\GoogleAnalyticHepler.cs" />
     <Compile Include="Helpers\TrackJSHelper.cs" />

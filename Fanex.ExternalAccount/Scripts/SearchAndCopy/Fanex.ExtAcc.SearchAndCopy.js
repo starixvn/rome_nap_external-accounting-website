@@ -13,7 +13,7 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         $btnSubmit,
         $username,
         $usernameMessage,
-        $message,
+        $validationMessage,
         $txtUsername,
         $txtPassword,
         $txtFirstName,
@@ -44,7 +44,7 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         $btnSubmit = $('#btnSubmit');
         $username = $('#username');
         $usernameMessage = $('#usernameMessage');
-        $message = $('#msg_content');
+        $validationMessage = $('#validation_message');
         $txtUsername = $('#txtUsername');
         $txtPassword = $('#txtPassword');
         $txtFirstName = $('#txtFirstName');
@@ -54,7 +54,6 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         $txtFax = $('#txtFax');
         $txtMaxCredit = $('#txtMaxCredit');
         passwordTemplate = $('#passwordTemplate').html();
-        $message.width($step1Panel.width());
 
         $step2Panel.hide();
         $btnPrevious.hide();
@@ -88,14 +87,14 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         $step2Panel.find('input').removeClass('invalid');
         var username = $.trim($txtUsername.val());
         if (!username) {
-            ShowErrorMessage('The username is required !');
+            ShowErrorMessage('User Name is required !');
             $txtUsername.addClass('invalid');
             return;
         }
 
         var password = $.trim($txtPassword.val());
         if (!password) {
-            ShowErrorMessage('The password is required !');
+            ShowErrorMessage('Password is required !');
             $txtPassword.addClass('invalid');
             return;
         }
@@ -108,7 +107,7 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
 
         var maxCredit = parseFloat(Fanex.ExtAcc.ReplaceAll($txtMaxCredit.val(), ',', ''));
         if (isNaN(maxCredit)) {
-            ShowErrorMessage('The max credit is required !');
+            ShowErrorMessage('Max Credit is required !');
             $txtMaxCredit.addClass('invalid');
             return;
         }
@@ -139,7 +138,6 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
 
     function GotoStep1() {
         HideMessage();
-        $message.width($step1Panel.width());
         $step1Tab.removeClass('step1-inactive');
         $step1Tab.addClass('step1-active');
         $step2Tab.removeClass('step2-active');
@@ -153,7 +151,6 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
 
     function GotoStep2() {
         HideMessage();
-        $message.width($step2Panel.width());
         SearchCustomer(function () {
             $step1Tab.removeClass('step1-active');
             $step1Tab.addClass('step1-inactive');
@@ -221,20 +218,20 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
     }
 
     function HideMessage() {
-        $message.hide();
-        $message.removeClass();
+        $validationMessage.hide();
+        $validationMessage.removeClass();
     }
 
     function ShowErrorMessage(message) {
-        $message.show();
-        $message.addClass('error');
-        $message.html(message);
+        $validationMessage.show();
+        $validationMessage.addClass('error');
+        $validationMessage.html(message);
     }
 
     function ShowSuccessMessage(message) {
-        $message.show();
-        $message.addClass('success');
-        $message.html(message);
+        $validationMessage.show();
+        $validationMessage.addClass('success');
+        $validationMessage.html(message);
     }
 
     Fanex.ExtAcc.SearchAndCopy = function () {

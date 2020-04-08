@@ -103,6 +103,8 @@
             return GetValue("SpecialGroups").Split(',').Select(g => g.Trim()).ToArray();
         }
 
+        public static string SearchAndCopySuperEmailRecipientList => GetValue("SearchAndCopySuperEmailRecipientList");
+
         private static string GetValue(string key) => ConfigurationManager.AppSettings[key];
     }
 }

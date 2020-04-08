@@ -2777,6 +2777,7 @@
     <Content Include="Views\Customer\MultipleSuspend.cshtml" />
     <Content Include="Views\Domain\SSO.cshtml" />
     <Content Include="Views\CustomerList\Index.cshtml" />
+    <Content Include="Views\SearchAndCopy\Email.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">

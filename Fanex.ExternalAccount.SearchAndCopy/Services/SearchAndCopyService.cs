@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Services
 {
-    using Fanex.ExternalAccount.Core.Context;
+    using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.SearchAndCopy.Criteria;
@@ -16,24 +16,26 @@
         SearchCustomerModel SearchCustomer(string username, int roleId);
 
         Result CloneSetting(CloneSettingRequest request);
+
+        //void SendEmail(CloneSettingContext context, string emailBody);
     }
 
     public class SearchAndCopyService : ISearchAndCopyService
     {
         private readonly ISearchAndCopyRepository searchAndCopyRepository;
-        private readonly CurrentSession currentSession;
-        private readonly CurrentContext currentContext;
+        private readonly ICurrentSession currentSession;
+        private readonly ICurrentContext currentContext;
 
         public SearchAndCopyService()
             : this(null, null, null)
         {
         }
 
-        public SearchAndCopyService(ISearchAndCopyRepository searchAndCopyRepository, CurrentSession currentSession, CurrentContext currentContext)
+        public SearchAndCopyService(ISearchAndCopyRepository searchAndCopyRepository, ICurrentSession currentSession, ICurrentContext currentContext)
         {
             this.searchAndCopyRepository = searchAndCopyRepository ?? new SearchAndCopyRepository();
-            this.currentSession = currentSession ?? new CurrentSession();
-            this.currentContext = currentContext ?? new CurrentContext();
+            this.currentSession = currentSession;
+            this.currentContext = currentContext;
         }
 
         public SearchCustomerModel SearchCustomer(string username, int roleId)
@@ -82,5 +84,16 @@
             result = searchAndCopyRepository.CloneSettingExtraPT(cloneSettingExtraPTCriteria);
             return result;
         }
+
+        //public void SendEmail(CloneSettingContext context, string emailBody)
+        //{
+        //    try
+        //    {
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        ExceptionHandler.Handle(ex);
+        //    }
+        //}
     }
 }
