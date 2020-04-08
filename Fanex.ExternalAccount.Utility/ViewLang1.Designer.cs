@@ -1988,6 +1988,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to - For {0}, Net Turnover is total valid bets that we use to compute commission..
+        /// </summary>
+        public static string Tooltip_NetTurnover_LiveCasino {
+            get {
+                return ResourceManager.GetString("Tooltip_NetTurnover_LiveCasino", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Top Currencies.
         /// </summary>
         public static string TopCurrencies {
