@@ -87,7 +87,7 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         $step2Panel.find('input').removeClass('invalid');
         var username = $.trim($txtUsername.val());
         if (!username) {
-            ShowErrorMessage('User Name is required !');
+            ShowErrorMessage('Username is required !');
             $txtUsername.addClass('invalid');
             return;
         }
