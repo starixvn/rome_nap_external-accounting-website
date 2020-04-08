@@ -297,5 +297,6 @@
     <Setting Key="EAS_CustomerUplineUserNameSel" SpName="EAS_CustomerUplineUserNameSel" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="EAS_CustomerInsMember_CloneSetting_Com" SpName="EAS_CustomerInsMember_CloneSetting_Com" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="EAS_CustomerInsMember_CloneSetting_ExtraPT" SpName="EAS_CustomerInsMember_CloneSetting_ExtraPT" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_GameEnableJackpotSel" SpName="Acc_GameEnableJackpotSel" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
 </Functions>

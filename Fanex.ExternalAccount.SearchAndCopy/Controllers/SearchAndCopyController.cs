@@ -4,6 +4,7 @@
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Core.Shared;
+    using Fanex.ExternalAccount.SearchAndCopy.Models;
     using Fanex.ExternalAccount.SearchAndCopy.Requests;
     using Fanex.ExternalAccount.SearchAndCopy.Services;
     using System.Collections.Generic;
@@ -22,15 +23,16 @@
 
         public SearchAndCopyController(ISearchAndCopyService searchAndCopyService)
         {
-            this.searchAndCopyService = searchAndCopyService ?? new SearchAndCopyService(null, CurrentSession, CurrentContext);
+            this.searchAndCopyService = searchAndCopyService ?? new SearchAndCopyService();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
         public JsonResult SearchCustomer(SearchCustomerRequest request)
         {
-            var customer = searchAndCopyService.SearchCustomer(request.Username, Role.Super);
-            return Json(customer);
+            var searchCustomerContext = new SearchCustomerContext(request, Role.Super, CurrentSession);
+            var result = searchAndCopyService.SearchCustomer(searchCustomerContext);
+            return Json(result);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Host)]
@@ -43,15 +45,29 @@
         [AntiXSRFFilter]
         public JsonResult SuperPost(CloneSettingRequest request)
         {
-            var result = searchAndCopyService.CloneSetting(request);
-            //if (!ErrorCodesNotSendEmail.Contains(result.ErrorCode))
-            //{
-            //    var cloneSettingContext = new CloneSettingContext(request, result, CurrentSession.UserName);
-            //    var emailBody = this.RenderRazorViewToString("Email", cloneSettingContext);
-            //    searchAndCopyService.SendEmail(cloneSettingContext, emailBody);
-            //}
+            var searchCustomerContext = new SearchCustomerContext(new SearchCustomerRequest { Username = request.ExistingUsername }, Role.Super, CurrentSession);
+            var searchCustomerResult = searchAndCopyService.SearchCustomer(searchCustomerContext);
+            if (!searchCustomerResult.IsSuccess)
+            {
+                return Json(searchCustomerResult);
+            }
+
+            var existingCustomer = (SearchCustomerModel)searchCustomerResult.ResultData;
+            var cloneSettingContext = new CloneSettingContext(request, existingCustomer.CustId.Value, CurrentSession, CurrentContext);
+            var cloneSettingResult = searchAndCopyService.CloneSetting(cloneSettingContext);
+            if(!cloneSettingResult.IsSuccess)
+            {
+                if (!ErrorCodesNotSendEmail.Contains(cloneSettingResult.ErrorCode))
+                {
+                    // SendEmail(cloneSettingContext);
+                }
+
+                return Json(cloneSettingResult);
+            }
             
-            return Json(result);
+            var syncCasinoResult = searchAndCopyService.Sync3rdProducts(cloneSettingContext);
+            // SendEmail(cloneSettingContext);
+            return Json(syncCasinoResult);
         }
     }
 }

@@ -202,10 +202,10 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         $usernameMessage.show();
         $.post(resolveClientUrl('SearchAndCopy/SearchCustomer'), searchParams, function (result) {
             $usernameMessage.removeClass();
-            if (!result || !result.CustId) {
+            if (!result.IsSuccess) {
                 $username.addClass('invalid');
                 $usernameMessage.addClass('errorWarning');
-                ShowErrorMessage('The super doesn’t exist !');
+                ShowErrorMessage(result.ErrorMessage);
                 return;
             }
 

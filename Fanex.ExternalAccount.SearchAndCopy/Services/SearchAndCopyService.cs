@@ -1,99 +1,123 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Services
 {
-    using Fanex.CustomerSetting.Module.Core.Web;
-    using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.SearchAndCopy.Criteria;
     using Fanex.ExternalAccount.SearchAndCopy.Models;
     using Fanex.ExternalAccount.SearchAndCopy.Repositories;
-    using Fanex.ExternalAccount.SearchAndCopy.Requests;
+    using Fanex.Logging.Extensions.Web;
     using IBCUtils;
     using System;
     using System.Linq;
+    using System.Threading;
 
     public interface ISearchAndCopyService
     {
-        SearchCustomerModel SearchCustomer(string username, int roleId);
+        Result SearchCustomer(SearchCustomerContext context);
 
-        Result CloneSetting(CloneSettingRequest request);
+        Result CloneSetting(CloneSettingContext context);
 
-        //void SendEmail(CloneSettingContext context, string emailBody);
+        Result Sync3rdProducts(CloneSettingContext context);
     }
 
     public class SearchAndCopyService : ISearchAndCopyService
     {
         private readonly ISearchAndCopyRepository searchAndCopyRepository;
-        private readonly ICurrentSession currentSession;
-        private readonly ICurrentContext currentContext;
+        private readonly ICustomerRepository customerRepository;
+        private readonly ING2Service ng2Service;
+        private readonly ICasinoService casinoService;
 
         public SearchAndCopyService()
-            : this(null, null, null)
+            : this(null, null, null, null)
         {
         }
 
-        public SearchAndCopyService(ISearchAndCopyRepository searchAndCopyRepository, ICurrentSession currentSession, ICurrentContext currentContext)
+        public SearchAndCopyService(
+            ISearchAndCopyRepository searchAndCopyRepository,
+            ICustomerRepository customerRepository,
+            ING2Service ng2Service,
+            ICasinoService casinoService)
         {
             this.searchAndCopyRepository = searchAndCopyRepository ?? new SearchAndCopyRepository();
-            this.currentSession = currentSession;
-            this.currentContext = currentContext;
+            this.customerRepository = customerRepository ?? new CustomerRepository();
+            this.ng2Service = ng2Service ?? new NG2Service();
+            this.casinoService = casinoService ?? new CasinoService();
         }
 
-        public SearchCustomerModel SearchCustomer(string username, int roleId)
+        public Result SearchCustomer(SearchCustomerContext context)
         {
-            return searchAndCopyRepository.SearchCustomer(username, currentSession.CurrencyGroup)
-                .FirstOrDefault(c => c.RoleId == roleId && username.Equals(c.Username, StringComparison.InvariantCultureIgnoreCase) && c.IsExistGroup);
+            var customer = searchAndCopyRepository.SearchCustomer(context.Request.Username, context.CurrentSession.CurrencyGroup)
+                .FirstOrDefault(c => c.RoleId == context.RoleId && context.Request.Username.Equals(c.Username, StringComparison.InvariantCultureIgnoreCase) && c.IsExistGroup);
+            return customer != null ? new Result(0, string.Empty, customer) : new Result(1, "The super doesn’t exist !");
         }
 
-        public Result CloneSetting(CloneSettingRequest request)
+        public Result CloneSetting(CloneSettingContext context)
         {
-            var searchCustomer = SearchCustomer(request.ExistingUsername, Role.Super);
-            if (searchCustomer == null)
-            {
-                return new Result(1, "Unauthorized");
-            }
-
-            var existingCustId = searchCustomer.CustId.Value;
             var cloneSettingComCriteria = new CloneSettingComCriteria
             {
-                Username = request.Username,
-                UserPwd = Encryption.CfsEnCode(request.Password),
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Phone = request.Phone,
-                MobilePhone = request.MobilePhone,
-                Fax = request.LastName,
-                Credit = request.Credit,
-                ExistingCustId = existingCustId,
-                Creator = currentSession.CustId,
-                IP = currentContext.Ip4Address
+                Username = context.Request.Username,
+                UserPwd = Encryption.CfsEnCode(context.Request.Password),
+                FirstName = context.Request.FirstName,
+                LastName = context.Request.LastName,
+                Phone = context.Request.Phone,
+                MobilePhone = context.Request.MobilePhone,
+                Fax = context.Request.LastName,
+                Credit = context.Request.Credit,
+                ExistingCustId = context.ExistingCustId,
+                Creator = context.CurrentSession.CustId,
+                IP = context.CurrentContext.Ip4Address
             };
-            var result = searchAndCopyRepository.CloneSettingComm(cloneSettingComCriteria);
-            if (!result.IsSuccess)
+            var cloneSettingCommResult = searchAndCopyRepository.CloneSettingComm(cloneSettingComCriteria);
+            if (!cloneSettingCommResult.IsSuccess)
             {
-                return result;
+                return cloneSettingCommResult;
             }
 
-            var custId = Convert.ToInt32(result.ResultData);
+            context.CustId = Convert.ToInt32(cloneSettingCommResult.ResultData);
             var cloneSettingExtraPTCriteria = new CloneSettingExtraPTCriteria
             {
-                CustId = custId,
-                ExistingCustId = existingCustId,
-                Creator = currentSession.CustId,
-                IP = currentContext.Ip4Address
+                CustId = context.CustId,
+                ExistingCustId = context.ExistingCustId,
+                Creator = context.CurrentSession.CustId,
+                IP = context.CurrentContext.Ip4Address
             };
-            result = searchAndCopyRepository.CloneSettingExtraPT(cloneSettingExtraPTCriteria);
-            return result;
+            var cloneSettingExtraPTResult = searchAndCopyRepository.CloneSettingExtraPT(cloneSettingExtraPTCriteria);
+            if (!cloneSettingExtraPTResult.IsSuccess)
+            {
+                return cloneSettingExtraPTResult;
+            }
+
+            return cloneSettingCommResult;
         }
 
-        //public void SendEmail(CloneSettingContext context, string emailBody)
-        //{
-        //    try
-        //    {
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        ExceptionHandler.Handle(ex);
-        //    }
-        //}
+        public Result Sync3rdProducts(CloneSettingContext context)
+        {
+            try
+            {
+                context.NG2Status = ng2Service.GetStatus(context.ExistingCustId); ;
+                context.ExistingCustomerInfo = customerRepository.GetCustomerInfoByUserId(context.ExistingCustId, false);
+                if(!context.NG2Status.IsSync && !context.ExistingCustomerInfo.SyncCasino)
+                {
+                    return new Result(0, string.Empty);
+                }
+
+                Thread.Sleep(3000);
+                if (context.NG2Status.IsSync)
+                {
+                    ng2Service.SyncCustomer(context);
+                }
+
+                if (context.ExistingCustomerInfo.SyncCasino)
+                {
+                    casinoService.SyncCustomer(context);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+                return new Result(1, "Create customer failed. Please try again.");
+            }
+
+            return new Result(0, string.Empty);
+        }
     }
 }
