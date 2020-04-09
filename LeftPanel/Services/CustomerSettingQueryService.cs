@@ -155,23 +155,29 @@
             {
                 return;
             }
-            var disable = false;
+            
             var disableUpline = false;
+            var isHideUpline = true;
+            var isHide = true;
             foreach (var sporttype in table3rdDCS.Select($"ProductID = {ProductConstants.LiveCasino}"))
-            {
-                disable = disable || sporttype.IsDisabled();
+            {                
                 disableUpline = disableUpline || sporttype.IsDisabledUpline();
+                isHideUpline = isHideUpline && sporttype.IsHiddenUpline();
+                isHide = isHide && sporttype.IsHidden();
             }
 
             var eSportsStatus =
                 new ObjectInfo("EnableLiveCasino", "Enable Live Casino", "Enable Live Casino");
-
-            if (disableUpline)
+            var isShowProduct = !IsHiddenProduct(_roleId, isHideUpline, isHide);
+            if (isShowProduct)
             {
-                eSportsStatus = DisableStatus(eSportsStatus);
-            }
+                if (disableUpline)
+                {
+                    eSportsStatus = DisableStatus(eSportsStatus);
+                }
 
-            editItems.Add(eSportsStatus);
+                editItems.Add(eSportsStatus);
+            }
         }
 
         private void AddLiveCasinoLink(DataTable table3rdDCS, List<ObjectInfo> editLinks)
@@ -180,18 +186,18 @@
             {
                 return;
             }
-            var isHideUpline = false;
-            var isHide = false;
+            var isHideUpline = true;
+            var isHide = true;
             foreach (var sporttype in table3rdDCS.Select($"ProductID = {ProductConstants.LiveCasino}"))
             {
-                isHideUpline = isHideUpline || sporttype.IsHiddenUpline();
-                isHide = isHide || sporttype.IsHidden();
+                isHideUpline = isHideUpline && sporttype.IsHiddenUpline();
+                isHide = isHide && sporttype.IsHidden();
             }
 
             var eSportsStatus =
                 new ObjectInfo("LiveCasino", "Live Casino");
-
-            if ((!isHide && _roleId.IsSuper()) || !isHideUpline)
+            var isShowProduct = !IsHiddenProduct(_roleId, isHideUpline, isHide);
+            if (isShowProduct)
             {
                 editLinks.Add(eSportsStatus);
             }
