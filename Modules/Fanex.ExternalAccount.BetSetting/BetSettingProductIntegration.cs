@@ -18,7 +18,7 @@
             ProductConstants.LiveCasino,
             ProductConstants.VoidBridge,
             ProductConstants.NG2,
-            ProductConstants.Lottery,
+            ProductConstants.RNGLottery,
             ProductConstants.Sportsbook2,
             ProductConstants.VirtualGames,
             ProductConstants.Sabaclub

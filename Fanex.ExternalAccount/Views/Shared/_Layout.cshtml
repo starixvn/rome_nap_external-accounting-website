@@ -30,7 +30,7 @@
     var showVoidbridge = ProductSettings.IsShowVoidBridge ? 1 : 0;
     var showNG2 = ProductSettings.IsShowNG2 ? 1 : 0;
     var showFishingWorld = ProductSettings.IsShowFishingWorld ? 1 : 0;
-    var showLottery = ProductSettings.IsShowLottery ? 1 : 0;
+    var showRNGLottery = ProductSettings.IsShowRNGLottery ? 1 : 0;
     var ng2Text = new RemotingRefService().GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
     var products = JsonConvert.SerializeObject(ProductSettings.SiteProducts.Values);
     string Env = ConfigurationManager.AppSettings["EnvTheme"].ToString();
@@ -153,7 +153,7 @@
         //var showFishingWorldBetting = true;
         var showNG2Betting = true;
         var ng2Text = '@ng2Text';
-        var showLottery = @showLottery;
+        var showRNGLottery = @showRNGLottery;
 
         var siteLevelProducts = @(Html.Raw(products));
 

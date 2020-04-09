@@ -17,7 +17,7 @@
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.VoidBridge], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.NG2], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.FishingWorld], StatusType.Checkbox),
-                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Lottery], StatusType.Checkbox),
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.RNGLottery], StatusType.Link),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Sportsbook2], StatusType.OnlyDetail),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.VirtualGames], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Sabaclub], StatusType.Link)
@@ -34,7 +34,7 @@
                 {ProductConstants.LiveCasino, eFunctions.LiveCasinoBetting},
                 {ProductConstants.VoidBridge, eFunctions.VoidbridgeBetting},
                 {ProductConstants.NG2, eFunctions.NG2Betting},
-                {ProductConstants.Lottery, eFunctions.LotteryBetting},
+                {ProductConstants.RNGLottery, eFunctions.RNGLotteryBetting},
                 {ProductConstants.VirtualGames, eFunctions.VirtualGamesBetting}
             };
 
@@ -42,7 +42,7 @@
         public static List<ProductStatus> TransformToProductStatus(DataRow statusRow, bool isSetUplineStatus = false)
             => new List<ProductStatus>
             {
-                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Lottery], statusRow, isSetUplineStatus: isSetUplineStatus),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.RNGLottery], statusRow, isSetUplineStatus: isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.FishingWorld], statusRow, isSetUplineStatus: isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.NG2], statusRow, isSetUplineStatus: isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.VoidBridge], statusRow, false, isSetUplineStatus),
@@ -60,7 +60,7 @@
                 new ObjectInfo("HideVoidbridge", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.VoidBridge)),
                 new ObjectInfo("HideNG2", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.NG2)),
                 new ObjectInfo("HideFishingWorld", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.FishingWorld)),
-                new ObjectInfo("HideLottery", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.Lottery)),
+                new ObjectInfo("HideRNGLottery", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.RNGLottery)),
                 new ObjectInfo("HideVirtualGames", dcsProductStatusTable.IsProductHidden(ProductConstants.VirtualGames)),
                 new ObjectInfo("HideSabaclub", dcsProductStatusTable.IsProductHidden(ProductConstants.Sabaclub))
             };

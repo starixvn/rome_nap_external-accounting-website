@@ -67,10 +67,10 @@ function LoadNG2() {
     }, 1000);
 };
 
-function LoadLottery() {
+function LoadRNGLottery() {
     Fanex.CustomerSetting.Core.BlockUI();
-    var url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=28&customerId=" + custId + "&sssss=v&customerLevel=4&isreadonly=false&groupName=" + parent.$('#selectedGroupName').html() + '&v=0001');
-    document.getElementById('lottery').src = url;
+    var url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=44&customerId=" + custId + "&sssss=v&customerLevel=4&isreadonly=false&groupName=" + parent.$('#selectedGroupName').html() + '&v=0001');
+    document.getElementById('rnglottery').src = url;
     setTimeout(function () {
         Fanex.CustomerSetting.Core.UnBlockUI();
     }, 1000);

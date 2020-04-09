@@ -171,8 +171,8 @@
         $scope.collapseSidebar();
     };
 
-    $scope.Lottery = function () {
-        $scope.RenderDCS(28);
+    $scope.RNGLottery = function () {
+        $scope.RenderDCS(44);
         $scope.collapseSidebar();
     };
 
