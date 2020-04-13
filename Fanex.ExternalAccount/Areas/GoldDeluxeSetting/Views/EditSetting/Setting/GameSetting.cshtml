@@ -35,8 +35,8 @@
                         }
                         else
                         {
-                            <label class="radio-inline betting-limit-label">
-                                <input id="betLimit{{betLimitItem.Id}}" type="radio" name="{{itemGameType.Name}}" data-ng-model="itemGameType.CheckedStakeLevelId"
+                            <label class="checkbox-inline betting-limit-label">
+                                <input id="betLimit{{betLimitItem.Id}}" type="checkbox" data-ng-model="betLimitItem.IsChecked"
                                        data-ng-disabled="$parent.isReadOnly || !$parent.isUpdateGameSettingPartial" value="{{betLimitItem.Id}}" />
                                 {{betLimitItem.Range}}
                             </label>
