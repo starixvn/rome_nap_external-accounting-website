@@ -12,7 +12,8 @@
             ProductConstants.Sportsbook,
             ProductConstants.SexyGaming,
             ProductConstants.SAGaming,
-            ProductConstants.TableGames
+            ProductConstants.TableGames,
+            ProductConstants.BBin
         };
 
         protected MultipleEditProductStatus()
@@ -35,7 +36,7 @@
 
             if (productId == ProductConstants.AllBet)
             {
-                productId = ProductConstants.DummyProductIdForAllbet_SAGaming_SexyGaming;
+                productId = ProductConstants.DummyLiveCasinoProductId;
             }
             else if (productId == ProductConstants.Lottery)
             {
