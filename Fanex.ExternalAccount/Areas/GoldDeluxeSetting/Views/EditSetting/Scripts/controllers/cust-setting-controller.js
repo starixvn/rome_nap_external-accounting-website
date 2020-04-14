@@ -22,7 +22,9 @@
             $scope.isUpdateGameSettingPartial = $scope.isUpdateWinLimitPartial;
             $scope.isEditMember = settingViewModel.Level != 2 && settingViewModel.Level != 3;
             $scope.validateAndUpdateSetting = function (updateType) {
-                if (isBelongToSpecialGroups && $scope.mainResult.Warning !== undefined && $scope.mainResult.Warning.IsShow) {
+                var gameSettingScope = angular.element('[data-ng-controller="CustGameSettingController"]').scope();
+                gameSettingScope.checkShowWarningUncheckedAll();
+                if ($scope.mainResult.Warning.IsShowV3) {
                     return;
                 }
 
@@ -41,7 +43,7 @@
                 var custInfoScope = angular.element('[data-ng-controller="CustomerInfoController"]').scope(),
                     ptAndComScope = angular.element('[data-ng-controller="PtAndComSettingController"]').scope(),
                     winLimitScope = angular.element('[data-ng-controller="CustomerWinLimitController"]').scope(),
-                    gameSettingScope = angular.element('[data-ng-controller="CustGameSettingController"]').scope();
+                    gameSettingScope = angular.element('[data-ng-controller="CustGameSettingController"]').scope();                
 
                 custInfoScope.updateSettingStatus(settingViewModel.Setting);
 

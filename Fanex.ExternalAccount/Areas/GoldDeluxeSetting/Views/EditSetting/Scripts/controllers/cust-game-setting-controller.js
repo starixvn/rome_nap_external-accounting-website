@@ -17,10 +17,8 @@
             };
 
             $scope.updateGameSetting = function () {
-
-                var custInfoScope = angular.element('[data-ng-controller="CustomerInfoController"]').scope();
-
-                if (isBelongToSpecialGroups && $scope.mainResult.Warning !== undefined && $scope.mainResult.Warning.IsShow) {
+                $scope.checkShowWarningUncheckedAll();
+                if ($scope.mainResult.Warning.IsShowV3) {
                     return;
                 }
 
@@ -29,8 +27,8 @@
 
             $scope.checkShowWarningUncheckedAll = function () {
                 var isShowWarning = false;
+                var isUncheckedAll = true;
                 angular.forEach($scope.gameSetting, function (gameType) {
-                    var isUncheckedAll = true;
                     angular.forEach(gameType.BettingLimit, function (stakeLevel) {
                         if (stakeLevel.IsChecked) {
                             isUncheckedAll = false;
@@ -44,9 +42,13 @@
                     }
                 });
 
-                var message = language.getString(isBelongToSpecialGroups ? 'WarningUncheckAllStakeLevelMsg_DirectionV3' :'WarningUncheckAllStakeLevelMsg');
+                var isWarningV3 = isBelongToSpecialGroups ||
+                    (settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member &&
+                        isUncheckedAll);
+                var message = language.getString(isWarningV3 ? 'WarningUncheckAllStakeLevelMsg_DirectionV3' :'WarningUncheckAllStakeLevelMsg');
                 $scope.$parent.mainResult.Warning = {
                     IsShow: isShowWarning,
+                    IsShowV3: isWarningV3,
                     Message: message
                 };
             };
