@@ -93,7 +93,7 @@
         {
             try
             {
-                context.NG2Status = ng2Service.GetStatus(context.ExistingCustId); ;
+                context.NG2Status = ng2Service.GetStatus(context.ExistingCustId);
                 context.ExistingCustomerInfo = customerRepository.GetCustomerInfoByUserId(context.ExistingCustId, false);
                 if(!context.NG2Status.IsSync && !context.ExistingCustomerInfo.SyncCasino)
                 {

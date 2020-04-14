@@ -1,30 +1,30 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Repositories
 {
+    using Fanex.Data;
     using Fanex.ExternalAccount.SearchAndCopy.Models;
     using Fanex.NAP.Framework.Data;
+    using System;
 
     public interface ING2Repository
     {
         NG2Status GetStatus(ICriteria criteria);
     }
 
-    public class NG2Repository: ING2Repository
+    public class NG2Repository : ING2Repository
     {
-        private readonly IDynamicRepository dynamicRepository;
-
-        public NG2Repository()
-            : this(null)
-        {
-        }
-
-        public NG2Repository(IDynamicRepository dynamicRepository)
-        {
-            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
-        }
-
         public NG2Status GetStatus(ICriteria criteria)
         {
-            return dynamicRepository.Get<NG2Status>(criteria);
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    reader.Read();
+                    var isSync = Convert.ToBoolean(reader["issync"]);
+                    var isDisabled = Convert.ToBoolean(reader["isdisabled"]);
+                    return new NG2Status(isSync, isDisabled);
+                }
+            }
+
         }
     }
 }
