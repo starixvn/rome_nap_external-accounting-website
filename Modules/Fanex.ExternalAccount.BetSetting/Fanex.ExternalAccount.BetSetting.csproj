@@ -99,8 +99,8 @@
       <HintPath>..\..\packages\Fanex.Data.0.5.404.59\lib\net40\Fanex.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.GoldDeluxe.CoreSetting, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.GoldDeluxe.Setting.1.0.1.9\lib\net461\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
+    <Reference Include="Fanex.GoldDeluxe.CoreSetting, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Fanex.GoldDeluxe.Setting.1.0.2-beta01\lib\net461\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Logging, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Fanex.Logging.2.0.1\lib\net461\Fanex.Logging.dll</HintPath>

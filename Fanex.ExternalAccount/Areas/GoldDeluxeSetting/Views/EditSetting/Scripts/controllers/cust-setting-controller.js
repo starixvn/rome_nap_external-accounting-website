@@ -21,6 +21,7 @@
             $scope.isUpdateWinLimitPartial = !((settingViewModel.UpLineLevel === fanex.goldDeluxeSetting.customerLevel.Super || settingViewModel.UpLineLevel === fanex.goldDeluxeSetting.customerLevel.Master) && settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member);
             $scope.isUpdateGameSettingPartial = $scope.isUpdateWinLimitPartial;
             $scope.isEditMember = settingViewModel.Level != 2 && settingViewModel.Level != 3;
+            $scope.isEditAgent = settingViewModel.Level == 2;
             $scope.validateAndUpdateSetting = function (updateType) {
                 var gameSettingScope = angular.element('[data-ng-controller="CustGameSettingController"]').scope();
                 gameSettingScope.checkShowWarningUncheckedAll();
