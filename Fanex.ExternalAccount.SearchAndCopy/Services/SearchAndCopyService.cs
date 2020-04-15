@@ -52,6 +52,17 @@
 
         public Result CloneSetting(CloneSettingContext context)
         {
+            var result = CloneCustomerAndSettings(context);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            return Sync3rdProducts(context);
+        }
+
+        private Result CloneCustomerAndSettings(CloneSettingContext context)
+        {
             var cloneSettingComCriteria = new CloneSettingComCriteria
             {
                 Username = context.Request.Username,
@@ -66,13 +77,13 @@
                 Creator = context.CurrentSession.CustId,
                 IP = context.CurrentContext.Ip4Address
             };
-            var cloneSettingCommResult = searchAndCopyRepository.CloneSettingComm(cloneSettingComCriteria);
-            if (!cloneSettingCommResult.IsSuccess)
+            context.Result = searchAndCopyRepository.CloneSettingComm(cloneSettingComCriteria);
+            if (!context.Result.IsSuccess)
             {
-                return cloneSettingCommResult;
+                return context.Result;
             }
 
-            context.CustId = Convert.ToInt32(cloneSettingCommResult.ResultData);
+            context.CustId = Convert.ToInt32(context.Result.ResultData);
             var cloneSettingExtraPTCriteria = new CloneSettingExtraPTCriteria
             {
                 CustId = context.CustId,
@@ -80,13 +91,13 @@
                 Creator = context.CurrentSession.CustId,
                 IP = context.CurrentContext.Ip4Address
             };
-            var cloneSettingExtraPTResult = searchAndCopyRepository.CloneSettingExtraPT(cloneSettingExtraPTCriteria);
-            if (!cloneSettingExtraPTResult.IsSuccess)
+            context.Result = searchAndCopyRepository.CloneSettingExtraPT(cloneSettingExtraPTCriteria);
+            if (!context.Result.IsSuccess)
             {
-                return cloneSettingExtraPTResult;
+                return context.Result;
             }
 
-            return cloneSettingCommResult;
+            return context.Result;
         }
 
         public Result Sync3rdProducts(CloneSettingContext context)

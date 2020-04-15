@@ -3,10 +3,16 @@
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Core.Helpers;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.SearchAndCopy.Models;
     using Fanex.ExternalAccount.SearchAndCopy.Requests;
     using Fanex.ExternalAccount.SearchAndCopy.Services;
+    using Fanex.ExternalAccount.Utilities;
+    using Fanex.Logging.Extensions.Web;
+    using Fanex.MailDelivery.Client;
+    using Fanex.MailDelivery.Core.Models;
+    using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
     using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
@@ -59,15 +65,36 @@
             {
                 if (!ErrorCodesNotSendEmail.Contains(cloneSettingResult.ErrorCode))
                 {
-                    // SendEmail(cloneSettingContext);
+                    SendEmail(cloneSettingContext);
                 }
 
                 return Json(cloneSettingResult);
             }
             
-            var syncCasinoResult = searchAndCopyService.Sync3rdProducts(cloneSettingContext);
-            // SendEmail(cloneSettingContext);
-            return Json(syncCasinoResult);
+            SendEmail(cloneSettingContext);
+            return Json(cloneSettingContext.Result);
+        }
+
+        private void SendEmail(CloneSettingContext context)
+        {
+            try
+            {
+                var mailBody = this.RenderRazorViewToString("Email", context);
+                var mail = new Mail
+                {
+                    Title= "Auto Generated Report Administrator",
+                    Subject = $"New super created by external admin - {context.Request.Username}",
+                    Body = mailBody,
+                    MailingListId = Config.SearchAndCopySuperMailingListId
+                };
+                MailClientHandler.Start();
+                MailClientHandler.SendFunctionMail(mail);
+                MailClientHandler.Stop();
+            }
+            catch(Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
         }
     }
 }
