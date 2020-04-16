@@ -7,7 +7,7 @@
         VoidbridgeSetting = 22,
         NG2Setting = 23,
         FishingWorldSetting = 24,
-        LotterySetting = 28,
+        RNGLotterySetting = 44,
         VirtualSports = 5,
         VirtualGamesSetting = 38,
         SabaclubSetting = 42

@@ -703,14 +703,13 @@
         $scope.EnableThirdpartyProduct(23, parent.ng2Text);
     };
 
-    $scope.EnableLottery = function (enable, id, disabled) {
+    $scope.EnableRNGLottery = function (enable, id, disabled) {
         if (disabled) {
             return;
         }
 
         top.shouldCalculatePopupHeight = false;
-        document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(28, "Lottery");
+        $scope.EnableThirdpartyProduct(44, "RNG Lottery", 800, 320);
     };
 
     $scope.EnableVirtualGames = function (enable, id, disabled) {
@@ -963,8 +962,8 @@
         $scope.RenderSupeOnMemberDCS(24);
     };
 
-    $scope.SuperLottery = function () {
-        $scope.RenderSupeOnMemberDCS(28);
+    $scope.SuperRNGLottery = function () {
+        $scope.RenderSupeOnMemberDCS(44);
     };
 
     $scope.SuperVirtualGames = function () {
@@ -1000,8 +999,8 @@
         $scope.RenderMasterOnMemberDCS(24);
     };
 
-    $scope.MasterLottery = function () {
-        $scope.RenderMasterOnMemberDCS(28);
+    $scope.MasterRNGLottery = function () {
+        $scope.RenderMasterOnMemberDCS(44);
     };
 
     $scope.MasterVirtualGames = function () {

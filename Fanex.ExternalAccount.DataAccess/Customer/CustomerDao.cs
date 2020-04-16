@@ -242,6 +242,7 @@
                 var result = new CustomerStatusDTO();
                 CustomerStatusDCS sportsbook2 = null;
                 CustomerStatusDCS liveCasino = null;
+                CustomerStatusDCS rngLottery = null;
                 var reader = objDb.ExecuteReader(criteria.GetSpParams());
                 if (reader.Read())
                 {
@@ -323,6 +324,31 @@
                         continue;
                     }
 
+                    if (productId == ProductConstants.RNGLottery)
+                    {
+                        if (rngLottery == null)
+                        {
+                            rngLottery = new CustomerStatusDCS
+                            {
+                                ProductID = productId,
+                                ProductName = ProductSettings.SiteProducts[productId]?.Name,
+                                IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
+                                IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
+                                IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
+                                IsSynced = Utils.ToBoolean(reader["isSync"]),
+                                IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
+                            };
+                        }
+                        else
+                        {
+                            rngLottery.IsDisabled = rngLottery.IsDisabled && Utils.ToBoolean(reader["isDisabled"]);
+                            rngLottery.IsDisabledUpline = rngLottery.IsDisabled && Utils.ToBoolean(reader["isDisabledUpline"]);
+                            rngLottery.IsHidden = rngLottery.IsDisabled && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
+                        }
+
+                        continue;
+                    }
+
                     if (!result.IsDCSProductExisted(productId))
                     {
                         result.DCSProductsSetting.Add(new CustomerStatusDCS
@@ -343,7 +369,12 @@
                 {
                     result.DCSProductsSetting.Add(liveCasino);
                 }
-                
+
+                if (rngLottery != null)
+                {
+                    result.DCSProductsSetting.Add(rngLottery);
+                }
+
                 return result;
             }
         }
