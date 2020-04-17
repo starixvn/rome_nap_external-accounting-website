@@ -14,6 +14,7 @@
     using Fanex.MailDelivery.Core.Models;
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
 
@@ -65,13 +66,13 @@
             {
                 if (!ErrorCodesNotSendEmail.Contains(cloneSettingResult.ErrorCode))
                 {
-                    SendEmail(cloneSettingContext);
+                    Task.Run(() => SendEmail(cloneSettingContext));
                 }
 
                 return Json(cloneSettingResult);
             }
-            
-            SendEmail(cloneSettingContext);
+
+            Task.Run(() => SendEmail(cloneSettingContext));
             return Json(cloneSettingContext.Result);
         }
 
