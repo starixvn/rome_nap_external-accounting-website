@@ -66,13 +66,13 @@
             {
                 if (!ErrorCodesNotSendEmail.Contains(cloneSettingResult.ErrorCode))
                 {
-                    Task.Run(() => SendEmail(cloneSettingContext));
+                    SendEmail(cloneSettingContext);
                 }
 
                 return Json(cloneSettingResult);
             }
 
-            Task.Run(() => SendEmail(cloneSettingContext));
+            SendEmail(cloneSettingContext);
             return Json(cloneSettingContext.Result);
         }
 
@@ -88,9 +88,19 @@
                     Body = mailBody,
                     MailingListId = Config.SearchAndCopySuperMailingListId
                 };
-                MailClientHandler.Start();
-                MailClientHandler.SendFunctionMail(mail);
-                MailClientHandler.Stop();
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        MailClientHandler.Start();
+                        MailClientHandler.SendFunctionMail(mail);
+                        MailClientHandler.Stop(); ;
+                    }
+                    catch (Exception ex)
+                    {
+                        ExceptionHandler.Handle(ex);
+                    }
+                });
             }
             catch(Exception ex)
             {
