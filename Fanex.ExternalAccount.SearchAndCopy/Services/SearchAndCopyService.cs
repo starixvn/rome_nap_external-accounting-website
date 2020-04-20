@@ -4,6 +4,7 @@
     using Fanex.ExternalAccount.SearchAndCopy.Criteria;
     using Fanex.ExternalAccount.SearchAndCopy.Models;
     using Fanex.ExternalAccount.SearchAndCopy.Repositories;
+    using Fanex.ExternalAccount.SearchAndCopy.Resources;
     using Fanex.Logging.Extensions.Web;
     using IBCUtils;
     using System;
@@ -47,7 +48,7 @@
         {
             var customer = searchAndCopyRepository.SearchCustomer(context.Request.Username, context.CurrentSession.CurrencyGroup)
                 .FirstOrDefault(c => c.RoleId == context.RoleId && context.Request.Username.Equals(c.Username, StringComparison.InvariantCultureIgnoreCase) && c.IsExistGroup);
-            return customer != null ? new Result(0, string.Empty, customer) : new Result(1, "The super doesn’t exist !");
+            return customer != null ? new Result(0, string.Empty, customer) : new Result(1, Lang.SearchSuperNotExisted);
         }
 
         public Result CloneSetting(CloneSettingContext context)
@@ -125,7 +126,7 @@
             catch (Exception ex)
             {
                 ExceptionHandler.Handle(ex);
-                return new Result(1, "Create customer failed. Please try again.");
+                return new Result(1, Lang.SearchAndCopyFailureMessage);
             }
 
             return new Result(0, string.Empty);
