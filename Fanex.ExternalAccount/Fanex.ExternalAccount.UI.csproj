@@ -459,6 +459,7 @@
     <Content Include="Areas\Common\Views\Shared\Scripts\Fanex.CustomerSetting.js" />
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\ThirdPartyProductStatus\Index.cshtml" />
+    <Content Include="assets\styles\pages\customer\images\info.png" />
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.js" />
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting.js" />
     <Content Include="Areas\ProductStatusSetting\Scripts\simple-product-status-setting.js" />

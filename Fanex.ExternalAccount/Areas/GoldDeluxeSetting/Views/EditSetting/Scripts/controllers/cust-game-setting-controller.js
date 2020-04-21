@@ -52,6 +52,31 @@
                     Message: message
                 };
             };
+
+            $scope.checkToDisable = function (gameIndex) {
+                var gameTypes = document.getElementsByClassName('game' + gameIndex);
+                var checkedCount = 0;
+                for (var i = 0; i < gameTypes.length; i++) {
+                    if (gameTypes[i].checked) {
+                        ++checkedCount;
+                    }
+                }
+
+                if (checkedCount >= MemberMaxStakeLevels) {
+                    for (var i = 0; i < gameTypes.length; i++) {
+                        if (!gameTypes[i].checked) {
+                            gameTypes[i].setAttribute('disabled', true);
+                        }
+                    }
+                }
+                else {
+                    for (var i = 0; i < gameTypes.length; i++) {
+                        if (!gameTypes[i].checked) {
+                            gameTypes[i].removeAttribute('disabled');
+                        }
+                    }
+                }
+            };
         }
     ]);
 }
