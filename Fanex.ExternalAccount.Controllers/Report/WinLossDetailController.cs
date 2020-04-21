@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
@@ -15,6 +12,9 @@
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.UserControl;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -117,6 +117,7 @@
                 new GroupConfigurationModel{ProductId=ProductConstants.AllBet,ProductName="AllBet"},
                 new GroupConfigurationModel{ProductId=ProductConstants.SexyGaming,ProductName="Sexy Gaming"},
                 new GroupConfigurationModel{ProductId=ProductConstants.SAGaming,ProductName="SA Gaming"},
+                new GroupConfigurationModel{ProductId=ProductConstants.GTCasino,ProductName="GT Casino"}
             };
 
             var offeredLiveCasino = liveCasino.Where(

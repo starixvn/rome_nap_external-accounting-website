@@ -1,9 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization.ProductStatus
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Fanex.ExternalAccount.Utilities.Reports.WinLossDetail;
     using Shared;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class MultipleEditProductStatus
     {
@@ -12,6 +12,7 @@
             ProductConstants.Sportsbook,
             ProductConstants.SexyGaming,
             ProductConstants.SAGaming,
+            ProductConstants.GTCasino,
             ProductConstants.TableGames
         };
 
