@@ -36,7 +36,7 @@
 
             if (productId == ProductConstants.AllBet)
             {
-                productId = ProductConstants.DummyProductIdForAllbet_SAGaming_SexyGaming;
+                productId = ProductConstants.DummyProductIdForAllbet_SAGaming_SexyGaming_GTCasino;
             }
             else if (productId == ProductConstants.Lottery)
             {
