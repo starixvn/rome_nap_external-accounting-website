@@ -7,7 +7,6 @@
         function ($scope, $http, customerGameSettingService) {
             'use strict';
             $scope.gameSetting = fanex.cloneObject(settingViewModel.Setting.GameSetting);
-            var uplineUncheckedAllMsg = '';
             $scope.init = function () {
                 $scope.checkShowWarningUncheckedAll();
             };
@@ -83,3 +82,10 @@
 else {
     alert('Missing fanex.goldDeluxeSetting!');
 }
+
+$(document).ready(function () {
+    var gameSettingScope = angular.element('[data-ng-controller="CustGameSettingController"]').scope();
+    angular.forEach(gameSettingScope.gameSetting, function (gameType) {
+        gameSettingScope.checkToDisable(gameType.Id);
+    });
+});
