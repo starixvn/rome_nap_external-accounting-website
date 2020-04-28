@@ -7,6 +7,9 @@
         function ($scope, $http, customerGameSettingService) {
             'use strict';
             $scope.gameSetting = fanex.cloneObject(settingViewModel.Setting.GameSetting);
+            $scope.isCrossLevelOrNotMember = settingViewModel.Level !== fanex.goldDeluxeSetting.customerLevel.Member
+                || settingViewModel.UpLineLevel - settingViewModel.Level > 1;
+
             $scope.init = function () {
                 $scope.checkShowWarningUncheckedAll();
             };
@@ -26,20 +29,20 @@
 
             $scope.checkShowWarningUncheckedAll = function () {
                 var isShowWarning = false;
-                var isUncheckedAll = true;
                 angular.forEach($scope.gameSetting, function (gameType) {
+                    var isUncheckedAll = true;
                     angular.forEach(gameType.BettingLimit, function (stakeLevel) {
                         if (stakeLevel.IsChecked) {
                             isUncheckedAll = false;
                             return;
                         }
                     });
-                });
 
-                if (isUncheckedAll) {
-                    isShowWarning = true;
-                    return;
-                }
+                    if (isUncheckedAll) {
+                        isShowWarning = true;
+                        return;
+                    }
+                });
 
                 var isWarningV3 = (isBelongToSpecialGroups ||
                     settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member) &&
@@ -53,6 +56,10 @@
             };
 
             $scope.checkToDisable = function (gameIndex) {
+                if ($scope.isCrossLevelOrNotMember) {
+                    return;
+                }
+
                 var gameTypes = document.getElementsByClassName('game' + gameIndex);
                 var checkedCount = 0;
                 for (var i = 0; i < gameTypes.length; i++) {
