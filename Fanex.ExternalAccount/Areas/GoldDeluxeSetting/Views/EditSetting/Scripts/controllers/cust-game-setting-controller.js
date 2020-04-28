@@ -34,16 +34,16 @@
                             return;
                         }
                     });
-
-                    if (isUncheckedAll) {
-                        isShowWarning = true;
-                        return;
-                    }
                 });
 
-                var isWarningV3 = isBelongToSpecialGroups ||
-                    (settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member &&
-                        isUncheckedAll);
+                if (isUncheckedAll) {
+                    isShowWarning = true;
+                    return;
+                }
+
+                var isWarningV3 = (isBelongToSpecialGroups ||
+                    settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member) &&
+                    isShowWarning;
                 var message = language.getString(isWarningV3 ? 'WarningUncheckAllStakeLevelMsg_DirectionV3' :'WarningUncheckAllStakeLevelMsg');
                 $scope.$parent.mainResult.Warning = {
                     IsShow: isShowWarning,
