@@ -100,7 +100,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.GoldDeluxe.CoreSetting, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.GoldDeluxe.Setting.1.0.2-beta07\lib\net461\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
+      <HintPath>..\..\packages\Fanex.GoldDeluxe.Setting.1.0.2-beta08\lib\net461\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Logging, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Fanex.Logging.2.0.1\lib\net461\Fanex.Logging.dll</HintPath>
