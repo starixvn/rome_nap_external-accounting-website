@@ -24,6 +24,12 @@
             ProductConstants.Sabaclub
         };
 
+        private static readonly int[] DummyProducts = new[]
+        {
+            ProductConstants.LiveCasino,
+            ProductConstants.RNGLottery
+        };
+
         private static CustomerService customerService = new CustomerService();
 
         public static IList<Product> GetVisibledBetSettingTabs(int custId)
@@ -34,7 +40,7 @@
             foreach (var product in customerStatus.DCSProductsSetting)
             {
                 if (Array.Exists(BetSettingTabProductConfigs, element => element == product.ProductID)
-                    && !product.IsHidden && product.IsSynced)
+                    && !product.IsHidden && (DummyProducts.Any(p => p == product.ProductID) || product.IsSynced))
                 {
                     visibleProductTabs.Add(new Product(index++, product.ProductID, product.ProductName));
                 }
