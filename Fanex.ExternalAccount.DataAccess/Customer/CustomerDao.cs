@@ -317,8 +317,8 @@
                         else
                         {
                             liveCasino.IsDisabled = liveCasino.IsDisabled && Utils.ToBoolean(reader["isDisabled"]);
-                            liveCasino.IsDisabledUpline = liveCasino.IsDisabled && Utils.ToBoolean(reader["isDisabledUpline"]);
-                            liveCasino.IsHidden = liveCasino.IsDisabled && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
+                            liveCasino.IsDisabledUpline = liveCasino.IsDisabledUpline && Utils.ToBoolean(reader["isDisabledUpline"]);
+                            liveCasino.IsHidden = liveCasino.IsHidden && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
                         }
 
                         continue;
@@ -342,8 +342,8 @@
                         else
                         {
                             rngLottery.IsDisabled = rngLottery.IsDisabled && Utils.ToBoolean(reader["isDisabled"]);
-                            rngLottery.IsDisabledUpline = rngLottery.IsDisabled && Utils.ToBoolean(reader["isDisabledUpline"]);
-                            rngLottery.IsHidden = rngLottery.IsDisabled && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
+                            rngLottery.IsDisabledUpline = rngLottery.IsDisabledUpline && Utils.ToBoolean(reader["isDisabledUpline"]);
+                            rngLottery.IsHidden = rngLottery.IsHidden && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
                         }
 
                         continue;
