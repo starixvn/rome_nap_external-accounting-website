@@ -220,7 +220,7 @@ Fanex.ExtAcc.DailyWinLoss = {
         value1 = String(value1).replace(/,/g, '');
         value2 = String(value2).replace(/,/g, '');
 
-        if (value2 === 0 || value2 === '0.00') {
+        if (value2 === 0 || value2 === '0.00' || value2 === '0' || value2 === '0.0') {
             return '0.00';
         }
 
