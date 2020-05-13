@@ -1,4 +1,9 @@
 ﻿@model EditSettingViewModel
+@{
+    var memberMaxStakeLevels = GoldDeluxeSettings.Settings.MemberMaxStakeLevels;
+    var showInfo = Model.Level == CustomerLevel.Member && Model.Setting.GameSetting.Any(g => g.BettingLimit.Count > memberMaxStakeLevels) ? "true" : "false";
+    var infoMessage = string.Format(GoldDeluxeLang.InfoMaxMemberStakeLevels, GoldDeluxeLang.GoldDeluxe, memberMaxStakeLevels);
+}
 <div id="tblGameSetting" class="pt-container col-xs-12"
      data-ng-controller="CustGameSettingController"
      data-ng-init="init()">
@@ -10,7 +15,7 @@
         <thead>
             <tr>
                 <td class="col-xs-3 right bold">
-                    @GoldDeluxeLang.lblGameType
+                    @GoldDeluxeLang.lblGameType <span data-ng-show="@showInfo" class="info-StakeLevels" title="@infoMessage">&nbsp;</span>
                 </td>
                 <td class="col-xs-9 left bold">
                     @GoldDeluxeLang.lblBettingLimit
@@ -35,8 +40,8 @@
                         }
                         else
                         {
-                            <label class="radio-inline betting-limit-label">
-                                <input id="betLimit{{betLimitItem.Id}}" type="radio" name="{{itemGameType.Name}}" data-ng-model="itemGameType.CheckedStakeLevelId"
+                            <label class="checkbox-inline betting-limit-label">
+                                <input class="game{{itemGameType.Id}}" data-ng-change="checkToDisable({{itemGameType.Id}})" id="betLimit{{betLimitItem.Id}}" type="checkbox" data-ng-model="betLimitItem.IsChecked"
                                        data-ng-disabled="$parent.isReadOnly || !$parent.isUpdateGameSettingPartial" value="{{betLimitItem.Id}}" />
                                 {{betLimitItem.Range}}
                             </label>

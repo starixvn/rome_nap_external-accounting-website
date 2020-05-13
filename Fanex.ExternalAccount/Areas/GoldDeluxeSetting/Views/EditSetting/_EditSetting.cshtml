@@ -64,15 +64,20 @@
         </div>
     </div>
 
-    <div class="warning-result col-xs-12" data-ng-show="!isEditMember || mainResult.Warning.IsShow">
-        <span data-ng-show="mainResult.Warning.IsShow">
+    <div class="warning-result col-xs-12" data-ng-show="isEditAgent || mainResult.Warning.IsShow || mainResult.Warning.IsShowV3">
+        <span>
             <div class="sub-message-icon sub-icon-warning">
             </div>
-            <div class="message-content message-content-warning">
+            <div data-ng-show="isEditAgent">
+                <div class="message-content message-content-warning">
+                    @GoldDeluxeLang.WarningEditAgentAllStakeLevels
+                </div>
+            </div>
+            <div data-ng-show="mainResult.Warning.IsShow || mainResult.Warning.IsShowV3" class="message-content message-content-warning">
                 {{mainResult.Warning.Message}}
             </div>
         </span>
-</div>
+    </div>
 
     @RenderSection("Customer", true)
 

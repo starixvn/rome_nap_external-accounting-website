@@ -7,30 +7,20 @@
         function ($scope, $http, customerGameSettingService) {
             'use strict';
             $scope.gameSetting = fanex.cloneObject(settingViewModel.Setting.GameSetting);
-            var uplineUncheckedAllMsg = '';
+            $scope.isCrossLevelOrNotMember = settingViewModel.Level !== fanex.goldDeluxeSetting.customerLevel.Member
+                || settingViewModel.UpLineLevel - settingViewModel.Level > 1;
+
             $scope.init = function () {
                 $scope.checkShowWarningUncheckedAll();
             };
 
             $scope.getGameSetting = function () {
-                if (settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member) {
-                    for (var i = 0; i < $scope.gameSetting.length; i++) {
-                        var gameType = $scope.gameSetting[i];
-                        for (var j = 0; j < gameType.BettingLimit.length; j++) {
-                            var bettingLimit = gameType.BettingLimit[j];
-                            bettingLimit.IsChecked = bettingLimit.Id === parseInt(gameType.CheckedStakeLevelId);
-                        }
-                    }
-                }
-
                 return $scope.gameSetting;
             };
 
             $scope.updateGameSetting = function () {
-
-                var custInfoScope = angular.element('[data-ng-controller="CustomerInfoController"]').scope();
-
-                if (isBelongToSpecialGroups && $scope.mainResult.Warning !== undefined && $scope.mainResult.Warning.IsShow) {
+                $scope.checkShowWarningUncheckedAll();
+                if ($scope.mainResult.Warning.IsShowV3) {
                     return;
                 }
 
@@ -54,11 +44,44 @@
                     }
                 });
 
-                var message = language.getString(isBelongToSpecialGroups ? 'WarningUncheckAllStakeLevelMsg_DirectionV3' :'WarningUncheckAllStakeLevelMsg');
+                var isWarningV3 = (isBelongToSpecialGroups ||
+                    settingViewModel.Level === fanex.goldDeluxeSetting.customerLevel.Member) &&
+                    isShowWarning;
+                var message = language.getString(isWarningV3 ? 'WarningUncheckAllStakeLevelMsg_DirectionV3' :'WarningUncheckAllStakeLevelMsg');
                 $scope.$parent.mainResult.Warning = {
                     IsShow: isShowWarning,
+                    IsShowV3: isWarningV3,
                     Message: message
                 };
+            };
+
+            $scope.checkToDisable = function (gameIndex) {
+                if ($scope.isCrossLevelOrNotMember) {
+                    return;
+                }
+
+                var gameTypes = document.getElementsByClassName('game' + gameIndex);
+                var checkedCount = 0;
+                for (var i = 0; i < gameTypes.length; i++) {
+                    if (gameTypes[i].checked) {
+                        ++checkedCount;
+                    }
+                }
+
+                if (checkedCount >= MemberMaxStakeLevels) {
+                    for (var i = 0; i < gameTypes.length; i++) {
+                        if (!gameTypes[i].checked) {
+                            gameTypes[i].setAttribute('disabled', true);
+                        }
+                    }
+                }
+                else {
+                    for (var i = 0; i < gameTypes.length; i++) {
+                        if (!gameTypes[i].checked) {
+                            gameTypes[i].removeAttribute('disabled');
+                        }
+                    }
+                }
             };
         }
     ]);
@@ -66,3 +89,10 @@
 else {
     alert('Missing fanex.goldDeluxeSetting!');
 }
+
+$(document).ready(function () {
+    var gameSettingScope = angular.element('[data-ng-controller="CustGameSettingController"]').scope();
+    angular.forEach(gameSettingScope.gameSetting, function (gameType) {
+        gameSettingScope.checkToDisable(gameType.Id);
+    });
+});

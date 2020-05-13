@@ -315,7 +315,7 @@ label.clearfix
 .edit-setting-gold-deluxe .warning-result .message-content-warning
 {
     display: inline-block;
-    margin-left: 21px;
+    margin-left: 30px;
     color: #C28F06;
 }
 
@@ -557,4 +557,10 @@ label.clearfix
 .text-red
 {
     color: Red;
+}
+.info-StakeLevels {
+    background: url(Images/info.png) no-repeat;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
 }
