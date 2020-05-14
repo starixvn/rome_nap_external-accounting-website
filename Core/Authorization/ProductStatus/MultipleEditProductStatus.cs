@@ -13,7 +13,8 @@
             ProductConstants.SexyGaming,
             ProductConstants.SAGaming,
             ProductConstants.GTCasino,
-            ProductConstants.TableGames
+            ProductConstants.TableGames,
+            ProductConstants.BBin
         };
 
         protected MultipleEditProductStatus()
@@ -36,7 +37,7 @@
 
             if (productId == ProductConstants.AllBet)
             {
-                productId = ProductConstants.DummyProductIdForAllbet_SAGaming_SexyGaming_GTCasino;
+                productId = ProductConstants.DummyLiveCasinoProductId;
             }
             else if (productId == ProductConstants.Lottery)
             {

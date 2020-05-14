@@ -15,6 +15,7 @@
         public const int LiveCasino = 41;
         public const int SexyGaming = 45;
         public const int GTCasino = 46;
+        public const int BBin = 47;
         public const int VoidBridge = 22;  // Real name is Macau Game
         public const int NG2 = 23;
         public const int FishingWorld = 24;
@@ -24,6 +25,6 @@
         public const int VirtualGames = 38;
 
         public const int Sabaclub = 42;
-        public const int DummyProductIdForAllbet_SAGaming_SexyGaming_GTCasino = 41;
+        public const int DummyLiveCasinoProductId = 41;
     }
 }
