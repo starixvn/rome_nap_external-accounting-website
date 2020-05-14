@@ -48,7 +48,18 @@
         {
             var customer = searchAndCopyRepository.SearchCustomer(context.Request.Username, context.CurrentSession.CurrencyGroup)
                 .FirstOrDefault(c => c.RoleId == context.RoleId && context.Request.Username.Equals(c.Username, StringComparison.InvariantCultureIgnoreCase) && c.IsExistGroup);
-            return customer != null ? new Result(0, string.Empty, customer) : new Result(1, Lang.SearchSuperNotExisted);
+            if(customer == null)
+            {
+                return new Result(1, Lang.SearchSuperNotExisted);
+            }
+
+            if (!customer.IsValidSuperPrefix)
+            {
+                return new Result(2, Lang.SuperNotFollowPrefix);
+            }
+
+
+            return new Result(0, string.Empty, customer);
         }
 
         public Result CloneSetting(CloneSettingContext context)

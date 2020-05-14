@@ -123,4 +123,7 @@
   <data name="SearchSuperNotExisted" xml:space="preserve">
     <value>The super doesn’t exist !</value>
   </data>
+  <data name="SuperNotFollowPrefix" xml:space="preserve">
+    <value>This account does not follow the prefix of the market, please choose another</value>
+  </data>
 </root>

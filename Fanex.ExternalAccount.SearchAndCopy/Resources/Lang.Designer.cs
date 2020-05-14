@@ -77,5 +77,14 @@ namespace Fanex.ExternalAccount.SearchAndCopy.Resources {
                 return ResourceManager.GetString("SearchSuperNotExisted", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This account does not follow the prefix of the market, please choose another.
+        /// </summary>
+        internal static string SuperNotFollowPrefix {
+            get {
+                return ResourceManager.GetString("SuperNotFollowPrefix", resourceCulture);
+            }
+        }
     }
 }

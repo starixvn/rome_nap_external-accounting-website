@@ -6,11 +6,13 @@
         {
         }
 
-        public SearchCustomerModel(int? custId, string username, int roleId)
+        public SearchCustomerModel(int? custId, string username, int roleId, bool isExistGroup, bool isValidSuperPrefix)
         {
             CustId = custId;
             Username = username;
             RoleId = roleId;
+            IsExistGroup = isExistGroup;
+            IsValidSuperPrefix = isValidSuperPrefix;
         }
 
         public int? CustId { get; private set; }
@@ -20,5 +22,7 @@
         public int RoleId { get; private set; }
 
         public bool IsExistGroup { get; private set; }
+
+        public bool IsValidSuperPrefix { get; private set; }
     }
 }
