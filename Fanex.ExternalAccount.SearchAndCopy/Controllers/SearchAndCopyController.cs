@@ -20,7 +20,7 @@
 
     public class SearchAndCopyController : BaseController
     {
-        private readonly IList<string> ErrorCodesNotSendEmail = new List<string> { "201", "202", "203" };
+        private readonly IList<string> ErrorCodesNotSendEmail = new List<string> { "201", "202", "203", "204", "205" };
         private readonly ISearchAndCopyService searchAndCopyService;
 
         public SearchAndCopyController()
