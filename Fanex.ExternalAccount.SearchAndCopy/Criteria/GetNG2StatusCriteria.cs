@@ -11,7 +11,7 @@
 
         public int CustId { get; }
 
-        public int ProductId { get; } = 23;
+        public int ProductId => 23;
 
         public override string GetSettingKey() => "Acc_CustSetting_DisableGameStatusSelect";
 

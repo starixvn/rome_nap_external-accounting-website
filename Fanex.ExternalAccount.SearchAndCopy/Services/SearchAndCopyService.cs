@@ -16,8 +16,6 @@
         Result SearchCustomer(SearchCustomerContext context);
 
         Result CloneSetting(CloneSettingContext context);
-
-        Result Sync3rdProducts(CloneSettingContext context);
     }
 
     public class SearchAndCopyService : ISearchAndCopyService
@@ -112,7 +110,7 @@
             return context.Result;
         }
 
-        public Result Sync3rdProducts(CloneSettingContext context)
+        private Result Sync3rdProducts(CloneSettingContext context)
         {
             try
             {
