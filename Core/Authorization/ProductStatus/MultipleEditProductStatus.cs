@@ -14,7 +14,8 @@
             ProductConstants.SAGaming,
             ProductConstants.GTCasino,
             ProductConstants.TableGames,
-            ProductConstants.BBin
+            ProductConstants.BBin,
+            ProductConstants.RNGWar
         };
 
         protected MultipleEditProductStatus()

@@ -341,8 +341,12 @@
                         }
                         else
                         {
-                            rngLottery.IsDisabled = rngLottery.IsDisabled && Utils.ToBoolean(reader["isDisabled"]);
-                            rngLottery.IsDisabledUpline = rngLottery.IsDisabledUpline && Utils.ToBoolean(reader["isDisabledUpline"]);
+                            if (!Utils.ToBoolean(reader["isHidden"]))
+                            {
+                                rngLottery.IsDisabled = rngLottery.IsDisabled || Utils.ToBoolean(reader["isDisabled"]);
+                                rngLottery.IsDisabledUpline = rngLottery.IsDisabledUpline || Utils.ToBoolean(reader["isDisabledUpline"]);
+                            }
+
                             rngLottery.IsHidden = rngLottery.IsHidden && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
                         }
 
