@@ -74,5 +74,9 @@
   {
     "outputFile": "assets/styles/base/_alpha-admin-fonts.css",
     "inputFile": "assets/styles/base/_alpha-admin-fonts.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/searchandcopy/index.css",
+    "inputFile": "assets/styles/pages/searchandcopy/index.scss"
   }
 ]

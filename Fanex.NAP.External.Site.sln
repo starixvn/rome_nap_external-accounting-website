@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.Resou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.ActivityTracking", "Fanex.ExternalAccount.ActivityTracking\Fanex.ExternalAccount.ActivityTracking.csproj", "{E507530A-E438-48A5-98EF-B1291C29E34C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.SearchAndCopy", "Fanex.ExternalAccount.SearchAndCopy\Fanex.ExternalAccount.SearchAndCopy.csproj", "{21D80CC8-2307-4117-B3F9-3825BB0C71AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -195,16 +197,27 @@ Global
 		{E507530A-E438-48A5-98EF-B1291C29E34C}.Development|Any CPU.Build.0 = Debug|Any CPU
 		{E507530A-E438-48A5-98EF-B1291C29E34C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E507530A-E438-48A5-98EF-B1291C29E34C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21D80CC8-2307-4117-B3F9-3825BB0C71AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21D80CC8-2307-4117-B3F9-3825BB0C71AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21D80CC8-2307-4117-B3F9-3825BB0C71AC}.Debug-Alpha|Any CPU.ActiveCfg = Debug|Any CPU
+		{21D80CC8-2307-4117-B3F9-3825BB0C71AC}.Debug-Alpha|Any CPU.Build.0 = Debug|Any CPU
+		{21D80CC8-2307-4117-B3F9-3825BB0C71AC}.Debug-NAP|Any CPU.ActiveCfg = Debug|Any CPU
+		{21D80CC8-2307-4117-B3F9-3825BB0C71AC}.Debug-NAP|Any CPU.Build.0 = Debug|Any CPU
+		{21D80CC8-2307-4117-B3F9-3825BB0C71AC}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{21D80CC8-2307-4117-B3F9-3825BB0C71AC}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{21D80CC8-2307-4117-B3F9-3825BB0C71AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21D80CC8-2307-4117-B3F9-3825BB0C71AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F9261CF3-913A-436F-AD9D-6607C190367E} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
+		{21D80CC8-2307-4117-B3F9-3825BB0C71AC} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\EnterpriseLibrary.Caching.5.0.505.0\lib\NET35
 		SolutionGuid = {AE0E7979-1E8E-4837-A106-1C4DE3FB8397}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\EnterpriseLibrary.Caching.5.0.505.0\lib\NET35
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal

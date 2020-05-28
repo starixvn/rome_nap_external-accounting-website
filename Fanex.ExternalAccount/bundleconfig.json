@@ -60,7 +60,8 @@
       "assets/styles/pages/reports/daily-winloss.css",
       "assets/styles/pages/reports/winloss-detail.css",
       "assets/styles/pages/customer/pt-engine.css",
-      "assets/styles/pages/admin/product.css"
+      "assets/styles/pages/admin/product.css",
+      "assets/styles/pages/searchandcopy/index.css"
     ],
     "sourceMap": true
   },
@@ -188,6 +189,13 @@
       "Areas/CustomerSetting/Styles/Validators.css",
       "Areas/CustomerSetting/Styles/Common.css",
       "Areas/CustomerSetting/Views/Casino/Styles/Casino.css"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/searchandcopy/index.js",
+    "inputFiles": [
+      "Scripts/SearchAndCopy/Fanex.ExtAcc.SearchAndCopy.js"
     ],
     "sourceMap": true
   }

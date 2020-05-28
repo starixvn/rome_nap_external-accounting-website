@@ -77,6 +77,12 @@
     <Reference Include="CasinoUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CasinoLibrary.2.0.3.38621\lib\net40\CasinoUtility.dll</HintPath>
     </Reference>
+    <Reference Include="Common.Logging, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Couchbase, Version=1.2.6.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
       <HintPath>..\packages\CouchbaseNetClient.1.2.6.3\lib\net40\Couchbase.dll</HintPath>
     </Reference>
@@ -165,6 +171,12 @@
     </Reference>
     <Reference Include="Fanex.Logging.Sentry.RavenClient, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Logging.Sentry.RavenClient.1.0.1\lib\net461\Fanex.Logging.Sentry.RavenClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.MailDelivery.Client, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.MailStation.1.1.0.1\lib\net40\Fanex.MailDelivery.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.MailDelivery.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.MailStation.1.1.0.1\lib\net40\Fanex.MailDelivery.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Module.NG2, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Module.NG2.NAP.1.0.1.5\lib\net40\Fanex.Module.NG2.dll</HintPath>
@@ -311,6 +323,9 @@
     <Reference Include="ONEbook.UM.ThirdParty, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ONEbook.UM.ThirdParty.1.0.0.0\lib\net40\ONEbook.UM.ThirdParty.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Quartz, Version=2.3.3.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.3.3\lib\net40\Quartz.dll</HintPath>
     </Reference>
     <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.5.0.1\lib\net451\RabbitMQ.Client.dll</HintPath>
@@ -871,6 +886,10 @@
     <Content Include="assets\bundles\otp\otp.min.js">
       <DependentUpon>otp.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\searchandcopy\index.js" />
+    <Content Include="assets\bundles\searchandcopy\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\statement\index.js" />
     <Content Include="assets\bundles\statement\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -898,12 +917,16 @@
     <Content Include="assets\js\libs\raven\raven.min.js" />
     <Content Include="assets\styles\base\normalize.css" />
     <Content Include="assets\styles\base\Validators.css" />
+    <Content Include="assets\styles\base\_alpha-admin-fonts.css">
+      <DependentUpon>_alpha-admin-fonts.scss</DependentUpon>
+    </Content>
     <Content Include="assets\styles\fonts\AlphaAdmin\demo-files\demo.css" />
     <Content Include="assets\styles\fonts\AlphaAdmin\demo-files\demo.js" />
     <Content Include="assets\styles\fonts\AlphaAdmin\demo.html" />
     <Content Include="assets\styles\fonts\AlphaAdmin\fonts\AlphaAdmin.svg" />
     <Content Include="assets\styles\fonts\AlphaAdmin\Read Me.txt" />
     <Content Include="assets\styles\fonts\AlphaAdmin\style.css" />
+    <Content Include="assets\styles\images\ajax-loader.gif" />
     <Content Include="assets\styles\images\arrow-down-icn.png" />
     <Content Include="assets\styles\images\arrow-icn-right.png" />
     <Content Include="assets\styles\images\arrow-icn.png" />
@@ -1032,6 +1055,12 @@
     </Content>
     <Content Include="assets\styles\pages\reports\winloss-detail.min.css">
       <DependentUpon>winloss-detail.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\searchandcopy\index.css">
+      <DependentUpon>index.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\searchandcopy\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\statement\guideline.css">
       <DependentUpon>guideline.scss</DependentUpon>
@@ -1524,6 +1553,7 @@
     <Content Include="Content\um.css" />
     <Content Include="Content\UserControl\UserControl.css" />
     <Content Include="Content\Validators.css" />
+    <Content Include="assets\styles\images\bgSteps.png" />
     <Content Include="Images\tick.png" />
     <Content Include="Images\x5.gif" />
     <Content Include="Scripts\aes.js" />
@@ -1590,6 +1620,7 @@
     <Content Include="Scripts\Manage\Fanex.ExtAcc.Permission.js" />
     <Content Include="Scripts\MultiSelect\select2.css" />
     <Content Include="Scripts\MultiSelect\select2.js" />
+    <Content Include="Scripts\SearchAndCopy\Fanex.ExtAcc.SearchAndCopy.js" />
     <Content Include="Scripts\_Libs\jQuery\classList.js" />
     <Content Include="Scripts\_Libs\jQuery\Core\jquery.js" />
     <Content Include="Scripts\_Libs\jQuery\Countdown\jquery.countdown.css" />
@@ -2402,6 +2433,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\OTP\Index.cshtml" />
+    <Content Include="Views\SearchAndCopy\Super.cshtml" />
     <None Include="Areas\GoldDeluxeSetting\Content\bootstrap.css.map" />
     <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
@@ -2635,6 +2667,10 @@
     <Content Include="Areas\ProductStatusSetting\Styles\font\AlphaAdmin\TAHOMAB0.TTF" />
     <Content Include="Areas\ProductStatusSetting\Styles\font\AlphaAdmin\TAHOMABD.TTF" />
     <Content Include="Areas\ProductStatusSetting\Styles\font\AlphaAdmin\TAHOMA_0.TTF" />
+    <Content Include="assets\bundles\searchandcopy\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\searchandcopy\index.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2756,6 +2792,7 @@
     <Content Include="Views\Customer\MultipleSuspend.cshtml" />
     <Content Include="Views\Domain\SSO.cshtml" />
     <Content Include="Views\CustomerList\Index.cshtml" />
+    <Content Include="Views\SearchAndCopy\Email.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
@@ -2789,6 +2826,10 @@
     <ProjectReference Include="..\Fanex.ExternalAccount.Resources\Fanex.ExternalAccount.Resources.csproj">
       <Project>{825f3ea3-33ae-4427-91b5-9d30d9fefa3a}</Project>
       <Name>Fanex.ExternalAccount.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.SearchAndCopy\Fanex.ExternalAccount.SearchAndCopy.csproj">
+      <Project>{21d80cc8-2307-4117-b3f9-3825bb0c71ac}</Project>
+      <Name>Fanex.ExternalAccount.SearchAndCopy</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Service\Fanex.ExternalAccount.Service.csproj">
       <Project>{D172255E-6B0A-4602-B22C-8A4BABA84D07}</Project>
@@ -2836,6 +2877,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

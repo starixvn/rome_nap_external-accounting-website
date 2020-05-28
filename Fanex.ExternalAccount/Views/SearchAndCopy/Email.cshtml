@@ -1,0 +1,24 @@
+﻿@model Fanex.ExternalAccount.SearchAndCopy.Models.CloneSettingContext
+<div>
+    Dear all,
+    <br />
+    A new super has just been created by an external admin via Ext NAP site
+    <br />
+    - Username: @Model.Request.Username
+    <br />
+    - Copied from: @Model.Request.ExistingUsername
+    <br />
+    - Creator: @Model.CurrentSession.UserName
+    <br />
+    - Creation Date: @DateTime.Now
+    <br />
+    - Error / Warning: @Model.Result.ErrorMessage
+    <br />
+    Please be informed
+    <br />
+    Thank you.
+    <br />
+    <br />
+    This is an auto-mail. Please do not reply
+</div>
+
