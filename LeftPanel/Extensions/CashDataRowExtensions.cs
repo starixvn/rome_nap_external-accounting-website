@@ -21,6 +21,8 @@
 
         internal static decimal Outstanding(this DataRow dataRow) => Utils.ToDecimal(dataRow["Outstanding"]).Format();
 
+        internal static decimal PendingTransfer3rd(this DataRow dataRow) => Utils.ToDecimal(dataRow["PendingTransfer3rd"]).Format();
+
         internal static decimal YesterdayCash(this DataRow dataRow) => Utils.ToDecimal(dataRow["YesterdayCash"]).Format();
 
         internal static decimal TotalCash(this DataRow dataRow) => Utils.ToDecimal(dataRow["TotalCash"]).Format();
