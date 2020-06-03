@@ -15,17 +15,18 @@
             </th>
             <th colspan="3"></th>
         </tr>
-        <tr>
-            <th>No.</th>
-            <th>Credit</th>
-            <th>Balance</th>
-            <th>Yesterday Balance</th>
-            <th>Outstanding</th>
-            <th><input id="all" type="checkbox" onclick="CheckAll()" /></th>
-            <th>Username</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-        </tr>
+		<tr>
+			<th>No.</th>
+			<th>Credit</th>
+			<th>Balance</th>
+			<th>Yesterday Balance</th>
+			<th>3rd Party Pending Transfer</th>
+			<th>Outstanding</th>
+			<th><input id="all" type="checkbox" onclick="CheckAll()" /></th>
+			<th>Username</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+		</tr>
     </thead>
     <tbody>
         @if (Model == null || Model.Rows.Count == 0)
@@ -43,17 +44,18 @@
             {
                 index++;
                 disabled = Utils.ToDecimal(row["YesterdayBalance"]) == 0m ? "disabled='disabled'" : string.Empty;
-                <tr>
-                    <td class="text-center">@index</td>
-                    <td class="text-right bold">@Html.Raw(Utils.ToDecimal(row["GivenCredit"]).ToStringFormat())</td>
-                    <td class="text-right bold">@Html.Raw(Utils.ToDecimal(row["Balance"]).ToStringFormat())</td>
-                    <td class="text-right bold">@Html.Raw(Utils.ToDecimal(row["YesterdayBalance"]).ToStringFormat())</td>
-                    <td class="text-right bold">@Html.Raw(Utils.ToDecimal(row["Outstanding"]).ToStringFormat())</td>
-                    <td class="text-center"><input type="checkbox" @disabled id="@row["CustId"]" onclick="Check(this)" /></td>
-                    <td class="text-center bold">@row.DecodeHtml("UserName")</td>
-                    <td class="text-center bold">@row.DecodeHtml("FirstName")</td>
-                    <td class="text-center bold">@row.DecodeHtml("LastName")</td>
-                </tr>
+			<tr>
+				<td class="text-center">@index</td>
+				<td class="text-right bold">@Html.Raw(Utils.ToDecimal(row["GivenCredit"]).ToStringFormat())</td>
+				<td class="text-right bold">@Html.Raw(Utils.ToDecimal(row["Balance"]).ToStringFormat())</td>
+				<td class="text-right bold">@Html.Raw(Utils.ToDecimal(row["YesterdayBalance"]).ToStringFormat())</td>
+				<td class="text-right bold">@Html.Raw(Utils.ToDecimal(row["PendingTransfer3rd"]).ToStringFormat())</td>
+				<td class="text-right bold">@Html.Raw(Utils.ToDecimal(row["Outstanding"]).ToStringFormat())</td>
+				<td class="text-center"><input type="checkbox" @disabled id="@row["CustId"]" onclick="Check(this)" /></td>
+				<td class="text-center bold">@row.DecodeHtml("UserName")</td>
+				<td class="text-center bold">@row.DecodeHtml("FirstName")</td>
+				<td class="text-center bold">@row.DecodeHtml("LastName")</td>
+			</tr>
             }
         }
         <tr class="row-special">
