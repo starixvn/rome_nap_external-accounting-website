@@ -420,6 +420,7 @@
                 objdb.ExecuteNonQuery();
                 return new MemberBalanceInfoModel(
                     FanexCommonConverter.ToDecimal(objdb.GetParameterValue("balance")),
+                    FanexCommonConverter.ToDecimal(objdb.GetParameterValue("PendingTransfer3rd")),
                     FanexCommonConverter.ToDecimal(objdb.GetParameterValue("netposition")));
             }
         }

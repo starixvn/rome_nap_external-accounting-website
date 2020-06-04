@@ -19,6 +19,7 @@
             DataSet balanceInfoDataset,
             DataSet customerStatusInfoDataset,
             decimal balance,
+            decimal member3rdPendingTransfer,
             decimal memberOustanding);
     }
 
@@ -44,6 +45,7 @@
             DataSet balanceInfoDataset,
             DataSet customerStatusInfoDataset,
             decimal balance,
+            decimal member3rdPendingTransfer,
             decimal memberOustanding)
         {
             var personalInfoRow = personalInfoDataset.Tables[0].Rows[0];
@@ -58,6 +60,7 @@
                 isUpdateCredit,
                 authorizationService.CanViewVNIP,
                 balance,
+                member3rdPendingTransfer,
                 memberOustanding);
 
             AssignSettingValue(customerStatusInfoDataset, roleId, customerModel);

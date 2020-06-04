@@ -107,40 +107,46 @@
                     </div>
                     <div class="row">
                         <div class="pull-left">{{balances[3].text}}</div>
-                        <div class="{{myClass3}} pull-right bold" data-ng-init="myClass3 = balances[3].value < 0">
+                        <div class="{{myClass2}} pull-right bold" data-ng-init="myClass2 = balances[3].value < 0">
+                            {{balances[3].value.toFixed(2).formatNumber()}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="pull-left">{{balances[4].text}}</div>
+                        <div class="{{myClass3}} pull-right bold" data-ng-init="myClass3 = balances[4].value < 0">
                             <div class="floatLeftBalance R" data-ng-hide="{{model.isUpdateCredit == false}}">
-                                <a id="linkGivenCredit" href="javascript:;" data-ng-click="EditCredit()">{{balances[3].value.toFixed(2).formatNumber()}}</a>
-                                <input style="text-align: right; margin-right: 0; height: 20px !important" data-ng-blur="RevertCredit({{preVal}})" data-ng-init="preVal=balances[3].value" maxlength="14" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" onkeypress="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" data-ng-keypress="UpdateCredit($event)" onpaste="return false;" oncut="return false;" id="givenCredit" type="text" data-ng-hide="true" />
+                                <a id="linkGivenCredit" href="javascript:;" data-ng-click="EditCredit()">{{balances[4].value.toFixed(2).formatNumber()}}</a>
+                                <input style="text-align: right; margin-right: 0; height: 20px !important" data-ng-blur="RevertCredit({{preVal}})" data-ng-init="preVal=balances[4].value" maxlength="14" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" onkeypress="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" data-ng-keypress="UpdateCredit($event)" onpaste="return false;" oncut="return false;" id="givenCredit" type="text" data-ng-hide="true" />
                             </div>
                             <div style="color: #2489CE"
                                  title="You are not authorized on this function" class="floatLeftBalance R"
                                  data-ng-hide="{{model.isUpdateCredit == true}}">
-                                {{balances[3].value.toFixed(2).formatNumber()}}
+                                {{balances[4].value.toFixed(2).formatNumber()}}
                             </div>
                         </div>
                     </div>
                     <div data-ng-hide="{{isHide}}" class="row">
-                        <div class="pull-left">{{balances[4].text}}&nbsp;[<a href="javascript:;" data-ng-click="CreditDetail(); collapseSidebar();">Detail</a>]</div>
-                        <div class="{{myClass4}} pull-right bold" data-ng-init="myClass4 = balances[4].value < 0">
-                            {{balances[4].value.toFixed(2).formatNumber()}}
-                        </div>
-                    </div>
-                    <div data-ng-hide="{{isHide}}" class="row">
-                        <div class="pull-left">{{balances[5].text}}</div>
-                        <div class="{{myClass5}} pull-right bold" data-ng-init="myClass5 = balances[5].value < 0">
+                        <div class="pull-left">{{balances[5].text}}&nbsp;[<a href="javascript:;" data-ng-click="CreditDetail(); collapseSidebar();">Detail</a>]</div>
+                        <div class="{{myClass4}} pull-right bold" data-ng-init="myClass4 = balances[5].value < 0">
                             {{balances[5].value.toFixed(2).formatNumber()}}
                         </div>
                     </div>
                     <div data-ng-hide="{{isHide}}" class="row">
                         <div class="pull-left">{{balances[6].text}}</div>
-                        <div class="{{myClass6}} pull-right bold" data-ng-init="myClass6 = balances[6].value < 0">
+                        <div class="{{myClass5}} pull-right bold" data-ng-init="myClass5 = balances[6].value < 0">
                             {{balances[6].value.toFixed(2).formatNumber()}}
                         </div>
                     </div>
                     <div data-ng-hide="{{isHide}}" class="row">
                         <div class="pull-left">{{balances[7].text}}</div>
-                        <div class="{{myClass7}} pull-right bold" data-ng-init="myClass7 = balances[7].value < 0">
+                        <div class="{{myClass6}} pull-right bold" data-ng-init="myClass6 = balances[7].value < 0">
                             {{balances[7].value.toFixed(2).formatNumber()}}
+                        </div>
+                    </div>
+                    <div data-ng-hide="{{isHide}}" class="row">
+                        <div class="pull-left">{{balances[8].text}}</div>
+                        <div class="{{myClass7}} pull-right bold" data-ng-init="myClass7 = balances[8].value < 0">
+                            {{balances[8].value.toFixed(2).formatNumber()}}
                         </div>
                     </div>
                 </div>

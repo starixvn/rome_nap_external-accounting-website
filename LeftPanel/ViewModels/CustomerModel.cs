@@ -16,6 +16,7 @@
             bool isUpdateCredit, 
             Func<string, bool> canViewVNIP,
             decimal balance,
+            decimal member3rdPendingTransfer,
             decimal memberOustanding)
         {
             var custInfoRow = customerInfoDataset.Tables[0].Rows[0];
@@ -24,7 +25,7 @@
             HasDownline = custStatusRow.HasDownline();
             UplineHasSecurityCode = custInfoRow.UplineHasSecurityCode();
             CurrencyId = cashRow.CurrencyId();
-            BalanceInfo = new BalanceInfo(isUpdateCredit, custInfoRow.RoleId(), cashRow, balance, memberOustanding);
+            BalanceInfo = new BalanceInfo(isUpdateCredit, custInfoRow.RoleId(), cashRow, balance, member3rdPendingTransfer, memberOustanding);
             PersonalInfo = new PersonalInfo(custInfoRow);
             Login = GetLoginInfo(loginInfoDataset, canViewVNIP, cashRow.LastTxn());
             DownlineList = new DownlineList();

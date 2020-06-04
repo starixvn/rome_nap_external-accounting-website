@@ -2,6 +2,7 @@
 {
     using Core.Shared;
     using Extensions;
+    using Fanex.ExternalAccount.Utilities;
     using System.Collections.Generic;
     using System.Data;
 
@@ -12,6 +13,7 @@
             int roleId, 
             DataRow cashRow,
             decimal balance,
+            decimal member3rdPendingTransfer,
             decimal memberOustanding)
         {
             CurrencyId = ObjectInfo.CreateInstance("Currency Id", cashRow.CurrencyId());
@@ -19,9 +21,10 @@
 
             Balances = new List<ObjectInfo>
             {
-                ObjectInfo.CreateInstance("Total Cash", roleId.IsMember() ? balance + memberOustanding : cashRow.TotalCash()),
+                ObjectInfo.CreateInstance("Total Cash", roleId.IsMember() ? balance + memberOustanding + member3rdPendingTransfer : cashRow.TotalCash()),
                 ObjectInfo.CreateInstance("Yesterday Cash", cashRow.YesterdayCash()),
                 ObjectInfo.CreateInstance("Outstanding", roleId.IsMember() ? memberOustanding : cashRow.Outstanding()),
+                ObjectInfo.CreateInstance("3rd Party Pending Transfer", roleId.IsMember() ? member3rdPendingTransfer.Format() : cashRow.PendingTransfer3rd()),
                 ObjectInfo.CreateInstance("Given Credit", cashRow.Credit())
             };
             IsUpdateCredit = isUpdateCredit;
