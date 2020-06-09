@@ -15,7 +15,8 @@
             ProductConstants.GTCasino,
             ProductConstants.TableGames,
             ProductConstants.BBin,
-            ProductConstants.ION
+            ProductConstants.ION,
+            ProductConstants.RNGWar
         };
 
         protected MultipleEditProductStatus()
