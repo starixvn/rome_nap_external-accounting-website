@@ -316,8 +316,12 @@
                         }
                         else
                         {
-                            liveCasino.IsDisabled = liveCasino.IsDisabled && Utils.ToBoolean(reader["isDisabled"]);
-                            liveCasino.IsDisabledUpline = liveCasino.IsDisabledUpline && Utils.ToBoolean(reader["isDisabledUpline"]);
+                            if(!Utils.ToBoolean(reader["isHidden"]))
+                            {
+                                liveCasino.IsDisabled = liveCasino.IsDisabled || Utils.ToBoolean(reader["isDisabled"]);
+                                liveCasino.IsDisabledUpline = liveCasino.IsDisabledUpline || Utils.ToBoolean(reader["isDisabledUpline"]);
+                            }
+                            
                             liveCasino.IsHidden = liveCasino.IsHidden && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
                         }
 
@@ -341,8 +345,12 @@
                         }
                         else
                         {
-                            rngLottery.IsDisabled = rngLottery.IsDisabled && Utils.ToBoolean(reader["isDisabled"]);
-                            rngLottery.IsDisabledUpline = rngLottery.IsDisabledUpline && Utils.ToBoolean(reader["isDisabledUpline"]);
+                            if (!Utils.ToBoolean(reader["isHidden"]))
+                            {
+                                rngLottery.IsDisabled = rngLottery.IsDisabled || Utils.ToBoolean(reader["isDisabled"]);
+                                rngLottery.IsDisabledUpline = rngLottery.IsDisabledUpline || Utils.ToBoolean(reader["isDisabledUpline"]);
+                            }
+
                             rngLottery.IsHidden = rngLottery.IsHidden && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
                         }
 

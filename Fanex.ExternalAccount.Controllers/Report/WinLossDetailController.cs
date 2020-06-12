@@ -118,7 +118,8 @@
                 new GroupConfigurationModel{ProductId=ProductConstants.SexyGaming,ProductName="Sexy Gaming"},
                 new GroupConfigurationModel{ProductId=ProductConstants.SAGaming,ProductName="SA Gaming"},
                 new GroupConfigurationModel{ProductId=ProductConstants.GTCasino,ProductName="IBCBet Live Casino"},
-                new GroupConfigurationModel{ProductId=ProductConstants.BBin,ProductName="BBIN"}
+                new GroupConfigurationModel{ProductId=ProductConstants.BBin,ProductName="BBIN"},
+                new GroupConfigurationModel{ProductId=ProductConstants.ION,ProductName="ION"}
             };
 
             var offeredLiveCasino = liveCasino.Where(
