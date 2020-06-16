@@ -9,6 +9,7 @@ ManageFunction
 ManageMenu
 DailyWinLoss
 WinLossDetail
+WinLossDetailIBCBetLiveCasino
 Statement
 Sportsbook
 Casino

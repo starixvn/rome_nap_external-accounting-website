@@ -65,6 +65,38 @@
             string productIds,
             DateTime balanceUpDay);
 
+        List<WinLossDetailIBCBetLiveCasino> EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(
+            string groupname,
+            int custId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            DateTime balanceUpDay);
+
+        List<WinLossDetailIBCBetLiveCasino> EAS_Rpt_WinLossDetailIBCBetLiveCasino_SAg(
+            int custId,
+            int masterId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            DateTime balanceUpDay);
+
+        List<WinLossDetailIBCBetLiveCasinoMAg> EAS_Rpt_WinLossDetailIBCBetLiveCasino_MAg(
+            int custId,
+            int agentId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            DateTime balanceUpDay);
+
+        List<WinLossDetailIBCBetLiveCasinoAg> EAS_Rpt_WinLossDetailIBCBetLiveCasino_Ag(
+            int custId,
+            int memberId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            DateTime balanceUpDay);
+
         ArrayList EAS_Rpt_WinLossDaily_SortingOrder(string groupname);
     }
 }

@@ -197,8 +197,11 @@
     <Compile Include="OTP\CustomerOtpService.cs" />
     <Compile Include="Products\ProductService.cs" />
     <Compile Include="Report\IReportService.cs" />
+    <Compile Include="Report\WinLossDetailIBCBetLiveCasinoRequests.cs" />
     <Compile Include="Report\WinLossDetailRequests.cs" />
+    <Compile Include="Report\IWinLossDetailIBCBetLiveCasinoService.cs" />
     <Compile Include="Report\WinLossDetailService.cs" />
+    <Compile Include="Report\WinLossDetailIBCBetLiveCasinoService.cs" />
     <Compile Include="Report\WinLossDetailServiceImpl.cs" />
     <Compile Include="Statement\IStatementService.cs" />
     <Compile Include="Statement\StatementService.cs" />

@@ -91,6 +91,38 @@
             string productIds)
             => _reportDao.EAS_Rpt_WinLossDetail_Ag(custId, memberId, fromDate, toDate, productIds, BalanceUpDate);
 
+        public List<WinLossDetailIBCBetLiveCasino> GetSuperWinLossDetailIBCBetLiveCasino(
+            string groupname,
+            int custId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds)
+            => _reportDao.EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(groupname, custId, fromDate, toDate, productIds, BalanceUpDate);
+
+        public List<WinLossDetailIBCBetLiveCasino> GetMasterWinLossDetailIBCBetLiveCasino(
+            int custId,
+            int masterId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds)
+            => _reportDao.EAS_Rpt_WinLossDetailIBCBetLiveCasino_SAg(custId, masterId, fromDate, toDate, productIds, BalanceUpDate);
+
+        public List<WinLossDetailIBCBetLiveCasinoMAg> GetAgentWinLossDetailIBCBetLiveCasino(
+            int custId,
+            int agentId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds)
+            => _reportDao.EAS_Rpt_WinLossDetailIBCBetLiveCasino_MAg(custId, agentId, fromDate, toDate, productIds, BalanceUpDate);
+
+        public List<WinLossDetailIBCBetLiveCasinoAg> GetMemberWinLossDetailIBCBetLiveCasino(
+            int custId,
+            int memberId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds)
+            => _reportDao.EAS_Rpt_WinLossDetailIBCBetLiveCasino_Ag(custId, memberId, fromDate, toDate, productIds, BalanceUpDate);
+
         public ArrayList GetSortingOrderList(string groupname)
             => _reportDao.EAS_Rpt_WinLossDaily_SortingOrder(groupname);
 

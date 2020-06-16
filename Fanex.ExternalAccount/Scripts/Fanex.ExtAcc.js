@@ -264,6 +264,10 @@ Fanex.ExtAcc = {
             module: 'Fanex.ExtAcc.WinLossDetail'
         },
         {
+            url: 'WinLossDetailIBCBetLiveCasino/Index',
+            module: 'Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino'
+        },
+        {
             url: 'Statement/Index',
             module: 'Fanex.ExtAcc.Statement'
         },

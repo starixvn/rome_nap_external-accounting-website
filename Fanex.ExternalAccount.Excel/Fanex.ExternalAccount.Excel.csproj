@@ -101,6 +101,14 @@
     <Compile Include="Extensions\CustomerInfoDataRowExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IReportBuilder.cs" />
+    <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\AgentWinLossDetailIBCBetLiveCasinoReportBuilder.cs" />
+    <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\IWinLossDetailIBCBetLiveCasinoReportBuilder.cs" />
+    <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\MemberWinLossIBCBetLiveCasinoDetailReportBuilder.cs" />
+    <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\TemplateSettings.cs" />
+    <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\WinLossDetailIBCBetLiveCasinoReport.cs" />
+    <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\WinLossDetailIBCBetLiveCasinoReportAg.cs" />
+    <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\WinLossDetailIBCBetLiveCasinoReportBuilder.cs" />
+    <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\WinLossDetailIBCBetLiveCasinoReportMAg.cs" />
     <Compile Include="Reports\WinLossDetail\IWinLossDetailReportBuilder.cs" />
     <Compile Include="Statement\StatementPage\StatementPage.cs" />
     <Compile Include="Statement\StatementPage\StatementPageBuilder.cs" />
