@@ -373,106 +373,112 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
             HeaderText: "Username", Name: "Username", Width: 130, Sort: true, HeaderAlign: "center",
             CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
         },
+        { HeaderText: "Bet Count", Name: "BetCount", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right" },
         { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Win/Loss", Name: "MemberWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Comm", Name: "PlayerComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "MemberTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Win/Loss", Name: "AgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Win/Loss", Name: "MAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Comm", Name: "MAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Total", Name: "MAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        //{ HeaderText: "Win/Loss", Name: "AgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        //{ HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        //{ HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        //{ HeaderText: "Win/Loss", Name: "MAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        //{ HeaderText: "Comm", Name: "MAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        //{ HeaderText: "Total", Name: "MAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Win/Loss", Name: "SAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Comm", Name: "SAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "SAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
+        { HeaderText: "Win/Loss", Name: "ExtWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Comm", Name: "ExtComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Total", Name: "ExtTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Net Company", Name: "NetCompany", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
     ],
-    MAgColumns: [
-        {
-            HeaderText: "Username", Name: "Username", Width: 130,
-            Sort: true, HeaderAlign: "center", CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
-        },
-        { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Win/Loss", Name: "MemberWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Comm", Name: "PlayerComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Total", Name: "MemberTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Win/Loss", Name: "AgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Win/Loss", Name: "MAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Comm", Name: "MAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Total", Name: "MAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
-    ],
-    AgColumns: [
-        {
-            HeaderText: "Username", Name: "Username", Width: 130,
-            Sort: true, HeaderAlign: "center", CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
-        },
-        { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Win/Loss", Name: "MemberWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Comm", Name: "PlayerComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Total", Name: "MemberTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Win/Loss", Name: "AgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
-    ],
+    //MAgColumns: [
+    //    {
+    //        HeaderText: "Username", Name: "Username", Width: 130,
+    //        Sort: true, HeaderAlign: "center", CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
+    //    },
+    //    { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Win/Loss", Name: "MemberWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Comm", Name: "PlayerComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Total", Name: "MemberTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Win/Loss", Name: "AgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Win/Loss", Name: "MAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Comm", Name: "MAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Total", Name: "MAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
+    //],
+    //AgColumns: [
+    //    {
+    //        HeaderText: "Username", Name: "Username", Width: 130,
+    //        Sort: true, HeaderAlign: "center", CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
+    //    },
+    //    { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Win/Loss", Name: "MemberWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Comm", Name: "PlayerComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Total", Name: "MemberTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Win/Loss", Name: "AgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+    //    { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
+    //],
     SAgHeaderColumns: [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
+        { HeaderText: "Bet Count", Name: "BetCount", MergeRowNumber: 2 },
         { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
         { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
         { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
         { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
-        { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
-        { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
+        //{ HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
+        //{ HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
         { HeaderText: "Super", Name: "SAgWinlost", MergeColNumber: 3 },
-        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+        { HeaderText: "Extra", Name: "ExtWinlost", MergeColNumber: 3 },
+        { HeaderText: "NetCompany", Name: "NetCompany", MergeRowNumber: 2 }
     ],
-    MAgHeaderColumns: [
-        { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
-        { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
-        { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
-        { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
-        { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
-        { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
-        { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
-        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
-    ],
-    AgHeaderColumns: [
-        { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
-        { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
-        { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
-        { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
-        { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
-        { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
-        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
-    ],
+    //MAgHeaderColumns: [
+    //    { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
+    //    { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
+    //    { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
+    //    { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
+    //    { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
+    //    { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
+    //    { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
+    //    { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+    //],
+    //AgHeaderColumns: [
+    //    { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
+    //    { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
+    //    { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
+    //    { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
+    //    { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
+    //    { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
+    //    { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+    //],
     Render: function (dateInfo) {
         var arrColData = new Array();
         var arrGroupHeaders = new Array();
         var arrGroupFooters = new Array();
 
-        if (this.viewlevel == 1) {
-            arrColData = this.AgColumns;
-            arrGroupHeaders = this.AgHeaderColumns;
-            arrGroupFooters = this.AgFooterColumns;
-        } else if (this.viewlevel == 2) {
-            arrColData = this.MAgColumns;
-            arrGroupHeaders = this.MAgHeaderColumns;
-            arrGroupFooters = this.MAgFooterColumns;
-        } else {
+        //if (this.viewlevel == 1) {
+        //    arrColData = this.AgColumns;
+        //    arrGroupHeaders = this.AgHeaderColumns;
+        //    arrGroupFooters = this.AgFooterColumns;
+        //} else if (this.viewlevel == 2) {
+        //    arrColData = this.MAgColumns;
+        //    arrGroupHeaders = this.MAgHeaderColumns;
+        //    arrGroupFooters = this.MAgFooterColumns;
+        //} else {
             arrColData = this.defaultColumns;
             arrGroupHeaders = this.SAgHeaderColumns;
             arrGroupFooters = this.SAgFooterColumns;
-        }
+        //}
 
         var level = $this.viewlevel == 4 ? "Super" :
             $this.viewlevel == 3 ? "Master" :
@@ -495,7 +501,7 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
             gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
             showTitle: true,
             titleInfo: {
-                text: level + " Win Loss Detail " + dateInfo
+                text: level + " Win Loss Detail for IBCBet Live Casino " + dateInfo
             },
             showFooter: true,
             gridExpandHeight: 256,
@@ -520,106 +526,118 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
         };
 
         // For Summary Footer
+        var sumBetCount = 0;
         var sumTurnover = 0;
         var sumNetTurnover = 0;
         var sumGrossComm = 0;
         var sumMemberWinlost = 0;
         var sumPlayerComm = 0;
         var sumMemberTotal = 0;
-        var sumAgWinlost = 0;
-        var sumAgComm = 0;
-        var sumAgTotal = 0;
-        var sumMAgWinlost = 0;
-        var sumMAgComm = 0;
-        var sumMAgTotal = 0;
+        //var sumAgWinlost = 0;
+        //var sumAgComm = 0;
+        //var sumAgTotal = 0;
+        //var sumMAgWinlost = 0;
+        //var sumMAgComm = 0;
+        //var sumMAgTotal = 0;
         var sumSAgWinlost = 0;
         var sumSAgComm = 0;
         var sumSAgTotal = 0;
-        var sumCompany = 0;
+        var sumExtWinlost = 0;
+        var sumExtComm = 0;
+        var sumExtTotal = 0;
+        var sumNetCompany = 0;
 
         //// Assing BodyData
         $this.InitSort();
         var bodyData = [];
         for (var i = 0; i < this.totalRows; i++) {
-            if (this.viewlevel == 1) {
+            //if (this.viewlevel == 1) {
+            //    bodyData.push({
+            //        Columns: [
+            //            { Name: "Username", Value: this.dataSource[i] },
+            //            { Name: "Turnover", Value: this.dataSource[i].Turnover },
+            //            { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
+            //            { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
+            //            { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
+            //            { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
+            //            { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
+            //            { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
+            //            { Name: "AgComm", Value: this.dataSource[i].AgComm },
+            //            { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
+            //            { Name: "Company", Value: this.dataSource[i].Company }
+            //        ]
+            //    })
+            //} else if (this.viewlevel == 2) {
+            //    bodyData.push({
+            //        Columns: [
+            //            { Name: "Username", Value: this.dataSource[i] },
+            //            { Name: "Turnover", Value: this.dataSource[i].Turnover },
+            //            { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
+            //            { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
+            //            { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
+            //            { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
+            //            { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
+            //            { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
+            //            { Name: "AgComm", Value: this.dataSource[i].AgComm },
+            //            { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
+            //            { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
+            //            { Name: "MAgComm", Value: this.dataSource[i].MAgComm },
+            //            { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
+            //            { Name: "Company", Value: this.dataSource[i].Company }
+            //        ]
+            //    })
+            //} else {
                 bodyData.push({
                     Columns: [
                         { Name: "Username", Value: this.dataSource[i] },
+                        { Name: "BetCount", Value: this.dataSource[i].BetCount },
                         { Name: "Turnover", Value: this.dataSource[i].Turnover },
                         { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
                         { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
                         { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
                         { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
                         { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
-                        { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
-                        { Name: "AgComm", Value: this.dataSource[i].AgComm },
-                        { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
-                        { Name: "Company", Value: this.dataSource[i].Company }
-                    ]
-                })
-            } else if (this.viewlevel == 2) {
-                bodyData.push({
-                    Columns: [
-                        { Name: "Username", Value: this.dataSource[i] },
-                        { Name: "Turnover", Value: this.dataSource[i].Turnover },
-                        { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
-                        { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
-                        { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
-                        { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
-                        { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
-                        { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
-                        { Name: "AgComm", Value: this.dataSource[i].AgComm },
-                        { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
-                        { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
-                        { Name: "MAgComm", Value: this.dataSource[i].MAgComm },
-                        { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
-                        { Name: "Company", Value: this.dataSource[i].Company }
-                    ]
-                })
-            } else {
-                bodyData.push({
-                    Columns: [
-                        { Name: "Username", Value: this.dataSource[i] },
-                        { Name: "Turnover", Value: this.dataSource[i].Turnover },
-                        { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
-                        { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
-                        { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
-                        { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
-                        { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
-                        { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
-                        { Name: "AgComm", Value: this.dataSource[i].AgComm },
-                        { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
-                        { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
-                        { Name: "MAgComm", Value: this.dataSource[i].MAgComm },
-                        { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
+                        //{ Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
+                        //{ Name: "AgComm", Value: this.dataSource[i].AgComm },
+                        //{ Name: "AgTotal", Value: this.dataSource[i].AgTotal },
+                        //{ Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
+                        //{ Name: "MAgComm", Value: this.dataSource[i].MAgComm },
+                        //{ Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
                         { Name: "SAgWinlost", Value: this.dataSource[i].SAgWinlost },
                         { Name: "SAgComm", Value: this.dataSource[i].SAgComm },
                         { Name: "SAgTotal", Value: this.dataSource[i].SAgTotal },
-                        { Name: "Company", Value: this.dataSource[i].Company }
+                        { Name: "ExtWinlost", Value: this.dataSource[i].ExtWinlost },
+                        { Name: "ExtComm", Value: this.dataSource[i].ExtComm },
+                        { Name: "ExtTotal", Value: this.dataSource[i].ExtTotal },
+                        { Name: "NetCompany", Value: this.dataSource[i].NetCompany }
                     ]
                 })
-            }
+            //}
 
+            sumBetCount += this.dataSource[i].BetCount;
             sumTurnover += this.dataSource[i].Turnover;
             sumNetTurnover += this.dataSource[i].NetTurnover;
             sumGrossComm += this.dataSource[i].GrossComm;
             sumMemberWinlost += this.dataSource[i].MemberWinlost;
             sumPlayerComm += this.dataSource[i].PlayerComm;
             sumMemberTotal += this.dataSource[i].MemberTotal;
-            sumAgWinlost += this.dataSource[i].AgWinlost;
-            sumAgComm += this.dataSource[i].AgComm;
-            sumAgTotal += this.dataSource[i].AgTotal;
-            if (this.viewlevel > 1) {
-                sumMAgWinlost += this.dataSource[i].MAgWinlost;
-                sumMAgComm += this.dataSource[i].MAgComm;
-                sumMAgTotal += this.dataSource[i].MAgTotal;
-            }
-            if (this.viewlevel > 2) {
+            //sumAgWinlost += this.dataSource[i].AgWinlost;
+            //sumAgComm += this.dataSource[i].AgComm;
+            //sumAgTotal += this.dataSource[i].AgTotal;
+            //if (this.viewlevel > 1) {
+            //    sumMAgWinlost += this.dataSource[i].MAgWinlost;
+            //    sumMAgComm += this.dataSource[i].MAgComm;
+            //    sumMAgTotal += this.dataSource[i].MAgTotal;
+            //}
+            //if (this.viewlevel > 2) {
                 sumSAgWinlost += this.dataSource[i].SAgWinlost;
                 sumSAgComm += this.dataSource[i].SAgComm;
-                sumSAgTotal += this.dataSource[i].SAgTotal;
-            }
-            sumCompany += this.dataSource[i].Company;
+            sumSAgTotal += this.dataSource[i].SAgTotal;
+            sumExtWinlost += this.dataSource[i].ExtWinlost;
+            sumExtComm += this.dataSource[i].ExtComm;
+            sumExtTotal += this.dataSource[i].ExtTotal;
+            //}
+            sumNetCompany += this.dataSource[i].NetCompany;
         }
 
         gridOption.bodyRows = bodyData;
@@ -627,64 +645,68 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
 
         //// Asign Footer Data
         var footerData = [];
-        if (this.viewlevel == 1) {
+        //if (this.viewlevel == 1) {
+        //    footerData.push({
+        //        Columns: [
+        //            { Name: "Username", Value: "Grand Total" },
+        //            { Name: "Turnover", Value: sumTurnover },
+        //            { Name: "NetTurnover", Value: sumNetTurnover },
+        //            { Name: "GrossComm", Value: sumGrossComm },
+        //            { Name: "MemberWinlost", Value: sumMemberWinlost },
+        //            { Name: "PlayerComm", Value: sumPlayerComm },
+        //            { Name: "MemberTotal", Value: sumMemberTotal },
+        //            { Name: "AgWinlost", Value: sumAgWinlost },
+        //            { Name: "AgComm", Value: sumAgComm },
+        //            { Name: "AgTotal", Value: sumAgTotal },
+        //            { Name: "Company", Value: sumCompany }
+        //        ]
+        //    });
+        //} else if (this.viewlevel == 2) {
+        //    footerData.push({
+        //        Columns: [
+        //            { Name: "Username", Value: "Grand Total" },
+        //            { Name: "Turnover", Value: sumTurnover },
+        //            { Name: "NetTurnover", Value: sumNetTurnover },
+        //            { Name: "GrossComm", Value: sumGrossComm },
+        //            { Name: "MemberWinlost", Value: sumMemberWinlost },
+        //            { Name: "PlayerComm", Value: sumPlayerComm },
+        //            { Name: "MemberTotal", Value: sumMemberTotal },
+        //            { Name: "AgWinlost", Value: sumAgWinlost },
+        //            { Name: "AgComm", Value: sumAgComm },
+        //            { Name: "AgTotal", Value: sumAgTotal },
+        //            { Name: "MAgWinlost", Value: sumMAgWinlost },
+        //            { Name: "MAgComm", Value: sumMAgComm },
+        //            { Name: "MAgTotal", Value: sumMAgTotal },
+        //            { Name: "Company", Value: sumCompany }
+        //        ]
+        //    });
+        //} else {
             footerData.push({
                 Columns: [
                     { Name: "Username", Value: "Grand Total" },
+                    { Name: "BetCount", Value: sumBetCount },
                     { Name: "Turnover", Value: sumTurnover },
                     { Name: "NetTurnover", Value: sumNetTurnover },
                     { Name: "GrossComm", Value: sumGrossComm },
                     { Name: "MemberWinlost", Value: sumMemberWinlost },
                     { Name: "PlayerComm", Value: sumPlayerComm },
                     { Name: "MemberTotal", Value: sumMemberTotal },
-                    { Name: "AgWinlost", Value: sumAgWinlost },
-                    { Name: "AgComm", Value: sumAgComm },
-                    { Name: "AgTotal", Value: sumAgTotal },
-                    { Name: "Company", Value: sumCompany }
-                ]
-            });
-        } else if (this.viewlevel == 2) {
-            footerData.push({
-                Columns: [
-                    { Name: "Username", Value: "Grand Total" },
-                    { Name: "Turnover", Value: sumTurnover },
-                    { Name: "NetTurnover", Value: sumNetTurnover },
-                    { Name: "GrossComm", Value: sumGrossComm },
-                    { Name: "MemberWinlost", Value: sumMemberWinlost },
-                    { Name: "PlayerComm", Value: sumPlayerComm },
-                    { Name: "MemberTotal", Value: sumMemberTotal },
-                    { Name: "AgWinlost", Value: sumAgWinlost },
-                    { Name: "AgComm", Value: sumAgComm },
-                    { Name: "AgTotal", Value: sumAgTotal },
-                    { Name: "MAgWinlost", Value: sumMAgWinlost },
-                    { Name: "MAgComm", Value: sumMAgComm },
-                    { Name: "MAgTotal", Value: sumMAgTotal },
-                    { Name: "Company", Value: sumCompany }
-                ]
-            });
-        } else {
-            footerData.push({
-                Columns: [
-                    { Name: "Username", Value: "Grand Total" },
-                    { Name: "Turnover", Value: sumTurnover },
-                    { Name: "NetTurnover", Value: sumNetTurnover },
-                    { Name: "GrossComm", Value: sumGrossComm },
-                    { Name: "MemberWinlost", Value: sumMemberWinlost },
-                    { Name: "PlayerComm", Value: sumPlayerComm },
-                    { Name: "MemberTotal", Value: sumMemberTotal },
-                    { Name: "AgWinlost", Value: sumAgWinlost },
-                    { Name: "AgComm", Value: sumAgComm },
-                    { Name: "AgTotal", Value: sumAgTotal },
-                    { Name: "MAgWinlost", Value: sumMAgWinlost },
-                    { Name: "MAgComm", Value: sumMAgComm },
-                    { Name: "MAgTotal", Value: sumMAgTotal },
+                    //{ Name: "AgWinlost", Value: sumAgWinlost },
+                    //{ Name: "AgComm", Value: sumAgComm },
+                    //{ Name: "AgTotal", Value: sumAgTotal },
+                    //{ Name: "MAgWinlost", Value: sumMAgWinlost },
+                    //{ Name: "MAgComm", Value: sumMAgComm },
+                    //{ Name: "MAgTotal", Value: sumMAgTotal },
                     { Name: "SAgWinlost", Value: sumSAgWinlost },
                     { Name: "SAgComm", Value: sumSAgComm },
                     { Name: "SAgTotal", Value: sumSAgTotal },
-                    { Name: "Company", Value: sumCompany }
+                    { Name: "ExtWinlost", Value: sumExtWinlost },
+                    { Name: "ExtComm", Value: sumExtComm },
+                    { Name: "ExtTotal", Value: sumExtTotal },
+                    { Name: "NetCompany", Value: sumNetCompany }
                 ]
             });
-        }
+        //}
 
         gridOption.footerRows = footerData;
 

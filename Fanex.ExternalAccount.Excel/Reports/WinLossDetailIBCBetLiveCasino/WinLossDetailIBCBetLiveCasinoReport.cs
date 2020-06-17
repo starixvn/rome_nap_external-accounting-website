@@ -48,22 +48,20 @@
                 var values = new List<object>
                 {
                     item.Username,
+                    item.BetCount,
                     item.Turnover,
                     item.NetTurnover,
                     item.GrossComm,
                     item.MemberWinlost,
                     item.PlayerComm,
                     item.MemberTotal,
-                    item.AgWinlost,
-                    item.AgComm,
-                    item.AgTotal,
-                    item.MAgWinlost,
-                    item.MAgComm,
-                    item.MAgTotal,
                     item.SAgWinlost,
                     item.SAgComm,
                     item.SAgTotal,
-                    item.Company
+                    item.ExtWinlost,
+                    item.ExtComm,
+                    item.ExtTotal,
+                    item.NetCompany,
                 };
 
                 resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, values);
@@ -81,22 +79,20 @@
             var values = new List<object>
             {
                 "Grand Total",
+                data.Sum(p => p.BetCount),
                 data.Sum(p => p.Turnover),
                 data.Sum(p => p.NetTurnover),
                 data.Sum(p => p.GrossComm),
                 data.Sum(p => p.MemberWinlost),
                 data.Sum(p => p.PlayerComm),
                 data.Sum(p => p.MemberTotal),
-                data.Sum(p => p.AgWinlost),
-                data.Sum(p => p.AgComm),
-                data.Sum(p => p.AgTotal),
-                data.Sum(p => p.MAgWinlost),
-                data.Sum(p => p.MAgComm),
-                data.Sum(p => p.MAgTotal),
                 data.Sum(p => p.SAgWinlost),
                 data.Sum(p => p.SAgComm),
                 data.Sum(p => p.SAgTotal),
-                data.Sum(p => p.Company)
+                data.Sum(p => p.ExtWinlost),
+                data.Sum(p => p.ExtComm),
+                data.Sum(p => p.ExtTotal),
+                data.Sum(p => p.NetCompany),
             };
 
             resultSheet.GetRow(toRowIndex).WriteCells(FirstColumnIndex, values);

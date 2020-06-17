@@ -97,7 +97,7 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds)
-            => _reportDao.EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(groupname, custId, fromDate, toDate, productIds, BalanceUpDate);
+            => _reportDao.EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(groupname, custId, productIds, fromDate, toDate, BalanceUpDate);
 
         public List<WinLossDetailIBCBetLiveCasino> GetMasterWinLossDetailIBCBetLiveCasino(
             int custId,

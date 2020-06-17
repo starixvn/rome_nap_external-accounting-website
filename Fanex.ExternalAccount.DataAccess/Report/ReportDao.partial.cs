@@ -9,32 +9,32 @@
 
     public partial class ReportDao
     {
+        const string eASRptWinLossDetailIBCBetLiveCasinoCom = "EAS_Rpt_WinLossExtraDetail_Com";
+
         public List<WinLossDetailIBCBetLiveCasino> EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(
-            string groupname,
-            int custId,
+            string groupName,
+            int customerId,
+            string productIds,
             DateTime fromDate,
             DateTime toDate,
-            string productIds,
             DateTime balanceUpDay)
         {
             var parameters = new Hashtable
             {
-#pragma warning disable S1192 // String literals should not be duplicated
-                {"groupname", groupname},
-                {"fromdate", fromDate},
-                {"todate", toDate},
-                {"balanceupday", balanceUpDay},
-                {"productids", productIds}
-#pragma warning restore S1192 // String literals should not be duplicated
+                {ParameterNameConstants.GroupName, groupName},
+                {ParameterNameConstants.FromDate, fromDate},
+                {ParameterNameConstants.ToDate, toDate},
+                {ParameterNameConstants.BalanceUpDay, balanceUpDay},
+                {ParameterNameConstants.ProductIds, productIds}
             };
-
-            if (custId != 0)
+            if (customerId != 0)
             {
-                parameters.Add("custid", custId);
+                parameters.Add(ParameterNameConstants.CustomerId, customerId);
             }
+            var winLossDetailIBCBetLiveCasino =
+                GetCommonWinLossDetailIBCBetLiveCasino(eASRptWinLossDetailIBCBetLiveCasinoCom, parameters);
 
-            // Expected SP name: EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com
-            return GetCommonWinLossDetailIBCBetLiveCasino("EAS_Rpt_WinLossDetail_Com", parameters);
+            return winLossDetailIBCBetLiveCasino;
         }
 
         public List<WinLossDetailIBCBetLiveCasino> EAS_Rpt_WinLossDetailIBCBetLiveCasino_SAg(
@@ -115,47 +115,102 @@
             return GetCommonWinLossDetailIBCBetLiveCasinoAg("EAS_Rpt_WinLossDetail_Ag", parameters);
         }
 
-        private List<WinLossDetailIBCBetLiveCasino> GetCommonWinLossDetailIBCBetLiveCasino(string spname, Hashtable parameters)
+        private List<WinLossDetailIBCBetLiveCasino> GetCommonWinLossDetailIBCBetLiveCasino(string spName, Hashtable parameters)
         {
             var entityList = new List<WinLossDetailIBCBetLiveCasino>();
 
-            using (var reader = ExecDataReader(spname, parameters))
+            var fakeData = new WinLossDetailIBCBetLiveCasino[]
             {
-                if (reader != null)
+                new WinLossDetailIBCBetLiveCasino
                 {
-                    while (reader.Read())
-                    {
-                        var entity = CreateWinLossDetailIBCBetLiveCasinoEntity(reader);
-                        entityList.Add(entity);
-                    }
-                }
-            }
+                    Username = "user1",
+                    BetCount=10,
+                    Turnover=20000,
+                    NetTurnover=20000,
+                    GrossComm=20000,
+                    MemberWinlost=20000,
+                    PlayerComm=20000,
+                    MemberTotal=20000,
+                    SAgWinlost=20000,
+                    SAgComm=20000,
+                    SAgTotal=20000,
+                    ExtWinlost=20000,
+                    ExtComm=20000,
+                    ExtTotal=20000,
+                    NetCompany=20000,
+                },
+                new WinLossDetailIBCBetLiveCasino
+                {
+                    Username = "user2",
+                    BetCount=10,
+                    Turnover=20000,
+                    NetTurnover=20000,
+                    GrossComm=20000,
+                    MemberWinlost=20000,
+                    PlayerComm=20000,
+                    MemberTotal=20000,
+                    SAgWinlost=20000,
+                    SAgComm=20000,
+                    SAgTotal=20000,
+                    ExtWinlost=20000,
+                    ExtComm=20000,
+                    ExtTotal=20000,
+                    NetCompany=20000,
+                },
+                new WinLossDetailIBCBetLiveCasino
+                {
+                    Username = "user3",
+                    BetCount=10,
+                    Turnover=20000,
+                    NetTurnover=20000,
+                    GrossComm=20000,
+                    MemberWinlost=20000,
+                    PlayerComm=20000,
+                    MemberTotal=20000,
+                    SAgWinlost=20000,
+                    SAgComm=20000,
+                    SAgTotal=20000,
+                    ExtWinlost=20000,
+                    ExtComm=20000,
+                    ExtTotal=20000,
+                    NetCompany=20000,
+                },
+            };
+
+            entityList.AddRange(fakeData);
+
+            //using (var reader = ExecDataReader(spName, parameters))
+            //{
+            //    if (reader != null)
+            //    {
+            //        while (reader.Read())
+            //        {
+            //            var entity = CreateWinLossDetailIBCBetLiveCasinoEntity(reader);
+            //            entityList.Add(entity);
+            //        }
+            //    }
+            //}
 
             return entityList;
         }
 
         private static WinLossDetailIBCBetLiveCasino CreateWinLossDetailIBCBetLiveCasinoEntity(IDataReader reader) => new WinLossDetailIBCBetLiveCasino
         {
-            CustId = reader.ToInt("custid"),
-            Username = reader.To<string>("username"),
-            Turnover = reader.ToDouble("Turnover"),
-            NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-            GrossComm = reader.ToDouble("GrossComm"),
-            MemberWinlost = reader.ToDouble("MemberWinlost"),
-            PlayerComm = reader.ToDouble("PlayerComm"),
-            MemberTotal = reader.ToDouble("MemberTotal"),
-#pragma warning disable S1192 // String literals should not be duplicated
-            AgWinlost = reader.ToDouble("AgWinlost"),
-            AgComm = reader.ToDouble("AgComm"),
-            AgTotal = reader.ToDouble("AgTotal"),
-            MAgWinlost = reader.ToDouble("MAgWinlost"),
-            MAgComm = reader.ToDouble("MAgComm"),
-            MAgTotal = reader.ToDouble("MAgTotal"),
-            SAgWinlost = reader.ToDouble("SAgWinlost"),
-            SAgComm = reader.ToDouble("SAgComm"),
-            SAgTotal = reader.ToDouble("SAgTotal"),
-            Company = reader.ToDouble("Company")
-#pragma warning restore S1192 // String literals should not be duplicated
+            Username = reader.To<string>(ColumnNameConstants.UserName),
+            BetCount = reader.ToInt(ColumnNameConstants.BetCount),
+            Turnover = reader.ToDouble(ColumnNameConstants.Turnover),
+            NetTurnover = reader.ToDouble(ColumnNameConstants.NetTurnover),
+            GrossComm = reader.ToDouble(ColumnNameConstants.GrossComm),
+            MemberWinlost = reader.ToDouble(ColumnNameConstants.MemberWinlost),
+            PlayerComm = reader.ToDouble(ColumnNameConstants.PlayerComm),
+            MemberTotal = reader.ToDouble(ColumnNameConstants.MemberTotal),
+            SAgWinlost = reader.ToDouble(ColumnNameConstants.SAgWinlost),
+            SAgComm = reader.ToDouble(ColumnNameConstants.SAgComm),
+            SAgTotal = reader.ToDouble(ColumnNameConstants.SAgTotal),
+            ExtWinlost = reader.ToDouble(ColumnNameConstants.ExtWinlost),
+            ExtComm = reader.ToDouble(ColumnNameConstants.ExtComm),
+            ExtTotal = reader.ToDouble(ColumnNameConstants.ExtTotal),
+            NetCompany = reader.ToDouble(ColumnNameConstants.NetCompany),
         };
 
         private List<WinLossDetailIBCBetLiveCasinoMAg> GetCommonWinLossDetailIBCBetLiveCasinoMAg(string spname, Hashtable parameters)
@@ -230,5 +285,34 @@
             AgTotal = reader.ToDouble("AgTotal"),
             Company = reader.ToDouble("Company")
         };
+    }
+
+    static class ParameterNameConstants
+    {
+        public const string CustomerId = "custid";
+        public const string GroupName = "groupname";
+        public const string FromDate = "fromdate";
+        public const string ToDate = "todate";
+        public const string BalanceUpDay = "balanceupday";
+        public const string ProductIds = "productids";
+    }
+
+    static class ColumnNameConstants
+    {
+        public const string UserName = "Username";
+        public const string BetCount = "BetCount";
+        public const string Turnover = "Turnover";
+        public const string NetTurnover = "TurnoverNoDraw";
+        public const string GrossComm = "GrossComm";
+        public const string MemberWinlost = "MemberWinlost";
+        public const string PlayerComm = "PlayerComm";
+        public const string MemberTotal = "MemberTotal";
+        public const string SAgWinlost = "SAgWinlost";
+        public const string SAgComm = "SAgComm";
+        public const string SAgTotal = "SAgTotal";
+        public const string ExtWinlost = "ExtWinloss";
+        public const string ExtComm = "ExtComm";
+        public const string ExtTotal = "ExtTotal";
+        public const string NetCompany = "NetCompany";
     }
 }

@@ -66,11 +66,11 @@
             DateTime balanceUpDay);
 
         List<WinLossDetailIBCBetLiveCasino> EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(
-            string groupname,
-            int custId,
+            string groupName,
+            int customerId,
+            string productIds,
             DateTime fromDate,
             DateTime toDate,
-            string productIds,
             DateTime balanceUpDay);
 
         List<WinLossDetailIBCBetLiveCasino> EAS_Rpt_WinLossDetailIBCBetLiveCasino_SAg(

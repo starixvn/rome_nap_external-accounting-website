@@ -69,16 +69,16 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="label">@ViewLang.Username</div>
-            <input class="usernameInput" type="text" maxlength="50" autocomplete="off" name="txtUserName" id="txtUserName" />
-        </div>
-        <div class="form-group">
-            <div class="label">@ViewLang.Products</div>
-            <div class="user-group pull-left ddl-product" id="productList">
-                <select name="GroupProducts" id="GroupProducts" multiple="multiple" style="display: none"></select>
+        @*<div class="form-group">
+                <div class="label">@ViewLang.Username</div>
+                <input class="usernameInput" type="text" maxlength="50" autocomplete="off" name="txtUserName" id="txtUserName" />
             </div>
-        </div>
+            <div class="form-group">
+                <div class="label">@ViewLang.Products</div>
+                <div class="user-group pull-left ddl-product" id="productList">
+                    <select name="GroupProducts" id="GroupProducts" multiple="multiple" style="display: none"></select>
+                </div>
+            </div>*@
         <div class="form-group">
             <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
         </div>
@@ -86,13 +86,16 @@
             <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel hide"></span>
         </div>
         <div class="form-group">
-            <div id="GroupViewHistory" class="">
-                <div>@ViewLang.NoteViewHistory <span id="ViewHistoryReport" class="history"><span class="txt-history">@ViewLang.ViewHistoryReport</span></span></div>
-            </div>
-            <div id="GroupBackToCurrent" class="" style="display: none">
-                <span id="BackToCurrentReport" class="history"><span class="arrow"></span><span class="txt-history">@ViewLang.BackToCurrentReport</span></span>
-            </div>
+            <span>You can view report data form Dec 01, 2019.</span>
         </div>
+        @*<div class="form-group">
+                <div id="GroupViewHistory" class="">
+                    <div>@ViewLang.NoteViewHistory <span id="ViewHistoryReport" class="history"><span class="txt-history">@ViewLang.ViewHistoryReport</span></span></div>
+                </div>
+                <div id="GroupBackToCurrent" class="" style="display: none">
+                    <span id="BackToCurrentReport" class="history"><span class="arrow"></span><span class="txt-history">@ViewLang.BackToCurrentReport</span></span>
+                </div>
+            </div>*@
     </div>
     <div id="mainGrid" class="hide tbl-winloss-detail">
         <div id="jqgrid" class="removeRadius freegrid content-grid"></div>
