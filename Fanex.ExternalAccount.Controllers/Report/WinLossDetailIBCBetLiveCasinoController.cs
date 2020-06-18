@@ -7,13 +7,11 @@
     using DTO.Report;
     using Excel.Reports.WinLossDetailIBCBetLiveCasinoReport;
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.ExternalAccount.Utilities.Reports.WinLossDetailIBCBetLiveCasino;
     using Requests;
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.UserControl;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Mvc;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinLossDetailIBCBetLiveCasino,
@@ -23,22 +21,22 @@
         private readonly IWinLossDetailIBCBetLiveCasinoService winLossDetailIBCBetLiveCasinoService;
 
         public WinLossDetailIBCBetLiveCasinoController(
+            IWinLossDetailIBCBetLiveCasinoService winLossDetailIBCBetLiveCasinoService,
             ICurrentSession currentSession,
             IReportService reportService,
             IGroupConfigurationService groupConfigurationService)
             : base(currentSession, reportService, groupConfigurationService)
         {
-            winLossDetailIBCBetLiveCasinoService = new WinLossDetailIBCBetLiveCasinoService();
+            this.winLossDetailIBCBetLiveCasinoService = winLossDetailIBCBetLiveCasinoService ?? new WinLossDetailIBCBetLiveCasinoService();
         }
 
-        public WinLossDetailIBCBetLiveCasinoController() : this(null, null, null)
+        public WinLossDetailIBCBetLiveCasinoController() : this(null, null, null, null)
         {
         }
 
         public ActionResult Index()
         {
-            bool isIBCINDO = IsIBCINDO();
-            if (!isIBCINDO)
+            if (!IsIBCINDO())
             {
                 return PartialView("NoPermission");
             }
@@ -84,7 +82,7 @@
         {
             var toolTipsProducts = new
             {
-                liveCasino = BuildTooltipsForLiveCasino(),
+                liveCasino = string.Format(ViewLang.Tooltip_NetTurnover_LiveCasino, "IBCBet Live Casino"),
             };
 
             var searchRequest = new SearchWinLossDetailIBCBetLiveCasinoRequest(request, toolTipsProducts)
@@ -95,30 +93,6 @@
                 .SearchWinLossDetailIBCBetLiveCasino(searchRequest);
 
             return winLossDetailIBCBetLiveCasino;
-        }
-
-        private string BuildTooltipsForLiveCasino()
-        {
-            var liveCasinos = new List<GroupConfigurationModel>
-            {
-                new GroupConfigurationModel
-                {
-                    ProductId = ProductConstants.GTCasino,
-                    ProductName = "IBCBet Live Casino"
-                }
-            };
-
-            var offeredLiveCasinos = liveCasinos
-                .Where(liveCasino => groupConfigurationService.IsShowByProductAndGroup(liveCasino.ProductId, currentSession.CurrencyGroup));
-
-            if (offeredLiveCasinos.Any())
-            {
-                var liveCasinoName = string.Join(", ", offeredLiveCasinos.Select(offeredLiveCasino => offeredLiveCasino.ProductName));
-
-                return string.Format(ViewLang.Tooltip_NetTurnover_LiveCasino, liveCasinoName);
-            }
-
-            return string.Empty;
         }
     }
 

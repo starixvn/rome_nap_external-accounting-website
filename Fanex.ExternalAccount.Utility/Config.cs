@@ -43,10 +43,8 @@
         public static string CssDailyWinLoss => GetValue("CssDailyWinLoss");
 
         public static string JsWinLossDetail => GetValue("JsWinLossDetail");
-        public static string JsWinLossDetailIBCBetLiveCasino => GetValue("JsWinLossDetailIBCBetLiveCasino");
 
         public static string CssWinLossDetail => GetValue("CssWinLossDetail");
-        public static string CssWinLossDetailIBCBetLiveCasino => GetValue("CssWinLossDetailIBCBetLiveCasino");
 
         public static string JsStatement => GetValue("JsStatement");
 
