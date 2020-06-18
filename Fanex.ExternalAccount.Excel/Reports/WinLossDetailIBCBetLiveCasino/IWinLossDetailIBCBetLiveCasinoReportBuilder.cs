@@ -7,6 +7,7 @@
         bool IsBold { get; }
         string FromDate { get; }
         string ToDate { get; }
+
         MemoryStream Build(string products = null);
     }
 }

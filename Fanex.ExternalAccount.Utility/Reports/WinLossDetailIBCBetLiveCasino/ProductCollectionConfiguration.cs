@@ -12,7 +12,7 @@
 
         IEnumerator<ProductElementConfiguration> IEnumerable<ProductElementConfiguration>.GetEnumerator() =>
             (from i in Enumerable.Range(0, Count)
-                select this[i])
+             select this[i])
             .GetEnumerator();
 
         protected override ConfigurationElement CreateNewElement() => new ProductElementConfiguration();

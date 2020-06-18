@@ -1,9 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Report
 {
-    using System;
     using Core.Shared;
     using DTO.Customer;
     using Interface.Report;
+    using System;
 
     public class WinLossDetailIBCBetLiveCasinoService : IWinLossDetailIBCBetLiveCasinoService
     {

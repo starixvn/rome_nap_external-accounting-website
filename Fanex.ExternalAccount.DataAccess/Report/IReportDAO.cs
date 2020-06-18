@@ -1,11 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Interface.Report
 {
+    using DTO.Customer;
+    using DTO.Report;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    using DTO.Customer;
-    using DTO.Report;
 
     public interface IReportDao
     {

@@ -1,15 +1,15 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailIBCBetLiveCasinoReport
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using System.Collections.Generic;
+    using System.Linq;
     using Utility;
 
     internal class WinLossDetailIBCBetLiveCasinoReport : TemplateReport, IReportBuilder
     {
-        readonly WinLossDetailIBCBetLiveCasinoReportBuilder _builder;
-        const int LastColumnIndex = 16;
+        private readonly WinLossDetailIBCBetLiveCasinoReportBuilder _builder;
+        private const int LastColumnIndex = 16;
 
         public WinLossDetailIBCBetLiveCasinoReport(string filePath, WinLossDetailIBCBetLiveCasinoReportBuilder builder, string products = null)
             : base(filePath, products)

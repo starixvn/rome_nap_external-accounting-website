@@ -1,15 +1,15 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Report
 {
+    using Common.Extensions;
+    using DTO.Report;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    using Common.Extensions;
-    using DTO.Report;
 
     public partial class ReportDao
     {
-        const string eASRptWinLossDetailIBCBetLiveCasinoCom = "EAS_Rpt_WinLossExtraDetail_Com";
+        private const string eASRptWinLossDetailIBCBetLiveCasinoCom = "EAS_Rpt_WinLossExtraDetail_Com";
 
         public List<WinLossDetailIBCBetLiveCasino> EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(
             string groupName,
@@ -35,7 +35,7 @@
                 GetCommonWinLossDetailIBCBetLiveCasino(eASRptWinLossDetailIBCBetLiveCasinoCom, parameters);
 
             return winLossDetailIBCBetLiveCasino;
-        }        
+        }
 
         private List<WinLossDetailIBCBetLiveCasino> GetCommonWinLossDetailIBCBetLiveCasino(string spName, Hashtable parameters)
         {
@@ -76,7 +76,7 @@
         };
     }
 
-    static class ParameterNameConstants
+    internal static class ParameterNameConstants
     {
         public const string CustomerId = "custid";
         public const string GroupName = "groupname";
@@ -86,7 +86,7 @@
         public const string ProductIds = "productids";
     }
 
-    static class ColumnNameConstants
+    internal static class ColumnNameConstants
     {
         public const string UserName = "Username";
         public const string BetCount = "BetCount";

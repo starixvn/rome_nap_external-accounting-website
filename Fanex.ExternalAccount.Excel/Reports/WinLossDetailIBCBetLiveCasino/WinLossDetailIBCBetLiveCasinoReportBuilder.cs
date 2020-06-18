@@ -1,9 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailIBCBetLiveCasinoReport
 {
+    using DTO.Report;
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using DTO.Report;
 
     public class WinLossDetailIBCBetLiveCasinoReportBuilder : IWinLossDetailIBCBetLiveCasinoReportBuilder
     {

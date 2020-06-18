@@ -12,7 +12,6 @@
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.UserControl;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
@@ -21,7 +20,7 @@
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
     public class WinLossDetailIBCBetLiveCasinoController : BaseReportController
     {
-        readonly IWinLossDetailIBCBetLiveCasinoService winLossDetailIBCBetLiveCasinoService;
+        private readonly IWinLossDetailIBCBetLiveCasinoService winLossDetailIBCBetLiveCasinoService;
 
         public WinLossDetailIBCBetLiveCasinoController(
             ICurrentSession currentSession,
@@ -81,7 +80,7 @@
             }
         }
 
-        dynamic GetDataFromDB(WinLossDetailIBCBetLiveCasinoRequest request)
+        private dynamic GetDataFromDB(WinLossDetailIBCBetLiveCasinoRequest request)
         {
             var toolTipsProducts = new
             {
@@ -98,7 +97,7 @@
             return winLossDetailIBCBetLiveCasino;
         }
 
-        string BuildTooltipsForLiveCasino()
+        private string BuildTooltipsForLiveCasino()
         {
             var liveCasinos = new List<GroupConfigurationModel>
             {
@@ -125,7 +124,7 @@
 
     public sealed class ExportWinLossDetailIBCBetLiveCasinoRequest : WinLossDetailIBCBetLiveCasinoRequest
     {
-        const string DateFormat = "yyyyMMdd";
+        private const string DateFormat = "yyyyMMdd";
 
         public string GetFileName()
         {

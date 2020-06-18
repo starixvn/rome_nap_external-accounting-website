@@ -13,6 +13,7 @@
     using Utilities;
 
 #pragma warning disable S109 // Magic numbers should not be used
+
     public class ReportService : IReportService
     {
         private const string BalanceUpDayKey = "SUNPLUS.AGENT.MODEL.BL.REPORTS.BALANCEUPDAY";
@@ -121,5 +122,6 @@
         private static bool CheckConstraintMoveBetsDay(DateTime fromDate)
             => DateTime.Compare(fromDate, MoveBetsDate) > 0;
     }
+
 #pragma warning restore S109 // Magic numbers should not be used
 }

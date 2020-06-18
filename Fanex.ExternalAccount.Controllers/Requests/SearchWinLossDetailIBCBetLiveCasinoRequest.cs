@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Requests
 {
-    using System;
     using Service.Interface.Report;
+    using System;
 
     public class SearchWinLossDetailIBCBetLiveCasinoRequest : ISearchWinLossDetailIBCBetLiveCasinoRequest
     {
