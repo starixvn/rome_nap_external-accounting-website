@@ -2750,8 +2750,6 @@
     <Content Include="ExcelTemplates\Reports\PokerGamesWinLossAg.xls" />
     <Content Include="ExcelTemplates\Reports\PokerGamesWinLossMAg.xls" />
     <Content Include="ExcelTemplates\Reports\WinLossDetailIBCBetLiveCasino.xls" />
-    <Content Include="ExcelTemplates\Reports\WinLossDetailIBCBetLiveCasinoAg.xls" />
-    <Content Include="ExcelTemplates\Reports\WinLossDetailIBCBetLiveCasinoMAg.xls" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />

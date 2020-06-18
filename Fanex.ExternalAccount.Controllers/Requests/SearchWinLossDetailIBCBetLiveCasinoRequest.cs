@@ -24,7 +24,7 @@
         public string Username { get; }
         public DateTime FromDate { get; }
         public DateTime ToDate { get; }
-        public string ProductIds { get; }
+        public string ProductIds { get; set; }
         public dynamic ToolTipsProducts { get; }
     }
 }

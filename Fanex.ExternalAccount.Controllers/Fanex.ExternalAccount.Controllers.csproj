@@ -326,7 +326,6 @@
     <Compile Include="Report\BaseReportController.cs" />
     <Compile Include="Report\WinLossDetailIBCBetLiveCasinoController.cs" />
     <Compile Include="Requests\CustomerList\SeachCustomerListRequest.cs" />
-    <Compile Include="Requests\DrillDownWinLossDetailIBCBetLiveCasinoRequest.cs" />
     <Compile Include="Requests\DrillDownWinLossDetailRequest.cs" />
     <Compile Include="Requests\SearchWinLossDetailIBCBetLiveCasinoRequest.cs" />
     <Compile Include="Requests\SearchWinLossDetailRequest.cs" />

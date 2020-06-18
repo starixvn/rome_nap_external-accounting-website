@@ -12,6 +12,7 @@
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.UserControl;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
@@ -20,114 +21,100 @@
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
     public class WinLossDetailIBCBetLiveCasinoController : BaseReportController
     {
-        private readonly IWinLossDetailIBCBetLiveCasinoService winLossDetailIBCBetLiveCasinoService;
+        readonly IWinLossDetailIBCBetLiveCasinoService winLossDetailIBCBetLiveCasinoService;
 
         public WinLossDetailIBCBetLiveCasinoController(
             ICurrentSession currentSession,
-            IWinLossDetailIBCBetLiveCasinoService winLossDetailIBCBetLiveCasinoService,
             IReportService reportService,
             IGroupConfigurationService groupConfigurationService)
             : base(currentSession, reportService, groupConfigurationService)
         {
-            this.winLossDetailIBCBetLiveCasinoService = winLossDetailIBCBetLiveCasinoService ?? new WinLossDetailIBCBetLiveCasinoService();
+            winLossDetailIBCBetLiveCasinoService = new WinLossDetailIBCBetLiveCasinoService();
         }
 
-        public WinLossDetailIBCBetLiveCasinoController() : this(null, null, null, null)
+        public WinLossDetailIBCBetLiveCasinoController() : this(null, null, null)
         {
         }
 
         public ActionResult Index()
-            => View();
+        {
+            bool isIBCINDO = IsIBCINDO();
+            if (!isIBCINDO)
+            {
+                return PartialView("NoPermission");
+            }
+
+            return View();
+        }
 
         [AntiXSRFFilter]
         public ActionResult GetData(WinLossDetailIBCBetLiveCasinoRequest request)
         {
-            var viewModel = GetDataFromDB(request);
-            return Json(viewModel);
+            var winLossDetailIBCBetLiveCasino = GetDataFromDB(request);
+
+            return Json(winLossDetailIBCBetLiveCasino);
         }
 
         public void ExportWinLossDetailIBCBetLiveCasinoToExcel(ExportWinLossDetailIBCBetLiveCasinoRequest request)
         {
-            IWinLossDetailIBCBetLiveCasinoReportBuilder builder;
-            request.viewlevel++;
             var winlossDetailIBCBetLiveCasino = GetDataFromDB(request);
-            request.viewlevel--;
-            switch (request.viewlevel)
-            {
-                case Role.Member:
-                    {
-                        builder = new MemberWinLossDetailIBCBetLiveCasinoReportBuilder(
-                            (List<WinLossDetailIBCBetLiveCasinoAg>)winlossDetailIBCBetLiveCasino.GetType().GetProperty("rows").GetValue(winlossDetailIBCBetLiveCasino, null),
-                            request.viewlevel,
+            var winlossDetailIBCBetLiveCasinoList = (List<WinLossDetailIBCBetLiveCasino>)winlossDetailIBCBetLiveCasino
+                .GetType()
+                .GetProperty("rows")
+                .GetValue(winlossDetailIBCBetLiveCasino, null);
+
+            var builder = new WinLossDetailIBCBetLiveCasinoReportBuilder(
+                            winlossDetailIBCBetLiveCasinoList,
                             request.fromdate,
                             request.todate);
 
-                        break;
-                    }
-                case Role.Agent:
-                    {
-                        builder = new AgentWinLossDetailIBCBetLiveCasinoReportBuilder(
-                            (List<WinLossDetailIBCBetLiveCasinoMAg>)winlossDetailIBCBetLiveCasino.GetType().GetProperty("rows").GetValue(winlossDetailIBCBetLiveCasino, null),
-                            request.viewlevel,
-                            request.fromdate,
-                            request.todate);
+            var productList = GetProductList();
+            var productNames = request.GetProductNames(productList);
 
-                        break;
-                    }
-                default:
-                    {
-                        builder = new WinLossDetailIBCBetLiveCasinoReportBuilder(
-                            (List<WinLossDetailIBCBetLiveCasino>)winlossDetailIBCBetLiveCasino.GetType().GetProperty("rows").GetValue(winlossDetailIBCBetLiveCasino, null),
-                            request.viewlevel,
-                            request.fromdate,
-                            request.todate);
-
-                        break;
-                    }
-            }
-
-            var formatedProducts = request.GetProductNames(GetProductList());
-            var memoryStream = builder.Build(formatedProducts);
-
+            var memoryStream = builder.Build(productNames);
             if (memoryStream != null)
             {
-                ExportToExcel(memoryStream, request.FileName);
+                string fileName = request.GetFileName();
+                ExportToExcel(memoryStream, fileName);
+
                 memoryStream.Dispose();
             }
         }
 
-        private dynamic GetDataFromDB(WinLossDetailIBCBetLiveCasinoRequest request)
+        dynamic GetDataFromDB(WinLossDetailIBCBetLiveCasinoRequest request)
         {
             var toolTipsProducts = new
             {
-                liveCasino = BuildTooltipsForLiveCasino()
+                liveCasino = BuildTooltipsForLiveCasino(),
             };
 
-            return request.IsSearch()
-                ? winLossDetailIBCBetLiveCasinoService.SearchWinLossDetailIBCBetLiveCasino(
-                    new SearchWinLossDetailIBCBetLiveCasinoRequest(request, toolTipsProducts))
-                : winLossDetailIBCBetLiveCasinoService.DrillDownWinLossDetailIBCBetLiveCasino(
-                    new DrillDownWinLossDetailIBCBetLiveCasinoRequest(request, toolTipsProducts));
+            var searchRequest = new SearchWinLossDetailIBCBetLiveCasinoRequest(request, toolTipsProducts)
+            {
+                ProductIds = $"{ProductConstants.GTCasino}",
+            };
+            var winLossDetailIBCBetLiveCasino = winLossDetailIBCBetLiveCasinoService
+                .SearchWinLossDetailIBCBetLiveCasino(searchRequest);
+
+            return winLossDetailIBCBetLiveCasino;
         }
 
-        private string BuildTooltipsForLiveCasino()
+        string BuildTooltipsForLiveCasino()
         {
-            var liveCasino = new List<GroupConfigurationModel>
+            var liveCasinos = new List<GroupConfigurationModel>
             {
-                new GroupConfigurationModel{ProductId=ProductConstants.AllBet,ProductName="AllBet"},
-                new GroupConfigurationModel{ProductId=ProductConstants.SexyGaming,ProductName="Sexy Gaming"},
-                new GroupConfigurationModel{ProductId=ProductConstants.SAGaming,ProductName="SA Gaming"},
-                new GroupConfigurationModel{ProductId=ProductConstants.GTCasino,ProductName="IBCBet Live Casino"},
-                new GroupConfigurationModel{ProductId=ProductConstants.BBin,ProductName="BBIN"},
-                new GroupConfigurationModel{ProductId=ProductConstants.ION,ProductName="ION"}
+                new GroupConfigurationModel
+                {
+                    ProductId = ProductConstants.GTCasino,
+                    ProductName = "IBCBet Live Casino"
+                }
             };
 
-            var offeredLiveCasino = liveCasino.Where(
-                i => this.groupConfigurationService.IsShowByProductAndGroup(i.ProductId, this.currentSession.CurrencyGroup));
+            var offeredLiveCasinos = liveCasinos
+                .Where(liveCasino => groupConfigurationService.IsShowByProductAndGroup(liveCasino.ProductId, currentSession.CurrencyGroup));
 
-            if (offeredLiveCasino != null && offeredLiveCasino.Any())
+            if (offeredLiveCasinos.Any())
             {
-                var liveCasinoName = string.Join(", ", offeredLiveCasino.Select(i => i.ProductName));
+                var liveCasinoName = string.Join(", ", offeredLiveCasinos.Select(offeredLiveCasino => offeredLiveCasino.ProductName));
 
                 return string.Format(ViewLang.Tooltip_NetTurnover_LiveCasino, liveCasinoName);
             }
@@ -136,11 +123,18 @@
         }
     }
 
-    public class ExportWinLossDetailIBCBetLiveCasinoRequest : WinLossDetailIBCBetLiveCasinoRequest
+    public sealed class ExportWinLossDetailIBCBetLiveCasinoRequest : WinLossDetailIBCBetLiveCasinoRequest
     {
-        private const string DateFormat = "yyyyMMdd";
+        const string DateFormat = "yyyyMMdd";
 
-        public string FileName =>
-            $"{viewlevel.DisplayRoleName()}WinLossDetailIBCBetLiveCasino_{fromdate.ToString(DateFormat)}_{todate.ToString(DateFormat)}.xls";
+        public string GetFileName()
+        {
+            string displayRoleName = viewlevel.DisplayRoleName();
+            string fromDate = fromdate.ToString(DateFormat);
+            string toDate = todate.ToString(DateFormat);
+            string fileName = $"{displayRoleName}WinLossDetailForIBCBetLiveCasino_{fromDate}_{toDate}.xls";
+
+            return fileName;
+        }
     }
 }

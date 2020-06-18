@@ -2,7 +2,6 @@
 {
     using System.IO;
     using System.Web;
-    using Core.Shared;
 
     internal class TemplateSettings
     {
@@ -13,17 +12,9 @@
             _dir = HttpContext.Current.Server.MapPath("~/ExcelTemplates/Reports");
         }
 
-        public string WinLossDetailIBCBetLiveCasinoPath(int roleId)
+        public string WinLossDetailIBCBetLiveCasinoPath()
         {
-            switch (roleId)
-            {
-                case Role.Member:
-                    return Path.Combine(_dir, "WinLossDetailIBCBetLiveCasinoAg.xls");
-                case Role.Agent:
-                    return Path.Combine(_dir, "WinLossDetailIBCBetLiveCasinoMAg.xls");
-                default:
-                    return Path.Combine(_dir, "WinLossDetailIBCBetLiveCasino.xls");
-            }
+            return Path.Combine(_dir, "WinLossDetailIBCBetLiveCasino.xls");
         }
     }
 }

@@ -245,7 +245,6 @@
             }
             return false;
         }
-
     }
 #pragma warning restore S109 // Magic numbers should not be used
 }

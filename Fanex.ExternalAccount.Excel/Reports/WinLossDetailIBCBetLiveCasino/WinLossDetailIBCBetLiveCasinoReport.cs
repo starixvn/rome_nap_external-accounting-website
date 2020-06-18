@@ -2,15 +2,14 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Core.Shared;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using Utility;
 
     internal class WinLossDetailIBCBetLiveCasinoReport : TemplateReport, IReportBuilder
     {
-        private readonly WinLossDetailIBCBetLiveCasinoReportBuilder _builder;
-        private const int LastColumnIndex = 16;
+        readonly WinLossDetailIBCBetLiveCasinoReportBuilder _builder;
+        const int LastColumnIndex = 16;
 
         public WinLossDetailIBCBetLiveCasinoReport(string filePath, WinLossDetailIBCBetLiveCasinoReportBuilder builder, string products = null)
             : base(filePath, products)
@@ -100,13 +99,9 @@
 
         public override void BuildMainTitle(ISheet resultSheet)
         {
-#pragma warning disable S3358 // Ternary operators should not be nested
-            var mainTitle = _builder.RoleId.IsSuper() ? "Super" : _builder.RoleId.IsMaster() ? "Master" : string.Empty;
-#pragma warning restore S3358 // Ternary operators should not be nested
-
-            mainTitle += _builder.FromDate.Equals(_builder.ToDate)
-                ? $" Win Loss Detail for IBCBet Live Casino on {_builder.FromDate}"
-                : $" Win Loss Detail for IBCBet Live Casino From {_builder.FromDate} To {_builder.ToDate}";
+            string mainTitle = _builder.FromDate.Equals(_builder.ToDate)
+                ? $"Super Win Loss Detail for IBCBet Live Casino on {_builder.FromDate}"
+                : $"Super Win Loss Detail for IBCBet Live Casino From {_builder.FromDate} To {_builder.ToDate}";
 
             mainTitle += string.IsNullOrEmpty(Products) ? string.Empty : $" - {Products}";
 

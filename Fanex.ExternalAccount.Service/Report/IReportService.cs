@@ -33,12 +33,6 @@
 
         List<WinLossDetailIBCBetLiveCasino> GetSuperWinLossDetailIBCBetLiveCasino(string groupname, int custId, DateTime fromDate, DateTime toDate, string productIds);
 
-        List<WinLossDetailIBCBetLiveCasino> GetMasterWinLossDetailIBCBetLiveCasino(int custId, int masterId, DateTime fromDate, DateTime toDate, string productIds);
-
-        List<WinLossDetailIBCBetLiveCasinoMAg> GetAgentWinLossDetailIBCBetLiveCasino(int custId, int agentId, DateTime fromDate, DateTime toDate, string productIds);
-
-        List<WinLossDetailIBCBetLiveCasinoAg> GetMemberWinLossDetailIBCBetLiveCasino(int custId, int memberId, DateTime fromDate, DateTime toDate, string productIds);
-
         ArrayList GetSortingOrderList(string groupname);
     }
 }
