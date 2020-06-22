@@ -82,7 +82,7 @@
         public const string GroupName = "groupname";
         public const string FromDate = "fromdate";
         public const string ToDate = "todate";
-        public const string BalanceUpDay = "balanceupday";
+        public const string BalanceUpDay = "movebetday";
         public const string ProductIds = "productids";
     }
 
