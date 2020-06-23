@@ -9,28 +9,21 @@
 
     public partial class ReportDao
     {
-        private const string eASRptWinLossDetailIBCBetLiveCasinoCom = "EAS_Rpt_WinLossExtraDetail_Com";
+        private const string eASRptWinLossDetailIBCBetLiveCasinoCom = "EAS_Rpt_WinLossDetailExtra_Com";
 
         public List<WinLossDetailIBCBetLiveCasino> EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(
             string groupName,
-            int customerId,
-            string productIds,
             DateTime fromDate,
             DateTime toDate,
-            DateTime balanceUpDay)
+            DateTime movebetDay)
         {
             var parameters = new Hashtable
             {
                 {ParameterNameConstants.GroupName, groupName},
                 {ParameterNameConstants.FromDate, fromDate},
                 {ParameterNameConstants.ToDate, toDate},
-                {ParameterNameConstants.BalanceUpDay, balanceUpDay},
-                {ParameterNameConstants.ProductIds, productIds}
+                {ParameterNameConstants.MovebetDay, movebetDay}
             };
-            if (customerId != 0)
-            {
-                parameters.Add(ParameterNameConstants.CustomerId, customerId);
-            }
             var winLossDetailIBCBetLiveCasino =
                 GetCommonWinLossDetailIBCBetLiveCasino(eASRptWinLossDetailIBCBetLiveCasinoCom, parameters);
 
@@ -58,6 +51,7 @@
 
         private static WinLossDetailIBCBetLiveCasino CreateWinLossDetailIBCBetLiveCasinoEntity(IDataReader reader) => new WinLossDetailIBCBetLiveCasino
         {
+            CustId = reader.ToInt(ColumnNameConstants.CustId),
             Username = reader.To<string>(ColumnNameConstants.UserName),
             BetCount = reader.ToInt(ColumnNameConstants.BetCount),
             Turnover = reader.ToDouble(ColumnNameConstants.Turnover),
@@ -78,16 +72,15 @@
 
     internal static class ParameterNameConstants
     {
-        public const string CustomerId = "custid";
         public const string GroupName = "groupname";
         public const string FromDate = "fromdate";
         public const string ToDate = "todate";
-        public const string BalanceUpDay = "movebetday";
-        public const string ProductIds = "productids";
+        public const string MovebetDay = "movebetday";
     }
 
     internal static class ColumnNameConstants
     {
+        public const string CustId = "CustId";
         public const string UserName = "Username";
         public const string BetCount = "BetCount";
         public const string Turnover = "Turnover";

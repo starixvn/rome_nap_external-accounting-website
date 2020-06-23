@@ -67,11 +67,9 @@
 
         List<WinLossDetailIBCBetLiveCasino> EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(
             string groupName,
-            int customerId,
-            string productIds,
             DateTime fromDate,
             DateTime toDate,
-            DateTime balanceUpDay);
+            DateTime movebetDay);
 
         ArrayList EAS_Rpt_WinLossDaily_SortingOrder(string groupname);
     }

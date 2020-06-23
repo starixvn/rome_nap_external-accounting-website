@@ -94,11 +94,9 @@
 
         public List<WinLossDetailIBCBetLiveCasino> GetSuperWinLossDetailIBCBetLiveCasino(
             string groupname,
-            int custId,
             DateTime fromDate,
-            DateTime toDate,
-            string productIds)
-            => _reportDao.EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(groupname, custId, productIds, fromDate, toDate, BalanceUpDate);
+            DateTime toDate)
+            => _reportDao.EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(groupname, fromDate, toDate, MoveBetsDate);
 
         public ArrayList GetSortingOrderList(string groupname)
             => _reportDao.EAS_Rpt_WinLossDaily_SortingOrder(groupname);

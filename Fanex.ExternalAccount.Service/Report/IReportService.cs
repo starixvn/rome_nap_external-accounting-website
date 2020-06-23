@@ -31,7 +31,7 @@
 
         List<WinLossDetailAg> GetMemberWinLossDetail(int custId, int memberId, DateTime fromDate, DateTime toDate, string productIds);
 
-        List<WinLossDetailIBCBetLiveCasino> GetSuperWinLossDetailIBCBetLiveCasino(string groupname, int custId, DateTime fromDate, DateTime toDate, string productIds);
+        List<WinLossDetailIBCBetLiveCasino> GetSuperWinLossDetailIBCBetLiveCasino(string groupname, DateTime fromDate, DateTime toDate);
 
         ArrayList GetSortingOrderList(string groupname);
     }

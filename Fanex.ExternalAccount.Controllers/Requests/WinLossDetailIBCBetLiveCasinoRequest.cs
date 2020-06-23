@@ -2,8 +2,6 @@
 {
     using Core.Context;
     using Core.Reports;
-    using DataAccess.Criteria.GroupConfiguration;
-    using Service.UserControl;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -15,55 +13,22 @@
 
         private readonly Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter;
         private readonly IExtRequest extRequest;
-        private readonly IGroupConfigurationService groupConfigurationService;
 
-        public WinLossDetailIBCBetLiveCasinoRequest() : this(null, null, null)
+        public WinLossDetailIBCBetLiveCasinoRequest() : this(null, null)
         {
         }
 
         public WinLossDetailIBCBetLiveCasinoRequest(
             Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter,
-            IExtRequest extRequest,
-            IGroupConfigurationService groupConfigurationService)
+            IExtRequest extRequest)
         {
             this.selectedProductQueryGetter = selectedProductQueryGetter ?? new FilterController().AsCollection;
             this.extRequest = extRequest ?? new ExtRequest();
-            this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
         }
 
-        public string groupName => extRequest.GetGroupName();
-        public string username { get; set; }
-        public int srecommend { get; set; }
-        public int mrecommend { get; set; }
-        public int recommend { get; set; }
-        public int custId { get; set; }
-        public DateTime fromdate { get; set; }
-        public DateTime todate { get; set; }
-        public int viewlevel { get; set; }
-
-        public bool IsSearch() => custId == 0;
-
-        internal string GetProductIds()
-        {
-            var filterParams = selectedProductQueryGetter();
-
-            var formatedProductIds = new List<int>();
-
-            var products = groupConfigurationService.Get(new GetGroupConfigurationCriteria()).Where(i => i.GroupName == groupName);
-            foreach (var item in products)
-            {
-                foreach (var product in filterParams)
-                {
-                    if (item.ProductId != 0 && product.Key.Equals(item.Id, StringComparison.OrdinalIgnoreCase)
-                        && product.Value)
-                    {
-                        formatedProductIds.Add(item.ProductId);
-                    }
-                }
-            }
-
-            return string.Join(",", formatedProductIds);
-        }
+        public string GroupName => extRequest.GetGroupName();
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
 
         internal string GetProductNames(List<KeyValuePair<string, string>> productList)
         {

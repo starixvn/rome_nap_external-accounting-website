@@ -62,8 +62,8 @@
 
             var builder = new WinLossDetailIBCBetLiveCasinoReportBuilder(
                             winlossDetailIBCBetLiveCasinoList,
-                            request.fromdate,
-                            request.todate);
+                            request.FromDate,
+                            request.ToDate);
 
             var productList = GetProductList();
             var productNames = request.GetProductNames(productList);
@@ -85,10 +85,7 @@
                 liveCasino = string.Format(ViewLang.Tooltip_NetTurnover_LiveCasino, "IBCBet Live Casino"),
             };
 
-            var searchRequest = new SearchWinLossDetailIBCBetLiveCasinoRequest(request, toolTipsProducts)
-            {
-                ProductIds = $"{ProductConstants.GTCasino}",
-            };
+            var searchRequest = new SearchWinLossDetailIBCBetLiveCasinoRequest(request, toolTipsProducts);
             var winLossDetailIBCBetLiveCasino = winLossDetailIBCBetLiveCasinoService
                 .SearchWinLossDetailIBCBetLiveCasino(searchRequest);
 
@@ -102,10 +99,9 @@
 
         public string GetFileName()
         {
-            string displayRoleName = viewlevel.DisplayRoleName();
-            string fromDate = fromdate.ToString(DateFormat);
-            string toDate = todate.ToString(DateFormat);
-            string fileName = $"{displayRoleName}WinLossDetailForIBCBetLiveCasino_{fromDate}_{toDate}.xls";
+            string fromDate = FromDate.ToString(DateFormat);
+            string toDate = ToDate.ToString(DateFormat);
+            string fileName = $"WinLossDetailForIBCBetLiveCasino_{fromDate}_{toDate}.xls";
 
             return fileName;
         }

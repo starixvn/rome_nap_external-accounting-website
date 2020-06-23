@@ -8,23 +8,19 @@
         public SearchWinLossDetailIBCBetLiveCasinoRequest(WinLossDetailIBCBetLiveCasinoRequest request, dynamic toolTipsProducts)
             : this(request)
         {
-            ProductIds = request.GetProductIds();
             ToolTipsProducts = toolTipsProducts;
         }
 
         public SearchWinLossDetailIBCBetLiveCasinoRequest(WinLossDetailIBCBetLiveCasinoRequest request)
         {
-            GroupName = request.groupName;
-            Username = request.username;
-            FromDate = request.fromdate;
-            ToDate = request.todate;
+            GroupName = request.GroupName;
+            FromDate = request.FromDate;
+            ToDate = request.ToDate;
         }
 
         public string GroupName { get; }
-        public string Username { get; }
         public DateTime FromDate { get; }
         public DateTime ToDate { get; }
-        public string ProductIds { get; set; }
         public dynamic ToolTipsProducts { get; }
     }
 }
