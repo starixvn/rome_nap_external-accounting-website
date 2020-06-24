@@ -5,12 +5,6 @@
 
     public class SearchWinLossDetailIBCBetLiveCasinoRequest : ISearchWinLossDetailIBCBetLiveCasinoRequest
     {
-        public SearchWinLossDetailIBCBetLiveCasinoRequest(WinLossDetailIBCBetLiveCasinoRequest request, dynamic toolTipsProducts)
-            : this(request)
-        {
-            ToolTipsProducts = toolTipsProducts;
-        }
-
         public SearchWinLossDetailIBCBetLiveCasinoRequest(WinLossDetailIBCBetLiveCasinoRequest request)
         {
             GroupName = request.GroupName;
@@ -21,6 +15,5 @@
         public string GroupName { get; }
         public DateTime FromDate { get; }
         public DateTime ToDate { get; }
-        public dynamic ToolTipsProducts { get; }
     }
 }

@@ -80,12 +80,7 @@
 
         private dynamic GetDataFromDB(WinLossDetailIBCBetLiveCasinoRequest request)
         {
-            var toolTipsProducts = new
-            {
-                liveCasino = string.Format(ViewLang.Tooltip_NetTurnover_LiveCasino, "IBCBet Live Casino"),
-            };
-
-            var searchRequest = new SearchWinLossDetailIBCBetLiveCasinoRequest(request, toolTipsProducts);
+            var searchRequest = new SearchWinLossDetailIBCBetLiveCasinoRequest(request);
             var winLossDetailIBCBetLiveCasino = winLossDetailIBCBetLiveCasinoService
                 .SearchWinLossDetailIBCBetLiveCasino(searchRequest);
 

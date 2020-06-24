@@ -25,8 +25,7 @@
             return new
             {
                 rows = winLossDetailIBCBetLiveCasinoData,
-                sortingorderlist = sortingOrderList,
-                tooltips = request.ToolTipsProducts
+                sortingorderlist = sortingOrderList
             };
         }
 

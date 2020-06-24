@@ -20,39 +20,15 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
     },
     SwitchCalendarType: function (showType) {
         if (showType === 1) {
-            $("#GroupViewHistory").css("display", "none");
-            $("#GroupBackToCurrent").css("display", "block");
             $('.from-to-date').css('display', 'none');
-            $('.group-month-day').css('display', 'inline-block');
         }
         else {
-            $("#GroupViewHistory").css("display", "block");
-            $("#GroupBackToCurrent").css("display", "none");
             $('.from-to-date').css('display', 'inline-block');
-            $('.group-month-day').css('display', 'none');
         }
     },
     CallSubmit: function () {
         this.groupName = $("#selectedGroupName").html();
         this.Databind();
-    },
-    initMonthlyCalendar: function () {
-        $("#monPickr1").monPickr({
-            today: $("#MaxDate").val(),
-            minDate: "2010/1/1",
-            showDateRange: true,
-            fromDayId: "fromDay1",
-            toDayId: "toDay1",
-            log: function (msg) {
-                if (typeof console !== "undefined")
-                    console.warn(msg);
-            }
-        });
-
-        var today = new Date($("#MaxDate").val());
-        $("#monPickr1").monPickr("setMonth", today);
-        $("#monPickr1").monPickr("setToDay", today.getDate());
-        $("#monPickr1").monPickr("setFromDay", 1);
     },
     getDayOfYear: function (date) {
         var day = date.getDate();
@@ -167,8 +143,6 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
 
         $(".ui-datepicker").draggable();
 
-        $this.initMonthlyCalendar();
-
         $("#ddlGroupName").bind("change", function (event) {
             var args = event.args;
             if (args) {
@@ -194,14 +168,6 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
                 + params;
 
             top.exportExcel(url, document);
-        });
-
-        $("#ViewHistoryReport").click(function () {
-            $this.SwitchCalendarType(1);
-        });
-
-        $("#BackToCurrentReport").click(function () {
-            $this.SwitchCalendarType(0);
         });
 
         $this.sorters = $(".col-sorter");
@@ -465,7 +431,7 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
             gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
             showTitle: true,
             titleInfo: {
-                text: " Win Loss Detail for IBCBet Live Casino " + dateInfo
+                text: "Win Loss Detail for IBCBet Live Casino " + dateInfo
             },
             showFooter: true,
             gridExpandHeight: 256,
@@ -603,22 +569,12 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
             }
         }
     },
-    ChangeHeadlineTab: function () {
-        $("#headlineDaily").css("visibility", "visible");
-    },
     InitShowHideControls: function (status) {
-        $("#headlineDaily").css("display", status);
         $("#mainGrid").css("display", status);
     },
     GetFromDateToDate: function () {
-        if ($(".from-to-date").css('display') !== 'none') {
-            this.fromdate = $("#dtpFromDate").val();
-            this.todate = $("#dtpToDate").val();
-        }
-        else {
-            this.fromdate = $("#monPickr1").monPickr("getFromDate", "MM/dd/yyyy");
-            this.todate = $("#monPickr1").monPickr("getToDate", "MM/dd/yyyy");
-        }
+        this.fromdate = $("#dtpFromDate").val();
+        this.todate = $("#dtpToDate").val();
     },
     Databind: function () {
         this.GetFromDateToDate();
@@ -665,12 +621,8 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
                 $this.totalRows = data.rows.length;
                 $this.fixedsortlist = data.sortingorderlist;
 
-                $this.ChangeHeadlineTab();
-
                 $("#mainGrid").css("display", $this.totalRows < 1 ? "none" : "block");
                 $("#mainGrid").css("visibility", $this.totalRows < 1 ? "hidden" : "visible");
-                $("#headlineDaily").css("display", $this.totalRows < 1 ? "none" : "block");
-                $("#headlineDaily").css("visibility", $this.totalRows < 1 ? "hidden" : "visible");
                 $("#exporttoexcel").css("display", $this.totalRows < 1 ? "none" : "block");
                 $("#msgNoinfo").css("display", $this.totalRows < 1 ? "block" : "none");
 
@@ -684,16 +636,8 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
                 $("#netTurnover").bind("click",
                     function () {
                         var message =
-                            "- For Sportbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
+                            "Net Turnover is total valid bets that we use to compute commission.";
                         var height = 170;
-
-                        if (data.tooltips.liveCasino !== "") {
-                            message +=
-                                "<br/>" +
-                                "<br/>" +
-                                data.tooltips.liveCasino;
-                            height += 50;
-                        }
 
                         Fanex.ExtAcc.Form.Alert("Net Turnover Information", message, 430, height);
                         return false;

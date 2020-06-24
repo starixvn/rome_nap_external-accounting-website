@@ -7,6 +7,5 @@
         string GroupName { get; }
         DateTime FromDate { get; }
         DateTime ToDate { get; }
-        dynamic ToolTipsProducts { get; }
     }
 }
