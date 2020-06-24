@@ -20,10 +20,14 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
     },
     SwitchCalendarType: function (showType) {
         if (showType === 1) {
+            $("#GroupViewHistory").css("display", "none");
+            $("#GroupBackToCurrent").css("display", "block");
             $('.from-to-date').css('display', 'none');
             $('.group-month-day').css('display', 'inline-block');
         }
         else {
+            $("#GroupViewHistory").css("display", "block");
+            $("#GroupBackToCurrent").css("display", "none");
             $('.from-to-date').css('display', 'inline-block');
             $('.group-month-day').css('display', 'none');
         }
@@ -192,6 +196,14 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
             top.exportExcel(url, document);
         });
 
+        $("#ViewHistoryReport").click(function () {
+            $this.SwitchCalendarType(1);
+        });
+
+        $("#BackToCurrentReport").click(function () {
+            $this.SwitchCalendarType(0);
+        });
+
         $this.sorters = $(".col-sorter");
         $this.sorters.click(function () {
             var elem = $(this);
@@ -258,14 +270,6 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
             }
         },
         {
-            HeaderText: "Bet Count",
-            Name: "BetCount",
-            Width: 130,
-            Sort: true,
-            HeaderAlign: "center",
-            CellAlign: "right"
-        },
-        {
             HeaderText: "Turnover",
             Name: "Turnover",
             Width: 130,
@@ -286,7 +290,7 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
             FormatNegative: "$"
         },
         {
-            HeaderText: "GrossComm",
+            HeaderText: "Gross Comm",
             Name: "GrossComm",
             Width: 130,
             Sort: true,
@@ -326,7 +330,7 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
             FormatNegative: "$"
         },
         {
-            HeaderText: "Win/Loss",
+            HeaderText: "Win Loss",
             Name: "SAgWinlost",
             Width: 130,
             Sort: true,
@@ -356,7 +360,7 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
             FormatNegative: "$"
         },
         {
-            HeaderText: "Win/Loss",
+            HeaderText: "Win Loss",
             Name: "ExtWinlost",
             Width: 130,
             Sort: true,
@@ -403,11 +407,6 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
             MergeRowNumber: 2
         },
         {
-            HeaderText: "Bet Count",
-            Name: "BetCount",
-            MergeRowNumber: 2
-        },
-        {
             HeaderText: "Turnover",
             Name: "Turnover",
             MergeRowNumber: 2
@@ -418,7 +417,7 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
             MergeRowNumber: 2
         },
         {
-            HeaderText: "GrossComm",
+            HeaderText: "Gross Comm",
             Name: "GrossComm",
             MergeRowNumber: 2
         },
@@ -438,7 +437,7 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
             MergeColNumber: 3
         },
         {
-            HeaderText: "NetCompany",
+            HeaderText: "Net Company",
             Name: "NetCompany",
             MergeRowNumber: 2
         }
@@ -491,7 +490,6 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
         };
 
         // For Summary Footer
-        var sumBetCount = 0;
         var sumTurnover = 0;
         var sumNetTurnover = 0;
         var sumGrossComm = 0;
@@ -513,7 +511,6 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
             bodyData.push({
                 Columns: [
                     { Name: "Username", Value: this.dataSource[i] },
-                    { Name: "BetCount", Value: this.dataSource[i].BetCount },
                     { Name: "Turnover", Value: this.dataSource[i].Turnover },
                     { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
                     { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
@@ -530,7 +527,6 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
                 ]
             });
 
-            sumBetCount += this.dataSource[i].BetCount;
             sumTurnover += this.dataSource[i].Turnover;
             sumNetTurnover += this.dataSource[i].NetTurnover;
             sumGrossComm += this.dataSource[i].GrossComm;
@@ -554,7 +550,6 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
         footerData.push({
             Columns: [
                 { Name: "Username", Value: "Grand Total" },
-                { Name: "BetCount", Value: sumBetCount },
                 { Name: "Turnover", Value: sumTurnover },
                 { Name: "NetTurnover", Value: sumNetTurnover },
                 { Name: "GrossComm", Value: sumGrossComm },

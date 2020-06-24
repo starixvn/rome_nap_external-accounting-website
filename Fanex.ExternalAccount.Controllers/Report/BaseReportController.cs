@@ -6,6 +6,8 @@
     using Service.Interface.Report;
     using Service.UserControl;
     using System;
+    using System.Linq;
+    using Utilities;
 
     public class BaseReportController : BaseController
     {
@@ -23,16 +25,20 @@
             this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
         }
 
-        protected bool IsIBCINDO()
+        protected bool CanViewWinLossDetailForIBCBetLiveCasino()
         {
-            const string IBCINDO = "IBCINDO";
-
             string groupName = RouteData.Values["id"] as string;
             if (string.IsNullOrWhiteSpace(groupName))
             {
                 groupName = Core.Context.CurrentSession.Instance.CurrencyGroup;
             }
-            if (!groupName.Equals(IBCINDO, StringComparison.CurrentCultureIgnoreCase))
+            if (string.IsNullOrWhiteSpace(groupName))
+            {
+                return false;
+            }
+
+            var viewableGroups = Config.GroupsCanViewWinLossDetailForIBCBetLiveCasino();
+            if (!viewableGroups.Contains(groupName, StringComparer.CurrentCultureIgnoreCase))
             {
                 return false;
             }

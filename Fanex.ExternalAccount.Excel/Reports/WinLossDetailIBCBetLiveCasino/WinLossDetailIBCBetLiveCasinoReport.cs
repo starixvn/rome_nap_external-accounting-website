@@ -9,7 +9,7 @@
     internal class WinLossDetailIBCBetLiveCasinoReport : TemplateReport, IReportBuilder
     {
         private readonly WinLossDetailIBCBetLiveCasinoReportBuilder _builder;
-        private const int LastColumnIndex = 16;
+        private const int LastColumnIndex = 13;
 
         public WinLossDetailIBCBetLiveCasinoReport(string filePath, WinLossDetailIBCBetLiveCasinoReportBuilder builder, string products = null)
             : base(filePath, products)
@@ -47,7 +47,6 @@
                 var values = new List<object>
                 {
                     item.Username,
-                    item.BetCount,
                     item.Turnover,
                     item.NetTurnover,
                     item.GrossComm,
@@ -78,7 +77,6 @@
             var values = new List<object>
             {
                 "Grand Total",
-                data.Sum(p => p.BetCount),
                 data.Sum(p => p.Turnover),
                 data.Sum(p => p.NetTurnover),
                 data.Sum(p => p.GrossComm),

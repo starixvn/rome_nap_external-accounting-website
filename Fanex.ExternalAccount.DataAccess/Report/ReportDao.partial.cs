@@ -53,7 +53,6 @@
         {
             CustId = reader.ToInt(ColumnNameConstants.CustId),
             Username = reader.To<string>(ColumnNameConstants.UserName),
-            BetCount = reader.ToInt(ColumnNameConstants.BetCount),
             Turnover = reader.ToDouble(ColumnNameConstants.Turnover),
             NetTurnover = reader.ToDouble(ColumnNameConstants.NetTurnover),
             GrossComm = reader.ToDouble(ColumnNameConstants.GrossComm),
@@ -82,7 +81,6 @@
     {
         public const string CustId = "CustId";
         public const string UserName = "Username";
-        public const string BetCount = "BetCount";
         public const string Turnover = "Turnover";
         public const string NetTurnover = "TurnoverNoDraw";
         public const string GrossComm = "GrossComm";

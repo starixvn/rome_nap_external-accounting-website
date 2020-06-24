@@ -36,7 +36,7 @@
 
         public ActionResult Index()
         {
-            if (!IsIBCINDO())
+            if (!CanViewWinLossDetailForIBCBetLiveCasino())
             {
                 return PartialView("NoPermission");
             }

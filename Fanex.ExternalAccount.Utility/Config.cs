@@ -106,6 +106,14 @@
 
         public static int SearchAndCopySuperMailingListId => Utils.ToInt32(GetValue("SearchAndCopySuperMailingListId"));
 
+        public static string[] GroupsCanViewWinLossDetailForIBCBetLiveCasino()
+        {
+            return GetValue("GroupsCanViewWinLossDetailForIBCBetLiveCasino")
+                .Split(',')
+                .Select(group => group.Trim())
+                .ToArray();
+        }
+
         private static string GetValue(string key) => ConfigurationManager.AppSettings[key];
     }
 }

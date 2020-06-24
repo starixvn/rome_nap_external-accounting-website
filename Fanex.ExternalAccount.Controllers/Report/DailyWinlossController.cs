@@ -44,7 +44,7 @@
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult Index()
         {
-            ViewData["IsIBCINDO"] = IsIBCINDO();
+            ViewData["viewable"] = CanViewWinLossDetailForIBCBetLiveCasino();
 
             return PartialViewBase();
         }

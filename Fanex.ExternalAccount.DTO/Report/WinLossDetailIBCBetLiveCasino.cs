@@ -4,7 +4,6 @@
     {
         public int CustId { get; set; }
         public string Username { get; set; }
-        public int BetCount { get; set; }
         public double Turnover { get; set; }
         public double NetTurnover { get; set; }
         public double GrossComm { get; set; }

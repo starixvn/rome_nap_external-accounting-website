@@ -42,8 +42,8 @@
             </div>
         </div>
         @{
-            bool isIBCINDO = (bool)ViewData["IsIBCINDO"];
-            if (isIBCINDO)
+            bool viewable = (bool)ViewData["viewable"];
+            if (viewable)
             {
                 <div class="searchBar">
                     <span>The report data do not include tickets of IBCBet Live Casino</span>
