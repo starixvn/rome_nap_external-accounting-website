@@ -98,8 +98,8 @@
         public override void BuildMainTitle(ISheet resultSheet)
         {
             string mainTitle = _builder.FromDate.Equals(_builder.ToDate)
-                ? $"Super Win Loss Detail for IBCBet Live Casino on {_builder.FromDate}"
-                : $"Super Win Loss Detail for IBCBet Live Casino From {_builder.FromDate} To {_builder.ToDate}";
+                ? $"Win Loss Detail for IBCBet Live Casino on {_builder.FromDate}"
+                : $"Win Loss Detail for IBCBet Live Casino From {_builder.FromDate} To {_builder.ToDate}";
 
             mainTitle += string.IsNullOrEmpty(Products) ? string.Empty : $" - {Products}";
 
