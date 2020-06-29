@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Report
 {
+    using Core.Shared;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -127,7 +128,8 @@
 #pragma warning disable S1192 // String literals should not be duplicated
                 {"winlostdate", winlostDate},
 #pragma warning restore S1192 // String literals should not be duplicated
-                {"groupname", groupname}
+                {"groupname", groupname},
+                {"excludeproductids", $"{ProductConstants.GTCasino}" }
             };
 
             if (custId != 0)
@@ -143,7 +145,8 @@
             var parameters = new Hashtable
             {
                 {"winlostdate", winlostDate},
-                {"groupname", groupname}
+                {"groupname", groupname},
+                {"excludeproductids", $"{ProductConstants.GTCasino}" }
             };
 
             if (custId != 0)
