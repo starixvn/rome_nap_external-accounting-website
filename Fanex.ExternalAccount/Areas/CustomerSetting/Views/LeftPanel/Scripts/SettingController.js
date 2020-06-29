@@ -731,6 +731,16 @@
         $scope.EnableThirdpartyProduct(42, "Saba.club");
     };
 
+    $scope.EnableSabaVirtualSports = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
+        top.shouldCalculatePopupHeight = false;
+        document.getElementById(id).checked = enable;
+        $scope.EnableThirdpartyProduct(54, "Saba Virtual Sports");
+    };
+
     $scope.EnableDCS = function (productId, productName, enable, id, productText, width, height) {
         var url_SELECT = productId == 24 ? 'customersetting/enablestatus/productstatus/GetProductStatusNotAllowDisabledDownline?' : 'customersetting/enablestatus/productstatus?';
         var query = 'custid=' + $scope.model.personalInfo.custId.value + '&uplineid=' + ($scope.model.personalInfo.roleId.value != 4 ? $scope.model.personalInfo.uplineId.value : 0) +
