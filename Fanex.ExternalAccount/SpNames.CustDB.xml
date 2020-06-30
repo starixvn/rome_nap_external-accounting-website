@@ -110,7 +110,7 @@
     <Setting Key="EAS_UserPolicyUpdMultiple" SpName="EAS_UserPolicyUpdMultiple" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Left Panel">
-    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo_xpre" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelList" SpName="Acc_CustomerSelList" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="DBONUSER.ON_USER.bodbExtAccNet" Plain="0" />
@@ -136,7 +136,7 @@
     <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelAllInfo" SpName="EAS_CustomerSelAllInfo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerSelAllStatus" SpName="EAS_CustomerSelAllStatus" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelAllStatus" SpName="EAS_CustomerSelAllStatus_xpre" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelLoginInfo" SpName="EAS_CustomerSelLoginInfo" DbName="DBACC.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelBalanceInfo" SpName="EAS_CustomerSelBalanceInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
@@ -229,7 +229,7 @@
   </Functions>
   <Function Name="DCS">
     <Function Name="Enable Status">
-      <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect" DbName="DBCUST.CustDB.bodbExtAccNet" />
+      <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect_xpre" DbName="DBCUST.CustDB.bodbExtAccNet" />
       <Setting Key="Acc_CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd" DbName="DBCUST.CustDB.bodbExtAccNet" />
       <Setting Key="Acc_CustSetting_DisableNewProductStatusUpd" SpName="Acc_CustSetting_DisableNewProductStatusUpd" DbName="DBCust.CustDB.bodbExtAccNet" />
     </Function>
@@ -264,7 +264,7 @@
     <!--Select functions-->
     <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductId" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_Admin_DisableGameStatusSelect" SpName="Acc_Admin_DisableGameStatusSelect" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect_xpre" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_Admin_DisableNewProductStatusSelect_Esports" SpName="Acc_Admin_DisableNewProductStatusSelect_Esports" DbName="DBCust.CustDB.bodbExtAccNet" />
     <!--Update functions-->
     <Setting Key="Acc_AdminUpdDisableNumberGame" SpName="Acc_AdminUpdDisableNumberGame" DbName="DBCust.CustDB.bodbExtAccNet" />
@@ -274,7 +274,7 @@
     <Setting Key="Acc_AdminUpdDisableGoldDeluxe" SpName="Acc_AdminUpdDisableGoldDeluxe" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_Admin_DisableGameStatusUpd" SpName="Acc_Admin_DisableGameStatusUpd" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_Admin_DisableNewProductStatusUpd" SpName="Acc_Admin_DisableNewProductStatusUpd" DbName="DBCust.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustSetting_ProductProfileSelect" SpName="Acc_CustSetting_ProductProfileSelect" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_CustSetting_ProductProfileSelect" SpName="Acc_CustSetting_ProductProfileSelect_xpre" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
   <Function Name="Check allow downlines">
     <Setting Key="Acc_CustomerSelCheckAllowedDownlines" SpName="Acc_CustomerSelCheckAllowedDownlines" DbName="DBCust.CustDB.bodbExtAccNet" />
