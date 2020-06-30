@@ -296,7 +296,7 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
             FormatNegative: "$"
         },
         {
-            HeaderText: "Win Loss",
+            HeaderText: "Win/Loss",
             Name: "SAgWinlost",
             Width: 130,
             Sort: true,
@@ -326,7 +326,7 @@ Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino = {
             FormatNegative: "$"
         },
         {
-            HeaderText: "Win Loss",
+            HeaderText: "Win/Loss",
             Name: "ExtWinlost",
             Width: 130,
             Sort: true,
