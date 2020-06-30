@@ -58,7 +58,13 @@
         [AntiXSRFFilter]
         public JsonResult GetCustomerStatus(int custId)
         {
-            return Json(_customerService.GetCustomerAllStatus(custId));
+            var products = _customerService.GetCustomerAllStatus(custId);
+            if (products != null && products.DCSProductsSetting != null)
+            {
+                products.DCSProductsSetting.RemoveAll(i => i.ProductID == ProductConstants.SabaVirtualSports);
+            }
+
+            return Json(products);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
