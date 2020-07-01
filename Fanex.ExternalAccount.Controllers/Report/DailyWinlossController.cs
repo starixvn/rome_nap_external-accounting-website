@@ -43,7 +43,11 @@
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult Index()
-            => PartialViewBase();
+        {
+            ViewData["viewable"] = CanViewWinLossDetailForIBCBetLiveCasino();
+
+            return PartialViewBase();
+        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,
             Policy = AuthenticateAction.AuthenticationType.Read)]

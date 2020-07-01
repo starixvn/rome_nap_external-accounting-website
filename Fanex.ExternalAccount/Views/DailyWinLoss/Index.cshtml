@@ -41,6 +41,15 @@
                 <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel hide"></span>
             </div>
         </div>
+        @{
+            bool viewable = (bool)ViewData["viewable"];
+            if (viewable)
+            {
+                <div class="searchBar">
+                    <span>The report data do not include tickets of IBCBet Live Casino</span>
+                </div>
+            }
+        }
     </div>
     <div id="mainGrid" class="hide">
         <div id="jqgrid" class="removeRadius freegrid content-grid"></div>

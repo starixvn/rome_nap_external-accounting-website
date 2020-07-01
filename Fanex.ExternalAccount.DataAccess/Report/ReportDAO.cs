@@ -13,7 +13,7 @@
     using Interface.Report;
     using Utilities;
 
-    public class ReportDao : DAOBase, IReportDao
+    public partial class ReportDao : DAOBase, IReportDao
     {
         public DataTable EAS_CustomerSelUserInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
         {

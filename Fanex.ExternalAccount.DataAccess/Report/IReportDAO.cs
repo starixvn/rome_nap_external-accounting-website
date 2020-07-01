@@ -1,11 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Interface.Report
 {
+    using DTO.Customer;
+    using DTO.Report;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    using DTO.Customer;
-    using DTO.Report;
 
     public interface IReportDao
     {
@@ -64,6 +64,12 @@
             DateTime toDate,
             string productIds,
             DateTime balanceUpDay);
+
+        List<WinLossDetailIBCBetLiveCasino> EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(
+            string groupName,
+            DateTime fromDate,
+            DateTime toDate,
+            DateTime movebetDay);
 
         ArrayList EAS_Rpt_WinLossDaily_SortingOrder(string groupname);
     }

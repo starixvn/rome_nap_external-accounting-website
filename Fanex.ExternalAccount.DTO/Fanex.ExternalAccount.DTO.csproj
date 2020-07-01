@@ -152,6 +152,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Products\ProductDto.cs" />
     <Compile Include="Products\ProductStatusDto.cs" />
+    <Compile Include="Report\WinLossDetailIBCBetLiveCasino.cs" />
     <Compile Include="Statement\Statement.cs" />
     <Compile Include="RecheckinStatus.cs" />
     <Compile Include="GroupCurrency.cs" />

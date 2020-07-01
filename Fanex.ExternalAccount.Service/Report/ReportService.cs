@@ -13,6 +13,7 @@
     using Utilities;
 
 #pragma warning disable S109 // Magic numbers should not be used
+
     public class ReportService : IReportService
     {
         private const string BalanceUpDayKey = "SUNPLUS.AGENT.MODEL.BL.REPORTS.BALANCEUPDAY";
@@ -91,6 +92,12 @@
             string productIds)
             => _reportDao.EAS_Rpt_WinLossDetail_Ag(custId, memberId, fromDate, toDate, productIds, BalanceUpDate);
 
+        public List<WinLossDetailIBCBetLiveCasino> GetSuperWinLossDetailIBCBetLiveCasino(
+            string groupname,
+            DateTime fromDate,
+            DateTime toDate)
+            => _reportDao.EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(groupname, fromDate, toDate, MoveBetsDate);
+
         public ArrayList GetSortingOrderList(string groupname)
             => _reportDao.EAS_Rpt_WinLossDaily_SortingOrder(groupname);
 
@@ -113,5 +120,6 @@
         private static bool CheckConstraintMoveBetsDay(DateTime fromDate)
             => DateTime.Compare(fromDate, MoveBetsDate) > 0;
     }
+
 #pragma warning restore S109 // Magic numbers should not be used
 }

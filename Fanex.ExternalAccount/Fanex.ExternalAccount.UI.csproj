@@ -474,6 +474,10 @@
     <Content Include="Areas\Common\Views\Shared\Scripts\Fanex.CustomerSetting.js" />
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\ThirdPartyProductStatus\Index.cshtml" />
+    <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.js" />
+    <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\styles\images\cross.png" />
     <Content Include="assets\styles\pages\customer\images\cross.png" />
     <Content Include="assets\styles\pages\customer\images\info.png" />
@@ -1620,6 +1624,7 @@
     <Content Include="Scripts\Manage\Fanex.ExtAcc.Permission.js" />
     <Content Include="Scripts\MultiSelect\select2.css" />
     <Content Include="Scripts\MultiSelect\select2.js" />
+    <Content Include="Scripts\Reports\Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino.js" />
     <Content Include="Scripts\SearchAndCopy\Fanex.ExtAcc.SearchAndCopy.js" />
     <Content Include="Scripts\_Libs\jQuery\classList.js" />
     <Content Include="Scripts\_Libs\jQuery\Core\jquery.js" />
@@ -2671,6 +2676,9 @@
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\searchandcopy\index.scss" />
+    <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2741,6 +2749,8 @@
     <Content Include="ExcelTemplates\Reports\PokerGamesWinLoss.xls" />
     <Content Include="ExcelTemplates\Reports\PokerGamesWinLossAg.xls" />
     <Content Include="ExcelTemplates\Reports\PokerGamesWinLossMAg.xls" />
+    <Content Include="ExcelTemplates\Reports\WinLossDetailIBCBetLiveCasino.xls" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />
@@ -2793,6 +2803,7 @@
     <Content Include="Views\Domain\SSO.cshtml" />
     <Content Include="Views\CustomerList\Index.cshtml" />
     <Content Include="Views\SearchAndCopy\Email.cshtml" />
+    <Content Include="Views\WinLossDetailIBCBetLiveCasino\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">

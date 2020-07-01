@@ -147,6 +147,15 @@
     "sourceMap": true
   },
   {
+    "outputFileName": "assets/bundles/winlossdetailibcbetlivecasino/index.js",
+    "inputFiles": [
+      "Scripts/monthPicker/monPickr-0.0.1.js",
+      "Scripts/Combobox/Combobox.js",
+      "Scripts/Reports/Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino.js"
+    ],
+    "sourceMap": true
+  },
+  {
     "outputFileName": "assets/bundles/dailywinloss/index.js",
     "inputFiles": [
       "Scripts/Reports/Fanex.ExtAcc.DailyWinLoss.js"
