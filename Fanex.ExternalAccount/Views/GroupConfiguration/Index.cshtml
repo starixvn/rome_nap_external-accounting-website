@@ -12,58 +12,59 @@
             @ViewLang.ProductManagement
         </div>
     </div>
-        <div id="tabs" style="float: left; border: none">
-            <ul class="tabs">
-                <li><a href="#tabs-Product" onclick="Fanex.ExtAcc.GroupConfiguration.RenderDataByProduct()">Product</a></li>
-                <li><a href="#tabs-Group" onclick="Fanex.ExtAcc.GroupConfiguration.RenderDataByGroup()">Group</a></li>
-            </ul>
-            <div id="tabs-Product" style="width:100%;">
-                <div id="msgProductSection"></div>
-                <div class="search-form filterbox">
-                    <div class="searchBar">
-                        <div class="form-group">
-                            <label class="label">
-                                @ViewLang.ProductList
-                            </label>
-                            <div id="productlist" class="select-box pull-left">
-                                <select id="productIds" class="usernameInput group">
-                                    @foreach (var item in Model.Products)
-                                    {
-                                        <option value="@item.ProductId">@item.ProductText</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="ProductGrid" class="removeRadius freegrid content-grid">
-                </div>
-                <input type="button" value="Submit" class="btn -submit" style="float:left;margin:30px 30px 30px 730px" id="updateByProduct" />
-            </div>
-            <div id="tabs-Group" style="width:100%;">
-                <div id="msgGroupSection"></div>
-                <div class="search-form filterbox">
+    <div id="tabs" style="float: left; border: none">
+        <ul class="tabs">
+            <li><a href="#tabs-Product" onclick="Fanex.ExtAcc.GroupConfiguration.RenderDataByProduct()">Product</a></li>
+            <li><a href="#tabs-Group" onclick="Fanex.ExtAcc.GroupConfiguration.RenderDataByGroup()">Group</a></li>
+        </ul>
+        <div id="tabs-Product" style="width:100%;">
+            <div id="msgProductSection"></div>
+            <div class="search-form filterbox">
+                <div class="searchBar">
                     <div class="form-group">
                         <label class="label">
-                            @ViewLang.GroupList
+                            @ViewLang.ProductList
                         </label>
-                        <div id="grouplist" class="select-box pull-left">
-                            <select id="groupIds" class="usernameInput group">
-                                @foreach (var item in Model.Groups)
+                        <div id="productlist" class="select-box pull-left">
+                            <select id="productIds" class="usernameInput group">
+                                @foreach (var item in Model.Products)
                                 {
-                                    <option value="@item.GroupID">@item.GroupName</option>
+                                    <option value="@item.ProductId">@item.ProductText</option>
                                 }
                             </select>
                         </div>
                     </div>
                 </div>
-                <div id="GroupGrid" class="removeRadius freegrid content-grid">
-
-                </div>
-                <input type="button" value="Submit" class="btn -submit" style="float:left;margin:30px 30px 30px 730px" id="updateByGroup" />
             </div>
+            <div id="ProductGrid" class="removeRadius freegrid content-grid">
+            </div>
+            <input type="button" value="Submit" class="btn -submit" style="float:left;margin:30px 30px 30px 730px" id="updateByProduct" />
         </div>
+        <div id="tabs-Group" style="width:100%;">
+            <div id="msgGroupSection"></div>
+            <div class="search-form filterbox">
+                <div class="form-group">
+                    <label class="label">
+                        @ViewLang.GroupList
+                    </label>
+                    <div id="grouplist" class="select-box pull-left">
+                        <select id="groupIds" class="usernameInput group">
+                            @foreach (var item in Model.Groups)
+                            {
+                                <option value="@item.GroupID">@item.GroupName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div id="GroupGrid" class="removeRadius freegrid content-grid">
+
+            </div>
+            <input type="button" value="Submit" class="btn -submit" style="float:left;margin:30px 30px 30px 730px" id="updateByGroup" />
+        </div>
+    </div>
 
 </div>
 
 <script src="@Url.Content("~/Scripts/Manage/Fanex.ExtAcc.GroupConfiguration.js")" type="text/javascript"></script>
+@Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())

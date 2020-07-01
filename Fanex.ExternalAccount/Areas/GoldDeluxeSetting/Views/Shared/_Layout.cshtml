@@ -26,7 +26,7 @@
     <div id="mainContainer" class="main-content">
         @RenderBody()
     </div>
-    @Html.AntiForgeryToken()    
+    @Html.AntiForgeryToken()
     @Html.Hidden("GoldDeluxeRoot", Url.Content("~/"))
     @Scripts.Render("~/areasjs/golddeluxe/core")
     @if (GoldDeluxeSettings.Settings.System == SystemType.Accounting)
@@ -57,5 +57,6 @@
         @Scripts.Render("~/areasjs/golddeluxe/setting")
     }
     @RenderSection("scripts", false)
+    @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
 </body>
 </html>

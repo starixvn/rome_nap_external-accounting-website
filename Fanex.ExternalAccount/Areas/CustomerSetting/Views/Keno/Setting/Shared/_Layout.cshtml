@@ -6,21 +6,21 @@
 <html ng-app='kenoSettingModule' id="ng-app">
 
 <head>
-  <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="~/assets/styles/pages/customer/keno-setting.css?v=14062018"
           rel="stylesheet" type="text/css" />
-            <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/dialog/ngDialog.css" rel="stylesheet"
-        type="text/css" />
-          <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/dialog/ngDialog-theme-default.css" rel="stylesheet"
-        type="text/css" />
-          <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/dialog/ngDialog-theme-plain.css" rel="stylesheet"
-        type="text/css" />
+    <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/dialog/ngDialog.css" rel="stylesheet"
+          type="text/css" />
+    <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/dialog/ngDialog-theme-default.css" rel="stylesheet"
+          type="text/css" />
+    <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/dialog/ngDialog-theme-plain.css" rel="stylesheet"
+          type="text/css" />
 
-          <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/Tipsy/tipsy.css" rel="stylesheet"
-        type="text/css" />
-         <link href="~/Areas/CustomerSetting/Styles/input.css" rel="stylesheet"
-        type="text/css" />
+    <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/Tipsy/tipsy.css" rel="stylesheet"
+          type="text/css" />
+    <link href="~/Areas/CustomerSetting/Styles/input.css" rel="stylesheet"
+          type="text/css" />
     @{
         var KenoSetting = JsonConvert.SerializeObject(Model, Formatting.None, new JsonSerializerSettings
         {
@@ -33,32 +33,32 @@
     }
 </head>
 <body>
-<div ng-controller="mainController" class="content">
-<div id="page_main" >
-    <div id="customerInfo" class="tableWidth"  >
-        <div id="errMsg" style="display: none" ng-class="{'errMsg' : errors, 'successMsg' : !errors}">
+    <div ng-controller="mainController" class="content">
+        <div id="page_main">
+            <div id="customerInfo" class="tableWidth">
+                <div id="errMsg" style="display: none" ng-class="{'errMsg' : errors, 'successMsg' : !errors}">
+                </div>
+                <div id="arrowUpDown" style="display: none;" class="collapse ">
+                </div>
+                <div id="names" style="display: none; width: 829px;" class="names">
+                </div>
+                @if (!isBelongToSpecialGroups)
+                {
+                    <div class="errMsg" style="color: #ff5411">@Html.Raw(Role.IsMember(Model.CustomerInformation.RoleId) ? LayoutTexts.MemberUnlimitedBetSettingWarningMessage : LayoutTexts.SMAUnlimitedBetSettingWarningMessage)</div>
+                }
+                @Html.Partial("~/Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/CustomerInfo/_Information.cshtml")
+                @RenderBody()
+                @Html.AntiForgeryToken()
+            </div>
+            <div class="tableWidth">
+                @if (Role.IsNotSuper(Model.CustomerInformation.RoleId))
+                {
+                    <input ng-class-name="btnUpdate" check-disable-element ng-model="isUpdatedKeno" ng-click="updated(false)" value="Submit"
+                           type="button" class="btnUpdate" />
+                }
+            </div>
         </div>
-        <div id="arrowUpDown" style="display: none;"  class="collapse ">
-        </div>
-        <div id="names" style="display: none; width: 829px;" class="names">
-        </div>
-        @if (!isBelongToSpecialGroups)
-        {
-            <div class="errMsg" style="color: #ff5411">@Html.Raw(Role.IsMember(Model.CustomerInformation.RoleId) ? LayoutTexts.MemberUnlimitedBetSettingWarningMessage : LayoutTexts.SMAUnlimitedBetSettingWarningMessage)</div>
-        }
-        @Html.Partial("~/Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/CustomerInfo/_Information.cshtml")
-        @RenderBody()
-        @Html.AntiForgeryToken()
     </div>
-    <div class="tableWidth">
-        @if (Role.IsNotSuper(Model.CustomerInformation.RoleId))
-        {
-        <input ng-class-name="btnUpdate" check-disable-element ng-model="isUpdatedKeno" ng-click="updated(false)"  value="Submit" 
-            type="button" class="btnUpdate" />
-        }
-    </div>
-</div>
-</div>
 </body>
 
 
@@ -123,7 +123,8 @@
         }
     }
 
-   
+
 </script>
 @RenderSection("scripts", required: false)
+@Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
 </html>

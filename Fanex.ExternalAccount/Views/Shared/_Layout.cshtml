@@ -60,7 +60,7 @@
         <header id="header" class="header @Env">
             @if (!string.IsNullOrEmpty(Env))
             {
-              @Html.Raw("<div class='env'>(" + Env + ")</div>");
+                @Html.Raw("<div class='env'>(" + Env + ")</div>");
             }
             <div id="iconUserInfo" class="icon-account-settings active"></div>
             <div id='accMenuGroup' class="group-user">
@@ -178,5 +178,6 @@
 
     @Fanex.ExternalAccount.Core.Helpers.GoogleAnalyticHepler.Render()
     @Fanex.ExternalAccount.Core.Helpers.TrackJSHelper.Render()
+    @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
 </body>
 </html>
