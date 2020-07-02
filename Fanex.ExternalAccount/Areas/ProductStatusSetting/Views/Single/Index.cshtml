@@ -129,6 +129,7 @@
             HttpContext.Current.IsDebuggingEnabled ? string.Empty : ".min",
             assetsVersion);
         <script type="text/javascript" src="@Url.Content(jsUrl)"></script>
+        @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
     }
 </body>
 </html>

@@ -77,5 +77,6 @@
     <script src="@Url.Content("~/Areas/CustomerSetting/Views/EnableStatus/Scripts/EnableStatus.js")" type="text/javascript"></script>
     @Fanex.ExternalAccount.Core.Helpers.GoogleAnalyticHepler.Render()
     @Fanex.ExternalAccount.Core.Helpers.TrackJSHelper.Render()
+    @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
 </body>
 </html>

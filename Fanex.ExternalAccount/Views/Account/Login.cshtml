@@ -78,5 +78,6 @@
         }
     </script>
     @StaticResources.RenderScripts("~/assets/bundles/login/login")
+    @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
 </body>
 </html>

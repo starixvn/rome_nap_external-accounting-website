@@ -42,7 +42,7 @@
                                        data-originalvalue="@item.IsDisabled.ToString().ToLowerInvariant()"
                                        data-sporttype="@item.SportType"
                                        data-bettype="@item.BetType"
-                                       @(!item.IsDisabled ? "checked=checked" : string.Empty) 
+                                       @(!item.IsDisabled ? "checked=checked" : string.Empty)
                                        @(item.IsDisabledUpline ? "disabled=disabled" : string.Empty) />
                                 <label for="checkbox-main-@item.SportType-@item.BetType">@roleName</label>
                             </div>
@@ -92,6 +92,7 @@
             HttpContext.Current.IsDebuggingEnabled ? string.Empty : ".min",
             assetsVersion);
         <script type="text/javascript" src="@Url.Content(jsUrl)"></script>
+        @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
     }
 </body>
 </html>

@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.ActivityTracking.LogEngines
 {
+    using System.Web;
     using Fanex.ExternalAccount.ActivityTracking.Configurations;
     using Fanex.Logging;
     using Fanex.Logging.Sentry.RavenClient;
@@ -14,7 +15,9 @@
                 FrontEndDsn = new SharpRaven.Dsn(AppSettings.SentryUrl)
             };
 
-            return new SentryLogging(sentryOptions, AppSettings.RavenLibPath);
+            return new SentryLogging(
+                sentryOptions,
+                $"{HttpRuntime.AppDomainAppVirtualPath.TrimEnd(new[] { '/' })}{AppSettings.RavenLibPath}");
         }
     }
 }

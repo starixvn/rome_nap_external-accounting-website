@@ -2,7 +2,7 @@
 @{
     var canEditForceChange = Role.IsSuper(ViewBag.roleId);
 }
-@{ 
+@{
     Layout = null;
 }
 
@@ -79,3 +79,4 @@
     var roleId = parseInt('@ViewBag.roleId');
 </script>
 <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/SecurityCode/Scripts/SecurityCode.js")" type="text/javascript"></script>
+@Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())

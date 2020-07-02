@@ -35,5 +35,6 @@
         }
     </script>
     @RenderSection("Scripts", false)
+    @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
 </body>
 </html>

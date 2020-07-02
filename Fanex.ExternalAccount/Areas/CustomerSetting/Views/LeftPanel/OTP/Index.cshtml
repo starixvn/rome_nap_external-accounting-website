@@ -9,7 +9,7 @@
     int customerId = Request["custId"] != null ? Converter.ToInt(Request["custId"]) : 0;
     string customerName = Request["username"] != null ? Converter.ToString2(Request["username"]) : string.Empty;
 }
-@{ 
+@{
     Layout = null;
 }
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
@@ -41,3 +41,4 @@
 <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/OTP/Scripts/OTP.js")" type="text/javascript"></script>
+@Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
