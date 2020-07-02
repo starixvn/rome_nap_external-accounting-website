@@ -114,7 +114,7 @@
     </div>
     <div id="footer">
     </div>
-
+    @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
     @StaticResources.RenderScripts("~/assets/bundles/common")
 
     <script type="text/javascript">
@@ -178,6 +178,5 @@
 
     @Fanex.ExternalAccount.Core.Helpers.GoogleAnalyticHepler.Render()
     @Fanex.ExternalAccount.Core.Helpers.TrackJSHelper.Render()
-    @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
 </body>
 </html>

@@ -38,5 +38,8 @@
         {
             throw new NotImplementedException("Test Exception.");
         }
+
+        public ActionResult TestSentryLog()
+            => View();
     }
 }
