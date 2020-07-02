@@ -9,6 +9,7 @@
     using System.Web;
 
 #pragma warning disable S109 // Magic numbers should not be used
+
     public static class Utils
     {
         public static bool IsExistedInList(this IEnumerable<IPRange> ipList, string ip)
@@ -120,7 +121,6 @@
             {
                 return 0.0d;
             }
-
 
             double.TryParse(value.ToString(), out double val);
 
@@ -245,6 +245,12 @@
             }
             return false;
         }
+
+        // For Security Code Feature:
+        public static double ConvertDateTimeToMilliseconds(DateTime dateTime) => (dateTime - DateTime.MinValue).TotalMilliseconds;
+
+        // For Security Code Feature.
     }
+
 #pragma warning restore S109 // Magic numbers should not be used
 }

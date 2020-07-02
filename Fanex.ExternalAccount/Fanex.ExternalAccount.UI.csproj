@@ -1724,6 +1724,7 @@
     <Content Include="Scripts\MultiSelect\select2.js" />
     <Content Include="Scripts\Reports\Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino.js" />
     <Content Include="Scripts\SearchAndCopy\Fanex.ExtAcc.SearchAndCopy.js" />
+    <Content Include="Scripts\SecurityCode\Fanex.ExtAcc.SecurityCode.js" />
     <Content Include="Scripts\_Libs\jQuery\classList.js" />
     <Content Include="Scripts\_Libs\jQuery\Core\jquery.js" />
     <Content Include="Scripts\_Libs\jQuery\Countdown\jquery.countdown.css" />

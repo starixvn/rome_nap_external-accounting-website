@@ -1,10 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Core.Context
 {
+    using CustomerSetting.Module.Core.Web;
     using System;
     using System.Globalization;
     using System.Linq;
     using System.Web;
-    using CustomerSetting.Module.Core.Web;
     using Utilities;
 
     public class CurrentSession : ICurrentSession
@@ -30,6 +30,7 @@
         public const string EASUserAttempt = "_userAttempt";
         public const string EASHashPwd = "EASHashPwd";
         public const string EASLine = "EASLine";
+        public const string EASSCExpiredTime = "EASSCExpiredTime";
 
         public static ICurrentSession Instance => new CurrentSession();
 
@@ -40,6 +41,7 @@
         public bool HadNoSessionData => !IsLogin;
 
 #pragma warning disable S2325 // Methods and properties that don't access instance data should be static
+
         public int LoginAttempt
 #pragma warning restore S2325 // Methods and properties that don't access instance data should be static
         {
@@ -49,6 +51,7 @@
         }
 
 #pragma warning disable S2325 // Methods and properties that don't access instance data should be static
+
         public string UserAttempt
 #pragma warning restore S2325 // Methods and properties that don't access instance data should be static
         {

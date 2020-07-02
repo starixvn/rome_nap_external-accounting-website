@@ -353,8 +353,10 @@
     <Compile Include="Context\ExternalAccountAuthenticateAttribute.cs" />
     <Compile Include="Context\ExtRequest.cs" />
     <Compile Include="Context\NoCaptchaSectionConfiguration.cs" />
+    <Compile Include="Filters\BaseActionFilter.cs" />
     <Compile Include="Filters\LogActionFilterAttribute.cs" />
     <Compile Include="Filters\CheckBelongingFilter.cs" />
+    <Compile Include="Filters\SecurityCodeFilter.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GlobalSuppressions2.cs" />
     <Compile Include="Helpers\MvcHelpers.cs" />

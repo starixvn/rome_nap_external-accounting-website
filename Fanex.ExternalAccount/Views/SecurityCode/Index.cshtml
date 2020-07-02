@@ -1,0 +1,62 @@
+﻿@using Fanex.ExternalAccount.Utilities;
+@{
+    ViewBag.Title = ViewLang.SCPageTile;
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style type="text/css">
+        .error {
+            line-height: 1.5;
+            text-align: left;
+            vertical-align: middle;
+            color: #dc3545;
+            margin-top: 5px;
+        }
+    </style>
+    @StaticResources.RenderStyles("~/assets/bundles/login/login")
+</head>
+<body>
+    @using (Html.BeginForm("Verify", "SecurityCode"))
+    {
+        <div class="block-login">
+            <div class="row">
+                <div class="login-logo icon-outline-lock"></div>
+            </div>
+            <div class="row">
+                <h3 style="text-align: center;">@string.Format(ViewLang.SCFormTile, ViewBag.UserName)</h3>
+            </div>
+            <div class="row">
+                <input class="form-control no-spin"
+                       type="number"
+                       name="code"
+                       id="code"
+                       value=""
+                       placeholder="@ViewLang.SCFormInputPlaceholder"
+                       maxlength="6"
+                       autocomplete="off" />
+                <label id="code-error" class="error">@ViewBag.ErrorMessage</label>
+                <span class="icon-lock"></span>
+            </div>
+
+            <div class="row">
+                <button id="btnLogin" class="btnLogin">Verify</button>
+            </div>
+        </div>
+    }
+
+    <script type="text/javascript">
+        function resolveClientUrl(relativeUrl) {
+            return '@Url.Content("~/")' + relativeUrl;
+        }
+    </script>
+
+    @StaticResources.RenderScripts("~/assets/bundles/securitycode/index")
+</body>
+</html>

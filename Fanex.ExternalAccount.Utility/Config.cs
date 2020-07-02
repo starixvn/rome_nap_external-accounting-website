@@ -135,6 +135,19 @@
                 .ToArray();
         }
 
+        // For Security Code Feature:
+
+        public static string[] GetSCIgnoredActions()
+        {
+            return GetValue("SCFilter:IgnoredActions").Split(',').Select(action => action.Trim()).ToArray();
+        }
+
+        public static string GetSCIdleTime => GetValue("SCFilter:IdleTime");
+
+        public static string GetSecurityCode(string userName) => GetValue(userName);
+
+        //  For Security Code Feature.
+
         private static string GetValue(string key) => ConfigurationManager.AppSettings[key];
     }
 }
