@@ -24,7 +24,7 @@ namespace Fanex.ExternalAccount.Core.Filters
             }
             if (session[SessionConstants.EASSCExpiredTime] == null)
             {
-                filterContext.Result = new RedirectResult("~/SecurityCode/Index");
+                filterContext.Result = new RedirectResult("~/SecurityCode/Index?ReturnUrl=" + actionURL);
                 return;
             }
 
@@ -32,16 +32,16 @@ namespace Fanex.ExternalAccount.Core.Filters
             double currentTime = Utils.ConvertDateTimeToMilliseconds(DateTime.Now);
             if (scExpiredTime < currentTime)
             {
-                filterContext.Result = new RedirectResult("~/SecurityCode/Index");
+                filterContext.Result = new RedirectResult("~/SecurityCode/Index?ReturnUrl=" + actionURL);
             }
         }
 
         protected override bool IsIgnoredAction(string actionURL)
         {
-            string[] listIgnoreActions = Config.GetSCIgnoredActions();
-            foreach (var ignoreAction in listIgnoreActions)
+            string[] listFilteredActions = Config.GetSCFilteredActions();
+            foreach (var filteredActions in listFilteredActions)
             {
-                if (IsContainsIgnoreCase(actionURL, ignoreAction))
+                if (!IsContainsIgnoreCase(actionURL, filteredActions))
                 {
                     return true;
                 }

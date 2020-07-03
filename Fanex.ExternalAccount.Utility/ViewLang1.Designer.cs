@@ -1808,11 +1808,11 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter the security code here..
+        ///   Looks up a localized string similar to The security code is invalid..
         /// </summary>
-        public static string SCFormInputPlaceholder {
+        public static string SCErrorMessage {
             get {
-                return ResourceManager.GetString("SCFormInputPlaceholder", resourceCulture);
+                return ResourceManager.GetString("SCErrorMessage", resourceCulture);
             }
         }
         
@@ -1826,11 +1826,11 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The security code is invalid..
+        ///   Looks up a localized string similar to Enter the security code here..
         /// </summary>
-        public static string SCInvalidMessage {
+        public static string SCInputPlaceholder {
             get {
-                return ResourceManager.GetString("SCInvalidMessage", resourceCulture);
+                return ResourceManager.GetString("SCInputPlaceholder", resourceCulture);
             }
         }
         

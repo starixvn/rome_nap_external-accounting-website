@@ -210,9 +210,15 @@
     "sourceMap": true
   },
   {
+    "outputFileName": "assets/bundles/securitycode/index.css",
+    "inputFiles": [
+      "Scripts/SecurityCode/Fanex.ExtAcc.SecurityCode.css"
+    ],
+    "sourceMap": true
+  },
+  {
     "outputFileName": "assets/bundles/securitycode/index.js",
     "inputFiles": [
-      "Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.3.min.js",
       "Scripts/SecurityCode/Fanex.ExtAcc.SecurityCode.js"
     ],
     "sourceMap": true

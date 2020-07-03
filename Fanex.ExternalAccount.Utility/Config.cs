@@ -137,9 +137,9 @@
 
         // For Security Code Feature:
 
-        public static string[] GetSCIgnoredActions()
+        public static string[] GetSCFilteredActions()
         {
-            return GetValue("SCFilter:IgnoredActions").Split(',').Select(action => action.Trim()).ToArray();
+            return GetValue("SCFilter:FilteredActions").Split(',').Select(action => action.Trim()).ToArray();
         }
 
         public static string GetSCIdleTime => GetValue("SCFilter:IdleTime");

@@ -16,6 +16,7 @@ namespace Fanex.ExternalAccount.Core.Filters
             var currentArea = filterContext.RouteData.DataTokens["area"] ?? string.Empty;
             var currentController = (string)routingValues["controller"] ?? string.Empty;
             var currentAction = (string)routingValues["action"] ?? string.Empty;
+
             return string.Join("/", new[] { currentArea, currentController, currentAction });
         }
 

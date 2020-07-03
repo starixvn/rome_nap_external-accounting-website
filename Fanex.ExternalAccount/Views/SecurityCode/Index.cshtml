@@ -4,59 +4,43 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>@ViewBag.Title</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=9" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <style type="text/css">
-        .error {
-            line-height: 1.5;
-            text-align: left;
-            vertical-align: middle;
-            color: #dc3545;
-            margin-top: 5px;
-        }
-    </style>
-    @StaticResources.RenderStyles("~/assets/bundles/login/login")
-</head>
-<body>
-    @using (Html.BeginForm("Verify", "SecurityCode"))
-    {
+@StaticResources.RenderStyles("~/assets/bundles/securitycode/index")
+
+<div id="securityCodePage" class="sc-page">
+    <form id="verySecurityCodeForm">
         <div class="block-login">
             <div class="row">
                 <div class="login-logo icon-outline-lock"></div>
             </div>
             <div class="row">
-                <h3 style="text-align: center;">@string.Format(ViewLang.SCFormTile, ViewBag.UserName)</h3>
+                <h3 class="sc-form-title">@string.Format(ViewLang.SCFormTile, ViewBag.UserName)</h3>
             </div>
             <div class="row">
-                <input class="form-control no-spin"
-                       type="number"
+                <input class="form-control"
+                       type="password"
                        name="code"
                        id="code"
                        value=""
-                       placeholder="@ViewLang.SCFormInputPlaceholder"
+                       placeholder="@ViewLang.SCInputPlaceholder"
                        maxlength="6"
                        autocomplete="off" />
-                <label id="code-error" class="error">@ViewBag.ErrorMessage</label>
+                <label id="codeError" class="sc-error-msg hidden">@ViewLang.SCErrorMessage</label>
                 <span class="icon-lock"></span>
+
+                <input type="hidden" id="returnUrl" name="return-url" value="@ViewBag.ReturnUrl" />
             </div>
 
             <div class="row">
-                <button id="btnLogin" class="btnLogin">Verify</button>
+                <button id="btnVerify" class="sc-btn-verify">Verify</button>
             </div>
         </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    function resolveClientUrl(relativeUrl) {
+        return '@Url.Content("~/")' + relativeUrl;
     }
+</script>
 
-    <script type="text/javascript">
-        function resolveClientUrl(relativeUrl) {
-            return '@Url.Content("~/")' + relativeUrl;
-        }
-    </script>
-
-    @StaticResources.RenderScripts("~/assets/bundles/securitycode/index")
-</body>
-</html>
+@StaticResources.RenderScripts("~/assets/bundles/securitycode/index")

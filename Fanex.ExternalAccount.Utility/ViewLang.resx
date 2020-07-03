@@ -856,7 +856,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="SCFormTile" xml:space="preserve">
     <value>Please verify that you are {0}.</value>
   </data>
-  <data name="SCInvalidMessage" xml:space="preserve">
+  <data name="SCErrorMessage" xml:space="preserve">
     <value>The security code is invalid.</value>
   </data>
   <data name="SCPageTile" xml:space="preserve">

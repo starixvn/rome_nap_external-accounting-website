@@ -1,10 +1,14 @@
-﻿using Fanex.ExternalAccount.Core.Context;
+﻿using Fanex.CustomerSetting.Security.Authenticate;
+using Fanex.ExternalAccount.Core.Context;
+using Fanex.ExternalAccount.Core.Shared;
 using Fanex.ExternalAccount.Utilities;
 using System;
 using System.Web.Mvc;
 
 namespace Fanex.ExternalAccount.Controllers.SecurityCode
 {
+    [ExternalAccountAuthenticate(Function = eFunctions.Administration,
+        Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
     public class SecurityCodeController : Controller
     {
         private readonly CurrentSession _currentSession;
@@ -14,15 +18,15 @@ namespace Fanex.ExternalAccount.Controllers.SecurityCode
             _currentSession = new CurrentSession();
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string ReturnUrl)
         {
             ViewBag.UserName = _currentSession.UserName;
-            ViewBag.ErrorMessage = (string)TempData["ErrorMessage"] ?? string.Empty;
+            ViewBag.ReturnUrl = ReturnUrl;
 
             return View();
         }
 
-        public ActionResult Verify(string code)
+        public string Verify(string code)
         {
             string userName = _currentSession.UserName;
             string userSecurityCode = Config.GetSecurityCode(userName);
@@ -34,14 +38,10 @@ namespace Fanex.ExternalAccount.Controllers.SecurityCode
 
                 HttpContext.Session.Add(CurrentSession.EASSCExpiredTime, scExpiredTime);
 
-                return RedirectToReturnUrl("~/Home/Index");
+                return "valid";
             }
 
-            TempData["ErrorMessage"] = ViewLang.SCInvalidMessage;
-
-            return RedirectToAction("Index");
+            return "invalid";
         }
-
-        private RedirectResult RedirectToReturnUrl(string returnUrl) => Redirect(returnUrl);
     }
 }

@@ -482,6 +482,8 @@
     <Content Include="assets\bundles\problemaccount\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\securitycode\index.css" />
+    <Content Include="assets\bundles\securitycode\index.js" />
     <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.js" />
     <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -2877,6 +2879,8 @@
     <Content Include="Views\CustomerList\Index.cshtml" />
     <Content Include="Views\SearchAndCopy\Email.cshtml" />
     <Content Include="Views\WinLossDetailIBCBetLiveCasino\Index.cshtml" />
+    <Content Include="Views\SecurityCode\Index.cshtml" />
+    <Content Include="Scripts\SecurityCode\Fanex.ExtAcc.SecurityCode.css" />
     <Content Include="Views\Home\TestSentryLog.cshtml" />
     <Content Include="Views\AssociationAccount\Index.cshtml" />
     <Content Include="Views\ProblemAccount\Index.cshtml" />
