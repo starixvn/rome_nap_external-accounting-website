@@ -2804,6 +2804,7 @@
     <Content Include="Views\CustomerList\Index.cshtml" />
     <Content Include="Views\SearchAndCopy\Email.cshtml" />
     <Content Include="Views\WinLossDetailIBCBetLiveCasino\Index.cshtml" />
+    <Content Include="Views\Home\TestSentryLog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">

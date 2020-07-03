@@ -107,4 +107,5 @@
     </div>
     @Html.AntiForgeryToken()
 </div>
+@Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
 @StaticResources.RenderScripts("~/assets/bundles/winlossdetail/index")
