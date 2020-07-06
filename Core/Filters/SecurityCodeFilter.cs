@@ -1,4 +1,5 @@
-﻿using Fanex.ExternalAccount.Utilities;
+﻿using Fanex.ExternalAccount.Core.Configurations.SecurityCode;
+using Fanex.ExternalAccount.Utilities;
 using System;
 using System.Web.Mvc;
 using SessionConstants = Fanex.ExternalAccount.Core.Context.CurrentSession;
@@ -11,7 +12,7 @@ namespace Fanex.ExternalAccount.Core.Filters
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var actionURL = GetActionLink(filterContext);
-            if (IsIgnoredAction(actionURL))
+            if (!IsIgnoredAction(actionURL))
             {
                 return;
             }
@@ -38,10 +39,10 @@ namespace Fanex.ExternalAccount.Core.Filters
 
         protected override bool IsIgnoredAction(string actionURL)
         {
-            string[] listFilteredActions = Config.GetSCFilteredActions();
+            string[] listFilteredActions = SecurityCodeManager.GetFilteredActions();
             foreach (var filteredActions in listFilteredActions)
             {
-                if (!IsContainsIgnoreCase(actionURL, filteredActions))
+                if (IsContainsIgnoreCase(actionURL, filteredActions))
                 {
                     return true;
                 }

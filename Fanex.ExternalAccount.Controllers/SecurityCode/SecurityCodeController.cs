@@ -1,4 +1,5 @@
 ﻿using Fanex.CustomerSetting.Security.Authenticate;
+using Fanex.ExternalAccount.Core.Configurations.SecurityCode;
 using Fanex.ExternalAccount.Core.Context;
 using Fanex.ExternalAccount.Core.Shared;
 using Fanex.ExternalAccount.Utilities;
@@ -29,11 +30,11 @@ namespace Fanex.ExternalAccount.Controllers.SecurityCode
         public string Verify(string code)
         {
             string userName = _currentSession.UserName;
-            string userSecurityCode = Config.GetSecurityCode(userName);
+            string userSecurityCode = SecurityCodeManager.GetSecurityCode(userName);
 
             if (userSecurityCode.Equals(code, StringComparison.CurrentCulture))
             {
-                double idleTime = Utils.ToDouble(Config.GetSCIdleTime);
+                double idleTime = Utils.ToDouble(SecurityCodeManager.GetIdleTime);
                 double scExpiredTime = Utils.ConvertDateTimeToMilliseconds(DateTime.Now.AddMilliseconds(idleTime));
 
                 HttpContext.Session.Add(CurrentSession.EASSCExpiredTime, scExpiredTime);

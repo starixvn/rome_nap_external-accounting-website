@@ -2758,6 +2758,18 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <Content Include="Configurations\InternalUrlSection.config" />
+    <Content Include="Configurations\InternalUrlSection.mnl.config" />
+    <Content Include="Configurations\InternalUrlSection.Production.config" />
+    <Content Include="Configurations\InternalUrlSection.sit.config" />
+    <Content Include="Configurations\InternalUrlSection.staging.config" />
+    <Content Include="Configurations\InternalUrlSection.uat.config" />
+    <Content Include="Configurations\SecurityCodeSection.config" />
+    <Content Include="Configurations\SecurityCodeSection.mnl.config" />
+    <Content Include="Configurations\SecurityCodeSection.ng2.config" />
+    <Content Include="Configurations\SecurityCodeSection.production.config" />
+    <Content Include="Configurations\SecurityCodeSection.sit.config" />
+    <Content Include="Configurations\SecurityCodeSection.staging.config" />
+    <Content Include="Configurations\SecurityCodeSection.uat.config" />
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.ng2.config">
       <SubType>Designer</SubType>
