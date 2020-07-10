@@ -1,23 +1,19 @@
 @font-face {
   font-family: 'AlphaAdmin';
-  src:  url('fonts/AlphaAdmin.eot?3d71m2');
-  src:  url('fonts/AlphaAdmin.eot?3d71m2#iefix') format('embedded-opentype'),
-    url('fonts/AlphaAdmin.ttf?3d71m2') format('truetype'),
-    url('fonts/AlphaAdmin.woff?3d71m2') format('woff'),
-    url('fonts/AlphaAdmin.svg?3d71m2#AlphaAdmin') format('svg');
+  src:  url('fonts/AlphaAdmin.eot?am5oac');
+  src:  url('fonts/AlphaAdmin.eot?am5oac#iefix') format('embedded-opentype'),
+    url('fonts/AlphaAdmin.ttf?am5oac') format('truetype'),
+    url('fonts/AlphaAdmin.woff?am5oac') format('woff'),
+    url('fonts/AlphaAdmin.svg?am5oac#AlphaAdmin') format('svg');
   font-weight: normal;
   font-style: normal;
+  font-display: block;
 }
-@font-face {
-    font-family: 'Tahoma Custom';
-    src: url('fonts/Tahoma Regular font.ttf?3d71m2#iefix') format('truetype'), url('fonts/TAHOMA_0.ttf?3d71m2') format('truetype'), url('fonts/TAHOMAB0.ttf?3d71m2') format('truetype'), url('fonts/TAHOMABD.ttf?3d71m2') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
+
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'AlphaAdmin' !important;
-  speak: none;
+  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -29,6 +25,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-wifi:before {
+  content: "\e93a";
+}
 .icon-do-not-disturb:before {
   content: "\e939";
 }

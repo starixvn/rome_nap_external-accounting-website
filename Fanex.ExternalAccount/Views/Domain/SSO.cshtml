@@ -5,10 +5,14 @@
     Layout = null;
 
     string[] domains = null;
-    var currentDomain = Request.Headers["Host"] +
-        (Request.ApplicationPath.Equals("/", StringComparison.OrdinalIgnoreCase) ? string.Empty : Request.ApplicationPath);
-    var supportSwitchLine = !Group.IsOfficeGroup(new CurrentSession().CurrencyGroup);
+    var appPath = Request.ApplicationPath;
+    var virtualDirectory = appPath.Equals("/", StringComparison.OrdinalIgnoreCase) ? string.Empty : appPath;
+    var currentDomain = Request.Headers["Host"] + virtualDirectory;
+
     string currentLine = currentDomain;
+    string currentLineValue = string.Empty;
+
+    var supportSwitchLine = !Group.IsOfficeGroup(new CurrentSession().CurrencyGroup);
 
     if (supportSwitchLine)
     {
@@ -22,12 +26,15 @@
                 break;
             }
         }
+
+        var url = Request.Url;
+        currentLineValue = url.Scheme + Uri.SchemeDelimiter + url.Authority + virtualDirectory;
     }
 }
 @if (supportSwitchLine && domains.Length > 0)
 {
-    <select onchange="javascript:switchLine(this)" style="background-color: #313c51; color: #ffa500; cursor: pointer; font-weight: bold">
-        <option>
+    <select onchange="javascript:switchLine(this)" id="ddl-switchLine">
+        <option value="@currentLineValue">
             @currentLine
         </option>
             @for (var i = 0; i < domains.Length; i++)
@@ -41,7 +48,7 @@
                     string.IsNullOrWhiteSpace(domainName) ? string.Empty : "http://" + domainName;
                 if (!string.IsNullOrWhiteSpace(domainName))
                 {
-                    <option style="color: #fff" value="@formatedDomain">@aliasName</option>
+                    <option value="@formatedDomain" data-classname="icon-lock-reset">@aliasName</option>
                 }
             }
     </select>

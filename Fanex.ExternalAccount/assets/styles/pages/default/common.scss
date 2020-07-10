@@ -1806,3 +1806,52 @@ ul, li {
         width: 122px;
     }
 }
+
+.wifi-box {
+    position: absolute;
+    right: 56px;
+    top: 8px;
+    display: none;
+
+    .icon-wifi {
+        color: #fff;
+        font-size: 20px;
+    }
+
+    @media screen and (max-width: 480px) {
+        display: inline-block;
+    }
+}
+
+.list-wifi {
+    position: absolute;
+    top: 48px;
+    right: 24px;
+    z-index: 9999;
+    list-style: none;
+    padding-left: 0;
+    min-width: 250px;
+    margin: 0;
+    padding: 12px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+
+    .line-network {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 12px;
+        border: 1px solid #CDCDCD;
+        border-radius: 3px;
+        margin-bottom: 8px;
+
+        &.in-use {
+            background-color: #ECECEC;
+        }
+    }
+
+    .icon-wifi {
+        font-size: 24px;
+        color: #2F80ED;
+    }
+}

@@ -496,6 +496,9 @@
       <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
     </Content>
     <Content Include="assets\styles\images\cross.png" />
+    <Content Include="assets\styles\images\medium-network.svg" />
+    <Content Include="assets\styles\images\sample_test_network_speed_1.jpg" />
+    <Content Include="assets\styles\images\weak-network.svg" />
     <Content Include="assets\styles\pages\customer\images\cross.png" />
     <Content Include="assets\styles\pages\customer\images\info.png" />
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.js" />
@@ -2801,6 +2804,7 @@
     <Content Include="ExcelTemplates\Reports\PokerGamesWinLossMAg.xls" />
     <Content Include="ExcelTemplates\Reports\WinLossDetailIBCBetLiveCasino.xls" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Scripts\Account\Fanex.ExtAcc.SSO.js" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />

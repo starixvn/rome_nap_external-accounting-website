@@ -98,7 +98,8 @@
       "Scripts/Customer/Fanex.ExtAcc.Customer.EditMultiple.js",
       "Scripts/isMobile.min.js",
       "Scripts/knockout.min-2.0.js",
-      "Scripts/Fanex.ExtAcc.Utils.js"
+      "Scripts/Fanex.ExtAcc.Utils.js",
+      "Scripts/Account/Fanex.ExtAcc.SSO.js"
     ],
     "sourceMap": true
   },
