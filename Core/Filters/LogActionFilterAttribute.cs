@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Core.Filters
 {
     using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Core.Shared;
     using System;
     using System.Diagnostics;
     using System.Web.Mvc;
@@ -13,7 +14,7 @@
             if (IsAppliedUserName())
             {
                 var actionURL = GetActionLink(filterContext);
-                if (!IsIgnoredAction(actionURL))
+                if (!IsContainsAction(actionURL, ignoredActions))
                 {
                     var stopWatch = (Stopwatch)filterContext.HttpContext.Items["StopWatch"];
                     var duration = stopWatch == null ? -1 : stopWatch.ElapsedMilliseconds;
@@ -26,12 +27,15 @@
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (IsAppliedUserName() && !IsIgnoredAction(GetActionLink(filterContext)))
+            var actionURL = GetActionLink(filterContext);
+            if (IsAppliedUserName() && !IsContainsAction(actionURL, ignoredActions))
             {
                 var stopWatch = new Stopwatch();
                 stopWatch.Start();
                 filterContext.HttpContext.Items["StopWatch"] = stopWatch;
             }
         }
+
+        private readonly string[] ignoredActions = AppSettings.LogActionFilter_IgnoredActions.Split(',');
     }
 }

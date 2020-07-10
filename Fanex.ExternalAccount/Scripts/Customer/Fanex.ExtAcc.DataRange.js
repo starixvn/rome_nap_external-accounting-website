@@ -37,19 +37,19 @@
             var key = e.charCode || e.keyCode || 0;
 
             var isAccept =
-            (e.ctrlKey && e.keyCode == 67) || //accept ctrl + c(copy)
-            (e.ctrlKey && e.keyCode == 86) || //accept ctrl + v(paste)
-            key == 16 || //shift
-            key == 17 || //ctrl
-            key == 8 || //backspace
-            key == 36 || //home
-            key == 35 || //end
-            key == 9 || //tab
-            key == 46 || //delete
+                (e.ctrlKey && e.keyCode == 67) || //accept ctrl + c(copy)
+                (e.ctrlKey && e.keyCode == 86) || //accept ctrl + v(paste)
+                key == 16 || //shift
+                key == 17 || //ctrl
+                key == 8 || //backspace
+                key == 36 || //home
+                key == 35 || //end
+                key == 9 || //tab
+                key == 46 || //delete
 
-            (key >= 37 && key <= 40) || //left , right , up , down (arrow)
-            (key >= 48 && key <= 57) || //0-9
-            (key >= 96 && key <= 105); //numpad 0-9
+                (key >= 37 && key <= 40) || //left , right , up , down (arrow)
+                (key >= 48 && key <= 57) || //0-9
+                (key >= 96 && key <= 105); //numpad 0-9
 
             return isAccept;
         }).keyup(function () {
@@ -139,10 +139,17 @@
     postUpdateDataRange: function (params) {
         $.ajax({
             url: resolveClientUrl("DataRange/Update"),
-            dataType: 'json',
             type: 'post',
             data: params
         }).success(function (result) {
+
+            if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+                Fanex.ExtAcc.UnBlockUI();
+
+                $('#securityCodePageContainer').html(result);
+                return;
+            }
+
             if (result && !result.IsSuccess) {
                 dataRangeController.updateResultMessage = result.ErrorMessage;
             }

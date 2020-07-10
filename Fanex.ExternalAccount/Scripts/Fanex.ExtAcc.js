@@ -100,7 +100,7 @@ String.prototype.formatSuccessMessage = function () {
     $('#errMsg').addClass('successMsg');
 
     return this;
-}
+};
 
 Fanex.ExtAcc = {
     $this: null,
@@ -144,8 +144,16 @@ Fanex.ExtAcc = {
         var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
         $.ajax({
             url: fullUrl, type: 'post', success: function (result) {
+                if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+                    Fanex.ExtAcc.UnBlockUI();
+
+                    $('#securityCodePageContainer').html(result);
+                    return;
+                }
+
                 $('#contentSplitter').html('');
-                if (url.indexOf('Customer/CustomerList') == -1 || $(result).text().indexOf('You are not authorized on this function') != -1) {
+
+                if (url.indexOf('Customer/CustomerList') === -1 || $(result).text().indexOf('You are not authorized on this function') !== -1) {
                     Fanex.ExtAcc.UnBlockUI();
                 }
 

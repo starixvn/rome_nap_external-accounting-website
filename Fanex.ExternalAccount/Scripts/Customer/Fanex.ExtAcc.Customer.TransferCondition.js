@@ -109,28 +109,35 @@ Fanex.ExtAcc.Customer.TransferCondition = {
 
             $.ajax({
                 url: urlTransferCondition,
-                data: data,
-                dataType: 'json'
+                data: data
             })
-            .success(function (result) {
-                if (result.isSuccess) {
-                    Fanex.ExtAcc.Form.Close(false, null, 'windowConfirm');
-                    Fanex.ExtAcc.Form.Close(false);
+                .success(function (result) {
+
+                    if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+                        Fanex.ExtAcc.UnBlockUI();
+
+                        $('#securityCodePageContainer').html(result);
+                        return;
+                    }
+
+                    if (result.isSuccess) {
+                        Fanex.ExtAcc.Form.Close(false, null, 'windowConfirm');
+                        Fanex.ExtAcc.Form.Close(false);
+                        Fanex.ExtAcc.UnBlockUI();
+                    }
+                    else {
+                        $('#errMsg').css('display', 'block');
+                        $('#errMsg').html(result.errorMessage.formatErrorMessage());
+                        Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.Form.Close(false, null, 'windowConfirm');
+                    }
+                })
+                .error(function (xhr, status, err) {
                     Fanex.ExtAcc.UnBlockUI();
-                }
-                else {
+                    Fanex.ExtAcc.Form.Close(false, null, 'windowConfirm');
                     $('#errMsg').css('display', 'block');
-                    $('#errMsg').html(result.errorMessage.formatErrorMessage());
-                    Fanex.ExtAcc.UnBlockUI();
-                    Fanex.ExtAcc.Form.Close(false, null, 'windowConfirm');
-                }
-            })
-            .error(function (xhr, status, err) {
-                Fanex.ExtAcc.UnBlockUI();
-                Fanex.ExtAcc.Form.Close(false, null, 'windowConfirm');
-                $('#errMsg').css('display', 'block');
-                $('#errMsg').html(err);
-            });
+                    $('#errMsg').html(err);
+                });
         });
     },
 

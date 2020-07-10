@@ -20,12 +20,11 @@ namespace Fanex.ExternalAccount.Core.Filters
             return string.Join("/", new[] { currentArea, currentController, currentAction });
         }
 
-        protected virtual bool IsIgnoredAction(string actionURL)
+        protected virtual bool IsContainsAction(string actionURL, string[] actions)
         {
-            string[] listIgnoreActions = AppSettings.LogActionFilter_IgnoredActions.Split(',');
-            foreach (var ignoreAction in listIgnoreActions)
+            foreach (var action in actions)
             {
-                if (IsContainsIgnoreCase(actionURL, ignoreAction))
+                if (IsContainsCase(actionURL, action))
                 {
                     return true;
                 }
@@ -36,10 +35,10 @@ namespace Fanex.ExternalAccount.Core.Filters
 
         protected virtual bool IsAppliedUserName()
         {
-            return !string.IsNullOrWhiteSpace(CurrentSession.Instance.UserName) && IsContainsIgnoreCase(AppSettings.LogActionFilter_AppliedUserNames, CurrentSession.Instance.UserName);
+            return !string.IsNullOrWhiteSpace(CurrentSession.Instance.UserName) && IsContainsCase(AppSettings.LogActionFilter_AppliedUserNames, CurrentSession.Instance.UserName);
         }
 
-        protected virtual bool IsContainsIgnoreCase(string source, string findingText)
+        protected virtual bool IsContainsCase(string source, string findingText)
         {
             return !string.IsNullOrWhiteSpace(findingText) && Thread.CurrentThread.CurrentCulture.CompareInfo.IndexOf(source, findingText, CompareOptions.IgnoreCase) >= 0;
         }

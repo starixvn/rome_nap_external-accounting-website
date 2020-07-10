@@ -152,9 +152,16 @@
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             type: 'post',
-            dataType: 'json'
         })
             .success(function (result) {
+
+                if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+                    Fanex.CustomerSetting.Core.UnBlockUI();
+
+                    parent.$('#securityCodePageContainer').html(result);
+                    return;
+                }
+
                 if (result.errorCode != 0) {
                     ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ":</font><br />" + result.errorMessage.formatErrorMessage() + '<br /><br />';
                 }

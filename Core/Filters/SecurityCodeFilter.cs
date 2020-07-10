@@ -1,6 +1,7 @@
 ﻿using Fanex.ExternalAccount.Core.Configurations.SecurityCode;
 using Fanex.ExternalAccount.Utilities;
 using System;
+using System.Web;
 using System.Web.Mvc;
 using SessionConstants = Fanex.ExternalAccount.Core.Context.CurrentSession;
 
@@ -12,43 +13,39 @@ namespace Fanex.ExternalAccount.Core.Filters
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var actionURL = GetActionLink(filterContext);
-            if (!IsIgnoredAction(actionURL))
+            if (!IsContainsAction(actionURL, filteredActions))
             {
                 return;
             }
 
+            var returnUrl = filterContext.HttpContext.Request.RawUrl;
             var session = filterContext.HttpContext.Session;
-            if (session == null)
+            if (IsSecurityCodeRequired(session))
             {
-                filterContext.Result = new RedirectResult("~/Account/Login");
-                return;
-            }
-            if (session[SessionConstants.EASSCExpiredTime] == null)
-            {
-                filterContext.Result = new RedirectResult("~/SecurityCode/Index?ReturnUrl=" + actionURL);
+                filterContext.Result = RedirectToSecurityCodePage(returnUrl);
                 return;
             }
 
-            double scExpiredTime = (double)session[SessionConstants.EASSCExpiredTime];
-            double currentTime = Utils.ConvertDateTimeToMilliseconds(DateTime.Now);
-            if (scExpiredTime < currentTime)
-            {
-                filterContext.Result = new RedirectResult("~/SecurityCode/Index?ReturnUrl=" + actionURL);
-            }
+            double scNewActiveTime = Utils.ConvertDateTimeToMilliseconds(DateTime.Now);
+            filterContext.HttpContext.Session[SessionConstants.EASSCLastActiveTime] = scNewActiveTime;
         }
 
-        protected override bool IsIgnoredAction(string actionURL)
+        private readonly string[] filteredActions = SecurityCodeManager.GetFilteredActions();
+
+        private static bool IsSecurityCodeRequired(HttpSessionStateBase session)
         {
-            string[] listFilteredActions = SecurityCodeManager.GetFilteredActions();
-            foreach (var filteredActions in listFilteredActions)
+            if (session[SessionConstants.EASSCLastActiveTime] == null)
             {
-                if (IsContainsIgnoreCase(actionURL, filteredActions))
-                {
-                    return true;
-                }
+                return true;
             }
 
-            return false;
+            double scLastActiveTime = (double)session[SessionConstants.EASSCLastActiveTime];
+            double scLiveTime = Utils.ToDouble(SecurityCodeManager.GetLiveTime);
+            double currentTime = Utils.ConvertDateTimeToMilliseconds(DateTime.Now);
+
+            return currentTime - scLastActiveTime > scLiveTime;
         }
+
+        private static RedirectResult RedirectToSecurityCodePage(string returnUrl) => new RedirectResult($"~/SecurityCode/Index?ReturnUrl={returnUrl}");
     }
 }

@@ -70,7 +70,7 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
 
     $scope.$watch("model.bettingLimitItems[10].minBetFormated", function (newValue, oldValue, _model) {
         if (_model.bettingLimits[10].checked) {
-            for (var i = 10; i < length ; i++) {
+            for (var i = 10; i < length; i++) {
                 _model.bettingLimits[i].minBetFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
                 _model.bettingLimits[i].minBet = _model.bettingLimits[i].minBetFormated;
             }
@@ -98,9 +98,9 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
     $scope.Init = function () {
         for (var i = 0; i < length; i++) {
             $scope.model.bettingLimitItems[i].title = $scope.model.bettingLimitItems[i].resourceKey == 'Soccer' ?
-            'Copy all below bet settings from Soccer (excluding Number Game)' : $scope.model.bettingLimitItems[i].resourceKey == 'Basketball' ?
-            'Copy all below bet settings from Basketball (excluding Number Game)' : $scope.model.bettingLimitItems[i].resourceKey == 'NumberGame' ?
-            'Copy all below bet settings from Number Game' : '';
+                'Copy all below bet settings from Soccer (excluding Number Game)' : $scope.model.bettingLimitItems[i].resourceKey == 'Basketball' ?
+                    'Copy all below bet settings from Basketball (excluding Number Game)' : $scope.model.bettingLimitItems[i].resourceKey == 'NumberGame' ?
+                        'Copy all below bet settings from Number Game' : '';
         }
     };
 
@@ -350,7 +350,7 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
             return false;
         }
 
-        if (minMin != 0 && min  < minMin) {
+        if (minMin != 0 && min < minMin) {
             Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet should be greater than or equals to ' + minMin.formatNumber(), undefined, undefined, 3000);
 
             return false;
@@ -431,7 +431,6 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
     Fanex.CustomerSetting.Core.BlockUI();
 
     $.ajax({
-        dataType: 'json',
         type: 'post',
         url: toUrl('Sportsbook/EditBetSettingPost'),
         data: {
@@ -441,38 +440,42 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
             txtCustomerObject: JSON.stringify(model)
         }
     })
-    .success(function (data) {
-        if (data.errorCode == "0") {
-            $('#errMsg').attr('class', 'successMsg');
-            $('#errMsg').html('<font color="Blue">Updated successfully</font>');
-            $('#errMsg').show();
-        }
-        else {
-            $('#errMsg').attr('class', 'errMsg');
-            $('#errMsg').html(data.errorMessage.formatErrorMessage());
-            $('#errMsg').show();
-        }
+        .success(function (data) {
 
-        Fanex.CustomerSetting.Core.UnBlockUI();
+            Fanex.CustomerSetting.Core.UnBlockUI();
 
-        if (typeof ondone == 'function') {
-            ondone(data);
-        }
-    })
-    .error(function (data) {
-        if (typeof console != 'undefined')
-            console.log(data);
+            if (typeof data === 'string' && data.indexOf('securityCodePage') > -1) {
+                parent.parent.$('#securityCodePageContainer').html(data);
+                return;
+            }
 
-        if (JSON.parse(data.responseText).errorCode) {
-            $('#errMsg').attr('class', 'errMsg');
-            $('#errMsg').html(JSON.parse(data.responseText).errorMessage.formatErrorMessage());
-            $('#errMsg').show();
-        }
+            if (data.errorCode == "0") {
+                $('#errMsg').attr('class', 'successMsg');
+                $('#errMsg').html('<font color="Blue">Updated successfully</font>');
+                $('#errMsg').show();
+            }
+            else {
+                $('#errMsg').attr('class', 'errMsg');
+                $('#errMsg').html(data.errorMessage.formatErrorMessage());
+                $('#errMsg').show();
+            }
 
-        Fanex.CustomerSetting.Core.UnBlockUI();
+            if (typeof ondone == 'function') {
+                ondone(data);
+            }
+        })
+        .error(function (data) {
 
-        if (typeof ondone == 'function') {
-            ondone({ errorCode: "1", errorMessage: "Error on updating..." });
-        }
-    });
+            if (JSON.parse(data.responseText).errorCode) {
+                $('#errMsg').attr('class', 'errMsg');
+                $('#errMsg').html(JSON.parse(data.responseText).errorMessage.formatErrorMessage());
+                $('#errMsg').show();
+            }
+
+            Fanex.CustomerSetting.Core.UnBlockUI();
+
+            if (typeof ondone == 'function') {
+                ondone({ errorCode: "1", errorMessage: "Error on updating..." });
+            }
+        });
 };

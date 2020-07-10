@@ -1,5 +1,4 @@
-﻿/// <reference path="../_references.js" />
-if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
+﻿if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
     alert("Fanex.ExtAcc.js module is required!")
 }
 
@@ -1274,10 +1273,16 @@ Fanex.ExtAcc.Customer.PTSetting = {
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/SuperUpdateMasterPTPost'),
             data: data,
-            dataType: 'json',
             type: 'post'
         })
             .success(function (result) {
+                if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+                    Fanex.ExtAcc.UnBlockUI();
+
+                    $('#securityCodePageContainer').html(result);
+                    return;
+                }
+
                 if (result.errorCode && (result.errorCode == '1' || result.errorCode == UMError)) {
                     $('#errMsg').show();
                     $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
@@ -1426,10 +1431,16 @@ Fanex.ExtAcc.Customer.PTSetting = {
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/MasterUpdateAgentPTPost'),
             data: data,
-            dataType: 'json',
             type: 'post'
         })
             .success(function (result) {
+                if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+                    Fanex.ExtAcc.UnBlockUI();
+
+                    $('#securityCodePageContainer').html(result);
+                    return;
+                }
+
                 if (result.errorCode && (result.errorCode == '1' || result.errorCode == UMError)) {
                     $('#errMsg').show();
                     $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
@@ -1574,10 +1585,16 @@ Fanex.ExtAcc.Customer.PTSetting = {
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/AgentUpdateMemberPTPost'),
             data: data,
-            dataType: 'json',
             type: 'post'
         })
             .success(function (result) {
+                if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+                    Fanex.ExtAcc.UnBlockUI();
+
+                    $('#securityCodePageContainer').html(result);
+                    return;
+                }
+
                 if (result.errorCode && (result.errorCode == '1' || result.errorCode == UMError)) {
                     $('#errMsg').show();
                     $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
@@ -1733,10 +1750,16 @@ Fanex.ExtAcc.Customer.PTSetting = {
         $.ajax({
             url: resolveClientUrl(urlPost),
             data: data,
-            dataType: 'json',
             type: 'post'
         })
             .success(function (result) {
+                if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+                    Fanex.ExtAcc.UnBlockUI();
+
+                    $('#securityCodePageContainer').html(result);
+                    return;
+                }
+
                 if (result.errorCode && (result.errorCode == '1' || result.errorCode == UMError)) {
                     $('#errMsg').show();
                     $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');

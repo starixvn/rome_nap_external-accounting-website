@@ -360,26 +360,35 @@
             type: 'POST'
         })
             .done(function (data) {
+                if (typeof data === 'string' && data.indexOf('securityCodePage') > -1) {
+                    Fanex.ExtAcc.UnBlockUI();
+
+                    $('#securityCodePageContainer').html(data);
+                    return;
+                }
+
                 if (!data.isSuccess) {
+                    Fanex.ExtAcc.UnBlockUI();
+
                     $('#errMsg').show();
                     $('#errMsg').html(data.errorMessage.formatErrorMessage());
-                    Fanex.ExtAcc.UnBlockUI();
-                } else {
-                    if (document.getElementById('customerListGrid')) {
-                        var timeout = setTimeout(function () {
-                            clearTimeout(timeout);
-                            Fanex.ExtAcc.Customer.CallBackCustomerList();
-                            Fanex.ExtAcc.UnBlockUI();
-                            Fanex.ExtAcc.Form.Close();
-                        }, 2000);
-                    } else {
+                    return;
+                }
+                if (document.getElementById('customerListGrid')) {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        Fanex.ExtAcc.Customer.CallBackCustomerList();
                         Fanex.ExtAcc.UnBlockUI();
                         Fanex.ExtAcc.Form.Close();
-                    }
+                    }, 2000);
+                } else {
+                    Fanex.ExtAcc.UnBlockUI();
+                    Fanex.ExtAcc.Form.Close();
                 }
+
             })
             .error(function (data) {
-                if (typeof console != 'undefined') console.log(data.responseText);
+                if (data.responseText) { console.log(data.responseText); }
                 Fanex.ExtAcc.UnBlockUI();
             });
     },
@@ -417,6 +426,14 @@
             data: Fanex.ExtAcc.Customer.GroupName()
         })
             .done(function (data) {
+
+                if (typeof data === 'string' && data.indexOf('securityCodePage') > -1) {
+                    Fanex.ExtAcc.UnBlockUI();
+
+                    $('#securityCodePageContainer').html(data);
+                    return;
+                }
+
                 if (!data.isSuccess) {
                     $('#err-message').html(data.errorMessage.formatErrorMessage()).removeClass('hide');
                 } else {
@@ -473,7 +490,6 @@
 
                 $.ajax({
                     url: resolveClientUrl('Customer/ConfigDoubleComm'),
-                    dataType: 'json',
                     type: 'post',
                     data: {
                         custid: custid,
@@ -482,6 +498,14 @@
                     }
                 })
                     .success(function (result) {
+
+                        if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+                            Fanex.ExtAcc.UnBlockUI();
+
+                            $('#securityCodePageContainer').html(result);
+                            return;
+                        }
+
                         if (result.isSuccess) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);

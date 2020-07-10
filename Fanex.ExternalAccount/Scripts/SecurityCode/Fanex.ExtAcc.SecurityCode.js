@@ -8,7 +8,7 @@
         $.post('/SecurityCode/Verify', { code })
             .done(function (message) {
                 if (message === 'valid') {
-                    Fanex.ExtAcc.LoadMainFrame(returnUrl);
+                    $('#securityCodePageContainer').html('');
                 } else {
                     $('input#code').val('');
                     $("label#codeError").removeClass('hidden');

@@ -16,41 +16,41 @@
             url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetOnlineList?custId=' + custId),
             method: 'post'
         })
-        .success(function (result) {
-            model.onlineLoaded = true;
-            model.onlineList.onlines = result;
-            var onlines = result.onlines;
+            .success(function (result) {
+                model.onlineLoaded = true;
+                model.onlineList.onlines = result;
+                var onlines = result.onlines;
 
-            if (onlines.length > 0) {
-                $('#onlines').empty();
-                $('#onlines').show();
-                $('#online').hide();
+                if (onlines.length > 0) {
+                    $('#onlines').empty();
+                    $('#onlines').show();
+                    $('#online').hide();
 
-                for (var i = 0; i < onlines.length; i++) {
-                    var online = onlines[i];
-                    var item = '<tr><td class="percent10">' + (i + 1) + '</td>' +
-                                    '<td class="percent32">' +
-                                        '<a href="javascript:;" onclick="parent.Fanex.ExtAcc.Customer.ShowIpInfo(\'' + online.iP.text + '\')">' +
-                                            online.iP.text +
-                                        '</a>' +
-                                    '</td>' +
-                                '<td>' + online.loginTime.text + '</td></tr>';
-                    $('#onlines').append(item);
+                    for (var i = 0; i < onlines.length; i++) {
+                        var online = onlines[i];
+                        var item = '<tr><td class="percent10">' + (i + 1) + '</td>' +
+                            '<td class="percent32">' +
+                            '<a href="javascript:;" onclick="parent.Fanex.ExtAcc.Customer.ShowIpInfo(\'' + online.iP.text + '\')">' +
+                            online.iP.text +
+                            '</a>' +
+                            '</td>' +
+                            '<td>' + online.loginTime.text + '</td></tr>';
+                        $('#onlines').append(item);
 
+                    }
+
+                    $('#onlines').scrollTop(0);
+                }
+                else {
+                    $('#onlines').hide();
+                    $('#online').show();
                 }
 
-                $('#onlines').scrollTop(0);
-            }
-            else {
-                $('#onlines').hide();
-                $('#online').show();
-            }
-
-            parent.Fanex.ExtAcc.UnBlockUI();
-        })
-        .error(function (result) {
-            parent.Fanex.ExtAcc.UnBlockUI();
-        })
+                parent.Fanex.ExtAcc.UnBlockUI();
+            })
+            .error(function (result) {
+                parent.Fanex.ExtAcc.UnBlockUI();
+            })
     };
 
     $scope.Init = function () {
@@ -158,56 +158,63 @@
         var titleMember = allow ? "Turn OFF Double Commission" : "Turn ON Double Commission";
         var title = roleId == 1 ? titleMember : allow ? 'Disable Allow Double Commission' : 'Allow Double Commission';
         parent.Fanex.ExtAcc.Form.ConfirmBox(title,
-        message,
-        450,
-        170,
-        false,
-        function () {
-            parent.Fanex.ExtAcc.BlockUI();
+            message,
+            450,
+            170,
+            false,
+            function () {
+                parent.Fanex.ExtAcc.BlockUI();
 
-            $.ajax({
-                url: parent.resolveClientUrl('Customer/ConfigDoubleComm'),
-                dataType: 'json',
-                type: 'post',
-                data: {
-                    custid: $scope.model.personalInfo.custId.value,
-                    allow: !allow,
-                    groupName: parent.$('#selectedGroupName').html()
-                }
-            })
-            .success(function (result) {
-                parent.Fanex.ExtAcc.Form.Close();
-                if (result.isSuccess) {
-                    var timeout = setTimeout(function () {
-                        clearTimeout(timeout);
+                $.ajax({
+                    url: parent.resolveClientUrl('Customer/ConfigDoubleComm'),
+                    type: 'post',
+                    data: {
+                        custid: $scope.model.personalInfo.custId.value,
+                        allow: !allow,
+                        groupName: parent.$('#selectedGroupName').html()
+                    }
+                })
+                    .success(function (result) {
+
+                        if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+                            parent.Fanex.ExtAcc.UnBlockUI();
+
+                            parent.$('#securityCodePageContainer').html(result);
+                            return;
+                        }
+
+                        parent.Fanex.ExtAcc.Form.Close();
+                        if (result.isSuccess) {
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                parent.Fanex.ExtAcc.UnBlockUI();
+                                document.location.reload(true);
+                            }, 2000);
+                        }
+                        else {
+                            parent.Fanex.ExtAcc.UnBlockUI();
+                            parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
+                            document.getElementById('DoubleComm').checked = allow;
+                        }
+                    })
+                    .error(function (xhr) {
                         parent.Fanex.ExtAcc.UnBlockUI();
-                        document.location.reload(true);
-                    }, 2000);
-                }
-                else {
-                    parent.Fanex.ExtAcc.UnBlockUI();
-                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
-                    document.getElementById('DoubleComm').checked = allow;
-                }
-            })
-            .error(function (xhr) {
-                parent.Fanex.ExtAcc.UnBlockUI();
+                        parent.Fanex.ExtAcc.Form.Close();
+                        document.getElementById(id).checked = allow;
+                        if (typeof console != 'undefined') {
+                            console.log(xhr);
+                        }
+                    });
+            },
+            function () {
                 parent.Fanex.ExtAcc.Form.Close();
                 document.getElementById(id).checked = allow;
-                if (typeof console != 'undefined') {
-                    console.log(xhr);
-                }
+            },
+            null,
+            null,
+            function () {
+                document.getElementById(id).checked = allow;
             });
-        },
-        function () {
-            parent.Fanex.ExtAcc.Form.Close();
-            document.getElementById(id).checked = allow;
-        },
-        null,
-        null,
-        function () {
-            document.getElementById(id).checked = allow;
-        });
     };
 
     $scope.Closed = function (close, id, disabled) {
@@ -249,30 +256,30 @@
                             groupName: parent.$('#selectedGroupName').html()
                         }
                     })
-                    .success(function (result) {
-                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
-                        if (result.isSuccess) {
-                            var timeout = setTimeout(function () {
-                                clearTimeout(timeout);
+                        .success(function (result) {
+                            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
+                            if (result.isSuccess) {
+                                var timeout = setTimeout(function () {
+                                    clearTimeout(timeout);
+                                    parent.Fanex.ExtAcc.UnBlockUI();
+                                    document.location.reload(true);
+                                }, 2000);
+                            }
+                            else {
                                 parent.Fanex.ExtAcc.UnBlockUI();
-                                document.location.reload(true);
-                            }, 2000);
-                        }
-                        else {
+                                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
+                                parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
+                                document.getElementById(id).checked = close;
+                            }
+                        })
+                        .error(function (xhr) {
                             parent.Fanex.ExtAcc.UnBlockUI();
                             parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
-                            parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                             document.getElementById(id).checked = close;
-                        }
-                    })
-                    .error(function (xhr) {
-                        parent.Fanex.ExtAcc.UnBlockUI();
-                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
-                        document.getElementById(id).checked = close;
-                        if (typeof console != 'undefined') {
-                            console.log(xhr);
-                        }
-                    });
+                            if (typeof console != 'undefined') {
+                                console.log(xhr);
+                            }
+                        });
                 },
                 function () {
                     parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
@@ -286,77 +293,77 @@
         }
         else {
             parent.Fanex.ExtAcc.Form.ConfirmBox('Close Customer: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
-            content,
-            350,
-            150,
-            false,
-            function () {
-                parent.Fanex.ExtAcc.Form.ConfirmBox('Warning!!!',
-                    'Are you sure you want to change Close status for this customer? Warning, all downlines will be closed as well!',
-                    460,
-                    150,
-                    false,
-                    function () {
-                        parent.Fanex.ExtAcc.BlockUI();
+                content,
+                350,
+                150,
+                false,
+                function () {
+                    parent.Fanex.ExtAcc.Form.ConfirmBox('Warning!!!',
+                        'Are you sure you want to change Close status for this customer? Warning, all downlines will be closed as well!',
+                        460,
+                        150,
+                        false,
+                        function () {
+                            parent.Fanex.ExtAcc.BlockUI();
 
-                        $.ajax({
-                            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateCloseCutomer'),
-                            dataType: 'json',
-                            type: 'post',
-                            data: {
-                                custId: $scope.model.personalInfo.custId.value,
-                                uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
-                                close: !close,
-                                clearCredit: parent.$('#clearCredit').get(0).checked,
-                                custName: $scope.model.personalInfo.currentLevel.value,
-                                groupName: parent.$('#selectedGroupName').html()
-                            }
-                        })
-                        .success(function (result) {
-                            parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmClose');
-                            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
-                            if (result.isSuccess) {
-                                var timeout = setTimeout(function () {
-                                    clearTimeout(timeout);
+                            $.ajax({
+                                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateCloseCutomer'),
+                                dataType: 'json',
+                                type: 'post',
+                                data: {
+                                    custId: $scope.model.personalInfo.custId.value,
+                                    uplineId: $scope.model.personalInfo.roleId.value == 4 ? 0 : $scope.model.personalInfo.uplineId.value,
+                                    close: !close,
+                                    clearCredit: parent.$('#clearCredit').get(0).checked,
+                                    custName: $scope.model.personalInfo.currentLevel.value,
+                                    groupName: parent.$('#selectedGroupName').html()
+                                }
+                            })
+                                .success(function (result) {
+                                    parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmClose');
+                                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
+                                    if (result.isSuccess) {
+                                        var timeout = setTimeout(function () {
+                                            clearTimeout(timeout);
+                                            parent.Fanex.ExtAcc.UnBlockUI();
+                                            document.location.reload(true);
+                                        }, 2000);
+                                    }
+                                    else {
+                                        parent.Fanex.ExtAcc.UnBlockUI();
+                                        parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmClose');
+                                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
+                                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
+                                        document.getElementById(id).checked = close;
+                                    }
+                                })
+                                .error(function (xhr) {
                                     parent.Fanex.ExtAcc.UnBlockUI();
-                                    document.location.reload(true);
-                                }, 2000);
-                            }
-                            else {
-                                parent.Fanex.ExtAcc.UnBlockUI();
-                                parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmClose');
-                                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
-                                parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
-                                document.getElementById(id).checked = close;
-                            }
-                        })
-                        .error(function (xhr) {
-                            parent.Fanex.ExtAcc.UnBlockUI();
+                                    parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmClose');
+                                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
+                                    document.getElementById(id).checked = close;
+                                    if (typeof console != 'undefined') {
+                                        console.log(xhr);
+                                    }
+                                });
+                        },
+                        null,
+                        'confirmClose',
+                        null,
+                        function () {
                             parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmClose');
-                            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
-                            document.getElementById(id).checked = close;
-                            if (typeof console != 'undefined') {
-                                console.log(xhr);
-                            }
                         });
-                    },
-                    null,
-                    'confirmClose',
-                    null,
-                    function () {
-                        parent.Fanex.ExtAcc.Form.Close(null, null, 'confirmClose');
-                    });
-            },
-            function () {
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
-                document.getElementById(id).checked = close;
-            },
-            'popupClose',
-            true,
-            function () {
-                document.getElementById(id).checked = close;
-            },
-            true);
+                },
+                function () {
+                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupClose');
+                    document.getElementById(id).checked = close;
+                },
+                'popupClose',
+                true,
+                function () {
+                    document.getElementById(id).checked = close;
+                },
+                true);
         }
     };
 
@@ -384,23 +391,23 @@
         }
 
         parent.Fanex.ExtAcc.Form.ConfirmBox(title,
-                message,
-                480,
-                150,
-                false,
-                function () {
-                    parent.Fanex.ExtAcc.BlockUI();
+            message,
+            480,
+            150,
+            false,
+            function () {
+                parent.Fanex.ExtAcc.BlockUI();
 
-                    $.ajax({
-                        url: parent.resolveClientUrl('Customer/UpdateSuspendSingle'),
-                        dataType: 'json',
-                        type: 'post',
-                        data: {
-                            custId: $scope.model.personalInfo.custId.value,
-                            suspended: !suspend,
-                            groupName: parent.$('#selectedGroupName').html()
-                        }
-                    })
+                $.ajax({
+                    url: parent.resolveClientUrl('Customer/UpdateSuspendSingle'),
+                    dataType: 'json',
+                    type: 'post',
+                    data: {
+                        custId: $scope.model.personalInfo.custId.value,
+                        suspended: !suspend,
+                        groupName: parent.$('#selectedGroupName').html()
+                    }
+                })
                     .success(function (result) {
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'popupSuspend');
                         if (result.IsSuccess) {
@@ -425,16 +432,16 @@
                             console.log(xhr);
                         }
                     });
-                },
-                function () {
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupSuspend');
-                    document.getElementById(id).checked = suspend;
-                },
-                'popupSuspend',
-                null,
-                function () {
-                    document.getElementById(id).checked = suspend;
-                });
+            },
+            function () {
+                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupSuspend');
+                document.getElementById(id).checked = suspend;
+            },
+            'popupSuspend',
+            null,
+            function () {
+                document.getElementById(id).checked = suspend;
+            });
     };
 
     $scope.Outright = function (allow, id, disabled) {
@@ -449,57 +456,57 @@
         var message = allow ? 'Are you sure you want to change Outright status for this customer? ' + subtitle : 'Are you sure you want to change Outright status for this customer?';
         title = allow ? ('Disallow Outright: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>') : ('Allow Outright: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>');
         parent.Fanex.ExtAcc.Form.ConfirmBox(title,
-        message,
-        480,
-        150,
-        false,
-        function () {
-            parent.Fanex.ExtAcc.BlockUI();
+            message,
+            480,
+            150,
+            false,
+            function () {
+                parent.Fanex.ExtAcc.BlockUI();
 
-            $.ajax({
-                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateOutright'),
-                dataType: 'json',
-                type: 'post',
-                data: {
-                    custId: $scope.model.personalInfo.custId.value,
-                    allow: !allow,
-                    groupName: parent.$('#selectedGroupName').html()
-                }
-            })
-            .success(function (result) {
-                parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
-                if (result.isSuccess) {
-                    var timeout = setTimeout(function () {
-                        clearTimeout(timeout);
+                $.ajax({
+                    url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateOutright'),
+                    dataType: 'json',
+                    type: 'post',
+                    data: {
+                        custId: $scope.model.personalInfo.custId.value,
+                        allow: !allow,
+                        groupName: parent.$('#selectedGroupName').html()
+                    }
+                })
+                    .success(function (result) {
+                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
+                        if (result.isSuccess) {
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                parent.Fanex.ExtAcc.UnBlockUI();
+                                document.location.reload(true);
+                            }, 2000);
+                        }
+                        else {
+                            parent.Fanex.ExtAcc.UnBlockUI();
+                            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
+                            parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
+                            document.getElementById(id).checked = allow;
+                        }
+                    })
+                    .error(function (xhr) {
                         parent.Fanex.ExtAcc.UnBlockUI();
-                        document.location.reload(true);
-                    }, 2000);
-                }
-                else {
-                    parent.Fanex.ExtAcc.UnBlockUI();
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
-                    parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
-                    document.getElementById(id).checked = allow;
-                }
-            })
-            .error(function (xhr) {
-                parent.Fanex.ExtAcc.UnBlockUI();
+                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
+                        document.getElementById(id).checked = allow;
+                        if (typeof console != 'undefined') {
+                            console.log(xhr);
+                        }
+                    });
+            },
+            function () {
                 parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
                 document.getElementById(id).checked = allow;
-                if (typeof console != 'undefined') {
-                    console.log(xhr);
-                }
+            },
+            'popupOutright',
+            null,
+            function () {
+                document.getElementById(id).checked = allow;
             });
-        },
-        function () {
-            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupOutright');
-            document.getElementById(id).checked = allow;
-        },
-        'popupOutright',
-        null,
-        function () {
-            document.getElementById(id).checked = allow;
-        });
     };
 
     $scope.AutoPT = function (allow, id, disabled) {
@@ -530,30 +537,30 @@
                         groupName: parent.$('#selectedGroupName').html()
                     }
                 })
-                .success(function (result) {
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupAutoPT');
-                    if (result.isSuccess) {
-                        var timeout = setTimeout(function () {
-                            clearTimeout(timeout);
+                    .success(function (result) {
+                        parent.Fanex.ExtAcc.Form.Close(null, null, 'popupAutoPT');
+                        if (result.isSuccess) {
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                parent.Fanex.ExtAcc.UnBlockUI();
+                                document.location.reload(true);
+                            }, 2000);
+                        }
+                        else {
                             parent.Fanex.ExtAcc.UnBlockUI();
-                            document.location.reload(true);
-                        }, 2000);
-                    }
-                    else {
+                            parent.Fanex.ExtAcc.Form.Close(null, null, 'popupAutoPT');
+                            parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
+                            document.getElementById(id).checked = allow;
+                        }
+                    })
+                    .error(function (xhr) {
                         parent.Fanex.ExtAcc.UnBlockUI();
                         parent.Fanex.ExtAcc.Form.Close(null, null, 'popupAutoPT');
-                        parent.Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 350, 150, 'alert');
                         document.getElementById(id).checked = allow;
-                    }
-                })
-                .error(function (xhr) {
-                    parent.Fanex.ExtAcc.UnBlockUI();
-                    parent.Fanex.ExtAcc.Form.Close(null, null, 'popupAutoPT');
-                    document.getElementById(id).checked = allow;
-                    if (typeof console != 'undefined') {
-                        console.log(xhr);
-                    }
-                });
+                        if (typeof console != 'undefined') {
+                            console.log(xhr);
+                        }
+                    });
             },
             function () {
                 parent.Fanex.ExtAcc.Form.Close(null, null, 'popupAutoPT');
@@ -619,8 +626,8 @@
             "&groupName=" + parent.$('#selectedGroupName').html());
         if ($scope.model.personalInfo.roleId.value == 4) {
             url = parent.resolveClientUrl('MainSuper/EditInfo/?' +
-            'custId=' + $scope.model.personalInfo.custId.value +
-            "&groupName=" + parent.$('#selectedGroupName').html());
+                'custId=' + $scope.model.personalInfo.custId.value +
+                "&groupName=" + parent.$('#selectedGroupName').html());
         }
 
         var title = parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
@@ -638,7 +645,7 @@
 
     $scope.Transfer = function () {
         top.shouldCalculatePopupHeight = false;
-        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditTransferCondition/?roleId='+ $scope.model.personalInfo.roleId.value + '&custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), parent.titles[1] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 600, 300, false, false, 1);
+        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl('Customer/EditTransferCondition/?roleId=' + $scope.model.personalInfo.roleId.value + '&custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), parent.titles[1] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 600, 300, false, false, 1);
 
     };
 

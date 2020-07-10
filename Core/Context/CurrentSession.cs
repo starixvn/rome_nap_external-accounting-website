@@ -30,7 +30,7 @@
         public const string EASUserAttempt = "_userAttempt";
         public const string EASHashPwd = "EASHashPwd";
         public const string EASLine = "EASLine";
-        public const string EASSCExpiredTime = "EASSCExpiredTime";
+        public const string EASSCLastActiveTime = "EASSCLastActiveTime";
 
         public static ICurrentSession Instance => new CurrentSession();
 

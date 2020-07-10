@@ -5,7 +5,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
     kenoRepositories.getData().then(
         function (kenoSetting) {
             $scope.kenoSetting = kenoSetting;
-            
+
             $scope.betSettingList = $scope.kenoSetting.betSettings;
             $scope.betSettingCopyAll = $scope.kenoSetting.betSettingCopyAll;
             $scope.positionTakingList = $scope.kenoSetting.positionTakings;
@@ -28,7 +28,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                     $scope.customerInformation.fax = superInfo.fax;
                 });
             }
-                
+
             $scope.multipleEdit = {
                 isMultipleEdit: isMultipleEdit,
                 custids: isMultipleEdit ? custids : [],
@@ -65,12 +65,12 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                     }
                 }
 
-				$scope.confirmIsAutoArray.length > 0 ? $scope.$broadcast("updateAllMember") : $scope.doUpdated();
+                $scope.confirmIsAutoArray.length > 0 ? $scope.$broadcast("updateAllMember") : $scope.doUpdated();
             };
 
-			$scope.$on('confirmUpdateAllMember', function () {
-				$scope.doUpdated();
-			});
+            $scope.$on('confirmUpdateAllMember', function () {
+                $scope.doUpdated();
+            });
 
             $scope.getUrlUpdated = function (username) {
                 var url = "";
@@ -127,14 +127,22 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                 $http.defaults.headers.post.__RequestVerificationToken = antiXSRFToken[0].value;
 
                 $http.post(url, kenoSetting)
-                .success(function (data, status, headers, config) {
-                    if ($scope.multipleEdit.isMultipleEdit && typeof data != "string") {
-                        data.custId = $scope.multipleEdit.custids[index];
-                        data.username = $scope.multipleEdit.usernameArray[index];
-                    }
-                    $scope.afterUpdatedSuccessfully(data, kenoSetting, ++index);
-                })
-                .error(function () { $scope.afterUpdatedFailed(kenoSetting, ++index); });
+                    .success(function (data, status, headers, config) {
+
+                        if (typeof data === 'string' && data.indexOf('securityCodePage') > -1) {
+                            Fanex.CustomerSetting.Core.UnBlockUI();
+
+                            parent.$('#securityCodePageContainer').html(data);
+                            return;
+                        }
+
+                        if ($scope.multipleEdit.isMultipleEdit && typeof data != "string") {
+                            data.custId = $scope.multipleEdit.custids[index];
+                            data.username = $scope.multipleEdit.usernameArray[index];
+                        }
+                        $scope.afterUpdatedSuccessfully(data, kenoSetting, ++index);
+                    })
+                    .error(function () { $scope.afterUpdatedFailed(kenoSetting, ++index); });
             };
 
             $scope.afterUpdatedSuccessfully = function (results, kenoSetting, index) {
@@ -167,7 +175,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                         $scope.showMesseges(usermessageGroupSuccess + '<div class="alertsuccess' + multipleEditClass + '">' + resources.successful + '</div><br>');
 
                         if (($scope.multipleEdit.isMultipleEdit && $scope.multipleEdit.updatedCount == $scope.multipleEdit.custids.length)
-                        || !$scope.multipleEdit.isMultipleEdit) {
+                            || !$scope.multipleEdit.isMultipleEdit) {
                             $timeout(function () {
                                 location.reload();
                             }, 2000);

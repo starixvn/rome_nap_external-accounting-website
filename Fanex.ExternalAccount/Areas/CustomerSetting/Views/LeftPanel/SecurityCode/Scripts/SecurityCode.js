@@ -38,6 +38,14 @@
             groupName: parent.$('#selectedGroupName').html()
         }
     }).success(function (result) {
+
+        if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+            Fanex.CustomerSetting.Core.UnBlockUI();
+
+            parent.$('#securityCodePageContainer').html(result);
+            return;
+        }
+
         if (result.isSuccess) {
             $('#errMsg').attr('class', 'successMsg');
             $('#errMsg').html('<font color="Blue">Updated successfully</font>');

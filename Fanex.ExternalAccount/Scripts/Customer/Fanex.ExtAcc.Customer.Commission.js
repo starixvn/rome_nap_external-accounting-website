@@ -149,10 +149,17 @@ Fanex.ExtAcc.Customer.Commission = {
         $.ajax({
             url: resolveClientUrl('SportsbookSetting/EditCommissionPost'),
             data: para,
-            dataType: 'json',
             type: 'post'
         })
             .success(function (result) {
+
+                if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+                    Fanex.ExtAcc.UnBlockUI();
+
+                    $('#securityCodePageContainer').html(result);
+                    return;
+                }
+
                 if (result.errorCode == 0) {
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);

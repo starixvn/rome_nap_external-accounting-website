@@ -34,10 +34,8 @@ namespace Fanex.ExternalAccount.Controllers.SecurityCode
 
             if (userSecurityCode.Equals(code, StringComparison.CurrentCulture))
             {
-                double idleTime = Utils.ToDouble(SecurityCodeManager.GetIdleTime);
-                double scExpiredTime = Utils.ConvertDateTimeToMilliseconds(DateTime.Now.AddMilliseconds(idleTime));
-
-                HttpContext.Session.Add(CurrentSession.EASSCExpiredTime, scExpiredTime);
+                double scNewActiveTime = Utils.ConvertDateTimeToMilliseconds(DateTime.Now);
+                HttpContext.Session.Add(CurrentSession.EASSCLastActiveTime, scNewActiveTime);
 
                 return "valid";
             }

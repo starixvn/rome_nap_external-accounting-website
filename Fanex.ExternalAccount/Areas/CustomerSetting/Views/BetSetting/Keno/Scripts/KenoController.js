@@ -227,69 +227,74 @@ Fanex.CustomerSetting.Betting.Keno.Update = function (ondone) {
     Fanex.CustomerSetting.Core.BlockUI();
 
     $.ajax({
-        dataType: 'json',
         type: 'post',
         url: toUrl('KenoBetting/EditBetSettingPost'),
         data: {
             custId: custId,
             uplineId: uplineId,
             userId: userId,
-            txtCustomerObject: JSON.stringify(model)            
+            txtCustomerObject: JSON.stringify(model)
         }
     })
-    .success(function (data) {
-        var errorCodes = data;
-        var errorMessage = '';
-        var success = true;
+        .success(function (data) {
 
-        $(errorCodes).each(function (i, obj) {
-            if (obj.errorCode) {
-                success = obj.isSuccess;
-                errorMessage += obj.errorMessage + '<br />';
+            if (typeof data === 'string' && data.indexOf('securityCodePage') > -1) {
+                Fanex.CustomerSetting.Core.UnBlockUI();
+
+                parent.parent.$('#securityCodePageContainer').html(data);
+                return;
             }
-            else if (obj[0].errorCode != '' && parseInt(obj[0].errorCode) >= 0) {
-                success = false;
-                errorMessage += obj[0].errorMessage + '<br />';
+
+            var errorCodes = data;
+            var errorMessage = '';
+            var success = true;
+
+            $(errorCodes).each(function (i, obj) {
+                if (obj.errorCode) {
+                    success = obj.isSuccess;
+                    errorMessage += obj.errorMessage + '<br />';
+                }
+                else if (obj[0].errorCode != '' && parseInt(obj[0].errorCode) >= 0) {
+                    success = false;
+                    errorMessage += obj[0].errorMessage + '<br />';
+                }
+            });
+
+            if (success) {
+                $('#errMsg').attr('class', 'successMsg');
+                $('#errMsg').html('<font color="Blue">Updated successfully</font>');
+                $('#errMsg').show();
+
+                Fanex.CustomerSetting.Core.UnBlockUI();
+
+                if (typeof ondone == 'function') {
+                    ondone({ errorCode: "0" });
+                }
+            }
+            else {
+                $('#errMsg').attr('class', 'errMsg');
+                $('#errMsg').html(errorMessage.formatErrorMessage());
+                $('#errMsg').show();
+
+                Fanex.CustomerSetting.Core.UnBlockUI();
+
+                if (typeof ondone == 'function') {
+                    ondone({ errorCode: "1" });
+                }
+            }
+        })
+        .error(function (data) {
+
+            if (JSON.parse(data.responseText).errorCode) {
+                $('#errMsg').attr('class', 'errMsg');
+                $('#errMsg').html(JSON.parse(data.responseText).errorMessage.formatErrorMessage());
+                $('#errMsg').show();
+            }
+
+            Fanex.CustomerSetting.Core.UnBlockUI();
+
+            if (typeof ondone == 'function') {
+                ondone({ errorCode: "1", errorMessage: "Error on updating..." });
             }
         });
-
-        if (success) {
-            $('#errMsg').attr('class', 'successMsg');
-            $('#errMsg').html('<font color="Blue">Updated successfully</font>');
-            $('#errMsg').show();
-
-            Fanex.CustomerSetting.Core.UnBlockUI();
-
-            if (typeof ondone == 'function') {
-                ondone({ errorCode: "0" });
-            }
-        }
-        else {
-            $('#errMsg').attr('class', 'errMsg');
-            $('#errMsg').html(errorMessage.formatErrorMessage());
-            $('#errMsg').show();
-
-            Fanex.CustomerSetting.Core.UnBlockUI();
-
-            if (typeof ondone == 'function') {
-                ondone({ errorCode: "1" });
-            }
-        }
-    })
-    .error(function (data) {
-        if (typeof console != 'undefined')
-            console.log(data);
-
-        if (JSON.parse(data.responseText).errorCode) {
-            $('#errMsg').attr('class', 'errMsg');
-            $('#errMsg').html(JSON.parse(data.responseText).errorMessage.formatErrorMessage());
-            $('#errMsg').show();
-        }
-
-        Fanex.CustomerSetting.Core.UnBlockUI();
-
-        if (typeof ondone == 'function') {
-            ondone({ errorCode: "1", errorMessage: "Error on updating..." });
-        }
-    });
 };

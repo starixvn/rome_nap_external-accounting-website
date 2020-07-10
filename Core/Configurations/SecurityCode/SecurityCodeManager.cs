@@ -26,6 +26,6 @@ namespace Fanex.ExternalAccount.Core.Configurations.SecurityCode
                 .FirstOrDefault()?.SecurityCode.Trim();
         }
 
-        public static string GetIdleTime => ConfigurationManager.AppSettings["SCFilter:IdleTime"];
+        public static string GetLiveTime => ConfigurationManager.AppSettings["SCFilter:LiveTime"];
     }
 }

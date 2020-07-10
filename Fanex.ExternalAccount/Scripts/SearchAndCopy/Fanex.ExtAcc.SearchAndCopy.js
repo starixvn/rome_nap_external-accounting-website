@@ -133,6 +133,12 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
             existingUsername: existingUsername
         };
         $.post(resolveClientUrl('SearchAndCopy/SuperPost'), requestParams, function (result) {
+
+            if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+                $('#securityCodePageContainer').html(result);
+                return;
+            }
+
             if (!result.IsSuccess) {
                 ShowErrorMessage(result.ErrorMessage);
                 return;
