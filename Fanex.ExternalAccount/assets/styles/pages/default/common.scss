@@ -10,6 +10,7 @@
 @import "../../components/form";
 @import "../../components/textbox";
 @import "../../components/dropdown";
+@import "../../components/select2-customize.scss";
 @import "../../components/filterbox";
 @import "../../components/calendar";
 @import "../../layout/header";
@@ -1808,25 +1809,28 @@ ul, li {
     }
 }
 
-.wifi-box {
-    position: absolute;
-    right: 56px;
-    top: 8px;
-    display: none;
-
-    .icon-wifi {
-        color: #fff;
-        font-size: 20px;
-    }
-
-    @media screen and (max-width: 480px) {
-        display: inline-block;
+@media screen and (max-device-width: 480px) {
+    .switch-line-mobile {
+        display: inline-block !important;
+        position: absolute;
+        right: 52px;
+        height: 40px;
+        background: rgba(0, 0, 0, 0.1);
+        .switch-line {
+            background: transparent;
+        }
     }
 }
 
-.icon-wifi {
-    color: #2F80ED;
-    margin-left: 5px;
+.switch-line {
+    padding: 0 20px;
+    background: rgba(0, 0, 0, 0.1);
+
+    .icon-wifi {
+        color: #fff;
+        margin-right: 0 !important;
+        font-size: 20px;
+    }
 }
 
 [class*="icon-network"] {
@@ -1835,7 +1839,7 @@ ul, li {
     height: 15px;
     display: inline-block;
     position: relative;
-    top: 4px;
+    top: 1px;
     margin-left: 5px;
 }
 
@@ -1847,4 +1851,9 @@ ul, li {
 .icon-network-medium {
     background: url("../../images/network/medium-network.svg") no-repeat;
     background-size: contain;
+}
+
+.icon-wifi {
+    color: #2F80ED;
+    font-size: 15px;
 }

@@ -33,10 +33,12 @@
 }
 @if (supportSwitchLine && domains.Length > 0)
 {
-    <select onchange="javascript:switchLine(this)" id="ddl-switchLine">
-        <option value="@currentLineValue" id="opt-line-current">
-            @currentLine
-        </option>
+    <div class="switch-line">
+        <span class="icon-wifi"></span>
+        <select onchange="javascript:switchLine(this)" id="ddl-switchLine">
+            <option value="@currentLineValue" id="opt-line-current">
+                @currentLine
+            </option>
             @for (var i = 0; i < domains.Length; i++)
             {
                 var domainName = domains[i].Split(';')[0];
@@ -51,5 +53,7 @@
                     <option value="@formatedDomain" id="opt-line-@i">@aliasName</option>
                 }
             }
-    </select>
+        </select>
+    </div>
+    
 }

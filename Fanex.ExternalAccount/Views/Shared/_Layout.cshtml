@@ -71,13 +71,15 @@
             @Html.Action("_Menu", "Shared")
             <div class="info" id="accMenu">
                 <ul class="list" id="userNameMenu">
+                    <li>@Html.Partial("~/Views/Domain/SSO.cshtml")</li>
                     <li><span class="circle">@CurrentSession.Instance.UserName</span></li>
                     <li><span class="icon-lock-reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')" title="Reset Password"></span></li>
                     <li><span class="icon-logout" onclick="Fanex.ExtAcc.Account.Logout()" title="Log out"></span></li>
-                    <li>@Html.Partial("~/Views/Domain/SSO.cshtml")</li>
+
                 </ul>
             </div>
             <!-- For mobile -->
+            <div class="switch-line-mobile hide">@Html.Partial("~/Views/Domain/SSO.cshtml")</div>
             <div id="iconNav" class="icon-nav">
                 <span></span>
                 <span></span>
@@ -96,7 +98,7 @@
                 </div>
             </div>
             @Html.Action("_Menu", "Shared")
-            <div style="margin: 15px 0 0 57px">@Html.Partial("~/Views/Domain/SSO.cshtml")</div>
+            @*<div style="margin: 15px 0 0 57px">@Html.Partial("~/Views/Domain/SSO.cshtml")</div>*@
         </div>
 
         <div id='mainContent' class="main-content">

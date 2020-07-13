@@ -40,7 +40,7 @@ Fanex.ExtAcc.SSO = {
                         classname = "icon-network-medium";
                     }
 
-                    return $('<span>' + line.text + '<span class="' + classname + '"></span></span>');
+                    return $('<span>' + line.text + '</span><span class="' + classname + '"></span>');
                 }
             })
             .find("option").each(function () {
