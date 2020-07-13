@@ -14,6 +14,7 @@
         EnableFishingWorld = 24,
         EnableRNGLottery = 44,
         EnableVirtualGames = 38,
-        EnableSabaclub = 42
+        EnableSabaclub = 42,
+        EnableSabaVirtualSports = 54
     }
 }

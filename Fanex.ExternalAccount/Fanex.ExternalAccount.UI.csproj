@@ -192,8 +192,8 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.2.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.2.7\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.2.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.2.8\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTEngine.1.0.5.1\lib\net40\Fanex.PTEngine.dll</HintPath>
@@ -477,6 +477,23 @@
     <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.js" />
     <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.min.js">
       <DependentUpon>index.js</DependentUpon>
+    </Content>
+    <Content Include="Areas\NG2\ONEbook.NG2.API.mnl.config">
+      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
+    </Content>
+    <Content Include="Areas\NG2\ONEbook.NG2.API.production.config">
+      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
+    </Content>
+    <Content Include="Areas\NG2\ONEbook.NG2.API.sit.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
+    </Content>
+    <Content Include="Areas\NG2\ONEbook.NG2.API.staging.config">
+      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
+    </Content>
+    <Content Include="Areas\NG2\ONEbook.NG2.API.uat.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
     </Content>
     <Content Include="assets\styles\images\cross.png" />
     <Content Include="assets\styles\pages\customer\images\cross.png" />
@@ -1390,6 +1407,64 @@
     <Content Include="bundles\images\dec4_disable.gif" />
     <Content Include="bundles\images\error.gif" />
     <Content Include="bundles\images\sucess.gif" />
+    <Content Include="Configurations\appSettings.mnl.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>appSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\appSettings.production.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>appSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\appSettings.sit.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>appSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\appSettings.staging.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>appSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\appSettings.uat.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>appSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\connectionStrings.dev.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>connectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\connectionStrings.mnl.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>connectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\connectionStrings.ng2.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>connectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\connectionStrings.production.config">
+      <DependentUpon>connectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\connectionStrings.sit.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>connectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\connectionStrings.uat.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>connectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\InternalUrlSection.mnl.config">
+      <DependentUpon>InternalUrlSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\InternalUrlSection.Production.config">
+      <DependentUpon>InternalUrlSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\InternalUrlSection.sit.config">
+      <DependentUpon>InternalUrlSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\InternalUrlSection.staging.config">
+      <DependentUpon>InternalUrlSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\InternalUrlSection.uat.config">
+      <DependentUpon>InternalUrlSection.config</DependentUpon>
+    </Content>
     <Content Include="Configurations\Permissions.txt" />
     <Content Include="Areas\NG2\UM.aspx.cs">
       <DependentUpon>UM.aspx</DependentUpon>
@@ -1401,6 +1476,13 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\StaticResources.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Configurations\connectionStrings.staging.config">
+      <DependentUpon>connectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.uat.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>Web.mnl.config</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\AlphaAdmin\style.css" />
@@ -1673,18 +1755,23 @@
     <Content Include="Images\Content\view.png" />
     <Content Include="SpNames.CustDB.mnl.xml">
       <SubType>Designer</SubType>
+      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
     </Content>
     <Content Include="SpNames.CustDB.production.xml">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="SpNames.CustDB.staging.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="SpNames.CustDB.uat.xml">
-      <SubType>Designer</SubType>
+      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
     </Content>
     <Content Include="SpNames.CustDB.sit.xml">
       <SubType>Designer</SubType>
+      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
+    </Content>
+    <Content Include="SpNames.CustDB.staging.xml">
+      <SubType>Designer</SubType>
+      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
+    </Content>
+    <Content Include="SpNames.CustDB.uat.xml">
+      <SubType>Designer</SubType>
+      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
     </Content>
     <Content Include="SpNames.CustDB.xml">
       <SubType>Designer</SubType>
@@ -2398,22 +2485,6 @@
     <Content Include="Configurations\connectionStrings.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configurations\appSettings.production.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configurations\appSettings.uat.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configurations\connectionStrings.production.config" />
-    <Content Include="Configurations\connectionStrings.uat.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configurations\connectionStrings.mnl.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configurations\appSettings.mnl.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Areas\CustomerSetting\Views\BetSetting\GoldDeluxe\Content.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\GoldDeluxe\Index.cshtml" />
     <Content Include="Areas\Common\Views\Web.config" />
@@ -2456,28 +2527,8 @@
     <Content Include="Areas\Reports\WinlossDetail\Products.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configurations\appSettings.sit.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configurations\connectionStrings.sit.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configurations\connectionStrings.ng2.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Areas\NG2\NumberGame2Section.config" />
     <Content Include="Areas\NG2\ONEbook.NG2.API.config" />
-    <Content Include="Areas\NG2\ONEbook.NG2.API.mnl.config" />
-    <Content Include="Areas\NG2\ONEbook.NG2.API.pro.config" />
-    <Content Include="Areas\NG2\ONEbook.NG2.API.sit.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Areas\NG2\ONEbook.NG2.API.uat.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configurations\appSettings.staging.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Content\fonts\AlphaAdmin\fonts\AlphaAdmin.eot" />
     <Content Include="Content\fonts\AlphaAdmin\fonts\AlphaAdmin.svg" />
     <Content Include="Content\fonts\AlphaAdmin\fonts\AlphaAdmin.ttf" />
@@ -2683,21 +2734,23 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <Content Include="Configurations\connectionStrings.dev.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Configurations\InternalUrlSection.config" />
-    <Content Include="Configurations\InternalUrlSection.mnl.config" />
-    <Content Include="Configurations\InternalUrlSection.Production.config" />
-    <Content Include="Configurations\InternalUrlSection.sit.config" />
-    <Content Include="Configurations\InternalUrlSection.staging.config" />
-    <Content Include="Configurations\InternalUrlSection.uat.config" />
     <None Include="Content\Images\Thumbs.db" />
-    <Content Include="Web.uat.config">
+    <Content Include="Web.ng2.config">
       <SubType>Designer</SubType>
+      <DependentUpon>Web.mnl.config</DependentUpon>
     </Content>
     <Content Include="Web.production.config">
       <SubType>Designer</SubType>
+      <DependentUpon>Web.mnl.config</DependentUpon>
+    </Content>
+    <Content Include="Web.sit.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>Web.mnl.config</DependentUpon>
+    </Content>
+    <Content Include="Web.staging.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>Web.mnl.config</DependentUpon>
     </Content>
     <Content Include="ExcelTemplates\Customer\MemberList.xls" />
     <Content Include="ExcelTemplates\Customer\CustomerList.xls" />
@@ -2729,9 +2782,6 @@
     <Content Include="IbcKeys\ibcpkey.snk" />
     <Content Include="IbcKeys\Web.config" />
     <Content Include="Web.mnl.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.sit.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="deployment.ignore" />
@@ -2783,13 +2833,7 @@
     <Content Include="Views\BettypeReference\Themes\ExtAccounting\variables.less" />
     <Content Include="Views\BettypeReference\Themes\style.less" />
     <Content Include="Views\Shared\_LayoutPtInfo.cshtml" />
-    <Content Include="Web.ng2.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Views\Shared\NoPermission.cshtml" />
-    <Content Include="Web.staging.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\NetworkSpeed\Index.cshtml" />
     <Content Include="Views\OTP\Index.cshtml" />

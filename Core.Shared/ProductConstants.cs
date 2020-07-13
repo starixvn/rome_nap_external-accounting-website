@@ -27,5 +27,6 @@
         public const int RNGWar = 50;
         public const int Sabaclub = 42;
         public const int DummyLiveCasinoProductId = 41;
+        public const int SabaVirtualSports = 54;
     }
 }

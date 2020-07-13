@@ -394,7 +394,7 @@
                 return setting;
             }
 
-            if (syncUpline || _roleId.IsSuper())
+            if ((syncUpline || _roleId.IsSuper()) && productElement.Id != ProductConstants.SabaVirtualSports)
             {
                 setting.Details.Add(
                     GetEditSettingLink(productElement.Key, productElement.Name));

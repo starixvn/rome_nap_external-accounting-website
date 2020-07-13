@@ -333,7 +333,8 @@
                 if (productStatus != null
                     && !productStatus.IsHidden
                     && productStatus.IsSyncedUpline
-                    && ProductSettings.IsShowProduct(product.Id))
+                    && ProductSettings.IsShowProduct(product.Id)
+                    && product.Id != ProductConstants.SabaVirtualSports)
                 {
                     visibledProducts.Add(product);
                 }
