@@ -1851,7 +1851,26 @@ ul, li {
     }
 
     .icon-wifi {
-        font-size: 24px;
+        font-size: 20px;
         color: #2F80ED;
+    }
+
+    [class*="icon-network"] {
+        overflow: hidden;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        position: relative;
+        top: 4px;
+    }
+
+    .icon-network-weak {
+        background: url("../../images/network/weak-network.svg") no-repeat;
+        background-size: contain;
+    }
+
+    .icon-network-medium {
+        background: url("../../images/network/medium-network.svg") no-repeat;
+        background-size: contain;
     }
 }
