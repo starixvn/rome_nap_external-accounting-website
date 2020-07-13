@@ -427,6 +427,7 @@ body {
     border: none !important;
     color: #42a15c;
     cursor: pointer;
+
     &:hover {
         color: #ff9900;
     }
@@ -1823,54 +1824,27 @@ ul, li {
     }
 }
 
-.list-wifi {
-    position: absolute;
-    top: 48px;
-    right: 24px;
-    z-index: 9999;
-    list-style: none;
-    padding-left: 0;
-    min-width: 250px;
-    margin: 0;
-    padding: 12px;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
+.icon-wifi {
+    color: #2F80ED;
+    margin-left: 5px;
+}
 
-    .line-network {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 8px 12px;
-        border: 1px solid #CDCDCD;
-        border-radius: 3px;
-        margin-bottom: 8px;
+[class*="icon-network"] {
+    overflow: hidden;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    position: relative;
+    top: 4px;
+    margin-left: 5px;
+}
 
-        &.in-use {
-            background-color: #ECECEC;
-        }
-    }
+.icon-network-weak {
+    background: url("../../images/network/weak-network.svg") no-repeat;
+    background-size: contain;
+}
 
-    .icon-wifi {
-        font-size: 20px;
-        color: #2F80ED;
-    }
-
-    [class*="icon-network"] {
-        overflow: hidden;
-        width: 20px;
-        height: 20px;
-        display: inline-block;
-        position: relative;
-        top: 4px;
-    }
-
-    .icon-network-weak {
-        background: url("../../images/network/weak-network.svg") no-repeat;
-        background-size: contain;
-    }
-
-    .icon-network-medium {
-        background: url("../../images/network/medium-network.svg") no-repeat;
-        background-size: contain;
-    }
+.icon-network-medium {
+    background: url("../../images/network/medium-network.svg") no-repeat;
+    background-size: contain;
 }

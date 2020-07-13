@@ -30,13 +30,22 @@ Fanex.ExtAcc.SSO = {
                         return null;
                     }
 
+                    var classname = "icon-network-weak";
                     var $origOption = $(line.element);
-                    return $('<span>' + line.text + '<span class="' + $origOption.data("classname") + '"></span></span>');
+                    var speed = parseInt($origOption.attr("data-speed"));
+
+                    if (speed > 800) {
+                        classname = "icon-wifi";
+                    } else if (speed > 400) {
+                        classname = "icon-network-medium";
+                    }
+
+                    return $('<span>' + line.text + '<span class="' + classname + '"></span></span>');
                 }
             })
             .find("option").each(function () {
                 Fanex.ExtAcc.SSO.lines.push({
-                    id: this.id,
+                    element: $("#" + this.id),
                     url: this.value,
                     speeds: [],
                     index: 0,
@@ -83,7 +92,7 @@ Fanex.ExtAcc.SSO = {
 
         line.speeds[line.index++] = value;
         line.average = Fanex.ExtAcc.SSO.CalculateSpeedAverage(line.speeds);
-        $("#" + line.id).attr("data-speed", line.average);
+        line.element.attr("data-speed", line.average);
 
         console.dir(line);
         setTimeout(function () {

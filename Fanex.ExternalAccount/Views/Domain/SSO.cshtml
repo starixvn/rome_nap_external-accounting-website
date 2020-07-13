@@ -34,7 +34,7 @@
 @if (supportSwitchLine && domains.Length > 0)
 {
     <select onchange="javascript:switchLine(this)" id="ddl-switchLine">
-        <option value="@currentLineValue" id="opt-line-current" data-defaultspeed="1000">
+        <option value="@currentLineValue" id="opt-line-current">
             @currentLine
         </option>
             @for (var i = 0; i < domains.Length; i++)
@@ -48,7 +48,7 @@
                     string.IsNullOrWhiteSpace(domainName) ? string.Empty : "http://" + domainName;
                 if (!string.IsNullOrWhiteSpace(domainName))
                 {
-                    <option value="@formatedDomain" id="opt-line-@i" data-defaultspeed="1000">@aliasName</option>
+                    <option value="@formatedDomain" id="opt-line-@i">@aliasName</option>
                 }
             }
     </select>
