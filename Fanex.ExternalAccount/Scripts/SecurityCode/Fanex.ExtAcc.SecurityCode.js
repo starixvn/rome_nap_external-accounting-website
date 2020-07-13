@@ -5,7 +5,7 @@
         var code = $('input#code').val();
         var returnUrl = $('input#returnUrl').val();
 
-        $.post('/SecurityCode/Verify', { code })
+        $.post(resolveClientUrl('SecurityCode/Verify'), { code })
             .done(function (message) {
                 if (message === 'valid') {
                     $('#securityCodePageContainer').html('');
