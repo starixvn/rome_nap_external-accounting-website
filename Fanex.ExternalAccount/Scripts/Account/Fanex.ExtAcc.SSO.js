@@ -9,15 +9,15 @@ if (typeof Fanex.ExtAcc === 'undefined') {
 Fanex.ExtAcc.SSO = {
     imageAddress: "/assets/styles/images/sample_test_network_speed_1.jpg",
     imageDownloadSize: 4995374, // bytes
-    domains: [],
+    lines: [],
     maxSpeedsLength: 5,
     addedErrorTime: 1000 * 60 * 5, // 5 minutes
 
     Init: function () {
         Fanex.ExtAcc.SSO.InitDropdownList();
 
-        for (var i = 0, max = Fanex.ExtAcc.SSO.domains.length; i < max; i++) {
-            Fanex.ExtAcc.SSO.MeasureConnectionSpeed(Fanex.ExtAcc.SSO.domains[i]);
+        for (var i = 0, max = Fanex.ExtAcc.SSO.lines.length; i < max; i++) {
+            Fanex.ExtAcc.SSO.MeasureConnectionSpeed(Fanex.ExtAcc.SSO.lines[i]);
         }
     },
 
@@ -35,8 +35,9 @@ Fanex.ExtAcc.SSO = {
                 }
             })
             .find("option").each(function () {
-                Fanex.ExtAcc.SSO.domains.push({
-                    id: this.value,
+                Fanex.ExtAcc.SSO.lines.push({
+                    id: this.id,
+                    url: this.value,
                     speeds: [],
                     index: 0,
                     average: 0
@@ -44,25 +45,25 @@ Fanex.ExtAcc.SSO = {
             });
     },
 
-    MeasureConnectionSpeed: function (domain) {
+    MeasureConnectionSpeed: function (line) {
         var startTime;
         var download = new Image();
         download.onload = function () {
             var endTime = (new Date()).getTime();
-            Fanex.ExtAcc.SSO.OnMeasureConnectionSpeedSuccess(domain, startTime, endTime);
+            Fanex.ExtAcc.SSO.OnMeasureConnectionSpeedSuccess(line, startTime, endTime);
         };
 
         download.onerror = function () {
             var endTime = startTime + Fanex.ExtAcc.SSO.addedErrorTime;
-            Fanex.ExtAcc.SSO.OnMeasureConnectionSpeedSuccess(domain, startTime, endTime);
+            Fanex.ExtAcc.SSO.OnMeasureConnectionSpeedSuccess(line, startTime, endTime);
         };
 
         startTime = (new Date()).getTime();
         var cacheBuster = "?v=" + startTime;
-        download.src = domain.id + Fanex.ExtAcc.SSO.imageAddress + cacheBuster;
+        download.src = line.url + Fanex.ExtAcc.SSO.imageAddress + cacheBuster;
     },
 
-    OnMeasureConnectionSpeedSuccess: function (domain, startTime, endTime) {
+    OnMeasureConnectionSpeedSuccess: function (line, startTime, endTime) {
         var duration = (endTime - startTime) / 1000;
         var bitsLoaded = Fanex.ExtAcc.SSO.imageDownloadSize * 8;
         //var speedBps = (bitsLoaded / duration).toFixed(2);
@@ -72,24 +73,25 @@ Fanex.ExtAcc.SSO = {
         var speedKbps = speedBps / 1024;
         var speedMbps = speedKbps / 1024;
 
-        Fanex.ExtAcc.SSO.UpdateConnectionSpeed(domain, speedMbps);
+        Fanex.ExtAcc.SSO.UpdateConnectionSpeed(line, speedMbps);
     },
 
-    UpdateConnectionSpeed: function (domain, value) {
-        if (domain.index >= Fanex.ExtAcc.SSO.maxSpeedsLength) {
-            domain.index = 0;
+    UpdateConnectionSpeed: function (line, value) {
+        if (line.index >= Fanex.ExtAcc.SSO.maxSpeedsLength) {
+            line.index = 0;
         }
 
-        domain.speeds[domain.index++] = value;
-        domain.average = Fanex.ExtAcc.SSO.CalculateAverage(domain.speeds);
+        line.speeds[line.index++] = value;
+        line.average = Fanex.ExtAcc.SSO.CalculateSpeedAverage(line.speeds);
+        $("#" + line.id).attr("data-speed", line.average);
 
-        console.dir(domain);
+        console.dir(line);
         setTimeout(function () {
-            Fanex.ExtAcc.SSO.MeasureConnectionSpeed(domain);
-        }, 1000 * 5)
+            Fanex.ExtAcc.SSO.MeasureConnectionSpeed(line);
+        }, 1000 * 5);
     },
 
-    CalculateAverage: function (values) {
+    CalculateSpeedAverage: function (values) {
         var total = 0;
         var max = values.length;
 
@@ -97,7 +99,7 @@ Fanex.ExtAcc.SSO = {
             total += values[i];
         }
 
-        return total / max;
+        return Math.round(total / max);
     }
 }
 
