@@ -483,7 +483,16 @@
       <DependentUpon>index.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\securitycode\index.css" />
+    <Content Include="assets\bundles\securitycode\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\securitycode\index.js" />
+    <Content Include="assets\bundles\securitycode\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\securitycode\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.js" />
     <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.min.js">
       <DependentUpon>index.js</DependentUpon>
