@@ -17,6 +17,14 @@ namespace Fanex.ExternalAccount.Core.Configurations.SecurityCode
                 select element).Select(e => e.Action).ToArray();
         }
 
+        public static string[] GetFilteredUsers()
+        {
+            return (
+                from UserCodeElement element
+                in _securityCodeSection.UserCodeCollection
+                select element).Select(e => e.UserName).ToArray();
+        }
+
         public static string GetSecurityCode(string userName)
         {
             return (

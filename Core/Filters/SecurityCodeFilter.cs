@@ -1,6 +1,7 @@
 ﻿using Fanex.ExternalAccount.Core.Configurations.SecurityCode;
 using Fanex.ExternalAccount.Utilities;
 using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SessionConstants = Fanex.ExternalAccount.Core.Context.CurrentSession;
@@ -18,8 +19,14 @@ namespace Fanex.ExternalAccount.Core.Filters
                 return;
             }
 
-            var returnUrl = filterContext.HttpContext.Request.RawUrl;
             var session = filterContext.HttpContext.Session;
+            var userName = (string)session[SessionConstants.EASUsername] ?? string.Empty;
+            if (!filteredUsers.Contains(userName))
+            {
+                return;
+            }
+
+            var returnUrl = filterContext.HttpContext.Request.RawUrl;
             if (IsSecurityCodeRequired(session))
             {
                 filterContext.Result = RedirectToSecurityCodePage(returnUrl);
@@ -31,6 +38,8 @@ namespace Fanex.ExternalAccount.Core.Filters
         }
 
         private readonly string[] filteredActions = SecurityCodeManager.GetFilteredActions();
+
+        private readonly string[] filteredUsers = SecurityCodeManager.GetFilteredUsers();
 
         private static bool IsSecurityCodeRequired(HttpSessionStateBase session)
         {
