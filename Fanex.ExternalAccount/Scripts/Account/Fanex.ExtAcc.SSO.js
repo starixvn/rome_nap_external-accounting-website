@@ -8,17 +8,17 @@ if (typeof Fanex.ExtAcc === 'undefined') {
 
 Fanex.ExtAcc.SSO = {
     imageAddress: "/assets/styles/images/sample_test_network_speed_1.jpg",
-    imageDownloadSize: 4995374, // bytes
     lines: [],
-    maxSpeedsLength: 5,
+    maxTimesLength: 5,
     addedErrorTime: 1000 * 60 * 5, // 5 minutes
+    intervalTime: 1000 * 5, // 1 minute
 
     Init: function () {
         Fanex.ExtAcc.SSO.InitDropdownList();
 
-        for (var i = 0, max = Fanex.ExtAcc.SSO.lines.length; i < max; i++) {
-            Fanex.ExtAcc.SSO.MeasureConnectionSpeed(Fanex.ExtAcc.SSO.lines[i]);
-        }
+        $.each(this.lines, function (index, value) {
+            Fanex.ExtAcc.SSO.MeasureConnectionSpeed(value);
+        });
     },
 
     InitDropdownList: function () {
@@ -30,19 +30,11 @@ Fanex.ExtAcc.SSO = {
                     return null;
                 }
 
-                console.dir(line);
-
-                var classname = "icon-network-weak";
                 var $origOption = $(line.element);
-                var speed = parseInt($origOption.attr("data-speed"));
+                var classname = $origOption.attr("data-networkspeed");
+                var text = line.text + (line.selected ? " - (In use)" : '');
 
-                if (speed > 800) {
-                    classname = "icon-wifi";
-                } else if (speed > 400) {
-                    classname = "icon-network-medium";
-                }
-
-                return $(['<span>', line.text, line.selected ? " - (In use)" : '', '</span><span class="', classname, '"></span>'].join(""));
+                return $('<span>' + text + '</span><span class="' + classname + '"></span>');
             }
         });
 
@@ -50,7 +42,7 @@ Fanex.ExtAcc.SSO = {
             Fanex.ExtAcc.SSO.lines.push({
                 elements: $("." + this.className),
                 url: this.value,
-                speeds: [],
+                times: [],
                 index: 0,
                 average: 0
             });
@@ -75,18 +67,17 @@ Fanex.ExtAcc.SSO = {
     },
 
     UpdateConnectionSpeed: function (line, value) {
-        if (line.index >= Fanex.ExtAcc.SSO.maxSpeedsLength) {
+        if (line.index >= Fanex.ExtAcc.SSO.maxTimesLength) {
             line.index = 0;
         }
 
-        line.speeds[line.index++] = value;
-        line.average = Fanex.ExtAcc.SSO.CalculateSpeedAverage(line.speeds);
-        line.elements.attr("data-speed", line.average);
+        line.times[line.index++] = value;
+        line.average = Fanex.ExtAcc.SSO.CalculateSpeedAverage(line.times);
+        Fanex.ExtAcc.SSO.AssignNetworkSpeedIcon(line);
 
-        console.dir(line);
         setTimeout(function () {
             Fanex.ExtAcc.SSO.MeasureConnectionSpeed(line);
-        }, 1000 * 5);
+        }, Fanex.ExtAcc.SSO.intervalTime);
     },
 
     CalculateSpeedAverage: function (values) {
@@ -98,6 +89,32 @@ Fanex.ExtAcc.SSO = {
         }
 
         return Math.round(total / max);
+    },
+
+    AssignNetworkSpeedIcon: function (currentLine) {
+        var line = Fanex.ExtAcc.SSO.lines[0];
+        var min = line.average;
+        var max = line.average;
+
+        for (var i = 1, maxLen = Fanex.ExtAcc.SSO.lines.length; i < maxLen; i++) {
+            line = Fanex.ExtAcc.SSO.lines[i];
+
+            if (line.average < min) {
+                min = line.average;
+            }
+
+            if (line.average > max) {
+                max = line.average;
+            }
+        }
+
+        if (currentLine.average <= min) {
+            currentLine.elements.attr("data-networkspeed", "icon-wifi");
+        } else if (currentLine.average >= max) {
+            currentLine.elements.attr("data-networkspeed", "icon-network-weak");
+        } else {
+            currentLine.elements.attr("data-networkspeed", "icon-network-medium");
+        }
     }
 }
 
