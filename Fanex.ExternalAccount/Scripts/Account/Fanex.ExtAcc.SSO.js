@@ -23,7 +23,7 @@ Fanex.ExtAcc.SSO = {
 
     InitDropdownList: function () {
         var ddlSwitchLines = $(".ddl-switchLine").select2({
-            theme: "custom-option-select",
+            theme: "switchline",
             minimumResultsForSearch: -1,
             templateResult: function (line) {
                 if (!line.id) {

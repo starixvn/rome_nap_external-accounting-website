@@ -1830,10 +1830,12 @@ ul, li {
         color: #fff;
         margin-right: 0 !important;
         font-size: 18px;
+
         &:hover {
             color: #fff !important;
         }
     }
+
     &:after {
         content: '';
         width: 1px;
@@ -1842,6 +1844,11 @@ ul, li {
         right: 0;
         top: 16px;
         background: #fff;
+    }
+
+    @media screen and (max-device-width: 480px) {
+        padding: 10px 0 0 30px;
+        color: #cbcbcb;
     }
 }
 
@@ -1868,4 +1875,80 @@ ul, li {
 .icon-wifi {
     color: #2F80ED;
     font-size: 15px;
+}
+
+.select2-container.select2-container--switchline {
+    width: auto !important;
+
+    .select2-selection--single {
+        background-color: transparent;
+        border: none;
+        display: unset;
+
+        .select2-selection__rendered {
+            color: #fff;
+            padding-left: 4px;
+            display: unset;
+            @media screen and (max-device-width: 480px) {
+                padding-left: 10px;
+            }
+        }
+
+        .select2-selection__arrow {
+            position: relative;
+        }
+
+        .select2-selection__arrow b {
+            position: absolute;
+            top: 50%;
+            right: 4px;
+            content: "";
+            height: 6px;
+            width: 6px;
+            margin-top: -4px;
+            border: 1px solid #fff;
+            border-width: 1px 1px 0 0;
+            transform: rotate(135deg);
+        }
+    }
+
+    *:focus {
+        outline: none;
+    }
+}
+
+.select2-container--switchline {
+    &.select2-container--open .select2-results__option[aria-selected=true] {
+        background-color: #ECECEC !important;
+        color: #232428 !important;
+    }
+
+    .select2-results__option {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &:hover {
+            background-color: #ECECEC !important;
+        }
+    }
+}
+
+.select2-container--switchline .select2-dropdown {
+    box-shadow: inset 1px 1px 0 rgba(0,0,0,.1), inset 0 -1px 0 rgba(0,0,0,.07);
+    border-radius: 0;
+    border: 1px solid #a6a6a6;
+    top: -1px;
+    min-width: 200px;
+    left: unset !important;
+    right: -115px;
+    @media screen and (max-device-width: 480px) {
+        right: unset;
+        left: 0;
+        top: 8px;
+    }
+
+    .select2-results__option {
+        padding: 8px;
+    }
 }
