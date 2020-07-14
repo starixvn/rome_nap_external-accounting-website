@@ -22,36 +22,39 @@ Fanex.ExtAcc.SSO = {
     },
 
     InitDropdownList: function () {
-        $(".ddl-switchLine")
-            .select2({
-                minimumResultsForSearch: -1,
-                templateResult: function (line) {
-                    if (!line.id) {
-                        return null;
-                    }
-
-                    var classname = "icon-network-weak";
-                    var $origOption = $(line.element);
-                    var speed = parseInt($origOption.attr("data-speed"));
-
-                    if (speed > 800) {
-                        classname = "icon-wifi";
-                    } else if (speed > 400) {
-                        classname = "icon-network-medium";
-                    }
-
-                    return $('<span>' + line.text + '</span><span class="' + classname + '"></span>');
+        var ddlSwitchLines = $(".ddl-switchLine").select2({
+            theme: "custom-option-select",
+            minimumResultsForSearch: -1,
+            templateResult: function (line) {
+                if (!line.id) {
+                    return null;
                 }
-            })
-            .find("option").each(function () {
-                Fanex.ExtAcc.SSO.lines.push({
-                    element: $("#" + this.id),
-                    url: this.value,
-                    speeds: [],
-                    index: 0,
-                    average: 0
-                });
+
+                console.dir(line);
+
+                var classname = "icon-network-weak";
+                var $origOption = $(line.element);
+                var speed = parseInt($origOption.attr("data-speed"));
+
+                if (speed > 800) {
+                    classname = "icon-wifi";
+                } else if (speed > 400) {
+                    classname = "icon-network-medium";
+                }
+
+                return $(['<span>', line.text, line.selected ? " - (In use)" : '', '</span><span class="', classname, '"></span>'].join(""));
+            }
+        });
+
+        $(ddlSwitchLines[0]).find("option").each(function () {
+            Fanex.ExtAcc.SSO.lines.push({
+                elements: $("." + this.className),
+                url: this.value,
+                speeds: [],
+                index: 0,
+                average: 0
             });
+        });
     },
 
     MeasureConnectionSpeed: function (line) {
@@ -59,30 +62,16 @@ Fanex.ExtAcc.SSO = {
         var download = new Image();
         download.onload = function () {
             var endTime = (new Date()).getTime();
-            Fanex.ExtAcc.SSO.OnMeasureConnectionSpeedSuccess(line, startTime, endTime);
+            Fanex.ExtAcc.SSO.UpdateConnectionSpeed(line, endTime - startTime);
         };
 
         download.onerror = function () {
-            var endTime = startTime + Fanex.ExtAcc.SSO.addedErrorTime;
-            Fanex.ExtAcc.SSO.OnMeasureConnectionSpeedSuccess(line, startTime, endTime);
+            Fanex.ExtAcc.SSO.UpdateConnectionSpeed(line, Fanex.ExtAcc.SSO.addedErrorTime);
         };
 
         startTime = (new Date()).getTime();
         var cacheBuster = "?v=" + startTime;
         download.src = line.url + Fanex.ExtAcc.SSO.imageAddress + cacheBuster;
-    },
-
-    OnMeasureConnectionSpeedSuccess: function (line, startTime, endTime) {
-        var duration = (endTime - startTime) / 1000;
-        var bitsLoaded = Fanex.ExtAcc.SSO.imageDownloadSize * 8;
-        //var speedBps = (bitsLoaded / duration).toFixed(2);
-        //var speedKbps = (speedBps / 1024).toFixed(2);
-        //var speedMbps = (speedKbps / 1024).toFixed(2);
-        var speedBps = bitsLoaded / duration;
-        var speedKbps = speedBps / 1024;
-        var speedMbps = speedKbps / 1024;
-
-        Fanex.ExtAcc.SSO.UpdateConnectionSpeed(line, speedMbps);
     },
 
     UpdateConnectionSpeed: function (line, value) {
@@ -92,7 +81,7 @@ Fanex.ExtAcc.SSO = {
 
         line.speeds[line.index++] = value;
         line.average = Fanex.ExtAcc.SSO.CalculateSpeedAverage(line.speeds);
-        line.element.attr("data-speed", line.average);
+        line.elements.attr("data-speed", line.average);
 
         console.dir(line);
         setTimeout(function () {
