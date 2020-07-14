@@ -1826,7 +1826,7 @@ ul, li {
     position: relative;
 
     .icon-wifi {
-        color: #fff;
+        //color: #fff;
         margin-right: 0 !important;
         font-size: 18px;
 
@@ -1865,6 +1865,7 @@ ul, li {
     position: relative;
     top: 1px;
     margin-left: 5px;
+    margin-right: 0 !important;
 }
 
 .icon-network-weak {
@@ -1878,7 +1879,7 @@ ul, li {
 }
 
 .icon-wifi {
-    color: #2F80ED;
+    color: #27AE60;
     font-size: 15px;
 }
 
