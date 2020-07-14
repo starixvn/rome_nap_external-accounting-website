@@ -1,10 +1,12 @@
 ﻿.select2-container {
+    width: auto !important;
     .select2-selection--single {
         background-color: transparent;
         border: none;
 
         .select2-selection__rendered {
             color: #fff;
+            padding-left: 4px;
         }
 
         .select2-selection__arrow b {
@@ -39,4 +41,10 @@
     border-radius: 0;
     border: 1px solid #a6a6a6;
     top: 15px;
+    min-width: 200px;
+    left: unset !important;
+    right: -115px;
+    .select2-results__option {
+        padding: 8px;
+    }
 }
