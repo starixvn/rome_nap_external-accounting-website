@@ -1,9 +1,16 @@
 ﻿@using Fanex.ExternalAccount.Utilities;
 @{
     ViewBag.Title = ViewLang.SCPageTile;
+    ViewBag.IsExternalSite = ViewBag.ReturnUrl.Contains("/updateCustomerSetting/updateSetting");
     Layout = null;
 }
 
+@{
+    if (ViewBag.IsExternalSite)
+    {
+        <link href="@Url.Content("~/assets/bundles/common.min.css")" rel="stylesheet" type="text/css" />
+    }
+}
 @StaticResources.RenderStyles("~/assets/bundles/securitycode/index")
 
 <div id="securityCodePage" class="securitycode-page-overlay">
@@ -24,7 +31,8 @@
                            value=""
                            placeholder="@ViewLang.SCInputPlaceholder"
                            maxlength="6"
-                           autocomplete="off" />
+                           autocomplete="off"
+                           onkeypress="Fanex.ExtAcc.SecurityCode.OnKeyPress(event)" />
                     <label id="codeError" class="sc-error-msg hidden">@ViewLang.SCErrorMessage</label>
                     <span class="icon-lock"></span>
 
@@ -32,11 +40,22 @@
                 </div>
 
                 <div class="row">
-                    <button id="btnVerify" class="sc-btn-verify">Verify</button>
+                    <button id="btnVerify" type="button" class="sc-btn-verify" onclick="Fanex.ExtAcc.SecurityCode.OnClick()">Verify</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
+@{
+    if (ViewBag.IsExternalSite)
+    {
 
+        <script type="text/javascript">
+            function resolveClientUrl(relativeUrl) {
+                return '@Url.Content("~/")' + relativeUrl;
+            }
+        </script>
+        <script src="@Url.Content("~/assets/bundles/common.min.js")" type="text/javascript"></script>
+    }
+}
 @StaticResources.RenderScripts("~/assets/bundles/securitycode/index")
