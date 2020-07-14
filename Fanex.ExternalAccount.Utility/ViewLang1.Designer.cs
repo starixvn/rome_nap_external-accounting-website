@@ -1808,42 +1808,6 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The security code is invalid..
-        /// </summary>
-        public static string SCErrorMessage {
-            get {
-                return ResourceManager.GetString("SCErrorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please verify that you are {0}..
-        /// </summary>
-        public static string SCFormTile {
-            get {
-                return ResourceManager.GetString("SCFormTile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter the security code here..
-        /// </summary>
-        public static string SCInputPlaceholder {
-            get {
-                return ResourceManager.GetString("SCInputPlaceholder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Verify User Identity.
-        /// </summary>
-        public static string SCPageTile {
-            get {
-                return ResourceManager.GetString("SCPageTile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string Search {

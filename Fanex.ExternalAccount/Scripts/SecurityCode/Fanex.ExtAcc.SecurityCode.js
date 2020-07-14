@@ -59,6 +59,13 @@ Fanex.ExtAcc.SecurityCode = {
         var currentIFrameSrc = currentIFrame.attr('src');
         currentIFrame.attr('src', currentIFrameSrc);
     },
+    OnShowSecurityCode: function (event) {
+        if (event.target.checked) {
+            $('input#code').prop('type', 'text');
+        } else {
+            $('input#code').prop('type', 'password');
+        }
+    },
     OnKeyPress: function (event) {
         if (event.which === 13) {
             event.preventDefault();
@@ -86,7 +93,7 @@ Fanex.ExtAcc.SecurityCode = {
 
                 if (Fanex.ExtAcc.SecurityCode.GetFailedCount() < 5) {
                     $('input#code').val('');
-                    $("label#codeError").removeClass('hidden');
+                    $("span#codeError").removeClass('hidden');
 
                     Fanex.ExtAcc.SecurityCode.IncrementFailedCount();
                     return;
