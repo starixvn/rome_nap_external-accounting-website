@@ -32,7 +32,13 @@ Fanex.ExtAcc.SSO = {
 
                 var $origOption = $(line.element);
                 var classname = $origOption.attr("data-networkspeed");
-                var text = line.text + (line.selected ? " - (In use)" : '');
+                var text = line.text;
+
+                if (line.selected) {
+                    text += " - In use";
+                } else if (classname === "icon-wifi") {
+                    text += " - Recommend";
+                }
 
                 return $('<span>' + text + '</span><span class="' + classname + '"></span>');
             }
