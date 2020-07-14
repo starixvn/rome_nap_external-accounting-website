@@ -2736,7 +2736,6 @@
     <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.min.js.map">
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
-    <Content Include="assets\styles\components\_select2-customize.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
