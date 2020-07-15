@@ -53,8 +53,7 @@
                 .success(function (result) {
                     parent.Fanex.ExtAcc.UnBlockUI();
 
-                    if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
-                        parent.$('#securityCodePageContainer').html(result);
+                    if (parent.Fanex.ExtAcc.ShowSecurityCodePage(result)) {
                         return;
                     }
 

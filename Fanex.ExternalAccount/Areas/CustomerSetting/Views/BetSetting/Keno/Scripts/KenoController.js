@@ -238,10 +238,7 @@ Fanex.CustomerSetting.Betting.Keno.Update = function (ondone) {
     })
         .success(function (data) {
 
-            if (typeof data === 'string' && data.indexOf('securityCodePage') > -1) {
-                Fanex.CustomerSetting.Core.UnBlockUI();
-
-                parent.parent.$('#securityCodePageContainer').html(data);
+            if (parent.parent.Fanex.ExtAcc.ShowSecurityCodePage(data, Fanex.CustomerSetting.Core.UnBlockUI)) {
                 return;
             }
 

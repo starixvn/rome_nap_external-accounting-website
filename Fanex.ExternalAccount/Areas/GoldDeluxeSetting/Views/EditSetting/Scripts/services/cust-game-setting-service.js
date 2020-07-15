@@ -13,8 +13,7 @@
                 data: settingViewModel
             }).success(function (mainResult) {
 
-                if (typeof mainResult === 'string' && mainResult.indexOf('securityCodePage') > -1) {
-                    parent.parent.$('#securityCodePageContainer').html(mainResult);
+                if (parent.parent.Fanex.ExtAcc.ShowSecurityCodePage(mainResult)) {
                     return;
                 }
 

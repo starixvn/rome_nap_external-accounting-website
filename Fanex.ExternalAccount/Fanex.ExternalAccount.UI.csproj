@@ -1475,6 +1475,7 @@
       <SubType>Designer</SubType>
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
+    <Content Include="Configurations\InternalUrlSection.config" />
     <Content Include="Configurations\InternalUrlSection.mnl.config">
       <DependentUpon>InternalUrlSection.config</DependentUpon>
     </Content>
@@ -2766,19 +2767,22 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <Content Include="Configurations\InternalUrlSection.config" />
-    <Content Include="Configurations\InternalUrlSection.mnl.config" />
-    <Content Include="Configurations\InternalUrlSection.Production.config" />
-    <Content Include="Configurations\InternalUrlSection.sit.config" />
-    <Content Include="Configurations\InternalUrlSection.staging.config" />
-    <Content Include="Configurations\InternalUrlSection.uat.config" />
     <Content Include="Configurations\SecurityCodeSection.config" />
-    <Content Include="Configurations\SecurityCodeSection.mnl.config" />
-    <Content Include="Configurations\SecurityCodeSection.ng2.config" />
-    <Content Include="Configurations\SecurityCodeSection.production.config" />
-    <Content Include="Configurations\SecurityCodeSection.sit.config" />
-    <Content Include="Configurations\SecurityCodeSection.staging.config" />
-    <Content Include="Configurations\SecurityCodeSection.uat.config" />
+    <Content Include="Configurations\SecurityCodeSection.mnl.config">
+      <DependentUpon>SecurityCodeSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\SecurityCodeSection.production.config">
+      <DependentUpon>SecurityCodeSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\SecurityCodeSection.sit.config">
+      <DependentUpon>SecurityCodeSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\SecurityCodeSection.staging.config">
+      <DependentUpon>SecurityCodeSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\SecurityCodeSection.uat.config">
+      <DependentUpon>SecurityCodeSection.config</DependentUpon>
+    </Content>
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.ng2.config">
       <SubType>Designer</SubType>

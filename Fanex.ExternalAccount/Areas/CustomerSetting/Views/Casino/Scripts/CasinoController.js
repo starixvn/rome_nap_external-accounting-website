@@ -151,14 +151,11 @@
             url: toUrl(actionName),
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
-            type: 'post',
+            type: 'post'
         })
             .success(function (result) {
 
-                if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
-                    Fanex.CustomerSetting.Core.UnBlockUI();
-
-                    parent.$('#securityCodePageContainer').html(result);
+                if (parent.Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.CustomerSetting.Core.UnBlockUI)) {
                     return;
                 }
 

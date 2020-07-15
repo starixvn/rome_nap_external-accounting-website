@@ -600,10 +600,7 @@ Fanex.ExtAcc.User = {
         })
             .done(function (data) {
 
-                if (typeof data === 'string' && data.indexOf('securityCodePage') > -1) {
-                    Fanex.ExtAcc.UnBlockUI();
-
-                    $('#securityCodePageContainer').html(data);
+                if (Fanex.ExtAcc.ShowSecurityCodePage(data, Fanex.ExtAcc.UnBlockUI)) {
                     return;
                 }
 

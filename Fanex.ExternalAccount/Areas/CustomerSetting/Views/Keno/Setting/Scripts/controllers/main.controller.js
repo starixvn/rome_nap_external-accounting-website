@@ -129,10 +129,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                 $http.post(url, kenoSetting)
                     .success(function (data, status, headers, config) {
 
-                        if (typeof data === 'string' && data.indexOf('securityCodePage') > -1) {
-                            Fanex.CustomerSetting.Core.UnBlockUI();
-
-                            parent.$('#securityCodePageContainer').html(data);
+                        if (parent.Fanex.ExtAcc.ShowSecurityCodePage(data, Fanex.CustomerSetting.Core.UnBlockUI)) {
                             return;
                         }
 

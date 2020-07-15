@@ -137,17 +137,12 @@ Fanex.ExtAcc = {
     LoadMainFrame: function (url, id, isLeftPanelClick, dontNeedGroupName) {
         this.BlockUI();
         $('#contentSplitter').hide();
-        //if (typeof id != 'undefined') {
-        //    $('#' + id).hide();
-        //}
 
         var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
         $.ajax({
             url: fullUrl, type: 'post', success: function (result) {
-                if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
-                    Fanex.ExtAcc.UnBlockUI();
 
-                    $('#securityCodePageContainer').html(result);
+                if (Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.ExtAcc.UnBlockUI)) {
                     return;
                 }
 
@@ -736,6 +731,19 @@ Fanex.ExtAcc = {
         infoDiv.setAttribute('onclick', "window.open(resolveClientUrl('SportsbookSetting/ViewPtInfo'), '_blank')");
 
         headerPt.append(infoDiv);
+    },
+
+    ShowSecurityCodePage: function (result, unBlockUI = null) {
+        if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+            if (typeof unBlockUI === 'function') {
+                unBlockUI();
+            }
+
+            $('#securityCodePageContainer').html(result);
+            return true;
+        }
+
+        return false;
     }
 };
 

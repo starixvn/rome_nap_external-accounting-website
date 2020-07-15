@@ -177,23 +177,20 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                             type: 'post'
                         }).success(function (result) {
 
-                                if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
-                                    Fanex.ExtAcc.UnBlockUI();
+                            if (Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.ExtAcc.UnBlockUI)) {
+                                return;
+                            }
 
-                                    $('#securityCodePageContainer').html(result);
-                                    return;
-                                }
+                            if (result.errorCode == 0) {
+                                Fanex.ExtAcc.LoadMainFrame(resolveClientUrl("Customer/Settings/3/" + result.custId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val()));
+                            }
+                            else {
+                                Fanex.ExtAcc.UnBlockUI();
 
-                                if (result.errorCode == 0) {
-                                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl("Customer/Settings/3/" + result.custId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val()));
-                                }
-                                else {
-                                    Fanex.ExtAcc.UnBlockUI();
-
-                                    $('#errMsg').css('display', 'block');
-                                    $('#errMsg').html(result.errorMessage.formatErrorMessage());
-                                }
-                            });
+                                $('#errMsg').css('display', 'block');
+                                $('#errMsg').html(result.errorMessage.formatErrorMessage());
+                            }
+                        });
                     };
                 };
 

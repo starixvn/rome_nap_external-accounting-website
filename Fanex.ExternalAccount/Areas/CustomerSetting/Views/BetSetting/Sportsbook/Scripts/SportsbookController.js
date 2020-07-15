@@ -444,8 +444,7 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
 
             Fanex.CustomerSetting.Core.UnBlockUI();
 
-            if (typeof data === 'string' && data.indexOf('securityCodePage') > -1) {
-                parent.parent.$('#securityCodePageContainer').html(data);
+            if (parent.parent.Fanex.ExtAcc.ShowSecurityCodePage(data)) {
                 return;
             }
 

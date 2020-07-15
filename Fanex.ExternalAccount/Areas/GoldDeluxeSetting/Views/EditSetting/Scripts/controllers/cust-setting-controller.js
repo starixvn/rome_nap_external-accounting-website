@@ -61,10 +61,7 @@
 
                 $scope.afterServerReturnSuccess = function (mainResult, isUpdatePartial) {
 
-                    if (typeof mainResult === 'string' && mainResult.indexOf('securityCodePage') > -1) {
-                        parent.Fanex.ExtAcc.UnBlockUI();
-
-                        parent.$('#securityCodePageContainer').html(mainResult);
+                    if (parent.Fanex.ExtAcc.ShowSecurityCodePage(mainResult, parent.Fanex.ExtAcc.UnBlockUI)) {
                         return;
                     }
 

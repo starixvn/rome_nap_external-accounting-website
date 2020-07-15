@@ -360,10 +360,8 @@
             type: 'POST'
         })
             .done(function (data) {
-                if (typeof data === 'string' && data.indexOf('securityCodePage') > -1) {
-                    Fanex.ExtAcc.UnBlockUI();
 
-                    $('#securityCodePageContainer').html(data);
+                if (Fanex.ExtAcc.ShowSecurityCodePage(data, Fanex.ExtAcc.UnBlockUI)) {
                     return;
                 }
 
@@ -427,10 +425,7 @@
         })
             .done(function (data) {
 
-                if (typeof data === 'string' && data.indexOf('securityCodePage') > -1) {
-                    Fanex.ExtAcc.UnBlockUI();
-
-                    $('#securityCodePageContainer').html(data);
+                if (Fanex.ExtAcc.ShowSecurityCodePage(data, Fanex.ExtAcc.UnBlockUI)) {
                     return;
                 }
 
@@ -499,10 +494,7 @@
                 })
                     .success(function (result) {
 
-                        if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
-                            Fanex.ExtAcc.UnBlockUI();
-
-                            $('#securityCodePageContainer').html(result);
+                        if (Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.ExtAcc.UnBlockUI)) {
                             return;
                         }
 

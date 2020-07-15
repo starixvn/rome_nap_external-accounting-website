@@ -52,8 +52,7 @@ Fanex.ExtAcc.Form = {
                 return;
             }
 
-            if (typeof data === 'string' && data.indexOf('securityCodePage') > -1) {
-                $('#securityCodePageContainer').html(data);
+            if (Fanex.ExtAcc.ShowSecurityCodePage(data)) {
                 return;
             }
 
