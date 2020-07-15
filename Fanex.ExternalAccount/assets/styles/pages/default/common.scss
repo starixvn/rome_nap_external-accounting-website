@@ -1832,6 +1832,7 @@ ul, li {
         @media screen and (max-width: 768px) {
             position: relative;
             top: 3px;
+            left: -2px;
         }
 
         &:hover {
@@ -1850,8 +1851,9 @@ ul, li {
     }
 
     @media screen and (max-width: 768px) {
-        padding: 10px 0 0 30px;
+        padding: 10px 0 16px 30px;
         color: #cbcbcb;
+        border-bottom: 1px solid #d1d1d1;
         [class*="icon-network"] {
             top: 6px;
         }
