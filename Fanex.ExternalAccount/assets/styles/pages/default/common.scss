@@ -1808,7 +1808,7 @@ ul, li {
     }
 }
 
-@media screen and (max-device-width: 480px) {
+/*@media screen and (max-device-width: 480px) {
     .switch-line-mobile {
         display: inline-block !important;
         position: absolute;
@@ -1819,19 +1819,17 @@ ul, li {
             background: transparent;
         }
     }
-}
+}*/
 
 .switch-line {
     padding: 0 8px;
     position: relative;
 
     .icon-wifi {
-        //color: #fff;
         margin-right: 0 !important;
         font-size: 18px;
 
         @media screen and (max-width: 768px) {
-            color: #878f9c;
             position: relative;
             top: 3px;
         }
@@ -1854,6 +1852,9 @@ ul, li {
     @media screen and (max-width: 768px) {
         padding: 10px 0 0 30px;
         color: #cbcbcb;
+        [class*="icon-network"] {
+            top: 6px;
+        }
     }
 }
 
@@ -1866,6 +1867,12 @@ ul, li {
     top: 1px;
     margin-left: 5px;
     margin-right: 0 !important;
+
+    @media screen and (max-width: 768px) {
+        margin-left: 0;
+        width: 18px;
+        height: 18px;
+    }
 }
 
 .icon-network-weak {
@@ -1881,6 +1888,9 @@ ul, li {
 .icon-wifi {
     color: #27AE60;
     font-size: 15px;
+    @media screen and (max-width: 768px) {
+        font-size: 18px;
+    }
 }
 
 .select2-container.select2-container--switchline {
@@ -1897,7 +1907,7 @@ ul, li {
             display: unset;
 
             @media screen and (max-width: 768px) {
-                padding-left: 10px;
+                padding-left: 11px;
                 color: #cbcbcb;
             }
         }
