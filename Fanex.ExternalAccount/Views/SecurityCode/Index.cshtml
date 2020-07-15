@@ -1,14 +1,11 @@
 ﻿@{
     ViewBag.Title = "Security Code Validation";
-    ViewBag.IsExternalSite = ViewBag.ReturnUrl.Contains("/updateCustomerSetting/updateSetting");
     Layout = null;
 }
 
-@{
-    if (ViewBag.IsExternalSite)
-    {
-        <link href="@Url.Content("~/assets/bundles/common.min.css")" rel="stylesheet" type="text/css" />
-    }
+@if (ViewBag.IsExternalSite)
+{
+    <link href="@Url.Content("~/assets/bundles/common.min.css")" rel="stylesheet" type="text/css" />
 }
 @StaticResources.RenderStyles("~/assets/bundles/securitycode/index")
 
@@ -16,53 +13,49 @@
     <div class="securitycode-block-overlay">
         <div class="securitycode-block">
             <div class="form-title-wrapper">
-                <h3 class="form-title">Security Code Validation</h3>
+                <h3 class="form-title">@ViewBag.Title</h3>
             </div>
             <div class="row">
                 <h3 class="form-body">Hi @ViewBag.UserName.ToUpper()</h3>
                 <h3 class="form-body">Please input your security code before proceeding!</h3>
             </div>
-            <div class="row">
-                <form>
-                    <div class="form-group">
-                        <label for="code">Security Code</label>
-                        <input class="form-control"
-                               autofocus
-                               type="password"
-                               id="code"
-                               name="code"
-                               value=""
-                               placeholder=""
-                               maxlength="6"
-                               autocomplete="off"
-                               onkeypress="Fanex.ExtAcc.SecurityCode.OnKeyPress(event)" />
-                        <span id="codeError" class="error form-text hidden">The security code is invalid.</span>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox"
-                               class="form-check-input"
-                               id="showSecurityCode"
-                               onchange="Fanex.ExtAcc.SecurityCode.OnShowSecurityCode(event)">
-                        <label class="form-check-label" for="showSC">Show security code</label>
-                    </div>
+            <form>
+                <div class="form-group">
+                    <label for="code">Security Code</label>
+                    <input class="form-control"
+                           autofocus
+                           type="password"
+                           id="code"
+                           name="code"
+                           value=""
+                           placeholder=""
+                           maxlength="6"
+                           autocomplete="off"
+                           onkeypress="Fanex.ExtAcc.SecurityCode.OnKeyPress(event)" />
+                    <span id="codeError" class="error form-text hidden">The security code is invalid.</span>
+                </div>
+                <div class="form-check row">
+                    <input type="checkbox"
+                           class="form-check-input"
+                           id="showSecurityCode"
+                           onchange="Fanex.ExtAcc.SecurityCode.OnShowSecurityCode(event)">
+                    <label class="form-check-label" for="showSecurityCode">Show security code</label>
+                </div>
 
-                    <input type="hidden" id="returnUrl" name="returnUrl" value="@ViewBag.ReturnUrl" />
+                <input type="hidden" id="returnUrl" name="returnUrl" value="@ViewBag.ReturnUrl" />
 
-                    <button id="btnVerify" type="button" class="btn-verify" onclick="Fanex.ExtAcc.SecurityCode.OnClick()">Verify</button>
-                </form>
-            </div>
+                <button id="btnVerify" type="button" class="btn-verify" onclick="Fanex.ExtAcc.SecurityCode.OnClick()">Submit</button>
+            </form>
         </div>
     </div>
 </div>
-@{
-    if (ViewBag.IsExternalSite)
-    {
-        <script type="text/javascript">
-            function resolveClientUrl(relativeUrl) {
-                return '@Url.Content("~/")' + relativeUrl;
-            }
-        </script>
-        <script src="@Url.Content("~/assets/bundles/common.min.js")" type="text/javascript"></script>
-    }
+@if (ViewBag.IsExternalSite)
+{
+    <script type="text/javascript">
+        function resolveClientUrl(relativeUrl) {
+            return '@Url.Content("~/")' + relativeUrl;
+        }
+    </script>
+    <script src="@Url.Content("~/assets/bundles/common.min.js")" type="text/javascript"></script>
 }
 @StaticResources.RenderScripts("~/assets/bundles/securitycode/index")

@@ -134,19 +134,18 @@ input[type=checkbox], input[type=radio] {
 }
 
 .btn-verify {
-    margin-top: 10px;
-    width: 100px;
     height: 36px;
+    width: 100px;
     border: none;
     background-color: #0b599c;
-    color: #fff;
-    text-transform: uppercase;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-    cursor: pointer;
+    color: #ffffff;
+    text-transform: capitalize;
 }
 
     .btn-verify:hover {
         background-color: #637187;
+    }
+
+    .btn-verify:focus {
+        outline: none;
     }

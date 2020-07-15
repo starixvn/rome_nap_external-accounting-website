@@ -21,6 +21,7 @@ namespace Fanex.ExternalAccount.Controllers.SecurityCode
         {
             ViewBag.UserName = _currentSession.UserName;
             ViewBag.ReturnUrl = ReturnUrl;
+            ViewBag.IsExternalSite = ReturnUrl.Contains("/updateCustomerSetting/updateSetting");
 
             return View();
         }
