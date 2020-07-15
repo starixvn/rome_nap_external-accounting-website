@@ -1,8 +1,8 @@
-﻿if (typeof Fanex === 'undefined') {
+﻿if (typeof Fanex === "undefined") {
     Fanex = {};
 }
 
-if (typeof Fanex.ExtAcc === 'undefined') {
+if (typeof Fanex.ExtAcc === "undefined") {
     Fanex.ExtAcc = {};
 }
 
@@ -12,6 +12,11 @@ Fanex.ExtAcc.SSO = {
     maxTimesLength: 5,
     addedErrorTime: 1000 * 60 * 5, // 5 minutes
     intervalTime: 1000 * 5, // 1 minute
+    strongNetworkClassName: "icon-wifi",
+    mediumNetworkClassName: "icon-network-medium",
+    weakNetworkClassName: "icon-network-weak",
+    networkSpeedAttrName: "data-networkspeed",
+    currentNetworkLine: $(".switch-line-current-line"),
 
     Init: function () {
         Fanex.ExtAcc.SSO.InitDropdownList();
@@ -31,12 +36,12 @@ Fanex.ExtAcc.SSO = {
                 }
 
                 var $origOption = $(line.element);
-                var classname = $origOption.attr("data-networkspeed");
+                var classname = $origOption.attr(Fanex.ExtAcc.SSO.networkSpeedAttrName);
                 var text = line.text;
 
                 if (line.selected) {
                     text += " - In use";
-                } else if (classname === "icon-wifi") {
+                } else if (classname === Fanex.ExtAcc.SSO.strongNetworkClassName) {
                     text += " - Recommend";
                 }
 
@@ -50,7 +55,8 @@ Fanex.ExtAcc.SSO = {
                 url: this.value,
                 times: [],
                 index: 0,
-                average: 0
+                average: 0,
+                isCurrentLine: this.className === "opt-line-current"
             });
         });
     },
@@ -114,13 +120,16 @@ Fanex.ExtAcc.SSO = {
             }
         }
 
+        var classname = Fanex.ExtAcc.SSO.mediumNetworkClassName;
+
         if (currentLine.average <= min) {
-            currentLine.elements.attr("data-networkspeed", "icon-wifi");
+            classname = Fanex.ExtAcc.SSO.strongNetworkClassName;
         } else if (currentLine.average >= max) {
-            currentLine.elements.attr("data-networkspeed", "icon-network-weak");
-        } else {
-            currentLine.elements.attr("data-networkspeed", "icon-network-medium");
+            classname = Fanex.ExtAcc.SSO.weakNetworkClassName;
         }
+
+        currentLine.elements.attr(Fanex.ExtAcc.SSO.networkSpeedAttrName, classname);
+        currentLine.isCurrentLine && Fanex.ExtAcc.SSO.currentNetworkLine.removeClass().addClass(classname);
     }
 }
 
