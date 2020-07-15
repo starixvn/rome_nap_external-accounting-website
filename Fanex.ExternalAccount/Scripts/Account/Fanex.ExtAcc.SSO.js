@@ -11,7 +11,7 @@ Fanex.ExtAcc.SSO = {
     lines: [],
     maxTimesLength: 5,
     addedErrorTime: 1000 * 60 * 5, // 5 minutes
-    intervalTime: 1000 * 5, // 1 minute
+    intervalTime: 1000 * 60, // 1 minute
     strongNetworkClassName: "icon-wifi",
     mediumNetworkClassName: "icon-network-medium",
     weakNetworkClassName: "icon-network-weak",
