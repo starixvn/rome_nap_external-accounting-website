@@ -1808,19 +1808,6 @@ ul, li {
     }
 }
 
-/*@media screen and (max-device-width: 480px) {
-    .switch-line-mobile {
-        display: inline-block !important;
-        position: absolute;
-        right: 52px;
-        height: 40px;
-        background: rgba(0, 0, 0, 0.1);
-        .switch-line {
-            background: transparent;
-        }
-    }
-}*/
-
 .switch-line {
     padding: 0 8px;
     position: relative;
@@ -1829,7 +1816,7 @@ ul, li {
         margin-right: 0 !important;
         font-size: 18px;
 
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: 767px) {
             position: relative;
             top: 3px;
             left: -2px;
@@ -1850,7 +1837,7 @@ ul, li {
         background: #fff;
     }
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 767px) {
         padding: 10px 0 16px 30px;
         color: #cbcbcb;
         border-bottom: 1px solid #d1d1d1;
@@ -1870,7 +1857,7 @@ ul, li {
     margin-left: 5px;
     margin-right: 0 !important;
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 767px) {
         margin-left: 0;
         width: 18px;
         height: 18px;
@@ -1890,7 +1877,7 @@ ul, li {
 .icon-wifi {
     color: #27AE60;
     font-size: 15px;
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 767px) {
         font-size: 18px;
     }
 }
@@ -1908,7 +1895,7 @@ ul, li {
             padding-left: 4px;
             display: unset;
 
-            @media screen and (max-width: 768px) {
+            @media screen and (max-width: 767px) {
                 padding-left: 11px;
                 color: #cbcbcb;
             }

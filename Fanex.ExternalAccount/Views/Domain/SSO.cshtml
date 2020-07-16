@@ -27,8 +27,8 @@
             }
         }
 
-        var url = Request.Url;
-        currentLineValue = url.Scheme + Uri.SchemeDelimiter + url.Authority + virtualDirectory;
+        var scheme = Request.Headers["X-Forwarded-Proto"];
+        currentLineValue = string.Format("{0}://{1}{2}", string.IsNullOrWhiteSpace(scheme) ? "http" : scheme, currentDomain, virtualDirectory);
     }
 }
 @if (supportSwitchLine && domains.Length > 0)
