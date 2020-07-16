@@ -1,6 +1,5 @@
-﻿/// <reference path="../_references.js" />
-if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
-    alert("Fanex.ExtAcc.js module is required!")
+﻿if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
+    alert("Fanex.ExtAcc.js module is required!");
 }
 
 Fanex.ExtAcc.WinLossDetail = {
@@ -27,7 +26,7 @@ Fanex.ExtAcc.WinLossDetail = {
         return {
             minDate: new Date($("#MinDate").val()),
             maxDate: new Date($("#MaxDate").val())
-        }
+        };
     },
     SwitchCalendarType: function (showType) {
         if (showType == 1) {
@@ -152,7 +151,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 $this.InitProductsList();
                 $("#GroupProducts :input").width($("#GroupProducts").width() - 21);
             }
-        })
+        });
     },
     Init: function () {
         $this = this;
@@ -309,8 +308,9 @@ Fanex.ExtAcc.WinLossDetail = {
 
         Fanex.ExtAcc.OnResize = $this.resizeReportGrid;
         $(".icon-filter").click($this.showHideFilter);
-    },
 
+        $('#ViewExtraPT').click($this.GetExtraPT);
+    },
     resizeReportGrid: function () {
         try {
             $("#jqgrid").fanexGrid("resizeGrid");
@@ -371,7 +371,34 @@ Fanex.ExtAcc.WinLossDetail = {
     defaultColumns: [
         {
             HeaderText: "Username", Name: "Username", Width: 130, Sort: true, HeaderAlign: "center",
-            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
+            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); },
+            CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection); }
+        },
+        { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Win/Loss", Name: "MemberWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Comm", Name: "PlayerComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Total", Name: "MemberTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Win/Loss", Name: "AgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Win/Loss", Name: "MAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Comm", Name: "MAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Total", Name: "MAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Win/Loss", Name: "SAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Comm", Name: "SAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Total", Name: "SAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Win/Loss", Name: "ExtraWinLost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Comm", Name: "ExtraComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Total", Name: "ExtraTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
+    ],
+    SAgColumns: [
+        {
+            HeaderText: "Username", Name: "Username", Width: 130, Sort: true, HeaderAlign: "center",
+            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); },
+            CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection); }
         },
         { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -393,7 +420,9 @@ Fanex.ExtAcc.WinLossDetail = {
     MAgColumns: [
         {
             HeaderText: "Username", Name: "Username", Width: 130,
-            Sort: true, HeaderAlign: "center", CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
+            Sort: true, HeaderAlign: "center",
+            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); },
+            CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection); }
         },
         { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -412,7 +441,9 @@ Fanex.ExtAcc.WinLossDetail = {
     AgColumns: [
         {
             HeaderText: "Username", Name: "Username", Width: 130,
-            Sort: true, HeaderAlign: "center", CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }, CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) }
+            Sort: true, HeaderAlign: "center",
+            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); },
+            CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection); }
         },
         { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -424,6 +455,18 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
+    ],
+    defaultHeaderColumns: [
+        { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
+        { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
+        { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
+        { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
+        { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
+        { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
+        { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
+        { HeaderText: "Super", Name: "SAgWinlost", MergeColNumber: 3 },
+        { HeaderText: "Extra", Name: "ExtraWinLost", MergeColNumber: 3 },
+        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
     ],
     SAgHeaderColumns: [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
@@ -458,20 +501,19 @@ Fanex.ExtAcc.WinLossDetail = {
     Render: function (dateInfo) {
         var arrColData = new Array();
         var arrGroupHeaders = new Array();
-        var arrGroupFooters = new Array();
 
-        if (this.viewlevel == 1) {
+        if (this.viewlevel === 1) {
             arrColData = this.AgColumns;
             arrGroupHeaders = this.AgHeaderColumns;
-            arrGroupFooters = this.AgFooterColumns;
-        } else if (this.viewlevel == 2) {
+        } else if (this.viewlevel === 2) {
             arrColData = this.MAgColumns;
             arrGroupHeaders = this.MAgHeaderColumns;
-            arrGroupFooters = this.MAgFooterColumns;
+        } else if (this.viewlevel === 3) {
+            arrColData = this.SAgColumns;
+            arrGroupHeaders = this.SAgHeaderColumns;
         } else {
             arrColData = this.defaultColumns;
-            arrGroupHeaders = this.SAgHeaderColumns;
-            arrGroupFooters = this.SAgFooterColumns;
+            arrGroupHeaders = this.defaultHeaderColumns;
         }
 
         var level = $this.viewlevel == 4 ? "Super" :
@@ -511,11 +553,11 @@ Fanex.ExtAcc.WinLossDetail = {
             showDistinctRow: false,
             allowTruncate: true,
             sortOption:
-                {
-                    afterGridSorted: function (rows) {
-                        return $this.customsortfunc(rows);
-                    }
-                },
+            {
+                afterGridSorted: function (rows) {
+                    return $this.customsortfunc(rows);
+                }
+            },
             numOfPaddingForGridExpandHeight: 40
         };
 
@@ -535,13 +577,16 @@ Fanex.ExtAcc.WinLossDetail = {
         var sumSAgWinlost = 0;
         var sumSAgComm = 0;
         var sumSAgTotal = 0;
+        var sumExtraWinLost = 0;
+        var sumExtraComm = 0;
+        var sumExtraTotal = 0;
         var sumCompany = 0;
 
         //// Assing BodyData
         $this.InitSort();
         var bodyData = [];
         for (var i = 0; i < this.totalRows; i++) {
-            if (this.viewlevel == 1) {
+            if (this.viewlevel === 1) {
                 bodyData.push({
                     Columns: [
                         { Name: "Username", Value: this.dataSource[i] },
@@ -556,8 +601,8 @@ Fanex.ExtAcc.WinLossDetail = {
                         { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
                         { Name: "Company", Value: this.dataSource[i].Company }
                     ]
-                })
-            } else if (this.viewlevel == 2) {
+                });
+            } else if (this.viewlevel === 2) {
                 bodyData.push({
                     Columns: [
                         { Name: "Username", Value: this.dataSource[i] },
@@ -575,8 +620,8 @@ Fanex.ExtAcc.WinLossDetail = {
                         { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
                         { Name: "Company", Value: this.dataSource[i].Company }
                     ]
-                })
-            } else {
+                });
+            } else if (this.viewlevel === 3) {
                 bodyData.push({
                     Columns: [
                         { Name: "Username", Value: this.dataSource[i] },
@@ -597,7 +642,32 @@ Fanex.ExtAcc.WinLossDetail = {
                         { Name: "SAgTotal", Value: this.dataSource[i].SAgTotal },
                         { Name: "Company", Value: this.dataSource[i].Company }
                     ]
-                })
+                });
+            } else {
+                bodyData.push({
+                    Columns: [
+                        { Name: "Username", Value: this.dataSource[i] },
+                        { Name: "Turnover", Value: this.dataSource[i].Turnover },
+                        { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
+                        { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
+                        { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
+                        { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
+                        { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
+                        { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
+                        { Name: "AgComm", Value: this.dataSource[i].AgComm },
+                        { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
+                        { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
+                        { Name: "MAgComm", Value: this.dataSource[i].MAgComm },
+                        { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
+                        { Name: "SAgWinlost", Value: this.dataSource[i].SAgWinlost },
+                        { Name: "SAgComm", Value: this.dataSource[i].SAgComm },
+                        { Name: "SAgTotal", Value: this.dataSource[i].SAgTotal },
+                        { Name: 'ExtraWinLost', Value: this.dataSource[i].ExtraWinLost },
+                        { Name: 'ExtraComm', Value: this.dataSource[i].ExtraComm },
+                        { Name: 'ExtraTotal', Value: this.dataSource[i].ExtraTotal },
+                        { Name: "Company", Value: this.dataSource[i].Company }
+                    ]
+                });
             }
 
             sumTurnover += this.dataSource[i].Turnover;
@@ -619,6 +689,11 @@ Fanex.ExtAcc.WinLossDetail = {
                 sumSAgComm += this.dataSource[i].SAgComm;
                 sumSAgTotal += this.dataSource[i].SAgTotal;
             }
+            if (this.viewlevel > 3) {
+                sumExtraWinLost += this.dataSource[i].ExtraWinLost;
+                sumExtraComm += this.dataSource[i].ExtraComm;
+                sumExtraTotal += this.dataSource[i].ExtraTotal;
+            }
             sumCompany += this.dataSource[i].Company;
         }
 
@@ -627,7 +702,7 @@ Fanex.ExtAcc.WinLossDetail = {
 
         //// Asign Footer Data
         var footerData = [];
-        if (this.viewlevel == 1) {
+        if (this.viewlevel === 1) {
             footerData.push({
                 Columns: [
                     { Name: "Username", Value: "Grand Total" },
@@ -643,7 +718,7 @@ Fanex.ExtAcc.WinLossDetail = {
                     { Name: "Company", Value: sumCompany }
                 ]
             });
-        } else if (this.viewlevel == 2) {
+        } else if (this.viewlevel === 2) {
             footerData.push({
                 Columns: [
                     { Name: "Username", Value: "Grand Total" },
@@ -659,6 +734,28 @@ Fanex.ExtAcc.WinLossDetail = {
                     { Name: "MAgWinlost", Value: sumMAgWinlost },
                     { Name: "MAgComm", Value: sumMAgComm },
                     { Name: "MAgTotal", Value: sumMAgTotal },
+                    { Name: "Company", Value: sumCompany }
+                ]
+            });
+        } else if (this.viewlevel === 3) {
+            footerData.push({
+                Columns: [
+                    { Name: "Username", Value: "Grand Total" },
+                    { Name: "Turnover", Value: sumTurnover },
+                    { Name: "NetTurnover", Value: sumNetTurnover },
+                    { Name: "GrossComm", Value: sumGrossComm },
+                    { Name: "MemberWinlost", Value: sumMemberWinlost },
+                    { Name: "PlayerComm", Value: sumPlayerComm },
+                    { Name: "MemberTotal", Value: sumMemberTotal },
+                    { Name: "AgWinlost", Value: sumAgWinlost },
+                    { Name: "AgComm", Value: sumAgComm },
+                    { Name: "AgTotal", Value: sumAgTotal },
+                    { Name: "MAgWinlost", Value: sumMAgWinlost },
+                    { Name: "MAgComm", Value: sumMAgComm },
+                    { Name: "MAgTotal", Value: sumMAgTotal },
+                    { Name: "SAgWinlost", Value: sumSAgWinlost },
+                    { Name: "SAgComm", Value: sumSAgComm },
+                    { Name: "SAgTotal", Value: sumSAgTotal },
                     { Name: "Company", Value: sumCompany }
                 ]
             });
@@ -681,6 +778,9 @@ Fanex.ExtAcc.WinLossDetail = {
                     { Name: "SAgWinlost", Value: sumSAgWinlost },
                     { Name: "SAgComm", Value: sumSAgComm },
                     { Name: "SAgTotal", Value: sumSAgTotal },
+                    { Name: 'ExtraWinLost', Value: sumExtraWinLost },
+                    { Name: 'ExtraComm', Value: sumExtraComm },
+                    { Name: 'ExtraTotal', Value: sumExtraTotal },
                     { Name: "Company", Value: sumCompany }
                 ]
             });
@@ -741,7 +841,7 @@ Fanex.ExtAcc.WinLossDetail = {
             $("#tabSuper").attr("class", "tabDisableSuper");
             $("#tabMaster").attr("class", "tabDisable");
             $("#tabAgent").attr("class", "tabActive");
-        };
+        }
         $("#headlineDaily").css("visibility", "visible");
     },
     GetDownlineWinLossDetail: function (custId) {
@@ -861,7 +961,7 @@ Fanex.ExtAcc.WinLossDetail = {
                             "- For Sportbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
                         var height = 170;
 
-                        if (data.tooltips.liveCasino!="") {
+                        if (data.tooltips.liveCasino != "") {
                             message +=
                                 "<br/>" +
                                 "<br/>" +
@@ -876,6 +976,45 @@ Fanex.ExtAcc.WinLossDetail = {
                 Fanex.ExtAcc.UnBlockUI();
             }
         });
+    },
+    GetExtraPT: function () {
+        $this.getParameterProducts();
+
+        $this.groupName = $("#selectedGroupName").html();
+        var url = resolveClientUrl('WinLossDetail/GetExtraPT') + "?groupname=" + $this.groupName + $this.parameterProducts;
+
+        Fanex.ExtAcc.BlockUI();
+
+        $.ajax({
+            context: $this,
+            url,
+            type: 'post',
+            dataType: 'json',
+            cache: false
+        })
+            .done(function (data) {
+                var height = 170;
+                var extraPT = '';
+                var sportBook = $('.ui-multiselect-checkboxes :input[value="showSB"]')[0];
+                if (sportBook.checked) {
+                    extraPT += '<li>1.5% of Sportbook</li>';
+                    height += 50;
+                }
+                for (var i = 0; i < data.length; i++) {
+                    extraPT += '<li>' + data[i].ExtraPT + '% of ' + data[i].Products + '</li>';
+                    height += 50;
+                }
+
+                var extraPTMessage = 'Extra PT% Details <ul>' + extraPT + '</ul>';
+
+                Fanex.ExtAcc.Form.Alert("View Extra PT%", extraPTMessage, 500, height);
+            })
+            .fail(function (error) {
+                console.log(error);
+            })
+            .always(function () {
+                Fanex.ExtAcc.UnBlockUI();
+            });
     }
 };
 

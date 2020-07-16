@@ -106,6 +106,8 @@
     <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\WinLossDetailIBCBetLiveCasinoReport.cs" />
     <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\WinLossDetailIBCBetLiveCasinoReportBuilder.cs" />
     <Compile Include="Reports\WinLossDetail\IWinLossDetailReportBuilder.cs" />
+    <Compile Include="Reports\WinLossDetail\WinLossDetailExtraReport.cs" />
+    <Compile Include="Reports\WinLossDetail\WinLossDetailExtraReportBuilder.cs" />
     <Compile Include="Statement\StatementPage\StatementPage.cs" />
     <Compile Include="Statement\StatementPage\StatementPageBuilder.cs" />
     <Compile Include="Statement\StatementPage\TemplateSettings.cs" />

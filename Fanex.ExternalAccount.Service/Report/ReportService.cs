@@ -60,7 +60,7 @@
                 ? _reportDao.EAS_Rpt_WinLossDaily_Ag(winlostDate, custId, memberId)
                 : _reportDao.EAS_Rpt_WinLossDaily_Ag14(winlostDate, custId, memberId);
 
-        public List<WinLossDetail> GetSuperWinLossDetail(
+        public List<WinLossDetailExtra> GetSuperWinLossDetail(
             string groupname,
             int custId,
             DateTime fromDate,
@@ -100,6 +100,8 @@
 
         public ArrayList GetSortingOrderList(string groupname)
             => _reportDao.EAS_Rpt_WinLossDaily_SortingOrder(groupname);
+
+        public List<ExtraPTModel> GetExtraPT(string groupName) => _reportDao.EAS_Rpt_ViewExtraPT2(groupName);
 
         public static DataTable GetBalanceUpDay()
         {

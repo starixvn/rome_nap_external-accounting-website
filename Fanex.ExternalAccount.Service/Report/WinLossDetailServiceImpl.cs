@@ -1,10 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Report
 {
-    using System;
-    using System.Collections;
     using Core.Shared;
     using DTO.Customer;
     using Interface.Report;
+    using System;
+    using System.Collections;
+    using System.Linq;
 
     public class WinLossDetailServiceImpl : WinLossDetailService
     {
@@ -94,6 +95,19 @@
                     sortingorderlist = sortingOrderList,
                     tooltips = request.ToolTipsProducts
                 };
+        }
+
+        public dynamic GetExtraPT(IViewExtraPTRequest request)
+        {
+            var selectedProductIds = request.GetSelectedProductIds();
+            var extraPTList = reportService.GetExtraPT(request.GroupName);
+
+            return extraPTList
+                .Where(item => selectedProductIds.Contains(item.ProductId))
+                .Select(item => new { item.ExtraPT, ProductName = request.GetProductName(item.ProductId) })
+                .GroupBy(item => item.ExtraPT, item => item.ProductName,
+                (key, group) => new { ExtraPT = key * 100.0f, Products = string.Join(", ", group) })
+                .OrderBy(item => item.ExtraPT);
         }
 
         private dynamic SearchWinLossDetailData(
