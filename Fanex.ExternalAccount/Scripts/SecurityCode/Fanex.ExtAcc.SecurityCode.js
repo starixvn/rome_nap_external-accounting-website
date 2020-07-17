@@ -11,6 +11,7 @@
 */
 Fanex.ExtAcc.SecurityCode = {
     code: '',
+    currentIFrame: null,
     failedCount: 0,
     returnUrl: '',
     verifyUrl: resolveClientUrl('SecurityCode/Verify'),
@@ -42,6 +43,8 @@ Fanex.ExtAcc.SecurityCode = {
                 return product;
             }
         }
+
+        return null;
     },
     GetFailedCount: function () {
         return this.failedCount;
@@ -49,15 +52,26 @@ Fanex.ExtAcc.SecurityCode = {
     IncrementFailedCount: function () {
         this.failedCount++;
     },
+    Init: function () {
+        this.SetInputFocused();
+
+        this.returnUrl = $('input#returnUrl').val();
+        this.currentIFrame = this.GetCurrentIFrame();
+        if (this.currentIFrame && this.currentIFrame.attr('id').indexOf('product-') > -1) {
+            $('div.securitycode-block-overlay').css('top', '5rem');
+        }
+    },
+    IsExternalSite: function () {
+        return this.returnUrl.indexOf('/updateCustomerSetting/updateSetting') > -1;
+    },
     OnValidated: function () {
-        if (this.returnUrl.indexOf('/updateCustomerSetting/updateSetting') === -1) {
+        if (!this.IsExternalSite()) {
             $('#securityCodePageContainer').html('');
             return;
         }
 
-        var currentIFrame = this.GetCurrentIFrame();
-        var currentIFrameSrc = currentIFrame.attr('src');
-        currentIFrame.attr('src', currentIFrameSrc);
+        var currentIFrameSrc = this.currentIFrame.attr('src');
+        this.currentIFrame.attr('src', currentIFrameSrc);
     },
     OnShowSecurityCode: function (event) {
         if (event.target.checked) {
@@ -78,9 +92,10 @@ Fanex.ExtAcc.SecurityCode = {
     },
     Verify: function () {
         this.code = $('input#code').val();
-        this.returnUrl = $('input#returnUrl').val();
 
         if (!this.code.trim()) {
+            this.SetInputFocused();
+            this.ShowError('The security code must not be empty.');
             return;
         }
 
@@ -93,19 +108,31 @@ Fanex.ExtAcc.SecurityCode = {
 
                 if (Fanex.ExtAcc.SecurityCode.GetFailedCount() < 5) {
                     $('input#code').val('');
-                    $("span#codeError").removeClass('hidden');
 
                     Fanex.ExtAcc.SecurityCode.IncrementFailedCount();
+                    Fanex.ExtAcc.SecurityCode.ShowError('The security code is invalid.');
                     return;
                 }
 
-                top.location.href = resolveClientUrl('Account/LogOff');
+                Fanex.ExtAcc.SecurityCode.KnockOut();
             })
             .fail(function (error) {
                 console.log(error);
             })
             .always(function () {
-                $('input#code').focus();
+                Fanex.ExtAcc.SecurityCode.SetInputFocused();
             });
+    },
+    ShowError: function (errorMessage) {
+        $('span#codeError').text(errorMessage);
+        $('span#codeError').removeClass('hidden');
+    },
+    SetInputFocused: function () {
+        $('input#code').focus();
+    },
+    KnockOut: function () {
+        top.location.href = resolveClientUrl('Account/LogOff');
     }
 };
+
+Fanex.ExtAcc.SecurityCode.Init();

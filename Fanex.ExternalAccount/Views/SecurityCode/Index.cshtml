@@ -23,7 +23,6 @@
                 <div class="form-group">
                     <label for="code">Security Code</label>
                     <input class="form-control"
-                           autofocus
                            type="password"
                            id="code"
                            name="code"
@@ -32,7 +31,7 @@
                            maxlength="6"
                            autocomplete="off"
                            onkeypress="Fanex.ExtAcc.SecurityCode.OnKeyPress(event)" />
-                    <span id="codeError" class="error form-text hidden">The security code is invalid.</span>
+                    <span id="codeError" class="error form-text hidden"></span>
                 </div>
                 <div class="form-check row">
                     <input type="checkbox"

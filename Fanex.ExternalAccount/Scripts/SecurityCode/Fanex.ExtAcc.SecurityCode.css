@@ -15,6 +15,16 @@
     background-color: rgba(0, 0, 0, 0);
 }
 
+    .securitycode-page-overlay label {
+        display: inline-block;
+        margin-bottom: .5rem;
+    }
+
+    .securitycode-page-overlay small {
+        font-size: 80%;
+        font-weight: 400;
+    }
+
 .securitycode-block-overlay {
     position: fixed;
     top: 30%;
@@ -83,16 +93,6 @@
         .form-group .form-control:focus {
             color: rgb(0, 0, 0);
         }
-
-label {
-    display: inline-block;
-    margin-bottom: .5rem;
-}
-
-small {
-    font-size: 80%;
-    font-weight: 400;
-}
 
 .error {
     color: #b22222;
