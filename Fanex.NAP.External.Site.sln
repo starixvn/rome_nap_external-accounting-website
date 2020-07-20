@@ -212,13 +212,12 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{E738F53C-66DE-4C5B-B5AF-FF39407CEA09} = {BEA06A80-C6DB-42EE-9265-912D52FED2D7}
 		{F9261CF3-913A-436F-AD9D-6607C190367E} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
 		{21D80CC8-2307-4117-B3F9-3825BB0C71AC} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\EnterpriseLibrary.Caching.5.0.505.0\lib\NET35
 		SolutionGuid = {AE0E7979-1E8E-4837-A106-1C4DE3FB8397}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\EnterpriseLibrary.Caching.5.0.505.0\lib\NET35
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal
