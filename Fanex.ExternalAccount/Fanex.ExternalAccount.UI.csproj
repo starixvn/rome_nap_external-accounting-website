@@ -2767,7 +2767,9 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <Content Include="Configurations\SecurityCodeSection.config" />
+    <Content Include="Configurations\SecurityCodeSection.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\SecurityCodeSection.mnl.config">
       <DependentUpon>SecurityCodeSection.config</DependentUpon>
     </Content>

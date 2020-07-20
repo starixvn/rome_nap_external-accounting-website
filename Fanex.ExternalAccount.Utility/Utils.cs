@@ -246,10 +246,7 @@
             return false;
         }
 
-        // For Security Code Feature:
         public static double ConvertDateTimeToMilliseconds(DateTime dateTime) => (dateTime - DateTime.MinValue).TotalMilliseconds;
-
-        // For Security Code Feature.
     }
 
 #pragma warning restore S109 // Magic numbers should not be used

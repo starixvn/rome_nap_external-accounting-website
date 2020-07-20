@@ -16,15 +16,14 @@
 }
 
 .securitycode-block-overlay {
-    position: fixed;
-    top: 30%;
-    left: 37.77%;
+    position: absolute;
     z-index: 10000;
     margin: 0px;
     padding: 0px;
     border: 0px solid rgb(170, 170, 170);
     background-color: rgba(0, 0, 0, 0);
     color: rgb(0, 0, 0);
+    transition: display 1s;
 }
 
     .securitycode-block-overlay label {

@@ -53,31 +53,12 @@ Fanex.ExtAcc.SecurityCode = {
         this.failedCount++;
     },
     Init: function () {
-        this.InitClosePageEventHandler();
-        this.SetInputFocused();
-
         this.returnUrl = $('input#returnUrl').val();
         this.currentIFrame = this.GetCurrentIFrame();
 
-        var currentIFrameId = this.currentIFrame ? this.currentIFrame.attr('id') : '';
-        if (currentIFrameId.indexOf('mainIFrame') > -1) {
-            $('div.securitycode-block-overlay').css('top', '99px');
-            if (this.IsExternalSite()) {
-                $('div.securitycode-block-overlay').css('left', '33.33%');
-            }
-            return;
-        }
-        if ((currentIFrameId.indexOf('virtualSportsFrame') > -1 || currentIFrameId.indexOf('Frame_') > -1) && this.IsExternalSite()) {
-            $('div.securitycode-block-overlay').css('left', '35%');
-            return;
-        }
-        if (currentIFrameId.indexOf('product-') > -1) {
-            $('div.securitycode-block-overlay').css('top', '5rem');
-            if (this.IsExternalSite()) {
-                $('div.securitycode-block-overlay').css('left', '22.75%');
-            }
-            return;
-        }
+        this.AdjustPagePosition();
+        this.InitClosePageEventHandler();
+        this.SetInputFocused();
     },
     IsExternalSite: function () {
         return this.returnUrl.indexOf('/updateCustomerSetting/updateSetting') > -1;
@@ -160,6 +141,32 @@ Fanex.ExtAcc.SecurityCode = {
     },
     OnClosePage: function () {
         Fanex.ExtAcc.SecurityCode.OnValidated();
+    },
+    AdjustPagePosition: function () {
+        var scBlockOverlay = $('div.securitycode-block-overlay');
+
+        var setTopLeft = function (top, left) {
+            scBlockOverlay.css('top', top);
+            if (Fanex.ExtAcc.SecurityCode.IsExternalSite()) {
+                scBlockOverlay.css('left', left);
+            } else {
+                scBlockOverlay.css('left', '37.77%');
+            }
+        };
+
+        var currentIFrameId = this.currentIFrame ? this.currentIFrame.attr('id') : '';
+        if (currentIFrameId.indexOf('mainIFrame') > -1) {
+            setTopLeft('99px', '33.33%');
+        } else if (currentIFrameId.indexOf('virtualSportsFrame') > -1 || currentIFrameId.indexOf('Frame_') > -1) {
+            setTopLeft('30%', '35%');
+        } else if (currentIFrameId.indexOf('product-') > -1) {
+            setTopLeft('5rem', '22.75%');
+        } else {
+            scBlockOverlay.css('top', '30%');
+            scBlockOverlay.css('left', '37.77%');
+        }
+
+        scBlockOverlay.css('display', 'block');
     }
 };
 

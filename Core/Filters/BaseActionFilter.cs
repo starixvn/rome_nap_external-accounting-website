@@ -1,12 +1,13 @@
-﻿using Fanex.ExternalAccount.Core.Context;
-using Fanex.ExternalAccount.Core.Shared;
-using System;
-using System.Globalization;
-using System.Threading;
-using System.Web.Mvc;
-
-namespace Fanex.ExternalAccount.Core.Filters
+﻿namespace Fanex.ExternalAccount.Core.Filters
 {
+    using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Core.Shared;
+    using System;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading;
+    using System.Web.Mvc;
+
     [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
     public class BaseActionFilterAttribute : ActionFilterAttribute
     {
@@ -20,18 +21,7 @@ namespace Fanex.ExternalAccount.Core.Filters
             return string.Join("/", new[] { currentArea, currentController, currentAction });
         }
 
-        protected virtual bool IsContainsAction(string actionURL, string[] actions)
-        {
-            foreach (var action in actions)
-            {
-                if (IsContainsCase(actionURL, action))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
+        protected virtual bool IsContainsAction(string actionURL, string[] actions) => actions.Any(action => IsContainsCase(actionURL, action));
 
         protected virtual bool IsAppliedUserName()
         {

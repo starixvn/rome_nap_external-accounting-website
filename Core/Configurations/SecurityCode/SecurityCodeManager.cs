@@ -1,39 +1,39 @@
-﻿using System;
-using System.Configuration;
-using System.Linq;
-
-namespace Fanex.ExternalAccount.Core.Configurations.SecurityCode
+﻿namespace Fanex.ExternalAccount.Core.Configurations.SecurityCode
 {
+    using System;
+    using System.Configuration;
+    using System.Linq;
+
     public static class SecurityCodeManager
     {
-        private static SecurityCodeSection _securityCodeSection =
+        private static SecurityCodeSection securityCodeSection =
             ConfigurationManager.GetSection("SecurityCodeSection") as SecurityCodeSection;
 
         public static string[] GetFilteredActions()
         {
             return (
                 from ActionFilterElement element
-                in _securityCodeSection.ActionFilterCollection
-                select element).Select(e => e.Action).ToArray();
+                in securityCodeSection.ActionFilterCollection
+                select element.Action).ToArray();
         }
 
         public static string[] GetFilteredUsers()
         {
             return (
                 from UserCodeElement element
-                in _securityCodeSection.UserCodeCollection
-                select element).Select(e => e.UserName).ToArray();
+                in securityCodeSection.UserCodeCollection
+                select element.UserName).ToArray();
         }
 
         public static string GetSecurityCode(string userName)
         {
             return (
-                from UserCodeElement element in _securityCodeSection.UserCodeCollection
+                from UserCodeElement element in securityCodeSection.UserCodeCollection
                 where element.UserName.Equals(userName, StringComparison.CurrentCultureIgnoreCase)
                 select element)
                 .FirstOrDefault()?.SecurityCode.Trim();
         }
 
-        public static string GetLiveTime => ConfigurationManager.AppSettings["SCFilter:LiveTime"];
+        public static string GetLiveTime => securityCodeSection.ScLiveTime;
     }
 }

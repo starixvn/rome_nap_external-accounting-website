@@ -206,6 +206,19 @@
             set { HttpContext.Current.Session[EASLine] = value; }
         }
 
+#pragma warning disable S2325 // Methods and properties that don't access instance data should be static
+        public double LastActiveTime
+#pragma warning restore S2325 // Methods and properties that don't access instance data should be static
+        {
+            get => Utils.ToDouble(HttpContext.Current.Session[EASSCLastActiveTime]);
+            set => HttpContext.Current.Session[EASSCLastActiveTime] = value;
+        }
+
+        public void UpdateLastActiveTime()
+        {
+            LastActiveTime = Utils.ConvertDateTimeToMilliseconds(DateTime.Now);
+        }
+
         public string LangKey { get; set; } = "E";
     }
 }

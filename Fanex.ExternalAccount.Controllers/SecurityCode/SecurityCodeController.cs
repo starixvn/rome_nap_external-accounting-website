@@ -1,40 +1,37 @@
-﻿using Fanex.CustomerSetting.Security.Authenticate;
-using Fanex.ExternalAccount.Core.Configurations.SecurityCode;
-using Fanex.ExternalAccount.Core.Context;
-using Fanex.ExternalAccount.Utilities;
-using System;
-using System.Web.Mvc;
-
-namespace Fanex.ExternalAccount.Controllers.SecurityCode
+﻿namespace Fanex.ExternalAccount.Controllers.SecurityCode
 {
+    using Fanex.CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.Core.Configurations.SecurityCode;
+    using Fanex.ExternalAccount.Core.Context;
+    using System;
+    using System.Web.Mvc;
+
     [ExternalAccountAuthenticate(Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
     public class SecurityCodeController : Controller
     {
-        private readonly CurrentSession _currentSession;
+        private readonly CurrentSession currentSession;
 
         public SecurityCodeController()
         {
-            _currentSession = new CurrentSession();
+            currentSession = new CurrentSession();
         }
 
         public ActionResult Index(string ReturnUrl)
         {
-            ViewBag.UserName = _currentSession.UserName;
+            ViewBag.UserName = currentSession.UserName;
             ViewBag.ReturnUrl = ReturnUrl;
-            ViewBag.IsExternalSite = ReturnUrl.Contains("/updateCustomerSetting/updateSetting");
 
             return View();
         }
 
         public string Verify(string code)
         {
-            string userName = _currentSession.UserName;
+            string userName = currentSession.UserName;
             string userSecurityCode = SecurityCodeManager.GetSecurityCode(userName);
 
             if (userSecurityCode.Equals(code, StringComparison.CurrentCulture))
             {
-                double scNewActiveTime = Utils.ConvertDateTimeToMilliseconds(DateTime.Now);
-                HttpContext.Session.Add(CurrentSession.EASSCLastActiveTime, scNewActiveTime);
+                currentSession.UpdateLastActiveTime();
 
                 return "valid";
             }
