@@ -3,40 +3,39 @@
 }
 
 .securitycode-page-overlay {
-    position: fixed;
+    position: absolute;
     top: 0px;
     left: 0px;
-    z-index: 9999999;
+    z-index: 9999;
     margin: 0px;
     padding: 0px;
     width: 100%;
     height: 100%;
-    border: none;
-    background-color: rgba(0, 0, 0, 0);
+    background: #aaaaaa url(../../Scripts/Lib/jquery-ui-1.9.1/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;
+    opacity: .3;
 }
-
-    .securitycode-page-overlay label {
-        display: inline-block;
-        margin-bottom: .5rem;
-    }
-
-    .securitycode-page-overlay small {
-        font-size: 80%;
-        font-weight: 400;
-    }
 
 .securitycode-block-overlay {
     position: fixed;
     top: 30%;
-    left: 0;
-    z-index: 10000010;
+    left: 37.77%;
+    z-index: 10000;
     margin: 0px;
     padding: 0px;
-    width: 100%;
     border: 0px solid rgb(170, 170, 170);
     background-color: rgba(0, 0, 0, 0);
     color: rgb(0, 0, 0);
 }
+
+    .securitycode-block-overlay label {
+        display: inline-block;
+        margin-bottom: .5rem;
+    }
+
+    .securitycode-block-overlay small {
+        font-size: 80%;
+        font-weight: 400;
+    }
 
 .securitycode-block {
     margin: auto;

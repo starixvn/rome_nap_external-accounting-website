@@ -53,12 +53,30 @@ Fanex.ExtAcc.SecurityCode = {
         this.failedCount++;
     },
     Init: function () {
+        this.InitClosePageEventHandler();
         this.SetInputFocused();
 
         this.returnUrl = $('input#returnUrl').val();
         this.currentIFrame = this.GetCurrentIFrame();
-        if (this.currentIFrame && this.currentIFrame.attr('id').indexOf('product-') > -1) {
+
+        var currentIFrameId = this.currentIFrame ? this.currentIFrame.attr('id') : '';
+        if (currentIFrameId.indexOf('mainIFrame') > -1) {
+            $('div.securitycode-block-overlay').css('top', '99px');
+            if (this.IsExternalSite()) {
+                $('div.securitycode-block-overlay').css('left', '33.33%');
+            }
+            return;
+        }
+        if ((currentIFrameId.indexOf('virtualSportsFrame') > -1 || currentIFrameId.indexOf('Frame_') > -1) && this.IsExternalSite()) {
+            $('div.securitycode-block-overlay').css('left', '35%');
+            return;
+        }
+        if (currentIFrameId.indexOf('product-') > -1) {
             $('div.securitycode-block-overlay').css('top', '5rem');
+            if (this.IsExternalSite()) {
+                $('div.securitycode-block-overlay').css('left', '22.75%');
+            }
+            return;
         }
     },
     IsExternalSite: function () {
@@ -70,7 +88,7 @@ Fanex.ExtAcc.SecurityCode = {
             return;
         }
 
-        var currentIFrameSrc = this.currentIFrame.attr('src');
+        var currentIFrameSrc = this.currentIFrame ? this.currentIFrame.attr('src') : '';
         this.currentIFrame.attr('src', currentIFrameSrc);
     },
     OnShowSecurityCode: function (event) {
@@ -132,6 +150,16 @@ Fanex.ExtAcc.SecurityCode = {
     },
     KnockOut: function () {
         top.location.href = resolveClientUrl('Account/LogOff');
+    },
+    InitClosePageEventHandler: function () {
+        $(document).bind('keydown', function (event) {
+            if (event.which === 27) {
+                Fanex.ExtAcc.SecurityCode.OnValidated();
+            }
+        });
+    },
+    OnClosePage: function () {
+        Fanex.ExtAcc.SecurityCode.OnValidated();
     }
 };
 
