@@ -101,7 +101,7 @@
             {
                 return Redirect(url);
             }
-            
+
             var path = Server.MapPath("~/IbcKeys/ibcpkey.snk");
             var timeout = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff tt");
             var username = _currentSession.UserName;
@@ -254,7 +254,7 @@
                 {
                     WriteLogSwitchLine($"Switched {model.FromLine} to {model.Line} failed: {ViewLang.AccessDenyToPublicDomain}, username: {model.UserName}", TraceEventType.Warning);
                 }
-                
+
                 return View("~/Views/Account/Login.cshtml", new LoginModel(ViewLang.AccessDenyToPublicDomain));
             }
 
@@ -374,6 +374,7 @@
             _currentSession.Captcha = model.Code;
             _currentSession.HashPassword = model.Password;
             _currentSession.CurrentLine = model.Line;
+            _currentSession.UpdateLastActiveTime();
         }
 
         private static void WriteLogSwitchLine(string message, System.Diagnostics.TraceEventType type)

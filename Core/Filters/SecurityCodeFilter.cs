@@ -33,7 +33,7 @@
 
         private readonly string[] filteredUsers = SecurityCodeManager.GetFilteredUsers();
 
-        private static bool IsSecurityCodeRequired()
+        private bool IsSecurityCodeRequired()
         {
             double scLastActiveTime = currentSession.LastActiveTime;
             double scLiveTime = Utils.ToDouble(SecurityCodeManager.GetLiveTime) * 1000.0d;
@@ -44,6 +44,6 @@
 
         private static RedirectResult RedirectToSecurityCodePage(string returnUrl) => new RedirectResult($"~/SecurityCode/Index?ReturnUrl={returnUrl}");
 
-        private static CurrentSession currentSession = new CurrentSession();
+        private readonly CurrentSession currentSession = new CurrentSession();
     }
 }
