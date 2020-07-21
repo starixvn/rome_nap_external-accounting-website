@@ -500,7 +500,7 @@
     <Content Include="assets\styles\images\network\medium-network.svg" />
     <Content Include="assets\styles\images\network\strength-network.svg" />
     <Content Include="assets\styles\images\network\weak-network.svg" />
-    <Content Include="assets\styles\images\sample_test_network_speed_1.jpg" />
+    <Content Include="assets\styles\images\sample_test_network_speed_1.png" />
     <Content Include="assets\styles\images\weak-network.svg" />
     <Content Include="assets\styles\pages\customer\images\cross.png" />
     <Content Include="assets\styles\pages\customer\images\info.png" />
