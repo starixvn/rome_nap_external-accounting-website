@@ -16,6 +16,6 @@
 
         public override bool IsValid() => true;
 
-        public string LoginIP { get; set; }
+        public string IP { get; set; }
     }
 }

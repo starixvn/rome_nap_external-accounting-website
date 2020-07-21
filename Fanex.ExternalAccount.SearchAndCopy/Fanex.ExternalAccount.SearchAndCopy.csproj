@@ -169,6 +169,7 @@
     <Compile Include="Criteria\GetCustomerInfoByUserIdCriteria.cs" />
     <Compile Include="Criteria\GetNG2StatusCriteria.cs" />
     <Compile Include="Criteria\SearchCustomerCriteria.cs" />
+    <Compile Include="Criteria\UpdateCRMHeadlineInfoCriteria.cs" />
     <Compile Include="Criteria\UpdateSyncBaseForIBCCriteria.cs" />
     <Compile Include="Criteria\UpdateSyncCasinoForIBCCriteria.cs" />
     <Compile Include="Models\CloneSettingContext.cs" />

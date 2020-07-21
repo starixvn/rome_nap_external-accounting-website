@@ -5,16 +5,18 @@
     using Fanex.ExternalAccount.SearchAndCopy.Criteria;
     using Fanex.ExternalAccount.SearchAndCopy.Models;
     using Fanex.NAP.Framework.Data;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
     public interface ISearchAndCopyRepository
     {
-        IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName);
-
-        Result CloneSettingComm(CloneSettingComCriteria criteria);
+        Result CloneSettingComm(CloneSettingComCriteria criteria, ref int Case);
 
         Result CloneSettingExtraPT(CloneSettingExtraPTCriteria criteria);
+
+        IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName);
+        void UpdateCRMHeadlineInfo(UpdateCRMHeadlineInfoCriteria criteria);
     }
 
     public class SearchAndCopyRepository : ISearchAndCopyRepository
@@ -31,18 +33,7 @@
             this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName)
-        {
-            var criteria = new SearchCustomerCriteria(username, groupName);
-            if (!criteria.IsValid())
-            {
-                return Enumerable.Empty<SearchCustomerModel>();
-            }
-
-            return dynamicRepository.Fetch<SearchCustomerModel>(criteria);
-        }
-
-        public Result CloneSettingComm(CloneSettingComCriteria criteria)
+        public Result CloneSettingComm(CloneSettingComCriteria criteria, ref int Case)
         {
             if (!criteria.IsValid())
             {
@@ -54,6 +45,7 @@
                 objDb.AssignParamValues(criteria.GetSpParams());
                 objDb.ExecuteNonQuery();
                 var outputs = objDb.GetOuputParams();
+                Case = Convert.ToInt32(outputs["case"]);
                 return new Result
                 {
                     ErrorCode = outputs["errcode"].ToString(),
@@ -80,6 +72,25 @@
                     ErrorCode = outputs["errcode"].ToString(),
                     ErrorMessage = outputs["errmsg"].ToString()
                 };
+            }
+        }
+
+        public IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName)
+        {
+            var criteria = new SearchCustomerCriteria(username, groupName);
+            if (!criteria.IsValid())
+            {
+                return Enumerable.Empty<SearchCustomerModel>();
+            }
+
+            return dynamicRepository.Fetch<SearchCustomerModel>(criteria);
+        }
+        public void UpdateCRMHeadlineInfo(UpdateCRMHeadlineInfoCriteria criteria)
+        {            
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                objDb.ExecuteNonQuery();
             }
         }
     }

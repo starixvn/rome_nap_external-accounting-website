@@ -32,6 +32,8 @@
 
         public string IP { get; set; }
 
+        public int Case { get; set; }
+
         public override bool IsValid() =>
             Creator > 0
             && ExistingCustId > 0
