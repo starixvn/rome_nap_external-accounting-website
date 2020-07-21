@@ -28,7 +28,7 @@
         }
 
         var scheme = Request.Headers["X-Forwarded-Proto"];
-        currentLineValue = string.Format("{0}://{1}{2}", string.IsNullOrWhiteSpace(scheme) ? "http" : scheme, currentDomain, virtualDirectory);
+        currentLineValue = string.Format("{0}://{1}", string.IsNullOrWhiteSpace(scheme) ? "http" : scheme, currentDomain);
     }
 }
 @if (supportSwitchLine && domains.Length > 0)
