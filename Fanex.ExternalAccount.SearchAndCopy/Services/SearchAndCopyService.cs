@@ -93,25 +93,28 @@
                 return context.Result;
             }
 
-            var updateCRMHeadlineInfoCriteria = new UpdateCRMHeadlineInfoCriteria
-            {
-                CustId = Convert.ToInt32(context.Result.ResultData),
-                UserName = string.Empty,
-                IP = context.CurrentContext.Ip4Address,
-                UserId = context.CurrentSession.CustId,
-                Case = Case
-            };
-
-            try
-            {
-                searchAndCopyRepository.UpdateCRMHeadlineInfo(updateCRMHeadlineInfoCriteria);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-
             context.CustId = Convert.ToInt32(context.Result.ResultData);
+
+            if (Case != 0) {
+                var updateCRMHeadlineInfoCriteria = new UpdateCRMHeadlineInfoCriteria
+                {
+                    CustId = context.CustId,
+                    UserName = string.Empty,
+                    IP = context.CurrentContext.Ip4Address,
+                    UserId = context.CurrentSession.CustId,
+                    Case = Case
+                };
+
+                try
+                {
+                    searchAndCopyRepository.UpdateCRMHeadlineInfo(updateCRMHeadlineInfoCriteria);
+                }
+                catch (Exception ex)
+                {
+                    ExceptionHandler.Handle(ex);
+                }
+            }
+           
             var cloneSettingExtraPTCriteria = new CloneSettingExtraPTCriteria
             {
                 CustId = context.CustId,
