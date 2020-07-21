@@ -5,10 +5,14 @@
     Layout = null;
 
     string[] domains = null;
-    var currentDomain = Request.Headers["Host"] +
-        (Request.ApplicationPath.Equals("/", StringComparison.OrdinalIgnoreCase) ? string.Empty : Request.ApplicationPath);
-    var supportSwitchLine = !Group.IsOfficeGroup(new CurrentSession().CurrencyGroup);
+    var appPath = Request.ApplicationPath;
+    var virtualDirectory = appPath.Equals("/", StringComparison.OrdinalIgnoreCase) ? string.Empty : appPath;
+    var currentDomain = Request.Headers["Host"] + virtualDirectory;
+
     string currentLine = currentDomain;
+    var currentLineValue = string.Empty;
+
+    var supportSwitchLine = !Group.IsOfficeGroup(new CurrentSession().CurrencyGroup);
 
     if (supportSwitchLine)
     {
@@ -22,14 +26,19 @@
                 break;
             }
         }
+
+        var scheme = Request.Headers["X-Forwarded-Proto"];
+        currentLineValue = string.Format("{0}://{1}{2}", string.IsNullOrWhiteSpace(scheme) ? "http" : scheme, currentDomain, virtualDirectory);
     }
 }
 @if (supportSwitchLine && domains.Length > 0)
 {
-    <select onchange="javascript:switchLine(this)" style="background-color: #313c51; color: #ffa500; cursor: pointer; font-weight: bold">
-        <option>
-            @currentLine
-        </option>
+    <div class="switch-line">
+        <span class="switch-line-current-line"></span>
+        <select onchange="javascript:switchLine(this)" class="ddl-switchLine">
+            <option value="@currentLineValue" class="opt-line-current">
+                @currentLine
+            </option>
             @for (var i = 0; i < domains.Length; i++)
             {
                 var domainName = domains[i].Split(';')[0];
@@ -41,8 +50,10 @@
                     string.IsNullOrWhiteSpace(domainName) ? string.Empty : "http://" + domainName;
                 if (!string.IsNullOrWhiteSpace(domainName))
                 {
-                    <option style="color: #fff" value="@formatedDomain">@aliasName</option>
+                    <option value="@formatedDomain" class="opt-line-@i">@aliasName</option>
                 }
             }
-    </select>
+        </select>
+    </div>
+    
 }

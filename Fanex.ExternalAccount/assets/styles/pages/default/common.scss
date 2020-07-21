@@ -427,6 +427,7 @@ body {
     border: none !important;
     color: #42a15c;
     cursor: pointer;
+
     &:hover {
         color: #ff9900;
     }
@@ -1804,5 +1805,155 @@ ul, li {
 
     #txt-min-date {
         width: 122px;
+    }
+}
+
+.switch-line {
+    padding: 0 8px;
+    position: relative;
+
+    .icon-wifi {
+        margin-right: 0 !important;
+        font-size: 18px;
+
+        @media screen and (max-width: 767px) {
+            position: relative;
+            top: 3px;
+            left: -2px;
+        }
+
+        &:hover {
+            color: #fff !important;
+        }
+    }
+
+    &:after {
+        content: '';
+        width: 1px;
+        height: 28px;
+        position: absolute;
+        right: 0;
+        top: 16px;
+        background: #fff;
+    }
+
+    @media screen and (max-width: 767px) {
+        padding: 10px 0 16px 30px;
+        color: #cbcbcb;
+        border-bottom: 1px solid #d1d1d1;
+        [class*="icon-network"] {
+            top: 6px;
+        }
+    }
+}
+
+[class*="icon-network"] {
+    overflow: hidden;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    position: relative;
+    top: 1px;
+    margin-left: 5px;
+    margin-right: 0 !important;
+
+    @media screen and (max-width: 767px) {
+        margin-left: 0;
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.icon-network-weak {
+    background: url("../../images/network/weak-network.svg") no-repeat;
+    background-size: contain;
+}
+
+.icon-network-medium {
+    background: url("../../images/network/medium-network.svg") no-repeat;
+    background-size: contain;
+}
+
+.icon-wifi {
+    color: #27AE60;
+    font-size: 15px;
+    @media screen and (max-width: 767px) {
+        font-size: 18px;
+    }
+}
+
+.select2-container.select2-container--switchline {
+    width: auto !important;
+
+    .select2-selection--single {
+        background-color: transparent;
+        border: none;
+        display: unset;
+
+        .select2-selection__rendered {
+            color: #fff;
+            padding-left: 4px;
+            display: unset;
+
+            @media screen and (max-width: 767px) {
+                padding-left: 11px;
+                color: #cbcbcb;
+            }
+        }
+
+        .select2-selection__arrow {
+            position: relative;
+        }
+
+        .select2-selection__arrow b {
+            position: absolute;
+            top: 50%;
+            right: 4px;
+            content: "";
+            height: 6px;
+            width: 6px;
+            margin-top: -4px;
+            border: 1px solid #fff;
+            border-width: 1px 1px 0 0;
+            transform: rotate(135deg);
+        }
+    }
+
+    *:focus {
+        outline: none;
+    }
+}
+
+.select2-container--switchline {
+    &.select2-container--open .select2-results__option[aria-selected=true] {
+        background-color: #ECECEC !important;
+        color: #232428 !important;
+    }
+
+    .select2-results__option {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &:hover {
+            background-color: #ECECEC !important;
+        }
+    }
+}
+
+.select2-container--switchline {
+
+    .select2-dropdown {
+        box-shadow: inset 1px 1px 0 rgba(0,0,0,.1), inset 0 -1px 0 rgba(0,0,0,.07);
+        border-radius: 0;
+        border: 1px solid #a6a6a6;
+        min-width: 200px;
+    }
+
+
+
+
+    .select2-results__option {
+        padding: 8px;
     }
 }

@@ -130,6 +130,8 @@
         protected void Application_BeginRequest()
         {
             Context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+
+            AddCORSToCheckNetworkSpeed();
         }
 
         private static string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair) =>
@@ -144,5 +146,16 @@
                 {"area", string.Empty},
                 {captchaManager.TokenParameterName, keyValuePair.Key}
             });
+
+        private void AddCORSToCheckNetworkSpeed()
+        {
+            const string SampleTestNetworkSpeedFileName = "sample_test_network_speed_1.jpg";
+            var fileName = VirtualPathUtility.GetFileName(Context.Request.FilePath);
+
+            if (fileName.Equals(SampleTestNetworkSpeedFileName, StringComparison.OrdinalIgnoreCase))
+            {
+                Context.Response.AddHeader("Access-Control-Allow-Origin", "*");
+            }
+        }
     }
 }
