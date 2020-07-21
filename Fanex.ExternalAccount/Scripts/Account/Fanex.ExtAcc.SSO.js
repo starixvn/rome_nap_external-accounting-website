@@ -7,11 +7,11 @@ if (typeof Fanex.ExtAcc === "undefined") {
 }
 
 Fanex.ExtAcc.SSO = {
-    imageAddress: "/assets/styles/images/sample_test_network_speed_1.jpg",
+    imageAddress: "/assets/styles/images/sample_test_network_speed_1.png",
     lines: [],
     maxTimesLength: 5,
     addedErrorTime: 1000 * 60 * 5, // 5 minutes
-    intervalTime: 1000 * 60, // 1 minute
+    intervalTime: 1000 * 60 * 2, // 2 minutes
     strongNetworkClassName: "icon-wifi",
     mediumNetworkClassName: "icon-network-medium",
     weakNetworkClassName: "icon-network-weak",
