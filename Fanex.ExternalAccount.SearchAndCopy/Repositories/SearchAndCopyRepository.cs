@@ -11,7 +11,7 @@
 
     public interface ISearchAndCopyRepository
     {
-        Result CloneSettingComm(CloneSettingComCriteria criteria, ref int Case);
+        Result CloneSettingComm(CloneSettingComCriteria criteria, ref int Case, ref int HeadlineID_Old);
 
         Result CloneSettingExtraPT(CloneSettingExtraPTCriteria criteria);
 
@@ -33,7 +33,7 @@
             this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public Result CloneSettingComm(CloneSettingComCriteria criteria, ref int Case)
+        public Result CloneSettingComm(CloneSettingComCriteria criteria, ref int Case, ref int HeadlineID_Old)
         {
             if (!criteria.IsValid())
             {
@@ -46,6 +46,7 @@
                 objDb.ExecuteNonQuery();
                 var outputs = objDb.GetOuputParams();
                 Case = Convert.ToInt32(outputs["case"]);
+                HeadlineID_Old = Convert.ToInt32(outputs["headlineid_old"]);
                 return new Result
                 {
                     ErrorCode = outputs["errcode"].ToString(),

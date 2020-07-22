@@ -10,6 +10,8 @@
 
         public int Case { get; set; }
 
+        public int HeadlineID_Old { get; set; }
+
         public int UserId { get; set; }
 
         public override string GetSettingKey() => "Acc_CRM_HeadlineUpd";

@@ -87,7 +87,8 @@
                 IP = context.CurrentContext.Ip4Address
             };
             int Case = 0;
-            context.Result = searchAndCopyRepository.CloneSettingComm(cloneSettingComCriteria, ref Case);
+            int HeadlineID_Old = 0;
+            context.Result = searchAndCopyRepository.CloneSettingComm(cloneSettingComCriteria, ref Case, ref HeadlineID_Old);
             if (!context.Result.IsSuccess)
             {
                 return context.Result;
@@ -102,7 +103,8 @@
                     UserName = string.Empty,
                     IP = context.CurrentContext.Ip4Address,
                     UserId = context.CurrentSession.CustId,
-                    Case = Case
+                    Case = Case,
+                    HeadlineID_Old = HeadlineID_Old
                 };
 
                 try
