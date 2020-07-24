@@ -151,6 +151,10 @@
       <HintPath>..\packages\NetUtility.4.5.6325.30210\lib\net40\NetUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\LeftPanel\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="ONEbook.OTP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ONEbook.OTP.1.0.0\lib\net461\ONEbook.OTP.dll</HintPath>
       <Private>True</Private>
@@ -180,6 +184,7 @@
   <ItemGroup>
     <Compile Include="Customer\CustomerList\CustomerListService.cs" />
     <Compile Include="Customer\CustomerList\Params\SearchCustomerListParams.cs" />
+    <Compile Include="Customer\AssociationAccountService.cs" />
     <Compile Include="Customer\IAgentService.cs" />
     <Compile Include="Customer\ICommissionService.cs" />
     <Compile Include="Customer\ICustomerService.cs" />

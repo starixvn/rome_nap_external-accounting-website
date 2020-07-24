@@ -474,6 +474,10 @@
     <Content Include="Areas\Common\Views\Shared\Scripts\Fanex.CustomerSetting.js" />
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\ThirdPartyProductStatus\Index.cshtml" />
+    <Content Include="assets\bundles\associationaccount\index.js" />
+    <Content Include="assets\bundles\associationaccount\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.js" />
     <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -1485,6 +1489,7 @@
     <Content Include="Configurations\connectionStrings.staging.config">
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.AssociationAccount.js" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
@@ -2736,6 +2741,7 @@
     <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.min.js.map">
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\associationaccount\index.min.js.map" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2857,6 +2863,7 @@
     <Content Include="Views\SearchAndCopy\Email.cshtml" />
     <Content Include="Views\WinLossDetailIBCBetLiveCasino\Index.cshtml" />
     <Content Include="Views\Home\TestSentryLog.cshtml" />
+    <Content Include="Views\AssociationAccount\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">

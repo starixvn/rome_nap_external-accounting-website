@@ -10,6 +10,8 @@
 
     public interface ICustomerDao
     {
+        Customer GetCustomerByUserName(string userName, string groupName, int userId);
+
         bool IsValidUsername(string userName, int uplineId);
 
         Customer UserInfo(int custId);

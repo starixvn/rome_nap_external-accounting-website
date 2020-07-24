@@ -146,6 +146,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Criteria\Customer\AssociationAccount\GetAssociationAccountCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckNewCustomerLimitationCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckMemberCreationCriteria.cs" />
     <Compile Include="Criteria\Customer\GetCustomerAllStatusCriteria.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Criteria\Customer\CustomerList\SearchAgentListCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerList\SearchMasterListCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerList\SearchSuperListCriteria.cs" />
+    <Compile Include="Criteria\Customer\GetCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\KickoutCustomerCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\GetMultipleSuspendCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\GetSingleSuspendCustomerInfoCriteria.cs" />
@@ -174,6 +176,7 @@
     <Compile Include="Criteria\UserControl\GetUserPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateMultipleGroupPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateMultipleUserPolicyCriteria.cs" />
+    <Compile Include="Customer\AssociationAccount\AssociationAccountDao.cs" />
     <Compile Include="Customer\CustomerList\CustomerListDao.cs" />
     <Compile Include="Customer\IAgentDao.cs" />
     <Compile Include="Customer\ICommissionDao.cs" />

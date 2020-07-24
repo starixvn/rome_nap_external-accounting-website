@@ -44,6 +44,7 @@
         public const string Transfer = "Transfer";
         public const string ViewVNIP = "ViewVNIP";
         public const string CustomerList = "CustomerList";
+        public const string AssociationAccountList = "AssociationAccountList";        
         public const string Keno = "Keno";
         public const string KenoSetting = "KenoSetting";
         public const string ShowEnableEsports = "ShowEnableEsports";
