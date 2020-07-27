@@ -99,14 +99,16 @@
 
         public dynamic GetExtraPT(IViewExtraPTRequest request)
         {
+            const float percentage = 100.0f;
+
             var selectedProductIds = request.GetSelectedProductIds();
             var extraPTList = reportService.GetExtraPT(request.GroupName);
 
             return extraPTList
                 .Where(item => selectedProductIds.Contains(item.ProductId))
-                .Select(item => new { item.ExtraPT, ProductName = request.GetProductName(item.ProductId) })
+                .Select(item => new { ExtraPT = item.ExtraPT * percentage, ProductName = request.GetProductName(item.ProductId) })
                 .GroupBy(item => item.ExtraPT, item => item.ProductName,
-                (key, group) => new { ExtraPT = key * 100.0f, Products = string.Join(", ", group) })
+                (key, group) => new { ExtraPT = key, ProductNames = string.Join(", ", group) })
                 .OrderBy(item => item.ExtraPT);
         }
 

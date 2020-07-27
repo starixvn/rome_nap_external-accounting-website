@@ -978,13 +978,12 @@ Fanex.ExtAcc.WinLossDetail = {
         });
     },
     GetExtraPT: function () {
-        $this.getParameterProducts();
-
-        $this.groupName = $("#selectedGroupName").html();
-        var url = resolveClientUrl('WinLossDetail/GetExtraPT') + "?groupname=" + $this.groupName + $this.parameterProducts;
-
         Fanex.ExtAcc.BlockUI();
 
+        $this.getParameterProducts();
+        $this.groupName = $("#selectedGroupName").html();
+
+        var url = resolveClientUrl('WinLossDetail/GetExtraPT') + "?groupname=" + $this.groupName + $this.parameterProducts;
         $.ajax({
             context: $this,
             url,
@@ -993,21 +992,7 @@ Fanex.ExtAcc.WinLossDetail = {
             cache: false
         })
             .done(function (data) {
-                var height = 170;
-                var extraPT = '';
-                var sportBook = $('.ui-multiselect-checkboxes :input[value="showSB"]')[0];
-                if (sportBook.checked) {
-                    extraPT += '<li>1.5% of Sportbook</li>';
-                    height += 50;
-                }
-                for (var i = 0; i < data.length; i++) {
-                    extraPT += '<li>' + data[i].ExtraPT + '% of ' + data[i].Products + '</li>';
-                    height += 50;
-                }
-
-                var extraPTMessage = 'Extra PT% Details <ul>' + extraPT + '</ul>';
-
-                Fanex.ExtAcc.Form.Alert("View Extra PT%", extraPTMessage, 500, height);
+                Fanex.ExtAcc.WinLossDetail.ShowExtraPTDetail(data);
             })
             .fail(function (error) {
                 console.log(error);
@@ -1015,6 +1000,25 @@ Fanex.ExtAcc.WinLossDetail = {
             .always(function () {
                 Fanex.ExtAcc.UnBlockUI();
             });
+    },
+    ShowExtraPTDetail: function (data) {
+        var extraPT = '',
+            height = 170,
+            sportBook = $('.ui-multiselect-checkboxes :input[value="showSB"]')[0];
+
+        if (sportBook.checked) {
+            extraPT += '<li>1.5% of Sportbook</li>';
+            height += 50;
+        }
+
+        for (var i = 0; i < data.length; i++) {
+            extraPT += '<li>' + data[i].ExtraPT + '% of ' + data[i].ProductNames + '</li>';
+            height += 50;
+        }
+
+        var extraPTMessage = 'Extra PT% Details <ul>' + extraPT + '</ul>';
+
+        Fanex.ExtAcc.Form.Alert("View Extra PT%", extraPTMessage, 500, height);
     }
 };
 
