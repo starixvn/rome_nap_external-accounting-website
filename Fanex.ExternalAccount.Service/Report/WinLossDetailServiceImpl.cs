@@ -101,12 +101,9 @@
         {
             const float percentage = 100.0f;
 
-            var selectedProductIds = request.GetSelectedProductIds();
-            var extraPTList = reportService.GetExtraPT(request.GroupName);
-
-            return extraPTList
-                .Where(item => selectedProductIds.Contains(item.ProductId))
+            return reportService.GetExtraPT(request.GroupName)
                 .Select(item => new { ExtraPT = item.ExtraPT * percentage, ProductName = request.GetProductName(item.ProductId) })
+                .Where(item => !string.IsNullOrWhiteSpace(item.ProductName))
                 .GroupBy(item => item.ExtraPT, item => item.ProductName,
                 (key, group) => new { ExtraPT = key, ProductNames = string.Join(", ", group) })
                 .OrderBy(item => item.ExtraPT);

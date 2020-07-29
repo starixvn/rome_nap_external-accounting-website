@@ -1002,14 +1002,8 @@ Fanex.ExtAcc.WinLossDetail = {
             });
     },
     ShowExtraPTDetail: function (data) {
-        var extraPT = '',
-            height = 170,
-            sportBook = $('.ui-multiselect-checkboxes :input[value="showSB"]')[0];
-
-        if (sportBook.checked) {
-            extraPT += '<li>1.5% of Sportbook</li>';
-            height += 50;
-        }
+        var extraPT = '<li>1.5% of Sportbook</li>',
+            height = 220;
 
         for (var i = 0; i < data.length; i++) {
             extraPT += '<li>' + data[i].ExtraPT + '% of ' + data[i].ProductNames + '</li>';
