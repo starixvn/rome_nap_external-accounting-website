@@ -1487,7 +1487,7 @@
     </Content>
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
-      <DependentUpon>Web.mnl.config</DependentUpon>
+      <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -2744,19 +2744,19 @@
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.ng2.config">
       <SubType>Designer</SubType>
-      <DependentUpon>Web.mnl.config</DependentUpon>
+      <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.production.config">
       <SubType>Designer</SubType>
-      <DependentUpon>Web.mnl.config</DependentUpon>
+      <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.sit.config">
       <SubType>Designer</SubType>
-      <DependentUpon>Web.mnl.config</DependentUpon>
+      <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.staging.config">
       <SubType>Designer</SubType>
-      <DependentUpon>Web.mnl.config</DependentUpon>
+      <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="ExcelTemplates\Customer\MemberList.xls" />
     <Content Include="ExcelTemplates\Customer\CustomerList.xls" />
@@ -2789,6 +2789,7 @@
     <Content Include="IbcKeys\Web.config" />
     <Content Include="Web.mnl.config">
       <SubType>Designer</SubType>
+      <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="deployment.ignore" />
     <Content Include="IbcKeys\ibckey.snk" />
