@@ -10,7 +10,9 @@
 
         public int Case { get; set; }
 
-        public int HeadlineID_Old { get; set; }
+        public int Old_Headline { get; set; }
+
+        public int New_Headline { get; set; }
 
         public int UserId { get; set; }
 

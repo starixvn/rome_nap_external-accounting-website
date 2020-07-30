@@ -88,7 +88,8 @@
             };
             int Case = 0;
             int HeadlineID_Old = 0;
-            context.Result = searchAndCopyRepository.CloneSettingComm(cloneSettingComCriteria, ref Case, ref HeadlineID_Old);
+            int HeadlineID_New = 0;
+            context.Result = searchAndCopyRepository.CloneSettingComm(cloneSettingComCriteria, ref Case, ref HeadlineID_Old, ref HeadlineID_New);
             if (!context.Result.IsSuccess)
             {
                 return context.Result;
@@ -104,7 +105,8 @@
                     IP = context.CurrentContext.Ip4Address,
                     UserId = context.CurrentSession.CustId,
                     Case = Case,
-                    HeadlineID_Old = HeadlineID_Old
+                    Old_Headline = HeadlineID_Old,
+                    New_Headline = HeadlineID_New
                 };
 
                 try
