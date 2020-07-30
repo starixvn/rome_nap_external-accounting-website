@@ -67,7 +67,7 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.5\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=2.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.Setting.2.0.1.9-IP-01\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.Setting.2.0.1.9\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Security, Version=2.0.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Security.2.0.0.6\lib\net40\Fanex.CustomerSetting.Security.dll</HintPath>
