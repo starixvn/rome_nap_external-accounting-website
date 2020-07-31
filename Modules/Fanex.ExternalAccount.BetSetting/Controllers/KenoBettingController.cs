@@ -11,6 +11,8 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
     using Security.Configurations;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
+    using Fanex.CustomerSetting.Module.Core.Constants;
+    using Fanex.CustomerSetting.Module.Core.Web;
 
     public class KenoBettingController : BettingControllerBase
     {
@@ -51,6 +53,12 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "KenoBetting")]
         public ActionResult EditBetSettingPost(int custId, int uplineId, int userId, string txtCustomerObject)
         {
+            var checkUmResult = serviceBase.CheckUM(custId, NonDcsProduct.Sportsbook, AppSession.CurrentSession.LangKey);
+            if (!checkUmResult.IsSuccess)
+            {
+                return UmJsonResult(checkUmResult);
+            }
+
             var customer = CustomerInfo(custId, userId);
 
             var settings = new JsonSerializerSettings();
