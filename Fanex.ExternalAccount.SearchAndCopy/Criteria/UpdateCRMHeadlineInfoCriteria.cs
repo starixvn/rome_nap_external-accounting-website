@@ -20,6 +20,10 @@
 
         public override bool IsValid() => true;
 
-        public string IP { get; set; }
+        public int ErrCode { get; set; }
+
+        public string ErrMsg { get; set; }
+
+        public string LoginIP { get; set; }
     }
 }
