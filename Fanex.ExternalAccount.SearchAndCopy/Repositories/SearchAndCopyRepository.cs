@@ -16,7 +16,8 @@
         Result CloneSettingExtraPT(CloneSettingExtraPTCriteria criteria);
 
         IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName);
-        Result UpdateCRMHeadlineInfo(UpdateCRMHeadlineInfoCriteria criteria);
+
+        Result UpdateCRMHeadlineInfo(UpdateCrmHeadlineInfoCriteria criteria);
     }
 
     public class SearchAndCopyRepository : ISearchAndCopyRepository
@@ -87,14 +88,15 @@
 
             return dynamicRepository.Fetch<SearchCustomerModel>(criteria);
         }
-        public Result UpdateCRMHeadlineInfo(UpdateCRMHeadlineInfoCriteria criteria)
-        {            
+
+        public Result UpdateCRMHeadlineInfo(UpdateCrmHeadlineInfoCriteria criteria)
+        {
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AssignParamValues(criteria.GetSpParams());
                 objDb.ExecuteNonQuery();
                 var outputs = objDb.GetOuputParams();
-                
+
                 return new Result
                 {
                     ErrorCode = outputs["errcode"].ToString(),

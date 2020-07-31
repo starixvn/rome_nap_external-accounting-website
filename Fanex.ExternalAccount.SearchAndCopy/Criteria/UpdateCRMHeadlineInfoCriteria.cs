@@ -2,7 +2,7 @@
 {
     using Fanex.NAP.Framework.Data;
 
-    public class UpdateCRMHeadlineInfoCriteria : CriteriaBase
+    public class UpdateCrmHeadlineInfoCriteria : CriteriaBase
     {
         public int CustId { get; set; }
 

@@ -91,32 +91,10 @@
             int HeadlineID_Old = 0;
             int HeadlineID_New = 0;
             context.Result = searchAndCopyRepository.CloneSettingComm(cloneSettingComCriteria, ref Case, ref HeadlineID_Old, ref HeadlineID_New);
+
             if (!context.Result.IsSuccess)
             {
                 return context.Result;
-            }
-
-            context.CustId = Convert.ToInt32(context.Result.ResultData);
-
-            if (Case != 0) {
-                var updateCRMHeadlineInfoCriteria = new UpdateCRMHeadlineInfoCriteria
-                {
-                    CustId = context.CustId,
-                    UserName = string.Empty,
-                    LoginIP = context.CurrentContext.Ip4Address,
-                    UserId = context.CurrentSession.CustId,
-                    Case = Case,
-                    Old_Headline = HeadlineID_Old,
-                    New_Headline = HeadlineID_New
-                };
-                
-                context.Result = searchAndCopyRepository.UpdateCRMHeadlineInfo(updateCRMHeadlineInfoCriteria);
-
-                if (!context.Result.IsSuccess)
-                {
-                    return context.Result;
-                }
-
             }
            
             var cloneSettingExtraPTCriteria = new CloneSettingExtraPTCriteria
@@ -131,6 +109,30 @@
             if (!context.Result.IsSuccess)
             {
                 return context.Result;
+            }
+
+            context.CustId = Convert.ToInt32(context.Result.ResultData);
+
+            if (Case != 0)
+            {
+                var updateCRMHeadlineInfoCriteria = new UpdateCrmHeadlineInfoCriteria
+                {
+                    CustId = context.CustId,
+                    UserName = string.Empty,
+                    LoginIP = context.CurrentContext.Ip4Address,
+                    UserId = context.CurrentSession.CustId,
+                    Case = Case,
+                    Old_Headline = HeadlineID_Old,
+                    New_Headline = HeadlineID_New
+                };
+
+                context.Result = searchAndCopyRepository.UpdateCRMHeadlineInfo(updateCRMHeadlineInfoCriteria);
+
+                if (!context.Result.IsSuccess)
+                {
+                    return context.Result;
+                }
+
             }
 
             return context.Result;
