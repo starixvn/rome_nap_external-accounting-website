@@ -91,12 +91,14 @@
             int HeadlineID_Old = 0;
             int HeadlineID_New = 0;
             context.Result = searchAndCopyRepository.CloneSettingComm(cloneSettingComCriteria, ref Case, ref HeadlineID_Old, ref HeadlineID_New);
-
+           
             if (!context.Result.IsSuccess)
             {
                 return context.Result;
             }
-           
+
+            context.CustId = Convert.ToInt32(context.Result.ResultData);
+
             var cloneSettingExtraPTCriteria = new CloneSettingExtraPTCriteria
             {
                 CustId = context.CustId,
@@ -111,7 +113,7 @@
                 return context.Result;
             }
 
-            context.CustId = Convert.ToInt32(context.Result.ResultData);
+            
 
             if (Case != 0)
             {
