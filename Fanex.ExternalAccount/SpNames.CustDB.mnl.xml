@@ -306,4 +306,7 @@
   <Function Name="CRM Update Headline Info">
     <Setting Key="Acc_CRM_HeadlineUpd" SpName="Acc_CRM_HeadlineUpd" DbName="DBCRM.bodb_CRM.bodbExtAccNet" Plain="0" />
   </Function>
+  <Function Name="UM On product">
+    <Setting Key="Acc_CheckUM" SpName="Acc_CheckUM" DbName="DBCust.CustDB.bodbExtAccNet" />
+  </Function>
 </Functions>

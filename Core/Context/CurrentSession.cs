@@ -202,5 +202,7 @@
             get { return HttpContext.Current.Session[EASLine] as string; }
             set { HttpContext.Current.Session[EASLine] = value; }
         }
+
+        public string LangKey { get; set; } = "E";
     }
 }
