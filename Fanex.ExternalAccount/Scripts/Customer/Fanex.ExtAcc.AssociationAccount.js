@@ -18,6 +18,7 @@ Fanex.ExtAcc.AssociationAccount = {
     $this: null,
     options: null,
     cachedParams: {
+        userName: "",
         pageSize: 50,
         pageIndex: 0
     },
@@ -42,8 +43,12 @@ Fanex.ExtAcc.AssociationAccount = {
             var code = e.keyCode ? e.keyCode : e.which;
 
             if (code === 13) {
-                $this.Search();
+                $this.NewSearch();
             }
+        });
+
+        $('#btnSearch').click(function (e) {
+            $this.NewSearch();
         });
     },
 
@@ -108,16 +113,21 @@ Fanex.ExtAcc.AssociationAccount = {
         }
     },
 
-    Search: function () {
-
+    NewSearch: function () {
         if (!Validators.validateInput($('#Username').val())) {
             $('#Username').focus();
             Validators.showDown($('#Username').get(0), 'This field is required', 0, 0, 41, -10, 20);
             return false;
         }
+        Fanex.ExtAcc.AssociationAccount.cachedParams.userName = $('#Username').val();
+        Fanex.ExtAcc.AssociationAccount.cachedParams.pageIndex = 0;
+        Fanex.ExtAcc.AssociationAccount.cachedParams.pageSize = 50;
+        $this.Search();
+    },
 
+    Search: function () {
         Fanex.ExtAcc.BlockUI();
-        var username = $('#Username').val();
+        var username = Fanex.ExtAcc.AssociationAccount.cachedParams.userName;
         var pageSize = Fanex.ExtAcc.AssociationAccount.cachedParams.pageSize;
         var pageIndex = Fanex.ExtAcc.AssociationAccount.cachedParams.pageIndex;
 
