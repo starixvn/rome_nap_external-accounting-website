@@ -133,8 +133,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Customer\AssociationAccountViewModel.cs" />
     <Compile Include="Customer\Commission.cs" />
     <Compile Include="Customer\Casino\CasinoCustomer.cs" />
+    <Compile Include="Customer\AssociationAccount.cs" />
     <Compile Include="Customer\CustomerInfo.cs" />
     <Compile Include="Customer\CustomerList\CustomerListDTO.cs" />
     <Compile Include="Customer\CustomerStatusDTO.cs" />

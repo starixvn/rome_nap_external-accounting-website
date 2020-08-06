@@ -5,6 +5,8 @@
 
     public static class AppSettings
     {
+        public static string CTS_Url => Configs["CTS:Url"];
+
         public static string Environment => Configs["Environment"];
 
         public static bool IsUAT => Environment == "UAT";

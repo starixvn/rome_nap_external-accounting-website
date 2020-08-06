@@ -19,6 +19,29 @@
 
     public class CustomerDao : DAOBase, ICustomerDao
     {
+        public Customer GetCustomerByUserName(string userName, string groupName, int userId)
+        {
+            var param = new Hashtable
+            {
+                { "username", userName },
+                { "groupname", groupName },
+                { "userid", userId }
+            };
+
+            using (var reader = ExecDataReader("EAS_CustomerSelAllInfo", param))
+            {
+                if (reader?.Read() == true)
+                {
+                    return new Customer
+                    {
+                        CustId = reader.ToInt("custid")
+                    };
+                }
+
+                return null;
+            }
+        }
+
         public bool IsValidUsername(string userName, int uplineId)
         {
             if (string.IsNullOrEmpty(userName))
