@@ -22,6 +22,8 @@
 
         public string Creator { get; set; }
 
+        public string ParentGroupId { get; set; }
+
         public bool IsIT => IsITGroup(GroupID);
 
         public static bool IsOfficeGroup(string groupName)

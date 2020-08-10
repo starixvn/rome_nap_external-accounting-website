@@ -41,7 +41,17 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
-        public ActionResult AddGroup() => PartialViewBase();
+        public ActionResult AddGroup()
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem { Text = "General Tea", Value = "1" });
+            items.Add(new SelectListItem { Text = "Coffee", Value = "2" });
+            items.Add(new SelectListItem { Text = "Green Tea", Value = "3" });
+            items.Add(new SelectListItem { Text = "Black Tea", Value = "4" });
+            ViewBag.ParentGroups = items;
+
+            return PartialViewBase();
+        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read)]
