@@ -340,7 +340,9 @@
         [ExternalAccountAuthenticate]
         public ActionResult ExternalGroupList()
         {
-            var result = groupService.GetExternalGroup();
+            var result = _currentSession.IsITAdmin || _currentSession.IsInternalAdmin
+                ? groupService.GetExternalGroup()
+                : groupService.GetGroupWithSubGroups(_currentSession.GroupId);
 
             return Json(
                 result.Select(o => new

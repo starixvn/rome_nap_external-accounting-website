@@ -1,8 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Service.Interface.UserControl
 {
+    using System.Collections.Generic;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
-    using System.Collections.Generic;
 
     public interface IGroupService
     {
@@ -14,7 +14,9 @@
 
         IEnumerable<Function> GetAllGroupPolicy(int groupId);
 
-        Group GetGroupById(int groupId, int mode = 0);
+        Group GetGroupById(int groupId);
+
+        IEnumerable<Group> GetGroupWithSubGroups(int groupId);
 
         Result CreateGroup(string groupName, string description, int parentId, int custId, string ip);
 

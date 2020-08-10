@@ -14,7 +14,7 @@
 
         IEnumerable<Function> GetAllGroupPolicy(int groupId);
 
-        Group GetGroupById(int groupId, int mode);
+        IEnumerable<Group> GetGroupById(int groupId, byte mode);
 
         Result CreateGroup(string groupName, string description, int parentId, int custId,  string ip);
 

@@ -110,30 +110,31 @@
             return result;
         }
 
-        public Group GetGroupById(int groupId, int mode)
+        public IEnumerable<Group> GetGroupById(int groupId, byte mode)
         {
             using (var db = new ObjectDb("EAS_GroupInfoSelByGroupID"))
             {
                 db.AddInParameter("GroupID", DbType.Int32, groupId);
-                db.AddInParameter("Mode", DbType.Int32, mode);
+                db.AddInParameter("Mode", DbType.Byte, mode);
 
                 using (var reader = db.ExecuteReader())
                 {
-                    if (reader?.Read() == true)
+                    while (reader.Read())
                     {
-                        return new Group
-                        {
-                            GroupID = reader.ToInt("GroupID"),
-                            GroupName = reader.ToString("GroupName"),
-                            Description = reader.ToString("Description"),
-                            ParentGroupName = reader.ToString("ParentGroup")
-                        };
+                        yield return GetGroup(reader);
                     }
                 }
             }
-
-            return null;
         }
+
+        private static Group GetGroup(IDataReader reader)
+            => new Group
+            {
+                GroupID = reader.ToInt("GroupID"),
+                GroupName = reader.ToString("GroupName"),
+                Description = reader.ToString("Description"),
+                ParentGroupName = reader.ToString("ParentGroup")
+            };
 
         public Result CreateGroup(string groupName, string description, int parentId, int custId, string ip)
         {

@@ -1,13 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.UserControl
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Common.Helper;
     using DataAccess.Impl.UserControl;
     using DataAccess.Interface.UserControl;
     using DTO;
     using DTO.UserControl;
     using Interface.UserControl;
-    using System.Linq;
 
     public class GroupService : IGroupService
     {
@@ -26,11 +26,21 @@
 
         public IEnumerable<Function> GetAllGroupPolicy(int groupId) => _groupDao.GetAllGroupPolicy(groupId);
 
-        public Group GetGroupById(int groupId, int mode = 0)
+        public Group GetGroupById(int groupId)
         {
             Check.Argument.IsNotNegativeOrZero(groupId, "groupId");
 
-            return _groupDao.GetGroupById(groupId, mode);
+            return _groupDao.GetGroupById(groupId, 1).FirstOrDefault();
+        }
+
+        public IEnumerable<Group> GetGroupWithSubGroups(int groupId)
+        {
+            Check.Argument.IsNotNegativeOrZero(groupId, nameof(groupId));
+
+            const int GroupWithSub = 2;
+            var groups = _groupDao.GetGroupById(groupId, GroupWithSub).ToList();
+
+            return groups.Count > 1 ? groups : Enumerable.Empty<Group>();
         }
 
         public Result CreateGroup(string groupName, string description, int parentId, int custId, string ip)

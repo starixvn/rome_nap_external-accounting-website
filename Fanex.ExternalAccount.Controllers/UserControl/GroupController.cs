@@ -1,5 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.UserControl
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
@@ -8,11 +13,6 @@
     using Newtonsoft.Json;
     using Service.Impl.UserControl;
     using Service.Interface.UserControl;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
 
     public class GroupController : BaseController
     {
@@ -78,7 +78,7 @@
         [AntiXSRFFilter]
         public ActionResult EditGroup(int id)
         {
-            var model = _groupService.GetGroupById(id, 1);
+            var model = _groupService.GetGroupById(id);
 
             model.GroupName = HttpUtility.HtmlDecode(model.GroupName);
             model.Description = HttpUtility.HtmlDecode(model.Description);
