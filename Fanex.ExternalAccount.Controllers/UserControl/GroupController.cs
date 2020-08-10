@@ -43,12 +43,9 @@
         [AntiXSRFFilter]
         public ActionResult AddGroup()
         {
-            List<SelectListItem> items = new List<SelectListItem>();
-            items.Add(new SelectListItem { Text = "General Tea", Value = "1" });
-            items.Add(new SelectListItem { Text = "Coffee", Value = "2" });
-            items.Add(new SelectListItem { Text = "Green Tea", Value = "3" });
-            items.Add(new SelectListItem { Text = "Black Tea", Value = "4" });
-            ViewBag.ParentGroups = items;
+            var groups = new List<SelectListItem> { new SelectListItem { Text = "None", Value = "0" } };
+            groups.AddRange(_groupService.GetExternalGroup().Select(group => new SelectListItem { Text = group.GroupName, Value = group.GroupID.ToString() }).ToList());
+            ViewBag.ParentGroups = groups;
 
             return PartialViewBase();
         }
@@ -102,9 +99,9 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult Add(string name, string description)
+        public ActionResult Add(string name, string description, int parentId)
         {
-            var result = _groupService.CreateGroup(name, description, CurrentSession.CustId, CurrentContext.Ip4Address);
+            var result = _groupService.CreateGroup(name, description, parentId,  CurrentSession.CustId, CurrentContext.Ip4Address);
 
             return JsonBase(result);
         }

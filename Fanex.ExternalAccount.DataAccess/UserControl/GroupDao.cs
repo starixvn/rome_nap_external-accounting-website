@@ -133,7 +133,7 @@
             return null;
         }
 
-        public Result CreateGroup(string groupName, string description, int custId, string ip)
+        public Result CreateGroup(string groupName, string description, int parentId, int custId, string ip)
         {
             using (var db = new ObjectDb("EAS_GroupInfoIns"))
             {
@@ -142,6 +142,7 @@
 #pragma warning restore S1192 // String literals should not be duplicated
                 db.AddInParameter("GroupName", DbType.String, groupName);
                 db.AddInParameter("Description", DbType.String, description);
+                db.AddInParameter("ParentID", DbType.Int32, parentId);
                 db.AddInParameter("IP", DbType.String, ip);
                 db.AddOutParameter("GroupID", DbType.Int32, sizeof(int));
 

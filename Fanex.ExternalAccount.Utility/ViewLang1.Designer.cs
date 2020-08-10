@@ -1583,6 +1583,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parent Group.
+        /// </summary>
+        public static string ParentGroup {
+            get {
+                return ResourceManager.GetString("ParentGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parlay RMS.
         /// </summary>
         public static string Parlayrms {

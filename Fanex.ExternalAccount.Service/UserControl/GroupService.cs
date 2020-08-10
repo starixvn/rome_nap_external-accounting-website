@@ -33,8 +33,8 @@
             return _groupDao.GetGroupById(groupId);
         }
 
-        public Result CreateGroup(string groupName, string description, int custId, string ip)
-            => _groupDao.CreateGroup(groupName, description, custId, ip);
+        public Result CreateGroup(string groupName, string description, int parentId, int custId, string ip)
+            => _groupDao.CreateGroup(groupName, description, parentId, custId, ip);
 
         public Result EditGroup(string groupName, string description, int custId, string ip, int groupId)
             => _groupDao.EditGroup(groupName, description, custId, ip, groupId);

@@ -16,7 +16,7 @@
 
         Group GetGroupById(int groupId);
 
-        Result CreateGroup(string groupName, string description, int custId, string ip);
+        Result CreateGroup(string groupName, string description, int parentId, int custId,  string ip);
 
         Result EditGroup(string groupName, string description, int custId, string ip, int groupId);
 

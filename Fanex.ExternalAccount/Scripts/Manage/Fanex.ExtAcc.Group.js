@@ -219,7 +219,7 @@ Fanex.ExtAcc.Group = {
 
         $('#jqbutton').bind('click', function () {
             top.shouldCalculatePopupHeight = false;
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('Group/AddGroup'), 'Add New Group', 400, 300, false);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('Group/AddGroup'), 'Add New Group', 400, 350, false);
         });
 
         Fanex.ExtAcc.OnResize = function () {
@@ -347,12 +347,14 @@ Fanex.ExtAcc.Group = {
 
         var name = $('#GroupName').val();
         var desc = $('#Description').val();
+        var parentId = $('#ParentGroupId').val();
 
         var editUrl = 'Group/Add';
         var params = new Object();
 
         params.name = Fanex.ExtAcc.EscapeHtml(name);
         params.description = Fanex.ExtAcc.EscapeHtml(desc);
+        params.parentId = Fanex.ExtAcc.EscapeHtml(parentId);
 
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
         .done(function (data) {
