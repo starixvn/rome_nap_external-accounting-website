@@ -110,11 +110,12 @@
             return result;
         }
 
-        public Group GetGroupById(int groupId)
+        public Group GetGroupById(int groupId, int mode)
         {
             using (var db = new ObjectDb("EAS_GroupInfoSelByGroupID"))
             {
                 db.AddInParameter("GroupID", DbType.Int32, groupId);
+                db.AddInParameter("Mode", DbType.Int32, mode);
 
                 using (var reader = db.ExecuteReader())
                 {
@@ -124,7 +125,8 @@
                         {
                             GroupID = reader.ToInt("GroupID"),
                             GroupName = reader.ToString("GroupName"),
-                            Description = reader.ToString("Description")
+                            Description = reader.ToString("Description"),
+                            ParentGroupName = reader.ToString("ParentGroup")
                         };
                     }
                 }

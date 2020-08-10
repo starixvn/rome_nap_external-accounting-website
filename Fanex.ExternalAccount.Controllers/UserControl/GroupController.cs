@@ -78,10 +78,11 @@
         [AntiXSRFFilter]
         public ActionResult EditGroup(int id)
         {
-            var model = _groupService.GetGroupById(id);
+            var model = _groupService.GetGroupById(id, 1);
 
             model.GroupName = HttpUtility.HtmlDecode(model.GroupName);
             model.Description = HttpUtility.HtmlDecode(model.Description);
+            model.ParentGroupName = HttpUtility.HtmlDecode(model.ParentGroupName);
 
             return PartialViewBase(model);
         }

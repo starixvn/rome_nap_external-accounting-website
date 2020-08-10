@@ -26,11 +26,11 @@
 
         public IEnumerable<Function> GetAllGroupPolicy(int groupId) => _groupDao.GetAllGroupPolicy(groupId);
 
-        public Group GetGroupById(int groupId)
+        public Group GetGroupById(int groupId, int mode = 0)
         {
             Check.Argument.IsNotNegativeOrZero(groupId, "groupId");
 
-            return _groupDao.GetGroupById(groupId);
+            return _groupDao.GetGroupById(groupId, mode);
         }
 
         public Result CreateGroup(string groupName, string description, int parentId, int custId, string ip)

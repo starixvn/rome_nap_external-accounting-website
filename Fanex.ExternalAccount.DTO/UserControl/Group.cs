@@ -22,7 +22,9 @@
 
         public string Creator { get; set; }
 
-        public string ParentGroupId { get; set; }
+        public int ParentGroupId { get; set; }
+
+        public string ParentGroupName { get; set; }
 
         public bool IsIT => IsITGroup(GroupID);
 

@@ -287,7 +287,7 @@ Fanex.ExtAcc.Group = {
             resolveClientUrl('Group/EditGroup/' + groupId),
             title,
             400,
-            300,
+            350,
             false);
     },
 
