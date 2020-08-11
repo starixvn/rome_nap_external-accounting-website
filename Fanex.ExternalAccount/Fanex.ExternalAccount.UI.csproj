@@ -196,7 +196,7 @@
       <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.2.8\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.5.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.5.3-NG-06\lib\net40\Fanex.PTEngine.dll</HintPath>
+      <HintPath>..\packages\Fanex.PTEngine.1.0.5.3\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTSetting.BettypeReference, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTSetting.BettypeReference.1.0.0.2\lib\net461\Fanex.PTSetting.BettypeReference.dll</HintPath>
