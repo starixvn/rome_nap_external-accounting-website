@@ -209,3 +209,7 @@ body {
 .block__cell-group .align-center {
     align-items: center;
 }
+
+.w33-percent {
+    width: 31% !important;
+}
