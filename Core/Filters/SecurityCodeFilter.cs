@@ -5,6 +5,7 @@
     using Fanex.ExternalAccount.Utilities;
     using System;
     using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
 
     [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
@@ -18,7 +19,7 @@
             {
                 if (IsSecurityCodeRequired())
                 {
-                    var returnUrl = filterContext.HttpContext.Request.RawUrl;
+                    var returnUrl = HttpUtility.UrlEncode(filterContext.HttpContext.Request.RawUrl);
                     filterContext.Result = RedirectToSecurityCodePage(returnUrl);
                 }
                 else
