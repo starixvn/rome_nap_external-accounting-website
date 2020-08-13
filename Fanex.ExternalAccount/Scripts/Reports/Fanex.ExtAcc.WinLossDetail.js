@@ -1002,7 +1002,7 @@ Fanex.ExtAcc.WinLossDetail = {
             });
     },
     ShowExtraPTDetail: function (data) {
-        var extraPT = '<li>1.5% of Sportbook</li>',
+        var extraPT = '',
             height = 220;
 
         for (var i = 0; i < data.length; i++) {
