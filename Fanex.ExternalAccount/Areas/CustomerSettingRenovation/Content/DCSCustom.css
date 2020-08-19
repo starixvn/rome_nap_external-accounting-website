@@ -205,3 +205,7 @@ body {
 .system-9 .settingtype8 .modal__content {
     max-height: 200px;
 }
+
+.block__cell-group .align-center {
+    align-items: center;
+}
