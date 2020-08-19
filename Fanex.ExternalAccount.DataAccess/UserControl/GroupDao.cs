@@ -40,12 +40,13 @@
             }
         }
 
-        public IEnumerable<Group> GetAllGroup()
+        public IEnumerable<Group> GetAllGroup(int mode)
         {
             var result = new List<Group>();
 
             using (var db = new ObjectDb("EAS_GroupInfoSelAllGroup"))
             {
+                db.AddInParameter("Mode", DbType.Int16, mode);
                 using (var reader = db.ExecuteReader())
                 {
                     while (reader?.Read() == true)
@@ -133,7 +134,8 @@
                 GroupID = reader.ToInt("GroupID"),
                 GroupName = reader.ToString("GroupName"),
                 Description = reader.ToString("Description"),
-                ParentGroupName = reader.ToString("ParentGroup")
+                ParentGroupName = reader.ToString("ParentGroup"),
+                ParentGroupId = reader.ToInt("ParentId")
             };
 
         public Result CreateGroup(string groupName, string description, int parentId, int custId, string ip)

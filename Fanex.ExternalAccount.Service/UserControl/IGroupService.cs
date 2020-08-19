@@ -8,7 +8,7 @@
     {
         IEnumerable<Group> GetListGroup();
 
-        IEnumerable<Group> GetAllGroup();
+        IEnumerable<Group> GetAllGroup(int mode = 0);
 
         IEnumerable<Group> GetExternalGroup();
 
@@ -17,6 +17,8 @@
         Group GetGroupById(int groupId);
 
         IEnumerable<Group> GetGroupWithSubGroups(int groupId);
+
+        bool CheckIsMainGroup(int groupId);
 
         Result CreateGroup(string groupName, string description, int parentId, int custId, string ip);
 

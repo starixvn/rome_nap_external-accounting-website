@@ -32,7 +32,7 @@
 
         public GroupController() : this(null, null, null)
         {
-        }
+        }   
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -44,7 +44,7 @@
         public ActionResult AddGroup()
         {
             var groups = new List<SelectListItem> { new SelectListItem { Text = "None", Value = "0" } };
-            groups.AddRange(_groupService.GetExternalGroup().Select(group => new SelectListItem { Text = group.GroupName, Value = group.GroupID.ToString() }).ToList());
+            groups.AddRange(_groupService.GetAllGroup(1).Select(group => new SelectListItem { Text = group.GroupName, Value = group.GroupID.ToString() }).ToList());
             ViewBag.ParentGroups = groups;
 
             return PartialViewBase();

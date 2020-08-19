@@ -171,12 +171,14 @@
     <Compile Include="Result.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report\SuggestedUserName.cs" />
+    <Compile Include="SubGroup\SubGroupStatus.cs" />
     <Compile Include="UserControl\Function.cs" />
     <Compile Include="UserControl\FunctionPolicy.cs" />
     <Compile Include="UserControl\Group.cs" />
     <Compile Include="UserControl\GroupPolicy.cs" />
     <Compile Include="UserControl\HierarchicalFunction.cs" />
     <Compile Include="UserControl\Menu.cs" />
+    <Compile Include="SubGroup\SubGroupCustomer.cs" />
     <Compile Include="UserControl\User.cs" />
     <Compile Include="UserControl\UserCache.cs" />
     <Compile Include="UserControl\UserPolicy.cs" />

@@ -8,7 +8,7 @@
     {
         IEnumerable<Group> GetListGroup();
 
-        IEnumerable<Group> GetAllGroup();
+        IEnumerable<Group> GetAllGroup(int mode);
 
         IEnumerable<Group> GetExternalGroup();
 

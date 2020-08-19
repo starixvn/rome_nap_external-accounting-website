@@ -64,14 +64,18 @@
   </Function>
   <Function Name="Group">
     <Setting Key="EAS_GroupInfoDel" SpName="EAS_GroupInfoDel" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_GroupInfoIns" SpName="EAS_GroupInfoIns_xtest" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_GroupInfoSel" SpName="EAS_GroupInfoSel_xtest" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_GroupInfoIns" SpName="EAS_GroupInfoIns" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_GroupInfoSel" SpName="EAS_GroupInfoSel" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_GroupInfoSelAllGroup" SpName="EAS_GroupInfoSelAllGroup" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_GroupInfoSelExternalGroup" SpName="EAS_GroupInfoSelExternalGroup_xtest" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_GroupInfoSelByGroupID" SpName="EAS_GroupInfoSelByGroupID_xtest" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_GroupInfoSelExternalGroup" SpName="EAS_GroupInfoSelExternalGroup" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_GroupInfoSelByGroupID" SpName="EAS_GroupInfoSelByGroupID" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_GroupInfoUpd" SpName="EAS_GroupInfoUpd" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_GroupPolicySel" SpName="EAS_GroupPolicySel" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_GroupPolicyUpd" SpName="EAS_GroupPolicyUpd" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
+  </Function>
+  <Function Name="SubGroup">
+    <Setting Key="EAS_CustomerSelBySubGroup" SpName="EAS_CustomerSelBySubGroup" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerUpdSubGroup" SpName="EAS_CustomerUpdSubGroup" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
   <Function name="Group Configuration">
     <Setting Key="EAS_GroupConfigurationSel" SpName="EAS_GroupConfigurationSel" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" plain="0" />

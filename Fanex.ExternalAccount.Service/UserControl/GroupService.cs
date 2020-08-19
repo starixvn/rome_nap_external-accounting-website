@@ -22,7 +22,7 @@
 
         public IEnumerable<Group> GetExternalGroup() => _groupDao.GetExternalGroup().OrderBy(i => i.GroupName);
 
-        public IEnumerable<Group> GetAllGroup() => _groupDao.GetAllGroup();
+        public IEnumerable<Group> GetAllGroup(int mode = 0) => _groupDao.GetAllGroup(mode);
 
         public IEnumerable<Function> GetAllGroupPolicy(int groupId) => _groupDao.GetAllGroupPolicy(groupId);
 
@@ -54,5 +54,12 @@
 
         public Result DeleteGroup(int groupId, int userId)
             => _groupDao.DeleteGroup(groupId, userId);
+
+        public bool CheckIsMainGroup(int groupId)
+        {
+            var group = GetGroupById(groupId);
+
+            return group?.ParentGroupId == 0;
+        }
     }
 }

@@ -1,0 +1,49 @@
+﻿namespace Fanex.ExternalAccount.Service.UserControl
+{
+    using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.ExternalAccount.DataAccess.Criteria.SubGroup;
+    using Fanex.ExternalAccount.DataAccess.UserControl;
+    using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.DTO.UserControl;
+    using Fanex.ExternalAccount.ViewModel.SubGroup;
+
+    public class SubGroupService : ISubGroupService
+    {
+        private readonly ISubGroupDao _subGroupDao;
+
+        public SubGroupService()
+        {
+            _subGroupDao = new SubGroupDao();
+        }
+
+        public SubGroupViewModel GetListCustomerSubGroup(IEnumerable<Group> groups, int pageSize, int pageIndex)
+        {
+            var mainGroup = groups.FirstOrDefault(group => group.ParentGroupId == 0);
+            var subGroups = groups.Where(group => group.ParentGroupId != 0);
+            var criteria = new GetSubGroupCustomerCriteria
+            {
+                GroupName = mainGroup.GroupName,
+                SubGroup = string.Join(",", subGroups.Select(group => group.GroupName)),
+                PageSize = pageSize,
+                PageIndex = pageIndex
+            };
+
+            return _subGroupDao.GetSubGroupCustomer(criteria);
+        }
+
+        public Result UpdateCustomerSubGroup(string subGroupName, string custIds, bool isAssigned, int userId, string ip6Address)
+        {
+            var criteria = new UpdateCustomerSubGroupCriteria
+            {
+                GroupName = subGroupName,
+                CustList = custIds,
+                IsCheck = isAssigned,
+                UserId = userId,
+                IP = ip6Address
+            };
+
+            return _subGroupDao.UpdateSubGroupCustomer(criteria);
+        }
+    }
+}

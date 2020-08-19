@@ -282,6 +282,10 @@ Fanex.ExtAcc = {
             module: 'Fanex.ExtAcc.Group'
         },
         {
+            url: 'SubGroup/SubGroupList',
+            module: 'Fanex.ExtAcc.SubGroup'
+        },
+        {
             url: 'Function/FunctionList',
             module: 'Fanex.ExtAcc.Function'
         },

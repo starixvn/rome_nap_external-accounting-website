@@ -1,0 +1,73 @@
+﻿namespace Fanex.ExternalAccount.DataAccess.UserControl
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.Common.Extensions;
+    using Fanex.Data;
+    using Fanex.ExternalAccount.DataAccess.Criteria.SubGroup;
+    using Fanex.ExternalAccount.DataAccess.Impl.Base;
+    using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.DTO.SubGroup;
+    using Fanex.ExternalAccount.ViewModel.SubGroup;
+
+    public class SubGroupDao : DAOBase, ISubGroupDao
+    {
+        public SubGroupViewModel GetSubGroupCustomer(GetSubGroupCustomerCriteria criteria)
+        {
+            var result = new List<SubGroupCustomer>();
+            var subGroups = criteria.SubGroup.Split(',').Select(groupName => new SubGroupStatus { GroupName = groupName, IsAssigned = false});
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        var customer = new SubGroupCustomer
+                        {
+                            CustId = reader.ToInt("custid"),
+                            Username = reader.ToString("username"),
+                            IsClosed = reader.ToBool("closed"),
+                            IsSuspended = reader.ToBool("suspended"),
+                            IsEnabled = reader.ToBool("enabled"),
+                            SubGroupStatusList = subGroups.ToList()
+                        };
+                        result.Add(customer);
+                    }
+
+                    reader.NextResult();
+                    while (reader.Read())
+                    {
+                        var customerId = reader.ToInt("custid");
+                        var groupName = reader.ToString("groupname");
+
+                        var customer = result.FirstOrDefault(cust => cust.CustId == customerId);
+                        customer.SubGroupStatusList.ForEach(subgroup => subgroup.IsAssigned = (subgroup.GroupName == groupName) || subgroup.IsAssigned);
+                    }
+                }
+
+                var outputParams = db.GetOuputParams();
+
+                return new SubGroupViewModel
+                {
+                    SubGroupCustomers = result,
+                    SubGroups = subGroups.Select(subGroup => subGroup.GroupName),
+                    PageIndex = outputParams["pageindex"] is DBNull ? 0 : Convert.ToInt16(outputParams["pageindex"]),
+                    TotalItems = outputParams["totalrows"] is DBNull ? 0 : Convert.ToInt16(outputParams["totalrows"])
+                };
+            }
+        }
+
+        public Result UpdateSubGroupCustomer(UpdateCustomerSubGroupCriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+
+                return new Result(outputParams["errcode"], outputParams["errmsg"]);
+            }
+        }
+    }
+}
