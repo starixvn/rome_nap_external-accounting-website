@@ -13,22 +13,54 @@ Fanex.ExtAcc.SubGroup = {
         Fanex.ExtAcc.BlockUI();
         $('#mainGrid').css('visibility', 'hidden');
         $this = this;
-        $this.URL = resolveClientUrl("SubGroup/SubGroupPost");
-        $this.GetCustomerList(1, 50);
+        $this.URL = resolveClientUrl("SubGroup/SearchSubGroupCustomer");
+        $('#btnSearch').click(function () {
+            $this.GetCustomerList(1, 50);
+        });
+        $this.InitSubGroup();
+    },
+    InitSubGroup: function () {
+        var groupId = $('#selectedGroupName').html() === '' ? '17' : $('#ddlGroupName').val();
+        var params = new Object();
+        params.groupId = groupId;
+        $.ajax({
+            url: resolveClientUrl("SubGroup/SubGroupPost"),
+            data: params,
+            dataType: 'json',
+            type: 'post'
+        })
+            .success(function (data) {
+                if (data.errorCode === "401" || data.errorCode === "204") {
+                    $this.ShowError(data.errorCode);
+                    return;
+                }
+                $this.HideNoPermission();
+                $.each(data, function (_, subGroup) {
+                    $('#selSubGroup').append($('<option>', {
+                        value: subGroup.groupName,
+                        text: subGroup.groupName
+                    }));
+                });
+                Fanex.ExtAcc.UnBlockUI();
+            });
     },
     GetCustomerList: function (pageIndex, pageSize) {
-        var groupId = $('#selectedGroupName').html() === '' ? '17' : $('#ddlGroupName').val();
+        Fanex.ExtAcc.BlockUI();
+        var groupName = $('#selectedGroupName').html();
+        var subGroupName = $('#selSubGroup').val();
+        var username = $('#txtUserName').val();
 
         $this.params = new Object();
-
-        $this.params.groupId = groupId;
+        $this.params.groupName = groupName;
+        $this.params.subGroupName = subGroupName;
+        $this.params.username = username;
         $this.params.pageSize = pageSize;
         $this.params.pageIndex = pageIndex;
 
         var header = [
-            { HeaderText: 'Username', Name: 'Username', Width: 150 },
+            { HeaderText: 'Username', Name: 'Username', Width: 200 },
             {
-                HeaderText: 'Status', Name: 'Status', Width: 75, CellAlign: 'center',
+                HeaderText: 'Status', Name: 'Status', Width: 100, CellAlign: 'center',
                 CustomCellRender: function (cell) {
                     return !cell.Value.isEnabled ? 'Disabled' : cell.Value.isClosed ? 'Closed' : cell.Value.isSuspended ? 'Suspended' : 'Open';
                 }
@@ -42,18 +74,14 @@ Fanex.ExtAcc.SubGroup = {
             type: 'post'
         })
             .success(function (data) {
-                if (data.errorCode === "401" || data.errorCode === "404") {
-                    $this.ShowError(data.errorCode);
-                    return;
-                }
-                $this.HideNoPermission();
+                
                 var subGroups = data.subGroups;
                 for (var i = 0; i < subGroups.length; i++) {
                     header.push({
                         HeaderText: subGroups[i],
                         Name: subGroups[i],
                         CellAlign: 'center',
-                        Width: 100,
+                        Width: 200,
                         CustomHeaderRender: function (cell) {
                             return '<div>' + cell.HeaderText + '</div><div id="editMult' + cell.HeaderText + '" class="editMult" data-subGroupName="' + cell.HeaderText + '"></div>';
                         },
@@ -232,9 +260,9 @@ Fanex.ExtAcc.SubGroup = {
         });
     },
     ShowError: function (errorCode) {
-        if (errorCode === 401) {
+        if (errorCode === "401") {
             $("#divNoPermission").find('h3').html("You don't have permission to access.");
-        } else if (errorCode === 204) {
+        } else if (errorCode === "204") {
             $("#divNoPermission").find('h3').html("There is no Sub Group to assign super.");
         }
 

@@ -37,21 +37,28 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.SubGroup,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult SubGroupPost(int groupId, int pageSize, int pageIndex)
+        public ActionResult SubGroupPost(int groupId)
         {
             if (!_groupService.CheckIsMainGroup(groupId))
             {
-                return JsonBase(new Result(HttpStatusCode.Unauthorized));
+                return JsonBase(new Result((int)HttpStatusCode.Unauthorized));
             }
 
             var groups = _groupService.GetGroupWithSubGroups(groupId);
 
             if(!groups.Any())
             {
-                return JsonBase(new Result(HttpStatusCode.NoContent));
+                return JsonBase(new Result((int)HttpStatusCode.NoContent));
             }
 
-            var model = _subGroupService.GetListCustomerSubGroup(groups, pageSize, pageIndex);
+            return JsonBase(groups.Where(group => group.ParentGroupId != 0));
+        }
+
+        [ExternalAccountAuthenticate(Function = eFunctions.SubGroup,
+            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+        public ActionResult SearchSubGroupCustomer(string groupName, string subGroupName, string username, int pageSize, int pageIndex)
+        {
+            var model = _subGroupService.GetListCustomerSubGroup(groupName, subGroupName, username, pageSize, pageIndex);
 
             return JsonBase(model);
         }

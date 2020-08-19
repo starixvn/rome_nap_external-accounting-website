@@ -8,6 +8,8 @@
 
         public string SubGroup { get; set; }
 
+        public string Username { get; set; }
+
         public int PageIndex { get; set; }
 
         public int PageSize { get; set; }

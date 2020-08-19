@@ -1898,6 +1898,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Sub Group.
+        /// </summary>
+        public static string ShowSupGroup {
+            get {
+                return ResourceManager.GetString("ShowSupGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Soccer only.
         /// </summary>
         public static string Socceronly {
@@ -2173,6 +2182,15 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string Username {
             get {
                 return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username contains.
+        /// </summary>
+        public static string UsernameContains {
+            get {
+                return ResourceManager.GetString("UsernameContains", resourceCulture);
             }
         }
         

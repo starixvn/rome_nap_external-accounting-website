@@ -17,14 +17,13 @@
             _subGroupDao = new SubGroupDao();
         }
 
-        public SubGroupViewModel GetListCustomerSubGroup(IEnumerable<Group> groups, int pageSize, int pageIndex)
+        public SubGroupViewModel GetListCustomerSubGroup(string groupName, string subGroupName, string username, int pageSize, int pageIndex)
         {
-            var mainGroup = groups.FirstOrDefault(group => group.ParentGroupId == 0);
-            var subGroups = groups.Where(group => group.ParentGroupId != 0);
             var criteria = new GetSubGroupCustomerCriteria
             {
-                GroupName = mainGroup.GroupName,
-                SubGroup = string.Join(",", subGroups.Select(group => group.GroupName)),
+                GroupName = groupName,
+                SubGroup = subGroupName,
+                Username = username,
                 PageSize = pageSize,
                 PageIndex = pageIndex
             };
