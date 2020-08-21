@@ -58,9 +58,9 @@ Fanex.ExtAcc.SubGroup = {
         $this.params.pageIndex = pageIndex;
 
         var header = [
-            { HeaderText: 'Username', Name: 'Username', Width: 200 },
+            { HeaderText: 'Username', Name: 'Username', Width: 225 },
             {
-                HeaderText: 'Status', Name: 'Status', Width: 100, CellAlign: 'center',
+                HeaderText: 'Status', Name: 'Status', Width: 125, CellAlign: 'center',
                 CustomCellRender: function (cell) {
                     return !cell.Value.isEnabled ? 'Disabled' : cell.Value.isClosed ? 'Closed' : cell.Value.isSuspended ? 'Suspended' : 'Open';
                 }
@@ -81,7 +81,7 @@ Fanex.ExtAcc.SubGroup = {
                         HeaderText: subGroups[i],
                         Name: subGroups[i],
                         CellAlign: 'center',
-                        Width: 200,
+                        Width: 225,
                         CustomHeaderRender: function (cell) {
                             return '<div>' + cell.HeaderText + '</div><div id="editMult' + cell.HeaderText + '" class="editMult" data-subGroupName="' + cell.HeaderText + '"></div>';
                         },
