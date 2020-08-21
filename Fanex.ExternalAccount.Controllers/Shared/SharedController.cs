@@ -8,6 +8,7 @@
     using Core.Context;
     using DTO;
     using Fanex.ExternalAccount.Core.Base;
+    using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.ViewModel.Shared;
     using Logging.Extensions.Web;
@@ -26,6 +27,7 @@
         private readonly CurrentSession _currentSession;
         private readonly IMaintenanceService _maintenanceService;
         private readonly IMenuService menuService;
+        private readonly IGroupService groupService;
 
         public SharedController()
         {
@@ -33,6 +35,7 @@
             _loginService = new LoginService();
             _maintenanceService = new MaintenanceService();
             menuService = new MenuService();
+            groupService = new GroupService();
         }
 
         public ActionResult _Layout()

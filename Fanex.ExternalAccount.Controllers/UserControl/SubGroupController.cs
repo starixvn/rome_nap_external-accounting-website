@@ -29,7 +29,7 @@
             _groupService = groupService ?? new GroupService();
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
+        [ExternalAccountAuthenticate(Function = eFunctions.SubGroup,
            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult SubGroupList() {
             return PartialViewBase();
