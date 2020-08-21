@@ -286,16 +286,16 @@ String.prototype.toFixed = function (precision, optionals) {
 String.prototype.formatErrorMessage = function () {
     var msg = this;
 
-    var indexOfStartParenthesis = msg.indexOf('(');
-    var indexOfEndParenthesis = msg.indexOf(')');
+    var indexOfStartParenthesis = msg.indexOf('GMT') === -1 ? msg.indexOf('(') : 0;
+    var indexOfEndParenthesis = msg.indexOf('GMT') === -1 ? msg.indexOf(')') : msg.length - 1;
     var orgMsg = msg.substring(indexOfStartParenthesis, indexOfEndParenthesis + 1);
     var preMsg = msg.substring(0, indexOfStartParenthesis);
     var subMsg = msg.substring(indexOfEndParenthesis + 1, msg.length);
 
     var tmp = msg.substring(indexOfStartParenthesis, indexOfStartParenthesis + 4);
 
-    var formatMsg = '<font color="#ff5411">' + preMsg + '</font>' + orgMsg +
-    '<font color="#ff5411">' + subMsg + '</font>';
+    var formatMsg = '<span style="color: #fe0000">' + preMsg + '</span>' + orgMsg +
+        '<span tyle="color: #fe0000">' + subMsg + '</span>';
 
 
     return formatMsg;
