@@ -36,7 +36,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "GoldDeluxeBetting")]
         public ActionResult UpdateGameSetting(EditSettingViewModel model)
         {
-            var checkUmResult = serviceBase.CheckUM(model.CustId, NonDcsProduct.Sportsbook, AppSession.CurrentSession.LangKey);
+            var checkUmResult = serviceBase.CheckUM(model.CustId, NonDcsProduct.GoldDeluxe, AppSession.CurrentSession.LangKey);
             if (!checkUmResult.IsSuccess)
             {
                 return UmJsonResult(checkUmResult);

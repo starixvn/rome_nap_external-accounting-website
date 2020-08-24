@@ -34,7 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SonarQube", "SonarQube", "{
 		SonarQube\SolutionBinding.sqconfig = SonarQube\SolutionBinding.sqconfig
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BEA06A80-C6DB-42EE-9265-912D52FED2D7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ForSuperModules", "ForSuperModules", "{BEA06A80-C6DB-42EE-9265-912D52FED2D7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{E738F53C-66DE-4C5B-B5AF-FF39407CEA09}"
 EndProject
