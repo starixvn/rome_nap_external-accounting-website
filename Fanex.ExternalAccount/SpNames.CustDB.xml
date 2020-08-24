@@ -54,13 +54,13 @@
     <Setting Key="EAS_Rpt_WinLossDaily_MAg" SpName="EAS_Rpt_WinLossDaily_MAg" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDaily_Ag14" SpName="EAS_Rpt_WinLossDaily_Ag14" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDaily_Ag" SpName="EAS_Rpt_WinLossDaily_Ag" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDetail_Com" SpName="EAS_Rpt_WinLossDetail_Com_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
+    <Setting Key="EAS_Rpt_WinLossDetail_Com" SpName="EAS_Rpt_WinLossDetail_Com" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
     <Setting Key="EAS_Rpt_WinLossDetail_SAg" SpName="EAS_Rpt_WinLossDetail_SAg" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
     <Setting Key="EAS_Rpt_WinLossDetail_MAg" SpName="EAS_Rpt_WinLossDetail_MAg" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
     <Setting Key="EAS_Rpt_WinLossDetail_Ag" SpName="EAS_Rpt_WinLossDetail_Ag" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
     <Setting Key="EAS_Rpt_WinLossDetailExtra_Com" SpName="EAS_Rpt_WinLossDetailExtra_Com" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" TimeOut="600" />
     <Setting Key="EAS_Rpt_WinLossDaily_SortingOrder" SpName="EAS_Rpt_WinLossDaily_SortingOrder" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_Rpt_ViewExtraPT2" SpName="EAS_Rpt_ViewExtraPT2_xtest" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="EAS_Rpt_ViewExtraPT2" SpName="EAS_Rpt_ViewExtraPT2" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
   <Function Name="Group">
     <Setting Key="EAS_GroupInfoDel" SpName="EAS_GroupInfoDel" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
