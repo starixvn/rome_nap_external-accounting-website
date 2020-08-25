@@ -3,6 +3,13 @@
     ViewBag.Title = "Win Loss Detail";
     Layout = null;
 }
+
+<style type="text/css">
+    .view-xtra-pt {
+        color: #2489ce;
+        cursor: pointer;
+    }
+</style>
 <div>
     <div class="page-title">
         <div class="wlDetail">
@@ -88,17 +95,22 @@
         <div class="form-group">
             <div id="GroupViewHistory" class="">
                 <div>@ViewLang.NoteViewHistory <span id="ViewHistoryReport" class="history"><span class="txt-history">@ViewLang.ViewHistoryReport</span></span></div>
+                
             </div>
             <div id="GroupBackToCurrent" class="" style="display: none">
                 <span id="BackToCurrentReport" class="history"><span class="arrow"></span><span class="txt-history">@ViewLang.BackToCurrentReport</span></span>
             </div>
         </div>
-    </div>
-    @*<div id="headlineDaily">
-            <div id="InfoDate">
-                <span id="SelectedLevel">Super</span> Win Loss Detail <span id="DateValueInfo"></span>
+        <div>@Html.Raw(ViewLang.NoteExtraLevelAvailableDate)</div>
+        @if (ViewBag.CanViewExtraPT)
+        {
+            <div>
+                <span id="ViewExtraPT" class="view-xtra-pt">
+                    View Extra PT %
+                </span>
             </div>
-        </div>*@
+        }
+    </div>
     <div id="mainGrid" class="hide tbl-winloss-detail">
         <div id="jqgrid" class="removeRadius freegrid content-grid"></div>
     </div>

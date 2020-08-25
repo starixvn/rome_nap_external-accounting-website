@@ -1439,6 +1439,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data for Extra level is available from Aug 15&lt;sup&gt;th&lt;/sup&gt;, 2020 onward..
+        /// </summary>
+        public static string NoteExtraLevelAvailableDate {
+            get {
+                return ResourceManager.GetString("NoteExtraLevelAvailableDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data is up to 3 months. For more historical data, please click.
         /// </summary>
         public static string NoteViewHistory {

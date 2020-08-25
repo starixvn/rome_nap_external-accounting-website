@@ -7,7 +7,6 @@
     using Service.UserControl;
     using System;
     using System.Linq;
-    using Utilities;
 
     public class BaseReportController : BaseController
     {
@@ -25,25 +24,10 @@
             this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
         }
 
-        protected bool CanViewWinLossDetailForIBCBetLiveCasino()
+        protected bool CanView(string[] groups)
         {
-            string groupName = RouteData.Values["id"] as string;
-            if (string.IsNullOrWhiteSpace(groupName))
-            {
-                groupName = Core.Context.CurrentSession.Instance.CurrencyGroup;
-            }
-            if (string.IsNullOrWhiteSpace(groupName))
-            {
-                return false;
-            }
-
-            var viewableGroups = Config.GroupsCanViewWinLossDetailForIBCBetLiveCasino();
-            if (!viewableGroups.Contains(groupName, StringComparer.CurrentCultureIgnoreCase))
-            {
-                return false;
-            }
-
-            return true;
+            var groupName = (string)RouteData.Values["id"] ?? currentSession.CurrencyGroup;
+            return groups.Contains(groupName, StringComparer.CurrentCultureIgnoreCase);
         }
     }
 }

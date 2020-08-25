@@ -2813,7 +2813,7 @@
     <Content Include="ExcelTemplates\Reports\PokerGamesWinLossAg.xls" />
     <Content Include="ExcelTemplates\Reports\PokerGamesWinLossMAg.xls" />
     <Content Include="ExcelTemplates\Reports\WinLossDetailIBCBetLiveCasino.xls" />
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="ExcelTemplates\Reports\WinLossDetailExtra.xls" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.SSO.js" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />

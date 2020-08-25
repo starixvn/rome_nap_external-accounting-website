@@ -1,8 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
 {
+    using Core.Shared;
     using System.IO;
     using System.Web;
-    using Core.Shared;
 
     internal class TemplateSettings
     {
@@ -19,10 +19,15 @@
             {
                 case Role.Member:
                     return Path.Combine(_dir, "WinLossDetailAg.xls");
+
                 case Role.Agent:
                     return Path.Combine(_dir, "WinLossDetailMAg.xls");
-                default:
+
+                case Role.Master:
                     return Path.Combine(_dir, "WinLossDetail.xls");
+
+                default:
+                    return Path.Combine(_dir, "WinLossDetailExtra.xls");
             }
         }
     }

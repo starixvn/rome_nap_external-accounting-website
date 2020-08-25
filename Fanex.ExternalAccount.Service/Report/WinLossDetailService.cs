@@ -5,5 +5,7 @@
         dynamic DrillDownWinLossDetail(IDrillDownWinLossDetailRequest request);
 
         dynamic SearchWinLossDetail(ISearchWinLossDetailRequest request);
+
+        dynamic GetExtraPT(IViewExtraPTRequest request);
     }
 }

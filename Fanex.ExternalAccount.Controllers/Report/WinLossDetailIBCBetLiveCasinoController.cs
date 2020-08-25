@@ -36,7 +36,7 @@
 
         public ActionResult Index()
         {
-            if (!CanViewWinLossDetailForIBCBetLiveCasino())
+            if (!CanView(Config.GroupsCanViewWinLossDetailForIBCBetLiveCasino()))
             {
                 return PartialView("NoPermission");
             }

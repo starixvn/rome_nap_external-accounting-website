@@ -23,7 +23,7 @@
 
         List<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId);
 
-        List<WinLossDetail> GetSuperWinLossDetail(string groupname, int custId, DateTime fromDate, DateTime toDate, string productIds);
+        List<WinLossDetailExtra> GetSuperWinLossDetail(string groupname, int custId, DateTime fromDate, DateTime toDate, string productIds);
 
         List<WinLossDetail> GetMasterWinLossDetail(int custId, int masterId, DateTime fromDate, DateTime toDate, string productIds);
 
@@ -34,5 +34,7 @@
         List<WinLossDetailIBCBetLiveCasino> GetSuperWinLossDetailIBCBetLiveCasino(string groupname, DateTime fromDate, DateTime toDate);
 
         ArrayList GetSortingOrderList(string groupname);
+
+        List<ExtraPTModel> GetExtraPT(string groupName);
     }
 }

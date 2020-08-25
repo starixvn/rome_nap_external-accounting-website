@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
@@ -12,6 +9,9 @@
     using Newtonsoft.Json;
     using Service.Interface.Report;
     using Service.UserControl;
+    using System;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
     using Utilities;
 
     public class DailyWinlossController : BaseReportController
@@ -44,7 +44,7 @@
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult Index()
         {
-            ViewData["viewable"] = CanViewWinLossDetailForIBCBetLiveCasino();
+            ViewBag.WillShowMessage = CanView(Config.GroupsCanViewWinLossDetailForIBCBetLiveCasino());
 
             return PartialViewBase();
         }

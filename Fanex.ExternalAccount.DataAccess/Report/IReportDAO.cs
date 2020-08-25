@@ -33,7 +33,7 @@
 
         List<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag(DateTime winlostDate, int custId, int memberId);
 
-        List<WinLossDetail> EAS_Rpt_WinLossDetail_Com(
+        List<WinLossDetailExtra> EAS_Rpt_WinLossDetail_Com(
             string groupname,
             int custId,
             DateTime fromDate,
@@ -72,5 +72,7 @@
             DateTime movebetDay);
 
         ArrayList EAS_Rpt_WinLossDaily_SortingOrder(string groupname);
+
+        List<ExtraPTModel> EAS_Rpt_ViewExtraPT2(string groupName);
     }
 }
