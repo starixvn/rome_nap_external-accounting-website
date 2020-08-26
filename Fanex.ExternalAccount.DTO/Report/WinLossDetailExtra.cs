@@ -7,5 +7,7 @@
         public double ExtraComm { get; set; }
 
         public double ExtraTotal { get; set; }
+
+        public double CompanyAfterExtraPT { get; set; }
     }
 }
