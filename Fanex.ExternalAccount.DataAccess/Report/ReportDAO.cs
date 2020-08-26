@@ -441,6 +441,7 @@
             ExtraWinLost = reader.ToDouble("ExtraWinLoss"),
             ExtraComm = reader.ToDouble("ExtraComm"),
             ExtraTotal = reader.ToDouble("ExtraTotal"),
+            CompanyAfterExtraPT = reader.ToDouble("CompanyAfterExtraPT"),
             Company = reader.ToDouble("Company")
 #pragma warning restore S1192 // String literals should not be duplicated
         };

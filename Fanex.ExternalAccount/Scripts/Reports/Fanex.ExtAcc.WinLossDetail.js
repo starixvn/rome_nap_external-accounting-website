@@ -392,6 +392,7 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: "Win/Loss", Name: "ExtraWinLost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Comm", Name: "ExtraComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "ExtraTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Company (After Extra)", Name: "CompanyAfterExtraPT", Width: 160, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
     ],
     SAgColumns: [
@@ -466,6 +467,7 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
         { HeaderText: "Super", Name: "SAgWinlost", MergeColNumber: 3 },
         { HeaderText: "Extra", Name: "ExtraWinLost", MergeColNumber: 3 },
+        { HeaderText: "Company (After Extra)", Name: "CompanyAfterExtraPT", MergeRowNumber: 2 },
         { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
     ],
     SAgHeaderColumns: [
@@ -580,6 +582,7 @@ Fanex.ExtAcc.WinLossDetail = {
         var sumExtraWinLost = 0;
         var sumExtraComm = 0;
         var sumExtraTotal = 0;
+        var sumCompanyAfterExtraPT = 0;
         var sumCompany = 0;
 
         //// Assing BodyData
@@ -665,6 +668,7 @@ Fanex.ExtAcc.WinLossDetail = {
                         { Name: 'ExtraWinLost', Value: this.dataSource[i].ExtraWinLost },
                         { Name: 'ExtraComm', Value: this.dataSource[i].ExtraComm },
                         { Name: 'ExtraTotal', Value: this.dataSource[i].ExtraTotal },
+                        { Name: "CompanyAfterExtraPT", Value: this.dataSource[i].CompanyAfterExtraPT },
                         { Name: "Company", Value: this.dataSource[i].Company }
                     ]
                 });
@@ -693,6 +697,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 sumExtraWinLost += this.dataSource[i].ExtraWinLost;
                 sumExtraComm += this.dataSource[i].ExtraComm;
                 sumExtraTotal += this.dataSource[i].ExtraTotal;
+                sumCompanyAfterExtraPT += this.dataSource[i].CompanyAfterExtraPT;
             }
             sumCompany += this.dataSource[i].Company;
         }
@@ -781,6 +786,7 @@ Fanex.ExtAcc.WinLossDetail = {
                     { Name: 'ExtraWinLost', Value: sumExtraWinLost },
                     { Name: 'ExtraComm', Value: sumExtraComm },
                     { Name: 'ExtraTotal', Value: sumExtraTotal },
+                    { Name: 'CompanyAfterExtraPT', Value: sumCompanyAfterExtraPT },
                     { Name: "Company", Value: sumCompany }
                 ]
             });
