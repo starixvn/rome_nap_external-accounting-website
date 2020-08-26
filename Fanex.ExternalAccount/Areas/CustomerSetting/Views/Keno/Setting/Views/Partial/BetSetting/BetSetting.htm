@@ -1,7 +1,7 @@
 ﻿<td class="formatCol l betSetting">
     <span ng-bind="betSetting.betTypeName"></span>
     <div style="display: inline-block; float: right;" ng-switch="$index == 0">
-        <span ng-model="betSettingCopyAll.isCopiedAll" ng-switch-when="true" ng-click="copyAllBetSetting(!betSettingCopyAll.isCopiedAll, betSetting.betTypeId)"
+        <span ng-hide="true" ng-model="betSettingCopyAll.isCopiedAll" ng-switch-when="true" ng-click="copyAllBetSetting(!betSettingCopyAll.isCopiedAll, betSetting.betTypeId)"
             ng-class="{'btnCopyAll' : betSettingCopyAll.isCopiedAll, 'btnUnCopyAll' : !betSettingCopyAll.isCopiedAll}"
              title="Copy all below bet setting from Australia Acttab "></span>
     </div>
