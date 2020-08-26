@@ -297,7 +297,7 @@ function CustomerController($scope, $element) {
                     HasError = true;
                     UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='red'>" + result.errorMessage.formatErrorMessage() + "</font></div>";
                 }
-                if (index == null || index == custIds.length - 1) {
+                if (index == null || index == custIds.length - 1 || result.errorCode == '90014') {
                     $('#errMsg')
                         .html(UpdateWinLossMessage)
                         .show();

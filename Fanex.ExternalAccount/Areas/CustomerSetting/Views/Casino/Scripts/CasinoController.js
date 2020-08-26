@@ -193,7 +193,7 @@
                     }
                 }
                 else {
-                    if (custIdIndex == CustIds.length - 1) {
+                    if (custIdIndex == CustIds.length - 1 || result.errorCode == '90014') {
                         if (ErrorMessage != '') {
                             $('#errMsg').html(ErrorMessage + SuccessMessage);
                             $('#errMsg').show();

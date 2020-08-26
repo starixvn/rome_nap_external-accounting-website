@@ -180,7 +180,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                     $scope.showMesseges(html);
                 }
 
-                if ($scope.multipleEdit.isMultipleEdit && index < $scope.multipleEdit.custids.length) {
+                if (((results && results.length > 0 && results[0].ErrorCode !== 90014) || results.length === 0) && ($scope.multipleEdit.isMultipleEdit && index < $scope.multipleEdit.custids.length)) {
                     $scope.save(kenoSetting, index);
                 }
             };

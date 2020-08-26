@@ -75,7 +75,7 @@
       <HintPath>..\packages\Fanex.CustomerSetting.1.2.0\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.4.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.4.3-UM-04\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.4.3-UM-05\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.6-UM-03\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>

@@ -1255,7 +1255,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
             .success(function (result) {
-                if (result.errorCode && result.errorCode == '1') {
+                if (result.errorCode && (result.errorCode == '1' || result.errorCode == '90014')) {
                     $('#errMsg').show();
                     $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
@@ -1407,7 +1407,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
             .success(function (result) {
-                if (result.errorCode && result.errorCode == '1') {
+                if (result.errorCode && (result.errorCode == '1' || result.errorCode == '90014')) {
                     $('#errMsg').show();
                     $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
@@ -1555,7 +1555,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
             .success(function (result) {
-                if (result.errorCode && result.errorCode == '1') {
+                if (result.errorCode && (result.errorCode == '1' || result.errorCode == '90014')) {
                     $('#errMsg').show();
                     $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
@@ -1714,7 +1714,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
             .success(function (result) {
-                if (result.errorCode && result.errorCode == '1') {
+                if (result.errorCode && (result.errorCode == '1' || result.errorCode == '90014')) {
                     $('#errMsg').show();
                     $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
