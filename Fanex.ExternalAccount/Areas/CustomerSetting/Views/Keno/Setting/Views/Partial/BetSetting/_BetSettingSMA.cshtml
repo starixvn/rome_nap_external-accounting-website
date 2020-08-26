@@ -17,7 +17,7 @@
             @if (!isBelongToSpecialGroups)
             {
                 <td colspan="2" class="header c b">
-                    <span ng-hide="true" ng-model="statusCopyAll.isCopiedAll" ng-click="copyAllStatus(!statusCopyAll.isCopiedAll, betSettingList[0].betTypeId)"
+                    <span ng-model="statusCopyAll.isCopiedAll" ng-click="copyAllStatus(!statusCopyAll.isCopiedAll, betSettingList[0].betTypeId)"
                           ng-class="{'btnCopyAll' : statusCopyAll.isCopiedAll, 'btnUnCopyAll' : !statusCopyAll.isCopiedAll}"
                           title="@LayoutTexts.lblCopyAllStatus"></span>
                     <span>@LayoutTexts.ProductStatus</span>
