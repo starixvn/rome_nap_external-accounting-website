@@ -46,7 +46,7 @@
         {
             var customer = searchAndCopyRepository.SearchCustomer(context.Request.Username, context.CurrentSession.CurrencyGroup)
                 .FirstOrDefault(c => c.RoleId == context.RoleId && context.Request.Username.Equals(c.Username, StringComparison.InvariantCultureIgnoreCase) && c.IsExistGroup);
-            if(customer == null)
+            if (customer == null)
             {
                 return new Result(1, Lang.SearchSuperNotExisted);
             }
@@ -55,7 +55,6 @@
             {
                 return new Result(2, Lang.SuperNotFollowPrefix);
             }
-
 
             return new Result(0, string.Empty, customer);
         }
@@ -87,13 +86,19 @@
                 Creator = context.CurrentSession.CustId,
                 IP = context.CurrentContext.Ip4Address
             };
-            context.Result = searchAndCopyRepository.CloneSettingComm(cloneSettingComCriteria);
+
+            int Case = 0;
+            int HeadlineID_Old = 0;
+            int HeadlineID_New = 0;
+            context.Result = searchAndCopyRepository.CloneSettingComm(cloneSettingComCriteria, ref Case, ref HeadlineID_Old, ref HeadlineID_New);
+           
             if (!context.Result.IsSuccess)
             {
                 return context.Result;
             }
 
             context.CustId = Convert.ToInt32(context.Result.ResultData);
+
             var cloneSettingExtraPTCriteria = new CloneSettingExtraPTCriteria
             {
                 CustId = context.CustId,
@@ -101,10 +106,35 @@
                 Creator = context.CurrentSession.CustId,
                 IP = context.CurrentContext.Ip4Address
             };
+
             context.Result = searchAndCopyRepository.CloneSettingExtraPT(cloneSettingExtraPTCriteria);
             if (!context.Result.IsSuccess)
             {
                 return context.Result;
+            }
+
+            
+
+            if (Case != 0)
+            {
+                var updateCRMHeadlineInfoCriteria = new UpdateCrmHeadlineInfoCriteria
+                {
+                    CustId = context.CustId,
+                    UserName = string.Empty,
+                    LoginIP = context.CurrentContext.Ip4Address,
+                    UserId = context.CurrentSession.CustId,
+                    Case = Case,
+                    Old_Headline = HeadlineID_Old,
+                    New_Headline = HeadlineID_New
+                };
+
+                context.Result = searchAndCopyRepository.UpdateCRMHeadlineInfo(updateCRMHeadlineInfoCriteria);
+
+                if (!context.Result.IsSuccess)
+                {
+                    return context.Result;
+                }
+
             }
 
             return context.Result;
@@ -116,7 +146,7 @@
             {
                 context.NG2Status = ng2Service.GetStatus(context.ExistingCustId);
                 context.ExistingCustomerInfo = customerRepository.GetCustomerInfoByUserId(context.ExistingCustId, false);
-                if(!context.NG2Status.IsSync && !context.ExistingCustomerInfo.SyncCasino)
+                if (!context.NG2Status.IsSync && !context.ExistingCustomerInfo.SyncCasino)
                 {
                     return new Result(0, string.Empty);
                 }

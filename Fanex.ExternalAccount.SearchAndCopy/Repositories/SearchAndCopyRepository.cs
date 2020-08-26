@@ -5,16 +5,19 @@
     using Fanex.ExternalAccount.SearchAndCopy.Criteria;
     using Fanex.ExternalAccount.SearchAndCopy.Models;
     using Fanex.NAP.Framework.Data;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
     public interface ISearchAndCopyRepository
     {
-        IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName);
-
-        Result CloneSettingComm(CloneSettingComCriteria criteria);
+        Result CloneSettingComm(CloneSettingComCriteria criteria, ref int Case, ref int HeadlineID_Old, ref int HeadlineID_New);
 
         Result CloneSettingExtraPT(CloneSettingExtraPTCriteria criteria);
+
+        IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName);
+
+        Result UpdateCRMHeadlineInfo(UpdateCrmHeadlineInfoCriteria criteria);
     }
 
     public class SearchAndCopyRepository : ISearchAndCopyRepository
@@ -31,18 +34,7 @@
             this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName)
-        {
-            var criteria = new SearchCustomerCriteria(username, groupName);
-            if (!criteria.IsValid())
-            {
-                return Enumerable.Empty<SearchCustomerModel>();
-            }
-
-            return dynamicRepository.Fetch<SearchCustomerModel>(criteria);
-        }
-
-        public Result CloneSettingComm(CloneSettingComCriteria criteria)
+        public Result CloneSettingComm(CloneSettingComCriteria criteria, ref int Case, ref int HeadlineID_Old, ref int HeadlineID_New)
         {
             if (!criteria.IsValid())
             {
@@ -54,6 +46,9 @@
                 objDb.AssignParamValues(criteria.GetSpParams());
                 objDb.ExecuteNonQuery();
                 var outputs = objDb.GetOuputParams();
+                Case = Convert.ToInt32(outputs["case"]);
+                HeadlineID_Old = Convert.ToInt32(outputs["old_headline"]);
+                HeadlineID_New = Convert.ToInt32(outputs["new_headline"]);
                 return new Result
                 {
                     ErrorCode = outputs["errcode"].ToString(),
@@ -75,6 +70,33 @@
                 objDb.AssignParamValues(criteria.GetSpParams());
                 objDb.ExecuteNonQuery();
                 var outputs = objDb.GetOuputParams();
+                return new Result
+                {
+                    ErrorCode = outputs["errcode"].ToString(),
+                    ErrorMessage = outputs["errmsg"].ToString()
+                };
+            }
+        }
+
+        public IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName)
+        {
+            var criteria = new SearchCustomerCriteria(username, groupName);
+            if (!criteria.IsValid())
+            {
+                return Enumerable.Empty<SearchCustomerModel>();
+            }
+
+            return dynamicRepository.Fetch<SearchCustomerModel>(criteria);
+        }
+
+        public Result UpdateCRMHeadlineInfo(UpdateCrmHeadlineInfoCriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                objDb.ExecuteNonQuery();
+                var outputs = objDb.GetOuputParams();
+
                 return new Result
                 {
                     ErrorCode = outputs["errcode"].ToString(),
