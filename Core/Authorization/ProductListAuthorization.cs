@@ -1,5 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using CustomerSetting.Module.Core.Criteria;
     using CustomerSetting.Module.Core.Models;
     using CustomerSetting.Module.Core.Services.Impl;
@@ -7,9 +9,9 @@
     using CustomerSetting.Module.Core.Web;
     using DataAccess.Criteria.GroupConfiguration;
     using DTO.UserControl;
+    using Fanex.ExternalAccount.DTO.Products;
+    using Fanex.ExternalAccount.Service.Products;
     using Service.UserControl;
-    using System.Collections.Generic;
-    using System.Linq;
     using Utilities.Reports.WinLossDetail;
 
     public class ProductListAuthorization
@@ -17,18 +19,21 @@
         private readonly ICurrentSession currentSession;
         private readonly IServiceBase permissionService;
         private readonly IGroupConfigurationService groupConfigurationService;
+        private readonly IProductDetailService productDetailService;
 
-        public ProductListAuthorization() : this(null, null, null)
+        public ProductListAuthorization() : this(null, null, null, null)
         { }
 
         public ProductListAuthorization(
             ICurrentSession currentSession,
             IServiceBase permissionService,
-            IGroupConfigurationService groupConfigurationService)
+            IGroupConfigurationService groupConfigurationService,
+            IProductDetailService productDetailService)
         {
             this.currentSession = currentSession ?? Context.CurrentSession.Instance;
             this.permissionService = permissionService ?? new ServiceBase();
             this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
+            this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
         public IEnumerable<GroupConfigurationModel> GetProductList()
@@ -74,5 +79,26 @@
             bool isAuthorized)
             => checkIsInternalAdminResult.IsInternalAdmin
                && (!checkIsInternalAdminResult.IsAllowAccess || !isAuthorized);
+
+        public IEnumerable<ProductDetailDto> GetProductDetails()
+        {
+            var groupConfigurationModels = GetProductList();
+            var productDetails = productDetailService.GetProductDetails();
+
+            foreach (var item in productDetails)
+            {
+                var group = groupConfigurationModels.FirstOrDefault(g => g.ProductId == item.ProductId);
+
+                if (group != null)
+                {
+                    yield return new ProductDetailDto
+                    {
+                        RefId = item.RefId,
+                        ResourceId = item.ResourceId,
+                        ProductKey = group.Id
+                    };
+                }
+            }
+        }
     }
 }

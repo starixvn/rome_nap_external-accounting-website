@@ -40,6 +40,7 @@
         public DateTime fromdate { get; set; }
         public DateTime todate { get; set; }
         public int viewlevel { get; set; }
+        public string ResourceIds { get; set; }
 
         public bool IsSearch() => custId == 0;
 

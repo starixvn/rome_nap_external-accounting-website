@@ -21,6 +21,8 @@ Fanex.ExtAcc.WinLossDetail = {
     url: resolveClientUrl("WinLossDetail/GetData"),
     viewlevel: 5,
     dataSource: [],
+    productDetailsData: [],
+    $productDetailsMultiSelect: null,
     $this: null,
     SetRange: function () {
         return {
@@ -81,20 +83,32 @@ Fanex.ExtAcc.WinLossDetail = {
     },
     getParameterProducts: function () {
         this.parameterProducts = "";
-        var ids = $(".ui-multiselect-checkboxes :input");
+        var ids = $("#productList .ui-multiselect-checkboxes :input");
         for (var i = 0; i < ids.length; i++) {
             this.parameterProducts += "&" + ids[i].value + "=" + ids[i].checked;
         }
     },
-    InitProductsList: function () {
-        $("#GroupProducts").css("display", "block");
+    getParameterProductDetails: function () {
+        var parameterProductDetails = [];
+        var ids = $("#productDetailsList .ui-multiselect-checkboxes :input:checked:not(:disabled)");
+        for (var i = 0; i < ids.length; i++) {
+            ids[i].value !== "showAll" && parameterProductDetails.push(ids[i].value);
+        }
+
+        return "&resourceIds=" + parameterProductDetails.join(",");
+    },
+    InitProductsList: function ($proupProducts) {
+        $proupProducts.css("display", "block");
+        var $productList = $("#productList");
         $("#productList div").remove();
-        $("#GroupProducts").multiSelect({
+
+        $proupProducts.multiSelect({
             minWidth: 170,
             showHeader: false,
             onCheck: function () {
-                if (this.value == "showAll") {
-                    var ids = $(".ui-multiselect-checkboxes :input");
+                var checkedValue = this.value;
+                if (checkedValue === "showAll") {
+                    var ids = $productList.find(".ui-multiselect-checkboxes :input");
                     for (var i = 0; i < ids.length; i++) {
                         ids[i].checked = this.checked;
                     }
@@ -103,31 +117,94 @@ Fanex.ExtAcc.WinLossDetail = {
                     if (!this.checked) {
                         $("#ui-multiselect-GroupProducts-option-0")[0].checked = false;
                     }
+
+                    Fanex.ExtAcc.WinLossDetail.ConstrainProductDetails(this.checked, checkedValue);
                 }
             },
             noneSelectedText: function () {
-                $("#GroupProducts").attr("title", "");
+                $proupProducts.attr("title", "");
                 return "";
             },
             selectedText: function (numChecked, numTotal, checkedItems) {
-                if (checkedItems[0].value != "showAll") {
+                if (checkedItems[0].value !== "showAll") {
                     numChecked++;
                 }
 
-                if (numChecked != numTotal) {
+                if (numChecked !== numTotal) {
                     var mainTitle = "";
                     $.each(checkedItems, function (i) {
                         mainTitle += checkedItems[i].title + ", ";
                     });
 
                     mainTitle = mainTitle.substring(0, mainTitle.length - 2);
-                    $("#GroupProducts").attr("title", mainTitle);
+                    $proupProducts.attr("title", mainTitle);
 
                     return mainTitle;
-                }
-                else {
+                } else {
                     $("#ui-multiselect-GroupProducts-option-0")[0].checked = true;
-                    $("#GroupProducts").attr("title", "All");
+                    $proupProducts.attr("title", "All");
+                    return "All";
+                }
+            }
+        });
+    },
+    ConstrainProductDetails: function (checked, checkedValue) {
+        var filteredProductDetails = Fanex.ExtAcc.WinLossDetail.productDetailsData.filter(function (p) {
+            if (p.ProductKey === checkedValue) {
+                return p;
+            }
+        });
+
+        if (filteredProductDetails.length) {
+            $("#productDetailsList").children().attr("disabled", "disabled");
+        }
+
+        //$.each(filteredProductDetails, function (index, p) {
+        //    $('#productDetailsList .ui-multiselect-checkboxes :input[value="' + p.ResourceId + '"]').prop("disabled", checkedValue);
+        //});
+    },
+    InitProductDetailsList: function ($productDetails) {
+        $productDetails.css("display", "block");
+        var $productDetailsList = $("#productDetailsList");
+        $("#productDetailsList div").remove();
+
+        Fanex.ExtAcc.WinLossDetail.$productDetailsMultiSelect = $productDetails.multiSelect({
+            minWidth: 170,
+            showHeader: false,
+            onCheck: function () {
+                if (this.value === "showAll") {
+                    var ids = $productDetailsList.find(".ui-multiselect-checkboxes :input");
+                    for (var i = 0; i < ids.length; i++) {
+                        ids[i].checked = this.checked;
+                    }
+                } else {
+                    if (!this.checked) {
+                        $("#ui-multiselect-ProductDetails-option-0")[0].checked = false;
+                    }
+                }
+            },
+            noneSelectedText: function () {
+                $productDetails.attr("title", "");
+                return "";
+            },
+            selectedText: function (numChecked, numTotal, checkedItems) {
+                if (checkedItems[0].value !== "showAll") {
+                    numChecked++;
+                }
+
+                if (numChecked !== numTotal) {
+                    var mainTitle = "";
+                    $.each(checkedItems, function (i) {
+                        mainTitle += checkedItems[i].title + ", ";
+                    });
+
+                    mainTitle = mainTitle.substring(0, mainTitle.length - 2);
+                    $productDetails.attr("title", mainTitle);
+
+                    return mainTitle;
+                } else {
+                    $("#ui-multiselect-ProductDetails-option-0")[0].checked = true;
+                    $productDetails.attr("title", "All");
                     return "All";
                 }
             }
@@ -144,14 +221,29 @@ Fanex.ExtAcc.WinLossDetail = {
             dataType: "json",
             cache: false,
             success: function (result) {
+                var products = result.products;
                 var productList = '<option value="' + 'showAll' + '" selected="selected">' + 'All' + "</option>";
-                $.each(result, function (i) {
-                    productList += '<option value="' + result[i].Key + '" selected="selected">' + result[i].Value + "</option>";
+                $.each(products, function (i) {
+                    productList += '<option value="' + products[i].Key + '" selected="selected">' + products[i].Value + "</option>";
                 });
                 
-                $("#GroupProducts").html(productList);
-                $this.InitProductsList();
-                $("#GroupProducts :input").width($("#GroupProducts").width() - 21);
+                var $proupProducts = $("#GroupProducts").html(productList);
+                $this.InitProductsList($proupProducts);
+                $("#GroupProducts :input").width($proupProducts.width() - 21);
+
+                var productDetails = result.productDetails;
+                Fanex.ExtAcc.WinLossDetail.productDetailsData = productDetails;
+                if (productDetails.length) {
+                    var productDetailsList = '<option value="' + 'showAll' + '" selected="selected">' + 'All' + "</option>";
+                    $.each(productDetails, function (i) {
+                        productDetailsList += '<option value="' + productDetails[i].ResourceId + '" selected="selected" data-productkey="' + productDetails[i].ProductKey + '">' + productDetails[i].DisplayName + "</option>";
+                    });
+
+                    var $productDetails = $("#ProductDetails").html(productDetailsList);
+                    this.InitProductDetailsList($productDetails);
+                    $("#ProductDetails :input").width($productDetails.width() - 21);
+                    $("#productDetailsContainer").removeClass("hidden");
+                }
             }
         });
     },
@@ -249,7 +341,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 "&custid=" + $this.custId +
                 "&groupname=" + $this.groupName +
                 "&username=" + Fanex.ExtAcc.WinLossDetail.username;
-            var url = resolveClientUrl("WinLossDetail/ExportWinLossDetailToExcel?") + params + Fanex.ExtAcc.WinLossDetail.parameterProducts;
+            var url = resolveClientUrl("WinLossDetail/ExportWinLossDetailToExcel?") + params + Fanex.ExtAcc.WinLossDetail.parameterProducts + Fanex.ExtAcc.WinLossDetail.getParameterProductDetails();
 
             top.exportExcel(url, document);
         });
@@ -921,7 +1013,8 @@ Fanex.ExtAcc.WinLossDetail = {
             + "&fromdate=" + this.fromdate
             + "&todate=" + this.todate
             + "&viewlevel=" + this.viewlevel
-            + this.parameterProducts;
+            + this.parameterProducts
+            + $this.getParameterProductDetails();
 
         Fanex.ExtAcc.BlockUI();
 

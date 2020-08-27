@@ -2,6 +2,7 @@
 {
     using Core.Shared;
     using DTO.Customer;
+    using Fanex.ExternalAccount.Service.Products;
     using Interface.Report;
     using System;
     using System.Collections;
@@ -10,10 +11,12 @@
     public class WinLossDetailServiceImpl : WinLossDetailService
     {
         private readonly IReportService reportService;
+        private readonly IProductDetailService productDetailService;
 
-        public WinLossDetailServiceImpl(IReportService reportService = null)
+        public WinLossDetailServiceImpl(IReportService reportService = null, IProductDetailService productDetailService = null)
         {
             this.reportService = reportService ?? new ReportService();
+            this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
         private Func<int, int, DateTime, DateTime, string, object> GetWinLossDetailFunction(int roleId)

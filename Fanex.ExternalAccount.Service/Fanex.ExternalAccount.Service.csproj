@@ -200,6 +200,7 @@
     <Compile Include="IPInformatonService.cs" />
     <Compile Include="Login\ILoginService.cs" />
     <Compile Include="OTP\CustomerOtpService.cs" />
+    <Compile Include="Products\ProductDetailService.cs" />
     <Compile Include="Products\ProductService.cs" />
     <Compile Include="Report\IReportService.cs" />
     <Compile Include="Report\IViewExtraPTRequest.cs" />

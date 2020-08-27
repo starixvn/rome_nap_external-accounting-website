@@ -5,11 +5,13 @@
 
     public class SearchWinLossDetailRequest : ISearchWinLossDetailRequest
     {
-        public SearchWinLossDetailRequest(WinLossDetailRequest request, dynamic toolTipsProducts)
+        public SearchWinLossDetailRequest(WinLossDetailRequest request, dynamic toolTipsProducts, bool isBelongToSpecialGroups)
             : this(request)
         {
             ProductIds = request.GetProductIds();
             ToolTipsProducts = toolTipsProducts;
+            ResourceIds = request.ResourceIds;
+            IsBelongToSpecialGroups = isBelongToSpecialGroups;
         }
 
         public SearchWinLossDetailRequest(WinLossDetailRequest request)
@@ -26,5 +28,7 @@
         public DateTime ToDate { get; }
         public string ProductIds { get; }
         public dynamic ToolTipsProducts { get; }
+        public string ResourceIds { get; }
+        public bool IsBelongToSpecialGroups { get; }
     }
 }

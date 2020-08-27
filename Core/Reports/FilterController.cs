@@ -1,13 +1,14 @@
 ﻿namespace Fanex.ExternalAccount.Core.Reports
 {
-    using Base;
-    using Newtonsoft.Json;
-    using Service.Impl.Report;
-    using Service.Interface.Report;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Web.Mvc;
+    using Base;
+    using Fanex.ExternalAccount.DTO.Products;
+    using Newtonsoft.Json;
+    using Service.Impl.Report;
+    using Service.Interface.Report;
     using Utilities;
 
     public class FilterController : BaseController
@@ -41,7 +42,10 @@
 
         public ActionResult ProductsList()
         {
-            return JsonBase(GetProductList(), new JsonSerializerSettings());
+            var products = GetProductList();
+            var productDetails = GetProductDetails();
+
+            return JsonBase(new { products, productDetails }, new JsonSerializerSettings());
         }
 
         public ActionResult GetSuggestedUserName()

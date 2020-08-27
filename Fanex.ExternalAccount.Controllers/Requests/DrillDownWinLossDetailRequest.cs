@@ -7,11 +7,13 @@
 
     public class DrillDownWinLossDetailRequest : IDrillDownWinLossDetailRequest
     {
-        public DrillDownWinLossDetailRequest(WinLossDetailRequest request, dynamic toolTipsProducts)
+        public DrillDownWinLossDetailRequest(WinLossDetailRequest request, dynamic toolTipsProducts, bool isBelongToSpecialGroups)
             : this(request)
         {
             ProductIds = request.GetProductIds();
             ToolTipsProducts = toolTipsProducts;
+            ResourceIds = request.ResourceIds;
+            IsBelongToSpecialGroups = isBelongToSpecialGroups;
         }
 
         public DrillDownWinLossDetailRequest(WinLossDetailRequest request)
@@ -53,6 +55,8 @@
         public DateTime ToDate { get; }
         public string ProductIds { get; }
         public dynamic ToolTipsProducts { get; }
+        public string ResourceIds { get; }
+        public bool IsBelongToSpecialGroups { get; }
 
         public bool IsValid => !ViewLevel.IsMember()
                                && ViewLevel <= Role.Group

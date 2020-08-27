@@ -127,9 +127,9 @@
 
             return request.IsSearch()
                 ? winLossDetailService.SearchWinLossDetail(
-                    new SearchWinLossDetailRequest(request, toolTipsProducts))
+                    new SearchWinLossDetailRequest(request, toolTipsProducts, CurrentSession.IsBelongToSpecialGroups))
                 : winLossDetailService.DrillDownWinLossDetail(
-                    new DrillDownWinLossDetailRequest(request, toolTipsProducts));
+                    new DrillDownWinLossDetailRequest(request, toolTipsProducts, CurrentSession.IsBelongToSpecialGroups));
         }
 
         private string BuildTooltipsForLiveCasino()
