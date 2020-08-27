@@ -11,24 +11,31 @@
 
     public class NetworkSpeedController : BaseController
     {
-        private readonly IEnumerable<int> CalculatingNWSpeedGroupIds = string.IsNullOrEmpty(ConfigurationManager.AppSettings["TrackConnectionSpeedGroupIds"])
-            ? Enumerable.Empty<int>()
-            : ConfigurationManager.AppSettings["TrackConnectionSpeedGroupIds"]
-                .Split(',')
-                .Select(groupIdString => Converter.ToInt(groupIdString));
-        private readonly IEnumerable<string> IngoredCalculatingNWSpeedAdminNames = string.IsNullOrEmpty(ConfigurationManager.AppSettings["IngoredCalculatingNWSpeedAdminNames"])
-            ? Enumerable.Empty<string>()
-            : ConfigurationManager.AppSettings["IngoredCalculatingNWSpeedAdminNames"].Split(',');
+        private readonly IEnumerable<int> CalculatingNWSpeedGroupIds;
+        private readonly IEnumerable<string> CalculatingNWSpeedAdminNames;
 
-        private const string LoggedNWSpeedAdminName = "starix";
-        private const int ITGroupId = 1;
+        public NetworkSpeedController()
+        {
+            CalculatingNWSpeedGroupIds = (string.IsNullOrEmpty(ConfigurationManager.AppSettings["TrackConnectionSpeedGroupIds"])
+                ? Enumerable.Empty<int>()
+                : ConfigurationManager.AppSettings["TrackConnectionSpeedGroupIds"]
+                    .Split(',')
+                    .Select(groupIdString => ConvertStringToInt(groupIdString)))
+                .Where(groupId => groupId != 0);
+
+            CalculatingNWSpeedAdminNames = string.IsNullOrEmpty(ConfigurationManager.AppSettings["CalculatingNWSpeedAdminNames"])
+                ? Enumerable.Empty<string>()
+                : ConfigurationManager.AppSettings["CalculatingNWSpeedAdminNames"]
+                    .Split(',')
+                    .Select(adminNames => adminNames.Trim());
+        }
 
         public ActionResult Index()
         {
             if (CurrentSession.IsLogin
                 && User.Identity.IsAuthenticated)
             {
-                if(!IsNeedToCalculateUserConnectionSpeed())
+                if (!IsNeedToCalculateUserConnectionSpeed())
                 {
                     return new EmptyResult();
                 }
@@ -43,7 +50,7 @@
         {
             if (CurrentSession.IsLogin
                 && User.Identity.IsAuthenticated
-                && speedKbps > 0 
+                && speedKbps > 0
                 && CalculatingNWSpeedGroupIds.Any())
             {
                 LogUserInformation(speedKbps);
@@ -54,30 +61,14 @@
 
         private bool IsNeedToCalculateUserConnectionSpeed()
         {
-            var adminUsername = CurrentSession.UserName;
-            foreach (var groupId in CalculatingNWSpeedGroupIds)
+            if (CalculatingNWSpeedGroupIds.Any(groupId => groupId == -1 || CurrentSession.GroupId == groupId))
             {
-                if (groupId == 0)
-                {
-                    return true;
-                }
+                return true;
+            }
 
-                if (groupId > 0 && CurrentSession.GroupId == groupId)
-                {
-                    if (groupId == ITGroupId
-                        && !adminUsername.StartsWith(LoggedNWSpeedAdminName, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        continue;
-                    }
-
-                    if(IngoredCalculatingNWSpeedAdminNames
-                        .Any(adminName => string.Compare(adminName, adminUsername, StringComparison.OrdinalIgnoreCase) == 0))
-                    {
-                        continue;
-                    }
-
-                    return true;
-                }
+            if (CalculatingNWSpeedAdminNames.Any(adminUsername => adminUsername.Trim().Equals("*") || CurrentSession.UserName.Equals(adminUsername.Trim(), StringComparison.CurrentCultureIgnoreCase)))
+            {
+                return true;
             }
 
             return false;
@@ -102,5 +93,8 @@
 
             Logging.LogService.Info(message);
         }
+
+        private int ConvertStringToInt(string strInput)
+            => strInput.Trim().Equals("*") ? -1 : Converter.ToInt(strInput);
     }
 }
