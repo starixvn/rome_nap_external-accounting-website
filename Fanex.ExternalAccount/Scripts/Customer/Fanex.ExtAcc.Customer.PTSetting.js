@@ -3,6 +3,8 @@ if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
     alert("Fanex.ExtAcc.js module is required!")
 }
 
+var UMError = 90014;
+
 Validators.show = function (elementInput, message, xPos, pointerXPos, yPos, pointerYPos, height, timeout) {
     // <span class="hint"><span>This is the message.<span><span class="hint-pointer">&nbsp;</span></span>
     var hideTimeout = timeout ? timeout : 1000;
@@ -1255,7 +1257,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
             .success(function (result) {
-                if (result.errorCode && (result.errorCode == '1' || result.errorCode == '90014')) {
+                if (result.errorCode && (result.errorCode == '1' || result.errorCode == UMError)) {
                     $('#errMsg').show();
                     $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
@@ -1407,7 +1409,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
             .success(function (result) {
-                if (result.errorCode && (result.errorCode == '1' || result.errorCode == '90014')) {
+                if (result.errorCode && (result.errorCode == '1' || result.errorCode == UMError)) {
                     $('#errMsg').show();
                     $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
@@ -1555,7 +1557,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
             .success(function (result) {
-                if (result.errorCode && (result.errorCode == '1' || result.errorCode == '90014')) {
+                if (result.errorCode && (result.errorCode == '1' || result.errorCode == UMError)) {
                     $('#errMsg').show();
                     $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 
@@ -1714,7 +1716,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
             .success(function (result) {
-                if (result.errorCode && (result.errorCode == '1' || result.errorCode == '90014')) {
+                if (result.errorCode && (result.errorCode == '1' || result.errorCode == UMError)) {
                     $('#errMsg').show();
                     $('#errMsg').html(result.errorMessage.formatErrorMessage() + '<br />');
 

@@ -1,5 +1,6 @@
 ﻿"use strict";
 
+var UMError = 90014;
 KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoRepositories, ngDialog, commonService) {
     kenoRepositories.getData().then(
         function (kenoSetting) {
@@ -143,7 +144,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                 if (typeof results != 'undefined') {
                     var length = results.length;
                     var isError = false;
-                    var html = results && results.length > 0 && results[0].ErrorCode === 90014 ? '' : usermessageGroup;
+                    var html = results && results.length > 0 && results[0].ErrorCode === UMError ? '' : usermessageGroup;
 
                     if (typeof results == 'string') {
                         html += results;
@@ -180,7 +181,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                     $scope.showMesseges(html);
                 }
 
-                if (((results && results.length > 0 && results[0].ErrorCode !== 90014) || results.length === 0) && ($scope.multipleEdit.isMultipleEdit && index < $scope.multipleEdit.custids.length)) {
+                if (((results && results.length > 0 && results[0].ErrorCode !== UMError) || results.length === 0) && ($scope.multipleEdit.isMultipleEdit && index < $scope.multipleEdit.custids.length)) {
                     $scope.save(kenoSetting, index);
                 }
             };
