@@ -195,8 +195,13 @@
                 else {
                     if (custIdIndex == CustIds.length - 1 || result.errorCode == '90014') {
                         if (ErrorMessage != '') {
-                            $('#errMsg').html(ErrorMessage + SuccessMessage);
-                            $('#errMsg').show();
+                            var err = result.errorCode == '90014' ?
+                                result.errorMessage.formatErrorMessage() :
+                                ErrorMessage + SuccessMessage;
+                            $('#errMsg').html(err)
+                                .removeClass('successMsg')
+                                .addClass('errMsg')
+                                .show();
 
                             if (typeof ondone == 'function') {
                                 ondone(1, ErrorMessage + SuccessMessage);

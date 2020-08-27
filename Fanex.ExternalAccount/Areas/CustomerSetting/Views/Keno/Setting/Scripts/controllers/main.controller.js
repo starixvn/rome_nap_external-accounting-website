@@ -143,7 +143,7 @@ KenoModule.controller('mainController', function ($scope, $timeout, $http, kenoR
                 if (typeof results != 'undefined') {
                     var length = results.length;
                     var isError = false;
-                    var html = usermessageGroup;
+                    var html = results && results.length > 0 && results[0].ErrorCode === 90014 ? '' : usermessageGroup;
 
                     if (typeof results == 'string') {
                         html += results;
