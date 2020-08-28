@@ -39,7 +39,9 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds,
-            DateTime balanceUpDay);
+            string productDetailsXML,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay);
 
         List<WinLossDetail> EAS_Rpt_WinLossDetail_SAg(
             int custId,
@@ -47,7 +49,9 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds,
-            DateTime balanceUpDay);
+            string productDetailsXML,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay);
 
         List<WinLossDetailMAg> EAS_Rpt_WinLossDetail_MAg(
             int custId,
@@ -55,7 +59,9 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds,
-            DateTime balanceUpDay);
+            string productDetailsXML,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay);
 
         List<WinLossDetailAg> EAS_Rpt_WinLossDetail_Ag(
             int custId,
@@ -63,7 +69,9 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds,
-            DateTime balanceUpDay);
+            string productDetailsXML,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay);
 
         List<WinLossDetailIBCBetLiveCasino> EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(
             string groupName,

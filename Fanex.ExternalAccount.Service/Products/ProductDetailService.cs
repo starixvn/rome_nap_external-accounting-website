@@ -13,7 +13,7 @@
     {
         IEnumerable<ProductDetailEntity> GetProductDetails();
 
-        string BuildProductDetailsXML(string validProductIds, string validResourceIds, bool isBelongToSpecialGroups);
+        string BuildProductDetailsXML(string validProductIds, string userSelectedResourceIds, bool isBelongToSpecialGroups);
     }
 
     public class ProductDetailService : IProductDetailService
@@ -40,7 +40,7 @@
             return result;
         }
 
-        public string BuildProductDetailsXML(string validProductIds, string validResourceIds, bool isBelongToSpecialGroups)
+        public string BuildProductDetailsXML(string validProductIds, string userSelectedResourceIds, bool isBelongToSpecialGroups)
         {
             var productIdsHash = ToDictionaryString(validProductIds);
 
@@ -49,7 +49,7 @@
 
             if (isBelongToSpecialGroups)
             {
-                var resourceIdsHash = ToDictionaryString(validResourceIds);
+                var resourceIdsHash = ToDictionaryString(userSelectedResourceIds);
 
                 validProductDetails = validProductDetails.Where(p => resourceIdsHash.ContainsKey(p.ResourceId));
             }

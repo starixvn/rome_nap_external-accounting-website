@@ -1,5 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
@@ -12,9 +16,6 @@
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.UserControl;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -100,7 +101,10 @@
                     }
             }
 
-            var formatedProducts = request.GetProductNames(GetProductList());
+            var products = GetProductList();
+            GetSabaclubNameExportExcel(request, products);
+
+            var formatedProducts = request.GetProductNames(products);
             var memoryStream = builder.Build(formatedProducts);
 
             if (memoryStream != null)
@@ -127,9 +131,9 @@
 
             return request.IsSearch()
                 ? winLossDetailService.SearchWinLossDetail(
-                    new SearchWinLossDetailRequest(request, toolTipsProducts, CurrentSession.IsBelongToSpecialGroups))
+                    new SearchWinLossDetailRequest(request, toolTipsProducts, Config.IsSpecialGroup(request.groupName)))
                 : winLossDetailService.DrillDownWinLossDetail(
-                    new DrillDownWinLossDetailRequest(request, toolTipsProducts, CurrentSession.IsBelongToSpecialGroups));
+                    new DrillDownWinLossDetailRequest(request, toolTipsProducts, Config.IsSpecialGroup(request.groupName)));
         }
 
         private string BuildTooltipsForLiveCasino()
@@ -156,6 +160,39 @@
 
             return string.Empty;
         }
+
+        private static void GetSabaclubNameExportExcel(ExportWinLossDetailRequest request, List<KeyValuePair<string, string>> products)
+        {
+            if (string.IsNullOrWhiteSpace(request.ResourceIds))
+            {
+                return;
+            }
+
+            for (int i = 0, max = products.Count; i < max; i++)
+            {
+                var product = products[i];
+
+                if (product.Key == "showsaba")
+                {
+                    var userSelectedResourceIds = request.ResourceIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    var productDetails = GetProductDetails(request.groupName)
+                        .Where(p => p.ProductKey == product.Key)
+                        .ToList();
+
+                    if (productDetails.Count > 0 && !IsEquals(productDetails.Select(p => p.ResourceId), userSelectedResourceIds))
+                    {
+                        products[i] = new KeyValuePair<string, string>(
+                            product.Key,
+                            string.Join(", ", productDetails.Where(p => userSelectedResourceIds.Contains(p.ResourceId)).Select(p => p.DisplayName)));
+                    }
+
+                    return;
+                }
+            }
+        }
+
+        private static bool IsEquals(IEnumerable<string> source, IEnumerable<string> destination)
+            => Enumerable.SequenceEqual(source.OrderBy(id => id), destination.OrderBy(id => id));
     }
 
     public class ExportWinLossDetailRequest : WinLossDetailRequest

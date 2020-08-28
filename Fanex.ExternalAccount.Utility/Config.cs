@@ -104,6 +104,9 @@
             return GetValue("SpecialGroups").Split(',').Select(g => g.Trim()).ToArray();
         }
 
+        public static bool IsSpecialGroup(string groupName)
+            => SpecialGroups().Contains(groupName, StringComparer.CurrentCultureIgnoreCase);
+
         public static int SearchAndCopySuperMailingListId => Utils.ToInt32(GetValue("SearchAndCopySuperMailingListId"));
 
         public static string[] GroupsCanViewWinLossDetailForIBCBetLiveCasino()

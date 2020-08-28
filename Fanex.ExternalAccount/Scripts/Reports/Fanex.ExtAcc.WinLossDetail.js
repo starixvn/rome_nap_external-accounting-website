@@ -22,7 +22,6 @@ Fanex.ExtAcc.WinLossDetail = {
     viewlevel: 5,
     dataSource: [],
     productDetailsData: [],
-    $productDetailsMultiSelect: null,
     $this: null,
     SetRange: function () {
         return {
@@ -90,19 +89,21 @@ Fanex.ExtAcc.WinLossDetail = {
     },
     getParameterProductDetails: function () {
         var parameterProductDetails = [];
-        var ids = $("#productDetailsList .ui-multiselect-checkboxes :input:checked:not(:disabled)");
-        for (var i = 0; i < ids.length; i++) {
-            ids[i].value !== "showAll" && parameterProductDetails.push(ids[i].value);
+        if (!$("#ProductDetails").hasClass("ui-state-disabled")) {
+            var ids = $("#productDetailsList .ui-multiselect-checkboxes :input:checked:not(:disabled)");
+            for (var i = 0; i < ids.length; i++) {
+                ids[i].value !== "showAll" && parameterProductDetails.push(ids[i].value);
+            }
         }
 
-        return "&resourceIds=" + parameterProductDetails.join(",");
+        return parameterProductDetails.length ? "&resourceIds=" + parameterProductDetails.join(",") : "";
     },
-    InitProductsList: function ($proupProducts) {
-        $proupProducts.css("display", "block");
+    InitProductsList: function ($groupProducts) {
+        $groupProducts.css("display", "block");
         var $productList = $("#productList");
         $("#productList div").remove();
 
-        $proupProducts.multiSelect({
+        $groupProducts.multiSelect({
             minWidth: 170,
             showHeader: false,
             onCheck: function () {
@@ -117,12 +118,12 @@ Fanex.ExtAcc.WinLossDetail = {
                     if (!this.checked) {
                         $("#ui-multiselect-GroupProducts-option-0")[0].checked = false;
                     }
-
-                    Fanex.ExtAcc.WinLossDetail.ConstrainProductDetails(this.checked, checkedValue);
                 }
+
+                Fanex.ExtAcc.WinLossDetail.ConstrainProductDetails(this.checked, checkedValue);
             },
             noneSelectedText: function () {
-                $proupProducts.attr("title", "");
+                $groupProducts.attr("title", "");
                 return "";
             },
             selectedText: function (numChecked, numTotal, checkedItems) {
@@ -137,39 +138,65 @@ Fanex.ExtAcc.WinLossDetail = {
                     });
 
                     mainTitle = mainTitle.substring(0, mainTitle.length - 2);
-                    $proupProducts.attr("title", mainTitle);
+                    $groupProducts.attr("title", mainTitle);
 
                     return mainTitle;
                 } else {
                     $("#ui-multiselect-GroupProducts-option-0")[0].checked = true;
-                    $proupProducts.attr("title", "All");
+                    $groupProducts.attr("title", "All");
                     return "All";
                 }
             }
         });
+
+        $("#GroupProducts").width(170);
     },
     ConstrainProductDetails: function (checked, checkedValue) {
-        var filteredProductDetails = Fanex.ExtAcc.WinLossDetail.productDetailsData.filter(function (p) {
-            if (p.ProductKey === checkedValue) {
-                return p;
-            }
-        });
+        var $productDetails;
 
-        if (filteredProductDetails.length) {
-            $("#productDetailsList").children().attr("disabled", "disabled");
+        if (checkedValue === "showAll") {
+            $('#productDetailsList .ui-multiselect-checkboxes input[type="checkbox"]').prop("checked", checked);
+            $productDetails = $("#ProductDetails");
+
+            if (checked) {
+                $productDetails.removeClass("ui-state-disabled").find('input[type="button"]').val("All");
+            } else {
+                $productDetails.addClass("ui-state-disabled").find('input[type="button"]').val("");
+            }
+        } else {
+            var filteredProductDetails = Fanex.ExtAcc.WinLossDetail.productDetailsData.filter(function (p) {
+                if (p.ProductKey === checkedValue) {
+                    return p;
+                }
+            });
+
+            if (filteredProductDetails.length) {
+                $.each(filteredProductDetails, function (index, p) {
+                    $('#productDetailsList .ui-multiselect-checkboxes input[type="checkbox"]').prop("checked", checked);
+                });
+
+                $productDetails = $("#ProductDetails");
+
+                if (checked) {
+                    $productDetails.removeClass("ui-state-disabled").find('input[type="button"]').val("All");
+                } else {
+                    $productDetails.addClass("ui-state-disabled").find('input[type="button"]').val("");
+                }
+            }
         }
 
-        //$.each(filteredProductDetails, function (index, p) {
-        //    $('#productDetailsList .ui-multiselect-checkboxes :input[value="' + p.ResourceId + '"]').prop("disabled", checkedValue);
-        //});
+        ////$.each(filteredProductDetails, function (index, p) {
+        ////    $('#productDetailsList .ui-multiselect-checkboxes :input[value="' + p.ResourceId + '"]').prop("disabled", checkedValue);
+        ////});
     },
     InitProductDetailsList: function ($productDetails) {
         $productDetails.css("display", "block");
         var $productDetailsList = $("#productDetailsList");
         $("#productDetailsList div").remove();
 
-        Fanex.ExtAcc.WinLossDetail.$productDetailsMultiSelect = $productDetails.multiSelect({
-            minWidth: 170,
+        $productDetails.multiSelect({
+            minWidth: 190,
+            maxHeight: 70,
             showHeader: false,
             onCheck: function () {
                 if (this.value === "showAll") {
@@ -210,7 +237,7 @@ Fanex.ExtAcc.WinLossDetail = {
             }
         });
 
-        $("#GroupProducts").width(170);
+        $("#ProductDetails").width(190);
     },
     ProductsList: function (isHide) {
         $.ajax({
@@ -227,12 +254,11 @@ Fanex.ExtAcc.WinLossDetail = {
                     productList += '<option value="' + products[i].Key + '" selected="selected">' + products[i].Value + "</option>";
                 });
                 
-                var $proupProducts = $("#GroupProducts").html(productList);
-                $this.InitProductsList($proupProducts);
-                $("#GroupProducts :input").width($proupProducts.width() - 21);
+                var $groupProducts = $("#GroupProducts").html(productList);
+                $this.InitProductsList($groupProducts);
+                $("#GroupProducts :input").width($groupProducts.width() - 21);
 
                 var productDetails = result.productDetails;
-                Fanex.ExtAcc.WinLossDetail.productDetailsData = productDetails;
                 if (productDetails.length) {
                     var productDetailsList = '<option value="' + 'showAll' + '" selected="selected">' + 'All' + "</option>";
                     $.each(productDetails, function (i) {
@@ -243,6 +269,8 @@ Fanex.ExtAcc.WinLossDetail = {
                     this.InitProductDetailsList($productDetails);
                     $("#ProductDetails :input").width($productDetails.width() - 21);
                     $("#productDetailsContainer").removeClass("hidden");
+
+                    Fanex.ExtAcc.WinLossDetail.productDetailsData = productDetails;
                 }
             }
         });

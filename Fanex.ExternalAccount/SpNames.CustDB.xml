@@ -291,7 +291,7 @@
   </Function>
   <Function Name="Products">
     <Setting Key="EAS_GetProductList" SpName="EAS_GetProductList" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
-    <Setting Key="Age_Rpt_GetProductDetail" SpName="Age_Rpt_GetProductDetail_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Age_Rpt_GetProductDetail" SpName="Age_Rpt_GetProductDetail" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Member Balance Info">
     <Setting Key="Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.bodbExtAccNet" Plain="0" />

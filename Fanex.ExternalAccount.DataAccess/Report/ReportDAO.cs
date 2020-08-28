@@ -256,7 +256,9 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds,
-            DateTime balanceUpDay)
+            string productDetailsXML,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay)
         {
             var parameters = new Hashtable
             {
@@ -265,7 +267,9 @@
                 {"fromdate", fromDate},
                 {"todate", toDate},
                 {"balanceupday", balanceUpDay},
-                {"productids", productIds}
+                {"productids", productIds},
+                {"productdetails", productDetailsXML},
+                {"movebetsday", moveBetsDay}
 #pragma warning restore S1192 // String literals should not be duplicated
             };
 
@@ -283,7 +287,9 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds,
-            DateTime balanceUpDay)
+            string productDetailsXML,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay)
         {
             var parameters = new Hashtable
             {
@@ -291,7 +297,9 @@
                 {"fromdate", fromDate},
                 {"todate", toDate},
                 {"balanceupday", balanceUpDay},
-                {"productids", productIds}
+                {"productids", productIds},
+                {"productdetails", productDetailsXML},
+                {"movebetsday", moveBetsDay}
             };
 
             if (masterId != 0)
@@ -308,7 +316,9 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds,
-            DateTime balanceUpDay)
+            string productDetailsXML,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay)
         {
             var parameters = new Hashtable
             {
@@ -316,7 +326,9 @@
                 {"fromdate", fromDate},
                 {"todate", toDate},
                 {"balanceupday", balanceUpDay},
-                {"productids", productIds}
+                {"productids", productIds},
+                {"productdetails", productDetailsXML},
+                {"movebetsday", moveBetsDay}
             };
 
             if (agentId != 0)
@@ -333,7 +345,9 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds,
-            DateTime balanceUpDay)
+            string productDetailsXML,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay)
         {
             var parameters = new Hashtable
             {
@@ -341,7 +355,9 @@
                 {"fromdate", fromDate},
                 {"todate", toDate},
                 {"balanceupday", balanceUpDay},
-                {"productids", productIds}
+                {"productids", productIds},
+                {"productdetails", productDetailsXML},
+                {"movebetsday", moveBetsDay}
             };
 
             if (memberId != 0)

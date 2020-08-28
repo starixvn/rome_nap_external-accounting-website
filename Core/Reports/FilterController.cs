@@ -5,7 +5,7 @@
     using System.Globalization;
     using System.Web.Mvc;
     using Base;
-    using Fanex.ExternalAccount.DTO.Products;
+    using Fanex.ExternalAccount.Core.Context;
     using Newtonsoft.Json;
     using Service.Impl.Report;
     using Service.Interface.Report;
@@ -14,13 +14,15 @@
     public class FilterController : BaseController
     {
         private readonly IReportService reportService;
+        private readonly IExtRequest extRequest;
 
-        public FilterController(IReportService reportService)
+        public FilterController(IReportService reportService, IExtRequest extRequest)
         {
             this.reportService = reportService ?? new ReportService();
+            this.extRequest = extRequest ?? new ExtRequest();
         }
 
-        public FilterController() : this(null)
+        public FilterController() : this(null, null)
         {
         }
 
@@ -43,7 +45,7 @@
         public ActionResult ProductsList()
         {
             var products = GetProductList();
-            var productDetails = GetProductDetails();
+            var productDetails = GetProductDetails(extRequest.GetGroupName());
 
             return JsonBase(new { products, productDetails }, new JsonSerializerSettings());
         }
