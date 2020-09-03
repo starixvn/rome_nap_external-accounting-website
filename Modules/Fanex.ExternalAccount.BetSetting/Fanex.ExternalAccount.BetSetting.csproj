@@ -86,7 +86,7 @@
       <HintPath>..\..\packages\Fanex.CustomerSetting.Module.Casino.2.0.4.3-UM-05\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.6-UM-03\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+      <HintPath>..\..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.6-UM-04\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Fanex.CustomerSetting.Module.Keno.Setting.2.0.2-UM-02\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
