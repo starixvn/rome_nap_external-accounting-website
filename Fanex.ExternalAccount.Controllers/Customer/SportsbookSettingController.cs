@@ -10,6 +10,8 @@
     using CustomerSetting.Module.Core.Criteria;
     using CustomerSetting.Module.Core.Services.Impl;
     using CustomerSetting.Security.Authenticate;
+    using Fanex.CustomerSetting.Module.Core.Constants;
+    using Fanex.CustomerSetting.Module.Core.Services.Interface;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using PTEngine.BusinessObjects;
@@ -31,6 +33,7 @@
         private readonly IBettingLimitService bettingLimitService = new BettingLimitService();
         private readonly PTEngine.Services.ICustomerService customerService = new CustomerService();
         private readonly ISuperService superService = new SuperService();
+        private readonly IServiceBase serviceBase = new ServiceBase();
 
         public ActionResult EditBetSetting() => PartialViewBase();
 
@@ -187,24 +190,32 @@
                 Language = "En"
             };
 
-            Result result;
+            PTEngine.BusinessObjects.Result result;
+            var checkUmResult = serviceBase.CheckUM(requestContext.TargetCustId, NonDcsProduct.Sportsbook, requestContext.LangKey);
+            if (!checkUmResult.IsSuccess)
+            {
+                result = new PTEngine.BusinessObjects.Result(checkUmResult.ErrorCode.ToString(), checkUmResult.ErrorMessage);
+                return JsonBase(new { result.ErrorCode, result.ErrorMessage });
+            }
+
+            DTO.Result updateResult;
 
             switch (currentLevel)
             {
                 case Role.Master:
-                    result = commissionService.UpdateCommissionMaster(commissionSetting, requestContext);
+                    updateResult = commissionService.UpdateCommissionMaster(commissionSetting, requestContext);
                     break;
 
                 case (int)CustomerRole.Agent:
-                    result = commissionService.UpdateCommissionAgent(commissionSetting, requestContext);
+                    updateResult = commissionService.UpdateCommissionAgent(commissionSetting, requestContext);
                     break;
 
                 default:
-                    result = commissionService.UpdateCommissionMember(commissionSetting, requestContext);
+                    updateResult = commissionService.UpdateCommissionMember(commissionSetting, requestContext);
                     break;
             }
 
-            return JsonBase(new { result.ErrorCode, result.ErrorMessage });
+            return JsonBase(new { updateResult.ErrorCode, updateResult.ErrorMessage });
         }
 
         public ActionResult EditPT() => PartialViewBase();
