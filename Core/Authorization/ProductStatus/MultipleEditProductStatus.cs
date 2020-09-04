@@ -16,7 +16,11 @@
             ProductConstants.TableGames,
             ProductConstants.BBin,
             ProductConstants.ION,
-            ProductConstants.RNGWar
+            ProductConstants.RNGWar,
+            ProductConstants.PragmaticPlay,
+            ProductConstants.SpadeGaming,
+            ProductConstants.CardClub,
+            ProductConstants.PGSoft
         };
 
         protected MultipleEditProductStatus()

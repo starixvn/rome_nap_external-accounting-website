@@ -28,5 +28,9 @@
         public const int Sabaclub = 42;
         public const int DummyLiveCasinoProductId = 41;
         public const int SabaVirtualSports = 54;
+        public const int PragmaticPlay = 32;
+        public const int SpadeGaming = 36;
+        public const int CardClub = 34;
+        public const int PGSoft = 55;
     }
 }
