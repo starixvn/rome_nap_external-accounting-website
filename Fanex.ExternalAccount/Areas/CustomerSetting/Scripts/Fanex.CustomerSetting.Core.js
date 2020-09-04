@@ -292,7 +292,7 @@ String.prototype.formatErrorMessage = function () {
     var preMsg = msg.substring(0, indexOfStartParenthesis);
     var subMsg = msg.substring(indexOfEndParenthesis + 1, msg.length);
 
-    if (msg.indexOf('GMT+') !== -1) {
+    if (msg.indexOf('GMT') !== -1) {
         preMsg = msg;
         orgMsg = subMsg = '';
     }
