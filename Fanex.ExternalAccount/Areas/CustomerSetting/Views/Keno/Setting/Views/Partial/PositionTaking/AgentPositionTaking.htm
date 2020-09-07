@@ -1,7 +1,7 @@
 ﻿<td class="formatCol l betSetting">
     <span ng-bind="positionTaking.betTypeName"></span>
     <div style="display: inline-block; float: right;" ng-switch="index == 0">
-        <span ng-class="{'btnCopyAll' : $parent.$parent.isCopyAll, 'btnUnCopyAll' : !$parent.$parent.isCopyAll}"
+        <span ng-hide="true" ng-class="{'btnCopyAll' : $parent.$parent.isCopyAll, 'btnUnCopyAll' : !$parent.$parent.isCopyAll}"
             ng-switch-when="true"  ng-model="$parent.$parent.isCopyAll"
             ng-click="$parent.$parent.copyAll(!$parent.$parent.isCopyAll, positionTaking.betTypeId)"></span>
     </div>
