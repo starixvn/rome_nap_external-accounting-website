@@ -132,6 +132,8 @@ Fanex.ExtAcc.WinLossDetail = {
                 }
             }
         });
+
+        $("#GroupProducts").width(170);
     },
     ProductsList: function (isHide) {
         $.ajax({
@@ -146,7 +148,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 $.each(result, function (i) {
                     productList += '<option value="' + result[i].Key + '" selected="selected">' + result[i].Value + "</option>";
                 });
-
+                
                 $("#GroupProducts").html(productList);
                 $this.InitProductsList();
                 $("#GroupProducts :input").width($("#GroupProducts").width() - 21);
@@ -389,11 +391,11 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: "Win/Loss", Name: "SAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Comm", Name: "SAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "SAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Win/Loss", Name: "ExtraWinLost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Comm", Name: "ExtraComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "ExtraTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Company (After Extra)", Name: "CompanyAfterExtraPT", Width: 160, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
+        { HeaderText: "Company (After Extra)", Name: "CompanyAfterExtraPT", Width: 180, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
     ],
     SAgColumns: [
         {
@@ -466,9 +468,9 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
         { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
         { HeaderText: "Super", Name: "SAgWinlost", MergeColNumber: 3 },
+        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 },
         { HeaderText: "Extra", Name: "ExtraWinLost", MergeColNumber: 3 },
-        { HeaderText: "Company (After Extra)", Name: "CompanyAfterExtraPT", MergeRowNumber: 2 },
-        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+        { HeaderText: "Company (After Extra)", Name: "CompanyAfterExtraPT", MergeRowNumber: 2 }
     ],
     SAgHeaderColumns: [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
@@ -504,6 +506,20 @@ Fanex.ExtAcc.WinLossDetail = {
         var arrColData = new Array();
         var arrGroupHeaders = new Array();
 
+        var u = $this.viewlevel === 2 ? "Agent" : "Member";
+        var v = $this.viewlevel === 3 ? "Master" : u;
+        var level = $this.viewlevel === 4 ? "Super" : v;
+
+        var numberOfFrozenColumn = 3;
+        var widthDevice = top.$(top.window).width();
+        if (widthDevice <= 768) {
+            numberOfFrozenColumn = 1;
+        }
+
+        var titleInfo = {
+            text: level + " Win Loss Detail " + dateInfo
+        };
+
         if (this.viewlevel === 1) {
             arrColData = this.AgColumns;
             arrGroupHeaders = this.AgHeaderColumns;
@@ -516,17 +532,10 @@ Fanex.ExtAcc.WinLossDetail = {
         } else {
             arrColData = this.defaultColumns;
             arrGroupHeaders = this.defaultHeaderColumns;
-        }
-
-        var level = $this.viewlevel == 4 ? "Super" :
-            $this.viewlevel == 3 ? "Master" :
-                $this.viewlevel == 2 ? "Agent" :
-                    "Member";
-
-        var numberOfFrozenColumn = 3;
-        var widthDevice = top.$(top.window).width();
-        if (widthDevice <= 768) {
-            numberOfFrozenColumn = 1;
+            $.extend(titleInfo, {
+                customButtons: '<span style="display: inline-block; position: relative; top: -3px; margin-right: 3px;">Show Extra PT</span>' +
+                    '<div id="showHideExtras" style="display: inline-block" class= "disallowDblComm"></div>'
+            });
         }
 
         var gridOption = {
@@ -538,9 +547,7 @@ Fanex.ExtAcc.WinLossDetail = {
             fullHeight: !isMobile.phone,
             gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
             showTitle: true,
-            titleInfo: {
-                text: level + " Win Loss Detail " + dateInfo
-            },
+            titleInfo,
             showFooter: true,
             gridExpandHeight: 256,
             showPager: true,
@@ -665,11 +672,11 @@ Fanex.ExtAcc.WinLossDetail = {
                         { Name: "SAgWinlost", Value: this.dataSource[i].SAgWinlost },
                         { Name: "SAgComm", Value: this.dataSource[i].SAgComm },
                         { Name: "SAgTotal", Value: this.dataSource[i].SAgTotal },
+                        { Name: "Company", Value: this.dataSource[i].Company },
                         { Name: 'ExtraWinLost', Value: this.dataSource[i].ExtraWinLost },
                         { Name: 'ExtraComm', Value: this.dataSource[i].ExtraComm },
                         { Name: 'ExtraTotal', Value: this.dataSource[i].ExtraTotal },
-                        { Name: "CompanyAfterExtraPT", Value: this.dataSource[i].CompanyAfterExtraPT },
-                        { Name: "Company", Value: this.dataSource[i].Company }
+                        { Name: "CompanyAfterExtraPT", Value: this.dataSource[i].CompanyAfterExtraPT }
                     ]
                 });
             }
@@ -783,11 +790,11 @@ Fanex.ExtAcc.WinLossDetail = {
                     { Name: "SAgWinlost", Value: sumSAgWinlost },
                     { Name: "SAgComm", Value: sumSAgComm },
                     { Name: "SAgTotal", Value: sumSAgTotal },
+                    { Name: "Company", Value: sumCompany },
                     { Name: 'ExtraWinLost', Value: sumExtraWinLost },
                     { Name: 'ExtraComm', Value: sumExtraComm },
                     { Name: 'ExtraTotal', Value: sumExtraTotal },
-                    { Name: 'CompanyAfterExtraPT', Value: sumCompanyAfterExtraPT },
-                    { Name: "Company", Value: sumCompany }
+                    { Name: 'CompanyAfterExtraPT', Value: sumCompanyAfterExtraPT }
                 ]
             });
         }
@@ -797,6 +804,20 @@ Fanex.ExtAcc.WinLossDetail = {
         setPagerOptionOnMobile(gridOption);
 
         $("#jqgrid").fanexGrid(gridOption);
+
+        if (this.viewlevel >= 4) {
+            $('#jqgrid').fanexGrid("hideColumns", gridOption, [17, 18, 19, 20]);
+
+            $('#showHideExtras').click(function () {
+                if ($('#showHideExtras').attr('class') === 'allowDblComm') {
+                    $('#jqgrid').fanexGrid("hideColumns", gridOption, [17, 18, 19, 20]);
+                    $('#showHideExtras').attr('class', 'disallowDblComm');
+                } else {
+                    $('#jqgrid').fanexGrid("hideColumns", gridOption, []);
+                    $('#showHideExtras').attr('class', 'allowDblComm');
+                }
+            });
+        }
 
         workaroundForGridOnPhone();
     },

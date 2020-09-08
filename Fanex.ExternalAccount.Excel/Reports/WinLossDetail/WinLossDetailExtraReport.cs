@@ -10,7 +10,7 @@
     internal class WinLossDetailExtraReport : TemplateReport, IReportBuilder
     {
         private readonly WinLossDetailExtraReportBuilder _builder;
-        private const int LastColumnIndex = 20;
+        private const int LastColumnIndex = 21;
 
         public WinLossDetailExtraReport(string filePath, WinLossDetailExtraReportBuilder builder, string products = null)
             : base(filePath, products)
@@ -63,11 +63,12 @@
                     item.SAgWinlost,
                     item.SAgComm,
                     item.SAgTotal,
+                    item.Company,
+                    "",
                     item.ExtraWinLost,
                     item.ExtraComm,
                     item.ExtraTotal,
-                    item.CompanyAfterExtraPT,
-                    item.Company
+                    item.CompanyAfterExtraPT
                 };
 
                 resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, values);
@@ -100,11 +101,12 @@
                 data.Sum(p => p.SAgWinlost),
                 data.Sum(p => p.SAgComm),
                 data.Sum(p => p.SAgTotal),
+                data.Sum(p => p.Company),
+                "",
                 data.Sum(p => p.ExtraWinLost),
                 data.Sum(p => p.ExtraComm),
                 data.Sum(p => p.ExtraTotal),
-                data.Sum(p => p.CompanyAfterExtraPT),
-                data.Sum(p => p.Company)
+                data.Sum(p => p.CompanyAfterExtraPT)
             };
 
             resultSheet.GetRow(toRowIndex).WriteCells(FirstColumnIndex, values);

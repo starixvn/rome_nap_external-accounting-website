@@ -23,6 +23,6 @@
         </td>
     </tr>
     <tr ng-repeat="positionTaking in positionTakingList track by $index" master-on-member-position-taking-element ng-model="positionTaking" index="$index"
-             ng-class="{'betTypeInactive': $parent.isCopyAll && index != 0}" title="@LayoutTexts.lblCopyAllPT">
+             ng-class="{'betTypeInactive': $parent.isCopyAll && index != 0}" >
     </tr>
 </table>
