@@ -273,9 +273,7 @@
         }
 
         protected static IEnumerable<ProductDetailDto> GetProductDetails(string groupName)
-            => Config.IsSpecialGroup(groupName)
-                ? new ProductListAuthorization().GetProductDetails()
-                : Enumerable.Empty<ProductDetailDto>();
+            => new ProductListAuthorization().GetProductDetails(groupName);
 
         protected int GetDefaultMinBetValue()
             => CurrentSession.IsBelongToSpecialGroups ? 1 : 0;

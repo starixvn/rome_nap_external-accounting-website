@@ -102,7 +102,7 @@
             }
 
             var products = GetProductList();
-            GetSabaclubNameExportExcel(request, products);
+            products = GetPPNameExportExcel(request, products);
 
             var formatedProducts = request.GetProductNames(products);
             var memoryStream = builder.Build(formatedProducts);
@@ -131,9 +131,9 @@
 
             return request.IsSearch()
                 ? winLossDetailService.SearchWinLossDetail(
-                    new SearchWinLossDetailRequest(request, toolTipsProducts, Config.IsSpecialGroup(request.groupName)))
+                    new SearchWinLossDetailRequest(request, toolTipsProducts))
                 : winLossDetailService.DrillDownWinLossDetail(
-                    new DrillDownWinLossDetailRequest(request, toolTipsProducts, Config.IsSpecialGroup(request.groupName)));
+                    new DrillDownWinLossDetailRequest(request, toolTipsProducts));
         }
 
         private string BuildTooltipsForLiveCasino()
@@ -161,18 +161,23 @@
             return string.Empty;
         }
 
-        private static void GetSabaclubNameExportExcel(ExportWinLossDetailRequest request, List<KeyValuePair<string, string>> products)
+        private static List<KeyValuePair<string, string>> GetPPNameExportExcel(ExportWinLossDetailRequest request, List<KeyValuePair<string, string>> products)
         {
             if (string.IsNullOrWhiteSpace(request.ResourceIds))
             {
-                return;
+                if (!Config.IsOfferJackpotProductDetailsGroup(request.groupName))
+                {
+                    return products;
+                }
+
+                products = products.Where(p => !p.Key.Equals("showPP", StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
             for (int i = 0, max = products.Count; i < max; i++)
             {
                 var product = products[i];
 
-                if (product.Key == "showsaba")
+                if (product.Key == "showPP")
                 {
                     var userSelectedResourceIds = request.ResourceIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                     var productDetails = GetProductDetails(request.groupName)
@@ -186,9 +191,11 @@
                             string.Join(", ", productDetails.Where(p => userSelectedResourceIds.Contains(p.ResourceId)).Select(p => p.DisplayName)));
                     }
 
-                    return;
+                    return products;
                 }
             }
+
+            return products;
         }
 
         private static bool IsEquals(IEnumerable<string> source, IEnumerable<string> destination)

@@ -1,12 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Report
 {
+    using System;
+    using System.Collections;
+    using System.Linq;
     using Core.Shared;
     using DTO.Customer;
     using Fanex.ExternalAccount.Service.Products;
     using Interface.Report;
-    using System;
-    using System.Collections;
-    using System.Linq;
 
     public class WinLossDetailServiceImpl : WinLossDetailService
     {
@@ -45,14 +45,15 @@
             }
             var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
             var getWinLossDetail = GetWinLossDetailFunction(request.ViewLevel);
-            var productDetailsXML = productDetailService.BuildProductDetailsXML(request.ProductIds, request.ResourceIds, request.IsBelongToSpecialGroups);
+            var productDetailsXML = productDetailService.BuildProductDetailsXML(request.ProductIds, request.ResourceIds, request.GroupName);
+            var productIds = productDetailService.RemoveProductIds(request.ProductIds, request.ResourceIds, request.GroupName);
 
             var winLossDetailData = getWinLossDetail(
                 request.CustId,
                 0,
                 request.FromDate,
                 request.ToDate,
-                request.ProductIds,
+                productIds,
                 productDetailsXML);
 
             return
@@ -84,8 +85,9 @@
                 }
             }
 
-            var productDetailsXML = productDetailService.BuildProductDetailsXML(request.ProductIds, request.ResourceIds, request.IsBelongToSpecialGroups);
-            var winLossDetailData = SearchWinLossDetailData(request.GroupName, request.FromDate, request.ToDate, request.ProductIds, productDetailsXML, customerInfo);
+            var productDetailsXML = productDetailService.BuildProductDetailsXML(request.ProductIds, request.ResourceIds, request.GroupName);
+            var productIds = productDetailService.RemoveProductIds(request.ProductIds, request.ResourceIds, request.GroupName);
+            var winLossDetailData = SearchWinLossDetailData(request.GroupName, request.FromDate, request.ToDate, productIds, productDetailsXML, customerInfo);
 
             return
                 new

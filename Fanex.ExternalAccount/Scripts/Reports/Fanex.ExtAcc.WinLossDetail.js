@@ -195,8 +195,8 @@ Fanex.ExtAcc.WinLossDetail = {
         $("#productDetailsList div").remove();
 
         $productDetails.multiSelect({
-            minWidth: 190,
-            maxHeight: 70,
+            minWidth: 200,
+            maxHeight: 100,
             showHeader: false,
             onCheck: function () {
                 if (this.value === "showAll") {
@@ -237,7 +237,7 @@ Fanex.ExtAcc.WinLossDetail = {
             }
         });
 
-        $("#ProductDetails").width(190);
+        $("#ProductDetails").width(200);
     },
     ProductsList: function (isHide) {
         $.ajax({

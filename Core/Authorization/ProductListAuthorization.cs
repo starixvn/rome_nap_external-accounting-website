@@ -80,10 +80,10 @@
             => checkIsInternalAdminResult.IsInternalAdmin
                && (!checkIsInternalAdminResult.IsAllowAccess || !isAuthorized);
 
-        public IEnumerable<ProductDetailDto> GetProductDetails()
+        public IEnumerable<ProductDetailDto> GetProductDetails(string groupName)
         {
             var groupConfigurationModels = GetProductList();
-            var productDetails = productDetailService.GetProductDetails();
+            var productDetails = productDetailService.GetProductDetails(groupName);
 
             foreach (var item in productDetails)
             {

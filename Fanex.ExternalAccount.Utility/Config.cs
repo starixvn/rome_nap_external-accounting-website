@@ -104,8 +104,18 @@
             return GetValue("SpecialGroups").Split(',').Select(g => g.Trim()).ToArray();
         }
 
-        public static bool IsSpecialGroup(string groupName)
-            => SpecialGroups().Contains(groupName, StringComparer.CurrentCultureIgnoreCase);
+        public static bool IsOfferJackpotProductDetailsGroup(string currentGroup)
+        {
+            var allGroups = GetValue("OfferJackpotProductDetailsGroups");
+
+            return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
+        }
+
+        private static bool IsOfferJackpotProductDetailsGroup(string allGroups, string currentGroup)
+            => !string.IsNullOrWhiteSpace(allGroups)
+                && allGroups.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(g => g.Trim())
+                    .Contains(currentGroup, StringComparer.CurrentCultureIgnoreCase);
 
         public static int SearchAndCopySuperMailingListId => Utils.ToInt32(GetValue("SearchAndCopySuperMailingListId"));
 
