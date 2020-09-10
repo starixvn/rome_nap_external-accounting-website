@@ -66,7 +66,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             return View("~/Areas/CustomerSetting/Views/BetSetting/Casino/Content.cshtml", model);
         }
 
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "CasinoBetting")]
         public ActionResult EditBetSettingPost(int custId, int uplineId, int userId, string txtCustomerObject)
         {
