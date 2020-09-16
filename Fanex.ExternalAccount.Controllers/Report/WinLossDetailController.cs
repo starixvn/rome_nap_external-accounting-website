@@ -137,7 +137,7 @@
             var liveCasino = new List<GroupConfigurationModel>
             {
                 new GroupConfigurationModel{ProductId=ProductConstants.AllBet,ProductName="AllBet"},
-                new GroupConfigurationModel{ProductId=ProductConstants.SexyGaming,ProductName="Sexy Gaming"},
+                new GroupConfigurationModel{ProductId=ProductConstants.SexyGaming,ProductName="AE Casino"},
                 new GroupConfigurationModel{ProductId=ProductConstants.SAGaming,ProductName="SA Gaming"},
                 new GroupConfigurationModel{ProductId=ProductConstants.GTCasino,ProductName="IBCBet Live Casino"},
                 new GroupConfigurationModel{ProductId=ProductConstants.BBin,ProductName="BBIN"},
