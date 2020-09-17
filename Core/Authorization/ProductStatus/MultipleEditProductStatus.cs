@@ -20,7 +20,8 @@
             ProductConstants.PragmaticPlay,
             ProductConstants.SpadeGaming,
             ProductConstants.CardClub,
-            ProductConstants.PGSoft
+            ProductConstants.PGSoft,
+            ProductConstants.Joker
         };
 
         protected MultipleEditProductStatus()
