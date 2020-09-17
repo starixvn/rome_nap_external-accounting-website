@@ -145,7 +145,8 @@
                 new GroupConfigurationModel{ProductId=ProductConstants.SAGaming,ProductName="SA Gaming"},
                 new GroupConfigurationModel{ProductId=ProductConstants.GTCasino,ProductName="IBCBet Live Casino"},
                 new GroupConfigurationModel{ProductId=ProductConstants.BBin,ProductName="BBIN"},
-                new GroupConfigurationModel{ProductId=ProductConstants.ION,ProductName="ION"}
+                new GroupConfigurationModel{ProductId=ProductConstants.ION,ProductName="ION"},
+                new GroupConfigurationModel{ProductId=ProductConstants.WM,ProductName="WM"}
             };
 
             var offeredLiveCasino = liveCasino.Where(
