@@ -1,19 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Core.Base
 {
-    using Authorization;
-    using CasinoLibrary.Model.UserException;
-    using Context;
-    using CustomerSetting.Module.Core.Criteria;
-    using CustomerSetting.Module.Core.Models;
-    using CustomerSetting.Module.Core.Services.Impl;
-    using CustomerSetting.Module.Core.Web;
-    using CustomerSetting.Security.Authenticate;
-    using Logging.Extensions.Web;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
-    using PTEngine.BusinessObjects;
-    using Service.Impl.Customer.Casino;
-    using Shared;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -23,6 +9,21 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.SessionState;
+    using Authorization;
+    using CasinoLibrary.Model.UserException;
+    using Context;
+    using CustomerSetting.Module.Core.Criteria;
+    using CustomerSetting.Module.Core.Models;
+    using CustomerSetting.Module.Core.Services.Impl;
+    using CustomerSetting.Module.Core.Web;
+    using CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.DTO.Products;
+    using Logging.Extensions.Web;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
+    using PTEngine.BusinessObjects;
+    using Service.Impl.Customer.Casino;
+    using Shared;
     using Utilities;
     using CurrentContext = Context.CurrentContext;
     using CurrentSession = Context.CurrentSession;
@@ -270,6 +271,9 @@
                 .Select(product => new KeyValuePair<string, string>(product.Id, product.ProductText))
                 .ToList();
         }
+
+        protected static IEnumerable<ProductDetailDto> GetProductDetails(string groupName)
+            => new ProductListAuthorization().GetProductDetails(groupName);
 
         protected int GetDefaultMinBetValue()
             => CurrentSession.IsBelongToSpecialGroups ? 1 : 0;

@@ -12,6 +12,7 @@
         {
             ProductIds = request.GetProductIds();
             ToolTipsProducts = toolTipsProducts;
+            ResourceIds = request.ResourceIds;
         }
 
         public DrillDownWinLossDetailRequest(WinLossDetailRequest request)
@@ -53,6 +54,7 @@
         public DateTime ToDate { get; }
         public string ProductIds { get; }
         public dynamic ToolTipsProducts { get; }
+        public string ResourceIds { get; }
 
         public bool IsValid => !ViewLevel.IsMember()
                                && ViewLevel <= Role.Group

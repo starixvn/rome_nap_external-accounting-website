@@ -152,6 +152,8 @@
     <Compile Include="Customer\CustomerClosedReason.cs" />
     <Compile Include="Customer\Transfer.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Products\ProductDetailDto.cs" />
+    <Compile Include="Products\ProductDetailEntity.cs" />
     <Compile Include="Products\ProductDto.cs" />
     <Compile Include="Products\ProductStatusDto.cs" />
     <Compile Include="Report\ExtraPTModel.cs" />

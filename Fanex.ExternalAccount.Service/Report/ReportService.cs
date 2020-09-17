@@ -65,32 +65,36 @@
             int custId,
             DateTime fromDate,
             DateTime toDate,
-            string productIds)
-            => _reportDao.EAS_Rpt_WinLossDetail_Com(groupname, custId, fromDate, toDate, productIds, BalanceUpDate);
+            string productIds,
+            string productDetailsXML)
+            => _reportDao.EAS_Rpt_WinLossDetail_Com(groupname, custId, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
 
         public List<WinLossDetail> GetMasterWinLossDetail(
             int custId,
             int masterId,
             DateTime fromDate,
             DateTime toDate,
-            string productIds)
-            => _reportDao.EAS_Rpt_WinLossDetail_SAg(custId, masterId, fromDate, toDate, productIds, BalanceUpDate);
+            string productIds,
+            string productDetailsXML)
+            => _reportDao.EAS_Rpt_WinLossDetail_SAg(custId, masterId, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
 
         public List<WinLossDetailMAg> GetAgentWinLossDetail(
             int custId,
             int agentId,
             DateTime fromDate,
             DateTime toDate,
-            string productIds)
-            => _reportDao.EAS_Rpt_WinLossDetail_MAg(custId, agentId, fromDate, toDate, productIds, BalanceUpDate);
+            string productIds,
+            string productDetailsXML)
+            => _reportDao.EAS_Rpt_WinLossDetail_MAg(custId, agentId, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
 
         public List<WinLossDetailAg> GetMemberWinLossDetail(
             int custId,
             int memberId,
             DateTime fromDate,
             DateTime toDate,
-            string productIds)
-            => _reportDao.EAS_Rpt_WinLossDetail_Ag(custId, memberId, fromDate, toDate, productIds, BalanceUpDate);
+            string productIds,
+            string productDetailsXML)
+            => _reportDao.EAS_Rpt_WinLossDetail_Ag(custId, memberId, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
 
         public List<WinLossDetailIBCBetLiveCasino> GetSuperWinLossDetailIBCBetLiveCasino(
             string groupname,

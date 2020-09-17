@@ -195,10 +195,12 @@
     <Compile Include="Customer\AgentDao.cs" />
     <Compile Include="Customer\MasterDao.cs" />
     <Compile Include="Customer\SuperDao.cs" />
+    <Compile Include="GlobalSuppressions2.cs" />
     <Compile Include="Login\ILoginDao.cs" />
     <Compile Include="Login\LoginDao.cs" />
     <Compile Include="OTP\CustomerOtpDataAccess.cs" />
     <Compile Include="Products\GetProductsCriteria.cs" />
+    <Compile Include="Products\GetProductsDetailCriteria.cs" />
     <Compile Include="Report\IReportDAO.cs" />
     <Compile Include="Report\ReportDao.partial.cs" />
     <Compile Include="Report\ReportDao.cs" />

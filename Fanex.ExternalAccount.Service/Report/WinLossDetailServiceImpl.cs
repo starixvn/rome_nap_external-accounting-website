@@ -1,22 +1,25 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Report
 {
-    using Core.Shared;
-    using DTO.Customer;
-    using Interface.Report;
     using System;
     using System.Collections;
     using System.Linq;
+    using Core.Shared;
+    using DTO.Customer;
+    using Fanex.ExternalAccount.Service.Products;
+    using Interface.Report;
 
     public class WinLossDetailServiceImpl : WinLossDetailService
     {
         private readonly IReportService reportService;
+        private readonly IProductDetailService productDetailService;
 
-        public WinLossDetailServiceImpl(IReportService reportService = null)
+        public WinLossDetailServiceImpl(IReportService reportService = null, IProductDetailService productDetailService = null)
         {
             this.reportService = reportService ?? new ReportService();
+            this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
-        private Func<int, int, DateTime, DateTime, string, object> GetWinLossDetailFunction(int roleId)
+        private Func<int, int, DateTime, DateTime, string, string, object> GetWinLossDetailFunction(int roleId)
         {
             switch (roleId)
             {
@@ -42,13 +45,16 @@
             }
             var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
             var getWinLossDetail = GetWinLossDetailFunction(request.ViewLevel);
+            var productDetailsXML = productDetailService.BuildProductDetailsXML(request.ProductIds, request.ResourceIds, request.GroupName);
+            var productIds = productDetailService.RemoveProductIds(request.ProductIds, request.ResourceIds, request.GroupName);
 
             var winLossDetailData = getWinLossDetail(
                 request.CustId,
                 0,
                 request.FromDate,
                 request.ToDate,
-                request.ProductIds);
+                productIds,
+                productDetailsXML);
 
             return
                 new
@@ -79,7 +85,9 @@
                 }
             }
 
-            var winLossDetailData = SearchWinLossDetailData(request.GroupName, request.FromDate, request.ToDate, request.ProductIds, customerInfo);
+            var productDetailsXML = productDetailService.BuildProductDetailsXML(request.ProductIds, request.ResourceIds, request.GroupName);
+            var productIds = productDetailService.RemoveProductIds(request.ProductIds, request.ResourceIds, request.GroupName);
+            var winLossDetailData = SearchWinLossDetailData(request.GroupName, request.FromDate, request.ToDate, productIds, productDetailsXML, customerInfo);
 
             return
                 new
@@ -114,6 +122,7 @@
             DateTime fromDate,
             DateTime toDate,
             string productIds,
+            string productDetailsXML,
             LineInfo customerInfo)
         {
             if (customerInfo.RoleId >= Role.Super)
@@ -123,7 +132,8 @@
                     customerInfo.CustId,
                     fromDate,
                     toDate,
-                    productIds);
+                    productIds,
+                    productDetailsXML);
             }
 
             var getWinLossDetail = GetWinLossDetailFunction(customerInfo.RoleId.DirectUplineLevel());
@@ -133,7 +143,8 @@
                 customerInfo.CustId,
                 fromDate,
                 toDate,
-                productIds);
+                productIds,
+                productDetailsXML);
         }
 
         private static dynamic NoInfoResult(string username, ArrayList sortingOrderList, dynamic toolTipsProducts) => new

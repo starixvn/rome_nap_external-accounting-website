@@ -1,5 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
@@ -12,9 +16,6 @@
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.UserControl;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -100,7 +101,10 @@
                     }
             }
 
-            var formatedProducts = request.GetProductNames(GetProductList());
+            var products = GetProductList();
+            products = GetPPNameExportExcel(request, products);
+
+            var formatedProducts = request.GetProductNames(products);
             var memoryStream = builder.Build(formatedProducts);
 
             if (memoryStream != null)
@@ -156,6 +160,46 @@
 
             return string.Empty;
         }
+
+        private static List<KeyValuePair<string, string>> GetPPNameExportExcel(ExportWinLossDetailRequest request, List<KeyValuePair<string, string>> products)
+        {
+            if (string.IsNullOrWhiteSpace(request.ResourceIds))
+            {
+                if (!Config.IsOfferJackpotProductDetailsGroup(request.groupName))
+                {
+                    return products;
+                }
+
+                products = products.Where(p => !p.Key.Equals("showPP", StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            for (int i = 0, max = products.Count; i < max; i++)
+            {
+                var product = products[i];
+
+                if (product.Key == "showPP")
+                {
+                    var userSelectedResourceIds = request.ResourceIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    var productDetails = GetProductDetails(request.groupName)
+                        .Where(p => p.ProductKey == product.Key)
+                        .ToList();
+
+                    if (productDetails.Count > 0 && !IsEquals(productDetails.Select(p => p.ResourceId), userSelectedResourceIds))
+                    {
+                        products[i] = new KeyValuePair<string, string>(
+                            product.Key,
+                            string.Join(", ", productDetails.Where(p => userSelectedResourceIds.Contains(p.ResourceId)).Select(p => p.DisplayName)));
+                    }
+
+                    return products;
+                }
+            }
+
+            return products;
+        }
+
+        private static bool IsEquals(IEnumerable<string> source, IEnumerable<string> destination)
+            => Enumerable.SequenceEqual(source.OrderBy(id => id), destination.OrderBy(id => id));
     }
 
     public class ExportWinLossDetailRequest : WinLossDetailRequest

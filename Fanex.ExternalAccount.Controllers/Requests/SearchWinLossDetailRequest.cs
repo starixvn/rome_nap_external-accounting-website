@@ -10,6 +10,7 @@
         {
             ProductIds = request.GetProductIds();
             ToolTipsProducts = toolTipsProducts;
+            ResourceIds = request.ResourceIds;
         }
 
         public SearchWinLossDetailRequest(WinLossDetailRequest request)
@@ -26,5 +27,6 @@
         public DateTime ToDate { get; }
         public string ProductIds { get; }
         public dynamic ToolTipsProducts { get; }
+        public string ResourceIds { get; }
     }
 }
