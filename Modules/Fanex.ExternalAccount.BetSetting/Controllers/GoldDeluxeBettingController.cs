@@ -6,6 +6,8 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
     using AutoMapper;
     using Base;
     using ExternalAccount.Core.Shared;
+    using Fanex.CustomerSetting.Module.Core.Constants;
+    using Fanex.CustomerSetting.Module.Core.Web;
     using GoldDeluxe.CoreSetting.CommandResult;
     using GoldDeluxe.CoreSetting.Enumerations;
     using GoldDeluxe.CoreSetting.ParameterObjects;
@@ -34,6 +36,12 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "GoldDeluxeBetting")]
         public ActionResult UpdateGameSetting(EditSettingViewModel model)
         {
+            var checkUmResult = serviceBase.CheckUM(model.CustId, NonDcsProduct.GoldDeluxe, AppSession.CurrentSession.LangKey);
+            if (!checkUmResult.IsSuccess)
+            {
+                return UmJsonResult(checkUmResult);
+            }
+
             var customer = CustomerInfo(model.CustId, model.ActorId);
 
             if (model.Level != CustomerLevel.Super || customer.HideGoldDeluxe)

@@ -8,7 +8,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link href="~/assets/styles/pages/customer/keno-setting.css?v=14062018"
+    <link href="~/assets/styles/pages/customer/keno-setting.css?v=14062019"
           rel="stylesheet" type="text/css" />
     <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/directives/dialog/ngDialog.css" rel="stylesheet"
           type="text/css" />
@@ -19,7 +19,7 @@
 
     <link href="~/Areas/CustomerSetting/Views/Keno/Setting/Scripts/Tipsy/tipsy.css" rel="stylesheet"
           type="text/css" />
-    <link href="~/Areas/CustomerSetting/Styles/input.css" rel="stylesheet"
+    <link href="~/Areas/CustomerSetting/Styles/input.css?v=1.0" rel="stylesheet"
           type="text/css" />
     @{
         var KenoSetting = JsonConvert.SerializeObject(Model, Formatting.None, new JsonSerializerSettings
@@ -44,7 +44,7 @@
                 </div>
                 @if (!isBelongToSpecialGroups)
                 {
-                    <div class="errMsg" style="color: #ff5411">@Html.Raw(Role.IsMember(Model.CustomerInformation.RoleId) ? LayoutTexts.MemberUnlimitedBetSettingWarningMessage : LayoutTexts.SMAUnlimitedBetSettingWarningMessage)</div>
+                    <div class="noteMsg" style="color: #ff5411">@Html.Raw(Role.IsMember(Model.CustomerInformation.RoleId) ? LayoutTexts.MemberUnlimitedBetSettingWarningMessage : LayoutTexts.SMAUnlimitedBetSettingWarningMessage)</div>
                 }
                 @Html.Partial("~/Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/CustomerInfo/_Information.cshtml")
                 @RenderBody()

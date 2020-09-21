@@ -15472,10 +15472,27 @@ var ProductStatusSettingBase = /** @class */ (function () {
         headers["__RequestVerificationToken"] = token;
         return headers;
     };
-    ProductStatusSettingBase.prototype.onSuccess = function (result) {
+    ProductStatusSettingBase.prototype.onSuccess = function (data) {
         var _this = this;
-        this.showMessage(result.Code, result.Message);
-        if (result.Code == 0 && this.$topWindow.reloadLeftPanel) {
+        var html = [];
+        var isSuccess = true;
+        this.$.each(data, function (index, result) {
+            var className;
+            if (result.Code !== 0) {
+                className = "alerterror";
+                isSuccess = false;
+            }
+            else {
+                className = "alertsuccess";
+            }
+            html.push('<div class="');
+            html.push(className);
+            html.push('"><div>');
+            html.push(result.Message);
+            html.push("</div></div>");
+        });
+        this.showMixedMessages(html.join(""));
+        if (isSuccess && this.$topWindow.reloadLeftPanel) {
             setTimeout(function () { return _this.$topWindow.reloadLeftPanel(); }, this.$timeoutDefault);
         }
     };
@@ -15485,13 +15502,21 @@ var ProductStatusSettingBase = /** @class */ (function () {
         messageDiv.html(html).removeClass("hide");
         this.$.unblockUI();
     };
+    ProductStatusSettingBase.prototype.showMixedMessages = function (html) {
+        var messageDiv = this.$("#sectionMessage");
+        messageDiv.html(html).removeClass("hide");
+        this.$.unblockUI();
+    };
     return ProductStatusSettingBase;
 }());
 //# sourceMappingURL=product-status-setting-base.js.map
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -15741,20 +15766,24 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
     };
     ProductStatusSettingMultipe.prototype.onSuccess = function (results) {
         if (results.length > 0) {
-            this.isUpdateSuccess(results) ? _super.prototype.onSuccess.call(this, results[0]) : this.onError(results);
+            this.isUpdateSuccess(results) ? _super.prototype.onSuccess.call(this, [results[0]]) : this.onError(results);
         }
         else {
             this.showMessage(results.Code, results.Message);
         }
     };
     ProductStatusSettingMultipe.prototype.onError = function (results) {
-        var html = '';
-        results.forEach(function (result) {
-            if (result.Code != 0) {
-                html += [result.CustName, ": ", result.Message, "<br>"].join("");
-            }
+        var html = [];
+        this.$.each(results, function (index, result) {
+            html.push('<div class="');
+            html.push(result.Code !== 0 ? "alerterror" : "alertsuccess");
+            html.push('"><div>');
+            html.push(result.CustName);
+            html.push(": ");
+            html.push(result.Message);
+            html.push("</div></div>");
         });
-        _super.prototype.showMessage.call(this, this.$errorCodeDefault, html);
+        this.showMixedMessages(html.join(""));
     };
     return ProductStatusSettingMultipe;
 }(ProductStatusSettingBase));

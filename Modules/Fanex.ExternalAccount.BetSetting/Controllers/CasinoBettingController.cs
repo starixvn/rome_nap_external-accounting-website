@@ -7,6 +7,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
     using Casino.Services.Impl;
     using Core.Web;
     using ExternalAccount.Core.Shared;
+    using Fanex.CustomerSetting.Module.Core.Constants;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Security.Authenticate;
@@ -65,10 +66,16 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             return View("~/Areas/CustomerSetting/Views/BetSetting/Casino/Content.cshtml", model);
         }
 
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "CasinoBetting")]
         public ActionResult EditBetSettingPost(int custId, int uplineId, int userId, string txtCustomerObject)
         {
+            var checkUmResult = serviceBase.CheckUM(custId, NonDcsProduct.RNGCasino, AppSession.CurrentSession.LangKey);
+            if (!checkUmResult.IsSuccess)
+            {
+                return UmJsonResult(checkUmResult);
+            }
+
             var customer = CustomerInfo(custId, userId);
 
             var settings = new JsonSerializerSettings

@@ -680,7 +680,7 @@
         }
 
         top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(41, "Live Casino", 800, 350);
+        $scope.EnableThirdpartyProduct(41, "Live Casino", 800, 420);
     };
 
     $scope.EnableVoidBridge = function (enable, id, disabled) {

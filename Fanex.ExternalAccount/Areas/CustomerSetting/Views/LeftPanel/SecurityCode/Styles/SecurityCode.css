@@ -137,7 +137,7 @@ textarea {
     -o-border-radius: 2px;
     border-radius: 2px;
     margin-bottom: 10px;
-    padding: 10px 10px 10px 30px;
+    padding: 10px 0px 0px 30px;
     line-height: 1.5;
     max-height: 180px;
     clear: both;

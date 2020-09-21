@@ -11,6 +11,7 @@
     var ErrorMessage = '';
     var SuccessMessage = '';
     var actionName = '';
+    var UMError = 90014;
     CustomerModel.casinoEnabled = CustomerModel.casinoEnabled = !CustomerModel.casinoDisabled && (CustomerModel.casinoSync || !CustomerModel.uplineDisabledCasino);
 
     if (isMultiple) {
@@ -193,10 +194,15 @@
                     }
                 }
                 else {
-                    if (custIdIndex == CustIds.length - 1) {
+                    if (custIdIndex == CustIds.length - 1 || result.errorCode == UMError) {
                         if (ErrorMessage != '') {
-                            $('#errMsg').html(ErrorMessage + SuccessMessage);
-                            $('#errMsg').show();
+                            var err = result.errorCode == UMError ?
+                                result.errorMessage.formatErrorMessage() :
+                                ErrorMessage + SuccessMessage;
+                            $('#errMsg').html(err)
+                                .removeClass('successMsg')
+                                .addClass('errMsg')
+                                .show();
 
                             if (typeof ondone == 'function') {
                                 ondone(1, ErrorMessage + SuccessMessage);

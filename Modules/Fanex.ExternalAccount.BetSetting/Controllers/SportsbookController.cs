@@ -10,6 +10,8 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
     using PTEngine.Services;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
+    using Fanex.CustomerSetting.Module.Core.Web;
+    using Fanex.CustomerSetting.Module.Core.Constants;
 
     public class SportsbookController : BettingControllerBase
     {
@@ -54,8 +56,13 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "SportsbookBetting")]
         public ActionResult EditBetSettingPost(int custId, int uplineId, int userId, string txtCustomerObject)
         {
-            var customer = CustomerInfo(custId, userId);
+            var checkUmResult = serviceBase.CheckUM(custId, NonDcsProduct.Sportsbook, AppSession.CurrentSession.LangKey);
+            if (!checkUmResult.IsSuccess)
+            {
+                return UmJsonResult(checkUmResult);
+            }
 
+            var customer = CustomerInfo(custId, userId);
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();

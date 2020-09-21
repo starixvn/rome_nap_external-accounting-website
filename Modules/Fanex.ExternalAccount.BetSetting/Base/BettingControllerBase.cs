@@ -3,10 +3,16 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Base
     using Casino.Services.Impl;
     using Casino.Services.Interface;
     using Core.Web.Controllers;
+    using Fanex.CustomerSetting.Module.Core.Models;
+    using Fanex.CustomerSetting.Module.Core.Services.Impl;
+    using Fanex.CustomerSetting.Module.Core.Services.Interface;
     using Fanex.ExternalAccount.Core.Context;
     using Keno.KenoSetting.Services;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
     using Services.Impl;
     using Services.Interface;
+    using System.Web.Mvc;
     using ViewModels;
 
     public class BettingControllerBase : BaseController
@@ -23,6 +29,8 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Base
 
         public IKenoSettingService KenoService => _kenoService ?? new KenoSettingService();
 
+        public IServiceBase serviceBase = new ServiceBase();
+
         public Customer CustomerInfo(int id, int userId)
         {
             ICustomerService customerService = new CustomerService();
@@ -31,6 +39,15 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Base
             customer.GroupId = customerService.UserGroupId(userId);
 
             return customer;
+        }
+
+        protected ActionResult UmJsonResult(Result result)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            return JsonBase(new { result.ErrorCode, result.ErrorMessage }, settings);
         }
 
         protected int GetDefaultMinBetValue()

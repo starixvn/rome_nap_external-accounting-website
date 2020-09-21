@@ -57,8 +57,8 @@
       <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.4.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.4.2\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.4.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.4.3\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Data.0.5.404.59\lib\net40\Fanex.Data.dll</HintPath>
@@ -78,8 +78,8 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.5.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.5.3\lib\net40\Fanex.PTEngine.dll</HintPath>
+    <Reference Include="Fanex.PTEngine, Version=1.0.5.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTEngine.1.0.5.4\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CasinoLibrary.2.0.3.38621\lib\net40\HandHistoryLibrary.dll</HintPath>
@@ -146,7 +146,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Criteria\Customer\AssociationAccount\GetAssociationAccountCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckNewCustomerLimitationCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckMemberCreationCriteria.cs" />
     <Compile Include="Criteria\Customer\GetCustomerAllStatusCriteria.cs" />
@@ -155,7 +154,6 @@
     <Compile Include="Criteria\Customer\CustomerList\SearchAgentListCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerList\SearchMasterListCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerList\SearchSuperListCriteria.cs" />
-    <Compile Include="Criteria\Customer\GetCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\KickoutCustomerCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\GetMultipleSuspendCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\GetSingleSuspendCustomerInfoCriteria.cs" />
@@ -176,7 +174,6 @@
     <Compile Include="Criteria\UserControl\GetUserPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateMultipleGroupPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateMultipleUserPolicyCriteria.cs" />
-    <Compile Include="Customer\AssociationAccount\AssociationAccountDao.cs" />
     <Compile Include="Customer\CustomerList\CustomerListDao.cs" />
     <Compile Include="Customer\IAgentDao.cs" />
     <Compile Include="Customer\ICommissionDao.cs" />

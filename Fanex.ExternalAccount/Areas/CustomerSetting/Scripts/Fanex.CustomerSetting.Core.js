@@ -292,11 +292,13 @@ String.prototype.formatErrorMessage = function () {
     var preMsg = msg.substring(0, indexOfStartParenthesis);
     var subMsg = msg.substring(indexOfEndParenthesis + 1, msg.length);
 
-    var tmp = msg.substring(indexOfStartParenthesis, indexOfStartParenthesis + 4);
+    if (msg.indexOf('GMT') !== -1) {
+        preMsg = msg;
+        orgMsg = subMsg = '';
+    }
 
-    var formatMsg = '<font color="#ff5411">' + preMsg + '</font>' + orgMsg +
-    '<font color="#ff5411">' + subMsg + '</font>';
-
+    var formatMsg = '<font color="#fe0000">' + preMsg + '</font>' + orgMsg +
+    '<font color="#fe0000">' + subMsg + '</font>';
 
     return formatMsg;
 };
