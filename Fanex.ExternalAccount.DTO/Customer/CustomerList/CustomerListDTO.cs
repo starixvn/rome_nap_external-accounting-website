@@ -57,5 +57,11 @@
         public decimal PlayerDiscountCS { get; set; }
 
         public decimal PlayerDiscount { get; set; }
+
+        public bool IsMyanmarOdds { get; set; }
+
+        public decimal DiscountMyanmarOdds { get; set; }
+
+        public decimal PlayerDiscountMyanmarOdds { get; set; }
     }
 }

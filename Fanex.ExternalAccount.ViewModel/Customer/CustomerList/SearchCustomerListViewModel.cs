@@ -2,6 +2,7 @@
 {
     using Fanex.ExternalAccount.DTO.Customer.CustomerList;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class SearchCustomerListViewModel
     {
@@ -10,6 +11,8 @@
         public int PageIndex { get; set; }
 
         public int TotalRows { get; set; }
+
+        public bool IsMyanmarOdds => CustomerList.Any(i => i.IsMyanmarOdds);
 
         public SearchCustomerListViewModel()
         {

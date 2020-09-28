@@ -6,12 +6,13 @@
 
     public class CustomerListPageBuilder
     {
-        public CustomerListPageBuilder(List<CustomerListDTO> customerList, bool isBold, string status, int roleId, bool withDataLimited = false)
+        public CustomerListPageBuilder(List<CustomerListDTO> customerList, bool isBold, string status, int roleId, bool isMyanmarOdds = false, bool withDataLimited = false)
         {
             Status = status;
             RoleId = roleId;
             IsBold = isBold;
             Data = customerList;
+            IsMyanmarOdds = isMyanmarOdds;
             WithDataLimited = withDataLimited;
         }
 
@@ -23,13 +24,15 @@
 
         public string Status { get; }
 
+        public bool IsMyanmarOdds { get; }
+
         public bool WithDataLimited { get; }
 
         public MemoryStream Build()
         {
             var mem = new MemoryStream();
             var settings = new TemplateSettings();
-            var filePath = settings.CustomerListPath(RoleId);
+            var filePath = settings.CustomerListPath(RoleId, IsMyanmarOdds);
 
             using (var report = new CustomerListPage(filePath, this))
             {

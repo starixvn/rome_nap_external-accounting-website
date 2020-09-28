@@ -66,7 +66,10 @@
                         Discount = Utils.HasColumn(reader, "Discount") ? Utils.ToDecimal(reader["Discount"]).Format(decimalPrecision) : 0,
                         PlayerDiscount = Utils.HasColumn(reader, "PlayerDiscount") ? Utils.ToDecimal(reader["PlayerDiscount"]).Format(decimalPrecision) : 0m,
                         PlayerDiscount1x2 = Utils.HasColumn(reader, "PlayerDiscount1x2") ? Utils.ToDecimal(reader["PlayerDiscount1x2"]).Format(decimalPrecision) : 0m,
-                        PlayerDiscountCS = Utils.HasColumn(reader, "PlayerDiscountCS") ? Utils.ToDecimal(reader["PlayerDiscountCS"]).Format(decimalPrecision) : 0m
+                        PlayerDiscountCS = Utils.HasColumn(reader, "PlayerDiscountCS") ? Utils.ToDecimal(reader["PlayerDiscountCS"]).Format(decimalPrecision) : 0m,
+                        IsMyanmarOdds = Utils.ToBoolean(reader["ismyanmarodds"]),
+                        DiscountMyanmarOdds = Utils.HasColumn(reader, "discountmyanmarodds") ? Utils.ToDecimal(reader["discountmyanmarodds"]).Format(decimalPrecision) : 0m,
+                        PlayerDiscountMyanmarOdds = Utils.HasColumn(reader, "playerdiscountmyanmarodds") ? Utils.ToDecimal(reader["playerdiscountmyanmarodds"]).Format(decimalPrecision) : 0m
                     });
                 }
 

@@ -71,11 +71,22 @@ Fanex.ExtAcc.Customer.Commission = {
                 if (context.roleId == 1) {
                     $("#textBoxDiscountAsian").val(commission.discount);
                     $("#textBoxDiscount1x2").val(commission.discount1x2);
-                    $("#textBoxDiscountCS").val(commission.discountCS);
-
+                    $("#textBoxDiscountCS").val(commission.discountCS); debugger;
+                    if (commission.isMyanmarOdds) {
+                        $("#textBoxDiscountMyanmarOdds").val(commission.discountMyanmarOdds);
+                    }
+                    else {
+                        $('#discountMyanmar').hide();
+                    }
                     Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.discount, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount);
                     Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount1x2);
                     Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);
+                    if (commission.isMyanmarOdds) {
+                        Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOdds, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountMyanmarOdds);
+                    }
+                    else {
+                        $('#discountMyanmar').hide();
+                    }
                 }
                 else {
                     Fanex.PTEngine.PT_SetSelect($("#groupA")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
@@ -84,6 +95,16 @@ Fanex.ExtAcc.Customer.Commission = {
                     Fanex.PTEngine.PT_SetSelect($("#groupD")[0], 0, commission.groupDMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupD);
                     Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
                     Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
+                    if (commission.isMyanmarOdds) {
+                        Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
+
+                        var groups = $('.group');
+                        for (var i = 0; i < groups.length; i++) {
+                            groups[i].remove();
+                        }                        
+                    } else {
+                        $('#discountMyanmar').hide();
+                    }
                 }
 
                 Fanex.ExtAcc.UnBlockUI();
