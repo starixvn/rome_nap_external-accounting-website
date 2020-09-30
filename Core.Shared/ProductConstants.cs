@@ -32,5 +32,6 @@
         public const int SpadeGaming = 36;
         public const int CardClub = 34;
         public const int PGSoft = 55;
+        public const int Joker = 56;
     }
 }
