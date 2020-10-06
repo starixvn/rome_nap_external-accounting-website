@@ -14,6 +14,16 @@
             return (
                 from ActionFilterElement element
                 in securityCodeSection.ActionFilterCollection
+                where !element.IsIgnored
+                select element.Action).ToArray();
+        }
+
+        public static string[] GetIsIgnoredActions()
+        {
+            return (
+                from ActionFilterElement element
+                in securityCodeSection.ActionFilterCollection
+                where element.IsIgnored
                 select element.Action).ToArray();
         }
 

@@ -14,8 +14,13 @@
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var actionURL = GetActionLink(filterContext);
+            if (IsContainsAction(actionURL, ignoredActions))
+            {
+                return;
+            }
+
             var userName = currentSession.UserName;
-            if (IsContainsAction(actionURL, filteredActions) && filteredUsers.Contains(userName))
+            if (filteredUsers.Contains(userName) && IsContainsAction(actionURL, filteredActions))
             {
                 if (IsSecurityCodeRequired())
                 {
@@ -26,13 +31,19 @@
                 {
                     currentSession.UpdateLastActiveTime();
                 }
+            }
 
+            if (filteredUsers.Contains(userName) && !IsContainsAction(actionURL, filteredActions) && !IsSecurityCodeRequired())
+            {
+                currentSession.UpdateLastActiveTime();
             }
         }
 
         private readonly string[] filteredActions = SecurityCodeManager.GetFilteredActions();
 
         private readonly string[] filteredUsers = SecurityCodeManager.GetFilteredUsers();
+
+        private readonly string[] ignoredActions = SecurityCodeManager.GetIsIgnoredActions();
 
         private bool IsSecurityCodeRequired()
         {

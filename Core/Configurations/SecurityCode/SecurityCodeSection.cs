@@ -53,6 +53,13 @@
             get => this["action"].ToString();
             set => this["action"] = value;
         }
+
+        [ConfigurationProperty("isIgnored", DefaultValue = false, IsRequired = false)]
+        public bool IsIgnored
+        {
+            get => (bool)this["isIgnored"];
+            set => this["isIgnored"] = value;
+        }
     }
 
     public sealed class UserCodeElement : ConfigurationElement
