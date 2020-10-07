@@ -71,7 +71,7 @@ Fanex.ExtAcc.Customer.Commission = {
                 if (context.roleId == 1) {
                     $("#textBoxDiscountAsian").val(commission.discount);
                     $("#textBoxDiscount1x2").val(commission.discount1x2);
-                    $("#textBoxDiscountCS").val(commission.discountCS); debugger;
+                    $("#textBoxDiscountCS").val(commission.discountCS);
                     if (commission.isMyanmarOdds) {
                         $("#textBoxDiscountMyanmarOdds").val(commission.discountMyanmarOdds);
                     }
@@ -120,14 +120,21 @@ Fanex.ExtAcc.Customer.Commission = {
                 commission.playerDiscount = $("#discountAsian").val();
                 commission.playerDiscount1x2 = $("#discount1x2").val();
                 commission.playerDiscountCs = $("#discountCS").val();
+                debugger;
+                if (commission.isMyanmarOdds)
+                    commission.playerDiscountMyanmarOdds = $("#discountMyanmarOdds").val();
             }
             else {
                 commission.groupA = $("#groupA").val();
                 commission.discount1x2 = $("#discount1x2").val();
                 commission.discountCS = $("#discountCS").val();
-                commission.groupB = $("#groupB").val();
-                commission.groupC = $("#groupC").val();
-                commission.groupD = $("#groupD").val();
+                if (commission.isMyanmarOdds)
+                    commission.discountMyanmarOdds = $("#discountMyanmarOdds").val();
+                else {
+                    commission.groupB = $("#groupB").val();
+                    commission.groupC = $("#groupC").val();
+                    commission.groupD = $("#groupD").val();
+                }
             }
 
             var text = JSON.stringify(commission);

@@ -80,7 +80,6 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                 $("#textBoxDiscountAsian").val(commission.groupA);
                 $("#textBoxDiscount1x2").val(commission.discount1x2);
                 $("#textBoxDiscountCS").val(commission.discountCS);
-                debugger;
                 Fanex.ExtAcc.Customer.AgentAddNewMember.LoadGroupCommission(document.getElementById("group"), context.currencyId, context.siteName, commission.isMyanmarOdds);
 
                 Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);

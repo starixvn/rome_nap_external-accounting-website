@@ -277,7 +277,6 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 return '<div><a href="javascript:Fanex.ExtAcc.Customer.ShowIpInfo(\'' + cell.Value + '\')">' + cell.Value + '</a></div>';
             }
         });
-        debugger;
         return columns.filter(function (item) { return item !== undefined });
     },
     GetGridGroupHeader: function (uplineRoleId, isMyanmarOdds) {
@@ -300,7 +299,6 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push(isMemberList ? { HeaderText: 'Player Commission', Name: 'playerdiscount', MergeColNumber: isMyanmarOdds ? 4 : 3 } : undefined);
         columns.push({ HeaderText: 'Created Date', Name: 'createdate', MergeRowNumber: 2 });
         columns.push({ HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 });
-        debugger;
         return [{ Columns: columns.filter(function (item) { return item !== undefined }) }];
     },
     GetGridBodyRows: function (currentRow, currentIndex, pageSize, pageIndex, uplineRoleId, isMyanmarOdds) {
@@ -348,7 +346,6 @@ Fanex.ExtAcc.Customer.CustomerList = {
 
         columns.push({ Name: 'createdate', Value: currentRow.CreateDate, FormatDateTime: 'MM/DD/YYYY hh:mm:ss A' });
         columns.push({ Name: 'lastloginip', Value: currentRow.LastLoginIP });
-        debugger;
         return columns.filter(function (item) { return item !== undefined });
     },
     RenderBreadScrumbs: function (uplineId, uplineRoleId) {
