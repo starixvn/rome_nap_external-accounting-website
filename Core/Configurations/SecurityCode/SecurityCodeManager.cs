@@ -9,21 +9,12 @@
         private static SecurityCodeSection securityCodeSection =
             ConfigurationManager.GetSection("SecurityCodeSection") as SecurityCodeSection;
 
-        public static string[] GetFilteredActions()
+        public static string[] GetActions(bool isIgnored)
         {
             return (
                 from ActionFilterElement element
                 in securityCodeSection.ActionFilterCollection
-                where !element.IsIgnored
-                select element.Action).ToArray();
-        }
-
-        public static string[] GetIsIgnoredActions()
-        {
-            return (
-                from ActionFilterElement element
-                in securityCodeSection.ActionFilterCollection
-                where element.IsIgnored
+                where element.IsIgnored == isIgnored
                 select element.Action).ToArray();
         }
 
@@ -44,6 +35,6 @@
                 .FirstOrDefault()?.SecurityCode.Trim();
         }
 
-        public static string GetLiveTime => securityCodeSection.ScLiveTime;
+        public static string GetAliveTime => securityCodeSection.ScAliveTime;
     }
 }

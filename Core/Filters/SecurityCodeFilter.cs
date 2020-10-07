@@ -13,45 +13,30 @@
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var actionURL = GetActionLink(filterContext);
-            if (IsContainsAction(actionURL, ignoredActions))
+            string actionURL = GetActionLink(filterContext);
+            bool isFilteredUser = SecurityCodeManager.GetFilteredUsers().Contains(currentSession.UserName);
+            bool isFilteredAction = IsContainsAction(actionURL, SecurityCodeManager.GetActions(isIgnored: false));
+            bool isIgnoredAction = IsContainsAction(actionURL, SecurityCodeManager.GetActions(isIgnored: true));
+
+            if (isFilteredUser && isFilteredAction && IsSecurityCodeRequired())
             {
-                return;
+                var returnUrl = HttpUtility.UrlEncode(filterContext.HttpContext.Request.RawUrl);
+                filterContext.Result = RedirectToSecurityCodePage(returnUrl);
             }
 
-            var userName = currentSession.UserName;
-            if (filteredUsers.Contains(userName) && IsContainsAction(actionURL, filteredActions))
-            {
-                if (IsSecurityCodeRequired())
-                {
-                    var returnUrl = HttpUtility.UrlEncode(filterContext.HttpContext.Request.RawUrl);
-                    filterContext.Result = RedirectToSecurityCodePage(returnUrl);
-                }
-                else
-                {
-                    currentSession.UpdateLastActiveTime();
-                }
-            }
-
-            if (filteredUsers.Contains(userName) && !IsContainsAction(actionURL, filteredActions) && !IsSecurityCodeRequired())
+            if (isFilteredUser && !isIgnoredAction && !IsSecurityCodeRequired())
             {
                 currentSession.UpdateLastActiveTime();
             }
         }
 
-        private readonly string[] filteredActions = SecurityCodeManager.GetFilteredActions();
-
-        private readonly string[] filteredUsers = SecurityCodeManager.GetFilteredUsers();
-
-        private readonly string[] ignoredActions = SecurityCodeManager.GetIsIgnoredActions();
-
         private bool IsSecurityCodeRequired()
         {
             double scLastActiveTime = currentSession.LastActiveTime;
-            double scLiveTime = Utils.ToDouble(SecurityCodeManager.GetLiveTime) * 1000.0d;
+            double scAliveTime = Utils.ToDouble(SecurityCodeManager.GetAliveTime) * 1000.0d;
             double currentTime = Utils.ConvertDateTimeToMilliseconds(DateTime.Now);
 
-            return currentTime - scLastActiveTime > scLiveTime;
+            return currentTime - scLastActiveTime > scAliveTime;
         }
 
         private static RedirectResult RedirectToSecurityCodePage(string returnUrl) => new RedirectResult($"~/SecurityCode/Index?ReturnUrl={returnUrl}");

@@ -12,11 +12,11 @@
         [ConfigurationCollection(typeof(UserCodeCollection), AddItemName = "add")]
         public UserCodeCollection UserCodeCollection => (UserCodeCollection)base["UserCodeCollection"];
 
-        [ConfigurationProperty("scLiveTime", IsRequired = true)]
-        public string ScLiveTime
+        [ConfigurationProperty("scAliveTime", IsRequired = true)]
+        public string ScAliveTime
         {
-            get => this["scLiveTime"].ToString();
-            set => this["scLiveTime"] = value;
+            get => this["scAliveTime"].ToString();
+            set => this["scAliveTime"] = value;
         }
     }
 
