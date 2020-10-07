@@ -78,7 +78,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                 Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
                 if (customer.commissionSetting.isMyanmarOdds) {
                     Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
-
+                    $("#commissionSection").height(50);
                     var groups = $('.group');
                     for (var i = 0; i < groups.length; i++) {
                         groups[i].remove();
