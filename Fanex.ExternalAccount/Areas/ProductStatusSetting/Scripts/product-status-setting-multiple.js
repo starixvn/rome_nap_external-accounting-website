@@ -15402,7 +15402,6 @@ var ProductStatusSettingBase = /** @class */ (function () {
                 cache: false,
                 headers: _this.setupAntiXSRF(),
                 data: JSON.stringify(updateViewModel),
-                dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (data) { return _this.onSuccess(data); },
                 error: _this.onDefaultError
@@ -15765,6 +15764,10 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
         return model;
     };
     ProductStatusSettingMultipe.prototype.onSuccess = function (results) {
+        if (parent.Fanex.ExtAcc.ShowSecurityCodePage(results, this.$.unblockUI)) {
+            return;
+        }
+
         if (results.length > 0) {
             this.isUpdateSuccess(results) ? _super.prototype.onSuccess.call(this, [results[0]]) : this.onError(results);
         }

@@ -97,9 +97,12 @@
             $.ajax({
                 type: 'POST',
                 url: resolveClientUrl('Customer/UpdateSuspendMultiple'),
-                dataType: "json",
                 data: params,
                 success: function (result) {
+                    if (parent.Fanex.ExtAcc.ShowSecurityCodePage(result, parent.Fanex.ExtAcc.UnBlockUI)) {
+                        return;
+                    }
+
                     var isSuccessAll = true;
                     for (var i = 0; i < result.length; i++) {
                         if (result[i].IsSuccess) {
