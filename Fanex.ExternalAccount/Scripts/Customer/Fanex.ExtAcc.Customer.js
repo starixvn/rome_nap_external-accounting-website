@@ -489,7 +489,8 @@
                     data: {
                         custid: custid,
                         allow: ($('#dbl-' + custid).attr('class') == 'disallowDblComm' || $('#dbl-' + custid).attr('class') == 'offDblComm'),
-                        groupName: Fanex.ExtAcc.Customer.GroupName().groupName
+                        groupName: Fanex.ExtAcc.Customer.GroupName().groupName,
+                        isFilteredAction: false
                     }
                 })
                     .success(function (result) {

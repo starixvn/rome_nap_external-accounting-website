@@ -15,7 +15,8 @@
         {
             string actionURL = GetActionLink(filterContext);
             bool isFilteredUser = SecurityCodeManager.GetFilteredUsers().Contains(currentSession.UserName);
-            bool isFilteredAction = IsContainsAction(actionURL, SecurityCodeManager.GetActions(isIgnored: false));
+            bool isFilteredAction = IsContainsAction(actionURL, SecurityCodeManager.GetActions(isIgnored: false))
+                && Utils.ToBoolean(filterContext.HttpContext.Request.Params.Get("isFilteredAction"), true);
             bool isIgnoredAction = IsContainsAction(actionURL, SecurityCodeManager.GetActions(isIgnored: true));
 
             if (isFilteredUser && isFilteredAction && IsSecurityCodeRequired())

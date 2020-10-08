@@ -171,7 +171,8 @@
                     data: {
                         custid: $scope.model.personalInfo.custId.value,
                         allow: !allow,
-                        groupName: parent.$('#selectedGroupName').html()
+                        groupName: parent.$('#selectedGroupName').html(),
+                        isFilteredAction: false
                     }
                 })
                     .success(function (result) {
