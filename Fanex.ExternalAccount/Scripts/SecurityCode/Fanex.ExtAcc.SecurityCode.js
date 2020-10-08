@@ -10,6 +10,15 @@
     RNG Lottery             44
 */
 Fanex.ExtAcc.SecurityCode = {
+    $scPageContainer: null,
+    $message: null,
+    $messageContent: null,
+    $txtSecurityCode: null,
+    $txtReturnUrl: null,
+    $cbShowSC: null,
+    $btnSubmit: null,
+    $scPageOverlay: null,
+
     code: '',
     currentIFrame: null,
     failedCount: 0,
@@ -53,19 +62,31 @@ Fanex.ExtAcc.SecurityCode = {
         this.failedCount++;
     },
     Init: function () {
-        this.returnUrl = $('input#returnUrl').val();
+        this.CacheDOMElements();
+
+        this.returnUrl = this.$txtReturnUrl.val();
         this.currentIFrame = this.GetCurrentIFrame();
 
         this.AdjustPagePosition();
         this.InitClosePageEventHandler();
-        this.SetInputFocused();
+        this.RegisterEvents();
+    },
+    CacheDOMElements: function () {
+        this.$scPageContainer = $('#securityCodePageContainer');
+        this.$txtSecurityCode = $('#txtSecurityCode');
+        this.$txtReturnUrl = $('#txtReturnUrl');
+        this.$cbShowSC = $('#showSecurityCode');
+        this.$btnSubmit = $('#btnSubmit');
+        this.$scPageOverlay = $('.securitycode-page-overlay');
+        this.$messageContent = $('#status-message-content');
+        this.$message = $('#status-message');
     },
     IsExternalSite: function () {
         return this.returnUrl.indexOf('/updateCustomerSetting/updateSetting') > -1;
     },
     OnValidated: function () {
         if (!this.IsExternalSite()) {
-            $('#securityCodePageContainer').html('');
+            this.$scPageContainer.html('');
             return;
         }
 
@@ -74,9 +95,16 @@ Fanex.ExtAcc.SecurityCode = {
     },
     OnShowSecurityCode: function (event) {
         if (event.target.checked) {
-            $('input#code').prop('type', 'text');
+            Fanex.ExtAcc.SecurityCode.$txtSecurityCode.prop('type', 'text');
         } else {
-            $('input#code').prop('type', 'password');
+            Fanex.ExtAcc.SecurityCode.$txtSecurityCode.prop('type', 'password');
+        }
+    },
+    OnKeyUp: function (event) {
+        if (event.target.value.trim().length < 6) {
+            $(event.target).removeClass('valid').addClass('error');
+        } else {
+            $(event.target).removeClass('error').addClass('valid');
         }
     },
     OnKeyPress: function (event) {
@@ -90,11 +118,11 @@ Fanex.ExtAcc.SecurityCode = {
         Fanex.ExtAcc.SecurityCode.Verify();
     },
     Verify: function () {
-        this.code = $('input#code').val();
+        this.code = this.$txtSecurityCode.val();
 
         if (!this.code.trim()) {
-            this.SetInputFocused();
-            this.ShowError('The security code must not be empty.');
+            this.$txtSecurityCode.focus();
+            this.ShowError('This field is required.');
             return;
         }
 
@@ -106,10 +134,8 @@ Fanex.ExtAcc.SecurityCode = {
                 }
 
                 if (Fanex.ExtAcc.SecurityCode.GetFailedCount() < 5) {
-                    $('input#code').val('');
-
                     Fanex.ExtAcc.SecurityCode.IncrementFailedCount();
-                    Fanex.ExtAcc.SecurityCode.ShowError('The security code is invalid.');
+                    Fanex.ExtAcc.SecurityCode.ShowError('Wrong Security Code. Please try again.');
                     return;
                 }
 
@@ -119,15 +145,20 @@ Fanex.ExtAcc.SecurityCode = {
                 console.log(error);
             })
             .always(function () {
-                Fanex.ExtAcc.SecurityCode.SetInputFocused();
+                Fanex.ExtAcc.SecurityCode.$txtSecurityCode.focus();
             });
     },
     ShowError: function (errorMessage) {
-        $('span#codeError').text(errorMessage);
-        $('span#codeError').removeClass('hidden');
+        this.$messageContent.text(errorMessage);
+        this.$message.removeClass('hidden');
     },
-    SetInputFocused: function () {
-        $('input#code').focus();
+    RegisterEvents: function () {
+        this.$txtSecurityCode.val('').focus();
+        this.$txtSecurityCode.keypress(this.OnKeyPress);
+        this.$txtSecurityCode.keyup(this.OnKeyUp);
+        this.$cbShowSC.change(this.OnShowSecurityCode);
+        this.$btnSubmit.click(this.OnClick);
+        this.$scPageOverlay.click(this.OnClosePage);
     },
     KnockOut: function () {
         top.location.href = resolveClientUrl('Account/LogOff');
@@ -135,7 +166,7 @@ Fanex.ExtAcc.SecurityCode = {
     InitClosePageEventHandler: function () {
         $(document).bind('keydown', function (event) {
             if (event.which === 27) {
-                Fanex.ExtAcc.SecurityCode.OnValidated();
+                Fanex.ExtAcc.SecurityCode.OnClosePage();
             }
         });
     },

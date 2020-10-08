@@ -14,42 +14,47 @@
 <div id="securityCodePage" class="securitycode-block-overlay" style="display: none;">
     <div class="securitycode-block">
         <div class="form-title-wrapper">
-            <h3 class="form-title">@ViewBag.Title</h3>
+            <h1 class="form-title">@ViewBag.Title</h1>
+        </div>
+        <div id="status-message" class="row hidden">
+            <div id="status-message-content" class="msg msg-error"></div>
         </div>
         <div class="row">
-            <h3 class="form-body">Hi @ViewBag.UserName.ToUpper()</h3>
-            <h3 class="form-body">Please input your security code before proceeding!</h3>
+            <label class="form-body">Hi @ViewBag.UserName.ToUpper()</label>
+            <label class="form-body">You have been idled for awhile. Please input your security code before proceeding!</label>
         </div>
-        <form>
+        <form class="form-validation">
             <div class="form-group">
                 <label for="code">Security Code</label>
-                <input class="form-control"
+                <input class="form-control txt-code"
                        type="password"
-                       id="code"
+                       id="txtSecurityCode"
                        name="code"
                        value=""
                        placeholder=""
                        maxlength="6"
-                       autocomplete="off"
-                       onkeypress="Fanex.ExtAcc.SecurityCode.OnKeyPress(event)" />
-                <span id="codeError" class="error form-text hidden"></span>
+                       autocomplete="off" />
+                <i class="validation"></i>
             </div>
             <div class="form-check row">
                 <input type="checkbox"
                        class="form-check-input"
-                       id="showSecurityCode"
-                       onchange="Fanex.ExtAcc.SecurityCode.OnShowSecurityCode(event)">
+                       id="showSecurityCode" />
                 <label class="form-check-label" for="showSecurityCode">Show security code</label>
             </div>
 
-            <input type="hidden" id="returnUrl" name="returnUrl" value="@ViewBag.ReturnUrl" />
+            <input type="hidden" id="txtReturnUrl" name="returnUrl" value="@ViewBag.ReturnUrl" />
 
-            <button id="btnVerify" type="button" class="btn-verify" onclick="Fanex.ExtAcc.SecurityCode.OnClick()">Submit</button>
+            <label class="form-body" style="margin-bottom: 16px;">
+                After Sending SC is successful, you must submit the setting page to complete the update.
+            </label>
+
+            <button id="btnSubmit" type="button" class="btn-submit">Submit</button>
         </form>
     </div>
 </div>
 
-<div class="securitycode-page-overlay" onclick="Fanex.ExtAcc.SecurityCode.OnClosePage()"></div>
+<div class="securitycode-page-overlay"></div>
 
 @if (IsExternalSite)
 {
