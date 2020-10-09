@@ -193,8 +193,7 @@ Fanex.ExtAcc.SecurityCode = {
         } else if (currentIFrameId.indexOf('product-') > -1) {
             setTopLeft('5rem', '22.75%');
         } else {
-            scBlockOverlay.css('top', '30%');
-            scBlockOverlay.css('left', '37.77%');
+            scBlockOverlay.css({ top: '30%', left: '37.77%' });
         }
 
         scBlockOverlay.css('display', 'block');

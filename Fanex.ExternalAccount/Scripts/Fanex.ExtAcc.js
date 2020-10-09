@@ -112,6 +112,9 @@ Fanex.ExtAcc = {
     SuggestionXHR: null,
     shouldReloadLeftPanel: false,
 
+    scPageId: 'securityCodePage',
+    $scPageContainer: null,
+
     DecodeHtml: function (str) {
         return $("<div/>").html(str).text();
     },
@@ -346,6 +349,8 @@ Fanex.ExtAcc = {
 
     Init: function () {
         $this = this;
+
+        this.$scPageContainer = $('#securityCodePageContainer');
 
         $.blockUI.defaults.css.border = '0px solid #aaa';
         $.blockUI.defaults.css.backgroundColor = "transparent";
@@ -734,12 +739,13 @@ Fanex.ExtAcc = {
     },
 
     ShowSecurityCodePage: function (result, unBlockUI = null) {
-        if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+        if (typeof result === 'string' && result.indexOf(this.scPageId) > -1) {
             if (typeof unBlockUI === 'function') {
                 unBlockUI();
             }
 
-            $('#securityCodePageContainer').html(result);
+            this.$scPageContainer.html(result);
+
             return true;
         }
 

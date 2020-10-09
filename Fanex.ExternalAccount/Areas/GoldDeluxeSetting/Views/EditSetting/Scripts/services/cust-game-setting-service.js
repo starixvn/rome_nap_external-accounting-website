@@ -13,7 +13,7 @@
                 data: settingViewModel
             }).success(function (mainResult) {
 
-                if (parent.parent.Fanex.ExtAcc.ShowSecurityCodePage(mainResult)) {
+                if (top.Fanex.ExtAcc.ShowSecurityCodePage(mainResult)) {
                     return;
                 }
 

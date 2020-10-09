@@ -238,7 +238,7 @@ Fanex.CustomerSetting.Betting.Keno.Update = function (ondone) {
     })
         .success(function (data) {
 
-            if (parent.parent.Fanex.ExtAcc.ShowSecurityCodePage(data, Fanex.CustomerSetting.Core.UnBlockUI)) {
+            if (top.Fanex.ExtAcc.ShowSecurityCodePage(data, Fanex.CustomerSetting.Core.UnBlockUI)) {
                 return;
             }
 
