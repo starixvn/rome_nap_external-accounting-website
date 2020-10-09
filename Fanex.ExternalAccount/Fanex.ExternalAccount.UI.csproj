@@ -478,6 +478,10 @@
     <Content Include="assets\bundles\associationaccount\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\problemaccount\index.js" />
+    <Content Include="assets\bundles\problemaccount\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.js" />
     <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -1490,6 +1494,7 @@
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
     <Content Include="Scripts\Customer\Fanex.ExtAcc.AssociationAccount.js" />
+    <Content Include="Scripts\ProblemAccount\Fanex.ExtAcc.ProblemAccount.js" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
@@ -2742,6 +2747,9 @@
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\associationaccount\index.min.js.map" />
+    <Content Include="assets\bundles\problemaccount\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2867,6 +2875,7 @@
     <Content Include="Views\WinLossDetailIBCBetLiveCasino\Index.cshtml" />
     <Content Include="Views\Home\TestSentryLog.cshtml" />
     <Content Include="Views\AssociationAccount\Index.cshtml" />
+    <Content Include="Views\ProblemAccount\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
@@ -2928,6 +2937,10 @@
     <ProjectReference Include="..\Modules\Fanex.ExternalAccount.BetSetting\Fanex.ExternalAccount.BetSetting.csproj">
       <Project>{f9261cf3-913a-436f-ad9d-6607c190367e}</Project>
       <Name>Fanex.ExternalAccount.BetSetting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.ExternalAccount.ProblemAccount\Fanex.ExternalAccount.ProblemAccount.csproj">
+      <Project>{be8d34fe-39ca-447e-bd10-71991c08ceb6}</Project>
+      <Name>Fanex.ExternalAccount.ProblemAccount</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

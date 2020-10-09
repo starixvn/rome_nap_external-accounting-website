@@ -1,0 +1,74 @@
+﻿@using Fanex.ExternalAccount.ProblemAccount.Resources
+@{
+    Layout = null;
+}
+@model Fanex.ExternalAccount.ProblemAccount.ViewModels.IndexViewModel
+<div class="problem-account-container">
+    <div class="page-title">
+        @ViewLang.ProblemAccountList
+    </div>
+    <div id="problem-account-tabs">
+        <ul class="tabs">
+            <li><a href="#tab-master">@ViewLang.Master</a></li>
+            <li><a href="#tab-agent">@ViewLang.Agent</a></li>
+            <li><a href="#tab-member">@ViewLang.Member</a></li>
+        </ul>
+        <div id="tab-master">
+            @RenderSMATab("form-master-list", 3, ViewLang.Super)
+        </div>
+        <div id="tab-agent">
+            @RenderSMATab("form-agent-list", 2, ViewLang.Master)
+        </div>
+        <div id="tab-member">
+            @RenderSMATab("form-member-list", 1, ViewLang.Agent)
+        </div>
+    </div>
+</div>
+@StaticResources.RenderScripts("~/assets/bundles/problemaccount/index")
+@Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
+@helper RenderSMATab(string formName, byte searchRoleId, string uplineLabel)
+{
+    using (Html.BeginForm("GetList", "ProblemAccount", FormMethod.Get, new { @class = "search-form filterbox", id = formName }))
+    {
+        <input type="hidden" name="searchRoleId" value="@searchRoleId" />
+        <div class="searchBar">
+            <div class="form-group">
+                <label for="txt-uplineName-@searchRoleId" class="label">@uplineLabel</label>
+                <input type="text" autocomplete="off" name="uplineName" id="txt-uplineName-@searchRoleId" />
+            </div>
+            <div class="form-group">
+                <label class="label">@ViewLang.DateNotifiedFrom</label>
+                <input type="text" readonly="readonly" value="@Model.DefaultFrom" class="dtp-from" name="from" />
+            </div>
+            <div class="form-group">
+                <label class="label">To</label>
+                <input type="text" readonly="readonly" value="@Model.DefaultTo" class="dtp-to" name="to" />
+            </div>
+            <div class="form-group">
+                <label class="label">@ViewLang.ReviewStatus</label>
+                <div class="select-box pull-left">
+                    @Html.DropDownList("status", Model.ReviewStatus, new { id = "ddl-reviewStatus-" + searchRoleId })
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" placeholder="@ViewLang.UsernameNicknameFirstLastName" autocomplete="off" style="width:260px" name="query" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@ViewLang.Submit" class="btn -submit btnSearch" />
+            </div>
+            <div class="form-group icon-excel-container">
+                <span title="@ViewLang.ExportExcel" class="icon-excel"></span>
+            </div>
+        </div>
+    }
+    <div class="freegrid-container hide">
+        <div class="pull-right select-container">
+            <span class="text-select">@ViewLang.Select:</span>
+            <span class="status-select">@ViewLang.All</span>
+            <span class="character">|</span>
+            <span class="status-select">@ViewLang.None</span>
+        </div>
+        <div class="freegrid clearBoth"></div>
+    </div>
+    <div class="div-noData hide">@ViewLang.NoData</div>
+}

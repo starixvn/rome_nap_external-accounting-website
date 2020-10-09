@@ -68,5 +68,6 @@
         public const string VirtualGamesSetting = "VirtualGamesSetting";
         public const string SabaclubSetting = "SabaclubSetting";
         public const string SearchAndCopySuper = "SearchAndCopySuper";
+        public const string ProblemAccountList = "ProblemAccountList";
     }
 }
