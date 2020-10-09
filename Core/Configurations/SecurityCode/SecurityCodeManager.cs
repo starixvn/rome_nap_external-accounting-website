@@ -36,5 +36,7 @@
         }
 
         public static string GetAliveTime => securityCodeSection.ScAliveTime;
+
+        public static int GetMaxAllowAttempt => securityCodeSection.ScMaxAllowAttempt;
     }
 }

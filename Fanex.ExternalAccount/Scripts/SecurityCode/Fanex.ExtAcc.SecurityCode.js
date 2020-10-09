@@ -18,10 +18,9 @@ Fanex.ExtAcc.SecurityCode = {
     $cbShowSC: null,
     $btnSubmit: null,
     $scPageOverlay: null,
+    $txtMaxAllowAttempt: null,
 
-    code: '',
     currentIFrame: null,
-    failedCount: 0,
     returnUrl: '',
     verifyUrl: resolveClientUrl('SecurityCode/Verify'),
     GetCurrentIFrame: function () {
@@ -55,12 +54,6 @@ Fanex.ExtAcc.SecurityCode = {
 
         return null;
     },
-    GetFailedCount: function () {
-        return this.failedCount;
-    },
-    IncrementFailedCount: function () {
-        this.failedCount++;
-    },
     Init: function () {
         this.CacheDOMElements();
 
@@ -80,6 +73,7 @@ Fanex.ExtAcc.SecurityCode = {
         this.$scPageOverlay = $('.securitycode-page-overlay');
         this.$messageContent = $('#status-message-content');
         this.$message = $('#status-message');
+        this.$txtMaxAllowAttempt = $('#txtMaxAllowAttempt');
     },
     IsExternalSite: function () {
         return this.returnUrl.indexOf('/updateCustomerSetting/updateSetting') > -1;
@@ -118,23 +112,23 @@ Fanex.ExtAcc.SecurityCode = {
         Fanex.ExtAcc.SecurityCode.Verify();
     },
     Verify: function () {
-        this.code = this.$txtSecurityCode.val();
+        var maxAllowAttempt = parseInt(this.$txtMaxAllowAttempt.val(), 10);
+        var txtSecurityCode = this.$txtSecurityCode.val();
 
-        if (!this.code.trim()) {
+        if (!txtSecurityCode.trim()) {
             this.$txtSecurityCode.focus();
             this.ShowError('This field is required.');
             return;
         }
 
-        $.post(this.verifyUrl, { code: this.code })
+        $.post(this.verifyUrl, { txtSecurityCode })
             .done(function (result) {
-                if (result === 'valid') {
+                if (result.StatusCode === 1) {
                     Fanex.ExtAcc.SecurityCode.OnValidated();
                     return;
                 }
 
-                if (Fanex.ExtAcc.SecurityCode.GetFailedCount() < 5) {
-                    Fanex.ExtAcc.SecurityCode.IncrementFailedCount();
+                if (result.FailedCounter < maxAllowAttempt) {
                     Fanex.ExtAcc.SecurityCode.ShowError('Wrong Security Code. Please try again.');
                     return;
                 }

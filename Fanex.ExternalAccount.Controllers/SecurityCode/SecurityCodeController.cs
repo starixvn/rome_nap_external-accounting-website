@@ -18,25 +18,34 @@
 
         public ActionResult Index(string ReturnUrl)
         {
+            ViewBag.MaxAllowAttempt = SecurityCodeManager.GetMaxAllowAttempt;
             ViewBag.UserName = currentSession.UserName;
             ViewBag.ReturnUrl = ReturnUrl;
 
             return View();
         }
 
-        public string Verify(string code)
+        public ActionResult Verify(string txtSecurityCode)
         {
             string userName = currentSession.UserName;
             string userSecurityCode = SecurityCodeManager.GetSecurityCode(userName);
 
-            if (userSecurityCode.Equals(code, StringComparison.CurrentCulture))
+            if (userSecurityCode.Equals(txtSecurityCode, StringComparison.CurrentCulture))
             {
                 currentSession.UpdateLastActiveTime();
+                currentSession.SCFailedCounter = 0;
 
-                return "valid";
+                return Json(new
+                {
+                    StatusCode = 1
+                });
             }
 
-            return "invalid";
+            return Json(new
+            {
+                StatusCode = 0,
+                FailedCounter = ++currentSession.SCFailedCounter
+            });
         }
     }
 }

@@ -31,6 +31,7 @@
         public const string EASHashPwd = "EASHashPwd";
         public const string EASLine = "EASLine";
         public const string EASSCLastActiveTime = "EASSCLastActiveTime";
+        public const string EASSCFailedCounter = "EASSCFailedCounter";
 
         public static ICurrentSession Instance => new CurrentSession();
 
@@ -207,6 +208,7 @@
         }
 
 #pragma warning disable S2325 // Methods and properties that don't access instance data should be static
+
         public double LastActiveTime
 #pragma warning restore S2325 // Methods and properties that don't access instance data should be static
         {
@@ -217,6 +219,15 @@
         public void UpdateLastActiveTime()
         {
             LastActiveTime = Utils.ConvertDateTimeToMilliseconds(DateTime.Now);
+        }
+
+#pragma warning disable S2325 // Methods and properties that don't access instance data should be static
+
+        public int SCFailedCounter
+#pragma warning restore S2325 // Methods and properties that don't access instance data should be static
+        {
+            get => Utils.ToInt32(HttpContext.Current.Session[EASSCFailedCounter]);
+            set => HttpContext.Current.Session[EASSCFailedCounter] = value;
         }
 
         public string LangKey { get; set; } = "E";

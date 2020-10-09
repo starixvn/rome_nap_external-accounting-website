@@ -375,6 +375,7 @@
             _currentSession.HashPassword = model.Password;
             _currentSession.CurrentLine = model.Line;
             _currentSession.UpdateLastActiveTime();
+            _currentSession.SCFailedCounter = 0;
         }
 
         private static void WriteLogSwitchLine(string message, System.Diagnostics.TraceEventType type)

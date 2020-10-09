@@ -18,6 +18,13 @@
             get => this["scAliveTime"].ToString();
             set => this["scAliveTime"] = value;
         }
+
+        [ConfigurationProperty("scMaxAllowAttempt", IsRequired = true)]
+        public int ScMaxAllowAttempt
+        {
+            get => (int)this["scMaxAllowAttempt"];
+            set => this["scMaxAllowAttempt"] = value;
+        }
     }
 
     public sealed class ActionFilterCollection : ConfigurationElementCollection

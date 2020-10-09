@@ -29,7 +29,7 @@
                 <input class="form-control txt-code"
                        type="password"
                        id="txtSecurityCode"
-                       name="code"
+                       name="txtSecurityCode"
                        value=""
                        placeholder=""
                        maxlength="6"
@@ -43,7 +43,8 @@
                 <label class="form-check-label" for="showSecurityCode">Show security code</label>
             </div>
 
-            <input type="hidden" id="txtReturnUrl" name="returnUrl" value="@ViewBag.ReturnUrl" />
+            <input type="hidden" id="txtMaxAllowAttempt" value="@ViewBag.MaxAllowAttempt"/>
+            <input type="hidden" id="txtReturnUrl" value="@ViewBag.ReturnUrl" />
 
             <label class="form-body" style="margin-bottom: 16px;">
                 After Sending SC is successful, you must submit the setting page to complete the update.
