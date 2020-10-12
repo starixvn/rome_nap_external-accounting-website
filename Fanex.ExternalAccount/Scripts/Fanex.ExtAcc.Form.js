@@ -47,7 +47,7 @@ Fanex.ExtAcc.Form = {
             if (typeof Fanex.ExtAcc.UnBlockUI == 'function')
                 Fanex.ExtAcc.UnBlockUI();
 
-            if (data.errorCode && data.errorCode === "1") {
+            if (data.errorCode && data.errorCode == "1") {
                 Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 300, 150, 'alert');
                 return;
             }

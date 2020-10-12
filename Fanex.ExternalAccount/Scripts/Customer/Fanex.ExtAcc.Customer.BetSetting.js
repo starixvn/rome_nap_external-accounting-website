@@ -78,7 +78,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                                     return;
                                 }
 
-                                if (result.errorCode === 0) {
+                                if (result.errorCode == 0) {
                                     var timeout = setTimeout(function () {
                                         clearTimeout(timeout);
                                         Fanex.ExtAcc.UnBlockUI();
@@ -165,7 +165,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                                     return;
                                 }
 
-                                if (result.errorCode === 0) {
+                                if (result.errorCode == 0) {
                                     var timeout = setTimeout(function () {
                                         clearTimeout(timeout);
                                         Fanex.ExtAcc.UnBlockUI();
@@ -250,7 +250,7 @@ Fanex.ExtAcc.Customer.BetSetting = {
                                     return;
                                 }
 
-                                if (result.errorCode === 0) {
+                                if (result.errorCode == 0) {
                                     var timeout = setTimeout(function () {
                                         clearTimeout(timeout);
                                         Fanex.ExtAcc.UnBlockUI();

@@ -41,7 +41,7 @@
         var id = $scope.personalInfo.custId.value;
         var uplineId = userId;
 
-        if (keyCode === 13 && value !== '') {
+        if (keyCode == 13 && value != '') {
             parent.Fanex.ExtAcc.BlockUI();
             value = value.replace(/,/g, "");
 
