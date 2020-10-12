@@ -106,7 +106,9 @@
             var timeout = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff tt");
             var username = _currentSession.UserName;
             var fromLine = _currentSession.CurrentLine;
-            var parameter = $"{username}&{pwd}&{code}&{line}&{timeout}&{fromLine}";
+            var scLastActiveTime = _currentSession.LastActiveTime;
+            var scFailedCounter = _currentSession.SCFailedCounter;
+            var parameter = $"{username}&{pwd}&{code}&{line}&{timeout}&{fromLine}&{scLastActiveTime}&{scFailedCounter}";
 #pragma warning disable S109 // Magic numbers should not be used
             parameter = new EncryptionThread().EncryptString(parameter, 1024, path);
 #pragma warning restore S109 // Magic numbers should not be used
@@ -135,6 +137,8 @@
             var line = queries[3];
             var timeout = queries[4];
             var fromLine = queries[5];
+            var scLastActiveTime = queries[6];
+            var scFailedCounter = queries[7];
             var totalSeconds = DateTime.Now.Subtract(Convert.ToDateTime(timeout)).TotalSeconds;
             var isTimeout = totalSeconds > 10;
             var rawPassword = DecryptPassword(pwd, code);
@@ -156,6 +160,9 @@
                 WriteLogSwitchLine($"Switched line failed: wrong param info", TraceEventType.Warning);
                 return RedirectToAction(LoginActionName);
             }
+
+            _currentSession.UpdateLastActiveTime(scLastActiveTime);
+            _currentSession.SCFailedCounter = int.Parse(scFailedCounter);
 
             return VerifyLoginCredential(new LoginModel { UserName = username, Password = pwd, Code = code, Line = line, FromLine = fromLine, TotalSeconds = totalSeconds }, rawPassword);
         }
@@ -374,8 +381,15 @@
             _currentSession.Captcha = model.Code;
             _currentSession.HashPassword = model.Password;
             _currentSession.CurrentLine = model.Line;
-            _currentSession.UpdateLastActiveTime();
-            _currentSession.SCFailedCounter = 0;
+           
+            if (HttpContext.Session[CurrentSession.EASSCLastActiveTime] == null)
+            {
+                _currentSession.UpdateLastActiveTime();
+            }
+            if (HttpContext.Session[CurrentSession.EASSCFailedCounter] == null)
+            {
+                _currentSession.SCFailedCounter = 0;
+            }
         }
 
         private static void WriteLogSwitchLine(string message, System.Diagnostics.TraceEventType type)

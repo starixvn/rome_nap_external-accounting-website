@@ -216,9 +216,11 @@
             set => HttpContext.Current.Session[EASSCLastActiveTime] = value;
         }
 
-        public void UpdateLastActiveTime()
+        public void UpdateLastActiveTime(object lastActiveTime  = null)
         {
-            LastActiveTime = Utils.ConvertDateTimeToMilliseconds(DateTime.Now);
+            LastActiveTime = lastActiveTime == null
+                ? Utils.ConvertDateTimeToMilliseconds(DateTime.Now)
+                : Utils.ToDouble(lastActiveTime);
         }
 
 #pragma warning disable S2325 // Methods and properties that don't access instance data should be static
