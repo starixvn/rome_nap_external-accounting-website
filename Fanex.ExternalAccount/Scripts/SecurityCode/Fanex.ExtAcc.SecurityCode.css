@@ -17,6 +17,7 @@
 
 .securitycode-block-overlay {
     position: absolute;
+    left: calc(50% - 234px);
     z-index: 10000;
     margin: 0px;
     padding: 0px;

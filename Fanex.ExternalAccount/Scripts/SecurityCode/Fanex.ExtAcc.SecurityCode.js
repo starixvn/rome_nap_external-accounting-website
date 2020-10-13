@@ -171,26 +171,17 @@ Fanex.ExtAcc.SecurityCode = {
     AdjustPagePosition: function () {
         var scBlockOverlay = $('div.securitycode-block-overlay');
 
-        var setTopLeft = function (top, left) {
-            scBlockOverlay.css('top', top);
-            if (Fanex.ExtAcc.SecurityCode.IsExternalSite()) {
-                scBlockOverlay.css('left', left);
-            } else {
-                scBlockOverlay.css('left', '37.77%');
-            }
-        };
-
         var currentIFrameId = this.currentIFrame ? this.currentIFrame.attr('id') : '';
         if (currentIFrameId.indexOf('mainIFrame') > -1) {
-            setTopLeft('99px', '33.33%');
+            scBlockOverlay.css('top', '99px');
         } else if (currentIFrameId.indexOf('virtualSportsFrame') > -1 || currentIFrameId.indexOf('Frame_') > -1) {
-            setTopLeft('30%', '35%');
+            scBlockOverlay.css('top', '30%');
         } else if (currentIFrameId.indexOf('product-') > -1) {
-            setTopLeft('5rem', '22.75%');
+            scBlockOverlay.css('top', '5rem');
         } else {
-            scBlockOverlay.css({ top: '30%', left: '37.77%' });
+            scBlockOverlay.css('top', '30%');
         }
-
+        
         scBlockOverlay.css('display', 'block');
     }
 };
