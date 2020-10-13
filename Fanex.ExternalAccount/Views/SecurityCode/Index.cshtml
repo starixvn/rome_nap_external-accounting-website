@@ -2,7 +2,8 @@
     ViewBag.Title = "Security Code Validation";
     Layout = null;
 
-    bool IsExternalSite = ViewBag.ReturnUrl.Contains("/updateCustomerSetting/updateSetting");
+    bool IsExternalSite = ViewBag.ReturnUrl.Contains("/updateCustomerSetting/updateSetting")
+        || ViewBag.ReturnUrl.Contains("/updateCustomerSetting/updateMultipleSetting");
 }
 
 @if (IsExternalSite)

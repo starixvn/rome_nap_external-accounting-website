@@ -76,7 +76,8 @@ Fanex.ExtAcc.SecurityCode = {
         this.$txtMaxAllowAttempt = $('#txtMaxAllowAttempt');
     },
     IsExternalSite: function () {
-        return this.returnUrl.indexOf('/updateCustomerSetting/updateSetting') > -1;
+        return this.returnUrl.indexOf('/updateCustomerSetting/updateSetting') > -1
+            || this.returnUrl.indexOf('/updateCustomerSetting/updateMultipleSetting') > -1;
     },
     OnValidated: function () {
         if (!this.IsExternalSite()) {
