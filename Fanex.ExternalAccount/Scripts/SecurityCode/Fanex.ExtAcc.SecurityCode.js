@@ -21,6 +21,7 @@ Fanex.ExtAcc.SecurityCode = {
     $txtMaxAllowAttempt: null,
 
     currentIFrame: null,
+    windowPopupFrameName: 'windowPopup',
     returnUrl: '',
     verifyUrl: resolveClientUrl('SecurityCode/Verify'),
     GetCurrentIFrame: function () {
@@ -52,7 +53,23 @@ Fanex.ExtAcc.SecurityCode = {
             }
         }
 
+        var windowPopupFrame = parent.$(`iframe[name=${this.windowPopupFrameName}]`);
+        if (windowPopupFrame.length === 1) {
+            return windowPopupFrame;
+        }
+
         return null;
+    },
+    GetWindowPopupFrameHref: function () {
+        var frame;
+        for (var i = 0; i < parent.length; i++) {
+            if (parent[i].name === this.windowPopupFrameName) {
+                frame = parent[i];
+                break;
+            }
+        }
+
+        return frame ? frame.location.href : null;
     },
     Init: function () {
         this.CacheDOMElements();
@@ -84,9 +101,17 @@ Fanex.ExtAcc.SecurityCode = {
             this.$scPageContainer.html('');
             return;
         }
-
-        var currentIFrameSrc = this.currentIFrame ? this.currentIFrame.attr('src') : '';
-        this.currentIFrame.attr('src', currentIFrameSrc);
+        
+        if (this.currentIFrame) {
+            var src = this.currentIFrame.attr('src');
+            if (this.currentIFrame.attr('name') !== this.windowPopupFrameName) {
+                this.currentIFrame.attr('src', src);
+            } else {
+                var href = this.GetWindowPopupFrameHref();
+                href ? this.currentIFrame.attr('src', href)
+                    : this.currentIFrame.attr('src', src);
+            }
+        }
     },
     OnShowSecurityCode: function (event) {
         if (event.target.checked) {
@@ -171,7 +196,13 @@ Fanex.ExtAcc.SecurityCode = {
     AdjustPagePosition: function () {
         var scBlockOverlay = $('div.securitycode-block-overlay');
 
-        var currentIFrameId = this.currentIFrame ? this.currentIFrame.attr('id') : '';
+        var currentIFrameId = this.currentIFrame ? this.currentIFrame.attr('id') : null;
+        if (!currentIFrameId) {
+            scBlockOverlay.css('top', '30%');
+            scBlockOverlay.css('display', 'block');
+            return;
+        }
+
         if (currentIFrameId.indexOf('mainIFrame') > -1) {
             scBlockOverlay.css('top', '99px');
         } else if (currentIFrameId.indexOf('virtualSportsFrame') > -1 || currentIFrameId.indexOf('Frame_') > -1) {
