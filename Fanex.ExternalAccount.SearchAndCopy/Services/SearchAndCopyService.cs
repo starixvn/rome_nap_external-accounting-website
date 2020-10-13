@@ -16,6 +16,8 @@
         Result SearchCustomer(SearchCustomerContext context);
 
         Result CloneSetting(CloneSettingContext context);
+
+        dynamic GetSuperPrefixes(SuperPrefixCriteria criteria);
     }
 
     public class SearchAndCopyService : ISearchAndCopyService
@@ -70,6 +72,14 @@
             return Sync3rdProducts(context);
         }
 
+        public dynamic GetSuperPrefixes(SuperPrefixCriteria criteria)
+            => searchAndCopyRepository.GetSuperPrefixes(criteria)
+            .GroupBy(item => item.GroupName, item => item.Prefix, (groupName, prefixes) => new
+            {
+                GroupName = groupName,
+                Prefixes = string.Join(", ", prefixes)
+            });
+
         private Result CloneCustomerAndSettings(CloneSettingContext context)
         {
             var cloneSettingComCriteria = new CloneSettingComCriteria
@@ -91,7 +101,7 @@
             int HeadlineID_Old = 0;
             int HeadlineID_New = 0;
             context.Result = searchAndCopyRepository.CloneSettingComm(cloneSettingComCriteria, ref Case, ref HeadlineID_Old, ref HeadlineID_New);
-           
+
             if (!context.Result.IsSuccess)
             {
                 return context.Result;
@@ -113,8 +123,6 @@
                 return context.Result;
             }
 
-            
-
             if (Case != 0)
             {
                 var updateCRMHeadlineInfoCriteria = new UpdateCrmHeadlineInfoCriteria
@@ -134,7 +142,6 @@
                 {
                     return context.Result;
                 }
-
             }
 
             return context.Result;

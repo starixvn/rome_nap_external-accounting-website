@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Repositories
 {
+    using Common.Extensions;
     using Fanex.Data;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.SearchAndCopy.Criteria;
@@ -18,6 +19,8 @@
         IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName);
 
         Result UpdateCRMHeadlineInfo(UpdateCrmHeadlineInfoCriteria criteria);
+
+        IEnumerable<SuperPrefix> GetSuperPrefixes(ICriteria criteria);
     }
 
     public class SearchAndCopyRepository : ISearchAndCopyRepository
@@ -102,6 +105,25 @@
                     ErrorCode = outputs["errcode"].ToString(),
                     ErrorMessage = outputs["errmsg"].ToString()
                 };
+            }
+        }
+
+        public IEnumerable<SuperPrefix> GetSuperPrefixes(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return new SuperPrefix
+                        {
+                            GroupName = reader.ToString("GroupName"),
+                            Prefix = reader.ToString("Prefix"),
+                            AllowNewSuper = reader.ToBool("AllowNewSuper")
+                        };
+                    }
+                }
             }
         }
     }

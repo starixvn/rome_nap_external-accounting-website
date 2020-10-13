@@ -302,6 +302,7 @@
     <Setting Key="EAS_CustomerInsMember_CloneSetting_Com" SpName="EAS_CustomerInsMember_CloneSetting_Com" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="EAS_CustomerInsMember_CloneSetting_ExtraPT" SpName="EAS_CustomerInsMember_CloneSetting_ExtraPT" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_GameEnableJackpotSel" SpName="Acc_GameEnableJackpotSel" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_SuperPrefixByGroupSel" SpName="Acc_SuperPrefixByGroupSel_xpre" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
     <Function Name="CRM Update Headline Info">
     <Setting Key="Acc_CRM_HeadlineUpd" SpName="Acc_CRM_HeadlineUpd" DbName="DBCRM.bodb_CRM.bodbExtAccNet" Plain="0" />
