@@ -4,7 +4,7 @@
 
     public interface ICachingService
     {
-        UserCache GetUserCache(int userId);
+        UserCache GetUserCache(int userId, string groupName);
         void ClearUserCache();
         void RemoveUserCache(int userId);
     }

@@ -99,7 +99,7 @@
     <Setting Key="EAS_MenuDel" SpName="EAS_MenuDel" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_MenuIns" SpName="EAS_MenuIns" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_MenuSel" SpName="EAS_MenuSel" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_MenuSelByUserID" SpName="EAS_MenuSelByUserID" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_MenuSelByUserID" SpName="EAS_MenuSelByUserID_UAT1" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_MenuUpd" SpName="EAS_MenuUpd" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_MenuUpdStatus" SpName="EAS_MenuUpdStatus" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_FunctionSelEdit" SpName="EAS_FunctionSelEdit" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />

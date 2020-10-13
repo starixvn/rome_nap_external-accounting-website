@@ -78,6 +78,7 @@
                                          ParentName = c.Field<string>("ParentName"),
                                          Url = c.Field<string>("Url"),
                                          FuncId = c.Field<int>("FuncId"),
+                                         FuncKey = c.Field<string>("FuncKey"),
                                          DisplayOrder = c.Field<int>("DisplayOrder"),
                                          IsActive = c.Field<bool>("Active")
                                      }).ToList();

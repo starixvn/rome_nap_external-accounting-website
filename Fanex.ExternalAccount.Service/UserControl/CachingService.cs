@@ -1,7 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.UserControl
 {
     using System;
+    using System.Linq;
     using Fanex.Caching;
+    using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DataAccess.Impl.UserControl;
     using Fanex.ExternalAccount.DataAccess.Interface.UserControl;
     using Fanex.ExternalAccount.DTO.UserControl;
@@ -12,7 +14,7 @@
         private static readonly ICache UserCache = CacheService.CreateInstance(CacheType.MemoryCache);
         private readonly IMenuDao _menuDao = new MenuDao();
 
-        public UserCache GetUserCache(int userId)
+        public UserCache GetUserCache(int userId, string groupName)
         {
             var result = UserCache.Get<UserCache>(userId.ToString());
 
@@ -21,9 +23,8 @@
                 result = this._menuDao.GetMenuByUserId(userId);
                 if (result != null)
                 {
-#pragma warning disable S109 // Magic numbers should not be used
+                    CheckPermissionForSearchAndCopy(result, groupName);
                     UserCache.Set<UserCache>(userId.ToString(), result, DateTime.Now.AddSeconds(30));
-#pragma warning restore S109 // Magic numbers should not be used
                 }
             }
 
@@ -38,6 +39,15 @@
         public void ClearUserCache()
         {
             UserCache.Clear();
+        }
+
+        private static void CheckPermissionForSearchAndCopy(UserCache userCache, string groupName)
+        {
+            if(!AppSettings.ShowSearchAndCopyForGroups.Contains(groupName))
+            {
+                userCache.MenuList.RemoveAll(i => i.FuncKey == eFunctions.SearchAndCopySuper);
+                userCache.PolicyList.RemoveAll(i => i.FuncKey == eFunctions.SearchAndCopySuper);
+            }
         }
     }
 }

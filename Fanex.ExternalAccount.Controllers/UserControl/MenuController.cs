@@ -143,7 +143,7 @@
             Policy = AuthenticateAction.AuthenticationType.Read)]
         private List<Menu> GetMenus()
         {
-            var menuList = _cachingService.GetUserCache(CurrentSession.UserId).MenuList;
+            var menuList = _cachingService.GetUserCache(CurrentSession.UserId, ExtRequest.GetGroupName()).MenuList;
             var parents = menuList.Where(x => x.ParentId == 0);
             var list = new List<Menu>();
             foreach (var parent in parents)
@@ -158,7 +158,7 @@
             Policy = AuthenticateAction.AuthenticationType.Read)]
         private List<Function> GetFunctions()
         {
-            var menuList = _cachingService.GetUserCache(CurrentSession.UserId).PolicyList;
+            var menuList = _cachingService.GetUserCache(CurrentSession.UserId, ExtRequest.GetGroupName()).PolicyList;
             var parents = menuList.Where(x => x.ParentID == 0);
             var list = new List<Function>();
             foreach (var parent in parents)
