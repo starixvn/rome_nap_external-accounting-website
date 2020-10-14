@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Text;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Excel.Utility;
@@ -82,17 +83,17 @@
             const int mainTitleRowIndex = 0;
             var uplineRoleId = searchFilter.SearchRoleId + 1;
 
-            var mainTitle = string.Format(
-                ViewLang.SearchFilterPatternExcel,
-                uplineRoleId.DisplayRoleName(),
-                searchFilter.UplineUsername,
-                searchFilter.FromDate.ToDateWithSlash(),
-                searchFilter.ToDate.ToDateWithSlash(),
-                ReviewStatusConst.GetReviewStatusName(searchFilter.ReviewStatus),
-                searchFilter.SearchUsername,
-                DateTime.Now.ToDateTimeInMinuteString());
+            var mainTitle = new StringBuilder();
+            mainTitle
+                .Append($"{ViewLang.FilterOption}:\n")
+                .AppendFormat("\t{0}: {1}\n", uplineRoleId.DisplayRoleName(), searchFilter.UplineUsername)
+                .Append($"\t{ViewLang.DateNotifiedFrom}: {searchFilter.FromDate.ToDateWithSlash()}\n")
+                .Append($"\t{ViewLang.To}: {searchFilter.ToDate.ToDateWithSlash()}\n")
+                .Append($"\t{ViewLang.ReviewStatus}: {ReviewStatusConst.GetReviewStatusName(searchFilter.ReviewStatus)}\n")
+                .Append($"\t{ViewLang.Username}: {searchFilter.SearchUsername}\n")
+                .Append($"{ViewLang.ExportDate}: {DateTime.Now.ToDateTimeInSecondString()}");
 
-            dataSheet.GetCell(mainTitleRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
+            dataSheet.GetCell(mainTitleRowIndex, FirstColumnIndex).SetCellValue(mainTitle.ToString());
         }
 
         private static void ExportBodyRows(

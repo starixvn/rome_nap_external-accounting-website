@@ -10,7 +10,8 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
             3: null,
             2: null,
             1: null
-        };
+        },
+        hasHostPermission = false;
 
     function selector(query) {
         var element = cacheDOMElements[query];
@@ -80,7 +81,7 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
             top.exportExcel(url, document);
         });
 
-        selector("#freegrid-container-" + roleId)
+        hasHostPermission && selector("#freegrid-container-" + roleId)
             .find(".status-select")
             .click(function () {
                 var $this = $(this);
@@ -142,12 +143,10 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
                 { Name: "colDateNotified", Value: datum.CreatedDateStr }
             ];
 
-            if (roleId === 2 || roleId === 3) {
-                columns.push({ Name: "colProblemAccountsNo", Value: datum.NumberOfDownline });
-            }
+            (roleId === 2 || roleId === 3) && columns.push({ Name: "colProblemAccountsNo", Value: datum.NumberOfDownline });
 
             columns.push({ Name: "colReviewStatus", Value: datum.ReviewStatus });
-            columns.push({ Name: "colSetReviewed", Value: datum });
+            hasHostPermission && columns.push({ Name: "colSetReviewed", Value: datum });
 
             bodyRows.push({ Columns: columns, CssClass: getAccountStatusCssClass(datum) });
         }
@@ -167,14 +166,6 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
 
     function bindEventsAfterRenderProblemAccountsSuccessfully(roleId, $grid) {
         $grid
-            .find("#icon-review-user-" + roleId)
-            .off("click")
-            .on("click", function () {
-                var checkboxes = $grid.find(".menuActive");
-                checkboxes.length && openSetToReviewedPopup(roleId, checkboxes);
-            });
-
-        $grid
             .find(".drow-username")
             .off("click")
             .on("click", function () {
@@ -188,14 +179,24 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
                 }
             });
 
-        $grid
-            .find(".menuInactive")
-            .off("click")
-            .on("click", function () {
-                var $this = $(this);
-                var checked = $this.hasClass("menuActive");
-                $this.removeClass().addClass(checked ? "menuInactive set-to-reviewed" : "menuActive set-to-reviewed")
-            });
+        if (hasHostPermission) {
+            $grid
+                .find("#icon-review-user-" + roleId)
+                .off("click")
+                .on("click", function () {
+                    var checkboxes = $grid.find(".menuActive");
+                    checkboxes.length && openSetToReviewedPopup(roleId, checkboxes);
+                });
+
+            $grid
+                .find(".menuInactive")
+                .off("click")
+                .on("click", function () {
+                    var $this = $(this);
+                    var checked = $this.hasClass("menuActive");
+                    $this.removeClass().addClass(checked ? "menuInactive set-to-reviewed" : "menuActive set-to-reviewed")
+                });
+        }
     }
 
     function getAccountStatusCssClass(datum) {
@@ -244,8 +245,8 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
         }
 
         columns.push({ HeaderText: "Review Status", Name: "colReviewStatus", Width: 120, CellAlign: "center" });
-        columns.push({
-            HeaderText: '<span class="icon-review-user" id="icon-review-user-' + roleId + '"></span>',
+        hasHostPermission && columns.push({
+            HeaderText: '<span class="icon-review-user" id="icon-review-user-' + roleId + '" title="Set to reviewed"></span>',
             Name: "colSetReviewed",
             Width: 60,
             CellAlign: "center",
@@ -288,11 +289,12 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
     }
 
     function setFilterUIControls(roleId, uplineName) {
+        var formData = filterParams[roleId];
         var targetRoleId = roleId - 1;
         selector("#txt-uplineUsername-" + targetRoleId).val(uplineName);
 
-        var uplineFromDate = selector("#dtp-fromdate-" + roleId).val();
-        var uplineToDate = selector("#dtp-todate-" + roleId).val();
+        var uplineFromDate = formData.fromDate;
+        var uplineToDate = formData.toDate;
         var $dtpFromDate = selector("#dtp-fromdate-" + targetRoleId);
         $dtpFromDate
             .val(uplineFromDate)
@@ -302,7 +304,7 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
             .val(uplineToDate)
             .datepicker("option", "minDate", new Date(uplineFromDate));
 
-        var uplineReviewStatus = selector("#ddl-reviewStatus-" + roleId).val();
+        var uplineReviewStatus = formData.reviewStatus;
         var $ddlReviewStatus = selector("#ddl-reviewStatus-" + targetRoleId);
         $ddlReviewStatus
             .val(uplineReviewStatus)
@@ -320,13 +322,15 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
             usernames.push($this.data("username"));
         });
 
-        parent.Fanex.ExtAcc.Form.ConfirmBox(
+        Fanex.ExtAcc.Form.ConfirmBox(
             "SET TO REVIEWED",
             $popupSetToReviewed.html(),
             600,
             roleId === 1 ? 200 : 300,
             false,
-            setToReviewedSubmit,
+            function () {
+                setToReviewedSubmit(roleId);
+            },
             null,
             null,
             true,
@@ -363,7 +367,7 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
         $("#hidden-set-to-reviewed-roleId").val(roleId);
     }
 
-    function setToReviewedSubmit() {
+    function setToReviewedSubmit(roleId) {
         Fanex.ExtAcc.BlockUI();
         var formSetToReviewed = $("#form-set-to-reviewed");
         $.post(formSetToReviewed.attr("action"), formSetToReviewed.serialize())
@@ -375,24 +379,27 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
                         .removeClass()
                         .addClass("errMsg");
                 } else {
+                    selector("#form-problem-account-" + roleId).trigger("submit");
                     $("#msgContainer")
                         .html("Update Successfully.")
                         .removeClass()
                         .addClass("successMsg");
+                    setTimeout(Fanex.ExtAcc.Form.Close, 1000 * 3);
                 }
             })
             .always(Fanex.ExtAcc.UnBlockUI);
     }
 
     $(function () {
-        var divSetToReviewed = $("#div-set-to-reviewed");
-        $popupSetToReviewed = divSetToReviewed.clone();
+        var $popupContainer = $("#div-popup-container");
+        $popupSetToReviewed = $popupContainer.clone();
+        hasHostPermission = $popupSetToReviewed.length;
 
         selector("#problem-account-tabs").tabs();
         initSMATab(selector("#form-problem-account-1"), 1);
         initSMATab(selector("#form-problem-account-2"), 2);
         initSMATab(selector("#form-problem-account-3"), 3);
 
-        divSetToReviewed.remove();
+        $popupContainer.remove();
     })
 })(jQuery);

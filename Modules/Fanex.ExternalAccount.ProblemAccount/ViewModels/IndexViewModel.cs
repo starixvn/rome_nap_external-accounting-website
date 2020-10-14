@@ -11,11 +11,12 @@
     {
         private const int DefaultFromDays = -13;
 
-        public IndexViewModel()
+        public IndexViewModel(bool hasHostPermission)
         {
             var today = DateTime.Today;
             DefaultFromDate = today.AddDays(DefaultFromDays).ToDateWithSlash();
             DefaultToDate = today.ToDateWithSlash();
+            HasHostPermission = hasHostPermission;
         }
 
         public string DefaultFromDate { get; }
@@ -29,5 +30,7 @@
                 new SelectListItem { Text = ViewLang.Reviewed, Value = ReviewStatusConst.Reviewed.ToString() },
                 new SelectListItem { Text = ViewLang.NotReviewed, Value = ReviewStatusConst.NotReviewed.ToString() }
             };
+
+        public bool HasHostPermission { get; }
     }
 }

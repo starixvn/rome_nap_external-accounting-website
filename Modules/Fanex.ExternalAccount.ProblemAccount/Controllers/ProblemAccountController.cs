@@ -27,7 +27,8 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ProblemAccountList, Policy = AuthenticationType.Read)]
         public ActionResult Index()
-            => PartialViewBase(new IndexViewModel());
+            => PartialViewBase(
+                new IndexViewModel(AuthorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ProblemAccountList, AuthenticationType.Host)));
 
         [ExternalAccountAuthenticate(Function = eFunctions.ProblemAccountList, Policy = AuthenticationType.Read)]
         public ActionResult GetList(GetListViewModel viewModel)

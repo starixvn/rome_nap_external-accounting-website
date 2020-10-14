@@ -24,28 +24,13 @@
         </div>
     </div>
 </div>
-<div class="hide" id="div-set-to-reviewed">
-    <div id="msgContainer" class="hide"></div>
-    <div class="successMsg">Update Successfully</div>
-    <p class="selected-accounts">@ViewLang.SelectedAccounts: <span id="span-selected-accounts"></span></p>
-    <a href="javascript:;" class="show-all-accounts hide" id="link-show-all-accounts">@ViewLang.ShowAllnAccounts</a>
-    @using (Html.BeginForm("SetToReviewed", "ProblemAccount", FormMethod.Post, new { @class = "form-set-to-reviewed", id = "form-set-to-reviewed" }))
-    {
-        @Html.AntiForgeryToken()
-        <input type="hidden" name="custIds" id="hidden-set-to-reviewed-custIds" />
-        <input type="hidden" name="roleId" id="hidden-set-to-reviewed-roleId" />
-        <div id="reviewed-option-container">
-            <label class="reviewed-option">
-                <input type="radio" name="isAffectedAllDownlines" value="false" checked="checked" /> @ViewLang.STRSelectedAccountsOnly
-            </label>
-            <label class="reviewed-option">
-                <input type="radio" name="isAffectedAllDownlines" value="true" /> @ViewLang.STRSelectedAccountsAndDownlines
-            </label>
-        </div>
-    }
-</div>
+@if (Model.HasHostPermission)
+{
+    @RenderSetToReviewedPopup()
+}
 @StaticResources.RenderScripts("~/assets/bundles/problemaccount/index")
 @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
+
 @helper RenderSMATab(byte searchRoleId, string uplineLabel)
 {
     using (Html.BeginForm("GetList", "ProblemAccount", FormMethod.Get, new { @class = "search-form filterbox", id = "form-problem-account-" + searchRoleId }))
@@ -70,7 +55,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <input type="text" placeholder="@ViewLang.UsernameNicknameFirstLastName" autocomplete="off" style="width:260px" id="txt-searchUsername-@searchRoleId" />
+                <input type="text" placeholder="@ViewLang.Username" autocomplete="off" style="width:260px" id="txt-searchUsername-@searchRoleId" />
             </div>
             <div class="form-group">
                 <input type="submit" value="@ViewLang.Submit" class="btn -submit btnSearch" />
@@ -81,13 +66,38 @@
         </div>
     }
     <div class="freegrid-container hide" id="freegrid-container-@searchRoleId">
-        <div class="pull-right @(searchRoleId == 1 ? "select-container-member" : "select-container")">
-            <span class="text-select">@ViewLang.Select:</span>
-            <span class="status-select">@ViewLang.All</span>
-            <span class="character">|</span>
-            <span class="status-select">@ViewLang.None</span>
-        </div>
+        @if (Model.HasHostPermission)
+        {
+            <div class="pull-right @(searchRoleId == 1 ? "select-container-member" : "select-container")">
+                <span class="text-select">@ViewLang.Select:</span>
+                <span class="status-select">@ViewLang.All</span>
+                <span class="character">|</span>
+                <span class="status-select">@ViewLang.None</span>
+            </div>
+        }
         <div class="freegrid clearBoth" id="freegrid-@searchRoleId"></div>
     </div>
     <div class="div-noData hide" id="div-noData-@searchRoleId">@ViewLang.NoData</div>
+}
+@helper RenderSetToReviewedPopup()
+{
+    <div class="hide" id="div-popup-container">
+        <div id="msgContainer" class="hide"></div>
+        <p class="selected-accounts">@ViewLang.SelectedAccounts: <span id="span-selected-accounts"></span></p>
+        <a href="javascript:;" class="show-all-accounts hide" id="link-show-all-accounts">@ViewLang.ShowAllnAccounts</a>
+        @using (Html.BeginForm("SetToReviewed", "ProblemAccount", FormMethod.Post, new { @class = "form-set-to-reviewed", id = "form-set-to-reviewed" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="custIds" id="hidden-set-to-reviewed-custIds" />
+            <input type="hidden" name="roleId" id="hidden-set-to-reviewed-roleId" />
+            <div id="reviewed-option-container">
+                <label class="reviewed-option">
+                    <input type="radio" name="isAffectedAllDownlines" value="false" checked="checked" /> @ViewLang.STRSelectedAccountsOnly
+                </label>
+                <label class="reviewed-option">
+                    <input type="radio" name="isAffectedAllDownlines" value="true" /> @ViewLang.STRSelectedAccountsAndDownlines
+                </label>
+            </div>
+        }
+    </div>
 }

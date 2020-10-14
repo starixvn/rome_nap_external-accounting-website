@@ -159,8 +159,8 @@
   <data name="To" xml:space="preserve">
     <value>To</value>
   </data>
-  <data name="UsernameNicknameFirstLastName" xml:space="preserve">
-    <value>Username, Nickname or First/Last Name</value>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>None</value>
@@ -185,5 +185,11 @@
   </data>
   <data name="SearchFilterPatternExcel" xml:space="preserve">
     <value>Filter option:\n{0}: {1}\nDate Notified from: {2}\nTo: {3}\nReview Status: {4}\nUsername: {5}\nExport Date: {6}</value>
+  </data>
+  <data name="ExportDate" xml:space="preserve">
+    <value>Export Date</value>
+  </data>
+  <data name="FilterOption" xml:space="preserve">
+    <value>Filter option</value>
   </data>
 </root>

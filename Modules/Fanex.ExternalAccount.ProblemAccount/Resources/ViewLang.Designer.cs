@@ -88,11 +88,29 @@ namespace Fanex.ExternalAccount.ProblemAccount.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export Date.
+        /// </summary>
+        public static string ExportDate {
+            get {
+                return ResourceManager.GetString("ExportDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export Excel.
         /// </summary>
         public static string ExportExcel {
             get {
                 return ResourceManager.GetString("ExportExcel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter option.
+        /// </summary>
+        public static string FilterOption {
+            get {
+                return ResourceManager.GetString("FilterOption", resourceCulture);
             }
         }
         
@@ -259,11 +277,11 @@ namespace Fanex.ExternalAccount.ProblemAccount.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Username, Nickname or First/Last Name.
+        ///   Looks up a localized string similar to Username.
         /// </summary>
-        public static string UsernameNicknameFirstLastName {
+        public static string Username {
             get {
-                return ResourceManager.GetString("UsernameNicknameFirstLastName", resourceCulture);
+                return ResourceManager.GetString("Username", resourceCulture);
             }
         }
     }
