@@ -122,6 +122,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ViewLang.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\ProblemAccountExcel.cs" />
     <Compile Include="Services\ProblemAccountService.cs" />
     <Compile Include="ViewModels\GetListViewModel.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />

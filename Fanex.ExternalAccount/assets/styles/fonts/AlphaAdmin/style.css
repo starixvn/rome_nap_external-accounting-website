@@ -27,6 +27,7 @@
 
 .icon-review-user:before {
   content: "\e93b";
+  color: #fff;
 }
 .icon-wifi:before {
   content: "\e93a";

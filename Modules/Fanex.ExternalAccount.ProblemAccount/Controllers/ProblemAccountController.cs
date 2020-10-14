@@ -1,11 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.ProblemAccount.Controllers
 {
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.ProblemAccount.Extensions;
+    using Fanex.ExternalAccount.ProblemAccount.Models;
     using Fanex.ExternalAccount.ProblemAccount.Resources;
     using Fanex.ExternalAccount.ProblemAccount.Services;
     using Fanex.ExternalAccount.ProblemAccount.ViewModels;
@@ -14,15 +16,17 @@
     public class ProblemAccountController : BaseController
     {
         private readonly IProblemAccountService service;
+        private readonly IProblemAccountExcel excel;
 
         public ProblemAccountController()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public ProblemAccountController(IProblemAccountService service)
+        public ProblemAccountController(IProblemAccountService service, IProblemAccountExcel excel)
         {
-            this.service = new ProblemAccountService();
+            this.service = service ?? new ProblemAccountService();
+            this.excel = excel ?? new ProblemAccountExcel();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ProblemAccountList, Policy = AuthenticationType.Read)]
@@ -37,16 +41,26 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ProblemAccountList, Policy = AuthenticationType.Read)]
         public void ExportExcel(GetListViewModel viewModel)
         {
-            var roleName = ((int)viewModel.SearchRoleId).DisplayRoleName();
+            const int allPageSize = int.MaxValue - 2;
+            viewModel.PageIndex = 0;
+            viewModel.PageSize = allPageSize;
+            var report = service.GetProblemAccounts(viewModel);
+
+            ExportExcel(viewModel, report.ProblemAccounts);
+        }
+
+        private void ExportExcel(GetListViewModel searchFilter, IEnumerable<ProblemAccountEntity> problemAccounts)
+        {
+            var roleName = ((int)searchFilter.SearchRoleId).DisplayRoleName();
             var fileName = string.Format(
                 "{0} {1} - {2} - {3}.xls",
                 ViewLang.ProblemAccount,
-                viewModel.FromDate.ToDateWithHyphen(),
-                viewModel.ToDate.ToDateWithHyphen(),
+                searchFilter.FromDate.ToDateWithHyphen(),
+                searchFilter.ToDate.ToDateWithHyphen(),
                 roleName);
             var excelTemplatePath = Server.MapPath($"~/ExcelTemplates/ProblemAccountList/{roleName}.xls");
 
-            using (var excelStream = service.ExportExcel(viewModel, excelTemplatePath))
+            using (var excelStream = excel.ExportExcel(excelTemplatePath, searchFilter, problemAccounts))
             {
                 ExportToExcel(excelStream, fileName);
             }

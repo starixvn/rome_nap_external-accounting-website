@@ -75,7 +75,7 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
             getProblemAccounts(formData);
         });
 
-        $form.find("#icon-excel-" + roleId).click(function () {
+        selector("#icon-excel-" + roleId).click(function () {
             var formData = filterParams[roleId];
             var url = resolveClientUrl("ProblemAccount/ExportExcel?") + $.param(formData);
             top.exportExcel(url, document);
@@ -94,6 +94,10 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
     }
 
     function getFilterParams(roleId, pageIndex, pageSize) {
+        if (!pageSize) {
+            pageSize = filterParams[roleId] ? filterParams[roleId].pageSize : 50;
+        }
+
         return {
             groupName: Fanex.ExtAcc.Customer.GroupName().groupName,
             searchRoleId: roleId,
@@ -103,7 +107,7 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
             reviewStatus: selector("#ddl-reviewStatus-" + roleId).val(),
             searchUsername: selector("#txt-searchUsername-" + roleId).val(),
             pageIndex: pageIndex || 0,
-            pageSize: pageSize || 50
+            pageSize: pageSize
         };
     }
 
@@ -113,22 +117,17 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
         var $form = selector("#form-problem-account-" + roleId);
         var url = $form.attr("action") + "?" + $.param(formData);
         $.getJSON(url, function (data) {
-            renderProblemAccounts(formData, data);
+            if (data.TotalItems) {
+                renderProblemAccounts(formData, data);
+            } else {
+                renderNoData(roleId);
+            }
         }).done(Fanex.ExtAcc.UnBlockUI);
     }
 
     function renderProblemAccounts(formData, data) {
         var roleId = formData.searchRoleId;
-        var $gridContainer = selector("#freegrid-container-" + roleId);
-        var $grid = selector("#freegrid-" + roleId);
-        var $divNoData = selector("#div-noData-" + roleId);
-
-        if (!data.TotalItems) {
-            $gridContainer.removeAttr("style").addClass("hide");
-            $grid.removeAttr("style").html("");
-            $divNoData.removeClass("hide");
-            return;
-        }
+        var isNotMember = roleId !== 1;
 
         var bodyRows = [];
         var startNumber = formData.pageIndex * formData.pageSize;
@@ -143,7 +142,7 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
                 { Name: "colDateNotified", Value: datum.CreatedDateStr }
             ];
 
-            (roleId === 2 || roleId === 3) && columns.push({ Name: "colProblemAccountsNo", Value: datum.NumberOfDownline });
+            isNotMember && columns.push({ Name: "colProblemAccountsNo", Value: datum.NumberOfDownline });
 
             columns.push({ Name: "colReviewStatus", Value: datum.ReviewStatus });
             hasHostPermission && columns.push({ Name: "colSetReviewed", Value: datum });
@@ -157,11 +156,20 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
             totalItem: data.TotalItems
         };
 
+        var $grid = selector("#freegrid-" + roleId);
         $grid.fanexGrid(initGridOptions(roleId, bodyRows, pagerOption));
         bindEventsAfterRenderProblemAccountsSuccessfully(roleId, $grid);
 
-        $gridContainer.removeClass("hide");
-        $divNoData.addClass("hide");
+        selector("#icon-excel-" + roleId).removeClass("hide");
+        selector("#freegrid-container-" + roleId).removeClass("hide");
+        selector("#div-noData-" + roleId).addClass("hide");
+    }
+
+    function renderNoData(roleId) {
+        selector("#icon-excel-" + roleId).addClass("hide");
+        selector("#freegrid-container-" + roleId).removeAttr("style").addClass("hide");
+        selector("#freegrid-" + roleId).removeAttr("style").html("");
+        selector("#div-noData-" + roleId).removeClass("hide");
     }
 
     function bindEventsAfterRenderProblemAccountsSuccessfully(roleId, $grid) {
@@ -200,19 +208,16 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
     }
 
     function getAccountStatusCssClass(datum) {
-        if (datum.Status === 2) {
-            return "rowSuspended";
+        switch (datum.Status) {
+            case 2:
+                return "rowSuspended";
+            case 3:
+                return Fanex.ExtAcc.Customer.GetClosedClassName(datum);
+            case 4:
+                return "rowDisabled";
+            default:
+                return "";
         }
-
-        if (datum.Status === 3) {
-            return Fanex.ExtAcc.Customer.GetClosedClassName(datum);
-        }
-
-        if (datum.Status === 4) {
-            return "rowDisabled";
-        }
-
-        return "";
     }
 
     function initGridOptions(roleId, bodyRows, pagerOption) {
@@ -228,8 +233,8 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
                         : '<a href="javascript:;" class="drow-username">' + cell.Value.Username + '</a>';
                 }
             },
-            { HeaderText: "First Name", Name: "colFirstName", Width: 200 },
-            { HeaderText: "Last Name", Name: "colLastName", Width: 200 },
+            { HeaderText: "First Name", Name: "colFirstName", Width: 160 },
+            { HeaderText: "Last Name", Name: "colLastName", Width: 160 },
             { HeaderText: "Status", Name: "colStatus", Width: 100, CellAlign: "center" },
             { HeaderText: "Date Notified", Name: "colDateNotified", Width: 140, CellAlign: "center" }
         ];
@@ -281,7 +286,6 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
                     formData.pageIndex = pageIndex;
                     formData.pageSize = pageSize;
 
-                    filterParams[roleId] = formData;
                     getProblemAccounts(formData);
                 }
             }, pagerOption)
