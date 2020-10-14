@@ -526,7 +526,6 @@
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.js" />
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting.js" />
     <Content Include="Areas\ProductStatusSetting\Scripts\simple-product-status-setting.js" />
-    <Content Include="Areas\ProductStatusSetting\Scripts\simple-product-status-setting.min.js" />
     <Content Include="Areas\ProductStatusSetting\Styles\images\copy-icon.png" />
     <Content Include="Areas\ProductStatusSetting\Styles\product-status-setting-multiple.min.css" />
     <Content Include="Areas\ProductStatusSetting\Styles\simple-product-status-setting.min.css" />
@@ -868,8 +867,6 @@
     <Content Include="Areas\NG2\Styles\Images\icon_warning.gif" />
     <Content Include="Areas\NG2\Styles\um.css" />
     <Content Include="Areas\NG2\UM.aspx" />
-    <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.min.js" />
-    <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting.min.js" />
     <Content Include="Areas\ProductStatusSetting\Styles\images\error.png" />
     <Content Include="Areas\ProductStatusSetting\Styles\images\loading.gif" />
     <Content Include="Areas\ProductStatusSetting\Styles\images\success.png" />
