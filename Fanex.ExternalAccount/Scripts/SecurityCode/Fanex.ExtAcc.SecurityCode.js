@@ -9,6 +9,21 @@
     Saba.club               42
     RNG Lottery             44
 */
+
+String.prototype.contains = function (str) {
+    return this.indexOf(str) > -1;
+};
+
+var $ = window.$ || window.parent.$ || window.top.$;
+
+$.fn.existsOnly = function () {
+    return this.length === 1;
+};
+
+$.fn.displayBlock = function () {
+    return this.css('display') === 'block';
+};
+
 Fanex.ExtAcc.SecurityCode = {
     $scPageContainer: null,
     $message: null,
@@ -21,55 +36,40 @@ Fanex.ExtAcc.SecurityCode = {
     $txtMaxAllowAttempt: null,
 
     currentIFrame: null,
-    windowPopupFrameName: 'windowPopup',
     returnUrl: '',
     verifyUrl: resolveClientUrl('SecurityCode/Verify'),
     GetCurrentIFrame: function () {
-        var mainFrame = parent.$('iframe#mainIFrame');
-        if (mainFrame.length === 1) {
+        var mainFrame = $('iframe#mainIFrame');
+        if (mainFrame.existsOnly()) {
             return mainFrame;
         }
 
-        var virtualSportsFrame = parent.$('iframe#virtualSportsFrame');
-        var virtualSportsTab = parent.$('div#tabs-8');
-        if (virtualSportsFrame.length === 1 &&
-            virtualSportsTab.length === 1 &&
-            virtualSportsTab.css('display') === 'block') {
+        var virtualSportsFrame = $('iframe#virtualSportsFrame');
+        var virtualSportsTab = $('div#tabs-8');
+        if (virtualSportsFrame.existsOnly() &&
+            virtualSportsTab.existsOnly() &&
+            virtualSportsTab.displayBlock()) {
             return virtualSportsFrame;
         }
 
         var productIds = [5, 16, 22, 23, 24, 38, 41, 42, 44];
         var productId;
         for (productId of productIds) {
-            var productTab = parent.$('div#tabs-' + productId);
-            if (productTab.length === 1 && productTab.css('display') === 'block') {
-                var frame = parent.$('iframe#Frame_' + productId);
-                if (frame.length === 1) {
+            var productTab = $('div#tabs-' + productId);
+            if (productTab.existsOnly() && productTab.displayBlock()) {
+                var frame = $('iframe#Frame_' + productId);
+                if (frame.existsOnly()) {
                     return frame;
                 }
 
-                var product = parent.$('iframe#product-' + productId);
-                return product;
+                var product = $('iframe#product-' + productId);
+                if (product.existsOnly()) {
+                    return product;
+                }
             }
-        }
-
-        var windowPopupFrame = parent.$(`iframe[name=${this.windowPopupFrameName}]`);
-        if (windowPopupFrame.length === 1) {
-            return windowPopupFrame;
         }
 
         return null;
-    },
-    GetWindowPopupFrameHref: function () {
-        var frame;
-        for (var i = 0; i < parent.length; i++) {
-            if (parent[i].name === this.windowPopupFrameName) {
-                frame = parent[i];
-                break;
-            }
-        }
-
-        return frame ? frame.location.href : null;
     },
     Init: function () {
         this.CacheDOMElements();
@@ -93,25 +93,11 @@ Fanex.ExtAcc.SecurityCode = {
         this.$txtMaxAllowAttempt = $('#txtMaxAllowAttempt');
     },
     IsExternalSite: function () {
-        return this.returnUrl.indexOf('/updateCustomerSetting/updateSetting') > -1
-            || this.returnUrl.indexOf('/updateCustomerSetting/updateMultipleSetting') > -1;
+        return this.returnUrl.contains('/updateCustomerSetting/updateSetting')
+            || this.returnUrl.contains('/updateCustomerSetting/updateMultipleSetting');
     },
     OnValidated: function () {
-        if (!this.IsExternalSite()) {
-            this.$scPageContainer.html('');
-            return;
-        }
-        
-        if (this.currentIFrame) {
-            var src = this.currentIFrame.attr('src');
-            if (this.currentIFrame.attr('name') !== this.windowPopupFrameName) {
-                this.currentIFrame.attr('src', src);
-            } else {
-                var href = this.GetWindowPopupFrameHref();
-                href ? this.currentIFrame.attr('src', href)
-                    : this.currentIFrame.attr('src', src);
-            }
-        }
+        this.IsExternalSite() ? window.location.reload() : this.$scPageContainer.html('');
     },
     OnShowSecurityCode: function (event) {
         if (event.target.checked) {
@@ -196,18 +182,12 @@ Fanex.ExtAcc.SecurityCode = {
     AdjustPagePosition: function () {
         var scBlockOverlay = $('div.securitycode-block-overlay');
 
-        var currentIFrameId = this.currentIFrame ? this.currentIFrame.attr('id') : null;
-        if (!currentIFrameId) {
-            scBlockOverlay.css('top', '30%');
-            scBlockOverlay.css('display', 'block');
-            return;
-        }
-
-        if (currentIFrameId.indexOf('mainIFrame') > -1) {
+        var currentIFrameId = this.currentIFrame ? this.currentIFrame.attr('id') : '';
+        if (currentIFrameId.contains('mainIFrame')) {
             scBlockOverlay.css('top', '99px');
-        } else if (currentIFrameId.indexOf('virtualSportsFrame') > -1 || currentIFrameId.indexOf('Frame_') > -1) {
+        } else if (currentIFrameId.contains('virtualSportsFrame') || currentIFrameId.contains('Frame_')) {
             scBlockOverlay.css('top', '30%');
-        } else if (currentIFrameId.indexOf('product-') > -1) {
+        } else if (currentIFrameId.contains('product-')) {
             scBlockOverlay.css('top', '5rem');
         } else {
             scBlockOverlay.css('top', '30%');
