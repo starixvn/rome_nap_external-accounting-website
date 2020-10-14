@@ -3,28 +3,31 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using Fanex.ExternalAccount.ProblemAccount.Constants;
     using Fanex.ExternalAccount.ProblemAccount.Extensions;
     using Fanex.ExternalAccount.ProblemAccount.Resources;
 
     public class IndexViewModel
     {
+        private const int DefaultFromDays = -13;
+
         public IndexViewModel()
         {
             var today = DateTime.Today;
-            DefaultFrom = today.AddDays(-13).ToDateString();
-            DefaultTo = today.ToDateString();
+            DefaultFromDate = today.AddDays(DefaultFromDays).ToDateWithSlash();
+            DefaultToDate = today.ToDateWithSlash();
         }
 
-        public string DefaultFrom { get; }
+        public string DefaultFromDate { get; }
 
-        public string DefaultTo { get; }
+        public string DefaultToDate { get; }
 
         public IEnumerable<SelectListItem> ReviewStatus
-            => new SelectListItem[]
+            => new[]
             {
-                new SelectListItem { Text = ViewLang.All, Value = "2", Selected = true },
-                new SelectListItem { Text = ViewLang.Reviewed, Value = "1" },
-                new SelectListItem { Text = ViewLang.NotReviewed, Value = "0" }
+                new SelectListItem { Text = ViewLang.All, Value = ReviewStatusConst.All.ToString(), Selected = true },
+                new SelectListItem { Text = ViewLang.Reviewed, Value = ReviewStatusConst.Reviewed.ToString() },
+                new SelectListItem { Text = ViewLang.NotReviewed, Value = ReviewStatusConst.NotReviewed.ToString() }
             };
     }
 }

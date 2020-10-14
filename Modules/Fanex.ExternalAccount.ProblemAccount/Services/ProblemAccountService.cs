@@ -2,99 +2,193 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
+    using Fanex.ExternalAccount.Core.Shared;
+    using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.Excel.Utility;
+    using Fanex.ExternalAccount.ProblemAccount.Constants;
     using Fanex.ExternalAccount.ProblemAccount.Criteria;
+    using Fanex.ExternalAccount.ProblemAccount.DataAccesses;
+    using Fanex.ExternalAccount.ProblemAccount.Extensions;
     using Fanex.ExternalAccount.ProblemAccount.Models;
+    using Fanex.ExternalAccount.ProblemAccount.Resources;
     using Fanex.ExternalAccount.ProblemAccount.ViewModels;
-    using Fanex.NAP.Framework.Data;
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
 
     public interface IProblemAccountService
     {
-        IEnumerable<ProblemAccountEntity> GetProblemAccounts(GetListViewModel viewModel);
+        ProblemAccountReport GetProblemAccounts(GetListViewModel viewModel);
+
+        MemoryStream ExportExcel(GetListViewModel searchFilter, string excelTemplatePath);
+
+        Result SetToReviewed(SetToReviewedViewModel viewModel);
     }
 
     public class ProblemAccountService : IProblemAccountService
     {
-        private readonly IDynamicRepository repository;
+        private const int FirstColumnIndex = 0;
 
-        public ProblemAccountService(IDynamicRepository repository = null)
+        private readonly IProblemAccountDataAccess dataAccess;
+
+        public ProblemAccountService(IProblemAccountDataAccess dataAccess = null)
         {
-            this.repository = repository ?? new DynamicRepository();
+            this.dataAccess = dataAccess ?? new ProblemAccountDataAccess();
         }
 
-        public IEnumerable<ProblemAccountEntity> GetProblemAccounts(GetListViewModel viewModel)
+        public ProblemAccountReport GetProblemAccounts(GetListViewModel viewModel)
         {
-            yield return new ProblemAccountEntity
-            {
-                CustId = 1,
-                Username = "master1",
-                FirstName = "Noah",
-                LastName = "James",
-                Status = 1,
-                CreatedDate = DateTime.Now.AddDays(-10),
-                NumberOfDownline = 10
-            };
-            yield return new ProblemAccountEntity
-            {
-                CustId = 2,
-                Username = "master2",
-                FirstName = "Liam",
-                LastName = "John",
-                Status = 2,
-                CreatedDate = DateTime.Now.AddDays(-9),
-                NumberOfDownline = 9
-            };
-            yield return new ProblemAccountEntity
-            {
-                CustId = 3,
-                Username = "master3",
-                FirstName = "Mason",
-                LastName = "Robert",
-                Status = 3,
-                CreatedDate = DateTime.Now.AddDays(-8),
-                NumberOfDownline = 8,
-                ClosedReason = 1
-            };
-            yield return new ProblemAccountEntity
-            {
-                CustId = 4,
-                Username = "master4",
-                FirstName = "Jacob",
-                LastName = "Michael",
-                Status = 4,
-                CreatedDate = DateTime.Now.AddDays(-7),
-                NumberOfDownline = 7
-            };
+            viewModel.PageIndex++;
+            var criteria = new GetProblemAccountCriteria(viewModel);
+            var problemAccounts = dataAccess.GetProblemAccounts(criteria);
 
-            yield return new ProblemAccountEntity
-            {
-                CustId = 5,
-                Username = "master5",
-                Status = 3,
-                CreatedDate = DateTime.Now.AddDays(-6),
-                NumberOfDownline = 6,
-                IsReviewed = true,
-                ClosedReason = 2
-            };
-            yield return new ProblemAccountEntity
-            {
-                CustId = 6,
-                Username = "master6",
-                Status = 3,
-                CreatedDate = DateTime.Now.AddDays(-5),
-                NumberOfDownline = 5,
-                IsReviewed = true,
-                ClosedReason = 3
-            };
-            yield return new ProblemAccountEntity
-            {
-                CustId = 7,
-                Username = "master7",
-                Status = 3,
-                CreatedDate = DateTime.Now.AddDays(-4),
-                IsReviewed = true,
-                ClosedReason = 4
-            };
+            return new ProblemAccountReport(criteria.TotalRows, problemAccounts);
         }
-            //=> repository.Fetch<ProblemAccountEntity>(new GetProblemAccountCriteria(viewModel));
+
+        public MemoryStream ExportExcel(GetListViewModel searchFilter, string excelTemplatePath)
+        {
+            const int allPageSize = int.MaxValue - 2;
+            searchFilter.PageIndex = 0;
+            searchFilter.PageSize = allPageSize;
+            var report = GetProblemAccounts(searchFilter);
+
+            using (var file = new FileStream(excelTemplatePath, FileMode.Open, FileAccess.Read))
+            {
+                var workbook = new HSSFWorkbook(file);
+                var dataSheet = workbook.GetSheet("ProblemAccountList");
+                var templateSheet = workbook.GetSheet("Template");
+
+                ExportData(dataSheet, templateSheet, searchFilter, report.ProblemAccounts);
+                workbook.RemoveSheetAt(workbook.GetSheetIndex(templateSheet));
+
+                return WriteToStream(workbook);
+            }
+        }
+
+        private static void ExportData(
+            ISheet dataSheet,
+            ISheet templateSheet,
+            GetListViewModel searchFilter,
+            IEnumerable<ProblemAccountEntity> problemAccounts)
+        {
+            var isMemberLevel = searchFilter.SearchRoleId == Role.Member;
+
+            ExportSearchFilter(dataSheet, searchFilter);
+            ExportBodyRows(dataSheet, templateSheet, problemAccounts, isMemberLevel);
+        }
+
+        private static void ExportSearchFilter(ISheet dataSheet, GetListViewModel searchFilter)
+        {
+            const int mainTitleRowIndex = 0;
+            var uplineRoleId = searchFilter.SearchRoleId + 1;
+
+            var mainTitle = string.Format(
+                ViewLang.SearchFilterPatternExcel,
+                uplineRoleId.DisplayRoleName(),
+                searchFilter.UplineUsername,
+                searchFilter.FromDate.ToDateWithSlash(),
+                searchFilter.ToDate.ToDateWithSlash(),
+                ReviewStatusConst.GetReviewStatusName(searchFilter.ReviewStatus),
+                searchFilter.SearchUsername,
+                DateTime.Now.ToDateTimeInMinuteString());
+
+            dataSheet.GetCell(mainTitleRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
+        }
+
+        private static void ExportBodyRows(
+            ISheet dataSheet,
+            ISheet templateSheet,
+            IEnumerable<ProblemAccountEntity> problemAccounts,
+            bool isMemberLevel)
+        {
+            var dataRowIndex = 2;
+            var lastColumnIndex = isMemberLevel ? 7 : 8;
+            var number = 0;
+
+            foreach (var item in problemAccounts)
+            {
+                SetBackgroundRow(dataSheet, templateSheet, dataRowIndex, lastColumnIndex, item);
+                var values = new List<object>
+                {
+                    ++number,
+                    item.Username,
+                    item.FirstName,
+                    item.LastName,
+                    item.StatusName,
+                    item.CreatedDateStr
+                };
+
+                if (!isMemberLevel)
+                {
+                    values.Add(item.NumberOfDownline);
+                }
+
+                values.Add(item.ReviewStatus);
+                dataSheet.GetRow(dataRowIndex).WriteCells(FirstColumnIndex, values);
+
+                dataRowIndex++;
+            }
+        }
+
+        private static void SetBackgroundRow(
+            ISheet dataSheet,
+            ISheet templateSheet,
+            int rowId,
+            int lastColumnIndex,
+            ProblemAccountEntity problemAccount)
+        {
+            var fromRowId = MapAccountStatusToExcelRow(problemAccount.Status, problemAccount.ClosedReason);
+
+            dataSheet.CopyRow(templateSheet, fromRowId, rowId, FirstColumnIndex, lastColumnIndex);
+        }
+
+        private static int MapAccountStatusToExcelRow(byte status, byte closedReason)
+        {
+            switch (status)
+            {
+                case AccountStatusConst.Suspended:
+                    return AccountStatusConst.SuspendedRowIndex;
+
+                case AccountStatusConst.Closed:
+                    return MapClosedReasonToExcelRow(closedReason);
+
+                case AccountStatusConst.Disabled:
+                    return AccountStatusConst.DisabledRowIndex;
+
+                case AccountStatusConst.Open:
+                default:
+                    return AccountStatusConst.OpenRowIndex;
+            }
+        }
+
+        private static int MapClosedReasonToExcelRow(byte closedReason)
+        {
+            switch (closedReason)
+            {
+                case ClosedReasonConst.ClosedByAdmin:
+                    return ClosedReasonConst.ClosedByAdminRowIndex;
+
+                case ClosedReasonConst.ClosedByUpline:
+                    return ClosedReasonConst.ClosedByUplineRowIndex;
+
+                case ClosedReasonConst.ClosedWrongOTPSC:
+                    return ClosedReasonConst.ClosedWrongOTPSCRowIndex;
+
+                case ClosedReasonConst.ClosedWrongPwdOthers:
+                default:
+                    return ClosedReasonConst.ClosedWrongPwdOthersRowIndex;
+            }
+        }
+
+        private static MemoryStream WriteToStream(HSSFWorkbook workbook)
+        {
+            var memoryStream = new MemoryStream();
+            workbook.Write(memoryStream);
+
+            return memoryStream;
+        }
+
+        public Result SetToReviewed(SetToReviewedViewModel viewModel)
+            => dataAccess.SetToReviewed(new SetToReviewedCriteria(viewModel));
     }
 }

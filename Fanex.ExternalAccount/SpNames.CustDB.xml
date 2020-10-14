@@ -311,7 +311,7 @@
     <Setting Key="Acc_CheckUM_MultipleCustProductStatus" SpName="Acc_CheckUM_MultipleCustProductStatus" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
   <Function Name="Problem Account List">
-    <Setting Key="Age_ProblemAccount_CustomerList" SpName="Age_ProblemAccount_CustomerList" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Age_ProblemAccount_ReviewStatusUpd" SpName="Age_ProblemAccount_ReviewStatusUpd" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_ProblemAccount_CustomerList" SpName="EAS_ProblemAccount_CustomerList" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_ProblemAccount_ReviewStatusUpd" SpName="EAS_ProblemAccount_ReviewStatusUpd" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
 </Functions>

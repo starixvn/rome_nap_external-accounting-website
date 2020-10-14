@@ -14,61 +14,80 @@
             <li><a href="#tab-member">@ViewLang.Member</a></li>
         </ul>
         <div id="tab-master">
-            @RenderSMATab("form-master-list", 3, ViewLang.Super)
+            @RenderSMATab(3, ViewLang.Super)
         </div>
         <div id="tab-agent">
-            @RenderSMATab("form-agent-list", 2, ViewLang.Master)
+            @RenderSMATab(2, ViewLang.Master)
         </div>
         <div id="tab-member">
-            @RenderSMATab("form-member-list", 1, ViewLang.Agent)
+            @RenderSMATab(1, ViewLang.Agent)
         </div>
     </div>
 </div>
+<div class="hide" id="div-set-to-reviewed">
+    <div id="msgContainer" class="hide"></div>
+    <div class="successMsg">Update Successfully</div>
+    <p class="selected-accounts">@ViewLang.SelectedAccounts: <span id="span-selected-accounts"></span></p>
+    <a href="javascript:;" class="show-all-accounts hide" id="link-show-all-accounts">@ViewLang.ShowAllnAccounts</a>
+    @using (Html.BeginForm("SetToReviewed", "ProblemAccount", FormMethod.Post, new { @class = "form-set-to-reviewed", id = "form-set-to-reviewed" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="custIds" id="hidden-set-to-reviewed-custIds" />
+        <input type="hidden" name="roleId" id="hidden-set-to-reviewed-roleId" />
+        <div id="reviewed-option-container">
+            <label class="reviewed-option">
+                <input type="radio" name="isAffectedAllDownlines" value="false" checked="checked" /> @ViewLang.STRSelectedAccountsOnly
+            </label>
+            <label class="reviewed-option">
+                <input type="radio" name="isAffectedAllDownlines" value="true" /> @ViewLang.STRSelectedAccountsAndDownlines
+            </label>
+        </div>
+    }
+</div>
 @StaticResources.RenderScripts("~/assets/bundles/problemaccount/index")
 @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
-@helper RenderSMATab(string formName, byte searchRoleId, string uplineLabel)
+@helper RenderSMATab(byte searchRoleId, string uplineLabel)
 {
-    using (Html.BeginForm("GetList", "ProblemAccount", FormMethod.Get, new { @class = "search-form filterbox", id = formName }))
+    using (Html.BeginForm("GetList", "ProblemAccount", FormMethod.Get, new { @class = "search-form filterbox", id = "form-problem-account-" + searchRoleId }))
     {
-        <input type="hidden" name="searchRoleId" value="@searchRoleId" />
         <div class="searchBar">
             <div class="form-group">
                 <label for="txt-uplineName-@searchRoleId" class="label">@uplineLabel</label>
-                <input type="text" autocomplete="off" name="uplineName" id="txt-uplineName-@searchRoleId" />
+                <input type="text" autocomplete="off" id="txt-uplineUsername-@searchRoleId" />
             </div>
             <div class="form-group">
                 <label class="label">@ViewLang.DateNotifiedFrom</label>
-                <input type="text" readonly="readonly" value="@Model.DefaultFrom" class="dtp-from" name="from" />
+                <input type="text" readonly="readonly" value="@Model.DefaultFromDate" id="dtp-fromdate-@searchRoleId" />
             </div>
             <div class="form-group">
                 <label class="label">To</label>
-                <input type="text" readonly="readonly" value="@Model.DefaultTo" class="dtp-to" name="to" />
+                <input type="text" readonly="readonly" value="@Model.DefaultToDate" id="dtp-todate-@searchRoleId" />
             </div>
             <div class="form-group">
                 <label class="label">@ViewLang.ReviewStatus</label>
                 <div class="select-box pull-left">
-                    @Html.DropDownList("status", Model.ReviewStatus, new { id = "ddl-reviewStatus-" + searchRoleId })
+                    @Html.DropDownList("reviewStatus", Model.ReviewStatus, new { id = "ddl-reviewStatus-" + searchRoleId })
                 </div>
             </div>
             <div class="form-group">
-                <input type="text" placeholder="@ViewLang.UsernameNicknameFirstLastName" autocomplete="off" style="width:260px" name="query" />
+                <input type="text" placeholder="@ViewLang.UsernameNicknameFirstLastName" autocomplete="off" style="width:260px" id="txt-searchUsername-@searchRoleId" />
             </div>
             <div class="form-group">
                 <input type="submit" value="@ViewLang.Submit" class="btn -submit btnSearch" />
             </div>
             <div class="form-group icon-excel-container">
-                <span title="@ViewLang.ExportExcel" class="icon-excel"></span>
+                <span title="@ViewLang.ExportExcel" class="icon-excel" id="icon-excel-@searchRoleId"></span>
             </div>
         </div>
     }
-    <div class="freegrid-container hide">
-        <div class="pull-right select-container">
+    <div class="freegrid-container hide" id="freegrid-container-@searchRoleId">
+        <div class="pull-right @(searchRoleId == 1 ? "select-container-member" : "select-container")">
             <span class="text-select">@ViewLang.Select:</span>
             <span class="status-select">@ViewLang.All</span>
             <span class="character">|</span>
             <span class="status-select">@ViewLang.None</span>
         </div>
-        <div class="freegrid clearBoth"></div>
+        <div class="freegrid clearBoth" id="freegrid-@searchRoleId"></div>
     </div>
-    <div class="div-noData hide">@ViewLang.NoData</div>
+    <div class="div-noData hide" id="div-noData-@searchRoleId">@ViewLang.NoData</div>
 }

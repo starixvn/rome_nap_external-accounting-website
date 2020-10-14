@@ -2826,6 +2826,9 @@
     <Content Include="ExcelTemplates\Customer\MemberListMO.xls" />
     <Content Include="ExcelTemplates\Customer\SuperListMO.xls" />
     <Content Include="ExcelTemplates\Customer\CustomerListMO.xls" />
+    <Content Include="ExcelTemplates\ProblemAccountList\Master.xls" />
+    <Content Include="ExcelTemplates\ProblemAccountList\Agent.xls" />
+    <Content Include="ExcelTemplates\ProblemAccountList\Member.xls" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />

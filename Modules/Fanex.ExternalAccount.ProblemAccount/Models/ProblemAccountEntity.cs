@@ -1,53 +1,59 @@
 ﻿namespace Fanex.ExternalAccount.ProblemAccount.Models
 {
     using System;
+    using Fanex.ExternalAccount.ProblemAccount.Constants;
     using Fanex.ExternalAccount.ProblemAccount.Extensions;
     using Fanex.ExternalAccount.ProblemAccount.Resources;
 
     public class ProblemAccountEntity
     {
-        public int CustId { get; set; }
-
-        public string Username { get; set; }
-
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
-        public byte Status { get; set; }
-
-        public string StatusName
+        public ProblemAccountEntity(
+            int custId,
+            string username,
+            string firstName,
+            string lastName,
+            int numberOfDownline,
+            byte status,
+            DateTime createdDate,
+            bool isReviewed,
+            byte closedReason)
         {
-            get
-            {
-                switch (Status)
-                {
-                    case 1:
-                        return "Open";
-                    case 2:
-                        return "Suspended";
-                    case 3:
-                        return "Closed";
-                    case 4:
-                        return "Disabled";
-                    default:
-                        return string.Empty;
-                }
-            }
+            CustId = custId;
+            Username = username;
+            FirstName = firstName;
+            LastName = lastName;
+            Status = status;
+            NumberOfDownline = numberOfDownline;
+            CreatedDate = createdDate;
+            IsReviewed = isReviewed;
+            ClosedReason = closedReason;
         }
 
-        public int NumberOfDownline { get; set; }
+        public int CustId { get; }
 
-        public DateTime CreatedDate { get; set; }
+        public string Username { get; }
+
+        public string FirstName { get; }
+
+        public string LastName { get; }
+
+        public byte Status { get; }
+
+        public string StatusName
+            => AccountStatusConst.GetAccountStatusName(Status);
+
+        public int NumberOfDownline { get; }
+
+        public DateTime CreatedDate { get; }
 
         public string CreatedDateStr
             => CreatedDate.ToDateTimeInMinuteString();
 
-        public bool IsReviewed { get; set; }
+        public bool IsReviewed { get; }
 
         public string ReviewStatus
             => IsReviewed ? ViewLang.Reviewed : ViewLang.NotReviewed;
 
-        public int ClosedReason { get; set; }
+        public byte ClosedReason { get; }
     }
 }

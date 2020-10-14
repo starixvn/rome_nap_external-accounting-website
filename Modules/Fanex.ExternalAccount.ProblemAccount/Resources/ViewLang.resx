@@ -168,4 +168,22 @@
   <data name="Select" xml:space="preserve">
     <value>Select</value>
   </data>
+  <data name="ProblemAccount" xml:space="preserve">
+    <value>Problem Account</value>
+  </data>
+  <data name="SelectedAccounts" xml:space="preserve">
+    <value>Selected account(s)</value>
+  </data>
+  <data name="ShowAllnAccounts" xml:space="preserve">
+    <value>Show all {0} accounts?</value>
+  </data>
+  <data name="STRSelectedAccountsAndDownlines" xml:space="preserve">
+    <value>Set to Reviewed for the selected accounts and their problem account downlines.</value>
+  </data>
+  <data name="STRSelectedAccountsOnly" xml:space="preserve">
+    <value>Set to Reviewed for the selected accounts only.</value>
+  </data>
+  <data name="SearchFilterPatternExcel" xml:space="preserve">
+    <value>Filter option:\n{0}: {1}\nDate Notified from: {2}\nTo: {3}\nReview Status: {4}\nUsername: {5}\nExport Date: {6}</value>
+  </data>
 </root>

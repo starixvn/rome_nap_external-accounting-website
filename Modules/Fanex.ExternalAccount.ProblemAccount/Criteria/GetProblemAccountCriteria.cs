@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.ProblemAccount.Criteria
 {
     using System;
+    using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.ProblemAccount.ViewModels;
     using Fanex.NAP.Framework.Data;
 
@@ -8,36 +9,43 @@
     {
         public GetProblemAccountCriteria(GetListViewModel viewModel)
         {
-            UplineUserName = viewModel.UplineName;
+            FromDate = viewModel.FromDate;
+            ToDate = viewModel.ToDate;
+            GroupName = viewModel.GroupName;
+            UplineUsername = viewModel.UplineUsername;
             SearchRoleId = viewModel.SearchRoleId;
-            FromDate = viewModel.From;
-            ToDate = viewModel.To;
-            ReviewStatusId = viewModel.Status;
-            SearchUserName = viewModel.Query;
+            SearchUsername = viewModel.SearchUsername;
+            ReviewStatusId = viewModel.ReviewStatus;
+            PageIndex = viewModel.PageIndex;
+            PageSize = viewModel.PageSize;
         }
-
-        public int CustId { get; } = 1176070;
-
-        public int SubAccId { get; } = 0;
-
-        public string UplineUserName { get; }
-
-        public byte SearchRoleId { get; }
 
         public DateTime FromDate { get; }
 
         public DateTime ToDate { get; }
 
-        public int ReviewStatusId { get; }
+        public string GroupName { get; }
 
-        public string SearchUserName { get; }
+        public string UplineUsername { get; }
+
+        public byte SearchRoleId { get; }
+
+        public string SearchUsername { get; }
+
+        public byte ReviewStatusId { get; }
+
+        public int PageIndex { get; }
+
+        public int PageSize { get; }
+
+        public int TotalRows { get; set; }
 
         public override string GetSettingKey()
-            => "Age_ProblemAccount_CustomerList";
+            => "EAS_ProblemAccount_CustomerList";
 
         public override bool IsValid()
-            => CustId > 0 &&
-            SubAccId >= 0 &&
-            SearchRoleId <= 3;
+            => FromDate <= ToDate
+            && !string.IsNullOrWhiteSpace(GroupName)
+            && SearchRoleId < Role.Super;
     }
 }

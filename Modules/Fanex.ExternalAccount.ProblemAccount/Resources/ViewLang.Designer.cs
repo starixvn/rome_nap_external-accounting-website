@@ -142,6 +142,15 @@ namespace Fanex.ExternalAccount.ProblemAccount.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Problem Account.
+        /// </summary>
+        public static string ProblemAccount {
+            get {
+                return ResourceManager.GetString("ProblemAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Problem Account List.
         /// </summary>
         public static string ProblemAccountList {
@@ -169,11 +178,56 @@ namespace Fanex.ExternalAccount.ProblemAccount.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter option:\n{0}: {1}\nDate Notified from: {2}\nTo: {3}\nReview Status: {4}\nUsername: {5}\nExport Date: {6}.
+        /// </summary>
+        public static string SearchFilterPatternExcel {
+            get {
+                return ResourceManager.GetString("SearchFilterPatternExcel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select.
         /// </summary>
         public static string Select {
             get {
                 return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected account(s).
+        /// </summary>
+        public static string SelectedAccounts {
+            get {
+                return ResourceManager.GetString("SelectedAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show all {0} accounts?.
+        /// </summary>
+        public static string ShowAllnAccounts {
+            get {
+                return ResourceManager.GetString("ShowAllnAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set to Reviewed for the selected accounts and their problem account downlines..
+        /// </summary>
+        public static string STRSelectedAccountsAndDownlines {
+            get {
+                return ResourceManager.GetString("STRSelectedAccountsAndDownlines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set to Reviewed for the selected accounts only..
+        /// </summary>
+        public static string STRSelectedAccountsOnly {
+            get {
+                return ResourceManager.GetString("STRSelectedAccountsOnly", resourceCulture);
             }
         }
         
