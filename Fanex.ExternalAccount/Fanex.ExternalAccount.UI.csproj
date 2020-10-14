@@ -474,6 +474,15 @@
     <Content Include="Areas\Common\Views\Shared\Scripts\Fanex.CustomerSetting.js" />
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\ThirdPartyProductStatus\Index.cshtml" />
+    <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.min.js">
+      <DependentUpon>product-status-setting-multiple.js</DependentUpon>
+    </Content>
+    <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting.min.js">
+      <DependentUpon>product-status-setting.js</DependentUpon>
+    </Content>
+    <Content Include="Areas\ProductStatusSetting\Scripts\simple-product-status-setting.min.js">
+      <DependentUpon>simple-product-status-setting.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\associationaccount\index.js" />
     <Content Include="assets\bundles\associationaccount\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -2760,6 +2769,15 @@
     <Content Include="assets\styles\fonts\AlphaAdmin\fonts\TAHOMAB0.TTF" />
     <Content Include="assets\styles\fonts\AlphaAdmin\fonts\TAHOMABD.TTF" />
     <Content Include="assets\styles\fonts\AlphaAdmin\fonts\TAHOMA_0.TTF" />
+    <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.min.js.map">
+      <DependentUpon>product-status-setting-multiple.min.js</DependentUpon>
+    </Content>
+    <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting.min.js.map">
+      <DependentUpon>product-status-setting.min.js</DependentUpon>
+    </Content>
+    <Content Include="Areas\ProductStatusSetting\Scripts\simple-product-status-setting.min.js.map">
+      <DependentUpon>simple-product-status-setting.min.js</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

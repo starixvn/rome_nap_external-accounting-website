@@ -236,5 +236,26 @@
       "Scripts/ProblemAccount/Fanex.ExtAcc.ProblemAccount.js"
     ],
     "sourceMap": true
+  },
+  {
+    "outputFileName": "Areas/ProductStatusSetting/Scripts/product-status-setting-multiple.js",
+    "inputFiles": [
+      "Areas/ProductStatusSetting/Scripts/product-status-setting-multiple.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "Areas/ProductStatusSetting/Scripts/product-status-setting.js",
+    "inputFiles": [
+      "Areas/ProductStatusSetting/Scripts/product-status-setting.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "Areas/ProductStatusSetting/Scripts/simple-product-status-setting.js",
+    "inputFiles": [
+      "Areas/ProductStatusSetting/Scripts/simple-product-status-setting.js"
+    ],
+    "sourceMap": true
   }
 ]
