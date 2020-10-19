@@ -325,6 +325,7 @@
     <Compile Include="Home\NetworkSpeedController.cs" />
     <Compile Include="OTP\OTPController.cs" />
     <Compile Include="Report\BaseReportController.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPTController.cs" />
     <Compile Include="Report\WinLossDetailIBCBetLiveCasinoController.cs" />
     <Compile Include="Requests\CustomerList\SeachCustomerListRequest.cs" />
     <Compile Include="Requests\DrillDownWinLossDetailRequest.cs" />
@@ -333,6 +334,7 @@
     <Compile Include="Requests\SubGroup\SubGroupUpdateRequest.cs" />
     <Compile Include="Requests\ViewExtraPTRequest.cs" />
     <Compile Include="Requests\WinLossDetailIBCBetLiveCasinoRequest.cs" />
+    <Compile Include="Requests\SuperWinLossDetailByPTRequest.cs" />
     <Compile Include="Requests\WinLossDetailRequest.cs" />
     <Compile Include="SecurityCode\SecurityCodeController.cs" />
     <Compile Include="Statement\StatementController.cs" />

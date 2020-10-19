@@ -172,6 +172,7 @@
     <Compile Include="Criteria\GroupConfiguration\GetGroupConfigurationCriteria.cs" />
     <Compile Include="Criteria\IPInformation\GetIPInformationCriteria.cs" />
     <Compile Include="Criteria\IPInformation\GetAllSpecialIPCriteria.cs" />
+    <Compile Include="Criteria\SuperWinLossDetailByPT\SuperWinLossByPTCriteria.cs" />
     <Compile Include="Criteria\SubGroup\GetSubGroupCustomerCriteria.cs" />
     <Compile Include="Criteria\SubGroup\UpdateCustomerSubGroupCriteria.cs" />
     <Compile Include="Criteria\UserControl\GetGroupPolicyCriteria.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Customer\ISuperDao.cs" />
     <Compile Include="DataRange\DataRangeDao.cs" />
     <Compile Include="DataRange\IDataRangeDao.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Base\DAOBase.cs" />
     <Compile Include="Customer\Casino\CasinoDao.cs" />
@@ -206,6 +208,7 @@
     <Compile Include="Report\IReportDAO.cs" />
     <Compile Include="Report\ReportDao.partial.cs" />
     <Compile Include="Report\ReportDao.cs" />
+    <Compile Include="Report\SuperWinLossByPTDataAccess.cs" />
     <Compile Include="Statement\IStatementDAO.cs" />
     <Compile Include="Statement\StatementDao.cs" />
     <Compile Include="UserControl\FunctionDao.cs" />

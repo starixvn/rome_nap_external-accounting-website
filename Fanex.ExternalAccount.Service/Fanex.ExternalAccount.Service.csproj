@@ -204,6 +204,8 @@
     <Compile Include="Products\ProductService.cs" />
     <Compile Include="Report\IReportService.cs" />
     <Compile Include="Report\IViewExtraPTRequest.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossByPTParam.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossByPTService.cs" />
     <Compile Include="Report\WinLossDetailIBCBetLiveCasinoRequests.cs" />
     <Compile Include="Report\WinLossDetailRequests.cs" />
     <Compile Include="Report\IWinLossDetailIBCBetLiveCasinoService.cs" />

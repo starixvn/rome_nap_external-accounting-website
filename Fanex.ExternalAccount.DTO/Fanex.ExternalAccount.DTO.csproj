@@ -157,6 +157,14 @@
     <Compile Include="Products\ProductDto.cs" />
     <Compile Include="Products\ProductStatusDto.cs" />
     <Compile Include="Report\ExtraPTModel.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\Enumeration.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\NetWinLoss.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\Product.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\ProductIdConstants.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailByPTModel.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailSportByPTModel.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\UserLevel.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\WinlossByBettypeModel.cs" />
     <Compile Include="Report\WinLossDetailExtra.cs" />
     <Compile Include="Report\WinLossDetailIBCBetLiveCasino.cs" />
     <Compile Include="Statement\Statement.cs" />
