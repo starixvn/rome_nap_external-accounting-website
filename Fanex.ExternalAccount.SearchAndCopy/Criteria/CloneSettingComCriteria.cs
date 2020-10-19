@@ -24,6 +24,8 @@
 
         public int CustId { get; set; }
 
+        public string GroupAdmin { get; set; }
+
         public int ErrCode { get; set; }
 
         public string ErrMsg { get; set; }

@@ -93,6 +93,7 @@
                 Fax = context.Request.LastName,
                 Credit = context.Request.Credit,
                 ExistingCustId = context.ExistingCustId,
+                GroupAdmin = context.CurrentSession.CurrencyGroup,
                 Creator = context.CurrentSession.CustId,
                 IP = context.CurrentContext.Ip4Address
             };
