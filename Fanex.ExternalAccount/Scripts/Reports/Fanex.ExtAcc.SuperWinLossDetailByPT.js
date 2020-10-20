@@ -30,17 +30,13 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         };
     },
     SwitchCalendarType: function (showType) {
-        if (showType == 1) {
+        if (showType === 1) {
             this.ProductsList(false);
-            $("#GroupViewHistory").css("display", "none");
-            $("#GroupBackToCurrent").css("display", "block");
             $('.from-to-date').css('display', 'none');
             $('.group-month-day').css('display', 'inline-block');
         }
         else {
             this.ProductsList(true);
-            $("#GroupViewHistory").css("display", "block");
-            $("#GroupBackToCurrent").css("display", "none");
             $('.from-to-date').css('display', 'inline-block');
             $('.group-month-day').css('display', 'none');
         }
@@ -59,7 +55,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
             fromDayId: "fromDay1",
             toDayId: "toDay1",
             log: function (msg) {
-                if (typeof console != "undefined")
+                if (typeof console !== "undefined")
                     console.warn(msg);
             }
         });
@@ -74,8 +70,8 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         var month = date.getMonth() + 1;
         var year = date.getFullYear();
         var totalDays = day + (2 * month) + parseInt(3 * (month + 1) / 5) + year + parseInt(year / 4) - parseInt(year / 100) + parseInt(year / 400) + 2;
-        var dayNo = (totalDays % 7);
-        if (dayNo == 0) {
+        var dayNo = totalDays % 7;
+        if (dayNo === 0) {
             dayNo = 7;
         }
         return dayNo;
@@ -184,10 +180,6 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                 }
             }
         }
-
-        ////$.each(filteredProductDetails, function (index, p) {
-        ////    $('#productDetailsList .ui-multiselect-checkboxes :input[value="' + p.ResourceId + '"]').prop("disabled", checkedValue);
-        ////});
     },
     InitProductDetailsList: function ($productDetails) {
         $productDetails.css("display", "block");
@@ -286,23 +278,23 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
 
                 var fdate = new Date($("#MaxDate").val());
                 var tdate = new Date($("#MaxDate").val());
-                if (itemIndex == 1) {
+                if (itemIndex === 1) {
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - 1);
                     tdate = fdate;
-                } else if (itemIndex == 2) {
+                } else if (itemIndex === 2) {
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - $this.getDayOfYear(tdate) + 1);
-                } else if (itemIndex == 3) {
+                } else if (itemIndex === 3) {
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - $this.getDayOfYear(tdate) - 6);
                     tdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - $this.getDayOfYear(tdate));
-                } else if (itemIndex == 4) {
+                } else if (itemIndex === 4) {
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth(), 1);
                     tdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate());
-                } else if (itemIndex == 5) {
+                } else if (itemIndex === 5) {
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth() - 1, 1);
                     tdate = new Date(tdate.getFullYear(), tdate.getMonth(), 0);
-                } else if (itemIndex == 6) {
+                } else if (itemIndex === 6) {
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth() - 1, 1);
-                } else if (itemIndex == 7) {
+                } else if (itemIndex === 7) {
                     return;
                 }
 
@@ -374,47 +366,10 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
             top.exportExcel(url, document);
         });
 
-        $("#ViewHistoryReport").click(function () {
-            $this.SwitchCalendarType(1);
-        });
-        $("#BackToCurrentReport").click(function () {
-            $this.SwitchCalendarType(0);
-        });
-
-        $("#tabSuper").click(function (e) {
-            $this.viewlevel = 4;
-            $this.srecommend = 0;
-            $this.mrecommend = 0;
-            $this.recommend = 0;
-
-            if ($this.custId !== 0) {
-                $this.custId = 0;
-            }
-
-            $this.ToggleTabs('none', 'none', 'none', 'none', 4);
-            $this.Databind($this.supername);
-        });
-
-        $("#tabMaster").click(function (e) {
-            $this.viewlevel = 4;
-            $this.custId = $this.mastername === "" ? $this.srecommend : 0;
-            $this.ToggleTabs('block', 'block', 'none', 'none', 3);
-
-            $this.Databind($this.mastername);
-        });
-
-        $("#tabAgent").click(function (e) {
-            $this.viewlevel = 3;
-            $this.custId = $this.agentname === "" ? $this.mrecommend : 0;
-            $this.ToggleTabs('block', 'block', 'block', 'none', 2);
-
-            $this.Databind($this.agentname);
-        });
-
         $("#txtUserName").keypress(function (e) {
-            if (typeof e == "undefined") e = window.event;
-            var key = (typeof e.keyCode == "undefined") ? e.which : e.keyCode;
-            if (key == 13) {
+            if (typeof e === "undefined") e = window.event;
+            var key = (typeof e.keyCode === "undefined") ? e.which : e.keyCode;
+            if (key === 13) {
                 $this.CallSubmit();
                 return true;
             } else {
@@ -430,8 +385,6 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
 
         Fanex.ExtAcc.OnResize = $this.resizeReportGrid;
         $(".icon-filter").click($this.showHideFilter);
-
-        $('#ViewExtraPT').click($this.GetExtraPT);
     },
     resizeReportGrid: function () {
         try {
@@ -459,22 +412,22 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         $("#tabAgent").css("display", statusAg);
 
         $('#levelLine').css('display', levelLine);
-        if (status == 1) {
+        if (status === 1) {
             $("#SelectedLevel").html("Member");
         }
-        else if (status == 2) {
+        else if (status === 2) {
             $("#SelectedLevel").html("Agent");
         }
-        else if (status == 3) {
+        else if (status === 3) {
             $("#SelectedLevel").html("Master");
         }
-        else if (status == 4) {
+        else if (status === 4) {
             $("#SelectedLevel").html("Super");
         }
     },
 
     RenderUsernameColumn: function (cell) {
-        if (cell == null || cell.Value.Username == "Grand Total" || $this.viewlevel < 2) {
+        if (cell === null || cell.Value.Username == "Grand Total" || $this.viewlevel < 2) {
             return '<div class="text-truncate" style="line-height: 22px; text-align: left; padding-left: 3px" title="' + cell.Value.Username + '">' + cell.Value.Username + "</div>";
         }
 
@@ -484,7 +437,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
             '</div>';
     },
     CustomUsernameSortFunction: function (cell1Value, cell2Value, sortDirection) {
-        if (sortDirection == 'asc') {
+        if (sortDirection === 'asc') {
             return cell1Value.Username > cell2Value.Username ? 1 : -1;
         }
 
@@ -946,7 +899,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         if (countFixedSort > 0) {
             for (var i = 0; i < countFixedSort; i++) {
                 for (var j = 0; j < rows.length; j++) {
-                    if ($this.fixedsortlist[i] == rows[j].Columns[0].Value.CustId) {
+                    if ($this.fixedsortlist[i] === rows[j].Columns[0].Value.CustId) {
                         $this.fixedsortdata.push(rows.slice(j, j + 1)[0]);
                         rows.unshift(rows.splice(j, 1)[0]);
                         break;
@@ -974,11 +927,11 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         if (this.viewlevel >= 4) {
             this.srecommend = this.custId;
             this.ToggleTabs('none', 'none', 'none', 'none', 4);
-        } else if (this.viewlevel == 3) {
+        } else if (this.viewlevel === 3) {
             this.mrecommend = this.custId;
             this.ToggleTabs('block', 'block', 'none', 'none', 3);
             $("#tabSuper").attr("class", "tabActiveSuper");
-        } else if (this.viewlevel == 2) {
+        } else if (this.viewlevel === 2) {
             this.recommend = this.custId;
             this.ToggleTabs('block', 'block', 'block', 'none', 2);
             $("#tabSuper").attr("class", "tabDisableSuper");
@@ -1009,7 +962,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         this.viewlevel = 4;
     },
     GetFromDateToDate: function () {
-        if ($(".from-to-date").css('display') != 'none') {
+        if ($(".from-to-date").css('display') !== 'none') {
             this.fromdate = $("#dtpFromDate").val();
             this.todate = $("#dtpToDate").val();
         }
@@ -1024,7 +977,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         this.groupName = $("#selectedGroupName").html();
 
         var dateInfo;
-        if (this.fromdate == this.todate) {
+        if (this.fromdate === this.todate) {
             dateInfo = 'on ' + this.fromdate;
         }
         else {
@@ -1068,24 +1021,22 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                 $this.fixedsortlist = data.sortingorderlist;
 
                 $this.viewlevel = data.viewlevel;
-                if ($this.viewlevel == 3) {
+                if ($this.viewlevel === 3) {
                     $this.srecommend = data.srecommend;
-                } else if ($this.viewlevel == 2) {
+                } else if ($this.viewlevel === 2) {
                     $this.srecommend = data.srecommend;
                     $this.mrecommend = data.mrecommend;
-                } else if ($this.viewlevel == 1) {
+                } else if ($this.viewlevel === 1) {
                     $this.srecommend = data.srecommend;
                     $this.mrecommend = data.mrecommend;
                     $this.recommend = data.recommend;
                 }
 
-                if ($this.custId == 0) {
+                if ($this.custId === 0) {
                     $this.supername = data.supername;
                     $this.mastername = data.mastername;
                     $this.agentname = data.agentname;
                 }
-
-                $this.ChangeHeadlineTab();
 
                 $("#mainGrid").css("display", $this.totalRows < 1 ? "none" : "block");
                 $("#mainGrid").css("visibility", $this.totalRows < 1 ? "hidden" : "visible");
@@ -1109,7 +1060,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                             "- For Sportbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
                         var height = 170;
 
-                        if (data.tooltips.liveCasino != "") {
+                        if (data.tooltips.liveCasino !== "") {
                             message +=
                                 "<br/>" +
                                 "<br/>" +
@@ -1124,43 +1075,6 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                 Fanex.ExtAcc.UnBlockUI();
             }
         });
-    },
-    GetExtraPT: function () {
-        Fanex.ExtAcc.BlockUI();
-
-        $this.getParameterProducts();
-        $this.groupName = $("#selectedGroupName").html();
-
-        var url = resolveClientUrl('WinLossDetail/GetExtraPT') + "?groupname=" + $this.groupName + $this.parameterProducts;
-        $.ajax({
-            context: $this,
-            url,
-            type: 'post',
-            dataType: 'json',
-            cache: false
-        })
-            .done(function (data) {
-                Fanex.ExtAcc.WinLossDetail.ShowExtraPTDetail(data);
-            })
-            .fail(function (error) {
-                console.log(error);
-            })
-            .always(function () {
-                Fanex.ExtAcc.UnBlockUI();
-            });
-    },
-    ShowExtraPTDetail: function (data) {
-        var extraPT = '',
-            height = 220;
-
-        for (var i = 0; i < data.length; i++) {
-            extraPT += '<li>' + data[i].ExtraPT + '% of ' + data[i].ProductNames + '</li>';
-            height += 50;
-        }
-
-        var extraPTMessage = 'Extra PT% Details <ul>' + extraPT + '</ul>';
-
-        Fanex.ExtAcc.Form.Alert("View Extra PT%", extraPTMessage, 500, height);
     }
 };
 

@@ -2768,6 +2768,7 @@
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\associationaccount\index.min.js.map" />
+    <Content Include="assets\bundles\SuperWinLossDetailByPT\index.min.js.map">
     <Content Include="assets\bundles\problemaccount\index.min.js.map">
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
