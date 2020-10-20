@@ -265,6 +265,10 @@
         return data;
     },
 
+    GetGroupId: function () {
+        return $('#ddlGroupName').val();
+    },
+
     GetParams: function () {
         var enabled = null;
         var closed = false;

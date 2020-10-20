@@ -182,7 +182,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
 
                 var firstCustId = result.CustomerList[0].CustId;
                 Fanex.ExtAcc.Customer.AllowDoubleComm = result.CustomerList[0].UplineDoubleCommLosing;
-                $.post(resolveClientUrl('CustomerList/GetCustomerStatus'), { custId: firstCustId }, function (custStatusResult) {
+                $.post(resolveClientUrl('CustomerList/GetCustomerStatus'), { custId: firstCustId, groupName: $("#selectedGroupName").html() }, function (custStatusResult) {
                     Fanex.ExtAcc.Customer.HideGoldDeluxe = custStatusResult.HideGoldDeluxe;
                     Fanex.ExtAcc.Customer.HideKeno = custStatusResult.HideKeno;
                     Fanex.ExtAcc.Customer.HideVirtualSports = custStatusResult.HideVirtualSports;

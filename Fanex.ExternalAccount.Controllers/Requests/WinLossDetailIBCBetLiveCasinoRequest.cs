@@ -11,7 +11,7 @@
         private const string Seperator = ", ";
         private const string ShowAll = "showAll";
 
-        private readonly Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter;
+        private readonly Func<int, ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter;
         private readonly IExtRequest extRequest;
 
         public WinLossDetailIBCBetLiveCasinoRequest() : this(null, null)
@@ -19,20 +19,21 @@
         }
 
         public WinLossDetailIBCBetLiveCasinoRequest(
-            Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter,
+            Func<int, ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter,
             IExtRequest extRequest)
         {
             this.selectedProductQueryGetter = selectedProductQueryGetter ?? new FilterController().AsCollection;
             this.extRequest = extRequest ?? new ExtRequest();
         }
 
+        public int GroupId => extRequest.GetGroupId();
         public string GroupName => extRequest.GetGroupName();
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
 
         internal string GetProductNames(List<KeyValuePair<string, string>> productList)
         {
-            var filterParams = selectedProductQueryGetter();
+            var filterParams = selectedProductQueryGetter(GroupId);
             var formatedProducts = string.Empty;
 
             filterParams.ToList().ForEach(o =>

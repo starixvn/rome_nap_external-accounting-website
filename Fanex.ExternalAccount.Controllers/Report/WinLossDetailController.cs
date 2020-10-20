@@ -101,7 +101,7 @@
                     }
             }
 
-            var products = GetProductList();
+            var products = GetProductList(request.groupId);
             products = GetPPNameExportExcel(request, products);
 
             var formatedProducts = request.GetProductNames(products);
@@ -126,7 +126,7 @@
         {
             var toolTipsProducts = new
             {
-                liveCasino = BuildTooltipsForLiveCasino()
+                liveCasino = BuildTooltipsForLiveCasino(request.groupName)
             };
 
             return request.IsSearch()
@@ -136,7 +136,7 @@
                     new DrillDownWinLossDetailRequest(request, toolTipsProducts));
         }
 
-        private string BuildTooltipsForLiveCasino()
+        private string BuildTooltipsForLiveCasino(string groupName)
         {
             var liveCasino = new List<GroupConfigurationModel>
             {
@@ -149,7 +149,7 @@
             };
 
             var offeredLiveCasino = liveCasino.Where(
-                i => groupConfigurationService.IsShowByProductAndGroup(i.ProductId, currentSession.CurrencyGroup));
+                i => groupConfigurationService.IsShowByProductAndGroup(i.ProductId, groupName));
 
             if (offeredLiveCasino != null && offeredLiveCasino.Any())
             {
@@ -180,7 +180,7 @@
                 if (product.Key == "showPP")
                 {
                     var userSelectedResourceIds = request.ResourceIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    var productDetails = GetProductDetails(request.groupName)
+                    var productDetails = GetProductDetails(request.groupId, request.groupName)
                         .Where(p => p.ProductKey == product.Key)
                         .ToList();
 

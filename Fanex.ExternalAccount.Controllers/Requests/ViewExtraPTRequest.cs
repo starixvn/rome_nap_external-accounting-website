@@ -12,7 +12,7 @@
 
     public class ViewExtraPTRequest : IViewExtraPTRequest
     {
-        private readonly Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter;
+        private readonly Func<int, ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter;
         private readonly IExtRequest extRequest;
         private readonly IGroupConfigurationService groupConfigurationService;
 
@@ -21,7 +21,7 @@
         }
 
         public ViewExtraPTRequest(
-            Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter,
+            Func<int, ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter,
             IExtRequest extRequest,
             IGroupConfigurationService groupConfigurationService)
         {
@@ -30,11 +30,13 @@
             this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
         }
 
+        public int GroupId => extRequest.GetGroupId();
+
         public string GroupName => extRequest.GetGroupName();
 
         public int[] GetSelectedProductIds()
         {
-            var filterParams = selectedProductQueryGetter();
+            var filterParams = selectedProductQueryGetter(GroupId);
             var products = groupConfigurationService.Get(new GetGroupConfigurationCriteria()).Where(model => model.GroupName == GroupName);
 
             return products
@@ -45,7 +47,7 @@
         public string GetProductName(int productId)
         {
             return new ProductListAuthorization()
-                .GetProductList()
+                .GetProductList(GroupId)
                 .SingleOrDefault(p => p.ProductId == productId)?
                 .ProductText;
         }

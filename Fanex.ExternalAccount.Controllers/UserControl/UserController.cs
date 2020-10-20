@@ -1,5 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.UserControl
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
     using Core.Authorization;
     using Core.Base;
     using Core.Context;
@@ -12,11 +17,6 @@
     using Service.Impl.UserControl;
     using Service.Interface.Login;
     using Service.Interface.UserControl;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
     using Tarus.Infrastructure.Configurations.InternalLogin;
     using Utilities;
 
@@ -269,13 +269,13 @@
             return JsonBase(result);
         }
 
-        public ActionResult InternalLogin(string username)
+        public ActionResult InternalLogin(string username, string groupName)
         {
             var url = Url.Content("~") + "Shared/NoPermission";
             var checkCustomerBelongToSpecialSiteResult = CheckCustomerBelongToSpecialSite(username);
             if (IsAdminHasPermissionOnCustomer(checkCustomerBelongToSpecialSiteResult.IsSpecialSite))
             {
-                var isBelonging = _authorization.IsBelong(CurrentSession.CurrencyGroup, 0, username, false);
+                var isBelonging = _authorization.IsBelong(ExtRequest.GetGroupName(groupName), 0, username, false);
                 if (isBelonging)
                 {
                     var encryption = new EncryptionThread();

@@ -1,5 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
+    using System.Collections.Generic;
+    using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
@@ -11,8 +13,6 @@
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.UserControl;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinLossDetailIBCBetLiveCasino,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -65,7 +65,7 @@
                             request.FromDate,
                             request.ToDate);
 
-            var productList = GetProductList();
+            var productList = GetProductList(request.GroupId);
             var productNames = request.GetProductNames(productList);
 
             var memoryStream = builder.Build(productNames);

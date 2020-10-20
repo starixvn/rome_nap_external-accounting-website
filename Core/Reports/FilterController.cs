@@ -26,11 +26,11 @@
         {
         }
 
-        public ICollection<KeyValuePair<string, bool>> AsCollection()
+        public ICollection<KeyValuePair<string, bool>> AsCollection(int groupId)
         {
             var list = new List<KeyValuePair<string, bool>>();
 
-            foreach (var product in GetProductList())
+            foreach (var product in GetProductList(groupId))
             {
                 if (!product.Key.Equals("showAll", StringComparison.CurrentCultureIgnoreCase))
                 {
@@ -44,8 +44,9 @@
 
         public ActionResult ProductsList()
         {
-            var products = GetProductList();
-            var productDetails = GetProductDetails(extRequest.GetGroupName());
+            var groupId = extRequest.GetGroupId();
+            var products = GetProductList(groupId);
+            var productDetails = GetProductDetails(groupId, extRequest.GetGroupName());
 
             return JsonBase(new { products, productDetails }, new JsonSerializerSettings());
         }

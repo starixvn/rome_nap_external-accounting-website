@@ -864,6 +864,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus = function (productIds) {
         document.getElementById('custIds').value = custIds;
         document.getElementById('custNames').value = this.Names().join(', ');
         document.getElementById('custRole').value = this.CurrentLevel;
+        document.getElementById('groupId').value = Fanex.ExtAcc.Customer.GetGroupId();
         Fanex.ExtAcc.Form.ShowFrame(blankUrl, title, width, height, false, false, 1);
         $('#targetProductStatusSettingForm').attr('action', resolveClientUrl('ProductStatusSetting/MultipleView')).submit();
     }

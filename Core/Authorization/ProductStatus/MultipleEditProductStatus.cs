@@ -1,9 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization.ProductStatus
 {
-    using Fanex.ExternalAccount.Utilities.Reports.WinLossDetail;
-    using Shared;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Utilities.Reports.WinLossDetail;
+    using Shared;
 
     public class MultipleEditProductStatus
     {
@@ -30,7 +31,7 @@
 
         public static IEnumerable<KeyValuePair<int, string>> GetCustomerProductList()
             => new ProductListAuthorization()
-                .GetProductList()
+                .GetProductList(ExtRequest.Instance.GetGroupId())
                 .Where(product => !UnsupportProductStatus.Any(i => i == product.ProductId))
                 .Select(product => MapToDummyProducts(product))
                 .Select(product => new KeyValuePair<int, string>(

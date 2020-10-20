@@ -97,7 +97,13 @@ Fanex.ExtAcc.Header = {
                         && !document.getElementById('customerListGrid') && !document.getElementById('txtUserName')
                         && (document.getElementById('leftFrame').getAttribute('src') == '' || !document.getElementById('leftFrame').getAttribute('src'))) {
                         if (window.history.pushState) {
-                            window.history.pushState("object or string", "Title", location.href.substr(0, location.href.lastIndexOf('/')) + "/" + selectedGroupName);
+                            var currentURL = location.href;
+
+                            if (!currentURL.toLowerCase().endsWith("home/index")) {
+                                currentURL = currentURL.substr(0, currentURL.lastIndexOf('/'));
+                            }
+
+                            window.history.pushState("object or string", "Title", currentURL + "/" + selectedGroupName);
                         }
                         else {
                             location.hash = id.split('group')[1];

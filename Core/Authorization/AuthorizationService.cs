@@ -76,17 +76,12 @@
         {
             if (!CurrentSession.Instance.IsInternalAdmin)
             {
-                if (!string.IsNullOrEmpty(groupName) && !groupName.Equals(CurrentSession.Instance.CurrencyGroup))
-                {
-                    return false;
-                }
-
                 if (custId == 0 && string.IsNullOrEmpty(userName))
                 {
                     return true;
                 }
 
-                var result = reportService.GetCustomerInfo(CurrentSession.Instance.CurrencyGroup, custId, userName, isGetUplineInfo);
+                var result = reportService.GetCustomerInfo(groupName, custId, userName, isGetUplineInfo);
 
                 return result?.Rows.Count > 0;
             }
