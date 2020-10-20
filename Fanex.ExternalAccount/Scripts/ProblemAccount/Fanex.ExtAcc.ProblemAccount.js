@@ -133,19 +133,18 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
         var startNumber = formData.pageIndex * formData.pageSize;
         for (var i = 0, dataLength = data.ProblemAccounts.length; i < dataLength; i++) {
             var datum = data.ProblemAccounts[i];
-            var columns = [
-                { Name: "colNo", Value: startNumber + i + 1 },
-                { Name: "colUsername", Value: datum },
-                { Name: "colFirstName", Value: datum.FirstName },
-                { Name: "colLastName", Value: datum.LastName },
-                { Name: "colStatus", Value: datum.StatusName },
-                { Name: "colDateNotified", Value: datum.CreatedDateStr }
-            ];
+            var columns = [{ Name: "colNo", Value: startNumber + i + 1 }];
+            hasHostPermission && columns.push({ Name: "colSetReviewed", Value: datum });
+
+            columns.push({ Name: "colUsername", Value: datum });
+            columns.push({ Name: "colFirstName", Value: datum.FirstName });
+            columns.push({ Name: "colLastName", Value: datum.LastName });
+            columns.push({ Name: "colStatus", Value: datum.StatusName });
+            columns.push({ Name: "colDateNotified", Value: datum.CreatedDateStr });
 
             isNotMember && columns.push({ Name: "colProblemAccountsNo", Value: datum.NumberOfDownline });
 
             columns.push({ Name: "colReviewStatus", Value: datum.ReviewStatus });
-            hasHostPermission && columns.push({ Name: "colSetReviewed", Value: datum });
 
             bodyRows.push({ Columns: columns, CssClass: getAccountStatusCssClass(datum) });
         }
@@ -221,35 +220,7 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
     }
 
     function initGridOptions(roleId, bodyRows, pagerOption) {
-        var columns = [
-            { HeaderText: "#", Name: "colNo", Width: 60, CellAlign: "center" },
-            {
-                HeaderText: "Username",
-                Name: "colUsername",
-                Width: 200,
-                CustomCellRender: function (cell) {
-                    return roleId === 1
-                        ? cell.Value.Username
-                        : '<a href="javascript:;" class="drow-username">' + cell.Value.Username + '</a>';
-                }
-            },
-            { HeaderText: "First Name", Name: "colFirstName", Width: 160 },
-            { HeaderText: "Last Name", Name: "colLastName", Width: 160 },
-            { HeaderText: "Status", Name: "colStatus", Width: 100, CellAlign: "center" },
-            { HeaderText: "Date Notified", Name: "colDateNotified", Width: 140, CellAlign: "center" }
-        ];
-
-        if (roleId === 2 || roleId === 3) {
-            columns.push({
-                HeaderText: roleId === 2 ? "Problem Member Accounts" : "Problem Agent Accounts",
-                Name: "colProblemAccountsNo",
-                Width: 180,
-                CellAlign: "right",
-                HeaderAlign: "center"
-            });
-        }
-
-        columns.push({ HeaderText: "Review Status", Name: "colReviewStatus", Width: 120, CellAlign: "center" });
+        var columns = [{ HeaderText: "#", Name: "colNo", Width: 40, CellAlign: "center" }];
         hasHostPermission && columns.push({
             HeaderText: '<span class="icon-review-user" id="icon-review-user-' + roleId + '" title="Set to reviewed"></span>',
             Name: "colSetReviewed",
@@ -270,6 +241,32 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
                 ].join("");
             }
         });
+        columns.push({
+            HeaderText: "Username",
+            Name: "colUsername",
+            Width: 200,
+            CustomCellRender: function (cell) {
+                return roleId === 1
+                    ? cell.Value.Username
+                    : '<a href="javascript:;" class="drow-username">' + cell.Value.Username + '</a>';
+            }
+        });
+        columns.push({ HeaderText: "First Name", Name: "colFirstName", Width: 160 });
+        columns.push({ HeaderText: "Last Name", Name: "colLastName", Width: 160 });
+        columns.push({ HeaderText: "Status", Name: "colStatus", Width: 100, CellAlign: "center" });
+        columns.push({ HeaderText: "Date Notified", Name: "colDateNotified", Width: 140, CellAlign: "center" });
+
+        if (roleId === 2 || roleId === 3) {
+            columns.push({
+                HeaderText: roleId === 2 ? "Problem Member Accounts" : "Problem Agent Accounts",
+                Name: "colProblemAccountsNo",
+                Width: 180,
+                CellAlign: "right",
+                HeaderAlign: "center"
+            });
+        }
+
+        columns.push({ HeaderText: "Review Status", Name: "colReviewStatus", Width: 120, CellAlign: "center" });
 
         return {
             columns: columns,
