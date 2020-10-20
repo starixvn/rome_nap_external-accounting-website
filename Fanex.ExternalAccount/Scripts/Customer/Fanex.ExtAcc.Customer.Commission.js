@@ -120,7 +120,6 @@ Fanex.ExtAcc.Customer.Commission = {
                 commission.playerDiscount = $("#discountAsian").val();
                 commission.playerDiscount1x2 = $("#discount1x2").val();
                 commission.playerDiscountCs = $("#discountCS").val();
-                debugger;
                 if (commission.isMyanmarOdds)
                     commission.playerDiscountMyanmarOdds = $("#discountMyanmarOdds").val();
             }
