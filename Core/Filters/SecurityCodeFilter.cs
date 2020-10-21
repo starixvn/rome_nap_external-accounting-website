@@ -5,7 +5,6 @@
     using Fanex.ExternalAccount.Utilities;
     using System;
     using System.Linq;
-    using System.Web;
     using System.Web.Mvc;
 
     [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
@@ -21,8 +20,7 @@
 
             if (isFilteredUser && isFilteredAction && IsSecurityCodeRequired())
             {
-                var returnUrl = HttpUtility.UrlEncode(filterContext.HttpContext.Request.RawUrl);
-                filterContext.Result = RedirectToSecurityCodePage(returnUrl);
+                filterContext.Result = RedirectToSecurityCodePage(actionURL);
             }
 
             if (isFilteredUser && !isIgnoredAction && !IsSecurityCodeRequired())
@@ -33,11 +31,10 @@
 
         private bool IsSecurityCodeRequired()
         {
-            double scLastActiveTime = currentSession.LastActiveTime;
             double scAliveTime = Utils.ToDouble(SecurityCodeManager.GetAliveTime) * 1000.0d;
             double currentTime = Utils.ConvertDateTimeToMilliseconds(DateTime.Now);
 
-            return currentTime - scLastActiveTime > scAliveTime;
+            return currentTime - currentSession.LastActiveTime > scAliveTime;
         }
 
         private static RedirectResult RedirectToSecurityCodePage(string returnUrl) => new RedirectResult($"~/SecurityCode/Index?ReturnUrl={returnUrl}");

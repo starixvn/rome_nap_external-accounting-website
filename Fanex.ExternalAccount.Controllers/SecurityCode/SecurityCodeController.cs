@@ -20,15 +20,15 @@
         {
             ViewBag.MaxAllowAttempt = SecurityCodeManager.GetMaxAllowAttempt;
             ViewBag.UserName = currentSession.UserName;
-            ViewBag.ReturnUrl = ReturnUrl;
+            ViewBag.IsExternalSite = ReturnUrl.Contains("/updateCustomerSetting/updateSetting") 
+                || ReturnUrl.Contains("/updateCustomerSetting/updateMultipleSetting");
 
             return View();
         }
 
         public ActionResult Verify(string txtSecurityCode)
         {
-            string userName = currentSession.UserName;
-            string userSecurityCode = SecurityCodeManager.GetSecurityCode(userName);
+            string userSecurityCode = SecurityCodeManager.GetSecurityCode(currentSession.UserName);
 
             if (userSecurityCode.Equals(txtSecurityCode, StringComparison.CurrentCulture))
             {

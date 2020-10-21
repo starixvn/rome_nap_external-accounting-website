@@ -29,14 +29,14 @@ Fanex.ExtAcc.SecurityCode = {
     $message: null,
     $messageContent: null,
     $txtSecurityCode: null,
-    $txtReturnUrl: null,
+    $txtIsExternalSite: null,
     $cbShowSC: null,
     $btnSubmit: null,
     $scPageOverlay: null,
     $txtMaxAllowAttempt: null,
 
     currentIFrame: null,
-    returnUrl: '',
+    isExternalSite: false,
     verifyUrl: resolveClientUrl('SecurityCode/Verify'),
     GetCurrentIFrame: function () {
         var mainFrame = $('iframe#mainIFrame');
@@ -74,7 +74,7 @@ Fanex.ExtAcc.SecurityCode = {
     Init: function () {
         this.CacheDOMElements();
 
-        this.returnUrl = this.$txtReturnUrl.val();
+        this.isExternalSite = JSON.parse(this.$txtIsExternalSite.val().toLowerCase());
         this.currentIFrame = this.GetCurrentIFrame();
 
         this.AdjustPagePosition();
@@ -84,7 +84,7 @@ Fanex.ExtAcc.SecurityCode = {
     CacheDOMElements: function () {
         this.$scPageContainer = $('#securityCodePageContainer');
         this.$txtSecurityCode = $('#txtSecurityCode');
-        this.$txtReturnUrl = $('#txtReturnUrl');
+        this.$txtIsExternalSite = $('#txtIsExternalSite');
         this.$cbShowSC = $('#showSecurityCode');
         this.$btnSubmit = $('#btnSubmit');
         this.$scPageOverlay = $('.securitycode-page-overlay');
@@ -92,12 +92,8 @@ Fanex.ExtAcc.SecurityCode = {
         this.$message = $('#status-message');
         this.$txtMaxAllowAttempt = $('#txtMaxAllowAttempt');
     },
-    IsExternalSite: function () {
-        return this.returnUrl.contains('/updateCustomerSetting/updateSetting')
-            || this.returnUrl.contains('/updateCustomerSetting/updateMultipleSetting');
-    },
     OnValidated: function () {
-        this.IsExternalSite() ? window.location.reload() : this.$scPageContainer.html('');
+        this.isExternalSite ? window.location.reload() : this.$scPageContainer.html('');
     },
     OnShowSecurityCode: function (event) {
         if (event.target.checked) {

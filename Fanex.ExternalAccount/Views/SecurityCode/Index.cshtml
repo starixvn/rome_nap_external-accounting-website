@@ -1,12 +1,9 @@
 ﻿@{
     ViewBag.Title = "Security Code Validation";
     Layout = null;
-
-    bool IsExternalSite = ViewBag.ReturnUrl.Contains("/updateCustomerSetting/updateSetting")
-        || ViewBag.ReturnUrl.Contains("/updateCustomerSetting/updateMultipleSetting");
 }
 
-@if (IsExternalSite)
+@if (ViewBag.IsExternalSite)
 {
     <link href="@Url.Content("~/assets/bundles/common.min.css")" rel="stylesheet" type="text/css" />
 }
@@ -45,7 +42,7 @@
             </div>
 
             <input type="hidden" id="txtMaxAllowAttempt" value="@ViewBag.MaxAllowAttempt"/>
-            <input type="hidden" id="txtReturnUrl" value="@ViewBag.ReturnUrl" />
+            <input type="hidden" id="txtIsExternalSite" value="@ViewBag.IsExternalSite.ToString()" />
 
             <label class="form-body" style="margin-bottom: 16px;">
                 After Sending SC is successful, you must submit the setting page to complete the update.
@@ -58,7 +55,7 @@
 
 <div class="securitycode-page-overlay"></div>
 
-@if (IsExternalSite)
+@if (ViewBag.IsExternalSite)
 {
     <script type="text/javascript">
         function resolveClientUrl(relativeUrl) {
