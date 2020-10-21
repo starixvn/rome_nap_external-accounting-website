@@ -196,6 +196,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assign Super to Sub Group.
+        /// </summary>
+        public static string AssignSuperToSubGroup {
+            get {
+                return ResourceManager.GetString("AssignSuperToSubGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assign to.
         /// </summary>
         public static string AssignTo {
