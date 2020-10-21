@@ -19,9 +19,9 @@
 
         public IEnumerable<Menu> GetAllMenus() => _menuDao.GetAllMenus();
 
-        public IEnumerable<Menu> GetMenusByUserId(int userId)
+        public IEnumerable<Menu> GetMenusByUserId(int userId, string currentGroup)
         {
-            var userCache = CachingService.GetUserCache(userId);
+            var userCache = CachingService.GetUserCache(userId, currentGroup);
 
             return userCache.MenuList;
         }

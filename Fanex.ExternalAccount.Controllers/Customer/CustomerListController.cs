@@ -90,6 +90,7 @@
                 false,
                 status,
                 roleId,
+                customerList.IsMyanmarOdds,
                 request.IsShowSuperLimitDate ?? false);
             var excelStream = builder.Build();
             var fileName = $"{status}{roleId.DisplayRoleName()}List{DateTime.Now.ToString("yyyyMMdd")}.xls";

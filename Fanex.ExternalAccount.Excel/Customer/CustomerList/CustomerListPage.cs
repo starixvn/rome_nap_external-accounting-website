@@ -35,26 +35,29 @@
 
         public override void WriteBodyReport(ISheet resultSheet)
         {
-            var totalColumn = _builder.RoleId.IsSuper() ? 15 : 14;
+            var totalColumn = _builder.IsMyanmarOdds || _builder.RoleId.IsSuper() ? 15 : 14;
+            if (_builder.RoleId.IsSuper())
+            {
+                totalColumn++;
+            }
             var lastColumnIndex = FirstColumnIndex + totalColumn - 1;
             if (_builder.RoleId.IsNotMember())
             {
-                WriteOthersReport(resultSheet, _builder.Data, lastColumnIndex);
+                WriteOthersReport(resultSheet, _builder.Data, lastColumnIndex, _builder.IsMyanmarOdds);
             }
             else
             {
-#pragma warning disable S109 // Magic numbers should not be used
                 totalColumn = 18;
-#pragma warning restore S109 // Magic numbers should not be used
                 lastColumnIndex = FirstColumnIndex + totalColumn - 1;
-                WriteMemberReport(resultSheet, _builder.Data, lastColumnIndex);
+                WriteMemberReport(resultSheet, _builder.Data, lastColumnIndex, _builder.IsMyanmarOdds);
             }
         }
 
         private void WriteMemberReport(
             ISheet resultSheet,
             List<CustomerListDTO> data,
-            int lastColumnIndex)
+            int lastColumnIndex,
+            bool isMyanmarOdds)
         {
             var id = 1;
             var rowId = 3;
@@ -82,6 +85,11 @@
                     item.LastLoginIP
                 };
 
+                if (isMyanmarOdds)
+                {
+                    values.Insert(11, item.DiscountMyanmarOdds.ToString());
+                    values.Insert(15, item.PlayerDiscountMyanmarOdds.ToString());
+                }
                 resultSheet.GetRow(rowId).WriteCells(FirstColumnIndex, values);
 
                 id++;
@@ -92,7 +100,8 @@
         private void WriteOthersReport(
             ISheet resultSheet,
             List<CustomerListDTO> data,
-            int lastColumnIndex)
+            int lastColumnIndex,
+            bool isMyanmarOdds)
         {
             var id = 1;
             var rowId = 3;
@@ -114,6 +123,22 @@
                     item.Discount1x2,
                     item.DiscountCS
                 };
+                if (isMyanmarOdds)
+                {
+                    values = new List<object>
+                    {
+                        id,
+                        item.UserName,
+                        custStatus,
+                        item.DoubleCommLosing ? "ALLOWED" : "DISALLOWED",
+                        item.FirstName,
+                        item.LastName,
+                        item.GroupA,
+                        item.Discount1x2,
+                        item.DiscountCS,
+                        item.DiscountMyanmarOdds
+                    };
+                }
 
                 if (_builder.RoleId.IsSuper())
                 {
@@ -122,13 +147,13 @@
 
                 values.Add(item.CreateDate);
                 values.Add(item.LastLoginIP);
+
                 resultSheet.GetRow(rowId).WriteCells(FirstColumnIndex, values);
                 id++;
                 rowId++;
             }
         }
 
-#pragma warning disable S3358 // Ternary operators should not be nested
         private string SetBackgroundRow(
             ISheet resultSheet,
             int rowId,

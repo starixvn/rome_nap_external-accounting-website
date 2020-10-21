@@ -79,18 +79,31 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                 Fanex.Customer.SetNextCustomer(document.getElementById("selectedOne"), document.getElementById("selectedTwo"), document.getElementById("selectedThree"), customer.newUserName);
                 $("#textBoxDiscountAsian").val(commission.groupA);
                 $("#textBoxDiscount1x2").val(commission.discount1x2);
-                $("#textBoxDiscountCS").val(commission.discountCS);              
-                Fanex.ExtAcc.Customer.AgentAddNewMember.LoadGroupCommission(document.getElementById("group"), context.currencyId, context.siteName);
+                $("#textBoxDiscountCS").val(commission.discountCS);
+                Fanex.ExtAcc.Customer.AgentAddNewMember.LoadGroupCommission(document.getElementById("group"), context.currencyId, context.siteName, commission.isMyanmarOdds);
 
                 Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
                 Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
                 Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
+                if (customer.commissionSetting.isMyanmarOdds) {
+                    $("#textBoxDiscountMyanmarOdds").val(commission.discountMyanmarOdds);
+                    Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
+                }
+                else {
+                    $("#discountMyanmar").remove();
+                }
             }
             else {
                 $("#textBoxDiscountAsian").val(commission.discount);
                 Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.discount, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount);
                 Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount1x2);
                 Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);
+                if (customer.commissionSetting.isMyanmarOdds) {
+                    Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
+                }
+                else {
+                    $("#discountMyanmar").remove();
+                }
                 $this.currentStatusClose = customer.statusSetting.closed;
                 $this.currentStatusSuspend = customer.statusSetting.suspended;
             }
@@ -125,6 +138,8 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                     customer.commissionSetting.playerDiscount = $("#discountAsian").val();
                     customer.commissionSetting.playerDiscount1x2 = $("#discount1x2").val();
                     customer.commissionSetting.playerDiscountCs = $("#discountCS").val();
+                    if (customer.commissionSetting.isMyanmarOdds)
+                        customer.commissionSetting.playerDiscountMyanmarOdds = $("#discountMyanmarOdds").val();
                     customer.credit = Fanex.RoundNumber(parseFloat($("#credit").val(), true), 1); // Fix bug for IE7
 
                     // EscapeHTML String
@@ -207,10 +222,13 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
     },
 
     // Load Group Commission
-    LoadGroupCommission: function (selectId, currencyId, siteName) {
+    LoadGroupCommission: function (selectId, currencyId, siteName, isMyanmarOdds) {
         var listGroupCommission;
         // If Currency name is Won
-        if (currencyId == 45) {
+        if (isMyanmarOdds) {
+            listGroupCommission = new Array("a");
+        }
+        else if (currencyId == 45) {
             listGroupCommission = new Array("dea", "deb", "dec", "ded");
         }
         else if (siteName == "IBSBET") {

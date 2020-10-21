@@ -60,7 +60,7 @@
 
         public ActionResult _Menu()
         {
-            var menuList = menuService.GetMenusByUserId(CurrentSession.UserId);
+            var menuList = menuService.GetMenusByUserId(CurrentSession.UserId, ExtRequest.GetGroupName());
             var rootMenuList = menuList.Where(x => x.ParentId == 0);
             var menuDict = new Dictionary<string, MenuItem>();
 

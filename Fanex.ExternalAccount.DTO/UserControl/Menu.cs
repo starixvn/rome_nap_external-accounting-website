@@ -14,6 +14,8 @@
 
         public string FuncName { get; set; }
 
+        public string FuncKey { get; set; }
+
         public int ParentId { get; set; }
 
         public string ParentName { get; set; }
