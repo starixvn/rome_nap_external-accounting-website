@@ -1,36 +1,29 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.SuperWinLossDetailByPT
 {
-    using Fanex.ExternalAccount.DataAccess.Extensions;
     using Fanex.NAP.Framework.Data;
     using System;
-    using System.Collections.Generic;
 
     public class SuperWinLossDetailByPTCriteria : CriteriaBase
     {
         public SuperWinLossDetailByPTCriteria(
-            int custId,
+            string groupName,
             DateTime fromDate,
             DateTime toDate,
             DateTime balanceUpDay,
             DateTime moveBetsDay,
             string productIds,
-            //UserLevel custLevel,
             string productDetails)
         {
-            //CustLevel = custLevel;
-            CustId = custId;
-            FromDate = fromDate.Date;
-            ToDate = toDate.Date;
+            GroupName = groupName;
+            FromDate = fromDate;
+            ToDate = toDate;
             BalanceUpDay = balanceUpDay;
             MoveBetsDay = moveBetsDay;
             ProductDetails = productDetails;
             ProductIds = productIds;
         }
 
-        //[SpParam(Ignored = true)]
-        //public UserLevel CustLevel { get; }
-
-        public int CustId { get; }
+        public string GroupName { get; }
 
         public DateTime FromDate { get; }
 

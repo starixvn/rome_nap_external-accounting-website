@@ -53,7 +53,7 @@
             request.GetProductIds(),
             "1,3,4");
 
-            var viewModel = services.GetWinLossByProduct(param);
+            var viewModel = services.GetSuperWinLossDetailByPT(param);
             return Json(viewModel);
         }
 
@@ -61,7 +61,7 @@
         {
             IWinLossDetailReportBuilder builder;
             request.viewlevel++;
-            var winlossDetail = services.GetWinLossByProduct(new SuperWinLossDetailByPTParam(
+            var winlossDetail = services.GetSuperWinLossDetailByPT(new SuperWinLossDetailByPTParam(
             request.custId,
             request.fromdate,
             request.todate,

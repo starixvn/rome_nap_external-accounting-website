@@ -4,12 +4,11 @@
     using Fanex.ExternalAccount.DataAccess.Impl.Report;
     using Fanex.ExternalAccount.DTO.Report;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
 
     public interface SuperWinLossDetailByPTService
     {
-        IEnumerable<SuperWinLossDetailByPTModel> GetWinLossByProduct(SuperWinLossDetailByPTParam param);
+        SuperWinLossDetailByPTModel GetSuperWinLossDetailByPT(SuperWinLossDetailByPTParam param);
     }
 
     public class SuperWinLossDetailByPTServiceImpl : SuperWinLossDetailByPTService
@@ -25,62 +24,44 @@
         {
         }
 
-        public IEnumerable<SuperWinLossDetailByPTModel> GetWinLossByProduct(SuperWinLossDetailByPTParam param)
+        public SuperWinLossDetailByPTModel GetSuperWinLossDetailByPT(SuperWinLossDetailByPTParam param)
         {
             if (param == null)
             {
                 throw new ArgumentNullException(nameof(param));
             }
 
+            //var criteria = new SuperWinLossDetailByPTCriteria(
+            //    param.CustId,
+            //    param.FromDate,
+            //    param.ToDate,
+            //    DateTime.Now,//reportDateService.GetBalanceUpDay(),
+            //    DateTime.Now,//reportDateService.GetMoveBetsDay(),
+            //    param.UserSelectedProductIds,
+            //    //param.CustLevel,
+            //    param.ProductDetailsXML);
+
             var criteria = new SuperWinLossDetailByPTCriteria(
-                param.CustId,
-                param.FromDate,
-                param.ToDate,
-                DateTime.Now,//reportDateService.GetBalanceUpDay(),
-                DateTime.Now,//reportDateService.GetMoveBetsDay(),
-                param.UserSelectedProductIds,
-                //param.CustLevel,
-                param.ProductDetailsXML);
+            "ACCINDO",
+               new DateTime(2020, 10, 04),
+               new DateTime(2020, 10, 12),
+               new DateTime(2020, 9, 30),//reportDateService.GetBalanceUpDay(),
+               new DateTime(2020, 10, 03),//reportDateService.GetMoveBetsDay(),
+              "1,3,28,8,40,38,5,24,42,21,47,12,39,45,52,22,6,34,36,32,55,56",
+              "All");
 
-            var winLossByBetTypeData = superWinLossDetailByPTDataAccess.GetWinLossByBetType(criteria);
-            var result = new List<SuperWinLossDetailByPTModel>();
+            var superWinLossDetailByProductModels = superWinLossDetailByPTDataAccess.GetWinLossByBetType(criteria);
 
-            if (winLossByBetTypeData.Any())
+            if (superWinLossDetailByProductModels.Any())
             {
-                var winLossByProducts = winLossByBetTypeData.GroupBy(winLossByBetType => winLossByBetType.ProductId);
+                var superWinLossDetailProductByUsernames = superWinLossDetailByProductModels.GroupBy(item => item.CustId);
 
-                foreach (var winLossByProduct in winLossByProducts)
-                {
-                    result.Add(new SuperWinLossDetailByPTModel(
-                        winLossByProduct.Key,
-                        "Product Name",//cacheRefService.GetProductName(winLossByProduct.Key),
-                        CreateWinLossBySportModel(winLossByProduct)));
-                }
+                return new SuperWinLossDetailByPTModel(
+                superWinLossDetailProductByUsernames.Select(
+                item => new SuperWinLossDetailProductByUsername(item.FirstOrDefault().CustId, item.FirstOrDefault().Username, item)));
             }
 
-            return result;
-        }
-
-        private static IEnumerable<SuperWinLossDetailSportByPTModel> CreateWinLossBySportModel(
-            IGrouping<int, WinLossByBetTypeModel> winLossByProduct)
-        {
-            var winLossBySports = winLossByProduct.GroupBy(winLossByBetType => new
-            {
-                winLossByBetType.SportTypeId,
-                winLossByBetType.SportTypeName
-            });
-
-            var result = new List<SuperWinLossDetailSportByPTModel>();
-
-            foreach (var winLossBySport in winLossBySports)
-            {
-                result.Add(new SuperWinLossDetailSportByPTModel(
-                    winLossBySport.Key.SportTypeId,
-                    winLossBySport.Key.SportTypeName,
-                    winLossBySport.ToList()));
-            }
-
-            return result;
+            return new SuperWinLossDetailByPTModel();
         }
     }
 }

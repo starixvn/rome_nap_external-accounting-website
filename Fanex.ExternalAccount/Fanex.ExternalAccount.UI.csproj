@@ -1516,7 +1516,7 @@
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
     <Content Include="Scripts\Customer\Fanex.ExtAcc.AssociationAccount.js" />
-    <Content Include="Scripts\Reports\Fanex.ExtAcc.SuperWinLossDetailByPT.js" />
+    <Content Include="Scripts\Reports\SuperWinLossDetailByPT\Fanex.ExtAcc.SuperWinLossDetailByPT.js" />
     <Content Include="Scripts\ProblemAccount\Fanex.ExtAcc.ProblemAccount.js" />
     <Content Include="Scripts\Manage\Fanex.ExtAcc.SubGroup.js" />
     <Content Include="Web.uat.config">

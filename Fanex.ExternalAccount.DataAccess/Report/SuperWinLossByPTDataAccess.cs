@@ -3,7 +3,7 @@
     using Fanex.Common.Extensions;
     using Fanex.Data;
     using Fanex.ExternalAccount.DataAccess.Criteria.SuperWinLossDetailByPT;
-    using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.DataAccess.Impl.Base;
     using Fanex.ExternalAccount.DTO.Report;
     using System;
     using System.Collections;
@@ -13,10 +13,10 @@
 
     public interface SuperWinLossDetailByPTDataAccess
     {
-        IEnumerable<WinLossByBetTypeModel> GetWinLossByBetType(SuperWinLossDetailByPTCriteria criteria);
+        IEnumerable<SuperWinLossDetailByProductModel> GetWinLossByBetType(SuperWinLossDetailByPTCriteria criteria);
     }
 
-    public class SuperWinLossDetailByPTDataAccessImpl : SuperWinLossDetailByPTDataAccess
+    public class SuperWinLossDetailByPTDataAccessImpl : DAOBase, SuperWinLossDetailByPTDataAccess
     {
         //private readonly CacheRefService cacheRefService;
 
@@ -25,28 +25,26 @@
         //    //this.cacheRefService = cacheRefService;
         //}
 
-        public IEnumerable<WinLossByBetTypeModel> GetWinLossByBetType(SuperWinLossDetailByPTCriteria criteria)
+        public IEnumerable<SuperWinLossDetailByProductModel> GetWinLossByBetType(SuperWinLossDetailByPTCriteria criteria)
         {
             if (criteria == null)
             {
                 throw new ArgumentNullException(nameof(criteria), "Criteria cannot be null");
             }
 
-            var winlossByBettypeData = new List<WinLossByBetTypeModel>();
+            var winlossByBettypeData = new List<SuperWinLossDetailByProductModel>();
 
-            using (var db = new ObjectDb("Age_Rpt_WinLossByProduct_Master"))
-            {
-                var reader = db.ExecuteReader(new Hashtable
+            using (var reader = ExecDataReader("EAS_Rpt_WinLossDetail_byPT", new Hashtable
                     {
-                        { "CustId", criteria.CustId },
-                        { "FromDate", criteria.FromDate },
-                        { "ToDate", criteria.ToDate },
-                        { "BalanceUpDay", criteria.BalanceUpDay },
-                        { "MoveBetsDay", criteria.MoveBetsDay },
-                        { "ProductIds", criteria.ProductIds },
-                        { "ProductDetails", criteria.ProductDetails }
-                    });
-
+                        { "groupname", criteria.GroupName },
+                        { "fromdate", criteria.FromDate },
+                        { "todate", criteria.ToDate },
+                        { "balanceupday", criteria.BalanceUpDay },
+                        { "movebetsday", criteria.MoveBetsDay },
+                        { "productids", criteria.ProductIds },
+                        { "productdetails", criteria.ProductDetails }
+                    }))
+            {
                 if (reader != null)
                 {
                     while (reader.Read())
@@ -61,26 +59,31 @@
 
 
         [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1118:ParameterMustNotSpanMultipleLines", Justification = "Reviewed.")]
-        private WinLossByBetTypeModel BuildWinLossByBetType(IDataReader reader)
+        private SuperWinLossDetailByProductModel BuildWinLossByBetType(IDataReader reader)
         {
-            var productId = Convert.IsDBNull(reader["ProductID"]) ? 0 : reader.ToInt("ProductID");
-            var sportTypeId = Convert.IsDBNull(reader["SportType"]) ? 0 : reader.ToInt("SportType");
-            var bettypeId = reader.ToInt("bettype");
-
-            var winLossByBettype = new WinLossByBetTypeModel(
-                 betTypeId: bettypeId,
-                 betTypeName: "betTypeName", //Core.Services.Impl.CacheRef.GetBettype(bettypeId),
-                 productId: productId,
-                 sportTypeId: sportTypeId,
-                 sportTypeName: sportTypeId == 0 ? string.Empty : "Sport Name",//cacheRefService.GetSportName(sportTypeId),
-                 liveIndicator: reader.ToString("liveindicator") == "1",
-                 betCount: reader.ToInt("NumberOfTickets"),
-                 turnover: reader.ToDecimal("TurnOver"),
-                 grossComm: reader.ToDecimal("GrossComm"),
-                 memberNetWinLoss: null,
-                 agentNetWinLoss: NetWinLoss.ReadAgentNetWinLoss(reader, UserLevel.Super),
-                 masterNetWinLoss: NetWinLoss.ReadMasterNetWinLoss(reader, UserLevel.Super),
-                 superNetWinLoss: NetWinLoss.ReadSuperNetWinLoss(reader, UserLevel.Super));
+            var winLossByBettype = new SuperWinLossDetailByProductModel
+            {
+                CustId = reader.ToInt("custid"),
+                Username = reader.To<string>("username"),
+                ProductID = reader.ToInt("ProductID"),
+                ProductName = reader.To<string>("ProductName"),
+                Turnover = reader.ToDouble("Turnover"),
+                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
+                GrossComm = reader.ToDouble("GrossComm"),
+                MemberWinlost = reader.ToDouble("MemberWinlost"),
+                PlayerComm = reader.ToDouble("PlayerComm"),
+                MemberTotal = reader.ToDouble("MemberTotal"),
+                AgWinlost = reader.ToDouble("AgWinlost"),
+                AgComm = reader.ToDouble("AgComm"),
+                AgTotal = reader.ToDouble("AgTotal"),
+                MAgWinlost = reader.ToDouble("MAgWinlost"),
+                MAgComm = reader.ToDouble("MAgComm"),
+                MAgTotal = reader.ToDouble("MAgTotal"),
+                SAgWinlost = reader.ToDouble("SAgWinlost"),
+                SAgComm = reader.ToDouble("SAgComm"),
+                SAgTotal = reader.ToDouble("SAgTotal"),
+                Company = reader.ToDouble("Company")
+            };
 
             return winLossByBettype;
         }

@@ -8,36 +8,42 @@
         {
         }
 
-        public SuperWinLossDetailByPTModel(
-            int productId,
-            string productName,
-            IEnumerable<SuperWinLossDetailSportByPTModel> winLossBySportModels)
+        public SuperWinLossDetailByPTModel(IEnumerable<SuperWinLossDetailProductByUsername> superWinLossDetailProductByUsernames)
         {
-            ProductId = productId;
-            ProductName = productName;
-
-            WinLossBySportModels = winLossBySportModels;
-            AccumulateTotal();
+            SuperWinLossDetailProductByUsernames = superWinLossDetailProductByUsernames;
         }
 
-        public int ProductId { get; }
+        public IEnumerable<SuperWinLossDetailProductByUsername> SuperWinLossDetailProductByUsernames { get; }
 
-        public string ProductName { get; }
-
-        public IEnumerable<SuperWinLossDetailSportByPTModel> WinLossBySportModels { get; }
-
-        public WinLossByBetTypeModel Total { get; private set; }
-
-        public SuperWinLossDetailByPTModel AccumulateTotal()
-        {
-            Total = new WinLossByBetTypeModel();
-
-            foreach (var winLossBySportModel in WinLossBySportModels)
+        public SuperWinLossDetailByProductModel Total { get
             {
-                Total.Add(winLossBySportModel.Total);
-            }
+                var total = new SuperWinLossDetailByProductModel();
 
-            return this;
+                foreach (var superWinLossDetailProductByUsername in SuperWinLossDetailProductByUsernames)
+                {
+                    var superWinLossDetailProductByUsernameTotal = superWinLossDetailProductByUsername.Total;
+                    total.Turnover += superWinLossDetailProductByUsernameTotal.Turnover;
+                    total.NetTurnover += superWinLossDetailProductByUsernameTotal.NetTurnover;
+                    total.GrossComm += superWinLossDetailProductByUsernameTotal.GrossComm;
+                    total.MemberWinlost += superWinLossDetailProductByUsernameTotal.MemberWinlost;
+                    total.PlayerComm += superWinLossDetailProductByUsernameTotal.PlayerComm;
+                    total.MemberTotal += superWinLossDetailProductByUsernameTotal.MemberTotal;
+
+                    total.AgWinlost += superWinLossDetailProductByUsernameTotal.AgWinlost;
+                    total.AgComm += superWinLossDetailProductByUsernameTotal.AgComm;
+                    total.AgTotal += superWinLossDetailProductByUsernameTotal.AgTotal;
+                    total.MAgWinlost += superWinLossDetailProductByUsernameTotal.MAgWinlost;
+                    total.MAgComm += superWinLossDetailProductByUsernameTotal.MAgComm;
+                    total.MAgTotal += superWinLossDetailProductByUsernameTotal.MAgTotal;
+
+                    total.SAgWinlost += superWinLossDetailProductByUsernameTotal.SAgWinlost;
+                    total.SAgComm += superWinLossDetailProductByUsernameTotal.SAgComm;
+                    total.SAgTotal += superWinLossDetailProductByUsernameTotal.SAgTotal;
+                    total.Company += superWinLossDetailProductByUsernameTotal.Company;
+                }
+
+                return total;
+            }
         }
     }
 }
