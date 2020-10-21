@@ -407,15 +407,6 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         $this.resizeReportGrid();
         $this.hideFilter = !$this.hideFilter;
     },
-    RenderUsernameColumn: function (cell) {
-        if (cell === null || cell.Value === "Grand Total" || $this.viewlevel < 2) {
-            return '<div class="text-truncate" style="line-height: 22px; text-align: left; padding-left: 3px" title="' + cell.Value + '">' + cell.Value + "</div>";
-        }
-
-        var func = "javascript: Fanex.ExtAcc.SuperWinLossDetailByPT.GetDownlineWinLossDetail('" + cell.Value + "')";
-        return html = '<div style="line-height: 22px; text-align: left;">' +
-			'<span>' + cell.Value + '</span></div>';
-    },
     CustomUsernameSortFunction: function (cell1Value, cell2Value, sortDirection) {
         if (sortDirection === 'asc') {
             return cell1Value.Username > cell2Value.Username ? 1 : -1;
@@ -424,11 +415,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         return cell1Value.Username < cell2Value.Username ? 1 : -1;
     },
     defaultColumns: [
-        {
-            HeaderText: "Username", Name: "Username", Width: 130, Sort: true, HeaderAlign: "center",
-            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); },
-            CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection); }
-        },
+        { HeaderText: "Username", Name: "Username", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "left", ShowCollapseExpand: true},
         { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -489,6 +476,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
             showTitle: true,
             titleInfo,
             showFooter: true,
+            showTree: true,
             gridExpandHeight: 256,
             showPager: true,
             pagerOption: {
@@ -514,6 +502,32 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         $this.InitSort();
         var bodyData = [];
         for (var i = 0; i < this.totalRows; i++) {
+            var subRow = [];
+            for (var j = 0; j < this.dataSource[i].WinLossByProductModels.length; j++) {
+                var winLossByProductModel = this.dataSource[i].WinLossByProductModels[j];
+                subRow.push({
+                    Columns: [
+                        { Name: "Username", Value: winLossByProductModel.Username },
+                        { Name: "Turnover", Value: winLossByProductModel.Turnover },
+                        { Name: "NetTurnover", Value: winLossByProductModel.NetTurnover },
+                        { Name: "GrossComm", Value: winLossByProductModel.GrossComm },
+                        { Name: "MemberWinlost", Value: winLossByProductModel.MemberWinlost },
+                        { Name: "PlayerComm", Value: winLossByProductModel.PlayerComm },
+                        { Name: "MemberTotal", Value: winLossByProductModel.MemberTotal },
+                        { Name: "AgWinlost", Value: winLossByProductModel.AgWinlost },
+                        { Name: "AgComm", Value: winLossByProductModel.AgComm },
+                        { Name: "AgTotal", Value: winLossByProductModel.AgTotal },
+                        { Name: "MAgWinlost", Value: winLossByProductModel.MAgWinlost },
+                        { Name: "MAgComm", Value: winLossByProductModel.MAgComm },
+                        { Name: "MAgTotal", Value: winLossByProductModel.MAgTotal },
+                        { Name: "SAgWinlost", Value: winLossByProductModel.SAgWinlost },
+                        { Name: "SAgComm", Value: winLossByProductModel.SAgComm },
+                        { Name: "SAgTotal", Value: winLossByProductModel.SAgTotal },
+                        { Name: "Company", Value: winLossByProductModel.Company }
+                    ]
+                });
+            }
+
             bodyData.push({
                 Columns: [
                     { Name: "Username", Value: this.dataSource[i].Username },
@@ -533,11 +547,12 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                     { Name: "SAgComm", Value: this.dataSource[i].Total.SAgComm },
                     { Name: "SAgTotal", Value: this.dataSource[i].Total.SAgTotal },
                     { Name: "Company", Value: this.dataSource[i].Total.Company }
-                ]
+                ],
+                SubRows: subRow,
+                CssClass: 'sub-row-class'
             });
-            //for (var j = 0; j < this.dataSource[i].length; j++) {
-               
-            //}
+
+           
         }
 
         gridOption.bodyRows = bodyData;
@@ -566,7 +581,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                 { Name: "Company", Value: this.totalRowData.Company }
             ]
         });
-        debugger;
+
         gridOption.footerRows = footerData;
 
         setPagerOptionOnMobile(gridOption);
