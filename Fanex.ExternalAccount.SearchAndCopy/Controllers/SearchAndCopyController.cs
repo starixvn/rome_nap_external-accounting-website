@@ -5,6 +5,7 @@
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Core.Helpers;
     using Fanex.ExternalAccount.Core.Shared;
+    using Fanex.ExternalAccount.SearchAndCopy.Criteria;
     using Fanex.ExternalAccount.SearchAndCopy.Models;
     using Fanex.ExternalAccount.SearchAndCopy.Requests;
     using Fanex.ExternalAccount.SearchAndCopy.Services;
@@ -62,7 +63,7 @@
             var existingCustomer = (SearchCustomerModel)searchCustomerResult.ResultData;
             var cloneSettingContext = new CloneSettingContext(request, existingCustomer.CustId.Value, CurrentSession, CurrentContext);
             var cloneSettingResult = searchAndCopyService.CloneSetting(cloneSettingContext);
-            if(!cloneSettingResult.IsSuccess)
+            if (!cloneSettingResult.IsSuccess)
             {
                 if (!ErrorCodesNotSendEmail.Contains(cloneSettingResult.ErrorCode))
                 {
@@ -76,6 +77,17 @@
             return Json(cloneSettingContext.Result);
         }
 
+        [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Host)]
+        [AntiXSRFFilter]
+        [HttpPost]
+        public ActionResult GetSuperPrefixes(SuperPrefixRequest query)
+            => Json(searchAndCopyService.GetSuperPrefixes(new SuperPrefixCriteria
+            {
+                GroupName = query.GroupName,
+                Prefix = query.Prefix,
+                AllowNewSuper = query.AllowNewSuper
+            }), JsonRequestBehavior.DenyGet);
+
         private void SendEmail(CloneSettingContext context)
         {
             try
@@ -83,7 +95,7 @@
                 var mailBody = this.RenderRazorViewToString("Email", context);
                 var mail = new Mail
                 {
-                    Title= "Auto Generated Report Administrator",
+                    Title = "Auto Generated Report Administrator",
                     Subject = $"New super created by external admin - {context.Request.Username}",
                     Body = mailBody,
                     MailingListId = Config.SearchAndCopySuperMailingListId
@@ -102,7 +114,7 @@
                     }
                 });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.Handle(ex);
             }

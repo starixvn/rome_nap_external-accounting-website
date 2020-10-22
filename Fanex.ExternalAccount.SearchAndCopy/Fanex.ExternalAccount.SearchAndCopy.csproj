@@ -171,12 +171,14 @@
     <Compile Include="Criteria\GetCustomerInfoByUserIdCriteria.cs" />
     <Compile Include="Criteria\GetNG2StatusCriteria.cs" />
     <Compile Include="Criteria\SearchCustomerCriteria.cs" />
+    <Compile Include="Criteria\SuperPrefixCriteria.cs" />
     <Compile Include="Criteria\UpdateCRMHeadlineInfoCriteria.cs" />
     <Compile Include="Criteria\UpdateSyncBaseForIBCCriteria.cs" />
     <Compile Include="Criteria\UpdateSyncCasinoForIBCCriteria.cs" />
     <Compile Include="Models\CloneSettingContext.cs" />
     <Compile Include="Models\CustomerInfo.cs" />
     <Compile Include="Models\NG2Status.cs" />
+    <Compile Include="Models\SuperPrefix.cs" />
     <Compile Include="Models\SearchCustomerContext.cs" />
     <Compile Include="Repositories\CasinoRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
@@ -186,6 +188,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\SearchAndCopyRepository.cs" />
     <Compile Include="Requests\SearchCustomerRequest.cs" />
+    <Compile Include="Requests\SuperPrefixRequest.cs" />
     <Compile Include="Resources\Lang.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

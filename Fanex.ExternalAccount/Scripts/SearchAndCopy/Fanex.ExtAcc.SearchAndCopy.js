@@ -22,6 +22,7 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         $txtMobilePhone,
         $txtFax,
         $txtMaxCredit,
+        $notAllowedSuperPrefixes,
         passwordTemplate,
         existingUsername;
 
@@ -53,7 +54,14 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         $txtMobilePhone = $('#txtMobilePhone');
         $txtFax = $('#txtFax');
         $txtMaxCredit = $('#txtMaxCredit');
+        $notAllowedSuperPrefixes = $('#notAllowedSuperPrefixes');
         passwordTemplate = $('#passwordTemplate').html();
+
+        GetNotAllowedSuperPrefixes();
+        $("#ddlGroupName").on("change", function () {
+            var selected = $(this).find('option:selected')[0];
+            selected && GetNotAllowedSuperPrefixes(selected.innerHTML);
+        });
 
         $step2Panel.hide();
         $btnPrevious.hide();
@@ -234,9 +242,27 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         $validationMessage.html(message);
     }
 
+    function GetNotAllowedSuperPrefixes(groupName) {
+        var params = {
+            groupName: groupName || $('#selectedGroupName').html(),
+            prefix: null,
+            allowNewSuper: false
+        };
+
+        $.post(resolveClientUrl('SearchAndCopy/GetSuperPrefixes'), params, function (data) {
+            if (data && data.length > 0) {
+                $notAllowedSuperPrefixes.addClass('row-info');
+                $notAllowedSuperPrefixes.html(`* The following username prefixes are not allowed for new supers anymore: ${data[0].Prefixes}`);
+            } else {
+                $notAllowedSuperPrefixes.removeClass('row-info');
+                $notAllowedSuperPrefixes.html('');
+            }
+        });
+    }
+
     Fanex.ExtAcc.SearchAndCopy = function () {
         Init();
-    }
+    };
 })(jQuery);
 
 $(document).ready(function () {
