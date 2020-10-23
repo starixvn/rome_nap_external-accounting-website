@@ -38,6 +38,4 @@ _Chutzpah
 */assets/bundles/**
 *.orig
 Fanex.ExternalAccount/Properties/PublishProfiles/**
-Fanex.ExternalAccount/Areas/ProductStatusSetting/Scripts/*.min.js
-Fanex.ExternalAccount/Areas/ProductStatusSetting/Scripts/*.min.js.map
 /Fanex.ExternalAccount.Controllers/Fanex.ExternalAccount.Controllers.csproj.user
