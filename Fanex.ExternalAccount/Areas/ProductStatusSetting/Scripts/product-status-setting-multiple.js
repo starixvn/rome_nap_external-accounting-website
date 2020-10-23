@@ -15764,10 +15764,9 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
         return model;
     };
     ProductStatusSettingMultipe.prototype.onSuccess = function (results) {
-        if (parent.Fanex.ExtAcc.ShowSecurityCodePage(results, this.$.unblockUI)) {
+        if (typeof this.$topWindow.onPruductStatusSettingSuccess === "function" && !this.$topWindow.onPruductStatusSettingSuccess(results, this.$.unblockUI)) {
             return;
         }
-
         if (results.length > 0) {
             this.isUpdateSuccess(results) ? _super.prototype.onSuccess.call(this, [results[0]]) : this.onError(results);
         }

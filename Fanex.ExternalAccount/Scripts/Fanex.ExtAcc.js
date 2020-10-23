@@ -942,3 +942,17 @@ function isNullOrUndefinedOrEmpty(obj) {
     obj = obj === '' ? null : obj;
     return isNullOrUndefined(obj);
 }
+
+function onPruductStatusSettingSuccess(result, callback) {
+    if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+        if (typeof callback === 'function') {
+            callback();
+        }
+
+        $('#securityCodePageContainer').html(result);
+
+        return false;
+    }
+
+    return true;
+}
