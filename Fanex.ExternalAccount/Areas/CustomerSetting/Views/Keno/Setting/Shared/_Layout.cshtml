@@ -2,6 +2,7 @@
 @using Newtonsoft.Json.Serialization
 @using Fanex.CustomerSetting.Module.Keno.Resources;
 @using Fanex.ExternalAccount.Core.Shared;
+@using Fanex.ExternalAccount.Utilities;
 <!DOCTYPE html>
 <html ng-app='kenoSettingModule' id="ng-app">
 
@@ -102,6 +103,9 @@
     var usernames;
     var isMultipleEdit;
     var isBelongToSpecialGroups = @isBelongToSpecialGroups.ToString().ToLowerInvariant();
+    var selectedGroup = parent.Fanex.ExtAcc.Customer.GroupName().groupName;
+    var specialGroups = '@string.Join(",", Config.SpecialGroups())'.split(',');
+    var isActingOnSpecialGroups = specialGroups.indexOf(selectedGroup) !== -1;
 
     if(parent.Fanex.ExtAcc.Customer.IsMultiple) {
         InitMultipleEditInformation();
