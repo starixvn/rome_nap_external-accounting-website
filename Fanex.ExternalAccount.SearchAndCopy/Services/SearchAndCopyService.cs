@@ -90,7 +90,7 @@
                 LastName = context.Request.LastName,
                 Phone = context.Request.Phone,
                 MobilePhone = context.Request.MobilePhone,
-                Fax = context.Request.LastName,
+                Fax = context.Request.Fax,
                 Credit = context.Request.Credit,
                 ExistingCustId = context.ExistingCustId,
                 GroupAdmin = context.CurrentSession.CurrencyGroup,

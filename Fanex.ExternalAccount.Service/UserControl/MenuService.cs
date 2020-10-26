@@ -29,10 +29,6 @@
             {
                 return userCache.MenuList.Where(menu => menu.Url != AssignSubGroupUrl);
             }
-            if (!isShowAssignSubGroup)
-            {
-                return userCache.MenuList.Where(menu => menu.Url != AssignSubGroupUrl);
-            }
 
             return userCache.MenuList;
         }
