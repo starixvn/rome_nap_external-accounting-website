@@ -12,16 +12,20 @@
             int custId,
             string username,
             IEnumerable<SuperWinLossDetailByProductModel> winLossByProductModels)
+            //IEnumerable<SuperPTModel> superPTModels)
         {
             CustId = custId;
             Username = username;
 
             WinLossByProductModels = winLossByProductModels;
+            //SuperPTModels = superPTModels;
         }
 
         public int CustId { get; }
 
         public string Username { get; }
+
+        //public IEnumerable<SuperPTModel> SuperPTModels { get; }
 
         public IEnumerable<SuperWinLossDetailByProductModel> WinLossByProductModels { get; }
 

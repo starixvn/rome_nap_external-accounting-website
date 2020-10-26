@@ -172,6 +172,7 @@
     <Compile Include="Criteria\GroupConfiguration\GetGroupConfigurationCriteria.cs" />
     <Compile Include="Criteria\IPInformation\GetIPInformationCriteria.cs" />
     <Compile Include="Criteria\IPInformation\GetAllSpecialIPCriteria.cs" />
+    <Compile Include="Criteria\SuperWinLossDetailByPT\SuperPTCriteria.cs" />
     <Compile Include="Criteria\SuperWinLossDetailByPT\SuperWinLossByPTCriteria.cs" />
     <Compile Include="Criteria\SubGroup\GetSubGroupCustomerCriteria.cs" />
     <Compile Include="Criteria\SubGroup\UpdateCustomerSubGroupCriteria.cs" />

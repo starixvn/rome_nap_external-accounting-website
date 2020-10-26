@@ -157,6 +157,7 @@
     <Compile Include="Products\ProductDto.cs" />
     <Compile Include="Products\ProductStatusDto.cs" />
     <Compile Include="Report\ExtraPTModel.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\SuperPTModel.cs" />
     <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailProductByUsername.cs" />
     <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailByPTModel.cs" />
     <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailByProductModel.cs" />

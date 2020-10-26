@@ -507,7 +507,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                 var winLossByProductModel = this.dataSource[i].WinLossByProductModels[j];
                 subRow.push({
                     Columns: [
-                        { Name: "Username", Value: winLossByProductModel.Username },
+                        { Name: "Username", Value: winLossByProductModel.PositionTaking },
                         { Name: "Turnover", Value: winLossByProductModel.Turnover },
                         { Name: "NetTurnover", Value: winLossByProductModel.NetTurnover },
                         { Name: "GrossComm", Value: winLossByProductModel.GrossComm },

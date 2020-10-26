@@ -4,6 +4,7 @@
     using Fanex.ExternalAccount.DataAccess.Impl.Report;
     using Fanex.ExternalAccount.DTO.Report;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     public interface SuperWinLossDetailByPTService
@@ -54,11 +55,55 @@
 
             if (superWinLossDetailByProductModels.Any())
             {
-                var superWinLossDetailProductByUsernames = superWinLossDetailByProductModels.GroupBy(item => item.CustId);
+                var winLossDetailByPTAfterGroup = superWinLossDetailByProductModels
+                .Select(product =>
+                {
+                    var superIds = superWinLossDetailByProductModels.Select(item => item.CustId).Distinct();
+                    var postionTakings = superWinLossDetailByPTDataAccess.GetSuperPositionTakingList(new SuperPTCriteria(string.Join(",", superIds)));
+                    var existedPT = postionTakings.Where(pt => pt.CustId.Equals(product.CustId) && pt.ProductID.Equals(product.ProductID));
+                    
+                    if (existedPT.Any())
+                    {
+                        product.PositionTaking = existedPT.FirstOrDefault().PositionTaking;
+                    }
+
+                    return product;
+                })
+                .GroupBy(item => item.CustId)
+                .Select(ss => ss.GroupBy(item => item.PositionTaking).Select(group =>
+                {
+                    var result = new SuperWinLossDetailByProductModel
+                    {
+                        ProductNames = new List<string>()
+                    };
+
+                    foreach (var product in group)
+                    {
+                        result.CustId = product.CustId;
+                        result.Username = product.Username;
+                        result.PositionTaking += product.PositionTaking;
+                        result.Turnover += product.Turnover;
+                        result.NetTurnover += product.NetTurnover;
+                        result.Turnover += product.Turnover;
+                        result.GrossComm += product.GrossComm;
+                        result.MemberWinlost += product.MemberWinlost;
+                        result.PlayerComm += product.PlayerComm;
+                        result.MemberTotal += product.MemberTotal;
+                        result.AgWinlost += product.AgWinlost;
+                        result.AgComm += product.AgComm;
+                        result.AgTotal += product.AgTotal;
+                        result.ProductNames.Add(product.ProductName);
+                    }
+
+                    return result;
+                }));
 
                 return new SuperWinLossDetailByPTModel(
-                superWinLossDetailProductByUsernames.Select(
-                item => new SuperWinLossDetailProductByUsername(item.FirstOrDefault().CustId, item.FirstOrDefault().Username, item)));
+                winLossDetailByPTAfterGroup.Select(
+                item => new SuperWinLossDetailProductByUsername(
+                item.FirstOrDefault().CustId,
+                item.FirstOrDefault().Username,
+                item.OrderBy(superWinLossDetailByPTModel => superWinLossDetailByPTModel.PositionTaking))));
             }
 
             return new SuperWinLossDetailByPTModel();

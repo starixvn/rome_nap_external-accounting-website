@@ -1,7 +1,13 @@
-﻿namespace Fanex.ExternalAccount.DTO.Report
+﻿using System.Collections.Generic;
+
+namespace Fanex.ExternalAccount.DTO.Report
 {
     public class SuperWinLossDetailByProductModel
     {
+        public List<string> ProductNames { get; set; }
+
+        public decimal PositionTaking { get; set; }
+
         public int CustId { get; set; }
 
         public string Username { get; set; }

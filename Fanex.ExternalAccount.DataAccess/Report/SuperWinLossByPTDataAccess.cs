@@ -14,10 +14,44 @@
     public interface SuperWinLossDetailByPTDataAccess
     {
         IEnumerable<SuperWinLossDetailByProductModel> GetWinLossByBetType(SuperWinLossDetailByPTCriteria criteria);
+
+        IEnumerable<SuperPTModel> GetSuperPositionTakingList(SuperPTCriteria criteria);
     }
 
     public class SuperWinLossDetailByPTDataAccessImpl : DAOBase, SuperWinLossDetailByPTDataAccess
     {
+        public IEnumerable<SuperPTModel> GetSuperPositionTakingList(SuperPTCriteria criteria)
+        {
+            if (criteria == null)
+            {
+                throw new ArgumentNullException(nameof(criteria), "Criteria cannot be null");
+            }
+
+            var superPTList = new List<SuperPTModel>();
+
+            using (var reader = ExecDataReader(criteria.GetSettingKey(), new Hashtable
+                    {
+                        { "supers", criteria.Supers }
+                    }))
+            {
+                if (reader != null)
+                {
+                    while (reader.Read())
+                    {
+                        superPTList.Add(new SuperPTModel
+                        {
+                            CustId = reader.ToInt("CustID"),
+                            PositionTaking = reader.To<decimal>("SuperPT"),
+                            ProductID = reader.ToInt("ProductID"),
+                            ProductName = reader.To<string>("ProductName"),
+                        });
+                    }
+                }
+            }
+
+            return superPTList;
+        }
+
         //private readonly CacheRefService cacheRefService;
 
         //public SuperWinLossDetailByPTDataAccessImpl()
