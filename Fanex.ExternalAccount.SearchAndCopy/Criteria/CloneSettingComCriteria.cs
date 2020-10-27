@@ -36,6 +36,8 @@
 
         public int Case { get; set; }
 
+        public byte SettingStatus { get; set; }
+
         public override bool IsValid() =>
             Creator > 0
             && ExistingCustId > 0

@@ -16,7 +16,7 @@
 
         DataSet GetLoginInfo(int custId, string groupName);
 
-        DataSet GetCustomerStatusInfo(int custId);
+        DataSet GetCustomerStatusInfo(int custId, byte settingStatus);
 
         DataSet GetBalanceInfo(int custId);
 

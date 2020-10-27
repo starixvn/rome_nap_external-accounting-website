@@ -112,7 +112,8 @@
                 AdminId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address,
                 Language = "En",
-                SystemId = (byte)Config.SystemId
+                SystemId = (byte)Config.SystemId,
+                SettingStatus = Config.SettingStatus
             };
 
             var result = ptCustomerService.AddNewMaster(customer, requestContext, out int masterId);
@@ -123,7 +124,7 @@
                 Thread.Sleep(3000);
 #pragma warning restore S109 // Magic numbers should not be used
                 AutoInsertNG2Product(masterId, customer.UserName, RoleId.Master, parentId, SiteId.NAP,
-                    customer.CurrencyId);
+                    customer.CurrencyId, Config.SettingStatus);
                 AutoInsertCasinoPost(masterId, parentId);
             }
 
@@ -194,7 +195,8 @@
                 AdminId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address,
                 Language = "En",
-                SystemId = (byte)Config.SystemId
+                SystemId = (byte)Config.SystemId,
+                SettingStatus = Config.SettingStatus
             };
 
             var result = ptCustomerService.AddNewAgent(customer, requestContext, out int agentId);
@@ -206,7 +208,7 @@
                 Thread.Sleep(3000);
 #pragma warning restore S109 // Magic numbers should not be used
                 AutoInsertNG2Product(agentId, customer.UserName, RoleId.Agent, parentId, SiteId.NAP,
-                    customer.CurrencyId);
+                    customer.CurrencyId, Config.SettingStatus);
 
                 AutoInsertCasinoPost(agentId, parentId);
             }
@@ -284,7 +286,8 @@
                 AdminId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address,
                 Language = "En",
-                SystemId = (byte)Config.SystemId
+                SystemId = (byte)Config.SystemId,
+                SettingStatus = Config.SettingStatus
             };
 
             var result = ptCustomerService.AddNewMember(customer, requestContext, out int memberId);
@@ -296,7 +299,7 @@
                 Thread.Sleep(3000);
 #pragma warning restore S109 // Magic numbers should not be used
                 AutoInsertNG2Product(memberId, customer.UserName, RoleId.Member, parentId, SiteId.NAP,
-                    customer.CurrencyId);
+                    customer.CurrencyId, Config.SettingStatus);
 
                 AutoInsertCasinoPost(memberId, parentId);
             }
@@ -309,7 +312,7 @@
 
         public ActionResult Settings(int id, int custId, int uplineId, string userName, string groupName)
         {
-            var custStatus = _customerService.GetCustomerAllStatus(custId);
+            var custStatus = _customerService.GetCustomerAllStatus(custId, Config.SettingStatus);
             ViewBag.CurrentLevel = id;
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
@@ -325,7 +328,7 @@
         private List<Product> GetVisibledProducts(int roleId, int custId)
         {
             var visibledProducts = new List<Product>();
-            var productStatusList = productStatusService.GetProductStatusList(custId, roleId);
+            var productStatusList = productStatusService.GetProductStatusList(custId, roleId, Config.SettingStatus);
 
             foreach (var product in ProductSettings.SiteProducts.Values)
             {
@@ -385,7 +388,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Read)]
         public ActionResult EditInfo(int custId)
         {
-            var model = _customerService.UserInfo(custId);
+            var model = _customerService.UserInfo(custId, Config.SettingStatus);
             model.FirstName = HttpUtility.HtmlDecode(model.FirstName);
             model.LastName = HttpUtility.HtmlDecode(model.LastName);
             model.Phone = HttpUtility.HtmlDecode(model.Phone);
@@ -441,7 +444,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Read)]
         public ActionResult ResetPassword(int custId)
         {
-            var user = _customerService.UserInfo(custId);
+            var user = _customerService.UserInfo(custId, Config.SettingStatus);
             return PartialViewBase(user);
         }
 

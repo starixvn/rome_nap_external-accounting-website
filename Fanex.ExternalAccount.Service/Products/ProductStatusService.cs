@@ -7,9 +7,9 @@
 
     public interface ProductStatusService
     {
-        ProductStatusDto GetProductStatus(int custId, int roleId, int productId);
+        ProductStatusDto GetProductStatus(int custId, int roleId, int productId, byte settingStatus);
 
-        List<ProductStatusDto> GetProductStatusList(int custId, int roleId);
+        List<ProductStatusDto> GetProductStatusList(int custId, int roleId, byte settingStatus);
     }
 
     public class ProductStatusServiceImpl : ProductStatusService
@@ -21,16 +21,16 @@
             this.dataAccess = dataAccess ?? new ProductStatusDataAccessImpl();
         }
 
-        public ProductStatusDto GetProductStatus(int custId, int roleId, int productId)
+        public ProductStatusDto GetProductStatus(int custId, int roleId, int productId, byte settingStatus)
         {
-            var productStatusList = this.dataAccess.GetProductStatusList(custId, roleId);
+            var productStatusList = this.dataAccess.GetProductStatusList(custId, roleId, settingStatus);
 
             var productStatus = productStatusList.FirstOrDefault(product => product.ProductId == productId);
 
             return productStatus ?? new ProductStatusDto { IsHidden = true };
         }
 
-        public List<ProductStatusDto> GetProductStatusList(int custId, int roleId)
-            => this.dataAccess.GetProductStatusList(custId, roleId);
+        public List<ProductStatusDto> GetProductStatusList(int custId, int roleId, byte settingStatus)
+            => this.dataAccess.GetProductStatusList(custId, roleId, settingStatus);
     }
 }

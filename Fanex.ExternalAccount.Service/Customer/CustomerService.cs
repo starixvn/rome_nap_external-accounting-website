@@ -27,8 +27,10 @@
         public bool IsValidUsername(string userName, int uplineId)
             => dataAccess.IsValidUsername(userName, uplineId);
 
-        public Customer UserInfo(int custId) => dataAccess.UserInfo(custId);
-        public CustomerStatusDTO GetCustomerAllStatus(int custId) => dataAccess.GetCustomerAllStatus(new GetCustomerAllStatusCriteria { CustId = custId });
+        public Customer UserInfo(int custId, byte settingStatus) => dataAccess.UserInfo(custId, settingStatus);
+
+        public CustomerStatusDTO GetCustomerAllStatus(int custId, byte settingStatus) 
+            => dataAccess.GetCustomerAllStatus(new GetCustomerAllStatusCriteria { CustId = custId, SettingStatus = settingStatus });
 
         public Result EditUserInfo(Customer customer, string ip, int userId, int subAccId, string language)
             => dataAccess.EditUserInfo(customer, ip, userId, subAccId, language);

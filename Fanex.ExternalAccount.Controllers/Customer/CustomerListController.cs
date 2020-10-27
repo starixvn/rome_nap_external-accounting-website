@@ -11,6 +11,7 @@
     using Fanex.ExternalAccount.Service.Customer.CustomerList.Params;
     using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Service.Interface.Customer;
+    using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer.CustomerList;
     using System;
     using System.Web.Mvc;
@@ -59,7 +60,7 @@
         [AntiXSRFFilter]
         public JsonResult GetCustomerStatus(int custId)
         {
-            var products = _customerService.GetCustomerAllStatus(custId);
+            var products = _customerService.GetCustomerAllStatus(custId, Config.SettingStatus);
             if (products != null && products.DCSProductsSetting != null)
             {
                 products.DCSProductsSetting.RemoveAll(i => i.ProductID == ProductConstants.SabaVirtualSports);

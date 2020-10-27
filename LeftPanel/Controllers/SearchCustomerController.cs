@@ -6,6 +6,7 @@
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.Utilities;
     using Services;
     using ViewModels;
 
@@ -62,7 +63,8 @@
             var customerInfo = customerQueryService.SearchCustomer(
                 userId,
                 custName,
-                ExtRequest.GetGroupName(groupName));
+                ExtRequest.GetGroupName(groupName),
+                Config.SettingStatus);
 
             return View(LeftPanelIndexView, customerInfo);
         }

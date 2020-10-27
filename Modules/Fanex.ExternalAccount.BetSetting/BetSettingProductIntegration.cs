@@ -32,9 +32,9 @@
 
         private static CustomerService customerService = new CustomerService();
 
-        public static IList<Product> GetVisibledBetSettingTabs(int custId)
+        public static IList<Product> GetVisibledBetSettingTabs(int custId, byte settingStatus)
         {
-            var customerStatus = customerService.GetCustomerAllStatus(custId);
+            var customerStatus = customerService.GetCustomerAllStatus(custId, settingStatus);
             var visibleProductTabs = new List<Product>();
             int index = 0;
             foreach (var product in customerStatus.DCSProductsSetting)

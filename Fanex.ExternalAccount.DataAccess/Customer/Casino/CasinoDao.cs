@@ -10,8 +10,8 @@
     {
         public CasinoCustomer GetCustInfoIBC(int ibcCustId, int uplineId)
         {
-            var param = new Hashtable { { "custid", ibcCustId } };
-            var uplineParam = new Hashtable { { "custid", uplineId } };
+            var param = new Hashtable { { "custid", ibcCustId }, { "settingstatus", Config.SettingStatus } };
+            var uplineParam = new Hashtable { { "custid", uplineId }, { "settingstatus", Config.SettingStatus } };
             var dr = DbHelper.ExecuteDbResult("Age_CustomerSelUserInfo", param, 300);
             var upline = uplineId != 0
                 ? DbHelper.ExecuteDbResult("Age_CustomerSelUserInfo", uplineParam, 300)

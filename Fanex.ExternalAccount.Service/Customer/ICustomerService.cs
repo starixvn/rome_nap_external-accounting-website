@@ -12,7 +12,7 @@
     {
         bool IsValidUsername(string userName, int uplineId);
 
-        Customer UserInfo(int custId);
+        Customer UserInfo(int custId, byte settingStatus);
 
         Result EditUserInfo(Customer customer,
             string ip,
@@ -36,6 +36,6 @@
 
         List<Result> SuspendMultipleCustomer(List<MultipleUpdateSuspendRequest> request, int userId, string ipv4);
 
-        CustomerStatusDTO GetCustomerAllStatus(int custId);
+        CustomerStatusDTO GetCustomerAllStatus(int custId, byte settingStatus);
     }
 }

@@ -43,11 +43,12 @@
             return DbHelper.ExecuteDataSet("EAS_CustomerSelLoginInfo", param);
         }
 
-        public DataSet GetCustomerStatusInfo(int custId)
+        public DataSet GetCustomerStatusInfo(int custId, byte settingStatus)
         {
             var param = new Hashtable
             {
-                { "custid", custId }
+                { "custid", custId },
+                { "settingstatus", settingStatus }
             };
 
             return DbHelper.ExecuteDataSet("EAS_CustomerSelAllStatus", param);

@@ -13,5 +13,7 @@
         public string ClientIP => CurrentContext.Instance.Ip4Address;
 
         public byte SystemId { get; } = (byte)Config.SystemId;
+
+        public byte SettingStatus => Config.SettingStatus;
     }
 }

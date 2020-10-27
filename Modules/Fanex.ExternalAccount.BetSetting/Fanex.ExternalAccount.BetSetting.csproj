@@ -82,8 +82,8 @@
       <HintPath>..\..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.4.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.CustomerSetting.Module.Casino.2.0.4.7\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.4.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Fanex.CustomerSetting.Module.Casino.2.0.4.8-beta1\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.4.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Fanex.CustomerSetting.Module.Core.2.0.4.8\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
@@ -116,8 +116,8 @@
       <HintPath>..\..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.6.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.PTEngine.1.0.6.1\lib\net40\Fanex.PTEngine.dll</HintPath>
+    <Reference Include="Fanex.PTEngine, Version=1.0.6.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Fanex.PTEngine.1.0.6.2-beta1\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation, Version=3.2.0.0, Culture=neutral, PublicKeyToken=a82054b837897c66, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FluentValidation.3.2.0.0\lib\Net40\FluentValidation.dll</HintPath>
@@ -321,6 +321,10 @@
     <ProjectReference Include="..\..\Fanex.ExternalAccount.Service\Fanex.ExternalAccount.Service.csproj">
       <Project>{d172255e-6b0a-4602-b22c-8a4baba84d07}</Project>
       <Name>Fanex.ExternalAccount.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
+      <Project>{016F274C-1F76-450B-B80D-E7FB59BE6A2B}</Project>
+      <Name>Fanex.ExternalAccount.Utilities</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\LeftPanel\LeftPanel.csproj">
       <Project>{6ed9bed7-1bce-4991-b425-740db8c56bbd}</Project>
