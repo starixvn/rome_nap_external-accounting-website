@@ -95,7 +95,7 @@
       "Scripts/Customer/Fanex.ExtAcc.Customer.CustomerList.SingleEditMaster.js",
       "Scripts/Customer/Fanex.ExtAcc.Customer.CustomerList.SingleEditAgent.js",
       "Scripts/Customer/Fanex.ExtAcc.Customer.CustomerList.SingleEditMember.js",
-      "Scripts/Customer/Fanex.ExtAcc.Customer.EditMultiple.js",      
+      "Scripts/Customer/Fanex.ExtAcc.Customer.EditMultiple.js",
       "Scripts/isMobile.min.js",
       "Scripts/knockout.min-2.0.js",
       "Scripts/Fanex.ExtAcc.Utils.js",
@@ -213,6 +213,13 @@
     "outputFileName": "assets/bundles/associationaccount/index.js",
     "inputFiles": [
       "Scripts/Customer/Fanex.ExtAcc.AssociationAccount.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/problemaccount/index.js",
+    "inputFiles": [
+      "Scripts/ProblemAccount/Fanex.ExtAcc.ProblemAccount.js"
     ],
     "sourceMap": true
   }
