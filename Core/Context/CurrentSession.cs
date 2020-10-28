@@ -15,6 +15,7 @@
         public const string EASOnUserId = "EASOnUserId";
         public const string EASCaptcha = "EASCaptcha";
         public const string EASCurrencyGroup = "EASCurrencyGroup";
+        public const string EASParentGroup = "EASParentGroup";
         public const string EASInvalidOTP = "EASInvalidOTP";
         public const string EASEnabledOTP = "EASEnabledOTP";
         public const string EASOTPFailedCounter = "EASOTPFailedCounter";
@@ -116,7 +117,16 @@
             set { HttpContext.Current.Session[EASCurrencyGroup] = value; }
         }
 
-        public bool IsBelongToSpecialGroups => Config.SpecialGroups().Contains(CurrencyGroup, StringComparer.CurrentCultureIgnoreCase);
+#pragma warning disable S2325 // Methods and properties that don't access instance data should be static
+        public string ParentGroupName
+#pragma warning restore S2325 // Methods and properties that don't access instance data should be static
+        {
+            get { return Utils.ToString(HttpContext.Current.Session[EASParentGroup]); }
+
+            set { HttpContext.Current.Session[EASParentGroup] = value; }
+        }
+
+        public bool IsBelongToSpecialGroups => Config.SpecialGroups().Contains(CurrencyGroup, StringComparer.CurrentCultureIgnoreCase) || Config.SpecialGroups().Contains(ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
 
         public bool InvalidOTP
         {
