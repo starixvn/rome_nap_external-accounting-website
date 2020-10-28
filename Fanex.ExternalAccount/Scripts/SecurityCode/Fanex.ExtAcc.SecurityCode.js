@@ -14,13 +14,11 @@ String.prototype.contains = function (str) {
     return this.indexOf(str) > -1;
 };
 
-var $ = window.$ || window.parent.$ || window.top.$;
-
-$.fn.existsOnly = function () {
+parent.$.fn.existsOnly = function () {
     return this.length === 1;
 };
 
-$.fn.displayBlock = function () {
+parent.$.fn.displayBlock = function () {
     return this.css('display') === 'block';
 };
 
@@ -39,13 +37,13 @@ Fanex.ExtAcc.SecurityCode = {
     isExternalSite: false,
     verifyUrl: resolveClientUrl('SecurityCode/Verify'),
     GetCurrentIFrame: function () {
-        var mainFrame = $('iframe#mainIFrame');
+        var mainFrame = parent.$('iframe#mainIFrame');
         if (mainFrame.existsOnly()) {
             return mainFrame;
         }
 
-        var virtualSportsFrame = $('iframe#virtualSportsFrame');
-        var virtualSportsTab = $('div#tabs-8');
+        var virtualSportsFrame = parent.$('iframe#virtualSportsFrame');
+        var virtualSportsTab = parent.$('div#tabs-8');
         if (virtualSportsFrame.existsOnly() &&
             virtualSportsTab.existsOnly() &&
             virtualSportsTab.displayBlock()) {
@@ -55,14 +53,14 @@ Fanex.ExtAcc.SecurityCode = {
         var productIds = [5, 16, 22, 23, 24, 38, 41, 42, 44];
         var productId;
         for (productId of productIds) {
-            var productTab = $('div#tabs-' + productId);
+            var productTab = parent.$('div#tabs-' + productId);
             if (productTab.existsOnly() && productTab.displayBlock()) {
-                var frame = $('iframe#Frame_' + productId);
+                var frame = parent.$('iframe#Frame_' + productId);
                 if (frame.existsOnly()) {
                     return frame;
                 }
 
-                var product = $('iframe#product-' + productId);
+                var product = parent.$('iframe#product-' + productId);
                 if (product.existsOnly()) {
                     return product;
                 }
@@ -184,7 +182,7 @@ Fanex.ExtAcc.SecurityCode = {
         } else if (currentIFrameId.contains('virtualSportsFrame') || currentIFrameId.contains('Frame_')) {
             scBlockOverlay.css('top', '30%');
         } else if (currentIFrameId.contains('product-')) {
-            scBlockOverlay.css('top', '5rem');
+            scBlockOverlay.css('top', '3rem');
         } else {
             scBlockOverlay.css('top', '30%');
         }

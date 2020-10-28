@@ -27,8 +27,7 @@
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var actionURL = GetActionLink(filterContext);
-            if (IsAppliedUserName() && !IsContainsAction(actionURL, ignoredActions))
+            if (IsAppliedUserName() && !IsContainsAction(GetActionLink(filterContext), ignoredActions))
             {
                 var stopWatch = new Stopwatch();
                 stopWatch.Start();
