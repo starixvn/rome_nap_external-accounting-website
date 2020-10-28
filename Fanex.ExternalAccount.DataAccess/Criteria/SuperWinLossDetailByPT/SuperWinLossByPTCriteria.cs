@@ -38,12 +38,5 @@
         public string ProductDetails { get; }
 
         public override string GetSettingKey() => "Age_Rpt_WinLossByProduct_Master";
-
-        //public override string GetSettingKey()
-        //    => CustLevel.IsAgentLevel()
-        //    ? "Age_Rpt_WinLossByProduct_Member"
-        //    : CustLevel.IsMasterLevel()
-        //    ? "Age_Rpt_WinLossByProduct_Agent"
-        //    : "Age_Rpt_WinLossByProduct_Master";
     }
 }

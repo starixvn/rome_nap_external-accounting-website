@@ -391,7 +391,9 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         try {
             $("#jqgrid").fanexGrid("resizeGrid");
         }
-        catch (err) { }
+        catch (err) {
+            console.log(err);
+        }
     },
     hideFilter: false,
     showHideFilter: function () {
@@ -460,10 +462,6 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
 
         arrColData = this.defaultColumns;
         arrGroupHeaders = this.defaultHeaderColumns;
-        $.extend(titleInfo, {
-            customButtons: '<span style="display: inline-block; position: relative; top: -3px; margin-right: 3px;">Show Extra PT</span>' +
-                '<div id="showHideExtras" style="display: inline-block" class= "disallowDblComm"></div>'
-        });
 
         var gridOption = {
             customizeHeader: true,
@@ -507,7 +505,12 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                 var winLossByProductModel = this.dataSource[i].WinLossByProductModels[j];
                 subRow.push({
                     Columns: [
-                        { Name: "Username", Value: winLossByProductModel.PositionTaking },
+                        {
+                            HeaderText: "Username", Name: "Username",
+                            Value: winLossByProductModel,
+                            CustomCellRender: function (cell) { return $this.RenderPositonTakingColumn(cell); }
+                        },
+                        //{ Name: "Username", Value: winLossByProductModel.PositionTaking },
                         { Name: "Turnover", Value: winLossByProductModel.Turnover },
                         { Name: "NetTurnover", Value: winLossByProductModel.NetTurnover },
                         { Name: "GrossComm", Value: winLossByProductModel.GrossComm },
@@ -603,6 +606,15 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         }
 
         workaroundForGridOnPhone();
+    },
+    RenderPositonTakingColumn: function (cell) {
+        var tooltip = '';
+
+        $.each(cell.Value.ProductNames, function (index, value) {
+            tooltip += "<div>" + value + "</div>";
+        });
+
+        return '<span class="text-truncate" style="text-decoration: none; margin: 0, text-align: left;" title="' + tooltip + '">' + cell.Value.PositionTaking + ' (' + cell.Value.ProductNames.length + ')' + '</a>';
     },
     customsortfunc: function (rows) {
         var countFixedSort = $this.fixedsortlist.length;

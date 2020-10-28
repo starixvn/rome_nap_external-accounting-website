@@ -55,55 +55,59 @@
 
             if (superWinLossDetailByProductModels.Any())
             {
-                var winLossDetailByPTAfterGroup = superWinLossDetailByProductModels
-                .Select(product =>
-                {
-                    var superIds = superWinLossDetailByProductModels.Select(item => item.CustId).Distinct();
-                    var postionTakings = superWinLossDetailByPTDataAccess.GetSuperPositionTakingList(new SuperPTCriteria(string.Join(",", superIds)));
-                    var existedPT = postionTakings.Where(pt => pt.CustId.Equals(product.CustId) && pt.ProductID.Equals(product.ProductID));
-                    
-                    if (existedPT.Any())
-                    {
-                        product.PositionTaking = existedPT.FirstOrDefault().PositionTaking;
-                    }
+                var superIds = superWinLossDetailByProductModels.Select(item => item.CustId).Distinct();
+                var postionTakings = superWinLossDetailByPTDataAccess.GetSuperPositionTakingList(new SuperPTCriteria(string.Join(",", superIds)));
 
-                    return product;
-                })
-                .GroupBy(item => item.CustId)
-                .Select(ss => ss.GroupBy(item => item.PositionTaking).Select(group =>
-                {
-                    var result = new SuperWinLossDetailByProductModel
-                    {
-                        ProductNames = new List<string>()
-                    };
+                var winLossDetailByPTAfterGroup = superWinLossDetailByProductModels.Join(
+                  postionTakings,
+                  winloss => new { winloss.CustId, winloss.ProductID },
+                  pt => new { pt.CustId, pt.ProductID },
+                  (winloss, pt) =>
+                  {
+                      winloss.PositionTaking = pt.PositionTaking;
+                      return winloss;
+                  })
+                 .GroupBy(groupById =>
+                            groupById.CustId, (key, groupById) =>
+                                groupById.GroupBy(item => item.PositionTaking, (key1, item) =>
+                                {
+                                    var result = new SuperWinLossDetailByProductModel
+                                    {
+                                        ProductNames = new List<string>()
+                                    };
 
-                    foreach (var product in group)
-                    {
-                        result.CustId = product.CustId;
-                        result.Username = product.Username;
-                        result.PositionTaking += product.PositionTaking;
-                        result.Turnover += product.Turnover;
-                        result.NetTurnover += product.NetTurnover;
-                        result.Turnover += product.Turnover;
-                        result.GrossComm += product.GrossComm;
-                        result.MemberWinlost += product.MemberWinlost;
-                        result.PlayerComm += product.PlayerComm;
-                        result.MemberTotal += product.MemberTotal;
-                        result.AgWinlost += product.AgWinlost;
-                        result.AgComm += product.AgComm;
-                        result.AgTotal += product.AgTotal;
-                        result.ProductNames.Add(product.ProductName);
-                    }
+                                    foreach (var product in item)
+                                    {
+                                        result.CustId = product.CustId;
+                                        result.Username = product.Username;
+                                        result.PositionTaking += product.PositionTaking;
+                                        result.Turnover += product.Turnover;
+                                        result.NetTurnover += product.NetTurnover;
+                                        result.Turnover += product.Turnover;
+                                        result.GrossComm += product.GrossComm;
+                                        result.MemberWinlost += product.MemberWinlost;
+                                        result.PlayerComm += product.PlayerComm;
+                                        result.MemberTotal += product.MemberTotal;
+                                        result.AgWinlost += product.AgWinlost;
+                                        result.AgComm += product.AgComm;
+                                        result.AgTotal += product.AgTotal;
 
-                    return result;
-                }));
+                                        result.MAgWinlost += product.MAgWinlost;
+                                        result.MAgComm += product.MAgWinlost;
+                                        result.MAgTotal += product.MAgComm;
 
-                return new SuperWinLossDetailByPTModel(
-                winLossDetailByPTAfterGroup.Select(
-                item => new SuperWinLossDetailProductByUsername(
-                item.FirstOrDefault().CustId,
-                item.FirstOrDefault().Username,
-                item.OrderBy(superWinLossDetailByPTModel => superWinLossDetailByPTModel.PositionTaking))));
+                                        result.SAgWinlost += product.SAgWinlost;
+                                        result.SAgComm += product.SAgComm;
+                                        result.SAgTotal += product.SAgTotal;
+
+                                        result.Company += product.Company;
+                                        result.ProductNames.Add(product.ProductName);
+                                    }
+
+                                    return result;
+                                }));
+
+                return new SuperWinLossDetailByPTModel(winLossDetailByPTAfterGroup.Select(item => new SuperWinLossDetailProductByUsername(item)));
             }
 
             return new SuperWinLossDetailByPTModel();

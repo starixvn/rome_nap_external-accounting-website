@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.DTO.Report
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     public class SuperWinLossDetailProductByUsername
     {
@@ -8,24 +9,14 @@
         {
         }
 
-        public SuperWinLossDetailProductByUsername(
-            int custId,
-            string username,
-            IEnumerable<SuperWinLossDetailByProductModel> winLossByProductModels)
-            //IEnumerable<SuperPTModel> superPTModels)
+        public SuperWinLossDetailProductByUsername(IEnumerable<SuperWinLossDetailByProductModel> winLossByProductModels)
         {
-            CustId = custId;
-            Username = username;
-
-            WinLossByProductModels = winLossByProductModels;
-            //SuperPTModels = superPTModels;
+            WinLossByProductModels = winLossByProductModels.OrderBy(superWinLossDetailByPTModel => superWinLossDetailByPTModel.PositionTaking);
         }
 
-        public int CustId { get; }
+        public int CustId => WinLossByProductModels.FirstOrDefault().CustId;
 
-        public string Username { get; }
-
-        //public IEnumerable<SuperPTModel> SuperPTModels { get; }
+        public string Username => WinLossByProductModels.FirstOrDefault().Username;
 
         public IEnumerable<SuperWinLossDetailByProductModel> WinLossByProductModels { get; }
 
