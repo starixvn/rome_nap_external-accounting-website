@@ -1,5 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
@@ -13,20 +17,18 @@
     using Fanex.Logging.Extensions.Web;
     using Fanex.MailDelivery.Client;
     using Fanex.MailDelivery.Core.Models;
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using System.Web.Mvc;
     using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
 
     public class SearchAndCopyController : BaseController
     {
         private readonly IList<string> ErrorCodesNotSendEmail = new List<string> { "201", "202", "203", "204", "205" };
         private readonly ISearchAndCopyService searchAndCopyService;
+        private readonly CurrentSession _currentSession;
 
         public SearchAndCopyController()
             : this(null)
         {
+            _currentSession = new CurrentSession();
         }
 
         public SearchAndCopyController(ISearchAndCopyService searchAndCopyService)
@@ -83,7 +85,7 @@
         public ActionResult GetSuperPrefixes(SuperPrefixRequest query)
             => Json(searchAndCopyService.GetSuperPrefixes(new SuperPrefixCriteria
             {
-                GroupName = query.GroupName,
+                GroupName = _currentSession.ParentGroupName == "None" ? _currentSession.CurrencyGroup : _currentSession.ParentGroupName,
                 Prefix = query.Prefix,
                 AllowNewSuper = query.AllowNewSuper
             }), JsonRequestBehavior.DenyGet);

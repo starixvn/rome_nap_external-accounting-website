@@ -58,10 +58,6 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         passwordTemplate = $('#passwordTemplate').html();
 
         GetNotAllowedSuperPrefixes();
-        $("#ddlGroupName").on("change", function () {
-            var selected = $(this).find('option:selected')[0];
-            selected && GetNotAllowedSuperPrefixes(selected.innerHTML);
-        });
 
         $step2Panel.hide();
         $btnPrevious.hide();
@@ -247,9 +243,8 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         $validationMessage.html(message);
     }
 
-    function GetNotAllowedSuperPrefixes(groupName) {
+    function GetNotAllowedSuperPrefixes() {
         var params = {
-            groupName: groupName || $('#selectedGroupName').html(),
             prefix: null,
             allowNewSuper: false
         };
