@@ -219,6 +219,8 @@
   {
     "outputFileName": "assets/bundles/securitycode/index.js",
     "inputFiles": [
+      "Scripts/aes.js",
+      "Scripts/Fanex.ExtAcc.EcHcUtil.js",
       "Scripts/SecurityCode/Fanex.ExtAcc.SecurityCode.js"
     ],
     "sourceMap": true

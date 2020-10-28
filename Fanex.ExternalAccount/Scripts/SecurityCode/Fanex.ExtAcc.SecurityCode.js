@@ -32,6 +32,7 @@ Fanex.ExtAcc.SecurityCode = {
     $btnSubmit: null,
     $scPageOverlay: null,
     $txtMaxAllowAttempt: null,
+    $txtSecretKey: null,
 
     currentIFrame: null,
     isExternalSite: false,
@@ -89,6 +90,7 @@ Fanex.ExtAcc.SecurityCode = {
         this.$messageContent = $('#status-message-content');
         this.$message = $('#status-message');
         this.$txtMaxAllowAttempt = $('#txtMaxAllowAttempt');
+        this.$txtSecretKey = $('#txtSecretKey');
     },
     OnValidated: function () {
         this.isExternalSite ? window.location.reload() : this.$scPageContainer.html('');
@@ -119,6 +121,7 @@ Fanex.ExtAcc.SecurityCode = {
     },
     Verify: function () {
         var maxAllowAttempt = parseInt(this.$txtMaxAllowAttempt.val(), 10);
+        var txtSecretKey = this.$txtSecretKey.val();
         var txtSecurityCode = this.$txtSecurityCode.val();
 
         if (!txtSecurityCode.trim()) {
@@ -127,7 +130,10 @@ Fanex.ExtAcc.SecurityCode = {
             return;
         }
 
-        $.post(this.verifyUrl, { txtSecurityCode })
+        $.post(this.verifyUrl, {
+            txtSecurityCode: txtSecurityCode.encrypt(txtSecretKey),
+            txtSecretKey
+        })
             .done(function (result) {
                 if (result.StatusCode === 1) {
                     Fanex.ExtAcc.SecurityCode.OnValidated();
@@ -186,7 +192,7 @@ Fanex.ExtAcc.SecurityCode = {
         } else {
             scBlockOverlay.css('top', '30%');
         }
-        
+
         scBlockOverlay.css('display', 'block');
     }
 };

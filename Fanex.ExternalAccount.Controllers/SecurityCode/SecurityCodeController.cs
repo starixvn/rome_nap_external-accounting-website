@@ -16,9 +16,9 @@
             currentSession = new CurrentSession();
         }
 
+        [HttpGet]
         public ActionResult Index(string ReturnUrl)
         {
-            ViewBag.MaxAllowAttempt = SecurityCodeManager.GetMaxAllowAttempt;
             ViewBag.UserName = currentSession.UserName;
             ViewBag.IsExternalSite = ReturnUrl.Contains("/updateCustomerSetting/updateSetting") 
                 || ReturnUrl.Contains("/updateCustomerSetting/updateMultipleSetting");
@@ -26,11 +26,12 @@
             return View();
         }
 
-        public ActionResult Verify(string txtSecurityCode)
+        [HttpPost]
+        public ActionResult Verify(string txtSecurityCode, string txtSecretKey)
         {
             string userSecurityCode = SecurityCodeManager.GetSecurityCode(currentSession.UserName);
-
-            if (userSecurityCode.Equals(txtSecurityCode, StringComparison.CurrentCulture))
+            string rawSecurityCode = Encryptor.Decrypt(txtSecurityCode, txtSecretKey);
+            if (userSecurityCode.Equals(rawSecurityCode, StringComparison.CurrentCulture))
             {
                 currentSession.UpdateLastActiveTime();
                 currentSession.SCFailedCounter = 0;

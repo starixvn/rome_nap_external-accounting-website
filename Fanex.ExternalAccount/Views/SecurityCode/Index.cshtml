@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Fanex.ExternalAccount.Core.Configurations.SecurityCode;
+@using Fanex.ExternalAccount.Core.Context;
+
+@{
     ViewBag.Title = "Security Code Validation";
     Layout = null;
 }
@@ -41,8 +44,9 @@
                 <label class="form-check-label" for="showSecurityCode">Show security code</label>
             </div>
 
-            <input type="hidden" id="txtMaxAllowAttempt" value="@ViewBag.MaxAllowAttempt"/>
-            <input type="hidden" id="txtIsExternalSite" value="@ViewBag.IsExternalSite.ToString()" />
+            <input type="hidden" id="txtMaxAllowAttempt" value="@SecurityCodeManager.GetMaxAllowAttempt"/>
+            <input type="hidden" id="txtIsExternalSite" value="@ViewBag.IsExternalSite.ToString().ToLower()" />
+            <input type="hidden" id="txtSecretKey" value="@Encryptor.RandomCaptcha" />
 
             <label class="form-body" style="margin-bottom: 16px;">
                 After Sending SC is successful, you must submit the setting page to complete the update.
