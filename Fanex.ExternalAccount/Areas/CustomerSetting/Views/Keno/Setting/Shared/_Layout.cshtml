@@ -103,9 +103,7 @@
     var usernames;
     var isMultipleEdit;
     var isBelongToSpecialGroups = @isBelongToSpecialGroups.ToString().ToLowerInvariant();
-    var selectedGroup = parent.Fanex.ExtAcc.Customer.GroupName().groupName;
-    var specialGroups = '@string.Join(",", Config.SpecialGroups())'.split(',');
-    var isActingOnSpecialGroups = specialGroups.indexOf(selectedGroup) !== -1;
+    var isPT3Decimal = model.customerInformation.isPT3Decimal;
 
     if(parent.Fanex.ExtAcc.Customer.IsMultiple) {
         InitMultipleEditInformation();

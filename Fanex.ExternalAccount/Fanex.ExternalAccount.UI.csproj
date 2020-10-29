@@ -129,7 +129,7 @@
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoResources.1.0.2.2\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoResources.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=2.0.2.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.Setting.2.0.2.7-Beta1\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.Setting.2.0.2.7-Beta2\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Racebook.Resources">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Racebook.RacebookResources.1.0.0.0\lib\net40\Fanex.CustomerSetting.Module.Racebook.Resources.dll</HintPath>
