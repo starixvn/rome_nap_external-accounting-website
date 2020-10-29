@@ -72,23 +72,23 @@
                                 <td ng-class="{'tdWidthMember' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}"
                                     class="C ptTitle noneBorderTop">
                                     <span data-ng-init="gameGroup.l2 = gameGroup.m3 - gameGroup.m2" data-ng-click="gameGroup.l2 = gameGroup.m3 - gameGroup.m2"
-                                        class="spanPT" enable="gameGroup.im2" ptarea="true" min="0" max="m3" selected="m2"
+                                        class="spanPT" enable="gameGroup.im2" ptarea="true" min="0" max="m3" selected="m2" isPT3Decimal="@Json.Encode(Model.IsPT3Decimal)"
                                         data-ng-model="setting"></span>
                                 </td>
                                 <td data-ng-hide="isDisableAutoMPT" class="C ptTitle noneBorderTop autoPtWidth">
                                     <input type="checkbox" data-ng-model="gameGroup.im2" />
-                                    <span enable="gameGroup.im2 == false" class="spanPT" ptarea="true" min="0" max="m3"
+                                    <span enable="gameGroup.im2 == false" class="spanPT" ptarea="true" min="0" max="m3" isPT3Decimal="@Json.Encode(Model.IsPT3Decimal)"
                                         selected="um2" data-ng-model="setting"></span>
                                 </td>
                                 <td ng-class="{'maxPtAgentWidth' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}"
                                     class="C ptTitle noneBorderTop">
                                     <span data-ng-init="gameGroup.l2 = gameGroup.m3 - gameGroup.m2" data-ng-click="gameGroup.l2 = gameGroup.m3 - gameGroup.m2"
-                                        class="spanPT" ptarea="true" min="0" max="l2" selected="a2" data-ng-model="setting">
+                                        class="spanPT" ptarea="true" min="0" max="l2" selected="a2" isPT3Decimal="@Json.Encode(Model.IsPT3Decimal)" data-ng-model="setting">
                                     </span>
                                 </td>
                                 <td ng-class="{'tdWidthMember' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}"
                                     class="C ptTitle noneBorderTop">
-                                    <span class="spanPT" ptarea="true" min="0" max="a2" selected="n2" data-ng-model="setting">
+                                    <span class="spanPT" ptarea="true" min="0" max="a2" selected="n2" isPT3Decimal="@Json.Encode(Model.IsPT3Decimal)"data-ng-model="setting">
                                     </span>
                                 </td>
                                 <td ng-class="{'tdWidthMember' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}"
@@ -110,22 +110,22 @@
                                                     class="C noneBorderT">
                                                     <span data-ng-init="gameType.l2 = gameType.m3 - gameType.m2" data-ng-click="gameType.l2 = gameType.m3 - gameType.m2"
                                                         class="spanPT" enable="gameType.im2" showbutton="false" ptarea="true" min="0"
-                                                        max="l2" selected="m2" data-ng-model="setting"></span>
+                                                        max="l2" selected="m2" isPT3Decimal="@Json.Encode(Model.IsPT3Decimal)" data-ng-model="setting"></span>
                                                 </td>
                                                 <td data-ng-hide="isDisableAutoMPT" class="C noneBorderT autoPtWidth">
                                                     <input type="checkbox" data-ng-model="gameType.im2" />
                                                     <span enable="gameType.im2 == false" class="spanPT" showbutton="false" ptarea="true"
-                                                        min="0" max="m3" selected="um2" data-ng-model="setting"></span>
+                                                        min="0" max="m3" selected="um2" isPT3Decimal="@Json.Encode(Model.IsPT3Decimal)" data-ng-model="setting"></span>
                                                 </td>
                                                 <td ng-class="{'maxPtAgentWidth' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}"
                                                     class="C noneBorderT">
                                                     <span data-ng-init="gameType.l2 = gameType.m3 - gameType.m2" data-ng-click="gameType.l2 = gameType.m3 - gameType.m2"
-                                                        class="spanPT" showbutton="false" ptarea="true" min="0" max="l2" selected="a2"
+                                                        class="spanPT" showbutton="false" ptarea="true" min="0" max="l2" selected="a2" isPT3Decimal="@Json.Encode(Model.IsPT3Decimal)"
                                                         data-ng-model="setting"></span>
                                                 </td>
                                                 <td ng-class="{'tdWidthMember' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}"
                                                     class="C noneBorderT">
-                                                    <span class="spanPT" showbutton="false" ptarea="true" min="0" max="a2" selected="n2"
+                                                    <span class="spanPT" showbutton="false" ptarea="true" min="0" max="a2" selected="n2" isPT3Decimal="@Json.Encode(Model.IsPT3Decimal)"
                                                         data-ng-model="setting"></span>
                                                 </td>
                                                 <td ng-class="{'tdWidthMember' : isDisableAutoMPT, 'tdWidth' : !isDisableAutoMPT}"
