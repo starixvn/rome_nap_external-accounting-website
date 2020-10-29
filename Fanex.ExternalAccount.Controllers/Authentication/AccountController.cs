@@ -379,7 +379,7 @@
             _currentSession.IsInternalAdmin = isInternalAdmin;
             _currentSession.GroupId = group.GroupID;
             _currentSession.CurrencyGroup = group.GroupName;
-            _currentSession.ParentGroupName = group.ParentGroupName;
+            _currentSession.ParentGroupName = group.ParentGroupName == "None" ? group.GroupName : group.ParentGroupName;
             _currentSession.IsITAdmin = group.IsIT;
             const int CasinoExternalSystemCode = 3;
             _currentSession.FromSystem = CasinoExternalSystemCode;
