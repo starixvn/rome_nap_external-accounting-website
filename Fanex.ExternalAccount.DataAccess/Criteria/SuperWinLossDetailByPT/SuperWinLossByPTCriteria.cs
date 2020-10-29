@@ -12,7 +12,9 @@
             DateTime balanceUpDay,
             DateTime moveBetsDay,
             string productIds,
-            string productDetails)
+            string productDetails,
+            int pageSize,
+            int pageIndex)
         {
             GroupName = groupName;
             FromDate = fromDate;
@@ -21,6 +23,8 @@
             MoveBetsDay = moveBetsDay;
             ProductDetails = productDetails;
             ProductIds = productIds;
+            PageSize = pageSize;
+            PageIndex = pageIndex;
         }
 
         public string GroupName { get; }
@@ -36,6 +40,10 @@
         public string ProductIds { get; }
 
         public string ProductDetails { get; }
+
+        public int PageSize { get; }
+
+        public int PageIndex { get; }
 
         public override string GetSettingKey() => "Age_Rpt_WinLossByProduct_Master";
     }

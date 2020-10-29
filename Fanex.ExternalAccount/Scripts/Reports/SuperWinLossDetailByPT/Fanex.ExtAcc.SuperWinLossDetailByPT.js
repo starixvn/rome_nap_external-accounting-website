@@ -645,11 +645,6 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
             }
         }
     },
-    GetDownlineWinLossDetail: function (custId) {
-        this.custId = custId;
-        this.username = "";
-        this.Databind(this.username);
-    },
     InitShowHideControls: function (status) {
         $("#headlineDaily").css("display", status);
         $("#mainGrid").css("display", status);

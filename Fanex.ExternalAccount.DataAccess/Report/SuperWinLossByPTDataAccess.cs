@@ -70,15 +70,17 @@
             var total = new SuperWinLossDetailByProductDTO();
 
             using (var reader = ExecDataReader("EAS_Rpt_WinLossDetail_byPT", new Hashtable
-                    {
-                        { "groupname", criteria.GroupName },
-                        { "fromdate", criteria.FromDate },
-                        { "todate", criteria.ToDate },
-                        { "balanceupday", criteria.BalanceUpDay },
-                        { "movebetsday", criteria.MoveBetsDay },
-                        { "productids", criteria.ProductIds },
-                        { "productdetails", criteria.ProductDetails }
-                    }))
+            {
+                { "groupname", criteria.GroupName },
+                { "fromdate", criteria.FromDate },
+                { "todate", criteria.ToDate },
+                { "balanceupday", criteria.BalanceUpDay },
+                { "movebetsday", criteria.MoveBetsDay },
+                { "productids", criteria.ProductIds },
+                { "productdetails", criteria.ProductDetails },
+                { "pagesize", criteria.PageSize },
+                { "pageindex", criteria.PageIndex }
+            }))
             {
                 if (reader != null)
                 {

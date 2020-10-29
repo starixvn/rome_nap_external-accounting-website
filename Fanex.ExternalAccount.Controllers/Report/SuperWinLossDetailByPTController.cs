@@ -4,8 +4,7 @@
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
-    using DTO.Report;
-    using Excel.Reports.WinLossDetailReport;
+    using Fanex.ExternalAccount.Excel.Reports.SuperWinLossDetailByPT;
     using Fanex.ExternalAccount.Service.Report.SuperWinLossDetailByPT;
     using Fanex.ExternalAccount.Utilities;
     using Requests;
@@ -57,10 +56,9 @@
             return Json(viewModel);
         }
 
-        public void ExportWinLossDetailToExcel(ExportWinLossDetailRequest request)
+        public void ExportWinLossDetailToExcel(ExportSuperWinLossDetailByPTRequest request)
         {
-            IWinLossDetailReportBuilder builder;
-            request.viewlevel++;
+            ISuperWinLossDetailByPTReportBuilder builder;
             var winlossDetail = services.GetSuperWinLossDetailByPT(new SuperWinLossDetailByPTParam(
             request.custId,
             request.fromdate,
@@ -68,50 +66,11 @@
             request.GetProductIds(),
             "1,3,4"));
 
-            request.viewlevel--;
-            switch (request.viewlevel)
-            {
-                case Role.Member:
-                    {
-                        builder = new MemberWinLossDetailReportBuilder(
-                            (List<WinLossDetailAg>)winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null),
-                            request.viewlevel,
-                            request.fromdate,
-                            request.todate);
-
-                        break;
-                    }
-                case Role.Agent:
-                    {
-                        builder = new AgentWinLossDetailReportBuilder(
-                            (List<WinLossDetailMAg>)winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null),
-                            request.viewlevel,
-                            request.fromdate,
-                            request.todate);
-
-                        break;
-                    }
-                case Role.Master:
-                    {
-                        builder = new WinLossDetailReportBuilder(
-                            (List<WinLossDetail>)winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null),
-                            request.viewlevel,
-                            request.fromdate,
-                            request.todate);
-
-                        break;
-                    }
-                default:
-                    {
-                        builder = new WinLossDetailExtraReportBuilder(
-                            (List<WinLossDetailExtra>)winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null),
-                            request.viewlevel,
-                            request.fromdate,
-                            request.todate);
-
-                        break;
-                    }
-            }
+            builder = new SuperWinLossDetailByPTReportBuilder(
+                           winlossDetail.WinLossByUsernames.ToList(),
+                           winlossDetail.Total,
+                           request.fromdate,
+                           request.todate);
 
             var products = GetProductList();
             products = GetPPNameExportExcel(request, products);
@@ -126,54 +85,7 @@
             }
         }
 
-        //[AntiXSRFFilter]
-        //public ActionResult GetExtraPT(ViewExtraPTRequest request)
-        //{
-        //    var extraPTs = services.GetExtraPT(request);
-
-        //    return Json(extraPTs);
-        //}
-
-        //private dynamic GetDataFromDB(SuperWinLossDetailByPTRequest request)
-        //{
-        //    var toolTipsProducts = new
-        //    {
-        //        liveCasino = BuildTooltipsForLiveCasino()
-        //    };
-
-        //    return request.IsSearch()
-        //        ? services.SearchWinLossDetail(
-        //            new SearchWinLossDetailRequest(request, toolTipsProducts))
-        //        : services.DrillDownWinLossDetail(
-        //            new DrillDownWinLossDetailRequest(request, toolTipsProducts));
-        //}
-
-        //private string BuildTooltipsForLiveCasino()
-        //{
-        //    var liveCasino = new List<GroupConfigurationModel>
-        //    {
-        //        new GroupConfigurationModel{ProductId=ProductConstants.AllBet,ProductName="AllBet"},
-        //        new GroupConfigurationModel{ProductId=ProductConstants.SexyGaming,ProductName="AE Casino"},
-        //        new GroupConfigurationModel{ProductId=ProductConstants.SAGaming,ProductName="SA Gaming"},
-        //        new GroupConfigurationModel{ProductId=ProductConstants.GTCasino,ProductName="IBCBet Live Casino"},
-        //        new GroupConfigurationModel{ProductId=ProductConstants.BBin,ProductName="BBIN"},
-        //        new GroupConfigurationModel{ProductId=ProductConstants.ION,ProductName="ION"}
-        //    };
-
-        //    var offeredLiveCasino = liveCasino.Where(
-        //        i => groupConfigurationService.IsShowByProductAndGroup(i.ProductId, currentSession.CurrencyGroup));
-
-        //    if (offeredLiveCasino != null && offeredLiveCasino.Any())
-        //    {
-        //        var liveCasinoName = string.Join(", ", offeredLiveCasino.Select(i => i.ProductName));
-
-        //        return string.Format(ViewLang.Tooltip_NetTurnover_LiveCasino, liveCasinoName);
-        //    }
-
-        //    return string.Empty;
-        //}
-
-        private static List<KeyValuePair<string, string>> GetPPNameExportExcel(ExportWinLossDetailRequest request, List<KeyValuePair<string, string>> products)
+        private static List<KeyValuePair<string, string>> GetPPNameExportExcel(ExportSuperWinLossDetailByPTRequest request, List<KeyValuePair<string, string>> products)
         {
             if (string.IsNullOrWhiteSpace(request.ResourceIds))
             {
@@ -219,6 +131,6 @@
         private const string DateFormat = "yyyyMMdd";
 
         public string FileName =>
-            $"{viewlevel.DisplayRoleName()}WinLossDetail_{fromdate.ToString(DateFormat)}_{todate.ToString(DateFormat)}.xls";
+            $"SuperWinLossDetail_{fromdate.ToString(DateFormat)}_{todate.ToString(DateFormat)}.xls";
     }
 }

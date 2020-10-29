@@ -2866,6 +2866,7 @@
     <Content Include="ExcelTemplates\Reports\WinLossDetailIBCBetLiveCasino.xls" />
     <Content Include="ExcelTemplates\Reports\WinLossDetailExtra.xls" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.SSO.js" />
+    <Content Include="ExcelTemplates\Reports\SuperWinLossDetailByPT.xls" />
     <Content Include="ExcelTemplates\Customer\MemberListMO.xls" />
     <Content Include="ExcelTemplates\Customer\SuperListMO.xls" />
     <Content Include="ExcelTemplates\Customer\CustomerListMO.xls" />
