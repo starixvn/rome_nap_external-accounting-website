@@ -17,7 +17,6 @@
 
 .securitycode-block-overlay {
     position: absolute;
-    left: calc(50% - 234px);
     z-index: 10000;
     margin: 0px;
     padding: 0px;
@@ -207,3 +206,20 @@ input[type=checkbox], input[type=radio] {
     .btn-submit:focus {
         outline: none;
     }
+
+@media only screen and (max-device-width: 767px) and (orientation: portrait) {
+    .securitycode-block {
+        width: 100%;
+        padding: 15px;
+    }
+}
+
+@media only screen and (max-device-width: 767px) and (orientation: landscape) {
+    body {
+        line-height: 1.125;
+    }
+
+    .securitycode-block {
+        width: 468px;
+    }
+}

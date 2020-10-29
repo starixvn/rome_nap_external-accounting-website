@@ -14,14 +14,6 @@ String.prototype.contains = function (str) {
     return this.indexOf(str) > -1;
 };
 
-parent.$.fn.existsOnly = function () {
-    return this.length === 1;
-};
-
-parent.$.fn.displayBlock = function () {
-    return this.css('display') === 'block';
-};
-
 Fanex.ExtAcc.SecurityCode = {
     $scPageContainer: null,
     $message: null,
@@ -34,47 +26,19 @@ Fanex.ExtAcc.SecurityCode = {
     $txtMaxAllowAttempt: null,
     $txtSecretKey: null,
 
-    currentIFrame: null,
+    browserSize: {},
     isExternalSite: false,
+    isMobile: false,
+    isLandscape: false,
     verifyUrl: resolveClientUrl('SecurityCode/Verify'),
-    GetCurrentIFrame: function () {
-        var mainFrame = parent.$('iframe#mainIFrame');
-        if (mainFrame.existsOnly()) {
-            return mainFrame;
-        }
 
-        var virtualSportsFrame = parent.$('iframe#virtualSportsFrame');
-        var virtualSportsTab = parent.$('div#tabs-8');
-        if (virtualSportsFrame.existsOnly() &&
-            virtualSportsTab.existsOnly() &&
-            virtualSportsTab.displayBlock()) {
-            return virtualSportsFrame;
-        }
-
-        var productIds = [5, 16, 22, 23, 24, 38, 41, 42, 44];
-        var productId;
-        for (productId of productIds) {
-            var productTab = parent.$('div#tabs-' + productId);
-            if (productTab.existsOnly() && productTab.displayBlock()) {
-                var frame = parent.$('iframe#Frame_' + productId);
-                if (frame.existsOnly()) {
-                    return frame;
-                }
-
-                var product = parent.$('iframe#product-' + productId);
-                if (product.existsOnly()) {
-                    return product;
-                }
-            }
-        }
-
-        return null;
-    },
     Init: function () {
         this.CacheDOMElements();
 
         this.isExternalSite = JSON.parse(this.$txtIsExternalSite.val().toLowerCase());
-        this.currentIFrame = this.GetCurrentIFrame();
+        this.browserSize = this.GetBrowserSize();
+        this.isMobile = this.browserSize.width < 768;
+        this.isLandscape = this.browserSize.width > this.browserSize.height;
 
         this.AdjustPagePosition();
         this.InitClosePageEventHandler();
@@ -110,7 +74,7 @@ Fanex.ExtAcc.SecurityCode = {
         }
     },
     OnKeyPress: function (event) {
-        if (event.which === 13) {
+        if (event.key === 'Enter' || event.keyCode === 13 || event.which === 13) {
             event.preventDefault();
 
             Fanex.ExtAcc.SecurityCode.Verify();
@@ -165,13 +129,14 @@ Fanex.ExtAcc.SecurityCode = {
         this.$cbShowSC.change(this.OnShowSecurityCode);
         this.$btnSubmit.click(this.OnClick);
         this.$scPageOverlay.click(this.OnClosePage);
+        $(window).on('orientationchange', this.AdjustPagePosition);
     },
     KnockOut: function () {
         top.location.href = resolveClientUrl('Account/LogOff');
     },
     InitClosePageEventHandler: function () {
         $(document).bind('keydown', function (event) {
-            if (event.which === 27) {
+            if (event.key === 'Escape' || event.keyCode === 27 || event.which === 27) {
                 Fanex.ExtAcc.SecurityCode.OnClosePage();
             }
         });
@@ -180,20 +145,47 @@ Fanex.ExtAcc.SecurityCode = {
         Fanex.ExtAcc.SecurityCode.OnValidated();
     },
     AdjustPagePosition: function () {
-        var scBlockOverlay = $('div.securitycode-block-overlay');
+        var scBlockOverlay = $('div.securitycode-block-overlay'),
+            calculatedLeft = 'calc(50% - 234px)',
+            calculatedTop = `calc(50% - ${scBlockOverlay.innerWidth() / 2}px)`,
+            setTopLeft = function (top, left) {
+                scBlockOverlay.css({ top, left });
+            };
 
-        var currentIFrameId = this.currentIFrame ? this.currentIFrame.attr('id') : '';
-        if (currentIFrameId.contains('mainIFrame')) {
-            scBlockOverlay.css('top', '99px');
-        } else if (currentIFrameId.contains('virtualSportsFrame') || currentIFrameId.contains('Frame_')) {
-            scBlockOverlay.css('top', '30%');
-        } else if (currentIFrameId.contains('product-')) {
-            scBlockOverlay.css('top', '3rem');
+        if (this.isMobile) {
+            if (this.isLandscape) {
+                if (this.isExternalSite) {
+                    $('body').css({
+                        'overflow-y': 'scroll',
+                        'background-color': '#aaaaaa'
+                    });
+                    scBlockOverlay.css('margin', '.5em 0');
+                }
+                setTopLeft('auto', calculatedLeft);
+            } else {
+                if (this.isExternalSite) {
+                    scBlockOverlay.css('margin', '.25em .25em 0');
+                    setTopLeft('auto', 'auto');
+                } else {
+                    scBlockOverlay.css('margin', '0 .25em');
+                    setTopLeft(calculatedTop, 'auto');
+                }
+            }
         } else {
-            scBlockOverlay.css('top', '30%');
+            setTopLeft(calculatedTop, calculatedLeft);
         }
 
         scBlockOverlay.css('display', 'block');
+    },
+    GetBrowserSize: function () {
+        var w = window,
+            d = document,
+            e = d.documentElement,
+            g = d.getElementsByTagName('body')[0],
+            width = w.innerWidth || e.clientWidth || g.clientWidth,
+            height = w.innerHeight || e.clientHeight || g.clientHeight;
+
+        return { width, height };
     }
 };
 
