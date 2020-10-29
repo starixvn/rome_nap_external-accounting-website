@@ -30,6 +30,7 @@ Fanex.ExtAcc.SecurityCode = {
     isExternalSite: false,
     isMobile: false,
     isLandscape: false,
+    maxAllowAttempt: 0,
     verifyUrl: resolveClientUrl('SecurityCode/Verify'),
 
     Init: function () {
@@ -39,6 +40,7 @@ Fanex.ExtAcc.SecurityCode = {
         this.browserSize = this.GetBrowserSize();
         this.isMobile = this.browserSize.width < 768;
         this.isLandscape = this.browserSize.width > this.browserSize.height;
+        this.maxAllowAttempt = parseInt(this.$txtMaxAllowAttempt.val(), 10);
 
         this.AdjustPagePosition();
         this.InitClosePageEventHandler();
@@ -84,9 +86,9 @@ Fanex.ExtAcc.SecurityCode = {
         Fanex.ExtAcc.SecurityCode.Verify();
     },
     Verify: function () {
-        var maxAllowAttempt = parseInt(this.$txtMaxAllowAttempt.val(), 10);
-        var txtSecretKey = this.$txtSecretKey.val();
-        var txtSecurityCode = this.$txtSecurityCode.val();
+        var self = this,
+            txtSecretKey = this.$txtSecretKey.val(),
+            txtSecurityCode = this.$txtSecurityCode.val();
 
         if (!txtSecurityCode.trim()) {
             this.$txtSecurityCode.focus();
@@ -100,22 +102,22 @@ Fanex.ExtAcc.SecurityCode = {
         })
             .done(function (result) {
                 if (result.StatusCode === 1) {
-                    Fanex.ExtAcc.SecurityCode.OnValidated();
+                    self.OnValidated();
+                    return;
+                }
+                
+                if (result.FailedCounter < self.maxAllowAttempt) {
+                    self.ShowError('Wrong Security Code. Please try again.');
                     return;
                 }
 
-                if (result.FailedCounter < maxAllowAttempt) {
-                    Fanex.ExtAcc.SecurityCode.ShowError('Wrong Security Code. Please try again.');
-                    return;
-                }
-
-                Fanex.ExtAcc.SecurityCode.KnockOut();
+                self.KnockOut();
             })
             .fail(function (error) {
                 console.log(error);
             })
             .always(function () {
-                Fanex.ExtAcc.SecurityCode.$txtSecurityCode.focus();
+                self.$txtSecurityCode.focus();
             });
     },
     ShowError: function (errorMessage) {
