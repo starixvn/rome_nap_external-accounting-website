@@ -126,7 +126,8 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
             mobilePhone: $.trim($txtMobilePhone.val()),
             fax: $.trim($txtFax.val()),
             credit: maxCredit,
-            existingUsername: existingUsername
+            existingUsername: existingUsername,
+            groupName: $('#selectedGroupName').html() === '' ? 'ACCDDD' : $('#selectedGroupName').html()
         };
         $.post(resolveClientUrl('SearchAndCopy/SuperPost'), requestParams, function (result) {
 

@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using System.Web.Security;
+    using System.Web.SessionState;
     using Core.Context;
     using DTO;
     using Fanex.ExternalAccount.Core.Base;
@@ -20,6 +21,7 @@
     using Service.Interface.UserControl;
     using Utilities;
 
+    [SessionState(SessionStateBehavior.Default)]
     public class SharedController : BaseController
     {
         private static readonly string[] ignoreRecheckinCustomers = Config.IgnoreRecheckinCustomers.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
@@ -158,5 +160,12 @@
             => _maintenanceService.IsUnderMaintenance()
                 ? (int)RecheckinStatus.Maintenance
                 : (int)RecheckinStatus.Login;
+
+        public bool ChangeSelectedGroup(string groupName)
+        {
+            CurrentSession.CurrencyGroup = groupName;
+
+            return true;
+        }
     }
 }

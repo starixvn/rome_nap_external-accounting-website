@@ -91,27 +91,36 @@ Fanex.ExtAcc.Header = {
                     selectedGroupName = event.params.data.text;
                     $('#selectedGroupIndex').html(event.params.data.id);
                     $('#selectedGroupName').html(selectedGroupName);
-                    if ((location.href.indexOf('Home/Index') != -1
-                        || location.href == (location.protocol + '//' + location.host + resolveClientUrl(''))
-                        || location.href == (location.protocol + '//' + location.host + '/'))
-                        && !document.getElementById('customerListGrid') && !document.getElementById('txtUserName')
-                        && (document.getElementById('leftFrame').getAttribute('src') == '' || !document.getElementById('leftFrame').getAttribute('src'))) {
-                        if (window.history.pushState) {
-                            var currentURL = location.href;
+                    $.ajax({
+                        url: resolveClientUrl('Shared/ChangeSelectedGroup?groupName=' + selectedGroupName),
+                        type: 'GET',
+                        dataType: 'json',
+                        cache: false,
+                        complete: function () {
+                            if ((location.href.indexOf('Home/Index') != -1
+                                || location.href == (location.protocol + '//' + location.host + resolveClientUrl(''))
+                                || location.href == (location.protocol + '//' + location.host + '/'))
+                                && !document.getElementById('customerListGrid') && !document.getElementById('txtUserName')
+                                && (document.getElementById('leftFrame').getAttribute('src') == '' || !document.getElementById('leftFrame').getAttribute('src'))) {
+                                if (window.history.pushState) {
+                                    var currentURL = location.href;
 
-                            if (!currentURL.toLowerCase().endsWith("home/index")) {
-                                currentURL = currentURL.substr(0, currentURL.lastIndexOf('/'));
+                                    if (!currentURL.toLowerCase().endsWith("home/index")) {
+                                        currentURL = currentURL.substr(0, currentURL.lastIndexOf('/'));
+                                    }
+
+                                    window.history.pushState("object or string", "Title", currentURL + "/" + selectedGroupName);
+                                }
+                                else {
+                                    location.hash = id.split('group')[1];
+                                }
+                                document.location.reload();
                             }
-
-                            window.history.pushState("object or string", "Title", currentURL + "/" + selectedGroupName);
+                            else {
+                                location.href = location.protocol + '//' + location.host + resolveClientUrl('') + 'Home/Index/' + selectedGroupName;
+                            }
                         }
-                        else {
-                            location.hash = id.split('group')[1];
-                        }
-                    }
-                    else {
-                        location.href = location.protocol + '//' + location.host + resolveClientUrl('') + 'Home/Index/' + selectedGroupName;
-                    }
+                    });
                 });
             }
         });

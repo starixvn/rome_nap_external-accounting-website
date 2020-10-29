@@ -16,7 +16,8 @@
 
         public UserCache GetUserCache(int userId, string groupName)
         {
-            var result = UserCache.Get<UserCache>(userId.ToString());
+            var menuKey = userId.ToString() + groupName;
+            var result = UserCache.Get<UserCache>(menuKey);
 
             if (result == null)
             {
@@ -24,7 +25,7 @@
                 if (result != null)
                 {
                     CheckPermissionForSearchAndCopy(result, groupName);
-                    UserCache.Set<UserCache>(userId.ToString(), result, DateTime.Now.AddSeconds(30));
+                    UserCache.Set<UserCache>(menuKey, result, DateTime.Now.AddSeconds(30));
                 }
             }
 
