@@ -501,8 +501,8 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         var bodyData = [];
         for (var i = 0; i < this.totalRows; i++) {
             var subRow = [];
-            for (var j = 0; j < this.dataSource[i].WinLossByProductModels.length; j++) {
-                var winLossByProductModel = this.dataSource[i].WinLossByProductModels[j];
+            for (var j = 0; j < this.dataSource[i].WinLossByProducts.length; j++) {
+                var winLossByProductModel = this.dataSource[i].WinLossByProducts[j];
                 subRow.push({
                     Columns: [
                         {
@@ -717,9 +717,9 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                 $this.fixedsortdata = new Array();
                 $this.removedsortdata = new Array();
 
-                $this.dataSource = data.SuperWinLossDetailProductByUsernames;
+                $this.dataSource = data.WinLossByUsernames;
                 $this.totalRowData = data.Total;
-                $this.totalRows = data.SuperWinLossDetailProductByUsernames.length;
+                $this.totalRows = data.WinLossByUsernames.length;
                 $this.fixedsortlist = [];
 
                 $this.viewlevel = data.viewlevel;

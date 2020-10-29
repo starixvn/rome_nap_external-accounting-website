@@ -13,21 +13,21 @@
 
     public interface SuperWinLossDetailByPTDataAccess
     {
-        IEnumerable<SuperWinLossDetailByProductModel> GetWinLossByBetType(SuperWinLossDetailByPTCriteria criteria);
+        SuperWinLossDetailByProductModel GetWinLossByBetType(SuperWinLossDetailByPTCriteria criteria);
 
-        IEnumerable<SuperPTModel> GetSuperPositionTakingList(SuperPTCriteria criteria);
+        IEnumerable<SuperPositionTakingModel> GetSuperPositionTakingList(SuperPTCriteria criteria);
     }
 
     public class SuperWinLossDetailByPTDataAccessImpl : DAOBase, SuperWinLossDetailByPTDataAccess
     {
-        public IEnumerable<SuperPTModel> GetSuperPositionTakingList(SuperPTCriteria criteria)
+        public IEnumerable<SuperPositionTakingModel> GetSuperPositionTakingList(SuperPTCriteria criteria)
         {
             if (criteria == null)
             {
                 throw new ArgumentNullException(nameof(criteria), "Criteria cannot be null");
             }
 
-            var superPTList = new List<SuperPTModel>();
+            var superPTList = new List<SuperPositionTakingModel>();
 
             using (var reader = ExecDataReader(criteria.GetSettingKey(), new Hashtable
                     {
@@ -38,11 +38,11 @@
                 {
                     while (reader.Read())
                     {
-                        superPTList.Add(new SuperPTModel
+                        superPTList.Add(new SuperPositionTakingModel
                         {
                             CustId = reader.ToInt("CustID"),
                             PositionTaking = reader.To<decimal>("SuperPT"),
-                            ProductID = reader.ToInt("ProductID"),
+                            ProductId = reader.ToInt("ProductID"),
                             ProductName = reader.To<string>("ProductName"),
                         });
                     }
@@ -59,14 +59,15 @@
         //    //this.cacheRefService = cacheRefService;
         //}
 
-        public IEnumerable<SuperWinLossDetailByProductModel> GetWinLossByBetType(SuperWinLossDetailByPTCriteria criteria)
+        public SuperWinLossDetailByProductModel GetWinLossByBetType(SuperWinLossDetailByPTCriteria criteria)
         {
             if (criteria == null)
             {
                 throw new ArgumentNullException(nameof(criteria), "Criteria cannot be null");
             }
 
-            var winlossByBettypeData = new List<SuperWinLossDetailByProductModel>();
+            var winlossByBettypeData = new List<SuperWinLossDetailByProductDTO>();
+            var total = new SuperWinLossDetailByProductDTO();
 
             using (var reader = ExecDataReader("EAS_Rpt_WinLossDetail_byPT", new Hashtable
                     {
@@ -85,21 +86,26 @@
                     {
                         winlossByBettypeData.Add(BuildWinLossByBetType(reader));
                     }
+
+                    if (reader.NextResult() && reader.Read())
+                    {
+                        total = BuildWinLossByBetType(reader);
+                    }
                 }
             }
 
-            return winlossByBettypeData;
+            return new SuperWinLossDetailByProductModel(winlossByBettypeData, total);
         }
 
 
         [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1118:ParameterMustNotSpanMultipleLines", Justification = "Reviewed.")]
-        private SuperWinLossDetailByProductModel BuildWinLossByBetType(IDataReader reader)
+        private SuperWinLossDetailByProductDTO BuildWinLossByBetType(IDataReader reader)
         {
-            var winLossByBettype = new SuperWinLossDetailByProductModel
+            var winLossByBettype = new SuperWinLossDetailByProductDTO
             {
                 CustId = reader.ToInt("custid"),
                 Username = reader.To<string>("username"),
-                ProductID = reader.ToInt("ProductID"),
+                ProductId = reader.ToInt("ProductID"),
                 ProductName = reader.To<string>("ProductName"),
                 Turnover = reader.ToDouble("Turnover"),
                 NetTurnover = reader.ToDouble("TurnoverNoDraw"),

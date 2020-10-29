@@ -43,7 +43,7 @@
             //    param.ProductDetailsXML);
 
             var criteria = new SuperWinLossDetailByPTCriteria(
-            "ACCINDO",
+                "ACCINDO",
                new DateTime(2020, 10, 04),
                new DateTime(2020, 10, 12),
                new DateTime(2020, 9, 30),//reportDateService.GetBalanceUpDay(),
@@ -51,63 +51,69 @@
               "1,3,28,8,40,38,5,24,42,21,47,12,39,45,52,22,6,34,36,32,55,56",
               "All");
 
-            var superWinLossDetailByProductModels = superWinLossDetailByPTDataAccess.GetWinLossByBetType(criteria);
+            var model = superWinLossDetailByPTDataAccess.GetWinLossByBetType(criteria);
 
-            if (superWinLossDetailByProductModels.Any())
+            if (model.WinLossByProducts.Any())
             {
-                var superIds = superWinLossDetailByProductModels.Select(item => item.CustId).Distinct();
+                var superIds = model.WinLossByProducts.Select(item => item.CustId).Distinct();
                 var postionTakings = superWinLossDetailByPTDataAccess.GetSuperPositionTakingList(new SuperPTCriteria(string.Join(",", superIds)));
 
-                var winLossDetailByPTAfterGroup = superWinLossDetailByProductModels.Join(
-                  postionTakings,
-                  winloss => new { winloss.CustId, winloss.ProductID },
-                  pt => new { pt.CustId, pt.ProductID },
-                  (winloss, pt) =>
-                  {
-                      winloss.PositionTaking = pt.PositionTaking;
-                      return winloss;
-                  })
-                 .GroupBy(groupById =>
-                            groupById.CustId, (key, groupById) =>
-                                groupById.GroupBy(item => item.PositionTaking, (key1, item) =>
+                var winlossByUsernames = model.WinLossByProducts.Join(
+                    postionTakings,
+                    winloss => new { winloss.CustId, winloss.ProductId },
+                    pt => new { pt.CustId, pt.ProductId },
+                    (winloss, pt) =>
+                    {
+                        winloss.PositionTaking = pt.PositionTaking;
+                        return winloss;
+                    })
+                    .GroupBy(winlossDetailByProduct =>
+                        winlossDetailByProduct.CustId, (key, winlossDetailByCustIds) =>
+                            winlossDetailByCustIds.GroupBy(item => item.PositionTaking, (index, winlossGroupByPTs) =>
+                            {
+                                var winlossbyPTTotal = new SuperWinLossDetailByProductDTO
                                 {
-                                    var result = new SuperWinLossDetailByProductModel
-                                    {
-                                        ProductNames = new List<string>()
-                                    };
+                                    ProductNames = new List<string>()
+                                };
 
-                                    foreach (var product in item)
-                                    {
-                                        result.CustId = product.CustId;
-                                        result.Username = product.Username;
-                                        result.PositionTaking += product.PositionTaking;
-                                        result.Turnover += product.Turnover;
-                                        result.NetTurnover += product.NetTurnover;
-                                        result.Turnover += product.Turnover;
-                                        result.GrossComm += product.GrossComm;
-                                        result.MemberWinlost += product.MemberWinlost;
-                                        result.PlayerComm += product.PlayerComm;
-                                        result.MemberTotal += product.MemberTotal;
-                                        result.AgWinlost += product.AgWinlost;
-                                        result.AgComm += product.AgComm;
-                                        result.AgTotal += product.AgTotal;
+                                foreach (var winloss in winlossGroupByPTs)
+                                {
+                                    winlossbyPTTotal.CustId = winloss.CustId;
+                                    winlossbyPTTotal.Username = winloss.Username;
+                                    winlossbyPTTotal.PositionTaking = winloss.PositionTaking;
 
-                                        result.MAgWinlost += product.MAgWinlost;
-                                        result.MAgComm += product.MAgWinlost;
-                                        result.MAgTotal += product.MAgComm;
+                                    winlossbyPTTotal.Turnover += winloss.Turnover;
+                                    winlossbyPTTotal.NetTurnover += winloss.NetTurnover;
+                                    winlossbyPTTotal.Turnover += winloss.Turnover;
+                                    winlossbyPTTotal.GrossComm += winloss.GrossComm;
 
-                                        result.SAgWinlost += product.SAgWinlost;
-                                        result.SAgComm += product.SAgComm;
-                                        result.SAgTotal += product.SAgTotal;
+                                    winlossbyPTTotal.MemberWinlost += winloss.MemberWinlost;
+                                    winlossbyPTTotal.PlayerComm += winloss.PlayerComm;
+                                    winlossbyPTTotal.MemberTotal += winloss.MemberTotal;
 
-                                        result.Company += product.Company;
-                                        result.ProductNames.Add(product.ProductName);
-                                    }
+                                    winlossbyPTTotal.AgWinlost += winloss.AgWinlost;
+                                    winlossbyPTTotal.AgComm += winloss.AgComm;
+                                    winlossbyPTTotal.AgTotal += winloss.AgTotal;
 
-                                    return result;
-                                }));
+                                    winlossbyPTTotal.MAgWinlost += winloss.MAgWinlost;
+                                    winlossbyPTTotal.MAgComm += winloss.MAgWinlost;
+                                    winlossbyPTTotal.MAgTotal += winloss.MAgComm;
 
-                return new SuperWinLossDetailByPTModel(winLossDetailByPTAfterGroup.Select(item => new SuperWinLossDetailProductByUsername(item)));
+                                    winlossbyPTTotal.SAgWinlost += winloss.SAgWinlost;
+                                    winlossbyPTTotal.SAgComm += winloss.SAgComm;
+                                    winlossbyPTTotal.SAgTotal += winloss.SAgTotal;
+
+                                    winlossbyPTTotal.Company += winloss.Company;
+
+                                    winlossbyPTTotal.ProductNames.Add(winloss.ProductName);
+                                }
+
+                                return winlossbyPTTotal;
+                            }));
+
+                return new SuperWinLossDetailByPTModel(
+                    winlossByUsernames.Select(winlossByUsername => new SuperWinLossDetailByUsernameModel(winlossByUsername)),
+                    model.Total);
             }
 
             return new SuperWinLossDetailByPTModel();

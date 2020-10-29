@@ -157,10 +157,11 @@
     <Compile Include="Products\ProductDto.cs" />
     <Compile Include="Products\ProductStatusDto.cs" />
     <Compile Include="Report\ExtraPTModel.cs" />
-    <Compile Include="Report\SuperWinLossDetailByPT\SuperPTModel.cs" />
-    <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailProductByUsername.cs" />
-    <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailByPTModel.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\SuperPositionTakingModel.cs" />
     <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailByProductModel.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailByUsernameModel.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailByPTModel.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailByProductDTO.cs" />
     <Compile Include="Report\WinLossDetailExtra.cs" />
     <Compile Include="Report\WinLossDetailIBCBetLiveCasino.cs" />
     <Compile Include="Statement\Statement.cs" />
