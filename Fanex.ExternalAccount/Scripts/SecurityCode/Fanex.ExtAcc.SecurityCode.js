@@ -105,7 +105,7 @@ Fanex.ExtAcc.SecurityCode = {
                     self.OnValidated();
                     return;
                 }
-                
+
                 if (result.FailedCounter < self.maxAllowAttempt) {
                     self.ShowError('Wrong Security Code. Please try again.');
                     return;
@@ -131,7 +131,7 @@ Fanex.ExtAcc.SecurityCode = {
         this.$cbShowSC.change(this.OnShowSecurityCode);
         this.$btnSubmit.click(this.OnClick);
         this.$scPageOverlay.click(this.OnClosePage);
-        $(window).on('orientationchange', this.AdjustPagePosition);
+        $(window).on('orientationchange', this.OnOrientationChange.bind(this));
     },
     KnockOut: function () {
         top.location.href = resolveClientUrl('Account/LogOff');
@@ -166,7 +166,7 @@ Fanex.ExtAcc.SecurityCode = {
                 setTopLeft('auto', calculatedLeft);
             } else {
                 if (this.isExternalSite) {
-                    scBlockOverlay.css('margin', '.25em .25em 0');
+                    scBlockOverlay.css('margin', '.25em');
                     setTopLeft('auto', 'auto');
                 } else {
                     scBlockOverlay.css('margin', '0 .25em');
@@ -188,6 +188,39 @@ Fanex.ExtAcc.SecurityCode = {
             height = w.innerHeight || e.clientHeight || g.clientHeight;
 
         return { width, height };
+    },
+    OnOrientationChange: function (event) {
+        var angle = window.orientation || event.target.screen.orientation.angle;
+        this.isLandscape = angle === -90 || angle === 90;
+
+        var $dialog = parent.$('.ui-dialog'),
+            $windowPopup = parent.$('#windowPopup'),
+            $body = $('body'),
+            $securityCodeBlock = $('div.securitycode-block');
+        var height = this.isLandscape ? this.browserSize.width : this.browserSize.height;
+
+        if (this.isMobile && this.isExternalSite) {
+            var calculatedHeight = `calc(${height + 34}px + .5em`,
+                calculatedTop = `calc(50% - ${height / 2 + 17}px - .25em)`;
+
+            if (this.isLandscape) {
+                $dialog.css({ top: 'auto', height: calculatedHeight });
+                $windowPopup.height(height - 34);
+                $securityCodeBlock.width(468);
+            } else {
+                $dialog.css({ top: calculatedTop, height: calculatedHeight });
+                $windowPopup.height(height);
+                $body.css('overflow-y', 'inherit');
+                $securityCodeBlock.width('100%');
+            }
+        }
+        if (!this.isMobile && this.isExternalSite) {
+            this.isLandscape
+                ? $body.css({ 'overflow-y': 'scroll', height })
+                : $body.css({ 'overflow-y': 'inherit', height });
+        }
+
+        this.AdjustPagePosition();
     }
 };
 
