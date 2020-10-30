@@ -47,7 +47,6 @@
         {
             var param = new SuperWinLossDetailByPTParam(
                 request.GroupName,
-            request.CustId,
             request.Fromdate,
             request.Todate,
             request.GetProductIds(),
@@ -64,7 +63,6 @@
             ISuperWinLossDetailByPTReportBuilder builder;
             var winlossDetail = services.GetSuperWinLossDetailByPT(new SuperWinLossDetailByPTParam(
                  request.GroupName,
-            request.CustId,
             request.Fromdate,
             request.Todate,
             request.GetProductIds(),

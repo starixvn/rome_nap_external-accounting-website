@@ -5,14 +5,6 @@
 Fanex.ExtAcc.SuperWinLossDetailByPT = {
     gridOption: { },
     groupName: "",
-    username: "",
-    srecommend: 0,
-    mrecommend: 0,
-    recommend: 0,
-    custId: 0,
-    supername: "",
-    mastername: "",
-    agentname: "",
     fromdate: new Date(),
     todate: new Date(),
     parameterProducts: "",
@@ -20,7 +12,6 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
     removedsortdata: new Array(),
     fixedsortlist: new Array(),
     url: resolveClientUrl("SuperWinLossDetailByPT/GetData"),
-    viewlevel: 5,
     dataSource: [],
     totalRowData: null,
     pageIndex: 0,
@@ -48,9 +39,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
     },
     CallSubmit: function () {
         this.groupName = $("#selectedGroupName").html();
-        this.ResetParameters();
-        this.username = Fanex.encodeHtml($("#txtUserName").val());
-        this.Databind(this.username);
+        this.Databind();
     },
     initMonthlyCalendar: function () {
         $("#monPickr1").monPickr({
@@ -339,7 +328,6 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                 var item = args.item;
                 $this.groupName = item.innerHTML;
 
-                $this.ResetParameters();
                 $this.InitShowHideControls("none");
             }
         });
@@ -352,34 +340,15 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
             $this.CallSubmit();
         });
 
-        $("#txtUserName").keyup(function (e) {
-            if ($("#txtUserName").val().length > 1) {
-                Fanex.ExtAcc.InitSuggestion();
-            }
-        });
-
         $("#exporttoexcel").click(function () {
             Fanex.ExtAcc.SuperWinLossDetailByPT.getParameterProducts();
             var params = "fromdate=" + $this.fromdate +
                 "&todate=" + $this.todate +
-                "&viewlevel=" + $this.viewlevel +
-                "&custid=" + $this.custId +
-                "&groupname=" + $this.groupName +
-                "&username=" + Fanex.ExtAcc.SuperWinLossDetailByPT.username;
+                "&groupname=" + $this.groupName;
+
             var url = resolveClientUrl("SuperWinLossDetailByPT/ExportWinLossDetailToExcel?") + params + Fanex.ExtAcc.SuperWinLossDetailByPT.parameterProducts + Fanex.ExtAcc.SuperWinLossDetailByPT.getParameterProductDetails();
 
             top.exportExcel(url, document);
-        });
-
-        $("#txtUserName").keypress(function (e) {
-            if (typeof e === "undefined") e = window.event;
-            var key = (typeof e.keyCode === "undefined") ? e.which : e.keyCode;
-            if (key === 13) {
-                $this.CallSubmit();
-                return true;
-            } else {
-                return true;
-            }
         });
 
         $this.sorters = $(".col-sorter");
@@ -488,7 +457,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                 totalItem: $this.totalRecords,
                 itemsPerPage: $this.pageSize,
                 pagerSelectCallBack: function (currentPageIndex, itemsPerPage) {
-                    $this.Databind($this.username, itemsPerPage, currentPageIndex + 1);
+                    $this.Databind(itemsPerPage, currentPageIndex + 1);
                     $("#jqgrid").fanexGrid($this.gridOption);
                 },
                 showDetail: true
@@ -644,14 +613,6 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         $("#headlineDaily").css("display", status);
         $("#mainGrid").css("display", status);
     },
-    ResetParameters: function () {
-        this.srecommend = 0;
-        this.mrecommend = 0;
-        this.recommend = 0;
-        this.custId = 0;
-        this.username = '';
-        this.viewlevel = 4;
-    },
     GetFromDateToDate: function () {
         if ($(".from-to-date").css('display') !== 'none') {
             this.fromdate = $("#dtpFromDate").val();
@@ -662,8 +623,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
             this.todate = $("#monPickr1").monPickr("getToDate", "MM/dd/yyyy");
         }
     },
-    Databind: function (username, pageSize = 50, pageIndex = 1) {
-        this.username = !username ? "" : username;
+    Databind: function (pageSize = 50, pageIndex = 1) {
         this.GetFromDateToDate();
         this.groupName = $("#selectedGroupName").html();
 
@@ -677,14 +637,8 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
 
         $this.getParameterProducts();
         var parameterUrl = "?Groupname=" + this.groupName
-            + "&Srecommend=" + this.srecommend
-            + "&Mrecommend=" + this.mrecommend
-            + "&Recommend=" + this.recommend
-            + "&Custid=" + this.custId
-            + "&Username=" + Fanex.ExtAcc.ReplaceAll(this.viewlevel === 5 ? "" : this.username, "&", "")
             + "&Fromdate=" + this.fromdate
             + "&Todate=" + this.todate
-            + "&Viewlevel=" + this.viewlevel
             + "&PageSize=" + pageSize
             + "&PageIndex=" + pageIndex
             + this.parameterProducts
@@ -716,24 +670,6 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                 $this.pageSize = data.PageSize;
                 $this.pageIndex = data.PageIndex;
                 $this.fixedsortlist = [];
-
-                $this.viewlevel = data.viewlevel;
-                if ($this.viewlevel === 3) {
-                    $this.srecommend = data.srecommend;
-                } else if ($this.viewlevel === 2) {
-                    $this.srecommend = data.srecommend;
-                    $this.mrecommend = data.mrecommend;
-                } else if ($this.viewlevel === 1) {
-                    $this.srecommend = data.srecommend;
-                    $this.mrecommend = data.mrecommend;
-                    $this.recommend = data.recommend;
-                }
-
-                if ($this.custId === 0) {
-                    $this.supername = data.supername;
-                    $this.mastername = data.mastername;
-                    $this.agentname = data.agentname;
-                }
 
                 $("#mainGrid").css("display", $this.totalRows < 1 ? "none" : "block");
                 $("#mainGrid").css("visibility", $this.totalRows < 1 ? "hidden" : "visible");

@@ -32,19 +32,11 @@
         }
 
         public string GroupName => extRequest.GetGroupName();
-        public string Username { get; set; }
-        public int Srecommend { get; set; }
-        public int Mrecommend { get; set; }
-        public int Recommend { get; set; }
-        public int CustId { get; set; }
         public DateTime Fromdate { get; set; }
         public DateTime Todate { get; set; }
         public int PageSize { get; set; } = 50;
         public int PageIndex { get; set; } = 1;
-        public int Viewlevel { get; set; }
         public string ResourceIds { get; set; }
-
-        public bool IsSearch() => CustId == 0;
 
         internal string GetProductIds()
         {
