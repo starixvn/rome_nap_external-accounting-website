@@ -3,6 +3,8 @@
     using Fanex.ExternalAccount.DataAccess.Criteria.SuperWinLossDetailByPT;
     using Fanex.ExternalAccount.DataAccess.Impl.Report;
     using Fanex.ExternalAccount.DTO.Report;
+    using Fanex.ExternalAccount.Service.Impl.Report;
+    using Fanex.ExternalAccount.Service.Interface.Report;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -15,13 +17,17 @@
     public class SuperWinLossDetailByPTServiceImpl : SuperWinLossDetailByPTService
     {
         private readonly SuperWinLossDetailByPTDataAccess superWinLossDetailByPTDataAccess;
+        private readonly IReportService reportService;
 
-        public SuperWinLossDetailByPTServiceImpl(SuperWinLossDetailByPTDataAccess superWinLossDetailByPTDataAccess)
+        public SuperWinLossDetailByPTServiceImpl(
+            SuperWinLossDetailByPTDataAccess superWinLossDetailByPTDataAccess,
+            IReportService reportService)
         {
             this.superWinLossDetailByPTDataAccess = superWinLossDetailByPTDataAccess ?? new SuperWinLossDetailByPTDataAccessImpl();
+            this.reportService = reportService ?? new ReportService();
         }
 
-        public SuperWinLossDetailByPTServiceImpl() : this(null)
+        public SuperWinLossDetailByPTServiceImpl() : this(null, null)
         {
         }
 
@@ -32,26 +38,27 @@
                 throw new ArgumentNullException(nameof(param));
             }
 
-            //var criteria = new SuperWinLossDetailByPTCriteria(
-            //    param.CustId,
-            //    param.FromDate,
-            //    param.ToDate,
-            //    DateTime.Now,//reportDateService.GetBalanceUpDay(),
-            //    DateTime.Now,//reportDateService.GetMoveBetsDay(),
-            //    param.UserSelectedProductIds,
-            //    //param.CustLevel,
-            //    param.ProductDetailsXML);
-
             var criteria = new SuperWinLossDetailByPTCriteria(
-                "ACCINDO",
-               new DateTime(2020, 10, 04),
-               new DateTime(2020, 10, 12),
-               new DateTime(2020, 9, 30),//reportDateService.GetBalanceUpDay(),
-               new DateTime(2020, 10, 03),//reportDateService.GetMoveBetsDay(),
+                param.GroupName,
+               param.FromDate,
+               param.ToDate,
+               ReportService.BalanceUpDate,//reportDateService.GetBalanceUpDay(),
+               ReportService.MoveBetsDate,//reportDateService.GetMoveBetsDay(),
               "1,3,28,8,40,38,5,24,42,21,47,12,39,45,52,22,6,34,36,32,55,56",
               "All",
               param.PageSize,
               param.PageIndex);
+
+            //var criteria = new SuperWinLossDetailByPTCriteria(
+            //    "ACCINDO",
+            //   new DateTime(2020, 10, 04),
+            //   new DateTime(2020, 10, 12),
+            //   new DateTime(2020, 9, 30),//reportDateService.GetBalanceUpDay(),
+            //   new DateTime(2020, 10, 03),//reportDateService.GetMoveBetsDay(),
+            //  "1,3,28,8,40,38,5,24,42,21,47,12,39,45,52,22,6,34,36,32,55,56",
+            //  "All",
+            //  param.PageSize,
+            //  param.PageIndex);
 
             var model = superWinLossDetailByPTDataAccess.GetWinLossByBetType(criteria);
 

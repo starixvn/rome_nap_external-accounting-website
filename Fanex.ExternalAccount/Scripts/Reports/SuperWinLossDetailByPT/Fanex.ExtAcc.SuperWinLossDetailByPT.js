@@ -711,7 +711,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
 
                 $this.dataSource = data.WinLossByUsernames;
                 $this.totalRowData = data.Total;
-                $this.totalRows = data.WinLossByUsernames.length;
+                $this.totalRows = data.WinLossByUsernames !== null ? data.WinLossByUsernames.length : 0;
                 $this.totalRecords = data.TotalRecords;
                 $this.pageSize = data.PageSize;
                 $this.pageIndex = data.PageIndex;

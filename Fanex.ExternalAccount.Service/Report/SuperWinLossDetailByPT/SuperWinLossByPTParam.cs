@@ -7,6 +7,7 @@
     public class SuperWinLossDetailByPTParam
     {
         public SuperWinLossDetailByPTParam(
+            string groupName,
             int custId,
             DateTime fromDate,
             DateTime toDate,
@@ -18,6 +19,7 @@
             int pageSize,
             int pageIndex)
         {
+            GroupName = groupName;
             CustId = custId;
             //CustLevel = custLevel;
             UserSelectedProductIds = userSelectedProductIds;
@@ -31,6 +33,8 @@
             PageSize = pageSize;
             PageIndex = pageIndex;
         }
+
+        public string GroupName { get; }
 
         public int CustId { get; }
 

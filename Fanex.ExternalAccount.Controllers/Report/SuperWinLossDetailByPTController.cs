@@ -46,11 +46,12 @@
         public ActionResult GetData(SuperWinLossDetailByPTRequest request)
         {
             var param = new SuperWinLossDetailByPTParam(
+                request.GroupName,
             request.CustId,
             request.Fromdate,
             request.Todate,
             request.GetProductIds(),
-            "1,3,4",
+            request.ResourceIds,
             request.PageSize,
             request.PageIndex);
 
@@ -62,11 +63,12 @@
         {
             ISuperWinLossDetailByPTReportBuilder builder;
             var winlossDetail = services.GetSuperWinLossDetailByPT(new SuperWinLossDetailByPTParam(
+                 request.GroupName,
             request.CustId,
             request.Fromdate,
             request.Todate,
             request.GetProductIds(),
-            "1,3,4",
+            request.ResourceIds,
             0,
             0));
 
