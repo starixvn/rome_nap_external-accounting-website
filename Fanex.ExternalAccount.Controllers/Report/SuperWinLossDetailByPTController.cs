@@ -46,11 +46,13 @@
         public ActionResult GetData(SuperWinLossDetailByPTRequest request)
         {
             var param = new SuperWinLossDetailByPTParam(
-            request.custId,
-            request.fromdate,
-            request.todate,
+            request.CustId,
+            request.Fromdate,
+            request.Todate,
             request.GetProductIds(),
-            "1,3,4");
+            "1,3,4",
+            request.PageSize,
+            request.PageIndex);
 
             var viewModel = services.GetSuperWinLossDetailByPT(param);
             return Json(viewModel);
@@ -60,17 +62,19 @@
         {
             ISuperWinLossDetailByPTReportBuilder builder;
             var winlossDetail = services.GetSuperWinLossDetailByPT(new SuperWinLossDetailByPTParam(
-            request.custId,
-            request.fromdate,
-            request.todate,
+            request.CustId,
+            request.Fromdate,
+            request.Todate,
             request.GetProductIds(),
-            "1,3,4"));
+            "1,3,4",
+            0,
+            0));
 
             builder = new SuperWinLossDetailByPTReportBuilder(
                            winlossDetail.WinLossByUsernames.ToList(),
                            winlossDetail.Total,
-                           request.fromdate,
-                           request.todate);
+                           request.Fromdate,
+                           request.Todate);
 
             var products = GetProductList();
             products = GetPPNameExportExcel(request, products);
@@ -89,7 +93,7 @@
         {
             if (string.IsNullOrWhiteSpace(request.ResourceIds))
             {
-                if (!Config.IsOfferJackpotProductDetailsGroup(request.groupName))
+                if (!Config.IsOfferJackpotProductDetailsGroup(request.GroupName))
                 {
                     return products;
                 }
@@ -104,7 +108,7 @@
                 if (product.Key == "showPP")
                 {
                     var userSelectedResourceIds = request.ResourceIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    var productDetails = GetProductDetails(request.groupName)
+                    var productDetails = GetProductDetails(request.GroupName)
                         .Where(p => p.ProductKey == product.Key)
                         .ToList();
 
@@ -131,6 +135,6 @@
         private const string DateFormat = "yyyyMMdd";
 
         public string FileName =>
-            $"SuperWinLossDetail_{fromdate.ToString(DateFormat)}_{todate.ToString(DateFormat)}.xls";
+            $"SuperWinLossDetail_{Fromdate.ToString(DateFormat)}_{Todate.ToString(DateFormat)}.xls";
     }
 }

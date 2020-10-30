@@ -3,6 +3,7 @@
 }
 
 Fanex.ExtAcc.SuperWinLossDetailByPT = {
+    gridOption: { },
     groupName: "",
     username: "",
     srecommend: 0,
@@ -22,6 +23,9 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
     viewlevel: 5,
     dataSource: [],
     totalRowData: null,
+    pageIndex: 0,
+    pageSize: 50,
+    totalRecords: 0,
     productDetailsData: [],
     $this: null,
     SetRange: function () {
@@ -463,7 +467,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         arrColData = this.defaultColumns;
         arrGroupHeaders = this.defaultHeaderColumns;
 
-        var gridOption = {
+        this.gridOption = {
             customizeHeader: true,
             groupHeaderRows: [{ Columns: arrGroupHeaders }],
             columns: arrColData,
@@ -477,11 +481,17 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
             showTree: true,
             gridExpandHeight: 256,
             showPager: true,
+            customPager: true,
             pagerOption: {
                 itemsPerPageArray: [50, 100, 500],
-                currentPage: 0,
-                totalItem: $this.totalRows,
-                itemsPerPage: 50
+                currentPage: $this.pageIndex - 1,
+                totalItem: $this.totalRecords,
+                itemsPerPage: $this.pageSize,
+                pagerSelectCallBack: function (currentPageIndex, itemsPerPage) {
+                    $this.Databind($this.username, itemsPerPage, currentPageIndex + 1);
+                    $("#jqgrid").fanexGrid($this.gridOption);
+                },
+                showDetail: true
             },
             marginRight: 10,
             bottomBorderWidth: 0,
@@ -558,8 +568,8 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
            
         }
 
-        gridOption.bodyRows = bodyData;
-        gridOption.pagerOption.totalItem = this.totalRows;
+        this.gridOption.bodyRows = bodyData;
+        this.gridOption.pagerOption.totalItem = this.totalRecords;
 
         //// Asign Footer Data
         var footerData = [];
@@ -585,25 +595,10 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
             ]
         });
 
-        gridOption.footerRows = footerData;
+        this.gridOption.footerRows = footerData;
 
-        setPagerOptionOnMobile(gridOption);
-
-        $("#jqgrid").fanexGrid(gridOption);
-
-        if (this.viewlevel >= 4) {
-            $('#jqgrid').fanexGrid("hideColumns", gridOption, [17, 18, 19, 20]);
-
-            $('#showHideExtras').click(function () {
-                if ($('#showHideExtras').attr('class') === 'allowDblComm') {
-                    $('#jqgrid').fanexGrid("hideColumns", gridOption, [17, 18, 19, 20]);
-                    $('#showHideExtras').attr('class', 'disallowDblComm');
-                } else {
-                    $('#jqgrid').fanexGrid("hideColumns", gridOption, []);
-                    $('#showHideExtras').attr('class', 'allowDblComm');
-                }
-            });
-        }
+        setPagerOptionOnMobile(this.gridOption);
+        $("#jqgrid").fanexGrid(this.gridOption);
 
         workaroundForGridOnPhone();
     },
@@ -667,7 +662,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
             this.todate = $("#monPickr1").monPickr("getToDate", "MM/dd/yyyy");
         }
     },
-    Databind: function (username) {
+    Databind: function (username, pageSize = 50, pageIndex = 1) {
         this.username = !username ? "" : username;
         this.GetFromDateToDate();
         this.groupName = $("#selectedGroupName").html();
@@ -681,15 +676,17 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         }
 
         $this.getParameterProducts();
-        var parameterUrl = "?groupname=" + this.groupName
-            + "&srecommend=" + this.srecommend
-            + "&mrecommend=" + this.mrecommend
-            + "&recommend=" + this.recommend
-            + "&custid=" + this.custId
-            + "&username=" + Fanex.ExtAcc.ReplaceAll(this.viewlevel === 5 ? "" : this.username, "&", "")
-            + "&fromdate=" + this.fromdate
-            + "&todate=" + this.todate
-            + "&viewlevel=" + this.viewlevel
+        var parameterUrl = "?Groupname=" + this.groupName
+            + "&Srecommend=" + this.srecommend
+            + "&Mrecommend=" + this.mrecommend
+            + "&Recommend=" + this.recommend
+            + "&Custid=" + this.custId
+            + "&Username=" + Fanex.ExtAcc.ReplaceAll(this.viewlevel === 5 ? "" : this.username, "&", "")
+            + "&Fromdate=" + this.fromdate
+            + "&Todate=" + this.todate
+            + "&Viewlevel=" + this.viewlevel
+            + "&PageSize=" + pageSize
+            + "&PageIndex=" + pageIndex
             + this.parameterProducts
             + $this.getParameterProductDetails();
 
@@ -715,6 +712,9 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                 $this.dataSource = data.WinLossByUsernames;
                 $this.totalRowData = data.Total;
                 $this.totalRows = data.WinLossByUsernames.length;
+                $this.totalRecords = data.TotalRecords;
+                $this.pageSize = data.PageSize;
+                $this.pageIndex = data.PageIndex;
                 $this.fixedsortlist = [];
 
                 $this.viewlevel = data.viewlevel;

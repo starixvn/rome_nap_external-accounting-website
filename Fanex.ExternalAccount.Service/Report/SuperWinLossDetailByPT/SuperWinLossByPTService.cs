@@ -50,8 +50,8 @@
                new DateTime(2020, 10, 03),//reportDateService.GetMoveBetsDay(),
               "1,3,28,8,40,38,5,24,42,21,47,12,39,45,52,22,6,34,36,32,55,56",
               "All",
-              50,
-              1);
+              param.PageSize,
+              param.PageIndex);
 
             var model = superWinLossDetailByPTDataAccess.GetWinLossByBetType(criteria);
 
@@ -115,7 +115,10 @@
 
                 return new SuperWinLossDetailByPTModel(
                     winlossByUsernames.Select(winlossByUsername => new SuperWinLossDetailByUsernameModel(winlossByUsername)),
-                    model.Total);
+                    model.Total,
+                    model.TotalRecords,
+                    criteria.PageIndex,
+                    criteria.PageSize);
             }
 
             return new SuperWinLossDetailByPTModel();

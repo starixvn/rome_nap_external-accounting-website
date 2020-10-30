@@ -31,18 +31,20 @@
             this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
         }
 
-        public string groupName => extRequest.GetGroupName();
-        public string username { get; set; }
-        public int srecommend { get; set; }
-        public int mrecommend { get; set; }
-        public int recommend { get; set; }
-        public int custId { get; set; }
-        public DateTime fromdate { get; set; }
-        public DateTime todate { get; set; }
-        public int viewlevel { get; set; }
+        public string GroupName => extRequest.GetGroupName();
+        public string Username { get; set; }
+        public int Srecommend { get; set; }
+        public int Mrecommend { get; set; }
+        public int Recommend { get; set; }
+        public int CustId { get; set; }
+        public DateTime Fromdate { get; set; }
+        public DateTime Todate { get; set; }
+        public int PageSize { get; set; } = 50;
+        public int PageIndex { get; set; } = 1;
+        public int Viewlevel { get; set; }
         public string ResourceIds { get; set; }
 
-        public bool IsSearch() => custId == 0;
+        public bool IsSearch() => CustId == 0;
 
         internal string GetProductIds()
         {
@@ -50,7 +52,7 @@
 
             var formatedProductIds = new List<int>();
 
-            var products = groupConfigurationService.Get(new GetGroupConfigurationCriteria()).Where(i => i.GroupName == groupName);
+            var products = groupConfigurationService.Get(new GetGroupConfigurationCriteria()).Where(i => i.GroupName == GroupName);
             foreach (var item in products)
             {
                 foreach (var product in filterParams)

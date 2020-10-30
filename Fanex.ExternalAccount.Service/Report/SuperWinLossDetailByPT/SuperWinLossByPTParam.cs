@@ -14,7 +14,9 @@
             //IEnumerable<int> userSelectedProductIds,
             //IEnumerable<int> userSelectedResourceIds,
             //UserLevel custLevel,
-            string productDetailsXML)
+            string productDetailsXML,
+            int pageSize,
+            int pageIndex)
         {
             CustId = custId;
             //CustLevel = custLevel;
@@ -26,6 +28,8 @@
             ToDate = toDate == DateTime.MinValue ? DateTime.Now : toDate;
 
             ProductDetailsXML = productDetailsXML;
+            PageSize = pageSize;
+            PageIndex = pageIndex;
         }
 
         public int CustId { get; }
@@ -43,5 +47,9 @@
         //public UserLevel CustLevel { get; }
 
         public string ProductDetailsXML { get; }
+
+        public int PageSize { get; }
+
+        public int PageIndex { get; }
     }
 }

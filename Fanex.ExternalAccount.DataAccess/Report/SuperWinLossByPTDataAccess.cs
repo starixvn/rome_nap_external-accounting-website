@@ -68,20 +68,24 @@
 
             var winlossByBettypeData = new List<SuperWinLossDetailByProductDTO>();
             var total = new SuperWinLossDetailByProductDTO();
+            var totalRecords = 0;
 
-            using (var reader = ExecDataReader("EAS_Rpt_WinLossDetail_byPT", new Hashtable
+            using (var db = new ObjectDb("EAS_Rpt_WinLossDetail_byPT"))
             {
-                { "groupname", criteria.GroupName },
-                { "fromdate", criteria.FromDate },
-                { "todate", criteria.ToDate },
-                { "balanceupday", criteria.BalanceUpDay },
-                { "movebetsday", criteria.MoveBetsDay },
-                { "productids", criteria.ProductIds },
-                { "productdetails", criteria.ProductDetails },
-                { "pagesize", criteria.PageSize },
-                { "pageindex", criteria.PageIndex }
-            }))
-            {
+               // db.AddOutParameter("totalrecords", DbType.Int32, sizeof(int));
+                var reader = db.ExecuteReader(new Hashtable
+                {
+                    { "groupname", criteria.GroupName },
+                    { "fromdate", criteria.FromDate },
+                    { "todate", criteria.ToDate },
+                    { "balanceupday", criteria.BalanceUpDay },
+                    { "movebetsday", criteria.MoveBetsDay },
+                    { "productids", criteria.ProductIds },
+                    { "productdetails", criteria.ProductDetails },
+                    { "pagesize", criteria.PageSize },
+                    { "pageindex", criteria.PageIndex }
+                });
+
                 if (reader != null)
                 {
                     while (reader.Read())
@@ -93,10 +97,12 @@
                     {
                         total = BuildWinLossByBetType(reader);
                     }
+
+                    totalRecords = 100;// (int)db.GetParameterValue("totalrecords");
                 }
             }
 
-            return new SuperWinLossDetailByProductModel(winlossByBettypeData, total);
+            return new SuperWinLossDetailByProductModel(winlossByBettypeData, total, totalRecords);
         }
 
 
