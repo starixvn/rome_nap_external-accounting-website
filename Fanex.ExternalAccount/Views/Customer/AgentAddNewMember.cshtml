@@ -146,6 +146,7 @@
     <input type="hidden" id="parentId" value="@Request["custId"]" />
     <input type="hidden" id="parentUsername" value="@parentUsername" />
     <input type="hidden" id="parentCurrencyId" value="@Request["currencyId"]" />
+    <input type="hidden" id="PT3DecimalSites" value="@AppSettings.PT3DecimalSites" />
     @Html.AntiForgeryToken()
 </div>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Languages.en.js")" type="text/javascript"></script>

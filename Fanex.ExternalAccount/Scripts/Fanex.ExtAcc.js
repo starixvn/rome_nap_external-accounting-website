@@ -102,6 +102,15 @@ String.prototype.formatSuccessMessage = function () {
     return this;
 };
 
+String.prototype.splitAndContains = function (strSearched) {
+    var sourceStr = this;
+    var sourceSplited = sourceStr.split(",").map(function (item) {
+        return item.trim().toUpperCase();
+    });
+
+    return sourceSplited.indexOf(strSearched.toUpperCase()) !== -1;
+}
+
 Fanex.ExtAcc = {
     $this: null,
     BlockedUI: false,

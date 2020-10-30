@@ -17,6 +17,8 @@
 
         public static string LogActionFilter_IgnoredActions => Configs["LogActionFilter:IgnoredActions"];
 
+        public static string PT3DecimalSites => Configs["PT3DecimalSites"] ?? "789y";
+
         internal static NameValueCollection Configs { get; set; } = ConfigurationManager.AppSettings;
     }
 }
