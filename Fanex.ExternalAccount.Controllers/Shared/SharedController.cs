@@ -13,7 +13,6 @@
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.ViewModel.Shared;
     using Logging.Extensions.Web;
-    using ONEbook.UM.Models;
     using ONEbook.UM.Services;
     using ONEbook.UM.Services.Impl;
     using Service.Impl.Login;
@@ -65,7 +64,7 @@
 
         public ActionResult _Menu()
         {
-            var isShowAssignSubGroup = Group.IsITGroup(CurrentSession.GroupId) || groupService.GetGroupWithSubGroups(CurrentSession.GroupId).Any();
+            var isShowAssignSubGroup = CurrentSession.GroupId > 0 && (Group.IsITGroup(CurrentSession.GroupId) || groupService.GetGroupWithSubGroups(CurrentSession.GroupId).Any());
             var menuList = menuService.GetMenusByUserId(CurrentSession.UserId, ExtRequest.GetGroupName(), isShowAssignSubGroup);
             var rootMenuList = menuList.Where(x => x.ParentId == 0);
             var menuDict = new Dictionary<string, MenuItem>();

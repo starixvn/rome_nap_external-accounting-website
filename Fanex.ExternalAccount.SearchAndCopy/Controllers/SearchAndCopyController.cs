@@ -48,6 +48,8 @@
         [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Host)]
         public ActionResult Super()
         {
+            ViewBag.Code = Encryptor.RandomCaptcha;
+
             return PartialViewBase();
         }
 

@@ -24,7 +24,8 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         $txtMaxCredit,
         $notAllowedSuperPrefixes,
         passwordTemplate,
-        existingUsername;
+        existingUsername,
+        sccode;
 
     function Init() {
         $.ajaxSetup({
@@ -56,6 +57,7 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         $txtMaxCredit = $('#txtMaxCredit');
         $notAllowedSuperPrefixes = $('#notAllowedSuperPrefixes');
         passwordTemplate = $('#passwordTemplate').html();
+        sccode = $('#SCCode').val();
 
         GetNotAllowedSuperPrefixes();
 
@@ -119,7 +121,7 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         Fanex.ExtAcc.BlockUI();
         var requestParams = {
             username: username,
-            password: password,
+            password: password.encrypt(sccode),
             firstName: $.trim($txtFirstName.val()),
             lastName: $.trim($txtLastName.val()),
             phone: $.trim($txtPhone.val()),

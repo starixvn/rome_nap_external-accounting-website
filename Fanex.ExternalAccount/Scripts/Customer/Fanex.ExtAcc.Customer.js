@@ -421,9 +421,9 @@
 
         $("#err-message").addClass("hide");
         Fanex.ExtAcc.BlockUI();
-
+        var encryptCode = $("#leftFrame").contents().find("#SCode").val();
         $.ajax({
-            url: resolveClientUrl('Customer/UpdatePassword/?custId=' + $('#CustId').val() + '&password=' + $('#Password').val() + '&roleId=' + roleId),
+            url: resolveClientUrl('Customer/UpdatePassword/?custId=' + $('#CustId').val() + '&password=' + encodeURIComponent($('#Password').val().encrypt(encryptCode)) + '&roleId=' + roleId),
             type: 'POST',
             data: Fanex.ExtAcc.Customer.GroupName()
         })
