@@ -154,26 +154,26 @@ Fanex.ExtAcc.SecurityCode = {
                 scBlockOverlay.css({ top, left });
             };
 
-        if (this.isMobile) {
-            if (this.isLandscape) {
-                if (this.isExternalSite) {
-                    $('body').css({
-                        'overflow-y': 'scroll',
-                        'background-color': '#aaaaaa'
-                    });
-                    scBlockOverlay.css('margin', '.5em 0');
-                }
-                setTopLeft('auto', calculatedLeft);
-            } else {
-                if (this.isExternalSite) {
-                    scBlockOverlay.css('margin', '.25em');
-                    setTopLeft('auto', 'auto');
-                } else {
-                    scBlockOverlay.css('margin', '0 .25em');
-                    setTopLeft(calculatedTop, 'auto');
-                }
+        if (this.isMobile && this.isLandscape) {
+            if (this.isExternalSite) {
+                $('body').css({
+                    'overflow-y': 'scroll',
+                    'background-color': '#aaaaaa'
+                });
+                scBlockOverlay.css('margin', '.5em 0');
             }
-        } else {
+            setTopLeft('auto', calculatedLeft);
+        }
+        if (this.isMobile && !this.isLandscape) {
+            if (this.isExternalSite) {
+                scBlockOverlay.css('margin', '.25em');
+                setTopLeft('auto', 'auto');
+            } else {
+                scBlockOverlay.css('margin', '0 .25em');
+                setTopLeft(calculatedTop, 'auto');
+            }
+        }
+        if (!this.isMobile) {
             setTopLeft(calculatedTop, calculatedLeft);
         }
 
