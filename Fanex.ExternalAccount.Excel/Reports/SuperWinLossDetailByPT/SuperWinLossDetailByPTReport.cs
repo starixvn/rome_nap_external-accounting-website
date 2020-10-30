@@ -75,7 +75,7 @@
 
                     var values01 = new List<object>
                     {
-                        childRow.PositionTaking,
+                        childRow.PositionTakingText,
                         childRow.Turnover,
                         childRow.NetTurnover,
                         childRow.GrossComm,

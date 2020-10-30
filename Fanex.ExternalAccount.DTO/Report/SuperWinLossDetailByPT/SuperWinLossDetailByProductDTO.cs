@@ -1,12 +1,17 @@
 ﻿namespace Fanex.ExternalAccount.DTO.Report
 {
+    using System;
     using System.Collections.Generic;
 
     public class SuperWinLossDetailByProductDTO
     {
+        private const int percentageFormat = 100;
+
         public List<string> ProductNames { get; set; }
 
         public decimal PositionTaking { get; set; }
+
+        public string PositionTakingText => $"{String.Format("{0:0.#}", PositionTaking * percentageFormat)}% PT";
 
         public int CustId { get; set; }
 

@@ -614,7 +614,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
             tooltip += "<div>" + value + "</div>";
         });
 
-        return '<span class="text-truncate" style="text-decoration: none; margin: 0, text-align: left;" title="' + tooltip + '">' + cell.Value.PositionTaking + ' (' + cell.Value.ProductNames.length + ')' + '</a>';
+        return '<span class="text-truncate" style="text-decoration: none; margin: 0, text-align: left;" title="' + tooltip + '">' + cell.Value.PositionTakingText + ' (' + cell.Value.ProductNames.length + ')' + '</a>';
     },
     customsortfunc: function (rows) {
         var countFixedSort = $this.fixedsortlist.length;
