@@ -9,7 +9,6 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
     todate: new Date(),
     parameterProducts: "",
     fixedsortdata: new Array(),
-    removedsortdata: new Array(),
     fixedsortlist: new Array(),
     url: resolveClientUrl("SuperWinLossDetailByPT/GetData"),
     dataSource: [],
@@ -430,7 +429,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         }
 
         var titleInfo = {
-            text: "Super Win Loss Detail By PT" + dateInfo
+            text: "Super Win Loss Detail By PT " + dateInfo
         };
 
         arrColData = this.defaultColumns;
@@ -452,13 +451,14 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
             showPager: true,
             customPager: true,
             pagerOption: {
-                itemsPerPageArray: [50, 100, 500],
+                itemsPerPageArray: [50, 100, 200],
                 currentPage: $this.pageIndex - 1,
                 totalItem: $this.totalRecords,
                 itemsPerPage: $this.pageSize,
                 pagerSelectCallBack: function (currentPageIndex, itemsPerPage) {
                     $this.Databind(itemsPerPage, currentPageIndex + 1);
-                    $("#jqgrid").fanexGrid($this.gridOption);
+                    $("#jqgrid").fanexGrid($this.gridOption); 
+                    $(".product-tooltip").tooltip();
                 },
                 showDetail: true
             },
@@ -489,7 +489,6 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                             Value: winLossByProductModel,
                             CustomCellRender: function (cell) { return $this.RenderPositonTakingColumn(cell); }
                         },
-                        //{ Name: "Username", Value: winLossByProductModel.PositionTaking },
                         { Name: "Turnover", Value: winLossByProductModel.Turnover },
                         { Name: "NetTurnover", Value: winLossByProductModel.NetTurnover },
                         { Name: "GrossComm", Value: winLossByProductModel.GrossComm },
@@ -568,6 +567,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
 
         setPagerOptionOnMobile(this.gridOption);
         $("#jqgrid").fanexGrid(this.gridOption);
+        $(".product-tooltip").tooltip();
 
         workaroundForGridOnPhone();
     },
@@ -575,10 +575,10 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         var tooltip = '';
 
         $.each(cell.Value.ProductNames, function (index, value) {
-            tooltip += "<div>" + value + "</div>";
+            tooltip += '<div>' + value + '</div>';
         });
 
-        return '<span class="text-truncate" style="text-decoration: none; margin: 0, text-align: left;" title="' + tooltip + '">' + cell.Value.PositionTakingText + ' (' + cell.Value.ProductNames.length + ')' + '</a>';
+        return '<span class="product-tooltip" title="' + tooltip + '">' + cell.Value.PositionTakingText + ' (' + cell.Value.ProductNames.length + ')' + '</a>';
     },
     customsortfunc: function (rows) {
         var countFixedSort = $this.fixedsortlist.length;
@@ -661,7 +661,6 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                 }
 
                 $this.fixedsortdata = new Array();
-                $this.removedsortdata = new Array();
 
                 $this.dataSource = data.WinLossByUsernames;
                 $this.totalRowData = data.Total;

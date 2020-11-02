@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Super WinLoss Detail By PT";
     Layout = null;
+    var minDate = DateTime.Now.AddMonths(-3).AddDays((-DateTime.Now.Day) + 1);
 }
 
 <div>
@@ -12,8 +13,20 @@
         <span class="icon-filter active"></span>
     </div>
     <div class="search-form filterbox filter-winloss-detail">
+        <div class="form-group">
+            <div class="label">@ViewLang.Products</div>
+            <div class="user-group pull-left ddl-product" id="productList">
+                <select name="GroupProducts" id="GroupProducts" multiple="multiple" style="display: none"></select>
+            </div>
+        </div>
+        <div class="form-group hidden" id="productDetailsContainer">
+            <div class="label">@ViewLang.ProductDetails</div>
+            <div class="user-group pull-left ddl-product" id="productDetailsList">
+                <select name="ProductDetails" id="ProductDetails" multiple="multiple" style="display: none"></select>
+            </div>
+        </div>
         <div class="form-group from-to-date">
-            <input type="hidden" id="MinDate" value="@DateTime.Now.AddMonths(-3).AddDays((-DateTime.Now.Day) + 1)" />
+            <input type="hidden" id="MinDate" value="@minDate" />
             <input type="hidden" id="MaxDate" value="@DateTime.Now" />
             <div class="label">@ViewLang.Date</div>
             <div id="userGroup" class="user-group pull-left">
@@ -59,24 +72,12 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="label">@ViewLang.Products</div>
-            <div class="user-group pull-left ddl-product" id="productList">
-                <select name="GroupProducts" id="GroupProducts" multiple="multiple" style="display: none"></select>
-            </div>
-        </div>
-        <div class="form-group hidden" id="productDetailsContainer">
-            <div class="label">@ViewLang.ProductDetails</div>
-            <div class="user-group pull-left ddl-product" id="productDetailsList">
-                <select name="ProductDetails" id="ProductDetails" multiple="multiple" style="display: none"></select>
-            </div>
-        </div>
-        <div class="form-group">
             <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
         </div>
         <div class="form-group">
             <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel hide"></span>
         </div>
-        <div>@Html.Raw("You can view the report data from Jul 01, 2020")</div>
+        <div>You can view the report data from @minDate.ToString("dd MMMM, yyyy")</div>
     </div>
     <div id="mainGrid" class="hide tbl-winloss-detail">
         <div id="jqgrid" class="removeRadius freegrid content-grid"></div>
@@ -86,5 +87,7 @@
     </div>
     @Html.AntiForgeryToken()
 </div>
+
 @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
 @StaticResources.RenderScripts("~/assets/bundles/SuperWinLossDetailByPT/index")
+

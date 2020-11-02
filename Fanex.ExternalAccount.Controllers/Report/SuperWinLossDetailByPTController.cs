@@ -135,6 +135,6 @@
         private const string DateFormat = "yyyyMMdd";
 
         public string FileName =>
-            $"SuperWinLossDetail_{Fromdate.ToString(DateFormat)}_{Todate.ToString(DateFormat)}.xls";
+            $"SuperWinLossDetailByPT_{Fromdate.ToString(DateFormat)}_{Todate.ToString(DateFormat)}.xls";
     }
 }

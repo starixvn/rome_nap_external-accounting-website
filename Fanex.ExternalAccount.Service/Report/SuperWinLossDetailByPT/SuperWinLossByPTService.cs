@@ -42,23 +42,12 @@
                 param.GroupName,
                param.FromDate,
                param.ToDate,
-               ReportService.BalanceUpDate,//reportDateService.GetBalanceUpDay(),
-               ReportService.MoveBetsDate,//reportDateService.GetMoveBetsDay(),
+               ReportService.BalanceUpDate,
+               ReportService.MoveBetsDate,
               "1,3,28,8,40,38,5,24,42,21,47,12,39,45,52,22,6,34,36,32,55,56",
               "All",
               param.PageSize,
               param.PageIndex);
-
-            //var criteria = new SuperWinLossDetailByPTCriteria(
-            //    "ACCINDO",
-            //   new DateTime(2020, 10, 04),
-            //   new DateTime(2020, 10, 12),
-            //   new DateTime(2020, 9, 30),//reportDateService.GetBalanceUpDay(),
-            //   new DateTime(2020, 10, 03),//reportDateService.GetMoveBetsDay(),
-            //  "1,3,28,8,40,38,5,24,42,21,47,12,39,45,52,22,6,34,36,32,55,56",
-            //  "All",
-            //  param.PageSize,
-            //  param.PageIndex);
 
             var model = superWinLossDetailByPTDataAccess.GetWinLossByBetType(criteria);
 
@@ -85,7 +74,7 @@
                                     ProductNames = new List<string>()
                                 };
 
-                                foreach (var winloss in winlossGroupByPTs)
+                                foreach (var winloss in winlossGroupByPTs.OrderBy(winloss => winloss.ProductName))
                                 {
                                     winlossbyPTTotal.CustId = winloss.CustId;
                                     winlossbyPTTotal.Username = winloss.Username;
