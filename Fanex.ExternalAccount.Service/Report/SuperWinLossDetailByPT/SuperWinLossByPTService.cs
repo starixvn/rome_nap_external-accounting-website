@@ -112,6 +112,7 @@
                 return new SuperWinLossDetailByPTModel(
                     winlossByUsernames.Select(winlossByUsername => new SuperWinLossDetailByUsernameModel(winlossByUsername)),
                     model.Total,
+                    param.TooltipsForLiveCasino,
                     model.TotalRecords,
                     criteria.PageIndex,
                     criteria.PageSize);

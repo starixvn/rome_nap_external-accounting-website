@@ -11,12 +11,14 @@
         public SuperWinLossDetailByPTModel(
         IEnumerable<SuperWinLossDetailByUsernameModel> winLossByUsernames,
         SuperWinLossDetailByProductDTO total,
+        string tooltipsForLiveCasino,
         int totalRecords,
         int pageIndex,
         int pageSize)
         {
             WinLossByUsernames = winLossByUsernames;
             Total = total;
+            TooltipsForLiveCasino = tooltipsForLiveCasino;
             TotalRecords = totalRecords;
             PageSize = pageSize;
             PageIndex = pageIndex;
@@ -25,6 +27,8 @@
         public IEnumerable<SuperWinLossDetailByUsernameModel> WinLossByUsernames { get; }
 
         public SuperWinLossDetailByProductDTO Total { get; }
+
+        public string TooltipsForLiveCasino { get; }
 
         public int TotalRecords { get; }
 

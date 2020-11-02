@@ -578,7 +578,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
             tooltip += '<div>' + value + '</div>';
         });
 
-        return '<span class="product-tooltip" title="' + tooltip + '">' + cell.Value.PositionTakingText + ' (' + cell.Value.ProductNames.length + ')' + '</a>';
+        return '<span class="product-tooltip" title="' + tooltip + '">' + cell.Value.PositionTakingText + ' <a>(' + cell.Value.ProductNames.length + ')</a>' + '</span>';
     },
     customsortfunc: function (rows) {
         var countFixedSort = $this.fixedsortlist.length;
@@ -692,11 +692,11 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                             "- For Sportbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
                         var height = 170;
 
-                        if (data.tooltips.liveCasino !== "") {
+                        if (data.TooltipsForLiveCasino !== "") {
                             message +=
                                 "<br/>" +
                                 "<br/>" +
-                                data.tooltips.liveCasino;
+                            data.TooltipsForLiveCasino;
                             height += 50;
                         }
 

@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Service.Report.SuperWinLossDetailByPT
 {
     using System;
+    using System.Collections.Generic;
 
     public class SuperWinLossDetailByPTParam
     {
@@ -10,6 +11,7 @@
             DateTime toDate,
             string userSelectedProductIds,
             string resourceIds,
+            string tooltipsForLiveCasino,
             int pageSize,
             int pageIndex)
         {
@@ -20,6 +22,8 @@
             ToDate = toDate == DateTime.MinValue ? DateTime.Now : toDate;
 
             ResourceIds = resourceIds;
+            TooltipsForLiveCasino = tooltipsForLiveCasino;
+
             PageSize = pageSize;
             PageIndex = pageIndex;
         }
@@ -33,6 +37,8 @@
         public string UserSelectedProductIds { get; }
 
         public string ResourceIds { get; }
+
+        public string TooltipsForLiveCasino { get; }
 
         public int PageSize { get; }
 
