@@ -11,6 +11,7 @@
     <script type="text/javascript">
         @(Html.ToJavascriptObject(Model, "settingViewModel"))
         @(Html.ToJavascriptObject(session.IsBelongToSpecialGroups, "isBelongToSpecialGroups"))
+        @(Html.ToJavascriptObject(Model.Setting.IsPT3Decimal, "isPT3Decimal"))
     </script>
 }
 
