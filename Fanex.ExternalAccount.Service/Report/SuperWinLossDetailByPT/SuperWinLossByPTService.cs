@@ -44,8 +44,8 @@
                param.ToDate,
                ReportService.BalanceUpDate,
                ReportService.MoveBetsDate,
-              "1,3,28,8,40,38,5,24,42,21,47,12,39,45,52,22,6,34,36,32,55,56",
-              "All",
+              param.UserSelectedProductIds,
+              param.ResourceIds,
               param.PageSize,
               param.PageIndex);
 

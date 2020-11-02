@@ -9,7 +9,7 @@
             DateTime fromDate,
             DateTime toDate,
             string userSelectedProductIds,
-            string productDetailsXML,
+            string resourceIds,
             int pageSize,
             int pageIndex)
         {
@@ -19,7 +19,7 @@
             FromDate = fromDate == DateTime.MinValue ? DateTime.Now : fromDate;
             ToDate = toDate == DateTime.MinValue ? DateTime.Now : toDate;
 
-            ProductDetailsXML = productDetailsXML;
+            ResourceIds = resourceIds;
             PageSize = pageSize;
             PageIndex = pageIndex;
         }
@@ -32,7 +32,7 @@
 
         public string UserSelectedProductIds { get; }
 
-        public string ProductDetailsXML { get; }
+        public string ResourceIds { get; }
 
         public int PageSize { get; }
 
