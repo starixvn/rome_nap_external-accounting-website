@@ -2,12 +2,29 @@
 {
     public class SuperPositionTakingModel
     {
-        public int CustId { get; set; }
+        public SuperPositionTakingModel()
+        {
+        }
 
-        public decimal PositionTaking { get; set; }
+        public SuperPositionTakingModel(
+            int custId,
+            decimal positionTaking,
+            int productId,
+            string productName)
+        {
+            CustId = custId;
+            PositionTaking = positionTaking;
+            ProductId = productId;
+            ProductName = productName;
+        }
 
-        public int ProductId { get; set; }
 
-        public string ProductName { get; set; }
+        public int CustId { get; }
+
+        public decimal PositionTaking { get; }
+
+        public int ProductId { get; }
+
+        public string ProductName { get; }
     }
 }

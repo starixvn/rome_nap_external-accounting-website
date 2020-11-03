@@ -158,12 +158,4 @@
         private static bool IsEquals(IEnumerable<string> source, IEnumerable<string> destination)
             => Enumerable.SequenceEqual(source.OrderBy(id => id), destination.OrderBy(id => id));
     }
-
-    public class ExportSuperWinLossDetailByPTRequest : SuperWinLossDetailByPTRequest
-    {
-        private const string DateFormat = "yyyyMMdd";
-
-        public string FileName =>
-            $"SuperWinLossDetailByPT_{Fromdate.ToString(DateFormat)}_{Todate.ToString(DateFormat)}.xls";
-    }
 }

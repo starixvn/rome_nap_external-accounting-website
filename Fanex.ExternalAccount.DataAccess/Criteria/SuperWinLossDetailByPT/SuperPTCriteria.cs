@@ -1,7 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.SuperWinLossDetailByPT
 {
     using Fanex.NAP.Framework.Data;
-    using System;
 
     public class SuperPTCriteria : CriteriaBase
     {

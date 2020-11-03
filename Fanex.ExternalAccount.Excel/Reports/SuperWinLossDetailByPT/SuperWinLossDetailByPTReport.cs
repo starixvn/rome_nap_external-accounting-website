@@ -1,17 +1,22 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Reports.SuperWinLossDetailByPT
 {
+    using Fanex.ExternalAccount.DTO.Report;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using System.Collections.Generic;
-    using System.Linq;
     using Utility;
 
     internal class SuperWinLossDetailByPTReport : TemplateReport, IReportBuilder
     {
         private readonly SuperWinLossDetailByPTReportBuilder _builder;
         private const int LastColumnIndex = 16;
+        private const int parentRowTemplateIndex = 1;
+        private const int childRowTemplateIndex = 3;
 
-        public SuperWinLossDetailByPTReport(string filePath, SuperWinLossDetailByPTReportBuilder builder, string products = null)
+        public SuperWinLossDetailByPTReport(
+            string filePath, 
+            SuperWinLossDetailByPTReportBuilder builder, 
+            string products = null)
             : base(filePath, products)
         {
             _builder = builder;
@@ -36,99 +41,104 @@
 
         public override void WriteBodyReport(ISheet resultSheet)
         {
-            var index = 1;
+            var rowIndex = 1;
             var toRowId = 3;
 
-            foreach (var item in _builder.Data)
+            foreach (var winlossByUsername in _builder.WinLossDetailByUsernames)
             {
-                var fromRowId = index % 2 == 0 ? OddRowIndex : EvenRowIndex;
-                resultSheet.CopyRow(TemplateSheet, 1, toRowId, FirstColumnIndex, LastColumnIndex);
+                resultSheet.CopyRow(TemplateSheet, parentRowTemplateIndex, toRowId, FirstColumnIndex, LastColumnIndex);
+                var winlossUsernameTotal = winlossByUsername.Total;
 
-                var values = new List<object>
+                var parentRowValues = new List<object>
                 {
-                    item.Username,
-                    item.Total.Turnover,
-                    item.Total.NetTurnover,
-                    item.Total.GrossComm,
-                    item.Total.MemberWinlost,
-                    item.Total.PlayerComm,
-                    item.Total.MemberTotal,
-                    item.Total.AgWinlost,
-                    item.Total.AgComm,
-                    item.Total.AgTotal,
-                    item.Total.MAgWinlost,
-                    item.Total.MAgComm,
-                    item.Total.MAgTotal,
-                    item.Total.SAgWinlost,
-                    item.Total.SAgComm,
-                    item.Total.SAgTotal,
-                    item.Total.Company
+                    winlossByUsername.Username,
+                    winlossUsernameTotal.Turnover,
+                    winlossUsernameTotal.NetTurnover,
+                    winlossUsernameTotal.GrossComm,
+                    winlossUsernameTotal.MemberWinlost,
+                    winlossUsernameTotal.PlayerComm,
+                    winlossUsernameTotal.MemberTotal,
+                    winlossUsernameTotal.AgWinlost,
+                    winlossUsernameTotal.AgComm,
+                    winlossUsernameTotal.AgTotal,
+                    winlossUsernameTotal.MAgWinlost,
+                    winlossUsernameTotal.MAgComm,
+                    winlossUsernameTotal.MAgTotal,
+                    winlossUsernameTotal.SAgWinlost,
+                    winlossUsernameTotal.SAgComm,
+                    winlossUsernameTotal.SAgTotal,
+                    winlossUsernameTotal.Company
                 };
 
-                resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, values);
-                index++;
+                resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, parentRowValues);
+                rowIndex++;
                 toRowId++;
 
-                foreach (var childRow in item.WinLossByProducts)
+                foreach (var winlossByProduct in winlossByUsername.WinLossByProducts)
                 {
-                    resultSheet.CopyRow(TemplateSheet, 3, toRowId, FirstColumnIndex, LastColumnIndex);
+                    resultSheet.CopyRow(TemplateSheet, childRowTemplateIndex, toRowId, FirstColumnIndex, LastColumnIndex);
 
-                    var values01 = new List<object>
+                    var childRowValues = new List<object>
                     {
-                        childRow.PositionTakingText,
-                        childRow.Turnover,
-                        childRow.NetTurnover,
-                        childRow.GrossComm,
-                        childRow.MemberWinlost,
-                        childRow.PlayerComm,
-                        childRow.MemberTotal,
-                        childRow.AgWinlost,
-                        childRow.AgComm,
-                        childRow.AgTotal,
-                        childRow.MAgWinlost,
-                        childRow.MAgComm,
-                        childRow.MAgTotal,
-                        childRow.SAgWinlost,
-                        childRow.SAgComm,
-                        childRow.SAgTotal,
-                        childRow.Company
+                        winlossByProduct.PositionTakingText,
+                        winlossByProduct.Turnover,
+                        winlossByProduct.NetTurnover,
+                        winlossByProduct.GrossComm,
+                        winlossByProduct.MemberWinlost,
+                        winlossByProduct.PlayerComm,
+                        winlossByProduct.MemberTotal,
+                        winlossByProduct.AgWinlost,
+                        winlossByProduct.AgComm,
+                        winlossByProduct.AgTotal,
+                        winlossByProduct.MAgWinlost,
+                        winlossByProduct.MAgComm,
+                        winlossByProduct.MAgTotal,
+                        winlossByProduct.SAgWinlost,
+                        winlossByProduct.SAgComm,
+                        winlossByProduct.SAgTotal,
+                        winlossByProduct.Company
                     };
 
-                    resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, values01);
-                    index++;
+                    resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, childRowValues);
+                    rowIndex++;
                     toRowId++;
                 }
             }
 
-            WriteTotal(resultSheet, toRowId);
+            WriteGrandTotal(resultSheet, _builder.Grandtotal, toRowId);
         }
 
-        private void WriteTotal(ISheet resultSheet, int toRowIndex)
+        private void WriteGrandTotal(ISheet resultSheet, SuperWinLossDetailByProductDTO grantotal, int grandTotalRowIndex)
         {
-            var data = _builder.Grandtotal;
-            resultSheet.CopyRow(TemplateSheet, FirstColumnTotalIndex, toRowIndex, FirstColumnIndex, LastColumnIndex);
-            var values = new List<object>
+            resultSheet.CopyRow(
+                TemplateSheet, 
+                FirstColumnTotalIndex, 
+                grandTotalRowIndex, 
+                FirstColumnIndex, 
+                LastColumnIndex);
+
+            var grandtotalRowValues = new List<object>
             {
                 "Grand Total",
-                data.Turnover,
-                data.NetTurnover,
-                data.GrossComm,
-                data.MemberWinlost,
-                data.PlayerComm,
-                data.MemberTotal,
-                data.AgWinlost,
-                data.AgComm,
-                data.AgTotal,
-                data.MAgWinlost,
-                data.MAgComm,
-                data.MAgTotal,
-                data.SAgWinlost,
-                data.SAgComm,
-                data.SAgTotal,
-                data.Company
+                grantotal.Turnover,
+                grantotal.NetTurnover,
+                grantotal.GrossComm,
+                grantotal.MemberWinlost,
+                grantotal.PlayerComm,
+                grantotal.MemberTotal,
+                grantotal.AgWinlost,
+                grantotal.AgComm,
+                grantotal.AgTotal,
+                grantotal.MAgWinlost,
+                grantotal.MAgComm,
+                grantotal.MAgTotal,
+                grantotal.SAgWinlost,
+                grantotal.SAgComm,
+                grantotal.SAgTotal,
+                grantotal.Company
             };
 
-            resultSheet.GetRow(toRowIndex).WriteCells(FirstColumnIndex, values);
+            resultSheet.GetRow(grandTotalRowIndex).WriteCells(FirstColumnIndex, grandtotalRowValues);
         }
 
         public override void BuildMainTitle(ISheet resultSheet)

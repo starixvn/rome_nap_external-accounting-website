@@ -12,6 +12,8 @@
     {
         private const string Seperator = ", ";
         private const string ShowAll = "showAll";
+        private const int PageSizeDefault = 50;
+        private const int PageIndexDefault = 1;
 
         private readonly Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter;
         private readonly IExtRequest extRequest;
@@ -26,16 +28,24 @@
             IExtRequest extRequest,
             IGroupConfigurationService groupConfigurationService)
         {
+            PageSize = PageSizeDefault;
+            PageIndex = PageIndexDefault;
+
             this.selectedProductQueryGetter = selectedProductQueryGetter ?? new FilterController().AsCollection;
             this.extRequest = extRequest ?? new ExtRequest();
             this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
         }
 
         public string GroupName => extRequest.GetGroupName();
+
         public DateTime Fromdate { get; set; }
+
         public DateTime Todate { get; set; }
-        public int PageSize { get; set; } = 50;
-        public int PageIndex { get; set; } = 1;
+
+        public int PageSize { get; set; }
+
+        public int PageIndex { get; set; }
+
         public string ResourceIds { get; set; }
 
         internal string GetProductIds()
@@ -86,5 +96,4 @@
             return formatedProducts;
         }
     }
-
 }

@@ -21,36 +21,36 @@
 
         public string ProductName { get; set; }
 
-        public double Turnover { get; set; }
+        public decimal Turnover { get; set; }
 
-        public double NetTurnover { get; set; }
+        public decimal NetTurnover { get; set; }
 
-        public double GrossComm { get; set; }
+        public decimal GrossComm { get; set; }
 
-        public double MemberWinlost { get; set; }
+        public decimal MemberWinlost { get; set; }
 
-        public double PlayerComm { get; set; }
+        public decimal PlayerComm { get; set; }
 
-        public double MemberTotal { get; set; }
+        public decimal MemberTotal { get; set; }
 
-        public double AgWinlost { get; set; }
+        public decimal AgWinlost { get; set; }
 
-        public double AgComm { get; set; }
+        public decimal AgComm { get; set; }
 
-        public double AgTotal { get; set; }
+        public decimal AgTotal { get; set; }
 
-        public double MAgWinlost { get; set; }
+        public decimal MAgWinlost { get; set; }
 
-        public double MAgComm { get; set; }
+        public decimal MAgComm { get; set; }
 
-        public double MAgTotal { get; set; }
+        public decimal MAgTotal { get; set; }
 
-        public double SAgWinlost { get; set; }
+        public decimal SAgWinlost { get; set; }
 
-        public double SAgComm { get; set; }
+        public decimal SAgComm { get; set; }
 
-        public double SAgTotal { get; set; }
+        public decimal SAgTotal { get; set; }
 
-        public double Company { get; set; }
+        public decimal Company { get; set; }
     }
 }

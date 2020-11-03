@@ -10,20 +10,20 @@
         private const string MonthDayYearFormat = "MMM, dd yyyy";
 
         public SuperWinLossDetailByPTReportBuilder(
-            List<SuperWinLossDetailByUsernameModel> winLossDetail,
+            List<SuperWinLossDetailByUsernameModel> winLossDetailByUsernames,
             SuperWinLossDetailByProductDTO grandtotal,
             DateTime fromDate,
             DateTime toDate,
             bool isBold = false)
         {
-            Data = winLossDetail;
+            WinLossDetailByUsernames = winLossDetailByUsernames;
             Grandtotal = grandtotal;
             FromDate = fromDate.ToString(MonthDayYearFormat);
             ToDate = toDate.ToString(MonthDayYearFormat);
             IsBold = isBold;
         }
 
-        public List<SuperWinLossDetailByUsernameModel> Data { get; }
+        public List<SuperWinLossDetailByUsernameModel> WinLossDetailByUsernames { get; }
 
         public SuperWinLossDetailByProductDTO Grandtotal { get; }
 

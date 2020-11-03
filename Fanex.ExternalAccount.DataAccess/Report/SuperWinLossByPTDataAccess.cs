@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Report
 {
+    using Fanex.Common;
     using Fanex.Common.Extensions;
     using Fanex.Data;
     using Fanex.ExternalAccount.DataAccess.Criteria.SuperWinLossDetailByPT;
@@ -38,26 +39,17 @@
                 {
                     while (reader.Read())
                     {
-                        superPTList.Add(new SuperPositionTakingModel
-                        {
-                            CustId = reader.ToInt("CustID"),
-                            PositionTaking = reader.To<decimal>("SuperPT"),
-                            ProductId = reader.ToInt("ProductID"),
-                            ProductName = reader.To<string>("ProductName"),
-                        });
+                        superPTList.Add(new SuperPositionTakingModel(
+                            reader.ToInt("CustID"),
+                            reader.To<decimal>("SuperPT"),
+                            reader.ToInt("ProductID"),
+                            reader.To<string>("ProductName")));
                     }
                 }
             }
 
             return superPTList;
         }
-
-        //private readonly CacheRefService cacheRefService;
-
-        //public SuperWinLossDetailByPTDataAccessImpl()
-        //{
-        //    //this.cacheRefService = cacheRefService;
-        //}
 
         public SuperWinLossDetailByProductModel GetWinLossByBetType(SuperWinLossDetailByPTCriteria criteria)
         {
@@ -72,9 +64,7 @@
 
             using (var db = new ObjectDb("EAS_Rpt_WinLossDetail_byPT"))
             {
-               // db.AddOutParameter("totalrecords", DbType.Int32, sizeof(int));
-                var reader = db.ExecuteReader(new Hashtable
-                {
+                db.AssignParamValues(new Hashtable {
                     { "groupname", criteria.GroupName },
                     { "fromdate", criteria.FromDate },
                     { "todate", criteria.ToDate },
@@ -86,19 +76,19 @@
                     { "pageindex", criteria.PageIndex }
                 });
 
-                if (reader != null)
+                using (var dataset = db.ExecuteDataSet())
                 {
-                    while (reader.Read())
+                    if (dataset != null && dataset.Tables.Count > 0)
                     {
-                        winlossByBettypeData.Add(BuildWinLossByBetType(reader));
+                        foreach (DataRow row in dataset.Tables[0].Rows)
+                        {
+                            winlossByBettypeData.Add(BuildWinLossByBetType(row));
+                        }
+
+                        total = BuildWinLossByBetType(dataset.Tables[1].Rows[0]);
                     }
 
-                    if (reader.NextResult() && reader.Read())
-                    {
-                        total = BuildWinLossByBetType(reader);
-                    }
-
-                    totalRecords = 100;// (int)db.GetParameterValue("totalrecords");
+                    totalRecords = Converter.ToInt(db.GetOuputParams()["totalrecords"]);
                 }
             }
 
@@ -107,30 +97,30 @@
 
 
         [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1118:ParameterMustNotSpanMultipleLines", Justification = "Reviewed.")]
-        private SuperWinLossDetailByProductDTO BuildWinLossByBetType(IDataReader reader)
+        private SuperWinLossDetailByProductDTO BuildWinLossByBetType(DataRow row)
         {
             var winLossByBettype = new SuperWinLossDetailByProductDTO
             {
-                CustId = reader.ToInt("custid"),
-                Username = reader.To<string>("username"),
-                ProductId = reader.ToInt("ProductID"),
-                ProductName = reader.To<string>("ProductName"),
-                Turnover = reader.ToDouble("Turnover"),
-                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-                GrossComm = reader.ToDouble("GrossComm"),
-                MemberWinlost = reader.ToDouble("MemberWinlost"),
-                PlayerComm = reader.ToDouble("PlayerComm"),
-                MemberTotal = reader.ToDouble("MemberTotal"),
-                AgWinlost = reader.ToDouble("AgWinlost"),
-                AgComm = reader.ToDouble("AgComm"),
-                AgTotal = reader.ToDouble("AgTotal"),
-                MAgWinlost = reader.ToDouble("MAgWinlost"),
-                MAgComm = reader.ToDouble("MAgComm"),
-                MAgTotal = reader.ToDouble("MAgTotal"),
-                SAgWinlost = reader.ToDouble("SAgWinlost"),
-                SAgComm = reader.ToDouble("SAgComm"),
-                SAgTotal = reader.ToDouble("SAgTotal"),
-                Company = reader.ToDouble("Company")
+                CustId = Converter.ToInt(row["custid"]),
+                Username = row["username"].ToString(),
+                ProductId = Converter.ToInt(row["ProductID"]),
+                ProductName = row["ProductName"].ToString(),
+                Turnover = Converter.ToDecimal(row["Turnover"]),
+                NetTurnover = Converter.ToDecimal(row["TurnoverNoDraw"]),
+                GrossComm = Converter.ToDecimal(row["GrossComm"]),
+                MemberWinlost = Converter.ToDecimal(row["MemberWinlost"]),
+                PlayerComm = Converter.ToDecimal(row["PlayerComm"]),
+                MemberTotal = Converter.ToDecimal(row["MemberTotal"]),
+                AgWinlost = Converter.ToDecimal(row["AgWinlost"]),
+                AgComm = Converter.ToDecimal(row["AgComm"]),
+                AgTotal = Converter.ToDecimal(row["AgTotal"]),
+                MAgWinlost = Converter.ToDecimal(row["MAgWinlost"]),
+                MAgComm = Converter.ToDecimal(row["MAgComm"]),
+                MAgTotal = Converter.ToDecimal(row["MAgTotal"]),
+                SAgWinlost = Converter.ToDecimal(row["SAgWinlost"]),
+                SAgComm = Converter.ToDecimal(row["SAgComm"]),
+                SAgTotal = Converter.ToDecimal(row["SAgTotal"]),
+                Company = Converter.ToDecimal(row["Company"])
             };
 
             return winLossByBettype;
