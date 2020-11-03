@@ -105,11 +105,11 @@
                 };
         }
 
-        public dynamic GetExtraPT(IViewExtraPTRequest request)
+        public dynamic GetExtraPT(IViewExtraPTRequest request, string groupName)
         {
             const float percentage = 100.0f;
 
-            return reportService.GetExtraPT(request.GroupName)
+            return reportService.GetExtraPT(groupName)
                 .Select(item => new { ExtraPT = item.ExtraPT * percentage, ProductName = request.GetProductName(item.ProductId) })
                 .Where(item => !string.IsNullOrWhiteSpace(item.ProductName))
                 .GroupBy(item => item.ExtraPT, item => item.ProductName,

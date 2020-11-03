@@ -4,7 +4,6 @@
     using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
-    using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
     using DTO.Report;
     using Excel.Reports.WinLossDetailIBCBetLiveCasinoReport;
@@ -22,7 +21,7 @@
 
         public WinLossDetailIBCBetLiveCasinoController(
             IWinLossDetailIBCBetLiveCasinoService winLossDetailIBCBetLiveCasinoService,
-            ICurrentSession currentSession,
+            CurrentSession currentSession,
             IReportService reportService,
             IGroupConfigurationService groupConfigurationService)
             : base(currentSession, reportService, groupConfigurationService)

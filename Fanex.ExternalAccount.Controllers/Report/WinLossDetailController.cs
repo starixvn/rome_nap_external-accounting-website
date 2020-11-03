@@ -6,7 +6,6 @@
     using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
-    using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
     using DTO.Report;
     using Excel.Reports.WinLossDetailReport;
@@ -24,7 +23,7 @@
         private readonly WinLossDetailService winLossDetailService;
 
         public WinLossDetailController(
-            ICurrentSession currentSession,
+            CurrentSession currentSession,
             WinLossDetailService winLossDetailService,
             IReportService reportService,
             IGroupConfigurationService groupConfigurationService)
@@ -117,7 +116,7 @@
         [AntiXSRFFilter]
         public ActionResult GetExtraPT(ViewExtraPTRequest request)
         {
-            var extraPTs = winLossDetailService.GetExtraPT(request);
+            var extraPTs = winLossDetailService.GetExtraPT(request, currentSession.ParentGroupName);
 
             return Json(extraPTs);
         }

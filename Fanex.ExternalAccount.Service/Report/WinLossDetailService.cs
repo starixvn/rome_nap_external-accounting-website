@@ -6,6 +6,6 @@
 
         dynamic SearchWinLossDetail(ISearchWinLossDetailRequest request);
 
-        dynamic GetExtraPT(IViewExtraPTRequest request);
+        dynamic GetExtraPT(IViewExtraPTRequest request, string groupName);
     }
 }
