@@ -69,49 +69,81 @@
                         winlossDetailByProduct.CustId, (key, winlossDetailByCustIds) =>
                             winlossDetailByCustIds.GroupBy(item => item.PositionTaking, (index, winlossGroupByPTs) =>
                             {
-                                var winlossbyPTTotal = new SuperWinLossDetailByProductDTO
-                                {
-                                    ProductNames = new List<string>()
-                                };
+                                decimal turnover = 0;
+                                decimal netTurnover = 0;
+                                decimal grossComm = 0;
+                                decimal memberWinlost = 0;
+                                decimal memberComm = 0;
+                                decimal memberTotal = 0;
+                                decimal agWinlost = 0;
+                                decimal agComm = 0;
+                                decimal agTotal = 0;
+                                decimal magWinlost = 0;
+                                decimal magComm = 0;
+                                decimal magTotal = 0;
+                                decimal sagWinlost = 0;
+                                decimal sagComm = 0;
+                                decimal sagTotal = 0;
+                                decimal company = 0;
+
+                                var productNames = new List<string>();
 
                                 foreach (var winloss in winlossGroupByPTs.OrderBy(winloss => winloss.ProductName))
                                 {
-                                    winlossbyPTTotal.CustId = winloss.CustId;
-                                    winlossbyPTTotal.Username = winloss.Username;
-                                    winlossbyPTTotal.PositionTaking = winloss.PositionTaking;
+                                    turnover += winloss.Turnover;
+                                    netTurnover += winloss.NetTurnover;
+                                    grossComm += winloss.GrossComm;
 
-                                    winlossbyPTTotal.Turnover += winloss.Turnover;
-                                    winlossbyPTTotal.NetTurnover += winloss.NetTurnover;
-                                    winlossbyPTTotal.Turnover += winloss.Turnover;
-                                    winlossbyPTTotal.GrossComm += winloss.GrossComm;
+                                    memberWinlost += winloss.MemberWinlost;
+                                    memberComm += winloss.MemberComm;
+                                    memberTotal += winloss.MemberTotal;
 
-                                    winlossbyPTTotal.MemberWinlost += winloss.MemberWinlost;
-                                    winlossbyPTTotal.PlayerComm += winloss.PlayerComm;
-                                    winlossbyPTTotal.MemberTotal += winloss.MemberTotal;
+                                    agWinlost += winloss.AgWinlost;
+                                    agComm += winloss.AgComm;
+                                    agTotal += winloss.AgTotal;
 
-                                    winlossbyPTTotal.AgWinlost += winloss.AgWinlost;
-                                    winlossbyPTTotal.AgComm += winloss.AgComm;
-                                    winlossbyPTTotal.AgTotal += winloss.AgTotal;
+                                    magWinlost += winloss.MAgWinlost;
+                                    magComm += winloss.MAgWinlost;
+                                    magTotal += winloss.MAgComm;
 
-                                    winlossbyPTTotal.MAgWinlost += winloss.MAgWinlost;
-                                    winlossbyPTTotal.MAgComm += winloss.MAgWinlost;
-                                    winlossbyPTTotal.MAgTotal += winloss.MAgComm;
+                                    sagWinlost += winloss.SAgWinlost;
+                                    sagComm += winloss.SAgComm;
+                                    sagTotal += winloss.SAgTotal;
+                                    company += winloss.Company;
 
-                                    winlossbyPTTotal.SAgWinlost += winloss.SAgWinlost;
-                                    winlossbyPTTotal.SAgComm += winloss.SAgComm;
-                                    winlossbyPTTotal.SAgTotal += winloss.SAgTotal;
-
-                                    winlossbyPTTotal.Company += winloss.Company;
-
-                                    winlossbyPTTotal.ProductNames.Add(winloss.ProductName);
+                                    productNames.Add(winloss.ProductName);
                                 }
 
-                                return winlossbyPTTotal;
+                                return new SuperWinLossDetailByProductDTO(
+                                    winlossGroupByPTs.FirstOrDefault().CustId,
+                                    winlossGroupByPTs.FirstOrDefault().Username,
+                                    winlossGroupByPTs.FirstOrDefault().ProductId,
+                                    winlossGroupByPTs.FirstOrDefault().ProductName,
+                                    turnover,
+                                    netTurnover,
+                                    grossComm,
+                                    memberWinlost,
+                                    memberComm,
+                                    memberTotal,
+                                    agWinlost,
+                                    agComm,
+                                    agTotal,
+                                    magWinlost,
+                                    magComm,
+                                    magTotal,
+                                    sagWinlost,
+                                    sagComm,
+                                    sagTotal,
+                                    company)
+                                {
+                                    PositionTaking = winlossGroupByPTs.FirstOrDefault().PositionTaking,
+                                    ProductNames = productNames
+                                };
                             }));
 
                 return new SuperWinLossDetailByPTModel(
                     winlossByUsernames.Select(winlossByUsername => new SuperWinLossDetailByUsernameModel(winlossByUsername)),
-                    model.Total,
+                    model.GrandTotal,
                     param.TooltipsForLiveCasino,
                     model.TotalRecords,
                     criteria.PageIndex,

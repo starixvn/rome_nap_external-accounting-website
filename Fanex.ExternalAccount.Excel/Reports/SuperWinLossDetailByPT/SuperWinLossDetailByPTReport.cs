@@ -51,12 +51,12 @@
 
                 var parentRowValues = new List<object>
                 {
-                    winlossByUsername.Username,
+                    winlossUsernameTotal.Username,
                     winlossUsernameTotal.Turnover,
                     winlossUsernameTotal.NetTurnover,
                     winlossUsernameTotal.GrossComm,
                     winlossUsernameTotal.MemberWinlost,
-                    winlossUsernameTotal.PlayerComm,
+                    winlossUsernameTotal.MemberComm,
                     winlossUsernameTotal.MemberTotal,
                     winlossUsernameTotal.AgWinlost,
                     winlossUsernameTotal.AgComm,
@@ -85,7 +85,7 @@
                         winlossByProduct.NetTurnover,
                         winlossByProduct.GrossComm,
                         winlossByProduct.MemberWinlost,
-                        winlossByProduct.PlayerComm,
+                        winlossByProduct.MemberComm,
                         winlossByProduct.MemberTotal,
                         winlossByProduct.AgWinlost,
                         winlossByProduct.AgComm,
@@ -124,7 +124,7 @@
                 grantotal.NetTurnover,
                 grantotal.GrossComm,
                 grantotal.MemberWinlost,
-                grantotal.PlayerComm,
+                grantotal.MemberComm,
                 grantotal.MemberTotal,
                 grantotal.AgWinlost,
                 grantotal.AgComm,

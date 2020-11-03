@@ -76,7 +76,7 @@
 
             builder = new SuperWinLossDetailByPTReportBuilder(
                            winlossDetail.WinLossByUsernames.ToList(),
-                           winlossDetail.Total,
+                           winlossDetail.GrandTotal,
                            request.Fromdate,
                            request.Todate);
 

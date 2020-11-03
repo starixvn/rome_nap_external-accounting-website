@@ -99,31 +99,28 @@
         [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1118:ParameterMustNotSpanMultipleLines", Justification = "Reviewed.")]
         private SuperWinLossDetailByProductDTO BuildWinLossByBetType(DataRow row)
         {
-            var winLossByBettype = new SuperWinLossDetailByProductDTO
-            {
-                CustId = Converter.ToInt(row["custid"]),
-                Username = row["username"].ToString(),
-                ProductId = Converter.ToInt(row["ProductID"]),
-                ProductName = row["ProductName"].ToString(),
-                Turnover = Converter.ToDecimal(row["Turnover"]),
-                NetTurnover = Converter.ToDecimal(row["TurnoverNoDraw"]),
-                GrossComm = Converter.ToDecimal(row["GrossComm"]),
-                MemberWinlost = Converter.ToDecimal(row["MemberWinlost"]),
-                PlayerComm = Converter.ToDecimal(row["PlayerComm"]),
-                MemberTotal = Converter.ToDecimal(row["MemberTotal"]),
-                AgWinlost = Converter.ToDecimal(row["AgWinlost"]),
-                AgComm = Converter.ToDecimal(row["AgComm"]),
-                AgTotal = Converter.ToDecimal(row["AgTotal"]),
-                MAgWinlost = Converter.ToDecimal(row["MAgWinlost"]),
-                MAgComm = Converter.ToDecimal(row["MAgComm"]),
-                MAgTotal = Converter.ToDecimal(row["MAgTotal"]),
-                SAgWinlost = Converter.ToDecimal(row["SAgWinlost"]),
-                SAgComm = Converter.ToDecimal(row["SAgComm"]),
-                SAgTotal = Converter.ToDecimal(row["SAgTotal"]),
-                Company = Converter.ToDecimal(row["Company"])
-            };
-
-            return winLossByBettype;
+            return new SuperWinLossDetailByProductDTO(
+                Converter.ToInt(row["custid"]),
+                row["username"].ToString(),
+                Converter.ToInt(row["ProductID"]),
+                row["ProductName"].ToString(),
+                Converter.ToDecimal(row["Turnover"]),
+                Converter.ToDecimal(row["TurnoverNoDraw"]),
+                Converter.ToDecimal(row["GrossComm"]),
+                Converter.ToDecimal(row["MemberWinlost"]),
+                Converter.ToDecimal(row["PlayerComm"]),
+                Converter.ToDecimal(row["MemberTotal"]),
+                Converter.ToDecimal(row["AgWinlost"]),
+                Converter.ToDecimal(row["AgComm"]),
+                Converter.ToDecimal(row["AgTotal"]),
+                Converter.ToDecimal(row["MAgWinlost"]),
+                Converter.ToDecimal(row["MAgComm"]),
+                Converter.ToDecimal(row["MAgTotal"]),
+                Converter.ToDecimal(row["SAgWinlost"]),
+                Converter.ToDecimal(row["SAgComm"]),
+                Converter.ToDecimal(row["SAgTotal"]),
+                Converter.ToDecimal(row["Company"])
+            );
         }
     }
 }

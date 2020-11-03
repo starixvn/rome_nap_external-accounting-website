@@ -12,7 +12,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
     fixedsortlist: new Array(),
     url: resolveClientUrl("SuperWinLossDetailByPT/GetData"),
     dataSource: [],
-    totalRowData: null,
+    grandTotal: null,
     pageIndex: 0,
     pageSize: 50,
     totalRecords: 0,
@@ -509,25 +509,26 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                 });
             }
 
+            var totalRow = this.dataSource[i].Total;
             bodyData.push({
                 Columns: [
-                    { Name: "Username", Value: this.dataSource[i].Username },
-                    { Name: "Turnover", Value: this.dataSource[i].Total.Turnover },
-                    { Name: "NetTurnover", Value: this.dataSource[i].Total.NetTurnover },
-                    { Name: "GrossComm", Value: this.dataSource[i].Total.GrossComm },
-                    { Name: "MemberWinlost", Value: this.dataSource[i].Total.MemberWinlost },
-                    { Name: "PlayerComm", Value: this.dataSource[i].Total.PlayerComm },
-                    { Name: "MemberTotal", Value: this.dataSource[i].Total.MemberTotal },
-                    { Name: "AgWinlost", Value: this.dataSource[i].Total.AgWinlost },
-                    { Name: "AgComm", Value: this.dataSource[i].Total.AgComm },
-                    { Name: "AgTotal", Value: this.dataSource[i].Total.AgTotal },
-                    { Name: "MAgWinlost", Value: this.dataSource[i].Total.MAgWinlost },
-                    { Name: "MAgComm", Value: this.dataSource[i].Total.MAgComm },
-                    { Name: "MAgTotal", Value: this.dataSource[i].Total.MAgTotal },
-                    { Name: "SAgWinlost", Value: this.dataSource[i].Total.SAgWinlost },
-                    { Name: "SAgComm", Value: this.dataSource[i].Total.SAgComm },
-                    { Name: "SAgTotal", Value: this.dataSource[i].Total.SAgTotal },
-                    { Name: "Company", Value: this.dataSource[i].Total.Company }
+                    { Name: "Username", Value: totalRow.Username },
+                    { Name: "Turnover", Value: totalRow.Turnover },
+                    { Name: "NetTurnover", Value: totalRow.NetTurnover },
+                    { Name: "GrossComm", Value: totalRow.GrossComm },
+                    { Name: "MemberWinlost", Value: totalRow.MemberWinlost },
+                    { Name: "PlayerComm", Value: totalRow.PlayerComm },
+                    { Name: "MemberTotal", Value: totalRow.MemberTotal },
+                    { Name: "AgWinlost", Value: totalRow.AgWinlost },
+                    { Name: "AgComm", Value: totalRow.AgComm },
+                    { Name: "AgTotal", Value: totalRow.AgTotal },
+                    { Name: "MAgWinlost", Value: totalRow.MAgWinlost },
+                    { Name: "MAgComm", Value: totalRow.MAgComm },
+                    { Name: "MAgTotal", Value: totalRow.MAgTotal },
+                    { Name: "SAgWinlost", Value: totalRow.SAgWinlost },
+                    { Name: "SAgComm", Value: totalRow.SAgComm },
+                    { Name: "SAgTotal", Value: totalRow.SAgTotal },
+                    { Name: "Company", Value: totalRow.Company }
                 ],
                 SubRows: subRow,
                 CssClass: 'sub-row-class'
@@ -544,22 +545,22 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
         footerData.push({
             Columns: [
                 { Name: "Username", Value: "Grand Total" },
-                { Name: "Turnover", Value: this.totalRowData.Turnover },
-                { Name: "NetTurnover", Value: this.totalRowData.NetTurnover },
-                { Name: "GrossComm", Value: this.totalRowData.GrossComm },
-                { Name: "MemberWinlost", Value: this.totalRowData.MemberWinlost },
-                { Name: "PlayerComm", Value: this.totalRowData.PlayerComm },
-                { Name: "MemberTotal", Value: this.totalRowData.MemberTotal },
-                { Name: "AgWinlost", Value: this.totalRowData.AgWinlost },
-                { Name: "AgComm", Value: this.totalRowData.AgComm },
-                { Name: "AgTotal", Value: this.totalRowData.AgTotal },
-                { Name: "MAgWinlost", Value: this.totalRowData.MAgWinlost },
-                { Name: "MAgComm", Value: this.totalRowData.MAgComm },
-                { Name: "MAgTotal", Value: this.totalRowData.MAgTotal },
-                { Name: "SAgWinlost", Value: this.totalRowData.SAgWinlost },
-                { Name: "SAgComm", Value: this.totalRowData.SAgComm },
-                { Name: "SAgTotal", Value: this.totalRowData.SAgTotal },
-                { Name: "Company", Value: this.totalRowData.Company }
+                { Name: "Turnover", Value: this.grandTotal.Turnover },
+                { Name: "NetTurnover", Value: this.grandTotal.NetTurnover },
+                { Name: "GrossComm", Value: this.grandTotal.GrossComm },
+                { Name: "MemberWinlost", Value: this.grandTotal.MemberWinlost },
+                { Name: "PlayerComm", Value: this.grandTotal.PlayerComm },
+                { Name: "MemberTotal", Value: this.grandTotal.MemberTotal },
+                { Name: "AgWinlost", Value: this.grandTotal.AgWinlost },
+                { Name: "AgComm", Value: this.grandTotal.AgComm },
+                { Name: "AgTotal", Value: this.grandTotal.AgTotal },
+                { Name: "MAgWinlost", Value: this.grandTotal.MAgWinlost },
+                { Name: "MAgComm", Value: this.grandTotal.MAgComm },
+                { Name: "MAgTotal", Value: this.grandTotal.MAgTotal },
+                { Name: "SAgWinlost", Value: this.grandTotal.SAgWinlost },
+                { Name: "SAgComm", Value: this.grandTotal.SAgComm },
+                { Name: "SAgTotal", Value: this.grandTotal.SAgTotal },
+                { Name: "Company", Value: this.grandTotal.Company }
             ]
         });
 
@@ -663,7 +664,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                 $this.fixedsortdata = new Array();
 
                 $this.dataSource = data.WinLossByUsernames;
-                $this.totalRowData = data.Total;
+                $this.grandTotal = data.GrandTotal;
                 $this.totalRows = data.WinLossByUsernames !== null ? data.WinLossByUsernames.length : 0;
                 $this.totalRecords = data.TotalRecords;
                 $this.pageSize = data.PageSize;

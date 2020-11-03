@@ -10,17 +10,17 @@
 
         public SuperWinLossDetailByProductModel(
         IEnumerable<SuperWinLossDetailByProductDTO> winLossByProducts,
-        SuperWinLossDetailByProductDTO total,
+        SuperWinLossDetailByProductDTO grandTotal,
         int totalRecords)
         {
             WinLossByProducts = winLossByProducts;
-            Total = total;
+            GrandTotal = grandTotal;
             TotalRecords = totalRecords;
         }
 
         public IEnumerable<SuperWinLossDetailByProductDTO> WinLossByProducts { get; }
 
-        public SuperWinLossDetailByProductDTO Total { get; }
+        public SuperWinLossDetailByProductDTO GrandTotal { get; }
 
         public int TotalRecords { get; }
     }

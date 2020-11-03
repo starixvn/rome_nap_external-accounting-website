@@ -144,6 +144,7 @@
     <Compile Include="Customer\Status\SingleUpdateAffectedDownline.cs" />
     <Compile Include="Customer\Status\UnsuspendDownlineDetail.cs" />
     <Compile Include="DataRange\CustomerDataRange.cs" />
+    <Compile Include="GlobalSuppressions2.cs" />
     <Compile Include="IPInformation\IPInformation.cs" />
     <Compile Include="IPInformation\IPRange.cs" />
     <Compile Include="OTP\CustomerOtp.cs" />

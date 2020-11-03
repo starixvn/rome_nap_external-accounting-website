@@ -14,42 +14,73 @@
             WinLossByProducts = winLossByProducts.OrderBy(winLossByProduct => winLossByProduct.PositionTaking);
         }
 
-        public int CustId => WinLossByProducts.FirstOrDefault().CustId;
-
-        public string Username => WinLossByProducts.FirstOrDefault().Username;
-
         public IEnumerable<SuperWinLossDetailByProductDTO> WinLossByProducts { get; }
 
         public SuperWinLossDetailByProductDTO Total { get
             {
-                var total = new SuperWinLossDetailByProductDTO();
+                decimal turnover = 0;
+                decimal netTurnover = 0;
+                decimal grossComm = 0;
+                decimal memberWinlost = 0;
+                decimal memberComm = 0;
+                decimal memberTotal = 0;
+                decimal agWinlost = 0;
+                decimal agComm = 0;
+                decimal agTotal = 0;
+                decimal magWinlost = 0;
+                decimal magComm = 0;
+                decimal magTotal = 0;
+                decimal sagWinlost = 0;
+                decimal sagComm = 0;
+                decimal sagTotal = 0;
+                decimal company = 0;
 
                 foreach (var winLossByProduct in WinLossByProducts)
                 {
-                    total.Turnover += winLossByProduct.Turnover;
-                    total.NetTurnover += winLossByProduct.NetTurnover;
-                    total.GrossComm += winLossByProduct.GrossComm;
+                    turnover += winLossByProduct.Turnover;
+                    netTurnover += winLossByProduct.NetTurnover;
+                    grossComm += winLossByProduct.GrossComm;
 
-                    total.MemberWinlost += winLossByProduct.MemberWinlost;
-                    total.PlayerComm += winLossByProduct.PlayerComm;
-                    total.MemberTotal += winLossByProduct.MemberTotal;
+                    memberWinlost += winLossByProduct.MemberWinlost;
+                    memberComm += winLossByProduct.MemberComm;
+                    memberTotal += winLossByProduct.MemberTotal;
 
-                    total.AgWinlost += winLossByProduct.AgWinlost;
-                    total.AgComm += winLossByProduct.AgComm;
-                    total.AgTotal += winLossByProduct.AgTotal;
+                    agWinlost += winLossByProduct.AgWinlost;
+                    agComm += winLossByProduct.AgComm;
+                    agTotal += winLossByProduct.AgTotal;
 
-                    total.MAgWinlost += winLossByProduct.MAgWinlost;
-                    total.MAgComm += winLossByProduct.MAgComm;
-                    total.MAgTotal += winLossByProduct.MAgTotal;
+                    magWinlost += winLossByProduct.MAgWinlost;
+                    magComm += winLossByProduct.MAgComm;
+                    magTotal += winLossByProduct.MAgTotal;
 
-                    total.SAgWinlost += winLossByProduct.SAgWinlost;
-                    total.SAgComm += winLossByProduct.SAgComm;
-                    total.SAgTotal += winLossByProduct.SAgTotal;
+                    sagWinlost += winLossByProduct.SAgWinlost;
+                    sagComm += winLossByProduct.SAgComm;
+                    sagTotal += winLossByProduct.SAgTotal;
 
-                    total.Company += winLossByProduct.Company;
+                    company += winLossByProduct.Company;
                 }
 
-                return total;
+                return new SuperWinLossDetailByProductDTO(
+                    WinLossByProducts.FirstOrDefault().CustId,
+                    WinLossByProducts.FirstOrDefault().Username,
+                    0,
+                    string.Empty,
+                    turnover,
+                    netTurnover,
+                    grossComm,
+                    memberWinlost,
+                    memberComm,
+                    memberTotal,
+                    agWinlost,
+                    agComm,
+                    agTotal,
+                    magWinlost,
+                    magComm,
+                    magTotal,
+                    sagWinlost,
+                    sagComm,
+                    sagTotal,
+                    company);
             }
         }
     }
