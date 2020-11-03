@@ -1,10 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Core.Context
 {
+    using CustomerSetting.Module.Core.Web;
     using System;
     using System.Globalization;
     using System.Linq;
     using System.Web;
-    using CustomerSetting.Module.Core.Web;
     using Utilities;
 
     public class CurrentSession : ICurrentSession
@@ -30,6 +30,8 @@
         public const string EASUserAttempt = "_userAttempt";
         public const string EASHashPwd = "EASHashPwd";
         public const string EASLine = "EASLine";
+        public const string EASSCLastActiveTime = "EASSCLastActiveTime";
+        public const string EASSCFailedCounter = "EASSCFailedCounter";
 
         public static ICurrentSession Instance => new CurrentSession();
 
@@ -40,6 +42,7 @@
         public bool HadNoSessionData => !IsLogin;
 
 #pragma warning disable S2325 // Methods and properties that don't access instance data should be static
+
         public int LoginAttempt
 #pragma warning restore S2325 // Methods and properties that don't access instance data should be static
         {
@@ -49,6 +52,7 @@
         }
 
 #pragma warning disable S2325 // Methods and properties that don't access instance data should be static
+
         public string UserAttempt
 #pragma warning restore S2325 // Methods and properties that don't access instance data should be static
         {
@@ -201,6 +205,31 @@
         {
             get { return HttpContext.Current.Session[EASLine] as string; }
             set { HttpContext.Current.Session[EASLine] = value; }
+        }
+
+#pragma warning disable S2325 // Methods and properties that don't access instance data should be static
+
+        public double LastActiveTime
+#pragma warning restore S2325 // Methods and properties that don't access instance data should be static
+        {
+            get => Utils.ToDouble(HttpContext.Current.Session[EASSCLastActiveTime]);
+            set => HttpContext.Current.Session[EASSCLastActiveTime] = value;
+        }
+
+        public void UpdateLastActiveTime(object lastActiveTime  = null)
+        {
+            LastActiveTime = lastActiveTime == null
+                ? Utils.ConvertDateTimeToMilliseconds(DateTime.Now)
+                : Utils.ToDouble(lastActiveTime);
+        }
+
+#pragma warning disable S2325 // Methods and properties that don't access instance data should be static
+
+        public int SCFailedCounter
+#pragma warning restore S2325 // Methods and properties that don't access instance data should be static
+        {
+            get => Utils.ToInt32(HttpContext.Current.Session[EASSCFailedCounter]);
+            set => HttpContext.Current.Session[EASSCFailedCounter] = value;
         }
 
         public string LangKey { get; set; } = "E";

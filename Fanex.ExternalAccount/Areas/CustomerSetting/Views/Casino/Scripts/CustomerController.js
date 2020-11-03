@@ -291,6 +291,8 @@ function CustomerController($scope, $element) {
                     roleId: $scope.CustomerModel.roleId
                 }
             }).success(function (result) {
+                if (parent.Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.CustomerSetting.Core.UnBlockUI)) { return; }
+
                 if (result.errorCode == 0) {
                     UpdateWinLossMessage += '<div style="margin-bottom: 5px;"><font color="Blue" style="font-weight: bold">' + username + ":</font><br /><font color='blue'>Updated successfully.</font></div>";
                 }

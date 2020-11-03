@@ -1,0 +1,225 @@
+﻿body {
+    line-height: 1.5;
+}
+
+.securitycode-page-overlay {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 9999;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    background: #aaaaaa url(../../Scripts/Lib/jquery-ui-1.9.1/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;
+    opacity: .3;
+}
+
+.securitycode-block-overlay {
+    position: absolute;
+    z-index: 10000;
+    margin: 0px;
+    padding: 0px;
+    border: 0px solid rgb(170, 170, 170);
+    background-color: rgba(0, 0, 0, 0);
+    color: #333333;
+    transition: display 1s;
+}
+
+    .securitycode-block-overlay label {
+        display: inline-block;
+        margin-bottom: .5rem;
+    }
+
+    .securitycode-block-overlay small {
+        font-size: 80%;
+        font-weight: 400;
+    }
+
+.securitycode-block {
+    margin: auto;
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+}
+
+@media screen and (min-device-width: 768px) {
+    .securitycode-block {
+        padding: 20px;
+        -webkit-box-shadow: 0px 7px 15px #b9b9b9;
+        -moz-box-shadow: 0px 7px 15px #b9b9b9;
+        box-shadow: 0px 7px 15px #b9b9b9;
+        width: 468px;
+        min-height: 260px;
+        border: 1px solid #c7c7c7;
+    }
+}
+
+.row {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.form-title-wrapper {
+    border-bottom: 1px solid silver;
+    margin: 0 0 20px;
+    padding: 0 0 15px;
+}
+
+    .form-title-wrapper .form-title {
+        color: #9d1c1c;
+        font-size: 13px;
+        margin: 0;
+        text-align: left;
+        text-transform: uppercase;
+    }
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+    .form-group .form-control {
+        background-color: transparent;
+        border: none !important;
+        box-shadow: 0px 5px 10px #b9b9b9;
+        color: rgb(0, 0, 0);
+        outline: none !important;
+        height: 40px !important;
+        width: 100%;
+        padding: 5px !important;
+    }
+
+        .form-group .form-control:focus {
+            color: rgb(0, 0, 0);
+        }
+
+.msg {
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 8px 8px 36px;
+    position: relative;
+    margin: 12px 0;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+    .msg:before {
+        font-family: AlphaAdmin;
+        font-size: 24px;
+        line-height: 20px;
+        position: absolute;
+        left: 8px;
+        top: 8px;
+    }
+
+.msg-error {
+    background-color: #fadddd;
+    border-color: #ef2d2d;
+    color: #fe0000;
+}
+
+    .msg-error:before {
+        content: '\e90b';
+    }
+
+.form-validation .form-group {
+    position: relative;
+}
+
+.form-validation .txt-code ~ .validation {
+    font-family: AlphaAdmin;
+    font-size: 18px;
+    font-style: normal;
+    position: absolute;
+    right: 5px;
+    top: 36px;
+}
+
+.form-validation .txt-code.error ~ .validation:before {
+    content: '\e909';
+    color: #fe0000;
+}
+
+.form-validation .txt-code.valid ~ .validation:before {
+    content: '\e936';
+    color: #52a220;
+}
+
+.form-body {
+    font-size: 100%;
+    font-weight: normal;
+    margin: 0 0 0.5rem;
+}
+
+.form-text {
+    display: block;
+    margin-top: .25rem;
+}
+
+.hidden {
+    display: none;
+}
+
+input[type=checkbox], input[type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+    input[type=checkbox]:focus, input[type=radio]:focus {
+        outline: none;
+    }
+
+.form-check {
+    position: relative;
+    display: block;
+    padding-left: 2rem;
+}
+
+.form-check-input {
+    position: absolute;
+    margin-top: .25rem;
+    margin-left: -2rem;
+}
+
+.form-check-label {
+    margin-bottom: 0;
+}
+
+.btn-submit {
+    height: 36px;
+    width: 100px;
+    background-color: #0b599c;
+    border: none;
+    box-shadow: 0px 5px 10px #b9b9b9;
+    color: #ffffff;
+    text-transform: capitalize;
+}
+
+    .btn-submit:hover {
+        background-color: #637187;
+    }
+
+    .btn-submit:focus {
+        outline: none;
+    }
+
+@media only screen and (max-device-width: 767px) and (orientation: portrait) {
+    .securitycode-block {
+        width: 100%;
+        padding: 15px;
+    }
+}
+
+@media only screen and (max-device-width: 767px) and (orientation: landscape) {
+    body {
+        line-height: 1.125;
+    }
+
+    .securitycode-block {
+        width: 468px;
+    }
+}

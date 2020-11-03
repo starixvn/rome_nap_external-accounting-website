@@ -38,6 +38,11 @@
             groupName: parent.$('#selectedGroupName').html()
         }
     }).success(function (result) {
+
+        if (parent.Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.CustomerSetting.Core.UnBlockUI)) {
+            return;
+        }
+
         if (result.isSuccess) {
             $('#errMsg').attr('class', 'successMsg');
             $('#errMsg').html('<font color="Blue">Updated successfully</font>');

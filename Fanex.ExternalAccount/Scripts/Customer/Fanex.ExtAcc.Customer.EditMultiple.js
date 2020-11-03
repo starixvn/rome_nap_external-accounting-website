@@ -739,7 +739,6 @@ Fanex.ExtAcc.Customer.ConfigMultipleDoubleComm = function (custids, allow, index
 
     $.ajax({
         url: resolveClientUrl('Customer/ConfigDoubleComm'),
-        dataType: 'json',
         type: 'post',
         data: {
             custid: parseInt(custids[current]),
@@ -748,6 +747,11 @@ Fanex.ExtAcc.Customer.ConfigMultipleDoubleComm = function (custids, allow, index
         }
     })
         .success(function (result) {
+
+            if (Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.ExtAcc.UnBlockUI)) {
+                return;
+            }
+
             if (result.errorCode && result.errorCode == '1') {
                 Fanex.ExtAcc.UnBlockUI();
                 Fanex.ExtAcc.Form.Alert('Error', result.errorMessage, 400, 150, 'alert');

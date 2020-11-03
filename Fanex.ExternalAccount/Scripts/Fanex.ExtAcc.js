@@ -100,7 +100,7 @@ String.prototype.formatSuccessMessage = function () {
     $('#errMsg').addClass('successMsg');
 
     return this;
-}
+};
 
 Fanex.ExtAcc = {
     $this: null,
@@ -111,6 +111,9 @@ Fanex.ExtAcc = {
     AutoInsertCount: 0,
     SuggestionXHR: null,
     shouldReloadLeftPanel: false,
+
+    scPageId: 'securityCodePage',
+    $scPageContainer: null,
 
     DecodeHtml: function (str) {
         return $("<div/>").html(str).text();
@@ -137,15 +140,18 @@ Fanex.ExtAcc = {
     LoadMainFrame: function (url, id, isLeftPanelClick, dontNeedGroupName) {
         this.BlockUI();
         $('#contentSplitter').hide();
-        //if (typeof id != 'undefined') {
-        //    $('#' + id).hide();
-        //}
 
         var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
         $.ajax({
             url: fullUrl, type: 'post', success: function (result) {
+
+                if (Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.ExtAcc.UnBlockUI)) {
+                    return;
+                }
+
                 $('#contentSplitter').html('');
-                if (url.indexOf('Customer/CustomerList') == -1 || $(result).text().indexOf('You are not authorized on this function') != -1) {
+
+                if (url.indexOf('Customer/CustomerList') === -1 || $(result).text().indexOf('You are not authorized on this function') !== -1) {
                     Fanex.ExtAcc.UnBlockUI();
                 }
 
@@ -343,6 +349,8 @@ Fanex.ExtAcc = {
 
     Init: function () {
         $this = this;
+
+        this.$scPageContainer = $('#securityCodePageContainer');
 
         $.blockUI.defaults.css.border = '0px solid #aaa';
         $.blockUI.defaults.css.backgroundColor = "transparent";
@@ -728,6 +736,20 @@ Fanex.ExtAcc = {
         infoDiv.setAttribute('onclick', "window.open(resolveClientUrl('SportsbookSetting/ViewPtInfo'), '_blank')");
 
         headerPt.append(infoDiv);
+    },
+
+    ShowSecurityCodePage: function (result, unBlockUI = null) {
+        if (typeof result === 'string' && result.indexOf(this.scPageId) > -1) {
+            if (typeof unBlockUI === 'function') {
+                unBlockUI();
+            }
+
+            this.$scPageContainer.html(result);
+
+            return true;
+        }
+
+        return false;
     }
 };
 
@@ -919,4 +941,18 @@ function isNullOrUndefined(obj) {
 function isNullOrUndefinedOrEmpty(obj) {
     obj = obj === '' ? null : obj;
     return isNullOrUndefined(obj);
+}
+
+function onPruductStatusSettingSuccess(result, callback) {
+    if (typeof result === 'string' && result.indexOf('securityCodePage') > -1) {
+        if (typeof callback === 'function') {
+            callback();
+        }
+
+        $('#securityCodePageContainer').html(result);
+
+        return false;
+    }
+
+    return true;
 }

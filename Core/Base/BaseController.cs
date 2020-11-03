@@ -29,7 +29,6 @@
     using CurrentSession = Context.CurrentSession;
     using Result = PTEngine.BusinessObjects.Result;
 
-    [SessionState(SessionStateBehavior.ReadOnly)]
     public class BaseController : Controller
     {
         protected const string SiteName = "ExtAcc";

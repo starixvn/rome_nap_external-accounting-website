@@ -193,7 +193,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.2.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.2.9\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.3.1\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.5.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTEngine.1.0.5.9\lib\net40\Fanex.PTEngine.dll</HintPath>
@@ -474,6 +474,15 @@
     <Content Include="Areas\Common\Views\Shared\Scripts\Fanex.CustomerSetting.js" />
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\ThirdPartyProductStatus\Index.cshtml" />
+    <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.min.js">
+      <DependentUpon>product-status-setting-multiple.js</DependentUpon>
+    </Content>
+    <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting.min.js">
+      <DependentUpon>product-status-setting.js</DependentUpon>
+    </Content>
+    <Content Include="Areas\ProductStatusSetting\Scripts\simple-product-status-setting.min.js">
+      <DependentUpon>simple-product-status-setting.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\associationaccount\index.js" />
     <Content Include="assets\bundles\associationaccount\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -481,6 +490,17 @@
     <Content Include="assets\bundles\problemaccount\index.js" />
     <Content Include="assets\bundles\problemaccount\index.min.js">
       <DependentUpon>index.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\securitycode\index.css" />
+    <Content Include="assets\bundles\securitycode\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\securitycode\index.js" />
+    <Content Include="assets\bundles\securitycode\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\securitycode\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.js" />
     <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.min.js">
@@ -515,7 +535,6 @@
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.js" />
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting.js" />
     <Content Include="Areas\ProductStatusSetting\Scripts\simple-product-status-setting.js" />
-    <Content Include="Areas\ProductStatusSetting\Scripts\simple-product-status-setting.min.js" />
     <Content Include="Areas\ProductStatusSetting\Styles\images\copy-icon.png" />
     <Content Include="Areas\ProductStatusSetting\Styles\product-status-setting-multiple.min.css" />
     <Content Include="Areas\ProductStatusSetting\Styles\simple-product-status-setting.min.css" />
@@ -857,8 +876,6 @@
     <Content Include="Areas\NG2\Styles\Images\icon_warning.gif" />
     <Content Include="Areas\NG2\Styles\um.css" />
     <Content Include="Areas\NG2\UM.aspx" />
-    <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.min.js" />
-    <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting.min.js" />
     <Content Include="Areas\ProductStatusSetting\Styles\images\error.png" />
     <Content Include="Areas\ProductStatusSetting\Styles\images\loading.gif" />
     <Content Include="Areas\ProductStatusSetting\Styles\images\success.png" />
@@ -1464,6 +1481,7 @@
       <SubType>Designer</SubType>
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
+    <Content Include="Configurations\InternalUrlSection.config" />
     <Content Include="Configurations\InternalUrlSection.mnl.config">
       <DependentUpon>InternalUrlSection.config</DependentUpon>
     </Content>
@@ -1724,6 +1742,7 @@
     <Content Include="Scripts\MultiSelect\select2.js" />
     <Content Include="Scripts\Reports\Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino.js" />
     <Content Include="Scripts\SearchAndCopy\Fanex.ExtAcc.SearchAndCopy.js" />
+    <Content Include="Scripts\SecurityCode\Fanex.ExtAcc.SecurityCode.js" />
     <Content Include="Scripts\_Libs\jQuery\classList.js" />
     <Content Include="Scripts\_Libs\jQuery\Core\jquery.js" />
     <Content Include="Scripts\_Libs\jQuery\Countdown\jquery.countdown.css" />
@@ -2754,7 +2773,24 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <Content Include="Configurations\InternalUrlSection.config" />
+    <Content Include="Configurations\SecurityCodeSection.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configurations\SecurityCodeSection.mnl.config">
+      <DependentUpon>SecurityCodeSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\SecurityCodeSection.production.config">
+      <DependentUpon>SecurityCodeSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\SecurityCodeSection.sit.config">
+      <DependentUpon>SecurityCodeSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\SecurityCodeSection.staging.config">
+      <DependentUpon>SecurityCodeSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\SecurityCodeSection.uat.config">
+      <DependentUpon>SecurityCodeSection.config</DependentUpon>
+    </Content>
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.ng2.config">
       <SubType>Designer</SubType>
@@ -2876,6 +2912,8 @@
     <Content Include="Views\CustomerList\Index.cshtml" />
     <Content Include="Views\SearchAndCopy\Email.cshtml" />
     <Content Include="Views\WinLossDetailIBCBetLiveCasino\Index.cshtml" />
+    <Content Include="Views\SecurityCode\Index.cshtml" />
+    <Content Include="Scripts\SecurityCode\Fanex.ExtAcc.SecurityCode.css" />
     <Content Include="Views\Home\TestSentryLog.cshtml" />
     <Content Include="Views\AssociationAccount\Index.cshtml" />
     <Content Include="Views\ProblemAccount\Index.cshtml" />

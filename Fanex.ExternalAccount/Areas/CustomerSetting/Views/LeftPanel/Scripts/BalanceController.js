@@ -10,7 +10,7 @@
     $scope.EditCredit = function () {
         var value = $('#linkGivenCredit').html();
         $('#linkGivenCredit').hide();
-        $('#givenCredit').val(value.replaceAll(',', '').toFixed(2).formatNumber())
+        $('#givenCredit').val(value.replaceAll(',', '').toFixed(2).formatNumber());
         $('#givenCredit').show();
         $('#givenCredit').focus();
     };
@@ -25,14 +25,14 @@
             url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?custId=' + id + '&roleId=' + roleId + '&groupName=' + parent.$('#selectedGroupName').html()),
             method: 'post'
         })
-        .success(function (result) {
-            parent.Fanex.ExtAcc.UnBlockUI();
+            .success(function (result) {
+                parent.Fanex.ExtAcc.UnBlockUI();
 
-            parent.$('#contentSplitter').html(result);
-        })
-        .error(function (data) {
-            parent.Fanex.ExtAcc.UnBlockUI();
-        })
+                parent.$('#contentSplitter').html(result);
+            })
+            .error(function (data) {
+                parent.Fanex.ExtAcc.UnBlockUI();
+            });
     };
 
     $scope.UpdateCredit = function (event) {
@@ -50,25 +50,29 @@
                 url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateGivenCreditPost?custId=' + id + '&uplineId=' + uplineId + '&newGivenCredit=' + value + '&groupName=' + parent.$('#selectedGroupName').html()),
                 method: 'post'
             })
-        .success(function (result) {
-            parent.Fanex.ExtAcc.UnBlockUI();
+                .success(function (result) {
+                    parent.Fanex.ExtAcc.UnBlockUI();
 
-            $('#linkGivenCredit').show();
-            $('#givenCredit').hide();
+                    if (parent.Fanex.ExtAcc.ShowSecurityCodePage(result)) {
+                        return;
+                    }
 
-            if (result.isSuccess) {
-                $('#linkGivenCredit').html(value.replaceAll(',', '').toFixed(2).formatNumber());
-                $('#givenCredit').val(value);
-                $('#givenCredit').attr('ng-blur', 'RevertCredit("' + value.replaceAll(',', '').toFixed(2).formatNumber() + '")');
-            }
-            else {
-                $('#givenCredit').val($scope.preVal.replaceAll(',', '').toFixed(2).formatNumber());
-                parent.Fanex.ExtAcc.Form.Alert('Update Credit Error', result.errorMessage.formatErrorMessage(), 400, 200, 'alert');
-            }
-        })
-        .error(function (data) {
-            parent.Fanex.ExtAcc.UnBlockUI();
-        });
+                    $('#linkGivenCredit').show();
+                    $('#givenCredit').hide();
+
+                    if (result.isSuccess) {
+                        $('#linkGivenCredit').html(value.replaceAll(',', '').toFixed(2).formatNumber());
+                        $('#givenCredit').val(value);
+                        $('#givenCredit').attr('ng-blur', 'RevertCredit("' + value.replaceAll(',', '').toFixed(2).formatNumber() + '")');
+                    }
+                    else {
+                        $('#givenCredit').val($scope.preVal.replaceAll(',', '').toFixed(2).formatNumber());
+                        parent.Fanex.ExtAcc.Form.Alert('Update Credit Error', result.errorMessage.formatErrorMessage(), 400, 200, 'alert');
+                    }
+                })
+                .error(function (data) {
+                    parent.Fanex.ExtAcc.UnBlockUI();
+                });
         }
     };
 
@@ -77,4 +81,4 @@
         $('#givenCredit').val(preVal.replaceAll(',', '').toFixed(2).formatNumber());
         $('#givenCredit').hide();
     };
-};
+}

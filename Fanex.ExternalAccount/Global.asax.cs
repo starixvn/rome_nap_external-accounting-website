@@ -1,11 +1,5 @@
 ﻿namespace Fanex.ExternalAccount
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
     using CasinoLibrary.SBAgent;
@@ -23,6 +17,12 @@
     using ONEbook.UM.Filters;
     using ProductStatus.Setting.Configuration;
     using Sunplus.Libraries.APILogger;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Routing;
 
     public class MvcApplication : HttpApplication
     {
@@ -31,6 +31,7 @@
             filters.Add(new CheckUMFilter());
             filters.Add(new CheckBelongingFilter());
             filters.Add(new LogActionFilterAttribute());
+            filters.Add(new SecurityCodeFilterAttribute());
         }
 
         public static void RegisterRoutes(RouteCollection routes)
@@ -39,7 +40,7 @@
             routes.IgnoreRoute("{*allaspx}", new { allaspx = @".*\.aspx(/.*)?" });
             routes.IgnoreRoute("{*allashx}", new { allashx = @".*\.ashx(/.*)?" });
             routes.IgnoreRoute("{*favicon}", new { favicon = "(.*/)?favicon.ico(/.*)?" });
-
+            
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",

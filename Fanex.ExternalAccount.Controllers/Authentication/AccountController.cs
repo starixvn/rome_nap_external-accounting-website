@@ -35,6 +35,9 @@
         private readonly ILoginService _userService;
         private readonly IGroupService groupService;
 
+        private string _scLastActiveTime;
+        private string _scFailedCounter;
+
         public AccountController()
         {
             _currentContext = new CurrentContext();
@@ -101,12 +104,14 @@
             {
                 return Redirect(url);
             }
-            
+
             var path = Server.MapPath("~/IbcKeys/ibcpkey.snk");
             var timeout = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff tt");
             var username = _currentSession.UserName;
             var fromLine = _currentSession.CurrentLine;
-            var parameter = $"{username}&{pwd}&{code}&{line}&{timeout}&{fromLine}";
+            var lastActiveTime = _currentSession.LastActiveTime;
+            var failedCounter = _currentSession.SCFailedCounter;
+            var parameter = $"{username}&{pwd}&{code}&{line}&{timeout}&{fromLine}&{lastActiveTime}&{failedCounter}";
 #pragma warning disable S109 // Magic numbers should not be used
             parameter = new EncryptionThread().EncryptString(parameter, 1024, path);
 #pragma warning restore S109 // Magic numbers should not be used
@@ -135,6 +140,10 @@
             var line = queries[3];
             var timeout = queries[4];
             var fromLine = queries[5];
+#pragma warning disable S109 // Magic numbers should not be used
+            _scLastActiveTime = queries[6];
+            _scFailedCounter = queries[7];
+#pragma warning restore S109 // Magic numbers should not be used
             var totalSeconds = DateTime.Now.Subtract(Convert.ToDateTime(timeout)).TotalSeconds;
             var isTimeout = totalSeconds > 10;
             var rawPassword = DecryptPassword(pwd, code);
@@ -254,7 +263,7 @@
                 {
                     WriteLogSwitchLine($"Switched {model.FromLine} to {model.Line} failed: {ViewLang.AccessDenyToPublicDomain}, username: {model.UserName}", TraceEventType.Warning);
                 }
-                
+
                 return View("~/Views/Account/Login.cshtml", new LoginModel(ViewLang.AccessDenyToPublicDomain));
             }
 
@@ -374,6 +383,9 @@
             _currentSession.Captcha = model.Code;
             _currentSession.HashPassword = model.Password;
             _currentSession.CurrentLine = model.Line;
+            _currentSession.UpdateLastActiveTime(_scLastActiveTime);
+            int.TryParse(_scFailedCounter, out int failedCounter);
+            _currentSession.SCFailedCounter = failedCounter;
         }
 
         private static void WriteLogSwitchLine(string message, System.Diagnostics.TraceEventType type)

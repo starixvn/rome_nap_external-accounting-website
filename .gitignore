@@ -37,4 +37,5 @@ _Chutzpah
 *.sh
 */assets/bundles/**
 *.orig
+Fanex.ExternalAccount/Properties/PublishProfiles/**
 /Fanex.ExternalAccount.Controllers/Fanex.ExternalAccount.Controllers.csproj.user

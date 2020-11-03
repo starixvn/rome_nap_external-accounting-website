@@ -12,7 +12,7 @@ Fanex.ExtAcc.Form = {
             Fanex.ExtAcc.BlockUI();
 
         var id = popupId ? popupId : 'windowPopup';
-        var Form = document.getElementById(id) == null 
+        var Form = document.getElementById(id) == null
             ? document.createElement("div")
             : document.getElementById(id);
         Form.innerHTML = '';
@@ -51,10 +51,13 @@ Fanex.ExtAcc.Form = {
                 Fanex.ExtAcc.Form.Alert('Error', data.errorMessage.formatErrorMessage(), 300, 150, 'alert');
                 return;
             }
-            else {                                
-                document.body.appendChild(Form);
-                $(DivContent).html(data);
+
+            if (Fanex.ExtAcc.ShowSecurityCodePage(data)) {
+                return;
             }
+
+            document.body.appendChild(Form);
+            $(DivContent).html(data);
 
             $('#' + id).dialog({
                 title: title,
@@ -69,7 +72,7 @@ Fanex.ExtAcc.Form = {
                     $self.Close(reloadOnClose, null, id);
                     if (typeof closeClick == 'function') {
                         closeClick();
-                    }                    
+                    }
                 }
             });
 
@@ -88,11 +91,11 @@ Fanex.ExtAcc.Form = {
         var Frame = document.createElement("iframe");
         var margin = '30px';
         mainDiv.setAttribute('id', id);
-        
+
         if (marginRight) {
             margin = marginRight + 'px';
         }
-                
+
         Frame.setAttribute('frameBorder', "0");
         Frame.setAttribute('name', id);
 
@@ -136,7 +139,7 @@ Fanex.ExtAcc.Form = {
         var id = popupId ? popupId : 'windowPopup';
 
         Form.setAttribute('id', id);
-        Form.setAttribute('style', 'display: none; border: none; font-size: 13px; z-index: 999999');        
+        Form.setAttribute('style', 'display: none; border: none; font-size: 13px; z-index: 999999');
 
         DivContent.setAttribute('style', 'height: ' + (height - 102) + 'px');
 
@@ -157,36 +160,37 @@ Fanex.ExtAcc.Form = {
         var $self = this;
 
         $('#' + id).css('display', 'block');
-        $('#' + id).dialog({ height: height, width: width, minWidth: 300, minHeight: 150,
+        $('#' + id).dialog({
+            height: height, width: width, minWidth: 300, minHeight: 150,
             title: title,
             resizable: false,
             draggable: true,
             modal: true,
             buttons: [
-            {
-                text: isSubmit ? "Submit" : "Yes",
-                'class': "btn -submit",
-                click: function () {
-                    if (okClickEvent && typeof okClickEvent === 'function') {
-                        okClickEvent();
+                {
+                    text: isSubmit ? "Submit" : "Yes",
+                    'class': "btn -submit",
+                    click: function () {
+                        if (okClickEvent && typeof okClickEvent === 'function') {
+                            okClickEvent();
+                        }
+                        else {
+                            $self.Close(reloadOnClose, null, id);
+                        }
                     }
-                    else {
-                        $self.Close(reloadOnClose, null, id);
+                },
+                {
+                    text: isCancel ? "Cancel" : "No",
+                    'class': "btn -normal",
+                    click: function () {
+                        if (cancelClickEvent && typeof cancelClickEvent === 'function') {
+                            cancelClickEvent();
+                        }
+                        else {
+                            $self.Close(reloadOnClose, null, id);
+                        }
                     }
-                }
-            },
-            {
-                text: isCancel ? "Cancel" : "No",
-                'class': "btn -normal",
-                click: function () {
-                    if (cancelClickEvent && typeof cancelClickEvent === 'function') {
-                        cancelClickEvent();
-                    }
-                    else {
-                        $self.Close(reloadOnClose, null, id);
-                    }
-                }
-            }],
+                }],
             close: function (event) {
                 $self.Close(reloadOnClose, null, id);
                 if (typeof closeClick == 'function') {
@@ -205,7 +209,7 @@ Fanex.ExtAcc.Form = {
 
         Form.setAttribute('id', id);
         Form.setAttribute('style', 'display: none; border: none; font-size: 12px; z-index: 999999');
-        
+
         DivContent.setAttribute('style', 'height: ' + (height - 122) + 'px');
 
         var divFrame = document.createElement("div");
@@ -225,22 +229,23 @@ Fanex.ExtAcc.Form = {
         var $self = this;
 
         $('#' + id).css('display', 'block');
-        $('#' + id).dialog({ height: height, width: width, minWidth: 300, minHeight: 150,
+        $('#' + id).dialog({
+            height: height, width: width, minWidth: 300, minHeight: 150,
             title: title,
             resizable: false,
             draggable: true,
             modal: true,
             buttons: [
-            {
-                text: "OK",
-                'class': "btn -submit",
-                click: function () {
-                    $self.Close(null, null, id);
-                    if (typeof okClick == 'function') {
-                        okClick();
+                {
+                    text: "OK",
+                    'class': "btn -submit",
+                    click: function () {
+                        $self.Close(null, null, id);
+                        if (typeof okClick == 'function') {
+                            okClick();
+                        }
                     }
-                }
-            }],
+                }],
             close: function (event) {
                 $self.Close(null, null, id);
                 if (typeof okClick == 'function') {
@@ -269,4 +274,4 @@ Fanex.ExtAcc.Form = {
             callBack();
         }
     }
-}
+};

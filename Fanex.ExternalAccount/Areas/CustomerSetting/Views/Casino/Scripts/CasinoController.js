@@ -151,10 +151,14 @@
             url: toUrl(actionName),
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
-            type: 'post',
-            dataType: 'json'
+            type: 'post'
         })
             .success(function (result) {
+
+                if (parent.Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.CustomerSetting.Core.UnBlockUI)) {
+                    return;
+                }
+
                 if (result.errorCode != 0) {
                     ErrorMessage += '<font color="Blue" style="font-weight: bold">' + data.username + ":</font><br />" + result.errorMessage.formatErrorMessage() + '<br /><br />';
                 }

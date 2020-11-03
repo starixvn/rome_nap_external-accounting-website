@@ -13,13 +13,18 @@
         });
     },
     removeOTP: function () {
-        try { Fanex.CustomerSetting.Core.BlockUI(); } catch (e) { }
+        try { Fanex.CustomerSetting.Core.BlockUI(); } catch (e) { console.log(e); }
         var $errorMessage = $("#errMsg");
         $.ajax({
             type: "POST",
             url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/RemoveOTP'),
             data: { custId: $("#customerId").val(), groupName: parent.$('#selectedGroupName').html() },
             success: function (result) {
+
+                if (parent.Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.CustomerSetting.Core.UnBlockUI)) {
+                    return;
+                }
+
                 if (result.isSuccess) {
                     $errorMessage.attr('class', 'successMsg');
                     $errorMessage.empty().html('<font color="Blue">' + $("#removeOTPsuccessfully").val() + '</font>');

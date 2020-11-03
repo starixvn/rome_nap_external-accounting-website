@@ -210,6 +210,22 @@
     "sourceMap": true
   },
   {
+    "outputFileName": "assets/bundles/securitycode/index.css",
+    "inputFiles": [
+      "Scripts/SecurityCode/Fanex.ExtAcc.SecurityCode.css"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/securitycode/index.js",
+    "inputFiles": [
+      "Scripts/aes.js",
+      "Scripts/Fanex.ExtAcc.EcHcUtil.js",
+      "Scripts/SecurityCode/Fanex.ExtAcc.SecurityCode.js"
+    ],
+    "sourceMap": true
+  },
+  {
     "outputFileName": "assets/bundles/associationaccount/index.js",
     "inputFiles": [
       "Scripts/Customer/Fanex.ExtAcc.AssociationAccount.js"

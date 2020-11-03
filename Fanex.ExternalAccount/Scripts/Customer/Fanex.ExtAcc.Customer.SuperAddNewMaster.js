@@ -174,22 +174,25 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
                         $.ajax({
                             url: resolveClientUrl('Customer/SuperAddNewMasterPost'),
                             data: para,
-                            dataType: 'json',
                             type: 'post'
-                        })
-                            .success(function (result) {
-                                if (result.errorCode == 0) {
-                                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl("Customer/Settings/3/" + result.custId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val()));
-                                }
-                                else {
-                                    Fanex.ExtAcc.UnBlockUI();
+                        }).success(function (result) {
 
-                                    $('#errMsg').css('display', 'block');
-                                    $('#errMsg').html(result.errorMessage.formatErrorMessage());
-                                }
-                            });
-                    }
-                }
+                            if (Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.ExtAcc.UnBlockUI)) {
+                                return;
+                            }
+
+                            if (result.errorCode == 0) {
+                                Fanex.ExtAcc.LoadMainFrame(resolveClientUrl("Customer/Settings/3/" + result.custId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val()));
+                            }
+                            else {
+                                Fanex.ExtAcc.UnBlockUI();
+
+                                $('#errMsg').css('display', 'block');
+                                $('#errMsg').html(result.errorMessage.formatErrorMessage());
+                            }
+                        });
+                    };
+                };
 
                 ko.applyBindings(new CustomerModel(customer));
 

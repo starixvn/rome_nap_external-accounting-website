@@ -174,10 +174,14 @@ Fanex.ExtAcc.Customer.MasterAddNewAgent = {
                         $.ajax({
                             url: resolveClientUrl('Customer/MasterAddNewAgentPost'),
                             data: para,
-                            dataType: 'json',
                             type: 'post'
                         })
                             .success(function (result) {
+
+                                if (Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.ExtAcc.UnBlockUI)) {
+                                    return;
+                                }
+
                                 if (result.errorCode == 0) {
                                     Fanex.ExtAcc.LoadMainFrame(resolveClientUrl("Customer/Settings/2/" + result.custId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val()));
                                 }
@@ -188,8 +192,8 @@ Fanex.ExtAcc.Customer.MasterAddNewAgent = {
                                     $('#errMsg').html(result.errorMessage.formatErrorMessage());
                                 }
                             });
-                    }
-                }
+                    };
+                };
 
                 ko.applyBindings(new CustomerModel(customer));
 

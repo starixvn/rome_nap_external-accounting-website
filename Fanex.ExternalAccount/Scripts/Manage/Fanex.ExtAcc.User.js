@@ -251,7 +251,7 @@ Fanex.ExtAcc.User = {
     GetPopupHeight: function (landscapeHeight, portraitHeight) {
         var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
             landscapeHeight :
-             portraitHeight;
+            portraitHeight;
 
         return height;
     },
@@ -264,74 +264,74 @@ Fanex.ExtAcc.User = {
                 type: 'post',
                 data: params
             })
-            .success(function (data) {
-                Fanex.ExtAcc.User.DataSource = data;
+                .success(function (data) {
+                    Fanex.ExtAcc.User.DataSource = data;
 
-                var rows = data.rows;
-                var bodyRows = [];
+                    var rows = data.rows;
+                    var bodyRows = [];
 
-                for (var i = 0; i < rows.length; i++) {
-                    bodyRows.push({
-                        Columns: [
-                        { Name: 'Username', Value: rows[i] },
-                        { Name: 'FirstName', Value: rows[i].FirstName },
-                        { Name: 'LastName', Value: rows[i].LastName },
-                        { Name: 'GroupName', Value: rows[i].GroupName },
-                        { Name: 'Creator', Value: rows[i].Creator },
-                        { Name: 'CreatedDate', Value: rows[i].CreatedDate },
-                        { Name: 'Permission', Value: rows[i] },
-                        { Name: 'Enabled', Value: rows[i] },
-                        { Name: 'ResetPwd', Value: rows[i] }
-                        ]
-                    });
-                }
-
-                Fanex.ExtAcc.User.options = {
-                    columns: Fanex.ExtAcc.User.DataFields,
-                    bodyRows: bodyRows,
-                    autoCalculateGridExpandHeight: true,
-                    marginRight: 10,
-                    showDistinctRow: false,
-                    allowTruncate: true
-                };
-
-                if (bodyRows.length == 0) {
-                    $('#msgNoinfo').css('display', 'block');
-                    $('#jqgrid-user').css('display', 'none');
-
-                    $('#activeUsers').html('0');
-                    $('#inActiveUsers').html('0');
-
-                    $('#mainGrid').css('visibility', 'visible');
-                }
-                else {
-                    $('#msgNoinfo').css('display', 'none');
-                    $('#jqgrid-user').css('display', 'block');
-                    // Init Grid jqgrid
-                    $('#jqgrid-user').fanexGrid(Fanex.ExtAcc.User.options);
-
-                    var divs = $('div');
-                    var activeUsers = 0;
-                    var inActiveUsers = 0;
-
-                    for (var i = 0; i < divs.length; i++) {
-                        if (divs[i].className == 'menuActive') {
-                            activeUsers++;
-                        }
-
-                        if (divs[i].className == 'menuInactive') {
-                            inActiveUsers++;
-                        }
+                    for (var i = 0; i < rows.length; i++) {
+                        bodyRows.push({
+                            Columns: [
+                                { Name: 'Username', Value: rows[i] },
+                                { Name: 'FirstName', Value: rows[i].FirstName },
+                                { Name: 'LastName', Value: rows[i].LastName },
+                                { Name: 'GroupName', Value: rows[i].GroupName },
+                                { Name: 'Creator', Value: rows[i].Creator },
+                                { Name: 'CreatedDate', Value: rows[i].CreatedDate },
+                                { Name: 'Permission', Value: rows[i] },
+                                { Name: 'Enabled', Value: rows[i] },
+                                { Name: 'ResetPwd', Value: rows[i] }
+                            ]
+                        });
                     }
 
-                    $('#activeUsers').html(activeUsers);
-                    $('#inActiveUsers').html(inActiveUsers);
+                    Fanex.ExtAcc.User.options = {
+                        columns: Fanex.ExtAcc.User.DataFields,
+                        bodyRows: bodyRows,
+                        autoCalculateGridExpandHeight: true,
+                        marginRight: 10,
+                        showDistinctRow: false,
+                        allowTruncate: true
+                    };
 
-                    $('#mainGrid').css('visibility', 'visible');
-                }
+                    if (bodyRows.length == 0) {
+                        $('#msgNoinfo').css('display', 'block');
+                        $('#jqgrid-user').css('display', 'none');
 
-                Fanex.ExtAcc.UnBlockUI();
-            });
+                        $('#activeUsers').html('0');
+                        $('#inActiveUsers').html('0');
+
+                        $('#mainGrid').css('visibility', 'visible');
+                    }
+                    else {
+                        $('#msgNoinfo').css('display', 'none');
+                        $('#jqgrid-user').css('display', 'block');
+                        // Init Grid jqgrid
+                        $('#jqgrid-user').fanexGrid(Fanex.ExtAcc.User.options);
+
+                        var divs = $('div');
+                        var activeUsers = 0;
+                        var inActiveUsers = 0;
+
+                        for (var i = 0; i < divs.length; i++) {
+                            if (divs[i].className == 'menuActive') {
+                                activeUsers++;
+                            }
+
+                            if (divs[i].className == 'menuInactive') {
+                                inActiveUsers++;
+                            }
+                        }
+
+                        $('#activeUsers').html(activeUsers);
+                        $('#inActiveUsers').html(inActiveUsers);
+
+                        $('#mainGrid').css('visibility', 'visible');
+                    }
+
+                    Fanex.ExtAcc.UnBlockUI();
+                });
         }
         catch (e) {
             if (typeof console != 'undefined') {
@@ -386,7 +386,7 @@ Fanex.ExtAcc.User = {
             415,
             210,
             false
-            );
+        );
     },
 
     ShowPermission: function (userId, username, groupName) {
@@ -449,22 +449,22 @@ Fanex.ExtAcc.User = {
         params.groupId = groupId;
 
         $.ajax({ url: resolveClientUrl(editUrl), type: 'POST', data: params })
-        .done(function (data) {
-            if (!data.isSuccess) {
-                Fanex.ExtAcc.UnBlockUI();
+            .done(function (data) {
+                if (!data.isSuccess) {
+                    Fanex.ExtAcc.UnBlockUI();
 
-                $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.errorMessage.formatErrorMessage());
-            }
-            else {
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-                    Fanex.ExtAcc.Form.Close(false);
+                    $('#errMsg').css('display', 'block');
+                    $('#errMsg').html(data.errorMessage.formatErrorMessage());
+                }
+                else {
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        Fanex.ExtAcc.Form.Close(false);
 
-                    Fanex.ExtAcc.User.Search();
-                }, 2000);
-            }
-        });
+                        Fanex.ExtAcc.User.Search();
+                    }, 2000);
+                }
+            });
     },
 
     AddExist: function () {
@@ -486,24 +486,24 @@ Fanex.ExtAcc.User = {
         params.groupId = groupId;
 
         $.ajax({ url: resolveClientUrl(editUrl), type: 'POST', data: params })
-        .done(function (data) {
-            if (!data.isSuccess) {
-                Fanex.ExtAcc.UnBlockUI();
+            .done(function (data) {
+                if (!data.isSuccess) {
+                    Fanex.ExtAcc.UnBlockUI();
 
-                $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.errorMessage.formatErrorMessage());
-            }
-            else {
-                Fanex.ExtAcc.Form.Close(false);
-
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
+                    $('#errMsg').css('display', 'block');
+                    $('#errMsg').html(data.errorMessage.formatErrorMessage());
+                }
+                else {
                     Fanex.ExtAcc.Form.Close(false);
 
-                    Fanex.ExtAcc.User.Search();
-                }, 2000);
-            }
-        });
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        Fanex.ExtAcc.Form.Close(false);
+
+                        Fanex.ExtAcc.User.Search();
+                    }, 2000);
+                }
+            });
     },
 
     Edit: function () {
@@ -521,47 +521,47 @@ Fanex.ExtAcc.User = {
         params.groupId = groupId;
 
         $.ajax({ url: resolveClientUrl(editUrl), data: params, type: 'POST' })
-        .done(function (data) {
-            if (!data.isSuccess) {
-                Fanex.ExtAcc.UnBlockUI();
+            .done(function (data) {
+                if (!data.isSuccess) {
+                    Fanex.ExtAcc.UnBlockUI();
 
-                $('#errMsg').css('display', 'block');
-                $('#errMsg').html(data.errorMessage.formatErrorMessage());
-            }
-            else {
-                Fanex.ExtAcc.Form.Close(false);
-
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
+                    $('#errMsg').css('display', 'block');
+                    $('#errMsg').html(data.errorMessage.formatErrorMessage());
+                }
+                else {
                     Fanex.ExtAcc.Form.Close(false);
 
-                    Fanex.ExtAcc.User.Search();
-                }, 2000);
-            }
-        });
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        Fanex.ExtAcc.Form.Close(false);
+
+                        Fanex.ExtAcc.User.Search();
+                    }, 2000);
+                }
+            });
     },
 
     Activate: function (userId, isActive) {
         Fanex.ExtAcc.BlockUI();
 
         $.ajax({ url: resolveClientUrl('User/UpdateStatus/?userId=' + userId + '&isActive=' + isActive), type: 'POST' })
-        .done(function (data) {
-            if (!data.isSuccess) {
-                Fanex.ExtAcc.UnBlockUI();
+            .done(function (data) {
+                if (!data.isSuccess) {
+                    Fanex.ExtAcc.UnBlockUI();
 
-                alert(data.errorMessage);
-            }
-            else {
-                Fanex.ExtAcc.Form.Close(false);
-
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
+                    alert(data.errorMessage);
+                }
+                else {
                     Fanex.ExtAcc.Form.Close(false);
 
-                    Fanex.ExtAcc.User.Search();
-                }, 2000);
-            }
-        });
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        Fanex.ExtAcc.Form.Close(false);
+
+                        Fanex.ExtAcc.User.Search();
+                    }, 2000);
+                }
+            });
     },
 
     ResetPwd: function (isOwner) {
@@ -593,15 +593,24 @@ Fanex.ExtAcc.User = {
         params.userId = $('#UserID').val();
         params.pwd = $('#Password').val();
 
-        $.ajax({ url: resolveClientUrl('User/' + (isOwner ? 'ResetPwdOwner' : 'ResetPwd')), data: params, type: 'POST' })
-        .done(function (data) {
-            if (!data.isSuccess) {
-                $("#err-message").html(data.errorMessage.formatErrorMessage()).removeClass("hide");
-            }
-            else {
-                Fanex.ExtAcc.Form.Close(false);
-            }
-        });
+        $.ajax({
+            url: resolveClientUrl('User/' + (isOwner ? 'ResetPwdOwner' : 'ResetPwd')),
+            data: params,
+            type: 'POST'
+        })
+            .done(function (data) {
+
+                if (Fanex.ExtAcc.ShowSecurityCodePage(data, Fanex.ExtAcc.UnBlockUI)) {
+                    return;
+                }
+
+                if (!data.isSuccess) {
+                    $("#err-message").html(data.errorMessage.formatErrorMessage()).removeClass("hide");
+                }
+                else {
+                    Fanex.ExtAcc.Form.Close(false);
+                }
+            });
     },
 
     Search: function (IsFirstLoad) {

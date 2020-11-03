@@ -34,44 +34,45 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
             dataType: 'json',
             type: 'post'
         })
-        .success(function (result) {
-            if (result.customer.bettingLimit.bettingLimitItems.length == 0) {
-                Fanex.ExtAcc.UnBlockUI();
-                Fanex.ExtAcc.Form.Close();
-                var timeout = setTimeout(function () {
-                    clearTimeout(timeout);
-                    Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
-                }, 1000);
+            .success(function (result) {
 
-                return;
-            }
+                if (result.customer.bettingLimit.bettingLimitItems.length == 0) {
+                    Fanex.ExtAcc.UnBlockUI();
+                    Fanex.ExtAcc.Form.Close();
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
+                    }, 1000);
 
-            customer = $this.customer = result.customer;
-            context = result.context;
+                    return;
+                }
 
-            if (context.targetCustId == 0) {
-                $('#group').change(function (e) {
-                    Fanex.ExtAcc.Customer.AgentAddNewMember.ChangeGroupCommission(document.getElementById('group'));
-                });
-            }
-            else {
-                $('#closed').click(function (e) {
-                    Fanex.ExtAcc.Customer.AgentAddNewMember.Closed(document.getElementById('closed'), $this.currentStatusClose);
-                });
-            }
+                customer = $this.customer = result.customer;
+                context = result.context;
 
-            Fanex.Customer.CheckUser(2, customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', 'selectedThree', 'msgIcon');
-            Fanex.Customer.CheckUser(2, customer.userName, 'selectedTwo', 'selectedOne', 'selectedTwo', 'selectedThree', 'msgIcon');
-            Fanex.Customer.CheckUser(2, customer.userName, 'selectedThree', 'selectedOne', 'selectedTwo', 'selectedThree', 'msgIcon');
+                if (context.targetCustId == 0) {
+                    $('#group').change(function (e) {
+                        Fanex.ExtAcc.Customer.AgentAddNewMember.ChangeGroupCommission(document.getElementById('group'));
+                    });
+                }
+                else {
+                    $('#closed').click(function (e) {
+                        Fanex.ExtAcc.Customer.AgentAddNewMember.Closed(document.getElementById('closed'), $this.currentStatusClose);
+                    });
+                }
 
-            Fanex.PTEngine.CURRENT_CONTEXT = context;
-            Fanex.PTEngine.CURRENT_CONTEXT.ia3 = !customer.statusSetting.disableAutoMPT;
+                Fanex.Customer.CheckUser(2, customer.userName, 'selectedOne', 'selectedOne', 'selectedTwo', 'selectedThree', 'msgIcon');
+                Fanex.Customer.CheckUser(2, customer.userName, 'selectedTwo', 'selectedOne', 'selectedTwo', 'selectedThree', 'msgIcon');
+                Fanex.Customer.CheckUser(2, customer.userName, 'selectedThree', 'selectedOne', 'selectedTwo', 'selectedThree', 'msgIcon');
 
-            var ptGrid = new Fanex.PTEngine.PTGrid(customer.ptSetting);
-            ptGrid.Render(document.getElementById('ptContainer'));
+                Fanex.PTEngine.CURRENT_CONTEXT = context;
+                Fanex.PTEngine.CURRENT_CONTEXT.ia3 = !customer.statusSetting.disableAutoMPT;
 
-            var bettingLimit = new Fanex.PTEngine.BettingLimit(customer.bettingLimit)
-            bettingLimit.Render(document.getElementById('bettingLimitContainer'));
+                var ptGrid = new Fanex.PTEngine.PTGrid(customer.ptSetting);
+                ptGrid.Render(document.getElementById('ptContainer'));
+
+                var bettingLimit = new Fanex.PTEngine.BettingLimit(customer.bettingLimit)
+                bettingLimit.Render(document.getElementById('bettingLimitContainer'));
 
             /* Render Commission to selected*/
             var commission = $this.commission = customer.commissionSetting;
@@ -108,32 +109,32 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                 $this.currentStatusSuspend = customer.statusSetting.suspended;
             }
 
-            var CustomerModel = function (customer) {
-                var uplineUserName = customer.userName;
+                var CustomerModel = function (customer) {
+                    var uplineUserName = customer.userName;
 
-                // Set label MaxCredit
-                customer.credit = String.prototype.FormatNumber(customer.credit);
-                customer.agentMaxCreditTemp = String.prototype.FormatNumber(customer.maxCredit);
-                customer.maxCredit = 0;
+                    // Set label MaxCredit
+                    customer.credit = String.prototype.FormatNumber(customer.credit);
+                    customer.agentMaxCreditTemp = String.prototype.FormatNumber(customer.maxCredit);
+                    customer.maxCredit = 0;
 
-                this.saveCustomer = function () {
-                    $('#contentSplitter').scrollTop(0);
-                    if (!Fanex.Customer.CheckInfoValue(true)) return;
-                    if (!bettingLimit.Validate(result.defaultMinBetValue)) return;
+                    this.saveCustomer = function () {
+                        $('#contentSplitter').scrollTop(0);
+                        if (!Fanex.Customer.CheckInfoValue(true)) return;
+                        if (!bettingLimit.Validate(result.defaultMinBetValue)) return;
 
-                    // For Check Edit Postion Taking
-                    if (context.targetCustId == 0) {
-                        // Re-set value for customer object
-                        customer.userName = uplineUserName + Fanex.Customer.SetAutoUserName();
-                        customer.group = $("#group").val();
-                    }
+                        // For Check Edit Postion Taking
+                        if (context.targetCustId == 0) {
+                            // Re-set value for customer object
+                            customer.userName = uplineUserName + Fanex.Customer.SetAutoUserName();
+                            customer.group = $("#group").val();
+                        }
 
-                    var max = parseFloat(Fanex.ExtAcc.ReplaceAll($('#maxCredit').text(), ',', ''));
-                    var cur = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
-                    if (cur > max) {
-                        Validators.show($('#credit').get(0), 'Given Credit must be less than or equals to ' + $('#maxCredit').text());
-                        return;
-                    }
+                        var max = parseFloat(Fanex.ExtAcc.ReplaceAll($('#maxCredit').text(), ',', ''));
+                        var cur = parseFloat(Fanex.ExtAcc.ReplaceAll($('#credit').val(), ',', ''));
+                        if (cur > max) {
+                            Validators.show($('#credit').get(0), 'Given Credit must be less than or equals to ' + $('#maxCredit').text());
+                            return;
+                        }
 
                     customer.commissionSetting.playerDiscount = $("#discountAsian").val();
                     customer.commissionSetting.playerDiscount1x2 = $("#discount1x2").val();
@@ -142,51 +143,55 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                         customer.commissionSetting.playerDiscountMyanmarOdds = $("#discountMyanmarOdds").val();
                     customer.credit = Fanex.RoundNumber(parseFloat($("#credit").val(), true), 1); // Fix bug for IE7
 
-                    // EscapeHTML String
-                    customer.firstName = customer.firstName.escapeHtml().encodeHtml();
-                    customer.lastName = customer.lastName.escapeHtml().encodeHtml();
-                    customer.phone = customer.phone.escapeHtml().encodeHtml();
-                    customer.mobilePhone = customer.mobilePhone.escapeHtml().encodeHtml();
-                    customer.fax = customer.fax.escapeHtml().encodeHtml();
+                        // EscapeHTML String
+                        customer.firstName = customer.firstName.escapeHtml().encodeHtml();
+                        customer.lastName = customer.lastName.escapeHtml().encodeHtml();
+                        customer.phone = customer.phone.escapeHtml().encodeHtml();
+                        customer.mobilePhone = customer.mobilePhone.escapeHtml().encodeHtml();
+                        customer.fax = customer.fax.escapeHtml().encodeHtml();
 
-                    if (ptGrid) {
-                        customer.ptSetting = ptGrid.Save();
-                        customer.bettingLimit = bettingLimit.Save();
+                        if (ptGrid) {
+                            customer.ptSetting = ptGrid.Save();
+                            customer.bettingLimit = bettingLimit.Save();
 
-                        var text = JSON.stringify(customer);
-                        var para = {
-                            custId: 0,
-                            parentId: $('#parentId').val(),
-                            txtCustomerObject: text,
-                            groupName: $('#selectedGroupName').html()
-                        };
-                    }
-
-                    Fanex.ExtAcc.BlockUI();
-                    $.ajax({
-                        url: resolveClientUrl('Customer/AgentAddNewMemberPost'),
-                        data: para,
-                        dataType: 'json',
-                        type: 'post'
-                    })
-                    .success(function (result) {
-                        if (result.errorCode == 0) {
-                            Fanex.ExtAcc.LoadMainFrame(resolveClientUrl("Customer/Settings/1/" + result.custId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val()));
+                            var text = JSON.stringify(customer);
+                            var para = {
+                                custId: 0,
+                                parentId: $('#parentId').val(),
+                                txtCustomerObject: text,
+                                groupName: $('#selectedGroupName').html()
+                            };
                         }
-                        else {
-                            Fanex.ExtAcc.UnBlockUI();
 
-                            $('#errMsg').css('display', 'block');
-                            $('#errMsg').html(result.errorMessage.formatErrorMessage());
-                        }
-                    });
-                }
-            }
+                        Fanex.ExtAcc.BlockUI();
+                        $.ajax({
+                            url: resolveClientUrl('Customer/AgentAddNewMemberPost'),
+                            data: para,
+                            type: 'post'
+                        })
+                            .success(function (result) {
 
-            ko.applyBindings(new CustomerModel(customer));
+                                if (Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.ExtAcc.UnBlockUI)) {
+                                    return;
+                                }
 
-            Fanex.ExtAcc.UnBlockUI();
-        });
+                                if (result.errorCode == 0) {
+                                    Fanex.ExtAcc.LoadMainFrame(resolveClientUrl("Customer/Settings/1/" + result.custId + "/" + $('#parentId').val() + "/" + $('#parentUsername').val()));
+                                }
+                                else {
+                                    Fanex.ExtAcc.UnBlockUI();
+
+                                    $('#errMsg').css('display', 'block');
+                                    $('#errMsg').html(result.errorMessage.formatErrorMessage());
+                                }
+                            });
+                    };
+                };
+
+                ko.applyBindings(new CustomerModel(customer));
+
+                Fanex.ExtAcc.UnBlockUI();
+            });
     },
 
     // Check or UnCheck Close Status
@@ -253,22 +258,22 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
     // Change Group Commission
     ChangeGroupCommission: function (group) {
         if ((group.options[group.selectedIndex].text == "a") || (group.options[group.selectedIndex].text == "hka")
-		|| (group.options[group.selectedIndex].text == "indoa") || (group.options[group.selectedIndex].text == "dea")) {
+            || (group.options[group.selectedIndex].text == "indoa") || (group.options[group.selectedIndex].text == "dea")) {
             $("#textBoxDiscountAsian").val($this.commission.groupA);
             this.SelectedAsianCommissionMember($this.commission.groupA)
         }
         if ((group.options[group.selectedIndex].text == "b") || (group.options[group.selectedIndex].text == "hkb")
-		|| (group.options[group.selectedIndex].text == "indob") || (group.options[group.selectedIndex].text == "deb")) {
+            || (group.options[group.selectedIndex].text == "indob") || (group.options[group.selectedIndex].text == "deb")) {
             $("#textBoxDiscountAsian").val($this.commission.groupB);
             this.SelectedAsianCommissionMember($this.commission.groupB)
         }
         if ((group.options[group.selectedIndex].text == "c") || (group.options[group.selectedIndex].text == "hkc")
-		|| (group.options[group.selectedIndex].text == "indoc") || (group.options[group.selectedIndex].text == "dec")) {
+            || (group.options[group.selectedIndex].text == "indoc") || (group.options[group.selectedIndex].text == "dec")) {
             $("#textBoxDiscountAsian").val($this.commission.groupC);
             this.SelectedAsianCommissionMember($this.commission.groupC)
         }
         if ((group.options[group.selectedIndex].text == "d") || (group.options[group.selectedIndex].text == "hkd")
-		|| (group.options[group.selectedIndex].text == "indod") || (group.options[group.selectedIndex].text == "ded")) {
+            || (group.options[group.selectedIndex].text == "indod") || (group.options[group.selectedIndex].text == "ded")) {
             $("#textBoxDiscountAsian").val($this.commission.groupD);
             this.SelectedAsianCommissionMember($this.commission.groupD)
         }
