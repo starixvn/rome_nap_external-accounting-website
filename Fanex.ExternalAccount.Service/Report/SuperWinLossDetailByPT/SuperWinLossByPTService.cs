@@ -8,6 +8,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using CasinoLibrary.SBAgent;
+    using System.Data;
+    using Fanex.ExternalAccount.Core.Shared;
 
     public interface SuperWinLossDetailByPTService
     {
@@ -54,7 +57,11 @@
             if (model.WinLossByProducts.Any())
             {
                 var superIds = model.WinLossByProducts.Select(item => item.CustId).Distinct();
-                var postionTakings = superWinLossDetailByPTDataAccess.GetSuperPositionTakingList(new SuperPTCriteria(string.Join(",", superIds)));
+                var superPositionTakingByRnG = GetSuperPositionTakingByRnG(superIds);
+
+                var postionTakings = superWinLossDetailByPTDataAccess
+                    .GetSuperPositionTakingList(new SuperPTCriteria(string.Join(",", superIds)))
+                    .Concat(superPositionTakingByRnG);
 
                 var winlossByUsernames = model.WinLossByProducts.Join(
                     postionTakings,
@@ -151,6 +158,24 @@
             }
 
             return new SuperWinLossDetailByPTModel();
+        }
+
+        internal IEnumerable<SuperPositionTakingModel> GetSuperPositionTakingByRnG(IEnumerable<int> superIds)
+        {
+            var customer = new Customer();
+            var rngCasinoPositionTakingsTable = customer.GetSuperDesktopPT(superIds.Select(id => id.ToString()).ToArray());
+            var rngCasinoPTs = new List<SuperPositionTakingModel>();
+
+            foreach (DataRow row in rngCasinoPositionTakingsTable.Rows)
+            {
+                rngCasinoPTs.Add(new SuperPositionTakingModel(
+                    Fanex.Common.Converter.ToInt(row["OBSuperID"]),
+                    Fanex.Common.Converter.ToDecimal(row["SPositionTaking"]),
+                    ProductConstants.RNGCasino,
+                    ""));
+            }
+
+            return rngCasinoPTs;
         }
     }
 }

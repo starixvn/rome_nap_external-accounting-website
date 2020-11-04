@@ -1,7 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Service.Report.SuperWinLossDetailByPT
 {
     using System;
-    using System.Collections.Generic;
 
     public class SuperWinLossDetailByPTParam
     {
