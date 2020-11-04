@@ -173,7 +173,7 @@ Fanex.ExtAcc.SubGroup = {
                     IsAssigned: true
                 };
 
-                $this.ShowAssignAllCustomerPopup(updateRequest, "Assign all supers (all pages)", "Are you sure you want to Assign all supers (this page)?<br>Please be reminded that newly created super must be manually assigned to sub accounts.");
+                $this.ShowAssignAllCustomerPopup(updateRequest, "Assign all supers (this page)", "Are you sure you want to Assign all supers (this page)?<br>Please be reminded that newly created super must be manually assigned to sub accounts.");
             }
         };
         menuItems.unassignAll = {
@@ -186,7 +186,7 @@ Fanex.ExtAcc.SubGroup = {
                     IsAssigned: false
                 };
 
-                $this.ShowAssignAllCustomerPopup(updateRequest, "Unassign all supers (all pages)", "Are you sure you want to Unassign all supers (this page)?<br>Please be reminded that newly created super must be manually assigned to sub accounts.");
+                $this.ShowAssignAllCustomerPopup(updateRequest, "Unassign all supers (this page)", "Are you sure you want to Unassign all supers (this page)?<br>Please be reminded that newly created super must be manually assigned to sub accounts.");
             }
         };
         $.contextMenu({

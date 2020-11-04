@@ -443,6 +443,7 @@ Fanex.ExtAcc = {
 
                 $('.ui-autocomplete').hide();
 
+                $("#leftFrame").css("visibility", "hidden");
                 $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?custName=' + (username == '' ? "''" : username) + '&groupName=' + $('#selectedGroupName').html() + '&pageIndex=1'));
 
                 var widthDevice = $(window).width();
@@ -469,7 +470,7 @@ Fanex.ExtAcc = {
             $('#txtLeftPanelUserName').val('');
 
             $('.ui-autocomplete').hide();
-
+            $("#leftFrame").css("visibility", "hidden");
             $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?custName=' + (username == '' ? "''" : username) + '&groupName=' + $('#selectedGroupName').html() + '&pageIndex=1'));
         });
 
@@ -506,6 +507,7 @@ Fanex.ExtAcc = {
         this.BlockUI();
 
         username = username.formatString();
+        $("#leftFrame").css("visibility", "hidden");
         $('#leftFrame').attr('src', resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/Index?custName=' + (username == '' ? "''" : username) + '&groupName=' + $('#selectedGroupName').html() + '&pageIndex=' + pageIndex));
     },
 
