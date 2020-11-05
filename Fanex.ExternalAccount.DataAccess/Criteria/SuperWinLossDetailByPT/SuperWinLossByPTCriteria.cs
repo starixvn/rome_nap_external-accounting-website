@@ -45,6 +45,6 @@
 
         public int PageIndex { get; }
 
-        public override string GetSettingKey() => "Age_Rpt_WinLossByProduct_Master";
+        public override string GetSettingKey() => "EAS_Rpt_WinLossDetail_byPT";
     }
 }

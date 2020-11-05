@@ -493,7 +493,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                         { Name: "NetTurnover", Value: winLossByProductModel.NetTurnover },
                         { Name: "GrossComm", Value: winLossByProductModel.GrossComm },
                         { Name: "MemberWinlost", Value: winLossByProductModel.MemberWinlost },
-                        { Name: "PlayerComm", Value: winLossByProductModel.PlayerComm },
+                        { Name: "PlayerComm", Value: winLossByProductModel.MemberComm },
                         { Name: "MemberTotal", Value: winLossByProductModel.MemberTotal },
                         { Name: "AgWinlost", Value: winLossByProductModel.AgWinlost },
                         { Name: "AgComm", Value: winLossByProductModel.AgComm },
@@ -517,7 +517,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                     { Name: "NetTurnover", Value: totalRow.NetTurnover },
                     { Name: "GrossComm", Value: totalRow.GrossComm },
                     { Name: "MemberWinlost", Value: totalRow.MemberWinlost },
-                    { Name: "PlayerComm", Value: totalRow.PlayerComm },
+                    { Name: "PlayerComm", Value: totalRow.MemberComm },
                     { Name: "MemberTotal", Value: totalRow.MemberTotal },
                     { Name: "AgWinlost", Value: totalRow.AgWinlost },
                     { Name: "AgComm", Value: totalRow.AgComm },
@@ -549,7 +549,7 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
                 { Name: "NetTurnover", Value: this.grandTotal.NetTurnover },
                 { Name: "GrossComm", Value: this.grandTotal.GrossComm },
                 { Name: "MemberWinlost", Value: this.grandTotal.MemberWinlost },
-                { Name: "PlayerComm", Value: this.grandTotal.PlayerComm },
+                { Name: "PlayerComm", Value: this.grandTotal.MemberComm },
                 { Name: "MemberTotal", Value: this.grandTotal.MemberTotal },
                 { Name: "AgWinlost", Value: this.grandTotal.AgWinlost },
                 { Name: "AgComm", Value: this.grandTotal.AgComm },
@@ -673,18 +673,14 @@ Fanex.ExtAcc.SuperWinLossDetailByPT = {
 
                 $("#mainGrid").css("display", $this.totalRows < 1 ? "none" : "block");
                 $("#mainGrid").css("visibility", $this.totalRows < 1 ? "hidden" : "visible");
-                $("#headlineDaily").css("display", $this.totalRows < 1 ? "none" : "block");
-                $("#headlineDaily").css("visibility", $this.totalRows < 1 ? "hidden" : "visible");
                 $("#exporttoexcel").css("display", $this.totalRows < 1 ? "none" : "block");
                 $("#msgNoinfo").css("display", $this.totalRows < 1 ? "block" : "none");
 
                 if ($this.totalRows > 0) {
                     $this.Render(dateInfo);
                     $("#exporttoexcel").removeClass("hide");
-                    $(".groupBack").removeClass("hide");
                 } else {
                     $("#exporttoexcel").addClass("hide");
-                    $(".groupBack").addClass("hide");
                 }
 
                 $("#netTurnover").bind("click",

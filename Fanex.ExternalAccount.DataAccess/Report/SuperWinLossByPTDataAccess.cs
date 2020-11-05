@@ -10,7 +10,6 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    using System.Diagnostics.CodeAnalysis;
 
     public interface SuperWinLossDetailByPTDataAccess
     {
@@ -59,10 +58,10 @@
             }
 
             var winlossByBettypeData = new List<SuperWinLossDetailByProductDTO>();
-            var total = new SuperWinLossDetailByProductDTO();
+            var grandTotal = new SuperWinLossDetailByProductDTO();
             var totalRecords = 0;
 
-            using (var db = new ObjectDb("EAS_Rpt_WinLossDetail_byPT"))
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 db.AssignParamValues(new Hashtable {
                     { "groupname", criteria.GroupName },
@@ -85,18 +84,16 @@
                             winlossByBettypeData.Add(BuildWinLossByBetType(row));
                         }
 
-                        total = BuildWinLossByBetType(dataset.Tables[1].Rows[0]);
+                        grandTotal = BuildWinLossByBetType(dataset.Tables[1].Rows[0]);
                     }
 
                     totalRecords = Converter.ToInt(db.GetOuputParams()["totalrecords"]);
                 }
             }
 
-            return new SuperWinLossDetailByProductModel(winlossByBettypeData, total, totalRecords);
+            return new SuperWinLossDetailByProductModel(winlossByBettypeData, grandTotal, totalRecords);
         }
 
-
-        [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1118:ParameterMustNotSpanMultipleLines", Justification = "Reviewed.")]
         private SuperWinLossDetailByProductDTO BuildWinLossByBetType(DataRow row)
         {
             return new SuperWinLossDetailByProductDTO(

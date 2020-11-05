@@ -48,13 +48,13 @@
         {
             var param = new SuperWinLossDetailByPTParam(
                 request.GroupName,
-            request.Fromdate,
-            request.Todate,
-            request.GetProductIds(),
-            request.ResourceIds,
-            BuildTooltipsForLiveCasino(),
-            request.PageSize,
-            request.PageIndex);
+                request.Fromdate,
+                request.Todate,
+                request.GetProductIds(),
+                request.ResourceIds,
+                BuildTooltipsForLiveCasino(),
+                request.PageSize,
+                request.PageIndex);
 
             var viewModel = services.GetSuperWinLossDetailByPT(param);
             return Json(viewModel);
@@ -65,20 +65,20 @@
 
             ISuperWinLossDetailByPTReportBuilder builder;
             var winlossDetail = services.GetSuperWinLossDetailByPT(new SuperWinLossDetailByPTParam(
-                 request.GroupName,
-            request.Fromdate,
-            request.Todate,
-            request.GetProductIds(),
-            request.ResourceIds,
-            BuildTooltipsForLiveCasino(),
-            0,
-            0));
+                request.GroupName,
+                request.Fromdate,
+                request.Todate,
+                request.GetProductIds(),
+                request.ResourceIds,
+                BuildTooltipsForLiveCasino(),
+                0,
+                0));
 
             builder = new SuperWinLossDetailByPTReportBuilder(
-                           winlossDetail.WinLossByUsernames.ToList(),
-                           winlossDetail.GrandTotal,
-                           request.Fromdate,
-                           request.Todate);
+                winlossDetail.WinLossByUsernames.ToList(),
+                winlossDetail.GrandTotal,
+                request.Fromdate,
+                request.Todate);
 
             var products = GetProductList();
             products = GetPPNameExportExcel(request, products);
