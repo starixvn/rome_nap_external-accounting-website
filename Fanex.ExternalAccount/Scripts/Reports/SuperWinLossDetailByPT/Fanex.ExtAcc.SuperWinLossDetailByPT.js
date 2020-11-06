@@ -16,11 +16,11 @@ class SuperWinLossDetailByPT {
         this.totalRecords= 0;
         this.productDetailsData= [];
         this.hideFilter= false;
-        this.dateTimeControls = new DateTimeControls();
-        this.productControls = new ProductControls();
+        this.dateTimeControls = new DateTimeControls($);
+        this.productControls = new ProductControls($);
 
         this.defaultColumns = [
-            { HeaderText: "Username", Name: "Username", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "left", ShowCollapseExpand: true },
+            { HeaderText: "Username / PT / Product", Name: "Username", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "left", ShowCollapseExpand: true },
             { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
             { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
             { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -128,7 +128,7 @@ class SuperWinLossDetailByPT {
 
         $(".ui-datepicker").draggable();
 
-        $this.dateTimeControls.initMonthlyCalendar();
+        this.dateTimeControls.initMonthlyCalendar();
 
         $("#ddlGroupName").bind("change", function (event) {
             var args = event.args;
@@ -140,7 +140,7 @@ class SuperWinLossDetailByPT {
             }
         });
 
-        $this.groupName = $("#selectedGroupName").html();
+        this.groupName = $("#selectedGroupName").html();
 
         this.productControls.ProductsList(this.groupName);
 
@@ -161,14 +161,14 @@ class SuperWinLossDetailByPT {
             top.exportExcel(url, document);
         });
 
-        $this.sorters = $(".col-sorter");
-        $this.sorters.click(function () {
+        this.sorters = $(".col-sorter");
+        this.sorters.click(function () {
             var elem = $(this);
             $this.sortTable(elem);
         });
 
-        Fanex.ExtAcc.OnResize = $this.resizeReportGrid;
-        $(".icon-filter").click($this.showHideFilter);
+        Fanex.ExtAcc.OnResize = this.resizeReportGrid;
+        $(".icon-filter").click(this.showHideFilter);
     }
     resizeReportGrid() {
         try {
@@ -179,7 +179,7 @@ class SuperWinLossDetailByPT {
         }
     }
     showHideFilter() {
-        if ($this.hideFilter) {
+        if (this.hideFilter) {
             $(".icon-filter").addClass("active");
 
             $(".filterbox").removeClass("hide");
@@ -188,8 +188,8 @@ class SuperWinLossDetailByPT {
             $(".filterbox").addClass("hide");
         }
 
-        $this.resizeReportGrid();
-        $this.hideFilter = !$this.hideFilter;
+        this.resizeReportGrid();
+        this.hideFilter = !this.hideFilter;
     }
     CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) {
         if (sortDirection === 'asc') {
@@ -233,12 +233,12 @@ class SuperWinLossDetailByPT {
             customPager: true,
             pagerOption: {
                 itemsPerPageArray: [50, 100, 200],
-                currentPage: $this.pageIndex - 1,
-                totalItem: $this.totalRecords,
-                itemsPerPage: $this.pageSize,
-                pagerSelectCallBack: function (currentPageIndex, itemsPerPage) {
-                    $this.Databind(itemsPerPage, currentPageIndex + 1);
-                    $("#jqgrid").fanexGrid($this.gridOption); 
+                currentPage: this.pageIndex - 1,
+                totalItem: this.totalRecords,
+                itemsPerPage: this.pageSize,
+                pagerSelectCallBack: (currentPageIndex, itemsPerPage) => {
+                    this.Databind(itemsPerPage, currentPageIndex + 1);
+                    $("#jqgrid").fanexGrid(this.gridOption); 
                     $(".product-tooltip").tooltip();
                 },
                 showDetail: true
@@ -250,14 +250,14 @@ class SuperWinLossDetailByPT {
             sortOption:
             {
                 afterGridSorted: function (rows) {
-                    return $this.customsortfunc(rows);
+                    return this.customsortfunc(rows);
                 }
             },
             numOfPaddingForGridExpandHeight: 40
         };
 
         //// Assing BodyData
-        $this.InitSort();
+        this.InitSort();
         var bodyData = [];
         for (var i = 0; i < this.totalRows; i++) {
             var subRow = [];
@@ -268,7 +268,7 @@ class SuperWinLossDetailByPT {
                         {
                             HeaderText: "Username", Name: "Username",
                             Value: winLossByProductModel,
-                            CustomCellRender: function (cell) { return $this.RenderPositonTakingColumn(cell); }
+                            CustomCellRender: cell => { return this.RenderPositonTakingColumn(cell); }
                         },
                         { Name: "Turnover", Value: winLossByProductModel.Turnover },
                         { Name: "NetTurnover", Value: winLossByProductModel.NetTurnover },
@@ -364,12 +364,12 @@ class SuperWinLossDetailByPT {
     }
 
     customsortfunc(rows) {
-        var countFixedSort = $this.fixedsortlist.length;
+        var countFixedSort = this.fixedsortlist.length;
         if (countFixedSort > 0) {
             for (var i = 0; i < countFixedSort; i++) {
                 for (var j = 0; j < rows.length; j++) {
-                    if ($this.fixedsortlist[i] === rows[j].Columns[0].Value.CustId) {
-                        $this.fixedsortdata.push(rows.slice(j, j + 1)[0]);
+                    if (this.fixedsortlist[i] === rows[j].Columns[0].Value.CustId) {
+                        this.fixedsortdata.push(rows.slice(j, j + 1)[0]);
                         rows.unshift(rows.splice(j, 1)[0]);
                         break;
                     }
@@ -379,13 +379,13 @@ class SuperWinLossDetailByPT {
         return rows;
     }
     InitSort() {
-        var countFixedSort = $this.fixedsortlist.length;
+        var countFixedSort = this.fixedsortlist.length;
         if (countFixedSort > 0) {
             for (var i = 0; i < countFixedSort; i++) {
-                for (var j = 0; j < $this.dataSource.length; j++) {
-                    if ($this.fixedsortlist[i] === $this.dataSource[j].CustId) {
-                        $this.fixedsortdata.push($this.dataSource.slice(j, j + 1)[0]);
-                        $this.dataSource.unshift($this.dataSource.splice(j, 1)[0]);
+                for (var j = 0; j < this.dataSource.length; j++) {
+                    if (this.fixedsortlist[i] === this.dataSource[j].CustId) {
+                        this.fixedsortdata.push(this.dataSource.slice(j, j + 1)[0]);
+                        this.dataSource.unshift(this.dataSource.splice(j, 1)[0]);
                         break;
                     }
                 }
@@ -398,7 +398,7 @@ class SuperWinLossDetailByPT {
     }
 
     Databind(pageSize = 50, pageIndex = 1) {
-        var dateTimeParams = $this.dateTimeControls.GetFromDateToDate();
+        var dateTimeParams = this.dateTimeControls.GetFromDateToDate();
         this.groupName = $("#selectedGroupName").html();
 
         var dateInfo;
@@ -415,42 +415,41 @@ class SuperWinLossDetailByPT {
             + "&Todate=" + dateTimeParams.todate
             + "&PageSize=" + pageSize
             + "&PageIndex=" + pageIndex
-            + $this.productControls.getParameterProducts()
-            + $this.productControls.getParameterProductDetails();
+            + this.productControls.getParameterProducts()
+            + this.productControls.getParameterProductDetails();
 
         Fanex.ExtAcc.BlockUI();
 
         $.ajax({
-            context: $this,
             url: this.url + parameterUrl,
             type: "post",
             dataType: "json",
             cache: false,
             beforesend: function (xhr) { },
-            success: function (data) {
+            success: data => {
                 if (data.errorCode) {
                     Fanex.ExtAcc.UnBlockUI();
                     Fanex.ExtAcc.Form.Alert("Error", data.errorMessage.formatErrorMessage(), 350, 150, "alertWLD");
                     return;
                 }
 
-                $this.fixedsortdata = new Array();
+                this.fixedsortdata = new Array();
 
-                $this.dataSource = data.WinLossByUsernames;
-                $this.grandTotal = data.GrandTotal;
-                $this.totalRows = data.WinLossByUsernames !== null ? data.WinLossByUsernames.length : 0;
-                $this.totalRecords = data.TotalRecords;
-                $this.pageSize = data.PageSize;
-                $this.pageIndex = data.PageIndex;
-                $this.fixedsortlist = [];
+                this.dataSource = data.WinLossByUsernames;
+                this.grandTotal = data.GrandTotal;
+                this.totalRows = data.WinLossByUsernames !== null ? data.WinLossByUsernames.length : 0;
+                this.totalRecords = data.TotalRecords;
+                this.pageSize = data.PageSize;
+                this.pageIndex = data.PageIndex;
+                this.fixedsortlist = [];
 
-                $("#mainGrid").css("display", $this.totalRows < 1 ? "none" : "block");
-                $("#mainGrid").css("visibility", $this.totalRows < 1 ? "hidden" : "visible");
-                $("#exporttoexcel").css("display", $this.totalRows < 1 ? "none" : "block");
-                $("#msgNoinfo").css("display", $this.totalRows < 1 ? "block" : "none");
+                $("#mainGrid").css("display", this.totalRows < 1 ? "none" : "block");
+                $("#mainGrid").css("visibility", this.totalRows < 1 ? "hidden" : "visible");
+                $("#exporttoexcel").css("display", this.totalRows < 1 ? "none" : "block");
+                $("#msgNoinfo").css("display", this.totalRows < 1 ? "block" : "none");
 
-                if ($this.totalRows > 0) {
-                    $this.Render(dateInfo);
+                if (this.totalRows > 0) {
+                    this.Render(dateInfo);
                     $("#exporttoexcel").removeClass("hide");
                 } else {
                     $("#exporttoexcel").addClass("hide");

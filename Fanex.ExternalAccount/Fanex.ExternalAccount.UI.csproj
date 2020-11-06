@@ -1520,7 +1520,7 @@
     <Content Include="Scripts\Customer\Fanex.ExtAcc.AssociationAccount.js" />
     <Content Include="Scripts\Reports\SuperWinLossDetailByPT\Fanex.ExtAcc.SuperWinLossDetailByPT - Copy.js" />
     <Content Include="Scripts\Reports\SuperWinLossDetailByPT\SuperWinLossDetailByPT.DateTimeControls.js" />
-    <Content Include="Scripts\Reports\SuperWinLossDetailByPT\SuperWinLossDetailByPT.ProductControls.js" />
+    <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\SuperWinLossDetailByPT.ProductControls.ts" />
     <Content Include="Scripts\Reports\SuperWinLossDetailByPT\Fanex.ExtAcc.SuperWinLossDetailByPT.js" />
     <Content Include="Scripts\ProblemAccount\Fanex.ExtAcc.ProblemAccount.js" />
     <Content Include="Scripts\Manage\Fanex.ExtAcc.SubGroup.js" />
@@ -1528,6 +1528,16 @@
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="typings\globals\jasmine-jquery\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\jasmine\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\jquery.blockui\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\jquery.cookie\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\jqueryui\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\jquery\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\moment\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\storejs\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\toastr\index.d.ts" />
+    <TypeScriptCompile Include="typings\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\AlphaAdmin\style.css" />
@@ -2932,6 +2942,15 @@
     <Content Include="Views\SuperWinLossDetailByPT\Index.cshtml" />
     <Content Include="Views\ProblemAccount\Index.cshtml" />
     <Content Include="Views\SubGroup\SubGroupList.cshtml" />
+    <Content Include="typings\globals\jasmine-jquery\typings.json" />
+    <Content Include="typings\globals\jasmine\typings.json" />
+    <Content Include="typings\globals\jquery.blockui\typings.json" />
+    <Content Include="typings\globals\jquery.cookie\typings.json" />
+    <Content Include="typings\globals\jqueryui\typings.json" />
+    <Content Include="typings\globals\jquery\typings.json" />
+    <Content Include="typings\globals\moment\typings.json" />
+    <Content Include="typings\globals\storejs\typings.json" />
+    <Content Include="typings\globals\toastr\typings.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">

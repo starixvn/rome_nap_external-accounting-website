@@ -1,33 +1,34 @@
-﻿class ProductControls {
-    constructor() {
+var ProductControls = /** @class */ (function () {
+    function ProductControls($) {
+        this.$ = $;
         this.productDetailsData = [];
     }
-    getParameterProducts() {
-        var parameterProducts = "";
+    ProductControls.prototype.getParameterProducts = function () {
+        //return this.$("#productList .ui-multiselect-checkboxes :input").map((index, element) => {
+        //    return `&${this.$(element).val()}=${this.$(element).checked}`;
+        //}).get().join();
+        var parameterProducts = '';
         var ids = $("#productList .ui-multiselect-checkboxes :input");
         for (var i = 0; i < ids.length; i++) {
             parameterProducts += "&" + ids[i].value + "=" + ids[i].checked;
         }
-
         return parameterProducts;
-    }
-    getParameterProductDetails() {
+    };
+    ProductControls.prototype.getParameterProductDetails = function () {
         var parameterProductDetails = [];
         if (!$("#ProductDetails").hasClass("ui-state-disabled")) {
             var ids = $("#productDetailsList .ui-multiselect-checkboxes :input:checked:not(:disabled)");
             for (var i = 0; i < ids.length; i++) {
-                ids[i].value !== "showAll" && parameterProductDetails.push(ids[i].value);
+                this.$(ids[i]).val() !== "showAll" && parameterProductDetails.push(this.$(ids[i]).val());
             }
         }
-
         return parameterProductDetails.length ? "&resourceIds=" + parameterProductDetails.join(",") : "";
-    }
-    InitProductsList($groupProducts) {
+    };
+    ProductControls.prototype.InitProductsList = function ($groupProducts) {
         var $this = this;
         $groupProducts.css("display", "block");
         var $productList = $("#productList");
         $("#productList div").remove();
-
         $groupProducts.multiSelect({
             minWidth: 170,
             showHeader: false,
@@ -44,7 +45,6 @@
                         $("#ui-multiselect-GroupProducts-option-0")[0].checked = false;
                     }
                 }
-
                 $this.ConstrainProductDetails(this.checked, checkedValue);
             },
             noneSelectedText: function () {
@@ -55,66 +55,61 @@
                 if (checkedItems[0].value !== "showAll") {
                     numChecked++;
                 }
-
                 if (numChecked !== numTotal) {
                     var mainTitle = "";
                     $.each(checkedItems, function (i) {
                         mainTitle += checkedItems[i].title + ", ";
                     });
-
                     mainTitle = mainTitle.substring(0, mainTitle.length - 2);
                     $groupProducts.attr("title", mainTitle);
-
                     return mainTitle;
-                } else {
+                }
+                else {
                     $("#ui-multiselect-GroupProducts-option-0")[0].checked = true;
                     $groupProducts.attr("title", "All");
                     return "All";
                 }
             }
         });
-
         $("#GroupProducts").width(170);
-    }
-    ConstrainProductDetails(checked, checkedValue) {
+    };
+    ProductControls.prototype.ConstrainProductDetails = function (checked, checkedValue) {
         var $productDetails;
-
         if (checkedValue === "showAll") {
             $('#productDetailsList .ui-multiselect-checkboxes input[type="checkbox"]').prop("checked", checked);
             $productDetails = $("#ProductDetails");
-
             if (checked) {
                 $productDetails.removeClass("ui-state-disabled").find('input[type="button"]').val("All");
-            } else {
+            }
+            else {
                 $productDetails.addClass("ui-state-disabled").find('input[type="button"]').val("");
             }
-        } else {
+        }
+        else {
             var filteredProductDetails = this.productDetailsData.filter(function (p) {
                 if (p.ProductKey === checkedValue) {
                     return p;
                 }
             });
-
             if (filteredProductDetails.length) {
                 $.each(filteredProductDetails, function (index, p) {
                     $('#productDetailsList .ui-multiselect-checkboxes input[type="checkbox"]').prop("checked", checked);
                 });
-
                 $productDetails = $("#ProductDetails");
-
                 if (checked) {
                     $productDetails.removeClass("ui-state-disabled").find('input[type="button"]').val("All");
-                } else {
+                }
+                else {
                     $productDetails.addClass("ui-state-disabled").find('input[type="button"]').val("");
                 }
             }
         }
-    }
-    InitProductDetailsList($productDetails) {
+    };
+    ProductControls.prototype.InitProductDetailsList = function ($productDetails) {
+        var $this = this;
         $productDetails.css("display", "block");
         var $productDetailsList = $("#productDetailsList");
         $("#productDetailsList div").remove();
-
         $productDetails.multiSelect({
             minWidth: 200,
             maxHeight: 100,
@@ -125,7 +120,8 @@
                     for (var i = 0; i < ids.length; i++) {
                         ids[i].checked = this.checked;
                     }
-                } else {
+                }
+                else {
                     if (!this.checked) {
                         $("#ui-multiselect-ProductDetails-option-0")[0].checked = false;
                     }
@@ -139,31 +135,27 @@
                 if (checkedItems[0].value !== "showAll") {
                     numChecked++;
                 }
-
                 if (numChecked !== numTotal) {
                     var mainTitle = "";
                     $.each(checkedItems, function (i) {
                         mainTitle += checkedItems[i].title + ", ";
                     });
-
                     mainTitle = mainTitle.substring(0, mainTitle.length - 2);
                     $productDetails.attr("title", mainTitle);
-
                     return mainTitle;
-                } else {
+                }
+                else {
                     $("#ui-multiselect-ProductDetails-option-0")[0].checked = true;
                     $productDetails.attr("title", "All");
                     return "All";
                 }
             }
         });
-
         $("#ProductDetails").width(200);
-    }
-    ProductsList(groupName) {
-        var $this = this;
-        $.ajax({
-            context: $this,
+    };
+    ProductControls.prototype.ProductsList = function (groupName) {
+        var _this = this;
+        this.$.ajax({
             url: resolveClientUrl("Filter/ProductsList"),
             type: "GET",
             data: { groupName: groupName },
@@ -175,26 +167,24 @@
                 $.each(products, function (i) {
                     productList += '<option value="' + products[i].Key + '" selected="selected">' + products[i].Value + "</option>";
                 });
-
                 var $groupProducts = $("#GroupProducts").html(productList);
-                $this.InitProductsList($groupProducts);
-                $("#GroupProducts :input").width($groupProducts.width() - 21);
-
+                _this.InitProductsList($groupProducts);
+                _this.$("#GroupProducts :input").width($groupProducts.width() - 21);
                 var productDetails = result.productDetails;
                 if (productDetails.length) {
-                    var productDetailsList = '<option value="' + 'showAll' + '" selected="selected">' + 'All' + "</option>";
-                    $.each(productDetails, function (i) {
-                        productDetailsList += '<option value="' + productDetails[i].ResourceId + '" selected="selected" data-productkey="' + productDetails[i].ProductKey + '">' + productDetails[i].DisplayName + "</option>";
+                    var productDetailsList_1 = '<option value="' + 'showAll' + '" selected="selected">' + 'All' + "</option>";
+                    _this.$.each(productDetails, function (i) {
+                        productDetailsList_1 += '<option value="' + productDetails[i].ResourceId + '" selected="selected" data-productkey="' + productDetails[i].ProductKey + '">' + productDetails[i].DisplayName + "</option>";
                     });
-
-                    var $productDetails = $("#ProductDetails").html(productDetailsList);
-                    this.InitProductDetailsList($productDetails);
-                    $("#ProductDetails :input").width($productDetails.width() - 21);
-                    $("#productDetailsContainer").removeClass("hidden");
-
-                    $this.productDetailsData = productDetails;
+                    var $productDetails = $("#ProductDetails").html(productDetailsList_1);
+                    _this.InitProductDetailsList($productDetails);
+                    _this.$("#ProductDetails :input").width($productDetails.width() - 21);
+                    _this.$("#productDetailsContainer").removeClass("hidden");
+                    _this.productDetailsData = productDetails;
                 }
             }
         });
-    }
-}
+    };
+    return ProductControls;
+}());
+//# sourceMappingURL=SuperWinLossDetailByPT.ProductControls.js.map
