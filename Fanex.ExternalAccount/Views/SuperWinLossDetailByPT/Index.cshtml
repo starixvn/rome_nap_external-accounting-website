@@ -25,6 +25,10 @@
                 <select name="ProductDetails" id="ProductDetails" multiple="multiple" style="display: none"></select>
             </div>
         </div>
+        <div class="form-group hidden">
+            <div class="label">@ViewLang.Username</div>
+            <input class="usernameInput" type="text" maxlength="50" autocomplete="off" name="txtUserName" id="txtUserName" />
+        </div>
         <div class="form-group from-to-date">
             <input type="hidden" id="MinDate" value="@minDate" />
             <input type="hidden" id="MaxDate" value="@DateTime.Now" />

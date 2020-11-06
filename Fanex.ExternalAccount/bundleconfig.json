@@ -244,9 +244,9 @@
     "inputFiles": [
       "Scripts/monthPicker/monPickr-0.0.1.js",
       "Scripts/Combobox/Combobox.js",
-      "Scripts/Reports/SuperWinLossDetailByPT/SuperWinLossDetailByPT.ProductControls.js",
-      "Scripts/Reports/SuperWinLossDetailByPT/SuperWinLossDetailByPT.DateTimeControls.js",
-      "Scripts/Reports/SuperWinLossDetailByPT/Fanex.ExtAcc.SuperWinLossDetailByPT.js"
+      "Scripts/Reports/SuperWinLossDetailByPT/DateTimeControls.js",
+      "Scripts/Reports/SuperWinLossDetailByPT/ProductControls.js",
+      "Scripts/Reports/SuperWinLossDetailByPT/SuperWinLossDetailByPT.js"
     ],
     "sourceMap": true
   }

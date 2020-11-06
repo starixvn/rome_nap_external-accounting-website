@@ -2,6 +2,67 @@ var DateTimeControls = /** @class */ (function () {
     function DateTimeControls($) {
         this.$ = $;
     }
+    DateTimeControls.prototype.Init = function () {
+        var _this = this;
+        this.$("#DateList").combobox({
+            selected: function (event, ui) {
+                var itemIndex = event.target.selectedIndex;
+                _this.$("#DateList").prop("selectedIndex", itemIndex);
+                var fdate = new Date(_this.$("#MaxDate").val());
+                var tdate = new Date(_this.$("#MaxDate").val());
+                if (itemIndex === 1) {
+                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - 1);
+                    tdate = fdate;
+                }
+                else if (itemIndex === 2) {
+                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - _this.getDayOfYear(tdate) + 1);
+                }
+                else if (itemIndex === 3) {
+                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - _this.getDayOfYear(tdate) - 6);
+                    tdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - _this.getDayOfYear(tdate));
+                }
+                else if (itemIndex === 4) {
+                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), 1);
+                    tdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate());
+                }
+                else if (itemIndex === 5) {
+                    fdate = new Date(tdate.getFullYear(), tdate.getMonth() - 1, 1);
+                    tdate = new Date(tdate.getFullYear(), tdate.getMonth(), 0);
+                }
+                else if (itemIndex === 6) {
+                    fdate = new Date(tdate.getFullYear(), tdate.getMonth() - 1, 1);
+                }
+                else if (itemIndex === 7) {
+                    return;
+                }
+                _this.$("#dtpFromDate").val($.datepicker.formatDate("M dd, yy", fdate));
+                _this.$("#dtpToDate").val($.datepicker.formatDate("M dd, yy", tdate));
+            }
+        });
+        this.$("#dtpFromDate").datepicker({
+            onClose: function () { _this.$("#userGroup input").val(_this.$("#DateList option:first").val()); },
+            showOn: "both",
+            buttonImageOnly: true,
+            buttonImage: resolveClientUrl("Content/Images/calendar.png"),
+            buttonText: "",
+            beforeShow: this.SetRange,
+            dateFormat: "M dd, yy"
+        });
+        this.$("#dtpFromDate").val(this.$.datepicker.formatDate("M dd, yy", new Date($("#MaxDate").val())));
+        this.$("#dtpToDate").datepicker({
+            onClose: function () { _this.$("#userGroup input").val(_this.$("#DateList option:last").val()); },
+            showOn: "both",
+            buttonImageOnly: true,
+            buttonImage: resolveClientUrl("Content/Images/calendar.png"),
+            buttonText: "",
+            beforeShow: this.SetRange,
+            dateFormat: "M dd, yy"
+        });
+        this.$("#dtpToDate").val(this.$.datepicker.formatDate("M dd, yy", new Date(this.$("#MaxDate").val())));
+        this.$(".ui-datepicker").draggable();
+        this.$("#userGroup input").val(this.$("#DateList option:first").val());
+        this.initMonthlyCalendar();
+    };
     DateTimeControls.prototype.SetRange = function () {
         return {
             minDate: new Date($("#MinDate").val()),
