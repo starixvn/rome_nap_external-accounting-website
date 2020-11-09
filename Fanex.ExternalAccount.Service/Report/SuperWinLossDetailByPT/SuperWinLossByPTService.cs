@@ -11,6 +11,7 @@
     using CasinoLibrary.SBAgent;
     using System.Data;
     using Fanex.ExternalAccount.Core.Shared;
+    using Fanex.ExternalAccount.Service.Products;
 
     public interface SuperWinLossDetailByPTService
     {
@@ -20,18 +21,14 @@
     public class SuperWinLossDetailByPTServiceImpl : SuperWinLossDetailByPTService
     {
         private readonly SuperWinLossDetailByPTDataAccess superWinLossDetailByPTDataAccess;
-        private readonly IReportService reportService;
+        private readonly IProductDetailService productDetailService;
 
         public SuperWinLossDetailByPTServiceImpl(
-            SuperWinLossDetailByPTDataAccess superWinLossDetailByPTDataAccess,
-            IReportService reportService)
+            SuperWinLossDetailByPTDataAccess superWinLossDetailByPTDataAccess = null,
+            IProductDetailService productDetailService = null)
         {
             this.superWinLossDetailByPTDataAccess = superWinLossDetailByPTDataAccess ?? new SuperWinLossDetailByPTDataAccessImpl();
-            this.reportService = reportService ?? new ReportService();
-        }
-
-        public SuperWinLossDetailByPTServiceImpl() : this(null, null)
-        {
+            this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
         public SuperWinLossDetailByPTModel GetSuperWinLossDetailByPT(SuperWinLossDetailByPTParam param)
@@ -48,7 +45,7 @@
                ReportService.BalanceUpDate,
                ReportService.MoveBetsDate,
               param.UserSelectedProductIds,
-              param.ResourceIds,
+              productDetailService.BuildProductDetailsXML(param.UserSelectedProductIds, param.ResourceIds, param.GroupName),
               param.PageSize,
               param.PageIndex);
 

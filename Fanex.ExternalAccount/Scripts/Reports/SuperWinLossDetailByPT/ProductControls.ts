@@ -9,21 +9,29 @@ class ProductControls {
         this.productDetailsData = [];
     }
 
-    getParameterProducts() {
-        //return this.$("#productList .ui-multiselect-checkboxes :input").map((index, element) => {
-        //    return `&${this.$(element).val()}=${this.$(element).checked}`;
-        //}).get().join();
+    public Init() {
+        this.$.ajax({
+            url: resolveClientUrl("Filter/ProductsList"),
+            type: "GET",
+            data: { groupName: $("#selectedGroupName").html() },
+            dataType: "json",
+            cache: false,
+            success: data => this.OnSuccessLoadProduct(data)
+        });
+    }
 
-                let parameterProducts = '';
-        var ids = $("#productList .ui-multiselect-checkboxes :input");
+    
+    public GetParameterProducts() {
+        let parameterProducts = '';
+        const ids = $("#productList .ui-multiselect-checkboxes :input");
         for (var i = 0; i < ids.length; i++) {
-            parameterProducts += "&" + (<HTMLInputElement>ids[i]).value + "=" + (<HTMLInputElement>ids[i]).checked;
+            parameterProducts += `&${(<HTMLInputElement>ids[i]).value}=${(<HTMLInputElement>ids[i]).checked}`;
         }
 
         return parameterProducts;
     }
 
-    getParameterProductDetails() {
+    public GetParameterProductDetails() {
         var parameterProductDetails = [];
         if (!$("#ProductDetails").hasClass("ui-state-disabled")) {
             var ids = $("#productDetailsList .ui-multiselect-checkboxes :input:checked:not(:disabled)");
@@ -35,7 +43,7 @@ class ProductControls {
         return parameterProductDetails.length ? "&resourceIds=" + parameterProductDetails.join(",") : "";
     }
 
-    InitProductsList($groupProducts) {
+    private InitProductsList($groupProducts) {
         var $this = this;
         $groupProducts.css("display", "block");
         var $productList = $("#productList");
@@ -90,7 +98,7 @@ class ProductControls {
         $("#GroupProducts").width(170);
     }
 
-    ConstrainProductDetails(checked, checkedValue) {
+    private ConstrainProductDetails(checked, checkedValue) {
         var $productDetails;
 
         if (checkedValue === "showAll") {
@@ -125,8 +133,7 @@ class ProductControls {
         }
     }
 
-    InitProductDetailsList($productDetails) {
-        const $this = this;
+    private InitProductDetailsList($productDetails) {
         $productDetails.css("display", "block");
         let $productDetailsList = $("#productDetailsList");
         $("#productDetailsList div").remove();
@@ -177,39 +184,30 @@ class ProductControls {
         $("#ProductDetails").width(200);
     }
 
-    ProductsList(groupName) {
-        this.$.ajax({
-            url: resolveClientUrl("Filter/ProductsList"),
-            type: "GET",
-            data: { groupName: groupName },
-            dataType: "json",
-            cache: false,
-            success: result => {
-                const products = result.products;
-                let productList = '<option value="' + 'showAll' + '" selected="selected">' + 'All' + "</option>";
-                $.each(products, function (i) {
-                    productList += '<option value="' + products[i].Key + '" selected="selected">' + products[i].Value + "</option>";
-                });
-
-                let $groupProducts = $("#GroupProducts").html(productList);
-                this.InitProductsList($groupProducts);
-                this.$("#GroupProducts :input").width($groupProducts.width() - 21);
-
-                let productDetails = result.productDetails;
-                if (productDetails.length) {
-                    let productDetailsList = '<option value="' + 'showAll' + '" selected="selected">' + 'All' + "</option>";
-                    this.$.each(productDetails, function (i) {
-                        productDetailsList += '<option value="' + productDetails[i].ResourceId + '" selected="selected" data-productkey="' + productDetails[i].ProductKey + '">' + productDetails[i].DisplayName + "</option>";
-                    });
-
-                    var $productDetails = $("#ProductDetails").html(productDetailsList);
-                    this.InitProductDetailsList($productDetails);
-                    this.$("#ProductDetails :input").width($productDetails.width() - 21);
-                    this.$("#productDetailsContainer").removeClass("hidden");
-
-                    this.productDetailsData = productDetails;
-                }
-            }
+    private OnSuccessLoadProduct(data) {
+        const products = data.products;
+        let productList = `<option value="showAll" selected="selected">All</option>`;
+        this.$.each(products, function (i) {
+            productList += `<option value="${products[i].Key}" selected="selected">${products[i].Value}</option>`;
         });
+
+        let $groupProducts = $("#GroupProducts").html(productList);
+        this.InitProductsList($groupProducts);
+        this.$("#GroupProducts :input").width($groupProducts.width() - 21);
+
+        let productDetails = data.productDetails;
+        if (productDetails.length) {
+            let productDetailsList = `<option value="showAll" selected="selected">All</option>`;
+            this.$.each(productDetails, function (i) {
+                productDetailsList += `<option value="${productDetails[i].ResourceId}" selected="selected" data-productkey="${productDetails[i].ProductKey}">${productDetails[i].DisplayName}</option>`;
+            });
+
+            var $productDetails = $("#ProductDetails").html(productDetailsList);
+            this.InitProductDetailsList($productDetails);
+            this.$("#ProductDetails :input").width($productDetails.width() - 21);
+            this.$("#productDetailsContainer").removeClass("hidden");
+
+            this.productDetailsData = productDetails;
+        }
     }
 }

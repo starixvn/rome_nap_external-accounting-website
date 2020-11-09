@@ -3,10 +3,18 @@ var ProductControls = /** @class */ (function () {
         this.$ = $;
         this.productDetailsData = [];
     }
-    ProductControls.prototype.getParameterProducts = function () {
-        //return this.$("#productList .ui-multiselect-checkboxes :input").map((index, element) => {
-        //    return `&${this.$(element).val()}=${this.$(element).checked}`;
-        //}).get().join();
+    ProductControls.prototype.Init = function () {
+        var _this = this;
+        this.$.ajax({
+            url: resolveClientUrl("Filter/ProductsList"),
+            type: "GET",
+            data: { groupName: $("#selectedGroupName").html() },
+            dataType: "json",
+            cache: false,
+            success: function (data) { return _this.OnSuccessLoadProduct(data); }
+        });
+    };
+    ProductControls.prototype.GetParameterProducts = function () {
         var parameterProducts = '';
         var ids = $("#productList .ui-multiselect-checkboxes :input");
         for (var i = 0; i < ids.length; i++) {
@@ -14,7 +22,7 @@ var ProductControls = /** @class */ (function () {
         }
         return parameterProducts;
     };
-    ProductControls.prototype.getParameterProductDetails = function () {
+    ProductControls.prototype.GetParameterProductDetails = function () {
         var parameterProductDetails = [];
         if (!$("#ProductDetails").hasClass("ui-state-disabled")) {
             var ids = $("#productDetailsList .ui-multiselect-checkboxes :input:checked:not(:disabled)");
@@ -106,7 +114,6 @@ var ProductControls = /** @class */ (function () {
         }
     };
     ProductControls.prototype.InitProductDetailsList = function ($productDetails) {
-        var $this = this;
         $productDetails.css("display", "block");
         var $productDetailsList = $("#productDetailsList");
         $("#productDetailsList div").remove();
@@ -153,37 +160,27 @@ var ProductControls = /** @class */ (function () {
         });
         $("#ProductDetails").width(200);
     };
-    ProductControls.prototype.ProductsList = function (groupName) {
-        var _this = this;
-        this.$.ajax({
-            url: resolveClientUrl("Filter/ProductsList"),
-            type: "GET",
-            data: { groupName: groupName },
-            dataType: "json",
-            cache: false,
-            success: function (result) {
-                var products = result.products;
-                var productList = '<option value="' + 'showAll' + '" selected="selected">' + 'All' + "</option>";
-                $.each(products, function (i) {
-                    productList += '<option value="' + products[i].Key + '" selected="selected">' + products[i].Value + "</option>";
-                });
-                var $groupProducts = $("#GroupProducts").html(productList);
-                _this.InitProductsList($groupProducts);
-                _this.$("#GroupProducts :input").width($groupProducts.width() - 21);
-                var productDetails = result.productDetails;
-                if (productDetails.length) {
-                    var productDetailsList_1 = '<option value="' + 'showAll' + '" selected="selected">' + 'All' + "</option>";
-                    _this.$.each(productDetails, function (i) {
-                        productDetailsList_1 += '<option value="' + productDetails[i].ResourceId + '" selected="selected" data-productkey="' + productDetails[i].ProductKey + '">' + productDetails[i].DisplayName + "</option>";
-                    });
-                    var $productDetails = $("#ProductDetails").html(productDetailsList_1);
-                    _this.InitProductDetailsList($productDetails);
-                    _this.$("#ProductDetails :input").width($productDetails.width() - 21);
-                    _this.$("#productDetailsContainer").removeClass("hidden");
-                    _this.productDetailsData = productDetails;
-                }
-            }
+    ProductControls.prototype.OnSuccessLoadProduct = function (data) {
+        var products = data.products;
+        var productList = "<option value=\"showAll\" selected=\"selected\">All</option>";
+        this.$.each(products, function (i) {
+            productList += "<option value=\"" + products[i].Key + "\" selected=\"selected\">" + products[i].Value + "</option>";
         });
+        var $groupProducts = $("#GroupProducts").html(productList);
+        this.InitProductsList($groupProducts);
+        this.$("#GroupProducts :input").width($groupProducts.width() - 21);
+        var productDetails = data.productDetails;
+        if (productDetails.length) {
+            var productDetailsList_1 = "<option value=\"showAll\" selected=\"selected\">All</option>";
+            this.$.each(productDetails, function (i) {
+                productDetailsList_1 += "<option value=\"" + productDetails[i].ResourceId + "\" selected=\"selected\" data-productkey=\"" + productDetails[i].ProductKey + "\">" + productDetails[i].DisplayName + "</option>";
+            });
+            var $productDetails = $("#ProductDetails").html(productDetailsList_1);
+            this.InitProductDetailsList($productDetails);
+            this.$("#ProductDetails :input").width($productDetails.width() - 21);
+            this.$("#productDetailsContainer").removeClass("hidden");
+            this.productDetailsData = productDetails;
+        }
     };
     return ProductControls;
 }());

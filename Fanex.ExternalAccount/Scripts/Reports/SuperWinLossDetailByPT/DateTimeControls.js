@@ -5,7 +5,7 @@ var DateTimeControls = /** @class */ (function () {
     DateTimeControls.prototype.Init = function () {
         var _this = this;
         this.$("#DateList").combobox({
-            selected: function (event, ui) {
+            selected: function (event) {
                 var itemIndex = event.target.selectedIndex;
                 _this.$("#DateList").prop("selectedIndex", itemIndex);
                 var fdate = new Date(_this.$("#MaxDate").val());
@@ -15,11 +15,11 @@ var DateTimeControls = /** @class */ (function () {
                     tdate = fdate;
                 }
                 else if (itemIndex === 2) {
-                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - _this.getDayOfYear(tdate) + 1);
+                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - _this.GetDayOfYear(tdate) + 1);
                 }
                 else if (itemIndex === 3) {
-                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - _this.getDayOfYear(tdate) - 6);
-                    tdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - _this.getDayOfYear(tdate));
+                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - _this.GetDayOfYear(tdate) - 6);
+                    tdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - _this.GetDayOfYear(tdate));
                 }
                 else if (itemIndex === 4) {
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth(), 1);
@@ -61,15 +61,20 @@ var DateTimeControls = /** @class */ (function () {
         this.$("#dtpToDate").val(this.$.datepicker.formatDate("M dd, yy", new Date(this.$("#MaxDate").val())));
         this.$(".ui-datepicker").draggable();
         this.$("#userGroup input").val(this.$("#DateList option:first").val());
-        this.initMonthlyCalendar();
+        this.InitMonthlyCalendar();
     };
-    DateTimeControls.prototype.SetRange = function () {
-        return {
-            minDate: new Date($("#MinDate").val()),
-            maxDate: new Date($("#MaxDate").val())
-        };
+    DateTimeControls.prototype.GetFromDateToDate = function () {
+        return this.$(".from-to-date").css('display') !== 'none' ?
+            {
+                fromdate: this.$("#dtpFromDate").val(),
+                todate: this.$("#dtpToDate").val()
+            } :
+            {
+                fromdate: this.$("#monPickr1").monPickr("getFromDate", "MM/dd/yyyy"),
+                todate: this.$("#monPickr1").monPickr("getToDate", "MM/dd/yyyy")
+            };
     };
-    DateTimeControls.prototype.initMonthlyCalendar = function () {
+    DateTimeControls.prototype.InitMonthlyCalendar = function () {
         this.$("#monPickr1").monPickr({
             today: this.$("#MaxDate").val(),
             minDate: "2010/1/1",
@@ -82,7 +87,7 @@ var DateTimeControls = /** @class */ (function () {
         this.$("#monPickr1").monPickr("setToDay", today.getDate());
         this.$("#monPickr1").monPickr("setFromDay", 1);
     };
-    DateTimeControls.prototype.getDayOfYear = function (date) {
+    DateTimeControls.prototype.GetDayOfYear = function (date) {
         var day = date.getDate();
         var month = date.getMonth() + 1;
         var year = date.getFullYear();
@@ -93,16 +98,11 @@ var DateTimeControls = /** @class */ (function () {
         }
         return dayNo;
     };
-    DateTimeControls.prototype.GetFromDateToDate = function () {
-        return this.$(".from-to-date").css('display') !== 'none' ?
-            {
-                fromdate: this.$("#dtpFromDate").val(),
-                todate: this.$("#dtpToDate").val()
-            } :
-            {
-                fromdate: this.$("#monPickr1").monPickr("getFromDate", "MM/dd/yyyy"),
-                todate: this.$("#monPickr1").monPickr("getToDate", "MM/dd/yyyy")
-            };
+    DateTimeControls.prototype.SetRange = function () {
+        return {
+            minDate: new Date($("#MinDate").val()),
+            maxDate: new Date($("#MaxDate").val())
+        };
     };
     return DateTimeControls;
 }());

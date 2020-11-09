@@ -5,9 +5,9 @@
         this.$ = $;
     }
 
-    Init() {
+    public Init() {
         this.$("#DateList").combobox({
-            selected: (event, ui) => {
+            selected: event => {
                 var itemIndex = event.target.selectedIndex;
                 this.$("#DateList").prop("selectedIndex", itemIndex);
 
@@ -17,10 +17,10 @@
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - 1);
                     tdate = fdate;
                 } else if (itemIndex === 2) {
-                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - this.getDayOfYear(tdate) + 1);
+                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - this.GetDayOfYear(tdate) + 1);
                 } else if (itemIndex === 3) {
-                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - this.getDayOfYear(tdate) - 6);
-                    tdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - this.getDayOfYear(tdate));
+                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - this.GetDayOfYear(tdate) - 6);
+                    tdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - this.GetDayOfYear(tdate));
                 } else if (itemIndex === 4) {
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth(), 1);
                     tdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate());
@@ -64,17 +64,22 @@
 
         this.$("#userGroup input").val(this.$("#DateList option:first").val());
 
-        this.initMonthlyCalendar();
+        this.InitMonthlyCalendar();
     }
 
-    SetRange() {
-        return {
-            minDate: new Date($("#MinDate").val()),
-            maxDate: new Date($("#MaxDate").val())
-        };
+    public GetFromDateToDate() {
+        return this.$(".from-to-date").css('display') !== 'none' ?
+            {
+                fromdate: this.$("#dtpFromDate").val(),
+                todate: this.$("#dtpToDate").val()
+            } :
+            {
+                fromdate: this.$("#monPickr1").monPickr("getFromDate", "MM/dd/yyyy"),
+                todate: this.$("#monPickr1").monPickr("getToDate", "MM/dd/yyyy")
+            };
     }
 
-    initMonthlyCalendar() {
+    private InitMonthlyCalendar() {
         this.$("#monPickr1").monPickr({
             today: this.$("#MaxDate").val(),
             minDate: "2010/1/1",
@@ -89,7 +94,7 @@
         this.$("#monPickr1").monPickr("setFromDay", 1);
     }
 
-    getDayOfYear(date) {
+    private GetDayOfYear(date) {
         const day = date.getDate();
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
@@ -103,15 +108,10 @@
         return dayNo;
     }
 
-    GetFromDateToDate() {
-        return this.$(".from-to-date").css('display') !== 'none' ?
-            {
-                fromdate: this.$("#dtpFromDate").val(),
-                todate: this.$("#dtpToDate").val()
-            } :
-            {
-                fromdate: this.$("#monPickr1").monPickr("getFromDate", "MM/dd/yyyy"),
-                todate: this.$("#monPickr1").monPickr("getToDate", "MM/dd/yyyy")
-            };
+    private SetRange() {
+        return {
+            minDate: new Date($("#MinDate").val()),
+            maxDate: new Date($("#MaxDate").val())
+        };
     }
 }

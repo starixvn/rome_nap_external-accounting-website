@@ -5,15 +5,13 @@ declare var isMobile: any;
 
 class SuperWinLossDetailByPT {
     private $: JQueryStatic;
-    private gridOption: any;
-    private fixedsortdata: any;
-    private fixedsortlist: any;
-    private dataSource: any;
-    private hideFilter: boolean;
     private dateTimeControls: DateTimeControls;
     private productControls: ProductControls;
-    private totalRows: number;
-    private sorters: any;
+
+    private fixedsortdata: any;
+    private fixedsortlist: any;
+    private hideFilter: boolean;
+
     private sortTable: any;
     private topWindow: any;
 
@@ -21,10 +19,8 @@ class SuperWinLossDetailByPT {
         this.$ = $;
         this.topWindow = topWindow;
 
-        this.gridOption = {};
-        this.fixedsortdata= new Array();
-        this.fixedsortlist= new Array();
-        this.dataSource= [];
+        this.fixedsortdata= [];
+        this.fixedsortlist = [];
         this.hideFilter= false;
         this.dateTimeControls = new DateTimeControls($);
         this.productControls = new ProductControls($);
@@ -32,68 +28,25 @@ class SuperWinLossDetailByPT {
 
     Init() {
         this.dateTimeControls.Init();
+        this.productControls.Init();
+
+        this.$(".icon-filter").click(this.ShowHideFilter);
 
         this.$("#userGroup input").attr("readonly", "true");
         $("#userGroup input").bind("click", function () {
             $(this).autocomplete("search", "");
         });
 
-        this.productControls.ProductsList($("#selectedGroupName").html());
-
         this.$("#Submit").click(() => { this.CallSubmit(); });
 
-        this.$("#exporttoexcel").click(() => { this.exportExcel(); });
+        this.$("#exporttoexcel").click(() => { this.ExportExcel(); });
 
-        this.sorters = this.$(".col-sorter");
-        this.sorters.click(event => { this.sortTable(this.$(event.currentTarget));});
+        this.$(".col-sorter").click(event => { this.sortTable(this.$(event.currentTarget));});
 
-        Fanex.ExtAcc.OnResize = this.resizeReportGrid;
-        this.$(".icon-filter").click(this.showHideFilter);
+        Fanex.ExtAcc.OnResize = this.ResizeReportGrid;
     }
 
-    exportExcel() {
-        const dateTimeParams = this.dateTimeControls.GetFromDateToDate();
-        const params = "fromdate=" + dateTimeParams.fromdate +
-            "&todate=" + dateTimeParams.todate +
-            "&groupname=" + $("#selectedGroupName").html();
-
-        const url = resolveClientUrl("SuperWinLossDetailByPT/ExportWinLossDetailToExcel?") + params +
-            this.productControls.getParameterProducts() +
-            this.productControls.getParameterProductDetails();
-
-        this.topWindow.exportExcel(url, document);
-    }
-
-    resizeReportGrid() {
-        try {
-            $("#jqgrid").fanexGrid("resizeGrid");
-        }
-        catch (err) {
-            console.log(err);
-        }
-    }
-
-    showHideFilter() {
-        if (this.hideFilter) {
-            $(".icon-filter").addClass("active");
-
-            $(".filterbox").removeClass("hide");
-        } else {
-            $(".icon-filter").removeClass("active");
-            $(".filterbox").addClass("hide");
-        }
-
-        this.resizeReportGrid();
-        this.hideFilter = !this.hideFilter;
-    }
-
-    CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) {
-        return sortDirection === 'asc' ?
-            cell1Value.Username > cell2Value.Username ? 1 : -1 :
-            cell1Value.Username < cell2Value.Username ? 1 : -1;
-    }
-
-    buildDefaultColumns() {
+    BuildDefaultColumns() {
         return [
             { HeaderText: "Username / PT / Product", Name: "Username", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "left", ShowCollapseExpand: true },
             { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -115,7 +68,7 @@ class SuperWinLossDetailByPT {
         ];
     }
 
-    buildDefaultHeaderColumns() {
+    BuildDefaultHeaderColumns() {
         return [
             { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
             { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
@@ -129,7 +82,7 @@ class SuperWinLossDetailByPT {
         ];
     }
 
-    buildSubRowData(winLossByProductModel) {
+    BuildSubRowData(winLossByProductModel) {
         return {
             Columns: [
                 {
@@ -157,15 +110,15 @@ class SuperWinLossDetailByPT {
         };
     }
 
-    buildBodyData(dataSource) {
+    BuildBodyData(dataSource) {
         let bodyData = [];
         for (let i = 0; i < dataSource.length ; i++) {
             let subRows = [];
             for (let j = 0; j < dataSource[i].WinLossByProducts.length; j++) {
-                subRows.push(this.buildSubRowData(dataSource[i].WinLossByProducts[j]));
+                subRows.push(this.BuildSubRowData(dataSource[i].WinLossByProducts[j]));
             }
 
-            let totalRow = this.dataSource[i].Total;
+            let totalRow = dataSource[i].Total;
             bodyData.push({
                 Columns: [
                     { Name: "Username", Value: totalRow.Username },
@@ -194,7 +147,7 @@ class SuperWinLossDetailByPT {
         return bodyData;
     }
 
-    buildFooterData(grandTotal) {
+    BuildFooterData(grandTotal) {
         let footerData = [];
         footerData.push({
             Columns: [
@@ -236,12 +189,12 @@ class SuperWinLossDetailByPT {
             `on ${dateTimeParams.fromdate}` :
             `from ${dateTimeParams.fromdate} to ${dateTimeParams.todate}`;
 
-        this.gridOption = {
-            bodyRows: this.buildBodyData(data.WinLossByUsernames),
-            footerRows: this.buildFooterData(data.GrandTotal),
+        const gridOption = {
+            bodyRows: this.BuildBodyData(data.WinLossByUsernames),
+            footerRows: this.BuildFooterData(data.GrandTotal),
             customizeHeader: true,
-            groupHeaderRows: [{ Columns: this.buildDefaultHeaderColumns() }],
-            columns: this.buildDefaultColumns(),
+            groupHeaderRows: [{ Columns: this.BuildDefaultHeaderColumns() }],
+            columns: this.BuildDefaultColumns(),
             numberOfFrozenColumn: this.topWindow.$(top.window).width() < 768 ? 1 : 3,
             autoCalculateGridExpandHeight: true,
             fullHeight: !isMobile.phone,
@@ -268,21 +221,28 @@ class SuperWinLossDetailByPT {
             showDistinctRow: false,
             allowTruncate: true,
             sortOption: {
-                afterGridSorted: rows => { return this.customsortfunc(rows); }
+                afterGridSorted: rows => { return this.Customsortfunc(rows); }
             },
             numOfPaddingForGridExpandHeight: 40
         };
 
-        this.InitSort();
+        this.InitSort(data.WinLossByUsernames);
+        setPagerOptionOnMobile(gridOption);
 
-        setPagerOptionOnMobile(this.gridOption);
-        this.$("#jqgrid").fanexGrid(this.gridOption);
+        this.$("#jqgrid").fanexGrid(gridOption);
         this.$(".product-tooltip").tooltip();
+        this.$("#netTurnover").unbind().bind("click", () => this.ShowNetTurnoverInfo(data));
 
         workaroundForGridOnPhone();
     }
 
-    customsortfunc(rows) {
+    CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) {
+        return sortDirection === 'asc' ?
+            cell1Value.Username > cell2Value.Username ? 1 : -1 :
+            cell1Value.Username < cell2Value.Username ? 1 : -1;
+    }
+
+    Customsortfunc(rows) {
         const countFixedSort = this.fixedsortlist.length;
         if (countFixedSort > 0) {
             for (let i = 0; i < countFixedSort; i++) {
@@ -298,14 +258,14 @@ class SuperWinLossDetailByPT {
         return rows;
     }
 
-    InitSort() {
+    InitSort(dataSource) {
         let countFixedSort = this.fixedsortlist.length;
         if (countFixedSort > 0) {
             for (let i = 0; i < countFixedSort; i++) {
-                for (let j = 0; j < this.dataSource.length; j++) {
-                    if (this.fixedsortlist[i] === this.dataSource[j].CustId) {
-                        this.fixedsortdata.push(this.dataSource.slice(j, j + 1)[0]);
-                        this.dataSource.unshift(this.dataSource.splice(j, 1)[0]);
+                for (let j = 0; j < dataSource.length; j++) {
+                    if (this.fixedsortlist[i] === dataSource[j].CustId) {
+                        this.fixedsortdata.push(dataSource.slice(j, j + 1)[0]);
+                        dataSource.unshift(dataSource.splice(j, 1)[0]);
                         break;
                     }
                 }
@@ -313,7 +273,7 @@ class SuperWinLossDetailByPT {
         }
     }
 
-    showNetTurnoverInfo(data: any) {
+    ShowNetTurnoverInfo(data: any) {
         let message = "- For Sportbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
         let height = 170;
 
@@ -338,44 +298,75 @@ class SuperWinLossDetailByPT {
             + "&Todate=" + dateTimeParams.todate
             + "&PageSize=" + pageSize
             + "&PageIndex=" + pageIndex
-            + this.productControls.getParameterProducts()
-            + this.productControls.getParameterProductDetails();
+            + this.productControls.GetParameterProducts()
+            + this.productControls.GetParameterProductDetails();
 
         this.$.ajax({
             url: resolveClientUrl("SuperWinLossDetailByPT/GetData") + parameterUrl,
             type: "post",
             dataType: "json",
             cache: false,
-            success: data => {
-                if (data.errorCode) {
-                    Fanex.ExtAcc.UnBlockUI();
-                    Fanex.ExtAcc.Form.Alert("Error", data.errorMessage.formatErrorMessage(), 350, 150, "alertWLD");
-                    return;
-                }
-
-                this.fixedsortdata = new Array();
-
-                this.dataSource = data.WinLossByUsernames;
-                this.totalRows = data.WinLossByUsernames !== null ? data.WinLossByUsernames.length : 0;
-                this.fixedsortlist = [];
-
-                this.$("#mainGrid").css("display", this.totalRows < 1 ? "none" : "block");
-                this.$("#mainGrid").css("visibility", this.totalRows < 1 ? "hidden" : "visible");
-                this.$("#exporttoexcel").css("display", this.totalRows < 1 ? "none" : "block");
-                this.$("#msgNoinfo").css("display", this.totalRows < 1 ? "block" : "none");
-
-                if (this.totalRows > 0) {
-                    this.Render(data, dateTimeParams);
-                    this.$("#exporttoexcel").removeClass("hide");
-                } else {
-                    this.$("#exporttoexcel").addClass("hide");
-                }
-
-                $("#netTurnover").unbind().bind("click", () => this.showNetTurnoverInfo(data));
-
-                Fanex.ExtAcc.UnBlockUI();
-            }
+            success: data => this.OnSuccess(data, dateTimeParams)
         });
+    }
+
+    OnSuccess(data, dateTimeParams) {
+        if (data.errorCode) {
+            Fanex.ExtAcc.UnBlockUI();
+            Fanex.ExtAcc.Form.Alert("Error", data.errorMessage.formatErrorMessage(), 350, 150, "alertWLD");
+            return;
+        }
+
+        const existedData = data.WinLossByUsernames !== null && data.WinLossByUsernames.length > 0;
+
+        this.$("#mainGrid").css("display", existedData ? "block" : "none");
+        this.$("#mainGrid").css("visibility", existedData ? "visible" : "hidden");
+        this.$("#exporttoexcel").css("display", existedData ? "block" : "none");
+        this.$("#msgNoinfo").css("display", existedData ? "none" : "block");
+
+        if (existedData) {
+            this.Render(data, dateTimeParams);
+            this.$("#exporttoexcel").removeClass("hide");
+        } else {
+            this.$("#exporttoexcel").addClass("hide");
+        }
+
+        Fanex.ExtAcc.UnBlockUI();
+    }
+
+    ExportExcel() {
+        const dateTimeParams = this.dateTimeControls.GetFromDateToDate();
+        const params = "fromdate=" + dateTimeParams.fromdate +
+            "&todate=" + dateTimeParams.todate +
+            "&groupname=" + $("#selectedGroupName").html();
+
+        const url = resolveClientUrl("SuperWinLossDetailByPT/ExportWinLossDetailToExcel?") + params +
+            this.productControls.GetParameterProducts() +
+            this.productControls.GetParameterProductDetails();
+
+        this.topWindow.ExportExcel(url, document);
+    }
+
+    ResizeReportGrid() {
+        try {
+            $("#jqgrid").fanexGrid("resizeGrid");
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
+    ShowHideFilter() {
+        if (this.hideFilter) {
+            $(".icon-filter").addClass("active");
+            $(".filterbox").removeClass("hide");
+        } else {
+            $(".icon-filter").removeClass("active");
+            $(".filterbox").addClass("hide");
+        }
+
+        this.ResizeReportGrid();
+        this.hideFilter = !this.hideFilter;
     }
 }
 
