@@ -3,47 +3,12 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
         this.$ = $;
         this.topWindow = topWindow;
         this.gridOption = {};
-        this.groupName = "";
         this.fixedsortdata = new Array();
         this.fixedsortlist = new Array();
         this.dataSource = [];
-        this.grandTotal = null;
-        this.pageIndex = 0;
-        this.pageSize = 50;
-        this.totalRecords = 0;
         this.hideFilter = false;
         this.dateTimeControls = new DateTimeControls($);
         this.productControls = new ProductControls($);
-        this.defaultColumns = [
-            { HeaderText: "Username / PT / Product", Name: "Username", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "left", ShowCollapseExpand: true },
-            { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-            { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-            { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-            { HeaderText: "Win/Loss", Name: "MemberWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-            { HeaderText: "Comm", Name: "PlayerComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-            { HeaderText: "Total", Name: "MemberTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-            { HeaderText: "Win/Loss", Name: "AgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-            { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-            { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-            { HeaderText: "Win/Loss", Name: "MAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-            { HeaderText: "Comm", Name: "MAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-            { HeaderText: "Total", Name: "MAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-            { HeaderText: "Win/Loss", Name: "SAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-            { HeaderText: "Comm", Name: "SAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-            { HeaderText: "Total", Name: "SAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-            { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
-        ];
-        this.defaultHeaderColumns = [
-            { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
-            { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
-            { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
-            { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
-            { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
-            { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
-            { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
-            { HeaderText: "Super", Name: "SAgWinlost", MergeColNumber: 3 },
-            { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
-        ];
     }
     SuperWinLossDetailByPT.prototype.Init = function () {
         var _this = this;
@@ -52,8 +17,7 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
         $("#userGroup input").bind("click", function () {
             $(this).autocomplete("search", "");
         });
-        this.groupName = $("#selectedGroupName").html();
-        this.productControls.ProductsList(this.groupName);
+        this.productControls.ProductsList($("#selectedGroupName").html());
         this.$("#Submit").click(function () { _this.CallSubmit(); });
         this.$("#exporttoexcel").click(function () { _this.exportExcel(); });
         this.sorters = this.$(".col-sorter");
@@ -65,7 +29,7 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
         var dateTimeParams = this.dateTimeControls.GetFromDateToDate();
         var params = "fromdate=" + dateTimeParams.fromdate +
             "&todate=" + dateTimeParams.todate +
-            "&groupname=" + this.groupName;
+            "&groupname=" + $("#selectedGroupName").html();
         var url = resolveClientUrl("SuperWinLossDetailByPT/ExportWinLossDetailToExcel?") + params +
             this.productControls.getParameterProducts() +
             this.productControls.getParameterProductDetails();
@@ -96,85 +60,74 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
             cell1Value.Username > cell2Value.Username ? 1 : -1 :
             cell1Value.Username < cell2Value.Username ? 1 : -1;
     };
-    SuperWinLossDetailByPT.prototype.Render = function (dateInfo) {
+    SuperWinLossDetailByPT.prototype.buildDefaultColumns = function () {
+        return [
+            { HeaderText: "Username / PT / Product", Name: "Username", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "left", ShowCollapseExpand: true },
+            { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+            { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+            { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+            { HeaderText: "Win/Loss", Name: "MemberWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+            { HeaderText: "Comm", Name: "PlayerComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+            { HeaderText: "Total", Name: "MemberTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+            { HeaderText: "Win/Loss", Name: "AgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+            { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+            { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+            { HeaderText: "Win/Loss", Name: "MAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+            { HeaderText: "Comm", Name: "MAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+            { HeaderText: "Total", Name: "MAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+            { HeaderText: "Win/Loss", Name: "SAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+            { HeaderText: "Comm", Name: "SAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+            { HeaderText: "Total", Name: "SAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+            { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
+        ];
+    };
+    SuperWinLossDetailByPT.prototype.buildDefaultHeaderColumns = function () {
+        return [
+            { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
+            { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
+            { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
+            { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
+            { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
+            { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
+            { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
+            { HeaderText: "Super", Name: "SAgWinlost", MergeColNumber: 3 },
+            { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+        ];
+    };
+    SuperWinLossDetailByPT.prototype.buildSubRowData = function (winLossByProductModel) {
         var _this = this;
-        var arrColData = new Array();
-        var arrGroupHeaders = new Array();
-        var numberOfFrozenColumn = 3;
-        var widthDevice = this.topWindow.$(top.window).width();
-        if (widthDevice <= 768) {
-            numberOfFrozenColumn = 1;
-        }
-        arrColData = this.defaultColumns;
-        arrGroupHeaders = this.defaultHeaderColumns;
-        this.gridOption = {
-            customizeHeader: true,
-            groupHeaderRows: [{ Columns: arrGroupHeaders }],
-            columns: arrColData,
-            numberOfFrozenColumn: numberOfFrozenColumn,
-            autoCalculateGridExpandHeight: true,
-            fullHeight: !isMobile.phone,
-            gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
-            showTitle: true,
-            titleInfo: { text: "Super Win Loss Detail By PT " + dateInfo },
-            showFooter: true,
-            showTree: true,
-            gridExpandHeight: 256,
-            showPager: true,
-            customPager: true,
-            pagerOption: {
-                itemsPerPageArray: [50, 100, 200],
-                currentPage: this.pageIndex - 1,
-                totalItem: this.totalRecords,
-                itemsPerPage: this.pageSize,
-                pagerSelectCallBack: function (currentPageIndex, itemsPerPage) {
-                    _this.CallSubmit(itemsPerPage, currentPageIndex + 1);
-                    _this.$("#jqgrid").fanexGrid(_this.gridOption);
-                    _this.$(".product-tooltip").tooltip();
+        return {
+            Columns: [
+                {
+                    HeaderText: "Username", Name: "Username",
+                    Value: winLossByProductModel,
+                    CustomCellRender: function (cell) { return _this.RenderPositonTakingColumn(cell); }
                 },
-                showDetail: true
-            },
-            marginRight: 10,
-            bottomBorderWidth: 0,
-            showDistinctRow: false,
-            allowTruncate: true,
-            sortOption: {
-                afterGridSorted: function (rows) { return _this.customsortfunc(rows); }
-            },
-            numOfPaddingForGridExpandHeight: 40
+                { Name: "Turnover", Value: winLossByProductModel.Turnover },
+                { Name: "NetTurnover", Value: winLossByProductModel.NetTurnover },
+                { Name: "GrossComm", Value: winLossByProductModel.GrossComm },
+                { Name: "MemberWinlost", Value: winLossByProductModel.MemberWinlost },
+                { Name: "PlayerComm", Value: winLossByProductModel.MemberComm },
+                { Name: "MemberTotal", Value: winLossByProductModel.MemberTotal },
+                { Name: "AgWinlost", Value: winLossByProductModel.AgWinlost },
+                { Name: "AgComm", Value: winLossByProductModel.AgComm },
+                { Name: "AgTotal", Value: winLossByProductModel.AgTotal },
+                { Name: "MAgWinlost", Value: winLossByProductModel.MAgWinlost },
+                { Name: "MAgComm", Value: winLossByProductModel.MAgComm },
+                { Name: "MAgTotal", Value: winLossByProductModel.MAgTotal },
+                { Name: "SAgWinlost", Value: winLossByProductModel.SAgWinlost },
+                { Name: "SAgComm", Value: winLossByProductModel.SAgComm },
+                { Name: "SAgTotal", Value: winLossByProductModel.SAgTotal },
+                { Name: "Company", Value: winLossByProductModel.Company }
+            ]
         };
-        //// Assing BodyData
-        this.InitSort();
+    };
+    SuperWinLossDetailByPT.prototype.buildBodyData = function (dataSource) {
         var bodyData = [];
-        for (var i = 0; i < this.totalRows; i++) {
-            var subRow = [];
-            for (var j = 0; j < this.dataSource[i].WinLossByProducts.length; j++) {
-                var winLossByProductModel = this.dataSource[i].WinLossByProducts[j];
-                subRow.push({
-                    Columns: [
-                        {
-                            HeaderText: "Username", Name: "Username",
-                            Value: winLossByProductModel,
-                            CustomCellRender: function (cell) { return _this.RenderPositonTakingColumn(cell); }
-                        },
-                        { Name: "Turnover", Value: winLossByProductModel.Turnover },
-                        { Name: "NetTurnover", Value: winLossByProductModel.NetTurnover },
-                        { Name: "GrossComm", Value: winLossByProductModel.GrossComm },
-                        { Name: "MemberWinlost", Value: winLossByProductModel.MemberWinlost },
-                        { Name: "PlayerComm", Value: winLossByProductModel.MemberComm },
-                        { Name: "MemberTotal", Value: winLossByProductModel.MemberTotal },
-                        { Name: "AgWinlost", Value: winLossByProductModel.AgWinlost },
-                        { Name: "AgComm", Value: winLossByProductModel.AgComm },
-                        { Name: "AgTotal", Value: winLossByProductModel.AgTotal },
-                        { Name: "MAgWinlost", Value: winLossByProductModel.MAgWinlost },
-                        { Name: "MAgComm", Value: winLossByProductModel.MAgComm },
-                        { Name: "MAgTotal", Value: winLossByProductModel.MAgTotal },
-                        { Name: "SAgWinlost", Value: winLossByProductModel.SAgWinlost },
-                        { Name: "SAgComm", Value: winLossByProductModel.SAgComm },
-                        { Name: "SAgTotal", Value: winLossByProductModel.SAgTotal },
-                        { Name: "Company", Value: winLossByProductModel.Company }
-                    ]
-                });
+        for (var i = 0; i < dataSource.length; i++) {
+            var subRows = [];
+            for (var j = 0; j < dataSource[i].WinLossByProducts.length; j++) {
+                subRows.push(this.buildSubRowData(dataSource[i].WinLossByProducts[j]));
             }
             var totalRow = this.dataSource[i].Total;
             bodyData.push({
@@ -197,40 +150,36 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
                     { Name: "SAgTotal", Value: totalRow.SAgTotal },
                     { Name: "Company", Value: totalRow.Company }
                 ],
-                SubRows: subRow,
+                SubRows: subRows,
                 CssClass: 'sub-row-class'
             });
         }
-        this.gridOption.bodyRows = bodyData;
-        this.gridOption.pagerOption.totalItem = this.totalRecords;
-        //// Asign Footer Data
+        return bodyData;
+    };
+    SuperWinLossDetailByPT.prototype.buildFooterData = function (grandTotal) {
         var footerData = [];
         footerData.push({
             Columns: [
                 { Name: "Username", Value: "Grand Total" },
-                { Name: "Turnover", Value: this.grandTotal.Turnover },
-                { Name: "NetTurnover", Value: this.grandTotal.NetTurnover },
-                { Name: "GrossComm", Value: this.grandTotal.GrossComm },
-                { Name: "MemberWinlost", Value: this.grandTotal.MemberWinlost },
-                { Name: "PlayerComm", Value: this.grandTotal.MemberComm },
-                { Name: "MemberTotal", Value: this.grandTotal.MemberTotal },
-                { Name: "AgWinlost", Value: this.grandTotal.AgWinlost },
-                { Name: "AgComm", Value: this.grandTotal.AgComm },
-                { Name: "AgTotal", Value: this.grandTotal.AgTotal },
-                { Name: "MAgWinlost", Value: this.grandTotal.MAgWinlost },
-                { Name: "MAgComm", Value: this.grandTotal.MAgComm },
-                { Name: "MAgTotal", Value: this.grandTotal.MAgTotal },
-                { Name: "SAgWinlost", Value: this.grandTotal.SAgWinlost },
-                { Name: "SAgComm", Value: this.grandTotal.SAgComm },
-                { Name: "SAgTotal", Value: this.grandTotal.SAgTotal },
-                { Name: "Company", Value: this.grandTotal.Company }
+                { Name: "Turnover", Value: grandTotal.Turnover },
+                { Name: "NetTurnover", Value: grandTotal.NetTurnover },
+                { Name: "GrossComm", Value: grandTotal.GrossComm },
+                { Name: "MemberWinlost", Value: grandTotal.MemberWinlost },
+                { Name: "PlayerComm", Value: grandTotal.MemberComm },
+                { Name: "MemberTotal", Value: grandTotal.MemberTotal },
+                { Name: "AgWinlost", Value: grandTotal.AgWinlost },
+                { Name: "AgComm", Value: grandTotal.AgComm },
+                { Name: "AgTotal", Value: grandTotal.AgTotal },
+                { Name: "MAgWinlost", Value: grandTotal.MAgWinlost },
+                { Name: "MAgComm", Value: grandTotal.MAgComm },
+                { Name: "MAgTotal", Value: grandTotal.MAgTotal },
+                { Name: "SAgWinlost", Value: grandTotal.SAgWinlost },
+                { Name: "SAgComm", Value: grandTotal.SAgComm },
+                { Name: "SAgTotal", Value: grandTotal.SAgTotal },
+                { Name: "Company", Value: grandTotal.Company }
             ]
         });
-        this.gridOption.footerRows = footerData;
-        setPagerOptionOnMobile(this.gridOption);
-        this.$("#jqgrid").fanexGrid(this.gridOption);
-        this.$(".product-tooltip").tooltip();
-        workaroundForGridOnPhone();
+        return footerData;
     };
     SuperWinLossDetailByPT.prototype.RenderPositonTakingColumn = function (cell) {
         var tooltip = '';
@@ -238,6 +187,53 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
             tooltip += "<div>" + value + "</div>";
         });
         return "<span class=\"product-tooltip\" title=\"" + tooltip + "\">" + cell.Value.PositionTakingText + "<a>('" + cell.Value.ProductNames.length + ")</a></span>";
+    };
+    SuperWinLossDetailByPT.prototype.Render = function (data, dateTimeParams) {
+        var _this = this;
+        var dateInfo = dateTimeParams.fromdate === dateTimeParams.todate ?
+            "on " + dateTimeParams.fromdate :
+            "from " + dateTimeParams.fromdate + " to " + dateTimeParams.todate;
+        this.gridOption = {
+            bodyRows: this.buildBodyData(data.WinLossByUsernames),
+            footerRows: this.buildFooterData(data.GrandTotal),
+            customizeHeader: true,
+            groupHeaderRows: [{ Columns: this.buildDefaultHeaderColumns() }],
+            columns: this.buildDefaultColumns(),
+            numberOfFrozenColumn: this.topWindow.$(top.window).width() < 768 ? 1 : 3,
+            autoCalculateGridExpandHeight: true,
+            fullHeight: !isMobile.phone,
+            gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
+            showTitle: true,
+            titleInfo: { text: "Super Win Loss Detail By PT " + dateInfo },
+            showFooter: true,
+            showTree: true,
+            gridExpandHeight: 256,
+            showPager: true,
+            customPager: true,
+            pagerOption: {
+                itemsPerPageArray: [50, 100, 200],
+                currentPage: data.PageIndex - 1,
+                totalItem: data.TotalRecords,
+                itemsPerPage: data.PageSize,
+                pagerSelectCallBack: function (currentPageIndex, itemsPerPage) {
+                    _this.CallSubmit(itemsPerPage, currentPageIndex + 1);
+                },
+                showDetail: true
+            },
+            marginRight: 10,
+            bottomBorderWidth: 0,
+            showDistinctRow: false,
+            allowTruncate: true,
+            sortOption: {
+                afterGridSorted: function (rows) { return _this.customsortfunc(rows); }
+            },
+            numOfPaddingForGridExpandHeight: 40
+        };
+        this.InitSort();
+        setPagerOptionOnMobile(this.gridOption);
+        this.$("#jqgrid").fanexGrid(this.gridOption);
+        this.$(".product-tooltip").tooltip();
+        workaroundForGridOnPhone();
     };
     SuperWinLossDetailByPT.prototype.customsortfunc = function (rows) {
         var countFixedSort = this.fixedsortlist.length;
@@ -284,19 +280,15 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
         var _this = this;
         if (pageSize === void 0) { pageSize = 50; }
         if (pageIndex === void 0) { pageIndex = 1; }
+        Fanex.ExtAcc.BlockUI();
         var dateTimeParams = this.dateTimeControls.GetFromDateToDate();
-        this.groupName = $("#selectedGroupName").html();
-        var dateInfo = dateTimeParams.fromdate === dateTimeParams.todate ?
-            "on " + dateTimeParams.fromdate :
-            "from " + dateTimeParams.fromdate + " to " + dateTimeParams.todate;
-        var parameterUrl = "?Groupname=" + this.groupName
+        var parameterUrl = "?Groupname=" + $("#selectedGroupName").html()
             + "&Fromdate=" + dateTimeParams.fromdate
             + "&Todate=" + dateTimeParams.todate
             + "&PageSize=" + pageSize
             + "&PageIndex=" + pageIndex
             + this.productControls.getParameterProducts()
             + this.productControls.getParameterProductDetails();
-        Fanex.ExtAcc.BlockUI();
         this.$.ajax({
             url: resolveClientUrl("SuperWinLossDetailByPT/GetData") + parameterUrl,
             type: "post",
@@ -310,18 +302,14 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
                 }
                 _this.fixedsortdata = new Array();
                 _this.dataSource = data.WinLossByUsernames;
-                _this.grandTotal = data.GrandTotal;
                 _this.totalRows = data.WinLossByUsernames !== null ? data.WinLossByUsernames.length : 0;
-                _this.totalRecords = data.TotalRecords;
-                _this.pageSize = data.PageSize;
-                _this.pageIndex = data.PageIndex;
                 _this.fixedsortlist = [];
                 _this.$("#mainGrid").css("display", _this.totalRows < 1 ? "none" : "block");
                 _this.$("#mainGrid").css("visibility", _this.totalRows < 1 ? "hidden" : "visible");
                 _this.$("#exporttoexcel").css("display", _this.totalRows < 1 ? "none" : "block");
                 _this.$("#msgNoinfo").css("display", _this.totalRows < 1 ? "block" : "none");
                 if (_this.totalRows > 0) {
-                    _this.Render(dateInfo);
+                    _this.Render(data, dateTimeParams);
                     _this.$("#exporttoexcel").removeClass("hide");
                 }
                 else {
