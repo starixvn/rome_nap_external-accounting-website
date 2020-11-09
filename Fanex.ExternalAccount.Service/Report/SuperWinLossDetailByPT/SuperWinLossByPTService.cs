@@ -40,14 +40,14 @@
 
             var criteria = new SuperWinLossDetailByPTCriteria(
                 param.GroupName,
-               param.FromDate,
-               param.ToDate,
-               ReportService.BalanceUpDate,
-               ReportService.MoveBetsDate,
-              param.UserSelectedProductIds,
-              productDetailService.BuildProductDetailsXML(param.UserSelectedProductIds, param.ResourceIds, param.GroupName),
-              param.PageSize,
-              param.PageIndex);
+                param.FromDate,
+                param.ToDate,
+                ReportService.BalanceUpDate,
+                ReportService.MoveBetsDate,
+                param.UserSelectedProductIds,
+                productDetailService.BuildProductDetailsXML(param.UserSelectedProductIds, param.ResourceIds, param.GroupName),
+                param.PageSize,
+                param.PageIndex);
 
             var model = superWinLossDetailByPTDataAccess.GetWinLossByBetType(criteria);
 
