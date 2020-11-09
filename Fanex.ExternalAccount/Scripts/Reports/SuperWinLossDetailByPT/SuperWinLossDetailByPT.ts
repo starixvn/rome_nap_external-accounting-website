@@ -338,7 +338,7 @@ class SuperWinLossDetailByPT {
             productDetailsParams = this.productControls.GetParameterProductDetails(),
             url = `${resolveClientUrl("SuperWinLossDetailByPT/ExportWinLossDetailToExcel?")}${params}${productParams}${productDetailsParams}`;
 
-        this.topWindow.ExportExcel(url, document);
+        this.topWindow.exportExcel(url, document);
     }
 
     ResizeReportGrid() {

@@ -283,7 +283,7 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
     };
     SuperWinLossDetailByPT.prototype.ExportExcel = function () {
         var dateTimeParams = this.dateTimeControls.GetFromDateToDate(), params = "fromdate=" + dateTimeParams.fromdate + "&todate=" + dateTimeParams.todate + "&groupname=" + this.$("#selectedGroupName").html(), productParams = this.productControls.GetParameterProducts(), productDetailsParams = this.productControls.GetParameterProductDetails(), url = "" + resolveClientUrl("SuperWinLossDetailByPT/ExportWinLossDetailToExcel?") + params + productParams + productDetailsParams;
-        this.topWindow.ExportExcel(url, document);
+        this.topWindow.exportExcel(url, document);
     };
     SuperWinLossDetailByPT.prototype.ResizeReportGrid = function () {
         try {
