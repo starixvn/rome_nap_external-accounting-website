@@ -6,7 +6,6 @@
     using Fanex.ExternalAccount.Excel.Reports.SuperWinLossDetailByPT;
     using Fanex.ExternalAccount.Service.Report.SuperWinLossDetailByPT;
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.ExternalAccount.Utilities.Reports.WinLossDetail;
     using Requests;
     using Service.Interface.Report;
     using Service.UserControl;
@@ -49,7 +48,7 @@
                 request.Todate,
                 request.GetProductIds(),
                 request.ResourceIds,
-                BuildTooltipsForLiveCasino(),
+                BuildTooltipsForLiveCasino(request.GroupName),
                 request.PageSize,
                 request.PageIndex);
 
@@ -66,7 +65,7 @@
                 request.Todate,
                 request.GetProductIds(),
                 request.ResourceIds,
-                BuildTooltipsForLiveCasino(),
+                BuildTooltipsForLiveCasino(request.GroupName),
                 0,
                 0));
 
@@ -87,31 +86,6 @@
                 ExportToExcel(memoryStream, request.FileName);
                 memoryStream.Dispose();
             }
-        }
-
-        private string BuildTooltipsForLiveCasino()
-        {
-            var liveCasino = new List<GroupConfigurationModel>
-            {
-                new GroupConfigurationModel{ProductId=ProductConstants.AllBet,ProductName="AllBet"},
-                new GroupConfigurationModel{ProductId=ProductConstants.SexyGaming,ProductName="AE Casino"},
-                new GroupConfigurationModel{ProductId=ProductConstants.SAGaming,ProductName="SA Gaming"},
-                new GroupConfigurationModel{ProductId=ProductConstants.GTCasino,ProductName="IBCBet Live Casino"},
-                new GroupConfigurationModel{ProductId=ProductConstants.BBin,ProductName="BBIN"},
-                new GroupConfigurationModel{ProductId=ProductConstants.ION,ProductName="ION"}
-            };
-
-            var offeredLiveCasino = liveCasino.Where(
-                i => groupConfigurationService.IsShowByProductAndGroup(i.ProductId, currentSession.CurrencyGroup));
-
-            if (offeredLiveCasino != null && offeredLiveCasino.Any())
-            {
-                var liveCasinoName = string.Join(", ", offeredLiveCasino.Select(i => i.ProductName));
-
-                return string.Format(ViewLang.Tooltip_NetTurnover_LiveCasino, liveCasinoName);
-            }
-
-            return string.Empty;
         }
 
         private static List<KeyValuePair<string, string>> GetPPNameExportExcel(ExportSuperWinLossDetailByPTRequest request, List<KeyValuePair<string, string>> products)

@@ -17,11 +17,11 @@
 
         public DrillDownWinLossDetailRequest(WinLossDetailRequest request)
         {
-            GroupName = request.groupName;
-            CustId = request.custId;
-            FromDate = request.fromdate;
-            ToDate = request.todate;
-            ViewLevel = request.viewlevel;
+            GroupName = request.GroupName;
+            CustId = request.CustId;
+            FromDate = request.Fromdate;
+            ToDate = request.Todate;
+            ViewLevel = request.Viewlevel;
             switch (ViewLevel)
             {
                 case Role.Super:

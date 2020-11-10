@@ -1,12 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Requests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Core.Context;
     using Core.Reports;
     using DataAccess.Criteria.GroupConfiguration;
     using Service.UserControl;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class WinLossDetailRequest
     {
@@ -31,27 +31,27 @@
             this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
         }
 
-        public int groupId => extRequest.GetGroupId();
-        public string groupName => extRequest.GetGroupName();
-        public string username { get; set; }
-        public int srecommend { get; set; }
-        public int mrecommend { get; set; }
-        public int recommend { get; set; }
-        public int custId { get; set; }
-        public DateTime fromdate { get; set; }
-        public DateTime todate { get; set; }
-        public int viewlevel { get; set; }
+        public int GroupId => extRequest.GetGroupId();
+        public string GroupName => extRequest.GetGroupName();
+        public string Username { get; set; }
+        public int Srecommend { get; set; }
+        public int Mrecommend { get; set; }
+        public int Recommend { get; set; }
+        public int CustId { get; set; }
+        public DateTime Fromdate { get; set; }
+        public DateTime Todate { get; set; }
+        public int Viewlevel { get; set; }
         public string ResourceIds { get; set; }
 
-        public bool IsSearch() => custId == 0;
+        public bool IsSearch() => CustId == 0;
 
         internal string GetProductIds()
         {
-            var filterParams = selectedProductQueryGetter(groupId);
+            var filterParams = selectedProductQueryGetter(GroupId);
 
             var formatedProductIds = new List<int>();
 
-            var products = groupConfigurationService.Get(new GetGroupConfigurationCriteria()).Where(i => i.GroupName == groupName);
+            var products = groupConfigurationService.Get(new GetGroupConfigurationCriteria()).Where(i => i.GroupName == GroupName);
             foreach (var item in products)
             {
                 foreach (var product in filterParams)
@@ -69,7 +69,7 @@
 
         internal string GetProductNames(List<KeyValuePair<string, string>> productList)
         {
-            var filterParams = selectedProductQueryGetter(groupId);
+            var filterParams = selectedProductQueryGetter(GroupId);
             var formatedProducts = string.Empty;
 
             filterParams.ToList().ForEach(o =>

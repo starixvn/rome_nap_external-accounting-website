@@ -1,20 +1,19 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
     using DTO.Report;
     using Excel.Reports.WinLossDetailReport;
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.ExternalAccount.Utilities.Reports.WinLossDetail;
     using Requests;
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.UserControl;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -53,18 +52,18 @@
         public void ExportWinLossDetailToExcel(ExportWinLossDetailRequest request)
         {
             IWinLossDetailReportBuilder builder;
-            request.viewlevel++;
+            request.Viewlevel++;
             var winlossDetail = GetDataFromDB(request);
-            request.viewlevel--;
-            switch (request.viewlevel)
+            request.Viewlevel--;
+            switch (request.Viewlevel)
             {
                 case Role.Member:
                     {
                         builder = new MemberWinLossDetailReportBuilder(
                             (List<WinLossDetailAg>)winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null),
-                            request.viewlevel,
-                            request.fromdate,
-                            request.todate);
+                            request.Viewlevel,
+                            request.Fromdate,
+                            request.Todate);
 
                         break;
                     }
@@ -72,9 +71,9 @@
                     {
                         builder = new AgentWinLossDetailReportBuilder(
                             (List<WinLossDetailMAg>)winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null),
-                            request.viewlevel,
-                            request.fromdate,
-                            request.todate);
+                            request.Viewlevel,
+                            request.Fromdate,
+                            request.Todate);
 
                         break;
                     }
@@ -82,9 +81,9 @@
                     {
                         builder = new WinLossDetailReportBuilder(
                             (List<WinLossDetail>)winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null),
-                            request.viewlevel,
-                            request.fromdate,
-                            request.todate);
+                            request.Viewlevel,
+                            request.Fromdate,
+                            request.Todate);
 
                         break;
                     }
@@ -92,15 +91,15 @@
                     {
                         builder = new WinLossDetailExtraReportBuilder(
                             (List<WinLossDetailExtra>)winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null),
-                            request.viewlevel,
-                            request.fromdate,
-                            request.todate);
+                            request.Viewlevel,
+                            request.Fromdate,
+                            request.Todate);
 
                         break;
                     }
             }
 
-            var products = GetProductList(request.groupId);
+            var products = GetProductList(request.GroupId);
             products = GetPPNameExportExcel(request, products);
 
             var formatedProducts = request.GetProductNames(products);
@@ -125,7 +124,7 @@
         {
             var toolTipsProducts = new
             {
-                liveCasino = BuildTooltipsForLiveCasino(request.groupName)
+                liveCasino = BuildTooltipsForLiveCasino(request.GroupName)
             };
 
             return request.IsSearch()
@@ -135,37 +134,11 @@
                     new DrillDownWinLossDetailRequest(request, toolTipsProducts));
         }
 
-        private string BuildTooltipsForLiveCasino(string groupName)
-        {
-            var liveCasino = new List<GroupConfigurationModel>
-            {
-                new GroupConfigurationModel{ProductId=ProductConstants.AllBet,ProductName="AllBet"},
-                new GroupConfigurationModel{ProductId=ProductConstants.SexyGaming,ProductName="AE Casino"},
-                new GroupConfigurationModel{ProductId=ProductConstants.SAGaming,ProductName="SA Gaming"},
-                new GroupConfigurationModel{ProductId=ProductConstants.GTCasino,ProductName="IBCBet Live Casino"},
-                new GroupConfigurationModel{ProductId=ProductConstants.BBin,ProductName="BBIN"},
-                new GroupConfigurationModel{ProductId=ProductConstants.ION,ProductName="ION"},
-                new GroupConfigurationModel{ProductId=ProductConstants.WM,ProductName="WM"}
-            };
-
-            var offeredLiveCasino = liveCasino.Where(
-                i => groupConfigurationService.IsShowByProductAndGroup(i.ProductId, groupName));
-
-            if (offeredLiveCasino != null && offeredLiveCasino.Any())
-            {
-                var liveCasinoName = string.Join(", ", offeredLiveCasino.Select(i => i.ProductName));
-
-                return string.Format(ViewLang.Tooltip_NetTurnover_LiveCasino, liveCasinoName);
-            }
-
-            return string.Empty;
-        }
-
         private static List<KeyValuePair<string, string>> GetPPNameExportExcel(ExportWinLossDetailRequest request, List<KeyValuePair<string, string>> products)
         {
             if (string.IsNullOrWhiteSpace(request.ResourceIds))
             {
-                if (!Config.IsOfferJackpotProductDetailsGroup(request.groupName))
+                if (!Config.IsOfferJackpotProductDetailsGroup(request.GroupName))
                 {
                     return products;
                 }
@@ -180,7 +153,7 @@
                 if (product.Key == "showPP")
                 {
                     var userSelectedResourceIds = request.ResourceIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    var productDetails = GetProductDetails(request.groupId, request.groupName)
+                    var productDetails = GetProductDetails(request.GroupId, request.GroupName)
                         .Where(p => p.ProductKey == product.Key)
                         .ToList();
 
@@ -207,6 +180,6 @@
         private const string DateFormat = "yyyyMMdd";
 
         public string FileName =>
-            $"{viewlevel.DisplayRoleName()}WinLossDetail_{fromdate.ToString(DateFormat)}_{todate.ToString(DateFormat)}.xls";
+            $"{Viewlevel.DisplayRoleName()}WinLossDetail_{Fromdate.ToString(DateFormat)}_{Todate.ToString(DateFormat)}.xls";
     }
 }
