@@ -36,6 +36,7 @@
             @Html.Hidden("productIds", Model.ProductIds)
             @Html.Hidden("custRole", Model.CustRole)
             @Html.Hidden("custId", Model.CustIds.Split(',')[0])
+            @Html.Hidden("groupId", HttpContext.Current.Request["groupid"])
         }
     </div>
 

@@ -196,6 +196,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assign Super to Sub Group.
+        /// </summary>
+        public static string AssignSuperToSubGroup {
+            get {
+                return ResourceManager.GetString("AssignSuperToSubGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assign to.
         /// </summary>
         public static string AssignTo {
@@ -1583,6 +1592,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parent Group.
+        /// </summary>
+        public static string ParentGroup {
+            get {
+                return ResourceManager.GetString("ParentGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parlay RMS.
         /// </summary>
         public static string Parlayrms {
@@ -1921,6 +1939,15 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sub Group.
+        /// </summary>
+        public static string SubGroup {
+            get {
+                return ResourceManager.GetString("SubGroup", resourceCulture);
             }
         }
         

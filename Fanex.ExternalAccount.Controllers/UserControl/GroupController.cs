@@ -1,5 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.UserControl
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
@@ -8,11 +13,6 @@
     using Newtonsoft.Json;
     using Service.Impl.UserControl;
     using Service.Interface.UserControl;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
 
     public class GroupController : BaseController
     {
@@ -32,7 +32,7 @@
 
         public GroupController() : this(null, null, null)
         {
-        }
+        }   
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -41,7 +41,14 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [AntiXSRFFilter]
-        public ActionResult AddGroup() => PartialViewBase();
+        public ActionResult AddGroup()
+        {
+            var groups = new List<SelectListItem> { new SelectListItem { Text = "None", Value = "0" } };
+            groups.AddRange(_groupService.GetAllGroup(1).Select(group => new SelectListItem { Text = group.GroupName, Value = group.GroupID.ToString() }).ToList());
+            ViewBag.ParentGroups = groups;
+
+            return PartialViewBase();
+        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read)]
@@ -75,6 +82,7 @@
 
             model.GroupName = HttpUtility.HtmlDecode(model.GroupName);
             model.Description = HttpUtility.HtmlDecode(model.Description);
+            model.ParentGroupName = HttpUtility.HtmlDecode(model.ParentGroupName);
 
             return PartialViewBase(model);
         }
@@ -92,9 +100,9 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult Add(string name, string description)
+        public ActionResult Add(string name, string description, int parentId)
         {
-            var result = _groupService.CreateGroup(name, description, CurrentSession.CustId, CurrentContext.Ip4Address);
+            var result = _groupService.CreateGroup(name, description, parentId,  CurrentSession.CustId, CurrentContext.Ip4Address);
 
             return JsonBase(result);
         }

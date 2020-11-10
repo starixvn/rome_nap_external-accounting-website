@@ -21,6 +21,14 @@
             @Html.TextAreaFor(m => m.Description, new { @class = "form-control width-250 textarea" })
         </div>
     </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.LabelFor(m => m.ParentGroupId, ViewLang.ParentGroup, new { @class = "label" })
+        </div>
+        <div class="pull-left">
+            @Html.DropDownListFor(m => m.ParentGroupId, (List<SelectListItem>)ViewBag.ParentGroups, new { @class = "form-control width-250" })
+        </div>
+    </div>
     <div class="group form-action">
         <input class="btn -submit" type="button" value="Submit" onclick="Fanex.ExtAcc.Group.Add()" />
     </div>        

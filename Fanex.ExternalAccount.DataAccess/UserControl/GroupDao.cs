@@ -40,12 +40,13 @@
             }
         }
 
-        public IEnumerable<Group> GetAllGroup()
+        public IEnumerable<Group> GetAllGroup(int mode)
         {
             var result = new List<Group>();
 
             using (var db = new ObjectDb("EAS_GroupInfoSelAllGroup"))
             {
+                db.AddInParameter("Mode", DbType.Int16, mode);
                 using (var reader = db.ExecuteReader())
                 {
                     while (reader?.Read() == true)
@@ -110,30 +111,34 @@
             return result;
         }
 
-        public Group GetGroupById(int groupId)
+        public IEnumerable<Group> GetGroupById(int groupId, byte mode)
         {
             using (var db = new ObjectDb("EAS_GroupInfoSelByGroupID"))
             {
                 db.AddInParameter("GroupID", DbType.Int32, groupId);
+                db.AddInParameter("Mode", DbType.Byte, mode);
 
                 using (var reader = db.ExecuteReader())
                 {
-                    if (reader?.Read() == true)
+                    while (reader.Read())
                     {
-                        return new Group
-                        {
-                            GroupID = reader.ToInt("GroupID"),
-                            GroupName = reader.ToString("GroupName"),
-                            Description = reader.ToString("Description")
-                        };
+                        yield return GetGroup(reader);
                     }
                 }
             }
-
-            return null;
         }
 
-        public Result CreateGroup(string groupName, string description, int custId, string ip)
+        private static Group GetGroup(IDataReader reader)
+            => new Group
+            {
+                GroupID = reader.ToInt("GroupID"),
+                GroupName = reader.ToString("GroupName"),
+                Description = reader.ToString("Description"),
+                ParentGroupName = reader.ToString("ParentGroup"),
+                ParentGroupId = reader.ToInt("ParentId")
+            };
+
+        public Result CreateGroup(string groupName, string description, int parentId, int custId, string ip)
         {
             using (var db = new ObjectDb("EAS_GroupInfoIns"))
             {
@@ -142,6 +147,7 @@
 #pragma warning restore S1192 // String literals should not be duplicated
                 db.AddInParameter("GroupName", DbType.String, groupName);
                 db.AddInParameter("Description", DbType.String, description);
+                db.AddInParameter("ParentID", DbType.Int32, parentId);
                 db.AddInParameter("IP", DbType.String, ip);
                 db.AddOutParameter("GroupID", DbType.Int32, sizeof(int));
 

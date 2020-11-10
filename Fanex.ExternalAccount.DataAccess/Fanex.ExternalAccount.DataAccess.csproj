@@ -172,6 +172,8 @@
     <Compile Include="Criteria\GroupConfiguration\GetGroupConfigurationCriteria.cs" />
     <Compile Include="Criteria\IPInformation\GetIPInformationCriteria.cs" />
     <Compile Include="Criteria\IPInformation\GetAllSpecialIPCriteria.cs" />
+    <Compile Include="Criteria\SubGroup\GetSubGroupCustomerCriteria.cs" />
+    <Compile Include="Criteria\SubGroup\UpdateCustomerSubGroupCriteria.cs" />
     <Compile Include="Criteria\UserControl\GetGroupPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\GetUserPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateMultipleGroupPolicyCriteria.cs" />
@@ -213,11 +215,13 @@
     <Compile Include="UserControl\IGroupDao.cs" />
     <Compile Include="UserControl\IMenuDao.cs" />
     <Compile Include="UserControl\IPolicyDao.cs" />
+    <Compile Include="UserControl\ISubGroupDao.cs" />
     <Compile Include="UserControl\IUserDao.cs" />
     <Compile Include="UserControl\MenuDao.cs" />
     <Compile Include="Products\ProductStatusDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserControl\PolicyDao.cs" />
+    <Compile Include="UserControl\SubGroupDao.cs" />
     <Compile Include="UserControl\UserDao.cs" />
   </ItemGroup>
   <ItemGroup>

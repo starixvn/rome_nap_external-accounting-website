@@ -1,13 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.Service.UserControl
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.ExternalAccount.DataAccess.Criteria.GroupConfiguration;
     using Fanex.ExternalAccount.DataAccess.UserControl;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.NAP.Framework.Data;
     using Utilities.Reports.WinLossDetail;
-    using System.Linq;
 
     public interface IGroupConfigurationService
     {
@@ -52,8 +52,9 @@
             }
 
             var groups = Get(new GetGroupConfigurationCriteria { ProductId = productId });
+            var firstGroup = groups.FirstOrDefault(i => i.GroupName.Equals(groupName));
 
-            return groups.FirstOrDefault(i => i.GroupName.Equals(groupName)).IsShow;
+            return firstGroup != null && firstGroup.IsShow;
         }
     }
 }

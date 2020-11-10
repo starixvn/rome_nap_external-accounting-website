@@ -10,7 +10,7 @@
             $.ajax({
                 type: 'POST',
                 url: resolveClientUrl('CustomerList/GetCustomerStatus'),
-                data: { custId: custId },
+                data: { custId: custId, groupName: $('#selectedGroupName').html() },
                 dataType: 'json',
                 async: false,
                 success: function (result) {

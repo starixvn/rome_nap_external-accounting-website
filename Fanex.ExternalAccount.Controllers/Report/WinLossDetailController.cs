@@ -6,7 +6,6 @@
     using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
-    using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
     using DTO.Report;
     using Excel.Reports.WinLossDetailReport;
@@ -24,7 +23,7 @@
         private readonly WinLossDetailService winLossDetailService;
 
         public WinLossDetailController(
-            ICurrentSession currentSession,
+            CurrentSession currentSession,
             WinLossDetailService winLossDetailService,
             IReportService reportService,
             IGroupConfigurationService groupConfigurationService)
@@ -101,7 +100,7 @@
                     }
             }
 
-            var products = GetProductList();
+            var products = GetProductList(request.groupId);
             products = GetPPNameExportExcel(request, products);
 
             var formatedProducts = request.GetProductNames(products);
@@ -117,7 +116,7 @@
         [AntiXSRFFilter]
         public ActionResult GetExtraPT(ViewExtraPTRequest request)
         {
-            var extraPTs = winLossDetailService.GetExtraPT(request);
+            var extraPTs = winLossDetailService.GetExtraPT(request, currentSession.ParentGroupName);
 
             return Json(extraPTs);
         }
@@ -126,7 +125,7 @@
         {
             var toolTipsProducts = new
             {
-                liveCasino = BuildTooltipsForLiveCasino()
+                liveCasino = BuildTooltipsForLiveCasino(request.groupName)
             };
 
             return request.IsSearch()
@@ -136,7 +135,7 @@
                     new DrillDownWinLossDetailRequest(request, toolTipsProducts));
         }
 
-        private string BuildTooltipsForLiveCasino()
+        private string BuildTooltipsForLiveCasino(string groupName)
         {
             var liveCasino = new List<GroupConfigurationModel>
             {
@@ -145,11 +144,12 @@
                 new GroupConfigurationModel{ProductId=ProductConstants.SAGaming,ProductName="SA Gaming"},
                 new GroupConfigurationModel{ProductId=ProductConstants.GTCasino,ProductName="IBCBet Live Casino"},
                 new GroupConfigurationModel{ProductId=ProductConstants.BBin,ProductName="BBIN"},
-                new GroupConfigurationModel{ProductId=ProductConstants.ION,ProductName="ION"}
+                new GroupConfigurationModel{ProductId=ProductConstants.ION,ProductName="ION"},
+                new GroupConfigurationModel{ProductId=ProductConstants.WM,ProductName="WM"}
             };
 
             var offeredLiveCasino = liveCasino.Where(
-                i => groupConfigurationService.IsShowByProductAndGroup(i.ProductId, currentSession.CurrencyGroup));
+                i => groupConfigurationService.IsShowByProductAndGroup(i.ProductId, groupName));
 
             if (offeredLiveCasino != null && offeredLiveCasino.Any())
             {
@@ -180,7 +180,7 @@
                 if (product.Key == "showPP")
                 {
                     var userSelectedResourceIds = request.ResourceIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    var productDetails = GetProductDetails(request.groupName)
+                    var productDetails = GetProductDetails(request.groupId, request.groupName)
                         .Where(p => p.ProductKey == product.Key)
                         .ToList();
 

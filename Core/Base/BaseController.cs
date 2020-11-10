@@ -263,16 +263,16 @@
                 new CheckCustomerIsSpecialSiteCriteria { UserName = username });
         }
 
-        protected static List<KeyValuePair<string, string>> GetProductList()
+        protected static List<KeyValuePair<string, string>> GetProductList(int groupId)
         {
             return new ProductListAuthorization()
-                .GetProductList()
+                .GetProductList(groupId)
                 .Select(product => new KeyValuePair<string, string>(product.Id, product.ProductText))
                 .ToList();
         }
 
-        protected static IEnumerable<ProductDetailDto> GetProductDetails(string groupName)
-            => new ProductListAuthorization().GetProductDetails(groupName);
+        protected static IEnumerable<ProductDetailDto> GetProductDetails(int groupId, string groupName)
+            => new ProductListAuthorization().GetProductDetails(groupId, groupName);
 
         protected int GetDefaultMinBetValue()
             => CurrentSession.IsBelongToSpecialGroups ? 1 : 0;

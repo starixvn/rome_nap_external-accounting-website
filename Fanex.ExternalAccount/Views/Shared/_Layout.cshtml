@@ -107,7 +107,7 @@
                         <input placeholder="username" class="search" maxlength="50" id="txtLeftPanelUserName" type="text" autocomplete="off" />
                         <span class="icon-magnify" id="searchPanel" title="Search"></span>
                     </div>
-                    <iframe id="leftFrame" class="iframe"></iframe>
+                    <iframe id="leftFrame" class="iframe" style="visibility: hidden;"></iframe>
                 </div>
                 <div class="content" id="contentSplitter">
                     @RenderBody()
@@ -177,6 +177,10 @@
                 location.href = '@Url.Content("~/Account/LoginSso?url=")' + $(select).val() + '&line=' + $(select).find('option:selected').text();
             }
         }
+
+        $('#leftFrame').on("load", function () {
+            $("#leftFrame").css("visibility", "visible");
+        });
     </script>
     @RenderSection("Scripts", false)
 

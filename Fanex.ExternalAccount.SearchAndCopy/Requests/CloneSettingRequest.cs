@@ -19,5 +19,7 @@
         public decimal Credit { get; set; }
 
         public string ExistingUsername { get; set; }
+
+        public string GroupName { get; set; }
     }
 }

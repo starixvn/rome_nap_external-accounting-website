@@ -31,7 +31,7 @@
                     <div class="pull-left width-90">{{person.text}}</div>
                     <div class="pull-left detail bold" data-ng-click="ViewUser('{{person.value}}')">{{person.value}}</div>
 
-                    <a class="floatRight icon-home" href="~/User/InternalLogin/?username={{person.value}}" target="_blank"></a>
+                    <a class="floatRight icon-home" href="~/User/InternalLogin/?username={{person.value}}&groupname=@(Model == null ? string.Empty : Model.GroupName)" target="_blank"></a>
                 </div>
             </div>
             <div id="customerInfo" class="customer-info" data-ng-controller="PersonalInfoController" data-ng-hide="{{model==null}}">
@@ -277,6 +277,7 @@
                     <div id="online" data-ng-hide="true" class="no-info">This user is not online</div>
                 </div>
             </div>
+            @Html.Hidden("SCode", (string)ViewBag.Code)
         </div>
         @Html.AntiForgeryToken()
     </div>

@@ -3,6 +3,7 @@
 }
 
 Fanex.ExtAcc.WinLossDetail = {
+    groupId: "",
     groupName: "",
     username: "",
     srecommend: 0,
@@ -244,7 +245,7 @@ Fanex.ExtAcc.WinLossDetail = {
             context: $this,
             url: resolveClientUrl("Filter/ProductsList"),
             type: "GET",
-            data: { groupName: this.groupName },
+            data: { groupName: this.groupName, groupId: this.groupId },
             dataType: "json",
             cache: false,
             success: function (result) {
@@ -347,6 +348,7 @@ Fanex.ExtAcc.WinLossDetail = {
             }
         });
 
+        this.groupId = Fanex.ExtAcc.Customer.GetGroupId() || "";
         $this.groupName = $("#selectedGroupName").html();
 
         this.ProductsList(true);
@@ -367,6 +369,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 "&todate=" + $this.todate +
                 "&viewlevel=" + $this.viewlevel +
                 "&custid=" + $this.custId +
+                "&groupId=" + Fanex.ExtAcc.WinLossDetail.groupId +
                 "&groupname=" + $this.groupName +
                 "&username=" + Fanex.ExtAcc.WinLossDetail.username;
             var url = resolveClientUrl("WinLossDetail/ExportWinLossDetailToExcel?") + params + Fanex.ExtAcc.WinLossDetail.parameterProducts + Fanex.ExtAcc.WinLossDetail.getParameterProductDetails();
@@ -1032,7 +1035,8 @@ Fanex.ExtAcc.WinLossDetail = {
         }
 
         $this.getParameterProducts();
-        var parameterUrl = "?groupname=" + this.groupName
+        var parameterUrl = "?groupid=" + this.groupId
+            + "&groupname=" + this.groupName
             + "&srecommend=" + this.srecommend
             + "&mrecommend=" + this.mrecommend
             + "&recommend=" + this.recommend
@@ -1131,7 +1135,10 @@ Fanex.ExtAcc.WinLossDetail = {
         $this.getParameterProducts();
         $this.groupName = $("#selectedGroupName").html();
 
-        var url = resolveClientUrl('WinLossDetail/GetExtraPT') + "?groupname=" + $this.groupName + $this.parameterProducts;
+        var url = resolveClientUrl('WinLossDetail/GetExtraPT')
+            + "?groupid=" + Fanex.ExtAcc.WinLossDetail.groupId
+            + "&groupname=" + $this.groupName
+            + $this.parameterProducts;
         $.ajax({
             context: $this,
             url,

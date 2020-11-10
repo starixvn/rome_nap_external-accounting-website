@@ -64,6 +64,7 @@
                 memberOustanding);
 
             AssignSettingValue(customerStatusInfoDataset, roleId, customerModel);
+            customerModel.GroupName = groupName;
 
             return customerModel;
         }

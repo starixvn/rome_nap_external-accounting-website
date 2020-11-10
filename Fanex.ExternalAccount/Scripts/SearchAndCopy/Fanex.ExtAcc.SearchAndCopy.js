@@ -24,7 +24,8 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         $txtMaxCredit,
         $notAllowedSuperPrefixes,
         passwordTemplate,
-        existingUsername;
+        existingUsername,
+        sccode;
 
     function Init() {
         $.ajaxSetup({
@@ -56,12 +57,9 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         $txtMaxCredit = $('#txtMaxCredit');
         $notAllowedSuperPrefixes = $('#notAllowedSuperPrefixes');
         passwordTemplate = $('#passwordTemplate').html();
+        sccode = $('#SCCode').val();
 
         GetNotAllowedSuperPrefixes();
-        $("#ddlGroupName").on("change", function () {
-            var selected = $(this).find('option:selected')[0];
-            selected && GetNotAllowedSuperPrefixes(selected.innerHTML);
-        });
 
         $step2Panel.hide();
         $btnPrevious.hide();
@@ -123,14 +121,15 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         Fanex.ExtAcc.BlockUI();
         var requestParams = {
             username: username,
-            password: password,
+            password: password.encrypt(sccode),
             firstName: $.trim($txtFirstName.val()),
             lastName: $.trim($txtLastName.val()),
             phone: $.trim($txtPhone.val()),
             mobilePhone: $.trim($txtMobilePhone.val()),
             fax: $.trim($txtFax.val()),
             credit: maxCredit,
-            existingUsername: existingUsername
+            existingUsername: existingUsername,
+            groupName: $('#selectedGroupName').html() === '' ? 'ACCDDD' : $('#selectedGroupName').html()
         };
         $.post(resolveClientUrl('SearchAndCopy/SuperPost'), requestParams, function (result) {
 
@@ -247,9 +246,8 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
         $validationMessage.html(message);
     }
 
-    function GetNotAllowedSuperPrefixes(groupName) {
+    function GetNotAllowedSuperPrefixes() {
         var params = {
-            groupName: groupName || $('#selectedGroupName').html(),
             prefix: null,
             allowNewSuper: false
         };

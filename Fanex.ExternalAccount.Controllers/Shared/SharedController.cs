@@ -5,13 +5,14 @@
     using System.Linq;
     using System.Web.Mvc;
     using System.Web.Security;
+    using System.Web.SessionState;
     using Core.Context;
     using DTO;
     using Fanex.ExternalAccount.Core.Base;
+    using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.ViewModel.Shared;
     using Logging.Extensions.Web;
-    using ONEbook.UM.Models;
     using ONEbook.UM.Services;
     using ONEbook.UM.Services.Impl;
     using Service.Impl.Login;
@@ -19,6 +20,7 @@
     using Service.Interface.UserControl;
     using Utilities;
 
+    [SessionState(SessionStateBehavior.Default)]
     public class SharedController : BaseController
     {
         private static readonly string[] ignoreRecheckinCustomers = Config.IgnoreRecheckinCustomers.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
@@ -26,6 +28,7 @@
         private readonly CurrentSession _currentSession;
         private readonly IMaintenanceService _maintenanceService;
         private readonly IMenuService menuService;
+        private readonly IGroupService groupService;
 
         public SharedController()
         {
@@ -33,6 +36,7 @@
             _loginService = new LoginService();
             _maintenanceService = new MaintenanceService();
             menuService = new MenuService();
+            groupService = new GroupService();
         }
 
         public ActionResult _Layout()
@@ -60,7 +64,8 @@
 
         public ActionResult _Menu()
         {
-            var menuList = menuService.GetMenusByUserId(CurrentSession.UserId, ExtRequest.GetGroupName());
+            var isShowAssignSubGroup = CurrentSession.GroupId > 0 && (Group.IsITGroup(CurrentSession.GroupId) || groupService.GetGroupWithSubGroups(CurrentSession.GroupId).Any());
+            var menuList = menuService.GetMenusByUserId(CurrentSession.UserId, ExtRequest.GetGroupName(), isShowAssignSubGroup);
             var rootMenuList = menuList.Where(x => x.ParentId == 0);
             var menuDict = new Dictionary<string, MenuItem>();
 
@@ -154,5 +159,12 @@
             => _maintenanceService.IsUnderMaintenance()
                 ? (int)RecheckinStatus.Maintenance
                 : (int)RecheckinStatus.Login;
+
+        public bool ChangeSelectedGroup(string groupName)
+        {
+            CurrentSession.CurrencyGroup = groupName;
+
+            return true;
+        }
     }
 }

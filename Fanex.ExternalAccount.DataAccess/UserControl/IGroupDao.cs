@@ -8,15 +8,15 @@
     {
         IEnumerable<Group> GetListGroup();
 
-        IEnumerable<Group> GetAllGroup();
+        IEnumerable<Group> GetAllGroup(int mode);
 
         IEnumerable<Group> GetExternalGroup();
 
         IEnumerable<Function> GetAllGroupPolicy(int groupId);
 
-        Group GetGroupById(int groupId);
+        IEnumerable<Group> GetGroupById(int groupId, byte mode);
 
-        Result CreateGroup(string groupName, string description, int custId, string ip);
+        Result CreateGroup(string groupName, string description, int parentId, int custId,  string ip);
 
         Result EditGroup(string groupName, string description, int custId, string ip, int groupId);
 

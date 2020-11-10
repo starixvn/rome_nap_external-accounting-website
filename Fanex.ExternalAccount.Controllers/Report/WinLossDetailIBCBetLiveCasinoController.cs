@@ -1,8 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
+    using System.Collections.Generic;
+    using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
-    using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
     using DTO.Report;
     using Excel.Reports.WinLossDetailIBCBetLiveCasinoReport;
@@ -11,8 +12,6 @@
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.UserControl;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinLossDetailIBCBetLiveCasino,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -22,7 +21,7 @@
 
         public WinLossDetailIBCBetLiveCasinoController(
             IWinLossDetailIBCBetLiveCasinoService winLossDetailIBCBetLiveCasinoService,
-            ICurrentSession currentSession,
+            CurrentSession currentSession,
             IReportService reportService,
             IGroupConfigurationService groupConfigurationService)
             : base(currentSession, reportService, groupConfigurationService)
@@ -65,7 +64,7 @@
                             request.FromDate,
                             request.ToDate);
 
-            var productList = GetProductList();
+            var productList = GetProductList(request.GroupId);
             var productNames = request.GetProductNames(productList);
 
             var memoryStream = builder.Build(productNames);

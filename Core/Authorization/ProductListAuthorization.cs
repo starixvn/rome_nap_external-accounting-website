@@ -36,7 +36,7 @@
             this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
-        public IEnumerable<GroupConfigurationModel> GetProductList()
+        public IEnumerable<GroupConfigurationModel> GetProductList(int groupId)
         {
             var custId = currentSession.CustId;
 
@@ -47,7 +47,7 @@
             var isAuthorized = permissionService.CheckCustomerHasSpecialSitePermission(
                 new CheckCustomerHasSpecialSiteFunctionPermissionCriteria { CustID = custId });
 
-            var products = GetProductConfiguration().OrderBy(i => i.ProductId);
+            var products = GetProductConfiguration(groupId).OrderBy(i => i.ProductId);
             var showedProductList = new List<GroupConfigurationModel>();
             foreach (var product in products)
             {
@@ -64,14 +64,14 @@
             return showedProductList;
         }
 
-        private IEnumerable<GroupConfigurationModel> GetProductConfiguration()
+        private IEnumerable<GroupConfigurationModel> GetProductConfiguration(int groupId)
         {
             if (Group.IsOfficeGroup(currentSession.CurrencyGroup))
             {
                 return groupConfigurationService.Get(new GetGroupConfigurationCriteria());
             }
 
-            return groupConfigurationService.Get(new GetGroupConfigurationCriteria { GroupId = currentSession.GroupId });
+            return groupConfigurationService.Get(new GetGroupConfigurationCriteria { GroupId = groupId });
         }
 
         private static bool AdminDoesNotHavePermissionOnSpecialProduct(
@@ -80,9 +80,9 @@
             => checkIsInternalAdminResult.IsInternalAdmin
                && (!checkIsInternalAdminResult.IsAllowAccess || !isAuthorized);
 
-        public IEnumerable<ProductDetailDto> GetProductDetails(string groupName)
+        public IEnumerable<ProductDetailDto> GetProductDetails(int groupId, string groupName)
         {
-            var groupConfigurationModels = GetProductList();
+            var groupConfigurationModels = GetProductList(groupId);
             var productDetails = productDetailService.GetProductDetails(groupName);
 
             foreach (var item in productDetails)

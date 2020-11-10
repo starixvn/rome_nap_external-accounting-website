@@ -12,6 +12,8 @@
     {
         string GetGroupName(string group = null);
 
+        int GetGroupId();
+
         int CustId { get; }
 
         IEnumerable<int> CustIds { get; }
@@ -32,6 +34,19 @@
 
             return string.IsNullOrEmpty(newGroup) ? CurrentSession.Instance.CurrencyGroup : newGroup;
         }
+
+        public int GetGroupId()
+        {
+            var groupIdValue = HttpContext.Current.Request["groupid"];
+
+            if (string.IsNullOrWhiteSpace(groupIdValue))
+            {
+                return CurrentSession.Instance.GroupId;
+            }
+
+            return int.TryParse(groupIdValue, out var groupId) ? groupId : default(int);
+        }
+
 
         public int CustId
         {

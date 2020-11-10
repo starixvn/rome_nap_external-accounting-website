@@ -1,10 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
-    using Core.Shared;
-    using Extensions;
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using Core.Shared;
+    using Extensions;
 
     public class CustomerModel
     {
@@ -83,5 +83,7 @@
 
             return loginInfos;
         }
+
+        public string GroupName { get; set; }
     }
 }

@@ -1,13 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.UserControl
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Common.Helper;
     using DataAccess.Impl.UserControl;
     using DataAccess.Interface.UserControl;
     using DTO;
     using DTO.UserControl;
     using Interface.UserControl;
-    using System.Linq;
 
     public class GroupService : IGroupService
     {
@@ -22,7 +22,7 @@
 
         public IEnumerable<Group> GetExternalGroup() => _groupDao.GetExternalGroup().OrderBy(i => i.GroupName);
 
-        public IEnumerable<Group> GetAllGroup() => _groupDao.GetAllGroup();
+        public IEnumerable<Group> GetAllGroup(int mode = 0) => _groupDao.GetAllGroup(mode);
 
         public IEnumerable<Function> GetAllGroupPolicy(int groupId) => _groupDao.GetAllGroupPolicy(groupId);
 
@@ -30,11 +30,21 @@
         {
             Check.Argument.IsNotNegativeOrZero(groupId, "groupId");
 
-            return _groupDao.GetGroupById(groupId);
+            return _groupDao.GetGroupById(groupId, 1).FirstOrDefault();
         }
 
-        public Result CreateGroup(string groupName, string description, int custId, string ip)
-            => _groupDao.CreateGroup(groupName, description, custId, ip);
+        public IEnumerable<Group> GetGroupWithSubGroups(int groupId)
+        {
+            Check.Argument.IsNotNegativeOrZero(groupId, nameof(groupId));
+
+            const int GroupWithSub = 2;
+            var groups = _groupDao.GetGroupById(groupId, GroupWithSub).ToList();
+
+            return groups.Count > 1 ? groups : Enumerable.Empty<Group>();
+        }
+
+        public Result CreateGroup(string groupName, string description, int parentId, int custId, string ip)
+            => _groupDao.CreateGroup(groupName, description, parentId, custId, ip);
 
         public Result EditGroup(string groupName, string description, int custId, string ip, int groupId)
             => _groupDao.EditGroup(groupName, description, custId, ip, groupId);
@@ -44,5 +54,12 @@
 
         public Result DeleteGroup(int groupId, int userId)
             => _groupDao.DeleteGroup(groupId, userId);
+
+        public bool CheckIsMainGroup(int groupId)
+        {
+            var group = GetGroupById(groupId);
+
+            return group?.ParentGroupId == 0;
+        }
     }
 }

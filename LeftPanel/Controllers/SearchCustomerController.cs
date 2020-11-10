@@ -45,6 +45,7 @@
         {
             var userId = CurrentSession.UserId;
             ViewBag.UserId = userId;
+            ViewBag.Code = Encryptor.RandomCaptcha;
 
             if (string.IsNullOrWhiteSpace(custName))
             {

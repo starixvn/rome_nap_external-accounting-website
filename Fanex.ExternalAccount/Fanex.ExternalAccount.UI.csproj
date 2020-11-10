@@ -1513,6 +1513,7 @@
     </Content>
     <Content Include="Scripts\Customer\Fanex.ExtAcc.AssociationAccount.js" />
     <Content Include="Scripts\ProblemAccount\Fanex.ExtAcc.ProblemAccount.js" />
+    <Content Include="Scripts\Manage\Fanex.ExtAcc.SubGroup.js" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
@@ -2917,6 +2918,7 @@
     <Content Include="Views\Home\TestSentryLog.cshtml" />
     <Content Include="Views\AssociationAccount\Index.cshtml" />
     <Content Include="Views\ProblemAccount\Index.cshtml" />
+    <Content Include="Views\SubGroup\SubGroupList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">

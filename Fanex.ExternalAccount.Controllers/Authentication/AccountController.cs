@@ -340,7 +340,9 @@
         [ExternalAccountAuthenticate]
         public ActionResult ExternalGroupList()
         {
-            var result = groupService.GetExternalGroup();
+            var result = _currentSession.IsITAdmin || _currentSession.IsInternalAdmin
+                ? groupService.GetExternalGroup()
+                : groupService.GetGroupWithSubGroups(_currentSession.GroupId);
 
             return Json(
                 result.Select(o => new
@@ -377,6 +379,7 @@
             _currentSession.IsInternalAdmin = isInternalAdmin;
             _currentSession.GroupId = group.GroupID;
             _currentSession.CurrencyGroup = group.GroupName;
+            _currentSession.ParentGroupName = group.ParentGroupName == "None" ? group.GroupName : group.ParentGroupName;
             _currentSession.IsITAdmin = group.IsIT;
             const int CasinoExternalSystemCode = 3;
             _currentSession.FromSystem = CasinoExternalSystemCode;

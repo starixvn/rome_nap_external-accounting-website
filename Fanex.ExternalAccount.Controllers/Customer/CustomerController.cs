@@ -449,10 +449,11 @@
         [AntiXSRFFilter]
         public ActionResult UpdatePassword(int custId, string password, byte roleId)
         {
+            var rawPassword = Encryptor.Decrypt(password, Encryptor.RandomCaptcha);
             var result = _customerService.ResetPassword(
                 new ResetPasswordCriteria(
                     custId,
-                    password,
+                    rawPassword,
                     CurrentSession.UserId,
                     CurrentContext.Ip4Address)
                 );
@@ -465,7 +466,7 @@
                     var cust = new CasinoLibrary.SBAgent.Customer();
                     try
                     {
-                        cust.UpdateCustPwd(custId, Encryption.CfsEnCode(password), CurrentContext.Ip4Address,
+                        cust.UpdateCustPwd(custId, Encryption.CfsEnCode(rawPassword), CurrentContext.Ip4Address,
                             CurrentSession.UserId, CurrentSession.UserName, CurrentSession.FromSystem);
                     }
                     catch (ErrorException casinoEx)

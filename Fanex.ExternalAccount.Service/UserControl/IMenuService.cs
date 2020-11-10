@@ -8,7 +8,7 @@
     {
         IEnumerable<Menu> GetAllMenus();
 
-        IEnumerable<Menu> GetMenusByUserId(int userId, string currentGroup);
+        IEnumerable<Menu> GetMenusByUserId(int userId, string currentGroup, bool isShowAssignSubGroup);
 
         Result CreateMenu(Menu menu, int custId, string ip);
 

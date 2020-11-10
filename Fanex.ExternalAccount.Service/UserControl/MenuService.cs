@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.UserControl
 {
     using System.Collections.Generic;
+    using System.Linq;
     using DataAccess.Impl.UserControl;
     using DataAccess.Interface.UserControl;
     using DTO;
@@ -9,6 +10,7 @@
 
     public class MenuService : IMenuService
     {
+        private const string AssignSubGroupUrl = "~/SubGroup/SubGroupList";
         private readonly IMenuDao _menuDao;
         private readonly ICachingService CachingService = new CachingService();
 
@@ -19,9 +21,14 @@
 
         public IEnumerable<Menu> GetAllMenus() => _menuDao.GetAllMenus();
 
-        public IEnumerable<Menu> GetMenusByUserId(int userId, string currentGroup)
+        public IEnumerable<Menu> GetMenusByUserId(int userId, string currentGroup, bool isShowAssignSubGroup)
         {
             var userCache = CachingService.GetUserCache(userId, currentGroup);
+            
+            if (!isShowAssignSubGroup)
+            {
+                return userCache.MenuList.Where(menu => menu.Url != AssignSubGroupUrl);
+            }
 
             return userCache.MenuList;
         }

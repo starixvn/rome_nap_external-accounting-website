@@ -69,5 +69,6 @@
         public const string SabaclubSetting = "SabaclubSetting";
         public const string SearchAndCopySuper = "SearchAndCopySuper";
         public const string ProblemAccountList = "ProblemAccountList";
+        public const string SubGroup = "ManageSubGroup";
     }
 }

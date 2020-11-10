@@ -73,6 +73,10 @@
     <Setting Key="EAS_GroupPolicySel" SpName="EAS_GroupPolicySel" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_GroupPolicyUpd" SpName="EAS_GroupPolicyUpd" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
   </Function>
+  <Function Name="SubGroup">
+    <Setting Key="EAS_CustomerSelBySubGroup" SpName="EAS_CustomerSelBySubGroup" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerUpdSubGroup" SpName="EAS_CustomerUpdSubGroup" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+  </Function>
   <Function name="Group Configuration">
     <Setting Key="EAS_GroupConfigurationSel" SpName="EAS_GroupConfigurationSel" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" plain="0" />
     <Setting Key="EAS_GroupConfigurationUpd" SpName="EAS_GroupConfigurationUpd" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" plain="0" />

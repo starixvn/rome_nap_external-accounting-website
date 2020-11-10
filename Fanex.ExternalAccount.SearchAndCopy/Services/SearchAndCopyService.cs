@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Services
 {
+    using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.SearchAndCopy.Criteria;
     using Fanex.ExternalAccount.SearchAndCopy.Models;
@@ -82,17 +83,20 @@
 
         private Result CloneCustomerAndSettings(CloneSettingContext context)
         {
+            var rawPassword =  Encryptor.Decrypt(context.Request.Password, Encryptor.RandomCaptcha);
+
             var cloneSettingComCriteria = new CloneSettingComCriteria
             {
                 Username = context.Request.Username,
-                UserPwd = Encryption.CfsEnCode(context.Request.Password),
+                UserPwd = Encryption.CfsEnCode(rawPassword),
                 FirstName = context.Request.FirstName,
                 LastName = context.Request.LastName,
                 Phone = context.Request.Phone,
                 MobilePhone = context.Request.MobilePhone,
-                Fax = context.Request.LastName,
+                Fax = context.Request.Fax,
                 Credit = context.Request.Credit,
                 ExistingCustId = context.ExistingCustId,
+                GroupAdmin = context.Request.GroupName,
                 Creator = context.CurrentSession.CustId,
                 IP = context.CurrentContext.Ip4Address
             };
