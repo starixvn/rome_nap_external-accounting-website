@@ -2,7 +2,6 @@
 {
     using Core.Context;
     using Core.Shared;
-    using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Excel.Reports.SuperWinLossDetailByPT;
     using Fanex.ExternalAccount.Service.Report.SuperWinLossDetailByPT;
@@ -23,7 +22,7 @@
         private readonly SuperWinLossDetailByPTService services;
 
         public SuperWinLossDetailByPTController(
-            ICurrentSession currentSession,
+            CurrentSession currentSession,
             SuperWinLossDetailByPTService services,
             IReportService reportService,
             IGroupConfigurationService groupConfigurationService)
@@ -38,8 +37,6 @@
 
         public ActionResult Index()
         {
-            ViewBag.CanViewExtraPT = CanView(Config.GroupsCanViewExtraPT());
-
             return View();
         }
 
@@ -62,7 +59,6 @@
 
         public void ExportWinLossDetailToExcel(ExportSuperWinLossDetailByPTRequest request)
         {
-
             ISuperWinLossDetailByPTReportBuilder builder;
             var winlossDetail = services.GetSuperWinLossDetailByPT(new SuperWinLossDetailByPTParam(
                 request.GroupName,
@@ -80,7 +76,7 @@
                 request.Fromdate,
                 request.Todate);
 
-            var products = GetProductList();
+            var products = GetProductList(request.GroupId);
             products = GetPPNameExportExcel(request, products);
 
             var formatedProducts = request.GetProductNames(products);
@@ -137,7 +133,7 @@
                 if (product.Key == "showPP")
                 {
                     var userSelectedResourceIds = request.ResourceIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    var productDetails = GetProductDetails(request.GroupName)
+                    var productDetails = GetProductDetails(request.GroupId, request.GroupName)
                         .Where(p => p.ProductKey == product.Key)
                         .ToList();
 

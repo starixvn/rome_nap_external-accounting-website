@@ -15,7 +15,7 @@
         private const int PageSizeDefault = 50;
         private const int PageIndexDefault = 1;
 
-        private readonly Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter;
+        private readonly Func<int, ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter;
         private readonly IExtRequest extRequest;
         private readonly IGroupConfigurationService groupConfigurationService;
 
@@ -24,7 +24,7 @@
         }
 
         public SuperWinLossDetailByPTRequest(
-            Func<ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter,
+            Func<int, ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter,
             IExtRequest extRequest,
             IGroupConfigurationService groupConfigurationService)
         {
@@ -35,6 +35,8 @@
             this.extRequest = extRequest ?? new ExtRequest();
             this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
         }
+
+        public int GroupId => extRequest.GetGroupId();
 
         public string GroupName => extRequest.GetGroupName();
 
@@ -50,7 +52,7 @@
 
         internal string GetProductIds()
         {
-            var filterParams = selectedProductQueryGetter();
+            var filterParams = selectedProductQueryGetter(GroupId);
 
             var formatedProductIds = new List<int>();
 
@@ -72,7 +74,7 @@
 
         internal string GetProductNames(List<KeyValuePair<string, string>> productList)
         {
-            var filterParams = selectedProductQueryGetter();
+            var filterParams = selectedProductQueryGetter(GroupId);
             var formatedProducts = string.Empty;
 
             filterParams.ToList().ForEach(o =>
