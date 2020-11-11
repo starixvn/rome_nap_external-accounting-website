@@ -40,7 +40,7 @@ var DateTimeControls = /** @class */ (function () {
             }
         });
         this.$("#dtpFromDate").datepicker({
-            onClose: function () { _this.$("#userGroup input").val(_this.$("#DateList option:first").val()); },
+            onClose: function () { _this.$("#userGroup input").val(_this.$("#DateList option:last").val()); },
             showOn: "both",
             buttonImageOnly: true,
             buttonImage: resolveClientUrl("Content/Images/calendar.png"),

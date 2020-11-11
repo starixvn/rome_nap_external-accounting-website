@@ -39,7 +39,7 @@
         });
 
         this.$("#dtpFromDate").datepicker({
-            onClose: () => { this.$("#userGroup input").val(this.$("#DateList option:first").val()); },
+            onClose: () => { this.$("#userGroup input").val(this.$("#DateList option:last").val()); },
             showOn: "both",
             buttonImageOnly: true,
             buttonImage: resolveClientUrl("Content/Images/calendar.png"),
