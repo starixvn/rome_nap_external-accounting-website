@@ -959,6 +959,8 @@
                 return "closed-byUpline";
             case 3:
                 return "closed-wrongOTPSC";
+            case 4:
+                return "closed-byArchive";
             case 0:
             default:
                 return "closed-wrongPwdOthers";

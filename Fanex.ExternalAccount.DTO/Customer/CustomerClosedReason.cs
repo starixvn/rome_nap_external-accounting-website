@@ -35,7 +35,7 @@
             {
                 case wrongPasswordOthers:
                     ClassName += "wrongPwdOthers";
-                    ClosedReason = "This account was closed by failed login or account expired.";
+                    ClosedReason = "This account was closed by failed logins.";
                     break;
 
                 case byAdmin:
