@@ -65,13 +65,13 @@
                                     <td class="gameTypeWidth ptTitle R noneBorderTop noneBorderL">@NGCasinoLang.lblGroupSetting
                                     </td>
                                     <td class="C ptTitle noneBorderTop tdWidth">
-                                        <span islabel="{{gameGroup.is3}}" enable="gameGroup.is1" class="spanPT" ptarea="true"
+                                        <span islabel="{{gameGroup.is3}}" enable="gameGroup.is1" class="spanPT" ptarea="true" isPT3Decimal="@Json.Encode(Model.IsPT3Decimal)"
                                             min="n3" max="{{gameGroup.s4 - gameGroup.m3 - gameGroup.m2}}" selected="s3" data-ng-model="setting">
                                         </span>
                                     </td>
                                     <td class="C ptTitle noneBorderTop superAutoPtWidth">
                                         <input type="checkbox" data-ng-model="gameGroup.is1" />
-                                        <span enable="gameGroup.is1 == false" class="spanPT" ptarea="false" min="0" max="s4"
+                                        <span enable="gameGroup.is1 == false" class="spanPT" ptarea="false" min="0" max="s4" isPT3Decimal="@Json.Encode(Model.IsPT3Decimal)"
                                             selected="us3" data-ng-model="setting"></span>
                                     </td>
                                     <td class="C noneBorderT tdWidth">
@@ -91,13 +91,13 @@
                                                         {{gameType.gameTypeName}}
                                                     </td>
                                                     <td class="C ptTitle noneBorderTop tdWidth">
-                                                        <span islabel="{{gameType.is3}}" showbutton="false" enable="gameType.is1" class="spanPT"
+                                                        <span islabel="{{gameType.is3}}" showbutton="false" enable="gameType.is1" class="spanPT" isPT3Decimal="@Json.Encode(Model.IsPT3Decimal)"
                                                             ptarea="true" min="n3" max="{{gameType.s4 - gameType.m3 - gameType.m2}}" selected="s3"
                                                             data-ng-model="setting"></span>
                                                     </td>
                                                     <td class="C ptTitle noneBorderTop superAutoPtWidth">
                                                         <input type="checkbox" data-ng-model="gameType.is1" />
-                                                        <span showbutton="false" enable="gameType.is1 == false" class="spanPT" ptarea="true"
+                                                        <span showbutton="false" enable="gameType.is1 == false" class="spanPT" ptarea="true" isPT3Decimal="@Json.Encode(Model.IsPT3Decimal)"
                                                             min="0" max="s4" selected="us3" data-ng-model="setting"></span>
                                                     </td>
                                                     <td class="C noneBorderT tdWidth">
