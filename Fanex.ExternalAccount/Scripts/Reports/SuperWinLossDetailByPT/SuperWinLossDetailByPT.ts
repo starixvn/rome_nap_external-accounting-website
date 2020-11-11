@@ -19,9 +19,9 @@ class SuperWinLossDetailByPT {
         this.$ = $;
         this.topWindow = topWindow;
 
-        this.fixedsortdata= [];
+        this.fixedsortdata = [];
         this.fixedsortlist = [];
-        this.hideFilter= false;
+        this.hideFilter = false;
         this.dateTimeControls = new DateTimeControls($);
         this.productControls = new ProductControls($);
     }
@@ -110,7 +110,7 @@ class SuperWinLossDetailByPT {
 
     BuildBodyData(dataSource) {
         let bodyData = [];
-        for (let i = 0; i < dataSource.length ; i++) {
+        for (let i = 0; i < dataSource.length; i++) {
             let subRows = [];
             for (let j = 0; j < dataSource[i].WinLossByProducts.length; j++) {
                 subRows.push(this.BuildSubRowData(dataSource[i].WinLossByProducts[j]));
@@ -318,14 +318,15 @@ class SuperWinLossDetailByPT {
 
         this.$("#mainGrid").css("display", existedData ? "block" : "none");
         this.$("#mainGrid").css("visibility", existedData ? "visible" : "hidden");
-        this.$("#exporttoexcel").css("display", existedData ? "block" : "none");
         this.$("#msgNoinfo").css("display", existedData ? "none" : "block");
 
         if (existedData) {
             this.Render(data, dateTimeParams);
             this.$("#exporttoexcel").removeClass("hide");
+            this.$("#pt-infor").removeClass("hide");
         } else {
             this.$("#exporttoexcel").addClass("hide");
+            this.$("#pt-infor").addClass("hide");
         }
 
         Fanex.ExtAcc.UnBlockUI();

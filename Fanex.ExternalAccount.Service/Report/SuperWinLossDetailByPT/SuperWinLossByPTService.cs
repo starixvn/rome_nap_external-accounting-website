@@ -1,17 +1,16 @@
 ﻿namespace Fanex.ExternalAccount.Service.Report.SuperWinLossDetailByPT
 {
+    using CasinoLibrary.SBAgent;
+    using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DataAccess.Criteria.SuperWinLossDetailByPT;
     using Fanex.ExternalAccount.DataAccess.Impl.Report;
     using Fanex.ExternalAccount.DTO.Report;
     using Fanex.ExternalAccount.Service.Impl.Report;
-    using Fanex.ExternalAccount.Service.Interface.Report;
+    using Fanex.ExternalAccount.Service.Products;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using CasinoLibrary.SBAgent;
     using System.Data;
-    using Fanex.ExternalAccount.Core.Shared;
-    using Fanex.ExternalAccount.Service.Products;
+    using System.Linq;
 
     public interface SuperWinLossDetailByPTService
     {

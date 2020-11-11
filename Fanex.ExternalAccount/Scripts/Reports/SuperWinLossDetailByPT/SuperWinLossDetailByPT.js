@@ -270,14 +270,15 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
         var existedData = data.WinLossByUsernames !== null && data.WinLossByUsernames.length > 0;
         this.$("#mainGrid").css("display", existedData ? "block" : "none");
         this.$("#mainGrid").css("visibility", existedData ? "visible" : "hidden");
-        this.$("#exporttoexcel").css("display", existedData ? "block" : "none");
         this.$("#msgNoinfo").css("display", existedData ? "none" : "block");
         if (existedData) {
             this.Render(data, dateTimeParams);
             this.$("#exporttoexcel").removeClass("hide");
+            this.$("#pt-infor").removeClass("hide");
         }
         else {
             this.$("#exporttoexcel").addClass("hide");
+            this.$("#pt-infor").addClass("hide");
         }
         Fanex.ExtAcc.UnBlockUI();
     };
