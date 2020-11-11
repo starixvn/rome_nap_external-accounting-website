@@ -27,6 +27,7 @@
             const byte byAdmin = 1; // purple: #b3a2c7
             const byte byUpline = 2; // orange: #f79646
             const byte wrongOtpsc = 3; // blue: #86c5e4
+            const byte byArchive = 4; // dark grey hi-light: #969696
 
             ClassName = "closed-";
 
@@ -50,6 +51,11 @@
                 case wrongOtpsc:
                     ClassName += "wrongOTPSC";
                     ClosedReason = "This account was closed by false input of OTP/Security Code.";
+                    break;
+
+                case byArchive:
+                    ClassName += "byArchive";
+                    ClosedReason = "This account was closed by inactivity.";
                     break;
 
                 default:
