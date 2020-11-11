@@ -22,7 +22,8 @@
             ProductConstants.SpadeGaming,
             ProductConstants.CardClub,
             ProductConstants.PGSoft,
-            ProductConstants.Joker
+            ProductConstants.Joker,
+            ProductConstants.WM
         };
 
         protected MultipleEditProductStatus()
