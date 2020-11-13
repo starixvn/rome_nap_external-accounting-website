@@ -15,6 +15,7 @@
             var specialProductIds = Config.SpecialProductIds();
             
 
+
             IProductService productService = new ProductService();
             var adminDoesNotHavePermissionOnSpecialProduct = productService.AdminDoesNotHavePermissionOnSpecialProduct(CurrentSession.Instance.CustId);
 

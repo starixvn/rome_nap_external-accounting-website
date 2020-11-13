@@ -1114,7 +1114,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 $("#netTurnover").bind("click",
                     function () {
                         var message =
-                            "- For Sportbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
+                            "- For Sportsbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
                         var height = 170;
 
                         if (data.tooltips.liveCasino != "") {
