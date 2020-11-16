@@ -2954,6 +2954,7 @@
     <Content Include="Views\SuperWinLossDetailByPT\Index.cshtml" />
     <Content Include="Views\ProblemAccount\Index.cshtml" />
     <Content Include="Views\SubGroup\SubGroupList.cshtml" />
+    <Content Include="Views\SubGroup\ChangeSubGroupAdminPassword.cshtml" />
     <Content Include="typings\globals\jasmine-jquery\typings.json" />
     <Content Include="typings\globals\jasmine\typings.json" />
     <Content Include="typings\globals\jquery.blockui\typings.json" />

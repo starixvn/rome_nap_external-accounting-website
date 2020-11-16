@@ -72,5 +72,13 @@
 
             return JsonBase(result);
         }
+
+        [ExternalAccountAuthenticate(Function = eFunctions.SubGroup,
+            Policy = AuthenticateAction.AuthenticationType.Host, IsAjaxRequest = false)]
+        [AntiXSRFFilter]
+        public ActionResult ChangeSubGroupAdminPassword()
+        {
+            return PartialViewBase();
+        }
     }
 }

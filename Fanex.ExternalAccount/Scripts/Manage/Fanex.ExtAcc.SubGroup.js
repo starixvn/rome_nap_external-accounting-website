@@ -189,6 +189,14 @@ Fanex.ExtAcc.SubGroup = {
                 $this.ShowAssignAllCustomerPopup(updateRequest, "Unassign all supers (this page)", "Are you sure you want to Unassign all supers (this page)?<br>Please be reminded that newly created super must be manually assigned to sub accounts.");
             }
         };
+        menuItems.changeSubAdminPassword = {
+            name: "Change Sub Group Admin's Password",
+            className: "",
+            callback: function () {
+                top.shouldCalculatePopupHeight = false;
+                Fanex.ExtAcc.Form.Show(resolveClientUrl('SubGroup/ChangeSubGroupAdminPassword'), "Change Sub Group Admin's Password", 400, 350, false);
+            }
+        };
         $.contextMenu({
             selector: "div[id^='editMult']",
             items: menuItems,
