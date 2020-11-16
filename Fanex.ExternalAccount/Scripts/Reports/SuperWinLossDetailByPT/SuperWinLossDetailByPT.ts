@@ -30,7 +30,7 @@ class SuperWinLossDetailByPT {
         this.dateTimeControls.Init();
         this.productControls.Init();
 
-        this.$(".icon-filter").click(this.ShowHideFilter);
+        this.$(".icon-filter").click(() => this.ShowHideFilter());
 
         this.$("#userGroup input").attr("readonly", "true");
         this.$("#userGroup input").bind("click", event => this.$(event.currentTarget).autocomplete("search", ""));
