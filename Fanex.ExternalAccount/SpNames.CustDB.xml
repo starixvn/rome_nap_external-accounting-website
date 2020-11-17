@@ -323,4 +323,7 @@
     <Setting Key="EAS_ProblemAccount_CustomerList" SpName="EAS_ProblemAccount_CustomerList" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_ProblemAccount_ReviewStatusUpd" SpName="EAS_ProblemAccount_ReviewStatusUpd" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
+  <Function Name="User belong to Group">
+    <Setting Key="EAS_UserCheckBelonging" SpName="EAS_UserCheckBelonging" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+  </Function>
 </Functions>

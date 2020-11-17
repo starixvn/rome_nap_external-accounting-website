@@ -9,9 +9,7 @@
     using DTO;
     using DTO.UserControl;
     using Service;
-    using Service.Impl.Report;
     using Service.Impl.UserControl;
-    using Service.Interface.Report;
     using Service.Interface.UserControl;
     using Shared;
 
@@ -19,7 +17,7 @@
     {
         bool IsBelong();
 
-        bool IsBelong(string groupName, int custId, string userName, bool isGetUplineInfo);
+        bool IsBelong(string groupName, int custId, string userName);
 
         bool IsAuthorized(
             int userId,
@@ -45,8 +43,8 @@
         public static readonly AuthorizationServiceImpl Instance = new AuthorizationServiceImpl();
 
         private readonly ICachingService cachingService;
-        private readonly IReportService reportService;
         private readonly IIPInformatonService ipInformationService;
+        private readonly IBelongingService belongingService;
 
         public AuthorizationServiceImpl() : this(null, null, null)
         {
@@ -54,12 +52,12 @@
 
         public AuthorizationServiceImpl(
             ICachingService cachingService,
-            IReportService reportService,
-            IIPInformatonService ipInformationService)
+            IIPInformatonService ipInformationService,
+            IBelongingService userService)
         {
             this.cachingService = cachingService ?? new CachingService();
-            this.reportService = reportService ?? new ReportService();
             this.ipInformationService = ipInformationService ?? new IPInformationService();
+            this.belongingService = belongingService ?? new BelongingService();
         }
 
         public bool IsBelong()
@@ -69,31 +67,22 @@
                 return IsBelong(ExtRequest.Instance.GetGroupName(), ExtRequest.Instance.CustIds);
             }
 
-            return IsBelong(ExtRequest.Instance.GetGroupName(), ExtRequest.Instance.CustId, string.Empty, false);
+            return IsBelong(ExtRequest.Instance.GetGroupName(), ExtRequest.Instance.CustId, string.Empty);
         }
 
-        public bool IsBelong(string groupName, int custId, string userName, bool isGetUplineInfo)
+        public bool IsBelong(string groupName, int custId, string userName)
         {
-            if (!CurrentSession.Instance.IsInternalAdmin)
-            {
-                if (custId == 0 && string.IsNullOrEmpty(userName))
-                {
-                    return true;
-                }
+            var currentSession = CurrentSession.Instance;
 
-                var result = reportService.GetCustomerInfo(groupName, custId, userName, isGetUplineInfo);
-
-                return result?.Rows.Count > 0;
-            }
-
-            return CurrentSession.Instance.IsInternalAdmin;
+            return currentSession.IsInternalAdmin
+                || belongingService.IsBelonging(currentSession.UserId, groupName, custId, userName);
         }
 
         private bool IsBelong(string groupName, IEnumerable<int> custIds)
         {
             foreach (var id in custIds)
             {
-                var isBeloging = IsBelong(groupName, id, string.Empty, false);
+                var isBeloging = IsBelong(groupName, id, string.Empty);
                 if (!isBeloging)
                 {
                     return isBeloging;

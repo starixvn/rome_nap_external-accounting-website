@@ -1,8 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Service.Interface.UserControl
 {
+    using System.Collections.Generic;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.UserControl;
-    using System.Collections.Generic;
 
     public interface IUserService
     {
