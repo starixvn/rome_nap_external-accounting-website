@@ -64,6 +64,9 @@ Fanex.ExtAcc.SubGroup = {
                 CustomCellRender: function (cell) {
                     return !cell.Value.isEnabled ? 'Disabled' : cell.Value.isClosed ? 'Closed' : cell.Value.isSuspended ? 'Suspended' : 'Open';
                 }
+            },
+            {
+                HeaderText: 'Assigned Sub Groups', Name: 'AssignedSubGroups', Width: 200, HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: false, TdClass: 'word-break-all'
             }
         ];
 
@@ -103,7 +106,8 @@ Fanex.ExtAcc.SubGroup = {
                     $this.customerList.push(customer.custId);
                     var columns = [
                         { Name: 'Username', Value: customer.username },
-                        { Name: 'Status', Value: customer }
+                        { Name: 'Status', Value: customer },
+                        { Name: 'AssignedSubGroups', Value: customer.subGroup }
                     ];
 
                     for (var j = 0; j < customer.subGroupStatusList.length; j++) {
@@ -118,12 +122,12 @@ Fanex.ExtAcc.SubGroup = {
                 var options = {
                     columns: header,
                     bodyRows: bodyRows,
-                    autoCalculateGridExpandHeight: true,
                     marginRight: 10,
-                    showDistinctRow: false,
-                    allowTruncate: true,
                     showPager: true,
                     customPager: true,
+                    autoFixFrozenRowHeight: true,
+                    allowtruncate: true,
+                    gridExpandHeight: 100,
                     pagerOption: {
                         itemsPerPageArray: [50, 100, 500],
                         currentPage: pageIndex - 1,
@@ -194,7 +198,8 @@ Fanex.ExtAcc.SubGroup = {
             className: "",
             callback: function () {
                 top.shouldCalculatePopupHeight = false;
-                Fanex.ExtAcc.Form.Show(resolveClientUrl('SubGroup/ChangeSubGroupAdminPassword'), "Change Sub Group Admin's Password", 400, 350, false);
+                var subGroupName = $('#selSubGroup').val();
+                Fanex.ExtAcc.Form.Show(resolveClientUrl('SubGroup/ChangeSubGroupAdminPassword?groupName=' + subGroupName), "Change Sub Group Admin's Password", 400, 350, false);
             }
         };
         $.contextMenu({
@@ -205,6 +210,61 @@ Fanex.ExtAcc.SubGroup = {
             autoHide: true
         });
         $("div[id^='editMult']").contextMenu(true);
+    },
+    ChangeSubGroupAdminPassword: function () {
+        var password = $('#newpassword').val();
+        var confirmPasword = $('#confirmpassword').val();
+
+        var errorMessage = "";
+        var errorField;
+
+        if (!Validators.validateInput(password)) {
+            errorField = $('#newpassword');
+            errorMessage = 'Password is required';
+        } else if (password.length > 30) {
+            errorField = $('#newpassword');
+            errorMessage = "Password's max length is 30 characters";
+        } else if (!Validators.validateInput(confirmPasword)) {
+            errorField = $('#confirmpassword');
+            errorMessage = 'Confirm password is required';
+        } else if (confirmPasword.length > 30) {
+            errorField = $('#confirmpassword');
+            errorMessage = "Confirm password's max length is 30 characters";
+        } else if (password !== confirmPasword) {
+            errorField = $('#confirmpassword');
+            errorMessage = 'Confirm password is not matched.';
+        }
+
+        if (errorMessage !== "") {
+            $("#err-message").html(errorMessage).removeClass("hide");
+            errorField.addClass("invalid-field").focus();
+            return false;
+        }
+
+        $("#err-message").addClass("hide");
+        Fanex.ExtAcc.BlockUI();
+        var encryptCode = $("#SCode").val();
+        var request = {
+            custId: $('#AdminId').val(),
+            password: encodeURIComponent(password.encrypt(encryptCode))
+        };
+        $.ajax({
+            url: resolveClientUrl('SubGroup/UpdateAdminPassword/?adminId=' + request.custId + '&password=' + request.password),
+            type: 'post'
+        })
+            .done(function (data) {
+                if (!data.isSuccess) {
+                    $('#err-message').html(data.errorMessage.formatErrorMessage()).removeClass('hide');
+                } else {
+                    Fanex.ExtAcc.Form.Close(false);
+                }
+
+                Fanex.ExtAcc.UnBlockUI();
+            })
+            .error(function (data) {
+                if (typeof console != 'undefined') console.log(data.responseText);
+                Fanex.ExtAcc.UnBlockUI();
+            });
     },
     ShowAssignAllCustomerPopup: function (updateRequest, title, msg) {
         $('#errMsg').hide();
@@ -261,8 +321,7 @@ Fanex.ExtAcc.SubGroup = {
                 $('#errMsg').html(data.errorMessage.formatErrorMessage());
             }
             else {
-                checkBox.prop("checked", updateRequest.IsAssigned === "true");
-                checkBox.attr("data-isAssigned", updateRequest.IsAssigned !== "true");
+                $this.GetCustomerList($this.params.pageIndex, $this.params.pageSize);
             }
             Fanex.ExtAcc.UnBlockUI();
         });

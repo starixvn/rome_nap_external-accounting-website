@@ -177,6 +177,7 @@
     <Compile Include="Result.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report\SuggestedUserName.cs" />
+    <Compile Include="SubGroup\SubGroupAdmin.cs" />
     <Compile Include="SubGroup\SubGroupStatus.cs" />
     <Compile Include="UserControl\Function.cs" />
     <Compile Include="UserControl\FunctionPolicy.cs" />

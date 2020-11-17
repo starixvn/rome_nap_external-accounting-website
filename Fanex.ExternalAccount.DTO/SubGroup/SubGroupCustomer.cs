@@ -14,6 +14,8 @@
 
         public bool IsEnabled { get; set; }
 
+        public string SubGroup { get; set; }
+
         public IEnumerable<SubGroupStatus> SubGroupStatusList { get; set; }
     }
 }

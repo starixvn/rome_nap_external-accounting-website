@@ -129,6 +129,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 showPager: true,
                 customPager: true,
                 showNumberColumn: true,
+                allowtruncate: true,
                 pagerOption: {
                     itemsPerPageArray: [50, 100, 500],
                     currentPage: result.PageIndex - 1,
@@ -269,6 +270,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         if (isMyanmarOdds) {
             columns.push(!isMemberList ? { HeaderText: 'Myanmar Odds', Name: 'discountmyanmarodds', Width: 100, CellAlign: 'center' } : undefined);
         }
+        columns.push(isSuperList ? { HeaderText: 'Assigned Sub Groups', Name: 'AssignedSubGroups', HeaderAlign: 'center', CellAlign: 'left', Width: 160, AllowTruncate: false, TdClass: 'word-break-all' } : undefined);
         columns.push(isSuperList ? { HeaderText: 'Data Available', Name: 'DateLimit', CellAlign: 'center', Width: 100 } : undefined);
         columns.push({ HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 160 });
         columns.push({
@@ -293,6 +295,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push({ HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 });
         columns.push({ HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 });
         columns.push(!isMemberList ? { HeaderText: 'Commission', Name: 'commision', MergeColNumber: isMyanmarOdds ? 4 : 6 } : undefined);
+        columns.push(isSuperList ? { HeaderText: 'Assigned Sub Groups', Name: 'AssignedSubGroups', MergeRowNumber: 2, AllowTruncate: false, TdClass: 'word-break-all' } : undefined);
         columns.push(isSuperList ? { HeaderText: 'Data Available', Name: 'DateLimit', MergeRowNumber: 2 } : undefined);
         columns.push(isMemberList ? { HeaderText: 'User Group', Name: 'ugroup', MergeRowNumber: 2 } : undefined);
         columns.push(isMemberList ? { HeaderText: 'Agent Commission', Name: 'discount', MergeColNumber: isMyanmarOdds ? 4 : 3 } : undefined);
@@ -342,6 +345,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
             columns.push(isMemberList ? { Name: 'playerdiscountmyanmarodds', Value: currentRow.PlayerDiscountMyanmarOdds ? currentRow.PlayerDiscountMyanmarOdds : 0 } : undefined);
         }
 
+        columns.push(isSuperList ? { Name: 'AssignedSubGroups', Value: currentRow.SubGroup } : undefined);
         columns.push(isSuperList ? { Name: 'DateLimit', Value: currentRow.MinDate ? moment(currentRow.MinDate).format("MM/DD/YYYY") : currentRow.LimitDays !== "" ? currentRow.LimitDays : "" } : undefined);
 
         columns.push({ Name: 'createdate', Value: currentRow.CreateDate, FormatDateTime: 'MM/DD/YYYY hh:mm:ss A' });
