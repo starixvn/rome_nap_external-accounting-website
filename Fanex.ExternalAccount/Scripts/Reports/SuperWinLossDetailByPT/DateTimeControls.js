@@ -91,8 +91,8 @@ var DateTimeControls = /** @class */ (function () {
         var day = date.getDate();
         var month = date.getMonth() + 1;
         var year = date.getFullYear();
-        var totalDays = day + (2 * month) + (3 * (month + 1) / 5) + year + (year / 4) - (year / 100) + (year / 400) + 2;
-        var dayNo = totalDays % 7;
+        var totalDays = day + (2 * month) + Math.round(3 * (month + 1) / 5) + year + Math.round(year / 4) - (year / 100) + Math.round(year / 400) + 2;
+        var dayNo = (totalDays % 7);
         if (dayNo === 0) {
             dayNo = 7;
         }

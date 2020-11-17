@@ -91,7 +91,7 @@
 
                                 var productNames = new List<string>();
 
-                                foreach (var winloss in winlossGroupByPTs.OrderBy(winloss => winloss.ProductName))
+                                foreach (var winloss in winlossGroupByPTs.OrderBy(winloss => winloss.ProductId))
                                 {
                                     turnover += winloss.Turnover;
                                     netTurnover += winloss.NetTurnover;

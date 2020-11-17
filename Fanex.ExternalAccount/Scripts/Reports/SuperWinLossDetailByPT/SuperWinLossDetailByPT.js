@@ -23,7 +23,7 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
     SuperWinLossDetailByPT.prototype.BuildDefaultColumns = function () {
         return [
             { HeaderText: "Username", Name: "Username", Width: 180, Sort: true, HeaderAlign: "center", CellAlign: "left", ShowCollapseExpand: true },
-            { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+            { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, SortDirection: 'desc', HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
             { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
             { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
             { HeaderText: "Win/Loss", Name: "MemberWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -205,7 +205,7 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
         if (countFixedSort > 0) {
             for (var i = 0; i < countFixedSort; i++) {
                 for (var j = 0; j < rows.length; j++) {
-                    if (this.fixedsortlist[i] === rows[j].Columns[0].Value.CustId) {
+                    if (this.fixedsortlist[i] === rows[j].Columns[0].Value.Turnover) {
                         this.fixedsortdata.push(rows.slice(j, j + 1)[0]);
                         rows.unshift(rows.splice(j, 1)[0]);
                         break;
@@ -220,7 +220,7 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
         if (countFixedSort > 0) {
             for (var i = 0; i < countFixedSort; i++) {
                 for (var j = 0; j < dataSource.length; j++) {
-                    if (this.fixedsortlist[i] === dataSource[j].CustId) {
+                    if (this.fixedsortlist[i] === dataSource[j].Turnover) {
                         this.fixedsortdata.push(dataSource.slice(j, j + 1)[0]);
                         dataSource.unshift(dataSource.splice(j, 1)[0]);
                         break;
