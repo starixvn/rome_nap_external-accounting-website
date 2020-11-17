@@ -15,14 +15,17 @@ KenoModule.service('commonService', function () {
     }
 
     this.roundPTValue = function (value) {
-        return Math.round(value * 100) / 100;
+        return isPT3Decimal ? Math.round(value * 1000) / 1000 : Math.round(value * 100) / 100;
     }
 
     this.getRangePTValue = function (max, min) {
-        var ptValue = {
-            stepValue: 0.01,
-            roundValue: 100
-        };
+        var ptValue = isPT3Decimal ? {
+            stepValue: 0.005,
+            roundValue: 1000
+        } : {
+                stepValue: 0.01,
+                roundValue: 100
+            };
 
         return getRangeValue(max, min, ptValue.stepValue, ptValue.roundValue);
     };

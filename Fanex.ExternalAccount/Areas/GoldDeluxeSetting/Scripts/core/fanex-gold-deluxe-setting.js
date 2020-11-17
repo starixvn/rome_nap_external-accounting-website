@@ -66,7 +66,7 @@ fanex.goldDeluxeSetting = angular.module('fanex.goldDeluxeSetting', ['ngSanitize
 fanex.goldDeluxeSetting.config(['$httpProvider', function ($httpProvider) {
     'use strict';
     $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-} ]);
+}]);
 
 fanex.goldDeluxeSetting.formType = {
     Add: 0,
@@ -89,7 +89,7 @@ fanex.goldDeluxeSetting.updateType = {
 };
 //// Constant
 fanex.goldDeluxeSetting.UN_AUTHORIZED_CODE = 401;
-fanex.goldDeluxeSetting.PT_INTERVAL = 0.01;
+fanex.goldDeluxeSetting.PT_INTERVAL = isPT3Decimal ? 0.005 : 0.01;
 fanex.goldDeluxeSetting.COM_INTERVAL = 0.0005;
 fanex.goldDeluxeSetting.COM_DECIMAL = 4;
 fanex.goldDeluxeSetting.PT_DECIMAL = 2;
@@ -118,7 +118,7 @@ fanex.goldDeluxeSetting.errorResult = {
 fanex.goldDeluxeSetting.rootUrl = document.getElementById('GoldDeluxeRoot') ? document.getElementById('GoldDeluxeRoot').value : '/';
 
 
-fanex.goldDeluxeSetting.config([ '$httpProvider', function ($httpProvider) {
+fanex.goldDeluxeSetting.config(['$httpProvider', function ($httpProvider) {
     'use strict';
     $httpProvider.responseInterceptors.push('loadingInterceptor');
 
@@ -134,7 +134,7 @@ fanex.goldDeluxeSetting.config([ '$httpProvider', function ($httpProvider) {
     }
 }]);
 
-fanex.goldDeluxeSetting.factory('loadingInterceptor', [ '$q', function ($q) {
+fanex.goldDeluxeSetting.factory('loadingInterceptor', ['$q', function ($q) {
     'use strict';
     return function (promise) {
         return promise.then(function (response) {

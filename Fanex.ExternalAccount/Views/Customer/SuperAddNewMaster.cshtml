@@ -25,8 +25,8 @@
     </div>
     <div class="noteMsg">
         @(session.IsBelongToSpecialGroups ?
-            Html.Raw(Resources.Lang.SMAUnlimitedBetSettingWarningMessageDirectionV3) :
-            Html.Raw(Resources.Lang.SMAUnlimitedBetSettingWarningMessage))
+                    Html.Raw(Resources.Lang.SMAUnlimitedBetSettingWarningMessageDirectionV3) :
+                    Html.Raw(Resources.Lang.SMAUnlimitedBetSettingWarningMessage))
     </div>
     <div class="customerInfo clear">
         <div class="headerTab">
@@ -162,6 +162,7 @@
     <input type="hidden" id="parentId" value="@Request["custId"]" />
     <input type="hidden" id="parentUsername" value="@parentUsername" />
     <input type="hidden" id="parentCurrencyId" value="@Request["currencyId"]" />
+    <input type="hidden" id="PT3DecimalSites" value="@AppSettings.PT3DecimalSites" />
     @Html.AntiForgeryToken()
 </div>
 

@@ -213,6 +213,7 @@
     <div class="floatR">
         <input id="buttonPopup2" class="btn -submit buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
     </div>
+    <input type="hidden" id="PT3DecimalSites" value="@AppSettings.PT3DecimalSites" />
     @Html.AntiForgeryToken()
 </div>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Languages.en.js")" type="text/javascript">

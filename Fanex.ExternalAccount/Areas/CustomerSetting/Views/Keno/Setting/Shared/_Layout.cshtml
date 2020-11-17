@@ -2,6 +2,7 @@
 @using Newtonsoft.Json.Serialization
 @using Fanex.CustomerSetting.Module.Keno.Resources;
 @using Fanex.ExternalAccount.Core.Shared;
+@using Fanex.ExternalAccount.Utilities;
 <!DOCTYPE html>
 <html ng-app='kenoSettingModule' id="ng-app">
 
@@ -102,6 +103,7 @@
     var usernames;
     var isMultipleEdit;
     var isBelongToSpecialGroups = @isBelongToSpecialGroups.ToString().ToLowerInvariant();
+    var isPT3Decimal = model.customerInformation.isPT3Decimal;
 
     if(parent.Fanex.ExtAcc.Customer.IsMultiple) {
         InitMultipleEditInformation();

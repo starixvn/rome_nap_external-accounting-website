@@ -4,12 +4,12 @@ angular.element(document.getElementById('ng-app')).ready(function () {
     $('#ng-app').show();
 });
 
-toPTSource = function (obj, resetSelected, isComm) {
+toPTSource = function (obj, resetSelected, isComm, isPT3Decimal) {
     var index = -1;
     var itemIndex = 0;
     var min = obj.min;
     var max = obj.max;
-    var step = isComm ? 0.0005 : 0.01;
+    var step = isComm ? 0.0005 : isPT3Decimal ? 0.005 : 0.01;
     var selectedValue = obj.selected;
     var breakpt = obj.breakpt;
     min = min < 0 ? 0 : min;
@@ -68,6 +68,7 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
         link: function (scope, elm, attrs, ctrl) {
 
             var isComm = attrs.iscomm == 'true';
+            var isPT3Decimal = attrs.ispt3decimal == 'true';
             var source = "$" + attrs.selected;
             scope[attrs.ngModel][source] = {};
 
@@ -85,7 +86,7 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
                 obj.max = max;
                 obj.selected = selected;
 
-                toPTSource(obj, false, isComm);
+                toPTSource(obj, false, isComm, isPT3Decimal);
             }
 
             function render() {
@@ -117,11 +118,11 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
                     max: max,
                     selected: selected,
                     warning: warned || curWarn
-                }, false, isComm);
+                }, false, isComm, isPT3Decimal);
             }
 
             var template = "<select ng-blur=\"" + source + "blur($event)\" ng-touchstart=\"" + source + "focus($event)\" ng-mouseenter=\"" + source + "focus($event)\" ng-change=\"" + source + "change($event, setting." + source + ")\" class='input-small' ng-disabled='" + attrs.enable + "' ng-model='setting." + source + ".selected' ng-options='pt for pt in setting." + source + ".pts'>" +
-                            "</select>";
+                "</select>";
 
             if (attrs.islabel == "true") {
                 var model = "setting." + source + ".selected";
@@ -130,14 +131,14 @@ module.directive("ptarea", function ($compile, $timeout, $rootScope) {
             else {
                 if (attrs.showbutton != "false") {
                     template +=
-                            "<input type='button' class='btnPTDown' ng-touchstart=\"" + source + "down($event, setting." + source + ", 1, " + isComm + ")\" ng-click=\"" + source + "down($event, setting." + source + ", 1, " + isComm + ")\" class='btn' ng-disabled='" + attrs.enable + "' />" +
-                            "<input type='button' class='btnPTUp' ng-touchstart=\"" + source + "up($event, setting." + source + ", 1, " + isComm + ")\" ng-click=\"" + source + "up($event, setting." + source + ", 1, " + isComm + ")\" class='btn' ng-disabled='" + attrs.enable + "' />" +
-                            "<input type='button' class='btnPTSub' ng-touchstart=\"" + source + "down($event, setting." + source + ", 10, " + isComm + ")\" ng-click=\"" + source + "down($event, setting." + source + ", 10, " + isComm + ")\"  class='btn' ng-disabled='" + attrs.enable + "' />" +
-                            "<input type='button' class='btnPTAdd' ng-touchstart=\"" + source + "up($event, setting." + source + ", 10, " + isComm + ")\" ng-click=\"" + source + "up($event, setting." + source + ", 10, " + isComm + ")\"  class='btn' ng-disabled='" + attrs.enable + "' />";
+                        "<input type='button' class='btnPTDown' ng-touchstart=\"" + source + "down($event, setting." + source + ", 1, " + isComm + ")\" ng-click=\"" + source + "down($event, setting." + source + ", 1, " + isComm + ")\" class='btn' ng-disabled='" + attrs.enable + "' />" +
+                        "<input type='button' class='btnPTUp' ng-touchstart=\"" + source + "up($event, setting." + source + ", 1, " + isComm + ")\" ng-click=\"" + source + "up($event, setting." + source + ", 1, " + isComm + ")\" class='btn' ng-disabled='" + attrs.enable + "' />" +
+                        "<input type='button' class='btnPTSub' ng-touchstart=\"" + source + "down($event, setting." + source + ", 10, " + isComm + ")\" ng-click=\"" + source + "down($event, setting." + source + ", 10, " + isComm + ")\"  class='btn' ng-disabled='" + attrs.enable + "' />" +
+                        "<input type='button' class='btnPTAdd' ng-touchstart=\"" + source + "up($event, setting." + source + ", 10, " + isComm + ")\" ng-click=\"" + source + "up($event, setting." + source + ", 10, " + isComm + ")\"  class='btn' ng-disabled='" + attrs.enable + "' />";
                 }
                 else {
                     template +=
-                            "<span ng-init=\"setting." + source + ".warning=false\" ng-model=\"setting." + source + ".warning\" ng-show=\"setting." + source + ".warning\" style=\"color: Red\">*</span>";
+                        "<span ng-init=\"setting." + source + ".warning=false\" ng-model=\"setting." + source + ".warning\" ng-show=\"setting." + source + ".warning\" style=\"color: Red\">*</span>";
                 }
             }
 
@@ -216,7 +217,7 @@ module.directive('ngFocus', ['$parse', function ($parse) {
             });
         });
     };
-} ]);
+}]);
 
 module.directive('ngTouchStart', ['$parse', function ($parse) {
     return function (scope, element, attr) {
@@ -228,7 +229,7 @@ module.directive('ngTouchStart', ['$parse', function ($parse) {
             });
         });
     };
-} ]);
+}]);
 
 module.directive('ngBlur', ['$parse', function ($parse) {
     return function (scope, element, attr) {
@@ -240,7 +241,7 @@ module.directive('ngBlur', ['$parse', function ($parse) {
             });
         });
     };
-} ]);
+}]);
 
 module.directive('ngFinishRender', function ($timeout) {
     return {

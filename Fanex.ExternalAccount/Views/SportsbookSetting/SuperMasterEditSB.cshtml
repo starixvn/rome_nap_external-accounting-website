@@ -23,8 +23,8 @@
     </div>
     <div class="noteMsg">
         @(session.IsBelongToSpecialGroups ?
-                Resources.Lang.MemberUnlimitedBetSettingWarningMessageDirectionV3 :
-                Resources.Lang.MemberUnlimitedBetSettingWarningMessage)
+                        Resources.Lang.MemberUnlimitedBetSettingWarningMessageDirectionV3 :
+                        Resources.Lang.MemberUnlimitedBetSettingWarningMessage)
     </div>
     <div id="custInfo" class="customerInfo" style="width: 850px">
         <div class="headerTab" style="border-bottom: 0px">
@@ -218,6 +218,7 @@
     <div class="floatR">
         <input class="btn -submit buttonPopup" type="button" value="Submit" data-bind='click: saveCustomer' />
     </div>
+    <input type="hidden" id="PT3DecimalSites" value="@AppSettings.PT3DecimalSites" />
     @Html.AntiForgeryToken()
 </div>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Languages.en.js")" type="text/javascript"></script>
