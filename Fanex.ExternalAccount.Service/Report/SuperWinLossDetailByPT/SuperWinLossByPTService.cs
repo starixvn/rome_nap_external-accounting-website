@@ -145,7 +145,7 @@
                             }));
 
                 return new SuperWinLossDetailByPTModel(
-                    winlossByUsernames.Select(winlossByUsername => new SuperWinLossDetailByUsernameModel(winlossByUsername)),
+                    winlossByUsernames.Select(winlossByUsername => new SuperWinLossDetailByUsernameModel(winlossByUsername.OrderByDescending(winloss => winloss.Turnover))),
                     model.GrandTotal,
                     param.TooltipsForLiveCasino,
                     model.TotalRecords,
