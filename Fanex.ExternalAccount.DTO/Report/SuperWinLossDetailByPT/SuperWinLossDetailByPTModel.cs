@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.DTO.Report
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     public class SuperWinLossDetailByPTModel
     {
@@ -16,7 +17,7 @@
         int pageIndex,
         int pageSize)
         {
-            WinLossByUsernames = winLossByUsernames;
+            WinLossByUsernames = winLossByUsernames.OrderByDescending(winloss => winloss.Total.Turnover);
             GrandTotal = grandTotal;
             TooltipsForLiveCasino = tooltipsForLiveCasino;
             TotalRecords = totalRecords;
