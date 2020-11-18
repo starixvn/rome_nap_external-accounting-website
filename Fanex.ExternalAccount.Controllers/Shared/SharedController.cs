@@ -65,7 +65,10 @@
         public ActionResult _Menu()
         {
             var isShowAssignSubGroup = CurrentSession.GroupId > 0 && (Group.IsITGroup(CurrentSession.GroupId) || groupService.GetGroupWithSubGroups(CurrentSession.GroupId).Any());
-            var menuList = menuService.GetMenusByUserId(CurrentSession.UserId, ExtRequest.GetGroupName(), isShowAssignSubGroup);
+            var menuList = menuService.GetMenusByUserId(
+                CurrentSession.UserId,
+                CurrentSession.IsInternalAdmin ? ExtRequest.GetGroupName() : _currentSession.ParentGroupName,
+                isShowAssignSubGroup);
             var rootMenuList = menuList.Where(x => x.ParentId == 0);
             var menuDict = new Dictionary<string, MenuItem>();
 

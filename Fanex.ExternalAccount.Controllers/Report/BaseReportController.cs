@@ -29,9 +29,9 @@
         }
 
         protected bool CanView(string[] groups)
-        {
-            return groups.Contains(currentSession.ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
-        }
+            => groups.Contains(
+                currentSession.IsInternalAdmin ? currentSession.CurrencyGroup : currentSession.ParentGroupName,
+                StringComparer.CurrentCultureIgnoreCase);
 
         protected string BuildTooltipsForLiveCasino(string groupName)
         {
@@ -57,6 +57,5 @@
             }
 
             return string.Empty;
-        }
     }
 }

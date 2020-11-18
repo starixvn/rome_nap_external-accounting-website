@@ -132,7 +132,8 @@
             AuthenticateAction.AuthenticationType policy = AuthenticateAction.AuthenticationType.Read,
             string requestUrl = "")
         {
-            var userCache = cachingService.GetUserCache(userId, ExtRequest.Instance.GetGroupName());
+            var currentSession = new CurrentSession();
+            var userCache = cachingService.GetUserCache(userId, currentSession.IsInternalAdmin ? ExtRequest.Instance.GetGroupName() : currentSession.ParentGroupName);
             var menuList = userCache.MenuList;
             var userFunctions = userCache.PolicyList.Where(x => x.FuncKey == functionKey).ToList();
             var noPermissionOnAnyMenu = !menuList.Any(menuItem =>
