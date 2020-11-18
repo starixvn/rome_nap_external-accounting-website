@@ -61,7 +61,7 @@
 
                 $scope.afterServerReturnSuccess = function (mainResult, isUpdatePartial) {
 
-                    if (parent.Fanex.ExtAcc.ShowSecurityCodePage(mainResult, parent.Fanex.ExtAcc.UnBlockUI)) {
+                    if (top.window.Fanex.ExtAcc.ShowSecurityCodePage(mainResult, top.window.Fanex.ExtAcc.UnBlockUI)) {
                         return;
                     }
 
