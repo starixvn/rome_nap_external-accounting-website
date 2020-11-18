@@ -256,7 +256,11 @@ Fanex.ExtAcc.SubGroup = {
                 if (!data.isSuccess) {
                     $('#err-message').html(data.errorMessage.formatErrorMessage()).removeClass('hide');
                 } else {
-                    Fanex.ExtAcc.Form.Close(false);
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+
+                        Fanex.ExtAcc.Form.Close(false);
+                    }, 2000);
                 }
 
                 Fanex.ExtAcc.UnBlockUI();
