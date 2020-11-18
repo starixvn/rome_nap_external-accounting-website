@@ -252,6 +252,8 @@ class SuperWinLossDetailByPT {
                 }
             }
         }
+
+        this.$(".product-tooltip").tooltip();
         return rows;
     }
 

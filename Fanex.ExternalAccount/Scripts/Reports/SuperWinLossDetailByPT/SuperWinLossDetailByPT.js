@@ -213,6 +213,7 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
                 }
             }
         }
+        this.$(".product-tooltip").tooltip();
         return rows;
     };
     SuperWinLossDetailByPT.prototype.InitSort = function (dataSource) {
