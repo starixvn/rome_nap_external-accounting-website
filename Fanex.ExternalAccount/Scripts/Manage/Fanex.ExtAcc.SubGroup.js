@@ -199,7 +199,7 @@ Fanex.ExtAcc.SubGroup = {
             callback: function () {
                 top.shouldCalculatePopupHeight = false;
                 var subGroupName = $('#selSubGroup').val();
-                Fanex.ExtAcc.Form.Show(resolveClientUrl('SubGroup/ChangeSubGroupAdminPassword?groupName=' + subGroupName), "Change Sub Group Admin's Password", 400, 350, false);
+                Fanex.ExtAcc.Form.Show(resolveClientUrl('SubGroup/ChangeSubGroupAdminPassword?groupName=' + subGroupName), "Change Sub Group Admin's Password", 'auto', 'auto', false);
             }
         };
         $.contextMenu({
