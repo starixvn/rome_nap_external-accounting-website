@@ -101,10 +101,7 @@
                     }
             }
 
-            var products = GetProductList(request.GroupId);
-            products = GetPPNameExportExcel(request, products);
-
-            var formatedProducts = request.GetProductNames(products);
+            var formatedProducts = winLossDetailService.ConcatProductName(request.ProductIds, request.ResourceIds, request.groupName);
             var memoryStream = builder.Build(formatedProducts);
 
             if (memoryStream != null)
@@ -117,16 +114,19 @@
         [AntiXSRFFilter]
         public ActionResult GetExtraPT(ViewExtraPTRequest request)
         {
-            var extraPTs = winLossDetailService.GetExtraPT(request, currentSession.ParentGroupName);
+            request.UserId = currentSession.CustId;
+            var extraPTs = winLossDetailService.GetExtraPT(request);
 
             return Json(extraPTs);
         }
 
         private dynamic GetDataFromDB(WinLossDetailRequest request)
         {
+            request.UserId = currentSession.CustId;
+
             var toolTipsProducts = new
             {
-                liveCasino = BuildTooltipsForLiveCasino(request.GroupName)
+                liveCasino = winLossDetailService.BuildTooltipsForLiveCasino(request.UserId, request.groupId)
             };
 
             return request.IsSearch()
@@ -135,46 +135,6 @@
                 : winLossDetailService.DrillDownWinLossDetail(
                     new DrillDownWinLossDetailRequest(request, toolTipsProducts));
         }
-
-        private static List<KeyValuePair<string, string>> GetPPNameExportExcel(ExportWinLossDetailRequest request, List<KeyValuePair<string, string>> products)
-        {
-            if (string.IsNullOrWhiteSpace(request.ResourceIds))
-            {
-                if (!Config.IsOfferJackpotProductDetailsGroup(request.MainGroupName))
-                {
-                    return products;
-                }
-
-                products = products.Where(p => !p.Key.Equals("showPP", StringComparison.OrdinalIgnoreCase)).ToList();
-            }
-
-            for (int i = 0, max = products.Count; i < max; i++)
-            {
-                var product = products[i];
-
-                if (product.Key == "showPP")
-                {
-                    var userSelectedResourceIds = request.ResourceIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    var productDetails = GetProductDetails(request.GroupId, request.MainGroupName)
-                        .Where(p => p.ProductKey == product.Key)
-                        .ToList();
-
-                    if (productDetails.Count > 0 && !IsEquals(productDetails.Select(p => p.ResourceId), userSelectedResourceIds))
-                    {
-                        products[i] = new KeyValuePair<string, string>(
-                            product.Key,
-                            string.Join(", ", productDetails.Where(p => userSelectedResourceIds.Contains(p.ResourceId)).Select(p => p.DisplayName)));
-                    }
-
-                    return products;
-                }
-            }
-
-            return products;
-        }
-
-        private static bool IsEquals(IEnumerable<string> source, IEnumerable<string> destination)
-            => Enumerable.SequenceEqual(source.OrderBy(id => id), destination.OrderBy(id => id));
     }
 
     public class ExportWinLossDetailRequest : WinLossDetailRequest

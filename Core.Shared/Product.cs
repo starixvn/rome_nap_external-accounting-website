@@ -1,19 +1,10 @@
-﻿using Fanex.RemotingRef;
-
-namespace Fanex.ExternalAccount.Core.Shared
+﻿namespace Fanex.ExternalAccount.Core.Shared
 {
-    
+
     public class Product
     {
-        private readonly IRemotingRefService _remotingRefService;
-
-        protected Product(): this(null)
+        protected Product()
         {
-        }
-
-        protected Product(IRemotingRefService remotingRefService)
-        {
-            _remotingRefService = remotingRefService ?? new RemotingRefService();
         }
 
         public Product(
@@ -21,7 +12,7 @@ namespace Fanex.ExternalAccount.Core.Shared
             int productId,
             string productName,
             bool isGetNameFromRemotingRef = false,
-            string substituteProductKey = null):this(new RemotingRefService())
+            string substituteProductKey = null)
         {
             Index = index;
             Id = productId;
@@ -33,7 +24,7 @@ namespace Fanex.ExternalAccount.Core.Shared
                     : substituteProductKey;
 #pragma warning restore S3358 // Ternary operators should not be nested
             Name = isGetNameFromRemotingRef
-                ? _remotingRefService.GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), "en-US", productName)
+                ? CacheRef.GetProductName(productId, productName)
                 : productName;
         }
 

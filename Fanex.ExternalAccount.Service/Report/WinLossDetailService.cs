@@ -6,6 +6,10 @@
 
         dynamic SearchWinLossDetail(ISearchWinLossDetailRequest request);
 
-        dynamic GetExtraPT(IViewExtraPTRequest request, string groupName);
+        dynamic GetExtraPT(IViewExtraPTRequest request);
+
+        string ConcatProductName(string productIds, string resourceIds, string groupName);
+
+        string BuildTooltipsForLiveCasino(int userId, int groupId);
     }
 }

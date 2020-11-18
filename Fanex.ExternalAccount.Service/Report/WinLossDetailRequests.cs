@@ -5,6 +5,7 @@
     public interface IDrillDownWinLossDetailRequest
     {
         string MainGroupName { get; }
+        int GroupId { get; }
         string GroupName { get; }
         int SuperId { get; }
         int MasterId { get; }
@@ -16,6 +17,7 @@
         string ProductIds { get; }
         dynamic ToolTipsProducts { get; }
         string ResourceIds { get; }
+        int UserId { get; }
         bool IsValid { get; }
         bool IsNotValid { get; }
     }
@@ -23,6 +25,7 @@
     public interface ISearchWinLossDetailRequest
     {
         string MainGroupName { get; }
+        int GroupId { get; }
         string GroupName { get; }
         string Username { get; }
         DateTime FromDate { get; }
@@ -30,5 +33,6 @@
         string ProductIds { get; }
         dynamic ToolTipsProducts { get; }
         string ResourceIds { get; }
+        int UserId { get; }
     }
 }

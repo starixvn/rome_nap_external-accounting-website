@@ -48,7 +48,7 @@
         {
             var result = groupConfigurationService.Get(criteria);
 
-            return Json(result,JsonRequestBehavior.DenyGet );
+            return Json(result, JsonRequestBehavior.DenyGet);
         }
 
         [HttpPost]

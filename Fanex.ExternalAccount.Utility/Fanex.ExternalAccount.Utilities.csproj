@@ -186,9 +186,6 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\WinLossDetail\GroupConfigurationModel.cs" />
-    <Compile Include="Reports\WinLossDetail\ProductCollectionConfiguration.cs" />
-    <Compile Include="Reports\WinLossDetail\ProductElementConfiguration.cs" />
-    <Compile Include="Reports\WinLossDetail\ProductsConfiguration.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="ViewLang1.Designer.cs">
       <AutoGen>True</AutoGen>

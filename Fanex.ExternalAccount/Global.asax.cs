@@ -115,7 +115,7 @@
                 .UseAuthorizeService(new ProductStatusAuthorizeService())
                 .UseProductStatusActor(new ProductStatusActor())
                 .SetUnAuthorizedUrl("~/Customer/AccessDenied")
-                .UseCustomerProductList(MultipleEditProductStatus.GetCustomerProductList);
+                .UseCustomerProductList(MultipleEditProductStatus.GetProductList);
             ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
             Fanex.RemotingRef.RefDataTypeContainer
                 .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service"]))

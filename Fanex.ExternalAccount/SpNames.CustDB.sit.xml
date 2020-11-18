@@ -327,4 +327,7 @@
   <Function Name="User belong to Group">
     <Setting Key="EAS_UserCheckBelonging" SpName="EAS_UserCheckBelonging" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
+  <Function Name="Get Product List of Multiple Edit Product Status">
+    <Setting Key="EAS_ProductSettingByGroup_Sel" SpName="EAS_ProductSettingByGroup_Sel" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
+  </Function>
 </Functions>

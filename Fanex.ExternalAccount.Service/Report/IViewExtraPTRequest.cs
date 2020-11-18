@@ -2,10 +2,10 @@
 {
     public interface IViewExtraPTRequest
     {
+        int GroupId { get; }
+
         string GroupName { get; }
 
-        int[] GetSelectedProductIds();
-
-        string GetProductName(int productId);
+        int UserId { get; set; }
     }
 }
