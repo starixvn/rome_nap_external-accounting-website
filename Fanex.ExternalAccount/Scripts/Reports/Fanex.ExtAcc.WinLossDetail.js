@@ -249,30 +249,52 @@ Fanex.ExtAcc.WinLossDetail = {
             dataType: "json",
             cache: false,
             success: function (result) {
-                var products = result.products;
-                var productList = '<option value="' + 'showAll' + '" selected="selected">' + 'All' + "</option>";
-                $.each(products, function (i) {
-                    productList += '<option value="' + products[i].Key + '" selected="selected">' + products[i].Value + "</option>";
-                });
-                
-                var $groupProducts = $("#GroupProducts").html(productList);
-                $this.InitProductsList($groupProducts);
-                $("#GroupProducts :input").width($groupProducts.width() - 21);
+                var dataList = [];
 
-                var productDetails = result.productDetails;
-                if (productDetails.length) {
-                    var productDetailsList = '<option value="' + 'showAll' + '" selected="selected">' + 'All' + "</option>";
-                    $.each(productDetails, function (i) {
-                        productDetailsList += '<option value="' + productDetails[i].ResourceId + '" selected="selected" data-productkey="' + productDetails[i].ProductKey + '">' + productDetails[i].DisplayName + "</option>";
+                $.each(result.products, function (i, item) {
+                    dataList.push({
+                        id: item.Key,
+                        value: item.Key,
+                        text: item.Value,
+                        checked: true,
+                        enable: true
                     });
+                });
 
-                    var $productDetails = $("#ProductDetails").html(productDetailsList);
-                    this.InitProductDetailsList($productDetails);
-                    $("#ProductDetails :input").width($productDetails.width() - 21);
-                    $("#productDetailsContainer").removeClass("hidden");
+                dataList.push({
+                    id: "1",
+                    value: "1",
+                    text: "Group Products",
+                    checked: true,
+                    enable: true,
+                    items: [{
+                        id: "1",
+                        value: "1",
+                        text: "Product 1",
+                        checked: true,
+                        enable: true
+                    }, {
+                        id: "2",
+                        value: "2",
+                        text: "Product 2",
+                        checked: true,
+                        enable: true
+                    }, {
+                        id: "2",
+                        value: "2",
+                        text: "Product 2",
+                        checked: true,
+                        enable: true
+                    }]
+                });
 
-                    Fanex.ExtAcc.WinLossDetail.productDetailsData = productDetails;
-                }
+                var $ddlProduct = $("#ddl-product");
+                $ddlProduct.fanexMultiSelect({
+                    minWidth: 180,
+                    checkAllText: "All Products",
+                    isCheckAll: true,
+                    listData: dataList
+                });
             }
         });
     },

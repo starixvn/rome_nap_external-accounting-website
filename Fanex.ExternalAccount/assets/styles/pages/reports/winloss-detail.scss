@@ -1,6 +1,5 @@
 ﻿@import "report";
 
-
 #GroupProducts, #ProductDetails {
     height: unset;
     border: none;
@@ -66,6 +65,7 @@
 
 #userGroup input {
     width: 147px !important;
+    outline: none;
 }
 
 .frozen-div {
@@ -225,5 +225,22 @@ span.selectedMonth {
 @media screen and (-webkit-min-device-pixel-ratio:0) { 
     .monPickrDropDown, .dayPickrDropDown {
         overflow: auto !important;
+    }
+}
+
+.search-form .form-group {
+    margin-bottom: 16px;
+    margin-right: 16px;
+
+    &.view-history-box {
+        display: block;
+        margin-top: -12px;
+        margin-bottom: 0;
+    }
+}
+
+@media (max-device-width: 480px) {
+    .filterbox .label {
+        width: 90px !important;
     }
 }
