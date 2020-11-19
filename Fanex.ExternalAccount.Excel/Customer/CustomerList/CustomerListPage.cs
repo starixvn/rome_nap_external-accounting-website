@@ -39,11 +39,17 @@
             if (_builder.RoleId.IsSuper())
             {
                 totalColumn++;
+
+                if (_builder.HasSubGroups)
+                {
+                    totalColumn++;
+                }
             }
+
             var lastColumnIndex = FirstColumnIndex + totalColumn - 1;
             if (_builder.RoleId.IsNotMember())
             {
-                WriteOthersReport(resultSheet, _builder.Data, lastColumnIndex, _builder.IsMyanmarOdds);
+                WriteOthersReport(resultSheet, _builder.Data, lastColumnIndex, _builder.IsMyanmarOdds, _builder.HasSubGroups);
             }
             else
             {
@@ -101,7 +107,8 @@
             ISheet resultSheet,
             List<CustomerListDTO> data,
             int lastColumnIndex,
-            bool isMyanmarOdds)
+            bool isMyanmarOdds,
+            bool hasSubGroups)
         {
             var id = 1;
             var rowId = 3;
@@ -142,6 +149,11 @@
 
                 if (_builder.RoleId.IsSuper())
                 {
+                    if (hasSubGroups)
+                    {
+                        values.Add(item.SubGroup);
+                    }
+
                     values.Add(item.LimitDays?.ToString() ?? item.MinDate);
                 }
 

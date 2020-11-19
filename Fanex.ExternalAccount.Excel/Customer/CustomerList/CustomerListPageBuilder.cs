@@ -6,7 +6,7 @@
 
     public class CustomerListPageBuilder
     {
-        public CustomerListPageBuilder(List<CustomerListDTO> customerList, bool isBold, string status, int roleId, bool isMyanmarOdds = false, bool withDataLimited = false)
+        public CustomerListPageBuilder(List<CustomerListDTO> customerList, bool isBold, string status, int roleId, bool isMyanmarOdds = false, bool withDataLimited = false, bool hasSubGroups = false)
         {
             Status = status;
             RoleId = roleId;
@@ -14,6 +14,7 @@
             Data = customerList;
             IsMyanmarOdds = isMyanmarOdds;
             WithDataLimited = withDataLimited;
+            HasSubGroups = hasSubGroups;
         }
 
         public List<CustomerListDTO> Data { get; }
@@ -28,11 +29,13 @@
 
         public bool WithDataLimited { get; }
 
+        public bool HasSubGroups { get; }
+
         public MemoryStream Build()
         {
             var mem = new MemoryStream();
             var settings = new TemplateSettings();
-            var filePath = settings.CustomerListPath(RoleId, IsMyanmarOdds);
+            var filePath = settings.CustomerListPath(RoleId, IsMyanmarOdds, HasSubGroups);
 
             using (var report = new CustomerListPage(filePath, this))
             {
