@@ -106,8 +106,8 @@
                                     agTotal += winloss.AgTotal;
 
                                     magWinlost += winloss.MAgWinlost;
-                                    magComm += winloss.MAgWinlost;
-                                    magTotal += winloss.MAgComm;
+                                    magComm += winloss.MAgComm;
+                                    magTotal += winloss.MAgTotal;
 
                                     sagWinlost += winloss.SAgWinlost;
                                     sagComm += winloss.SAgComm;
