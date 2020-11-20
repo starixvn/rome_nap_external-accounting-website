@@ -16,12 +16,12 @@ Fanex.ExtAcc.Header = {
         $.ajax({
             url: resolveClientUrl('Account/ExternalGroupList'),
             type: 'GET',
-            dataType: 'html',
+            dataType: 'json',
             cache: false,
             success: function (data) {
-                var items = eval(data);
+                var items = data;
 
-                if (!items.length) {
+                if (!Array.isArray(items) || !items.length) {
                     $('#selectedGroupName').html($('#groupName').html());
 
                     $('#userMenu').superfish();
