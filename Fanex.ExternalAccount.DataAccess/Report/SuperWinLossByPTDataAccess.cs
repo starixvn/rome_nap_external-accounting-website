@@ -73,7 +73,7 @@
                 reader.NextResult();
                 while (reader.Read())
                 {
-                    BuildWinLossByBetType(reader);
+                    grandTotal = BuildWinLossByBetType(reader);
                 }
 
                 reader.Close();
