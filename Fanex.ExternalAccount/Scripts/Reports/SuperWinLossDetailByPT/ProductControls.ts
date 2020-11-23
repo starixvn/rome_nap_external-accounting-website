@@ -13,14 +13,14 @@ class ProductControls {
         this.$.ajax({
             url: resolveClientUrl("Filter/ProductsList"),
             type: "GET",
-            data: { groupName: $("#selectedGroupName").html() },
+            data: { groupName: $("#selectedGroupName").html(), groupId: Fanex.ExtAcc.Customer.GetGroupId() === undefined ? '' : Fanex.ExtAcc.Customer.GetGroupId() },
             dataType: "json",
             cache: false,
             success: data => this.OnSuccessLoadProduct(data)
         });
     }
 
-    
+
     public GetParameterProducts() {
         let parameterProducts = '';
         const ids = $("#productList .ui-multiselect-checkboxes :input");
@@ -146,7 +146,7 @@ class ProductControls {
                 if (this.value === "showAll") {
                     var ids = $productDetailsList.find(".ui-multiselect-checkboxes :input");
                     for (var i = 0; i < ids.length; i++) {
-                       (<HTMLInputElement>ids[i]).checked = this.checked;
+                        (<HTMLInputElement>ids[i]).checked = this.checked;
                     }
                 } else {
                     if (!this.checked) {

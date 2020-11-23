@@ -249,7 +249,7 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
         if (pageIndex === void 0) { pageIndex = 1; }
         Fanex.ExtAcc.BlockUI();
         var dateTimeParams = this.dateTimeControls.GetFromDateToDate();
-        var parameterUrl = "?Groupname=" + $("#selectedGroupName").html()
+        var parameterUrl = "?Groupname=" + $("#selectedGroupName").html() + "&GroupId=" + (Fanex.ExtAcc.Customer.GetGroupId() === undefined ? '' : Fanex.ExtAcc.Customer.GetGroupId())
             + ("&Fromdate=" + dateTimeParams.fromdate + "&Todate=" + dateTimeParams.todate)
             + ("&PageSize=" + pageSize + "&PageIndex=" + pageIndex)
             + this.productControls.GetParameterProducts()
@@ -284,7 +284,7 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
         Fanex.ExtAcc.UnBlockUI();
     };
     SuperWinLossDetailByPT.prototype.ExportExcel = function () {
-        var dateTimeParams = this.dateTimeControls.GetFromDateToDate(), params = "fromdate=" + dateTimeParams.fromdate + "&todate=" + dateTimeParams.todate + "&groupname=" + this.$("#selectedGroupName").html(), productParams = this.productControls.GetParameterProducts(), productDetailsParams = this.productControls.GetParameterProductDetails(), url = "" + resolveClientUrl("SuperWinLossDetailByPT/ExportWinLossDetailToExcel?") + params + productParams + productDetailsParams;
+        var dateTimeParams = this.dateTimeControls.GetFromDateToDate(), params = "fromdate=" + dateTimeParams.fromdate + "&todate=" + dateTimeParams.todate + "&groupname=" + this.$("#selectedGroupName").html() + "&groupId=" + Fanex.ExtAcc.WinLossDetail.groupId, productParams = this.productControls.GetParameterProducts(), productDetailsParams = this.productControls.GetParameterProductDetails(), url = "" + resolveClientUrl("SuperWinLossDetailByPT/ExportWinLossDetailToExcel?") + params + productParams + productDetailsParams;
         this.topWindow.exportExcel(url, document);
     };
     SuperWinLossDetailByPT.prototype.ResizeReportGrid = function () {
