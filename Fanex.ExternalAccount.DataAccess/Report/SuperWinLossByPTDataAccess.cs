@@ -63,60 +63,49 @@
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                db.AssignParamValues(new Hashtable {
-                    { "groupname", criteria.GroupName },
-                    { "fromdate", criteria.FromDate },
-                    { "todate", criteria.ToDate },
-                    { "balanceupday", criteria.BalanceUpDay },
-                    { "movebetsday", criteria.MoveBetsDay },
-                    { "productids", criteria.ProductIds },
-                    { "productdetails", criteria.ProductDetails },
-                    { "pagesize", criteria.PageSize },
-                    { "pageindex", criteria.PageIndex }
-                });
+                var reader = db.ExecuteReader(criteria.GetSpParams());
 
-                using (var dataset = db.ExecuteDataSet())
+                while (reader.Read())
                 {
-                    if (dataset != null && dataset.Tables.Count > 0)
-                    {
-                        foreach (DataRow row in dataset.Tables[0].Rows)
-                        {
-                            winlossByBettypeData.Add(BuildWinLossByBetType(row));
-                        }
-
-                        grandTotal = BuildWinLossByBetType(dataset.Tables[1].Rows[0]);
-                    }
-
-                    totalRecords = Converter.ToInt(db.GetOuputParams()["totalrecords"]);
+                    winlossByBettypeData.Add(BuildWinLossByBetType(reader));
                 }
+
+                reader.NextResult();
+                while (reader.Read())
+                {
+                    BuildWinLossByBetType(reader);
+                }
+
+                reader.Close();
+                totalRecords = Converter.ToInt(db.GetOuputParams()["totalrecords"]);
             }
 
             return new SuperWinLossDetailByProductModel(winlossByBettypeData, grandTotal, totalRecords);
         }
 
-        private SuperWinLossDetailByProductDTO BuildWinLossByBetType(DataRow row)
+        private SuperWinLossDetailByProductDTO BuildWinLossByBetType(IDataReader reader)
         {
             return new SuperWinLossDetailByProductDTO(
-                Converter.ToInt(row["custid"]),
-                row["username"].ToString(),
-                Converter.ToInt(row["ProductID"]),
-                row["ProductName"].ToString(),
-                Converter.ToDecimal(row["Turnover"]),
-                Converter.ToDecimal(row["TurnoverNoDraw"]),
-                Converter.ToDecimal(row["GrossComm"]),
-                Converter.ToDecimal(row["MemberWinlost"]),
-                Converter.ToDecimal(row["PlayerComm"]),
-                Converter.ToDecimal(row["MemberTotal"]),
-                Converter.ToDecimal(row["AgWinlost"]),
-                Converter.ToDecimal(row["AgComm"]),
-                Converter.ToDecimal(row["AgTotal"]),
-                Converter.ToDecimal(row["MAgWinlost"]),
-                Converter.ToDecimal(row["MAgComm"]),
-                Converter.ToDecimal(row["MAgTotal"]),
-                Converter.ToDecimal(row["SAgWinlost"]),
-                Converter.ToDecimal(row["SAgComm"]),
-                Converter.ToDecimal(row["SAgTotal"]),
-                Converter.ToDecimal(row["Company"])
+                Converter.ToInt(reader["custid"]),
+                reader["username"].ToString(),
+                Converter.ToInt(reader["ProductID"]),
+                reader["ProductName"].ToString(),
+                Converter.ToDecimal(reader["Turnover"]),
+                Converter.ToDecimal(reader["TurnoverNoDraw"]),
+                Converter.ToDecimal(reader["GrossComm"]),
+                Converter.ToDecimal(reader["MemberWinlost"]),
+                Converter.ToDecimal(reader["PlayerComm"]),
+                Converter.ToDecimal(reader["MemberTotal"]),
+                Converter.ToDecimal(reader["AgWinlost"]),
+                Converter.ToDecimal(reader["AgComm"]),
+                Converter.ToDecimal(reader["AgTotal"]),
+                Converter.ToDecimal(reader["MAgWinlost"]),
+                Converter.ToDecimal(reader["MAgComm"]),
+                Converter.ToDecimal(reader["MAgTotal"]),
+                Converter.ToDecimal(reader["SAgWinlost"]),
+                Converter.ToDecimal(reader["SAgComm"]),
+                Converter.ToDecimal(reader["SAgTotal"]),
+                Converter.ToDecimal(reader["Company"])
             );
         }
     }
