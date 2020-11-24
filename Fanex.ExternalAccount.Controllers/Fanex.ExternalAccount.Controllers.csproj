@@ -56,14 +56,14 @@
       <HintPath>..\packages\CaptchaMVC.2.4.1\lib\CaptchaMvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CasinoLibrary, Version=2.0.3.38621, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.3.38621\lib\net40\CasinoLibrary.dll</HintPath>
+    <Reference Include="CasinoLibrary, Version=2.0.7.25922, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary.2.0.6.3\lib\net40\CasinoLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.3.38621\lib\net40\CasinoSetting.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary.2.0.6.3\lib\net40\CasinoSetting.dll</HintPath>
     </Reference>
     <Reference Include="CasinoUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.3.38621\lib\net40\CasinoUtility.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary.2.0.6.3\lib\net40\CasinoUtility.dll</HintPath>
     </Reference>
     <Reference Include="Couchbase, Version=1.0.0.0, Culture=neutral, PublicKeyToken=81137140da4e57ef, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Caching.1.0.404.95\lib\net40\Couchbase.dll</HintPath>
@@ -131,7 +131,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.3.38621\lib\net40\HandHistoryLibrary.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary.2.0.6.3\lib\net40\HandHistoryLibrary.dll</HintPath>
     </Reference>
     <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Crypt.1.1.0.0\lib\net40\IBCCrypt.dll</HintPath>
@@ -325,14 +325,17 @@
     <Compile Include="Home\NetworkSpeedController.cs" />
     <Compile Include="OTP\OTPController.cs" />
     <Compile Include="Report\BaseReportController.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPTController.cs" />
     <Compile Include="Report\WinLossDetailIBCBetLiveCasinoController.cs" />
     <Compile Include="Requests\CustomerList\SeachCustomerListRequest.cs" />
     <Compile Include="Requests\DrillDownWinLossDetailRequest.cs" />
     <Compile Include="Requests\SearchWinLossDetailIBCBetLiveCasinoRequest.cs" />
     <Compile Include="Requests\SearchWinLossDetailRequest.cs" />
+    <Compile Include="Requests\SuperWinLossDetail\ExportSuperWinLossDetailByPTRequest.cs" />
     <Compile Include="Requests\SubGroup\SubGroupUpdateRequest.cs" />
     <Compile Include="Requests\ViewExtraPTRequest.cs" />
     <Compile Include="Requests\WinLossDetailIBCBetLiveCasinoRequest.cs" />
+    <Compile Include="Requests\SuperWinLossDetail\SuperWinLossDetailByPTRequest.cs" />
     <Compile Include="Requests\WinLossDetailRequest.cs" />
     <Compile Include="SecurityCode\SecurityCodeController.cs" />
     <Compile Include="Statement\StatementController.cs" />

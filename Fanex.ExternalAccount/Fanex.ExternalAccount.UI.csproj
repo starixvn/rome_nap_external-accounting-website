@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,6 +38,7 @@
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
     <Use64BitIISExpress />
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,6 +50,19 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>Fanex.ExternalAccount.UI.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptModuleKind />
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -68,14 +83,14 @@
       <HintPath>..\packages\CaptchaMVC.2.4.1\lib\CaptchaMvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CasinoLibrary, Version=2.0.3.38621, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.3.38621\lib\net40\CasinoLibrary.dll</HintPath>
+    <Reference Include="CasinoLibrary, Version=2.0.7.25922, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary.2.0.6.3\lib\net40\CasinoLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.3.38621\lib\net40\CasinoSetting.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary.2.0.6.3\lib\net40\CasinoSetting.dll</HintPath>
     </Reference>
     <Reference Include="CasinoUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.3.38621\lib\net40\CasinoUtility.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary.2.0.6.3\lib\net40\CasinoUtility.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
@@ -211,7 +226,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.3.38621\lib\net40\HandHistoryLibrary.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary.2.0.6.3\lib\net40\HandHistoryLibrary.dll</HintPath>
     </Reference>
     <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IBCCrypt.1.1.0.0\lib\IBCCrypt.dll</HintPath>
@@ -485,6 +500,10 @@
     </Content>
     <Content Include="assets\bundles\associationaccount\index.js" />
     <Content Include="assets\bundles\associationaccount\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\SuperWinLossDetailByPT\index.js" />
+    <Content Include="assets\bundles\SuperWinLossDetailByPT\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\problemaccount\index.js" />
@@ -1512,12 +1531,25 @@
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
     <Content Include="Scripts\Customer\Fanex.ExtAcc.AssociationAccount.js" />
+    <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\DateTimeControls.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\ProductControls.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\SuperWinLossDetailByPT.ts" />
     <Content Include="Scripts\ProblemAccount\Fanex.ExtAcc.ProblemAccount.js" />
     <Content Include="Scripts\Manage\Fanex.ExtAcc.SubGroup.js" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="typings\globals\jasmine-jquery\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\jasmine\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\jquery.blockui\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\jquery.cookie\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\jqueryui\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\jquery\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\moment\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\storejs\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\toastr\index.d.ts" />
+    <TypeScriptCompile Include="typings\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\AlphaAdmin\style.css" />
@@ -2763,6 +2795,7 @@
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\associationaccount\index.min.js.map" />
+    <Content Include="assets\bundles\SuperWinLossDetailByPT\index.min.js.map" />
     <Content Include="assets\bundles\problemaccount\index.min.js.map">
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
@@ -2860,6 +2893,7 @@
     <Content Include="ExcelTemplates\Reports\WinLossDetailIBCBetLiveCasino.xls" />
     <Content Include="ExcelTemplates\Reports\WinLossDetailExtra.xls" />
     <Content Include="Scripts\Account\Fanex.ExtAcc.SSO.js" />
+    <Content Include="ExcelTemplates\Reports\SuperWinLossDetailByPT.xls" />
     <Content Include="ExcelTemplates\Customer\MemberListMO.xls" />
     <Content Include="ExcelTemplates\Customer\SuperListMO.xls" />
     <Content Include="ExcelTemplates\Customer\CustomerListMO.xls" />
@@ -2917,8 +2951,18 @@
     <Content Include="Scripts\SecurityCode\Fanex.ExtAcc.SecurityCode.css" />
     <Content Include="Views\Home\TestSentryLog.cshtml" />
     <Content Include="Views\AssociationAccount\Index.cshtml" />
+    <Content Include="Views\SuperWinLossDetailByPT\Index.cshtml" />
     <Content Include="Views\ProblemAccount\Index.cshtml" />
     <Content Include="Views\SubGroup\SubGroupList.cshtml" />
+    <Content Include="typings\globals\jasmine-jquery\typings.json" />
+    <Content Include="typings\globals\jasmine\typings.json" />
+    <Content Include="typings\globals\jquery.blockui\typings.json" />
+    <Content Include="typings\globals\jquery.cookie\typings.json" />
+    <Content Include="typings\globals\jqueryui\typings.json" />
+    <Content Include="typings\globals\jquery\typings.json" />
+    <Content Include="typings\globals\moment\typings.json" />
+    <Content Include="typings\globals\storejs\typings.json" />
+    <Content Include="typings\globals\toastr\typings.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
@@ -3001,19 +3045,23 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Scripts\Reports\Shared\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <MvcBuildViews>false</MvcBuildViews>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

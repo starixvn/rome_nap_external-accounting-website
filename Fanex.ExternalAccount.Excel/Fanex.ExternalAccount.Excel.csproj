@@ -101,6 +101,10 @@
     <Compile Include="Extensions\CustomerInfoDataRowExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IReportBuilder.cs" />
+    <Compile Include="Reports\SuperWinLossDetailByPT\IWinLossDetailReportBuilder.cs" />
+    <Compile Include="Reports\SuperWinLossDetailByPT\TemplateSettings.cs" />
+    <Compile Include="Reports\SuperWinLossDetailByPT\SuperWinLossDetailByPTReport.cs" />
+    <Compile Include="Reports\SuperWinLossDetailByPT\SuperWinLossDetailByPTReportBuilder.cs" />
     <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\IWinLossDetailIBCBetLiveCasinoReportBuilder.cs" />
     <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\TemplateSettings.cs" />
     <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\WinLossDetailIBCBetLiveCasinoReport.cs" />
@@ -158,6 +162,7 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
