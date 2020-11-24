@@ -80,6 +80,7 @@
     <Setting Key="EAS_CustomerUpdSubGroup" SpName="EAS_CustomerUpdSubGroup" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_UserInfoSelBySubGroup" SpName="EAS_UserInfoSelBySubGroup_xtest" DbName="DBPOL.NAP_UserControl.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_UserInfoUpdSubGroupAdminPwd" SpName="EAS_UserInfoUpdSubGroupAdminPwd_xtest" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_OnUser_ForceKickout" SpName="EAS_OnUser_ForceKickout_xtest" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
   </Function>
   <Function name="Group Configuration">
     <Setting Key="EAS_GroupConfigurationSel" SpName="EAS_GroupConfigurationSel" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" plain="0" />

@@ -15,5 +15,7 @@
         IEnumerable<SubGroupAdmin> GetSubGroupAdmin(GetSubGroupAdminCriteria criteria);
 
         Result UpdateSubGroupAdminPassword(UpdateSubGroupAdminPwdCriteria criteria);
+
+        void ForceKickout(ForceKickoutAdminSubGroupCriteria criteria);
     }
 }

@@ -64,7 +64,13 @@
                 IP = ipAddress
             };
 
-            return _subGroupDao.UpdateSubGroupAdminPassword(criteria);
+            var result = _subGroupDao.UpdateSubGroupAdminPassword(criteria);
+            if (result.IsSuccess)
+            {
+                _subGroupDao.ForceKickout(new ForceKickoutAdminSubGroupCriteria { CustId = custId });
+            }
+
+            return result;
         }
     }
 }

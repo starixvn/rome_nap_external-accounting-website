@@ -10,10 +10,17 @@
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.SubGroup;
     using Fanex.ExternalAccount.ViewModel.SubGroup;
-    using Fanex.NAP.Framework.Data;
 
     public class SubGroupDao : DAOBase, ISubGroupDao
     {
+        public void ForceKickout(ForceKickoutAdminSubGroupCriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+            }
+        }
+
         public IEnumerable<SubGroupAdmin> GetSubGroupAdmin(GetSubGroupAdminCriteria criteria)
         {
             var result = new List<SubGroupAdmin>();
