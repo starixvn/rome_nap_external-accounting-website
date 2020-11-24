@@ -17,7 +17,7 @@
 
         public DrillDownWinLossDetailRequest(WinLossDetailRequest request)
         {
-            MainGroupName = request.mainGroupName;
+            MainGroupName = request.MainGroupName;
             GroupName = request.GroupName;
             CustId = request.CustId;
             FromDate = request.Fromdate;

@@ -7,15 +7,16 @@
 
     public class SuperWinLossDetailByPTRequest : WinLossDetailRequest
     {
-        public SuperWinLossDetailByPTRequest() : this(null, null, null)
+        public SuperWinLossDetailByPTRequest() : this(null, null, null, null)
         {
         }
 
         public SuperWinLossDetailByPTRequest(
             Func<int, ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter,
             IExtRequest extRequest,
-            IGroupConfigurationService groupConfigurationService) :
-            base(selectedProductQueryGetter, extRequest, groupConfigurationService)
+            IGroupConfigurationService groupConfigurationService,
+            CurrentSession currentSession) :
+            base(selectedProductQueryGetter, extRequest, groupConfigurationService, currentSession)
         {
         }
 

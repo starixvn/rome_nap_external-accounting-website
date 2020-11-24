@@ -1532,7 +1532,6 @@
     </Content>
     <Content Include="Scripts\Customer\Fanex.ExtAcc.AssociationAccount.js" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\DateTimeControls.ts" />
-    <Content Include="Scripts\Manage\SubGroup.css" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\ProductControls.ts" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\SuperWinLossDetailByPT.ts" />
     <Content Include="Scripts\ProblemAccount\Fanex.ExtAcc.ProblemAccount.js" />

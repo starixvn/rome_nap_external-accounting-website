@@ -15,7 +15,7 @@
 
         public SearchWinLossDetailRequest(WinLossDetailRequest request)
         {
-            MainGroupName = request.mainGroupName;
+            MainGroupName = request.MainGroupName;
             GroupName = request.GroupName;
             Username = request.Username;
             FromDate = request.Fromdate;

@@ -138,7 +138,7 @@
         {
             if (string.IsNullOrWhiteSpace(request.ResourceIds))
             {
-                if (!Config.IsOfferJackpotProductDetailsGroup(request.mainGroupName))
+                if (!Config.IsOfferJackpotProductDetailsGroup(request.MainGroupName))
                 {
                     return products;
                 }
@@ -153,7 +153,7 @@
                 if (product.Key == "showPP")
                 {
                     var userSelectedResourceIds = request.ResourceIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    var productDetails = GetProductDetails(request.groupId, request.mainGroupName)
+                    var productDetails = GetProductDetails(request.GroupId, request.MainGroupName)
                         .Where(p => p.ProductKey == product.Key)
                         .ToList();
 

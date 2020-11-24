@@ -34,9 +34,10 @@
             this.currentSession = currentSession ?? new CurrentSession();
         }
 
-        public string mainGroupName => currentSession.ParentGroupName;
-        public int groupId => extRequest.GetGroupId();
-        public string groupName => extRequest.GetGroupName();
+        public string MainGroupName => currentSession.ParentGroupName;
+        public int GroupId => extRequest.GetGroupId();
+        public string GroupName => extRequest.GetGroupName();
+        public string Username { get; set; }
         public int Srecommend { get; set; }
         public int Mrecommend { get; set; }
         public int Recommend { get; set; }
