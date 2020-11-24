@@ -284,7 +284,7 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
         Fanex.ExtAcc.UnBlockUI();
     };
     SuperWinLossDetailByPT.prototype.ExportExcel = function () {
-        var dateTimeParams = this.dateTimeControls.GetFromDateToDate(), params = "fromdate=" + dateTimeParams.fromdate + "&todate=" + dateTimeParams.todate + "&groupname=" + this.$("#selectedGroupName").html() + "&groupId=" + Fanex.ExtAcc.WinLossDetail.groupId, productParams = this.productControls.GetParameterProducts(), productDetailsParams = this.productControls.GetParameterProductDetails(), url = "" + resolveClientUrl("SuperWinLossDetailByPT/ExportWinLossDetailToExcel?") + params + productParams + productDetailsParams;
+        var dateTimeParams = this.dateTimeControls.GetFromDateToDate(), params = "fromdate=" + dateTimeParams.fromdate + "&todate=" + dateTimeParams.todate + "&groupname=" + this.$("#selectedGroupName").html() + "&groupId=" + (Fanex.ExtAcc.Customer.GetGroupId() || ''), productParams = this.productControls.GetParameterProducts(), productDetailsParams = this.productControls.GetParameterProductDetails(), url = "" + resolveClientUrl("SuperWinLossDetailByPT/ExportWinLossDetailToExcel?") + params + productParams + productDetailsParams;
         this.topWindow.exportExcel(url, document);
     };
     SuperWinLossDetailByPT.prototype.ResizeReportGrid = function () {

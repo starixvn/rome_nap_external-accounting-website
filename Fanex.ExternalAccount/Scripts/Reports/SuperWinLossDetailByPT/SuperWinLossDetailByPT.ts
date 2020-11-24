@@ -336,7 +336,7 @@ class SuperWinLossDetailByPT {
 
     ExportExcel() {
         const dateTimeParams = this.dateTimeControls.GetFromDateToDate(),
-            params = `fromdate=${dateTimeParams.fromdate}&todate=${dateTimeParams.todate}&groupname=${this.$("#selectedGroupName").html()}&groupId=${Fanex.ExtAcc.WinLossDetail.groupId}`,
+            params = `fromdate=${dateTimeParams.fromdate}&todate=${dateTimeParams.todate}&groupname=${this.$("#selectedGroupName").html()}&groupId=${Fanex.ExtAcc.Customer.GetGroupId() || ''}`,
             productParams = this.productControls.GetParameterProducts(),
             productDetailsParams = this.productControls.GetParameterProductDetails(),
             url = `${resolveClientUrl("SuperWinLossDetailByPT/ExportWinLossDetailToExcel?")}${params}${productParams}${productDetailsParams}`;
