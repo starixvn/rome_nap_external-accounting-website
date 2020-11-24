@@ -378,7 +378,6 @@
             _currentSession.OnUserId = onuserId;
             _currentSession.IsInternalAdmin = isInternalAdmin;
             _currentSession.GroupId = group.GroupID;
-            _currentSession.ParentGroupId = group.ParentGroupId == 0 ? group.GroupID : group.ParentGroupId;
             _currentSession.CurrencyGroup = group.GroupName;
             _currentSession.ParentGroupName = group.ParentGroupName == "None" ? group.GroupName : group.ParentGroupName;
             _currentSession.IsITAdmin = group.IsIT;

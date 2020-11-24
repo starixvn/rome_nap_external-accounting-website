@@ -34,9 +34,9 @@
             this.currentSession = currentSession ?? new CurrentSession();
         }
 
-        public int groupId => currentSession.IsInternalAdmin ? extRequest.GetGroupId() : currentSession.ParentGroupId;
-        public string groupName => currentSession.IsInternalAdmin ? extRequest.GetGroupName() : currentSession.ParentGroupName;
-        public string Username { get; set; }
+        public string mainGroupName => currentSession.ParentGroupName;
+        public int groupId => extRequest.GetGroupId();
+        public string groupName => extRequest.GetGroupName();
         public int Srecommend { get; set; }
         public int Mrecommend { get; set; }
         public int Recommend { get; set; }

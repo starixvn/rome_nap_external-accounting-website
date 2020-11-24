@@ -4,6 +4,7 @@
 
     public interface IDrillDownWinLossDetailRequest
     {
+        string MainGroupName { get; }
         string GroupName { get; }
         int SuperId { get; }
         int MasterId { get; }
@@ -21,6 +22,7 @@
 
     public interface ISearchWinLossDetailRequest
     {
+        string MainGroupName { get; }
         string GroupName { get; }
         string Username { get; }
         DateTime FromDate { get; }

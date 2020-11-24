@@ -15,12 +15,14 @@
 
         public SearchWinLossDetailRequest(WinLossDetailRequest request)
         {
+            MainGroupName = request.mainGroupName;
             GroupName = request.GroupName;
             Username = request.Username;
             FromDate = request.Fromdate;
             ToDate = request.Todate;
         }
 
+        public string MainGroupName { get; }
         public string GroupName { get; }
         public string Username { get; }
         public DateTime FromDate { get; }

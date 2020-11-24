@@ -45,8 +45,8 @@
             }
             var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
             var getWinLossDetail = GetWinLossDetailFunction(request.ViewLevel);
-            var productDetailsXML = productDetailService.BuildProductDetailsXML(request.ProductIds, request.ResourceIds, request.GroupName);
-            var productIds = productDetailService.RemoveProductIds(request.ProductIds, request.ResourceIds, request.GroupName);
+            var productDetailsXML = productDetailService.BuildProductDetailsXML(request.ProductIds, request.ResourceIds, request.MainGroupName);
+            var productIds = productDetailService.RemoveProductIds(request.ProductIds, request.ResourceIds, request.MainGroupName);
 
             var winLossDetailData = getWinLossDetail(
                 request.CustId,
@@ -85,8 +85,8 @@
                 }
             }
 
-            var productDetailsXML = productDetailService.BuildProductDetailsXML(request.ProductIds, request.ResourceIds, request.GroupName);
-            var productIds = productDetailService.RemoveProductIds(request.ProductIds, request.ResourceIds, request.GroupName);
+            var productDetailsXML = productDetailService.BuildProductDetailsXML(request.ProductIds, request.ResourceIds, request.MainGroupName);
+            var productIds = productDetailService.RemoveProductIds(request.ProductIds, request.ResourceIds, request.MainGroupName);
             var winLossDetailData = SearchWinLossDetailData(request.GroupName, request.FromDate, request.ToDate, productIds, productDetailsXML, customerInfo);
 
             return

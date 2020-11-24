@@ -87,7 +87,7 @@
         public ActionResult GetSuperPrefixes(SuperPrefixRequest query)
             => Json(searchAndCopyService.GetSuperPrefixes(new SuperPrefixCriteria
             {
-                GroupName = _currentSession.ParentGroupName == "None" ? _currentSession.CurrencyGroup : _currentSession.ParentGroupName,
+                GroupName = _currentSession.ParentGroupName,
                 Prefix = query.Prefix,
                 AllowNewSuper = query.AllowNewSuper
             }), JsonRequestBehavior.DenyGet);
@@ -110,7 +110,7 @@
                     {
                         MailClientHandler.Start();
                         MailClientHandler.SendFunctionMail(mail);
-                        MailClientHandler.Stop(); ;
+                        MailClientHandler.Stop();
                     }
                     catch (Exception ex)
                     {

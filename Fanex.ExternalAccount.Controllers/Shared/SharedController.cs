@@ -65,10 +65,7 @@
         public ActionResult _Menu()
         {
             var isShowAssignSubGroup = CurrentSession.GroupId > 0 && (Group.IsITGroup(CurrentSession.GroupId) || groupService.GetGroupWithSubGroups(CurrentSession.GroupId).Any());
-            var menuList = menuService.GetMenusByUserId(
-                CurrentSession.UserId,
-                CurrentSession.IsInternalAdmin ? ExtRequest.GetGroupName() : _currentSession.ParentGroupName,
-                isShowAssignSubGroup);
+            var menuList = menuService.GetMenusByUserId(CurrentSession.UserId, _currentSession.ParentGroupName, isShowAssignSubGroup);
             var rootMenuList = menuList.Where(x => x.ParentId == 0);
             var menuDict = new Dictionary<string, MenuItem>();
 
@@ -163,8 +160,18 @@
                 ? (int)RecheckinStatus.Maintenance
                 : (int)RecheckinStatus.Login;
 
-        public bool ChangeSelectedGroup(string groupName)
+        public bool ChangeSelectedGroup(string groupName, int groupId)
         {
+            if (CurrentSession.IsInternalAdmin)
+            {
+                var group = groupService.GetGroupById(groupId);
+
+                if (group != null && group.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase))
+                {
+                    _currentSession.ParentGroupName = group.ParentGroupId == 0 ? groupName : group.ParentGroupName;
+                }
+            }
+
             CurrentSession.CurrencyGroup = groupName;
 
             return true;

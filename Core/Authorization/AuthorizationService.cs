@@ -122,7 +122,7 @@
             string requestUrl = "")
         {
             var currentSession = new CurrentSession();
-            var userCache = cachingService.GetUserCache(userId, currentSession.IsInternalAdmin ? ExtRequest.Instance.GetGroupName() : currentSession.ParentGroupName);
+            var userCache = cachingService.GetUserCache(userId, currentSession.ParentGroupName);
             var menuList = userCache.MenuList;
             var userFunctions = userCache.PolicyList.Where(x => x.FuncKey == functionKey).ToList();
             var noPermissionOnAnyMenu = !menuList.Any(menuItem =>

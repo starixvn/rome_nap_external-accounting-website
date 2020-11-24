@@ -17,6 +17,7 @@
 
         public DrillDownWinLossDetailRequest(WinLossDetailRequest request)
         {
+            MainGroupName = request.mainGroupName;
             GroupName = request.GroupName;
             CustId = request.CustId;
             FromDate = request.Fromdate;
@@ -44,6 +45,7 @@
             }
         }
 
+        public string MainGroupName { get; }
         public string GroupName { get; }
         public int SuperId { get; }
         public int MasterId { get; }

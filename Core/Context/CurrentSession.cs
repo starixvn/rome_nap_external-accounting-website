@@ -25,7 +25,6 @@
         public const string EASInternalAdmin = "EASInternalAdmin";
         public const string EASITAdmin = "EASITAdmin";
         public const string EASGroupId = "EASGroupId";
-        public const string EASParentGroupId = "EASParentGroupId";
         public const string EASFromSystem = "EASFromSystem";
         public const string EASIsLogin = "EASIsLogin";
         public const string EASLoginAttempt = "_loginAttempt";
@@ -128,7 +127,7 @@
         }
 
         public bool IsBelongToSpecialGroups
-            => Config.SpecialGroups().Contains(IsInternalAdmin ? CurrencyGroup : ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
+            => Config.SpecialGroups().Contains(ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
 
         public bool InvalidOTP
         {
@@ -191,13 +190,6 @@
             get { return Utils.ToInt32(HttpContext.Current.Session[EASGroupId]); }
 
             set { HttpContext.Current.Session[EASGroupId] = value; }
-        }
-
-        public int ParentGroupId
-        {
-            get { return Utils.ToInt32(HttpContext.Current.Session[EASParentGroupId]); }
-
-            set { HttpContext.Current.Session[EASParentGroupId] = value; }
         }
 
         public int FromSystem

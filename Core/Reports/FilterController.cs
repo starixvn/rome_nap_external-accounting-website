@@ -46,22 +46,10 @@
 
         public ActionResult ProductsList()
         {
-            int groupId;
-            string groupName;
-
-            if (currentSession.IsInternalAdmin)
-            {
-                groupId = extRequest.GetGroupId();
-                groupName = extRequest.GetGroupName();
-            }
-            else
-            {
-                groupId = currentSession.ParentGroupId;
-                groupName = currentSession.ParentGroupName;
-            }
+            var groupId = extRequest.GetGroupId();
 
             var products = GetProductList(groupId);
-            var productDetails = GetProductDetails(groupId, groupName);
+            var productDetails = GetProductDetails(groupId, currentSession.ParentGroupName);
 
             return JsonBase(new { products, productDetails }, new JsonSerializerSettings());
         }
