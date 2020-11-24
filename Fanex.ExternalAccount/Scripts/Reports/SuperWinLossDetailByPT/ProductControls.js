@@ -8,7 +8,7 @@ var ProductControls = /** @class */ (function () {
         this.$.ajax({
             url: resolveClientUrl("Filter/ProductsList"),
             type: "GET",
-            data: { groupName: $("#selectedGroupName").html(), groupId: Fanex.ExtAcc.Customer.GetGroupId() === undefined ? '' : Fanex.ExtAcc.Customer.GetGroupId() },
+            data: { groupName: $("#selectedGroupName").html(), groupId: Fanex.ExtAcc.Customer.GetGroupId() || '' },
             dataType: "json",
             cache: false,
             success: function (data) { return _this.OnSuccessLoadProduct(data); }

@@ -249,7 +249,7 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
         if (pageIndex === void 0) { pageIndex = 1; }
         Fanex.ExtAcc.BlockUI();
         var dateTimeParams = this.dateTimeControls.GetFromDateToDate();
-        var parameterUrl = "?Groupname=" + $("#selectedGroupName").html() + "&GroupId=" + (Fanex.ExtAcc.Customer.GetGroupId() === undefined ? '' : Fanex.ExtAcc.Customer.GetGroupId())
+        var parameterUrl = "?Groupname=" + $("#selectedGroupName").html() + "&GroupId=" + (Fanex.ExtAcc.Customer.GetGroupId() || '')
             + ("&Fromdate=" + dateTimeParams.fromdate + "&Todate=" + dateTimeParams.todate)
             + ("&PageSize=" + pageSize + "&PageIndex=" + pageIndex)
             + this.productControls.GetParameterProducts()

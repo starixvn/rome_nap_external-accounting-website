@@ -11,9 +11,9 @@ class ProductControls {
 
     public Init() {
         this.$.ajax({
-            url: resolveClientUrl("Filter/ProductsList"),
+            url: resolveClientUrl("Filter/ProductsList"), 
             type: "GET",
-            data: { groupName: $("#selectedGroupName").html(), groupId: Fanex.ExtAcc.Customer.GetGroupId() === undefined ? '' : Fanex.ExtAcc.Customer.GetGroupId() },
+            data: { groupName: $("#selectedGroupName").html(), groupId: Fanex.ExtAcc.Customer.GetGroupId() || '' },
             dataType: "json",
             cache: false,
             success: data => this.OnSuccessLoadProduct(data)

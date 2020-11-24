@@ -294,7 +294,7 @@ class SuperWinLossDetailByPT {
 
         const dateTimeParams = this.dateTimeControls.GetFromDateToDate();
 
-        const parameterUrl = `?Groupname=${$("#selectedGroupName").html()}&GroupId=${Fanex.ExtAcc.Customer.GetGroupId() === undefined ? '' : Fanex.ExtAcc.Customer.GetGroupId()}`
+        const parameterUrl = `?Groupname=${$("#selectedGroupName").html()}&GroupId=${Fanex.ExtAcc.Customer.GetGroupId() || ''}`
             + `&Fromdate=${dateTimeParams.fromdate}&Todate=${dateTimeParams.todate}`
             + `&PageSize=${pageSize}&PageIndex=${pageIndex}`
             + this.productControls.GetParameterProducts()
