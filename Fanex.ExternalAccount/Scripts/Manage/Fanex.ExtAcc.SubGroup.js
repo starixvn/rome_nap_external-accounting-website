@@ -212,13 +212,16 @@ Fanex.ExtAcc.SubGroup = {
         $("div[id^='editMult']").contextMenu(true);
     },
     ChangeSubGroupAdminPassword: function () {
+        var custId = $('#AdminId').val();
         var password = $('#newpassword').val();
         var confirmPasword = $('#confirmpassword').val();
 
         var errorMessage = "";
         var errorField;
-
-        if (!Validators.validateInput(password)) {
+        if (!Validators.validateInput(custId)) {
+            errorField = $('#AdminId');
+            errorMessage = 'Admin is required';
+        } else if (!Validators.validateInput(password)) {
             errorField = $('#newpassword');
             errorMessage = 'Password is required';
         } else if (password.length > 30) {
@@ -245,7 +248,7 @@ Fanex.ExtAcc.SubGroup = {
         Fanex.ExtAcc.BlockUI();
         var encryptCode = $("#SCode").val();
         var request = {
-            custId: $('#AdminId').val(),
+            custId: custId,
             password: encodeURIComponent(password.encrypt(encryptCode))
         };
         $.ajax({
@@ -256,6 +259,7 @@ Fanex.ExtAcc.SubGroup = {
                 if (!data.isSuccess) {
                     $('#err-message').html(data.errorMessage.formatErrorMessage()).removeClass('hide');
                 } else {
+                    $("#success-message").removeClass("hide");
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
 
