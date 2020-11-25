@@ -80,6 +80,7 @@
         {
             var admins = _subGroupService.GetListAdminSubGroup(groupName).Select(admin => new SelectListItem { Text = admin.Username, Value = admin.CustId.ToString() }).ToList();
             ViewBag.Admins = admins;
+            ViewBag.GroupName = groupName;
             ViewBag.SCode = Encryptor.RandomCaptcha;
 
             return PartialViewBase();

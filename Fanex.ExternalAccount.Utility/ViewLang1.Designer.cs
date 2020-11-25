@@ -430,7 +430,7 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirm password.
+        ///   Looks up a localized string similar to Confirm new password.
         /// </summary>
         public static string Confirmnewpassword {
             get {

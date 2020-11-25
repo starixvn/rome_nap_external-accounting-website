@@ -127,7 +127,7 @@
     <value>Your password has been changed successfully.</value>
   </data>
   <data name="Confirmnewpassword" xml:space="preserve">
-    <value>Confirm password</value>
+    <value>Confirm new password</value>
   </data>
   <data name="Confirmpassword" xml:space="preserve">
     <value>Confirm password</value>
