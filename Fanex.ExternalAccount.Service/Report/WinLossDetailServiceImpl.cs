@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
     using Core.Shared;
     using DTO.Customer;
@@ -54,7 +53,7 @@
             var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
             var getWinLossDetail = GetWinLossDetailFunction(request.ViewLevel);
 
-            var validProductIds = productService.ValidateProductIds(request.UserId, request.GroupId, ToEnumerable(request.ProductIds));
+            var validProductIds = productService.ValidateProductIds(request.UserId, request.GroupId, Utils.ToEnumerableInt(request.ProductIds));
             validProductIds = productDetailService.RemoveProductIds(validProductIds, request.ResourceIds, request.GroupName);
 
             var productDetailsXML = productDetailService.BuildProductDetailsXML(validProductIds, request.ResourceIds, request.GroupName);
@@ -64,7 +63,7 @@
                 0,
                 request.FromDate,
                 request.ToDate,
-                string.Join(",", validProductIds),
+                Utils.ToString(validProductIds),
                 productDetailsXML);
 
             return
@@ -96,12 +95,12 @@
                 }
             }
 
-            var validProductIds = productService.ValidateProductIds(request.UserId, request.GroupId, ToEnumerable(request.ProductIds));
+            var validProductIds = productService.ValidateProductIds(request.UserId, request.GroupId, Utils.ToEnumerableInt(request.ProductIds));
             validProductIds = productDetailService.RemoveProductIds(validProductIds, request.ResourceIds, request.GroupName);
 
             var productDetailsXML = productDetailService.BuildProductDetailsXML(validProductIds, request.ResourceIds, request.GroupName);
 
-            var winLossDetailData = SearchWinLossDetailData(request.GroupName, request.FromDate, request.ToDate, string.Join(",", validProductIds), productDetailsXML, customerInfo);
+            var winLossDetailData = SearchWinLossDetailData(request.GroupName, request.FromDate, request.ToDate, Utils.ToString(validProductIds), productDetailsXML, customerInfo);
 
             return
                 new
@@ -132,7 +131,7 @@
                 .Select(item => new { ExtraPT = item.ExtraPT * percentage, item.ProductName, item.ProductId })
                 .Where(item => !string.IsNullOrWhiteSpace(item.ProductName) && validProductIds.ContainsKey(item.ProductId))
                 .GroupBy(item => item.ExtraPT, item => item.ProductName,
-                (key, group) => new { ExtraPT = key, ProductNames = string.Join(", ", group) })
+                (key, group) => new { ExtraPT = key, ProductNames = Utils.ToString(group, ", ") })
                 .OrderBy(item => item.ExtraPT);
         }
 
@@ -176,92 +175,5 @@
             sortingorderlist = sortingOrderList,
             tooltips = toolTipsProducts
         };
-
-        public string ConcatProductName(string productIds, string resourceIds, string groupName)
-        {
-            var productIdList = ToEnumerable(productIds);
-
-            if (string.IsNullOrWhiteSpace(resourceIds)
-                && Config.IsOfferJackpotProductDetailsGroup(groupName))
-            {
-                productIdList = productIdList.Where(id => id != ProductConstants.PragmaticPlay);
-            }
-
-            return ConcatProductName(productIdList, resourceIds, groupName);
-        }
-
-        private string ConcatProductName(IEnumerable<int> productIds, string resourceIds, string groupName)
-        {
-            var productNames = new List<string>();
-
-            productIds.ToList().ForEach(productId =>
-            {
-                if (productId == ProductConstants.PragmaticPlay)
-                {
-                    var userSelectedResourceIds = ToEnumerable(resourceIds).ToList();
-                    var resourceIdList = productDetailService.GetProductDetails(groupName)
-                        .Where(p => p.ProductId == ProductConstants.PragmaticPlay)
-                        .Select(p => int.Parse(p.ResourceId))
-                        .ToList();
-
-                    if (resourceIdList.Count > 0 && !IsEquals(resourceIdList, userSelectedResourceIds))
-                    {
-                        productNames.AddRange(userSelectedResourceIds.Select(id => CacheRef.GetProductDetailName(id)));
-                    }
-                    else
-                    {
-                        productNames.Add(CacheRef.GetProductName(productId));
-                    }
-                }
-                else
-                {
-                    productNames.Add(CacheRef.GetProductName(productId));
-                }
-            });
-
-            return string.Join(", ", productNames);
-        }
-
-        private static IEnumerable<int> ToEnumerable(string value)
-        {
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                var arrayString = value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-                foreach (var item in arrayString)
-                {
-                    if (int.TryParse(item, out var intValue))
-                    {
-                        yield return intValue;
-                    }
-                }
-            }
-        }
-
-        private static bool IsEquals(IEnumerable<int> source, IEnumerable<int> destination)
-            => Enumerable.SequenceEqual(source.OrderBy(id => id), destination.OrderBy(id => id));
-
-        public string BuildTooltipsForLiveCasino(int userId, int groupId)
-        {
-            var offeredLiveCasino = productService
-                .GetProducts(userId, groupId)
-                .FirstOrDefault(p => p.ProductId == ProductConstants.DummyLiveCasinoProductId);
-
-            if (offeredLiveCasino != null && offeredLiveCasino.IsParent)
-            {
-                var ignoreProductIds = new Dictionary<int, bool>
-                {
-                    [ProductConstants.GoldDeluxe] = true
-                };
-
-                var liveCasinoName = string.Join(
-                    ", ",
-                    offeredLiveCasino.Products.Where(p => !ignoreProductIds.ContainsKey(p.ProductId)).Select(p => p.ProductName));
-
-                return string.Format(ViewLang.Tooltip_NetTurnover_LiveCasino, liveCasinoName);
-            }
-
-            return string.Empty;
-        }
     }
 }

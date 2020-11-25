@@ -1,8 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
@@ -13,7 +11,6 @@
     using Requests;
     using Service.Impl.Report;
     using Service.Interface.Report;
-    using Service.UserControl;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -24,14 +21,13 @@
         public WinLossDetailController(
             CurrentSession currentSession,
             WinLossDetailService winLossDetailService,
-            IReportService reportService,
-            IGroupConfigurationService groupConfigurationService)
-            : base(currentSession, reportService, groupConfigurationService)
+            IReportService reportService)
+            : base(currentSession, reportService)
         {
             this.winLossDetailService = winLossDetailService ?? new WinLossDetailServiceImpl();
         }
 
-        public WinLossDetailController() : this(null, null, null, null)
+        public WinLossDetailController() : this(null, null, null)
         {
         }
 
@@ -101,7 +97,7 @@
                     }
             }
 
-            var formatedProducts = winLossDetailService.ConcatProductName(request.ProductIds, request.ResourceIds, request.groupName);
+            var formatedProducts = reportService.ConcatProductName(request.ProductIds, request.ResourceIds, request.GroupName);
             var memoryStream = builder.Build(formatedProducts);
 
             if (memoryStream != null)
@@ -126,7 +122,7 @@
 
             var toolTipsProducts = new
             {
-                liveCasino = winLossDetailService.BuildTooltipsForLiveCasino(request.UserId, request.groupId)
+                liveCasino = reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupId)
             };
 
             return request.IsSearch()

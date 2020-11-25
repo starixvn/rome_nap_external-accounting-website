@@ -1,5 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Service.Report.SuperWinLossDetailByPT
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Diagnostics;
+    using System.Linq;
     using CasinoLibrary.Model.UserException;
     using CasinoLibrary.SBAgent;
     using Fanex.ExternalAccount.Core.Shared;
@@ -8,12 +13,8 @@
     using Fanex.ExternalAccount.DTO.Report;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Products;
+    using Fanex.ExternalAccount.Utilities;
     using Fanex.Logging.Extensions.Web;
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Diagnostics;
-    using System.Linq;
 
     public interface SuperWinLossDetailByPTService
     {
@@ -23,13 +24,16 @@
     public class SuperWinLossDetailByPTServiceImpl : SuperWinLossDetailByPTService
     {
         private readonly SuperWinLossDetailByPTDataAccess superWinLossDetailByPTDataAccess;
+        private readonly IProductService productService;
         private readonly IProductDetailService productDetailService;
 
         public SuperWinLossDetailByPTServiceImpl(
             SuperWinLossDetailByPTDataAccess superWinLossDetailByPTDataAccess = null,
+            IProductService productService = null,
             IProductDetailService productDetailService = null)
         {
             this.superWinLossDetailByPTDataAccess = superWinLossDetailByPTDataAccess ?? new SuperWinLossDetailByPTDataAccessImpl();
+            this.productService = productService ?? new ProductService();
             this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
@@ -40,14 +44,18 @@
                 throw new ArgumentNullException(nameof(param));
             }
 
+            var validProductIds = productService.ValidateProductIds(param.UserId, param.GroupId, Utils.ToEnumerableInt(param.UserSelectedProductIds));
+            validProductIds = productDetailService.RemoveProductIds(validProductIds, param.ResourceIds, param.GroupName);
+            var productDetailsXML = productDetailService.BuildProductDetailsXML(validProductIds, param.ResourceIds, param.GroupName);
+
             var criteria = new SuperWinLossDetailByPTCriteria(
                 param.GroupName,
                 param.FromDate,
                 param.ToDate,
                 ReportService.BalanceUpDate,
                 ReportService.MoveBetsDate,
-                param.UserSelectedProductIds,
-                productDetailService.BuildProductDetailsXML(param.UserSelectedProductIds, param.ResourceIds, param.GroupName),
+                Utils.ToString(validProductIds),
+                productDetailsXML,
                 param.PageSize,
                 param.PageIndex);
 
@@ -59,7 +67,7 @@
                 var superPositionTakingByRnG = GetSuperPositionTakingByRnG(superIds);
 
                 var postionTakings = superWinLossDetailByPTDataAccess
-                    .GetSuperPositionTakingList(new SuperPTCriteria(string.Join(",", superIds)))
+                    .GetSuperPositionTakingList(new SuperPTCriteria(Utils.ToString(superIds)))
                     .Concat(superPositionTakingByRnG);
 
                 var winlossByUsernames = model.WinLossByProducts.Join(

@@ -1,12 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Utilities
 {
-    using DTO;
     using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
     using System.Net;
     using System.Web;
+    using DTO;
 
 #pragma warning disable S109 // Magic numbers should not be used
 
@@ -247,6 +247,25 @@
         }
 
         public static double ConvertDateTimeToMilliseconds(DateTime dateTime) => (dateTime - DateTime.MinValue).TotalMilliseconds;
+
+        public static IEnumerable<int> ToEnumerableInt(string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                var arrayString = value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var item in arrayString)
+                {
+                    if (int.TryParse(item, out var intValue))
+                    {
+                        yield return intValue;
+                    }
+                }
+            }
+        }
+
+        public static string ToString<T>(IEnumerable<T> list, string separator = ",")
+            => list == null || !list.Any() ? string.Empty : string.Join(separator, list);
     }
 
 #pragma warning restore S109 // Magic numbers should not be used

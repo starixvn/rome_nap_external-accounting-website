@@ -1,9 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Requests
 {
-    using Core.Context;
-    using Service.UserControl;
     using System;
     using System.Collections.Generic;
+    using Core.Context;
+    using Service.UserControl;
 
     public class SuperWinLossDetailByPTRequest : WinLossDetailRequest
     {

@@ -3,6 +3,8 @@
 class ProductControls {
     private $: JQueryStatic;
     private productDetailsData: any;
+    private $multiSelectProduct: any;
+    private $multiSelectProductDetail: any;
 
     constructor($: JQueryStatic) {
         this.$ = $;
@@ -11,7 +13,7 @@ class ProductControls {
 
     public Init() {
         this.$.ajax({
-            url: resolveClientUrl("Filter/ProductsList"), 
+            url: resolveClientUrl("Filter/ProductsList"),
             type: "GET",
             data: { groupName: $("#selectedGroupName").html(), groupId: Fanex.ExtAcc.Customer.GetGroupId() || '' },
             dataType: "json",
@@ -20,194 +22,149 @@ class ProductControls {
         });
     }
 
-
-    public GetParameterProducts() {
-        let parameterProducts = '';
-        const ids = $("#productList .ui-multiselect-checkboxes :input");
-        for (var i = 0; i < ids.length; i++) {
-            parameterProducts += `&${(<HTMLInputElement>ids[i]).value}=${(<HTMLInputElement>ids[i]).checked}`;
+    private OnSuccessLoadProduct(data) {
+        const productDetails = data.productDetails;
+        if (productDetails.length) {
+            this.InitProductDetailsList(productDetails);
         }
 
-        return parameterProducts;
+        this.InitProductsList(data.products);
+    }
+
+    private InitProductDetailsList(productDetails) {
+        var dataList = [];
+        this.$.each(productDetails, function (i, item) {
+            dataList.push({
+                id: item.ResourceId,
+                value: item.ResourceId,
+                text: item.DisplayName,
+                checked: true,
+                enable: true
+            });
+        });
+
+        this.$multiSelectProductDetail = this.$("#ddl-product-detail").fanexMultiSelect(
+            {
+                minWidth: 180,
+                checkAllText: "Select all",
+                noneSelectedText: "Select none",
+                useCustomCheckAllText: true,
+                customCheckAllText: "Select all",
+                isCheckAll: true,
+                listData: dataList
+            });
+
+        $("#ddl-product-detail-container").removeClass("hidden");
+        this.productDetailsData = productDetails;
+    }
+
+    private InitProductsList(products) {
+        const self: any = this;
+        const $ddlProductDetail = this.$("#ddl-product-detail");
+        //const $checkAllProductDetail = $("#ddl-product-detailHeaderCheckBox");
+        const buildProductData = function (productList) {
+            var dataList = [];
+            self.$.each(productList, function (i, product) {
+                dataList.push({
+                    id: product.ProductId,
+                    value: product.ProductId,
+                    text: product.ProductName,
+                    checked: true,
+                    enable: true,
+                    items: product.IsParent ? buildProductData(product.Products) : []
+                });
+            });
+
+            return dataList;
+        };
+
+        this.$multiSelectProduct = this.$("#ddl-product").fanexMultiSelect({
+            checkAllText: "Select all",
+            noneSelectedText: "Select Products",
+            useCustomCheckAllText: true,
+            customCheckAllText: "All Products",
+            isCheckAll: true,
+            listData: buildProductData(products),
+            onCheck: function () {
+                if ($ddlProductDetail.length) {
+                    const checked = this.checked;
+                    const productId = parseInt(this.value);
+
+                    if (isNaN(productId)) { // Select all
+                        self.ProductsListOnCheckAll(checked, $ddlProductDetail);
+                    } else {
+                        var $groupCheckbox = $(this);
+                        if ($groupCheckbox.data("is-group")) {
+                            self.ProductsListOnCheckGroup(checked, $ddlProductDetail, $groupCheckbox);
+                        } else {
+                            self.ProductsListOnCheck(checked, productId, $ddlProductDetail);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private ProductsListOnCheckAll(checked, $ddlProductDetail) {
+        $ddlProductDetail.fanexMultiSelect("setCheckAll", checked);
+        $ddlProductDetail.fanexMultiSelect("setEnable", checked);
+    }
+
+    private ProductsListOnCheckGroup(checked, $ddlProductDetail, $groupCheckbox) {
+        const self: any = this;
+        $groupCheckbox
+            .closest(".fanex-multiselect-div")
+            .next(".fanex-multiselect-ul-group")
+            .find('input[type="checkbox"]')
+            .each(function () {
+                self.ProductsListOnCheck(checked, parseInt(this.value), $ddlProductDetail);
+            });
+    }
+
+    private ProductsListOnCheck(checked, productId, $ddlProductDetail) {
+        const filteredProductDetails = this.productDetailsData.filter(function (p) {
+            if (p.ProductId === productId) {
+                return p;
+            }
+        });
+
+        if (!filteredProductDetails.length) {
+            return;
+        }
+
+        const optionsElement = $ddlProductDetail.next(".fanex-multiselect-options");
+        this.$.each(filteredProductDetails, function (index, p) {
+            optionsElement
+                .find('input[type="checkbox"][value="' + p.ResourceId + '"]')
+                .prop("checked", checked)
+                .prop("disabled", !checked);
+        });
+
+        var enabledCheckboxes = optionsElement.find('input[type="checkbox"]:enabled').length - 1;
+
+        if (checked) {
+            if (enabledCheckboxes === this.productDetailsData.length) {
+                $ddlProductDetail.fanexMultiSelect("setCheckAll", checked);
+            }
+
+            $ddlProductDetail.fanexMultiSelect("setEnable", checked);
+        } else if (!enabledCheckboxes) {
+            $ddlProductDetail.fanexMultiSelect("setCheckAll", checked);
+            $ddlProductDetail.fanexMultiSelect("setEnable", checked);
+        }
+    }
+
+    public GetParameterProducts() {
+        var productIds = this.$multiSelectProduct.fanexMultiSelect("getItems", true);
+        return productIds.length ? "&productIds=" + productIds.join(",") : "";
     }
 
     public GetParameterProductDetails() {
-        var parameterProductDetails = [];
-        if (!$("#ProductDetails").hasClass("ui-state-disabled")) {
-            var ids = $("#productDetailsList .ui-multiselect-checkboxes :input:checked:not(:disabled)");
-            for (var i = 0; i < ids.length; i++) {
-                this.$(ids[i]).val() !== "showAll" && parameterProductDetails.push(this.$(ids[i]).val());
-            }
+        if (this.$multiSelectProductDetail) {
+            var resourceIds = this.$multiSelectProductDetail.fanexMultiSelect("getItems", true);
+            return resourceIds.length ? "&resourceIds=" + resourceIds.join(",") : "";
         }
 
-        return parameterProductDetails.length ? "&resourceIds=" + parameterProductDetails.join(",") : "";
-    }
-
-    private InitProductsList($groupProducts) {
-        var $this = this;
-        $groupProducts.css("display", "block");
-        var $productList = $("#productList");
-        $("#productList div").remove();
-
-        $groupProducts.multiSelect({
-            minWidth: 170,
-            showHeader: false,
-            onCheck: function () {
-                var checkedValue = this.value;
-                if (checkedValue === "showAll") {
-                    var ids = $productList.find(".ui-multiselect-checkboxes :input");
-                    for (var i = 0; i < ids.length; i++) {
-                        (<HTMLInputElement>ids[i]).checked = this.checked;
-                    }
-                }
-                else {
-                    if (!this.checked) {
-                        (<HTMLInputElement>$("#ui-multiselect-GroupProducts-option-0")[0]).checked = false;
-                    }
-                }
-
-                $this.ConstrainProductDetails(this.checked, checkedValue);
-            },
-            noneSelectedText: function () {
-                $groupProducts.attr("title", "");
-                return "";
-            },
-            selectedText: function (numChecked, numTotal, checkedItems) {
-                if (checkedItems[0].value !== "showAll") {
-                    numChecked++;
-                }
-
-                if (numChecked !== numTotal) {
-                    var mainTitle = "";
-                    $.each(checkedItems, function (i) {
-                        mainTitle += checkedItems[i].title + ", ";
-                    });
-
-                    mainTitle = mainTitle.substring(0, mainTitle.length - 2);
-                    $groupProducts.attr("title", mainTitle);
-
-                    return mainTitle;
-                } else {
-                    (<HTMLInputElement>$("#ui-multiselect-GroupProducts-option-0")[0]).checked = true;
-                    $groupProducts.attr("title", "All");
-                    return "All";
-                }
-            }
-        });
-
-        $("#GroupProducts").width(170);
-    }
-
-    private ConstrainProductDetails(checked, checkedValue) {
-        var $productDetails;
-
-        if (checkedValue === "showAll") {
-            $('#productDetailsList .ui-multiselect-checkboxes input[type="checkbox"]').prop("checked", checked);
-            $productDetails = $("#ProductDetails");
-
-            if (checked) {
-                $productDetails.removeClass("ui-state-disabled").find('input[type="button"]').val("All");
-            } else {
-                $productDetails.addClass("ui-state-disabled").find('input[type="button"]').val("");
-            }
-        } else {
-            var filteredProductDetails = this.productDetailsData.filter(function (p) {
-                if (p.ProductKey === checkedValue) {
-                    return p;
-                }
-            });
-
-            if (filteredProductDetails.length) {
-                $.each(filteredProductDetails, function (index, p) {
-                    $('#productDetailsList .ui-multiselect-checkboxes input[type="checkbox"]').prop("checked", checked);
-                });
-
-                $productDetails = $("#ProductDetails");
-
-                if (checked) {
-                    $productDetails.removeClass("ui-state-disabled").find('input[type="button"]').val("All");
-                } else {
-                    $productDetails.addClass("ui-state-disabled").find('input[type="button"]').val("");
-                }
-            }
-        }
-    }
-
-    private InitProductDetailsList($productDetails) {
-        $productDetails.css("display", "block");
-        let $productDetailsList = $("#productDetailsList");
-        $("#productDetailsList div").remove();
-
-        $productDetails.multiSelect({
-            minWidth: 200,
-            maxHeight: 100,
-            showHeader: false,
-            onCheck: function () {
-                if (this.value === "showAll") {
-                    var ids = $productDetailsList.find(".ui-multiselect-checkboxes :input");
-                    for (var i = 0; i < ids.length; i++) {
-                        (<HTMLInputElement>ids[i]).checked = this.checked;
-                    }
-                } else {
-                    if (!this.checked) {
-                        (<HTMLInputElement>$("#ui-multiselect-ProductDetails-option-0")[0]).checked = false;
-                    }
-                }
-            },
-            noneSelectedText: function () {
-                $productDetails.attr("title", "");
-                return "";
-            },
-            selectedText: function (numChecked, numTotal, checkedItems) {
-                if (checkedItems[0].value !== "showAll") {
-                    numChecked++;
-                }
-
-                if (numChecked !== numTotal) {
-                    var mainTitle = "";
-                    $.each(checkedItems, function (i) {
-                        mainTitle += checkedItems[i].title + ", ";
-                    });
-
-                    mainTitle = mainTitle.substring(0, mainTitle.length - 2);
-                    $productDetails.attr("title", mainTitle);
-
-                    return mainTitle;
-                } else {
-                    (<HTMLInputElement>$("#ui-multiselect-ProductDetails-option-0")[0]).checked = true;
-                    $productDetails.attr("title", "All");
-                    return "All";
-                }
-            }
-        });
-
-        $("#ProductDetails").width(200);
-    }
-
-    private OnSuccessLoadProduct(data) {
-        const products = data.products;
-        let productList = `<option value="showAll" selected="selected">All</option>`;
-        this.$.each(products, function (i) {
-            productList += `<option value="${products[i].Key}" selected="selected">${products[i].Value}</option>`;
-        });
-
-        let $groupProducts = $("#GroupProducts").html(productList);
-        this.InitProductsList($groupProducts);
-        this.$("#GroupProducts :input").width($groupProducts.width() - 21);
-
-        let productDetails = data.productDetails;
-        if (productDetails.length) {
-            let productDetailsList = `<option value="showAll" selected="selected">All</option>`;
-            this.$.each(productDetails, function (i) {
-                productDetailsList += `<option value="${productDetails[i].ResourceId}" selected="selected" data-productkey="${productDetails[i].ProductKey}">${productDetails[i].DisplayName}</option>`;
-            });
-
-            var $productDetails = $("#ProductDetails").html(productDetailsList);
-            this.InitProductDetailsList($productDetails);
-            this.$("#ProductDetails :input").width($productDetails.width() - 21);
-            this.$("#productDetailsContainer").removeClass("hidden");
-
-            this.productDetailsData = productDetails;
-        }
+        return "";
     }
 }

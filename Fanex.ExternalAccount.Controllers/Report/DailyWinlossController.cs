@@ -1,5 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
@@ -7,10 +10,6 @@
     using Excel.Reports.DailyWinLossReport;
     using Newtonsoft.Json;
     using Service.Interface.Report;
-    using Service.UserControl;
-    using System;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
     using Utilities;
 
     public class DailyWinlossController : BaseReportController
@@ -29,13 +28,12 @@
 
         public DailyWinlossController(
             CurrentSession currentSession,
-            IReportService reportService,
-            IGroupConfigurationService groupConfigurationService)
-            : base(currentSession, reportService, groupConfigurationService)
+            IReportService reportService)
+            : base(currentSession, reportService)
         {
         }
 
-        public DailyWinlossController() : this(null, null, null)
+        public DailyWinlossController() : this(null, null)
         {
         }
 
