@@ -228,14 +228,10 @@ span.selectedMonth {
     }
 }
 
-.search-form .form-group {
-    margin-bottom: 16px;
+.search-form.filter-winloss-detail .form-group {
     margin-right: 16px;
-
     &.view-history-box {
         display: block;
-        margin-top: -12px;
-        margin-bottom: 0;
     }
 }
 
