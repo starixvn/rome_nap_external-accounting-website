@@ -15,6 +15,8 @@
 
         int CustId { get; }
 
+        string CustName { get; }
+
         IEnumerable<int> CustIds { get; }
     }
 
@@ -24,6 +26,8 @@
             {"custId", "customerId", "parentId", "srecommend", "mrecommend", "recommend", "agentId"};
 
         private readonly string[] custIdsNames = { "custIds", "customerIds" };
+
+        private readonly string[] custNameParamNames = { "username" };
 
         public static IExtRequest Instance => new ExtRequest();
 
@@ -61,6 +65,14 @@
             }
         }
 
+        public string CustName
+        {
+            get
+            {
+                return GetCustNameInQueryString();
+            }
+        }
+
         public IEnumerable<int> CustIds => GetCustomerIdsInQueryString();
 
         private int GetCustomerIdInQueryString()
@@ -78,6 +90,23 @@
             }
 
             return 0;
+        }
+
+        private string GetCustNameInQueryString()
+        {
+            var request = HttpContext.Current.Request;
+
+            foreach (var paramName in custNameParamNames)
+            {
+                var custName = request[paramName];
+
+                if (!string.IsNullOrWhiteSpace(custName))
+                {
+                    return custName;
+                }
+            }
+
+            return string.Empty;
         }
 
         private IEnumerable<int> GetCustomerIdsInQueryString()

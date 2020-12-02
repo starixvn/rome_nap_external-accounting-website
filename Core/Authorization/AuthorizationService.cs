@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
@@ -40,6 +41,10 @@
 
     public class AuthorizationServiceImpl : AuthorizationService
     {
+        private static readonly string[] UrlToCheckUsernameParam = new[]
+        {
+            "NapStatement/StatementReport/GetCustomerInfo"
+        };
         public static readonly AuthorizationServiceImpl Instance = new AuthorizationServiceImpl();
 
         private readonly ICachingService cachingService;
@@ -62,12 +67,24 @@
 
         public bool IsBelong()
         {
-            if (ExtRequest.Instance.CustIds.Any())
+            var extRequest = ExtRequest.Instance;
+
+            if (extRequest.CustIds.Any())
             {
-                return IsBelong(ExtRequest.Instance.GetGroupName(), ExtRequest.Instance.CustIds);
+                return IsBelong(extRequest.GetGroupName(), extRequest.CustIds);
             }
 
-            return IsBelong(ExtRequest.Instance.GetGroupName(), ExtRequest.Instance.CustId, string.Empty);
+            var url = HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath.Substring(2);
+
+            foreach (var item in UrlToCheckUsernameParam)
+            {
+                if (url.IndexOf(item, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    return IsBelong(extRequest.GetGroupName(), 0, extRequest.CustName);
+                }
+            }
+
+            return IsBelong(extRequest.GetGroupName(), extRequest.CustId, string.Empty);
         }
 
         public bool IsBelong(string groupName, int custId, string userName)
