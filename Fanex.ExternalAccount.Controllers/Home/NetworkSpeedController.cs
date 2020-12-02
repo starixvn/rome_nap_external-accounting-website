@@ -51,7 +51,7 @@
             if (CurrentSession.IsLogin
                 && User.Identity.IsAuthenticated
                 && speedKbps > 0
-                && CalculatingNWSpeedGroupIds.Any())
+                && IsNeedToCalculateUserConnectionSpeed())
             {
                 LogUserInformation(speedKbps);
             }
