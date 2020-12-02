@@ -6,7 +6,6 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Web;
-    using Common;
 
     public interface IExtRequest
     {
@@ -47,7 +46,6 @@
             return int.TryParse(groupIdValue, out var groupId) ? groupId : default(int);
         }
 
-
         public int CustId
         {
             get
@@ -71,7 +69,7 @@
 
             foreach (var custIdParamName in custIdParamNames)
             {
-                var custId = Converter.ToInt(request[custIdParamName]);
+                var custId = Convert.ToInt32(request[custIdParamName]);
 
                 if (custId > 0)
                 {
@@ -90,7 +88,7 @@
                 var custIds = request[custIdName];
                 if (!string.IsNullOrEmpty(custIds))
                 {
-                    return custIds.Split(',').Select(id => Converter.ToInt(id));
+                    return custIds.Split(',').Select(id => Convert.ToInt32(id));
                 }
             }
 
