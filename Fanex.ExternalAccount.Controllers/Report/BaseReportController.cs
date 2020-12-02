@@ -22,5 +22,6 @@
 
         protected bool CanView(string[] groups)
             => groups.Contains(currentSession.ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
+
     }
 }

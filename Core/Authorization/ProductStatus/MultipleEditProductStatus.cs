@@ -13,6 +13,7 @@
         public static IEnumerable<KeyValuePair<int, string>> GetProductList()
         {
             var specialProductIds = Config.SpecialProductIds();
+            
 
             IProductService productService = new ProductService();
             var adminDoesNotHavePermissionOnSpecialProduct = productService.AdminDoesNotHavePermissionOnSpecialProduct(CurrentSession.Instance.CustId);
