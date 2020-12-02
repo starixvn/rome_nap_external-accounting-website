@@ -7,5 +7,7 @@
         string GroupName { get; }
 
         int UserId { get; set; }
+
+        string ParentGroupName { get; set; }
     }
 }

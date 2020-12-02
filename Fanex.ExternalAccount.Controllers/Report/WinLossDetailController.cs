@@ -111,6 +111,7 @@
         public ActionResult GetExtraPT(ViewExtraPTRequest request)
         {
             request.UserId = currentSession.CustId;
+            request.ParentGroupName = currentSession.ParentGroupName;
             var extraPTs = winLossDetailService.GetExtraPT(request);
 
             return Json(extraPTs);

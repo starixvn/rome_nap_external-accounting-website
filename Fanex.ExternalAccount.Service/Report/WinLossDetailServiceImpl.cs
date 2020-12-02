@@ -122,7 +122,7 @@
         {
             const float percentage = 100.0f;
 
-            var extraPTs = reportService.GetExtraPT(request.GroupName);
+            var extraPTs = reportService.GetExtraPT(request.ParentGroupName);
             var validProductIds = productService
                 .ValidateProductIds(request.UserId, request.GroupId, extraPTs.Select(e => e.ProductId))
                 .ToDictionary(kvp => kvp, kvp => true);

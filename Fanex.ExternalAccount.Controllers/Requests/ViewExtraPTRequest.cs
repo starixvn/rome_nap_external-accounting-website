@@ -21,5 +21,7 @@
         public string GroupName => extRequest.GetGroupName();
 
         public int UserId { get; set; }
+
+        public string ParentGroupName { get; set; }
     }
 }
