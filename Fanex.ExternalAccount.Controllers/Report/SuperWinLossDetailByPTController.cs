@@ -1,18 +1,19 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.DTO.Report;
     using Fanex.ExternalAccount.Excel.Reports.SuperWinLossDetailByPT;
     using Fanex.ExternalAccount.Service.Report.SuperWinLossDetailByPT;
     using Fanex.ExternalAccount.Utilities;
     using Requests;
     using Service.Interface.Report;
     using Service.UserControl;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
 
     [ExternalAccountAuthenticate(Function = eFunctions.SuperWinLossDetailByPT,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -70,8 +71,8 @@
                 0));
 
             builder = new SuperWinLossDetailByPTReportBuilder(
-                winlossDetail.WinLossByUsernames.ToList(),
-                winlossDetail.GrandTotal,
+                winlossDetail.WinLossByUsernames == null ? new List<SuperWinLossDetailByUsernameModel>() : winlossDetail.WinLossByUsernames.ToList(),
+                winlossDetail.GrandTotal ?? new SuperWinLossDetailByProductDTO(),
                 request.Fromdate,
                 request.Todate);
 

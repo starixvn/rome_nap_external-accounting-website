@@ -1,5 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
@@ -10,10 +14,6 @@
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.UserControl;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -54,13 +54,15 @@
             IWinLossDetailReportBuilder builder;
             request.Viewlevel++;
             var winlossDetail = GetDataFromDB(request);
+            var winlossDetailData = winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null);
+            var isWinlossDetailNoData = winlossDetailData is string;
             request.Viewlevel--;
             switch (request.Viewlevel)
             {
                 case Role.Member:
                     {
                         builder = new MemberWinLossDetailReportBuilder(
-                            (List<WinLossDetailAg>)winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null),
+                            isWinlossDetailNoData ? new List<WinLossDetailAg>() : (List<WinLossDetailAg>)winlossDetailData,
                             request.Viewlevel,
                             request.Fromdate,
                             request.Todate);
@@ -70,7 +72,7 @@
                 case Role.Agent:
                     {
                         builder = new AgentWinLossDetailReportBuilder(
-                            (List<WinLossDetailMAg>)winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null),
+                            isWinlossDetailNoData ? new List<WinLossDetailMAg>() : (List<WinLossDetailMAg>)winlossDetailData,
                             request.Viewlevel,
                             request.Fromdate,
                             request.Todate);
@@ -80,7 +82,7 @@
                 case Role.Master:
                     {
                         builder = new WinLossDetailReportBuilder(
-                            (List<WinLossDetail>)winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null),
+                            isWinlossDetailNoData ? new List<WinLossDetail>() : (List<WinLossDetail>)winlossDetailData,
                             request.Viewlevel,
                             request.Fromdate,
                             request.Todate);
@@ -90,7 +92,7 @@
                 default:
                     {
                         builder = new WinLossDetailExtraReportBuilder(
-                            (List<WinLossDetailExtra>)winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null),
+                            isWinlossDetailNoData ? new List<WinLossDetailExtra>() : (List<WinLossDetailExtra>)winlossDetailData,
                             request.Viewlevel,
                             request.Fromdate,
                             request.Todate);
