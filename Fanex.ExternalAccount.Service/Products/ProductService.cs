@@ -17,6 +17,8 @@
         IEnumerable<ProductDto> GetProducts(int userId, int groupId);
 
         IEnumerable<int> ValidateProductIds(int userId, int groupId, IEnumerable<int> productIds);
+
+        bool AdminDoesNotHavePermissionOnSpecialProduct(int userId);
     }
 
     public class ProductService : IProductService
@@ -87,7 +89,7 @@
             return productList;
         }
 
-        private bool AdminDoesNotHavePermissionOnSpecialProduct(int userId)
+        public bool AdminDoesNotHavePermissionOnSpecialProduct(int userId)
         {
             var checkIsInternalAdminResult =
                 permissionService.CheckCustomerIsInternalAdmin(

@@ -1,10 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.DTO.Report;
     using Fanex.ExternalAccount.Excel.Reports.SuperWinLossDetailByPT;
     using Fanex.ExternalAccount.Service.Report.SuperWinLossDetailByPT;
     using Requests;
@@ -35,7 +37,6 @@
         [AntiXSRFFilter]
         public ActionResult GetData(SuperWinLossDetailByPTRequest request)
         {
-            request.UserId = currentSession.CustId;
             var param = new SuperWinLossDetailByPTParam(
                 request.GroupId,
                 request.GroupName,
@@ -54,7 +55,6 @@
 
         public void ExportWinLossDetailToExcel(ExportSuperWinLossDetailByPTRequest request)
         {
-            request.UserId = currentSession.CustId;
             var winlossDetail = services.GetSuperWinLossDetailByPT(new SuperWinLossDetailByPTParam(
                 request.GroupId,
                 request.GroupName,

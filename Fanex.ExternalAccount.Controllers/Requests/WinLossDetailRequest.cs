@@ -1,9 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Requests
 {
-    using Core.Context;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using Core.Context;
 
     public class WinLossDetailRequest
     {
@@ -33,7 +31,7 @@
         public int Viewlevel { get; set; }
         public string ProductIds { get; set; }
         public string ResourceIds { get; set; }
-        public int UserId { get; set; }
+        public int UserId => currentSession.CustId;
 
         public bool IsSearch() => CustId == 0;
     }

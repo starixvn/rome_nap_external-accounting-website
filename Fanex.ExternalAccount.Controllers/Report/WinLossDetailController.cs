@@ -119,8 +119,6 @@
 
         private dynamic GetDataFromDB(WinLossDetailRequest request)
         {
-            request.UserId = currentSession.CustId;
-
             var toolTipsProducts = new
             {
                 liveCasino = reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupId)

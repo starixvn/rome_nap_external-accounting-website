@@ -1,5 +1,11 @@
 ﻿namespace Fanex.ExternalAccount
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
     using CasinoLibrary.SBAgent;
@@ -17,12 +23,6 @@
     using ONEbook.UM.Filters;
     using ProductStatus.Setting.Configuration;
     using Sunplus.Libraries.APILogger;
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Routing;
 
     public class MvcApplication : HttpApplication
     {

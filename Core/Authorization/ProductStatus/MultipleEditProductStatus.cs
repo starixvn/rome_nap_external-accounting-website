@@ -2,16 +2,33 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Fanex.Data;
     using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Service.Products;
+    using Fanex.ExternalAccount.Utilities;
     using Shared;
 
     public static class MultipleEditProductStatus
     {
         public static IEnumerable<KeyValuePair<int, string>> GetProductList()
-            => GetProductIds(ExtRequest.Instance.GetGroupId())
-            .Select(id => new KeyValuePair<int, string>(id, CacheRef.GetProductName(id)));
+        {
+            var specialProductIds = Config.SpecialProductIds();
+
+            IProductService productService = new ProductService();
+            var adminDoesNotHavePermissionOnSpecialProduct = productService.AdminDoesNotHavePermissionOnSpecialProduct(CurrentSession.Instance.CustId);
+
+            var productIds = GetProductIds(ExtRequest.Instance.GetGroupId());
+
+            foreach (var id in productIds)
+            {
+                if (specialProductIds.ContainsKey(id) && adminDoesNotHavePermissionOnSpecialProduct)
+                {
+                    continue;
+                }
+
+                yield return new KeyValuePair<int, string>(id, CacheRef.GetProductName(id));
+            }
+        }
 
         private static IEnumerable<int> GetProductIds(int groupId)
         {
