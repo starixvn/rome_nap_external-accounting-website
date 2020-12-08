@@ -65,7 +65,7 @@
             GetRequestPage();
             GetDailyWinLoss();
             var builder = new DailyWinLossReportBuilder(
-                _listDailyWinLoss,
+                _listDailyWinLoss ?? new List<DailyWinLoss>(),
                 false,
                 _viewlevel,
                 CheckRequest.GetStringRequest("date", string.Empty));

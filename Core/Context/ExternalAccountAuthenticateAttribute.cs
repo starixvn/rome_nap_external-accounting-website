@@ -25,7 +25,7 @@
             => FunctionAuthorization(CurrentSession.Instance.UserId, Function, Policy);
 
         public bool IsBelong(int custId, string username, string groupName = null, bool getUplineInfo = true)
-            => authorization.IsBelong(ExtRequest.Instance.GetGroupName(groupName), custId, username, getUplineInfo);
+            => authorization.IsBelong(ExtRequest.Instance.GetGroupName(groupName), custId, username);
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {

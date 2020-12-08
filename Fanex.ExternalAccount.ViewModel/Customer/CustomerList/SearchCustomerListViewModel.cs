@@ -14,6 +14,8 @@
 
         public bool IsMyanmarOdds => CustomerList.Any(i => i.IsMyanmarOdds);
 
+        public bool HasSubGroups { get; set; }
+
         public SearchCustomerListViewModel()
         {
             CustomerList = new List<CustomerListDTO>();

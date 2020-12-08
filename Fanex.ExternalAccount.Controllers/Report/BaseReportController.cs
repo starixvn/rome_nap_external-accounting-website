@@ -1,5 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
+    using System;
+    using System.Linq;
     using Core.Base;
     using Core.Shared;
     using Fanex.ExternalAccount.Core.Context;
@@ -8,9 +10,7 @@
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.UserControl;
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class BaseReportController : BaseController
     {
@@ -30,7 +30,9 @@
 
         protected bool CanView(string[] groups)
         {
-            return groups.Contains(currentSession.ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
+            var groupName = currentSession.ParentGroupName;
+
+            return groups.Contains(groupName, StringComparer.CurrentCultureIgnoreCase);
         }
 
         protected string BuildTooltipsForLiveCasino(string groupName)

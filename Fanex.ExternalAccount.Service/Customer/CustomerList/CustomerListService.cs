@@ -1,10 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.Service.Customer.CustomerList
 {
+    using System.Linq;
     using Fanex.ExternalAccount.Controllers.ViewModels.CustomerList;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DataAccess.Criteria.Customer.CustomerList;
     using Fanex.ExternalAccount.DataAccess.Customer.CustomerList;
     using Fanex.ExternalAccount.Service.Customer.CustomerList.Params;
+    using Fanex.ExternalAccount.Service.Impl.UserControl;
+    using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Fanex.ExternalAccount.Utilities;
 
     public interface ICustomerListService
@@ -18,17 +21,21 @@
 
         private readonly IIPInformatonService _IPInformatonService;
 
-        public CustomerListService() : this(null, null) { }
+        private readonly IGroupService _groupService;
 
-        public CustomerListService(ICustomerListDao customerListDao, IIPInformatonService ipInformatonService)
+        public CustomerListService() : this(null, null, null) { }
+
+        public CustomerListService(ICustomerListDao customerListDao, IIPInformatonService ipInformatonService, IGroupService groupService)
         {
             _IPInformatonService = ipInformatonService ?? new IPInformationService();
             _customerListDao = customerListDao ?? new CustomerListDao();
+            _groupService = groupService ?? new GroupService();
         }
 
         public SearchCustomerListViewModel Search(SearchCustomerListParams parameters, bool IsViewIPVN)
         {
             var result = _customerListDao.SearchCustomerList(GetSearchCriteria(parameters));
+            result.HasSubGroups = parameters.GroupId > 0 && _groupService.GetGroupWithSubGroups(parameters.GroupId).Any();
             if (!IsViewIPVN)
             {
                 var specialIPList = _IPInformatonService.GetSpecialIPs();

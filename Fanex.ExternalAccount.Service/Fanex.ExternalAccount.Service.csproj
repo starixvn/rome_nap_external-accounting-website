@@ -182,6 +182,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BelongingService.cs" />
     <Compile Include="Customer\CustomerList\CustomerListService.cs" />
     <Compile Include="Customer\CustomerList\Params\SearchCustomerListParams.cs" />
     <Compile Include="Customer\AssociationAccountService.cs" />

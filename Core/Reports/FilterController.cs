@@ -15,14 +15,16 @@
     {
         private readonly IReportService reportService;
         private readonly IExtRequest extRequest;
+        private readonly CurrentSession currentSession;
 
-        public FilterController(IReportService reportService, IExtRequest extRequest)
+        public FilterController(IReportService reportService, IExtRequest extRequest, CurrentSession currentSession)
         {
             this.reportService = reportService ?? new ReportService();
             this.extRequest = extRequest ?? new ExtRequest();
+            this.currentSession = currentSession ?? new CurrentSession();
         }
 
-        public FilterController() : this(null, null)
+        public FilterController() : this(null, null, null)
         {
         }
 
@@ -45,8 +47,9 @@
         public ActionResult ProductsList()
         {
             var groupId = extRequest.GetGroupId();
+
             var products = GetProductList(groupId);
-            var productDetails = GetProductDetails(groupId, extRequest.GetGroupName());
+            var productDetails = GetProductDetails(groupId, currentSession.ParentGroupName);
 
             return JsonBase(new { products, productDetails }, new JsonSerializerSettings());
         }

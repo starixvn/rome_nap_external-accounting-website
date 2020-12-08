@@ -35,7 +35,10 @@
 
         public IEnumerable<Group> GetGroupWithSubGroups(int groupId)
         {
-            Check.Argument.IsNotNegativeOrZero(groupId, nameof(groupId));
+            if(groupId <= 0)
+            {
+                return Enumerable.Empty<Group>();
+            }
 
             const int GroupWithSub = 2;
             var groups = _groupDao.GetGroupById(groupId, GroupWithSub).ToList();

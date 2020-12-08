@@ -12,7 +12,7 @@
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Fanex.ExternalAccount.Service.UserControl;
-
+    using IBCUtils;
 
     public class SubGroupController : BaseController
     {
@@ -69,6 +69,30 @@
         public ActionResult SubGroupUpdate(SubGroupUpdateRequest updateRequest)
         {
             var result = _subGroupService.UpdateCustomerSubGroup(updateRequest.SubGroupName, updateRequest.CustIds, updateRequest.IsAssigned, CurrentSession.UserId, CurrentContext.Ip4Address);
+
+            return JsonBase(result);
+        }
+
+        [ExternalAccountAuthenticate(Function = eFunctions.SubGroup,
+            Policy = AuthenticateAction.AuthenticationType.Host, IsAjaxRequest = false)]
+        [AntiXSRFFilter]
+        public ActionResult ChangeSubGroupAdminPassword(string groupName)
+        {
+            var admins = _subGroupService.GetListAdminSubGroup(groupName).Select(admin => new SelectListItem { Text = admin.Username, Value = admin.CustId.ToString() }).ToList();
+            ViewBag.Admins = admins;
+            ViewBag.GroupName = groupName;
+            ViewBag.SCode = Encryptor.RandomCaptcha;
+
+            return PartialViewBase();
+        }
+
+        [ExternalAccountAuthenticate(Function = eFunctions.SubGroup,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
+        public ActionResult UpdateAdminPassword(int adminId, string password)
+        {
+            var rawPassword = Encryptor.Decrypt(password, Encryptor.RandomCaptcha);
+            var result = _subGroupService.UpdateSubGroupAdminPassword(adminId, Encryption.CfsEnCode(rawPassword), CurrentSession.UserId, CurrentContext.Ip4Address);
 
             return JsonBase(result);
         }

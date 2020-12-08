@@ -12,7 +12,7 @@
     string currentLine = currentDomain;
     var currentLineValue = string.Empty;
 
-    var supportSwitchLine = !Group.IsOfficeGroup(new CurrentSession().CurrencyGroup);
+    var supportSwitchLine = !CurrentSession.Instance.IsInternalAdmin || !CurrentSession.Instance.IsITAdmin; /*!Group.IsOfficeGroup(new CurrentSession().CurrencyGroup);*/
 
     if (supportSwitchLine)
     {

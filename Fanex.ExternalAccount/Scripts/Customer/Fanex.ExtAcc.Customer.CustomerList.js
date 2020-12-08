@@ -70,6 +70,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         Fanex.ExtAcc.Customer.agentId = uplineRoleId === Fanex.ExtAcc.Customer.Agent ? uplineId : Fanex.ExtAcc.Customer.agentId;
         var params = {
             groupName: $('#selectedGroupName').html() === '' ? 'ACCDDD' : $('#selectedGroupName').html(),
+            groupId: $('#ddlGroupName').val(),
             userName: Fanex.encodeHtml(encodeURIComponent($.trim(this.DOMElements.txtUsername.val()))).replace(/[^a-zA-Z0-9~!*()-._]/g, ""),
             status: this.DOMElements.selStatus.val(),
             uplineRoleId: uplineRoleId,
@@ -92,6 +93,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         $.post(resolveClientUrl('CustomerList/Seach'), params, function (result) {
             var _this = Fanex.ExtAcc.Customer.CustomerList;
             var isSuperList = isNullOrUndefinedOrEmpty(params.uplineRoleId);
+            var hasSubGroups = result.HasSubGroups;
             _this.cachedParams.uplineId = params.uplineId;
             _this.cachedParams.uplineRoleId = params.uplineRoleId;
             var numberOfFrozenColumn = 6;
@@ -108,7 +110,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                     ? currentRow.MinDate
                     : currentRow.LimitDays !== "" ? currentRow.LimitDays
                         : "";
-                var columns = _this.GetGridBodyRows(currentRow, i, params.pageSize, params.pageIndex - 1, params.uplineRoleId, result.IsMyanmarOdds);
+                var columns = _this.GetGridBodyRows(currentRow, i, params.pageSize, params.pageIndex - 1, params.uplineRoleId, result.IsMyanmarOdds, result.HasSubGroups);
                 bodyRows.push({
                     Columns: columns,
                     CssClass: cssRow
@@ -116,8 +118,8 @@ Fanex.ExtAcc.Customer.CustomerList = {
             }
 
             gridOptions = {
-                groupHeaderRows: _this.GetGridGroupHeader(params.uplineRoleId, result.IsMyanmarOdds),
-                columns: _this.GetGridHeader(params.uplineRoleId, result.IsMyanmarOdds),
+                groupHeaderRows: _this.GetGridGroupHeader(params.uplineRoleId, result.IsMyanmarOdds, result.HasSubGroups),
+                columns: _this.GetGridHeader(params.uplineRoleId, result.IsMyanmarOdds, result.HasSubGroups),
                 bodyRows: bodyRows,
                 autoCalculateGridExpandHeight: true,
                 numberOfFrozenColumn: numberOfFrozenColumn,
@@ -170,6 +172,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 _this.DOMElements.icoExportExcel.click(function () {
                     var params = {
                         groupName: $('#selectedGroupName').html() === '' ? 'ACCDDD' : $('#selectedGroupName').html(),
+                        groupId: $('#ddlGroupName').val(),
                         userName: _this.DOMElements.txtUsername.val(),
                         status: _this.DOMElements.selStatus.val(),
                         uplineRoleId: _this.cachedParams.uplineRoleId,
@@ -193,10 +196,11 @@ Fanex.ExtAcc.Customer.CustomerList = {
         }).always(function () { Fanex.ExtAcc.UnBlockUI(); });
     },
 
-    GetGridHeader: function (uplineRoleId, isMyanmarOdds) {
+    GetGridHeader: function (uplineRoleId, isMyanmarOdds, hasSubGroups) {
         var columns = [];
         var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
         var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
+        var showSubGroups = isSuperList && hasSubGroups;
         columns.push({ HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' });
         columns.push({
             HeaderText: '', Name: 'Check', Width: 30, CellAlign: 'center',
@@ -269,6 +273,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         if (isMyanmarOdds) {
             columns.push(!isMemberList ? { HeaderText: 'Myanmar Odds', Name: 'discountmyanmarodds', Width: 100, CellAlign: 'center' } : undefined);
         }
+        columns.push(showSubGroups ? { HeaderText: 'Assigned Sub Groups', Name: 'AssignedSubGroups', HeaderAlign: 'center', CellAlign: 'left', Width: 160 } : undefined);
         columns.push(isSuperList ? { HeaderText: 'Data Available', Name: 'DateLimit', CellAlign: 'center', Width: 100 } : undefined);
         columns.push({ HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 160 });
         columns.push({
@@ -279,9 +284,10 @@ Fanex.ExtAcc.Customer.CustomerList = {
         });
         return columns.filter(function (item) { return item !== undefined });
     },
-    GetGridGroupHeader: function (uplineRoleId, isMyanmarOdds) {
+    GetGridGroupHeader: function (uplineRoleId, isMyanmarOdds, hasSubGroups) {
         var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
         var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
+        var showSubGroups = isSuperList && hasSubGroups;
         var columns = [];
         columns.push({ HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 });
         columns.push({ HeaderText: '', Name: 'Check', MergeRowNumber: 2 });
@@ -293,6 +299,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push({ HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 });
         columns.push({ HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 });
         columns.push(!isMemberList ? { HeaderText: 'Commission', Name: 'commision', MergeColNumber: isMyanmarOdds ? 4 : 6 } : undefined);
+        columns.push(showSubGroups ? { HeaderText: 'Assigned Sub Groups', Name: 'AssignedSubGroups', MergeRowNumber: 2 } : undefined);
         columns.push(isSuperList ? { HeaderText: 'Data Available', Name: 'DateLimit', MergeRowNumber: 2 } : undefined);
         columns.push(isMemberList ? { HeaderText: 'User Group', Name: 'ugroup', MergeRowNumber: 2 } : undefined);
         columns.push(isMemberList ? { HeaderText: 'Agent Commission', Name: 'discount', MergeColNumber: isMyanmarOdds ? 4 : 3 } : undefined);
@@ -301,10 +308,11 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push({ HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 });
         return [{ Columns: columns.filter(function (item) { return item !== undefined }) }];
     },
-    GetGridBodyRows: function (currentRow, currentIndex, pageSize, pageIndex, uplineRoleId, isMyanmarOdds) {
+    GetGridBodyRows: function (currentRow, currentIndex, pageSize, pageIndex, uplineRoleId, isMyanmarOdds, hasSubGroups) {
         var columns = [];
         var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
         var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
+        var showSubGroups = isSuperList && hasSubGroups;
         columns.push({ Name: 'RowNumber', Value: currentIndex + pageSize * (pageIndex) });
         columns.push({ Name: 'Check', Value: currentRow });
         columns.push({ Name: 'username', Value: currentRow });
@@ -342,6 +350,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
             columns.push(isMemberList ? { Name: 'playerdiscountmyanmarodds', Value: currentRow.PlayerDiscountMyanmarOdds ? currentRow.PlayerDiscountMyanmarOdds : 0 } : undefined);
         }
 
+        columns.push(showSubGroups ? { Name: 'AssignedSubGroups', Value: currentRow.SubGroup } : undefined);
         columns.push(isSuperList ? { Name: 'DateLimit', Value: currentRow.MinDate ? moment(currentRow.MinDate).format("MM/DD/YYYY") : currentRow.LimitDays !== "" ? currentRow.LimitDays : "" } : undefined);
 
         columns.push({ Name: 'createdate', Value: currentRow.CreateDate, FormatDateTime: 'MM/DD/YYYY hh:mm:ss A' });

@@ -16,21 +16,25 @@
         private readonly Func<int, ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter;
         private readonly IExtRequest extRequest;
         private readonly IGroupConfigurationService groupConfigurationService;
+        private readonly CurrentSession currentSession;
 
-        public WinLossDetailRequest() : this(null, null, null)
+        public WinLossDetailRequest() : this(null, null, null, null)
         {
         }
 
         public WinLossDetailRequest(
             Func<int, ICollection<KeyValuePair<string, bool>>> selectedProductQueryGetter,
             IExtRequest extRequest,
-            IGroupConfigurationService groupConfigurationService)
+            IGroupConfigurationService groupConfigurationService,
+            CurrentSession currentSession)
         {
             this.selectedProductQueryGetter = selectedProductQueryGetter ?? new FilterController().AsCollection;
             this.extRequest = extRequest ?? new ExtRequest();
             this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
+            this.currentSession = currentSession ?? new CurrentSession();
         }
 
+        public string MainGroupName => currentSession.ParentGroupName;
         public int GroupId => extRequest.GetGroupId();
         public string GroupName => extRequest.GetGroupName();
         public string Username { get; set; }

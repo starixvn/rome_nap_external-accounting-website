@@ -6,7 +6,6 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Web;
-    using Common;
 
     public interface IExtRequest
     {
@@ -15,6 +14,8 @@
         int GetGroupId();
 
         int CustId { get; }
+
+        string CustName { get; }
 
         IEnumerable<int> CustIds { get; }
     }
@@ -25,6 +26,8 @@
             {"custId", "customerId", "parentId", "srecommend", "mrecommend", "recommend", "agentId"};
 
         private readonly string[] custIdsNames = { "custIds", "customerIds" };
+
+        private readonly string[] custNameParamNames = { "username" };
 
         public static IExtRequest Instance => new ExtRequest();
 
@@ -47,7 +50,6 @@
             return int.TryParse(groupIdValue, out var groupId) ? groupId : default(int);
         }
 
-
         public int CustId
         {
             get
@@ -63,6 +65,14 @@
             }
         }
 
+        public string CustName
+        {
+            get
+            {
+                return GetCustNameInQueryString();
+            }
+        }
+
         public IEnumerable<int> CustIds => GetCustomerIdsInQueryString();
 
         private int GetCustomerIdInQueryString()
@@ -71,7 +81,7 @@
 
             foreach (var custIdParamName in custIdParamNames)
             {
-                var custId = Converter.ToInt(request[custIdParamName]);
+                var custId = Convert.ToInt32(request[custIdParamName]);
 
                 if (custId > 0)
                 {
@@ -82,6 +92,23 @@
             return 0;
         }
 
+        private string GetCustNameInQueryString()
+        {
+            var request = HttpContext.Current.Request;
+
+            foreach (var paramName in custNameParamNames)
+            {
+                var custName = request[paramName];
+
+                if (!string.IsNullOrWhiteSpace(custName))
+                {
+                    return custName;
+                }
+            }
+
+            return string.Empty;
+        }
+
         private IEnumerable<int> GetCustomerIdsInQueryString()
         {
             var request = HttpContext.Current.Request;
@@ -90,7 +117,7 @@
                 var custIds = request[custIdName];
                 if (!string.IsNullOrEmpty(custIds))
                 {
-                    return custIds.Split(',').Select(id => Converter.ToInt(id));
+                    return custIds.Split(',').Select(id => Convert.ToInt32(id));
                 }
             }
 

@@ -43,6 +43,7 @@
             return Json(_customerListService.Search(new SearchCustomerListParams
             {
                 GroupName = request.GroupName,
+                GroupId = request.GroupId,
                 IsDataLimited = request.IsShowSuperLimitDate ?? false,
                 UplineId = request.UplineId ?? 0,
                 UplineRoleId = request.UplineRoleId ?? 0,
@@ -75,6 +76,7 @@
             var customerList = _customerListService.Search(new SearchCustomerListParams
             {
                 GroupName = request.GroupName,
+                GroupId = request.GroupId,
                 IsDataLimited = request.IsShowSuperLimitDate ?? false,
                 UplineId = request.UplineId ?? 0,
                 UplineRoleId = request.UplineRoleId ?? 0,
@@ -91,7 +93,8 @@
                 status,
                 roleId,
                 customerList.IsMyanmarOdds,
-                request.IsShowSuperLimitDate ?? false);
+                request.IsShowSuperLimitDate ?? false,
+                customerList.HasSubGroups);
             var excelStream = builder.Build();
             var fileName = $"{status}{roleId.DisplayRoleName()}List{DateTime.Now.ToString("yyyyMMdd")}.xls";
 

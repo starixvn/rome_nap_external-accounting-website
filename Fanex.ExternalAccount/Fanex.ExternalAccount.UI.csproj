@@ -2900,6 +2900,8 @@
     <Content Include="ExcelTemplates\ProblemAccountList\Master.xls" />
     <Content Include="ExcelTemplates\ProblemAccountList\Agent.xls" />
     <Content Include="ExcelTemplates\ProblemAccountList\Member.xls" />
+    <Content Include="ExcelTemplates\Customer\SuperListSG.xls" />
+    <Content Include="ExcelTemplates\Customer\SuperListSGMO.xls" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />
@@ -2954,6 +2956,7 @@
     <Content Include="Views\SuperWinLossDetailByPT\Index.cshtml" />
     <Content Include="Views\ProblemAccount\Index.cshtml" />
     <Content Include="Views\SubGroup\SubGroupList.cshtml" />
+    <Content Include="Views\SubGroup\ChangeSubGroupAdminPassword.cshtml" />
     <Content Include="typings\globals\jasmine-jquery\typings.json" />
     <Content Include="typings\globals\jasmine\typings.json" />
     <Content Include="typings\globals\jquery.blockui\typings.json" />

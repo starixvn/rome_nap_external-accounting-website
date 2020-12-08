@@ -1,10 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Core.Context
 {
-    using CustomerSetting.Module.Core.Web;
     using System;
     using System.Globalization;
     using System.Linq;
     using System.Web;
+    using CustomerSetting.Module.Core.Web;
     using Utilities;
 
     public class CurrentSession : ICurrentSession
@@ -126,7 +126,8 @@
             set { HttpContext.Current.Session[EASParentGroup] = value; }
         }
 
-        public bool IsBelongToSpecialGroups => Config.SpecialGroups().Contains(CurrencyGroup, StringComparer.CurrentCultureIgnoreCase) || Config.SpecialGroups().Contains(ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
+        public bool IsBelongToSpecialGroups
+            => Config.SpecialGroups().Contains(ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
 
         public bool InvalidOTP
         {

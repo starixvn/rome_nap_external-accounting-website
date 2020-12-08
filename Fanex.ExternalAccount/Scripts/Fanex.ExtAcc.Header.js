@@ -16,12 +16,12 @@ Fanex.ExtAcc.Header = {
         $.ajax({
             url: resolveClientUrl('Account/ExternalGroupList'),
             type: 'GET',
-            dataType: 'html',
+            dataType: 'json',
             cache: false,
             success: function (data) {
-                var items = eval(data);
+                var items = data;
 
-                if (!items.length) {
+                if (!Array.isArray(items) || !items.length) {
                     $('#selectedGroupName').html($('#groupName').html());
 
                     $('#userMenu').superfish();
@@ -88,11 +88,12 @@ Fanex.ExtAcc.Header = {
                 });
 
                 $("#ddlGroupName").on('select2:select', function (event) {
+                    groupId = event.params.data.id;
                     selectedGroupName = event.params.data.text;
-                    $('#selectedGroupIndex').html(event.params.data.id);
+                    $('#selectedGroupIndex').html(groupId);
                     $('#selectedGroupName').html(selectedGroupName);
                     $.ajax({
-                        url: resolveClientUrl('Shared/ChangeSelectedGroup?groupName=' + selectedGroupName),
+                        url: resolveClientUrl('Shared/ChangeSelectedGroup?groupName=' + selectedGroupName + '&groupId=' + groupId),
                         type: 'GET',
                         dataType: 'json',
                         cache: false,

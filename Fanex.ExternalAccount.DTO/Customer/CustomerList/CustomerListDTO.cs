@@ -63,5 +63,7 @@
         public decimal DiscountMyanmarOdds { get; set; }
 
         public decimal PlayerDiscountMyanmarOdds { get; set; }
+
+        public string SubGroup { get; set; }
     }
 }

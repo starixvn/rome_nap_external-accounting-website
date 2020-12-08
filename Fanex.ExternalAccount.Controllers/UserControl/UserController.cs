@@ -275,7 +275,7 @@
             var checkCustomerBelongToSpecialSiteResult = CheckCustomerBelongToSpecialSite(username);
             if (IsAdminHasPermissionOnCustomer(checkCustomerBelongToSpecialSiteResult.IsSpecialSite))
             {
-                var isBelonging = _authorization.IsBelong(ExtRequest.GetGroupName(groupName), 0, username, false);
+                var isBelonging = _authorization.IsBelong(ExtRequest.GetGroupName(groupName), 0, username);
                 if (isBelonging)
                 {
                     var encryption = new EncryptionThread();

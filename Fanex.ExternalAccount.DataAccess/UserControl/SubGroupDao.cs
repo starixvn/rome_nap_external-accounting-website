@@ -13,6 +13,38 @@
 
     public class SubGroupDao : DAOBase, ISubGroupDao
     {
+        public void ForceKickout(ForceKickoutAdminSubGroupCriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+            }
+        }
+
+        public IEnumerable<SubGroupAdmin> GetSubGroupAdmin(GetSubGroupAdminCriteria criteria)
+        {
+            var result = new List<SubGroupAdmin>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        var admin = new SubGroupAdmin
+                        {
+                            CustId = reader.ToInt("custid"),
+                            Username = reader.ToString("username"),
+                        };
+
+                        result.Add(admin);
+                    }
+                }
+            }
+
+            return result;
+        }
+
         public SubGroupViewModel GetSubGroupCustomer(GetSubGroupCustomerCriteria criteria)
         {
             var result = new List<SubGroupCustomer>();
@@ -31,6 +63,7 @@
                             IsClosed = reader.ToBool("closed"),
                             IsSuspended = reader.ToBool("suspended"),
                             IsEnabled = reader.ToBool("enabled"),
+                            SubGroup = reader.ToString("subgroup"),
                             SubGroupStatusList = subGroups.ToList()
                         };
                         result.Add(customer);
@@ -51,11 +84,26 @@
 
                 return new SubGroupViewModel
                 {
-                    SubGroupCustomers = result,
+                    SubGroupCustomers = result.OrderByDescending(cust => string.IsNullOrWhiteSpace(cust.SubGroup))
+                                              .ThenByDescending(cust => cust.IsEnabled)
+                                              .ThenBy(cust => cust.IsClosed)
+                                              .ThenBy(cust => cust.IsSuspended)
+                                              .ThenBy(cust => cust.CustId),
                     SubGroups = subGroups.Select(subGroup => subGroup.GroupName),
                     PageIndex = outputParams["pageindex"] is DBNull ? 0 : Convert.ToInt16(outputParams["pageindex"]),
                     TotalItems = outputParams["totalrows"] is DBNull ? 0 : Convert.ToInt16(outputParams["totalrows"])
                 };
+            }
+        }
+
+        public Result UpdateSubGroupAdminPassword(UpdateSubGroupAdminPwdCriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+
+                return new Result(outputParams["errcode"], outputParams["errmsg"]);
             }
         }
 
