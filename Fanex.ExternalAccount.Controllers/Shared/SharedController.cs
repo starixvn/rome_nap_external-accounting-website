@@ -9,7 +9,6 @@
     using Core.Context;
     using DTO;
     using Fanex.ExternalAccount.Core.Base;
-    using Fanex.ExternalAccount.DTO.UserControl;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.ViewModel.Shared;
     using Logging.Extensions.Web;
@@ -64,7 +63,7 @@
 
         public ActionResult _Menu()
         {
-            var isShowAssignSubGroup = CurrentSession.GroupId > 0 && (Group.IsITGroup(CurrentSession.GroupId) || groupService.GetGroupWithSubGroups(CurrentSession.GroupId).Any());
+            var isShowAssignSubGroup = CurrentSession.GroupId > 0 && (CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin || groupService.GetGroupWithSubGroups(CurrentSession.GroupId).Any());
             var menuList = menuService.GetMenusByUserId(CurrentSession.UserId, _currentSession.ParentGroupName, isShowAssignSubGroup);
             var rootMenuList = menuList.Where(x => x.ParentId == 0);
             var menuDict = new Dictionary<string, MenuItem>();
