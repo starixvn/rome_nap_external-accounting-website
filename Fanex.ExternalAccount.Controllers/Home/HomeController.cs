@@ -4,6 +4,8 @@
     using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
+    using Fanex.ExternalAccount.Service.Impl.UserControl;
+    using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Logging.Extensions.Web;
     using ViewModels;
     using CurrentSession = Core.Context.CurrentSession;
@@ -11,20 +13,46 @@
     public class HomeController : BaseController
     {
         private readonly CurrentSession _currentSession;
+        private readonly IGroupService _groupService;
+
         public HomeController()
         {
             _currentSession = new CurrentSession();
+            _groupService = new GroupService();
         }
 
         [ExternalAccountAuthenticate]
         public ActionResult Index()
-           => View(new HomeViewModel
-           {
-               Username = _currentSession.UserName,
-               Code = _currentSession.OTPEncryptCode,
-               EnabledOTP = _currentSession.EnabledOTP,
-               ModifiedDate = _currentSession.OTPModifiedDate
-           });
+        {
+            if (_currentSession.IsInternalAdmin)
+            {
+                var groupName = (string)RouteData.Values["id"];
+
+                if (!string.IsNullOrWhiteSpace(groupName)
+                    && !groupName.Equals(_currentSession.CurrencyGroup)
+                    && !IsIgnoreGroupName(groupName))
+                {
+                    var group = _groupService.GetGroupByName(groupName);
+
+                    if (group != null)
+                    {
+                        _currentSession.CurrencyGroup = group.GroupName;
+                        _currentSession.ParentGroupName = group.ParentGroupId == 0 ? group.GroupName : group.ParentGroupName;
+                    }
+                }
+            }
+
+            return View(new HomeViewModel
+            {
+                Username = _currentSession.UserName,
+                Code = _currentSession.OTPEncryptCode,
+                EnabledOTP = _currentSession.EnabledOTP,
+                ModifiedDate = _currentSession.OTPModifiedDate
+            });
+        }
+
+        private static bool IsIgnoreGroupName(string groupName)
+            => groupName.IndexOf(".js.map", StringComparison.OrdinalIgnoreCase) >= 0;
 
         public ActionResult TestLog()
         {

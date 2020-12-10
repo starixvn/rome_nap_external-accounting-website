@@ -209,5 +209,23 @@
                 return GetResultParams(db.Database, db.DbCommand);
             }
         }
+
+        public Group GetGroupByName(string groupName)
+        {
+            using (var db = new ObjectDb("EAS_GroupInfoSelByGroupName"))
+            {
+                db.AddInParameter("GroupName", DbType.String, groupName);
+
+                using (var reader = db.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return GetGroup(reader);
+                    }
+                }
+            }
+
+            return null;
+        }
     }
 }
