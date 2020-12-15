@@ -125,7 +125,7 @@
                                     sagTotal += winloss.SAgTotal;
                                     company += winloss.Company;
 
-                                    productNames.Add(winloss.ProductName);
+                                    productNames.Add(CacheRef.GetProductName(winloss.ProductId));
                                 }
 
                                 return new SuperWinLossDetailByProductDTO(
