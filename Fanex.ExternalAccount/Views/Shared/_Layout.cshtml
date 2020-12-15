@@ -4,7 +4,6 @@
 @using Fanex.PTEngine
 @using Fanex.ExternalAccount.Module.LeftPanel
 @using Newtonsoft.Json;
-@using Fanex.RemotingRef;
 @using System.Configuration;
 
 @{
@@ -31,9 +30,9 @@
     var showNG2 = ProductSettings.IsShowNG2 ? 1 : 0;
     var showFishingWorld = ProductSettings.IsShowFishingWorld ? 1 : 0;
     var showRNGLottery = ProductSettings.IsShowRNGLottery ? 1 : 0;
-    var ng2Text = new RemotingRefService().GetResourceDataByRefIdAndResourceId("Product", "23", "en-US", "NG2");
+    var ng2Text = CacheRef.GetProductName(23, "NG2");
     var productsExcludeSabaVS = ProductSettings.SiteProducts.Where(i => i.Key != 54).ToDictionary(p => p.Key, p => p.Value);
-    
+
     var products = JsonConvert.SerializeObject(productsExcludeSabaVS.Values);
     string Env = ConfigurationManager.AppSettings["EnvTheme"].ToString();
 

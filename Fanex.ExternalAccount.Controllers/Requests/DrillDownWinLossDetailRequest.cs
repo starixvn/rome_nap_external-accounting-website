@@ -10,19 +10,21 @@
         public DrillDownWinLossDetailRequest(WinLossDetailRequest request, dynamic toolTipsProducts)
             : this(request)
         {
-            ProductIds = request.GetProductIds();
             ToolTipsProducts = toolTipsProducts;
-            ResourceIds = request.ResourceIds;
         }
 
         public DrillDownWinLossDetailRequest(WinLossDetailRequest request)
         {
             MainGroupName = request.MainGroupName;
+            GroupId = request.GroupId;
             GroupName = request.GroupName;
             CustId = request.CustId;
             FromDate = request.Fromdate;
             ToDate = request.Todate;
             ViewLevel = request.Viewlevel;
+            ProductIds = request.ProductIds;
+            ResourceIds = request.ResourceIds;
+
             switch (ViewLevel)
             {
                 case Role.Super:
@@ -46,6 +48,7 @@
         }
 
         public string MainGroupName { get; }
+        public int GroupId { get; }
         public string GroupName { get; }
         public int SuperId { get; }
         public int MasterId { get; }
@@ -57,6 +60,7 @@
         public string ProductIds { get; }
         public dynamic ToolTipsProducts { get; }
         public string ResourceIds { get; }
+        public int UserId { get; }
 
         public bool IsValid => !ViewLevel.IsMember()
                                && ViewLevel <= Role.Group

@@ -1,6 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
@@ -10,10 +9,8 @@
     using Fanex.ExternalAccount.DTO.Report;
     using Fanex.ExternalAccount.Excel.Reports.SuperWinLossDetailByPT;
     using Fanex.ExternalAccount.Service.Report.SuperWinLossDetailByPT;
-    using Fanex.ExternalAccount.Utilities;
     using Requests;
     using Service.Interface.Report;
-    using Service.UserControl;
 
     [ExternalAccountAuthenticate(Function = eFunctions.SuperWinLossDetailByPT,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -24,34 +21,33 @@
         public SuperWinLossDetailByPTController(
             CurrentSession currentSession,
             SuperWinLossDetailByPTService services,
-            IReportService reportService,
-            IGroupConfigurationService groupConfigurationService)
-            : base(currentSession, reportService, groupConfigurationService)
+            IReportService reportService)
+            : base(currentSession, reportService)
         {
             this.services = services ?? new SuperWinLossDetailByPTServiceImpl();
         }
 
-        public SuperWinLossDetailByPTController() : this(null, null, null, null)
+        public SuperWinLossDetailByPTController() : this(null, null, null)
         {
         }
 
         public ActionResult Index()
-        {
-            return View();
-        }
+            => View();
 
         [AntiXSRFFilter]
         public ActionResult GetData(SuperWinLossDetailByPTRequest request)
         {
             var param = new SuperWinLossDetailByPTParam(
+                request.GroupId,
                 request.GroupName,
                 request.Fromdate,
                 request.Todate,
-                request.GetProductIds(),
+                request.ProductIds,
                 request.ResourceIds,
-                BuildTooltipsForLiveCasino(request.GroupName),
+                reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupId),
                 request.PageSize,
-                request.PageIndex);
+                request.PageIndex,
+                request.UserId);
 
             var viewModel = services.GetSuperWinLossDetailByPT(param);
             return Json(viewModel);
@@ -59,27 +55,25 @@
 
         public void ExportWinLossDetailToExcel(ExportSuperWinLossDetailByPTRequest request)
         {
-            ISuperWinLossDetailByPTReportBuilder builder;
             var winlossDetail = services.GetSuperWinLossDetailByPT(new SuperWinLossDetailByPTParam(
+                request.GroupId,
                 request.GroupName,
                 request.Fromdate,
                 request.Todate,
-                request.GetProductIds(),
+                request.ProductIds,
                 request.ResourceIds,
-                BuildTooltipsForLiveCasino(request.GroupName),
+                reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupId),
                 0,
-                0));
+                0,
+                request.UserId));
 
-            builder = new SuperWinLossDetailByPTReportBuilder(
+            ISuperWinLossDetailByPTReportBuilder builder = new SuperWinLossDetailByPTReportBuilder(
                 winlossDetail.WinLossByUsernames == null ? new List<SuperWinLossDetailByUsernameModel>() : winlossDetail.WinLossByUsernames.ToList(),
                 winlossDetail.GrandTotal ?? new SuperWinLossDetailByProductDTO(),
                 request.Fromdate,
                 request.Todate);
 
-            var products = GetProductList(request.GroupId);
-            products = GetPPNameExportExcel(request, products);
-
-            var formatedProducts = request.GetProductNames(products);
+            var formatedProducts = reportService.ConcatProductName(request.ProductIds, request.ResourceIds, request.GroupName);
             var memoryStream = builder.Build(formatedProducts);
 
             if (memoryStream != null)
@@ -88,45 +82,5 @@
                 memoryStream.Dispose();
             }
         }
-
-        private static List<KeyValuePair<string, string>> GetPPNameExportExcel(ExportSuperWinLossDetailByPTRequest request, List<KeyValuePair<string, string>> products)
-        {
-            if (string.IsNullOrWhiteSpace(request.ResourceIds))
-            {
-                if (!Config.IsOfferJackpotProductDetailsGroup(request.GroupName))
-                {
-                    return products;
-                }
-
-                products = products.Where(p => !p.Key.Equals("showPP", StringComparison.OrdinalIgnoreCase)).ToList();
-            }
-
-            for (int i = 0, max = products.Count; i < max; i++)
-            {
-                var product = products[i];
-
-                if (product.Key == "showPP")
-                {
-                    var userSelectedResourceIds = request.ResourceIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    var productDetails = GetProductDetails(request.GroupId, request.GroupName)
-                        .Where(p => p.ProductKey == product.Key)
-                        .ToList();
-
-                    if (productDetails.Count > 0 && !IsEquals(productDetails.Select(p => p.ResourceId), userSelectedResourceIds))
-                    {
-                        products[i] = new KeyValuePair<string, string>(
-                            product.Key,
-                            string.Join(", ", productDetails.Where(p => userSelectedResourceIds.Contains(p.ResourceId)).Select(p => p.DisplayName)));
-                    }
-
-                    return products;
-                }
-            }
-
-            return products;
-        }
-
-        private static bool IsEquals(IEnumerable<string> source, IEnumerable<string> destination)
-            => Enumerable.SequenceEqual(source.OrderBy(id => id), destination.OrderBy(id => id));
     }
 }

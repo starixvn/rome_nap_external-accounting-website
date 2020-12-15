@@ -1,11 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Core.Reports
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
     using System.Web.Mvc;
     using Base;
     using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Service.Products;
     using Newtonsoft.Json;
     using Service.Impl.Report;
     using Service.Interface.Report;
@@ -14,42 +12,31 @@
     public class FilterController : BaseController
     {
         private readonly IReportService reportService;
-        private readonly IExtRequest extRequest;
+        private readonly IProductService productService;
+        private readonly IProductDetailService productDetailService;
         private readonly CurrentSession currentSession;
 
-        public FilterController(IReportService reportService, IExtRequest extRequest, CurrentSession currentSession)
+        public FilterController()
+            : this(null, null, null, null)
+        {
+        }
+
+        public FilterController(
+            IReportService reportService,
+            IProductService productService,
+            IProductDetailService productDetailService,
+            CurrentSession currentSession)
         {
             this.reportService = reportService ?? new ReportService();
-            this.extRequest = extRequest ?? new ExtRequest();
+            this.productService = productService ?? new ProductService();
+            this.productDetailService = productDetailService ?? new ProductDetailService();
             this.currentSession = currentSession ?? new CurrentSession();
-        }
-
-        public FilterController() : this(null, null, null)
-        {
-        }
-
-        public ICollection<KeyValuePair<string, bool>> AsCollection(int groupId)
-        {
-            var list = new List<KeyValuePair<string, bool>>();
-
-            foreach (var product in GetProductList(groupId))
-            {
-                if (!product.Key.Equals("showAll", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    list.Add(new KeyValuePair<string, bool>(product.Key.ToLower(CultureInfo.InvariantCulture),
-                        CheckRequest.GetBooleanRequest(product.Key, false)));
-                }
-            }
-
-            return list;
         }
 
         public ActionResult ProductsList()
         {
-            var groupId = extRequest.GetGroupId();
-
-            var products = GetProductList(groupId);
-            var productDetails = GetProductDetails(groupId, currentSession.ParentGroupName);
+            var products = productService.GetProducts(CurrentSession.CustId, ExtRequest.GetGroupId());
+            var productDetails = productDetailService.GetProductDetails(products, currentSession.ParentGroupName);
 
             return JsonBase(new { products, productDetails }, new JsonSerializerSettings());
         }

@@ -5,6 +5,7 @@
     public class SuperWinLossDetailByPTParam
     {
         public SuperWinLossDetailByPTParam(
+            int groupId,
             string groupName,
             DateTime fromDate,
             DateTime toDate,
@@ -12,8 +13,10 @@
             string resourceIds,
             string tooltipsForLiveCasino,
             int pageSize,
-            int pageIndex)
+            int pageIndex,
+            int userId)
         {
+            GroupId = groupId;
             GroupName = groupName;
             UserSelectedProductIds = userSelectedProductIds;
 
@@ -25,7 +28,11 @@
 
             PageSize = pageSize;
             PageIndex = pageIndex;
+
+            UserId = userId;
         }
+
+        public int GroupId { get; }
 
         public string GroupName { get; }
 
@@ -42,5 +49,7 @@
         public int PageSize { get; }
 
         public int PageIndex { get; }
+
+        public int UserId { get; }
     }
 }

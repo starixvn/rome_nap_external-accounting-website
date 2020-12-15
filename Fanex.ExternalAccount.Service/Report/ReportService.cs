@@ -1,15 +1,18 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Report
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
     using Caching;
     using DataAccess.Impl.Report;
     using DataAccess.Interface.Report;
     using DTO.Customer;
     using DTO.Report;
+    using Fanex.ExternalAccount.Core.Shared;
+    using Fanex.ExternalAccount.Service.Products;
     using Interface.Report;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
     using Utilities;
 
 #pragma warning disable S109 // Magic numbers should not be used
@@ -21,10 +24,17 @@
         private static readonly ICache Cache = CacheService.CreateInstance(CacheType.MemoryCache);
 
         private readonly IReportDao _reportDao;
+        private readonly IProductService _productService;
+        private readonly IProductDetailService _productDetailService;
 
-        public ReportService(IReportDao reportRespository = null)
+        public ReportService(
+            IReportDao reportRespository = null,
+            IProductService productService = null,
+            IProductDetailService productDetailService = null)
         {
             _reportDao = reportRespository ?? new ReportDao();
+            _productService = productService ?? new ProductService();
+            _productDetailService = productDetailService ?? new ProductDetailService();
         }
 
         public static DateTime BalanceUpDate => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["BalanceUpDay"]);
@@ -125,6 +135,75 @@
 
         private static bool CheckConstraintMoveBetsDay(DateTime fromDate)
             => DateTime.Compare(fromDate, MoveBetsDate) > 0;
+
+        public string BuildTooltipsForLiveCasino(int userId, int groupId)
+        {
+            var offeredLiveCasino = _productService
+                .GetProducts(userId, groupId)
+                .FirstOrDefault(p => p.ProductId == ProductConstants.DummyLiveCasinoProductId);
+
+            if (offeredLiveCasino != null && offeredLiveCasino.IsParent)
+            {
+                var ignoreProductIds = new Dictionary<int, bool>
+                {
+                    [ProductConstants.GoldDeluxe] = true
+                };
+
+                var liveCasinoName = Utils.ToString(offeredLiveCasino.Products.Where(p => !ignoreProductIds.ContainsKey(p.ProductId)).Select(p => p.ProductName), ", ");
+
+                return string.Format(ViewLang.Tooltip_NetTurnover_LiveCasino, liveCasinoName);
+            }
+
+            return string.Empty;
+        }
+
+        public string ConcatProductName(string productIds, string resourceIds, string groupName)
+        {
+            var productIdList = Utils.ToEnumerableInt(productIds);
+
+            if (string.IsNullOrWhiteSpace(resourceIds)
+                && Config.IsOfferJackpotProductDetailsGroup(groupName))
+            {
+                productIdList = productIdList.Where(id => id != ProductConstants.PragmaticPlay);
+            }
+
+            return ConcatProductName(productIdList, resourceIds, groupName);
+        }
+
+        private string ConcatProductName(IEnumerable<int> productIds, string resourceIds, string groupName)
+        {
+            var productNames = new List<string>();
+
+            productIds.ToList().ForEach(productId =>
+            {
+                if (productId == ProductConstants.PragmaticPlay)
+                {
+                    var userSelectedResourceIds = Utils.ToEnumerableInt(resourceIds).ToList();
+                    var resourceIdList = _productDetailService.GetProductDetails(groupName)
+                        .Where(p => p.ProductId == ProductConstants.PragmaticPlay)
+                        .Select(p => int.Parse(p.ResourceId))
+                        .ToList();
+
+                    if (resourceIdList.Count > 0 && !IsEquals(resourceIdList, userSelectedResourceIds))
+                    {
+                        productNames.AddRange(userSelectedResourceIds.Select(id => CacheRef.GetProductDetailName(id)));
+                    }
+                    else
+                    {
+                        productNames.Add(CacheRef.GetProductName(productId));
+                    }
+                }
+                else
+                {
+                    productNames.Add(CacheRef.GetProductName(productId));
+                }
+            });
+
+            return Utils.ToString(productNames, ", ");
+        }
+
+        private static bool IsEquals(IEnumerable<int> source, IEnumerable<int> destination)
+            => Enumerable.SequenceEqual(source.OrderBy(id => id), destination.OrderBy(id => id));
     }
 
 #pragma warning restore S109 // Magic numbers should not be used

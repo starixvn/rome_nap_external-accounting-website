@@ -6,16 +6,22 @@
     using Core.Shared;
     using DTO.Customer;
     using Fanex.ExternalAccount.Service.Products;
+    using Fanex.ExternalAccount.Utilities;
     using Interface.Report;
 
     public class WinLossDetailServiceImpl : WinLossDetailService
     {
         private readonly IReportService reportService;
+        private readonly IProductService productService;
         private readonly IProductDetailService productDetailService;
 
-        public WinLossDetailServiceImpl(IReportService reportService = null, IProductDetailService productDetailService = null)
+        public WinLossDetailServiceImpl(
+            IReportService reportService = null,
+            IProductService productService = null,
+            IProductDetailService productDetailService = null)
         {
             this.reportService = reportService ?? new ReportService();
+            this.productService = productService ?? new ProductService();
             this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
@@ -43,17 +49,21 @@
             {
                 throw new InvalidOperationException(nameof(request.IsValid));
             }
+
             var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
             var getWinLossDetail = GetWinLossDetailFunction(request.ViewLevel);
-            var productDetailsXML = productDetailService.BuildProductDetailsXML(request.ProductIds, request.ResourceIds, request.MainGroupName);
-            var productIds = productDetailService.RemoveProductIds(request.ProductIds, request.ResourceIds, request.MainGroupName);
+
+            var validProductIds = productService.ValidateProductIds(request.UserId, request.GroupId, Utils.ToEnumerableInt(request.ProductIds));
+            validProductIds = productDetailService.RemoveProductIds(validProductIds, request.ResourceIds, request.GroupName);
+
+            var productDetailsXML = productDetailService.BuildProductDetailsXML(validProductIds, request.ResourceIds, request.GroupName);
 
             var winLossDetailData = getWinLossDetail(
                 request.CustId,
                 0,
                 request.FromDate,
                 request.ToDate,
-                productIds,
+                Utils.ToString(validProductIds),
                 productDetailsXML);
 
             return
@@ -85,9 +95,12 @@
                 }
             }
 
-            var productDetailsXML = productDetailService.BuildProductDetailsXML(request.ProductIds, request.ResourceIds, request.MainGroupName);
-            var productIds = productDetailService.RemoveProductIds(request.ProductIds, request.ResourceIds, request.MainGroupName);
-            var winLossDetailData = SearchWinLossDetailData(request.GroupName, request.FromDate, request.ToDate, productIds, productDetailsXML, customerInfo);
+            var validProductIds = productService.ValidateProductIds(request.UserId, request.GroupId, Utils.ToEnumerableInt(request.ProductIds));
+            validProductIds = productDetailService.RemoveProductIds(validProductIds, request.ResourceIds, request.GroupName);
+
+            var productDetailsXML = productDetailService.BuildProductDetailsXML(validProductIds, request.ResourceIds, request.GroupName);
+
+            var winLossDetailData = SearchWinLossDetailData(request.GroupName, request.FromDate, request.ToDate, Utils.ToString(validProductIds), productDetailsXML, customerInfo);
 
             return
                 new
@@ -105,15 +118,20 @@
                 };
         }
 
-        public dynamic GetExtraPT(IViewExtraPTRequest request, string groupName)
+        public dynamic GetExtraPT(IViewExtraPTRequest request)
         {
             const float percentage = 100.0f;
 
-            return reportService.GetExtraPT(groupName)
-                .Select(item => new { ExtraPT = item.ExtraPT * percentage, ProductName = request.GetProductName(item.ProductId) })
-                .Where(item => !string.IsNullOrWhiteSpace(item.ProductName))
+            var extraPTs = reportService.GetExtraPT(request.ParentGroupName);
+            var validProductIds = productService
+                .ValidateProductIds(request.UserId, request.GroupId, extraPTs.Select(e => e.ProductId))
+                .ToDictionary(kvp => kvp, kvp => true);
+
+            return extraPTs
+                .Select(item => new { ExtraPT = item.ExtraPT * percentage, item.ProductName, item.ProductId })
+                .Where(item => !string.IsNullOrWhiteSpace(item.ProductName) && validProductIds.ContainsKey(item.ProductId))
                 .GroupBy(item => item.ExtraPT, item => item.ProductName,
-                (key, group) => new { ExtraPT = key, ProductNames = string.Join(", ", group) })
+                (key, group) => new { ExtraPT = key, ProductNames = Utils.ToString(group, ", ") })
                 .OrderBy(item => item.ExtraPT);
         }
 

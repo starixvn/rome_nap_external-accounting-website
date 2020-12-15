@@ -1,11 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Service.Interface.Report
 {
-    using DTO.Customer;
-    using DTO.Report;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
+    using DTO.Customer;
+    using DTO.Report;
 
     public interface IReportService
     {
@@ -36,5 +36,9 @@
         ArrayList GetSortingOrderList(string groupname);
 
         List<ExtraPTModel> GetExtraPT(string groupName);
+
+        string BuildTooltipsForLiveCasino(int userId, int groupId);
+
+        string ConcatProductName(string productIds, string resourceIds, string groupName);
     }
 }

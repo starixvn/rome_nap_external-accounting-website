@@ -13,11 +13,13 @@
 
     public interface IProductDetailService
     {
+        IEnumerable<ProductDetailDto> GetProductDetails(IEnumerable<ProductDto> products, string groupName);
+
         IEnumerable<ProductDetailEntity> GetProductDetails(string groupName);
 
-        string BuildProductDetailsXML(string validProductIds, string userSelectedResourceIds, string groupName);
+        string BuildProductDetailsXML(IEnumerable<int> validProductIds, string userSelectedResourceIds, string groupName);
 
-        string RemoveProductIds(string validProductIds, string userSelectedResourceIds, string groupName);
+        IEnumerable<int> RemoveProductIds(IEnumerable<int> validProductIds, string userSelectedResourceIds, string groupName);
     }
 
     public class ProductDetailService : IProductDetailService
@@ -28,6 +30,42 @@
         public ProductDetailService(IDynamicRepository dynamicRepository = null)
         {
             this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+
+        public IEnumerable<ProductDetailDto> GetProductDetails(IEnumerable<ProductDto> products, string groupName)
+        {
+            var productHash = new Dictionary<int, bool>();
+            products.ToList().ForEach(product =>
+            {
+                productHash[product.ProductId] = true;
+
+                if (product.IsParent)
+                {
+                    product.Products.ToList().ForEach(subProduct =>
+                    {
+                        productHash[subProduct.ProductId] = true;
+                    });
+                }
+            });
+
+            var productDetails = new List<ProductDetailDto>();
+            GetProductDetails(groupName)
+                .GroupBy(p => p.ProductId)
+                .ToList()
+                .ForEach(group =>
+                {
+                    if (productHash.ContainsKey(group.Key))
+                    {
+                        productDetails.AddRange(group.Select(p => new ProductDetailDto
+                        {
+                            RefId = p.RefId,
+                            ResourceId = p.ResourceId,
+                            ProductId = p.ProductId
+                        }));
+                    }
+                });
+
+            return productDetails;
         }
 
         public IEnumerable<ProductDetailEntity> GetProductDetails(string groupName)
@@ -63,14 +101,14 @@
             return canView;
         }
 
-        public string BuildProductDetailsXML(string validProductIds, string userSelectedResourceIds, string groupName)
+        public string BuildProductDetailsXML(IEnumerable<int> validProductIds, string userSelectedResourceIds, string groupName)
         {
             var validProductDetails = new List<ProductDetailEntity>();
-            var productIdsHash = ToDictionaryString(validProductIds);
+            var productIdsHash = validProductIds.ToDictionary(kvp => kvp, kvp => true);
             var resourceIdsHash = ToDictionaryString(userSelectedResourceIds);
 
             GetProductDetailsWithCache()
-                .Where(p => productIdsHash.ContainsKey(p.ProductId.ToString()))
+                .Where(p => productIdsHash.ContainsKey(p.ProductId))
                 .GroupBy(p => p.ProductId)
                 .ToList()
                 .ForEach(group =>
@@ -102,7 +140,7 @@
 
         private static IDictionary<string, bool> ToDictionaryString(string value)
         {
-            IDictionary<string, bool> results = new Dictionary<string, bool>();
+            var results = new Dictionary<string, bool>();
 
             if (!string.IsNullOrWhiteSpace(value))
             {
@@ -117,10 +155,10 @@
             return results;
         }
 
-        public string RemoveProductIds(string validProductIds, string userSelectedResourceIds, string groupName)
+        public IEnumerable<int> RemoveProductIds(IEnumerable<int> validProductIds, string userSelectedResourceIds, string groupName)
         {
-            var removedProductIds = ToListString(validProductIds).Select(id => int.Parse(id)).ToList();
-            var resourceIds = ToListString(userSelectedResourceIds);
+            var removedProductIds = validProductIds.ToList();
+            var resourceIds = ToEnumerable(userSelectedResourceIds);
 
             GetProductDetailsWithCache()
                 .Where(p => removedProductIds.Contains(p.ProductId))
@@ -139,12 +177,12 @@
                     }
                 });
 
-            return string.Join(",", removedProductIds);
+            return removedProductIds;
         }
 
-        private static IEnumerable<string> ToListString(string value)
+        private static string[] ToEnumerable(string value)
             => string.IsNullOrWhiteSpace(value)
-            ? Enumerable.Empty<string>()
+            ? Array.Empty<string>()
             : value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
     }
 }

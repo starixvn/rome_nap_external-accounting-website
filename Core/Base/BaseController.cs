@@ -1,14 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
-    using System.Collections.Generic;
     using System.Configuration;
     using System.Diagnostics;
     using System.IO;
-    using System.Linq;
     using System.Web;
     using System.Web.Mvc;
-    using System.Web.SessionState;
     using Authorization;
     using CasinoLibrary.Model.UserException;
     using Context;
@@ -17,7 +14,6 @@
     using CustomerSetting.Module.Core.Services.Impl;
     using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
-    using Fanex.ExternalAccount.DTO.Products;
     using Logging.Extensions.Web;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
@@ -262,17 +258,6 @@
             return permissionService.CheckCustomerBelongToSpecialSite(
                 new CheckCustomerIsSpecialSiteCriteria { UserName = username });
         }
-
-        protected static List<KeyValuePair<string, string>> GetProductList(int groupId)
-        {
-            return new ProductListAuthorization()
-                .GetProductList(groupId)
-                .Select(product => new KeyValuePair<string, string>(product.Id, product.ProductText))
-                .ToList();
-        }
-
-        protected static IEnumerable<ProductDetailDto> GetProductDetails(int groupId, string groupName)
-            => new ProductListAuthorization().GetProductDetails(groupId, groupName);
 
         protected int GetDefaultMinBetValue()
             => CurrentSession.IsBelongToSpecialGroups ? 1 : 0;

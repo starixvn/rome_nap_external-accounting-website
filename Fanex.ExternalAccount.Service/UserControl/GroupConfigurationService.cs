@@ -14,8 +14,6 @@
         IEnumerable<GroupConfigurationModel> Get(GetGroupConfigurationCriteria criteria);
 
         Result Update(UpdateGroupConfigurationCriteria criteria);
-
-        bool IsShowByProductAndGroup(int productId, string groupName);
     }
 
     public class GroupConfigurationService : IGroupConfigurationService
@@ -25,7 +23,6 @@
 
         public GroupConfigurationService() : this(null, null)
         {
-
         }
 
         public GroupConfigurationService(IDynamicRepository dynamicRepository, IGroupConfigurationDAO groupConfigurationDAO)
@@ -36,25 +33,12 @@
 
         public IEnumerable<GroupConfigurationModel> Get(GetGroupConfigurationCriteria criteria)
         {
-            var configurations=dynamicRepository.Fetch<GroupConfigurationModel>(criteria);
+            var configurations = dynamicRepository.Fetch<GroupConfigurationModel>(criteria);
 
             return configurations.Where(i => !Group.IsOfficeGroup(i.GroupName));
         }
 
         public Result Update(UpdateGroupConfigurationCriteria criteria)
             => groupConfigurationDAO.Update(criteria);
-
-        public bool IsShowByProductAndGroup(int productId, string groupName)
-        {
-            if (Group.IsOfficeGroup(groupName))
-            {
-                return true;
-            }
-
-            var groups = Get(new GetGroupConfigurationCriteria { ProductId = productId });
-            var firstGroup = groups.FirstOrDefault(i => i.GroupName.Equals(groupName));
-
-            return firstGroup != null && firstGroup.IsShow;
-        }
     }
 }

@@ -8,21 +8,24 @@
         public SearchWinLossDetailRequest(WinLossDetailRequest request, dynamic toolTipsProducts)
             : this(request)
         {
-            ProductIds = request.GetProductIds();
             ToolTipsProducts = toolTipsProducts;
-            ResourceIds = request.ResourceIds;
         }
 
         public SearchWinLossDetailRequest(WinLossDetailRequest request)
         {
             MainGroupName = request.MainGroupName;
+            GroupId = request.GroupId;
             GroupName = request.GroupName;
             Username = request.Username;
             FromDate = request.Fromdate;
             ToDate = request.Todate;
+            ProductIds = request.ProductIds;
+            ResourceIds = request.ResourceIds;
+            UserId = request.UserId;
         }
 
         public string MainGroupName { get; }
+        public int GroupId { get; }
         public string GroupName { get; }
         public string Username { get; }
         public DateTime FromDate { get; }
@@ -30,5 +33,6 @@
         public string ProductIds { get; }
         public dynamic ToolTipsProducts { get; }
         public string ResourceIds { get; }
+        public int UserId { get; }
     }
 }

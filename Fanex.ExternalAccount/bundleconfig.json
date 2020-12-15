@@ -79,6 +79,7 @@
       "Scripts/numeral.js",
       "Scripts/jquery.blockUI.js",
       "Scripts/MultiSelect/jquery.multiselect.min.js",
+      "Scripts/Fanex.Multiselect/fanex.multiSelect.js",
       "Scripts/MultiSelect/select2.js",
       "Scripts/cookie.js",
       "Scripts/Fanex.ExtAcc.js",

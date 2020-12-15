@@ -334,8 +334,8 @@
     <Compile Include="Authorization\DCS\ProductBettingLimitDcsFunction.cs" />
     <Compile Include="Authorization\DCS\ProductSettingDcsFunction.cs" />
     <Compile Include="Authorization\GoldDeluxe\GoldDeluxeAuthorizationService.cs" />
-    <Compile Include="Authorization\ProductListAuthorization.cs" />
     <Compile Include="Authorization\ProductStatus\EnableStatusProduct.cs" />
+    <Compile Include="Authorization\ProductStatus\GetProductListCriteria.cs" />
     <Compile Include="Authorization\ProductStatus\MultipleEditProductStatus.cs" />
     <Compile Include="Authorization\ProductStatus\ProductStatusAuthorizeService.cs" />
     <Compile Include="Authorization\ProductStatus\ProductStatusActor.cs" />

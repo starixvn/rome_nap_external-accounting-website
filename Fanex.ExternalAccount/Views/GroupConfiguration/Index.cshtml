@@ -29,7 +29,19 @@
                             <select id="productIds" class="usernameInput group">
                                 @foreach (var item in Model.Products)
                                 {
-                                    <option value="@item.ProductId">@item.ProductText</option>
+                                    if (item.IsParent)
+                                    {
+                                        <optgroup label="@item.ProductName">
+                                            @foreach (var product in item.Products)
+                                            {
+                                                <option value="@product.ProductId">@product.ProductName</option>
+                                            }
+                                        </optgroup>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.ProductId">@item.ProductName</option>
+                                    }
                                 }
                             </select>
                         </div>

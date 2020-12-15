@@ -11,21 +11,10 @@ Fanex.ExtAcc.GroupConfiguration = {
         $this = this;
         $('#tabs').tabs();
 
-        $("#productIds").combobox({
-            selected: function (event, ui) {
-                $this.RenderDataByProduct();
-            }
-        });
-
         $("#groupIds").combobox({
             selected: function (event, ui) {
                 $this.RenderDataByGroup();
             }
-        });
-        $("#productlist input").val($("#productIds")[0].options[0].text);
-        $("#productlist input").attr("readonly", "true");
-        $("#productlist input").bind("click", function () {
-            $(this).autocomplete("search", '');
         });
         $("#grouplist input").val($("#groupIds")[0].options[0].text);
         $("#grouplist input").attr("readonly", "true");
@@ -41,7 +30,9 @@ Fanex.ExtAcc.GroupConfiguration = {
             $this.UpdateDataByGroup();
         });
 
-        $this.RenderDataByProduct();
+        $("#productIds")
+            .change(this.RenderDataByProduct)
+            .trigger("change");
     },
 
     UpdateDataByProduct: function () {
