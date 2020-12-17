@@ -34,5 +34,6 @@
         public const int CardClub = 34;
         public const int PGSoft = 55;
         public const int Joker = 56;
+        public const int GDG = 59;
     }
 }
