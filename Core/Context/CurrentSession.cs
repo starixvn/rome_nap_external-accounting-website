@@ -127,7 +127,7 @@
         }
 
         public bool IsBelongToSpecialGroups
-            => Config.SpecialGroups().Contains(ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
+            => !IsInternalAdmin && !IsITAdmin && Config.SpecialGroups().Contains(ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
 
         public bool InvalidOTP
         {
