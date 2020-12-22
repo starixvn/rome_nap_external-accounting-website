@@ -88,12 +88,11 @@ Fanex.ExtAcc.Header = {
                 });
 
                 $("#ddlGroupName").on('select2:select', function (event) {
-                    groupId = event.params.data.id;
                     selectedGroupName = event.params.data.text;
-                    $('#selectedGroupIndex').html(groupId);
+                    $('#selectedGroupIndex').html(event.params.data.id);
                     $('#selectedGroupName').html(selectedGroupName);
                     $.ajax({
-                        url: resolveClientUrl('Shared/ChangeSelectedGroup?groupName=' + selectedGroupName + '&groupId=' + groupId),
+                        url: resolveClientUrl('Shared/ChangeSelectedGroup?groupName=' + selectedGroupName),
                         type: 'GET',
                         dataType: 'json',
                         cache: false,

@@ -64,5 +64,8 @@
 
             return group?.ParentGroupId == 0;
         }
+
+        public Group GetGroupByName(string groupName)
+            => _groupDao.GetGroupByName(groupName);
     }
 }

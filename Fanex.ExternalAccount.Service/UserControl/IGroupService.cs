@@ -27,5 +27,7 @@
         Result EditGroupPolicy(string oldGroupPolicy, string groupPolicy, int custId, string ip, int groupId);
 
         Result DeleteGroup(int groupId, int userId);
+
+        Group GetGroupByName(string groupName);
     }
 }

@@ -159,13 +159,13 @@
                 ? (int)RecheckinStatus.Maintenance
                 : (int)RecheckinStatus.Login;
 
-        public bool ChangeSelectedGroup(string groupName, int groupId)
+        public bool ChangeSelectedGroup(string groupName)
         {
             if (CurrentSession.IsInternalAdmin)
             {
-                var group = groupService.GetGroupById(groupId);
+                var group = groupService.GetGroupByName(groupName);
 
-                if (group != null && group.GroupName.Equals(groupName, StringComparison.OrdinalIgnoreCase))
+                if (group != null)
                 {
                     _currentSession.ParentGroupName = group.ParentGroupId == 0 ? groupName : group.ParentGroupName;
                 }

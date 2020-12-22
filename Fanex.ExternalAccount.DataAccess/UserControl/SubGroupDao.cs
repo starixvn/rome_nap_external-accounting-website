@@ -84,11 +84,7 @@
 
                 return new SubGroupViewModel
                 {
-                    SubGroupCustomers = result.OrderByDescending(cust => string.IsNullOrWhiteSpace(cust.SubGroup))
-                                              .ThenByDescending(cust => cust.IsEnabled)
-                                              .ThenBy(cust => cust.IsClosed)
-                                              .ThenBy(cust => cust.IsSuspended)
-                                              .ThenBy(cust => cust.CustId),
+                    SubGroupCustomers = result,
                     SubGroups = subGroups.Select(subGroup => subGroup.GroupName),
                     PageIndex = outputParams["pageindex"] is DBNull ? 0 : Convert.ToInt16(outputParams["pageindex"]),
                     TotalItems = outputParams["totalrows"] is DBNull ? 0 : Convert.ToInt16(outputParams["totalrows"])

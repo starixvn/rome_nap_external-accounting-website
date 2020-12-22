@@ -65,7 +65,7 @@
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.SubGroup,
-            Policy = AuthenticateAction.AuthenticationType.Host, IsAjaxRequest = false)]
+            Policy = AuthenticateAction.AuthenticationType.Host, IsAjaxRequest = true)]
         public ActionResult SubGroupUpdate(SubGroupUpdateRequest updateRequest)
         {
             var result = _subGroupService.UpdateCustomerSubGroup(updateRequest.SubGroupName, updateRequest.CustIds, updateRequest.IsAssigned, CurrentSession.UserId, CurrentContext.Ip4Address);
