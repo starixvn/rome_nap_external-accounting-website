@@ -859,4 +859,10 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="AssignSuperToSubGroup" xml:space="preserve">
     <value>Assign Super to Sub Group</value>
   </data>
+  <data name="Member" xml:space="preserve">
+    <value>Member</value>
+  </data>
+  <data name="NoData" xml:space="preserve">
+    <value>There is no data.</value>
+  </data>
 </root>

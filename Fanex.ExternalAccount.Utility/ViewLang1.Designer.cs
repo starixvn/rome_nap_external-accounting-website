@@ -1259,6 +1259,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Member.
+        /// </summary>
+        public static string Member {
+            get {
+                return ResourceManager.GetString("Member", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Member Max Credit.
         /// </summary>
         public static string MemberMaxCredit {
@@ -1417,6 +1426,15 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string NoChangeToUpdate {
             get {
                 return ResourceManager.GetString("NoChangeToUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no data..
+        /// </summary>
+        public static string NoData {
+            get {
+                return ResourceManager.GetString("NoData", resourceCulture);
             }
         }
         

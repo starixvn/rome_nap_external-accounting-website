@@ -62,40 +62,7 @@ class DateTimeControls {
 
     public Init() {
         this.$("#DateList").combobox({
-            selected: event => {
-                const nexDatePickerHelper = new NexDatePickerHelper();
-                let dateRange;
-
-                var itemIndex = event.target.selectedIndex;
-                this.$("#DateList").prop("selectedIndex", itemIndex);
-
-                var fdate = new Date(this.$("#MaxDate").val());
-                var tdate = new Date(this.$("#MaxDate").val());
-                if (itemIndex === 1) {
-                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - 1);
-                    tdate = fdate;
-                } else if (itemIndex === 2) {
-                    dateRange = nexDatePickerHelper.GetDateRangeOfCurrentWeek(tdate);
-                    fdate = dateRange[0];
-                } else if (itemIndex === 3) {
-                    dateRange = nexDatePickerHelper.GetDateRangeOfLastWeek(tdate);
-                    fdate = dateRange[0];
-                    tdate = dateRange[1];
-                } else if (itemIndex === 4) {
-                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), 1);
-                    tdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate());
-                } else if (itemIndex === 5) {
-                    fdate = new Date(tdate.getFullYear(), tdate.getMonth() - 1, 1);
-                    tdate = new Date(tdate.getFullYear(), tdate.getMonth(), 0);
-                } else if (itemIndex === 6) {
-                    fdate = new Date(tdate.getFullYear(), tdate.getMonth() - 1, 1);
-                } else if (itemIndex === 7) {
-                    return;
-                }
-
-                this.$("#dtpFromDate").val($.datepicker.formatDate("M dd, yy", fdate));
-                this.$("#dtpToDate").val($.datepicker.formatDate("M dd, yy", tdate));
-            }
+            selected: event => this.DateRangeSelected(event.target.selectedIndex)
         });
 
         this.$("#dtpFromDate").datepicker({
@@ -122,7 +89,10 @@ class DateTimeControls {
 
         this.$(".ui-datepicker").draggable();
 
-        this.$("#userGroup input").val(this.$("#DateList option:first").val());
+        const optionSelected = this.$("#DateList option:selected");
+        const optionSelectedIndex = optionSelected.index();
+        this.$("#userGroup input").val(optionSelected.val());
+        optionSelectedIndex > 0 && this.DateRangeSelected(optionSelectedIndex);
 
         this.InitMonthlyCalendar();
     }
@@ -173,5 +143,38 @@ class DateTimeControls {
             minDate: new Date($("#MinDate").val()),
             maxDate: new Date($("#MaxDate").val())
         };
+    }
+
+    private DateRangeSelected(itemIndex) {
+      	let dateRan
+    	const nexDatePickerHelper = new NexDatePickerHelper();
+        this.$("#DateList").prop("selectedIndex", itemIndex);
+
+        var fdate = new Date(this.$("#MaxDate").val());
+        var tdate = new Date(this.$("#MaxDate").val());
+        if (itemIndex === 1) {
+            fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - 1);
+            tdate = fdate;
+        } else if (itemIndex === 2) {
+            dateRange = nexDatePickerHelper.GetDateRangeOfCurrentWeek(tdate);
+            fdate = dateRange[0];
+        } else if (itemIndex === 3) {
+            dateRange = nexDatePickerHelper.GetDateRangeOfLastWeek(tdate);
+            fdate = dateRange[0];
+            tdate = dateRange[1];
+        } else if (itemIndex === 4) {
+            fdate = new Date(tdate.getFullYear(), tdate.getMonth(), 1);
+            tdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate());
+        } else if (itemIndex === 5) {
+            fdate = new Date(tdate.getFullYear(), tdate.getMonth() - 1, 1);
+            tdate = new Date(tdate.getFullYear(), tdate.getMonth(), 0);
+        } else if (itemIndex === 6) {
+            fdate = new Date(tdate.getFullYear(), tdate.getMonth() - 1, 1);
+        } else if (itemIndex === 7) {
+            return;
+        }
+
+        this.$("#dtpFromDate").val($.datepicker.formatDate("M dd, yy", fdate));
+        this.$("#dtpToDate").val($.datepicker.formatDate("M dd, yy", tdate));
     }
 }
