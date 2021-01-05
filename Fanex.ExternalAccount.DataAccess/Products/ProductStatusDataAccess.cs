@@ -8,17 +8,18 @@
 
     public interface ProductStatusDataAccess
     {
-        List<ProductStatusDto> GetProductStatusList(int custId, int roleId);
+        List<ProductStatusDto> GetProductStatusList(int custId, int roleId, byte settingStatus);
     }
 
     public class ProductStatusDataAccessImpl : ProductStatusDataAccess
     {
-        public List<ProductStatusDto> GetProductStatusList(int custId, int roleId)
+        public List<ProductStatusDto> GetProductStatusList(int custId, int roleId, byte settingStatus)
         {
             var param = new Hashtable
             {
                 { "custid", custId },
-                { "roleid", roleId }
+                { "roleid", roleId },
+                { "settingstatus", settingStatus }
             };
             var productStatusList = new List<ProductStatusDto>();
 

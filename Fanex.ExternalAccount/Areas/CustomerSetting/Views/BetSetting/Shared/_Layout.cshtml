@@ -1,7 +1,8 @@
-﻿@using Fanex.CustomerSetting.Module.Core
-@using Newtonsoft.Json
-@using Newtonsoft.Json.Serialization
+﻿@using Newtonsoft.Json;
+@using Newtonsoft.Json.Serialization;
 @using Fanex.CustomerSetting.Module.BetSetting;
+@using Fanex.ExternalAccount.Utilities;
+@using Utils = Fanex.CustomerSetting.Module.Core.Utils;
 @{
     var id = Utils.ToInt32(Request["custId"]);
     var uplineId = Utils.ToInt32(Request["uplineId"]);
@@ -15,7 +16,7 @@
         NullValueHandling = NullValueHandling.Ignore
     });
 
-    var visibleTabs = BetSettingProductIntegration.GetVisibledBetSettingTabs(id);
+    var visibleTabs = BetSettingProductIntegration.GetVisibledBetSettingTabs(id, Config.SettingStatus);
 }
 <!DOCTYPE html>
 <html lang="en">

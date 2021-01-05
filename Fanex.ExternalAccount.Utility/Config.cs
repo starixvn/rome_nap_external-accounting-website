@@ -87,6 +87,8 @@
 
         public static int SystemId => Utils.ToInt32(GetValue("SystemId"));
 
+        public static byte SettingStatus => Utils.ToByte(GetValue("SettingStatus"));
+
         public static string[] PublicDomains => GetValue("PublicDomains").Split(',');
 
         public static bool IsRestrictAccessPublicDomain => Utils.ToBoolean(GetValue("IsRestrictAccessPublicDomain"));

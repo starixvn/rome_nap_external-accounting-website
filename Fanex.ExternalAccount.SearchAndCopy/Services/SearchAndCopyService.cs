@@ -6,6 +6,7 @@
     using Fanex.ExternalAccount.SearchAndCopy.Models;
     using Fanex.ExternalAccount.SearchAndCopy.Repositories;
     using Fanex.ExternalAccount.SearchAndCopy.Resources;
+    using Fanex.ExternalAccount.Utilities;
     using Fanex.Logging.Extensions.Web;
     using IBCUtils;
     using System;
@@ -98,7 +99,8 @@
                 ExistingCustId = context.ExistingCustId,
                 GroupAdmin = context.Request.GroupName,
                 Creator = context.CurrentSession.CustId,
-                IP = context.CurrentContext.Ip4Address
+                IP = context.CurrentContext.Ip4Address,
+                SettingStatus = Config.SettingStatus
             };
 
             int Case = 0;

@@ -58,10 +58,10 @@
             return !(bool)result.Outputs["isexists"];
         }
 
-        public Customer UserInfo(int custId)
+        public Customer UserInfo(int custId, byte settingStatus)
         {
 #pragma warning disable S1192 // String literals should not be duplicated
-            var param = new Hashtable { { "custid", custId } };
+            var param = new Hashtable { { "custid", custId }, { "settingstatus", settingStatus} };
 #pragma warning restore S1192 // String literals should not be duplicated
 
             using (var reader = ExecDataReader("Age_CustomerSelUserInfo", param))

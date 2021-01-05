@@ -88,9 +88,9 @@
         }
 
         protected Module.NG2.Entities.Result AutoInsertNG2Product(int custId, string username, RoleId roleId,
-            int uplineId, SiteId siteId, int currencyId)
+            int uplineId, SiteId siteId, int currencyId, byte settingStatus)
         {
-            var dcsStatuses = productStatusService.GetProductStatus(custId, (int)roleId, 23);
+            var dcsStatuses = productStatusService.GetProductStatus(custId, (int)roleId, 23, settingStatus);
 
             if (dcsStatuses.IsSyncedUpline)
             {

@@ -8,6 +8,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Repositories.Impl
     using Core.Web;
     using Data;
     using ExternalAccount.Core.Shared;
+    using Config = Fanex.ExternalAccount.Utilities.Config;
 
     public class CustomerDao : ICustomerDao
     {
@@ -15,6 +16,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Repositories.Impl
         {
             var param = new Hashtable();
             param.Add("custid", custId);
+            param.Add("settingstatus", Config.SettingStatus);
 
             using (var objDb = new ObjectDb("Age_CustomerSelUserInfo"))
             {

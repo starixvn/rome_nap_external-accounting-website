@@ -14,7 +14,7 @@
     public interface CustomerQueryService
 #pragma warning restore IDE1006 // Naming Styles
     {
-        CustomerModel SearchCustomer(int actorId, string custName, string groupName);
+        CustomerModel SearchCustomer(int actorId, string custName, string groupName, byte settingStatus);
 
         OnlineList GetOnlineList(int custId);
 
@@ -43,7 +43,7 @@
             this.customerInfoQueryService = customerInfoQueryService ?? new CustomerInfoQueryServiceImpl();
         }
 
-        public CustomerModel SearchCustomer(int actorId, string custName, string groupName )
+        public CustomerModel SearchCustomer(int actorId, string custName, string groupName, byte settingStatus)
         {
             var personalInfoDataSet = customerDataAccess.GetPersonalInfo(
                 string.IsNullOrWhiteSpace(custName)
@@ -72,7 +72,7 @@
                 personalInfoDataSet,
                 customerDataAccess.GetLoginInfo(custId, groupName),
                 customerDataAccess.GetBalanceInfo(custId),
-                customerDataAccess.GetCustomerStatusInfo(custId),
+                customerDataAccess.GetCustomerStatusInfo(custId, settingStatus),
                 memberBalanceInfoModel.Balance,
                 memberBalanceInfoModel.PendingTransfer3rd,
                 roleId == Role.Member ? customerDataAccess.GetMemberOustanding(custId) : 0);
