@@ -609,8 +609,14 @@ Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts = function (uplineRoleId, 
     if (this.IsMultiple) {
         var Usernames = '';
         var CustIds = '';
-        var userNamesArr = this.Names();
-        var custIdsArr = this.Ids()
+        var userNamesArr = [];
+        var custIdsArr = [];
+
+        if (Fanex.ExtAcc.Customer.CustIds.length > 0 && Fanex.ExtAcc.Customer.CustIds.indexOf(',') != -1)
+            custIdsArr = Fanex.ExtAcc.Customer.CustIds.substring(0, Fanex.ExtAcc.Customer.CustIds.length - 1).split(',');
+
+        if (Fanex.ExtAcc.Customer.Usernames.length > 0 && Fanex.ExtAcc.Customer.Usernames.indexOf(',') != -1)
+            userNamesArr = Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2).split(', ');
 
         var customerlength = userNamesArr.length;
         for (var i = 0; i < customerlength; i++) {
