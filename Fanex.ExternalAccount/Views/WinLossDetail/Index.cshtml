@@ -9,6 +9,10 @@
         color: #2489ce;
         cursor: pointer;
     }
+
+    #filterBoxWLD .monPickrWrap, #filterBoxWLD .selectedDayWrap {
+        z-index: 1 !important;
+    }
 </style>
 <div>
     <div class="page-title">
@@ -29,7 +33,7 @@
         </div>
         <span class="icon-filter active"></span>
     </div>
-    <div class="search-form filterbox filter-winloss-detail">
+    <div id="filterBoxWLD" class="search-form filterbox filter-winloss-detail">
         <div class="form-group from-to-date">
             <input type="hidden" id="MinDate" value="@DateTime.Now.AddMonths(-3).AddDays((-DateTime.Now.Day) + 1)" />
             <input type="hidden" id="MaxDate" value="@DateTime.Now" />
