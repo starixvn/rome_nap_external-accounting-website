@@ -1,4 +1,59 @@
-﻿class DateTimeControls {
+﻿class NexDatePickerHelper {
+    private GetShortDateString(date): string {
+        // month is 0 based (0 - 11)
+        let strDate = this.GetDateStr(date.getMonth() + 1) + "/";
+        strDate += this.GetDateStr(date.getDate()) + "/";
+        strDate += this.GetDateStr(date.getFullYear());
+
+        return strDate;
+    }
+
+    private GetDateStr(date): string {
+        if (!date) {
+            return "";
+        }
+
+        if (date < 10) {
+            return "0" + date.toString();
+        }
+
+        return date.toString();
+    }
+
+    private GetBaseDateOfWeek(date): number {
+        // Base date from Monday
+        var day = date.getDay();            // Sun:0 -> Sat:6
+
+        return day === 0                    // Sun:0: default of system
+            ? date.getDate() - 6            // Sunday<-Mon: 6
+            : date.getDate() - day + 1;     // other days<-Mon: date.getDay() - 1
+    }
+
+    public GetDateRangeOfCurrentWeek(today) {
+        let date = new Date(today);
+        const lastDate = new Date(today);
+        const baseDate = this.GetBaseDateOfWeek(date);
+        const startDate = new Date(date.setDate(baseDate));
+
+        return [startDate, lastDate];
+    }
+
+    public GetDateRangeOfLastWeek(today) {
+        const baseDateOfCurrentWeek = this.GetBaseDateOfWeek(new Date(today)); // Monday
+        const baseDateOfLastWeek = baseDateOfCurrentWeek - 7; // Seek 7 days
+
+        let lastWeek = new Date(today);
+        lastWeek.setDate(baseDateOfLastWeek);
+        const startDate = this.GetShortDateString(lastWeek);
+
+        lastWeek.setDate(lastWeek.getDate() + 6); // Seek 6 days: Monday->Sunday
+        const endDate = this.GetShortDateString(lastWeek);
+
+        return [new Date(startDate), new Date(endDate)];
+    }
+}
+
+class DateTimeControls {
     private $: JQueryStatic;
 
     constructor($: JQueryStatic) {
@@ -8,6 +63,9 @@
     public Init() {
         this.$("#DateList").combobox({
             selected: event => {
+                const nexDatePickerHelper = new NexDatePickerHelper();
+                let dateRange;
+
                 var itemIndex = event.target.selectedIndex;
                 this.$("#DateList").prop("selectedIndex", itemIndex);
 
@@ -17,10 +75,12 @@
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - 1);
                     tdate = fdate;
                 } else if (itemIndex === 2) {
-                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - this.GetDayOfYear(tdate) + 1);
+                    dateRange = nexDatePickerHelper.GetDateRangeOfCurrentWeek(tdate);
+                    fdate = dateRange[0];
                 } else if (itemIndex === 3) {
-                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - this.GetDayOfYear(tdate) - 6);
-                    tdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - this.GetDayOfYear(tdate));
+                    dateRange = nexDatePickerHelper.GetDateRangeOfLastWeek(tdate);
+                    fdate = dateRange[0];
+                    tdate = dateRange[1];
                 } else if (itemIndex === 4) {
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth(), 1);
                     tdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate());

@@ -2,6 +2,54 @@
     alert("Fanex.ExtAcc.js module is required!");
 }
 
+NexDatePickerHelper = {
+    getShortDateString: function (date) {
+        // month is 0 based (0 - 11)
+        var strDate = NexDatePickerHelper.getDateStr(date.getMonth() + 1) + "/";
+        strDate += NexDatePickerHelper.getDateStr(date.getDate()) + "/";
+        strDate += NexDatePickerHelper.getDateStr(date.getFullYear());
+        return strDate;
+    },
+    getDateStr: function (date) {
+        if (!date) {
+            return '';
+        }
+        if (date < 10) {
+            return '0' + date.toString();
+        }
+        return date.toString();
+    },
+    getDateRangeOfCurrentWeek: function (today) {
+        var date = new Date(today);
+        var lastDate = new Date(today);
+        var baseDate = NexDatePickerHelper.getBaseDateOfWeek(date);
+        var startDate = new Date(date.setDate(baseDate));
+
+        return [startDate, lastDate];
+    },
+    getDateRangeOfLastWeek: function (today) {
+        var baseDateOfCurrentWeek = NexDatePickerHelper.getBaseDateOfWeek(new Date(today)); // Monday
+        var baseDateOfLastWeek = baseDateOfCurrentWeek - 7; // Seek 7 days
+
+        var lastWeek = new Date(today);
+        lastWeek.setDate(baseDateOfLastWeek);
+        var startDate = NexDatePickerHelper.getShortDateString(lastWeek);
+
+        lastWeek.setDate(lastWeek.getDate() + 6); // Seek 6 days: Monday->Sunday
+        var endDate = NexDatePickerHelper.getShortDateString(lastWeek);
+
+        return [new Date(startDate), new Date(endDate)];
+    },
+    getBaseDateOfWeek: function (date) {
+        // Base date from Monday
+        var day = date.getDay();            // Sun:0 -> Sat:6
+
+        return day === 0                    // Sun:0: default of system
+            ? date.getDate() - 6            // Sunday<-Mon: 6
+            : date.getDate() - day + 1;     // other days<-Mon: date.getDay() - 1
+    }
+};
+
 Fanex.ExtAcc.WinLossDetail = {
     groupId: "",
     groupName: "",
@@ -234,6 +282,7 @@ Fanex.ExtAcc.WinLossDetail = {
 
         $("#DateList").combobox({
             selected: function (event, ui) {
+                var dateRange;
                 var itemIndex = event.target.selectedIndex;
                 $("#DateList").prop("selectedIndex", itemIndex);
 
@@ -243,10 +292,12 @@ Fanex.ExtAcc.WinLossDetail = {
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - 1);
                     tdate = fdate;
                 } else if (itemIndex == 2) {
-                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - $this.getDayOfYear(tdate) + 1);
+                    dateRange = NexDatePickerHelper.getDateRangeOfCurrentWeek(tdate);
+                    fdate = dateRange[0];
                 } else if (itemIndex == 3) {
-                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - $this.getDayOfYear(tdate) - 6);
-                    tdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - $this.getDayOfYear(tdate));
+                    dateRange = NexDatePickerHelper.getDateRangeOfLastWeek(tdate);
+                    fdate = dateRange[0];
+                    tdate = dateRange[1];
                 } else if (itemIndex == 4) {
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth(), 1);
                     tdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate());
@@ -639,11 +690,11 @@ Fanex.ExtAcc.WinLossDetail = {
             showDistinctRow: false,
             allowTruncate: true,
             sortOption:
-            {
-                afterGridSorted: function (rows) {
-                    return $this.customsortfunc(rows);
-                }
-            },
+                {
+                    afterGridSorted: function (rows) {
+                        return $this.customsortfunc(rows);
+                    }
+                },
             numOfPaddingForGridExpandHeight: 40
         };
 
