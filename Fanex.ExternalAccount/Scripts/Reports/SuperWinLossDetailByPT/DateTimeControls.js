@@ -1,3 +1,48 @@
+var NexDatePickerHelper = /** @class */ (function () {
+    function NexDatePickerHelper() {
+    }
+    NexDatePickerHelper.prototype.GetShortDateString = function (date) {
+        // month is 0 based (0 - 11)
+        var strDate = this.GetDateStr(date.getMonth() + 1) + "/";
+        strDate += this.GetDateStr(date.getDate()) + "/";
+        strDate += this.GetDateStr(date.getFullYear());
+        return strDate;
+    };
+    NexDatePickerHelper.prototype.GetDateStr = function (date) {
+        if (!date) {
+            return "";
+        }
+        if (date < 10) {
+            return "0" + date.toString();
+        }
+        return date.toString();
+    };
+    NexDatePickerHelper.prototype.GetBaseDateOfWeek = function (date) {
+        // Base date from Monday
+        var day = date.getDay(); // Sun:0 -> Sat:6
+        return day === 0 // Sun:0: default of system
+            ? date.getDate() - 6 // Sunday<-Mon: 6
+            : date.getDate() - day + 1; // other days<-Mon: date.getDay() - 1
+    };
+    NexDatePickerHelper.prototype.GetDateRangeOfCurrentWeek = function (today) {
+        var date = new Date(today);
+        var lastDate = new Date(today);
+        var baseDate = this.GetBaseDateOfWeek(date);
+        var startDate = new Date(date.setDate(baseDate));
+        return [startDate, lastDate];
+    };
+    NexDatePickerHelper.prototype.GetDateRangeOfLastWeek = function (today) {
+        var baseDateOfCurrentWeek = this.GetBaseDateOfWeek(new Date(today)); // Monday
+        var baseDateOfLastWeek = baseDateOfCurrentWeek - 7; // Seek 7 days
+        var lastWeek = new Date(today);
+        lastWeek.setDate(baseDateOfLastWeek);
+        var startDate = this.GetShortDateString(lastWeek);
+        lastWeek.setDate(lastWeek.getDate() + 6); // Seek 6 days: Monday->Sunday
+        var endDate = this.GetShortDateString(lastWeek);
+        return [new Date(startDate), new Date(endDate)];
+    };
+    return NexDatePickerHelper;
+}());
 var DateTimeControls = /** @class */ (function () {
     function DateTimeControls($) {
         this.$ = $;
@@ -6,6 +51,8 @@ var DateTimeControls = /** @class */ (function () {
         var _this = this;
         this.$("#DateList").combobox({
             selected: function (event) {
+                var nexDatePickerHelper = new NexDatePickerHelper();
+                var dateRange;
                 var itemIndex = event.target.selectedIndex;
                 _this.$("#DateList").prop("selectedIndex", itemIndex);
                 var fdate = new Date(_this.$("#MaxDate").val());
@@ -15,11 +62,13 @@ var DateTimeControls = /** @class */ (function () {
                     tdate = fdate;
                 }
                 else if (itemIndex === 2) {
-                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - _this.GetDayOfYear(tdate) + 1);
+                    dateRange = nexDatePickerHelper.GetDateRangeOfCurrentWeek(tdate);
+                    fdate = dateRange[0];
                 }
                 else if (itemIndex === 3) {
-                    fdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - _this.GetDayOfYear(tdate) - 6);
-                    tdate = new Date(tdate.getFullYear(), tdate.getMonth(), tdate.getDate() - _this.GetDayOfYear(tdate));
+                    dateRange = nexDatePickerHelper.GetDateRangeOfLastWeek(tdate);
+                    fdate = dateRange[0];
+                    tdate = dateRange[1];
                 }
                 else if (itemIndex === 4) {
                     fdate = new Date(tdate.getFullYear(), tdate.getMonth(), 1);
