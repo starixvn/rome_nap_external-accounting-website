@@ -29,7 +29,7 @@
         public string LoginIP { get; }
 
         public override string GetSettingKey()
-            => "EAS_CancelBonus";
+            => "EAS_Bonus_Cancel";
 
         public override bool IsValid()
             => !string.IsNullOrWhiteSpace(GroupName) && CustId > 0 && TransId > 0;

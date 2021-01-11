@@ -18,11 +18,11 @@
             Amount = entity.Amount;
             PaymentDate = entity.PaymentDate.ToShortDateWithSlash();
             BonusStatus = BonusStatusIdConst.GetBonusStatus(entity.StatusId);
-            MemberFeedback = GetMemberFeedback(entity.IsComplained);
+            MemberFeedback = GetMemberFeedback(entity.PaymentDate, entity.IsComplained);
             CanCancelPending = entity.StatusId == BonusStatusIdConst.Pending
                 && DateTime.Now.Subtract(entity.CreatedDate).TotalHours <= PendingBonusCancellableHours;
             IsCancelled = entity.StatusId == BonusStatusIdConst.Cancelled;
-            IsNotReceived = entity.IsComplained == true;
+            IsNotReceived = entity.IsComplained;
         }
 
         public string CreatedDate { get; }
@@ -47,14 +47,14 @@
 
         public bool IsNotReceived { get; }
 
-        private static string GetMemberFeedback(bool? isComplained)
+        private static string GetMemberFeedback(DateTime? paymentDate, bool isComplained)
         {
-            if (isComplained == null)
+            if (paymentDate == null)
             {
                 return string.Empty;
             }
 
-            return isComplained.Value ? ViewLang.NotReceived : ViewLang.Received;
+            return isComplained ? ViewLang.NotReceived : ViewLang.Received;
         }
     }
 }

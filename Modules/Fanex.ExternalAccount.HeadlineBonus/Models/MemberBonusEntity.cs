@@ -13,7 +13,7 @@
             decimal amount,
             DateTime? paymentDate,
             byte statusId,
-            bool? isComplained)
+            bool isComplained)
         {
             CreatedDate = createdDate;
             TransId = transId;
@@ -42,6 +42,6 @@
 
         public byte StatusId { get; }
 
-        public bool? IsComplained { get; }
+        public bool IsComplained { get; }
     }
 }

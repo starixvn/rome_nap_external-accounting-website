@@ -23,6 +23,7 @@ class AddNewBonus {
     private txtMembers: JQuery;
     private txtAmount: JQuery;
     private groupName: string;
+    private buttonSubmit: JQuery;
     private resources = {
         popupTitle: "Add New Bonus",
         usernamesRequiredError: "Member Username(s) is required.",
@@ -49,7 +50,7 @@ class AddNewBonus {
                 false,
                 () => this.addNewBonusPost(),
                 null,
-                null,
+                "addnew-bonus-modal",
                 true,
                 null,
                 true);
@@ -65,6 +66,7 @@ class AddNewBonus {
         this.txtMembers = this.formAddNewBonus.find("#txt-MemberUsernames");
         this.txtAmount = this.formAddNewBonus.find("#txt-amount");
         this.groupName = this.$("#selectedGroupName").html();
+        this.buttonSubmit = this.$("#addnew-bonus-modal").next(".ui-dialog-buttonpane").find(".btn.-submit");
     }
 
     private bindEvents() {
@@ -101,6 +103,7 @@ class AddNewBonus {
     private addNewBonusPost() {
         if (this.isValidMembers() && this.isValidAmount()) {
             Fanex.ExtAcc.BlockUI();
+            this.buttonSubmit.prop("disabled", true);
             var formData = this.formAddNewBonus.serializeArray();
             formData.push({ name: "groupName", value: this.$("#selectedGroupName").html() });
             this.$.post(
@@ -110,16 +113,16 @@ class AddNewBonus {
                     const isSuccess = data.isSuccess || data.IsSuccess;
                     if (!isSuccess) {
                         this.showError(data.errorMessage || data.ErrorMessage);
-                        Fanex.ExtAcc.UnBlockUI();
+                        this.buttonSubmit.prop("disabled", false);
                     } else {
                         this.showSuccess(data.ErrorMessage);
                         setTimeout(() => {
-                            Fanex.ExtAcc.Form.Close();
                             this.callback();
+                            Fanex.ExtAcc.Form.Close(null, null, "addnew-bonus-modal");
                         }, 1000 * 3);
                     }
                 }
-            ).fail(Fanex.ExtAcc.UnBlockUI);
+            ).always(Fanex.ExtAcc.UnBlockUI);
         }
     }
 

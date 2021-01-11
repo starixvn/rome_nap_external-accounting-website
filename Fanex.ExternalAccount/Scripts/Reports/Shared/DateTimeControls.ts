@@ -146,7 +146,7 @@ class DateTimeControls {
     }
 
     private DateRangeSelected(itemIndex) {
-      	let dateRan
+        let dateRange;
     	const nexDatePickerHelper = new NexDatePickerHelper();
         this.$("#DateList").prop("selectedIndex", itemIndex);
 

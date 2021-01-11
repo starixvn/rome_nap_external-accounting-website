@@ -12,7 +12,6 @@
     private cachedPageIndex = 0;
     private cachedPageSize = 500;
     private groupName: string;
-    private msgCancelPending: JQuery;
     private popupAddNewBonus: JQuery;
     private hasHostPermission: boolean;
     private cancelBonus: CancelBonus;
@@ -43,7 +42,6 @@
         this.grid = this.$("#jqgrid");
         this.msgNoInfo = this.$("#msgNoinfo");
         this.getBonusDetailURL = this.formBonusDetail.attr("action") + "?";
-        this.msgCancelPending = this.$("#div-msgCancelPending");
 
         const popupContainer = this.$("#div-popupAddNewBonus");
         this.hasHostPermission = popupContainer.length > 0;
@@ -63,7 +61,7 @@
         this.formBonusDetail.submit(event => {
             event.preventDefault();
 
-            this.msgCancelPending.removeClass().addClass("hide").html("");
+            this.cachedPageIndex = 0;
             this.searchBonusDetailQueryString = this.formBonusDetail.serialize();
             this.getBonusDetail();
         });
@@ -197,10 +195,10 @@
             columns: [
                 { HeaderText: "Created Date", Width: 140, Name: "colCreatedDate", CellAlign: "center" },
                 { HeaderText: "Ref. No.", Width: 100, Name: "colRefNo", HeaderAlign: "center", CellAlign: "right" },
-                { HeaderText: "Username", Width: 160, Name: "colSuper" },
-                { HeaderText: "Amount", Width: 100, Name: "colSuperAmount", HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00" },
-                { HeaderText: "Username", Width: 160, Name: "colMember" },
-                { HeaderText: "Amount", Width: 100, Name: "colMemberAmount", HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00" },
+                { HeaderText: "Username", Width: 160, Name: "colSuper", AllowTruncate: true },
+                { HeaderText: "Amount", Width: 120, Name: "colSuperAmount", AllowTruncate: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00" },
+                { HeaderText: "Username", Width: 160, Name: "colMember", AllowTruncate: true },
+                { HeaderText: "Amount", Width: 120, Name: "colMemberAmount", AllowTruncate: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00" },
                 { HeaderText: "Payment Date", Width: 100, Name: "colPaymentDate", CellAlign: "center" },
                 { HeaderText: "Bonus Status", Width: 100, Name: "colBonusStatus", CellAlign: "center" },
                 { HeaderText: "Member Feedback", Width: 120, Name: "colMemberFeedback", CellAlign: "center" }
@@ -227,7 +225,7 @@
     private buildBonusStatusCell(memberBonus) {
         if (this.hasHostPermission && memberBonus.CanCancelPending) {
             return [
-                '<a href="javascript:void;" class="cancel-pending" data-custid="',
+                '<a href="javascript:;" class="cancel-pending" data-custid="',
                 memberBonus.CustId,
                 '" data-transid="',
                 memberBonus.TransId,

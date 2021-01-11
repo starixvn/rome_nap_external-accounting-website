@@ -48,13 +48,10 @@
                 Convert.ToDecimal(reader["amount"]),
                 ToDateTime(reader["paymentdate"]),
                 Convert.ToByte(reader["statusid"]),
-                ToBool(reader["iscomplained"]));
+                Convert.ToBoolean(reader["iscomplained"]));
 
         private static DateTime? ToDateTime(object value)
             => value == null || value == DBNull.Value ? default(DateTime?) : Convert.ToDateTime(value);
-
-        private static bool? ToBool(object value)
-            => value == null || value == DBNull.Value ? default(bool?) : Convert.ToBoolean(value);
 
         public Result ExecuteNonQuery(ICriteria criteria)
         {
