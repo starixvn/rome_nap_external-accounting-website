@@ -29,10 +29,7 @@
 
             var superPTList = new List<SuperPositionTakingModel>();
 
-            using (var reader = ExecDataReader(criteria.GetSettingKey(), new Hashtable
-                    {
-                        { "supers", criteria.Supers }
-                    }))
+            using (var reader = ExecDataReader(criteria.GetSettingKey(), criteria.GetSpParams()))
             {
                 if (reader != null)
                 {
