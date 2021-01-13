@@ -13,7 +13,7 @@
             newUplinePositionTaking: 0,
             isApplyNewUplinePositionTaking: false
         };
-
+        
         $scope.isEditPresetOnMember = function () {
             var currentPt = $scope.positionTaking;
             switch (settingViewModel.Level) {
@@ -25,7 +25,7 @@
                                                             $scope.uplinePTOnMember.newUplinePositionTaking,
                                                             0,
                                                             $scope.uplinePTOnMember.newUplinePositionTaking,
-                                                            fanex.goldDeluxeSetting.PT_INTERVAL);
+                            fanex.goldDeluxeSetting.PT_INTERVAL, isPT3Decimal ? 3 : 2);
                         me.$presetOnMemberModal.modal({
                             backdrop: 'static',
                             show: true,
@@ -42,7 +42,7 @@
                                                             $scope.uplinePTOnMember.newUplinePositionTaking,
                                                             0,
                                                             $scope.uplinePTOnMember.newUplinePositionTaking,
-                                                            fanex.goldDeluxeSetting.PT_INTERVAL);
+                            fanex.goldDeluxeSetting.PT_INTERVAL, isPT3Decimal ? 3 : 2);
                         me.$presetOnMemberModal.modal({
                             backdrop: 'static',
                             show: true,
