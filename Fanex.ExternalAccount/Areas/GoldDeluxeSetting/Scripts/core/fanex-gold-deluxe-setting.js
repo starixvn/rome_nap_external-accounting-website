@@ -92,7 +92,7 @@ fanex.goldDeluxeSetting.UN_AUTHORIZED_CODE = 401;
 fanex.goldDeluxeSetting.PT_INTERVAL = isPT3Decimal ? 0.005 : 0.01;
 fanex.goldDeluxeSetting.COM_INTERVAL = 0.0005;
 fanex.goldDeluxeSetting.COM_DECIMAL = 4;
-fanex.goldDeluxeSetting.PT_DECIMAL = 2;
+fanex.goldDeluxeSetting.PT_DECIMAL = isPT3Decimal ? 3 : 2;
 fanex.goldDeluxeSetting.TIME_OUT_SHOW_MESSAGE = 4000;
 fanex.goldDeluxeSetting.templateVersion = '?v=' + Math.random();
 fanex.goldDeluxeSetting.buildTemplateUrlWithVersion = function (templateUrl) {

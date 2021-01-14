@@ -20,12 +20,12 @@
                 case fanex.goldDeluxeSetting.customerLevel.Master:
                     if (settingViewModel.Setting.PositionTaking.Is3
                         && !currentPt.Is3) {
-                        $scope.uplinePTOnMember.newUplinePositionTaking = fanex.roundNumber(currentPt.S4 - currentPt.M3);
+                        $scope.uplinePTOnMember.newUplinePositionTaking = fanex.roundNumber(currentPt.S4 - currentPt.M3, fanex.goldDeluxeSetting.PT_DECIMAL);
                         $scope.uplinePTOnMemberOptions = fanex.createOptionsFromRange(
                                                             $scope.uplinePTOnMember.newUplinePositionTaking,
                                                             0,
                                                             $scope.uplinePTOnMember.newUplinePositionTaking,
-                            fanex.goldDeluxeSetting.PT_INTERVAL, isPT3Decimal ? 3 : 2);
+                            fanex.goldDeluxeSetting.PT_INTERVAL, fanex.goldDeluxeSetting.PT_DECIMAL);
                         me.$presetOnMemberModal.modal({
                             backdrop: 'static',
                             show: true,
@@ -37,12 +37,12 @@
                 case fanex.goldDeluxeSetting.customerLevel.Agent:
                     if (settingViewModel.Setting.PositionTaking.Im2
                         && !currentPt.Im2) {
-                        $scope.uplinePTOnMember.newUplinePositionTaking = fanex.roundNumber(currentPt.M3 - currentPt.A2);
+                        $scope.uplinePTOnMember.newUplinePositionTaking = fanex.roundNumber(currentPt.M3 - currentPt.A2, fanex.goldDeluxeSetting.PT_DECIMAL);
                         $scope.uplinePTOnMemberOptions = fanex.createOptionsFromRange(
                                                             $scope.uplinePTOnMember.newUplinePositionTaking,
                                                             0,
                                                             $scope.uplinePTOnMember.newUplinePositionTaking,
-                            fanex.goldDeluxeSetting.PT_INTERVAL, isPT3Decimal ? 3 : 2);
+                            fanex.goldDeluxeSetting.PT_INTERVAL, fanex.goldDeluxeSetting.PT_DECIMAL);
                         me.$presetOnMemberModal.modal({
                             backdrop: 'static',
                             show: true,
