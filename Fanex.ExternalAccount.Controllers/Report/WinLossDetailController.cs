@@ -130,6 +130,7 @@
                 : winLossDetailService.DrillDownWinLossDetail(
                     new DrillDownWinLossDetailRequest(request, toolTipsProducts));
         }
+
     }
 
     public class ExportWinLossDetailRequest : WinLossDetailRequest
