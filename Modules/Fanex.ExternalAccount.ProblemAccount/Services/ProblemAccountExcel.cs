@@ -1,9 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.ProblemAccount.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.Excel.Utility;
     using Fanex.ExternalAccount.ProblemAccount.Constants;
@@ -13,6 +9,10 @@
     using Fanex.ExternalAccount.ProblemAccount.ViewModels;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
 
     public interface IProblemAccountExcel
     {
@@ -151,6 +151,9 @@
 
                 case ClosedReasonConst.ClosedWrongOTPSC:
                     return ClosedReasonConst.ClosedWrongOTPSCRowIndex;
+
+                case ClosedReasonConst.ClosedByArchive:
+                    return ClosedReasonConst.ClosedByArchiveRowIndex;
 
                 case ClosedReasonConst.ClosedWrongPwdOthers:
                 default:
