@@ -15,6 +15,7 @@
     using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.Logging.Extensions.Web;
+    using Newtonsoft.Json;
 
     public interface SuperWinLossDetailByPTService
     {
@@ -64,11 +65,8 @@
             if (model.WinLossByProducts.Any())
             {
                 var superIds = model.WinLossByProducts.Select(item => item.CustId).Distinct();
-                var superPositionTakingByRnG = GetSuperPositionTakingByRnG(superIds);
-
                 var postionTakings = superWinLossDetailByPTDataAccess
-                    .GetSuperPositionTakingList(new SuperPTCriteria(Utils.ToString(superIds)))
-                    .Concat(superPositionTakingByRnG);
+                    .GetSuperPositionTakingList(new SuperPTCriteria(Utils.ToString(superIds)));
 
                 var winlossByUsernames = model.WinLossByProducts.Join(
                     postionTakings,
