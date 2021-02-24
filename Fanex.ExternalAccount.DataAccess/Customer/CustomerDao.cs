@@ -1,5 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
     using Base;
     using Common.Extensions;
     using Core.Shared;
@@ -12,9 +15,6 @@
     using DTO.Customer.Status;
     using Fanex.ExternalAccount.Utilities;
     using Interface.Customer;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
     using ViewModel.Customer.Suspend;
 
     public class CustomerDao : DAOBase, ICustomerDao
@@ -410,5 +410,16 @@
             }
         }
 #pragma warning restore S1192 // String literals should not be duplicated
+
+        public bool IsLimitNewDownline(CheckLimitNewDownlineCriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputs = db.GetOuputParams();
+
+                return Utils.ToBoolean(outputs["isallowed"]);
+            }
+        }
     }
 }

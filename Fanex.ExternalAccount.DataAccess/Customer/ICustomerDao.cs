@@ -1,11 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Interface.Customer
 {
+    using System.Collections.Generic;
     using Criteria.Customer;
     using Criteria.Customer.CustomerStatus;
     using DTO;
     using DTO.Customer;
     using DTO.Customer.Status;
-    using System.Collections.Generic;
     using ViewModel.Customer.Suspend;
 
     public interface ICustomerDao
@@ -40,5 +40,7 @@
         List<CustomerSuspendStatusRow> GetMultipleSuspendCustomerViewModel(GetMultipleSuspendCustomerInfoCriteria criteria);
 
         CustomerStatusDTO GetCustomerAllStatus(GetCustomerAllStatusCriteria criteria);
+
+        bool IsLimitNewDownline(CheckLimitNewDownlineCriteria criteria);
     }
 }

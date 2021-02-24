@@ -163,6 +163,7 @@
     <Compile Include="Criteria\Customer\CustomerStatus\GetSingleSuspendCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\GetSuspendCustomerDetailInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\UpdateSuspendCustomerCriteria.cs" />
+    <Compile Include="Criteria\Customer\CheckLimitNewDownlineCriteria.cs" />
     <Compile Include="Criteria\Customer\UpdateSuperInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\GetSuperInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\UpdateDoubleCommCriteria.cs" />
