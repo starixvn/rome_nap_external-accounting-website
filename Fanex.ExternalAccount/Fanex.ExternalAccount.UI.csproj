@@ -502,6 +502,10 @@
     <Content Include="assets\bundles\associationaccount\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\BonusDetail\index.js" />
+    <Content Include="assets\bundles\BonusDetail\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\SuperWinLossDetailByPT\index.js" />
     <Content Include="assets\bundles\SuperWinLossDetailByPT\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -1500,7 +1504,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
-    <Content Include="Configurations\InternalUrlSection.config" />
+    <Content Include="Configurations\InternalUrlSection.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\InternalUrlSection.mnl.config">
       <DependentUpon>InternalUrlSection.config</DependentUpon>
     </Content>
@@ -1531,8 +1537,11 @@
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
     <Content Include="Scripts\Customer\Fanex.ExtAcc.AssociationAccount.js" />
-    <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\DateTimeControls.ts" />
-    <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\ProductControls.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\BonusDetail\Fanex.ExtAcc.BonusDetail.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\BonusDetail\Fanex.ExtAcc.AddNewBonus.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\BonusDetail\Fanex.ExtAcc.CancelBonus.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\Shared\DateTimeControls.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\Shared\ProductControls.ts" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\SuperWinLossDetailByPT.ts" />
     <Content Include="Scripts\Fanex.Multiselect\fanex.multiSelect.css" />
     <Content Include="Scripts\Fanex.Multiselect\fanex.multiSelect.js" />
@@ -2812,6 +2821,9 @@
     <Content Include="assets\styles\fonts\AlphaAdmin\fonts\TAHOMAB0.TTF" />
     <Content Include="assets\styles\fonts\AlphaAdmin\fonts\TAHOMABD.TTF" />
     <Content Include="assets\styles\fonts\AlphaAdmin\fonts\TAHOMA_0.TTF" />
+    <Content Include="assets\bundles\BonusDetail\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2975,6 +2987,7 @@
     <Content Include="typings\globals\moment\typings.json" />
     <Content Include="typings\globals\storejs\typings.json" />
     <Content Include="typings\globals\toastr\typings.json" />
+    <Content Include="Views\BonusDetail\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
@@ -3037,6 +3050,10 @@
       <Project>{f9261cf3-913a-436f-ad9d-6607c190367e}</Project>
       <Name>Fanex.ExternalAccount.BetSetting</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.ExternalAccount.HeadlineBonus\Fanex.ExternalAccount.HeadlineBonus.csproj">
+      <Project>{c318c8c1-4b85-480e-8451-839a0bd8eea4}</Project>
+      <Name>Fanex.ExternalAccount.HeadlineBonus</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.ExternalAccount.ProblemAccount\Fanex.ExternalAccount.ProblemAccount.csproj">
       <Project>{be8d34fe-39ca-447e-bd10-71991c08ceb6}</Project>
       <Name>Fanex.ExternalAccount.ProblemAccount</Name>
@@ -3064,9 +3081,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Scripts\Reports\Shared\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

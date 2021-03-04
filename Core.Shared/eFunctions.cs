@@ -71,5 +71,6 @@
         public const string SearchAndCopySuper = "SearchAndCopySuper";
         public const string ProblemAccountList = "ProblemAccountList";
         public const string SubGroup = "ManageSubGroup";
+        public const string BonusDetail = "BonusDetail";
     }
 }

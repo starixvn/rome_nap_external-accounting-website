@@ -39,3 +39,8 @@ _Chutzpah
 *.orig
 Fanex.ExternalAccount/Properties/PublishProfiles/**
 /Fanex.ExternalAccount.Controllers/Fanex.ExternalAccount.Controllers.csproj.user
+
+/Fanex.ExternalAccount/Scripts/Reports/Shared/*.js
+/Fanex.ExternalAccount/Scripts/Reports/Shared/*.js.map
+/Fanex.ExternalAccount/Scripts/Reports/BonusDetail/*.js
+/Fanex.ExternalAccount/Scripts/Reports/BonusDetail/*.js.map

@@ -106,6 +106,7 @@
     <Compile Include="CacheRef.cs" />
     <Compile Include="CustomerDataRangeType.cs" />
     <Compile Include="eFunctions.cs" />
+    <Compile Include="Extensions\DateTimeExtension.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductSettings.cs" />
     <Compile Include="ProductConstants.cs" />
