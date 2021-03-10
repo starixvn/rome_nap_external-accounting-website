@@ -1490,6 +1490,10 @@
       <SubType>Designer</SubType>
       <DependentUpon>appSettings.config</DependentUpon>
     </Content>
+    <Content Include="Configurations\appSettings.cloud.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>appSettings.config</DependentUpon>
+    </Content>
     <Content Include="Configurations\appSettings.sit.config">
       <SubType>Designer</SubType>
       <DependentUpon>appSettings.config</DependentUpon>
@@ -1517,6 +1521,9 @@
     <Content Include="Configurations\connectionStrings.production.config">
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
+    <Content Include="Configurations\connectionStrings.cloud.config">
+      <DependentUpon>connectionStrings.config</DependentUpon>
+    </Content>
     <Content Include="Configurations\connectionStrings.sit.config">
       <SubType>Designer</SubType>
       <DependentUpon>connectionStrings.config</DependentUpon>
@@ -1532,6 +1539,9 @@
       <DependentUpon>InternalUrlSection.config</DependentUpon>
     </Content>
     <Content Include="Configurations\InternalUrlSection.Production.config">
+      <DependentUpon>InternalUrlSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\InternalUrlSection.cloud.config">
       <DependentUpon>InternalUrlSection.config</DependentUpon>
     </Content>
     <Content Include="Configurations\InternalUrlSection.sit.config">
@@ -1868,6 +1878,10 @@
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
     </Content>
     <Content Include="SpNames.CustDB.production.xml">
+      <SubType>Designer</SubType>
+      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
+    </Content>
+    <Content Include="SpNames.CustDB.cloud.xml">
       <SubType>Designer</SubType>
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
     </Content>
@@ -2873,6 +2887,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.production.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.cloud.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
     </Content>
