@@ -411,7 +411,7 @@
         }
 #pragma warning restore S1192 // String literals should not be duplicated
 
-        public bool IsLimitNewDownline(CheckLimitNewDownlineCriteria criteria)
+        public bool CheckLimitNewDownline(CheckLimitNewDownlineCriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {

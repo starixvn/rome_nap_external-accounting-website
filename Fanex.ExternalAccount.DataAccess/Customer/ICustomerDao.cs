@@ -41,6 +41,6 @@
 
         CustomerStatusDTO GetCustomerAllStatus(GetCustomerAllStatusCriteria criteria);
 
-        bool IsLimitNewDownline(CheckLimitNewDownlineCriteria criteria);
+        bool CheckLimitNewDownline(CheckLimitNewDownlineCriteria criteria);
     }
 }

@@ -112,7 +112,7 @@
         public Result CheckLimitNewDownline(int custId, int roleId)
         {
             var result = new Result();
-            var isAllow = dataAccess.IsLimitNewDownline(new CheckLimitNewDownlineCriteria(custId));
+            var isAllow = dataAccess.CheckLimitNewDownline(new CheckLimitNewDownlineCriteria(custId));
             
             if (!isAllow)
             {
