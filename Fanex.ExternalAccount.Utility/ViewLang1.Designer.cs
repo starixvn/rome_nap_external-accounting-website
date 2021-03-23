@@ -1151,6 +1151,33 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sorry, you can only create 5 members per day on this agent, please try again tomorrow..
+        /// </summary>
+        public static string LimitAgentNewDownlineError {
+            get {
+                return ResourceManager.GetString("LimitAgentNewDownlineError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry, you can only create 3 agents per day on this master, please try again tomorrow..
+        /// </summary>
+        public static string LimitMasterNewDownlineError {
+            get {
+                return ResourceManager.GetString("LimitMasterNewDownlineError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry, you can only create 3 masters per day on this super, please try again tomorrow..
+        /// </summary>
+        public static string LimitSuperNewDownlineError {
+            get {
+                return ResourceManager.GetString("LimitSuperNewDownlineError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Logged in as.
         /// </summary>
         public static string Loggedinas {

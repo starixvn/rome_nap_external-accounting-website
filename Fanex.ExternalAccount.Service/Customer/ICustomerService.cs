@@ -37,5 +37,7 @@
         List<Result> SuspendMultipleCustomer(List<MultipleUpdateSuspendRequest> request, int userId, string ipv4);
 
         CustomerStatusDTO GetCustomerAllStatus(int custId, byte settingStatus);
+
+        Result CheckLimitNewDownline(int custId, int roleId);
     }
 }

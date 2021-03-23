@@ -1,5 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading;
+    using System.Web;
+    using System.Web.Mvc;
     using CasinoLibrary.Model.UserException;
     using Core.Authorization;
     using Core.Base;
@@ -16,14 +24,6 @@
     using Service;
     using Service.Impl.Customer;
     using Service.Impl.Customer.Casino;
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Linq;
-    using System.Threading;
-    using System.Web;
-    using System.Web.Mvc;
     using Utilities;
     using ViewModel;
     using ViewModel.Customer;
@@ -58,6 +58,13 @@
             if (!reachLimitationResult.IsSuccess)
             {
                 return LimitationPage(reachLimitationResult.ErrorMessage);
+            }
+
+            var limitNewDownlineResult = _customerService.CheckLimitNewDownline(custId, Role.Super);
+
+            if (!limitNewDownlineResult.IsSuccess)
+            {
+                return LimitationPage(limitNewDownlineResult.ErrorMessage);
             }
 
             return PartialViewBase();
@@ -98,6 +105,13 @@
         [AntiXSRFFilter]
         public ActionResult SuperAddNewMasterPost(int parentId, string txtCustomerObject)
         {
+            var limitNewDownlineResult = _customerService.CheckLimitNewDownline(parentId, Role.Super);
+
+            if (!limitNewDownlineResult.IsSuccess)
+            {
+                return JsonBase(limitNewDownlineResult);
+            }
+
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
@@ -143,6 +157,13 @@
                 return LimitationPage(reachLimitationResult.ErrorMessage);
             }
 
+            var limitNewDownlineResult = _customerService.CheckLimitNewDownline(custId, Role.Master);
+
+            if (!limitNewDownlineResult.IsSuccess)
+            {
+                return LimitationPage(limitNewDownlineResult.ErrorMessage);
+            }
+
             return PartialViewBase();
         }
 
@@ -181,6 +202,13 @@
         [AntiXSRFFilter]
         public ActionResult MasterAddNewAgentPost(int parentId, string txtCustomerObject)
         {
+            var limitNewDownlineResult = _customerService.CheckLimitNewDownline(parentId, Role.Master);
+
+            if (!limitNewDownlineResult.IsSuccess)
+            {
+                return JsonBase(limitNewDownlineResult);
+            }
+
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
@@ -234,6 +262,13 @@
                 return LimitationPage(limitedMemberBySuperResult.ErrorMessage);
             }
 
+            var limitNewDownlineResult = _customerService.CheckLimitNewDownline(custId, Role.Agent);
+
+            if (!limitNewDownlineResult.IsSuccess)
+            {
+                return LimitationPage(limitNewDownlineResult.ErrorMessage);
+            }
+
             return PartialViewBase();
         }
 
@@ -272,6 +307,13 @@
         [AntiXSRFFilter]
         public ActionResult AgentAddNewMemberPost(int parentId, string txtCustomerObject)
         {
+            var limitNewDownlineResult = _customerService.CheckLimitNewDownline(parentId, Role.Agent);
+
+            if (!limitNewDownlineResult.IsSuccess)
+            {
+                return JsonBase(limitNewDownlineResult);
+            }
+
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);

@@ -336,4 +336,7 @@
     <Setting Key="EAS_Bonus_Cancel" SpName="EAS_Bonus_Cancel" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_Bonus_Ins" SpName="EAS_Bonus_Ins" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
+  <Function Name="Limit New Downline">
+    <Setting Key="Acc_ProblemAccountLimitDownlineCheck" SpName="Acc_ProblemAccountLimitDownlineCheck" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+  </Function>
 </Functions>
