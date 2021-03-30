@@ -316,7 +316,7 @@ tr.rowDisabled td {
     background-color: #a0a97a !important;
 }
 
-tr.closed-wrongPwdOthers td {
+tr.locked-falsePassword td {
     background-color: #ccc7ba !important;
 }
 
@@ -328,12 +328,22 @@ tr.closed-byUpline td {
     background-color: #f79646 !important;
 }
 
-tr.closed-wrongOTPSC td {
+tr.locked-falseOTPSC td {
     background-color: #86c5e4 !important;
 }
 
 tr.closed-byArchive td {
     background-color: #969696 !important;
+}
+
+.locked-icon {
+    background: url("../../images/unlock.svg") center center no-repeat;
+    color: #ff9900;
+    cursor: pointer;
+    display: inline-block;
+    width: 18px;
+    height: 16px;
+    vertical-align: middle;
 }
 
 .headerTransferCondition {

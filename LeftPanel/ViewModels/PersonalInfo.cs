@@ -13,6 +13,7 @@
             var enabled = customerInfoRow.Enabled();
             var closed = customerInfoRow.Closed();
             var suspended = customerInfoRow.Suspended();
+            var locked = customerInfoRow.Locked();
 
             CustId = ObjectInfo.CreateInstance("Cust Id", customerInfoRow.CustId());
             Fax = ObjectInfo.CreateInstance("Fax", customerInfoRow.Fax());
@@ -27,8 +28,8 @@
                 Key = "CustList",
                 Value = $"{(role.IsNotMember() ? role.DirectDownlineLevel().DisplayRoleName() : string.Empty)} List"
             };
-            Status = new ObjectInfo { Tooltip = customerInfoRow.StatusTooltip(enabled, closed, suspended) };
-            BackgroundColor = new ObjectInfo { Value = customerInfoRow.StatusBackground(enabled, closed, suspended) };
+            Status = new ObjectInfo { Tooltip = customerInfoRow.StatusTooltip(enabled, closed, suspended, locked) };
+            BackgroundColor = new ObjectInfo { Value = customerInfoRow.StatusBackground(enabled, closed, suspended, locked) };
 
             SetLineInfo(role, customerInfoRow);
         }

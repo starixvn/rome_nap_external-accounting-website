@@ -27,6 +27,8 @@
         Result CloseCutomer(int custId, int uplineId, ICurrentSession currentSession, ICurrentContext currentContext,
             bool close, bool clearCredit, string custName);
 
+        Result UnlockAccess(int custId, string groupName, int userId, string ip4Address);
+
         Result AllowOutright(int custId, bool allow);
         
         Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress);
@@ -88,9 +90,11 @@
             return customerDataAccess.CloseCutomer(custId, close, clearCredit, custName);
         }
 
+        public Result UnlockAccess(int custId, string groupName, int userId, string ip4Address)
+            => customerDataAccess.UnlockAccess(new UnlockAccessCriteria(custId, groupName, userId, ip4Address));
+
         public Result AllowOutright(int custId, bool allow)
             => customerDataAccess.AllowOutright(custId, allow);
-
         
         public Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress)
         {

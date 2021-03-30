@@ -5,8 +5,7 @@
     using Utilities;
 
     public static class PersonalInfoDataRowExtensions
-    {    
-
+    {
         internal static int CustId(this DataRow dataRow) => Utils.ToInt32(dataRow["custid"]);
 
         internal static string Fax(this DataRow dataRow) => Utils.ToString(dataRow["fax"]);
@@ -27,7 +26,7 @@
 
         internal static decimal Credit(this DataRow dataRow) => Utils.ToDecimal(dataRow["credit"]).Format();
 
-        internal static string StatusTooltip(this DataRow dataRow, bool enabled, bool closed, bool suspended)
+        internal static string StatusTooltip(this DataRow dataRow, bool enabled, bool closed, bool suspended, byte locked)
         {
             if (!enabled)
             {
@@ -45,22 +44,31 @@
                 return "This account was suspended.";
             }
 
-            return string.Empty;
+            var lockedAccess = new CustomerLockedAccess(locked);
+
+            return lockedAccess.IsLocked ? lockedAccess.Reason : string.Empty;
         }
 
-        internal static string StatusBackground(this DataRow dataRow, bool enabled, bool closed, bool suspended)
+        internal static string StatusBackground(this DataRow dataRow, bool enabled, bool closed, bool suspended, byte locked)
         {
-            var closedReason = string.Empty;
+            if (!enabled)
+            {
+                return "disabled";
+            }
 
             if (closed)
             {
-                var customerClosedReason = dataRow.CustomerClosedReason();
-                closedReason = customerClosedReason.ClassName;
+                return dataRow.CustomerClosedReason().ClassName;
             }
 
-#pragma warning disable S3358 // Ternary operators should not be nested
-            return !enabled ? "disabled" : closed ? closedReason : suspended ? "suspended" : string.Empty;
-#pragma warning restore S3358 // Ternary operators should not be nested
+            if (suspended)
+            {
+                return "suspended";
+            }
+
+            var lockedAccess = new CustomerLockedAccess(locked);
+
+            return lockedAccess.IsLocked ? lockedAccess.ClassName : string.Empty;
         }
     }
 }

@@ -23,21 +23,14 @@
 
         private void AssignParameters(byte closedReason)
         {
-            const byte wrongPasswordOthers = 0; // gray: #ccc7ba
             const byte byAdmin = 1; // purple: #b3a2c7
             const byte byUpline = 2; // orange: #f79646
-            const byte wrongOtpsc = 3; // blue: #86c5e4
             const byte byArchive = 4; // dark grey hi-light: #969696
 
             ClassName = "closed-";
 
             switch (closedReason)
             {
-                case wrongPasswordOthers:
-                    ClassName += "wrongPwdOthers";
-                    ClosedReason = "This account was closed by failed logins.";
-                    break;
-
                 case byAdmin:
                     ClassName += "byAdmin";
                     ClosedReason = "This account was closed by admin.";
@@ -46,11 +39,6 @@
                 case byUpline:
                     ClassName += "byUpline";
                     ClosedReason = "This account was closed by upline.";
-                    break;
-
-                case wrongOtpsc:
-                    ClassName += "wrongOTPSC";
-                    ClosedReason = "This account was closed by false input of OTP/Security Code.";
                     break;
 
                 case byArchive:

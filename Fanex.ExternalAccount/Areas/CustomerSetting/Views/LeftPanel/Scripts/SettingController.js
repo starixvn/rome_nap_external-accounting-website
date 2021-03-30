@@ -365,6 +365,72 @@
         }
     };
 
+    $scope.UnlockAccess1 = function (locked, id, disabled) {
+        $scope.UnlockAccess(id, disabled, "This account was locked by false input of OTP/Security Code. Are you sure you want to unlock this account?");
+    }
+
+    $scope.UnlockAccess2 = function (locked, id, disabled) {
+        $scope.UnlockAccess(id, disabled, "This account was locked by false input Password. Are you sure you want to unlock this account?");
+    }
+
+    $scope.UnlockAccess = function (id, disabled, confirmMessage) {
+        if (disabled) return;
+
+        top.shouldCalculatePopupHeight = false;
+        var popupId = "popupUnlockAccess";
+        parent.Fanex.ExtAcc.Form.ConfirmBox(
+            "Unlock Access",
+            confirmMessage,
+            480,
+            "auto",
+            false,
+            function () {
+                parent.Fanex.ExtAcc.BlockUI();
+
+                $.ajax({
+                    type: "POST",
+                    url: parent.resolveClientUrl("CustomerSetting/LeftPanel/UpdateCustomer/UnlockAccess"),
+                    dataType: "json",
+                    data: {
+                        custId: $scope.model.personalInfo.custId.value,
+                        groupName: parent.$('#selectedGroupName').html()
+                    },
+                    success: function(result) {
+                        if (result.isSuccess) {
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                parent.Fanex.ExtAcc.UnBlockUI();
+                                document.location.reload(true);
+                            }, 2000);
+                        } else {
+                            parent.Fanex.ExtAcc.UnBlockUI();
+                            document.getElementById(id).checked = true;
+                            parent.Fanex.ExtAcc.Form.Alert("Error", result.errorMessage, 480, "auto");
+                        }
+                    },
+                    error: function (xhr) {
+                        parent.Fanex.ExtAcc.UnBlockUI();
+                        document.getElementById(id).checked = true;
+                        if (typeof console !== "undefined") {
+                            console.log(xhr);
+                        }
+                    },
+                    complete: function () {
+                        parent.Fanex.ExtAcc.Form.Close(null, null, popupId);
+                    }
+                })
+            },
+            function () {
+                parent.Fanex.ExtAcc.Form.Close(null, null, popupId);
+                document.getElementById(id).checked = true;
+            },
+            popupId,
+            null,
+            function () {
+                document.getElementById(id).checked = true;
+            });
+    };
+
     $scope.Suspended = function (suspend, id, disabled) {
         if (disabled) {
             return;

@@ -139,6 +139,7 @@
     <Compile Include="Customer\AssociationAccount.cs" />
     <Compile Include="Customer\CustomerInfo.cs" />
     <Compile Include="Customer\CustomerList\CustomerListDTO.cs" />
+    <Compile Include="Customer\CustomerLockedAccess.cs" />
     <Compile Include="Customer\CustomerStatusDTO.cs" />
     <Compile Include="Customer\Status\CustomerSuspendStatusRow.cs" />
     <Compile Include="Customer\Status\SingleUpdateAffectedDownline.cs" />

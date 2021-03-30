@@ -1,5 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.DataAccesses
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Web;
     using Core.Context;
     using Core.Shared;
     using Criteria;
@@ -8,11 +13,7 @@
     using DTO;
     using Extensions;
     using Fanex.ExternalAccount.Module.LeftPanel.Models;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Web;
+    using Fanex.NAP.Framework.Data;
     using Utilities;
     using ViewModels;
     using FanexCommonConverter = Fanex.Common.Converter;
@@ -230,6 +231,9 @@
             }
         }
 
+        public Result UnlockAccess(ICriteria criteria)
+            => ExecuteNonQuery(criteria);
+
         public Result AllowOutright(int custId, bool allow)
         {
             using (var objDb = new ObjectDb("Acc_CustomerUpdDisableOutright", 600))
@@ -304,17 +308,7 @@
                 throw new ArgumentNullException(nameof(criteria));
             }
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
-
-                return new Result
-                {
-                    ErrorCode = outputParams["errcode"].ToString(),
-                    ErrorMessage = outputParams["errmsg"].ToString()
-                };
-            }
+            return ExecuteNonQuery(criteria);
         }
 
         private IList<MasterAgentUsedCreditItem> MasterUsedCreditItems(int custId)
@@ -438,6 +432,21 @@
                 objdb.AssignParamValues(param);
                 objdb.ExecuteNonQuery();
                 return FanexCommonConverter.ToDecimal(objdb.GetParameterValue("outstanding"));
+            }
+        }
+
+        private static Result ExecuteNonQuery(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+
+                return new Result
+                {
+                    ErrorCode = outputParams["errcode"].ToString(),
+                    ErrorMessage = outputParams["errmsg"].ToString()
+                };
             }
         }
     }

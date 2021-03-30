@@ -73,6 +73,7 @@
             var enableItems = new List<ObjectInfo>
             {
                 ClosedStatus(nonProductStatusRow),
+                LockedAccess(nonProductStatusRow),
                 SuspendedStatus(nonProductStatusRow),
                 OutrightStatus(nonProductStatusRow)
             };
@@ -305,6 +306,17 @@
             }
 
             return closedStatus;
+        }
+
+        private static ObjectInfo LockedAccess(DataRow nonProductStatusRow)
+        {
+            var locked = nonProductStatusRow.Locked();
+            var isLocked = locked != 0;
+
+            var lockedAccess = new ObjectInfo($"UnlockAccess{locked}", isLocked, "Locked Access");
+            lockedAccess.Disabled = !isLocked;
+
+            return lockedAccess;
         }
 
         internal List<ObjectInfo> Details(DataSet customerStatusInfoDataset)

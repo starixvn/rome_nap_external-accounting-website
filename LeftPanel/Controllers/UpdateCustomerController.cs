@@ -1,12 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 {
+    using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
     using Services;
-    using System.Web.Mvc;
 
     public class UpdateCustomerController : BaseController
     {
@@ -58,6 +58,13 @@
                     close,
                     clearCredit,
                     custName));
+
+        [HttpPost]
+        [ExternalAccountAuthenticate(Function = eFunctions.LockCustomer,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
+        public ActionResult UnlockAccess(int custId, string groupName)
+            => JsonBase(customerCommandService.UnlockAccess(custId, groupName, CurrentSession.UserId, CurrentContext.Ip4Address));
 
         [ExternalAccountAuthenticate(Function = eFunctions.AllowOutright,
             Policy = AuthenticateAction.AuthenticationType.Host)]

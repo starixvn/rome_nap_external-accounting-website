@@ -218,8 +218,8 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 var len = cell.Value.UserName.length;
                 var title = len >= 15 ? ' title="' + cell.Value.UserName + '"' : '';
                 return uplineRoleId === Fanex.ExtAcc.Customer.Agent ?
-                    '<div' + title + '>' + cell.Value.UserName + '</div>' :
-                    '<div' + title + '><a id="usr-' + cell.Value.CustId + '" href="' + func + '">' + cell.Value.UserName + '</a></div>';
+                    '<div' + title + '>' + cell.Value.UserName + '<span class="locked-icon"></span></div>' :
+                    '<div' + title + '><a id="usr-' + cell.Value.CustId + '" href="' + func + '">' + cell.Value.UserName + '</a><span class="locked-icon"></div>';
             }
         });
         columns.push({

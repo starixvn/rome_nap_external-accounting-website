@@ -233,6 +233,7 @@
     <Compile Include="Controllers\SearchCustomerController.cs" />
     <Compile Include="Controllers\UpdateCustomerController.cs" />
     <Compile Include="Criteria\RemoveOTPCriteria.cs" />
+    <Compile Include="Criteria\UnlockAccessCriteria.cs" />
     <Compile Include="Extensions\LoginInfoDataRowExtensions.cs" />
     <Compile Include="Extensions\CashDataRowExtensions.cs" />
     <Compile Include="Extensions\CustomerInfoDataRowExtensions.cs" />
