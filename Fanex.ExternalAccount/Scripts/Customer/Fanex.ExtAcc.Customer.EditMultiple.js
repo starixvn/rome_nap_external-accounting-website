@@ -466,6 +466,18 @@
         }
     }
 
+    menuItems.close = {
+        name: "Edit Multiple Closed Status",
+        className: "iconEnableEdit",
+        callback: function (key, opt) {
+            top.shouldCalculatePopupHeight = false;
+
+            Fanex.ExtAcc.Customer.Status.ShowMultipleOpenCustomerPopup(
+                Fanex.ExtAcc.Customer.IdsAndNames().Ids,
+                Fanex.ExtAcc.Customer.CurrentLevel);
+        }
+    };
+
     if ($.contextMenu) $.contextMenu('destroy');
 
     $.contextMenu({

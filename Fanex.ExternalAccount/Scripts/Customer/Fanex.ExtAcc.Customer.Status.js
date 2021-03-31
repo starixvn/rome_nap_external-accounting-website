@@ -266,6 +266,16 @@
         Fanex.ExtAcc.Form.Show(url, title, 'auto', 'auto', false, self.Init);
     };
 
+    self.ShowMultipleOpenCustomerPopup = function (custIdList, roleId) {
+        var url = resolveClientUrl('Customer/MultipleOpenCustomerView?custIdList=' + custIdList + '&roleid=' + roleId);
+        var title = 'Update Multiple Closed Status';
+
+        Fanex.ExtAcc.Form.Show(url, title, 'auto', 'auto', false, self.Init);
+
+        self.CustIdList = custIdList.join();
+        self.RoleId = roleId;
+    };
+
     self.RerenderPagingDownlineDetailInfo = function (currentPageIndex, itemsPerPage) {
         self.GetDownlinesDetailInfo(self.cachedDownlinesDetailInfoData.custId, self.cachedDownlinesDetailInfoData.userName, self.cachedDownlinesDetailInfoData.isAffected, self.cachedDownlinesDetailInfoData.downlineRoleId, itemsPerPage, currentPageIndex);
     }
