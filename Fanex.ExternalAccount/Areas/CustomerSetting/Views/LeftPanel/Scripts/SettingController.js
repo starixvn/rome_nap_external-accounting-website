@@ -222,7 +222,8 @@
 
         top.shouldCalculatePopupHeight = false;
         var allowAdmins = eval(parent.allowAdminEditSuperStatus);
-        if ($scope.model.personalInfo.roleId.value == 4 && !allowAdmins.contains(parseInt(parent.userId)) && close) {
+        var roleId = $scope.model.personalInfo.roleId.value;
+        if (roleId == 4 && !allowAdmins.contains(parseInt(parent.userId)) && close) {
             return;
         }
 
@@ -233,6 +234,13 @@
             '&nbsp;<input name="chkB" type="checkbox" id="clearCredit" title="' + title + '" ' + disableClearCredit + ' />Clear All Credit';
 
         if (close) {
+            if (roleId !== 1) {
+                parent.Fanex.ExtAcc.Customer.Status.ShowSingleOpenCustomerPopup(
+                    $scope.model.personalInfo.custId.value,
+                    $scope.model.personalInfo.currentLevel.value);
+                return;
+            }
+
             parent.Fanex.ExtAcc.Form.ConfirmBox('Open Customer: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
                 'Are you sure you want to change Closed status for this customer?',
                 460,

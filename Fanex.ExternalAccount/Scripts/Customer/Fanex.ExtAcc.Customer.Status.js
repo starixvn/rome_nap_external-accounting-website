@@ -259,6 +259,13 @@
         self.RoleId = roleId;
     }
 
+    self.ShowSingleOpenCustomerPopup = function (custId, userName) {
+        var url = resolveClientUrl('Customer/SingleOpenCustomerView') + '?custId=' + custId + '&userName=' + userName;
+        var title = 'Open ' + userName;
+
+        Fanex.ExtAcc.Form.Show(url, title, 'auto', 'auto', false, self.Init);
+    };
+
     self.RerenderPagingDownlineDetailInfo = function (currentPageIndex, itemsPerPage) {
         self.GetDownlinesDetailInfo(self.cachedDownlinesDetailInfoData.custId, self.cachedDownlinesDetailInfoData.userName, self.cachedDownlinesDetailInfoData.isAffected, self.cachedDownlinesDetailInfoData.downlineRoleId, itemsPerPage, currentPageIndex);
     }
