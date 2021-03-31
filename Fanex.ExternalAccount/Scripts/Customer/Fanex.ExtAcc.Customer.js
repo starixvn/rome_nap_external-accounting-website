@@ -1013,5 +1013,52 @@
         }
 
         return productSettings;
+    },
+
+    UnlockAccess: function (custId, locked) {
+        var confirmMessage = "";
+        if (locked === 1) {
+            confirmMessage = "This account was locked by false input of OTP/Security Code. Are you sure you want to unlock this account?";
+        } else if (locked === 2) {
+            confirmMessage = "This account was locked by false input Password. Are you sure you want to unlock this account?";
+        }
+
+        if (confirmMessage.length) {
+            var popupId = "popupUnlockAccess";
+            Fanex.ExtAcc.Form.ConfirmBox(
+                "Unlock Access",
+                confirmMessage,
+                480,
+                "auto",
+                false,
+                function () {
+                    Fanex.ExtAcc.BlockUI();
+                    $.ajax({
+                        type: "POST",
+                        url: resolveClientUrl("CustomerSetting/LeftPanel/UpdateCustomer/UnlockAccess"),
+                        data: {
+                            custid: custId,
+                            groupName: Fanex.ExtAcc.Customer.GroupName().groupName,
+                        },
+                        success: function (result) {
+                            if (result.isSuccess) {
+                                var timeout = setTimeout(function () {
+                                    clearTimeout(timeout);
+                                    Fanex.ExtAcc.Customer.CallBackCustomerList();
+                                    Fanex.ExtAcc.UnBlockUI();
+                                }, 2000);
+                            } else {
+                                Fanex.ExtAcc.UnBlockUI();
+                                Fanex.ExtAcc.Form.Alert("Error", result.errorMessage, 480, "auto");
+                            }
+                        },
+                        complete: function () {
+                            Fanex.ExtAcc.Form.Close(null, null, popupId);
+                        }
+                    })
+                },
+                null,
+                popupId);
+        }
     }
 };

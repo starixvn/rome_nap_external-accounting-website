@@ -338,12 +338,17 @@ tr.closed-byArchive td {
 
 .locked-icon {
     background: url("../../images/unlock.svg") center center no-repeat;
-    color: #ff9900;
     cursor: pointer;
     display: inline-block;
-    width: 18px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
     vertical-align: middle;
+    position: absolute;
+    right: 0;
+}
+
+.customerlist-username {
+    position: relative;
 }
 
 .headerTransferCondition {

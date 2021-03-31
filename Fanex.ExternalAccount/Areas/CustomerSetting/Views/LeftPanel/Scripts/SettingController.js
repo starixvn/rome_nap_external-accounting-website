@@ -386,7 +386,6 @@
             false,
             function () {
                 parent.Fanex.ExtAcc.BlockUI();
-
                 $.ajax({
                     type: "POST",
                     url: parent.resolveClientUrl("CustomerSetting/LeftPanel/UpdateCustomer/UnlockAccess"),

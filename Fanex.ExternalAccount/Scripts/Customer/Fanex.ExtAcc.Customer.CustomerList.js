@@ -105,7 +105,6 @@ Fanex.ExtAcc.Customer.CustomerList = {
             var rowLength = result.CustomerList.length;
             for (var i = 0; i < rowLength; i++) {
                 var currentRow = result.CustomerList[i];
-                var cssRow = !currentRow.Enabled ? 'rowDisabled' : currentRow.Closed ? Fanex.ExtAcc.Customer.GetClosedClassName(currentRow) : currentRow.Suspended ? 'rowSuspended' : '';
                 var dateLimit = !isNullOrUndefinedOrEmpty(currentRow.MinDate)
                     ? currentRow.MinDate
                     : currentRow.LimitDays !== "" ? currentRow.LimitDays
@@ -113,7 +112,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 var columns = _this.GetGridBodyRows(currentRow, i, params.pageSize, params.pageIndex - 1, params.uplineRoleId, result.IsMyanmarOdds, result.HasSubGroups);
                 bodyRows.push({
                     Columns: columns,
-                    CssClass: cssRow
+                    CssClass: Fanex.ExtAcc.Customer.CustomerList.GetCSSRow(currentRow)
                 });
             }
 
@@ -196,6 +195,26 @@ Fanex.ExtAcc.Customer.CustomerList = {
         }).always(function () { Fanex.ExtAcc.UnBlockUI(); });
     },
 
+    GetCSSRow: function (currentRow) {
+        if (!currentRow.Enabled) {
+            return 'rowDisabled';
+        }
+
+        if (currentRow.Closed) {
+            return Fanex.ExtAcc.Customer.GetClosedClassName(currentRow);
+        }
+
+        if (currentRow.Suspended) {
+            return 'rowSuspended';
+        }
+
+        if (currentRow.LockedAccess.IsLocked) {
+            return currentRow.LockedAccess.ClassName;
+        }
+
+        return '';
+    },
+
     GetGridHeader: function (uplineRoleId, isMyanmarOdds, hasSubGroups) {
         var columns = [];
         var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
@@ -212,14 +231,17 @@ Fanex.ExtAcc.Customer.CustomerList = {
             }
         });
         columns.push({
-            HeaderText: 'Username', Name: 'username', Width: 100,
+            HeaderText: 'Username', Name: 'username', Width: 160,
             CustomCellRender: function (cell) {
                 var func = 'javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + cell.Value.CustId + ', ' + (isNullOrUndefinedOrEmpty(uplineRoleId) ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1) + ', null, 0)';
                 var len = cell.Value.UserName.length;
-                var title = len >= 15 ? ' title="' + cell.Value.UserName + '"' : '';
+                var title = len >= 20 ? ' title="' + cell.Value.UserName + '"' : '';
+                var unlockIcon = cell.Value.LockedAccess.IsLocked
+                    ? '<span class="locked-icon" onclick="javascript:Fanex.ExtAcc.Customer.UnlockAccess(' + cell.Value.CustId + ',' + cell.Value.LockedAccess.Locked + ')"></span>'
+                    : "";
                 return uplineRoleId === Fanex.ExtAcc.Customer.Agent ?
-                    '<div' + title + '>' + cell.Value.UserName + '<span class="locked-icon"></span></div>' :
-                    '<div' + title + '><a id="usr-' + cell.Value.CustId + '" href="' + func + '">' + cell.Value.UserName + '</a><span class="locked-icon"></div>';
+                    '<div class="customerlist-username"' + title + '>' + cell.Value.UserName + unlockIcon + '</div>' :
+                    '<div class="customerlist-username"' + title + '><a id="usr-' + cell.Value.CustId + '" href="' + func + '">' + cell.Value.UserName + '</a>' + unlockIcon + '</div>';
             }
         });
         columns.push({
@@ -267,7 +289,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
             columns.push(!isMemberList ? { HeaderText: 'Group C', Name: 'groupc', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' } : undefined);
             columns.push(!isMemberList ? { HeaderText: 'Group D', Name: 'groupd', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' } : undefined);
         }
-        
+
         columns.push(!isMemberList ? { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of 1x2 bettype" ' } : undefined);
         columns.push(!isMemberList ? { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all other bettypes" ' } : undefined);
         if (isMyanmarOdds) {

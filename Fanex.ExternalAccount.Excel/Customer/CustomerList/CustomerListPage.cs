@@ -1,14 +1,29 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Customer.CustomerListPage
 {
+    using System.Collections.Generic;
     using Core.Shared;
     using Fanex.ExternalAccount.DTO.Customer.CustomerList;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
-    using System.Collections.Generic;
     using Utility;
 
     internal class CustomerListPage : TemplateReport, IReportBuilder
     {
+        private const int OpenRowIndex = 1;
+        private const int SuspendedRowIndex = 3;
+        private const int DisabledRowIndex = 7;
+        private static readonly IDictionary<byte, int> RowIndexClosedStatusMapping = new Dictionary<byte, int>
+        {
+            [1] = 11,
+            [2] = 13,
+            [4] = 17
+        };
+        private static readonly IDictionary<byte, int> RowIndexLockedStatusMapping = new Dictionary<byte, int>
+        {
+            [1] = 15,
+            [2] = 9
+        };
+
         private readonly CustomerListPageBuilder _builder;
         public CustomerListPage(string filePath, CustomerListPageBuilder builder)
             : base(filePath)
@@ -35,7 +50,7 @@
 
         public override void WriteBodyReport(ISheet resultSheet)
         {
-            var totalColumn = _builder.IsMyanmarOdds || _builder.RoleId.IsSuper() ? 15 : 14;
+            var totalColumn = _builder.IsMyanmarOdds || _builder.RoleId.IsSuper() ? 16 : 15;
             if (_builder.RoleId.IsSuper())
             {
                 totalColumn++;
@@ -53,7 +68,7 @@
             }
             else
             {
-                totalColumn = 18;
+                totalColumn = 19;
                 lastColumnIndex = FirstColumnIndex + totalColumn - 1;
                 WriteMemberReport(resultSheet, _builder.Data, lastColumnIndex, _builder.IsMyanmarOdds);
             }
@@ -69,13 +84,14 @@
             var rowId = 3;
             foreach (CustomerListDTO item in data)
             {
-                var custStatus = SetBackgroundRow(resultSheet, rowId, lastColumnIndex, item);
+                SetBackgroundRow(resultSheet, rowId, lastColumnIndex, item);
 
                 var values = new List<object>
                 {
                     id,
                     item.UserName,
-                    custStatus,
+                    item.LockedAccess.IsLocked ? "Yes" : "No",
+                    GetCustomerStatus(item),
                     item.DoubleCommLosing ? "ON" : "OFF",
                     item.NickName,
                     item.FirstName,
@@ -93,8 +109,8 @@
 
                 if (isMyanmarOdds)
                 {
-                    values.Insert(11, item.DiscountMyanmarOdds.ToString());
-                    values.Insert(15, item.PlayerDiscountMyanmarOdds.ToString());
+                    values.Insert(12, item.DiscountMyanmarOdds.ToString());
+                    values.Insert(16, item.PlayerDiscountMyanmarOdds.ToString());
                 }
                 resultSheet.GetRow(rowId).WriteCells(FirstColumnIndex, values);
 
@@ -114,11 +130,14 @@
             var rowId = 3;
             foreach (CustomerListDTO item in data)
             {
-                var custStatus = SetBackgroundRow(resultSheet, rowId, lastColumnIndex, item);
+                SetBackgroundRow(resultSheet, rowId, lastColumnIndex, item);
+                var custStatus = GetCustomerStatus(item);
+
                 var values = new List<object>
                 {
                     id,
                     item.UserName,
+                    item.LockedAccess.IsLocked ? "Yes" : "No",
                     custStatus,
                     item.DoubleCommLosing ? "ALLOWED" : "DISALLOWED",
                     item.FirstName,
@@ -136,6 +155,7 @@
                     {
                         id,
                         item.UserName,
+                        item.LockedAccess.IsLocked ? "Yes" : "No",
                         custStatus,
                         item.DoubleCommLosing ? "ALLOWED" : "DISALLOWED",
                         item.FirstName,
@@ -166,29 +186,59 @@
             }
         }
 
-        private string SetBackgroundRow(
+        private void SetBackgroundRow(
             ISheet resultSheet,
             int rowId,
             int lastColumnIndex,
             CustomerListDTO item)
         {
-            var custStatus = !item.Enabled ? "disabled"
-                : item.Closed ? "closed"
-                : item.Suspended ? "suspended"
-                : "open";
-
-            var rowIdFromStatus = new Dictionary<string, int> { { "open", 1 }, { "suspended", 3 }, { "disabled", 7 } };
-            var rowIdFromCloseStatus = new Dictionary<byte, int> { { 1, 11 }, { 2, 13 }, { 3, 15 }, { 4, 17 } };
-            var closedReason = item.ClosedReason;
-
-            var fromRowId = 5;
-            fromRowId = rowIdFromStatus.ContainsKey(custStatus) ? rowIdFromStatus[custStatus] : rowIdFromCloseStatus.ContainsKey(closedReason) ? rowIdFromCloseStatus[closedReason] : fromRowId;
+            var fromRowId = MapRowIdByCustomerStatus(item);
 
             resultSheet.CopyRow(TemplateSheet, fromRowId, rowId, FirstColumnIndex, lastColumnIndex);
-
-            return custStatus;
         }
-#pragma warning restore S3358 // Ternary operators should not be nested
+
+        private static int MapRowIdByCustomerStatus(CustomerListDTO item)
+        {
+            if (!item.Enabled)
+            {
+                return DisabledRowIndex;
+            }
+
+            if (item.Closed)
+            {
+                return MapRowIdByDictionaryStatus(item.ClosedReason, RowIndexClosedStatusMapping);
+            }
+
+            if (item.Suspended)
+            {
+                return SuspendedRowIndex;
+            }
+
+            if (item.LockedAccess.IsLocked)
+            {
+                return MapRowIdByDictionaryStatus(item.LockedAccess.Locked, RowIndexLockedStatusMapping);
+            }
+
+            return OpenRowIndex;
+        }
+
+        private static int MapRowIdByDictionaryStatus(byte key, IDictionary<byte, int> status)
+            => status.TryGetValue(key, out var rowId) ? rowId : OpenRowIndex;
+
+        private static string GetCustomerStatus(CustomerListDTO item)
+        {
+            if (!item.Enabled)
+            {
+                return "Disabled";
+            }
+
+            if (item.Closed)
+            {
+                return "Closed";
+            }
+
+            return item.Suspended ? "Suspended" : "Open";
+        }
 
         public override void BuildMainTitle(ISheet resultSheet)
         {

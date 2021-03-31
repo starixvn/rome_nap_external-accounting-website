@@ -1,12 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Customer.CustomerList
 {
+    using System;
     using Fanex.Data;
     using Fanex.ExternalAccount.Controllers.ViewModels.CustomerList;
     using Fanex.ExternalAccount.DataAccess.Criteria.Customer.CustomerList;
+    using Fanex.ExternalAccount.DTO.Customer;
     using Fanex.ExternalAccount.DTO.Customer.CustomerList;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.NAP.Framework.Data;
-    using System;
 
     public interface ICustomerListDao
     {
@@ -43,6 +44,7 @@
                         UserName = Utils.ToString(reader["UserName"]),
                         Closed = Utils.ToBoolean(reader["Closed"]),
                         ClosedReason = Utils.ToByte(reader["ClosedReason"]),
+                        LockedAccess = new CustomerLockedAccess(/*Utils.ToByte(reader["Locked"])*/1),
                         SyncCasino = Utils.ToBoolean(reader["SyncCasino"]),
                         CreateDate = Utils.ToStringExt(Utils.ToDateTime(reader["CreateDate"])),
                         Discount1x2 = Utils.ToDecimal(reader["Discount1x2"]).Format(decimalPrecision),
