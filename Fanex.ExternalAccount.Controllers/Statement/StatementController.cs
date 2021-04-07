@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Statement
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
     using Caching;
     using Core.Base;
     using Core.Context;
@@ -10,14 +7,18 @@
     using CustomerSetting.Security.Authenticate;
     using DTO.Statement;
     using Excel.Statement.StatementPage;
+    using Fanex.Caching.Memory;
     using Newtonsoft.Json;
     using Service.Impl.Statement;
     using Service.Interface.Statement;
+    using System;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
     using Utilities;
 
     public class StatementController : BaseController
     {
-        private readonly ICache _cache = CacheService.CreateInstance(CacheType.MemoryCache);
+        private readonly ICacheService _cache = new CacheService(new MemoryCache(new MemoryCacheOptions()));
         private readonly IStatementService _statementService = new StatementService();
         private string _cacheName = string.Empty;
         private int _custId;

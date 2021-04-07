@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using Fanex.Caching;
+    using Fanex.Caching.Memory;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DataAccess.Impl.UserControl;
     using Fanex.ExternalAccount.DataAccess.Interface.UserControl;
@@ -11,12 +12,13 @@
 
     public class CachingService : ICachingService
     {
-        private static readonly ICache UserCache = CacheService.CreateInstance(CacheType.MemoryCache);
+        private readonly ICacheService UserCache = new CacheService(new MemoryCache(new MemoryCacheOptions()));
         private readonly IMenuDao _menuDao = new MenuDao();
+        private string menuKey;
 
         public UserCache GetUserCache(int userId, string groupName)
         {
-            var menuKey = userId.ToString() + groupName;
+            menuKey = userId.ToString() + groupName;
             var result = UserCache.Get<UserCache>(menuKey);
 
             if (result == null)
@@ -25,7 +27,7 @@
                 if (result != null)
                 {
                     CheckPermissionForSearchAndCopy(result, groupName);
-                    UserCache.Set<UserCache>(menuKey, result, DateTime.Now.AddSeconds(30));
+                    UserCache.Set<UserCache>(menuKey, result, new CacheItemOptions { RelativeExpiration = TimeSpan.FromSeconds(30) });
                 }
             }
 
@@ -39,7 +41,10 @@
 
         public void ClearUserCache()
         {
-            UserCache.Clear();
+            if (!string.IsNullOrWhiteSpace(menuKey))
+            {
+                UserCache.Remove(menuKey);
+            }
         }
 
         private static void CheckPermissionForSearchAndCopy(UserCache userCache, string groupName)

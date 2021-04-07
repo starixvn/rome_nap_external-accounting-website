@@ -15,7 +15,7 @@
                     foreach (var menu in value.Children)
                     {
                         <li class="menu">
-                            <a class="link" parent="ddl-@value.Name.Replace(" ", string.Empty)" href="javascript:;" onclick="Fanex.ExtAcc.LoadMainFrame('@(menu.Url != "" ? @Url.Content(menu.Url) : "")', '@id', null)">
+                            <a class="link" parent="ddl-@value.Name.Replace(" ", string.Empty)" href="javascript:;" onclick="Fanex.ExtAcc.LoadMainFrame('@(!string.IsNullOrWhiteSpace(menu.Url) ? @Url.Content(menu.Url) : "")', '@id', null)">
                                         @menu.Name
                             </a>
                         </li>

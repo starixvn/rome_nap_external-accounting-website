@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using Fanex.Caching;
+    using Fanex.Caching.Memory;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DataAccess.Products;
     using Fanex.ExternalAccount.DTO.Products;
@@ -25,7 +26,7 @@
     public class ProductDetailService : IProductDetailService
     {
         private readonly IDynamicRepository dynamicRepository;
-        private readonly ICache Cache = CacheService.CreateInstance(CacheType.MemoryCache);
+        private readonly ICacheService Cache = new CacheService(new MemoryCache(new MemoryCacheOptions()));
 
         public ProductDetailService(IDynamicRepository dynamicRepository = null)
         {
@@ -83,7 +84,7 @@
             if (result == null)
             {
                 result = dynamicRepository.Fetch<ProductDetailEntity>(new GetProductsDetailCriteria());
-                Cache.Set(key, result, DateTime.Now.AddDays(1));
+                Cache.Set(key, result);
             }
 
             return result;
