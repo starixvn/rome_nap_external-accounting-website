@@ -7471,6 +7471,51 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List of downlines whose status are changed after {0} is opened..
+        /// </summary>
+        internal static string OpenedAffectedDownlinesTitle {
+            get {
+                return ResourceManager.GetString("OpenedAffectedDownlinesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of downlines whose status are changed/unchanged after going to open {0}..
+        /// </summary>
+        internal static string OpenedMainTitle {
+            get {
+                return ResourceManager.GetString("OpenedMainTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of downlines whose status are unchanged after {0} is opened..
+        /// </summary>
+        internal static string OpenedRemainUnchangedDownlinesTitle {
+            get {
+                return ResourceManager.GetString("OpenedRemainUnchangedDownlinesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;- When a customer is closed, all his downlines will be closed as well&lt;/p&gt;&lt;p&gt;- When a customer is opened:&lt;/p&gt;&lt;p&gt;+ Only the downlines who were &lt;b&gt;indirectly &lt;/b&gt;closed by upline will be opened. You can click on the number of affected downlines to view the list&lt;/p&gt;&lt;p&gt;+ For the rest, their current status will not be changed. You can click on the number of remain unchanged downlines to view the list.&lt;/p&gt;&lt;p&gt;- Affected Downlines: list of users whose status will be changed after their upline is opened.&lt;/p&gt;&lt;p&gt;- R [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string OpenInfoMessage {
+            get {
+                return ResourceManager.GetString("OpenInfoMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to change Closed status for this customer? All affected downlines will be opened as well..
+        /// </summary>
+        internal static string OpenSingleConfirmMesssage {
+            get {
+                return ResourceManager.GetString("OpenSingleConfirmMesssage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OT.
         /// </summary>
         internal static string OT {
@@ -9647,6 +9692,15 @@ namespace Resources {
         internal static string UpdateAll {
             get {
                 return ResourceManager.GetString("UpdateAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected customer and his affected donwlines have been successfully updated..
+        /// </summary>
+        internal static string UpdateCloseSuccess {
+            get {
+                return ResourceManager.GetString("UpdateCloseSuccess", resourceCulture);
             }
         }
         

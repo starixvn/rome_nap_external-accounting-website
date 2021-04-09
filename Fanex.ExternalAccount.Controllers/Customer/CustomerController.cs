@@ -31,7 +31,7 @@
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
     using Customer = PTEngine.BusinessObjects.Customer;
 
-    public class CustomerController : CustomerBase //DevSkim: ignore DS184626
+    public partial class CustomerController : CustomerBase //DevSkim: ignore DS184626
     {
         private readonly AgentService _agentService = new AgentService();
         private readonly CustomerService _customerService = new CustomerService();

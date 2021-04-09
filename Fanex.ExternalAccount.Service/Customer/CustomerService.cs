@@ -1,7 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Customer
 {
-    using System.Collections.Generic;
-    using System.Text;
+    using Core.Shared;
     using DataAccess.Criteria.Customer;
     using DataAccess.Criteria.Customer.CustomerStatus;
     using DataAccess.Impl.Customer;
@@ -9,14 +8,18 @@
     using DTO;
     using DTO.Customer;
     using DTO.Customer.Status;
-    using Fanex.ExternalAccount.Core.Shared;
-    using Fanex.ExternalAccount.Utilities;
     using Interface.Customer;
+    using Requests.Customer.OpenCustomer;
+    using System.Collections.Generic;
+    using System.Text;
+    using Utilities;
+    using ViewModel.Customer.OpenCustomer;
     using ViewModel.Customer.Suspend;
 
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerDao dataAccess;
+
         public CustomerService() : this(null)
         {
         }
@@ -36,7 +39,6 @@
 
         public Result EditUserInfo(Customer customer, string ip, int userId, int subAccId, string language)
             => dataAccess.EditUserInfo(customer, ip, userId, subAccId, language);
-
 
         public Result ResetPassword(ResetPasswordCriteria criteria)
             => dataAccess.ResetPassword(criteria);
@@ -139,5 +141,35 @@
 
             return result;
         }
+
+        public SingleOpenCustomerViewModel GetSingleOpenCustomerInfo(GetSingleOpenCustomerInfoQuery query)
+        {
+            var criteria = new GetSingleOpenCustomerInfoCriteria(query.CustId);
+            var affectedDownlines = dataAccess.GetSingleOpenAffectedDownlines(criteria);
+
+            return new SingleOpenCustomerViewModel(query, affectedDownlines);
+        }
+
+        public SingleOpenDownlinesViewModel GetSingleOpenDownlinesInfo(GetSingleOpenDownlinesInfoQuery query)
+        {
+            var criteria = new GetSingleOpenDownlinesInfoCriteria(
+                query.CustId,
+                query.IsAffected,
+                query.DownlineRoleId,
+                query.PageSize,
+                query.PageIndex);
+
+            var data = dataAccess.GetSingleOpenDownlines(criteria);
+
+            return new SingleOpenDownlinesViewModel(data.Item1, data.Item2);
+        }
+
+        public Result UpdateSingleCustomerClosedStatus(UpdateSingleClosedStatusQuery query)
+            => dataAccess.UpdateCustomerClosedStatus(new UpdateClosedStatusCriteria(
+                query.UserId,
+                query.CustId,
+                query.IsClosed,
+                query.Language,
+                query.Ip));
     }
 }

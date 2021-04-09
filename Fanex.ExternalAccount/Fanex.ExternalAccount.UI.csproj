@@ -1594,6 +1594,7 @@
     <Content Include="Scripts\Fanex.Multiselect\images\ui-icons_2e83ff_256x240.png" />
     <Content Include="Scripts\ProblemAccount\Fanex.ExtAcc.ProblemAccount.js" />
     <Content Include="Scripts\Manage\Fanex.ExtAcc.SubGroup.js" />
+    <None Include="Views\Customer\SingleOpenCustomer.cshtml" />
     <Content Include="SpNames.CustDB.aws.xml">
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
     </Content>

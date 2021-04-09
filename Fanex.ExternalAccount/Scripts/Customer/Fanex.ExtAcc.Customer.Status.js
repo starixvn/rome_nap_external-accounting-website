@@ -10,44 +10,70 @@
     self.clearMessage = function () {
         self.DOMElements.successMsg.empty().hide();
         self.DOMElements.errMsg.empty().hide();
-    }
+    };
 
     self.btnUnsuspendSingle_OnClick = function () {
-        Fanex.ExtAcc.Form.ConfirmBox('Information', top.window.LanguageResources.UnsuspendSingleConfirmMesssage, 400, 180, null, function () {
-            parent.Fanex.ExtAcc.Form.Close(null, null, 'suspend-confirm-box');
+        var params = {
+            custId: self.DOMElements.custId.val(),
+            suspended: false
+        };
+
+        self.UpdateCustomerStatus(
+            resolveClientUrl('Customer/UpdateSuspendSingle'),
+            params,
+            'btnUnsuspendSingle',
+            'suspend-confirm-box',
+            top.window.LanguageResources.UnsuspendSingleConfirmMesssage,
+            top.window.LanguageResources.UpdateSuspendSuccess);
+    };
+
+    self.btnOpenSingle_OnClick = function () {
+        var params = {
+            custId: self.DOMElements.custId.val(),
+            isClosed: false
+        };
+
+        self.UpdateCustomerStatus(
+            resolveClientUrl('Customer/SingleOpenCustomer'),
+            params,
+            'btnOpenSingle',
+            'open-confirm-box',
+            top.window.LanguageResources.OpenSingleConfirmMesssage,
+            top.window.LanguageResources.UpdateCloseSuccess);
+    };
+
+    self.UpdateCustomerStatus = function (url, params, domElementName, confirmBoxId, confirmBoxMsg, updateSuccessMsg) {
+        Fanex.ExtAcc.Form.ConfirmBox('Information', confirmBoxMsg, 400, 180, null, function () {
+            parent.Fanex.ExtAcc.Form.Close(null, null, confirmBoxId);
             parent.Fanex.ExtAcc.BlockUI();
-            self.DOMElements.btnUnsuspendSingle.attr("disabled", true);
+            self.DOMElements[domElementName].attr("disabled", true);
             self.clearMessage();
-            var params = {
-                custId: self.DOMElements.custId.val(),
-                suspended: false
-            };
 
             $.ajax({
                 type: 'POST',
-                url: resolveClientUrl('Customer/UpdateSuspendSingle'),
+                url,
                 dataType: "json",
                 data: params,
                 success: function (result) {
                     if (result.ErrorCode == 0) {
-                        self.DOMElements.successMsg.html(top.window.LanguageResources.UpdateSuspendSuccess).show();
+                        self.DOMElements.successMsg.html(updateSuccessMsg).show();
                         setTimeout(function () {
                             parent.$('#windowPopup').dialog('close');
                             parent.$('#windowPopup').dialog('destroy');
                             top.window.frames['leftFrame'].src = top.window.frames['leftFrame'].src;
-                        }, 3000)
+                        }, 3000);
                     }
                     else {
                         self.DOMElements.errMsg.html(result.ErrorMessage).show();
-                        self.DOMElements.btnUnsuspendSingle.removeAttr("disabled");
+                        self.DOMElements[domElementName].removeAttr("disabled");
                     }
                 },
                 complete: function () {
-                    self.DOMElements.btnUnsuspendSingle.removeAttr("disabled");
+                    self.DOMElements[domElementName].removeAttr("disabled");
                     parent.Fanex.ExtAcc.UnBlockUI();
                 }
             });
-        }, null, 'suspend-confirm-box', false, null, false);
+        }, null, confirmBoxId, false, null, false);
     };
 
     self.btnBack_OnClick = function () {
@@ -119,7 +145,7 @@
                             parent.$('#windowPopup').dialog('close');
                             parent.$('#windowPopup').dialog('destroy');
                             Fanex.ExtAcc.Customer.CallBackCustomerList();
-                        }, 3000)
+                        }, 3000);
                     }
                 },
                 complete: function () {
@@ -182,17 +208,22 @@
 
     self.informationBox_OnClick = function () {
         Fanex.ExtAcc.Form.Alert('Information', top.window.LanguageResources.SuspendInfoMessage, 750, 350, 'suspend-information-box');
-    }
+    };
+
+    self.informationBoxSingleOpen_OnClick = function () {
+        Fanex.ExtAcc.Form.Alert('Information', top.window.LanguageResources.OpenInfoMessage, 750, 350, 'open-information-box');
+    };
 
     self.Init = function (custIdList, roleId) {
         self.cachedDownlinesDetailInfoData = {
             custId: 0,
             isAffected: false,
-            downlineRoleId: 0,
-        }
+            downlineRoleId: 0
+        };
 
         self.DOMElements = {
             btnUnsuspendSingle: $('#btnUnsuspend'),
+            btnOpenSingle: $('#btnOpen'),
             custId: $('#custId'),
             successMsg: $('#successMsg'),
             errMsg: $('#errMsg'),
@@ -207,9 +238,10 @@
             btnSuspendAll: $('#button-suspend-all'),
             btnUnsuspendAll: $('#button-unsuspend-all'),
             informationBox: $('#information-box'),
+            informationBoxSingleOpen: $('#single-open-customer-information-box'),
             tblCustSuspend: $('#tbl-cust-suspend'),
             detailHeaderTitle: $('#detail-header-title')
-        }
+        };
 
         self.OldFormStatuses = []; self.CurrentFormStatuses = [];
         $('.button-suspend-status', self.DOMElements.tblCustSuspend).each(function () {
@@ -220,6 +252,10 @@
 
         self.DOMElements.btnUnsuspendSingle.click(function () {
             return self.btnUnsuspendSingle_OnClick();
+        });
+
+        self.DOMElements.btnOpenSingle.click(function () {
+            return self.btnOpenSingle_OnClick();
         });
 
         self.DOMElements.btnBack.click(function () {
@@ -247,17 +283,21 @@
         self.DOMElements.informationBox.click(function () {
             return self.informationBox_OnClick();
         });
-    }
+
+        self.DOMElements.informationBoxSingleOpen.click(function () {
+            return self.informationBoxSingleOpen_OnClick();
+        });
+    };
 
     self.ViewSuspendSingle = function (custId, userName) {
         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/UnsuspendSingle') + '?custId=' + custId + '&userName=' + userName, 'Update Unsuspend Status for ' + userName, 'auto', 'auto', false, self.Init);
-    }
+    };
 
     self.ViewSuspendMultiple = function (custIdList, roleId) {
         Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/MultipleSuspend?custIdList=' + custIdList + '&roleid=' + roleId), 'Edit Multiple Suspend Status', 'auto', 'auto', false, self.Init);
         self.CustIdList = custIdList.join();
         self.RoleId = roleId;
-    }
+    };
 
     self.ShowSingleOpenCustomerPopup = function (custId, userName) {
         var url = resolveClientUrl('Customer/SingleOpenCustomerView') + '?custId=' + custId + '&userName=' + userName;
@@ -278,13 +318,63 @@
 
     self.RerenderPagingDownlineDetailInfo = function (currentPageIndex, itemsPerPage) {
         self.GetDownlinesDetailInfo(self.cachedDownlinesDetailInfoData.custId, self.cachedDownlinesDetailInfoData.userName, self.cachedDownlinesDetailInfoData.isAffected, self.cachedDownlinesDetailInfoData.downlineRoleId, itemsPerPage, currentPageIndex);
-    }
+    };
+
+    self.RerenderPagingSingleOpenDownlineDetailInfo = function (currentPageIndex, itemsPerPage) {
+        self.GetSingleOpenDownlinesDetailInfo(
+            self.cachedDownlinesDetailInfoData.custId,
+            self.cachedDownlinesDetailInfoData.userName,
+            self.cachedDownlinesDetailInfoData.isAffected,
+            self.cachedDownlinesDetailInfoData.downlineRoleId,
+            itemsPerPage,
+            currentPageIndex);
+    };
 
     self.GetDownlinesDetailInfo = function (custId, userName, isAffected, downlineRoleId, pageSize, pageIndex) {
+        self.CallGetDownlinesDetailInfo(
+            resolveClientUrl('Customer/GetSuspendDownlinesDetail'),
+            custId,
+            userName,
+            isAffected,
+            downlineRoleId,
+            pageSize,
+            pageIndex,
+            top.window.LanguageResources.UnsuspendedTitleAffectedDownlines,
+            top.window.LanguageResources.UnsuspendedTitleRemainUnchangedDownlines,
+            self.RerenderPagingDownlineDetailInfo);
+    };
+
+    self.GetSingleOpenDownlinesDetailInfo = function (custId, userName, isAffected, downlineRoleId, pageSize, pageIndex) {
+        self.CallGetDownlinesDetailInfo(
+            resolveClientUrl('Customer/GetSingleOpenDownlinesInfo'),
+            custId,
+            userName,
+            isAffected,
+            downlineRoleId,
+            pageSize,
+            pageIndex,
+            top.window.LanguageResources.OpenedAffectedDownlinesTitle,
+            top.window.LanguageResources.OpenedRemainUnchangedDownlinesTitle,
+            self.RerenderPagingSingleOpenDownlineDetailInfo);
+    };
+
+    self.CallGetDownlinesDetailInfo = function (
+        url,
+        custId,
+        userName,
+        isAffected,
+        downlineRoleId,
+        pageSize,
+        pageIndex,
+        affectedDownlinesTitle,
+        remainUnchangedDownlinesTitle,
+        pagerSelectCallBack) {
         parent.Fanex.ExtAcc.BlockUI();
-        self.DOMElements.detailHeaderTitle.html(isAffected ?
-            top.window.LanguageResources.UnsuspendedTitleAffectedDownlines.replace('{0}', userName)
-            : top.window.LanguageResources.UnsuspendedTitleRemainUnchangedDownlines.replace('{0}', userName));
+
+        self.DOMElements.detailHeaderTitle.html(isAffected
+            ? affectedDownlinesTitle.replace('{0}', userName)
+            : remainUnchangedDownlinesTitle.replace('{0}', userName));
+
         var params = {
             custId: custId,
             isAffected: isAffected,
@@ -297,9 +387,10 @@
         self.cachedDownlinesDetailInfoData.userName = userName;
         self.cachedDownlinesDetailInfoData.isAffected = isAffected;
         self.cachedDownlinesDetailInfoData.downlineRoleId = downlineRoleId;
+
         $.ajax({
             type: 'POST',
-            url: resolveClientUrl('Customer/GetSuspendDownlinesDetail'),
+            url,
             dataType: 'json',
             data: params,
             success: function (result) {
@@ -309,11 +400,13 @@
                 var endMergedRowIndex = 0;
                 var prevLevel = '';
                 var currentLevel = '';
+
                 for (var i = 0; i < rowCount; i++) {
                     var row = { Columns: [] };
                     currentLevel = result.AffectedDownlines[i].LevelName;
                     endMergedRowIndex = i;
                     row.Columns.push({ Name: 'No', Value: 0 });
+
                     if (prevLevel != currentLevel) {
                         if (startMergedRowIndex != endMergedRowIndex) {
                             bodyRows[startMergedRowIndex].Columns[1].MergeRowNumber = endMergedRowIndex - startMergedRowIndex;
@@ -349,7 +442,7 @@
                             itemsPerPage: pageSize,
                             currentPage: pageIndex,
                             itemsPerPageArray: [50, 100, 200, 500],
-                            pagerSelectCallBack: self.RerenderPagingDownlineDetailInfo,
+                            pagerSelectCallBack,
                             totalItem: result.TotalRows
                         }
                     };
@@ -366,5 +459,5 @@
                 parent.Fanex.ExtAcc.UnBlockUI();
             }
         });
-    }
-}
+    };
+};

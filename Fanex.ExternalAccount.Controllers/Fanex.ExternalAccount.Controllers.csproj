@@ -345,6 +345,7 @@
     <Compile Include="Customer\CustomerListController.cs" />
     <Compile Include="Customer\MainSuperController.cs" />
     <Compile Include="Customer\CustomerController.cs" />
+    <Compile Include="Customer\OpenCustomerController.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusController.cs" />
     <Compile Include="DataRange\DataRangeController.cs" />
     <Compile Include="Customer\SportsbookSettingController.cs" />
@@ -422,6 +423,10 @@
     <ProjectReference Include="..\Fanex.ExternalAccount.Excel\Fanex.ExternalAccount.Excel.csproj">
       <Project>{E397E628-A155-4259-A806-D8210D54025D}</Project>
       <Name>Fanex.ExternalAccount.Excel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.Requests\Fanex.ExternalAccount.Requests.csproj">
+      <Project>{5860F677-2EA4-49F1-9B7D-78746112A39F}</Project>
+      <Name>Fanex.ExternalAccount.Requests</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Resources\Fanex.ExternalAccount.Resources.csproj">
       <Project>{825f3ea3-33ae-4427-91b5-9d30d9fefa3a}</Project>

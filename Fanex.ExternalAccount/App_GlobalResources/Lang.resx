@@ -3532,4 +3532,22 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="UnsuspendedTitleRemainUnchangedDownlines" xml:space="preserve">
     <value>List of downlines whose status are unchanged after {0} is unsuspended.</value>
   </data>
+  <data name="UpdateCloseSuccess" xml:space="preserve">
+    <value>The selected customer and his affected donwlines have been successfully updated.</value>
+  </data>
+  <data name="OpenedMainTitle" xml:space="preserve">
+    <value>List of downlines whose status are changed/unchanged after going to open {0}.</value>
+  </data>
+  <data name="OpenInfoMessage" xml:space="preserve">
+    <value>&lt;p&gt;- When a customer is closed, all his downlines will be closed as well&lt;/p&gt;&lt;p&gt;- When a customer is opened:&lt;/p&gt;&lt;p&gt;+ Only the downlines who were &lt;b&gt;indirectly &lt;/b&gt;closed by upline will be opened. You can click on the number of affected downlines to view the list&lt;/p&gt;&lt;p&gt;+ For the rest, their current status will not be changed. You can click on the number of remain unchanged downlines to view the list.&lt;/p&gt;&lt;p&gt;- Affected Downlines: list of users whose status will be changed after their upline is opened.&lt;/p&gt;&lt;p&gt;- Remain Unchanged Downlines: list of users whose status will be kept after their upline is opened .&lt;/p&gt;</value>
+  </data>
+  <data name="OpenSingleConfirmMesssage" xml:space="preserve">
+    <value>Are you sure you want to change Closed status for this customer? All affected downlines will be opened as well.</value>
+  </data>
+  <data name="OpenedAffectedDownlinesTitle" xml:space="preserve">
+    <value>List of downlines whose status are changed after {0} is opened.</value>
+  </data>
+  <data name="OpenedRemainUnchangedDownlinesTitle" xml:space="preserve">
+    <value>List of downlines whose status are unchanged after {0} is opened.</value>
+  </data>
 </root>

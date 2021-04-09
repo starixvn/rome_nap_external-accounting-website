@@ -131,6 +131,8 @@
     <Compile Include="Customer\CustomerList\CustomerListViewModel.cs" />
     <Compile Include="Customer\CustomerList\CustomerStatusViewModel.cs" />
     <Compile Include="Customer\CustomerList\SearchCustomerListViewModel.cs" />
+    <Compile Include="Customer\OpenCustomer\SingleOpenCustomerViewModel.cs" />
+    <Compile Include="Customer\OpenCustomer\SingleOpenDownlinesViewModel.cs" />
     <Compile Include="Customer\Suspend\MultipleUpdateSuspendRequest.cs" />
     <Compile Include="Customer\Suspend\MultipleUpdateViewModel.cs" />
     <Compile Include="Customer\Suspend\SingleUpdateViewModel.cs" />
@@ -157,6 +159,10 @@
     <ProjectReference Include="..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj">
       <Project>{AA1EA660-0E91-4C46-8100-F39C6A0BFC0B}</Project>
       <Name>Fanex.ExternalAccount.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.Requests\Fanex.ExternalAccount.Requests.csproj">
+      <Project>{5860F677-2EA4-49F1-9B7D-78746112A39F}</Project>
+      <Name>Fanex.ExternalAccount.Requests</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
       <Project>{016F274C-1F76-450B-B80D-E7FB59BE6A2B}</Project>
