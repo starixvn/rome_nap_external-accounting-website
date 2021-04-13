@@ -63,7 +63,7 @@
     <Setting Key="EAS_Rpt_ViewExtraPT2" SpName="EAS_Rpt_ViewExtraPT2" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="EAS_Rpt_WinLossDetail_byPT" SpName="EAS_Rpt_WinLossDetail_byPT" DbName="DBAGE.bodb02.bodbExtAccNet" />
     <Setting Key="EAS_GetPTProductBySuper" SpName="EAS_GetPTProductBySuper" DbName="DBACC.bodb02.bodbExtAccNet" />
-</Function>
+  </Function>
   <Function Name="Group">
     <Setting Key="EAS_GroupInfoDel" SpName="EAS_GroupInfoDel" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_GroupInfoIns" SpName="EAS_GroupInfoIns" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
@@ -121,7 +121,7 @@
     <Setting Key="EAS_UserPolicyUpdMultiple" SpName="EAS_UserPolicyUpdMultiple" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Left Panel">
-    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo_uat4" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelList" SpName="Acc_CustomerSelList" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="DBONUSER.ON_USER.bodbExtAccNet" Plain="0" />
@@ -146,16 +146,16 @@
     <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdDisableGoldDeluxe" SpName="Acc_CustomerUpdDisableGoldDeluxe" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerSelAllInfo" SpName="EAS_CustomerSelAllInfo" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerSelAllStatus" SpName="EAS_CustomerSelAllStatus" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelAllInfo" SpName="EAS_CustomerSelAllInfo_uat4" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelAllStatus" SpName="EAS_CustomerSelAllStatus_uat4" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelLoginInfo" SpName="EAS_CustomerSelLoginInfo" DbName="DBACC.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelBalanceInfo" SpName="EAS_CustomerSelBalanceInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Customer List">
-    <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom_uat4" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg_uat4" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg_uat4" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg_uat4" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0">
       <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
     </Setting>

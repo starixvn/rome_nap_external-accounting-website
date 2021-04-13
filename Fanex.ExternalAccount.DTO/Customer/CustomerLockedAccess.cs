@@ -14,7 +14,7 @@
 
         public byte Locked { get; }
 
-        public bool IsLocked { get; private set; }
+        public bool IsLocked => Locked != None;
 
         public string ClassName { get; private set; }
 
@@ -22,10 +22,11 @@
 
         public string UnlockConfirmMessage { get; private set; }
 
+        public string UnlockTooltip
+            => IsLocked ? "Click to unlock" : string.Empty;
+
         private void AssignParameters()
         {
-            IsLocked = Locked != None;
-
             if (Locked == FalseInputOTPSC)
             {
                 ClassName = "locked-falseOTPSC";

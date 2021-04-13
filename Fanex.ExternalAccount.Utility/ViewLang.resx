@@ -874,4 +874,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="LimitSuperNewDownlineError" xml:space="preserve">
     <value>Sorry, you can only create 3 masters per day on this super, please try again tomorrow.</value>
   </data>
+  <data name="Locked" xml:space="preserve">
+    <value>Locked</value>
+  </data>
 </root>

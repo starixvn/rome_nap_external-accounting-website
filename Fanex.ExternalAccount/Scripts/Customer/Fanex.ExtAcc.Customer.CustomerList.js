@@ -24,7 +24,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         this.cachedParams.uplineId = uplineId;
         this.cachedParams.uplineRoleId = uplineRoleId;
         this.DOMElements.txtUsername = $('#txtUserName');
-        this.DOMElements.selStatus = $('#selStatus')
+        this.DOMElements.selStatus = $('#selStatus');
         this.DOMElements.btnSearch = $('#btnSearch');
         this.DOMElements.icoExportExcel = $('#icoExportExcel');
         this.DOMElements.customerListGrid = $('#customerListGrid');
@@ -237,7 +237,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 var len = cell.Value.UserName.length;
                 var title = len >= 20 ? ' title="' + cell.Value.UserName + '"' : '';
                 var unlockIcon = cell.Value.LockedAccess.IsLocked
-                    ? '<span class="locked-icon" onclick="javascript:Fanex.ExtAcc.Customer.UnlockAccess(' + cell.Value.CustId + ',' + cell.Value.LockedAccess.Locked + ')"></span>'
+                    ? '<span class="locked-icon" onclick="javascript:Fanex.ExtAcc.Customer.UnlockAccess(' + cell.Value.CustId + ',' + cell.Value.LockedAccess.Locked + ')" title="' + cell.Value.LockedAccess.UnlockTooltip + '"></span>'
                     : "";
                 return uplineRoleId === Fanex.ExtAcc.Customer.Agent ?
                     '<div class="customerlist-username"' + title + '>' + cell.Value.UserName + unlockIcon + '</div>' :
