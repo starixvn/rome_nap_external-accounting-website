@@ -4,28 +4,37 @@
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Requests.Customer.OpenCustomer;
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
 
     public partial class CustomerController
     {
         private const string singleOpenCustomerViewName = "SingleOpenCustomer";
+        private const string multipleOpenCustomerViewName = "MultipleOpenCustomer";
 
         [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticationType.Read)]
         public ActionResult SingleOpenCustomerView(GetSingleOpenCustomerInfoQuery query)
             => PartialViewBase(_customerService.GetSingleOpenCustomerInfo(query), singleOpenCustomerViewName);
 
+        [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticationType.Read)]
+        public ActionResult MultipleOpenCustomerView(GetMultipleOpenCustomerInfoQuery query)
+            => PartialViewBase(_customerService.GetMultipleOpenCustomerInfo(query), multipleOpenCustomerViewName);
+
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer,
-            Policy = AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticationType.Read)]
         [AntiXSRFFilter]
         public JsonResult GetSingleOpenDownlinesInfo(GetSingleOpenDownlinesInfoQuery query)
             => Json(_customerService.GetSingleOpenDownlinesInfo(query));
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer,
-            Policy = AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticationType.Host)]
         public JsonResult SingleOpenCustomer(UpdateSingleClosedStatusQuery query)
             => Json(_customerService.UpdateSingleCustomerClosedStatus(query));
+
+        [HttpPost]
+        [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticationType.Host)]
+        public JsonResult MultipleOpenCustomer(IEnumerable<UpdateMultipleClosedStatusQuery> query)
+            => Json(_customerService.UpdateMultipleCustomerClosedStatus(query));
     }
 }

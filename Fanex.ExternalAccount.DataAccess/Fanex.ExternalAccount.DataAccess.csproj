@@ -151,6 +151,7 @@
     <Compile Include="Criteria\Customer\AssociationAccount\GetAssociationAccountCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckNewCustomerLimitationCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckMemberCreationCriteria.cs" />
+    <Compile Include="Criteria\Customer\CustomerStatus\GetMultipleOpenCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\GetSingleOpenCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\GetSingleOpenDownlinesInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\UpdateClosedStatusCriteria.cs" />

@@ -141,6 +141,7 @@
     <Compile Include="Customer\CustomerList\CustomerListDTO.cs" />
     <Compile Include="Customer\CustomerLockedAccess.cs" />
     <Compile Include="Customer\CustomerStatusDTO.cs" />
+    <Compile Include="Customer\Status\CustomerClosedStatusRow.cs" />
     <Compile Include="Customer\Status\CustomerSuspendStatusRow.cs" />
     <Compile Include="Customer\Status\SingleOpenAffectedDownline.cs" />
     <Compile Include="Customer\Status\SingleOpenDownline.cs" />

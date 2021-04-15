@@ -44,8 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Customer\OpenCustomer\GetMultipleOpenCustomerInfoQuery.cs" />
     <Compile Include="Customer\OpenCustomer\GetSingleOpenCustomerInfoQuery.cs" />
     <Compile Include="Customer\OpenCustomer\GetSingleOpenDownlinesInfoQuery.cs" />
+    <Compile Include="Customer\OpenCustomer\UpdateMultipleClosedStatusQuery.cs" />
     <Compile Include="Customer\OpenCustomer\UpdateSingleClosedStatusQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

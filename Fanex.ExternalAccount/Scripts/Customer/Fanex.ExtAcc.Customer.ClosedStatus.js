@@ -67,7 +67,7 @@
 
         $.ajax({
             type: 'POST',
-            url: resolveClientUrl('Customer/MultipleSuspend'),
+            url: resolveClientUrl('Customer/MultipleOpenCustomerView'),
             dataType: 'html',
             data: params,
             success: function (result) {
@@ -80,23 +80,23 @@
         });
     };
 
-    self.btnSuspendMultiple_OnClick = function () {
-        Fanex.ExtAcc.Form.ConfirmBox('Information', top.window.LanguageResources.UnsuspendSingleConfirmMesssage, 'auto', 'auto', null, function () {
-            parent.Fanex.ExtAcc.Form.Close(null, null, 'suspend-confirm-box');
+    self.btnCloseMultiple_OnClick = function () {
+        Fanex.ExtAcc.Form.ConfirmBox('Information', top.window.LanguageResources.OpenSingleConfirmMesssage, 'auto', 'auto', null, function () {
+            parent.Fanex.ExtAcc.Form.Close(null, null, 'open-confirm-box');
             parent.Fanex.ExtAcc.BlockUI();
             self.DOMElements.btnReset.attr("disabled", true);
-            self.DOMElements.btnSuspendMultiple.attr("disabled", true);
+            self.DOMElements.btnCloseMultiple.attr("disabled", true);
             self.clearMessage();
             var params = {
-                request: $('.button-suspend-status.is-changed').map(function () {
+                query: $('.button-close-status.is-changed').map(function () {
                     var $this = $(this);
-                    return { CustId: $this.attr('data-custid'), UserName: $this.attr('data-username'), Suspended: $this.hasClass('suspend-switch') };
+                    return { CustId: $this.attr('data-custid'), UserName: $this.attr('data-username'), IsClosed: $this.hasClass('suspend-switch') };
                 }).get()
             };
 
             $.ajax({
                 type: 'POST',
-                url: resolveClientUrl('Customer/UpdateSuspendMultiple'),
+                url: resolveClientUrl('Customer/MultipleOpenCustomer'),
                 data: params,
                 success: function (result) {
                     if (parent.Fanex.ExtAcc.ShowSecurityCodePage(result, parent.Fanex.ExtAcc.UnBlockUI)) {
@@ -124,23 +124,23 @@
                 },
                 complete: function () {
                     self.DOMElements.btnReset.removeAttr("disabled");
-                    self.DOMElements.btnSuspendMultiple.removeAttr("disabled");
+                    self.DOMElements.btnCloseMultiple.removeAttr("disabled");
                     parent.Fanex.ExtAcc.UnBlockUI();
                 }
             });
-        }, null, 'suspend-confirm-box', false, null, false);
+        }, null, 'open-confirm-box', false, null, false);
     };
 
-    self.btnSuspendStatus_OnClick = function () {
+    self.btnCloseStatus_OnClick = function () {
         var $this = $(this);
         var custId = $this.attr('data-custid');
         $this.toggleClass('suspend-switch unsuspend-switch');
         $this.toggleClass('is-changed');
         if ($this.hasClass('suspend-switch')) {
-            $this.html('  Suspended');
+            $this.html('  Closed');
         }
         else {
-            $this.html('Unsuspended');
+            $this.html('Opened');
         }
 
         $('#row-remain-unchanged-empty-' + custId).toggle();
@@ -151,20 +151,20 @@
             return customerStatus.custId == this;
         }, custId);
 
-        currentCustomerStatusItem.suspend = !currentCustomerStatusItem.suspend;
+        currentCustomerStatusItem.isClosed = !currentCustomerStatusItem.isClosed;
         if (self.IsFormChanged()) {
-            self.DOMElements.btnSuspendMultiple.removeAttr("disabled");
-            self.DOMElements.btnSuspendMultiple.removeClass("ui-state-disabled");
+            self.DOMElements.btnCloseMultiple.removeAttr("disabled");
+            self.DOMElements.btnCloseMultiple.removeClass("ui-state-disabled");
         }
         else {
-            self.DOMElements.btnSuspendMultiple.attr("disabled", "disabled");
-            self.DOMElements.btnSuspendMultiple.addClass("ui-state-disabled");
+            self.DOMElements.btnCloseMultiple.attr("disabled", "disabled");
+            self.DOMElements.btnCloseMultiple.addClass("ui-state-disabled");
         }
     };
 
     self.IsFormChanged = function () {
         for (var i = 0; i < self.CurrentFormStatuses.length; i++) {
-            if (self.CurrentFormStatuses[i].suspend != self.OldFormStatuses[i].suspend) {
+            if (self.CurrentFormStatuses[i].isClosed != self.OldFormStatuses[i].isClosed) {
                 return true;
             }
         }
@@ -172,12 +172,12 @@
         return false;
     };
 
-    self.btnSuspendAll_OnClick = function () {
-        $('.button-suspend-status:not(.suspend-switch)').click();
+    self.btnCloseAll_OnClick = function () {
+        $('.button-close-status:not(.suspend-switch)').click();
     };
 
-    self.btnUnsuspendAll_OnClick = function () {
-        $('.button-suspend-status:not(.unsuspend-switch)').click();
+    self.btnOpenAll_OnClick = function () {
+        $('.button-close-status:not(.unsuspend-switch)').click();
     };
 
     self.informationBox_OnClick = function () {
@@ -202,20 +202,20 @@
             gridContainer: $('#gridContainer'),
             gridId: $('#gridId'),
             btnReset: $('#btnReset'),
-            btnSuspendMultiple: $('#btnSuspendMultiple'),
-            btnSuspendStatus: $('.button-suspend-status'),
-            btnSuspendAll: $('#button-suspend-all'),
-            btnUnsuspendAll: $('#button-unsuspend-all'),
+            btnCloseMultiple: $('#btnCloseMultiple'),
+            btnCloseStatus: $('.button-close-status'),
+            btnCloseAll: $('#button-close-all'),
+            btnOpenAll: $('#button-open-all'),
             informationBox: $('#information-box'),
-            tblCustSuspend: $('#tbl-cust-suspend'),
+            tblCustClose: $('#tbl-cust-close'),
             detailHeaderTitle: $('#detail-header-title')
         };
 
         self.OldFormStatuses = []; self.CurrentFormStatuses = [];
-        $('.button-suspend-status', self.DOMElements.tblCustSuspend).each(function () {
+        $('.button-close-status', self.DOMElements.tblCustClose).each(function () {
             var $this = $(this);
-            self.OldFormStatuses.push({ custId: $this.attr('data-custid'), userName: $this.attr('data-username'), suspend: $this.attr('data-suspend-status') == 'true' });
-            self.CurrentFormStatuses.push({ custId: $this.attr('data-custid'), userName: $this.attr('data-username'), suspend: $this.attr('data-suspend-status') == 'true' });
+            self.OldFormStatuses.push({ custId: $this.attr('data-custid'), userName: $this.attr('data-username'), isClosed: $this.attr('data-close-status') == 'true' });
+            self.CurrentFormStatuses.push({ custId: $this.attr('data-custid'), userName: $this.attr('data-username'), isClosed: $this.attr('data-close-status') == 'true' });
         });
 
         self.DOMElements.btnOpenSingle.click(function () {
@@ -230,18 +230,18 @@
             return self.btnReset_OnClick();
         });
 
-        self.DOMElements.btnSuspendMultiple.click(function () {
-            return self.btnSuspendMultiple_OnClick();
+        self.DOMElements.btnCloseMultiple.click(function () {
+            return self.btnCloseMultiple_OnClick();
         });
 
-        self.DOMElements.btnSuspendStatus.click(self.btnSuspendStatus_OnClick);
+        self.DOMElements.btnCloseStatus.click(self.btnCloseStatus_OnClick);
 
-        self.DOMElements.btnSuspendAll.click(function () {
-            return self.btnSuspendAll_OnClick();
+        self.DOMElements.btnCloseAll.click(function () {
+            return self.btnCloseAll_OnClick();
         });
 
-        self.DOMElements.btnUnsuspendAll.click(function () {
-            return self.btnUnsuspendAll_OnClick();
+        self.DOMElements.btnOpenAll.click(function () {
+            return self.btnOpenAll_OnClick();
         });
 
         self.DOMElements.informationBox.click(function () {

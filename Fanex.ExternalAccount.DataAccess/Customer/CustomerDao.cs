@@ -446,6 +446,60 @@
             }
         }
 
+        public IEnumerable<CustomerClosedStatusRow> GetCustomerClosedStatusList(GetMultipleOpenCustomerInfoCriteria criteria)
+        {
+            var result = new List<CustomerClosedStatusRow>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(new CustomerClosedStatusRow
+                        {
+                            CustId = Utils.ToInt32(reader["custid"]),
+                            RoleId = criteria.RoleId,
+                            UserName = Utils.ToString(reader["username"]),
+                            IsClosed = Utils.ToBoolean(reader["suspended"])
+                        });
+                    }
+
+                    reader.NextResult();
+
+                    while (reader.Read())
+                    {
+                        var custid = Utils.ToInt32(reader["custid"]);
+                        var row = result.FirstOrDefault(m => m.CustId == custid);
+
+                        if (row != null)
+                        {
+                            var roleid = Utils.ToInt32(reader["roleid"]);
+                            switch (roleid)
+                            {
+                                case Role.Master:
+                                    row.AffectedMaster = Utils.ToInt32(reader["cntAffected"]);
+                                    row.RemainUnchangedMaster = Utils.ToInt32(reader["cntUnchanged"]);
+                                    break;
+
+                                case Role.Agent:
+                                    row.AffectedAgent = Utils.ToInt32(reader["cntAffected"]);
+                                    row.RemainUnchangedAgent = Utils.ToInt32(reader["cntUnchanged"]);
+                                    break;
+
+                                default:
+                                    row.AffectedMember = Utils.ToInt32(reader["cntAffected"]);
+                                    row.RemainUnchangedMember = Utils.ToInt32(reader["cntUnchanged"]);
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
         public Tuple<int, List<SingleOpenDownline>> GetSingleOpenDownlines(GetSingleOpenDownlinesInfoCriteria criteria)
         {
             var singleOpenDownlines = new List<SingleOpenDownline>();

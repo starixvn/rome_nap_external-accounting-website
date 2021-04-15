@@ -44,8 +44,12 @@
 
         SingleOpenCustomerViewModel GetSingleOpenCustomerInfo(GetSingleOpenCustomerInfoQuery query);
 
+        MultipleOpenCustomerViewModel GetMultipleOpenCustomerInfo(GetMultipleOpenCustomerInfoQuery query);
+
         SingleOpenDownlinesViewModel GetSingleOpenDownlinesInfo(GetSingleOpenDownlinesInfoQuery query);
 
         Result UpdateSingleCustomerClosedStatus(UpdateSingleClosedStatusQuery query);
+
+        IEnumerable<Result> UpdateMultipleCustomerClosedStatus(IEnumerable<UpdateMultipleClosedStatusQuery> query);
     }
 }

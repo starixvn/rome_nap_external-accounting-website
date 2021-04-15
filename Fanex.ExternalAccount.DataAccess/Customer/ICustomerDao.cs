@@ -46,6 +46,8 @@
 
         IEnumerable<SingleOpenAffectedDownline> GetSingleOpenAffectedDownlines(GetSingleOpenCustomerInfoCriteria criteria);
 
+        IEnumerable<CustomerClosedStatusRow> GetCustomerClosedStatusList(GetMultipleOpenCustomerInfoCriteria criteria);
+
         Tuple<int, List<SingleOpenDownline>> GetSingleOpenDownlines(GetSingleOpenDownlinesInfoCriteria criteria);
 
         Result UpdateCustomerClosedStatus(UpdateClosedStatusCriteria criteria);

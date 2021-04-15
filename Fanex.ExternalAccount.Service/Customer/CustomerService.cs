@@ -150,6 +150,13 @@
             return new SingleOpenCustomerViewModel(query, affectedDownlines);
         }
 
+        public MultipleOpenCustomerViewModel GetMultipleOpenCustomerInfo(GetMultipleOpenCustomerInfoQuery query)
+        {
+            var criteria = new GetMultipleOpenCustomerInfoCriteria(query.CustIdList, query.RoleId);
+
+            return new MultipleOpenCustomerViewModel(query, dataAccess.GetCustomerClosedStatusList(criteria));
+        }
+
         public SingleOpenDownlinesViewModel GetSingleOpenDownlinesInfo(GetSingleOpenDownlinesInfoQuery query)
         {
             var criteria = new GetSingleOpenDownlinesInfoCriteria(
@@ -171,5 +178,51 @@
                 query.IsClosed,
                 query.Language,
                 query.Ip));
+
+        public IEnumerable<Result> UpdateMultipleCustomerClosedStatus(IEnumerable<UpdateMultipleClosedStatusQuery> query)
+        {
+            var result = new List<Result>();
+            var successUpdateClosedList = new StringBuilder();
+            var successUpdateOpenedList = new StringBuilder();
+
+            foreach (var item in query)
+            {
+                var criteria = new UpdateClosedStatusCriteria(item.UserId, item.CustId, item.IsClosed, item.Language, item.Ip);
+                var preResult = dataAccess.UpdateCustomerClosedStatus(criteria);
+                if (preResult.IsSuccess)
+                {
+                    if (item.IsClosed)
+                    {
+                        successUpdateClosedList.Append(item.UserName);
+                        successUpdateClosedList.Append(", ");
+                    }
+                    else
+                    {
+                        successUpdateOpenedList.Append(item.UserName);
+                        successUpdateOpenedList.Append(", ");
+                    }
+                }
+                else
+                {
+                    result.Add(new Result(preResult.ErrorCode, $"{item.UserName}: {preResult.ErrorMessage}"));
+                }
+            }
+
+            const int indent = 2;
+
+            if (successUpdateClosedList.Length > 0)
+            {
+                successUpdateClosedList.Length -= indent;
+                result.Insert(0, new Result(0, $"Status of {successUpdateClosedList.ToString()} and their affected downlines have been successfully updated to Closed."));
+            }
+
+            if (successUpdateOpenedList.Length > 0)
+            {
+                successUpdateOpenedList.Length -= indent;
+                result.Insert(0, new Result(0, $"Status of {successUpdateOpenedList.ToString()} and their affected downlines have been successfully updated to Opened."));
+            }
+
+            return result;
+        }
     }
 }
