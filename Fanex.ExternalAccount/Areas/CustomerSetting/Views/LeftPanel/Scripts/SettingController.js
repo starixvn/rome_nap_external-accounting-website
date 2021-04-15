@@ -235,7 +235,7 @@
 
         if (close) {
             if (roleId !== 1) {
-                parent.Fanex.ExtAcc.Customer.Status.ShowSingleOpenCustomerPopup(
+                parent.Fanex.ExtAcc.Customer.ClosedStatus.ShowSingleOpenCustomerPopup(
                     $scope.model.personalInfo.custId.value,
                     $scope.model.personalInfo.currentLevel.value);
                 return;

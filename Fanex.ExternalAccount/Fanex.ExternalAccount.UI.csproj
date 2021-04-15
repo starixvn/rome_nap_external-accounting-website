@@ -1580,6 +1580,7 @@
     <TypeScriptCompile Include="Scripts\Reports\Shared\DateTimeControls.ts" />
     <TypeScriptCompile Include="Scripts\Reports\Shared\ProductControls.ts" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\SuperWinLossDetailByPT.ts" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.ClosedStatus.js" />
     <Content Include="Scripts\Fanex.Multiselect\fanex.multiSelect.css" />
     <Content Include="Scripts\Fanex.Multiselect\fanex.multiSelect.js" />
     <Content Include="Scripts\Fanex.Multiselect\images\BottomLine.png" />

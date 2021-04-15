@@ -472,7 +472,7 @@
         callback: function (key, opt) {
             top.shouldCalculatePopupHeight = false;
 
-            Fanex.ExtAcc.Customer.Status.ShowMultipleOpenCustomerPopup(
+            Fanex.ExtAcc.Customer.ClosedStatus.ShowMultipleOpenCustomerPopup(
                 Fanex.ExtAcc.Customer.IdsAndNames().Ids,
                 Fanex.ExtAcc.Customer.CurrentLevel);
         }

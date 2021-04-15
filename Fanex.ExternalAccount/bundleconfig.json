@@ -92,6 +92,7 @@
       "Scripts/Combobox/Combobox.js",
       "Scripts/Customer/Fanex.ExtAcc.Customer.js",
       "Scripts/Customer/Fanex.ExtAcc.Customer.Status.js",
+      "Scripts/Customer/Fanex.ExtAcc.Customer.ClosedStatus.js",
       "Scripts/Customer/Fanex.ExtAcc.Customer.CustomerList.js",
       "Scripts/Customer/Fanex.ExtAcc.Customer.CustomerList.SingleEditSuper.js",
       "Scripts/Customer/Fanex.ExtAcc.Customer.CustomerList.SingleEditMaster.js",
