@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.ProblemAccount.Models
 {
     using System;
+    using Fanex.ExternalAccount.DTO.Customer;
     using Fanex.ExternalAccount.ProblemAccount.Constants;
     using Fanex.ExternalAccount.ProblemAccount.Extensions;
     using Fanex.ExternalAccount.ProblemAccount.Resources;
@@ -16,7 +17,8 @@
             byte status,
             DateTime createdDate,
             bool isReviewed,
-            byte closedReason)
+            byte closedReason,
+            byte locked)
         {
             CustId = custId;
             Username = username;
@@ -27,6 +29,7 @@
             CreatedDate = createdDate;
             IsReviewed = isReviewed;
             ClosedReason = closedReason;
+            Locked = locked;
         }
 
         public int CustId { get; }
@@ -55,5 +58,10 @@
             => IsReviewed ? ViewLang.Reviewed : ViewLang.NotReviewed;
 
         public byte ClosedReason { get; }
+
+        public byte Locked { get; }
+
+        public string LockedClassName
+            => new CustomerLockedAccess(Locked).ClassName;
     }
 }

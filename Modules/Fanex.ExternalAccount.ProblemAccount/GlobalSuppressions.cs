@@ -5,3 +5,4 @@
 // a specific target and scoped to a namespace, type, member, etc.
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S107:Methods should not have too many parameters", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.ExternalAccount.ProblemAccount.Models.ProblemAccountEntity.#ctor(System.Int32,System.String,System.String,System.String,System.Int32,System.Byte,System.DateTime,System.Boolean,System.Byte)")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S107:Methods should not have too many parameters", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.ExternalAccount.ProblemAccount.Models.ProblemAccountEntity.#ctor(System.Int32,System.String,System.String,System.String,System.Int32,System.Byte,System.DateTime,System.Boolean,System.Byte,System.Byte)")]
