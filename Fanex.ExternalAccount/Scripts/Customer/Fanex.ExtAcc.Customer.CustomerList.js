@@ -231,17 +231,22 @@ Fanex.ExtAcc.Customer.CustomerList = {
             }
         });
         columns.push({
-            HeaderText: 'Username', Name: 'username', Width: 160,
+            HeaderText: 'Username', Name: 'username', Width: 125,
             CustomCellRender: function (cell) {
+                var usernameValue = cell.Value.UserName,
+                    shortUsername = usernameValue,
+                    tooltipUsername = "";
+                if (usernameValue.length >= 15) {
+                    shortUsername = usernameValue.substring(0, 15) + "...";
+                    tooltipUsername = usernameValue;
+                }
                 var func = 'javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + cell.Value.CustId + ', ' + (isNullOrUndefinedOrEmpty(uplineRoleId) ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1) + ', null, 0)';
-                var len = cell.Value.UserName.length;
-                var title = len >= 20 ? ' title="' + cell.Value.UserName + '"' : '';
                 var unlockIcon = cell.Value.LockedAccess.IsLocked
                     ? '<span class="locked-icon" onclick="javascript:Fanex.ExtAcc.Customer.UnlockAccess(' + cell.Value.CustId + ',' + cell.Value.LockedAccess.Locked + ')" title="' + cell.Value.LockedAccess.UnlockTooltip + '"></span>'
                     : "";
                 return uplineRoleId === Fanex.ExtAcc.Customer.Agent ?
-                    '<div class="customerlist-username"' + title + '>' + cell.Value.UserName + unlockIcon + '</div>' :
-                    '<div class="customerlist-username"' + title + '><a id="usr-' + cell.Value.CustId + '" href="' + func + '">' + cell.Value.UserName + '</a>' + unlockIcon + '</div>';
+                    '<div class="customerlist-username" title="' + tooltipUsername + '">' + shortUsername + unlockIcon + '</div>' :
+                    '<div class="customerlist-username" title="' + tooltipUsername + '"><a id="usr-' + cell.Value.CustId + '" href="' + func + '">' + shortUsername + '</a>' + unlockIcon + '</div>';
             }
         });
         columns.push({

@@ -31,7 +31,7 @@
         public const string VirtualSportsBetting = "VirtualSportsBetting";
         public const string CasinoBetting = "CasinoBetting";
         public const string CloseCustomer = "CloseCustomer";
-        public const string LockCustomer = "LockCustomer";
+        public const string UnlockCustomer = "UnlockCustomer";
         public const string SuspendCustomer = "SuspendCustomer";
         public const string AllowOutright = "AllowOutright";
         public const string AllowAutoMPT = "AllowAutoMPT";

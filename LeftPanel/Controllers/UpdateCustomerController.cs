@@ -60,11 +60,18 @@
                     custName));
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.LockCustomer,
+        [ExternalAccountAuthenticate(Function = eFunctions.UnlockCustomer,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UnlockAccess(int custId, string groupName)
-            => JsonBase(customerCommandService.UnlockAccess(custId, groupName, CurrentSession.UserId, CurrentContext.Ip4Address));
+        {
+            if (string.IsNullOrWhiteSpace(groupName))
+            {
+                throw new System.ArgumentNullException(nameof(groupName));
+            }
+
+            return JsonBase(customerCommandService.UnlockAccess(custId, CurrentSession.UserId, CurrentContext.Ip4Address));
+        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.AllowOutright,
             Policy = AuthenticateAction.AuthenticationType.Host)]

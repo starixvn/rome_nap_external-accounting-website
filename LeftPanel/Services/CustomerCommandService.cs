@@ -27,13 +27,13 @@
         Result CloseCutomer(int custId, int uplineId, ICurrentSession currentSession, ICurrentContext currentContext,
             bool close, bool clearCredit, string custName);
 
-        Result UnlockAccess(int custId, string groupName, int userId, string ip4Address);
+        Result UnlockAccess(int custId, int userId, string ip4Address);
 
         Result AllowOutright(int custId, bool allow);
-        
+
         Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress);
 
-        Result UpdateSecurityCode(int custId, string code, bool force, int roleId);        
+        Result UpdateSecurityCode(int custId, string code, bool force, int roleId);
 
         Result RemoveOtp(int custId, int userId, string ip4Address);
     }
@@ -90,12 +90,12 @@
             return customerDataAccess.CloseCutomer(custId, close, clearCredit, custName);
         }
 
-        public Result UnlockAccess(int custId, string groupName, int userId, string ip4Address)
-            => customerDataAccess.UnlockAccess(new UnlockAccessCriteria(custId, groupName, userId, ip4Address));
+        public Result UnlockAccess(int custId, int userId, string ip4Address)
+            => customerDataAccess.UnlockAccess(new UnlockAccessCriteria(custId, userId, 0, ip4Address, (byte)Config.SystemId));
 
         public Result AllowOutright(int custId, bool allow)
             => customerDataAccess.AllowOutright(custId, allow);
-        
+
         public Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress)
         {
             var result = customerDataAccess.AutoMasterPT(custId, allow);
@@ -140,7 +140,7 @@
 
             return customerDataAccess.ResetSecurityCode(custId, hashCode, force || roleId.IsNotSuper());
         }
-        
+
         public Result RemoveOtp(int custId, int userId, string ip4Address)
             => customerDataAccess.RemoveOTP(new RemoveOtpCriteria
             {
