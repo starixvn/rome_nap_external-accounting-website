@@ -3,8 +3,8 @@
     public sealed class CustomerLockedAccess
     {
         private const byte None = 0;
-        private const byte FalseInputOTPSC = 1; // blue: #86c5e4
-        private const byte FalseInputPassword = 2; // gray: #ccc7ba
+        private const byte FalseOTPSC = 1; // blue: #86c5e4
+        private const byte FalsePassword = 2; // gray: #ccc7ba
 
         public CustomerLockedAccess(byte locked)
         {
@@ -20,24 +20,17 @@
 
         public string Reason { get; private set; }
 
-        public string UnlockConfirmMessage { get; private set; }
-
-        public string UnlockTooltip
-            => IsLocked ? "Click to unlock" : string.Empty;
-
         private void AssignParameters()
         {
-            if (Locked == FalseInputOTPSC)
+            if (Locked == FalseOTPSC)
             {
                 ClassName = "locked-falseOTPSC";
                 Reason = "This account was locked by false input of OTP/Security Code.";
-                UnlockConfirmMessage = "This account was locked by false input of OTP/Security Code. Are you sure you want to unlock this account?";
             }
-            else if (Locked == FalseInputPassword)
+            else if (Locked == FalsePassword)
             {
                 ClassName = "locked-falsePassword";
                 Reason = "This account was locked by failed login.";
-                UnlockConfirmMessage = "This account was locked by false input Password. Are you sure you want to unlock this account?";
             }
         }
     }

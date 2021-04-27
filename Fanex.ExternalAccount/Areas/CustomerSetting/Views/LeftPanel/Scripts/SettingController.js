@@ -378,7 +378,7 @@
     }
 
     $scope.UnlockAccess2 = function (locked, id, disabled) {
-        $scope.UnlockAccess(id, disabled, "This account was locked by false input Password. Are you sure you want to unlock this account?");
+        $scope.UnlockAccess(id, disabled, "This account was locked by false input of Password. Are you sure you want to unlock this account?");
     }
 
     $scope.UnlockAccess = function (id, disabled, confirmMessage) {

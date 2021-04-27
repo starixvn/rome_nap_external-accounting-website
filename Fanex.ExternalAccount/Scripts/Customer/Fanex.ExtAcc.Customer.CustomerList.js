@@ -242,7 +242,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 }
                 var func = 'javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + cell.Value.CustId + ', ' + (isNullOrUndefinedOrEmpty(uplineRoleId) ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1) + ', null, 0)';
                 var unlockIcon = cell.Value.LockedAccess.IsLocked
-                    ? '<span class="locked-icon" onclick="javascript:Fanex.ExtAcc.Customer.UnlockAccess(' + cell.Value.CustId + ',' + cell.Value.LockedAccess.Locked + ')" title="' + cell.Value.LockedAccess.UnlockTooltip + '"></span>'
+                    ? '<span class="locked-icon" onclick="javascript:Fanex.ExtAcc.Customer.UnlockAccess(' + cell.Value.CustId + ',' + cell.Value.LockedAccess.Locked + ')" title="Click to unlock"></span>'
                     : "";
                 return uplineRoleId === Fanex.ExtAcc.Customer.Agent ?
                     '<div class="customerlist-username" title="' + tooltipUsername + '">' + shortUsername + unlockIcon + '</div>' :
