@@ -186,6 +186,11 @@
         $scope.collapseSidebar();
     };
 
+    $scope.VGaming = function () {
+        $scope.RenderDCS(66);
+        $scope.collapseSidebar();
+    };
+
     $scope.RenderDCS = function (productId) {
         $scope.ResetGlobalValue();
 

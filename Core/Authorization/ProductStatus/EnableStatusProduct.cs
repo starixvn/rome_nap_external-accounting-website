@@ -15,6 +15,7 @@
         EnableRNGLottery = 44,
         EnableVirtualGames = 38,
         EnableSabaclub = 42,
-        EnableSabaVirtualSports = 54
+        EnableSabaVirtualSports = 54,
+        EnableVGaming = 66,
     }
 }

@@ -10,6 +10,7 @@
         RNGLotterySetting = 44,
         VirtualSports = 5,
         VirtualGamesSetting = 38,
-        SabaclubSetting = 42
+        SabaclubSetting = 42,
+        VGamingSetting = 66
     }
 }

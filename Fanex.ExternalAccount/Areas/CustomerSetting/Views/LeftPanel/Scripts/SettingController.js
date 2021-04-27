@@ -736,6 +736,15 @@
         $scope.EnableThirdpartyProduct(42, "Saba.club");
     };
 
+    $scope.EnableVGaming = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
+        top.shouldCalculatePopupHeight = false;
+        $scope.EnableThirdpartyProduct(66, "VGaming");
+    };
+
     $scope.EnableSabaVirtualSports = function (enable, id, disabled) {
         if (disabled) {
             return;
@@ -989,6 +998,10 @@
         $scope.RenderSupeOnMemberDCS(42);
     };
 
+    $scope.SuperVGaming = function () {
+        $scope.RenderSupeOnMemberDCS(66);
+    };
+
     $scope.RenderSupeOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=' + productId + '&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
@@ -1024,6 +1037,10 @@
 
     $scope.MasterSabaclub = function () {
         $scope.RenderMasterOnMemberDCS(42);
+    };
+
+    $scope.MasterVGaming = function () {
+        $scope.RenderMasterOnMemberDCS(66);
     };
 
     $scope.RenderMasterOnMemberDCS = function (productId) {

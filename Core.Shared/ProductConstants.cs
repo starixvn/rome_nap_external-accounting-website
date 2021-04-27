@@ -36,5 +36,6 @@
         public const int PGSoft = 55;
         public const int Joker = 56;
         public const int GDG = 59;
+        public const int VGaming = 66;
     }
 }
