@@ -11,6 +11,8 @@
 
         internal static bool ClosedUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["upLineClosed"]);
 
+        internal static bool IsDirectClosed(this DataRow dataRow) => false;
+
         internal static byte Locked(this DataRow dataRow) => Utils.ToByte(dataRow["Locked"]);
 
         internal static bool Enabled(this DataRow dataRow) => Utils.ToBoolean(dataRow["enabled"]);

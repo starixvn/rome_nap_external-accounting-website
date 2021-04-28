@@ -303,6 +303,10 @@
             if (nonProductStatusRow.ClosedUpline())
             {
                 closedStatus = DisableStatus(closedStatus);
+                if (!nonProductStatusRow.IsDirectClosed())
+                {
+                    closedStatus.Tooltip = "This account was indirectly closed by upline.";
+                }
             }
 
             return closedStatus;
