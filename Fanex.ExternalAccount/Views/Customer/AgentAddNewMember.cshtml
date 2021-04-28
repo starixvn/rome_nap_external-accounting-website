@@ -109,12 +109,12 @@
                 <span data-bind="text: customer.group"></span>
             </div>
             <div class="customerInfoBlock3">
-                <label for="closed">
+                <label for="closed" style="display: none;">
                     @ViewLang.Closed
                 </label>
             </div>
             <div class="customerInfoBlock4">
-                <input name="closed" id="closed" type="checkbox" data-bind="checked: customer.statusSetting.closed, enable: (customer.statusSetting.uplineClosed || hasClose == 0) ? false : true, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
+                <input style="display: none;" name="closed" id="closed" type="checkbox" data-bind="checked: customer.statusSetting.closed, enable: (customer.statusSetting.uplineClosed || hasClose == 0) ? false : true, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
             </div>
         </div>
     </div>

@@ -90,12 +90,12 @@
         <div id="masterStatus">
             <div id="closedId">
                 <div class="customerInfoBlock1">
-                    <label for="closed">
+                    <label for="closed" style="display: none;">
                         Closed
                     </label>
                 </div>
                 <div class="customerInfoBlock2">
-                    <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed, enable: hasClose == 1, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
+                    <input style="display: none;" name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed, enable: hasClose == 1, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
                 </div>
             </div>
             <div class="customerInfoBlock3">
@@ -127,12 +127,12 @@
                 <span id="minCreditId">&gt;=<span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.memberMinCredit)" id="minCreditMember" /></span>&nbsp;and&nbsp; &lt;= <span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.credit)" id="maxCreditMember"></span>
             </div>
             <div class="customerInfoBlock3">
-                <label for="closed">
+                <label for="closed" style="display: none;">
                     Closed
                 </label>
             </div>
             <div class="customerInfoBlock4" style="width: 210px">
-                <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed, enable: hasClose == 1, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
+                <input style="display: none;" name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed, enable: hasClose == 1, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
             </div>
         </div>
         <div id="memberSection">
@@ -158,19 +158,19 @@
                 <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.group"></span>
             </div>
             <div class="customerInfoBlock3">
-                <label for="closed">
+                <label for="closed" style="display: none;">
                     Closed
                 </label>
             </div>
             <div class="customerInfoBlock4" style="width: 210px">
-                <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed, enable: hasClose == 1, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
+                <input style="display: none;" name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed, enable: hasClose == 1, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
             </div>
         </div>
     </div>
-    <div id="statusHeader" class="headerPositionTaking" style="border-top: 1px solid #CCC">
+    <div id="statusHeader" class="headerPositionTaking" style="border-top: 1px solid #CCC; display: none;">
         Status
     </div>
-    <div id="statusSection" class="positionTaking" style="border-bottom: 0; padding: 0;">
+    <div id="statusSection" class="positionTaking" style="border-bottom: 0; padding: 0; display: none;">
         <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: collapse; border-color: #CCC;">
             <tr style="height: 22px">
                 <td style="border-right: 1px solid #ccc; text-align: right; width: 50%;">
