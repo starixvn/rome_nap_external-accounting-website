@@ -29,7 +29,7 @@
 
         public int PageIndex { get; }
 
-        public override string GetSettingKey() => "Acc_Customer_SuspendInfoDetailSel";
+        public override string GetSettingKey() => "Acc_Customer_CloseInfoDetailSel";
 
         public override bool IsValid() => CustId > 0;
     }
