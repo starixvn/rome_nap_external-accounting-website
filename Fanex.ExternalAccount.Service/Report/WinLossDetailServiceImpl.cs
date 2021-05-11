@@ -63,7 +63,7 @@
                 0,
                 request.FromDate,
                 request.ToDate,
-                Utils.ToString(validProductIds),
+                Utils.JoinToString(validProductIds),
                 productDetailsXML);
 
             return
@@ -100,7 +100,7 @@
 
             var productDetailsXML = productDetailService.BuildProductDetailsXML(validProductIds, request.ResourceIds, request.GroupName);
 
-            var winLossDetailData = SearchWinLossDetailData(request.GroupName, request.FromDate, request.ToDate, Utils.ToString(validProductIds), productDetailsXML, customerInfo);
+            var winLossDetailData = SearchWinLossDetailData(request.GroupName, request.FromDate, request.ToDate, Utils.JoinToString(validProductIds), productDetailsXML, customerInfo);
 
             return
                 new
@@ -131,7 +131,7 @@
                 .Select(item => new { ExtraPT = item.ExtraPT * percentage, item.ProductName, item.ProductId })
                 .Where(item => !string.IsNullOrWhiteSpace(item.ProductName) && validProductIds.ContainsKey(item.ProductId))
                 .GroupBy(item => item.ExtraPT, item => item.ProductName,
-                (key, group) => new { ExtraPT = key, ProductNames = Utils.ToString(group, ", ") })
+                (key, group) => new { ExtraPT = key, ProductNames = Utils.JoinToString(group, ", ") })
                 .OrderBy(item => item.ExtraPT);
         }
 
