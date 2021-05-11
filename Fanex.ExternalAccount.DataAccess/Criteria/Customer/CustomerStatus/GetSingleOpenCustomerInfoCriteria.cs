@@ -11,7 +11,7 @@
 
         public int CustId { get; }
 
-        public override string GetSettingKey() => "Acc_Customer_SuspendInfoSel";
+        public override string GetSettingKey() => "Acc_Customer_CloseInfoSel";
 
         public override bool IsValid() => CustId > 0;
     }

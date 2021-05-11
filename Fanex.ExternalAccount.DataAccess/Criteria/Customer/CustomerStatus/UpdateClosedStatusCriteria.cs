@@ -22,14 +22,14 @@
 
         public int CustId { get; }
 
-        [SpParam(SqlParamName = "Suspended")]
+        [SpParam(SqlParamName = "Closed")]
         public bool IsClosed { get; }
 
         public string Language { get; }
 
         public string IP { get; }
 
-        public override string GetSettingKey() => "Acc_CustomerUpdSuspended";
+        public override string GetSettingKey() => "Acc_CustomerUpdClosed";
 
         public override bool IsValid() => UserId > 0 && CustId > 0;
     }

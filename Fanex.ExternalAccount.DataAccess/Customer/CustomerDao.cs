@@ -461,7 +461,7 @@
                             CustId = Utils.ToInt32(reader["custid"]),
                             RoleId = criteria.RoleId,
                             UserName = Utils.ToString(reader["username"]),
-                            IsClosed = Utils.ToBoolean(reader["suspended"])
+                            IsClosed = Utils.ToBoolean(reader["closed"])
                         });
                     }
 
