@@ -54,7 +54,7 @@
                 param.ToDate,
                 ReportService.BalanceUpDate,
                 ReportService.MoveBetsDate,
-                Utils.ToString(validProductIds),
+                Utils.JoinToString(validProductIds),
                 productDetailsXML,
                 param.PageSize,
                 param.PageIndex);
@@ -67,7 +67,7 @@
                 var superPositionTakingByRnG = GetSuperPositionTakingByRnG(superIds);
 
                 var postionTakings = superWinLossDetailByPTDataAccess
-                    .GetSuperPositionTakingList(new SuperPTCriteria(Utils.ToString(superIds)))
+                    .GetSuperPositionTakingList(new SuperPTCriteria(Utils.JoinToString(superIds)))
                     .Concat(superPositionTakingByRnG);
 
                 var winlossByUsernames = model.WinLossByProducts.Join(

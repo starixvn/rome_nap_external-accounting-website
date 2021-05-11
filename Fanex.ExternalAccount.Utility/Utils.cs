@@ -115,6 +115,9 @@
         public static string ToString(this DataRow obj, string fieldName)
             => ToString(obj[fieldName]);
 
+        public static string JoinToString<T>(IEnumerable<T> list, string separator = ",")
+            => list == null || !list.Any() ? string.Empty : string.Join(separator, list);
+
         public static double ToDouble(object value)
         {
             if (IsEmptyData(value))
@@ -263,9 +266,6 @@
                 }
             }
         }
-
-        public static string ToString<T>(IEnumerable<T> list, string separator = ",")
-            => list == null || !list.Any() ? string.Empty : string.Join(separator, list);
     }
 
 #pragma warning restore S109 // Magic numbers should not be used

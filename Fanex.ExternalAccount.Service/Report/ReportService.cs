@@ -149,7 +149,7 @@
                     [ProductConstants.GoldDeluxe] = true
                 };
 
-                var liveCasinoName = Utils.ToString(offeredLiveCasino.Products.Where(p => !ignoreProductIds.ContainsKey(p.ProductId)).Select(p => p.ProductName), ", ");
+                var liveCasinoName = Utils.JoinToString(offeredLiveCasino.Products.Where(p => !ignoreProductIds.ContainsKey(p.ProductId)).Select(p => p.ProductName), ", ");
 
                 return string.Format(ViewLang.Tooltip_NetTurnover_LiveCasino, liveCasinoName);
             }
@@ -199,7 +199,7 @@
                 }
             });
 
-            return Utils.ToString(productNames, ", ");
+            return Utils.JoinToString(productNames, ", ");
         }
 
         private static bool IsEquals(IEnumerable<int> source, IEnumerable<int> destination)
