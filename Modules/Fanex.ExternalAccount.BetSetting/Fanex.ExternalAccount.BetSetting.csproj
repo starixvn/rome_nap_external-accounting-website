@@ -80,7 +80,7 @@
       <HintPath>..\..\packages\Fanex.CustomerSetting.Module.Casino.2.0.4.9\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.CustomerSetting.Module.Core.2.0.5-redis01\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+      <HintPath>..\..\packages\Fanex.CustomerSetting.Module.Core.2.0.5\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoSetting, Version=2.0.2.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Fanex.CustomerSetting.Module.Keno.Setting.2.0.2.7\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoSetting.dll</HintPath>
@@ -209,7 +209,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Sunplus.Agent.Utilities.3.0.2-removeCouchbase\lib\net461\Sunplus.Agent.Utilities.dll</HintPath>
+      <HintPath>..\..\packages\Sunplus.Agent.Utilities.3.0.2\lib\net461\Sunplus.Agent.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Sunplus.Libraries.AOP.1.0.4218.28561\lib\net40\Sunplus.Libraries.AOP.dll</HintPath>
