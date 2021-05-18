@@ -121,6 +121,11 @@
                 .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service"]))
                 .FromApplication("Ext NAP")
                 .SupportOnlyDefaultLanguage();
+
+            Fanex.Caching.CacheServiceManager.Use(() => new Fanex.Caching.Redis.RedisCache(new Fanex.Caching.Redis.RedisCacheOptions
+            {
+                ConnectionOptions = StackExchange.Redis.ConfigurationOptions.Parse(ConfigurationManager.AppSettings["Redis:ConnectionString"])
+            }));
         }
 
         protected void Application_Error(object sender, EventArgs e)

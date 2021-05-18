@@ -1,18 +1,19 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Report
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
     using Caching;
     using DataAccess.Impl.Report;
     using DataAccess.Interface.Report;
     using DTO.Customer;
     using DTO.Report;
+    using Fanex.Caching.Memory;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.Service.Products;
     using Interface.Report;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
     using Utilities;
 
 #pragma warning disable S109 // Magic numbers should not be used
@@ -20,8 +21,7 @@
     public class ReportService : IReportService
     {
         private const string BalanceUpDayKey = "SUNPLUS.AGENT.MODEL.BL.REPORTS.BALANCEUPDAY";
-
-        private static readonly ICache Cache = CacheService.CreateInstance(CacheType.MemoryCache);
+        private static readonly ICacheService Cache = new CacheService(new MemoryCache(new MemoryCacheOptions()));
 
         private readonly IReportDao _reportDao;
         private readonly IProductService _productService;
@@ -126,14 +126,14 @@
                 balanceUpDay = reportDao.Age_SelBalanceUpDay();
                 if (balanceUpDay != null)
                 {
-                    Cache.Set(BalanceUpDayKey, balanceUpDay, DateTime.Now.AddMinutes(5));
+                    Cache.Set<DataTable>(BalanceUpDayKey, balanceUpDay, new CacheItemOptions { RelativeExpiration = TimeSpan.FromMinutes(5) });
                 }
             }
 
             return balanceUpDay;
         }
 
-        private static bool CheckConstraintMoveBetsDay(DateTime fromDate)
+        private bool CheckConstraintMoveBetsDay(DateTime fromDate)
             => DateTime.Compare(fromDate, MoveBetsDate) > 0;
 
         public string BuildTooltipsForLiveCasino(int userId, int groupId)
