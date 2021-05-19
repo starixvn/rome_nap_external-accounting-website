@@ -20,7 +20,7 @@
                 [ProductConstants.Sabaclub] = new Product(7, ProductConstants.Sabaclub, "Saba.club"),
                 [ProductConstants.RNGLottery] = new Product(8, ProductConstants.RNGLottery, "RNG Lottery"),
                 [ProductConstants.SabaVirtualSports] = new Product(9, ProductConstants.SabaVirtualSports, "Saba Virtual Sports"),
-                [ProductConstants.VGaming] = new Product(10, ProductConstants.VGaming, "VGaming"),
+                [ProductConstants.VGaming] = new Product(10, ProductConstants.VGaming, "Vgaming"),
             };
 
         public static bool IsShowGoldDeluxe => IsShowProduct(ProductConstants.GoldDeluxe);

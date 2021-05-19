@@ -736,13 +736,13 @@
         $scope.EnableThirdpartyProduct(42, "Saba.club");
     };
 
-    $scope.EnableVGaming = function (enable, id, disabled) {
+    $scope.EnableVgaming = function (enable, id, disabled) {
         if (disabled) {
             return;
         }
 
         top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(66, "VGaming");
+        $scope.EnableThirdpartyProduct(66, "Vgaming");
     };
 
     $scope.EnableSabaVirtualSports = function (enable, id, disabled) {
@@ -998,7 +998,7 @@
         $scope.RenderSupeOnMemberDCS(42);
     };
 
-    $scope.SuperVGaming = function () {
+    $scope.SuperVgaming = function () {
         $scope.RenderSupeOnMemberDCS(66);
     };
 
@@ -1039,7 +1039,7 @@
         $scope.RenderMasterOnMemberDCS(42);
     };
 
-    $scope.MasterVGaming = function () {
+    $scope.MasterVgaming = function () {
         $scope.RenderMasterOnMemberDCS(66);
     };
 

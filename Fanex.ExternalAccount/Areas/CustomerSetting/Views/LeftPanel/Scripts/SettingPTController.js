@@ -186,7 +186,7 @@
         $scope.collapseSidebar();
     };
 
-    $scope.VGaming = function () {
+    $scope.Vgaming = function () {
         $scope.RenderDCS(66);
         $scope.collapseSidebar();
     };
