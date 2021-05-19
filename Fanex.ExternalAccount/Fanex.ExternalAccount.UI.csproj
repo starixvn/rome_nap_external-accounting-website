@@ -1482,15 +1482,14 @@
     <Content Include="bundles\images\dec4_disable.gif" />
     <Content Include="bundles\images\error.gif" />
     <Content Include="bundles\images\sucess.gif" />
+    <Content Include="Configurations\appSettings.aws.config">
+      <DependentUpon>appSettings.config</DependentUpon>
+    </Content>
     <Content Include="Configurations\appSettings.mnl.config">
       <SubType>Designer</SubType>
       <DependentUpon>appSettings.config</DependentUpon>
     </Content>
     <Content Include="Configurations\appSettings.production.config">
-      <SubType>Designer</SubType>
-      <DependentUpon>appSettings.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\appSettings.cloud.config">
       <SubType>Designer</SubType>
       <DependentUpon>appSettings.config</DependentUpon>
     </Content>
@@ -1506,6 +1505,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>appSettings.config</DependentUpon>
     </Content>
+    <Content Include="Configurations\connectionStrings.aws.config">
+      <DependentUpon>connectionStrings.config</DependentUpon>
+    </Content>
     <Content Include="Configurations\connectionStrings.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>connectionStrings.config</DependentUpon>
@@ -1519,9 +1521,6 @@
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
     <Content Include="Configurations\connectionStrings.production.config">
-      <DependentUpon>connectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\connectionStrings.cloud.config">
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
     <Content Include="Configurations\connectionStrings.sit.config">
@@ -2890,10 +2889,6 @@
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Web.cloud.config">
-      <SubType>Designer</SubType>
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Web.sit.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
@@ -3027,6 +3022,9 @@
     <Content Include="typings\globals\storejs\typings.json" />
     <Content Include="typings\globals\toastr\typings.json" />
     <Content Include="Views\BonusDetail\Index.cshtml" />
+    <Content Include="Web.aws.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
