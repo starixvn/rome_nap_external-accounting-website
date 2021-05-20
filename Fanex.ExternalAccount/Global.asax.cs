@@ -40,7 +40,7 @@
             routes.IgnoreRoute("{*allaspx}", new { allaspx = @".*\.aspx(/.*)?" });
             routes.IgnoreRoute("{*allashx}", new { allashx = @".*\.ashx(/.*)?" });
             routes.IgnoreRoute("{*favicon}", new { favicon = "(.*/)?favicon.ico(/.*)?" });
-            
+            routes.IgnoreRoute("base/{*pathInfo}");
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
