@@ -996,7 +996,7 @@
 
         for (var i = 0, max = siteLevelProducts.length; i < max; i++) {
             var currentSiteProduct = siteLevelProducts[i];
-            var currentProduct;
+            var currentProduct = null;
             for (var j = 0, customerProductStatusLength = customerProductStatus.DCSProductsSetting.length; j < customerProductStatusLength; j++) {
                 var currentCustomerProductStatus = customerProductStatus.DCSProductsSetting[j];
                 if (currentSiteProduct.Id === currentCustomerProductStatus.ProductID) {
