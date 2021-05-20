@@ -4,17 +4,21 @@
     using System;
     using System.Web;
     using System.Web.Mvc;
+    using ONEbook.UM.Services;
+    using ONEbook.UM.Services.Impl;
 
     [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
     public class CheckBelongingFilter : AuthorizeAttribute
     {
         private readonly AuthorizationService authorization = new AuthorizationServiceImpl();
 
+        private readonly IMaintenanceService umService = new MaintenanceService();
+
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
             base.OnAuthorization(filterContext);
-
-            if (!authorization.IsBelong())
+            
+            if (!umService.IsUnderMaintenance() && !authorization.IsBelong())
             {
                 UnAuthorization(filterContext);                
             }
