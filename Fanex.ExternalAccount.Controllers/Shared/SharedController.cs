@@ -154,6 +154,7 @@
             return RedirectToAction("Login", "Account");
         }
 
+        [AllowAnonymous]
         public int ReCheckInOffline()
             => _maintenanceService.IsUnderMaintenance()
                 ? (int)RecheckinStatus.Maintenance

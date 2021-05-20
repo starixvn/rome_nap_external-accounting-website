@@ -116,7 +116,7 @@
                     else if (data == 2) {
                         top.location.href = resolveClientUrl('Shared/Offline');
                     }
-                    else if (data == 3) {
+                    else {
                         top.location.href = resolveClientUrl('Shared/Error');
                     }
 
