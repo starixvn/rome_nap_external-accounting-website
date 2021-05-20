@@ -21,7 +21,8 @@
             ProductConstants.RNGLottery,
             ProductConstants.Sportsbook2,
             ProductConstants.VirtualGames,
-            ProductConstants.Sabaclub
+            ProductConstants.Sabaclub,
+            ProductConstants.VGaming
         };
 
         private static readonly int[] DummyProducts = new[]

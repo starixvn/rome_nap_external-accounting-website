@@ -9,6 +9,7 @@
         FishingWorldBetting = 24,
         RNGLotteryBetting = 44,
         VirtualSportsBetting = 5,
-        SabaclubBetting = 42
+        SabaclubBetting = 42,
+        VGamingBetting = 66
     }
 }
