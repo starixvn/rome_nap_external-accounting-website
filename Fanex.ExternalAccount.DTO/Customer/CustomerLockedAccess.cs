@@ -25,12 +25,12 @@
             if (Locked == FalseOTPSC)
             {
                 ClassName = "locked-falseOTPSC";
-                Reason = "This account was locked by false input of OTP/Security Code.";
+                Reason = "This account has been locked due to multiple failed OTP/Security Code authentication attempts.";
             }
             else if (Locked == FalsePassword)
             {
                 ClassName = "locked-falsePassword";
-                Reason = "This account was locked by failed login.";
+                Reason = "This account has been locked due to multiple failed password attempts.";
             }
         }
     }

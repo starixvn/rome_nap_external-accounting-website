@@ -374,11 +374,11 @@
     };
 
     $scope.UnlockAccess1 = function (locked, id, disabled) {
-        $scope.UnlockAccess(id, disabled, "This account was locked by false input of OTP/Security Code. Are you sure you want to unlock this account?");
+        $scope.UnlockAccess(id, disabled, "This account has been locked due to multiple failed OTP/Security Code authentication attempts. Are you sure you want to unlock this account?");
     }
 
     $scope.UnlockAccess2 = function (locked, id, disabled) {
-        $scope.UnlockAccess(id, disabled, "This account was locked by false input of Password. Are you sure you want to unlock this account?");
+        $scope.UnlockAccess(id, disabled, "This account has been locked due to multiple failed password attempts. Are you sure you want to unlock this account?");
     }
 
     $scope.UnlockAccess = function (id, disabled, confirmMessage) {

@@ -153,7 +153,7 @@
     <Setting Key="EAS_CustomerSelAllStatus" SpName="EAS_CustomerSelAllStatus_uat4" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelLoginInfo" SpName="EAS_CustomerSelLoginInfo" DbName="DBACC.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelBalanceInfo" SpName="EAS_CustomerSelBalanceInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustomerUpdLocked" SpName="Acc_CustomerUpdLocked" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdLocked" SpName="Acc_CustomerUpdLocked_uat4" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Customer List">
     <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom_uat4" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
@@ -326,7 +326,7 @@
     <Setting Key="Acc_CheckUM_MultipleCustProductStatus" SpName="Acc_CheckUM_MultipleCustProductStatus" DbName="DBCust.CustDB.bodbExtAccNet" />
   </Function>
   <Function Name="Problem Account List">
-    <Setting Key="EAS_ProblemAccount_CustomerList" SpName="EAS_ProblemAccount_CustomerList" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_ProblemAccount_CustomerList" SpName="EAS_ProblemAccount_CustomerList_uat4" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_ProblemAccount_ReviewStatusUpd" SpName="EAS_ProblemAccount_ReviewStatusUpd" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="User belong to Group">
