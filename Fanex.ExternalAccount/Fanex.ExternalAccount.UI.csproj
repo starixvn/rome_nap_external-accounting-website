@@ -1482,6 +1482,9 @@
     <Content Include="bundles\images\dec4_disable.gif" />
     <Content Include="bundles\images\error.gif" />
     <Content Include="bundles\images\sucess.gif" />
+    <Content Include="Configurations\appSettings.aws.config">
+      <DependentUpon>appSettings.config</DependentUpon>
+    </Content>
     <Content Include="Configurations\appSettings.mnl.config">
       <SubType>Designer</SubType>
       <DependentUpon>appSettings.config</DependentUpon>
@@ -1501,6 +1504,9 @@
     <Content Include="Configurations\appSettings.uat.config">
       <SubType>Designer</SubType>
       <DependentUpon>appSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\connectionStrings.aws.config">
+      <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
     <Content Include="Configurations\connectionStrings.dev.config">
       <SubType>Designer</SubType>
@@ -1532,6 +1538,9 @@
       <DependentUpon>InternalUrlSection.config</DependentUpon>
     </Content>
     <Content Include="Configurations\InternalUrlSection.Production.config">
+      <DependentUpon>InternalUrlSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\InternalUrlSection.cloud.config">
       <DependentUpon>InternalUrlSection.config</DependentUpon>
     </Content>
     <Content Include="Configurations\InternalUrlSection.sit.config">
@@ -1868,6 +1877,10 @@
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
     </Content>
     <Content Include="SpNames.CustDB.production.xml">
+      <SubType>Designer</SubType>
+      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
+    </Content>
+    <Content Include="SpNames.CustDB.cloud.xml">
       <SubType>Designer</SubType>
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
     </Content>
@@ -3009,6 +3022,9 @@
     <Content Include="typings\globals\storejs\typings.json" />
     <Content Include="typings\globals\toastr\typings.json" />
     <Content Include="Views\BonusDetail\Index.cshtml" />
+    <Content Include="Web.aws.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
