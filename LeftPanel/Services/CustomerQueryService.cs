@@ -6,6 +6,7 @@
     using Extensions;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.Module.LeftPanel.Models;
+    using Fanex.ExternalAccount.Utilities;
     using System.Collections.Generic;
     using System.Data;
     using ViewModels;
@@ -79,7 +80,14 @@
         }
 
         public OnlineList GetOnlineList(int custId)
-            => new OnlineList(customerDataAccess.GetOnlineList(custId), authorizationService.CanViewVNIP);
+        {
+            if (Config.IsEnabledRecheckin)
+            {
+                return new OnlineList(customerDataAccess.GetOnlineList(custId), authorizationService.CanViewVNIP);
+            }
+
+            return new OnlineList();
+        }
 
         public DownlineList GetDownlineList(int custid, int pageSize, int pageIndex)
             => new DownlineList(customerDataAccess.GetDownlineList(custid, pageSize, pageIndex), pageIndex);

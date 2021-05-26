@@ -31,7 +31,7 @@
 
         public Customer UserInfo(int custId, byte settingStatus) => dataAccess.UserInfo(custId, settingStatus);
 
-        public CustomerStatusDTO GetCustomerAllStatus(int custId, byte settingStatus) 
+        public CustomerStatusDTO GetCustomerAllStatus(int custId, byte settingStatus)
             => dataAccess.GetCustomerAllStatus(new GetCustomerAllStatusCriteria { CustId = custId, SettingStatus = settingStatus });
 
         public Result EditUserInfo(Customer customer, string ip, int userId, int subAccId, string language)
@@ -48,7 +48,12 @@
             => dataAccess.CheckNewCustomerIsReachLimitation(criteria);
 
         public void KickoutCustomer(int custId, byte roleId, string ip)
-            => dataAccess.KickoutCustomer(new KickoutCustomerCriteria(custId, roleId, ip));
+        {
+            if (Config.IsEnabledRecheckin)
+            {
+                dataAccess.KickoutCustomer(new KickoutCustomerCriteria(custId, roleId, ip));
+            }
+        }
 
         public SingleUpdateViewModel GetSingleUpdateSuspendViewModel(int custId, string userName)
             => new SingleUpdateViewModel(custId, userName, dataAccess.GetSingleUpdateSuspendAffectedDownlines(new GetSingleSuspendCustomerInfoCriteria(custId)));
@@ -113,7 +118,7 @@
         {
             var result = new Result();
             var isAllow = dataAccess.CheckLimitNewDownline(new CheckLimitNewDownlineCriteria(custId));
-            
+
             if (!isAllow)
             {
                 result.ErrorCode = "1001";
