@@ -1531,6 +1531,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
+    <Content Include="Configurations\InternalUrlSection.aws.config">
+      <DependentUpon>InternalUrlSection.config</DependentUpon>
+    </Content>
     <Content Include="Configurations\InternalUrlSection.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1538,9 +1541,6 @@
       <DependentUpon>InternalUrlSection.config</DependentUpon>
     </Content>
     <Content Include="Configurations\InternalUrlSection.Production.config">
-      <DependentUpon>InternalUrlSection.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\InternalUrlSection.cloud.config">
       <DependentUpon>InternalUrlSection.config</DependentUpon>
     </Content>
     <Content Include="Configurations\InternalUrlSection.sit.config">
