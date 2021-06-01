@@ -339,4 +339,8 @@
   <Function Name="Limit New Downline">
     <Setting Key="Acc_ProblemAccountLimitDownlineCheck" SpName="Acc_ProblemAccountLimitDownlineCheck" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
+  <Function Name="ParlayMaxPayout">
+    <Setting Key="Acc_CustSetting_MaxPayoutSelect" SpName="Acc_CustSetting_MaxPayoutSelect_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_CustSetting_MaxPayoutUpd" SpName="Acc_CustSetting_MaxPayoutUpd_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" />
+  </Function>
 </Functions>

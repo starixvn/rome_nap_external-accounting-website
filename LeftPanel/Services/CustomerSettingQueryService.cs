@@ -323,6 +323,7 @@
                 details.Add(new ObjectInfo("Transfer", "Transfer Condition"));
             }
 
+            AddParlayMaxPayoutLink(details);
             AddCasinoEditLink(nonDCSProductStatusRow, details);
             AddVirtualSportsEditLink(table3rdDCS, details);
             AddKenoEditLink(details);
@@ -362,6 +363,11 @@
             {
                 details.Add(new ObjectInfo("Casino", "Casino"));
             }
+        }
+
+        private void AddParlayMaxPayoutLink(ICollection<ObjectInfo> details)
+        {
+            details.Add(new ObjectInfo("ParlayMaxPayout", "Parlay Max Payout"));
         }
 
         internal List<ObjectInfo> EnableKenoItem(DataRow nonDCSProductStatusRow)

@@ -430,3 +430,21 @@ input[type="text"]
 	overflow: auto;
     color: #ff5411;
 }
+
+.titleBox {
+    background-color: #ffedc1;
+    background-repeat: no-repeat;
+    background-position: 5px 5px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    line-height: 1.5;
+    text-align: left;
+    vertical-align: middle;
+    font-size: 12px;
+    clear: both;
+    border: 1px solid #d2a243;
+    padding: 5px;
+    overflow: auto;
+    font-weight: bold;
+}

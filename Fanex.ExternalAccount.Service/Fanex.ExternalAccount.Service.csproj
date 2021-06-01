@@ -227,6 +227,7 @@
     <Compile Include="Customer\IMasterService.cs" />
     <Compile Include="Customer\IMemberService.cs" />
     <Compile Include="Customer\ISuperService.cs" />
+    <Compile Include="Customer\ParlayMaxPayout\ParlayMaxPayoutService.cs" />
     <Compile Include="DataRange\DataRangeService.cs" />
     <Compile Include="DataRange\IDataRangeService.cs" />
     <Compile Include="GlobalSuppressions.cs" />
