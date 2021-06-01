@@ -478,6 +478,16 @@
         }
     };
 
+    menuItems.parlayMaxPayout = {
+        name: "Edit Multiple Parlay Max Payout",
+        className: "iconEnableEdit",
+        callback: function (key, opt) {
+            top.shouldCalculatePopupHeight = false;
+            var url = resolveClientUrl('ParlayMaxPayout/Index?custIds=' + Fanex.ExtAcc.Customer.IdsAndNames().Ids + '&custNames=' + Fanex.ExtAcc.Customer.IdsAndNames().Names);
+            Fanex.ExtAcc.Form.Show(url, 'Edit Multiple Parlay Max Payout', 'auto', 'auto', false, false, 1);
+        }
+    }
+
     if ($.contextMenu) $.contextMenu('destroy');
 
     $.contextMenu({

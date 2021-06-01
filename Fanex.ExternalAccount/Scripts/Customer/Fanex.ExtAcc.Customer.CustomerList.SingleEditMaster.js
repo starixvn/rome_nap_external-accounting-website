@@ -201,6 +201,16 @@
                         };
                     }
 
+                    items.parlayMaxPayout = {
+                        name: "Parlay Max Payout",
+                        className: "iconEnableEdit editInfoBg",
+                        callback: function (key, opt) {
+                            top.shouldCalculatePopupHeight = false;
+                            var url = resolveClientUrl('ParlayMaxPayout/Index?custId=' + custId + '&custName=' + title);
+                            Fanex.ExtAcc.Form.Show(url, 'Edit Parlay Max Payout: <font color="#6dcff6">' + title + '</font>', 'auto', 'auto', false, null, 1);
+                        }
+                    };
+
                 }
             });
 

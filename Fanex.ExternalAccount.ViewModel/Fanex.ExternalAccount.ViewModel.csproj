@@ -131,6 +131,7 @@
     <Compile Include="Customer\CustomerList\CustomerListViewModel.cs" />
     <Compile Include="Customer\CustomerList\CustomerStatusViewModel.cs" />
     <Compile Include="Customer\CustomerList\SearchCustomerListViewModel.cs" />
+    <Compile Include="Customer\ParlayMaxPayout\ParlayMaxPayoutViewModel.cs" />
     <Compile Include="Customer\OpenCustomer\MultipleOpenCustomerViewModel.cs" />
     <Compile Include="Customer\OpenCustomer\SingleOpenCustomerViewModel.cs" />
     <Compile Include="Customer\OpenCustomer\SingleOpenDownlinesViewModel.cs" />

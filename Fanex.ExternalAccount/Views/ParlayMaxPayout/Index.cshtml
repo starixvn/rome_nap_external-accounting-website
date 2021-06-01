@@ -1,0 +1,112 @@
+﻿@using Fanex.ExternalAccount.ViewModel.Customer.ParlayMaxPayout;
+
+@model ParlayMaxPayoutViewModel
+@{
+    Layout = null;
+}
+<style type="text/css">
+    .light-blue {
+        background-color: #B0C4DE;
+    }
+
+    .align-center {
+        text-align: center;
+    }
+
+    tr {
+        line-height: 22px;
+    }
+
+    .align-right {
+        text-align: right;
+    }
+
+    .parlay-max-payout-table {
+        border-collapse: collapse;
+    }
+</style>
+
+
+@helper RenderPayoutBlock(string entityName, int sporttype, int bettype, decimal payoutValue, decimal defaultPayoutValue, bool isUplineUnlimited)
+{
+    var id = sporttype + "_" + bettype + "_" + entityName;
+    var unlimitedId = "chkUnlimited_" + id;
+    <table>
+        <tr>
+            <td>
+                <input id="@id" value="@payoutValue.ToString("#,0")"
+                       onkeypress="return Fanex.ExtAcc.CheckNumber(event, this, true)"
+                       onkeyup="return Fanex.ExtAcc.CheckNumber(event, this, true)"
+                       class="R @(payoutValue > 0 ? "" : "hide")" sporttype="@sporttype" bettype="@bettype" fieldname="@entityName" />
+
+                <input id="@(id + "_Unlimited")" value="Unlimited" class="R @(payoutValue > 0 ? "hide" :" ")" disabled />
+
+            </td>
+            <td><= @defaultPayoutValue.ToString("#,0")</td>
+        </tr>
+        <tr>
+            <td class="align-right">
+                @if (isUplineUnlimited)
+                {
+                    <input id="@unlimitedId" type="checkbox" @(payoutValue == 0 ? "checked" : "") />
+                }
+            </td>
+            <td>
+                @if (isUplineUnlimited)
+                {
+                    <label for="@unlimitedId"> Unlimited</label>
+                }
+            </td>
+        </tr>
+
+    </table>
+}
+<div id="result-messages"></div>
+@if (Model.IsMultiple)
+{
+    <div id="custIdsName" class="title bold text-center">@Model.CustNames</div>
+}
+<table border="1" class="parlay-max-payout-table">
+    <thead>
+        <tr>
+            <td class="light-blue align-center bold" colspan="5">
+
+                @if (Model.IsMultiple)
+                {
+                    @("Parlay Max Payout")
+                }
+                else
+                {
+                    @("Parlay Max Payout: " + Model.CustName)
+                }
+            </td>
+        </tr>
+        <tr>
+            <td class="light-blue align-center"></td>
+            <td class="light-blue align-center bold">Single Match Parlay</td>
+            <td class="light-blue align-center bold">Combo 2</td>
+            <td class="light-blue align-center bold">Combo 3 - 5</td>
+            <td class="light-blue align-center bold">Combo 6+</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entity in Model.ListEntityModel)
+        {
+            <tr>
+                <td class="light-blue align-center">@entity.SportName</td>
+                <td>@RenderPayoutBlock("SingleMatchParlay", entity.SportType, entity.Bettype, entity.SingleMatchParlay, entity.UplineSingleMatchParlay, entity.IsAllowUnlimitedSingleMatchParlay)</td>
+                <td>@RenderPayoutBlock("Combo2", entity.SportType, entity.Bettype, entity.Combo2, entity.UplineCombo2, entity.IsAllowUnlimitedCombo2)</td>
+                <td>@RenderPayoutBlock("Combo35", entity.SportType, entity.Bettype, entity.Combo35, entity.UplineCombo35, entity.IsAllowUnlimitedCombo35)</td>
+                <td>@RenderPayoutBlock("ComboOver6", entity.SportType, entity.Bettype, entity.ComboOver6, entity.UplineComboOver6, entity.IsAllowUnlimitedComboOver6)</td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<input id="btnUpdate" type="button" class="btn -submit" style="margin-top:10px;" value="Update" />
+<input id="txtCustId" type="hidden" value="@Model.CustId" />
+<input id="txtCustIds" type="hidden" value="@Model.CustIds" />
+<input id="txtCustName" type="hidden" value="@Model.CustName" />
+<input id="txtCustNames" type="hidden" value="@Model.CustNames" />
+@Html.AntiForgeryToken()
+<script src="@Url.Content("~/Views/ParlayMaxPayout/Scripts/Index.js")" type="text/javascript"></script>
