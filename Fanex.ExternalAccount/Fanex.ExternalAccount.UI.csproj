@@ -1596,7 +1596,7 @@
     <Content Include="Scripts\ProblemAccount\Fanex.ExtAcc.ProblemAccount.js" />
     <Content Include="Scripts\Manage\Fanex.ExtAcc.SubGroup.js" />
     <Content Include="Views\Customer\MultipleOpenCustomer.cshtml" />
-    <None Include="Views\Customer\SingleOpenCustomer.cshtml" />
+    <Content Include="Views\Customer\SingleOpenCustomer.cshtml" />
     <Content Include="SpNames.CustDB.aws.xml">
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
     </Content>
