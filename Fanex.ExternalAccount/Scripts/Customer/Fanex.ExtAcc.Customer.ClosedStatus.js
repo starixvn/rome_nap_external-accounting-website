@@ -88,7 +88,7 @@
             self.DOMElements.btnCloseMultiple.attr("disabled", true);
             self.clearMessage();
             var params = {
-                query: $('.button-close-status.is-changed').map(function () {
+                queryList: $('.button-close-status.is-changed').map(function () {
                     var $this = $(this);
                     return { CustId: $this.attr('data-custid'), UserName: $this.attr('data-username'), IsClosed: $this.hasClass('suspend-switch') };
                 }).get()

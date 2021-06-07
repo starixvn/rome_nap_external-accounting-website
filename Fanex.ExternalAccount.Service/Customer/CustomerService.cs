@@ -177,7 +177,8 @@
                 query.CustId,
                 query.IsClosed,
                 query.Language,
-                query.Ip));
+                query.Ip,
+                query.SystemId));
 
         public IEnumerable<Result> UpdateMultipleCustomerClosedStatus(IEnumerable<UpdateMultipleClosedStatusQuery> query)
         {
@@ -187,7 +188,13 @@
 
             foreach (var item in query)
             {
-                var criteria = new UpdateClosedStatusCriteria(item.UserId, item.CustId, item.IsClosed, item.Language, item.Ip);
+                var criteria = new UpdateClosedStatusCriteria(
+                    item.UserId,
+                    item.CustId,
+                    item.IsClosed,
+                    item.Language,
+                    item.Ip,
+                    item.SystemId);
                 var preResult = dataAccess.UpdateCustomerClosedStatus(criteria);
                 if (preResult.IsSuccess)
                 {

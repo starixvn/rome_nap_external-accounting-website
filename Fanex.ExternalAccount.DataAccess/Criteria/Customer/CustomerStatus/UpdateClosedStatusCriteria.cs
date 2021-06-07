@@ -9,13 +9,15 @@
             int custId,
             bool isClosed,
             string language,
-            string ip)
+            string ip,
+            int systemId)
         {
             UserId = userId;
             CustId = custId;
             IsClosed = isClosed;
             Language = language;
             IP = ip;
+            SystemId = systemId;
         }
 
         public int UserId { get; }
@@ -28,6 +30,8 @@
         public string Language { get; }
 
         public string IP { get; }
+
+        public int SystemId { get; }
 
         public override string GetSettingKey() => "Acc_CustomerUpdClosed";
 

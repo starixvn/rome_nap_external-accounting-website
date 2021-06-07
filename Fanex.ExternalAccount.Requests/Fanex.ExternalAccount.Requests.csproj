@@ -47,6 +47,7 @@
     <Compile Include="Customer\OpenCustomer\GetMultipleOpenCustomerInfoQuery.cs" />
     <Compile Include="Customer\OpenCustomer\GetSingleOpenCustomerInfoQuery.cs" />
     <Compile Include="Customer\OpenCustomer\GetSingleOpenDownlinesInfoQuery.cs" />
+    <Compile Include="Customer\OpenCustomer\UpdateCloseStatusBaseQuery.cs" />
     <Compile Include="Customer\OpenCustomer\UpdateMultipleClosedStatusQuery.cs" />
     <Compile Include="Customer\OpenCustomer\UpdateSingleClosedStatusQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,6 +56,10 @@
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
       <Project>{05DD3A2F-F9FF-42E1-8D4E-D4F83E51EBF4}</Project>
       <Name>Core.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
+      <Project>{016F274C-1F76-450B-B80D-E7FB59BE6A2B}</Project>
+      <Name>Fanex.ExternalAccount.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

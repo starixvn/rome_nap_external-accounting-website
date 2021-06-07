@@ -30,11 +30,24 @@
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticationType.Host)]
         public JsonResult SingleOpenCustomer(UpdateSingleClosedStatusQuery query)
-            => Json(_customerService.UpdateSingleCustomerClosedStatus(query));
+        {
+            query.UserId = CurrentSession.UserId;
+            query.Language = CurrentSession.LangKey;
+
+            return Json(_customerService.UpdateSingleCustomerClosedStatus(query));
+        }
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticationType.Host)]
-        public JsonResult MultipleOpenCustomer(IEnumerable<UpdateMultipleClosedStatusQuery> query)
-            => Json(_customerService.UpdateMultipleCustomerClosedStatus(query));
+        public JsonResult MultipleOpenCustomer(IEnumerable<UpdateMultipleClosedStatusQuery> queryList)
+        {
+            foreach (var query in queryList)
+            {
+                query.UserId = CurrentSession.UserId;
+                query.Language = CurrentSession.LangKey;
+            }
+
+            return Json(_customerService.UpdateMultipleCustomerClosedStatus(queryList));
+        }
     }
 }
