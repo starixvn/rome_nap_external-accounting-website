@@ -1018,9 +1018,9 @@
     UnlockAccess: function (custId, locked) {
         var confirmMessage = "";
         if (locked === 1) {
-            confirmMessage = "This account has been locked due to multiple failed OTP/Security Code authentication attempts. Are you sure you want to unlock this account?";
+            confirmMessage = "This account has been locked due to multiple failed OTP/Security Code authentication attempts. Are you sure you want to unlock it?";
         } else if (locked === 2) {
-            confirmMessage = "This account has been locked due to multiple failed password attempts. Are you sure you want to unlock this account?";
+            confirmMessage = "This account has been locked due to multiple failed password attempts. Are you sure you want to unlock it?";
         }
 
         if (confirmMessage.length) {
