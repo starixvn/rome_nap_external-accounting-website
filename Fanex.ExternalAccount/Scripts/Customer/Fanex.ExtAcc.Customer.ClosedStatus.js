@@ -330,12 +330,19 @@
                     bodyRows[startMergedRowIndex].Columns[1].MergeRowNumber = endMergedRowIndex - startMergedRowIndex + 1;
                 }
 
+                var gridContainerWidth = calculatedGridContainerWidth(result.TotalRows, pageSize);
+                var yScrollBarWidth = 20,
+                    columnNoWidth = 50,
+                    columnLevelWidth = 100,
+                    columnUsernameWidth = gridContainerWidth > 0
+                        ? gridContainerWidth - columnNoWidth - columnLevelWidth - 2 * yScrollBarWidth
+                        : 200;
                 var gridOptions =
                     {
                         columns: [
-                            { HeaderText: "No.", Width: 50, Name: "No", HeaderAlign: "center", CellAlign: "center" },
-                            { HeaderText: "Level", Width: 100, Name: "Level", HeaderAlign: "center" },
-                            { HeaderText: "Username", Width: 200, Name: "Username", HeaderAlign: "center" }
+                            { HeaderText: "No.", Width: columnNoWidth, Name: "No", HeaderAlign: "center", CellAlign: "center" },
+                            { HeaderText: "Level", Width: columnLevelWidth, Name: "Level", HeaderAlign: "center" },
+                            { HeaderText: "Username", Width: columnUsernameWidth, Name: "Username", HeaderAlign: "center" }
                         ],
                         bodyRows: bodyRows,
                         showDistinctRow: false,
@@ -354,6 +361,7 @@
 
                 self.DOMElements.tabMain.fadeOut(function () {
                     self.DOMElements.tabDetail.fadeIn(function () {
+                        self.DOMElements.gridContainer.css('width', gridContainerWidth);
                         self.DOMElements.gridContainer.show();
                         self.DOMElements.gridId.fanexGrid(gridOptions);
                         parent.$('#windowPopup').dialog({ position: { my: "center", at: "center", of: top.window } });
@@ -364,5 +372,25 @@
                 parent.Fanex.ExtAcc.UnBlockUI();
             }
         });
+    };
+
+    var calculatedGridContainerWidth = function (totalRows, pageSize) {
+        var numberOfPages = Math.ceil(totalRows / pageSize);
+        if (numberOfPages > 0) {
+            var yScrollBarWidth = 20,
+                itemPerPageWidth = 120,
+                detailTextWidth = 200,
+                numberListMargin = 12,
+                prevNextButtonWidth = 48,
+                pageNumberButtonWidth = 24,
+                spareSpaceWidth = 50;
+
+            return yScrollBarWidth + itemPerPageWidth + detailTextWidth
+                + numberListMargin + prevNextButtonWidth
+                + pageNumberButtonWidth * numberOfPages
+                + spareSpaceWidth;
+        }
+
+        return 0;
     };
 };
