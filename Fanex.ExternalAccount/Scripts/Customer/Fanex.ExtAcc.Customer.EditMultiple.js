@@ -483,8 +483,8 @@
         className: "iconEnableEdit",
         callback: function (key, opt) {
             top.shouldCalculatePopupHeight = false;
-            var url = resolveClientUrl('ParlayMaxPayout/Index?custIds=' + Fanex.ExtAcc.Customer.IdsAndNames().Ids + '&custNames=' + Fanex.ExtAcc.Customer.IdsAndNames().Names);
-            Fanex.ExtAcc.Form.Show(url, 'Edit Multiple Parlay Max Payout', 'auto', 'auto', false, false, 1);
+            var url = resolveClientUrl('ParlayMaxPayout/Index?custIds=' + Fanex.ExtAcc.Customer.IdsAndNames().Ids + '&custNames=' + Fanex.ExtAcc.Customer.IdsAndNames().Names + '&roleid=' + Fanex.ExtAcc.Customer.CurrentLevel);
+            Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Multiple Parlay Max Payout', 1050, 350, false, false, 1);
         }
     }
 

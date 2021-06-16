@@ -9,5 +9,7 @@
         public string CustName { get; set; }
 
         public string CustNames { get; set; }
+
+        public int RoleId { get; set; }
     }
 }

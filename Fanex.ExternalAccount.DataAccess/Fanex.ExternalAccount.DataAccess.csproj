@@ -179,6 +179,7 @@
     <Compile Include="Criteria\GroupConfiguration\GetGroupConfigurationCriteria.cs" />
     <Compile Include="Criteria\IPInformation\GetIPInformationCriteria.cs" />
     <Compile Include="Criteria\IPInformation\GetAllSpecialIPCriteria.cs" />
+    <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutCheckCriteria.cs" />
     <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutSelectCriteria.cs" />
     <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutUpdateCriteria.cs" />
     <Compile Include="Criteria\SuperWinLossDetailByPT\SuperPTCriteria.cs" />

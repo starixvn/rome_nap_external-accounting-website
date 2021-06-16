@@ -13,6 +13,8 @@
 
         public string CustNames { get; set; }
 
+        public int RoleId { get; set; }
+
         public bool IsMultiple => !string.IsNullOrWhiteSpace(CustIds);
 
         public List<ParlayMaxPayoutEntityModel> ListEntityModel { get; set; }

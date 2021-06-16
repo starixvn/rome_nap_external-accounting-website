@@ -13,6 +13,8 @@
     {
         List<ParlayMaxPayoutEntityModel> Select(MaxPayoutSelectCriteria criteria);
 
+        Result Check(MaxPayoutCheckCriteria criteria);
+
         Result Update(MaxPayoutUpdateCriteria criteria);
     }
 
@@ -48,6 +50,8 @@
                 return result;
             }
         }
+
+        public Result Check(MaxPayoutCheckCriteria criteria) => ExecuteNonQuery(criteria);
 
         public Result Update(MaxPayoutUpdateCriteria criteria) => ExecuteNonQuery(criteria);
 

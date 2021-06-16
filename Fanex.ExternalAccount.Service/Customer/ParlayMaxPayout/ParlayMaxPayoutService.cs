@@ -15,6 +15,8 @@
     {
         ParlayMaxPayoutViewModel Select(ParlayMaxPayoutSelectRequest request);
 
+        Result Check(ParlayMaxPayoutUpdateRequest request);
+
         Result Update(ParlayMaxPayoutUpdateRequest request);
 
         IEnumerable<Result> UpdateMultiple(ParlayMaxPayoutUpdateMultipleRequest request);
@@ -38,8 +40,11 @@
                 CustIds = request.CustIds,
                 CustName = request.CustName,
                 CustNames = request.CustNames,
+                RoleId = request.RoleId,
                 ListEntityModel = _parlayMaxPayoutDataAccess.Select(new MaxPayoutSelectCriteria { CustId = request.CustId, SettingStatus = Config.SettingStatus })
             };
+
+        public Result Check(ParlayMaxPayoutUpdateRequest request) => _parlayMaxPayoutDataAccess.Check(new MaxPayoutCheckCriteria(request));
 
         public Result Update(ParlayMaxPayoutUpdateRequest request) => _parlayMaxPayoutDataAccess.Update(new MaxPayoutUpdateCriteria(request));
 

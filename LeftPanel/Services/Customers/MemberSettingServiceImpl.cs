@@ -11,7 +11,7 @@
     public class MemberSettingServiceImpl : CustomerSettingServiceImpl
     {
         private static readonly IList<string> IgnoredSettingsWhenEditMember =
-            new List<string> { "Info", "AddNew", "Transfer" };
+            new List<string> { "Info", "AddNew", "Transfer", "ParlayMaxPayout" };
 
         public MemberSettingServiceImpl(
             int userId, 

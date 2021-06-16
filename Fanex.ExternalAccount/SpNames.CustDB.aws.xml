@@ -343,5 +343,6 @@
   <Function Name="ParlayMaxPayout">
     <Setting Key="Acc_CustSetting_MaxPayoutSelect" SpName="Acc_CustSetting_MaxPayoutSelect_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_CustSetting_MaxPayoutUpd" SpName="Acc_CustSetting_MaxPayoutUpd_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_CustSetting_MaxPayoutCheckDownline" SpName="Acc_CustSetting_MaxPayoutCheckDownline_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" />
   </Function>
 </Functions>

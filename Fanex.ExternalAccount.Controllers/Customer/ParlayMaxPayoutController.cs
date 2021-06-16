@@ -29,21 +29,25 @@
         }
 
         [AntiXSRFFilter]
+        public JsonResult Check(ParlayMaxPayoutUpdateRequest request) => Json(_parlayMaxPayoutService.Check(request));
+
+        [AntiXSRFFilter]
         public JsonResult Update(ParlayMaxPayoutUpdateRequest request)
         {
+            request.UserId = CurrentSession.UserId;
+            request.IP = CurrentContext.Ip4Address;
             return Json(_parlayMaxPayoutService.Update(request));
         }
 
         [AntiXSRFFilter]
         public JsonResult UpdateMultiple(ParlayMaxPayoutUpdateMultipleRequest request)
         {
+            request.UserId = CurrentSession.UserId;
+            request.IP = CurrentContext.Ip4Address;
             return Json(_parlayMaxPayoutService.UpdateMultiple(request));
         }
 
-        private static bool IsMultiple(ParlayMaxPayoutSelectRequest request)
-        {
-            return request.CustId == 0 && !string.IsNullOrWhiteSpace(request.CustIds);
-        }
+        private static bool IsMultiple(ParlayMaxPayoutSelectRequest request) => request.CustId == 0 && !string.IsNullOrWhiteSpace(request.CustIds);
 
         private static int GetFirstCustId(string custIds) => int.Parse(custIds.Split(new[] { ',' }, 2)[0]);
     }

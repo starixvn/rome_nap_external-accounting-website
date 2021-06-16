@@ -722,17 +722,19 @@
         top.shouldCalculatePopupHeight = false;
         parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl(
             'Customer/EditTransferCondition/?roleId=' + $scope.model.personalInfo.roleId.value + '&custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()),
-            parent.titles[1] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>', 
+            parent.titles[1] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
             600, 300, false, false, 1);
 
     };
 
     $scope.ParlayMaxPayout = function () {
         top.shouldCalculatePopupHeight = false;
-        parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl(
-            'ParlayMaxPayout/Index?custId=' + $scope.model.personalInfo.custId.value + "&custName=" + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html()),
-            'Parlay Max Payout: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
-            'auto', 'auto', false, false, 1);
+        url = parent.resolveClientUrl('ParlayMaxPayout/Index?custId=' + $scope.model.personalInfo.custId.value + "&custName=" + $scope.model.personalInfo.currentLevel.value + "&roleid=" + $scope.model.personalInfo.roleId.value + "&groupName=" + parent.$('#selectedGroupName').html());
+        parent.Fanex.ExtAcc.LoadMainIFrame(url);
+        //parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl(
+        //    'ParlayMaxPayout/Index?custId=' + $scope.model.personalInfo.custId.value + "&custName=" + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html()),
+        //    'Parlay Max Payout: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
+        //    'auto', 'auto', false, false, 1);
 
     };
 
