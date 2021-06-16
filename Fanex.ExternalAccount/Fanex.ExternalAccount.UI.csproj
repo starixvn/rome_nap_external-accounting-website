@@ -1587,6 +1587,9 @@
     <Content Include="Scripts\Fanex.Multiselect\images\ui-icons_2e83ff_256x240.png" />
     <Content Include="Scripts\ProblemAccount\Fanex.ExtAcc.ProblemAccount.js" />
     <Content Include="Scripts\Manage\Fanex.ExtAcc.SubGroup.js" />
+    <Content Include="SpNames.CustDB.aws.xml">
+      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
+    </Content>
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
@@ -1877,10 +1880,6 @@
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
     </Content>
     <Content Include="SpNames.CustDB.production.xml">
-      <SubType>Designer</SubType>
-      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
-    </Content>
-    <Content Include="SpNames.CustDB.cloud.xml">
       <SubType>Designer</SubType>
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
     </Content>
