@@ -21,7 +21,7 @@
                 $me = $('#' + $me.attr('id'));
             }
             var checkedText = checked ? ':checked' : ':not(:checked)',
-                items = $me.next().find('input[data-is-group=false]' + checkedText),
+                items = $me.next().find('input[data-is-group=false]:not(:disabled)' + checkedText),
                 itemLength = items.length,
                 values = [];
             for (var i = 0; i < itemLength; i++) {
@@ -416,11 +416,10 @@
             updateSelected: function () {
                 var me = this,
                     options = me.options,
-                    $inputs = me.$allInputsExceptHeaderCheckBox,
-                    $checked = $inputs.filter(':checked'),
+                    $inputs = me.$allInputsExceptHeaderCheckBox.not(":disabled"),
+                    $checked = $inputs.filter(':checked:not(:disabled)'),
                     value = '',
                     numChecked = $checked.length;
-
                 if (numChecked === 0) {
                     value = options.noneSelectedText;
                 } else {

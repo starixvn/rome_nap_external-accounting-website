@@ -208,6 +208,14 @@ Fanex.ExtAcc.WinLossDetail = {
     ProductsListOnCheckAll: function (checked, $ddlProductDetail) {
         $ddlProductDetail.fanexMultiSelect("setCheckAll", checked);
         $ddlProductDetail.fanexMultiSelect("setEnable", checked);
+        var optionsElement = $ddlProductDetail.next(".fanex-multiselect-options");
+        $.each(optionsElement.find('input[type="checkbox"].show-item'), function (i, j) {
+            if ($(j).val) {
+                $(j).prop("checked", checked);
+                $(j).prop("disabled", !checked);
+            }
+            
+        });
     },
     ProductsListOnCheckGroup: function (checked, $ddlProductDetail, $groupCheckbox) {
         $groupCheckbox
@@ -230,23 +238,24 @@ Fanex.ExtAcc.WinLossDetail = {
         }
 
         var optionsElement = $ddlProductDetail.next(".fanex-multiselect-options");
-        $.each(filteredProductDetails, function (index, p) {
+        $.each(filteredProductDetails, function (index, product) {
             optionsElement
-                .find('input[type="checkbox"][value="' + p.ResourceId + '"]')
+                .find('input[type="checkbox"][value="' + product.ResourceId + '"]')
                 .prop("checked", checked)
-                .prop("disabled", !checked);
+                .prop("disabled", !checked)
+                .trigger('change');
+            $.each(optionsElement.find('input[type="checkbox"].show-item'), function (i, p) {
+                if ($(p).is("[disabled]")) {
+                    $(p).parent().addClass("hide-item");
+                } else {
+                    $(p).parent().removeClass("hide-item");
+                }
+            }) 
         });
-
         var enabledCheckboxes = optionsElement.find('input[type="checkbox"]:enabled').length - 1;
-
         if (checked) {
-            if (enabledCheckboxes === Fanex.ExtAcc.WinLossDetail.productDetailsData.length) {
-                $ddlProductDetail.fanexMultiSelect("setCheckAll", checked);
-            }
-
             $ddlProductDetail.fanexMultiSelect("setEnable", checked);
         } else if (!enabledCheckboxes) {
-            $ddlProductDetail.fanexMultiSelect("setCheckAll", checked);
             $ddlProductDetail.fanexMultiSelect("setEnable", checked);
         }
     },
