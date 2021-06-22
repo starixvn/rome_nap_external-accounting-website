@@ -29,6 +29,10 @@
                 dataType: "json",
                 data: params,
                 success: function (result) {
+                    if (result && result.errorCode && result.errorCode == 1) {
+                        return self.DOMElements.errMsg.html(result.errorMessage).show();
+                    }
+
                     if (result.ErrorCode == 0) {
                         self.DOMElements.successMsg.html(top.window.LanguageResources.UpdateCloseSuccess).show();
                         setTimeout(function () {
@@ -101,6 +105,10 @@
                 success: function (result) {
                     if (parent.Fanex.ExtAcc.ShowSecurityCodePage(result, parent.Fanex.ExtAcc.UnBlockUI)) {
                         return;
+                    }
+
+                    if (result && result.errorCode && result.errorCode == 1) {
+                        return self.DOMElements.errMsg.html(result.errorMessage).show();
                     }
 
                     var isSuccessAll = true;
