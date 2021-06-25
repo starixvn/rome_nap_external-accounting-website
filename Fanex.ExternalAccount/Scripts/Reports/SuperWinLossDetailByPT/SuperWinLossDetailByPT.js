@@ -231,7 +231,7 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
         }
     };
     SuperWinLossDetailByPT.prototype.ShowNetTurnoverInfo = function (data) {
-        var message = "- For Sportbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
+        var message = "- For Sportsbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
         var height = 170;
         if (data.TooltipsForLiveCasino !== "") {
             message += "<br/><br/>" + data.TooltipsForLiveCasino;

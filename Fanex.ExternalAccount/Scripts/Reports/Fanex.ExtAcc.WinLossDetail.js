@@ -213,10 +213,18 @@ Fanex.ExtAcc.WinLossDetail = {
             if ($(j).val) {
                 $(j).prop("checked", checked);
                 $(j).prop("disabled", !checked);
+                $(j).trigger('change');
             }
-            
+
+            const attr = $(j).attr('disabled');
+            if (typeof attr !== 'undefined' && attr !== false) {
+                $(j).parent().addClass("hide-item");
+            } else {
+                $(j).parent().removeClass("hide-item");
+            }
         });
     },
+
     ProductsListOnCheckGroup: function (checked, $ddlProductDetail, $groupCheckbox) {
         $groupCheckbox
             .closest(".fanex-multiselect-div")
@@ -244,14 +252,24 @@ Fanex.ExtAcc.WinLossDetail = {
                 .prop("checked", checked)
                 .prop("disabled", !checked)
                 .trigger('change');
-            $.each(optionsElement.find('input[type="checkbox"].show-item'), function (i, p) {
-                if ($(p).is("[disabled]")) {
-                    $(p).parent().addClass("hide-item");
-                } else {
-                    $(p).parent().removeClass("hide-item");
-                }
-            }) 
+
         });
+
+        $.each(optionsElement.find('input[type="checkbox"]'), function (i, p) {
+            const attr = $(p).attr('disabled');
+            if (typeof attr !== 'undefined' && attr !== false) {
+                $(p).parent().addClass("hide-item");
+            } else {
+                $(p).parent().removeClass("hide-item");
+            }
+        })
+
+        const maxAnabledItem = optionsElement.find('input[type="checkbox"].show-item:enabled').length;
+        const checkedItem = optionsElement.find('input[type="checkbox"].show-item:enabled:checked').length;
+        if (maxAnabledItem === checkedItem) {
+            $("#ddl-product-detailHeaderCheckBox").prop("checked", true);
+        }
+
         var enabledCheckboxes = optionsElement.find('input[type="checkbox"]:enabled').length - 1;
         if (checked) {
             $ddlProductDetail.fanexMultiSelect("setEnable", checked);
@@ -259,6 +277,7 @@ Fanex.ExtAcc.WinLossDetail = {
             $ddlProductDetail.fanexMultiSelect("setEnable", checked);
         }
     },
+
     InitProductDetailsList: function (productDetails) {
         var dataList = [];
         $.each(productDetails, function (i, item) {

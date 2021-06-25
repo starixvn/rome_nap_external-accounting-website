@@ -273,7 +273,7 @@ class SuperWinLossDetailByPT {
     }
 
     ShowNetTurnoverInfo(data: any) {
-        let message = "- For Sportbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
+        let message = "- For Sportsbook, Net Turnover is Turnover which excludes the draw tickets and halves of the turnover of the half won, half lost tickets.";
         let height = 170;
 
         if (data.TooltipsForLiveCasino !== "") {

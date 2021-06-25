@@ -108,6 +108,20 @@ class ProductControls {
     private ProductsListOnCheckAll(checked, $ddlProductDetail) {
         $ddlProductDetail.fanexMultiSelect("setCheckAll", checked);
         $ddlProductDetail.fanexMultiSelect("setEnable", checked);
+        var optionsElement = $ddlProductDetail.next(".fanex-multiselect-options");
+        $.each(optionsElement.find('input[type="checkbox"].show-item'), function () {
+            if ($(this).val) {
+                $(this).prop("checked", checked);
+                $(this).prop("disabled", !checked);
+                $(this).trigger('change');
+            }
+
+            if ($(this).is("[disabled]")) {
+                $(this).parent().addClass("hide-item");
+            } else {
+                $(this).parent().removeClass("hide-item");
+            }
+        });
     }
 
     private ProductsListOnCheckGroup(checked, $ddlProductDetail, $groupCheckbox) {
@@ -132,24 +146,32 @@ class ProductControls {
             return;
         }
 
-        const optionsElement = $ddlProductDetail.next(".fanex-multiselect-options");
-        this.$.each(filteredProductDetails, function (index, p) {
+        var optionsElement = $ddlProductDetail.next(".fanex-multiselect-options");
+        $.each(filteredProductDetails, function (index, product) {
             optionsElement
-                .find('input[type="checkbox"][value="' + p.ResourceId + '"]')
+                .find('input[type="checkbox"][value="' + product.ResourceId + '"]')
                 .prop("checked", checked)
-                .prop("disabled", !checked);
+                .prop("disabled", !checked)
+                .trigger('change');
+            $.each(optionsElement.find('input[type="checkbox"].show-item'), function () {
+                if ($(this).is("[disabled]")) {
+                    $(this).parent().addClass("hide-item");
+                } else {
+                    $(this).parent().removeClass("hide-item");
+                }
+            })
         });
 
+        const maxAnabledItem = optionsElement.find('input[type="checkbox"].show-item:enabled').length;
+        const checkedItem = optionsElement.find('input[type="checkbox"].show-item:enabled:checked').length;
+        if (maxAnabledItem === checkedItem) {
+            $("#ddl-product-detailHeaderCheckBox").prop("checked", true);
+        }
+
         var enabledCheckboxes = optionsElement.find('input[type="checkbox"]:enabled').length - 1;
-
         if (checked) {
-            if (enabledCheckboxes === this.productDetailsData.length) {
-                $ddlProductDetail.fanexMultiSelect("setCheckAll", checked);
-            }
-
             $ddlProductDetail.fanexMultiSelect("setEnable", checked);
         } else if (!enabledCheckboxes) {
-            $ddlProductDetail.fanexMultiSelect("setCheckAll", checked);
             $ddlProductDetail.fanexMultiSelect("setEnable", checked);
         }
     }

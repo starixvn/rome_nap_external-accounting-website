@@ -417,7 +417,7 @@
                 var me = this,
                     options = me.options,
                     $inputs = me.$allInputsExceptHeaderCheckBox.not(":disabled"),
-                    $checked = $inputs.filter(':checked:not(:disabled)'),
+                    $checked = $inputs.filter(':checked'),
                     value = '',
                     numChecked = $checked.length;
                 if (numChecked === 0) {
@@ -787,8 +787,8 @@
                         }
                         else if (this.checked) {
                             var currentGroup = parent,
-                                currentChildSelected = childrenNodes.filter('.show-item').filter(':checked').length,
-                                currentChildLength = childrenNodes.filter('.show-item').length;
+                                currentChildSelected = childrenNodes.filter('.show-item:not(:disabled)').filter(':checked').length,
+                                currentChildLength = childrenNodes.filter('.show-item:not(:disabled)').length;
                             if (currentChildLength === currentChildSelected) {
                                 currentGroup.prev().find('input').prop('checked', true);
                                 me.updateParentSelected(current.parent().parent().parent().parent());
