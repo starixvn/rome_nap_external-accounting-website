@@ -121,7 +121,8 @@
         {
             var toolTipsProducts = new
             {
-                liveCasino = reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupId)
+                liveCasino = reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupId),
+                rngCasino = reportService.BuildTooltipsForRNGCasino(request.UserId, request.GroupId)
             };
 
             return request.IsSearch()

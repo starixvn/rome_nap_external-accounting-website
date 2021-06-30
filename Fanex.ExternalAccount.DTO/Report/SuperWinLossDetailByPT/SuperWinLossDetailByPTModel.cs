@@ -13,6 +13,7 @@
         IEnumerable<SuperWinLossDetailByUsernameModel> winLossByUsernames,
         SuperWinLossDetailByProductDTO grandTotal,
         string tooltipsForLiveCasino,
+        string tooltipsForRNGCasino,
         int totalRecords,
         int pageIndex,
         int pageSize)
@@ -20,6 +21,7 @@
             WinLossByUsernames = winLossByUsernames.OrderByDescending(winloss => winloss.Total.Turnover);
             GrandTotal = grandTotal;
             TooltipsForLiveCasino = tooltipsForLiveCasino;
+            TooltipsForRNGCasino = tooltipsForRNGCasino;
             TotalRecords = totalRecords;
             PageSize = pageSize;
             PageIndex = pageIndex;
@@ -30,6 +32,8 @@
         public SuperWinLossDetailByProductDTO GrandTotal { get; }
 
         public string TooltipsForLiveCasino { get; }
+
+        public string TooltipsForRNGCasino { get; }
 
         public int TotalRecords { get; }
 

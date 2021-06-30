@@ -39,6 +39,8 @@
 
         string BuildTooltipsForLiveCasino(int userId, int groupId);
 
+        string BuildTooltipsForRNGCasino(int userId, int groupId);
+
         string ConcatProductName(string productIds, string resourceIds, string groupName);
     }
 }

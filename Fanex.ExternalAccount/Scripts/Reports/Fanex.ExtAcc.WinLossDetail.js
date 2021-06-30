@@ -1153,6 +1153,13 @@ Fanex.ExtAcc.WinLossDetail = {
                             height += 50;
                         }
 
+                        if (data.tooltips.rngCasino != "") {
+                            message +=
+                                "<br/>" +
+                                "<br/>" +
+                                data.tooltips.rngCasino;
+                            height += 70;
+                        }
                         Fanex.ExtAcc.Form.Alert("Net Turnover Information", message, 430, height);
                         return false;
                     });
