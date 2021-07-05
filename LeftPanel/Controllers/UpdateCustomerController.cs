@@ -60,7 +60,7 @@
                     custName));
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.UnlockCustomer,
+        [ExternalAccountAuthenticate(Function = eFunctions.OpenSuper,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UnlockAccess(int custId, string groupName)
