@@ -132,8 +132,7 @@
 
             var result = ptCustomerService.AddNewMaster(customer, requestContext, out int masterId);
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
-            {
-                UpdateCasinoStatus(masterId, result, customer);
+            {              
 #pragma warning disable S109 // Magic numbers should not be used
                 Thread.Sleep(3000);
 #pragma warning restore S109 // Magic numbers should not be used
@@ -230,8 +229,7 @@
             var result = ptCustomerService.AddNewAgent(customer, requestContext, out int agentId);
 
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
-            {
-                UpdateCasinoStatus(agentId, result, customer);
+            {               
 #pragma warning disable S109 // Magic numbers should not be used
                 Thread.Sleep(3000);
 #pragma warning restore S109 // Magic numbers should not be used
@@ -336,8 +334,7 @@
 
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
-                UpdateCasinoStatus(memberId, result, customer);
-#pragma warning disable S109 // Magic numbers should not be used
+              #pragma warning disable S109 // Magic numbers should not be used
                 Thread.Sleep(3000);
 #pragma warning restore S109 // Magic numbers should not be used
                 AutoInsertNG2Product(memberId, customer.UserName, RoleId.Member, parentId, SiteId.NAP,

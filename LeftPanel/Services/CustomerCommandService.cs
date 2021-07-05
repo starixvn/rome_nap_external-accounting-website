@@ -80,12 +80,7 @@
                     AuthenticateAction.AuthenticationType.Host))
             {
                 return new Result(1, ViewLang.DontHavePermission);
-            }
-
-            if (casinoCustomer?.CasinoSync == true)
-            {
-                UpdateCasinoClosed(custId, close, currentSession, currentContext);
-            }
+            }           
 
             return customerDataAccess.CloseCutomer(custId, close, clearCredit, custName);
         }
@@ -147,36 +142,6 @@
                 Custid = custId,
                 Userid = userId,
                 IP = ip4Address
-            });
-
-        protected void UpdateCasinoClosed(int custId, bool closed, ICurrentSession currentSession,
-            ICurrentContext currentContext)
-        {
-            var cust = new Customer();
-            try
-            {
-                if (authorizationService.IsAuthorized(
-                    currentSession.UserId,
-                    eFunctions.CloseCustomer,
-                    AuthenticateAction.AuthenticationType.Host))
-                {
-                    cust.UpdateCustClosed(
-                        custId,
-                        closed,
-                        currentContext.Ip4Address,
-                        currentSession.UserId,
-                        currentSession.UserName,
-                        AlphaAdminSystem);
-                }
-            }
-            catch (ErrorException casinoEx)
-            {
-                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-        }
+            });        
     }
 }
