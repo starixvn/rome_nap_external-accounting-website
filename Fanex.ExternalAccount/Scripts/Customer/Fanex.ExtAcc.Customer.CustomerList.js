@@ -143,7 +143,8 @@ Fanex.ExtAcc.Customer.CustomerList = {
                     }
                 },
                 marginRight: 12,
-                showDistinctRow: false
+                showDistinctRow: false,
+                allowTruncate: true
             };
 
             if (bodyRows.length === 0) {
@@ -244,8 +245,8 @@ Fanex.ExtAcc.Customer.CustomerList = {
                     ? '<span class="locked-icon" onclick="javascript:Fanex.ExtAcc.Customer.UnlockAccess(' + cell.Value.CustId + ',' + cell.Value.LockedAccess.Locked + ')" title="Click to unlock"></span>'
                     : "";
                 return uplineRoleId === Fanex.ExtAcc.Customer.Agent ?
-                    '<div class="customerlist-username" title="' + tooltipUsername + '">' + shortUsername + unlockIcon + '</div>' :
-                    '<div class="customerlist-username" title="' + tooltipUsername + '"><a id="usr-' + cell.Value.CustId + '" href="' + func + '">' + shortUsername + '</a>' + unlockIcon + '</div>';
+                    '<span title="' + tooltipUsername + '">' + shortUsername + '</span>' + unlockIcon :
+                    '<a id="usr-' + cell.Value.CustId + '" href="' + func + '" title="' + tooltipUsername + '">' + shortUsername + '</a>' + unlockIcon;
             }
         });
         columns.push({
