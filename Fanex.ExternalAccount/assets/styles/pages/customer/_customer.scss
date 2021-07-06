@@ -345,6 +345,11 @@ tr.closed-byArchive td {
     vertical-align: middle;
     position: absolute;
     right: 0;
+    z-index: 10;
+}
+
+.freegrid .column-truncate {
+    white-space: nowrap;
 }
 
 .headerTransferCondition {
