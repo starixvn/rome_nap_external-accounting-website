@@ -143,8 +143,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                     }
                 },
                 marginRight: 12,
-                showDistinctRow: false,
-                allowTruncate: true
+                showDistinctRow: false
             };
 
             if (bodyRows.length === 0) {
