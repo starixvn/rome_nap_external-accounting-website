@@ -26,14 +26,14 @@
         var $this = $(this);
         var $tr = $this.closest('tr');
         var $tds = $tr.find('td:not(.row-header)');
-        var $childInputs = $tr.find('input:not(.check-enable-edit)');
+        var $childInputsInRow = $tr.find('input:not(.check-enable-edit, .input-field-unlimited)');
         if ($this.is(':checked')) {
             $tds.removeClass('td-disabled');
-            $childInputs.attr('disabled', false);
+            $childInputsInRow.attr('disabled', false);
         }
         else {
             $tds.addClass('td-disabled');
-            $childInputs.attr('disabled', true);
+            $childInputsInRow.attr('disabled', true);
         }
 
     });

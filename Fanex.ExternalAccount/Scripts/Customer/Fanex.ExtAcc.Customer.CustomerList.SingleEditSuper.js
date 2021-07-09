@@ -179,7 +179,7 @@
                         className: "iconEnableEdit editInfoBg",
                         callback: function (key, opt) {
                             top.shouldCalculatePopupHeight = false;
-                            var url = resolveClientUrl('ParlayMaxPayout/Index?custId=' + custId + '&custName=' + title + '&roleId=4');
+                            var url = resolveClientUrl('ParlayMaxPayout/Index?custId=' + custId + '&custName=' + title + '&roleId=4' + '&groupName=' + $('#selectedGroupName').html());
                             Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Parlay Max Payout: <font color="#6dcff6">' + title + '</font>', 1050, 350, false, false, 1);
                         }
                     };
