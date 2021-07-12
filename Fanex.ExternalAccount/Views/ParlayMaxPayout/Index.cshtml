@@ -87,6 +87,8 @@
 
         .title {
             background-color: #f1f1a6;
+            max-height: 95px;
+            overflow-y: scroll;
         }
 
         .check-enable-edit {
@@ -119,7 +121,7 @@
                            data-default-payout-value="@defaultPayoutValue.ToString("#,0")"
                            data-checkbox-unlimited-id="@unlimitedId"
                            class="R @(payoutValue > 0 ? "" : "hide") input-field"
-                           @(Model.IsMultiple? "disabled" : "") />
+                           @(Model.IsMultiple ? "disabled" : "") />
 
                     <input id="@(id + "_Unlimited")" value="Unlimited" class="R @(payoutValue > 0 ? "hide" :" ") input-field-unlimited" disabled />
 
@@ -130,7 +132,7 @@
                 <td colspan="2" class="@(Model.IsMultiple? "td-disabled" : "")">
                     @if (isUplineUnlimited)
                     {
-                        <input id="@unlimitedId" type="checkbox" @(payoutValue == 0 ? "checked" : "") @(Model.IsMultiple? "disabled" : "") />
+                        <input id="@unlimitedId" type="checkbox" @(payoutValue == 0 ? "checked" : "") @(Model.IsMultiple ? "disabled" : "") />
                         <label for="@unlimitedId"> Unlimited</label>
                     }
                 </td>
@@ -171,10 +173,10 @@
             {
                 <tr>
                     <td class="row-header">
-                        @rowHeader[rowIndex] 
-                        @if(Model.IsMultiple)
+                        @rowHeader[rowIndex]
+                        @if (Model.IsMultiple)
                         {
-                            <input type="checkbox" class="check-enable-edit"  />
+                            <input type="checkbox" class="check-enable-edit" />
                         }
                     </td>
                     <td class="@(Model.IsMultiple? "td-disabled" : "")">@RenderPayoutBlock("SingleMatchParlay", "Single Match Parlay", entity.SportType, entity.Bettype, rowHeader[rowIndex], entity.SingleMatchParlay, entity.UplineSingleMatchParlay, entity.IsAllowUnlimitedSingleMatchParlay)</td>
