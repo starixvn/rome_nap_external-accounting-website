@@ -901,6 +901,6 @@ Fanex.ExtAcc.Customer.ShowEditMultipleParlayMaxPayout = function (custIds, userN
     $targetForm.find('#custIds').val(custIds);
     $targetForm.find('#custNames').val(userNames);
     $targetForm.find('#custRole').val(roleId);
-    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Views/_blank.html'), 'Edit Multiple Parlay Max Payout', 1050, 350, false, false, 1);
+    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Views/_blank.html'), 'Edit Multiple Parlay Max Payout', 1050, 350, false, false, 1, null, null, true);
     $targetForm.attr('action', resolveClientUrl('ParlayMaxPayout/Index')).submit();
 };

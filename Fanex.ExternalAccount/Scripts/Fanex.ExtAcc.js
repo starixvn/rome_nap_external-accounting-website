@@ -132,7 +132,7 @@ Fanex.ExtAcc = {
         return $('<div/>').text(str).html();
     },
 
-    LoadMainIFrame: function (url) {
+    LoadMainIFrame: function (url, resizeIframe) {
         this.BlockUI();
         $('#contentSplitter').html('');
         //$('#contentSplitter').height($('#mainContent').height() - 20);
@@ -141,9 +141,8 @@ Fanex.ExtAcc = {
         iframe.setAttribute('src', url);
         iframe.setAttribute('frameborder', 0);
         iframe.setAttribute('width', ($('#contentSplitter').width() - 5) + 'px');
-        iframe.setAttribute('onload', 'Fanex.ExtAcc.UnBlockUI()');
+        iframe.setAttribute('onload', resizeIframe ? 'resizeIframe(this)' : 'Fanex.ExtAcc.UnBlockUI()');
         $('#contentSplitter').append(iframe);
-
     },
 
     LoadMainFrame: function (url, id, isLeftPanelClick, dontNeedGroupName) {
@@ -970,4 +969,10 @@ function onPruductStatusSettingSuccess(result, callback) {
     }
 
     return true;
+}
+
+function resizeIframe(obj) {
+    obj.style.minHeight = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+    obj.style.minWidth = obj.contentWindow.document.documentElement.scrollWidth + 'px';
+    Fanex.ExtAcc.UnBlockUI();
 }

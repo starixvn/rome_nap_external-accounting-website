@@ -201,6 +201,11 @@
             }
         });
 
+        if (isValid === false) {
+            ShowSingleErrorMessage(errMsg);
+            return isValid;
+        }
+
         if (!isMultiple && !isChanged) {
             isValid = false;
             errMsg = 'There is no change to update.';
