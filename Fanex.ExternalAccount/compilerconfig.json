@@ -78,5 +78,9 @@
   {
     "outputFile": "assets/styles/pages/searchandcopy/index.css",
     "inputFile": "assets/styles/pages/searchandcopy/index.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/subgroup.css",
+    "inputFile": "assets/styles/pages/customer/subgroup.scss"
   }
 ]

@@ -61,7 +61,8 @@
       "assets/styles/pages/reports/winloss-detail.css",
       "assets/styles/pages/customer/pt-engine.css",
       "assets/styles/pages/admin/product.css",
-      "assets/styles/pages/searchandcopy/index.css"
+      "assets/styles/pages/searchandcopy/index.css",
+      "assets/styles/pages/customer/subgroup.css"
     ],
     "sourceMap": true
   },
