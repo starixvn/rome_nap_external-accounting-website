@@ -86,7 +86,7 @@ Fanex.ExtAcc.SubGroup = {
                         CellAlign: 'center',
                         Width: 225,
                         CustomHeaderRender: function (cell) {
-                            return '<div>' + cell.HeaderText + '</div><div id="editMult' + cell.HeaderText + '" class="editMult" data-subGroupName="' + cell.HeaderText + '"></div>';
+                            return '<div>' + cell.HeaderText + '</div><div id="editSGMult' + cell.HeaderText + '" class="editSGMutl" data-subGroupName="' + cell.HeaderText + '"></div>';
                         },
                         CustomCellRender: function (cell) {
                             var checked = cell.Value.SubGroupStatus.isAssigned ? "checked" : "";
@@ -143,7 +143,7 @@ Fanex.ExtAcc.SubGroup = {
                 $this.InitHeaderEvent();
 
                 if (data.subGroupCustomers.length === 0) {
-                    $("div[id^='editMult']").hide();
+                    $("div[id^='editSGMult']").hide();
                 }
             });
 
@@ -165,7 +165,7 @@ Fanex.ExtAcc.SubGroup = {
         }
     },
     InitHeaderEvent: function () {
-        $("div[id^='editMult']").attr('style', 'cursor: pointer !important');
+        $("div[id^='editSGMult']").attr('style', 'cursor: pointer !important');
         var menuItems = new Object();
         menuItems.assignAll = {
             name: "Assign all supers (this page)",
@@ -203,13 +203,13 @@ Fanex.ExtAcc.SubGroup = {
             }
         };
         $.contextMenu({
-            selector: "div[id^='editMult']",
+            selector: "div[id^='editSGMult']",
             items: menuItems,
             trigger: "left",
             ignoreRightClick: true,
             autoHide: true
         });
-        $("div[id^='editMult']").contextMenu(true);
+        $("div[id^='editSGMult']").contextMenu(true);
     },
     ChangeSubGroupAdminPassword: function () {
         var custId = $('#AdminId').val();

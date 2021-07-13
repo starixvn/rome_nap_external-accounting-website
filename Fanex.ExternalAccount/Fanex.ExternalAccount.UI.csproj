@@ -1122,6 +1122,12 @@
     <Content Include="assets\styles\pages\customer\pt-engine.min.css">
       <DependentUpon>pt-engine.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\customer\subgroup.css">
+      <DependentUpon>subgroup.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\subgroup.min.css">
+      <DependentUpon>subgroup.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\pages\customer\virtual-sport.css">
       <DependentUpon>virtual-sport.scss</DependentUpon>
     </Content>
@@ -2857,6 +2863,7 @@
     <Content Include="assets\bundles\BonusDetail\index.min.js.map">
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\customer\subgroup.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
