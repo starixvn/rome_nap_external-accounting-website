@@ -124,6 +124,12 @@
                 }
             },
             error: function (xhr, status, e) {
+                if (JSON && xhr.responseText) {
+                    var errorResult = JSON.parse(xhr.responseText);
+                    if (errorResult.code === 999999) {
+                        top.location.href = parent.resolveClientUrl('Shared/Offline');
+                    }
+                }
                 Fanex.ExtAcc.Account.RecheckinXHR = null;
             }
         });
