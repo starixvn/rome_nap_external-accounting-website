@@ -117,7 +117,7 @@
       <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.3.4\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.6.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.6.3-LockAndIndirectCloseAccount\lib\net40\Fanex.PTEngine.dll</HintPath>
+      <HintPath>..\packages\Fanex.PTEngine.1.0.6.4-LockAndIndirectCloseAccount\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.RemotingRef, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.RemotingRef.1.1.1\lib\net461\Fanex.RemotingRef.dll</HintPath>
