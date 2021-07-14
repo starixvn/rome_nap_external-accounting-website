@@ -266,7 +266,7 @@
 
     self.ShowMultipleOpenCustomerPopup = function (custIdList, roleId) {
         var url = resolveClientUrl('Customer/MultipleOpenCustomerView?custIdList=' + custIdList + '&roleid=' + roleId);
-        var title = 'Update Multiple Closed Status';
+        var title = 'Edit Multiple Closed Status';
 
         Fanex.ExtAcc.Form.Show(url, title, 'auto', 'auto', false, self.Init);
 
