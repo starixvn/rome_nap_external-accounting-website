@@ -20,6 +20,8 @@
 
         bool IsBelong(string groupName, int custId, string userName);
 
+        bool IsBelong(string groupName, IEnumerable<int> custIds);
+
         bool IsAuthorized(
             int userId,
             string functionKey,
@@ -95,7 +97,7 @@
                 || belongingService.IsBelonging(currentSession.UserId, groupName, custId, userName);
         }
 
-        private bool IsBelong(string groupName, IEnumerable<int> custIds)
+        public bool IsBelong(string groupName, IEnumerable<int> custIds)
         {
             foreach (var id in custIds)
             {

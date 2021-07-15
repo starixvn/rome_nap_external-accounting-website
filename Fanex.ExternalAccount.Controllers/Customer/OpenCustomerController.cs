@@ -3,6 +3,7 @@
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Requests.Customer.OpenCustomer;
     using System.Collections.Generic;
     using System.Web.Mvc;
@@ -39,15 +40,23 @@
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticationType.Host)]
-        public JsonResult MultipleOpenCustomer(IEnumerable<UpdateMultipleClosedStatusQuery> queryList)
+        public JsonResult MultipleOpenCustomer(
+            IEnumerable<UpdateMultipleClosedStatusQuery> request,
+            IEnumerable<int> custIds,
+            string groupName)
         {
-            foreach (var query in queryList)
+            if (!AuthorizationService.IsBelong(groupName, custIds))
             {
-                query.UserId = CurrentSession.UserId;
-                query.Language = CurrentSession.LangKey;
+                return Json(new Result(1, "You are not authorized on this function!"));
             }
 
-            return Json(_customerService.UpdateMultipleCustomerClosedStatus(queryList));
+            foreach (var item in request)
+            {
+                item.UserId = CurrentSession.UserId;
+                item.Language = CurrentSession.LangKey;
+            }
+
+            return Json(_customerService.UpdateMultipleCustomerClosedStatus(request));
         }
     }
 }

@@ -92,10 +92,15 @@
             self.DOMElements.btnCloseMultiple.attr("disabled", true);
             self.clearMessage();
             var params = {
-                queryList: $('.button-close-status.is-changed').map(function () {
+                request: $('.button-close-status.is-changed').map(function () {
                     var $this = $(this);
                     return { CustId: $this.attr('data-custid'), UserName: $this.attr('data-username'), IsClosed: $this.hasClass('suspend-switch') };
-                }).get()
+                }).get(),
+                custIds: $('.button-close-status.is-changed').map(function () {
+                    var $this = $(this);
+                    return parseInt($this.attr('data-custid'));
+                }).get(),
+                groupName: $('#selectedGroupName').html()
             };
 
             $.ajax({

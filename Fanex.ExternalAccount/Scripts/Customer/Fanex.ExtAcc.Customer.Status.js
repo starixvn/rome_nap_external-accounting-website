@@ -91,7 +91,12 @@
                 request: $('.button-suspend-status.is-changed').map(function () {
                     var $this = $(this);
                     return { CustId: $this.attr('data-custid'), UserName: $this.attr('data-username'), Suspended: $this.hasClass('suspend-switch') };
-                }).get()
+                }).get(),
+                custIds: $('.button-suspend-status.is-changed').map(function () {
+                    var $this = $(this);
+                    return parseInt($this.attr('data-custid'));
+                }).get(),
+                groupName: $('#selectedGroupName').html()
             };
 
             $.ajax({
@@ -101,6 +106,10 @@
                 success: function (result) {
                     if (parent.Fanex.ExtAcc.ShowSecurityCodePage(result, parent.Fanex.ExtAcc.UnBlockUI)) {
                         return;
+                    }
+
+                    if (result && result.errorCode && result.errorCode == 1) {
+                        return self.DOMElements.errMsg.html(result.errorMessage).show();
                     }
 
                     var isSuccessAll = true;
