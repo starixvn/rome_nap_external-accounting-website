@@ -164,7 +164,7 @@
             if (string.IsNullOrWhiteSpace(resourceIds)
                 && Config.IsOfferJackpotProductDetailsGroup(groupName))
             {
-                productIdList = productIdList.Where(id => id != ProductConstants.PragmaticPlay);
+                productIdList = productIdList.Where(id => !ProductConstants.ProductListHasProductDetail.Contains(id));
             }
 
             return ConcatProductName(productIdList, resourceIds, groupName);
@@ -172,38 +172,41 @@
 
         private string ConcatProductName(IEnumerable<int> productIds, string resourceIds, string groupName)
         {
-            var productNames = new List<string>();
+            var productDetailNames = GetProductDetailNames(Utils.ToEnumerableInt(resourceIds), groupName);
+            var productNames = ConcatProductNames(productIds, productDetailNames);
 
-            productIds.ToList().ForEach(productId =>
-            {
-                if (productId == ProductConstants.PragmaticPlay)
-                {
-                    var userSelectedResourceIds = Utils.ToEnumerableInt(resourceIds).ToList();
-                    var resourceIdList = _productDetailService.GetProductDetails(groupName)
-                        .Where(p => p.ProductId == ProductConstants.PragmaticPlay)
-                        .Select(p => int.Parse(p.ResourceId))
-                        .ToList();
-
-                    if (resourceIdList.Count > 0 && !IsEquals(resourceIdList, userSelectedResourceIds))
-                    {
-                        productNames.AddRange(userSelectedResourceIds.Select(id => CacheRef.GetProductDetailName(id)));
-                    }
-                    else
-                    {
-                        productNames.Add(CacheRef.GetProductName(productId));
-                    }
-                }
-                else
-                {
-                    productNames.Add(CacheRef.GetProductName(productId));
-                }
-            });
-
-            return Utils.JoinToString(productNames, ", ");
+            return productNames;
         }
 
-        private static bool IsEquals(IEnumerable<int> source, IEnumerable<int> destination)
-            => Enumerable.SequenceEqual(source.OrderBy(id => id), destination.OrderBy(id => id));
+        private IDictionary<int, string> GetProductDetailNames(IEnumerable<int> selectedResourceIds, string groupName)
+        {
+            var productNames = new Dictionary<int, string>();
+
+            _productDetailService.GetProductDetails(groupName)
+                .GroupBy(p => p.ProductId)
+                .ToList()
+                .ForEach(group =>
+                {
+                    if (Config.IsOfferJackpotProductDetailsGroup(groupName))
+                    {
+                        var allResourceIds = group.Select(p => int.Parse(p.ResourceId)).ToList();
+                        var intersectResourceIds = selectedResourceIds.Intersect(allResourceIds).ToList();
+
+                        if (intersectResourceIds.Count > 0
+                            && intersectResourceIds.Count != allResourceIds.Count)
+                        {
+                            productNames[group.Key] = string.Join(", ", intersectResourceIds.Select(id => CacheRef.GetProductDetailName(id)));
+                        }
+                    }
+                });
+
+            return productNames;
+        }
+
+        private static string ConcatProductNames(IEnumerable<int> productIds, IDictionary<int, string> productNames)
+           => productIds == null
+           ? string.Empty
+           : string.Join(", ", productIds.Select(id => productNames.TryGetValue(id, out var name) ? name : CacheRef.GetProductName(id)));
     }
 
 #pragma warning restore S109 // Magic numbers should not be used

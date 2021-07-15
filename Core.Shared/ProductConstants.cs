@@ -1,4 +1,6 @@
-﻿namespace Fanex.ExternalAccount.Core.Shared
+﻿using System.Collections.Generic;
+
+namespace Fanex.ExternalAccount.Core.Shared
 {
     public static class ProductConstants
     {
@@ -37,5 +39,11 @@
         public const int Joker = 56;
         public const int GDG = 59;
         public const int VGaming = 66;
+
+        public static readonly List<int> ProductListHasProductDetail = new List<int>
+        {
+            ProductConstants.PragmaticPlay,
+            ProductConstants.SexyGaming
+        };
     }
 }

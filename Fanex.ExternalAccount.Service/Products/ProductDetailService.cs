@@ -97,6 +97,7 @@
             if (Config.IsOfferJackpotProductDetailsGroup(groupName))
             {
                 canView[ProductConstants.PragmaticPlay] = true;
+                canView[ProductConstants.SexyGaming] = true;
             }
 
             return canView;
@@ -114,7 +115,7 @@
                 .ToList()
                 .ForEach(group =>
                 {
-                    if (group.Key == ProductConstants.PragmaticPlay)
+                    if (ProductConstants.ProductListHasProductDetail.Any(i => i == group.Key))
                     {
                         validProductDetails.AddRange(
                             Config.IsOfferJackpotProductDetailsGroup(groupName) ? group.Where(p => resourceIdsHash.ContainsKey(p.ResourceId)) : group);
@@ -167,7 +168,7 @@
                 .ToList()
                 .ForEach(group =>
                 {
-                    if (group.Key == ProductConstants.PragmaticPlay && Config.IsOfferJackpotProductDetailsGroup(groupName))
+                    if (ProductConstants.ProductListHasProductDetail.Any(i => i == group.Key) && Config.IsOfferJackpotProductDetailsGroup(groupName))
                     {
                         var intersectResourceIds = group.Select(p => p.ResourceId).Intersect(resourceIds);
 
