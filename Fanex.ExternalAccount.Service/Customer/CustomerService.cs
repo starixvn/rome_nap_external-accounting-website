@@ -69,7 +69,7 @@
         public List<CustomerSuspendStatusRow> GetMultipleSuspendCustomerViewModel(GetMultipleSuspendCustomerInfoCriteria criteria)
             => dataAccess.GetMultipleSuspendCustomerViewModel(criteria);
 
-        public List<Result> SuspendMultipleCustomer(List<MultipleUpdateSuspendRequest> request, int userId, string ipv4)
+        public List<Result> SuspendMultipleCustomer(List<MultipleUpdateSuspendRequest> request, int userId, string ipv4, int roleId)
         {
             var result = new List<Result>();
             var successUpdateSuspendedList = new StringBuilder();
@@ -97,20 +97,24 @@
                 }
             }
 
+            const int indent = 2;
+
             if (successUpdateSuspendedList.Length > 0)
             {
-#pragma warning disable S109 // Magic numbers should not be used
-                successUpdateSuspendedList.Length -= 2;
-#pragma warning restore S109 // Magic numbers should not be used
-                result.Insert(0, new Result(0, $"Status of {successUpdateSuspendedList.ToString()} and their affected downlines have been successfully updated to Suspended."));
+                successUpdateSuspendedList.Length -= indent;
+                string message = roleId != Role.Member
+                    ? $"Status of {successUpdateSuspendedList.ToString()} and their affected downlines have been successfully updated to Suspended."
+                    : $"{successUpdateSuspendedList.ToString()} have been successfully suspended.";
+                result.Insert(0, new Result(0, message));
             }
 
             if (successUpdateUnsuspendedList.Length > 0)
             {
-#pragma warning disable S109 // Magic numbers should not be used
-                successUpdateUnsuspendedList.Length -= 2;
-#pragma warning restore S109 // Magic numbers should not be used
-                result.Insert(0, new Result(0, $"Status of {successUpdateUnsuspendedList.ToString()} and their affected downlines have been successfully updated to Unsuspended."));
+                successUpdateUnsuspendedList.Length -= indent;
+                string message = roleId != Role.Member
+                    ? $"Status of {successUpdateUnsuspendedList.ToString()} and their affected downlines have been successfully updated to Unsuspended."
+                    : $"{successUpdateUnsuspendedList.ToString()} have been successfully unsuspended.";
+                result.Insert(0, new Result(0, message));
             }
 
             return result;
@@ -180,7 +184,7 @@
                 query.Ip,
                 query.SystemId));
 
-        public IEnumerable<Result> UpdateMultipleCustomerClosedStatus(IEnumerable<UpdateMultipleClosedStatusQuery> query)
+        public IEnumerable<Result> UpdateMultipleCustomerClosedStatus(IEnumerable<UpdateMultipleClosedStatusQuery> query, int roleId)
         {
             var result = new List<Result>();
             var successUpdateClosedList = new StringBuilder();
@@ -220,13 +224,19 @@
             if (successUpdateClosedList.Length > 0)
             {
                 successUpdateClosedList.Length -= indent;
-                result.Insert(0, new Result(0, $"Status of {successUpdateClosedList.ToString()} and their affected downlines have been successfully updated to Closed."));
+                string message = roleId != Role.Member
+                    ? $"Status of {successUpdateClosedList.ToString()} and their affected downlines have been successfully updated to Closed."
+                    : $"{successUpdateClosedList.ToString()} have been successfully closed.";
+                result.Insert(0, new Result(0, message));
             }
 
             if (successUpdateOpenedList.Length > 0)
             {
                 successUpdateOpenedList.Length -= indent;
-                result.Insert(0, new Result(0, $"Status of {successUpdateOpenedList.ToString()} and their affected downlines have been successfully updated to Opened."));
+                string message = roleId != Role.Member
+                    ? $"Status of {successUpdateOpenedList.ToString()} and their affected downlines have been successfully updated to Opened."
+                    : $"{successUpdateOpenedList.ToString()} have been successfully opened.";
+                result.Insert(0, new Result(0, message));
             }
 
             return result;

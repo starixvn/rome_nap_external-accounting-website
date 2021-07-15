@@ -85,7 +85,31 @@
     };
 
     self.btnCloseMultiple_OnClick = function () {
-        Fanex.ExtAcc.Form.ConfirmBox('Information', top.window.LanguageResources.OpenSingleConfirmMesssage, 'auto', 'auto', null, function () {
+        var message = top.window.LanguageResources.OpenSingleConfirmMesssage;
+        if (self.RoleId == 1) {
+            var openUserNames = '',
+                closeUserNames = '';
+            $('.button-close-status.is-changed').each(function () {
+                var $this = $(this);
+                if ($this.hasClass('suspend-switch')) {
+                    closeUserNames += $this.attr('data-username') + ', ';
+                } else {
+                    openUserNames += $this.attr('data-username') + ', ';
+                }
+            });
+
+            openUserNames = openUserNames.substring(0, openUserNames.length - 2);
+            closeUserNames = closeUserNames.substring(0, closeUserNames.length - 2);
+            message = openUserNames.length > 0
+                ? top.window.LanguageResources.OpenMultipleConfirmMessage.replace('custnames', openUserNames) + '<br />'
+                : '';
+            message += closeUserNames.length > 0
+                ? top.window.LanguageResources.CloseMultipleConfirmMessage.replace('custnames', closeUserNames) + '<br />'
+                : '';
+            message += top.window.LanguageResources.ProceedConfirmMessage;
+        }
+
+        Fanex.ExtAcc.Form.ConfirmBox('Information', message, 'auto', 'auto', null, function () {
             parent.Fanex.ExtAcc.Form.Close(null, null, 'open-confirm-box');
             parent.Fanex.ExtAcc.BlockUI();
             self.DOMElements.btnReset.attr("disabled", true);
@@ -100,7 +124,8 @@
                     var $this = $(this);
                     return parseInt($this.attr('data-custid'));
                 }).get(),
-                groupName: $('#selectedGroupName').html()
+                groupName: $('#selectedGroupName').html(),
+                roleId: self.RoleId
             };
 
             $.ajax({

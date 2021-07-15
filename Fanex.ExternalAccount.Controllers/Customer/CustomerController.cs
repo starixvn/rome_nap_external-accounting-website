@@ -574,14 +574,15 @@
         public JsonResult UpdateSuspendMultiple(
             List<MultipleUpdateSuspendRequest> request,
             List<int> custIds,
-            string groupName)
+            string groupName,
+            int roleId)
         {
             if (!AuthorizationService.IsBelong(groupName, custIds))
             {
                 return Json(new DTO.Result(1, "You are not authorized on this function!"));
             }
 
-            return Json(_customerService.SuspendMultipleCustomer(request, CurrentSession.UserId, CurrentContext.Ip4Address));
+            return Json(_customerService.SuspendMultipleCustomer(request, CurrentSession.UserId, CurrentContext.Ip4Address, roleId));
         }
 
         private ActionResult LimitationPage(string message)

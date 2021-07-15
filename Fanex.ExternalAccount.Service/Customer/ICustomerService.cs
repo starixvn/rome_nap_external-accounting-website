@@ -36,7 +36,7 @@
 
         List<CustomerSuspendStatusRow> GetMultipleSuspendCustomerViewModel(GetMultipleSuspendCustomerInfoCriteria criteria);
 
-        List<Result> SuspendMultipleCustomer(List<MultipleUpdateSuspendRequest> request, int userId, string ipv4);
+        List<Result> SuspendMultipleCustomer(List<MultipleUpdateSuspendRequest> request, int userId, string ipv4, int roleId);
 
         CustomerStatusDTO GetCustomerAllStatus(int custId, byte settingStatus);
 
@@ -50,6 +50,6 @@
 
         Result UpdateSingleCustomerClosedStatus(UpdateSingleClosedStatusQuery query);
 
-        IEnumerable<Result> UpdateMultipleCustomerClosedStatus(IEnumerable<UpdateMultipleClosedStatusQuery> query);
+        IEnumerable<Result> UpdateMultipleCustomerClosedStatus(IEnumerable<UpdateMultipleClosedStatusQuery> query, int roleId);
     }
 }

@@ -1194,6 +1194,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status of custnames shall be changed to Closed. Warning, the customers can&apos;t place bet..
+        /// </summary>
+        internal static string CloseMultipleConfirmMessage {
+            get {
+                return ResourceManager.GetString("CloseMultipleConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Coin Size.
         /// </summary>
         internal static string coinsize {
@@ -7507,6 +7516,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status of custnames shall be changed to Opened..
+        /// </summary>
+        internal static string OpenMultipleConfirmMessage {
+            get {
+                return ResourceManager.GetString("OpenMultipleConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to change Closed status for this customer? All affected downlines will be opened as well..
         /// </summary>
         internal static string OpenSingleConfirmMesssage {
@@ -7899,6 +7917,15 @@ namespace Resources {
         internal static string privateGames {
             get {
                 return ResourceManager.GetString("privateGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to proceed?.
+        /// </summary>
+        internal static string ProceedConfirmMessage {
+            get {
+                return ResourceManager.GetString("ProceedConfirmMessage", resourceCulture);
             }
         }
         
@@ -9065,6 +9092,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status of custnames shall be changed to Suspended. Warning, the customers can&apos;t place bet..
+        /// </summary>
+        internal static string SuspendMultipleConfirmMessage {
+            get {
+                return ResourceManager.GetString("SuspendMultipleConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Swimming.
         /// </summary>
         internal static string swimming {
@@ -9656,6 +9692,15 @@ namespace Resources {
         internal static string UnsuspendedTitleRemainUnchangedDownlines {
             get {
                 return ResourceManager.GetString("UnsuspendedTitleRemainUnchangedDownlines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status of custnames shall be changed to Unsuspended..
+        /// </summary>
+        internal static string UnsuspendMultipleConfirmMessage {
+            get {
+                return ResourceManager.GetString("UnsuspendMultipleConfirmMessage", resourceCulture);
             }
         }
         

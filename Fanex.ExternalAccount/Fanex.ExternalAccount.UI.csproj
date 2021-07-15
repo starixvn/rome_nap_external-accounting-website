@@ -484,11 +484,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Error.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Lang1.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Lang.resx</DependentUpon>
-    </Compile>
     <Content Include="App_Data\activitytracking.mnl.json">
       <DependentUpon>activitytracking.json</DependentUpon>
     </Content>
@@ -1564,6 +1559,11 @@
       <DependentUpon>UM.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Compile Include="App_GlobalResources\Lang.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Lang.resx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3109,8 +3109,8 @@
   <ItemGroup>
     <Content Include="App_GlobalResources\Lang.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Lang1.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Lang.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

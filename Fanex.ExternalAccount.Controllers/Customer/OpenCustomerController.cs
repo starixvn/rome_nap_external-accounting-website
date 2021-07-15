@@ -43,7 +43,8 @@
         public JsonResult MultipleOpenCustomer(
             IEnumerable<UpdateMultipleClosedStatusQuery> request,
             IEnumerable<int> custIds,
-            string groupName)
+            string groupName,
+            int roleId)
         {
             if (!AuthorizationService.IsBelong(groupName, custIds))
             {
@@ -56,7 +57,7 @@
                 item.Language = CurrentSession.LangKey;
             }
 
-            return Json(_customerService.UpdateMultipleCustomerClosedStatus(request));
+            return Json(_customerService.UpdateMultipleCustomerClosedStatus(request, roleId));
         }
     }
 }

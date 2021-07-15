@@ -81,7 +81,31 @@
     };
 
     self.btnSuspendMultiple_OnClick = function () {
-        Fanex.ExtAcc.Form.ConfirmBox('Information', top.window.LanguageResources.UnsuspendSingleConfirmMesssage, 'auto', 'auto', null, function () {
+        var message = top.window.LanguageResources.UnsuspendSingleConfirmMesssage;
+        if (self.RoleId == 1) {
+            var unsuspendUserNames = '',
+                suspendUserNames = '';
+            $('.button-suspend-status.is-changed').each(function () {
+                var $this = $(this);
+                if ($this.hasClass('suspend-switch')) {
+                    suspendUserNames += $this.attr('data-username') + ', ';
+                } else {
+                    unsuspendUserNames += $this.attr('data-username') + ', ';
+                }
+            });
+
+            unsuspendUserNames = unsuspendUserNames.substring(0, unsuspendUserNames.length - 2);
+            suspendUserNames = suspendUserNames.substring(0, suspendUserNames.length - 2);
+            message = unsuspendUserNames.length > 0
+                ? top.window.LanguageResources.UnsuspendMultipleConfirmMessage.replace('custnames', unsuspendUserNames) + '<br />'
+                : '';
+            message += suspendUserNames.length > 0
+                ? top.window.LanguageResources.SuspendMultipleConfirmMessage.replace('custnames', suspendUserNames) + '<br />'
+                : '';
+            message += top.window.LanguageResources.ProceedConfirmMessage;
+        }
+
+        Fanex.ExtAcc.Form.ConfirmBox('Information', message, 'auto', 'auto', null, function () {
             parent.Fanex.ExtAcc.Form.Close(null, null, 'suspend-confirm-box');
             parent.Fanex.ExtAcc.BlockUI();
             self.DOMElements.btnReset.attr("disabled", true);
@@ -96,7 +120,8 @@
                     var $this = $(this);
                     return parseInt($this.attr('data-custid'));
                 }).get(),
-                groupName: $('#selectedGroupName').html()
+                groupName: $('#selectedGroupName').html(),
+                roleId: self.RoleId
             };
 
             $.ajax({
