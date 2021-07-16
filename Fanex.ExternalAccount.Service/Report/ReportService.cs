@@ -160,11 +160,16 @@
         public string ConcatProductName(string productIds, string resourceIds, string groupName)
         {
             var productIdList = Utils.ToEnumerableInt(productIds);
-
             if (string.IsNullOrWhiteSpace(resourceIds)
                 && Config.IsOfferJackpotProductDetailsGroup(groupName))
             {
-                productIdList = productIdList.Where(id => !ProductConstants.ProductListHasProductDetail.Contains(id));
+                productIdList = productIdList.Where(id => id != ProductConstants.PragmaticPlay);
+            }
+
+            if (string.IsNullOrWhiteSpace(resourceIds)
+                && Config.IsOfferSexyGamingProductDetailsGroup(groupName))
+            {
+                productIdList = productIdList.Where(id => id != ProductConstants.SexyGaming);
             }
 
             return ConcatProductName(productIdList, resourceIds, groupName);
@@ -187,16 +192,14 @@
                 .ToList()
                 .ForEach(group =>
                 {
-                    if (Config.IsOfferJackpotProductDetailsGroup(groupName))
-                    {
-                        var allResourceIds = group.Select(p => int.Parse(p.ResourceId)).ToList();
-                        var intersectResourceIds = selectedResourceIds.Intersect(allResourceIds).ToList();
+                    var allResourceIds = group.Select(p => int.Parse(p.ResourceId)).ToList();
+                    var intersectResourceIds = selectedResourceIds.Intersect(allResourceIds).ToList();
 
-                        if (intersectResourceIds.Count > 0
-                            && intersectResourceIds.Count != allResourceIds.Count)
-                        {
-                            productNames[group.Key] = string.Join(", ", intersectResourceIds.Select(id => CacheRef.GetProductDetailName(id)));
-                        }
+                    if (intersectResourceIds.Count > 0
+                        && intersectResourceIds.Count != allResourceIds.Count
+                        && selectedResourceIds.Any())
+                    {
+                        productNames[group.Key] = string.Join(", ", intersectResourceIds.Select(id => CacheRef.GetProductDetailName(id)));
                     }
                 });
 

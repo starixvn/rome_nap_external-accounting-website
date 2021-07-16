@@ -106,9 +106,19 @@
             return GetValue("SpecialGroups").Split(',').Select(g => g.Trim()).ToArray();
         }
 
+        public static bool IsOfferProductDetail(string currentGroup)
+            => IsOfferJackpotProductDetailsGroup(currentGroup) || IsOfferSexyGamingProductDetailsGroup(currentGroup);
+
         public static bool IsOfferJackpotProductDetailsGroup(string currentGroup)
         {
             var allGroups = GetValue("OfferJackpotProductDetailsGroups");
+
+            return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
+        }
+
+        public static bool IsOfferSexyGamingProductDetailsGroup(string currentGroup)
+        {
+            var allGroups = GetValue("OfferSexyGamingProductDetailsGroups");
 
             return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
         }
