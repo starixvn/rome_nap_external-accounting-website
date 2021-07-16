@@ -573,10 +573,10 @@
             Policy = AuthenticateAction.AuthenticationType.Host)]
         public JsonResult UpdateSuspendMultiple(
             List<MultipleUpdateSuspendRequest> request,
-            List<int> custIds,
             string groupName,
             int roleId)
         {
+            var custIds = request.Select(item => item.CustId);
             if (!AuthorizationService.IsBelong(groupName, custIds))
             {
                 return Json(new DTO.Result(1, "You are not authorized on this function!"));

@@ -6,6 +6,7 @@
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Requests.Customer.OpenCustomer;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
 
@@ -42,10 +43,10 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticationType.Host)]
         public JsonResult MultipleOpenCustomer(
             IEnumerable<UpdateMultipleClosedStatusQuery> request,
-            IEnumerable<int> custIds,
             string groupName,
             int roleId)
         {
+            var custIds = request.Select(item => item.CustId);
             if (!AuthorizationService.IsBelong(groupName, custIds))
             {
                 return Json(new Result(1, "You are not authorized on this function!"));
