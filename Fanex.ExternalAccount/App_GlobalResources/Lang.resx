@@ -3515,7 +3515,7 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
     <value>There is no information available.</value>
   </data>
   <data name="UpdateSuspendSuccess" xml:space="preserve">
-    <value>The selected customer and his affected donwlines have been successfully updated.</value>
+    <value>The statuses of the selected account and his/her downlines have been successfully updated.</value>
   </data>
   <data name="SuspendInfoMessage" xml:space="preserve">
     <value>&lt;p&gt;- When a customer is suspended, all his downlines will be suspended as well&lt;/p&gt;&lt;p&gt;+ Only the downlines who were &lt;b&gt;indirectly &lt;/b&gt;suspended by upline will be unsuspended. You can click on the number of affected downlines to view the list&lt;/p&gt;&lt;p&gt;+ For the rest, their current status will not be changed. You can click on the number of remain unchanged downlines to view the list.&lt;/p&gt;&lt;p&gt;- Affected Downlines: list of users whose status will be changed after their upline is unsuspended.&lt;/p&gt;&lt;p&gt;- Remain Unchanged Downlines: list of users whose status will be kept after their upline is unsuspended .&lt;/p&gt;</value>
@@ -3533,16 +3533,16 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
     <value>List of downlines whose status are unchanged after {0} is unsuspended.</value>
   </data>
   <data name="UpdateCloseSuccess" xml:space="preserve">
-    <value>The selected customer and his affected donwlines have been successfully updated.</value>
+    <value>The statuses of the selected account and his/her downlines have been successfully updated.</value>
   </data>
   <data name="OpenedMainTitle" xml:space="preserve">
-    <value>List of downlines whose status are changed/unchanged after going to open {0}.</value>
+    <value>List of downlines' statuses after opening {0}.</value>
   </data>
   <data name="OpenInfoMessage" xml:space="preserve">
-    <value>&lt;p&gt;- When a customer is closed, all his downlines will be closed as well&lt;/p&gt;&lt;p&gt;- When a customer is opened:&lt;/p&gt;&lt;p&gt;+ Only the downlines who were &lt;b&gt;indirectly &lt;/b&gt;closed by upline will be opened. You can click on the number of affected downlines to view the list&lt;/p&gt;&lt;p&gt;+ For the rest, their current status will not be changed. You can click on the number of remain unchanged downlines to view the list.&lt;/p&gt;&lt;p&gt;- Affected Downlines: list of users whose status will be changed after their upline is opened.&lt;/p&gt;&lt;p&gt;- Remain Unchanged Downlines: list of users whose status will be kept after their upline is opened .&lt;/p&gt;</value>
+    <value>&lt;p&gt;- When an account is closed, all his/her downlines will be closed as well.&lt;/p&gt;&lt;p&gt;- When an account is opened:&lt;/p&gt;&lt;p&gt;+ Only the downlines who are &lt;b&gt;indirectly &lt;/b&gt; closed by the upline will be opened. You can click on the number of affected downlines to view the list.&lt;/p&gt;&lt;p&gt;+ For the rest, their current statuses will not change. You can click on the number of unaffected downlines to view the list.&lt;/p&gt;&lt;p&gt;- Affected Downlines: list of users whose statuses are changed after their upline is opened.&lt;/p&gt;&lt;p&gt;- Unaffected Downlines: list of users whose statuses remain unchanged after their upline is opened.&lt;/p&gt;</value>
   </data>
   <data name="OpenSingleConfirmMesssage" xml:space="preserve">
-    <value>Are you sure you want to change Closed status for this customer? All affected downlines will be opened as well.</value>
+    <value>Are you sure you want to open this account? All of his/her downlines will be opened as well.</value>
   </data>
   <data name="OpenMultipleConfirmMessage" xml:space="preserve">
     <value>Status of {0} shall be changed to Opened.</value>
@@ -3557,12 +3557,12 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
     <value>Status of {0} shall be changed to Suspended. Warning, the customers can't place bet.</value>
   </data>
   <data name="ProceedConfirmMessage" xml:space="preserve">
-    <value>Do you want to proceed?</value>
+    <value>Are you sure you want to proceed?</value>
   </data>
   <data name="OpenedAffectedDownlinesTitle" xml:space="preserve">
-    <value>List of downlines whose status are changed after {0} is opened.</value>
+    <value>List of downlines whose statuses are changed after opening {0}.</value>
   </data>
   <data name="OpenedRemainUnchangedDownlinesTitle" xml:space="preserve">
-    <value>List of downlines whose status are unchanged after {0} is opened.</value>
+    <value>List of downlines whose statuses remain unchanged after opening {0}.</value>
   </data>
 </root>

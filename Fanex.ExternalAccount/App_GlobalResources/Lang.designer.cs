@@ -7480,7 +7480,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of downlines whose status are changed after {0} is opened..
+        ///   Looks up a localized string similar to List of downlines whose statuses are changed after opening {0}..
         /// </summary>
         internal static string OpenedAffectedDownlinesTitle {
             get {
@@ -7489,7 +7489,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of downlines whose status are changed/unchanged after going to open {0}..
+        ///   Looks up a localized string similar to List of downlines&apos; statuses after opening {0}..
         /// </summary>
         internal static string OpenedMainTitle {
             get {
@@ -7498,7 +7498,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of downlines whose status are unchanged after {0} is opened..
+        ///   Looks up a localized string similar to List of downlines whose statuses remain unchanged after opening {0}..
         /// </summary>
         internal static string OpenedRemainUnchangedDownlinesTitle {
             get {
@@ -7507,7 +7507,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;- When a customer is closed, all his downlines will be closed as well&lt;/p&gt;&lt;p&gt;- When a customer is opened:&lt;/p&gt;&lt;p&gt;+ Only the downlines who were &lt;b&gt;indirectly &lt;/b&gt;closed by upline will be opened. You can click on the number of affected downlines to view the list&lt;/p&gt;&lt;p&gt;+ For the rest, their current status will not be changed. You can click on the number of remain unchanged downlines to view the list.&lt;/p&gt;&lt;p&gt;- Affected Downlines: list of users whose status will be changed after their upline is opened.&lt;/p&gt;&lt;p&gt;- R [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &lt;p&gt;- When an account is closed, all his/her downlines will be closed as well.&lt;/p&gt;&lt;p&gt;- When an account is opened:&lt;/p&gt;&lt;p&gt;+ Only the downlines who are &lt;b&gt;indirectly &lt;/b&gt; closed by the upline will be opened. You can click on the number of affected downlines to view the list.&lt;/p&gt;&lt;p&gt;+ For the rest, their current statuses will not change. You can click on the number of unaffected downlines to view the list.&lt;/p&gt;&lt;p&gt;- Affected Downlines: list of users whose statuses are changed after their upline is opened.&lt;/p&gt;&lt;p&gt;- U [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string OpenInfoMessage {
             get {
@@ -7525,7 +7525,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to change Closed status for this customer? All affected downlines will be opened as well..
+        ///   Looks up a localized string similar to Are you sure you want to open this account? All of his/her downlines will be opened as well..
         /// </summary>
         internal static string OpenSingleConfirmMesssage {
             get {
@@ -7921,7 +7921,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do you want to proceed?.
+        ///   Looks up a localized string similar to Are you sure you want to proceed?.
         /// </summary>
         internal static string ProceedConfirmMessage {
             get {
@@ -9741,7 +9741,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The selected customer and his affected donwlines have been successfully updated..
+        ///   Looks up a localized string similar to The statuses of the selected account and his/her downlines have been successfully updated..
         /// </summary>
         internal static string UpdateCloseSuccess {
             get {
@@ -9795,7 +9795,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The selected customer and his affected donwlines have been successfully updated..
+        ///   Looks up a localized string similar to The statuses of the selected account and his/her downlines have been successfully updated..
         /// </summary>
         internal static string UpdateSuspendSuccess {
             get {

@@ -225,7 +225,7 @@
             {
                 successUpdateClosedList.Length -= indent;
                 string message = roleId != Role.Member
-                    ? $"Status of {successUpdateClosedList.ToString()} and their affected downlines have been successfully updated to Closed."
+                    ? $"{successUpdateClosedList.ToString()} and his/her downlines have been successfully closed."
                     : $"{successUpdateClosedList.ToString()} have been successfully closed.";
                 result.Insert(0, new Result(0, message));
             }
@@ -234,7 +234,7 @@
             {
                 successUpdateOpenedList.Length -= indent;
                 string message = roleId != Role.Member
-                    ? $"Status of {successUpdateOpenedList.ToString()} and their affected downlines have been successfully updated to Opened."
+                    ? $"{successUpdateOpenedList.ToString()} and his/her affected downlines have been successfully opened."
                     : $"{successUpdateOpenedList.ToString()} have been successfully opened.";
                 result.Insert(0, new Result(0, message));
             }
