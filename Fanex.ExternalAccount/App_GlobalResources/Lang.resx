@@ -3545,16 +3545,16 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
     <value>Are you sure you want to change Closed status for this customer? All affected downlines will be opened as well.</value>
   </data>
   <data name="OpenMultipleConfirmMessage" xml:space="preserve">
-    <value>Status of custnames shall be changed to Opened.</value>
+    <value>Status of {0} shall be changed to Opened.</value>
   </data>
   <data name="CloseMultipleConfirmMessage" xml:space="preserve">
-    <value>Status of custnames shall be changed to Closed. Warning, the customers can't place bet.</value>
+    <value>Status of {0} shall be changed to Closed. Warning, the customers can't place bet.</value>
   </data>
   <data name="UnsuspendMultipleConfirmMessage" xml:space="preserve">
-    <value>Status of custnames shall be changed to Unsuspended.</value>
+    <value>Status of {0} shall be changed to Unsuspended.</value>
   </data>
   <data name="SuspendMultipleConfirmMessage" xml:space="preserve">
-    <value>Status of custnames shall be changed to Suspended. Warning, the customers can't place bet.</value>
+    <value>Status of {0} shall be changed to Suspended. Warning, the customers can't place bet.</value>
   </data>
   <data name="ProceedConfirmMessage" xml:space="preserve">
     <value>Do you want to proceed?</value>

@@ -97,10 +97,10 @@
             unsuspendUserNames = unsuspendUserNames.substring(0, unsuspendUserNames.length - 2);
             suspendUserNames = suspendUserNames.substring(0, suspendUserNames.length - 2);
             message = unsuspendUserNames.length > 0
-                ? top.window.LanguageResources.UnsuspendMultipleConfirmMessage.replace('custnames', unsuspendUserNames) + '<br />'
+                ? top.window.LanguageResources.UnsuspendMultipleConfirmMessage.replace('{0}', unsuspendUserNames) + '<br />'
                 : '';
             message += suspendUserNames.length > 0
-                ? top.window.LanguageResources.SuspendMultipleConfirmMessage.replace('custnames', suspendUserNames) + '<br />'
+                ? top.window.LanguageResources.SuspendMultipleConfirmMessage.replace('{0}', suspendUserNames) + '<br />'
                 : '';
             message += top.window.LanguageResources.ProceedConfirmMessage;
         }

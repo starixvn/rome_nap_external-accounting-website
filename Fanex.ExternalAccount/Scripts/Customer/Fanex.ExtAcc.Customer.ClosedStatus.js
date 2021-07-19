@@ -101,10 +101,10 @@
             openUserNames = openUserNames.substring(0, openUserNames.length - 2);
             closeUserNames = closeUserNames.substring(0, closeUserNames.length - 2);
             message = openUserNames.length > 0
-                ? top.window.LanguageResources.OpenMultipleConfirmMessage.replace('custnames', openUserNames) + '<br />'
+                ? top.window.LanguageResources.OpenMultipleConfirmMessage.replace('{0}', openUserNames) + '<br />'
                 : '';
             message += closeUserNames.length > 0
-                ? top.window.LanguageResources.CloseMultipleConfirmMessage.replace('custnames', closeUserNames) + '<br />'
+                ? top.window.LanguageResources.CloseMultipleConfirmMessage.replace('{0}', closeUserNames) + '<br />'
                 : '';
             message += top.window.LanguageResources.ProceedConfirmMessage;
         }
