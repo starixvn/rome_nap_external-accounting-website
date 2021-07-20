@@ -284,7 +284,7 @@
     }
 
     self.ViewSuspendMultiple = function (custIdList, roleId) {
-        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/MultipleSuspend?custIdList=' + custIdList + '&roleid=' + roleId), 'Edit Multiple Suspend Status', 'auto', 'auto', false, self.Init);
+        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/MultipleSuspend?custIdList=' + custIdList + '&roleid=' + roleId), 'Edit Multiple Suspended Status', 'auto', 'auto', false, self.Init);
         self.CustIdList = custIdList.join();
         self.RoleId = roleId;
     }

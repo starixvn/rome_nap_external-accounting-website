@@ -457,7 +457,7 @@
     }
 
     menuItems.suspend = {
-        name: "Edit Multiple Suspend Status",
+        name: "Edit Multiple Suspended Status",
         className: "iconEnableEdit",
         callback: function (key, opt) {
             top.shouldCalculatePopupHeight = false;
