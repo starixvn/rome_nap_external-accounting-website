@@ -1194,7 +1194,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status of {0} shall be changed to Closed. Warning, the customers can&apos;t place bet..
+        ///   Looks up a localized string similar to {0} will be closed and cannot place bet..
         /// </summary>
         internal static string CloseMultipleConfirmMessage {
             get {
@@ -7516,7 +7516,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status of {0} shall be changed to Opened..
+        ///   Looks up a localized string similar to {0} will be opened..
         /// </summary>
         internal static string OpenMultipleConfirmMessage {
             get {
@@ -9092,7 +9092,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status of {0} shall be changed to Suspended. Warning, the customers can&apos;t place bet..
+        ///   Looks up a localized string similar to {0} will be suspended and cannot place bet..
         /// </summary>
         internal static string SuspendMultipleConfirmMessage {
             get {
@@ -9696,7 +9696,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status of {0} shall be changed to Unsuspended..
+        ///   Looks up a localized string similar to {0} will be unsuspended..
         /// </summary>
         internal static string UnsuspendMultipleConfirmMessage {
             get {
