@@ -65,12 +65,12 @@
 
     RnGCasinoStatuses: [],
     TitleEditInfo: '',
-    MessageClosed: 'Are you sure you want to change Close status for this customer? Warning, all downlines will be closed as well!',
-    MessageUnClosed: 'Are you sure you want to change Close status for this customer?',
+    MessageClosed: 'Are you sure you want to change Closed status for this customer? Warning, all downlines will be closed as well!',
+    MessageUnClosed: 'Are you sure you want to open this account?',
     MessageSuspended: 'Are you sure you want to change Suspend status for this customer? Warning, all members under this agent can\'t place bet!',
     MessageUnSuspended: 'Are you sure you want to change Suspend status for this customer? All downlines will be un-suspended as well.',
 
-    MessageClosedMember: 'Are you sure you want to change Close status for this customer?',
+    MessageClosedMember: 'Are you sure you want to change Closed status for this customer?',
     MessageSuspendedMember: 'Are you sure you want to change Suspend status for this customer? Warning, this member can\'t place bet!',
     MessageUnSuspendedMember: 'Are you sure you want to change Suspend status for this customer?',
 

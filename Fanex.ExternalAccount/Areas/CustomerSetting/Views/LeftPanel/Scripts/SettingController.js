@@ -242,7 +242,7 @@
             }
 
             parent.Fanex.ExtAcc.Form.ConfirmBox('Open Customer: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
-                'Are you sure you want to change Closed status for this customer?',
+                'Are you sure you want to open this account?',
                 460,
                 150,
                 false,
@@ -298,6 +298,10 @@
                 });
         }
         else {
+            var confirmMessage = roleId !== 1 
+                ? 'Are you sure you want to change Closed status for this customer? Warning, all downlines will be closed as well!'
+                : 'Are you sure you want to change Closed status for this customer?';
+
             parent.Fanex.ExtAcc.Form.ConfirmBox('Close Customer: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
                 content,
                 350,
@@ -305,7 +309,7 @@
                 false,
                 function () {
                     parent.Fanex.ExtAcc.Form.ConfirmBox('Warning!!!',
-                        'Are you sure you want to change Close status for this customer? Warning, all downlines will be closed as well!',
+                        confirmMessage,
                         460,
                         150,
                         false,
