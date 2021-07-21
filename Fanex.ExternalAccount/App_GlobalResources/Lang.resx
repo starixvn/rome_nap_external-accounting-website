@@ -3544,6 +3544,9 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="OpenSingleConfirmMesssage" xml:space="preserve">
     <value>Are you sure you want to open this account? All of his/her downlines will be opened as well.</value>
   </data>
+  <data name="OpenMultipleSMAConfirmMessage" xml:space="preserve">
+    <value>Are you sure you want to open/close these accounts? All of their affected downlines will be opened/closed as well.</value>
+  </data>
   <data name="OpenMultipleConfirmMessage" xml:space="preserve">
     <value>{0} will be opened.</value>
   </data>

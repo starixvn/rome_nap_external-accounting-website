@@ -7525,6 +7525,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to open/close these accounts? All of their affected downlines will be opened/closed as well..
+        /// </summary>
+        internal static string OpenMultipleSMAConfirmMessage {
+            get {
+                return ResourceManager.GetString("OpenMultipleSMAConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to open this account? All of his/her downlines will be opened as well..
         /// </summary>
         internal static string OpenSingleConfirmMesssage {

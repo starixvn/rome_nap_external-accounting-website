@@ -85,7 +85,7 @@
     };
 
     self.btnCloseMultiple_OnClick = function () {
-        var message = top.window.LanguageResources.OpenSingleConfirmMesssage;
+        var message = top.window.LanguageResources.OpenMultipleSMAConfirmMessage;
         if (self.RoleId == 1) {
             var openUserNames = '',
                 closeUserNames = '';
