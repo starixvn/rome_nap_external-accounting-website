@@ -87,7 +87,7 @@
                 <input id="fax" type="text" class="textBoxInfo" data-bind="value: Fanex.decodeHtml(Fanex.ExtAcc.Customer.PTSetting.customer.fax)" maxlength="50" />
             </div>
         </div>
-        <div id="masterStatus">
+        <div id="masterStatus" style="display: none;">
             <div id="closedId">
                 <div class="customerInfoBlock1">
                     <label for="closed">
@@ -126,13 +126,13 @@
                 <input onpaste="return false;" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this, true)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this, true)" type="text" id="memberCredit" maxlength="14" class="textBoxCredit textBoxInfo" data-bind="value: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.memberMaxCredit), enable: isUpdateCredit == 1, attr: { title: isUpdateCredit == 1 ? '' : 'You are not authorized on this function'}" />
                 <span id="minCreditId">&gt;=<span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.memberMinCredit)" id="minCreditMember" /></span>&nbsp;and&nbsp; &lt;= <span data-bind="text: Fanex.ExtAcc.FormatNumber(Fanex.ExtAcc.Customer.PTSetting.customer.credit)" id="maxCreditMember"></span>
             </div>
-            <div class="customerInfoBlock3">
-                <label for="closed">
+            <div class="customerInfoBlock3" style="border-left: none;">
+                <label for="closed" style="display: none;">
                     Closed
                 </label>
             </div>
-            <div class="customerInfoBlock4" style="width: 210px">
-                <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed, enable: hasClose == 1, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
+            <div class="customerInfoBlock4" style="width: 210px; border-left: none;">
+                <input style="display: none;" name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed, enable: hasClose == 1, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
             </div>
         </div>
         <div id="memberSection">
@@ -157,20 +157,20 @@
             <div class="customerInfoBlock2">
                 <span data-bind="text: Fanex.ExtAcc.Customer.PTSetting.customer.group"></span>
             </div>
-            <div class="customerInfoBlock3">
-                <label for="closed">
+            <div class="customerInfoBlock3" style="border-left: none;">
+                <label for="closed" style="display: none;">
                     Closed
                 </label>
             </div>
-            <div class="customerInfoBlock4" style="width: 210px">
-                <input name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed, enable: hasClose == 1, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
+            <div class="customerInfoBlock4" style="width: 210px; border-left: none;">
+                <input style="display: none;" name="closed" id="closed" type="checkbox" data-bind="checked: Fanex.ExtAcc.Customer.PTSetting.customer.statusSetting.closed, enable: hasClose == 1, attr: { title: hasClose == 1 ? '' : 'You are not authorized on this function'}" />
             </div>
         </div>
     </div>
-    <div id="statusHeader" class="headerPositionTaking" style="border-top: 1px solid #CCC">
+    <div id="statusHeader" class="headerPositionTaking" style="border-top: 1px solid #CCC; display: none;">
         Status
     </div>
-    <div id="statusSection" class="positionTaking" style="border-bottom: 0; padding: 0;">
+    <div id="statusSection" class="positionTaking" style="border-bottom: 0; padding: 0; display: none;">
         <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse: collapse; border-color: #CCC;">
             <tr style="height: 22px">
                 <td style="border-right: 1px solid #ccc; text-align: right; width: 50%;">

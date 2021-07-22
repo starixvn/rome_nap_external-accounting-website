@@ -1194,6 +1194,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} will be closed and cannot place bet..
+        /// </summary>
+        internal static string CloseMultipleConfirmMessage {
+            get {
+                return ResourceManager.GetString("CloseMultipleConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Coin Size.
         /// </summary>
         internal static string coinsize {
@@ -7471,6 +7480,69 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List of downlines whose statuses are changed after opening {0}..
+        /// </summary>
+        internal static string OpenedAffectedDownlinesTitle {
+            get {
+                return ResourceManager.GetString("OpenedAffectedDownlinesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of downlines&apos; statuses after opening {0}..
+        /// </summary>
+        internal static string OpenedMainTitle {
+            get {
+                return ResourceManager.GetString("OpenedMainTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of downlines whose statuses remain unchanged after opening {0}..
+        /// </summary>
+        internal static string OpenedRemainUnchangedDownlinesTitle {
+            get {
+                return ResourceManager.GetString("OpenedRemainUnchangedDownlinesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;- When an account is closed, all his/her downlines will be closed as well.&lt;/p&gt;&lt;p&gt;- When an account is opened:&lt;/p&gt;&lt;p&gt;+ Only the downlines who are &lt;b&gt;indirectly &lt;/b&gt; closed by the upline will be opened. You can click on the number of affected downlines to view the list.&lt;/p&gt;&lt;p&gt;+ For the rest, their current statuses will not change. You can click on the number of unaffected downlines to view the list.&lt;/p&gt;&lt;p&gt;- Affected Downlines: list of users whose statuses are changed after their upline is opened.&lt;/p&gt;&lt;p&gt;- U [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string OpenInfoMessage {
+            get {
+                return ResourceManager.GetString("OpenInfoMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} will be opened..
+        /// </summary>
+        internal static string OpenMultipleConfirmMessage {
+            get {
+                return ResourceManager.GetString("OpenMultipleConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to open/close these accounts? All of their affected downlines will be opened/closed as well..
+        /// </summary>
+        internal static string OpenMultipleSMAConfirmMessage {
+            get {
+                return ResourceManager.GetString("OpenMultipleSMAConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to open this account? All of his/her downlines will be opened as well..
+        /// </summary>
+        internal static string OpenSingleConfirmMesssage {
+            get {
+                return ResourceManager.GetString("OpenSingleConfirmMesssage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OT.
         /// </summary>
         internal static string OT {
@@ -7854,6 +7926,15 @@ namespace Resources {
         internal static string privateGames {
             get {
                 return ResourceManager.GetString("privateGames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to proceed?.
+        /// </summary>
+        internal static string ProceedConfirmMessage {
+            get {
+                return ResourceManager.GetString("ProceedConfirmMessage", resourceCulture);
             }
         }
         
@@ -9020,6 +9101,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} will be suspended and cannot place bet..
+        /// </summary>
+        internal static string SuspendMultipleConfirmMessage {
+            get {
+                return ResourceManager.GetString("SuspendMultipleConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Swimming.
         /// </summary>
         internal static string swimming {
@@ -9615,6 +9705,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} will be unsuspended..
+        /// </summary>
+        internal static string UnsuspendMultipleConfirmMessage {
+            get {
+                return ResourceManager.GetString("UnsuspendMultipleConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to change Suspend status for this customer? All affected downlines will be unsuspend as well..
         /// </summary>
         internal static string UnsuspendSingleConfirmMesssage {
@@ -9647,6 +9746,15 @@ namespace Resources {
         internal static string UpdateAll {
             get {
                 return ResourceManager.GetString("UpdateAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The statuses of the selected account and his/her downlines have been successfully updated..
+        /// </summary>
+        internal static string UpdateCloseSuccess {
+            get {
+                return ResourceManager.GetString("UpdateCloseSuccess", resourceCulture);
             }
         }
         
@@ -9696,7 +9804,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The selected customer and his affected donwlines have been successfully updated..
+        ///   Looks up a localized string similar to The statuses of the selected account and his/her downlines have been successfully updated..
         /// </summary>
         internal static string UpdateSuspendSuccess {
             get {

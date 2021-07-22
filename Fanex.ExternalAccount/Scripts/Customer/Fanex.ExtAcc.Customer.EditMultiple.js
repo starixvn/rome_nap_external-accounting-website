@@ -457,7 +457,7 @@
     }
 
     menuItems.suspend = {
-        name: "Edit Multiple Suspend Status",
+        name: "Edit Multiple Suspended Status",
         className: "iconEnableEdit",
         callback: function (key, opt) {
             top.shouldCalculatePopupHeight = false;
@@ -465,6 +465,18 @@
             Fanex.ExtAcc.Customer.Status.ViewSuspendMultiple(Fanex.ExtAcc.Customer.IdsAndNames().Ids, Fanex.ExtAcc.Customer.CurrentLevel);
         }
     }
+
+    menuItems.close = {
+        name: "Edit Multiple Closed Status",
+        className: "iconEnableEdit",
+        callback: function (key, opt) {
+            top.shouldCalculatePopupHeight = false;
+
+            Fanex.ExtAcc.Customer.ClosedStatus.ShowMultipleOpenCustomerPopup(
+                Fanex.ExtAcc.Customer.IdsAndNames().Ids,
+                Fanex.ExtAcc.Customer.CurrentLevel);
+        }
+    };
 
     if ($.contextMenu) $.contextMenu('destroy');
 

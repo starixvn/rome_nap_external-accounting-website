@@ -1,7 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Customer
 {
-    using System.Collections.Generic;
-    using System.Text;
+    using Core.Shared;
     using DataAccess.Criteria.Customer;
     using DataAccess.Criteria.Customer.CustomerStatus;
     using DataAccess.Impl.Customer;
@@ -9,14 +8,18 @@
     using DTO;
     using DTO.Customer;
     using DTO.Customer.Status;
-    using Fanex.ExternalAccount.Core.Shared;
-    using Fanex.ExternalAccount.Utilities;
     using Interface.Customer;
+    using Requests.Customer.OpenCustomer;
+    using System.Collections.Generic;
+    using System.Text;
+    using Utilities;
+    using ViewModel.Customer.OpenCustomer;
     using ViewModel.Customer.Suspend;
 
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerDao dataAccess;
+
         public CustomerService() : this(null)
         {
         }
@@ -36,7 +39,6 @@
 
         public Result EditUserInfo(Customer customer, string ip, int userId, int subAccId, string language)
             => dataAccess.EditUserInfo(customer, ip, userId, subAccId, language);
-
 
         public Result ResetPassword(ResetPasswordCriteria criteria)
             => dataAccess.ResetPassword(criteria);
@@ -67,7 +69,7 @@
         public List<CustomerSuspendStatusRow> GetMultipleSuspendCustomerViewModel(GetMultipleSuspendCustomerInfoCriteria criteria)
             => dataAccess.GetMultipleSuspendCustomerViewModel(criteria);
 
-        public List<Result> SuspendMultipleCustomer(List<MultipleUpdateSuspendRequest> request, int userId, string ipv4)
+        public List<Result> SuspendMultipleCustomer(List<MultipleUpdateSuspendRequest> request, int userId, string ipv4, int roleId)
         {
             var result = new List<Result>();
             var successUpdateSuspendedList = new StringBuilder();
@@ -95,20 +97,24 @@
                 }
             }
 
+            const int indent = 2;
+
             if (successUpdateSuspendedList.Length > 0)
             {
-#pragma warning disable S109 // Magic numbers should not be used
-                successUpdateSuspendedList.Length -= 2;
-#pragma warning restore S109 // Magic numbers should not be used
-                result.Insert(0, new Result(0, $"Status of {successUpdateSuspendedList.ToString()} and their affected downlines have been successfully updated to Suspended."));
+                successUpdateSuspendedList.Length -= indent;
+                string message = roleId != Role.Member
+                    ? $"Status of {successUpdateSuspendedList.ToString()} and their affected downlines have been successfully updated to Suspended."
+                    : $"{successUpdateSuspendedList.ToString()} have been successfully suspended.";
+                result.Insert(0, new Result(0, message));
             }
 
             if (successUpdateUnsuspendedList.Length > 0)
             {
-#pragma warning disable S109 // Magic numbers should not be used
-                successUpdateUnsuspendedList.Length -= 2;
-#pragma warning restore S109 // Magic numbers should not be used
-                result.Insert(0, new Result(0, $"Status of {successUpdateUnsuspendedList.ToString()} and their affected downlines have been successfully updated to Unsuspended."));
+                successUpdateUnsuspendedList.Length -= indent;
+                string message = roleId != Role.Member
+                    ? $"Status of {successUpdateUnsuspendedList.ToString()} and their affected downlines have been successfully updated to Unsuspended."
+                    : $"{successUpdateUnsuspendedList.ToString()} have been successfully unsuspended.";
+                result.Insert(0, new Result(0, message));
             }
 
             return result;
@@ -135,6 +141,102 @@
                 {
                     result.ErrorMessage = ViewLang.LimitAgentNewDownlineError;
                 }
+            }
+
+            return result;
+        }
+
+        public SingleOpenCustomerViewModel GetSingleOpenCustomerInfo(GetSingleOpenCustomerInfoQuery query)
+        {
+            var criteria = new GetSingleOpenCustomerInfoCriteria(query.CustId);
+            var affectedDownlines = dataAccess.GetSingleOpenAffectedDownlines(criteria);
+
+            return new SingleOpenCustomerViewModel(query, affectedDownlines);
+        }
+
+        public MultipleOpenCustomerViewModel GetMultipleOpenCustomerInfo(GetMultipleOpenCustomerInfoQuery query)
+        {
+            var criteria = new GetMultipleOpenCustomerInfoCriteria(query.CustIdList, query.RoleId);
+
+            return new MultipleOpenCustomerViewModel(query, dataAccess.GetCustomerClosedStatusList(criteria));
+        }
+
+        public SingleOpenDownlinesViewModel GetSingleOpenDownlinesInfo(GetSingleOpenDownlinesInfoQuery query)
+        {
+            var criteria = new GetSingleOpenDownlinesInfoCriteria(
+                query.CustId,
+                query.IsAffected,
+                query.DownlineRoleId,
+                query.PageSize,
+                query.PageIndex);
+
+            var data = dataAccess.GetSingleOpenDownlines(criteria);
+
+            return new SingleOpenDownlinesViewModel(data.Item1, data.Item2);
+        }
+
+        public Result UpdateSingleCustomerClosedStatus(UpdateSingleClosedStatusQuery query)
+            => dataAccess.UpdateCustomerClosedStatus(new UpdateClosedStatusCriteria(
+                query.UserId,
+                query.CustId,
+                query.IsClosed,
+                query.Language,
+                query.Ip,
+                query.SystemId));
+
+        public IEnumerable<Result> UpdateMultipleCustomerClosedStatus(IEnumerable<UpdateMultipleClosedStatusQuery> query, int roleId)
+        {
+            var result = new List<Result>();
+            var successUpdateClosedList = new StringBuilder();
+            var successUpdateOpenedList = new StringBuilder();
+
+            foreach (var item in query)
+            {
+                var criteria = new UpdateClosedStatusCriteria(
+                    item.UserId,
+                    item.CustId,
+                    item.IsClosed,
+                    item.Language,
+                    item.Ip,
+                    item.SystemId);
+                var preResult = dataAccess.UpdateCustomerClosedStatus(criteria);
+                if (preResult.IsSuccess)
+                {
+                    if (item.IsClosed)
+                    {
+                        successUpdateClosedList.Append(item.UserName);
+                        successUpdateClosedList.Append(", ");
+                    }
+                    else
+                    {
+                        successUpdateOpenedList.Append(item.UserName);
+                        successUpdateOpenedList.Append(", ");
+                    }
+                }
+                else
+                {
+                    result.Add(new Result(preResult.ErrorCode, $"{item.UserName}: {preResult.ErrorMessage}"));
+                }
+            }
+
+            const int indent = 2;
+
+            if (successUpdateClosedList.Length > 0)
+            {
+                successUpdateClosedList.Length -= indent;
+                string message = roleId != Role.Member
+                    ? $"{successUpdateClosedList.ToString()} and his/her downlines have been successfully closed."
+                    : $"{successUpdateClosedList.ToString()} have been successfully closed.";
+                result.Insert(0, new Result(0, message));
+            }
+
+            if (successUpdateOpenedList.Length > 0)
+            {
+                successUpdateOpenedList.Length -= indent;
+                string message = roleId != Role.Member
+                    ? $"{successUpdateOpenedList.ToString()} and his/her affected downlines have been successfully opened."
+                    : $"{successUpdateOpenedList.ToString()} have been successfully opened.";
+                result.Insert(0, new Result(0, message));
             }
 
             return result;

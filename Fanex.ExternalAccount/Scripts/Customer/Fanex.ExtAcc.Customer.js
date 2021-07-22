@@ -65,12 +65,12 @@
 
     RnGCasinoStatuses: [],
     TitleEditInfo: '',
-    MessageClosed: 'Are you sure you want to change Close status for this customer? Warning, all downlines will be closed as well!',
-    MessageUnClosed: 'Are you sure you want to change Close status for this customer?',
+    MessageClosed: 'Are you sure you want to change Closed status for this customer? Warning, all downlines will be closed as well!',
+    MessageUnClosed: 'Are you sure you want to open this account?',
     MessageSuspended: 'Are you sure you want to change Suspend status for this customer? Warning, all members under this agent can\'t place bet!',
     MessageUnSuspended: 'Are you sure you want to change Suspend status for this customer? All downlines will be un-suspended as well.',
 
-    MessageClosedMember: 'Are you sure you want to change Close status for this customer?',
+    MessageClosedMember: 'Are you sure you want to change Closed status for this customer?',
     MessageSuspendedMember: 'Are you sure you want to change Suspend status for this customer? Warning, this member can\'t place bet!',
     MessageUnSuspendedMember: 'Are you sure you want to change Suspend status for this customer?',
 
@@ -957,13 +957,10 @@
                 return "closed-byAdmin";
             case 2:
                 return "closed-byUpline";
-            case 3:
-                return "closed-wrongOTPSC";
             case 4:
                 return "closed-byArchive";
-            case 0:
             default:
-                return "closed-wrongPwdOthers";
+                return "";
         }
     },
 
@@ -1016,5 +1013,52 @@
         }
 
         return productSettings;
+    },
+
+    UnlockAccess: function (custId, locked) {
+        var confirmMessage = "";
+        if (locked === 1) {
+            confirmMessage = "This account has been locked due to multiple failed OTP/Security Code authentication attempts. Are you sure you want to unlock it?";
+        } else if (locked === 2) {
+            confirmMessage = "This account has been locked due to multiple failed password attempts. Are you sure you want to unlock it?";
+        }
+
+        if (confirmMessage.length) {
+            var popupId = "popupUnlockAccess";
+            Fanex.ExtAcc.Form.ConfirmBox(
+                "Unlock Access",
+                confirmMessage,
+                480,
+                "auto",
+                false,
+                function () {
+                    Fanex.ExtAcc.BlockUI();
+                    $.ajax({
+                        type: "POST",
+                        url: resolveClientUrl("CustomerSetting/LeftPanel/UpdateCustomer/UnlockAccess"),
+                        data: {
+                            custid: custId,
+                            groupName: Fanex.ExtAcc.Customer.GroupName().groupName,
+                        },
+                        success: function (result) {
+                            if (result.isSuccess) {
+                                var timeout = setTimeout(function () {
+                                    clearTimeout(timeout);
+                                    Fanex.ExtAcc.Customer.CallBackCustomerList();
+                                    Fanex.ExtAcc.UnBlockUI();
+                                }, 2000);
+                            } else {
+                                Fanex.ExtAcc.UnBlockUI();
+                                Fanex.ExtAcc.Form.Alert("Error", result.errorMessage, 480, "auto");
+                            }
+                        },
+                        complete: function () {
+                            Fanex.ExtAcc.Form.Close(null, null, popupId);
+                        }
+                    })
+                },
+                null,
+                popupId);
+        }
     }
 };

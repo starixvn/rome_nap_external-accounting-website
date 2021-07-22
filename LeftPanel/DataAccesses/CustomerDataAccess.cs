@@ -1,11 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.DataAccesses
 {
+    using System.Collections.Generic;
+    using System.Data;
     using Criteria;
     using Data.DNAide;
     using DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.Models;
-    using System.Collections.Generic;
-    using System.Data;
+    using Fanex.NAP.Framework.Data;
     using ViewModels;
 
 #pragma warning disable IDE1006 // Naming Styles
@@ -39,6 +40,8 @@
         DataTable CustomerSelectClearBalance(int custId);
 
         Result CloseCutomer(int custId, bool close, bool clearCredit, string custName);
+
+        Result UnlockAccess(ICriteria criteria);
 
         Result AllowOutright(int custId, bool allow);
 

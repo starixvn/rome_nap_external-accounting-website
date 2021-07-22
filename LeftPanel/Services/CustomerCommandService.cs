@@ -27,11 +27,13 @@
         Result CloseCutomer(int custId, int uplineId, ICurrentSession currentSession, ICurrentContext currentContext,
             bool close, bool clearCredit, string custName);
 
+        Result UnlockAccess(int custId, int userId, string ip4Address);
+
         Result AllowOutright(int custId, bool allow);
-        
+
         Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress);
 
-        Result UpdateSecurityCode(int custId, string code, bool force, int roleId);        
+        Result UpdateSecurityCode(int custId, string code, bool force, int roleId);
 
         Result RemoveOtp(int custId, int userId, string ip4Address);
     }
@@ -78,20 +80,17 @@
                     AuthenticateAction.AuthenticationType.Host))
             {
                 return new Result(1, ViewLang.DontHavePermission);
-            }
-
-            if (casinoCustomer?.CasinoSync == true)
-            {
-                UpdateCasinoClosed(custId, close, currentSession, currentContext);
-            }
+            }           
 
             return customerDataAccess.CloseCutomer(custId, close, clearCredit, custName);
         }
 
+        public Result UnlockAccess(int custId, int userId, string ip4Address)
+            => customerDataAccess.UnlockAccess(new UnlockAccessCriteria(custId, userId, 0, ip4Address, (byte)Config.SystemId));
+
         public Result AllowOutright(int custId, bool allow)
             => customerDataAccess.AllowOutright(custId, allow);
 
-        
         public Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress)
         {
             var result = customerDataAccess.AutoMasterPT(custId, allow);
@@ -136,43 +135,13 @@
 
             return customerDataAccess.ResetSecurityCode(custId, hashCode, force || roleId.IsNotSuper());
         }
-        
+
         public Result RemoveOtp(int custId, int userId, string ip4Address)
             => customerDataAccess.RemoveOTP(new RemoveOtpCriteria
             {
                 Custid = custId,
                 Userid = userId,
                 IP = ip4Address
-            });
-
-        protected void UpdateCasinoClosed(int custId, bool closed, ICurrentSession currentSession,
-            ICurrentContext currentContext)
-        {
-            var cust = new Customer();
-            try
-            {
-                if (authorizationService.IsAuthorized(
-                    currentSession.UserId,
-                    eFunctions.CloseCustomer,
-                    AuthenticateAction.AuthenticationType.Host))
-                {
-                    cust.UpdateCustClosed(
-                        custId,
-                        closed,
-                        currentContext.Ip4Address,
-                        currentSession.UserId,
-                        currentSession.UserName,
-                        AlphaAdminSystem);
-                }
-            }
-            catch (ErrorException casinoEx)
-            {
-                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-        }
+            });        
     }
 }

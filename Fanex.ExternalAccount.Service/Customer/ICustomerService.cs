@@ -5,7 +5,9 @@
     using DTO;
     using DTO.Customer;
     using DTO.Customer.Status;
+    using Requests.Customer.OpenCustomer;
     using System.Collections.Generic;
+    using ViewModel.Customer.OpenCustomer;
     using ViewModel.Customer.Suspend;
 
     public interface ICustomerService
@@ -27,17 +29,27 @@
         Result CheckNewCustomerIsReachLimitation(CheckNewCustomerLimitationCriteria criteria);
 
         void KickoutCustomer(int custId, byte roleId, string ip);
-        
+
         SingleUpdateViewModel GetSingleUpdateSuspendViewModel(int custId, string userName);
 
         Result SuspendCustomer(UpdateSuspendCustomerCriteria criteria);
 
         List<CustomerSuspendStatusRow> GetMultipleSuspendCustomerViewModel(GetMultipleSuspendCustomerInfoCriteria criteria);
 
-        List<Result> SuspendMultipleCustomer(List<MultipleUpdateSuspendRequest> request, int userId, string ipv4);
+        List<Result> SuspendMultipleCustomer(List<MultipleUpdateSuspendRequest> request, int userId, string ipv4, int roleId);
 
         CustomerStatusDTO GetCustomerAllStatus(int custId, byte settingStatus);
 
         Result CheckLimitNewDownline(int custId, int roleId);
+
+        SingleOpenCustomerViewModel GetSingleOpenCustomerInfo(GetSingleOpenCustomerInfoQuery query);
+
+        MultipleOpenCustomerViewModel GetMultipleOpenCustomerInfo(GetMultipleOpenCustomerInfoQuery query);
+
+        SingleOpenDownlinesViewModel GetSingleOpenDownlinesInfo(GetSingleOpenDownlinesInfoQuery query);
+
+        Result UpdateSingleCustomerClosedStatus(UpdateSingleClosedStatusQuery query);
+
+        IEnumerable<Result> UpdateMultipleCustomerClosedStatus(IEnumerable<UpdateMultipleClosedStatusQuery> query, int roleId);
     }
 }

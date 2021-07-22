@@ -81,7 +81,31 @@
     };
 
     self.btnSuspendMultiple_OnClick = function () {
-        Fanex.ExtAcc.Form.ConfirmBox('Information', top.window.LanguageResources.UnsuspendSingleConfirmMesssage, 'auto', 'auto', null, function () {
+        var message = top.window.LanguageResources.UnsuspendSingleConfirmMesssage;
+        if (self.RoleId == 1) {
+            var unsuspendUserNames = '',
+                suspendUserNames = '';
+            $('.button-suspend-status.is-changed').each(function () {
+                var $this = $(this);
+                if ($this.hasClass('suspend-switch')) {
+                    suspendUserNames += $this.attr('data-username') + ', ';
+                } else {
+                    unsuspendUserNames += $this.attr('data-username') + ', ';
+                }
+            });
+
+            unsuspendUserNames = unsuspendUserNames.substring(0, unsuspendUserNames.length - 2);
+            suspendUserNames = suspendUserNames.substring(0, suspendUserNames.length - 2);
+            message = unsuspendUserNames.length > 0
+                ? top.window.LanguageResources.UnsuspendMultipleConfirmMessage.replace('{0}', unsuspendUserNames) + '<br />'
+                : '';
+            message += suspendUserNames.length > 0
+                ? top.window.LanguageResources.SuspendMultipleConfirmMessage.replace('{0}', suspendUserNames) + '<br />'
+                : '';
+            message += top.window.LanguageResources.ProceedConfirmMessage;
+        }
+
+        Fanex.ExtAcc.Form.ConfirmBox('Information', message, 'auto', 'auto', null, function () {
             parent.Fanex.ExtAcc.Form.Close(null, null, 'suspend-confirm-box');
             parent.Fanex.ExtAcc.BlockUI();
             self.DOMElements.btnReset.attr("disabled", true);
@@ -91,7 +115,9 @@
                 request: $('.button-suspend-status.is-changed').map(function () {
                     var $this = $(this);
                     return { CustId: $this.attr('data-custid'), UserName: $this.attr('data-username'), Suspended: $this.hasClass('suspend-switch') };
-                }).get()
+                }).get(),
+                groupName: $('#selectedGroupName').html(),
+                roleId: self.RoleId
             };
 
             $.ajax({
@@ -101,6 +127,10 @@
                 success: function (result) {
                     if (parent.Fanex.ExtAcc.ShowSecurityCodePage(result, parent.Fanex.ExtAcc.UnBlockUI)) {
                         return;
+                    }
+
+                    if (result && result.errorCode && result.errorCode == 1) {
+                        return self.DOMElements.errMsg.html(result.errorMessage).show();
                     }
 
                     var isSuccessAll = true;
@@ -254,7 +284,7 @@
     }
 
     self.ViewSuspendMultiple = function (custIdList, roleId) {
-        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/MultipleSuspend?custIdList=' + custIdList + '&roleid=' + roleId), 'Edit Multiple Suspend Status', 'auto', 'auto', false, self.Init);
+        Fanex.ExtAcc.Form.Show(resolveClientUrl('Customer/MultipleSuspend?custIdList=' + custIdList + '&roleid=' + roleId), 'Edit Multiple Suspended Status', 'auto', 'auto', false, self.Init);
         self.CustIdList = custIdList.join();
         self.RoleId = roleId;
     }
@@ -315,12 +345,19 @@
                     bodyRows[startMergedRowIndex].Columns[1].MergeRowNumber = endMergedRowIndex - startMergedRowIndex + 1;
                 }
 
+                var gridContainerWidth = calculatedGridContainerWidth(result.TotalRows, pageSize);
+                var yScrollBarWidth = 20,
+                    columnNoWidth = 50,
+                    columnLevelWidth = 100,
+                    columnUsernameWidth = gridContainerWidth > 0
+                        ? gridContainerWidth - columnNoWidth - columnLevelWidth - 2 * yScrollBarWidth
+                        : 200;
                 var gridOptions =
                     {
                         columns: [
-                            { HeaderText: "No.", Width: 50, Name: "No", HeaderAlign: "center", CellAlign: "center" },
-                            { HeaderText: "Level", Width: 100, Name: "Level", HeaderAlign: "center" },
-                            { HeaderText: "Username", Width: 200, Name: "Username", HeaderAlign: "center" }
+                            { HeaderText: "No.", Width: columnNoWidth, Name: "No", HeaderAlign: "center", CellAlign: "center" },
+                            { HeaderText: "Level", Width: columnLevelWidth, Name: "Level", HeaderAlign: "center" },
+                            { HeaderText: "Username", Width: columnUsernameWidth, Name: "Username", HeaderAlign: "center" }
                         ],
                         bodyRows: bodyRows,
                         showDistinctRow: false,
@@ -339,6 +376,7 @@
 
                 self.DOMElements.tabMain.fadeOut(function () {
                     self.DOMElements.tabDetail.fadeIn(function () {
+                        self.DOMElements.gridContainer.css('width', gridContainerWidth);
                         self.DOMElements.gridContainer.show();
                         self.DOMElements.gridId.fanexGrid(gridOptions);
                         parent.$('#windowPopup').dialog({ position: { my: "center", at: "center", of: top.window } });
@@ -349,5 +387,25 @@
                 parent.Fanex.ExtAcc.UnBlockUI();
             }
         });
-    }
+    };
+
+    var calculatedGridContainerWidth = function (totalRows, pageSize) {
+        var numberOfPages = Math.ceil(totalRows / pageSize);
+        if (numberOfPages > 0) {
+            var yScrollBarWidth = 20,
+                itemPerPageWidth = 120,
+                detailTextWidth = 200,
+                numberListMargin = 12,
+                prevNextButtonWidth = 48,
+                pageNumberButtonWidth = 24,
+                spareSpaceWidth = 50;
+
+            return yScrollBarWidth + itemPerPageWidth + detailTextWidth
+                + numberListMargin + prevNextButtonWidth
+                + pageNumberButtonWidth * numberOfPages
+                + spareSpaceWidth;
+        }
+
+        return 0;
+    };
 }

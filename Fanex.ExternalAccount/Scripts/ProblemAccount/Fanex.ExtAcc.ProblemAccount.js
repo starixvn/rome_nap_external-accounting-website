@@ -215,7 +215,7 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
             case 4:
                 return "rowDisabled";
             default:
-                return "";
+                return datum.LockedClassName || "";
         }
     }
 

@@ -297,11 +297,6 @@
                     param)
                 : customerService.SuperUpdateMaster(customer, requestContext, isUpdateAllMember, newPositionTaking);
 
-            if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
-            {
-                UpdateCasinoStatus(custId, result, customer, param.Count > 0 && param[0].ToString().Equals("1"));
-            }
-
             return JsonBase(new { result.ErrorCode, result.ErrorMessage });
         }
 
@@ -355,12 +350,7 @@
             var result = !string.IsNullOrWhiteSpace(mult) && mult.Equals("true")
                 ? customerService.MasterUpdateMultipleAgents(customer, requestContext, isUpdateAllMember, newPositionTaking,
                     param)
-                : customerService.MasterUpdateAgent(customer, requestContext, isUpdateAllMember, newPositionTaking);
-
-            if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
-            {
-                UpdateCasinoStatus(custId, result, customer, param.Count > 0 && param[0].ToString().Equals("1"));
-            }
+                : customerService.MasterUpdateAgent(customer, requestContext, isUpdateAllMember, newPositionTaking);           
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage });
         }
@@ -413,12 +403,7 @@
             var mult = Request["isMult"];
             var result = !string.IsNullOrWhiteSpace(mult) && mult.Equals("true")
                 ? customerService.AgentUpdateMultipleMembers(customer, requestContext, param)
-                : customerService.AgentUpdateMember(customer, requestContext);
-
-            if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
-            {
-                UpdateCasinoStatus(custId, result, customer, param.Count > 0 && param[0].ToString().Equals("1"));
-            }
+                : customerService.AgentUpdateMember(customer, requestContext);            
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage });
         }
@@ -479,12 +464,7 @@
 
             var result = param.Count > 0
                 ? customerService.SuperUpdateMultipleMembers(customer, requestContext, param)
-                : customerService.SuperUpdateMember(customer, requestContext);
-
-            if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
-            {
-                UpdateCasinoStatus(custId, result, customer, param.Count > 0 && param[0].ToString().Equals("1"));
-            }
+                : customerService.SuperUpdateMember(customer, requestContext);           
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage });
         }
@@ -545,12 +525,7 @@
 
             var result = param.Count > 0
                 ? customerService.MasterUpdateMultipleMembers(customer, requestContext, param)
-                : customerService.MasterUpdateMember(customer, requestContext);
-
-            if (param.Count == 0 || (param.Count > 0 && param[0].ToString().Equals("1")))
-            {
-                UpdateCasinoStatus(custId, result, customer, param.Count > 0 && param[0].ToString().Equals("1"));
-            }
+                : customerService.MasterUpdateMember(customer, requestContext);            
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage });
         }

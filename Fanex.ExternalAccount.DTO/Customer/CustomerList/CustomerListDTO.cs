@@ -14,6 +14,8 @@
 
         public byte ClosedReason { get; set; }
 
+        public CustomerLockedAccess LockedAccess { get; set; }
+
         public bool SyncCasino { get; set; }
 
         public bool Suspended { get; set; }

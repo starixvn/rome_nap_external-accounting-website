@@ -63,7 +63,7 @@
     <Setting Key="EAS_Rpt_ViewExtraPT2" SpName="EAS_Rpt_ViewExtraPT2" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="EAS_Rpt_WinLossDetail_byPT" SpName="EAS_Rpt_WinLossDetail_byPT" DbName="DBAGE.bodb02.bodbExtAccNet" />
     <Setting Key="EAS_GetPTProductBySuper" SpName="EAS_GetPTProductBySuper" DbName="DBACC.bodb02.bodbExtAccNet" />
-</Function>
+  </Function>
   <Function Name="Group">
     <Setting Key="EAS_GroupInfoDel" SpName="EAS_GroupInfoDel" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_GroupInfoIns" SpName="EAS_GroupInfoIns" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
@@ -137,6 +137,9 @@
     <Setting Key="Acc_CustomerSelClearBalance" SpName="Acc_CustomerSelClearBalance" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdMaster_DisableAutoMPT" SpName="Acc_CustomerUpdMaster_DisableAutoMPT" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerList_CloseInfoSel" SpName="Acc_CustomerList_CloseInfoSel" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_Customer_CloseInfoSel" SpName="Acc_Customer_CloseInfoSel" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_Customer_CloseInfoDetailSel" SpName="Acc_Customer_CloseInfoDetailSel" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerList_SuspendInfoSel" SpName="Acc_CustomerList_SuspendInfoSel" DbName="DBCust.CustDB.bodbExtAccNet" />
@@ -150,6 +153,7 @@
     <Setting Key="EAS_CustomerSelAllStatus" SpName="EAS_CustomerSelAllStatus" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelLoginInfo" SpName="EAS_CustomerSelLoginInfo" DbName="DBACC.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_CustomerSelBalanceInfo" SpName="EAS_CustomerSelBalanceInfo" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustomerUpdLocked" SpName="Acc_CustomerUpdLocked" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Customer List">
     <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />

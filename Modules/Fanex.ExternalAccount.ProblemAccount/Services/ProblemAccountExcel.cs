@@ -1,5 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.ProblemAccount.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.Excel.Utility;
     using Fanex.ExternalAccount.ProblemAccount.Constants;
@@ -9,10 +13,6 @@
     using Fanex.ExternalAccount.ProblemAccount.ViewModels;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
 
     public interface IProblemAccountExcel
     {
@@ -115,12 +115,12 @@
             int lastColumnIndex,
             ProblemAccountEntity problemAccount)
         {
-            var fromRowId = MapAccountStatusToExcelRow(problemAccount.Status, problemAccount.ClosedReason);
+            var fromRowId = MapAccountStatusToExcelRow(problemAccount.Status, problemAccount.ClosedReason, problemAccount.Locked);
 
             dataSheet.CopyRow(templateSheet, fromRowId, rowId, FirstColumnIndex, lastColumnIndex);
         }
 
-        private static int MapAccountStatusToExcelRow(byte status, byte closedReason)
+        private static int MapAccountStatusToExcelRow(byte status, byte closedReason, byte locked)
         {
             switch (status)
             {
@@ -135,7 +135,7 @@
 
                 case AccountStatusConst.Open:
                 default:
-                    return AccountStatusConst.OpenRowIndex;
+                    return MapLockedAccessToExcelRow(locked);
             }
         }
 
@@ -149,15 +149,26 @@
                 case ClosedReasonConst.ClosedByUpline:
                     return ClosedReasonConst.ClosedByUplineRowIndex;
 
-                case ClosedReasonConst.ClosedWrongOTPSC:
-                    return ClosedReasonConst.ClosedWrongOTPSCRowIndex;
-
                 case ClosedReasonConst.ClosedByArchive:
                     return ClosedReasonConst.ClosedByArchiveRowIndex;
 
-                case ClosedReasonConst.ClosedWrongPwdOthers:
                 default:
-                    return ClosedReasonConst.ClosedWrongPwdOthersRowIndex;
+                    return AccountStatusConst.OpenRowIndex;
+            }
+        }
+
+        private static int MapLockedAccessToExcelRow(byte locked)
+        {
+            switch (locked)
+            {
+                case LockedAccessConst.LockedFalseInputOTPSC:
+                    return LockedAccessConst.LockedFalseInputOTPSCRowIndex;
+
+                case LockedAccessConst.LockedFalseInputPassword:
+                    return LockedAccessConst.LockedFalseInputPasswordRowIndex;
+
+                default:
+                    return AccountStatusConst.OpenRowIndex;
             }
         }
 

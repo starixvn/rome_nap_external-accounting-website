@@ -1,9 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
     using Base;
+    using Common;
     using Common.Extensions;
     using Core.Shared;
     using Criteria.Customer;
@@ -15,6 +13,11 @@
     using DTO.Customer.Status;
     using Fanex.ExternalAccount.Utilities;
     using Interface.Customer;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
     using ViewModel.Customer.Suspend;
 
     public class CustomerDao : DAOBase, ICustomerDao
@@ -61,7 +64,7 @@
         public Customer UserInfo(int custId, byte settingStatus)
         {
 #pragma warning disable S1192 // String literals should not be duplicated
-            var param = new Hashtable { { "custid", custId }, { "settingstatus", settingStatus} };
+            var param = new Hashtable { { "custid", custId }, { "settingstatus", settingStatus } };
 #pragma warning restore S1192 // String literals should not be duplicated
 
             using (var reader = ExecDataReader("Age_CustomerSelUserInfo", param))
@@ -228,10 +231,12 @@
                                 row.AffectedMaster = Utilities.Utils.ToInt32(reader["cntAffected"]);
                                 row.RemainUnchangedMaster = Utilities.Utils.ToInt32(reader["cntUnchanged"]);
                                 break;
+
                             case Role.Agent:
                                 row.AffectedAgent = Utilities.Utils.ToInt32(reader["cntAffected"]);
                                 row.RemainUnchangedAgent = Utilities.Utils.ToInt32(reader["cntUnchanged"]);
                                 break;
+
                             default:
                                 row.AffectedMember = Utilities.Utils.ToInt32(reader["cntAffected"]);
                                 row.RemainUnchangedMember = Utilities.Utils.ToInt32(reader["cntUnchanged"]);
@@ -256,6 +261,7 @@
 #pragma warning disable S1192 // String literals should not be duplicated
 #pragma warning disable S3776 // Cognitive Complexity of methods should not be too high
 #pragma warning disable S1541 // Methods and properties should not be too complex
+
         public CustomerStatusDTO GetCustomerAllStatus(GetCustomerAllStatusCriteria criteria)
 #pragma warning restore S1541 // Methods and properties should not be too complex
 #pragma warning restore S3776 // Cognitive Complexity of methods should not be too high
@@ -339,12 +345,12 @@
                         }
                         else
                         {
-                            if(!Utils.ToBoolean(reader["isHidden"]))
+                            if (!Utils.ToBoolean(reader["isHidden"]))
                             {
                                 liveCasino.IsDisabled = liveCasino.IsDisabled || Utils.ToBoolean(reader["isDisabled"]);
                                 liveCasino.IsDisabledUpline = liveCasino.IsDisabledUpline || Utils.ToBoolean(reader["isDisabledUpline"]);
                             }
-                            
+
                             liveCasino.IsHidden = liveCasino.IsHidden && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
                         }
 
@@ -409,6 +415,7 @@
                 return result;
             }
         }
+
 #pragma warning restore S1192 // String literals should not be duplicated
 
         public bool CheckLimitNewDownline(CheckLimitNewDownlineCriteria criteria)
@@ -421,5 +428,124 @@
                 return Utils.ToBoolean(outputs["isallowed"]);
             }
         }
+
+        public IEnumerable<SingleOpenAffectedDownline> GetSingleOpenAffectedDownlines(GetSingleOpenCustomerInfoCriteria criteria)
+        {
+            if (criteria.IsValid())
+            {
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    {
+                        while (reader.Read())
+                        {
+                            yield return BuildSingleOpenAffectedDownline(reader);
+                        }
+                    }
+                }
+            }
+        }
+
+        public IEnumerable<CustomerClosedStatusRow> GetCustomerClosedStatusList(GetMultipleOpenCustomerInfoCriteria criteria)
+        {
+            var result = new List<CustomerClosedStatusRow>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        result.Add(new CustomerClosedStatusRow
+                        {
+                            CustId = Utils.ToInt32(reader["custid"]),
+                            RoleId = criteria.RoleId,
+                            UserName = Utils.ToString(reader["username"]),
+                            IsClosed = Utils.ToBoolean(reader["closed"])
+                        });
+                    }
+
+                    reader.NextResult();
+
+                    while (reader.Read())
+                    {
+                        var custid = Utils.ToInt32(reader["custid"]);
+                        var row = result.FirstOrDefault(m => m.CustId == custid);
+
+                        if (row != null)
+                        {
+                            var roleid = Utils.ToInt32(reader["roleid"]);
+                            switch (roleid)
+                            {
+                                case Role.Master:
+                                    row.AffectedMaster = Utils.ToInt32(reader["cntAffected"]);
+                                    row.RemainUnchangedMaster = Utils.ToInt32(reader["cntUnchanged"]);
+                                    break;
+
+                                case Role.Agent:
+                                    row.AffectedAgent = Utils.ToInt32(reader["cntAffected"]);
+                                    row.RemainUnchangedAgent = Utils.ToInt32(reader["cntUnchanged"]);
+                                    break;
+
+                                default:
+                                    row.AffectedMember = Utils.ToInt32(reader["cntAffected"]);
+                                    row.RemainUnchangedMember = Utils.ToInt32(reader["cntUnchanged"]);
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public Tuple<int, List<SingleOpenDownline>> GetSingleOpenDownlines(GetSingleOpenDownlinesInfoCriteria criteria)
+        {
+            var singleOpenDownlines = new List<SingleOpenDownline>();
+            var totalRows = 0;
+
+            if (criteria.IsValid())
+            {
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    {
+                        while (reader.Read())
+                        {
+                            singleOpenDownlines.Add(BuildSingleOpenDownline(reader));
+                        }
+                    }
+
+                    totalRows = Converter.ToInt(db.GetOuputParams()["totalrows"]);
+                }
+            }
+
+            return Tuple.Create(totalRows, singleOpenDownlines);
+        }
+
+        public Result UpdateCustomerClosedStatus(UpdateClosedStatusCriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+
+                var output = db.GetOuputParams();
+                return new Result(
+                    output["errcode"].ToString(),
+                    output["errmsg"].ToString());
+            }
+        }
+
+        private static SingleOpenAffectedDownline BuildSingleOpenAffectedDownline(IDataReader reader)
+            => new SingleOpenAffectedDownline(
+                reader.ToInt("roleid"),
+                reader.ToInt("cntAffected"),
+                reader.ToInt("cntUnchanged"));
+
+        private static SingleOpenDownline BuildSingleOpenDownline(IDataReader reader)
+            => new SingleOpenDownline(
+                reader.ToInt("roleid"),
+               Utils.ToString(reader["username"]));
     }
 }

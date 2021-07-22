@@ -222,7 +222,8 @@
 
         top.shouldCalculatePopupHeight = false;
         var allowAdmins = eval(parent.allowAdminEditSuperStatus);
-        if ($scope.model.personalInfo.roleId.value == 4 && !allowAdmins.contains(parseInt(parent.userId)) && close) {
+        var roleId = $scope.model.personalInfo.roleId.value;
+        if (roleId == 4 && !allowAdmins.contains(parseInt(parent.userId)) && close) {
             return;
         }
 
@@ -233,8 +234,15 @@
             '&nbsp;<input name="chkB" type="checkbox" id="clearCredit" title="' + title + '" ' + disableClearCredit + ' />Clear All Credit';
 
         if (close) {
+            if (roleId !== 1) {
+                parent.Fanex.ExtAcc.Customer.ClosedStatus.ShowSingleOpenCustomerPopup(
+                    $scope.model.personalInfo.custId.value,
+                    $scope.model.personalInfo.currentLevel.value);
+                return;
+            }
+
             parent.Fanex.ExtAcc.Form.ConfirmBox('Open Customer: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
-                'Are you sure you want to change Closed status for this customer?',
+                'Are you sure you want to open this account?',
                 460,
                 150,
                 false,
@@ -290,6 +298,10 @@
                 });
         }
         else {
+            var confirmMessage = roleId !== 1 
+                ? 'Are you sure you want to change Closed status for this customer? Warning, all downlines will be closed as well!'
+                : 'Are you sure you want to change Closed status for this customer?';
+
             parent.Fanex.ExtAcc.Form.ConfirmBox('Close Customer: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
                 content,
                 350,
@@ -297,7 +309,7 @@
                 false,
                 function () {
                     parent.Fanex.ExtAcc.Form.ConfirmBox('Warning!!!',
-                        'Are you sure you want to change Close status for this customer? Warning, all downlines will be closed as well!',
+                        confirmMessage,
                         460,
                         150,
                         false,
@@ -363,6 +375,71 @@
                 },
                 true);
         }
+    };
+
+    $scope.UnlockAccess1 = function (locked, id, disabled) {
+        $scope.UnlockAccess(id, disabled, "This account has been locked due to multiple failed OTP/Security Code authentication attempts. Are you sure you want to unlock it?");
+    }
+
+    $scope.UnlockAccess2 = function (locked, id, disabled) {
+        $scope.UnlockAccess(id, disabled, "This account has been locked due to multiple failed password attempts. Are you sure you want to unlock it?");
+    }
+
+    $scope.UnlockAccess = function (id, disabled, confirmMessage) {
+        if (disabled) return;
+
+        top.shouldCalculatePopupHeight = false;
+        var popupId = "popupUnlockAccess";
+        parent.Fanex.ExtAcc.Form.ConfirmBox(
+            "Unlock Access",
+            confirmMessage,
+            480,
+            "auto",
+            false,
+            function () {
+                parent.Fanex.ExtAcc.BlockUI();
+                $.ajax({
+                    type: "POST",
+                    url: parent.resolveClientUrl("CustomerSetting/LeftPanel/UpdateCustomer/UnlockAccess"),
+                    dataType: "json",
+                    data: {
+                        custId: $scope.model.personalInfo.custId.value,
+                        groupName: parent.$('#selectedGroupName').html()
+                    },
+                    success: function(result) {
+                        if (result.isSuccess) {
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                parent.Fanex.ExtAcc.UnBlockUI();
+                                document.location.reload(true);
+                            }, 2000);
+                        } else {
+                            parent.Fanex.ExtAcc.UnBlockUI();
+                            document.getElementById(id).checked = true;
+                            parent.Fanex.ExtAcc.Form.Alert("Error", result.errorMessage, 480, "auto");
+                        }
+                    },
+                    error: function (xhr) {
+                        parent.Fanex.ExtAcc.UnBlockUI();
+                        document.getElementById(id).checked = true;
+                        if (typeof console !== "undefined") {
+                            console.log(xhr);
+                        }
+                    },
+                    complete: function () {
+                        parent.Fanex.ExtAcc.Form.Close(null, null, popupId);
+                    }
+                })
+            },
+            function () {
+                parent.Fanex.ExtAcc.Form.Close(null, null, popupId);
+                document.getElementById(id).checked = true;
+            },
+            popupId,
+            null,
+            function () {
+                document.getElementById(id).checked = true;
+            });
     };
 
     $scope.Suspended = function (suspend, id, disabled) {

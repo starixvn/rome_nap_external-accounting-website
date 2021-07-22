@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="Constants\AccountStatusConst.cs" />
     <Compile Include="Constants\ClosedReasonConst.cs" />
+    <Compile Include="Constants\LockedAccessConst.cs" />
     <Compile Include="Constants\ReviewStatusConst.cs" />
     <Compile Include="Controllers\ProblemAccountController.cs" />
     <Compile Include="Criteria\GetProblemAccountCriteria.cs" />

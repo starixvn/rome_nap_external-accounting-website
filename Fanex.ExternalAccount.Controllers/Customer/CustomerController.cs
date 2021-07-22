@@ -1,13 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Linq;
-    using System.Threading;
-    using System.Web;
-    using System.Web.Mvc;
     using CasinoLibrary.Model.UserException;
     using Core.Authorization;
     using Core.Base;
@@ -24,6 +16,14 @@
     using Service;
     using Service.Impl.Customer;
     using Service.Impl.Customer.Casino;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading;
+    using System.Web;
+    using System.Web.Mvc;
     using Utilities;
     using ViewModel;
     using ViewModel.Customer;
@@ -31,7 +31,7 @@
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
     using Customer = PTEngine.BusinessObjects.Customer;
 
-    public class CustomerController : CustomerBase //DevSkim: ignore DS184626
+    public partial class CustomerController : CustomerBase //DevSkim: ignore DS184626
     {
         private readonly AgentService _agentService = new AgentService();
         private readonly CustomerService _customerService = new CustomerService();
@@ -133,7 +133,6 @@
             var result = ptCustomerService.AddNewMaster(customer, requestContext, out int masterId);
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
-                UpdateCasinoStatus(masterId, result, customer);
 #pragma warning disable S109 // Magic numbers should not be used
                 Thread.Sleep(3000);
 #pragma warning restore S109 // Magic numbers should not be used
@@ -231,7 +230,6 @@
 
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
-                UpdateCasinoStatus(agentId, result, customer);
 #pragma warning disable S109 // Magic numbers should not be used
                 Thread.Sleep(3000);
 #pragma warning restore S109 // Magic numbers should not be used
@@ -336,7 +334,6 @@
 
             if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
             {
-                UpdateCasinoStatus(memberId, result, customer);
 #pragma warning disable S109 // Magic numbers should not be used
                 Thread.Sleep(3000);
 #pragma warning restore S109 // Magic numbers should not be used
@@ -574,9 +571,18 @@
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        public JsonResult UpdateSuspendMultiple(List<MultipleUpdateSuspendRequest> request)
+        public JsonResult UpdateSuspendMultiple(
+            List<MultipleUpdateSuspendRequest> request,
+            string groupName,
+            int roleId)
         {
-            return Json(_customerService.SuspendMultipleCustomer(request, CurrentSession.UserId, CurrentContext.Ip4Address));
+            var custIds = request.Select(item => item.CustId);
+            if (!AuthorizationService.IsBelong(groupName, custIds))
+            {
+                return Json(new DTO.Result(1, "You are not authorized on this function!"));
+            }
+
+            return Json(_customerService.SuspendMultipleCustomer(request, CurrentSession.UserId, CurrentContext.Ip4Address, roleId));
         }
 
         private ActionResult LimitationPage(string message)
