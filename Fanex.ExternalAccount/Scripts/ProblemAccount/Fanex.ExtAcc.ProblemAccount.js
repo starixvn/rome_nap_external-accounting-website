@@ -28,7 +28,7 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
         initCombobox(roleId);
         bindEvents($form, roleId);
 
-        roleId === 3 && $form.trigger("submit");
+        roleId === 3 && setTimeout(function () { $form.trigger("submit"); }, 100);
     }
 
     function initFromToDatePicker($dtpFrom, $dtpTo) {
