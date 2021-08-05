@@ -7,6 +7,7 @@
     using DTO.Report;
     using Fanex.Caching.Memory;
     using Fanex.ExternalAccount.Core.Shared;
+    using Fanex.ExternalAccount.DTO.Products;
     using Fanex.ExternalAccount.Service.Products;
     using Interface.Report;
     using System;
@@ -155,6 +156,21 @@
             }
 
             return string.Empty;
+        }
+
+        public string BuildTooltipsForRNGCasino(int userId, int groupId)
+        {
+            var products = _productService.GetProducts(userId, groupId);
+            var childProducts = products
+                .FirstOrDefault(p => p.ProductId == ProductConstants.DummyRNGProductId)
+                .Products.Select(p => p.ProductName);
+            var parentProduct = products
+                .Where(p => ProductConstants.ProductListForTooltipsRNGCasino.Contains(p.ProductId))
+                .Select(p => p.ProductName);
+            var offeredRNGCasino = parentProduct.Concat(childProducts);
+
+            var rngCasinoName = Utils.JoinToString(offeredRNGCasino, ", ");
+            return string.Format(ViewLang.Tooltip_NetTurnover_RNGCasino, rngCasinoName);
         }
 
         public string ConcatProductName(string productIds, string resourceIds, string groupName)

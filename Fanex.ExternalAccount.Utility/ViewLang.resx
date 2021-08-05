@@ -877,4 +877,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="Locked" xml:space="preserve">
     <value>Locked</value>
   </data>
+  <data name="Tooltip_NetTurnover_RNGCasino" xml:space="preserve">
+    <value>- For {0}, Net Turnover is Turnover which excludes the Void/Reject/Refund tickets.</value>
+  </data>
 </root>

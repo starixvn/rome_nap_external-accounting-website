@@ -159,6 +159,7 @@
                     winlossByUsernames.Select(winlossByUsername => new SuperWinLossDetailByUsernameModel(winlossByUsername)),
                     model.GrandTotal,
                     param.TooltipsForLiveCasino,
+                    param.TooltipsForRNGCasino,
                     model.TotalRecords,
                     criteria.PageIndex,
                     criteria.PageSize);

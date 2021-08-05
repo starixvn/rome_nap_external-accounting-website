@@ -12,6 +12,7 @@
             string userSelectedProductIds,
             string resourceIds,
             string tooltipsForLiveCasino,
+            string tooltipsForRNGCasino,
             int pageSize,
             int pageIndex,
             int userId)
@@ -25,6 +26,7 @@
 
             ResourceIds = resourceIds;
             TooltipsForLiveCasino = tooltipsForLiveCasino;
+            TooltipsForRNGCasino = tooltipsForRNGCasino;
 
             PageSize = pageSize;
             PageIndex = pageIndex;
@@ -45,6 +47,8 @@
         public string ResourceIds { get; }
 
         public string TooltipsForLiveCasino { get; }
+
+        public string TooltipsForRNGCasino { get; }
 
         public int PageSize { get; }
 
