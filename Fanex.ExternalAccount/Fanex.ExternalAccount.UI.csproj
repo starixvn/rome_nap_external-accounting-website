@@ -2952,7 +2952,9 @@
     <Content Include="Views\User\AddExistUser.cshtml" />
     <Content Include="Views\Group\GrantPermission.cshtml" />
     <Content Include="ExcelTemplates\Statement\Statement.xls" />
-    <Content Include="PTEngine\BettingLimitMappingSection.config" />
+    <Content Include="PTEngine\BettingLimitMappingSection.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="IbcKeys\ibckeydec.snk" />
     <Content Include="IbcKeys\ibcpkey.snk" />
     <Content Include="IbcKeys\Web.config" />
@@ -3055,6 +3057,7 @@
     <Content Include="Web.aws.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Views\MaxPayoutSettingInformation\Index.cshtml" />
     <Content Include="Views\ParlayMaxPayout\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
