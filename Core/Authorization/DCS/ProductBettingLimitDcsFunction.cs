@@ -10,6 +10,7 @@
         RNGLotteryBetting = 44,
         VirtualSportsBetting = 5,
         SabaclubBetting = 42,
-        VGamingBetting = 66
+        VGamingBetting = 66,
+        BitcoinBetting = 69
     }
 }

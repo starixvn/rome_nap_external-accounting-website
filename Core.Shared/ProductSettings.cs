@@ -21,6 +21,7 @@
                 [ProductConstants.RNGLottery] = new Product(8, ProductConstants.RNGLottery, "RNG Lottery"),
                 [ProductConstants.SabaVirtualSports] = new Product(9, ProductConstants.SabaVirtualSports, "Saba Virtual Sports"),
                 [ProductConstants.VGaming] = new Product(10, ProductConstants.VGaming, "Vgaming"),
+                [ProductConstants.Bitcoin] = new Product(11, ProductConstants.Bitcoin, "Bitcoin"),
             };
 
         public static bool IsShowGoldDeluxe => IsShowProduct(ProductConstants.GoldDeluxe);
