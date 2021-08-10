@@ -115,19 +115,24 @@
                     }
                 },
                 complete: function () {
-                    parent.jQuery.unblockUI();
                 }
             });
         }
     });
 
     function PostUpdate(params, isMultiple) {
+        parent.Fanex.ExtAcc.BlockUI();
         $.ajax({
             type: "POST",
             url: parent.resolveClientUrl("ParlayMaxPayout/Update" + (isMultiple ? "Multiple" : "")),
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(params),
             success: function (result) {
+                if (result.errorCode !== undefined && result.errorCode !== '0') {
+                    ShowSingleErrorMessage(result.errorMessage);
+                    return;
+                }
+
                 if (isMultiple) {
                     var custNamesArray = cachedDOM.txtCustNames.val().split(',');
                     var hasSuccessUpdate = false;

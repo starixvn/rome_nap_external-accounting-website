@@ -6,11 +6,13 @@
     using Fanex.CustomerSetting.Module.Core.Services.Interface;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
+    using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DTO.Requests.ParlayMaxPayout;
     using Fanex.ExternalAccount.Service.Customer.ParlayMaxPayout;
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
 
     public class ParlayMaxPayoutController : BaseController
     {
@@ -24,6 +26,7 @@
             _parlayMaxPayoutService = parlayMaxPayoutService ?? new ParlayMaxPayoutService();
         }
 
+        [ExternalAccountAuthenticate(Function = eFunctions.SportsbookBetting, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult Index(ParlayMaxPayoutSelectRequest request)
         {
             if (IsMultiple(request))
@@ -36,9 +39,11 @@
         }
 
         [AntiXSRFFilter]
+        [ExternalAccountAuthenticate(Function = eFunctions.SportsbookBetting, Policy = AuthenticationType.Read)]
         public JsonResult Check(ParlayMaxPayoutUpdateRequest request) => Json(_parlayMaxPayoutService.Check(request));
 
         [AntiXSRFFilter]
+        [ExternalAccountAuthenticate(Function = eFunctions.SportsbookBetting, Policy = AuthenticationType.Host)]
         public JsonResult Update(ParlayMaxPayoutUpdateRequest request)
         {
             var checkUmResult = _serviceBase.CheckUM(request.CustId, NonDcsProduct.Sportsbook, AppSettings.DefaultLanguage);
@@ -53,6 +58,7 @@
         }
 
         [AntiXSRFFilter]
+        [ExternalAccountAuthenticate(Function = eFunctions.SportsbookBetting, Policy = AuthenticationType.Host)]
         public JsonResult UpdateMultiple(ParlayMaxPayoutUpdateMultipleRequest request)
         {
             var checkUmResult = _serviceBase.CheckUM(GetFirstCustId(request.CustIds), NonDcsProduct.Sportsbook, null);
