@@ -478,6 +478,14 @@
         }
     };
 
+    menuItems.parlayMaxPayout = {
+        name: "Edit Multiple Parlay Max Payout",
+        className: "iconEnableEdit",
+        callback: function (key, opt) {
+            Fanex.ExtAcc.Customer.ShowEditMultipleParlayMaxPayout(Fanex.ExtAcc.Customer.IdsAndNames().Ids, Fanex.ExtAcc.Customer.IdsAndNames().Names, Fanex.ExtAcc.Customer.CurrentLevel);
+        }
+    }
+
     if ($.contextMenu) $.contextMenu('destroy');
 
     $.contextMenu({
@@ -886,4 +894,13 @@ Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus = function (productIds) {
         Fanex.ExtAcc.Form.ShowFrame(blankUrl, title, width, height, false, false, 1);
         $('#targetProductStatusSettingForm').attr('action', resolveClientUrl('ProductStatusSetting/MultipleView')).submit();
     }
+};
+
+Fanex.ExtAcc.Customer.ShowEditMultipleParlayMaxPayout = function (custIds, userNames, roleId) {
+    var $targetForm = $('#targetParlayMaxPayoutForm');
+    $targetForm.find('#custIds').val(custIds);
+    $targetForm.find('#custNames').val(userNames);
+    $targetForm.find('#custRole').val(roleId);
+    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Views/_blank.html'), 'Edit Multiple Parlay Max Payout', 1050, 350, false, false, 1, null, null, true);
+    $targetForm.attr('action', resolveClientUrl('ParlayMaxPayout/Index')).submit();
 };

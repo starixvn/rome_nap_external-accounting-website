@@ -8686,6 +8686,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Soccer Parlay.
+        /// </summary>
+        internal static string SoccerParlay {
+            get {
+                return ResourceManager.GetString("SoccerParlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Special Announcements.
         /// </summary>
         internal static string specialmessage {

@@ -3568,4 +3568,7 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="OpenedRemainUnchangedDownlinesTitle" xml:space="preserve">
     <value>List of downlines whose statuses remain unchanged after opening {0}.</value>
   </data>
+  <data name="SoccerParlay" xml:space="preserve">
+    <value>Soccer Parlay</value>
+  </data>
 </root>

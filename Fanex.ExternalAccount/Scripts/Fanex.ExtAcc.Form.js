@@ -83,7 +83,7 @@ Fanex.ExtAcc.Form = {
         });
     },
 
-    ShowFrame: function (url, title, width, height, reloadOnClose, callBack, marginRight, popupId, resizable) {
+    ShowFrame: function (url, title, width, height, reloadOnClose, callBack, marginRight, popupId, resizable, resizeIframe) {
         Fanex.ExtAcc.BlockUI();
 
         var id = popupId ? popupId : 'windowPopup';
@@ -127,7 +127,7 @@ Fanex.ExtAcc.Form = {
         $('#' + id).css('width', width + 'px');
         $('#' + id).css('height', (height - 34) + 'px');
         Frame.setAttribute('style', 'display: block; border: none; font-size: 12px; z-index: 999999; margin-right: ' + margin + '; height: 100%; width: 100%;');
-        Frame.setAttribute('onload', 'Fanex.ExtAcc.UnBlockUI()');
+        Frame.setAttribute('onload', resizeIframe ? 'resizeIframe(this)' : 'Fanex.ExtAcc.UnBlockUI()');
         if (callBack && typeof callBack === 'function') {
             callBack();
         }

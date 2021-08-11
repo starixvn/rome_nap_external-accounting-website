@@ -1600,6 +1600,7 @@
     <Content Include="SpNames.CustDB.aws.xml">
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
     </Content>
+    <Content Include="Views\ParlayMaxPayout\Scripts\Index.js" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
@@ -3035,6 +3036,7 @@
     <Content Include="Web.aws.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Views\ParlayMaxPayout\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">

@@ -19,6 +19,8 @@
 
         public static string PT3DecimalSites => Configs["PT3DecimalSites"] ?? "789y";
 
+        public static string DefaultLanguage = "en-US";
+
         internal static NameValueCollection Configs { get; set; } = ConfigurationManager.AppSettings;
     }
 }

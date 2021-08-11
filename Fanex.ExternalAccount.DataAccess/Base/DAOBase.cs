@@ -1,12 +1,14 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Base
 {
+    using Data.DNAide;
+    using DTO;
+    using Fanex.Data;
+    using Fanex.NAP.Framework.Data;
+    using Microsoft.Practices.EnterpriseLibrary.Data;
     using System;
     using System.Collections;
     using System.Data;
     using System.Data.Common;
-    using Data.DNAide;
-    using DTO;
-    using Microsoft.Practices.EnterpriseLibrary.Data;
 
     public class DAOBase
     {
@@ -32,5 +34,20 @@
 
         public virtual IDataReader ExecDataReader(string name, Hashtable parameters)
             => DbHelper.ExecuteReader(name, parameters, Defaulttimeout);
+
+        public Result ExecuteNonQuery(ICriteria criteria)
+        {
+            using (var objDB = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDB.AssignParamValues(criteria.GetSpParams());
+                objDB.ExecuteNonQuery();
+                var outputs = objDB.GetOuputParams();
+                return new Result()
+                {
+                    ErrorCode = outputs["errcode"]?.ToString(),
+                    ErrorMessage = outputs["errmsg"]?.ToString()
+                };
+            }
+        }
     }
 }
