@@ -41,6 +41,15 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
         }
     });
 
+    $scope.$watch("model.bettingLimitItems[0].maxPayoutPerMatchFormated", function (newValue, oldValue, _model) {
+        if (_model.bettingLimits[0].checked) {
+            for (var i = 1; i < length - 2; i++) {
+                _model.bettingLimits[i].maxPayoutPerMatchFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
+                _model.bettingLimits[i].maxPayoutPerMatch = _model.bettingLimits[i].maxPayoutPerMatchFormated;
+            }
+        }
+    });
+
     $scope.$watch("model.bettingLimitItems[2].minBetFormated", function (newValue, oldValue, _model) {
         if (_model.bettingLimits[2].checked) {
             for (var i = 2; i < length - 2; i++) {
@@ -64,6 +73,15 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
             for (var i = 2; i < length - 2; i++) {
                 _model.bettingLimits[i].maxPerMatchFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
                 _model.bettingLimits[i].maxPerMatch = _model.bettingLimits[i].maxPerMatchFormated;
+            }
+        }
+    });
+
+    $scope.$watch("model.bettingLimitItems[2].maxPayoutPerMatchFormated", function (newValue, oldValue, _model) {
+        if (_model.bettingLimits[2].checked) {
+            for (var i = 2; i < length - 2; i++) {
+                _model.bettingLimits[i].maxPayoutPerMatchFormated = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((newValue == '' ? '0' : newValue), ',', '')).formatNumber();
+                _model.bettingLimits[i].maxPayoutPerMatch = _model.bettingLimits[i].maxPayoutPerMatchFormated;
             }
         }
     });
@@ -123,6 +141,7 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
                     var minBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((soccerBetting.minBetFormated == '' ? '0' : soccerBetting.minBetFormated), ',', ''));
                     var maxBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((soccerBetting.maxBetFormated == '' ? '0' : soccerBetting.maxBetFormated), ',', ''));
                     var maxPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((soccerBetting.maxPerMatchFormated == '' ? '0' : soccerBetting.maxPerMatchFormated), ',', ''));
+                    var maxPayoutPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((soccerBetting.maxPayoutPerMatchFormated == '' ? '0' : soccerBetting.maxPayoutPerMatchFormated), ',', ''));
 
                     for (var i = 1; i < length - 2; i++) {
                         $scope.model.bettingLimitItems[i].bgClass = 'inactive';
@@ -130,10 +149,12 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
                         $scope.model.bettingLimitItems[i].minBetFormated = minBet.formatNumber();
                         $scope.model.bettingLimitItems[i].maxBetFormated = maxBet.formatNumber();
                         $scope.model.bettingLimitItems[i].maxPerMatchFormated = maxPerMatch.formatNumber();
+                        $scope.model.bettingLimitItems[i].maxPayoutPerMatchFormated = maxPayoutPerMatch.formatNumber();
 
                         $scope.model.bettingLimitItems[i].minBet = minBet.formatNumber();
                         $scope.model.bettingLimitItems[i].maxBet = maxBet.formatNumber();
                         $scope.model.bettingLimitItems[i].maxPerMatch = maxPerMatch.formatNumber();
+                        $scope.model.bettingLimitItems[i].maxPayoutPerMatch = maxPayoutPerMatch.formatNumber();
                     }
                 }
                 else {
@@ -149,14 +170,17 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
                         var minBet = $scope.model.bettingLimitItems[i].preValMinBet;
                         var maxBet = $scope.model.bettingLimitItems[i].preValMaxBet;
                         var maxPerMatch = $scope.model.bettingLimitItems[i].preValMaxPerMatch;
+                        var maxPayoutPerMatch = $scope.model.bettingLimitItems[i].preValMaxPayoutPerMatch;
 
                         $scope.model.bettingLimitItems[i].minBetFormated = minBet;
                         $scope.model.bettingLimitItems[i].maxBetFormated = maxBet;
                         $scope.model.bettingLimitItems[i].maxPerMatchFormated = maxPerMatch;
+                        $scope.model.bettingLimitItems[i].maxPayoutPerMatchFormated = maxPayoutPerMatch;
 
                         $scope.model.bettingLimitItems[i].minBet = minBet;
                         $scope.model.bettingLimitItems[i].maxBet = maxBet;
                         $scope.model.bettingLimitItems[i].maxPerMatch = maxPerMatch;
+                        $scope.model.bettingLimitItems[i].maxPayoutPerMatch = maxPayoutPerMatch;
                     }
                 }
 
@@ -188,14 +212,17 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
                         var minBet = $scope.model.bettingLimitItems[i].preValMinBet;
                         var maxBet = $scope.model.bettingLimitItems[i].preValMaxBet;
                         var maxPerMatch = $scope.model.bettingLimitItems[i].preValMaxPerMatch;
+                        var maxPayoutPerMatch = $scope.model.bettingLimitItems[i].preValMaxPayoutPerMatch;
 
                         $scope.model.bettingLimitItems[i].minBetFormated = minBet;
                         $scope.model.bettingLimitItems[i].maxBetFormated = maxBet;
                         $scope.model.bettingLimitItems[i].maxPerMatchFormated = maxPerMatch;
+                        $scope.model.bettingLimitItems[i].maxPayoutPerMatchFormated = maxPayoutPerMatch;
 
                         $scope.model.bettingLimitItems[i].minBet = minBet;
                         $scope.model.bettingLimitItems[i].maxBet = maxBet;
                         $scope.model.bettingLimitItems[i].maxPerMatch = maxPerMatch;
+                        $scope.model.bettingLimitItems[i].maxPayoutPerMatch = maxPayoutPerMatch;
                     }
                 }
 
@@ -210,6 +237,7 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
                     var minBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((basketballBetting.minBetFormated == '' ? '0' : basketballBetting.minBetFormated), ',', ''));
                     var maxBet = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((basketballBetting.maxBetFormated == '' ? '0' : basketballBetting.maxBetFormated), ',', ''));
                     var maxPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((basketballBetting.maxPerMatchFormated == '' ? '0' : basketballBetting.maxPerMatchFormated), ',', ''));
+                    var maxPayoutPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll((basketballBetting.maxPayoutPerMatchFormated == '' ? '0' : basketballBetting.maxPayoutPerMatchFormated), ',', ''));
 
                     for (var i = 3; i < length - 2; i++) {
                         $scope.model.bettingLimitItems[i].bgClass = 'inactive';
@@ -217,10 +245,12 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
                         $scope.model.bettingLimitItems[i].minBetFormated = minBet.formatNumber();
                         $scope.model.bettingLimitItems[i].maxBetFormated = maxBet.formatNumber();
                         $scope.model.bettingLimitItems[i].maxPerMatchFormated = maxPerMatch.formatNumber();
+                        $scope.model.bettingLimitItems[i].maxPayoutPerMatchFormated = maxPayoutPerMatch.formatNumber();
 
                         $scope.model.bettingLimitItems[i].minBet = minBet.formatNumber();
                         $scope.model.bettingLimitItems[i].maxBet = maxBet.formatNumber();
                         $scope.model.bettingLimitItems[i].maxPerMatch = maxPerMatch.formatNumber();
+                        $scope.model.bettingLimitItems[i].maxPayoutPerMatch = maxPayoutPerMatch.formatNumber();
                     }
 
                     // Prevents model is updating value for class name
@@ -245,14 +275,17 @@ Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
                         var minBet = $scope.model.bettingLimitItems[i].preValMinBet;
                         var maxBet = $scope.model.bettingLimitItems[i].preValMaxBet;
                         var maxPerMatch = $scope.model.bettingLimitItems[i].preValMaxPerMatch;
+                        var maxPayoutPerMatch = $scope.model.bettingLimitItems[i].preValMaxPayoutPerMatch;
 
                         $scope.model.bettingLimitItems[i].minBetFormated = minBet;
                         $scope.model.bettingLimitItems[i].maxBetFormated = maxBet;
                         $scope.model.bettingLimitItems[i].maxPerMatchFormated = maxPerMatch;
+                        $scope.model.bettingLimitItems[i].maxPayoutPerMatchFormated = maxPayoutPerMatch;
 
                         $scope.model.bettingLimitItems[i].minBet = minBet;
                         $scope.model.bettingLimitItems[i].maxBet = maxBet;
                         $scope.model.bettingLimitItems[i].maxPerMatch = maxPerMatch;
+                        $scope.model.bettingLimitItems[i].maxPayoutPerMatch = maxPayoutPerMatch;
                     }
                 }
 
@@ -324,7 +357,15 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
 
     this.IsValid = function (min, max, maxPerMatch, minMin, maxMax, maxPerMatchMax, betting, isNumberGame, maxPerBall, maxPerBallMax) {
         var isNumberGameOrHappy5 = betting.id === 161 || betting.id === 164;
+        var isSoccerParkayOrMixSportsParlay = betting.resourceKey === 'soccerParlay' || betting.resourceKey === 'mixsports';
         var subFix = isNumberGameOrHappy5 ? '1' : '';
+
+        var maxPayoutPerMatch;
+        var maxPayoutPerMatchMax;
+        if (typeof betting.maxPayoutPerMatch != 'undefined') {
+            maxPayoutPerMatch = parseFloat(Fanex.CustomerSetting.Core.ReplaceAll(betting.maxPayoutPerMatchFormated, ',', ''));
+            maxPayoutPerMatchMax = betting.maxPayoutPerMatchMax;
+        }
 
         if (isNaN(min)) {
             Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet should be a value', undefined, undefined, 3000);
@@ -340,6 +381,12 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
 
         if (isNaN(maxPerMatch)) {
             Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch' + subFix).get(0), betting.name + ' - Max Per Match should be a value', undefined, undefined, 3000);
+
+            return false;
+        }
+
+        if (!isNumberGameOrHappy5 && !isSoccerParkayOrMixSportsParlay && isNaN(maxPayoutPerMatch)) {
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPayoutPerMatch' + subFix).get(0), betting.name + ' - Max Payout Per Match should be a value', undefined, undefined, 3000);
 
             return false;
         }
@@ -386,6 +433,18 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
             return false;
         }
 
+        if (!isNumberGameOrHappy5 && !isSoccerParkayOrMixSportsParlay && maxPayoutPerMatchMax != 0 && maxPayoutPerMatch > maxPayoutPerMatchMax) {
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPayoutPerMatch' + subFix).get(0), betting.name + ' - Max Payout Per Match should be less than or equals to ' + maxPayoutPerMatchMax.formatNumber(), undefined, undefined, 3000);
+
+            return false;
+        }
+
+        if (!isNumberGameOrHappy5 && !isSoccerParkayOrMixSportsParlay && maxPerMatch > maxPayoutPerMatch) {
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch' + subFix).get(0), betting.name + ' - Max Per Match should be less than or equal to Max Payout Per Match', undefined, undefined, 3000);
+
+            return false;
+        }
+
         if (isNumberGame && maxPerBallMax != 0 && maxPerBall > maxPerBallMax) {
             Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - Max Per Ball should be less than or equals to ' + maxPerBallMax.formatNumber(), undefined, undefined, 3000);
 
@@ -425,6 +484,11 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
             if (!this.IsValid(curValMinBet, curValMaxBet, curValMaxPerMatch, curValMinMin, curValMaxMax, curValMaxPerMatchMax, betting)) {
                 return;
             }
+        }
+
+        if (betting.resourceKey === 'soccerParlay' || betting.resourceKey === 'mixsports') {
+            betting.maxPayoutPerMatch = null;
+            betting.maxPayoutPerMatchMax = null;
         }
     }
 
