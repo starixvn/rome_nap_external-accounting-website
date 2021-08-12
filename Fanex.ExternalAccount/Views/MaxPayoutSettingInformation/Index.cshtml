@@ -1,5 +1,8 @@
 ﻿@{
     Layout = null;
+
+    var betTypeNames = ViewData["BetTypeNames"] as string[];
+    var sportTypeNames = ViewData["SportTypeNames"] as string;
 }
 
 <!DOCTYPE html>
@@ -39,34 +42,22 @@
                 <td class="xl65" style="border:0.5pt solid #cecece; background:#666666 none repeat scroll 0% 0%; border-left:none; width:265pt; text-align:center; vertical-align:middle; padding-top:1px; padding-right:1px; padding-left:1px; white-space:nowrap" width="353"><span style="color:#ffffff;"><strong><span>Bet types that do not apply Max Payout setting</span></strong></span></td>
             </tr>
             <tr height="24" style="height:18.0pt">
-                <td class="xl67" height="192" rowspan="8" style="border:0.5pt solid #cecece; background:#f3f5e0 none repeat scroll 0% 0%; height:144.0pt; border-top:none; text-align:center; vertical-align:middle; padding-top:1px; padding-right:1px; padding-left:1px; white-space:nowrap">
+                <td class="xl67" height="192" rowspan="@betTypeNames.Length" style="border:0.5pt solid #cecece; background:#f3f5e0 none repeat scroll 0% 0%; height:144.0pt; border-top:none; text-align:center; vertical-align:middle; padding-top:1px; padding-right:1px; padding-left:1px; white-space:nowrap">
                     <span style="font-size:11pt"><span style="color:black"><span style="font-weight:400"><span style="font-style:normal"><span style="text-decoration:none"><span style="font-family:Calibri,sans-serif">All Sports except </span></span></span></span></span></span>
                     <br>
-                    <span style="font-size:11pt"><span style="color:black"><span style="font-weight:400"><span style="font-style:normal"><span style="text-decoration:none"><span style="font-family:Calibri,sans-serif">E-Sports and Muay Thai</span></span></span></span></span></span>
+                    <span style="font-size:11pt"><span style="color:black"><span style="font-weight:400"><span style="font-style:normal"><span style="text-decoration:none"><span style="font-family:Calibri,sans-serif">@sportTypeNames</span></span></span></span></span></span>
                 </td>
-                <td class="xl66" style="border:0.5pt solid #cecece; background:white none repeat scroll 0% 0%; border-top:none; border-left:none; padding-top:1px; padding-right:1px; padding-left:1px; vertical-align:bottom; white-space:nowrap"><span style="font-size:11pt"><span style="color:black"><span style="font-weight:400"><span style="font-style:normal"><span style="text-decoration:none"><span style="font-family:Calibri,sans-serif">Handicap</span></span></span></span></span></span></td>
+                <td class="xl66" style="border:0.5pt solid #cecece; background:white none repeat scroll 0% 0%; border-top:none; border-left:none; padding-top:1px; padding-right:1px; padding-left:1px; vertical-align:bottom; white-space:nowrap"><span style="font-size:11pt"><span style="color:black"><span style="font-weight:400"><span style="font-style:normal"><span style="text-decoration:none"><span style="font-family:Calibri,sans-serif">@betTypeNames[0]</span></span></span></span></span></span></td>
             </tr>
-            <tr height="24" style="height:18.0pt">
-                <td class="xl66" height="24" style="border:0.5pt solid #cecece; background:white none repeat scroll 0% 0%; height:18.0pt; border-top:none; border-left:none; padding-top:1px; padding-right:1px; padding-left:1px; vertical-align:bottom; white-space:nowrap"><span style="font-size:11pt"><span style="color:black"><span style="font-weight:400"><span style="font-style:normal"><span style="text-decoration:none"><span style="font-family:Calibri,sans-serif">Over/Under</span></span></span></span></span></span></td>
-            </tr>
-            <tr height="24" style="height:18.0pt">
-                <td class="xl66" height="24" style="border:0.5pt solid #cecece; background:white none repeat scroll 0% 0%; height:18.0pt; border-top:none; border-left:none; padding-top:1px; padding-right:1px; padding-left:1px; vertical-align:bottom; white-space:nowrap"><span style="font-size:11pt"><span style="color:black"><span style="font-weight:400"><span style="font-style:normal"><span style="text-decoration:none"><span style="font-family:Calibri,sans-serif">1X2</span></span></span></span></span></span></td>
-            </tr>
-            <tr height="24" style="height:18.0pt">
-                <td class="xl66" height="24" style="border:0.5pt solid #cecece; background:white none repeat scroll 0% 0%; height:18.0pt; border-top:none; border-left:none; padding-top:1px; padding-right:1px; padding-left:1px; vertical-align:bottom; white-space:nowrap"><span style="font-size:11pt"><span style="color:black"><span style="font-weight:400"><span style="font-style:normal"><span style="text-decoration:none"><span style="font-family:Calibri,sans-serif">Moneyline</span></span></span></span></span></span></td>
-            </tr>
-            <tr height="24" style="height:18.0pt">
-                <td class="xl66" height="24" style="border:0.5pt solid #cecece; background:white none repeat scroll 0% 0%; height:18.0pt; border-top:none; border-left:none; padding-top:1px; padding-right:1px; padding-left:1px; vertical-align:bottom; white-space:nowrap"><span style="font-size:11pt"><span style="color:black"><span style="font-weight:400"><span style="font-style:normal"><span style="text-decoration:none"><span style="font-family:Calibri,sans-serif">1H Handicap</span></span></span></span></span></span></td>
-            </tr>
-            <tr height="24" style="height:18.0pt">
-                <td class="xl66" height="24" style="border:0.5pt solid #cecece; background:white none repeat scroll 0% 0%; height:18.0pt; border-top:none; border-left:none; padding-top:1px; padding-right:1px; padding-left:1px; vertical-align:bottom; white-space:nowrap"><span style="font-size:11pt"><span style="color:black"><span style="font-weight:400"><span style="font-style:normal"><span style="text-decoration:none"><span style="font-family:Calibri,sans-serif">1H Over/Under</span></span></span></span></span></span></td>
-            </tr>
-            <tr height="24" style="height:18.0pt">
-                <td class="xl66" height="24" style="border:0.5pt solid #cecece; background:white none repeat scroll 0% 0%; height:18.0pt; border-top:none; border-left:none; padding-top:1px; padding-right:1px; padding-left:1px; vertical-align:bottom; white-space:nowrap"><span style="font-size:11pt"><span style="color:black"><span style="font-weight:400"><span style="font-style:normal"><span style="text-decoration:none"><span style="font-family:Calibri,sans-serif">1H 1X2</span></span></span></span></span></span></td>
-            </tr>
-            <tr height="24" style="height:18.0pt">
-                <td class="xl66" height="24" style="border:0.5pt solid #cecece; background:white none repeat scroll 0% 0%; height:18.0pt; border-top:none; border-left:none; padding-top:1px; padding-right:1px; padding-left:1px; vertical-align:bottom; white-space:nowrap"><span style="font-size:11pt"><span style="color:black"><span style="font-weight:400"><span style="font-style:normal"><span style="text-decoration:none"><span style="font-family:Calibri,sans-serif">1H Moneyline</span></span></span></span></span></span></td>
-            </tr>
+
+            @{
+                for (int i = 1; i < betTypeNames.Length; i++)
+                {
+                    <tr height="24" style="height:18.0pt">
+                        <td class="xl66" height="24" style="border:0.5pt solid #cecece; background:white none repeat scroll 0% 0%; height:18.0pt; border-top:none; border-left:none; padding-top:1px; padding-right:1px; padding-left:1px; vertical-align:bottom; white-space:nowrap"><span style="font-size:11pt"><span style="color:black"><span style="font-weight:400"><span style="font-style:normal"><span style="text-decoration:none"><span style="font-family:Calibri,sans-serif">@betTypeNames[i]</span></span></span></span></span></span></td>
+                    </tr>
+                }
+            }
         </tbody>
     </table>
 
