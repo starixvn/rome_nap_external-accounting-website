@@ -386,7 +386,7 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
         }
 
         if (!isNumberGameOrHappy5 && !isSoccerParkayOrMixSportsParlay && isNaN(maxPayoutPerMatch)) {
-            Validators.show($('#txt' + betting.resourceKey + 'MaxPayoutPerMatch' + subFix).get(0), betting.name + ' - Max Payout Per Match should be a value', undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPayoutPerMatch' + subFix).get(0), betting.name + ' - Max Payout Per Match should be a value', -115, 150, 3000);
 
             return false;
         }
@@ -434,19 +434,31 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
         }
 
         if (!isNumberGameOrHappy5 && !isSoccerParkayOrMixSportsParlay && maxPayoutPerMatchMax != 0 && maxPayoutPerMatch > maxPayoutPerMatchMax) {
-            Validators.show($('#txt' + betting.resourceKey + 'MaxPayoutPerMatch' + subFix).get(0), betting.name + ' - Max Payout Per Match should be less than or equals to ' + maxPayoutPerMatchMax.formatNumber(), undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPayoutPerMatch' + subFix).get(0), betting.name + ' - Max Payout Per Match should be less than or equals to ' + maxPayoutPerMatchMax.formatNumber(), -50, 83, 3000);
 
             return false;
         }
 
         if (!isNumberGameOrHappy5 && !isSoccerParkayOrMixSportsParlay && maxPerMatch > maxPayoutPerMatch) {
-            Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch' + subFix).get(0), betting.name + ' - Max Per Match should be less than or equal to Max Payout Per Match', undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch' + subFix).get(0), betting.name + ' - Max Per Match should be less than or equal to Max Payout Per Match', -90, 123, 3000);
 
             return false;
         }
 
         if (isNumberGame && maxPerBallMax != 0 && maxPerBall > maxPerBallMax) {
             Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - Max Per Ball should be less than or equals to ' + maxPerBallMax.formatNumber(), undefined, undefined, 3000);
+
+            return false;
+        }
+
+        if (isNumberGame && max > maxPerBall && maxPerBall > 0) {
+            Validators.show($('#txt' + betting.resourceKey + 'Max' + subFix).get(0), betting.name + ' - The Max Bet should be less than or equal to Max Per Ball', undefined, undefined, 3000);
+
+            return false;
+        }
+
+        if (isNumberGame && maxPerBall > maxPerMatch && maxPerMatch > 0) {
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - The Max Per Ball should be less than or equal to Max Per Match', -278, 312, 3000);
 
             return false;
         }
