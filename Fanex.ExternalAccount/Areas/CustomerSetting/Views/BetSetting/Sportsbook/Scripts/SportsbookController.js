@@ -437,103 +437,103 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
         }
 
         if (isNaN(min)) {
-            Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet should be a value', undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet must be a value', undefined, undefined, 3000);
 
             return false;
         }
 
         if (isNaN(max)) {
-            Validators.show($('#txt' + betting.resourceKey + 'Max' + subFix).get(0), betting.name + ' - Max Bet should be a value', undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'Max' + subFix).get(0), betting.name + ' - Max Bet must be a value', undefined, undefined, 3000);
 
             return false;
         }
 
         if (isNaN(maxPerMatch)) {
-            Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch' + subFix).get(0), betting.name + ' - Max Per Match should be a value', undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch' + subFix).get(0), betting.name + ' - Max Per Match must be a value', undefined, undefined, 3000);
 
             return false;
         }
 
         if (!isNumberGameOrHappy5 && !isSoccerParkayOrMixSportsParlay && isNaN(maxPayoutPerMatch)) {
-            Validators.show($('#txt' + betting.resourceKey + 'MaxPayoutPerMatch' + subFix).get(0), betting.name + ' - Max Payout Per Match should be a value', -115, 150, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPayoutPerMatch' + subFix).get(0), betting.name + ' - Max Payout Per Match must be a value', -115, 150, 3000);
 
             return false;
         }
 
         if (isNumberGame && isNaN(maxPerBall)) {
-            Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - Max Per Ball should be a value', undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - Max Per Ball must be a value', undefined, undefined, 3000);
 
             return false;
         }
 
         if (minMin != 0 && min < minMin) {
-            Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet should be greater than or equals to ' + minMin.formatNumber(), undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet must be greater than or equals to ' + minMin.formatNumber(), undefined, undefined, 3000);
 
             return false;
         }
 
         if (min > max) {
-            Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet should be less than or equals to Max Bet', undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet must be less than or equals to Max Bet', undefined, undefined, 3000);
 
             return false;
         }
 
         if (min > maxPerMatch) {
-            Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet should be less than or equals to Max Per Match', undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet must be less than or equals to Max Per Match', undefined, undefined, 3000);
 
             return false;
         }
 
         if (maxMax != 0 && max > maxMax) {
-            Validators.show($('#txt' + betting.resourceKey + 'Max' + subFix).get(0), betting.name + ' - Max Bet should be less than or equals to ' + maxMax, undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'Max' + subFix).get(0), betting.name + ' - Max Bet must be less than or equals to ' + maxMax, undefined, undefined, 3000);
 
             return false;
         }
 
         if (max > maxPerMatch) {
-            Validators.show($('#txt' + betting.resourceKey + 'Max' + subFix).get(0), betting.name + ' - Max Bet should be less than or equals to Max Per Match', undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'Max' + subFix).get(0), betting.name + ' - Max Bet must be less than or equals to Max Per Match', undefined, undefined, 3000);
 
             return false;
         }
 
         if (maxPerMatchMax != 0 && maxPerMatch > maxPerMatchMax) {
-            Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch' + subFix).get(0), betting.name + ' - Max Per Match should be less than or equals to ' + maxPerMatchMax.formatNumber(), undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch' + subFix).get(0), betting.name + ' - Max Per Match must be less than or equals to ' + maxPerMatchMax.formatNumber(), undefined, undefined, 3000);
 
             return false;
         }
 
         if (!isNumberGameOrHappy5 && !isSoccerParkayOrMixSportsParlay && maxPayoutPerMatchMax != 0 && maxPayoutPerMatch > maxPayoutPerMatchMax) {
-            Validators.show($('#txt' + betting.resourceKey + 'MaxPayoutPerMatch' + subFix).get(0), betting.name + ' - Max Payout Per Match should be less than or equals to ' + maxPayoutPerMatchMax.formatNumber(), undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPayoutPerMatch' + subFix).get(0), betting.name + ' - Max Payout Per Match must be less than or equals to ' + maxPayoutPerMatchMax.formatNumber(), undefined, undefined, 3000);
 
             return false;
         }
 
         if (!isNumberGameOrHappy5 && !isSoccerParkayOrMixSportsParlay && maxPerMatch > maxPayoutPerMatch) {
-            Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch' + subFix).get(0), betting.name + ' - Max Per Match should be less than or equal to Max Payout Per Match', undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch' + subFix).get(0), betting.name + ' - Max Per Match must be less than or equal to Max Payout Per Match', undefined, undefined, 3000);
 
             return false;
         }
 
         if (isNumberGame && maxPerBallMax != 0 && maxPerBall > maxPerBallMax) {
-            Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - Max Per Ball should be less than or equals to ' + maxPerBallMax.formatNumber(), undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - Max Per Ball must be less than or equals to ' + maxPerBallMax.formatNumber(), undefined, undefined, 3000);
 
             return false;
         }
 
         if (isNumberGame && max > maxPerBall && maxPerBall > 0) {
-            Validators.show($('#txt' + betting.resourceKey + 'Max' + subFix).get(0), betting.name + ' - The Max Bet should be less than or equal to Max Per Ball', undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'Max' + subFix).get(0), betting.name + ' - Max Bet must be less than or equal to Max Per Ball', undefined, undefined, 3000);
 
             return false;
         }
 
         if (isNumberGame && maxPerBall > maxPerMatch && maxPerMatch > 0) {
-            Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - The Max Per Ball should be less than or equal to Max Per Match', undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - Max Per Ball must be less than or equal to Max Per Match', undefined, undefined, 3000);
 
             return false;
         }
 
         if (isNumberGameOrHappy5 && defaultMinBetValue && min < defaultMinBetValue) {
-            Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet should be greater than or equals to ' + defaultMinBetValue.formatNumber(), undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'Min' + subFix).get(0), betting.name + ' - Min Bet must be greater than or equals to ' + defaultMinBetValue.formatNumber(), undefined, undefined, 3000);
 
             return false;
         }
