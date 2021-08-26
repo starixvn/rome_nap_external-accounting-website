@@ -2,6 +2,75 @@
     alert('Require Fanex.CustomerSetting.Core.js');
 };
 
+Validators.show = function (elementInput, message, xPos, pointerXPos, timeout, yPos) {
+    // <span class="hint"><span>This is the message.<span><span class="hint-pointer">&nbsp;</span></span>
+    var hideTimeout = timeout ? timeout : 1000;
+    var hint = document.getElementById('fHint');
+    var hintPointer = null;
+    if (hint == null) {
+        var hint = document.createElement("SPAN");
+        hint.className = 'hint';
+        var hintMsg = document.createElement("SPAN");
+        hint.appendChild(hintMsg);
+        hintPointer = document.createElement("SPAN");
+        hintPointer.className = 'hint-pointer';
+        hint.appendChild(hintPointer);
+        hint.id = 'fHint';
+        hint.style.top = '10px';
+        hint.style.left = '10px';
+        hint.style.zIndex = 999999;
+        hint.onclick = function () { // Hide onclick
+            hint.style.display = 'none';
+        };
+        document.body.appendChild(hint);
+    };
+    hintPointer = hint.lastChild;
+    hint.firstChild.innerHTML = message;
+    if (this.timeOutHideTooltip) {
+        clearTimeout(this.timeOutHideTooltip);
+        this.timeOutHideTooltip = null;
+    };
+    this.timeOutHideTooltip = setTimeout(function () {
+        hint.style.display = 'none';
+    }, hideTimeout); // Auto hide in 1s
+
+    hint.style.display = 'block';
+    if (elementInput != null) {
+        if (typeof xPos == 'undefined') {
+            xPos = 0;
+        }
+
+        if (typeof yPos == 'undefined') {
+            yPos = 0;
+        }
+
+        if (typeof pointerXPos == 'undefined') {
+            pointerXPos = 10;
+        }
+
+        var pos = Validators.utils.findPosRelativeToViewport(elementInput);
+        if (pos[0] + hint.offsetWidth > document.body.offsetWidth) {
+            hintPointer.style.left = 'auto';
+            hintPointer.style.right = '10px';
+            hint.style.left = 'auto';
+            hint.style.right = document.body.offsetLeft + document.body.offsetWidth - pos[0] - elementInput.offsetWidth + 'px';
+        } else {
+            hintPointer.style.left = '10px';
+            hintPointer.style.right = 'auto';
+            hint.style.left = pos[0] + 'px';
+            hint.style.right = 'auto';
+        }
+
+        hint.style.backgroundPositionX = pointerXPos + 'px';
+        hint.style.top = pos[1] - 40 + yPos + 'px';
+
+        elementInput.onchange = function () {
+            hint.style.display = 'none';
+        };
+        elementInput.focus();
+    }
+};
+
 Fanex.CustomerSetting.Betting = {};
 
 Fanex.CustomerSetting.Betting.Sportsbook = function ($scope, $element) {
@@ -434,13 +503,13 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
         }
 
         if (!isNumberGameOrHappy5 && !isSoccerParkayOrMixSportsParlay && maxPayoutPerMatchMax != 0 && maxPayoutPerMatch > maxPayoutPerMatchMax) {
-            Validators.show($('#txt' + betting.resourceKey + 'MaxPayoutPerMatch' + subFix).get(0), betting.name + ' - Max Payout Per Match should be less than or equals to ' + maxPayoutPerMatchMax.formatNumber(), -50, 83, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPayoutPerMatch' + subFix).get(0), betting.name + ' - Max Payout Per Match should be less than or equals to ' + maxPayoutPerMatchMax.formatNumber(), undefined, undefined, 3000);
 
             return false;
         }
 
         if (!isNumberGameOrHappy5 && !isSoccerParkayOrMixSportsParlay && maxPerMatch > maxPayoutPerMatch) {
-            Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch' + subFix).get(0), betting.name + ' - Max Per Match should be less than or equal to Max Payout Per Match', -90, 123, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch' + subFix).get(0), betting.name + ' - Max Per Match should be less than or equal to Max Payout Per Match', undefined, undefined, 3000);
 
             return false;
         }
@@ -458,7 +527,7 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
         }
 
         if (isNumberGame && maxPerBall > maxPerMatch && maxPerMatch > 0) {
-            Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - The Max Per Ball should be less than or equal to Max Per Match', -278, 312, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - The Max Per Ball should be less than or equal to Max Per Match', undefined, undefined, 3000);
 
             return false;
         }
