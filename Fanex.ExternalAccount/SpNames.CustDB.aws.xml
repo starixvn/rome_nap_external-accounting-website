@@ -341,8 +341,8 @@
     <Setting Key="EAS_Bonus_Ins" SpName="EAS_Bonus_Ins" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="ParlayMaxPayout">
-    <Setting Key="Acc_CustSetting_MaxPayoutSelect" SpName="Acc_CustSetting_MaxPayoutSelect_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustSetting_MaxPayoutUpd" SpName="Acc_CustSetting_MaxPayoutUpd_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" />
-    <Setting Key="Acc_CustSetting_MaxPayoutCheckDownline" SpName="Acc_CustSetting_MaxPayoutCheckDownline_xtest" DbName="DBCUST.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_CustSetting_MaxPayoutSelect" SpName="Acc_CustSetting_MaxPayoutSelect" DbName="DBCUST.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_CustSetting_MaxPayoutUpd" SpName="Acc_CustSetting_MaxPayoutUpd" DbName="DBCUST.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_CustSetting_MaxPayoutCheckDownline" SpName="Acc_CustSetting_MaxPayoutCheckDownline" DbName="DBCUST.CustDB.bodbExtAccNet" />
   </Function>
 </Functions>
