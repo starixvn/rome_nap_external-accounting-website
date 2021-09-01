@@ -880,4 +880,10 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="Tooltip_NetTurnover_RNGCasino" xml:space="preserve">
     <value>- For {0}, Net Turnover is Turnover which excludes the Void/Reject/Refund tickets.</value>
   </data>
+  <data name="EditMultipleAllSuccessfully" xml:space="preserve">
+    <value>The selected accounts' protection status has been updated successfully.</value>
+  </data>
+  <data name="EditMultiplePartialSuccessfully" xml:space="preserve">
+    <value>The selected accounts' protection status has been updated successfully except the following account(s):</value>
+  </data>
 </root>

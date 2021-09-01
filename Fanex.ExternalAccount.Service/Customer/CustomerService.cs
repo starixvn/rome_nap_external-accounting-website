@@ -1,5 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Customer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
     using Core.Shared;
     using DataAccess.Criteria.Customer;
     using DataAccess.Criteria.Customer.CustomerStatus;
@@ -8,10 +11,9 @@
     using DTO;
     using DTO.Customer;
     using DTO.Customer.Status;
+    using Fanex.Logging.Extensions.Web;
     using Interface.Customer;
     using Requests.Customer.OpenCustomer;
-    using System.Collections.Generic;
-    using System.Text;
     using Utilities;
     using ViewModel.Customer.OpenCustomer;
     using ViewModel.Customer.Suspend;
@@ -49,11 +51,18 @@
         public Result CheckNewCustomerIsReachLimitation(CheckNewCustomerLimitationCriteria criteria)
             => dataAccess.CheckNewCustomerIsReachLimitation(criteria);
 
-        public void KickoutCustomer(int custId, byte roleId, string ip)
+        public void KickoutCustomer(int custId, byte roleId, string ip, string mode = null)
         {
             if (Config.IsEnabledRecheckin)
             {
-                dataAccess.KickoutCustomer(new KickoutCustomerCriteria(custId, roleId, ip));
+                try
+                {
+                    dataAccess.KickoutCustomer(new KickoutCustomerCriteria(custId, roleId, ip, mode));
+                }
+                catch (Exception ex)
+                {
+                    ExceptionHandler.Handle(ex);
+                }
             }
         }
 
@@ -237,6 +246,57 @@
                     ? $"{successUpdateOpenedList.ToString()} and his/her affected downlines have been successfully opened."
                     : $"{successUpdateOpenedList.ToString()} have been successfully opened.";
                 result.Insert(0, new Result(0, message));
+            }
+
+            return result;
+        }
+
+        public IEnumerable<CustomerProtectedStatus> GetMultipleProtectedStatus(string groupName, string custIds, byte roleId, int userId)
+            => dataAccess.GetMultipleProtectedStatus(new GetMultipleProtectedStatusCriteria(groupName, custIds, roleId, userId));
+
+        public IEnumerable<Result> UpdateMultipleProtectedStatus(CustomerProtectedStatus[] protectedStatus, int userId, string ip)
+        {
+            Result result;
+            IList<Result> errorResults = new List<Result>();
+
+            foreach (var item in protectedStatus)
+            {
+                result = UpdateProtectedStatus(item.CustId, item.RoleId, item.IsProtectedMode, userId, ip);
+
+                if (!result.IsSuccess)
+                {
+                    result.ErrorMessage = $"{item.Username}: {result.ErrorMessage}";
+                    errorResults.Add(result);
+                }
+            }
+
+            return BuildResults(protectedStatus.Length, errorResults);
+        }
+
+        private static IEnumerable<Result> BuildResults(int total, IList<Result> errorResults)
+        {
+            var errorCount = errorResults.Count;
+
+            if (errorCount == 0)
+            {
+                errorResults.Add(new Result(errMsg: ViewLang.EditMultipleAllSuccessfully));
+            }
+            else if (errorCount < total)
+            {
+                errorResults.Insert(0, new Result(errMsg: ViewLang.EditMultiplePartialSuccessfully));
+            }
+
+            return errorResults;
+        }
+
+        public Result UpdateProtectedStatus(int custId, byte roleId, bool isProtected, int userId, string ip)
+        {
+            var result = dataAccess.UpdateProtectedStatus(
+                new UpdateProtectedStatusCriteria(custId, isProtected, userId, ip));
+
+            if (result.IsSuccess && isProtected)
+            {
+                KickoutCustomer(custId, roleId, ip, "ChangeProtectionMode");
             }
 
             return result;

@@ -82,5 +82,9 @@
   {
     "outputFile": "assets/styles/pages/customer/subgroup.css",
     "inputFile": "assets/styles/pages/customer/subgroup.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/protected-status-multiple.css",
+    "inputFile": "assets/styles/pages/customer/protected-status-multiple.scss"
   }
 ]

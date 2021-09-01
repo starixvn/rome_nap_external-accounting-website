@@ -1,5 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading;
+    using System.Web;
+    using System.Web.Mvc;
     using CasinoLibrary.Model.UserException;
     using Core.Authorization;
     using Core.Base;
@@ -16,14 +24,6 @@
     using Service;
     using Service.Impl.Customer;
     using Service.Impl.Customer.Casino;
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Linq;
-    using System.Threading;
-    using System.Web;
-    using System.Web.Mvc;
     using Utilities;
     using ViewModel;
     using ViewModel.Customer;
@@ -521,14 +521,7 @@
                     }
                 }
 
-                try
-                {
-                    _customerService.KickoutCustomer(custId, roleId, CurrentContext.Ip4Address);
-                }
-                catch (Exception ex)
-                {
-                    ExceptionHandler.Handle(ex);
-                }
+                _customerService.KickoutCustomer(custId, roleId, CurrentContext.Ip4Address);
             }
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, result.IsSuccess });

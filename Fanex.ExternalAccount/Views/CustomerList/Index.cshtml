@@ -94,6 +94,11 @@
     <input type="hidden" id="custNames" name="custNames" value="" />
     <input type="hidden" id="custRole" name="custRole" value="" />
 </form>
+<form id="targetProtectedStatusForm" method="post" target="windowPopup" class="hide">
+    <input type="hidden" id="protectedstatus-groupName" name="groupName" />
+    <input type="hidden" id="protectedstatus-custIds" name="custIds" />
+    <input type="hidden" id="protectedstatus-roleId" name="roleId" />
+</form>
 <script>
     window.actionAfterUpdatedGoldDeluxeSettingMultiple = function () {
         document.getElementById("targetForm").submit();
@@ -101,4 +106,5 @@
 
     Fanex.ExtAcc.Customer.CustomerList.Init(@Html.Raw(Json.Encode(Model.CustId)), @Html.Raw(Json.Encode(Model.RoleId)));
     var isBelongToSpecialGroups = @Json.Encode(currentSession.IsBelongToSpecialGroups);
+    var hasReadProtectCustomerFunction = @Json.Encode(Model.HasReadProtectCustomerFunction);
 </script>

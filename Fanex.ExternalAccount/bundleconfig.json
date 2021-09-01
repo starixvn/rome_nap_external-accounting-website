@@ -263,5 +263,21 @@
       "Scripts/Reports/BonusDetail/Fanex.ExtAcc.BonusDetail.js"
     ],
     "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/protectedstatus/multiple.css",
+    "inputFiles": [
+      "assets/styles/pages/customer/protected-status-multiple.css"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/protectedstatus/multiple.js",
+    "inputFiles": [
+      "Scripts/Lib/jquery-ui-1.9.1/jquery-1.8.3.min.js",
+      "Scripts/jquery.blockUI.js",
+      "Scripts/Customer/Fanex.ExtAcc.Customer.ProtectedStatus.js"
+    ],
+    "sourceMap": true
   }
 ]

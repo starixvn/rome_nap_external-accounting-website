@@ -541,6 +541,14 @@
     <Content Include="assets\bundles\BonusDetail\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\protectedstatus\multiple.css" />
+    <Content Include="assets\bundles\protectedstatus\multiple.js" />
+    <Content Include="assets\bundles\protectedstatus\multiple.min.css">
+      <DependentUpon>multiple.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\protectedstatus\multiple.min.js">
+      <DependentUpon>multiple.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\SuperWinLossDetailByPT\index.js" />
     <Content Include="assets\bundles\SuperWinLossDetailByPT\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -1130,6 +1138,12 @@
     </Content>
     <Content Include="assets\styles\pages\customer\keno-setting.min.css">
       <DependentUpon>keno-setting.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\protected-status-multiple.css">
+      <DependentUpon>protected-status-multiple.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\protected-status-multiple.min.css">
+      <DependentUpon>protected-status-multiple.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\customer\pt-engine.css">
       <DependentUpon>pt-engine.scss</DependentUpon>
@@ -2888,6 +2902,10 @@
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\customer\subgroup.scss" />
+    <Content Include="assets\styles\pages\customer\protected-status-multiple.scss" />
+    <Content Include="assets\bundles\protectedstatus\multiple.min.js.map">
+      <DependentUpon>multiple.min.js</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2989,6 +3007,7 @@
     <Content Include="ExcelTemplates\ProblemAccountList\Member.xls" />
     <Content Include="ExcelTemplates\Customer\SuperListSG.xls" />
     <Content Include="ExcelTemplates\Customer\SuperListSGMO.xls" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.ProtectedStatus.js" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />
@@ -3059,6 +3078,7 @@
     </Content>
     <Content Include="Views\MaxPayoutSettingInformation\Index.cshtml" />
     <Content Include="Views\ParlayMaxPayout\Index.cshtml" />
+    <Content Include="Views\ProtectedStatus\OpenMultiple.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">

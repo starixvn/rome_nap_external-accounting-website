@@ -151,7 +151,7 @@
                 .Select(group => group.Trim())
                 .ToArray();
         }
-
+        
         private static string GetValue(string key) => ConfigurationManager.AppSettings[key];
     }
 }

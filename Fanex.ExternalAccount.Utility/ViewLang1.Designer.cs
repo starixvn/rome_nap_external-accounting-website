@@ -691,6 +691,24 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The selected accounts&apos; protection status has been updated successfully..
+        /// </summary>
+        public static string EditMultipleAllSuccessfully {
+            get {
+                return ResourceManager.GetString("EditMultipleAllSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected accounts&apos; protection status has been updated successfully except the following account(s):.
+        /// </summary>
+        public static string EditMultiplePartialSuccessfully {
+            get {
+                return ResourceManager.GetString("EditMultiplePartialSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Personal Info.
         /// </summary>
         public static string EditPersonalInfo {
