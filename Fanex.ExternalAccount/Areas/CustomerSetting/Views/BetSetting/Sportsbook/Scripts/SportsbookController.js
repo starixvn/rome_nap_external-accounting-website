@@ -526,7 +526,7 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
             return false;
         }
 
-        if (isNumberGame && maxPerBall > maxPerMatch && maxPerMatch > 0) {
+        if (isNumberGame && maxPerBall > maxPerMatch && maxPerBall > 0) {
             Validators.show($('#txt' + betting.resourceKey + 'MaxPerBall1').get(0), betting.name + ' - Max Per Ball must be less than or equal to Max Per Match', undefined, undefined, 3000);
 
             return false;
