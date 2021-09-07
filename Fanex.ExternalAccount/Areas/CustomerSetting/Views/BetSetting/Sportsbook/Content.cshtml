@@ -63,8 +63,8 @@
                 <span data-ng-show="betting.showmaxPerMatchMax"><={{betting.maxPerMatchMax.formatNumber()}}</span>
             </td>
             <td>
-                <input style="text-align: right; width: 100px" id="txt{{betting.resourceKey}}MaxPayoutPerMatch" data-ng-show="betting.showMaxPayoutPerMatch" data-ng-readonly="betting.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" data-ng-init="betting.showmaxPayoutPerMatchMax = betting.maxPayoutPerMatchMax > 0; betting.maxPayoutPerMatchFormated = betting.maxPayoutPerMatch.formatNumber(); betting.preValMaxPayoutPerMatch = betting.maxPayoutPerMatchFormated; betting.showMaxPayoutPerMatch = betting.resourceKey != 'soccerParlay' && betting.resourceKey != 'mixsports'" type="text" class="BettingLimitTextBox9" data-ng-model="betting.maxPayoutPerMatchFormated" data-ng-change="betting.maxPayoutPerMatch = betting.maxPayoutPerMatchFormated.replaceAll(',', '').formatNumber()" />
-                <span data-ng-show="betting.showMaxPayoutPerMatch && betting.showmaxPayoutPerMatchMax"><={{betting.maxPayoutPerMatchMax.formatNumber()}}</span>
+                <input style="text-align: right; width: 100px" id="txt{{betting.resourceKey}}MaxPayoutPerMatch" data-ng-readonly="betting.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this)" maxlength="14" data-ng-init="betting.showmaxPayoutPerMatchMax = betting.maxPayoutPerMatchMax > 0; betting.maxPayoutPerMatchFormated = betting.maxPayoutPerMatch.formatNumber(); betting.preValMaxPayoutPerMatch = betting.maxPayoutPerMatchFormated" type="text" class="BettingLimitTextBox9" data-ng-model="betting.maxPayoutPerMatchFormated" data-ng-change="betting.maxPayoutPerMatch = betting.maxPayoutPerMatchFormated.replaceAll(',', '').formatNumber()" />
+                <span data-ng-show="betting.showmaxPayoutPerMatchMax"><={{betting.maxPayoutPerMatchMax.formatNumber()}}</span>
             </td>
         </tr>
         <tr>

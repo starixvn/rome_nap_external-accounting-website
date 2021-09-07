@@ -566,11 +566,6 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
                 return;
             }
         }
-
-        if (betting.resourceKey === 'soccerParlay' || betting.resourceKey === 'mixsports') {
-            betting.maxPayoutPerMatch = null;
-            betting.maxPayoutPerMatchMax = null;
-        }
     }
 
     Fanex.CustomerSetting.Core.BlockUI();
