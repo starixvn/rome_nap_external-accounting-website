@@ -11,6 +11,7 @@
         VirtualSports = 5,
         VirtualGamesSetting = 38,
         SabaclubSetting = 42,
-        VGamingSetting = 66
+        VGamingSetting = 66,
+        BitcoinSetting = 69
     }
 }

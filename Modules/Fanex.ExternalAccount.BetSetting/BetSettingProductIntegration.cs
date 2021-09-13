@@ -22,7 +22,8 @@
             ProductConstants.Sportsbook2,
             ProductConstants.VirtualGames,
             ProductConstants.Sabaclub,
-            ProductConstants.VGaming
+            ProductConstants.VGaming,
+            ProductConstants.Bitcoin
         };
 
         private static readonly int[] DummyProducts = new[]

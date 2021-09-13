@@ -39,6 +39,7 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int Joker = 56;
         public const int GDG = 59;
         public const int VGaming = 66;
+        public const int Bitcoin = 69;
 
         public const int DummyRNGProductId = 53;
 

@@ -17,5 +17,6 @@
         EnableSabaclub = 42,
         EnableSabaVirtualSports = 54,
         EnableVGaming = 66,
+        EnableBitcoin = 69
     }
 }

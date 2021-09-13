@@ -837,6 +837,16 @@
         $scope.EnableThirdpartyProduct(66, "Vgaming");
     };
 
+    $scope.EnableBitcoin = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
+        top.shouldCalculatePopupHeight = false;
+        $scope.EnableThirdpartyProduct(69, "Bitcoin");
+    };
+
+
     $scope.EnableSabaVirtualSports = function (enable, id, disabled) {
         if (disabled) {
             return;
@@ -1094,6 +1104,10 @@
         $scope.RenderSupeOnMemberDCS(66);
     };
 
+    $scope.SuperBitcoin = function () {
+        $scope.RenderSupeOnMemberDCS(69);
+    };
+
     $scope.RenderSupeOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=' + productId + '&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
@@ -1133,6 +1147,10 @@
 
     $scope.MasterVgaming = function () {
         $scope.RenderMasterOnMemberDCS(66);
+    };
+
+    $scope.MasterBitcoin = function () {
+        $scope.RenderMasterOnMemberDCS(69);
     };
 
     $scope.RenderMasterOnMemberDCS = function (productId) {

@@ -191,6 +191,11 @@
         $scope.collapseSidebar();
     };
 
+    $scope.Bitcoin = function () {
+        $scope.RenderDCS(69);
+        $scope.collapseSidebar();
+    };
+
     $scope.RenderDCS = function (productId) {
         $scope.ResetGlobalValue();
 
