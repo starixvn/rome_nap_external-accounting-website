@@ -1107,17 +1107,20 @@ Fanex.ExtAcc.Customer.PTSetting = {
         Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportContainCopyallIcon(items[0], 0);
 
         // Render for Basket ball
-        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportContainCopyallIcon(items[2], 2);
+        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportContainCopyallIcon(items[3], 3);
 
         // Render for Number Game
-        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportContainCopyallIcon(items[10], 10);
-        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportWithoutCopyallIcon(items[11], 11);
+        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportContainCopyallIcon(items[12], 12);
+        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportWithoutCopyallIcon(items[13], 13);
 
         // Render for soccer parlay
+        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportWithoutCopyallIcon(items[2], 2);
+
+        // Render for Saba Soccer
         Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportWithoutCopyallIcon(items[1], 1);
 
         // Render for the rest
-        for (var i = 3; i < items.length - 2; i++) {
+        for (var i = 4; i < items.length - 2; i++) {
             Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportWithoutCopyallIcon(items[i], i);
         }
     },
@@ -2160,15 +2163,15 @@ function initBettingLimit() {
     }
 
     var headerSoccer = items[0].header;
-    var headerBasketBall = items[2].header;
-    var numberGame = items[10].header;
+    var headerBasketBall = items[3].header;
+    var numberGame = items[12].header;
     headerSoccer.onclick = function () {
         if (document.getElementById('bettingLimit0').checked) {
             if (items[0].active === false) { // Uncheck --> Checked
                 items[0].active = true;
                 headerSoccer.className = "BettingLimitHeaderCopiedActive";
-                if (items[2].active === true) { // Untick basket ball
-                    items[2].active = false;
+                if (items[3].active === true) { // Untick basket ball
+                    items[3].active = false;
                     headerBasketBall.className = "BettingLimitHeaderCopied";
                 }
 
@@ -2198,28 +2201,29 @@ function initBettingLimit() {
     };
 
     headerBasketBall.onclick = function () {
-        if (document.getElementById('bettingLimit2').checked) {
-            if (items[2].inactive == true) { // Re-enable current
-                items[2].inactive = false;
-                items[2].copiedItem = null; // Remove copiedItem
-                Fanex.PTEngine.ReEnableChildren(items[2].element);
+        if (document.getElementById('bettingLimit3').checked) {
+            if (items[3].inactive == true) { // Re-enable current
+                items[3].inactive = false;
+                items[3].copiedItem = null; // Remove copiedItem
+                Fanex.PTEngine.ReEnableChildren(items[3].element);
             }
 
+            setOriginalStatusSabaSoccer();
             setOriginalStatusSoccerParlay();
 
             var c = items.length - 2;
-            if (items[2].active === false) { // Uncheck --> Checked
-                items[2].active = true;
+            if (items[3].active === false) { // Uncheck --> Checked
+                items[3].active = true;
                 headerBasketBall.className = "BettingLimitHeaderCopiedActive";
                 if (items[0].active === true) { // Untick soccer
                     items[0].active = false;
                     headerSoccer.className = "BettingLimitHeaderCopied";
                 }
 
-                for (var i = 3; i < c; i++) {
+                for (var i = 4; i < c; i++) {
                     var item = items[i];
                     item.copiedItem = {
-                        id: 2
+                        id: 3
                     }; // Copied from Basketball, using index
 
                     item.inactive = true;
@@ -2228,9 +2232,9 @@ function initBettingLimit() {
                     Fanex.PTEngine.DisableChildren(item.element, "BetTypeInactive");
                 }
             } else {
-                items[2].active = false;
+                items[3].active = false;
                 headerBasketBall.className = "BettingLimitHeaderCopied";
-                for (var i = 3; i < c; i++) {
+                for (var i = 4; i < c; i++) {
                     var item = items[i];
                     item.copiedItem = null; // Remove copiedItem
                     if (item.inactive === false) break;
@@ -2243,23 +2247,23 @@ function initBettingLimit() {
     };
 
     numberGame.onclick = function () {
-        if (document.getElementById('bettingLimit10').checked) {
+        if (document.getElementById('bettingLimit12').checked) {
 
-            if (items[10].inactive == true) { // Re-enable current
-                items[10].inactive = false;
-                items[10].copiedItem = null; // Remove copiedItem
-                Fanex.PTEngine.ReEnableChildren(items[10].element);
+            if (items[12].inactive == true) { // Re-enable current
+                items[12].inactive = false;
+                items[12].copiedItem = null; // Remove copiedItem
+                Fanex.PTEngine.ReEnableChildren(items[12].element);
             }
 
             var c = items.length;
-            if (items[10].active === false) { // Uncheck --> Checked
-                items[10].active = true;
+            if (items[12].active === false) { // Uncheck --> Checked
+                items[12].active = true;
                 numberGame.className = "BettingLimitHeaderCopiedActive";
 
-                for (var i = 11; i < c; i++) {
+                for (var i = 13; i < c; i++) {
                     var item = items[i];
                     item.copiedItem = {
-                        id: 10
+                        id: 12
                     }; // Copied from Number game, using index
 
                     item.inactive = true;
@@ -2268,9 +2272,9 @@ function initBettingLimit() {
                     Fanex.PTEngine.DisableChildren(item.element, "BetTypeInactive");
                 }
             } else {
-                items[10].active = false;
+                items[12].active = false;
                 numberGame.className = "BettingLimitHeaderCopied";
-                for (var i = 11; i < c; i++) {
+                for (var i = 13; i < c; i++) {
                     var item = items[i];
                     item.copiedItem = null; // Remove copiedItem
                     if (item.inactive === false) break;
@@ -2283,12 +2287,20 @@ function initBettingLimit() {
         }
     };
 
-    setOriginalStatusSoccerParlay = function () {
+    setOriginalStatusSabaSoccer = function () {
         items[1].active = false;
         items[1].copiedItem = null;
         $('bettingLimit1').checked = false;
         Fanex.PTEngine.RemoveClass(items[1].header, "BetTypeInactive");
         Fanex.PTEngine.RemoveDisableChildren(items[1].header);
+    };
+
+    setOriginalStatusSoccerParlay = function () {
+        items[2].active = false;
+        items[2].copiedItem = null;
+        $('bettingLimit2').checked = false;
+        Fanex.PTEngine.RemoveClass(items[2].header, "BetTypeInactive");
+        Fanex.PTEngine.RemoveDisableChildren(items[2].header);
     };
 };
 
@@ -2530,10 +2542,11 @@ function getUpdateParamaters() {
             }
         }
     }
-    else if (document.getElementById("bettingLimit2").checked && items[2].active === true) {
+    else if (document.getElementById("bettingLimit3").checked && items[3].active === true) {
         document.getElementById("bettingLimit0").checked ? paramaters += "1" : paramaters += "0";
         document.getElementById("bettingLimit1").checked ? paramaters += "1" : paramaters += "0";
-        for (var i = 2; i < items.length - 2; i++) {
+        document.getElementById("bettingLimit2").checked ? paramaters += "1" : paramaters += "0";
+        for (var i = 3; i < items.length - 2; i++) {
             paramaters += "1";
             if (!isUpdate) {
                 isUpdate = true;
@@ -2554,15 +2567,15 @@ function getUpdateParamaters() {
         }
     }
 
-    if (document.getElementById("bettingLimit10").checked && items[10].active === true) {
-        for (var i = 10; i < items.length; i++) {
+    if (document.getElementById("bettingLimit12").checked && items[12].active === true) {
+        for (var i = 12; i < items.length; i++) {
             paramaters += "1";
             if (!isUpdate) {
                 isUpdate = true;
             }
         }
     } else {
-        for (var i = 10; i < items.length; i++) {
+        for (var i = 12; i < items.length; i++) {
             if (document.getElementById("bettingLimit" + i).checked) {
                 paramaters += "1";
                 if (!isUpdate) {
