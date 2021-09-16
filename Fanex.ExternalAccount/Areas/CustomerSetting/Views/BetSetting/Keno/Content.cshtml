@@ -25,6 +25,10 @@
     {
         <div class="noteMsg" style="color: #ff5411">@Html.Raw(Fanex.CustomerSetting.Module.Keno.Resources.LayoutTexts.SMAUnlimitedBetSettingWarningMessage)</div>
     }
+    @if (kenoSession.IsBelongToSpecialGroups)
+    {
+        <div class="noteMsg" style="color: #ff5411">@Html.Raw(Fanex.CustomerSetting.Module.Keno.Resources.LayoutTexts.SMABettingLimitMessageForSpecialGroup)</div>
+    }
     <div class="title C bold header">
         Update Bet Setting: @ViewBag.Username
     </div>
