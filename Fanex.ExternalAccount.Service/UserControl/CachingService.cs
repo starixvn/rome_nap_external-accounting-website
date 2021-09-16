@@ -1,7 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.UserControl
 {
     using System;
-    using System.Linq;
     using Fanex.Caching;
     using Fanex.Caching.Memory;
     using Fanex.ExternalAccount.Core.Shared;
@@ -19,7 +18,7 @@
         public UserCache GetUserCache(int userId, string groupName)
         {
             menuKey = userId.ToString() + groupName;
-            var result = UserCache.Get<UserCache>(menuKey);
+            UserCache.TryGet<UserCache>(menuKey, out var result);
 
             if (result == null)
             {

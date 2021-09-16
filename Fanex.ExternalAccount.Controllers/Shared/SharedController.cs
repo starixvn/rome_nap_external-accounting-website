@@ -12,8 +12,8 @@
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.ViewModel.Shared;
     using Logging.Extensions.Web;
+    using ONEbook.UM;
     using ONEbook.UM.Services;
-    using ONEbook.UM.Services.Impl;
     using Service.Impl.Login;
     using Service.Interface.Login;
     using Service.Interface.UserControl;
@@ -33,7 +33,11 @@
         {
             _currentSession = new CurrentSession();
             _loginService = new LoginService();
-            _maintenanceService = new MaintenanceService();
+            _maintenanceService = new MaintenanceService(
+                UMClientManager.RestClient,
+                UMClientManager.CacheService,
+                UMClientManager.UMClientConfigs,
+                UMClientManager.HttpContext);
             menuService = new MenuService();
             groupService = new GroupService();
         }

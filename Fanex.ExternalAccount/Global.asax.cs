@@ -14,13 +14,20 @@
     using Core.Filters;
     using CustomerSetting.Client40;
     using Data.Configuration;
+    using Fanex.Caching;
     using Fanex.ExternalAccount.ActivityTracking.Web;
     using Fanex.ExternalAccount.UI.Helpers;
     using Fanex.Logging.Extensions.Database;
     using GoldDeluxe.CoreSetting.Mappings;
     using Logging.Extensions.Web;
     using Module.LeftPanel.ViewModels;
-    using ONEbook.UM.Filters;
+    using ONEbook.UM;
+    using ONEbook.UM.AspNetMVC.Filters;
+    using ONEbook.UM.Configurations;
+    using ONEbook.UM.Helpers;
+    using ONEbook.UM.NETFramework;
+    using ONEbook.UM.Services;
+    using ONEbook.UM.Transport;
     using ProductStatus.Setting.Configuration;
     using Sunplus.Libraries.APILogger;
 
@@ -28,7 +35,7 @@
     {
         private static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new CheckUMFilter());
+            filters.Add(GetCheckUMAttribute());
             filters.Add(new CheckBelongingFilter());
             filters.Add(new LogActionFilterAttribute());
             filters.Add(new SecurityCodeFilterAttribute());
@@ -162,6 +169,25 @@
             {
                 Context.Response.AddHeader("Access-Control-Allow-Origin", "*");
             }
+        }
+
+        private static CheckUMFilterAttribute GetCheckUMAttribute()
+        {
+            var umConfig = new UMClientConfiguration().Initialize();
+
+            UMClientManager
+               .UseConfig(umConfig)
+               .UseCacheService(new UMCacheService(new CacheService()))
+               .UseRestClient(new UMRestClient(umConfig))
+               .UseHttpContext(new HttpContextHelper());
+
+            var maintenanceService = new MaintenanceService(
+                      UMClientManager.RestClient,
+                      UMClientManager.CacheService,
+                      UMClientManager.UMClientConfigs,
+                      UMClientManager.HttpContext);
+
+            return new CheckUMFilterAttribute(maintenanceService, umConfig);
         }
     }
 }

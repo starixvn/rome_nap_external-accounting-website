@@ -57,13 +57,14 @@
             GetRequestPage();
             if (_custId > 0)
             {
-                if (!Config.IsCache || _cache.Get<List<Statement>>(_cacheName) == null)
+                if (!Config.IsCache || _cache.TryGet<List<Statement>>(_cacheName, out var value))
                 {
                     LoadDataStatement();
                 }
+                _cache.TryGet<List<Statement>>(_cacheName, out var cachedValue);
 
                 var builder = new StatementPageBuilder(
-                    _cache.Get<List<Statement>>(_cacheName),
+                    cachedValue,
                     false,
                     _username,
                     _fromDate.ToString("MMM, dd yyyy"),
@@ -78,7 +79,7 @@
         private ActionResult LoadDataStatement()
         {
             var listStatement = _statementService.GetStatement(_custId, _fromDate, _toDate);
-            _cache.Set(_cacheName, listStatement);
+            _cache.Set(_cacheName, listStatement, new CacheItemOptions());
 
             return JsonBase(new { rows = listStatement, username = _username }, new JsonSerializerSettings());
         }

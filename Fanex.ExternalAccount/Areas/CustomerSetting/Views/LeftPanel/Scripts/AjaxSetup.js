@@ -24,6 +24,14 @@
                         top.location.href = parent.resolveClientUrl('Account/Login');
                     }
                 }
+            },
+            503: function (error, callback) {
+                if (JSON && error.responseText) {
+                    var errorResult = JSON.parse(error.responseText);
+                    if (errorResult.code === 999999) {
+                        top.location.href = parent.resolveClientUrl('Shared/Offline');
+                    }
+                }
             }
         }
     });

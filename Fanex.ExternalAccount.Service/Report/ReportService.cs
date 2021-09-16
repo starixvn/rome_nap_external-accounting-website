@@ -120,7 +120,7 @@
 
         public static DataTable GetBalanceUpDay()
         {
-            var balanceUpDay = Cache.Get<DataTable>(BalanceUpDayKey);
+            Cache.TryGet<DataTable>(BalanceUpDayKey, out var balanceUpDay);
             if (balanceUpDay == null)
             {
                 var reportDao = new ReportDao();

@@ -79,7 +79,7 @@
         private IEnumerable<ProductDetailEntity> GetProductDetailsWithCache()
         {
             const string key = "Fanex.NAP.External.Site.ProductDetails";
-            var result = Cache.Get<IEnumerable<ProductDetailEntity>>(key);
+            Cache.TryGet<IEnumerable<ProductDetailEntity>>(key, out var result);
 
             if (result == null)
             {
