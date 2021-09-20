@@ -8662,7 +8662,7 @@ namespace Resources {
         ///   Looks up a localized string similar to 
         ///      Inputting all fields of bet setting = 0 means you do not set limit to the bet setting of this account.&lt;br/&gt;
         ///      To prevent members from playing the game, set Min Bet = 0 and other fields = 0.1.&lt;br/&gt;
-        ///      Updating upline&apos;s bet setting might decrease all downlines&apos; to make sure the downlines&apos; are not greater than their uplines.
+        ///      Updating upline&apos;s bet setting might decrease all downlines&apos; bet settings to ensure that they are not greater than upline&apos;s bet setting.
         ///    .
         /// </summary>
         internal static string SMAUnlimitedBetSettingWarningMessage {
@@ -8675,7 +8675,7 @@ namespace Resources {
         ///   Looks up a localized string similar to 
         ///      Inputting all fields of bet setting = 0 means you do not set limit to the bet setting of this account.&lt;br/&gt;
         ///      To prevent members from playing the game, set Min Bet = 0 and other fields = 0.1 (for Sportsbook only).&lt;br/&gt;
-        ///      Updating upline&apos;s bet setting might decrease all downlines&apos; to make sure the downlines&apos; are not greater than their uplines.
+        ///      Updating upline&apos;s bet setting might decrease all downlines&apos; bet settings to ensure that they are not greater than upline&apos;s bet setting.
         ///    .
         /// </summary>
         internal static string SMAUnlimitedBetSettingWarningMessageDirectionV3 {
