@@ -62,7 +62,7 @@ Validators.show = function (elementInput, message, xPos, pointerXPos, timeout, y
         }
 
         hint.style.backgroundPositionX = pointerXPos + 'px';
-        hint.style.top = pos[1] - 40 + yPos + 'px';
+        hint.style.top = pos[1] - 40 + document.body.scrollTop + yPos + 'px';
 
         elementInput.onchange = function () {
             hint.style.display = 'none';
