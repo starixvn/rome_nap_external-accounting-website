@@ -424,7 +424,6 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
 
     this.IsValid = function (min, max, maxPerMatch, minMin, maxMax, maxPerMatchMax, betting, isNumberGame, maxPerBall, maxPerBallMax) {
         var isNumberGameOrHappy5 = betting.id === 161 || betting.id === 164;
-        var isSoccerParkayOrMixSportsParlay = betting.resourceKey === 'soccerParlay' || betting.resourceKey === 'mixsports';
         var subFix = isNumberGameOrHappy5 ? '1' : '';
 
         var maxPayoutPerMatch;
@@ -452,7 +451,7 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
             return false;
         }
 
-        if (!isNumberGameOrHappy5 && !isSoccerParkayOrMixSportsParlay && isNaN(maxPayoutPerMatch)) {
+        if (!isNumberGameOrHappy5 && isNaN(maxPayoutPerMatch)) {
             Validators.show($('#txt' + betting.resourceKey + 'MaxPayoutPerMatch' + subFix).get(0), betting.name + ' - Max Payout Per Match must be a value', -115, 150, 3000);
 
             return false;
@@ -500,13 +499,13 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
             return false;
         }
 
-        if (!isNumberGameOrHappy5 && !isSoccerParkayOrMixSportsParlay && maxPayoutPerMatchMax != 0 && maxPayoutPerMatch > maxPayoutPerMatchMax) {
+        if (!isNumberGameOrHappy5 && maxPayoutPerMatchMax != 0 && maxPayoutPerMatch > maxPayoutPerMatchMax) {
             Validators.show($('#txt' + betting.resourceKey + 'MaxPayoutPerMatch' + subFix).get(0), betting.name + ' - Max Payout Per Match must be less than or equals to ' + maxPayoutPerMatchMax.formatNumber(), undefined, undefined, 3000);
 
             return false;
         }
 
-        if (!isNumberGameOrHappy5 && !isSoccerParkayOrMixSportsParlay && maxPerMatch > maxPayoutPerMatch) {
+        if (!isNumberGameOrHappy5 && maxPerMatch > maxPayoutPerMatch) {
             Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch' + subFix).get(0), betting.name + ' - Max Per Match must be less than or equal to Max Payout Per Match', undefined, undefined, 3000);
 
             return false;
