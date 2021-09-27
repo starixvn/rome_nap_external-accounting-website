@@ -64,3 +64,22 @@ input[type="text"], input[type="password"] {
     border: 1px solid #CCC;
     border-bottom: none;
 }
+
+.bet-type-detail-icon {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background: url('../../../../../../assets/styles/images/information-icon2.png') 0px 0px no-repeat;
+    margin-bottom: -3px;
+}
+
+    .bet-type-detail-icon:hover {
+        background-position: 0px -16px;
+        cursor: pointer;
+    }
+
+.sport-type-detail-icon {
+    float: right;
+    margin-top: -2px;
+    margin-right: 5px;
+}

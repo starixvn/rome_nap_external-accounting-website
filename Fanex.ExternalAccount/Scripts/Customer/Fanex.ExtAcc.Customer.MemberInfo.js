@@ -485,6 +485,10 @@ extendPTEngine();
 function extendPTEngine() {
     Validators.utils.findPos = function (obj) {
         var curleft = curtop = 0;
+        if (obj && typeof obj.focus === 'function') {
+            obj.focus();
+        }
+
         if (obj.offsetParent) {
             do {
                 curleft += obj.offsetLeft;
@@ -509,6 +513,10 @@ function extendPTEngine() {
 
     Validators.utils.findPosRelativeToViewport = function (obj) {
         var curleft = curtop = 0;
+        if (obj && typeof obj.focus === 'function') {
+            obj.focus();
+        }
+
         if (obj.offsetParent) {
             do {
                 curleft += obj.offsetLeft;

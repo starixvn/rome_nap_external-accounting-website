@@ -47,6 +47,10 @@
                 {
                     <div class="noteMsg" style="color: #ff5411">@Html.Raw(Role.IsMember(Model.CustomerInformation.RoleId) ? LayoutTexts.MemberUnlimitedBetSettingWarningMessage : LayoutTexts.SMAUnlimitedBetSettingWarningMessage)</div>
                 }
+                @if (isBelongToSpecialGroups && Role.IsNotMember(Model.CustomerInformation.RoleId))
+                {
+                    <div class="noteMsg" style="color: #ff5411">@Html.Raw(LayoutTexts.SMABettingLimitMessageForSpecialGroup)</div>
+                }
                 @Html.Partial("~/Areas/CustomerSetting/Views/Keno/Setting/Views/Partial/CustomerInfo/_Information.cshtml")
                 @RenderBody()
                 @Html.AntiForgeryToken()
