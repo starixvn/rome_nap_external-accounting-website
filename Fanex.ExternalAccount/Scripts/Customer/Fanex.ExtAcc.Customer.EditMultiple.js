@@ -478,6 +478,17 @@
         }
     };
 
+    if (this.CurrentLevel !== this.Member && hasReadProtectCustomerFunction) {
+        menuItems.protectedStatus = {
+            name: "Edit Multiple Protection Status",
+            className: "iconEnableEdit",
+            callback: function (key, opt) {
+                top.shouldCalculatePopupHeight = false;
+                Fanex.ExtAcc.Customer.ShowEditMultipleProtectedStatus(Fanex.ExtAcc.Customer.GroupName().groupName, Fanex.ExtAcc.Customer.IdsAndNames().Ids, Fanex.ExtAcc.Customer.CurrentLevel);
+            }
+        };
+    }
+
     menuItems.parlayMaxPayout = {
         name: "Edit Multiple Parlay Max Payout",
         className: "iconEnableEdit",
@@ -903,4 +914,23 @@ Fanex.ExtAcc.Customer.ShowEditMultipleParlayMaxPayout = function (custIds, userN
     $targetForm.find('#custRole').val(roleId);
     Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Views/_blank.html'), 'Edit Multiple Parlay Max Payout', 1050, 350, false, false, 1, null, null, true);
     $targetForm.attr('action', resolveClientUrl('ParlayMaxPayout/Index')).submit();
+};
+
+Fanex.ExtAcc.Customer.ShowEditMultipleProtectedStatus = function (groupName, custIds, roleId) {
+    var $targetForm = $('#targetProtectedStatusForm');
+    $targetForm.find('#protectedstatus-groupName').val(groupName);
+    $targetForm.find('#protectedstatus-custIds').val(custIds);
+    $targetForm.find('#protectedstatus-roleId').val(roleId);
+    Fanex.ExtAcc.Form.ShowFrame(
+        resolveClientUrl('Views/_blank.html'),
+        'Edit Multiple Protection Status',
+        500,
+        540,
+        false,
+        null,
+        1,
+        null,
+        null,
+        true);
+    $targetForm.attr('action', resolveClientUrl('ProtectedStatus/OpenMultiple')).submit();
 };

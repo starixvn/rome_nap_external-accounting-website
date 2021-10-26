@@ -1,5 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
     using Base;
     using Common;
     using Common.Extensions;
@@ -13,11 +18,6 @@
     using DTO.Customer.Status;
     using Fanex.ExternalAccount.Utilities;
     using Interface.Customer;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
     using ViewModel.Customer.Suspend;
 
     public class CustomerDao : DAOBase, ICustomerDao
@@ -547,5 +547,23 @@
             => new SingleOpenDownline(
                 reader.ToInt("roleid"),
                Utils.ToString(reader["username"]));
+
+        public IEnumerable<CustomerProtectedStatus> GetMultipleProtectedStatus(GetMultipleProtectedStatusCriteria criteria)
+        {
+            using (var reader = ExecDataReader(criteria.GetSettingKey(), criteria.GetSpParams()))
+            {
+                while (reader.Read())
+                {
+                    yield return new CustomerProtectedStatus(
+                        Convert.ToInt32(reader["CustId"]),
+                        reader["Username"].ToString(),
+                        Convert.ToByte(reader["roleid"]),
+                        Convert.ToBoolean(reader["IsProtectedMode"]));
+                }
+            }
+        }
+
+        public Result UpdateProtectedStatus(UpdateProtectedStatusCriteria criteria)
+            => ExecuteNonQuery(criteria);
     }
 }

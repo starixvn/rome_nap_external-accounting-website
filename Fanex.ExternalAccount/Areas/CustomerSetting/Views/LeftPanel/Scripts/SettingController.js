@@ -442,6 +442,65 @@
             });
     };
 
+    $scope.ProtectedStatus = function (protected, id, disabled) {
+        if (disabled) return;
+
+        top.shouldCalculatePopupHeight = false;
+        var popupId = "popupProtectedStatus";
+        parent.Fanex.ExtAcc.Form.ConfirmBox(
+            "Update Protection Status",
+            "Are you sure you want to change the Protection Status for selected account(s)?\nProtection Status should just be turned on in emergency situations.",
+            480,
+            "auto",
+            false,
+            function () {
+                parent.Fanex.ExtAcc.BlockUI();
+                $.ajax({
+                    type: "POST",
+                    url: parent.resolveClientUrl("CustomerSetting/LeftPanel/UpdateCustomer/UpdateProtectedStatus"),
+                    dataType: "json",
+                    data: {
+                        custId: $scope.model.personalInfo.custId.value,
+                        roleId: $scope.model.personalInfo.roleId.value,
+                        isProtected: !protected,
+                        groupName: parent.$('#selectedGroupName').html()
+                    },
+                    success: function (result) {
+                        if (result.isSuccess) {
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                parent.Fanex.ExtAcc.UnBlockUI();
+                                document.location.reload(true);
+                            }, 2000);
+                        } else {
+                            parent.Fanex.ExtAcc.UnBlockUI();
+                            document.getElementById(id).checked = protected;
+                            parent.Fanex.ExtAcc.Form.Alert("Error", result.errorMessage, 480, "auto");
+                        }
+                    },
+                    error: function (xhr) {
+                        parent.Fanex.ExtAcc.UnBlockUI();
+                        document.getElementById(id).checked = protected;
+                        if (typeof console !== "undefined") {
+                            console.log(xhr);
+                        }
+                    },
+                    complete: function () {
+                        parent.Fanex.ExtAcc.Form.Close(null, null, popupId);
+                    }
+                })
+            },
+            function () {
+                parent.Fanex.ExtAcc.Form.Close(null, null, popupId);
+                document.getElementById(id).checked = protected;
+            },
+            popupId,
+            null,
+            function () {
+                document.getElementById(id).checked = protected;
+            });
+    };
+
     $scope.Suspended = function (suspend, id, disabled) {
         if (disabled) {
             return;

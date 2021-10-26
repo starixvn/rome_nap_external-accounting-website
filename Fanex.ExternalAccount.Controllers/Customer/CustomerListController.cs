@@ -1,5 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using System;
+    using System.Web.Mvc;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Controllers.Requests.CustomerList;
     using Fanex.ExternalAccount.Core.Authorization;
@@ -13,8 +15,6 @@
     using Fanex.ExternalAccount.Service.Interface.Customer;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer.CustomerList;
-    using System;
-    using System.Web.Mvc;
     using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
 
     public class CustomerListController : CustomerBase
@@ -34,7 +34,13 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
-        public ActionResult Index(int? custId, int? roleId) => PartialViewBase(new CustomerListViewModel { CustId = custId, RoleId = roleId });
+        public ActionResult Index(int? custId, int? roleId)
+            => PartialViewBase(new CustomerListViewModel
+            {
+                CustId = custId,
+                RoleId = roleId,
+                HasReadProtectCustomerFunction = _authorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ProtectCustomer)
+            });
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]

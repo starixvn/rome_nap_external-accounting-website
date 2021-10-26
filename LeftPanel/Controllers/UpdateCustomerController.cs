@@ -6,23 +6,29 @@
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.Service.Impl.Customer;
+    using Fanex.ExternalAccount.Service.Interface.Customer;
     using Services;
 
     public class UpdateCustomerController : BaseController
     {
         private readonly CustomerCommandService customerCommandService;
+        private readonly ICustomerService customerService;
 
-        public UpdateCustomerController() : this(new CustomerCommandServiceImpl(), null, null, null)
+        public UpdateCustomerController()
+            : this(new CustomerCommandServiceImpl(), new CustomerService(), null, null, null)
         {
         }
 
         internal UpdateCustomerController(
             CustomerCommandService customerCommandService,
+            ICustomerService customerService,
             ICurrentSession currentSession,
             ICurrentContext currentContext,
             IExtRequest extRequest) : base(currentSession, currentContext, extRequest)
         {
             this.customerCommandService = customerCommandService;
+            this.customerService = customerService;
         }
 
         [HttpPost]
@@ -72,6 +78,21 @@
 
             return JsonBase(customerCommandService.UnlockAccess(custId, CurrentSession.UserId, CurrentContext.Ip4Address));
         }
+
+        [HttpPost]
+        [ExternalAccountAuthenticate(Function = eFunctions.ProtectCustomer,
+            Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
+        public ActionResult UpdateProtectedStatus(int custId, byte roleId, bool isProtected, string groupName)
+        {
+            if (string.IsNullOrWhiteSpace(groupName))
+            {
+                throw new System.ArgumentNullException(nameof(groupName));
+            }
+
+            return JsonBase(customerService.UpdateProtectedStatus(custId, roleId, isProtected, CurrentSession.UserId, CurrentContext.Ip4Address));
+        }
+
 
         [ExternalAccountAuthenticate(Function = eFunctions.AllowOutright,
             Policy = AuthenticateAction.AuthenticationType.Host)]

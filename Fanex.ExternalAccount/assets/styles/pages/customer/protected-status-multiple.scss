@@ -1,0 +1,37 @@
+﻿body {
+    background-color: #fff;
+}
+
+.table-container {
+    max-height: 450px;
+    overflow-y: scroll;
+}
+
+.table-protected-status {
+    thead > tr > th, tbody > tr > td {
+        font-size: 12px;
+        padding: 8px 5px;
+    }
+}
+
+.protected-all, .unprotected-all {
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 4px 15px;
+}
+
+.protected-all {
+    background-color: #da5050;
+}
+
+.unprotected-all {
+    background-color: #248ad8;
+}
+
+.suspend-switch {
+    padding: 4px 30px 7px 20px;
+}
+
+.unsuspend-switch {
+    padding: 4px 10px 7px 25px;
+}

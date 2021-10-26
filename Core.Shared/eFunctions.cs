@@ -75,5 +75,7 @@
         public const string ProblemAccountList = "ProblemAccountList";
         public const string SubGroup = "ManageSubGroup";
         public const string BonusDetail = "BonusDetail";
+
+        public const string ProtectCustomer = "ProtectCustomer";
     }
 }

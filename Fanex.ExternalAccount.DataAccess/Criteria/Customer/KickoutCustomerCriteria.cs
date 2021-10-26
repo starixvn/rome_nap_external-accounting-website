@@ -7,11 +7,13 @@
         public KickoutCustomerCriteria(
             int custId,
             byte roleId,
-            string ip)
+            string ip,
+            string mode)
         {
             CustId = custId;
             RoleId = roleId;
             IP = ip;
+            Mode = mode;
         }
 
         public int CustId { get; }
@@ -19,6 +21,8 @@
         public byte RoleId { get; }
 
         public string IP { get; }
+
+        public string Mode { get; }
 
         public override string GetSettingKey()
             => "Age_OnUser_ForceKickedout";

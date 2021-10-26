@@ -15,6 +15,8 @@
 
         internal static byte Locked(this DataRow dataRow) => Utils.ToByte(dataRow["Locked"]);
 
+        internal static bool IsProtectedMode(this DataRow dataRow) => Utils.ToBoolean(dataRow["IsProtectedMode"]);
+
         internal static bool Enabled(this DataRow dataRow) => Utils.ToBoolean(dataRow["enabled"]);
 
         internal static bool Suspended(this DataRow dataRow) => Utils.ToBoolean(dataRow["suspended"]);

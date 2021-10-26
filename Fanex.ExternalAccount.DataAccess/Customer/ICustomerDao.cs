@@ -1,12 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Interface.Customer
 {
+    using System;
+    using System.Collections.Generic;
     using Criteria.Customer;
     using Criteria.Customer.CustomerStatus;
     using DTO;
     using DTO.Customer;
     using DTO.Customer.Status;
-    using System;
-    using System.Collections.Generic;
     using ViewModel.Customer.Suspend;
 
     public interface ICustomerDao
@@ -51,5 +51,9 @@
         Tuple<int, List<SingleOpenDownline>> GetSingleOpenDownlines(GetSingleOpenDownlinesInfoCriteria criteria);
 
         Result UpdateCustomerClosedStatus(UpdateClosedStatusCriteria criteria);
+
+        IEnumerable<CustomerProtectedStatus> GetMultipleProtectedStatus(GetMultipleProtectedStatusCriteria criteria);
+
+        Result UpdateProtectedStatus(UpdateProtectedStatusCriteria criteria);
     }
 }

@@ -6,6 +6,7 @@
     using Core.Authorization;
     using Core.Shared;
     using Extensions;
+    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Context;
     using Models;
     using ViewModels;
@@ -73,10 +74,17 @@
             var enableItems = new List<ObjectInfo>
             {
                 ClosedStatus(nonProductStatusRow),
-                LockedAccess(nonProductStatusRow),
-                SuspendedStatus(nonProductStatusRow),
-                OutrightStatus(nonProductStatusRow)
+                LockedAccess(nonProductStatusRow)
             };
+
+            if (_roleId.IsNotMember()
+                && authorizationService.IsAuthorized(currentSession.UserId, eFunctions.ProtectCustomer))
+            {
+                enableItems.Add(ProtectedStatus(nonProductStatusRow));
+            }
+
+            enableItems.Add(SuspendedStatus(nonProductStatusRow));
+            enableItems.Add(OutrightStatus(nonProductStatusRow));
 
             if (!this.currentSession.IsBelongToSpecialGroups)
             {
@@ -321,6 +329,17 @@
             lockedAccess.Disabled = !isLocked;
 
             return lockedAccess;
+        }
+
+        private ObjectInfo ProtectedStatus(DataRow nonProductStatusRow)
+        {
+            var protectedStatus = new ObjectInfo("ProtectedStatus", nonProductStatusRow.IsProtectedMode(), "Protected");
+            protectedStatus.Disabled = !authorizationService.IsAuthorized(
+                currentSession.UserId,
+                eFunctions.ProtectCustomer,
+                AuthenticateAction.AuthenticationType.Host);
+
+            return protectedStatus;
         }
 
         internal List<ObjectInfo> Details(DataSet customerStatusInfoDataset)

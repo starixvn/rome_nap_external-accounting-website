@@ -5,5 +5,7 @@
         public int? CustId { get; set; }
 
         public int? RoleId { get; set; }
+
+        public bool HasReadProtectCustomerFunction { get; set; }
     }
 }

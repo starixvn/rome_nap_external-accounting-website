@@ -28,7 +28,7 @@
 
         Result CheckNewCustomerIsReachLimitation(CheckNewCustomerLimitationCriteria criteria);
 
-        void KickoutCustomer(int custId, byte roleId, string ip);
+        void KickoutCustomer(int custId, byte roleId, string ip, string mode = null);
 
         SingleUpdateViewModel GetSingleUpdateSuspendViewModel(int custId, string userName);
 
@@ -51,5 +51,11 @@
         Result UpdateSingleCustomerClosedStatus(UpdateSingleClosedStatusQuery query);
 
         IEnumerable<Result> UpdateMultipleCustomerClosedStatus(IEnumerable<UpdateMultipleClosedStatusQuery> query, int roleId);
+
+        IEnumerable<CustomerProtectedStatus> GetMultipleProtectedStatus(string groupName, string custIds, byte roleId, int userId);
+
+        IEnumerable<Result> UpdateMultipleProtectedStatus(CustomerProtectedStatus[] protectedStatus, int userId, string ip);
+
+        Result UpdateProtectedStatus(int custId, byte roleId, bool isProtected, int userId, string ip);
     }
 }
