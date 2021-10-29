@@ -222,6 +222,7 @@
     <Compile Include="OTP\CustomerOtpDataAccess.cs" />
     <Compile Include="Products\GetProductsCriteria.cs" />
     <Compile Include="Products\GetProductsDetailCriteria.cs" />
+    <Compile Include="IPInformatonRepository.cs" />
     <Compile Include="Report\IReportDAO.cs" />
     <Compile Include="Report\ReportDao.partial.cs" />
     <Compile Include="Report\ReportDao.cs" />
