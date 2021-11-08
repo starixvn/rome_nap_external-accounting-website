@@ -15,7 +15,6 @@
     <p>
         <strong>Max Payout Setting Information</strong>
         <br>
-        <br>
         <span>&nbsp;- Max Payout Per Match is a setting that controls the total max payout of all tickets of the same match.</span><br>
         <span>&nbsp;&nbsp;&nbsp; For example,</span><br>
         <span>&nbsp;&nbsp;&nbsp; 1. Given that max payout per match = 1,000</span><br>
@@ -30,9 +29,19 @@
         <em>
             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * Accumulated Max Payout is the Max Payout of all tickets of the same match excludes the Void/Reject tickets. Therefore, if the first ticket is voided, Max Bet of the</span><br>
             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; second ticket = (1,000 - 0)/5 = 200.</span>
-        </em><br>
+        </em>
         <br>
-        <span>&nbsp;- Max Payout setting is applied to all bet types of Sportsbook except the bet types listed in the table below. E-Sports, Muay Thai and Parlay do not apply Max Payout setting.</span>
+    </p>
+
+    <p>
+        <strong>Saba Sports:</strong>
+        <br>
+        <span>&nbsp;- The Saba Futsal uses the bet settings of Saba Soccer.</span><br>
+        <span>&nbsp;- The Saba Cricket uses the bet settings of Other Sports.</span><br>
+    </p>
+
+    <p style="margin-top:6.0pt; margin-bottom:6.0pt; margin-left:0in">
+        <span>&nbsp;- Max Payout setting is applied to all bet types of Sportsbook except the bet types listed in the table below. E-Sports and Muay Thai do not apply Max Payout setting.</span>
     </p>
 
     <table style="border-collapse:collapse; width:376pt; border:none" width="501">
@@ -61,9 +70,42 @@
         </tbody>
     </table>
 
-    <p style="margin-top:6.0pt; margin-bottom:0pt; margin-left:0in">
-        &nbsp;<br>
-        &nbsp;
+    <p>
+        <strong><span style="color: red;">The difference between</span> Parlay Max Payout and Parlay Max Payout Per Match</strong>
+        <br>
+        <span>&nbsp;- <strong>Parlay Max Payout:</strong> This setting is used to calculate the max bet of each combo parlay in a single ticket.</span><br>
+        <span>&nbsp;&nbsp;&nbsp; For example,</span><br>
+        <span>&nbsp;&nbsp;&nbsp; 1. Given that the Parlay Max Payout Setting is: Combo 2 = 500; Combo 3-5 = 1,000; Combo 6+ & System Parlay  = 2,000</span><br>
+        <span>
+            &nbsp;&nbsp;&nbsp; 2. If member makes 3 selections: A (odds = 2), B (odds = 3), C (odds = 4), the system will offer the following combos: Double (3 Bets), Treble (1 Bet), Trixie (4 Bets) <br>
+            &nbsp;&nbsp;&nbsp; and Lucky 7 (7 Bets)
+        </span><br>
+        <span>&nbsp;&nbsp;&nbsp; 3. Max Bet of 3 Double bets = Parlay Max Payout of Combo 2 / (odds AB + odds BC + odds AC) = 500 / (2*3 + 3*4 + 2*4) = 500 / 26 = 19</span><br>
+        <span>&nbsp;&nbsp;&nbsp; 4. Max Bet of a Treble bet = Parlay Max Payout of Combo 3-5 / odds ABC = 1,000 / (2*3*4) = 1000 / 24 = 41</span><br>
+        <span>&nbsp;&nbsp;&nbsp; 5. Max Bet of Trixie and Lucky 7 bets =  Parlay Max Payout of Combo 6+ & System Parlay / (odds Double + odds Treble) = 2,000 / (26 + 24) = 2000 / 50 = 40</span><br>
+        <br>
+        <span>
+            &nbsp;- <strong>Parlay Max Payout Per Match:</strong> The system accumulates the max payout of all running parlay tickets and uses it together with the setting value to calculate the next <br>
+            &nbsp;ticket max bet. The max bet calculation is different between Single Match Parlay and Mix/Combo Parlay.
+        </span><br>
+        <br>
+        <span>
+            &nbsp;&nbsp;&nbsp; + Single Match Parlay: Max Bet = (Parlay Max Payout Per Match Setting - Accumulated Max Payout of the same match) / Odds  <br>
+            &nbsp;&nbsp;&nbsp; * Single Match Parlay does not count Mix/Combo Parlay ticket
+        </span><br>
+        <br>
+        <span>
+            &nbsp;&nbsp;&nbsp; + Mix/Combo Parlay: Max Bet = (Parlay Max Payout Per Match Setting - Accumulated Max Payout of the all matches) / Odds <br>
+            &nbsp;&nbsp;&nbsp; * Mix/Combo Parlay does not count Single Match Parlay tickets
+        </span><br>
+        <br>
+        <span>
+            &nbsp;&nbsp;&nbsp; Accumulated max payout counts all running tickets. It will be released if any running tickets are settled/rejected/refunded/voided.
+        </span><br>
+    </p>
+
+    <p>
+        <strong><span style="color: red;">*</span> For parlay, Max Payout is applied to all bet types.</strong>
     </p>
 </body>
 </html>

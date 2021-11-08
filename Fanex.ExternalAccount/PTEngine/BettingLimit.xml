@@ -14,6 +14,16 @@
       <MaxPayoutPerMatchMax></MaxPayoutPerMatchMax>
     </BettingLimitItem>
 
+    <BettingLimitItem id="1" name="Saba Soccer" key="Saba Soccer" resourcekey="sabaSoccer">
+      <MinBet></MinBet>
+      <MaxBet></MaxBet>
+      <MaxPerMatch></MaxPerMatch>
+      <MinBetMax></MinBetMax>
+      <MaxBetMin></MaxBetMin>
+      <MaxPerMatchMin></MaxPerMatchMin>
+      <MaxPerMatchMax></MaxPerMatchMax>
+    </BettingLimitItem>
+
     <BettingLimitItem id="1" name="Soccer Parlay" key="Soccer Parlay" resourcekey="soccerParlay">
       <MinBet></MinBet>
       <MaxBet></MaxBet>
@@ -25,6 +35,18 @@
     </BettingLimitItem>
     
     <BettingLimitItem id="2" name="Basketball" key="Basketball" resourcekey="Basketball">
+      <MinBet></MinBet>
+      <MaxBet></MaxBet>
+      <MaxPerMatch></MaxPerMatch>
+      <MaxPayoutPerMatch></MaxPayoutPerMatch>
+      <MinBetMax></MinBetMax>
+      <MaxBetMin></MaxBetMin>
+      <MaxPerMatchMin></MaxPerMatchMin>
+      <MaxPerMatchMax></MaxPerMatchMax>
+      <MaxPayoutPerMatchMax></MaxPayoutPerMatchMax>
+    </BettingLimitItem>
+
+    <BettingLimitItem id="2" name="Saba Basketball" key="Saba Basketball" resourcekey="sabaBasketball">
       <MinBet></MinBet>
       <MaxBet></MaxBet>
       <MaxPerMatch></MaxPerMatch>

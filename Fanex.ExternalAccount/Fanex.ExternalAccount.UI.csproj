@@ -202,8 +202,8 @@
     <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.3.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.3.5\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.6.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.6.4\lib\net40\Fanex.PTEngine.dll</HintPath>
+    <Reference Include="Fanex.PTEngine, Version=1.0.6.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTEngine.1.0.6.5\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTSetting.BettypeReference, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTSetting.BettypeReference.1.0.0.2\lib\net461\Fanex.PTSetting.BettypeReference.dll</HintPath>
@@ -2244,7 +2244,9 @@
     <Content Include="Images\Success.gif" />
     <Content Include="Images\super-btn.png" />
     <Content Include="Images\UnderMaintenance.gif" />
-    <Content Include="PTEngine\BettingLimit.xml" />
+    <Content Include="PTEngine\BettingLimit.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="PTEngine\PTGrid.xml">
       <SubType>Designer</SubType>
     </Content>
