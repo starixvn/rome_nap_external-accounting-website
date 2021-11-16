@@ -38,10 +38,9 @@
             result.HasSubGroups = parameters.GroupId > 0 && _groupService.GetGroupWithSubGroups(parameters.GroupId).Any();
             if (!IsViewIPVN)
             {
-                var specialIPList = _IPInformatonService.GetSpecialIPs();
                 foreach (var item in result.CustomerList)
                 {
-                    if (!string.IsNullOrWhiteSpace(item.LastLoginIP) && specialIPList.IsExistedInList(item.LastLoginIP))
+                    if (!string.IsNullOrWhiteSpace(item.LastLoginIP) && _IPInformatonService.IsSpecialIP(item.LastLoginIP))
                     {
                         item.LastLoginIP = string.Empty;
                     }

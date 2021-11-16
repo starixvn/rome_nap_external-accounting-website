@@ -12,26 +12,6 @@
 
     public static class Utils
     {
-        public static bool IsExistedInList(this IEnumerable<IPRange> ipList, string ip)
-        {
-            var ipNumber = ConvertIpToNumber(ip);
-
-            return ipList.Any(i => i.IPFrom <= ipNumber && i.IPTo >= ipNumber);
-        }
-
-        public static double ConvertIpToNumber(string ip)
-        {
-            var num = 0.0;
-            if (IsValidIpAddress(ip))
-            {
-                var strArray = ip.Split('.');
-                num = (((double.Parse(strArray[0]) * 16_777_216.0) + (double.Parse(strArray[1]) * 65_536.0)) +
-                    (double.Parse(strArray[2]) * 256.0)) + double.Parse(strArray[3]);
-            }
-
-            return num;
-        }
-
         public static bool IsValidIpAddress(string ip)
         {
             return IPAddress.TryParse(ip, out IPAddress address) && !ip.Equals("::1", StringComparison.OrdinalIgnoreCase);
