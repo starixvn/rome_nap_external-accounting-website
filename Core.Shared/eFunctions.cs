@@ -76,6 +76,8 @@
         public const string SubGroup = "ManageSubGroup";
         public const string BonusDetail = "BonusDetail";
 
+        public const string EnableCashout = "EnableCashout";
+
         public const string ProtectCustomer = "ProtectCustomer";
     }
 }

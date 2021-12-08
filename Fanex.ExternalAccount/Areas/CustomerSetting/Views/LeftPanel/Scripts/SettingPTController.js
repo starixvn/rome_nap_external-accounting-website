@@ -196,6 +196,11 @@
         $scope.collapseSidebar();
     };
 
+    $scope.Cashout = function () {
+        $scope.RenderDCS(25);
+        $scope.collapseSidebar();
+    };
+
     $scope.RenderDCS = function (productId) {
         $scope.ResetGlobalValue();
 
