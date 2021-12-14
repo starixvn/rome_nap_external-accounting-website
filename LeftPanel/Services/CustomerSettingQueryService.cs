@@ -435,7 +435,9 @@
                 return setting;
             }
 
-            if ((syncUpline || _roleId.IsSuper()) && productElement.Id != ProductConstants.SabaVirtualSports)
+            if ((syncUpline || _roleId.IsSuper()) 
+                && productElement.Id != ProductConstants.SabaVirtualSports 
+                && productElement.Id != ProductConstants.Cashout)
             {
                 setting.Details.Add(
                     GetEditSettingLink(productElement.Key, productElement.Name));
