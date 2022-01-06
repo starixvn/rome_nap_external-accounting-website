@@ -24,6 +24,7 @@
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.SabaVirtualSports], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.VGaming], StatusType.Link),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Bitcoin], StatusType.Checkbox),
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Cashout], StatusType.Checkbox)
             };
 
         public static readonly IReadOnlyDictionary<int, string> VisibleBetSettingPermissions =
@@ -55,7 +56,8 @@
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.VirtualGames], statusRow, isSetUplineStatus:isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Sabaclub], statusRow, isSetUplineStatus:isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.VGaming], statusRow, isSetUplineStatus:isSetUplineStatus),
-                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Bitcoin], statusRow, isSetUplineStatus:isSetUplineStatus)
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Bitcoin], statusRow, isSetUplineStatus:isSetUplineStatus),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Cashout], statusRow, isSetUplineStatus:isSetUplineStatus)
             };
 
         public static List<ObjectInfo> CreateSyncAndHiddenItems(DataRow nonDCSProductStatusRow,DataTable dcsProductStatusTable)

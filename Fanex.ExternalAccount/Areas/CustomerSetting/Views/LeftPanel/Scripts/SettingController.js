@@ -905,6 +905,15 @@
         $scope.EnableThirdpartyProduct(69, "Bitcoin");
     };
 
+    $scope.EnableCashout = function (enable, id, disabled) {
+        if (disabled) {
+            return;
+        }
+
+        top.shouldCalculatePopupHeight = false;
+        $scope.EnableThirdpartyProduct(25, "Cashout");
+    };
+
 
     $scope.EnableSabaVirtualSports = function (enable, id, disabled) {
         if (disabled) {

@@ -69,7 +69,9 @@
             var products = _customerService.GetCustomerAllStatus(custId, Config.SettingStatus);
             if (products != null && products.DCSProductsSetting != null)
             {
-                products.DCSProductsSetting.RemoveAll(i => i.ProductID == ProductConstants.SabaVirtualSports);
+                products.DCSProductsSetting.RemoveAll(
+                    i => i.ProductID == ProductConstants.SabaVirtualSports
+                    || i.ProductID == ProductConstants.Cashout);
             }
 
             return Json(products);
