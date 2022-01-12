@@ -69,25 +69,13 @@
                     $scope.setting.editItems[i].isHide = true;
                 }
             }
-
-            var syncCasino = true;
-
-            for (var j = 0; j < $scope.setting.syncItems.length; j++) {
-                if (!$scope.setting.syncItems[j].value && $scope.setting.syncItems[j].key == 'SyncCasino') {
-                    syncCasino = false;
-                }
-            }
-
+            
             for (var i = 0; i < $scope.setting.enableItems.length; i++) {
                 if ($scope.model.personalInfo.roleId.value == 4 && ($scope.setting.enableItems[i].key == 'Closed') &&
                     !allowAdmins.contains(parseInt(parent.userId)) && $scope.setting.enableItems[i].value == true) {
                     $scope.setting.enableItems[i].disabled = true;
                     $scope.setting.enableItems[i].tooltip = 'You are not authorized on this function';
                 }
-
-                if ($scope.setting.enableItems[i].key == 'EnableCasino')
-                    $scope.setting.enableItems[i].isHide = !syncCasino;
-
             }
 
             for (var i = 0; i < $scope.setting.masterPts.length; i++) {
@@ -713,7 +701,7 @@
         }
         top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(6, "Casino");
+        $scope.EnableThirdpartyProduct(6, "Saba Casino");
     };
 
     $scope.EnableNumberGame = function (enable, id, disabled) {
@@ -1041,9 +1029,7 @@
     };
 
     $scope.SuperCasino = function () {
-        $scope.ResetGlobalValueAtSuperOnMember();
-        var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberBySuper?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId + '&groupname=' + parent.$('#selectedGroupName').html()));
+        $scope.RenderSupeOnMemberDCS(6);
     };
 
     $scope.SuperVirtualSports = function () {
@@ -1081,9 +1067,7 @@
     };
 
     $scope.MasterCasino = function () {
-        $scope.ResetGlobalValueAtMasterOnMember();
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberByMaster?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupname=' + parent.$('#selectedGroupName').html()));
+        $scope.RenderMasterOnMemberDCS(6);
     };
 
     $scope.MasterVirtualSports = function () {

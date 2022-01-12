@@ -10,7 +10,7 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int Keno = 8;
         public const int GoldDeluxe = 12;
         public const int Sportsbook2 = 16;
-        public const int RNGCasino = 6;
+        public const int Casino = 6;
         public const int ProgressiveBonus = 10;
         public const int AllBet = 21;
         public const int SAGaming = 39;

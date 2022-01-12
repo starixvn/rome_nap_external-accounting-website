@@ -88,7 +88,7 @@
 
             if (!this.currentSession.IsBelongToSpecialGroups)
             {
-                AddCasinoStatus(nonDCSProductStatusRow, enableItems);
+                AddCasinoStatus(table3rdDCS, enableItems);
                 AddNumberGameStatus(nonDCSProductStatusRow, enableItems);
                 AddVirtualSportsStatus(table3rdDCS, enableItems);
             }
@@ -259,16 +259,17 @@
             enableItems.Add(numberGameStatus);
         }
 
-        private static void AddCasinoStatus(DataRow nonDCSProductStatusRow, ICollection<ObjectInfo> enableItems)
+        private static void AddCasinoStatus(DataTable table3rdDCS, ICollection<ObjectInfo> enableItems)
         {
-            if (!nonDCSProductStatusRow.SyncCasino())
+            if (table3rdDCS.IsProductHidden(ProductConstants.Casino))
             {
                 return;
             }
 
-            var casinoStatus = new ObjectInfo("EnableCasino", nonDCSProductStatusRow.EnableCasino(), "Enable Casino");
+            var casinoStatus = new ObjectInfo("EnableCasino",
+               !table3rdDCS.IsProductDisabled(ProductConstants.Casino), "Saba Casino");
 
-            if (nonDCSProductStatusRow.DisableCasinoUpline())
+            if (table3rdDCS.IsProductDisabledUpline(ProductConstants.Casino))
             {
                 casinoStatus = DisableStatus(casinoStatus);
             }
@@ -359,7 +360,7 @@
             }
 
             AddParlayMaxPayoutLink(details);
-            AddCasinoEditLink(nonDCSProductStatusRow, details);
+            AddCasinoEditLink(table3rdDCS, details);
             AddVirtualSportsEditLink(table3rdDCS, details);
             AddKenoEditLink(details);
             AddGoldDeluxeEditLink(nonDCSProductStatusRow, details);
@@ -392,11 +393,13 @@
             }
         }
 
-        private void AddCasinoEditLink(DataRow nonProductStatusRow, ICollection<ObjectInfo> details)
+        private void AddCasinoEditLink(DataTable table3rdDCS, ICollection<ObjectInfo> details)
         {
-            if (_roleId.IsSuper() || nonProductStatusRow.SyncCasinoUpline())
+            if (_roleId.IsMember() ?
+                !table3rdDCS.IsProductHiddenUpline(ProductConstants.Casino) :
+                !table3rdDCS.IsProductHidden(ProductConstants.Casino))
             {
-                details.Add(new ObjectInfo("Casino", "Casino"));
+                details.Add(new ObjectInfo("Casino", "Saba Casino"));
             }
         }
 

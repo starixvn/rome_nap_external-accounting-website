@@ -42,33 +42,7 @@
     };
 
     $scope.Casino = function () {
-        $scope.ResetGlobalValue();
-
-        var roleId = $scope.model.personalInfo.roleId.value;
-        var custId = $scope.model.personalInfo.custId.value;
-        var url = '';
-
-        switch (roleId) {
-            case 4:
-                url = parent.resolveClientUrl('CustomerSetting/Casino/Super/EditSuper?id=' + $scope.model.personalInfo.custId.value + '&uplineid=0');
-                break;
-            case 3:
-                url = parent.resolveClientUrl('CustomerSetting/Casino/Master/EditMaster?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + $scope.model.personalInfo.uplineId.value);
-                break;
-            case 2:
-                url = parent.resolveClientUrl('CustomerSetting/Casino/Agent/EditAgent?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + $scope.model.personalInfo.uplineId.value);
-                break;
-            case 1:
-                url = parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + $scope.model.personalInfo.uplineId.value);
-                break;
-            default:
-                break;
-        }
-
-        if (url !== '') {
-            parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupname=' + parent.$('#selectedGroupName').html());
-        }
-
+        $scope.RenderDCS(6);
         $scope.collapseSidebar();
     };
 
