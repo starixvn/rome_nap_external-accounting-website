@@ -58,18 +58,6 @@
                         },
                         separator1: "-----"
                     }
-                    var has3rdParty = false;
-                    if (result.UplineSyncedCasino) {
-                        has3rdParty = true;
-                        items.casino = {
-                            name: "Casino",
-                            className: result.SyncedCasino ? (result.DisableCasino ? "iconDisableEdit" : "iconEnableEdit") : 'iconUnsyncEdit',
-                            callback: function () {
-                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Agent/EditAgent?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.masterId + '&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1150, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, null, 1);
-                            }
-                        }
-                    }
-
 
                     function addEditProductAgentContextMenuItem(productId, productKey, productName, isDisabled, isSynced) {
                         isSynced = typeof (isSynced) == 'undefined' ? true : isSynced;
@@ -87,6 +75,12 @@
                                     productName);
                             }
                         };
+                    }
+
+                    var has3rdParty = false;
+                    if (!result.HideCasino) {
+                        has3rdParty = true;
+                        addEditProductAgentContextMenuItem(6, 'casino', 'Saba Casino', result.DisableCasino);
                     }
 
                     if (!result.HideVirtualSport) {

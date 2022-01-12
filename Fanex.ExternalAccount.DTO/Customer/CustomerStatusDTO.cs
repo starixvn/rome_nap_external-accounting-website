@@ -4,6 +4,8 @@ namespace Fanex.ExternalAccount.DTO.Customer
 {
     public class CustomerStatusDTO
     {
+        public bool HideCasino { get; set; }
+
         public bool SyncedCasino { get; set; }
 
         public bool UplineSyncedCasino { get; set; }

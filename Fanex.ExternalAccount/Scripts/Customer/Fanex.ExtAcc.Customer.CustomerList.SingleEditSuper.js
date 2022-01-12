@@ -33,13 +33,6 @@
                             }
                         },
                         separator1: "-----",
-                        casino: {
-                            name: "Casino",
-                            className: "iconViewEdit",
-                            callback: function () {
-                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Super/EditSuper?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=0&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 1150, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, null, 1);
-                            }
-                        }
                     }
 
                     function addEditProductSuperContextMenuItem(productId, productKey, productName) {
@@ -57,6 +50,8 @@
                             }
                         }
                     }
+
+                    addEditProductSuperContextMenuItem(6, 'Product-6', 'Saba Casino');
 
                     addEditProductSuperContextMenuItem(5, 'Product-5', 'Virtual Sports');
 

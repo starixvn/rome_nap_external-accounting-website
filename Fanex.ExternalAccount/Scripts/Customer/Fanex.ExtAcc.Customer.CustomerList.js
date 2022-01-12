@@ -187,6 +187,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 $.post(resolveClientUrl('CustomerList/GetCustomerStatus'), { custId: firstCustId, groupName: $("#selectedGroupName").html() }, function (custStatusResult) {
                     Fanex.ExtAcc.Customer.HideGoldDeluxe = custStatusResult.HideGoldDeluxe;
                     Fanex.ExtAcc.Customer.HideKeno = custStatusResult.HideKeno;
+                    Fanex.ExtAcc.Customer.HideCasino = custStatusResult.HideCasino;
                     Fanex.ExtAcc.Customer.HideVirtualSports = custStatusResult.HideVirtualSports;
                     Fanex.ExtAcc.Customer.UplineSyncCasino = custStatusResult.UplineSyncedCasino;
                     Fanex.ExtAcc.Customer.UplineProductSettings = Fanex.ExtAcc.Customer.GetProductSettings(custStatusResult, !isSuperList);

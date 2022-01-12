@@ -58,17 +58,6 @@
         // Number Game
         productIds.push(3);
 
-        if (this.UplineSyncCasino) {
-            menuItems.casino = {
-                name: "Edit Multiple Casino",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleCasino();
-                }
-            };
-            productIds.push(6);
-        }
-
         function addSuperEditMultipleMastersMenuItem(productId, productName) {
             var productKey = 'product_super_master_' + productId;
             menuItems[productKey] = {
@@ -79,6 +68,10 @@
                 }
             };
             productIds.push(productId);
+        }
+
+        if (!this.HideCasino) {
+            addSuperEditMultipleMastersMenuItem(6, 'Saba Casino');
         }
 
         if (!this.HideVirtualSports) {
@@ -149,17 +142,6 @@
         // Number Game
         productIds.push(3);
 
-        if (this.UplineSyncCasino) {
-            menuItems.casino = {
-                name: "Edit Multiple Casino",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleCasino();
-                }
-            };
-            productIds.push(6);
-        }
-
         function addMasterEditMultipleAgentsMenuItem(productId, productName) {
             var productKey = 'product_master_agent_' + productId;
             menuItems[productKey] = {
@@ -170,6 +152,10 @@
                 }
             };
             productIds.push(productId);
+        }
+
+        if (!this.HideCasino) {
+            addMasterEditMultipleAgentsMenuItem(6, 'Saba Casino');
         }
 
         if (!this.HideVirtualSports) {
@@ -263,40 +249,6 @@
         // Number Game
         productIds.push(3);
 
-        if (this.UplineSyncCasino) {
-            menuItems.casino = {
-                name: "Casino",
-                className: "iconEnableEdit",
-                items: {
-                    agentCS: {
-                        name: "Edit Multiple Casino",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleCasino();
-                        }
-                    },
-                    superCS: {
-                        name: "Super Edit Multiple Casino",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleCasino();
-                        }
-                    },
-                    masterCS: {
-                        name: "Master Edit Multiple Casino",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleCasino();
-                        }
-                    }
-                }
-            };
-            productIds.push(6);
-        }
-
         function addUplineEditMemberMenuItems(productId, productName) {
             var productKey = 'product_' + productId;
             menuItems[productKey] = {
@@ -333,6 +285,10 @@
             };
 
             productIds.push(productId);
+        }
+
+        if (!this.HideCasino) {
+            addUplineEditMemberMenuItems(6, 'Saba Casino');
         }
 
         if (!this.HideVirtualSports) {

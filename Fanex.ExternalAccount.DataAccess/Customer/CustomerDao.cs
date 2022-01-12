@@ -284,9 +284,6 @@
                 reader.NextResult();
                 if (reader.Read())
                 {
-                    result.SyncedCasino = Utils.ToBoolean(reader["SyncCasino"]);
-                    result.UplineSyncedCasino = Utils.ToBoolean(reader["uplineSyncCasino"]);
-                    result.DisableCasino = Utils.ToBoolean(reader["DisableCasino"]);
                     result.HideGoldDeluxe = !ProductSettings.IsShowGoldDeluxe || Utils.ToBoolean(reader["HideGoldDeluxe"]);
                     result.DisableGoldDeluxe = Utils.ToBoolean(reader["DisableGoldDeluxe"]);
                     result.UplineHideGoldDeluxe = Utils.ToBoolean(reader["uplineHideGoldDeluxe"]);
@@ -298,6 +295,15 @@
                 while (reader.Read())
                 {
                     int productId = Utils.ToInt32(reader["ProductID"]);
+                    if (productId == ProductConstants.Casino)
+                    {
+                        result.HideCasino = Utils.ToBoolean(reader["isHidden"]);
+                        result.SyncedCasino = Utils.ToBoolean(reader["IsSync"]);
+                        result.UplineSyncedCasino = Utils.ToBoolean(reader["isSyncedUpline"]);
+                        result.DisableCasino = Utils.ToBoolean(reader["isDisabled"]);
+                        continue;
+                    }
+
                     if (productId == ProductConstants.VirtualSports)
                     {
                         result.HideVirtualSport = Utils.ToBoolean(reader["isHidden"]);
