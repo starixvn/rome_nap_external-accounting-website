@@ -886,4 +886,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="EditMultiplePartialSuccessfully" xml:space="preserve">
     <value>The selected accounts' protection status has been updated successfully except the following account(s):</value>
   </data>
+  <data name="ViewReportMinDate" xml:space="preserve">
+    <value>You can view the report data from</value>
+  </data>
 </root>

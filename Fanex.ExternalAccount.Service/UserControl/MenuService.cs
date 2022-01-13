@@ -11,6 +11,7 @@
     public class MenuService : IMenuService
     {
         private const string AssignSubGroupUrl = "~/SubGroup/SubGroupList";
+        private const string SuperWinLossDetailBySubGroup = "~/SuperWinLossDetailBySubGroup/Index";
         private readonly IMenuDao _menuDao;
         private readonly ICachingService CachingService = new CachingService();
 
@@ -21,16 +22,26 @@
 
         public IEnumerable<Menu> GetAllMenus() => _menuDao.GetAllMenus();
 
-        public IEnumerable<Menu> GetMenusByUserId(int userId, string currentGroup, bool isShowAssignSubGroup)
+        public IEnumerable<Menu> GetMenusByUserId(
+            int userId,
+            string currentGroup,
+            bool isShowAssignSubGroup,
+            bool isShowSuperWinLossDetailBySubGroup)
         {
             var userCache = CachingService.GetUserCache(userId, currentGroup);
-            
+            var menuList = userCache.MenuList.AsEnumerable();
+
             if (!isShowAssignSubGroup)
             {
-                return userCache.MenuList.Where(menu => menu.Url != AssignSubGroupUrl);
+                menuList = menuList.Where(menu => menu.Url != AssignSubGroupUrl);
             }
 
-            return userCache.MenuList;
+            if (!isShowSuperWinLossDetailBySubGroup)
+            {
+                menuList = menuList.Where(menu => menu.Url != SuperWinLossDetailBySubGroup);
+            }
+
+            return menuList;
         }
 
         public Result CreateMenu(Menu menu, int custId, string ip)

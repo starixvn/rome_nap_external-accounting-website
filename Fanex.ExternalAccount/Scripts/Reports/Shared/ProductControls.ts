@@ -189,4 +189,14 @@ class ProductControls {
 
         return "";
     }
+
+    public GetProductIds() {
+        return this.$multiSelectProduct.fanexMultiSelect("getItems", true);
+    }
+
+    public GetResourceIds() {
+        return this.$multiSelectProductDetail
+            ? this.$multiSelectProductDetail.fanexMultiSelect("getItems", true)
+            : [];
+    }
 }

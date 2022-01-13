@@ -2303,6 +2303,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You can view the report data from.
+        /// </summary>
+        public static string ViewReportMinDate {
+            get {
+                return ResourceManager.GetString("ViewReportMinDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Virtual Sports.
         /// </summary>
         public static string VirtualSports {

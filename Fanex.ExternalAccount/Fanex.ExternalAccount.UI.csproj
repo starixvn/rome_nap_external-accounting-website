@@ -565,6 +565,10 @@
     <Content Include="assets\bundles\securitycode\index.min.js.map">
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\SuperWinLossDetailBySubGroup\index.js" />
+    <Content Include="assets\bundles\SuperWinLossDetailBySubGroup\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.js" />
     <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -2905,6 +2909,9 @@
     <Content Include="assets\bundles\protectedstatus\multiple.min.js.map">
       <DependentUpon>multiple.min.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\SuperWinLossDetailBySubGroup\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -3007,6 +3014,7 @@
     <Content Include="ExcelTemplates\Customer\SuperListSG.xls" />
     <Content Include="ExcelTemplates\Customer\SuperListSGMO.xls" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.ProtectedStatus.js" />
+    <Content Include="ExcelTemplates\Reports\SuperWinLossDetailBySubGroup.xls" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />
@@ -3078,6 +3086,8 @@
     <Content Include="Views\MaxPayoutSettingInformation\Index.cshtml" />
     <Content Include="Views\ParlayMaxPayout\Index.cshtml" />
     <Content Include="Views\ProtectedStatus\OpenMultiple.cshtml" />
+    <Content Include="Views\SuperWinLossDetailBySubGroup\Index.cshtml" />
+    <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailBySubGroup\Fanex.ExtAcc.SuperWinLossDetailBySubGroup.ts" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj">
@@ -3147,6 +3157,10 @@
     <ProjectReference Include="..\Modules\Fanex.ExternalAccount.ProblemAccount\Fanex.ExternalAccount.ProblemAccount.csproj">
       <Project>{be8d34fe-39ca-447e-bd10-71991c08ceb6}</Project>
       <Name>Fanex.ExternalAccount.ProblemAccount</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.ExternalAccount.WinLossDetailBySubGroup\Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.csproj">
+      <Project>{5f20bea2-febf-4ce2-8ff8-129dd93b3386}</Project>
+      <Name>Fanex.ExternalAccount.SuperWinLossDetailBySubGroup</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
