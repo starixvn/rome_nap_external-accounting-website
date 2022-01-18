@@ -20,6 +20,7 @@ Fanex.ExtAcc.Customer.Settings = {
         Fanex.ExtAcc.Customer.IsMultiple = false;
         $('#tabs').tabs();
 
+        $('#tab4').css('display', Fanex.ExtAcc.Customer.HideCasino ? 'none' : 'block');
         $('#tab8').css('display', Fanex.ExtAcc.Customer.HideVirtualSports ? 'none' : 'block');
         $('#tab9').css('display', Fanex.ExtAcc.Customer.HideKeno ? 'none' : 'block');
         $('#tab10').css('display', Fanex.ExtAcc.Customer.HideGoldDeluxe ? 'none' : 'block');
@@ -31,7 +32,7 @@ Fanex.ExtAcc.Customer.Settings = {
         
         $('#tab4').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.GetCasinoSetting();
+            Fanex.ExtAcc.Customer.Settings.RenderDCS(6, "#casinoFrame", "#tabs-4");
         });        
 
         $('#tab8').bind('click', function () {
@@ -69,38 +70,6 @@ Fanex.ExtAcc.Customer.Settings = {
             $('#tabs-1').html(result);
             Fanex.ExtAcc.UnBlockUI();
         });
-    },
-
-
-
-    GetCasinoSetting: function () {
-        Fanex.ExtAcc.Customer.IsMultiple = false;
-        Fanex.ExtAcc.Customer.UserId = this.UserId;
-        var action = '';
-
-        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-            action = 'Master/EditMaster';
-        }
-        else if (this.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-            action = 'Agent/EditAgent';
-        }
-        else {
-            action = 'Member/EditMember';
-        }
-
-        Fanex.ExtAcc.Customer.Ids = function () {
-            return [this.UserId];
-        };
-
-        Fanex.ExtAcc.Customer.Names = function () {
-            return [''];
-        };
-
-        var url = resolveClientUrl('CustomerSetting/Casino/' + action + '?id=' + this.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupname=' + $('#selectedGroupName').html());
-
-        $('#tabs-4').height($('#leftFrame').height() - 10);
-        $('#tabs-4').css('display', 'block');
-        Fanex.ExtAcc.Customer.Settings.LoadProductSetting('#casinoFrame', url);
     },
 
     GetKenoSetting: function () {

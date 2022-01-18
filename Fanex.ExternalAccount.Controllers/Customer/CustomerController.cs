@@ -355,7 +355,7 @@
             ViewBag.CurrentLevel = id;
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
-            ViewBag.SyncCasino = custStatus.SyncedCasino;
+            ViewBag.HideCasino = custStatus.HideCasino;
             ViewBag.HideVirtualSports = custStatus.HideVirtualSport;
             ViewBag.HideKeno = custStatus.HideKeno;
             ViewBag.HideGoldDeluxe = custStatus.HideGoldDeluxe;

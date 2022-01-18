@@ -658,26 +658,6 @@
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Scripts\SportsbookController.js" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Styles\Sportsbook.css" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Agent\EditAgent.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Agent\ViewAgentBySuper.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Customer\CustomerInfo.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Error.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Help.txt" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Master\EditMaster.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Member\EditMember.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Member\EditMemberByMaster.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Member\EditMemberBySuper.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\CasinoController.js" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\CustomerController.js" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditAgentController.js" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditMasterController.js" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditMemberByMasterController.js" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditMemberBySuperController.js" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditMemberController.js" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\EditSuperController.js" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Scripts\ViewAgentController.js" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Styles\Casino.css" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Super\EditSuper.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Readme.txt" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Scripts\EnableStatus.js" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Scripts\EnableStatus.js" />
@@ -2650,7 +2630,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\Common\Views\Web.config" />
-    <Content Include="Areas\CustomerSetting\Views\Casino\Shared\_Layout.cshtml" />
     <Content Include="App_Data\activitytracking.json" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Styles\EnableStatus.less" />

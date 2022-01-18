@@ -6,10 +6,6 @@ namespace Fanex.ExternalAccount.DTO.Customer
     {
         public bool HideCasino { get; set; }
 
-        public bool SyncedCasino { get; set; }
-
-        public bool UplineSyncedCasino { get; set; }
-
         public bool DisableCasino { get; set; }
 
         public bool HideVirtualSport { get; set; }

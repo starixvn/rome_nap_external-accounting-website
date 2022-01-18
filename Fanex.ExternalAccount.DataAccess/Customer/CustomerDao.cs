@@ -298,8 +298,6 @@
                     if (productId == ProductConstants.Casino)
                     {
                         result.HideCasino = Utils.ToBoolean(reader["isHidden"]);
-                        result.SyncedCasino = Utils.ToBoolean(reader["IsSync"]);
-                        result.UplineSyncedCasino = Utils.ToBoolean(reader["isSyncedUpline"]);
                         result.DisableCasino = Utils.ToBoolean(reader["isDisabled"]);
                         continue;
                     }
