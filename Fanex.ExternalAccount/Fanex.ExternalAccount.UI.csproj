@@ -648,11 +648,6 @@
     <Content Include="Areas\CustomerSetting\Styles\jquery-ui.css" />
     <Content Include="Areas\CustomerSetting\Styles\Validators.css" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\AccessDenied\AccessDenied.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Casino\Content.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Casino\Index.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Casino\Scripts\CasinoController.js" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Casino\Styles\Casino.css" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\GoldDeluxe\Styles\BettingLimiteGoldDeluxe.css" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Keno\Content.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Keno\Index.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Keno\Scripts\KenoController.js" />
@@ -2654,8 +2649,6 @@
     <Content Include="Configurations\connectionStrings.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\GoldDeluxe\Content.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\GoldDeluxe\Index.cshtml" />
     <Content Include="Areas\Common\Views\Web.config" />
     <Content Include="Areas\CustomerSetting\Views\Casino\Shared\_Layout.cshtml" />
     <Content Include="App_Data\activitytracking.json" />

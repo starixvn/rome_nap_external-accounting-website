@@ -29,8 +29,6 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             }
 
             ViewBag.Username = customer.Username;
-            ViewBag.SyncCasino = customer.SyncCasino; 
-            ViewBag.HideGoldDeluxe = customer.HideGoldDeluxe;
             ViewBag.DefaultMinBetValue = GetDefaultMinBetValue();
 
             var bettingLimitService = SportsBookService;

@@ -257,12 +257,6 @@
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
     <Compile Include="BetSettingProductIntegration.cs" />
-    <Compile Include="Controllers\CasinoBettingController.cs">
-      <SonarQubeExclude>true</SonarQubeExclude>
-    </Compile>
-    <Compile Include="Controllers\GoldDeluxeBettingController.cs">
-      <SonarQubeExclude>true</SonarQubeExclude>
-    </Compile>
     <Compile Include="Controllers\KenoBettingController.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>

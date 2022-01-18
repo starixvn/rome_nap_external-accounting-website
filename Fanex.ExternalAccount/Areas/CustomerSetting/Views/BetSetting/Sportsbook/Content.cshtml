@@ -119,7 +119,6 @@
     var uplineId = parseInt('@uplineId');
     var userId = parseInt('@userId');
     var siteName = '@siteName';
-    var syncCasino = '@ViewBag.SyncCasino';
     var defaultMinBetValue = @ViewBag.DefaultMinBetValue;
 
     function toUrl(relativeUrl) {
@@ -127,10 +126,6 @@
     }
 
     $(document).ready(function () {
-        if (syncCasino == 'False') {
-            $('#tab6').remove();
-        }
-
         $('#tab2').removeClass('ui-tabs-active');
 
         $('.buttonPopup').bind('click', function () {
