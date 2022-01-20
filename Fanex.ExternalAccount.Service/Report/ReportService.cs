@@ -179,7 +179,7 @@
             if (string.IsNullOrWhiteSpace(resourceIds)
                 && Config.IsOfferJackpotProductDetailsGroup(groupName))
             {
-                productIdList = productIdList.Where(id => id != ProductConstants.PragmaticPlay);
+                productIdList = productIdList.Where(id => id != ProductConstants.PragmaticPlay && id != ProductConstants.SpadeGaming);
             }
 
             if (string.IsNullOrWhiteSpace(resourceIds)

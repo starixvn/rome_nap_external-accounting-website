@@ -1,14 +1,16 @@
 ﻿@model QueryViewModel
 @{
-    Layout = null;
-    string assetsVersion = "202009030934";
+                /**/
+
+                Layout = null;
+                string assetsVersion = "201810031422";
 }
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="@Url.Content("~/Areas/ProductStatusSetting/Styles/product-status-setting.min.css?v=")@assetsVersion"/>
+    <link rel="stylesheet" href="@Url.Content("~/Areas/ProductStatusSetting/Styles/product-status-setting.min.css?v=")@assetsVersion" />
 </head>
 <body>
     <div id="sectionMessage" class="msg-container hide"></div>
@@ -136,51 +138,57 @@
 
 @helper RenderHeaderLevelName(byte roleId)
 {
-    while (roleId > 0 && --roleId > 0)
-    {
-        if (Model.ShowColumnByRoles[roleId])
-        {
-            <th colspan="2">
-                @Model.GetRoleName(roleId)
-            </th>
-        }
-    }
+                    /**/
+
+                    while (roleId > 0 && --roleId > 0)
+                    {
+                        if (Model.ShowColumnByRoles[roleId])
+                        {
+                            <th colspan="2">
+                                @Model.GetRoleName(roleId)
+                            </th>
+                        }
+                    }
 }
 
 @helper RenderHeaderStatus(byte roleId, bool isMultipleBetTypes)
 {
-    while (roleId > 0 && --roleId > 0)
-    {
-        if (Model.ShowColumnByRoles[roleId])
-        {
-            @RenderHeader(roleId, isMultipleBetTypes);
-        }
-    }
+                    /**/
+
+                    while (roleId > 0 && --roleId > 0)
+                    {
+                        if (Model.ShowColumnByRoles[roleId])
+                        {
+                            @RenderHeader(roleId, isMultipleBetTypes);
+                        }
+                    }
 }
 
 @helper RenderHeader(byte roleId, bool isMultipleBetTypes)
 {
-    var roleName = Model.GetRoleName(roleId);
-    if (isMultipleBetTypes)
-    {
-        <th>
-            <span class="enabled gray" data-roleid="@roleId"
-                  title="@string.Format(Resources.HeaderTooltip, Resources.Enable.ToLower(), roleName)">
-                @Resources.Enable
-            </span>
-        </th>
-        <th>
-            <span class="disabled gray" data-roleid="@roleId"
-                  title="@string.Format(Resources.HeaderTooltip, Resources.Disable.ToLower(), roleName)">
-                @Resources.Disable
-            </span>
-        </th>
-    }
-    else
-    {
-        <th>@Resources.Enable</th>
-        <th>@Resources.Disable</th>
-    }
+                    /**/
+
+                    var roleName = Model.GetRoleName(roleId);
+                    if (isMultipleBetTypes)
+                    {
+                        <th>
+                            <span class="enabled gray" data-roleid="@roleId"
+                                  title="@string.Format(Resources.HeaderTooltip, Resources.Enable.ToLower(), roleName)">
+                                @Resources.Enable
+                            </span>
+                        </th>
+                        <th>
+                            <span class="disabled gray" data-roleid="@roleId"
+                                  title="@string.Format(Resources.HeaderTooltip, Resources.Disable.ToLower(), roleName)">
+                                @Resources.Disable
+                            </span>
+                        </th>
+                    }
+                    else
+                    {
+                        <th>@Resources.Enable</th>
+                        <th>@Resources.Disable</th>
+                    }
 }
 
 @helper RenderStatus(
@@ -190,29 +198,31 @@
     bool isDisabledUpline,
     byte roleId)
 {
-    var labelText = isDisabled ? Resources.Disabled : Resources.Enabled;
-    var labelClass = isDisabledUpline ? "gray" : labelText.ToLowerInvariant();
-    var id = string.Format("{0}_{1}_{2}", labelClass, roleId, betType);
-    var roleName = Model.GetRoleName(roleId);
+                    /**/
 
-    var tbodyEnableDownlineTooltip = string.Format(Resources.SearchAccountTBodyTooltip, Resources.Enable.ToLower(), roleName);
-    var tbodyDisableDownlineTooltip = string.Format(Resources.SearchAccountTBodyTooltip, Resources.Disable.ToLower(), roleName);
+                    var labelText = isDisabled ? Resources.Disabled : Resources.Enabled;
+                    var labelClass = isDisabledUpline ? "gray" : labelText.ToLowerInvariant();
+                    var id = string.Format("{0}_{1}_{2}_{3}", labelClass, roleId, sportType, betType);
+                    var roleName = Model.GetRoleName(roleId);
 
-    <input type="checkbox" class="checkbox-hide" id="@id"
-           data-roleid="@roleId"
-           data-disabledupline="@isDisabledUpline"
-           data-sporttype="@sportType"
-           data-bettype="@betType"
-           data-originstatus="@isDisabled"
-           @(isDisabled ? string.Empty : "checked ")
-           @(isDisabledUpline ? "disabled " : string.Empty) />
+                    var tbodyEnableDownlineTooltip = string.Format(Resources.SearchAccountTBodyTooltip, Resources.Enable.ToLower(), roleName);
+                    var tbodyDisableDownlineTooltip = string.Format(Resources.SearchAccountTBodyTooltip, Resources.Disable.ToLower(), roleName);
 
-    <label for="@id" class="@labelClass"
-           title="@(isDisabled ? tbodyEnableDownlineTooltip : tbodyDisableDownlineTooltip)"
-           data-enabletooltip="@tbodyEnableDownlineTooltip"
-           data-disabletooltip="@tbodyDisableDownlineTooltip">
-        @labelText
-    </label>
+                    <input type="checkbox" class="checkbox-hide" id="@id"
+                           data-roleid="@roleId"
+                           data-disabledupline="@isDisabledUpline"
+                           data-sporttype="@sportType"
+                           data-bettype="@betType"
+                           data-originstatus="@isDisabled"
+                           @(isDisabled ? string.Empty : "checked ")
+                           @(isDisabledUpline ? "disabled " : string.Empty) />
+
+                    <label for="@id" class="@labelClass"
+                           title="@(isDisabled ? tbodyEnableDownlineTooltip : tbodyDisableDownlineTooltip)"
+                           data-enabletooltip="@tbodyEnableDownlineTooltip"
+                           data-disabletooltip="@tbodyDisableDownlineTooltip">
+                        @labelText
+                    </label>
 }
 
 @helper RenderDownlineStatus(
@@ -223,28 +233,30 @@
     DownlineStatusViewModel downlineStatus,
     int totalDisabledUpline = 0)
 {
-    var enabledSpanClass = "enabled" + (downlineStatus.IsDisabled || isDisabledUpline || totalDisabledUpline > 0 ? " gray" : string.Empty);
-    var enabledId = string.Format("enabled_{0}_{1}", roleId, betType);
-    var disabledSpanClass = "disabled" + (downlineStatus.IsDisabled || isDisabledUpline ? " gray" : string.Empty);
-    var disabledId = string.Format("disabled_{0}_{1}", roleId, betType);
-    var roleName = Model.GetRoleName(roleId);
+                    /**/
 
-    <td>
-        <span id="@enabledId" class="@enabledSpanClass"
-              title="@string.Format(Resources.TBodyDownlineTooltip, Resources.Enable.ToLower(), roleName + "s")"
-              data-roleid="@roleId"
-              data-sporttype="@sportType"
-              data-bettype="@betType"
-              data-total="@downlineStatus.Total"
-              data-totalenabled="@downlineStatus.TotalEnabled">@downlineStatus.TotalEnabled.ToString("N0")</span>
-    </td>
-    <td>
-        <span id="@disabledId" class="@disabledSpanClass"
-              title="@string.Format(Resources.TBodyDownlineTooltip, Resources.Disable.ToLower(), roleName + "s")"
-              data-roleid="@roleId"
-              data-sporttype="@sportType"
-              data-total="@downlineStatus.Total"
-              data-totaldisabled="@downlineStatus.TotalDisabled"
-              data-bettype="@betType">@downlineStatus.TotalDisabled.ToString("N0")</span>
-    </td>
+                    var enabledSpanClass = "enabled" + (downlineStatus.IsDisabled || isDisabledUpline || totalDisabledUpline > 0 ? " gray" : string.Empty);
+                    var enabledId = string.Format("enabled_{0}_{1}_{2}", roleId, sportType, betType);
+                    var disabledSpanClass = "disabled" + (downlineStatus.IsDisabled || isDisabledUpline ? " gray" : string.Empty);
+                    var disabledId = string.Format("disabled_{0}_{1}_{2}", roleId, sportType, betType);
+                    var roleName = Model.GetRoleName(roleId);
+
+                    <td>
+                        <span id="@enabledId" class="@enabledSpanClass"
+                              title="@string.Format(Resources.TBodyDownlineTooltip, Resources.Enable.ToLower(), roleName + "s")"
+                              data-roleid="@roleId"
+                              data-sporttype="@sportType"
+                              data-bettype="@betType"
+                              data-total="@downlineStatus.Total"
+                              data-totalenabled="@downlineStatus.TotalEnabled">@downlineStatus.TotalEnabled.ToString("N0")</span>
+                        </td>
+                        <td>
+                            <span id="@disabledId" class="@disabledSpanClass"
+                                  title="@string.Format(Resources.TBodyDownlineTooltip, Resources.Disable.ToLower(), roleName + "s")"
+                                  data-roleid="@roleId"
+                                  data-sporttype="@sportType"
+                                  data-total="@downlineStatus.Total"
+                                  data-totaldisabled="@downlineStatus.TotalDisabled"
+                                  data-bettype="@betType">@downlineStatus.TotalDisabled.ToString("N0")</span>
+                            </td>
 }

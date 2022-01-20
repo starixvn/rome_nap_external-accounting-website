@@ -108,7 +108,7 @@ else
     byte roleId)
 {
     var roleName = Model.GetRoleName(roleId);
-    var id = string.Format("{0}_{1}", roleId, betType);
+    var id = string.Format("{0}_{1}_{2}", roleId, sportType, betType);
     var tbodyEnableDownlineTooltip = string.Format(Resources.TBodyDownlineTooltip, Resources.Enable.ToLower(), roleName + "s");
     var tbodyDisableDownlineTooltip = string.Format(Resources.TBodyDownlineTooltip, Resources.Disable.ToLower(), roleName + "s");
 
