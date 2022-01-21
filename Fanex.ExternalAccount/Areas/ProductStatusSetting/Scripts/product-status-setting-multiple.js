@@ -15670,9 +15670,10 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
             var roleId = this.getRoleId(toogle);
             this.watchHeader(roleId, false);
             if (roleId > 1) {
+                var sportType = this.getSportType(toogle);
                 var bettype = this.getBetType(toogle);
                 var enable = this.isChecked(toogle);
-                var downlineToggle = this.getToggleElements(this.$toggleArray, roleId - 1, bettype);
+                var downlineToggle = this.getToggleElements(this.$toggleArray, roleId - 1, sportType, bettype);
                 this.toogleStatusDownline(downlineToggle, enable);
             }
         }
@@ -15683,16 +15684,17 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
         var roleId = this.getRoleId(toogle);
         this.watchHeader(roleId, true);
         if (roleId > 1) {
+            var sportType = this.getSportType(toogle);
             var bettype = this.getBetType(toogle);
             var enable = this.isChecked(toogle);
-            var downlineToggle = this.getToggleElements(this.$toggleArray, roleId - 1, bettype);
+            var downlineToggle = this.getToggleElements(this.$toggleArray, roleId - 1, sportType, bettype);
             this.toogleStatusDownline(downlineToggle, enable);
         }
     };
-    ProductStatusSettingMultipe.prototype.getToggleElements = function (toggleArray, roleId, bettype) {
+    ProductStatusSettingMultipe.prototype.getToggleElements = function (toggleArray, roleId, sportType, bettype) {
         for (var index = 0; index < toggleArray.length; index++) {
             var toggle = toggleArray[index];
-            if (this.getRoleId(toggle) == roleId && this.getBetType(toggle) == bettype) {
+            if (this.getRoleId(toggle) == roleId && this.getBetType(toggle) == bettype && this.getSportType(toggle) == sportType) {
                 return toggle;
             }
         }
