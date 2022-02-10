@@ -272,6 +272,7 @@
                 CustomerStatusDCS sportsbook2 = null;
                 CustomerStatusDCS liveCasino = null;
                 CustomerStatusDCS rngLottery = null;
+                CustomerStatusDCS macauGames = null;
                 var reader = objDb.ExecuteReader(criteria.GetSpParams());
                 if (reader.Read())
                 {
@@ -386,6 +387,35 @@
                         continue;
                     }
 
+                    if (productId == ProductConstants.VoidBridge)
+                    {
+                        if (macauGames == null)
+                        {
+                            macauGames = new CustomerStatusDCS
+                            {
+                                ProductID = productId,
+                                ProductName = ProductSettings.SiteProducts[productId]?.Name,
+                                IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
+                                IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
+                                IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
+                                IsSynced = Utils.ToBoolean(reader["isSync"]),
+                                IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
+                            };
+                        }
+                        else
+                        {
+                            if (!Utils.ToBoolean(reader["isHidden"]))
+                            {
+                                macauGames.IsDisabled = macauGames.IsDisabled || Utils.ToBoolean(reader["isDisabled"]);
+                                macauGames.IsDisabledUpline = macauGames.IsDisabledUpline || Utils.ToBoolean(reader["isDisabledUpline"]);
+                            }
+
+                            macauGames.IsHidden = macauGames.IsHidden && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
+                        }
+
+                        continue;
+                    }
+
                     if (!result.IsDCSProductExisted(productId))
                     {
                         result.DCSProductsSetting.Add(new CustomerStatusDCS
@@ -410,6 +440,11 @@
                 if (rngLottery != null)
                 {
                     result.DCSProductsSetting.Add(rngLottery);
+                }
+
+                if (macauGames != null)
+                {
+                    result.DCSProductsSetting.Add(macauGames);
                 }
 
                 return result;
