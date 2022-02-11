@@ -27,7 +27,7 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int Lottery = 28;
         public const int TableGames = 40;
         public const int RNGLottery = 44;
-        public const int VirtualGames = 38;
+        public const int VirtualGames = 64;
         public const int RNGWar = 50;
         public const int Sabaclub = 42;
         public const int DummyLiveCasinoProductId = 41;

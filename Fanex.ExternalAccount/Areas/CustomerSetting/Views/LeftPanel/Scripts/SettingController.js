@@ -873,8 +873,7 @@
         }
 
         top.shouldCalculatePopupHeight = false;
-        document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(38, "Virtual Games");
+        $scope.EnableThirdpartyProduct(64, "Virtual Games");
     };
 
     $scope.EnableSabagames = function (enable, id, disabled) {
@@ -1160,7 +1159,7 @@
     };
 
     $scope.SuperVirtualGames = function () {
-        $scope.RenderSupeOnMemberDCS(38);
+        $scope.RenderSupeOnMemberDCS(64);
     };
 
     $scope.SuperSabagames = function () {
@@ -1205,7 +1204,7 @@
     };
 
     $scope.MasterVirtualGames = function () {
-        $scope.RenderMasterOnMemberDCS(38);
+        $scope.RenderMasterOnMemberDCS(64);
     };
 
     $scope.MasterSabagames = function () {
