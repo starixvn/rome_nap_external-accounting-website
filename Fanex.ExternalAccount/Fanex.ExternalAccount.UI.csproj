@@ -854,14 +854,6 @@
     <Content Include="Areas\Statement\Views\StatementDetails\Index.cshtml" />
     <Content Include="Areas\Statement\Views\StatementDetails\Scripts\StatementDetailsManager.js" />
     <Content Include="Areas\Statement\Views\StatementDetails\Styles\StatementDetails.css" />
-    <Content Include="assets\bundles\casino\index.css" />
-    <Content Include="assets\bundles\casino\index.js" />
-    <Content Include="assets\bundles\casino\index.min.css">
-      <DependentUpon>index.css</DependentUpon>
-    </Content>
-    <Content Include="assets\bundles\casino\index.min.js">
-      <DependentUpon>index.js</DependentUpon>
-    </Content>
     <Content Include="assets\bundles\choosegroup\choosegroup.css" />
     <Content Include="assets\bundles\choosegroup\choosegroup.js" />
     <Content Include="assets\bundles\choosegroup\choosegroup.min.css">
@@ -1009,23 +1001,11 @@
     <Content Include="assets\styles\pages\customer\bet-limit.min.css">
       <DependentUpon>bet-limit.css</DependentUpon>
     </Content>
-    <Content Include="assets\styles\pages\customer\casino.css">
-      <DependentUpon>casino.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\customer\casino.min.css">
-      <DependentUpon>casino.css</DependentUpon>
-    </Content>
     <Content Include="assets\styles\pages\customer\customer-setting.css">
       <DependentUpon>customer-setting.scss</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\customer\customer-setting.min.css">
       <DependentUpon>customer-setting.css</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\customer\gold-deluxe-setting.css">
-      <DependentUpon>gold-deluxe-setting.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\customer\gold-deluxe-setting.min.css">
-      <DependentUpon>gold-deluxe-setting.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\customer\images\tick.png" />
     <Content Include="assets\styles\pages\customer\images\warning.png" />
@@ -2708,7 +2688,6 @@
     <Content Include="assets\styles\pages\customer\keno-setting.scss" />
     <Content Include="assets\styles\pages\customer\customer-setting.scss" />
     <Content Include="assets\styles\pages\customer\bet-limit.scss" />
-    <Content Include="assets\styles\pages\customer\casino.scss" />
     <Content Include="assets\styles\pages\customer\virtual-sport.scss" />
     <Content Include="assets\styles\pages\customer\pt-engine.scss" />
     <Content Include="assets\styles\pages\statement\guideline.scss" />
@@ -2716,7 +2695,6 @@
     <Content Include="assets\styles\pages\reports\winloss-detail.scss" />
     <Content Include="bundleconfig.json" />
     <Content Include="assets\styles\pages\account\security-code.scss" />
-    <Content Include="assets\styles\pages\customer\gold-deluxe-setting.scss" />
     <Content Include="assets\styles\pages\customer\_common.scss" />
     <Content Include="assets\styles\pages\customer\_theme-color.scss" />
     <Content Include="Areas\ProductStatusSetting\Views\web.config">
@@ -2751,9 +2729,6 @@
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\data-range\index.min.js.map">
-      <DependentUpon>index.min.js</DependentUpon>
-    </Content>
-    <Content Include="assets\bundles\casino\index.min.js.map">
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\winlossdetail\index.min.js.map">

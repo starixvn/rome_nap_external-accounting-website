@@ -60,10 +60,6 @@
     "inputFile": "assets/styles/vendors/bootstrap.scss"
   },
   {
-    "outputFile": "assets/styles/pages/customer/gold-deluxe-setting.css",
-    "inputFile": "assets/styles/pages/customer/gold-deluxe-setting.scss"
-  },
-  {
     "outputFile": "assets/styles/pages/admin/product.css",
     "inputFile": "assets/styles/pages/admin/product.scss"
   },
