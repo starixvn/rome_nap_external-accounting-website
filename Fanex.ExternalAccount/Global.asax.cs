@@ -1,16 +1,8 @@
 ﻿namespace Fanex.ExternalAccount
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
-    using CasinoLibrary.SBAgent;
     using Core.Authorization.ProductStatus;
-    using Core.Context;
     using Core.Filters;
     using CustomerSetting.Client40;
     using Data.Configuration;
@@ -18,9 +10,7 @@
     using Fanex.ExternalAccount.ActivityTracking.Web;
     using Fanex.ExternalAccount.UI.Helpers;
     using Fanex.Logging.Extensions.Database;
-    using GoldDeluxe.CoreSetting.Mappings;
     using Logging.Extensions.Web;
-    using Module.LeftPanel.ViewModels;
     using ONEbook.UM;
     using ONEbook.UM.AspNetMVC.Filters;
     using ONEbook.UM.Configurations;
@@ -29,7 +19,12 @@
     using ONEbook.UM.Services;
     using ONEbook.UM.Transport;
     using ProductStatus.Setting.Configuration;
-    using Sunplus.Libraries.APILogger;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Routing;
 
     public class MvcApplication : HttpApplication
     {
@@ -102,14 +97,7 @@
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
             DbSettingProviderManager.Current.Start();
-            AutoMapperConfiguration.Configure();
             StaticResources.Init();
-
-            var logger = new CasinoAPILogger();
-            var manager = new APILogManager(logger);
-            const string pattern = "AutoInsert*|Update*|Insert*|Move*|Reset*|FullSettlementResetMaxTransfer|Rollback*";
-            manager.Register(typeof(Customer), pattern);
-            manager.Register(typeof(DownlineList), pattern);
 
             var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
             defaultCaptchaManager.ImageUrlFactory =

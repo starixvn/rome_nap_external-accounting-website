@@ -97,7 +97,6 @@
             if (!this.currentSession.IsBelongToSpecialGroups)
             {
                 AddESportsStatus(table3rdDCS, enableItems);
-                AddGoldDeluxeStatus(nonDCSProductStatusRow, enableItems);
             }
 
             return enableItems;
@@ -119,24 +118,6 @@
             }
 
             enableItems.Add(virtualSportsStatus);
-        }
-
-        private static void AddGoldDeluxeStatus(DataRow nonDCSProductStatusRow, ICollection<ObjectInfo> enableItems)
-        {
-            if (nonDCSProductStatusRow.HideGoldDeluxe() || !ProductSettings.IsShowProduct(ProductConstants.GoldDeluxe))
-            {
-                return;
-            }
-
-            var goldDeluxeStatus =
-                new ObjectInfo("EnableGoldDeluxe", nonDCSProductStatusRow.EnableGoldDeluxe(), "Gold Deluxe");
-
-            if (nonDCSProductStatusRow.DisableGoldDeluxeUpline())
-            {
-                goldDeluxeStatus = DisableStatus(goldDeluxeStatus);
-            }
-
-            enableItems.Add(goldDeluxeStatus);
         }
 
         private void AddESportsStatus(DataTable table3rdDCS, List<ObjectInfo> enableItems)
@@ -363,7 +344,6 @@
             AddCasinoEditLink(table3rdDCS, details);
             AddVirtualSportsEditLink(table3rdDCS, details);
             AddKenoEditLink(details);
-            AddGoldDeluxeEditLink(nonDCSProductStatusRow, details);
             return details;
         }
 
@@ -382,14 +362,6 @@
             if (ProductSettings.IsShowKeno)
             {
                 details.Add(new ObjectInfo("Keno", "RNG Keno"));
-            }
-        }
-
-        private static void AddGoldDeluxeEditLink(DataRow nonDCSProductStatusRow, ICollection<ObjectInfo> details)
-        {
-            if (!nonDCSProductStatusRow.HideGoldDeluxeUpline())
-            {
-                details.Add(new ObjectInfo("GoldDeluxe", "Gold Deluxe"));
             }
         }
 

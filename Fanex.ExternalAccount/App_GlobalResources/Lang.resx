@@ -183,9 +183,6 @@
   <data name="agentposition" xml:space="preserve">
     <value>Agent Position</value>
   </data>
-  <data name="agentRealTimeWinloss" xml:space="preserve">
-    <value>Agent Real Time Casino Winloss</value>
-  </data>
   <data name="agenttotal" xml:space="preserve">
     <value>Agent Total</value>
   </data>
@@ -446,21 +443,6 @@
   <data name="canoeing" xml:space="preserve">
     <value>Canoeing</value>
   </data>
-  <data name="casino" xml:space="preserve">
-    <value>Casino</value>
-  </data>
-  <data name="casinodownlines" xml:space="preserve">
-    <value>Previous enabled downlines</value>
-  </data>
-  <data name="casinodownlinesdisabled" xml:space="preserve">
-    <value>Casino downlines will be disabled as well</value>
-  </data>
-  <data name="casinoGame" xml:space="preserve">
-    <value>Casino Games</value>
-  </data>
-  <data name="casinoPositionTaking" xml:space="preserve">
-    <value>Casino Position Taking (%)</value>
-  </data>
   <data name="choice" xml:space="preserve">
     <value>Choice</value>
   </data>
@@ -712,9 +694,6 @@
   <data name="editcustinfo" xml:space="preserve">
     <value>Edit Customer Information</value>
   </data>
-  <data name="editmultcs" xml:space="preserve">
-    <value>Edit Multiple Casino PT</value>
-  </data>
   <data name="editmultsportbook" xml:space="preserve">
     <value>Edit Multiple Sportsbook's PT</value>
   </data>
@@ -771,9 +750,6 @@
   </data>
   <data name="eway" xml:space="preserve">
     <value>Win Place</value>
-  </data>
-  <data name="exitCSConfirmMsg" xml:space="preserve">
-    <value>Are you sure you want to exit without saving your casino setting?</value>
   </data>
   <data name="exporttoexcel" xml:space="preserve">
     <value>Export to Excel</value>
@@ -999,9 +975,6 @@
   </data>
   <data name="indexname" xml:space="preserve">
     <value>Index Name</value>
-  </data>
-  <data name="insertCS" xml:space="preserve">
-    <value>Insert Casino Setting</value>
   </data>
   <data name="Internal" xml:space="preserve">
     <value>Internal</value>
@@ -1236,12 +1209,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="lblalerMaxbetCompare" xml:space="preserve">
     <value>Max Bet must be less than or equal to</value>
   </data>
-  <data name="lblAlertDisableCSMember" xml:space="preserve">
-    <value>Are you sure you want to disable Casino on this customer?</value>
-  </data>
-  <data name="lblAlertEnableCS" xml:space="preserve">
-    <value>Are you sure you want to enable Casino on this customer?</value>
-  </data>
   <data name="lblalertMaxBetNegativeHR" xml:space="preserve">
     <value>Max Bet must be greater than zero.</value>
   </data>
@@ -1322,12 +1289,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="lblCashBalance" xml:space="preserve">
     <value>Cash Balance</value>
-  </data>
-  <data name="lblCasinoHandHistory" xml:space="preserve">
-    <value>Casino Hand History</value>
-  </data>
-  <data name="lblCasinoWinLoss" xml:space="preserve">
-    <value>Casino Win Loss</value>
   </data>
   <data name="lblChangePassword" xml:space="preserve">
     <value>Change Password</value>
@@ -1446,12 +1407,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="lblCS" xml:space="preserve">
     <value>CS</value>
   </data>
-  <data name="lblCSOutstanding" xml:space="preserve">
-    <value>Casino Outstanding</value>
-  </data>
-  <data name="lblCSTransfer" xml:space="preserve">
-    <value>Casino Transfer</value>
-  </data>
   <data name="lblCustomerInfomation" xml:space="preserve">
     <value>Customer Information</value>
   </data>
@@ -1469,9 +1424,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="lbleditbetsetting" xml:space="preserve">
     <value>Edit Bet Setting</value>
-  </data>
-  <data name="lbleditcasino" xml:space="preserve">
-    <value>Edit Casino</value>
   </data>
   <data name="lbleditcomm" xml:space="preserve">
     <value>Edit Commission</value>
@@ -1502,9 +1454,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="lblEI" xml:space="preserve">
     <value>E.I</value>
-  </data>
-  <data name="lblEnableCS" xml:space="preserve">
-    <value>Enable Casino</value>
   </data>
   <data name="lblEnableNumber" xml:space="preserve">
     <value>Enable Game</value>
@@ -1864,9 +1813,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="lblRace" xml:space="preserve">
     <value>Race </value>
   </data>
-  <data name="lblRealTimeCSWinloss" xml:space="preserve">
-    <value>Real Time Casino Win Loss</value>
-  </data>
   <data name="lblresetpassword" xml:space="preserve">
     <value>Reset Password</value>
   </data>
@@ -1947,12 +1893,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="lblTotalCash" xml:space="preserve">
     <value>Total Cash</value>
-  </data>
-  <data name="lblTotalCSOutstanding" xml:space="preserve">
-    <value>Total Casino Outstanding</value>
-  </data>
-  <data name="lblTotalCSTransfer" xml:space="preserve">
-    <value>Total Casino Transfer</value>
   </data>
   <data name="lblTotalMasterCredit" xml:space="preserve">
     <value>Total Master Credit</value>
@@ -2089,9 +2029,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="masterposition" xml:space="preserve">
     <value>Master Position</value>
   </data>
-  <data name="masterRealTimeWinloss" xml:space="preserve">
-    <value>Master Real Time Casino Winloss</value>
-  </data>
   <data name="mastertotal" xml:space="preserve">
     <value>Master Total</value>
   </data>
@@ -2151,9 +2088,6 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   </data>
   <data name="memberoutstanding" xml:space="preserve">
     <value>Member Outstanding</value>
-  </data>
-  <data name="memberRealTimeWinloss" xml:space="preserve">
-    <value>Member Real Time Casino Winloss</value>
   </data>
   <data name="membertotal" xml:space="preserve">
     <value>Member Total</value>
@@ -2713,17 +2647,8 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="statusclosed" xml:space="preserve">
     <value>Status-Closed</value>
   </data>
-  <data name="strConfirmDisableCS" xml:space="preserve">
-    <value>WARNING!!! \n\n Are you sure you want to disable Casino on this customer and all downlines?</value>
-  </data>
-  <data name="strConfirmDisableCSMult" xml:space="preserve">
-    <value>WARNING!!! \n\n Are you sure you want to disable Casino on these customers and all downlines?</value>
-  </data>
   <data name="strConfirmDisableNumber" xml:space="preserve">
     <value>WARNING!!! \n\n Are you sure you want to disable Number Game on this customer and all downlines?</value>
-  </data>
-  <data name="strConfirmEnableCS" xml:space="preserve">
-    <value>Do you want to enable Casino for this customer?</value>
   </data>
   <data name="strConfirmEnableNumber" xml:space="preserve">
     <value>Do you want to enable Number Game for this customer?</value>
@@ -2812,9 +2737,6 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   </data>
   <data name="sync" xml:space="preserve">
     <value>Synchronize</value>
-  </data>
-  <data name="synccasino" xml:space="preserve">
-    <value>Sync Casino</value>
   </data>
   <data name="tabletennis" xml:space="preserve">
     <value>Table Tennis</value>
@@ -2987,9 +2909,6 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   </data>
   <data name="UpdateAll" xml:space="preserve">
     <value>Update All</value>
-  </data>
-  <data name="updateCS" xml:space="preserve">
-    <value>Update Casino Setting</value>
   </data>
   <data name="UpdateMinMax" xml:space="preserve">
     <value>Update Min/Max Bet</value>
@@ -3306,9 +3225,6 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   </data>
   <data name="plsChooseMatch" xml:space="preserve">
     <value>Please choose a match!</value>
-  </data>
-  <data name="lblTotalCSTransferOutstanding" xml:space="preserve">
-    <value>Total Casino Transfer|Outstanding</value>
   </data>
   <data name="at" xml:space="preserve">
     <value>at</value>

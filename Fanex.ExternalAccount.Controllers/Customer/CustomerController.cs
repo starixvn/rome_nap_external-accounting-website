@@ -1,14 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Linq;
-    using System.Threading;
-    using System.Web;
-    using System.Web.Mvc;
-    using CasinoLibrary.Model.UserException;
     using Core.Authorization;
     using Core.Base;
     using Core.Context;
@@ -17,13 +8,16 @@
     using DataAccess.Criteria.Customer;
     using DataAccess.Criteria.Customer.CustomerStatus;
     using Fanex.Module.NG2.Entities;
-    using IBCUtils;
-    using Logging.Extensions.Web;
     using Newtonsoft.Json;
     using PTEngine.BusinessObjects;
     using Service;
     using Service.Impl.Customer;
-    using Service.Impl.Customer.Casino;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading;
+    using System.Web;
+    using System.Web.Mvc;
     using Utilities;
     using ViewModel;
     using ViewModel.Customer;
@@ -138,7 +132,6 @@
 #pragma warning restore S109 // Magic numbers should not be used
                 AutoInsertNG2Product(masterId, customer.UserName, RoleId.Master, parentId, SiteId.NAP,
                     customer.CurrencyId, Config.SettingStatus);
-                AutoInsertCasinoPost(masterId, parentId);
             }
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = masterId });
@@ -235,8 +228,6 @@
 #pragma warning restore S109 // Magic numbers should not be used
                 AutoInsertNG2Product(agentId, customer.UserName, RoleId.Agent, parentId, SiteId.NAP,
                     customer.CurrencyId, Config.SettingStatus);
-
-                AutoInsertCasinoPost(agentId, parentId);
             }
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = agentId });
@@ -339,8 +330,6 @@
 #pragma warning restore S109 // Magic numbers should not be used
                 AutoInsertNG2Product(memberId, customer.UserName, RoleId.Member, parentId, SiteId.NAP,
                     customer.CurrencyId, Config.SettingStatus);
-
-                AutoInsertCasinoPost(memberId, parentId);
             }
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = memberId });
@@ -502,25 +491,6 @@
 
             if (result.ErrorCode.Equals("0"))
             {
-                var casino = CasinoManager.Instance.GetCustInfoIBC(custId, 0);
-                if (casino.CasinoSync)
-                {
-                    var cust = new CasinoLibrary.SBAgent.Customer();
-                    try
-                    {
-                        cust.UpdateCustPwd(custId, Encryption.CfsEnCode(rawPassword), CurrentContext.Ip4Address,
-                            CurrentSession.UserId, CurrentSession.UserName, CurrentSession.FromSystem);
-                    }
-                    catch (ErrorException casinoEx)
-                    {
-                        ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        ExceptionHandler.Handle(ex);
-                    }
-                }
-
                 _customerService.KickoutCustomer(custId, roleId, CurrentContext.Ip4Address);
             }
 

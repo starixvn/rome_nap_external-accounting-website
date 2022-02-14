@@ -1,7 +1,5 @@
 namespace Fanex.CustomerSetting.Module.BetSetting.Base
 {
-    using Casino.Services.Impl;
-    using Casino.Services.Interface;
     using Core.Web.Controllers;
     using Fanex.CustomerSetting.Module.Core.Models;
     using Fanex.CustomerSetting.Module.Core.Services.Impl;
@@ -22,10 +20,6 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Base
         private readonly IKenoSettingService _kenoService = new KenoSettingService();
 
         public PTEngine.Services.IBettingLimitService SportsBookService => _sportsBookService ?? new PTEngine.Services.BettingLimitService();
-
-        public SuperServices superCasinoService => new SuperServicesImpl();
-
-        public CasinoServiceBase casinoServiceBaseImpl => new CasinoServiceBaseImpl();
 
         public IKenoSettingService KenoService => _kenoService ?? new KenoSettingService();
 

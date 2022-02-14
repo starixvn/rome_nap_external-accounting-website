@@ -1,89 +1,19 @@
 ﻿namespace Fanex.ExternalAccount.Core.Base
 {
-    using CasinoLibrary.Model.UserException;
-    using Logging.Extensions.Web;
     using Module.NG2.Entities;
     using Module.NG2.Services;
-    using Service.Impl.Customer.Casino;
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.Products;
     using System;
-    using System.Diagnostics;
-    using System.Web.Mvc;
     using Utilities;
     using ViewModel.Customer;
-    using Customer = CasinoLibrary.SBAgent.Customer;
-    using Result = CustomerSetting.Module.Core.Models.Result;
 
     public class CustomerBase : BaseController
     {
-        private const string CasinoNo = "01";
-        private const int ErrorCode_Error = 999;
         private readonly IReportService _report = new ReportService();
         protected readonly ProductStatusService productStatusService = new ProductStatusServiceImpl();
 
-        [NonAction]
-        protected Result AutoInsertCasinoPost(int custId, int uplineId)
-        {
-            try
-            {
-                var custInfo = CasinoManager.Instance.GetCustInfoIBC(custId, uplineId);
-
-                if (custInfo?.UplineCasinoSync == true && !custInfo.CasinoSync)
-                {
-                    var isSuccess = new Customer().AutoInsertAccount(
-                        CasinoNo,
-                        custInfo.IBCCustID,
-                        custInfo.UserName,
-                        custInfo.UserName2,
-                        string.Empty,
-                        string.Empty,
-                        custInfo.UserPwd,
-                        string.Empty,
-                        string.Empty,
-                        custInfo.Currency,
-                        string.Empty,                       
-                        custInfo.IsEnablePT,
-                        custInfo.SIBCCustID,
-                        custInfo.MIBCCustID,
-                        custInfo.AIBCCustID,
-                        custInfo.RoleId.ToString(),
-                        false,
-                        false,
-                        !custInfo.IsDisableAutoMPT,
-                        DateTime.Now,
-                        CurrentContext.Ip4Address,
-                        uplineId,
-                        CurrentSession.UserName,
-                        CurrentSession.FromSystem);
-
-                    if (isSuccess)
-                    {
-                        new CasinoManager().UpdateCSStatus(custId, true, custInfo.CasinoDisabled, CurrentSession.UserId,
-                            CurrentContext.Ip4Address, 0, "E");
-                    }
-                    else
-                    {
-                        new Customer().RemoveAccount(custInfo.UserName, CurrentContext.Ip4Address,
-                            CurrentSession.UserId, CurrentSession.UserName, CurrentSession.FromSystem);
-                    }
-                }
-
-                return new Result(0, string.Empty);
-            }
-            catch (ErrorException casinoEx)
-            {
-                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
-                return new Result(ErrorCode_Error, casinoEx.Message);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-
-            return new Result(ErrorCode_Error, string.Empty);
-        }
 
         protected Module.NG2.Entities.Result AutoInsertNG2Product(int custId, string username, RoleId roleId,
             int uplineId, SiteId siteId, int currencyId, byte settingStatus)

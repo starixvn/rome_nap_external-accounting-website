@@ -151,15 +151,6 @@
     "sourceMap": true
   },
   {
-    "outputFileName": "assets/bundles/winlossdetailibcbetlivecasino/index.js",
-    "inputFiles": [
-      "Scripts/monthPicker/monPickr-0.0.1.js",
-      "Scripts/Combobox/Combobox.js",
-      "Scripts/Reports/Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino.js"
-    ],
-    "sourceMap": true
-  },
-  {
     "outputFileName": "assets/bundles/dailywinloss/index.js",
     "inputFiles": [
       "Scripts/Reports/Fanex.ExtAcc.DailyWinLoss.js"
@@ -179,29 +170,6 @@
     "outputFileName": "assets/bundles/data-range/index.js",
     "inputFiles": [
       "Scripts/Customer/Fanex.ExtAcc.DataRange.js"
-    ],
-    "sourceMap": true
-  },
-  {
-    "outputFileName": "assets/bundles/casino/index.js",
-    "inputFiles": [
-      "Areas/CustomerSetting/Scripts/jquery.js",
-      "Areas/CustomerSetting/Scripts/jquery.blockUI.1.33.js",
-      "Areas/CustomerSetting/Scripts/angular.min.js",
-      "Areas/CustomerSetting/Scripts/Validators.js",
-      "Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js",
-      "Areas/CustomerSetting/Scripts/ptarea.js",
-      "Areas/CustomerSetting/Views/Casino/Scripts/CustomerController.js",
-      "Areas/CustomerSetting/Views/Casino/Scripts/CasinoController.js"
-    ],
-    "sourceMap": true
-  },
-  {
-    "outputFileName": "assets/bundles/casino/index.css",
-    "inputFiles": [
-      "Areas/CustomerSetting/Styles/Validators.css",
-      "Areas/CustomerSetting/Styles/Common.css",
-      "Areas/CustomerSetting/Views/Casino/Styles/Casino.css"
     ],
     "sourceMap": true
   },

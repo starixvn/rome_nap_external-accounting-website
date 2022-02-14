@@ -83,15 +83,6 @@
       <HintPath>..\packages\CaptchaMVC.2.4.1\lib\CaptchaMvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CasinoLibrary, Version=2.1.0.18354, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.1.0.18354\lib\net40\CasinoLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.1.0.18354\lib\net40\CasinoSetting.dll</HintPath>
-    </Reference>
-    <Reference Include="CasinoUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.1.0.18354\lib\net40\CasinoUtility.dll</HintPath>
-    </Reference>
     <Reference Include="Common.Logging, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
@@ -130,9 +121,6 @@
     <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=2.0.3.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.2.0.3.2\lib\net461\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Casino, Version=2.0.4.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Casino.2.0.5.2\lib\net40\Fanex.CustomerSetting.Module.Casino.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.5\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
@@ -156,9 +144,6 @@
     <Reference Include="Fanex.Data.DbSettingProviderExtension, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Data.DbSettingProviderExtension.1.0.0.1\lib\net40\Fanex.Data.DbSettingProviderExtension.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.GoldDeluxe.CoreSetting, Version=1.0.3.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.GoldDeluxe.Setting.1.0.3.7\lib\net461\Fanex.GoldDeluxe.CoreSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.HttpModule.NG2.UM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.HttpModule.NG2.UM.1.0.0.1\lib\net40\Fanex.HttpModule.NG2.UM.dll</HintPath>
@@ -216,9 +201,6 @@
     <Reference Include="FluentValidation, Version=3.2.0.0, Culture=neutral, PublicKeyToken=a82054b837897c66, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.3.2.0.0\lib\Net40\FluentValidation.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.1.0.18354\lib\net40\HandHistoryLibrary.dll</HintPath>
     </Reference>
     <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IBCCrypt.1.1.0.0\lib\IBCCrypt.dll</HintPath>
@@ -569,10 +551,6 @@
     <Content Include="assets\bundles\SuperWinLossDetailBySubGroup\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
-    <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.js" />
-    <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.min.js">
-      <DependentUpon>index.js</DependentUpon>
-    </Content>
     <Content Include="Areas\NG2\ONEbook.NG2.API.mnl.config">
       <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
     </Content>
@@ -859,63 +837,6 @@
     <Content Include="Areas\CustomerSetting\Views\SylouCaptcha\Styles\Images\stop.png" />
     <Content Include="Areas\CustomerSetting\Views\SylouCaptcha\Styles\Index.css" />
     <Content Include="Areas\CustomerSetting\Views\SylouCaptcha\SylouCaptchaPartialView.cshtml" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\bootstrap.css" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\fanex-gold-deluxe-setting.css" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\fanex-gold-deluxe-setting-override.css" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\agency-button-left.gif" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\agency-button.gif" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\agency-title-header.jpg" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\btn-update-setting.jpg" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\center-header.png" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\cross.png" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\error-icon.gif" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\ext-acc-btn-hover.png" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\ext-acc-btn.png" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\header-popup-background.jpg" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\infoMsg.gif" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\left-header.png" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\loader3.gif" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\popup-background.jpg" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\right-header.png" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\save.png" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\Success.gif" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\tick.png" />
-    <Content Include="Areas\GoldDeluxeSetting\Content\Images\warning.png" />
-    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\fanex-gold-deluxe-setting.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\gold-deluxe-lang.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\language\GoldDeluxeLang.en-US.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\language\GoldDeluxeLang.ja-JP.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\language\GoldDeluxeLang.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\language\GoldDeluxeLang.ko-KR.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\language\GoldDeluxeLang.th-TH.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\language\GoldDeluxeLang.vi-VN.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\language\GoldDeluxeLang.zh-CN.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Scripts\core\language\GoldDeluxeLang.zh-TW.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Scripts\libs\angular-sanitize.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Scripts\libs\angular.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Scripts\libs\bootstrap.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Scripts\libs\jquery-1.11.1.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Scripts\libs\jquery.blockUI.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Scripts\libs\numeral.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\controllers\cust-game-setting-controller.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\controllers\cust-info-controller.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\controllers\cust-setting-controller.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\controllers\cust-win-limit-controller.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\controllers\pt-and-com-setting-controller.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\directives\edit-game-setting-directive.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\directives\pt-and-com-setting-directive.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\services\cust-game-setting-service.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\services\cust-setting-service.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\services\cust-win-limit-service.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\services\pt-and-com-setting-service.js" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\GameSetting\edit-game-setting.htm" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\PtAndCom\agent-edit-member.htm" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-agent.htm" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-master.htm" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\PtAndCom\edit-super.htm" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\PtAndCom\master-edit-member.htm" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Scripts\templates\PtAndCom\super-edit-member.htm" />
     <Content Include="Areas\NG2\Styles\Images\icon_warning.gif" />
     <Content Include="Areas\NG2\Styles\um.css" />
     <Content Include="Areas\NG2\UM.aspx" />
@@ -1847,7 +1768,6 @@
     <Content Include="Scripts\Manage\Fanex.ExtAcc.Permission.js" />
     <Content Include="Scripts\MultiSelect\select2.css" />
     <Content Include="Scripts\MultiSelect\select2.js" />
-    <Content Include="Scripts\Reports\Fanex.ExtAcc.WinLossDetailIBCBetLiveCasino.js" />
     <Content Include="Scripts\SearchAndCopy\Fanex.ExtAcc.SearchAndCopy.js" />
     <Content Include="Scripts\SecurityCode\Fanex.ExtAcc.SecurityCode.js" />
     <Content Include="Scripts\_Libs\jQuery\classList.js" />
@@ -2651,20 +2571,6 @@
     </None>
     <Content Include="Areas\CustomerSetting\Views\LeftPanel\OTP\Index.cshtml" />
     <Content Include="Views\SearchAndCopy\Super.cshtml" />
-    <None Include="Areas\GoldDeluxeSetting\Content\bootstrap.css.map" />
-    <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.eot" />
-    <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.ttf" />
-    <None Include="Areas\GoldDeluxeSetting\Content\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\Common\NoInformation.cshtml" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\Common\UnAuthorized.cshtml" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\EditSettingMultiple.cshtml" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\EditSettingSingle.cshtml" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Setting\GameSetting.cshtml" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Setting\PTAndCom.cshtml" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\_EditSetting.cshtml" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\Web.config" />
-    <Content Include="Areas\GoldDeluxeSetting\Views\EditSetting\Setting\MemberWinLimit.cshtml" />
     <Content Include="Areas\NG2\NumberGame2Section.config" />
     <Content Include="Areas\NG2\ONEbook.NG2.API.config" />
     <Content Include="Content\fonts\AlphaAdmin\fonts\AlphaAdmin.eot" />
@@ -2861,9 +2767,6 @@
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\searchandcopy\index.scss" />
-    <Content Include="assets\bundles\winlossdetailibcbetlivecasino\index.min.js.map">
-      <DependentUpon>index.min.js</DependentUpon>
-    </Content>
     <Content Include="assets\bundles\associationaccount\index.min.js.map" />
     <Content Include="assets\bundles\SuperWinLossDetailByPT\index.min.js.map" />
     <Content Include="assets\bundles\problemaccount\index.min.js.map">
@@ -3033,7 +2936,6 @@
     <Content Include="Views\Domain\SSO.cshtml" />
     <Content Include="Views\CustomerList\Index.cshtml" />
     <Content Include="Views\SearchAndCopy\Email.cshtml" />
-    <Content Include="Views\WinLossDetailIBCBetLiveCasino\Index.cshtml" />
     <Content Include="Views\SecurityCode\Index.cshtml" />
     <Content Include="Scripts\SecurityCode\Fanex.ExtAcc.SecurityCode.css" />
     <Content Include="Views\Home\TestSentryLog.cshtml" />

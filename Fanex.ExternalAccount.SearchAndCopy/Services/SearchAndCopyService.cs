@@ -27,23 +27,20 @@
         private readonly ISearchAndCopyRepository searchAndCopyRepository;
         private readonly ICustomerRepository customerRepository;
         private readonly ING2Service ng2Service;
-        private readonly ICasinoService casinoService;
 
         public SearchAndCopyService()
-            : this(null, null, null, null)
+            : this(null, null, null)
         {
         }
 
         public SearchAndCopyService(
             ISearchAndCopyRepository searchAndCopyRepository,
             ICustomerRepository customerRepository,
-            ING2Service ng2Service,
-            ICasinoService casinoService)
+            ING2Service ng2Service)
         {
             this.searchAndCopyRepository = searchAndCopyRepository ?? new SearchAndCopyRepository();
             this.customerRepository = customerRepository ?? new CustomerRepository();
             this.ng2Service = ng2Service ?? new NG2Service();
-            this.casinoService = casinoService ?? new CasinoService();
         }
 
         public Result SearchCustomer(SearchCustomerContext context)
@@ -159,7 +156,7 @@
             {
                 context.NG2Status = ng2Service.GetStatus(context.ExistingCustId);
                 context.ExistingCustomerInfo = customerRepository.GetCustomerInfoByUserId(context.ExistingCustId, false);
-                if (!context.NG2Status.IsSync && !context.ExistingCustomerInfo.SyncCasino)
+                if (!context.NG2Status.IsSync)
                 {
                     return new Result(0, string.Empty);
                 }
@@ -168,11 +165,6 @@
                 if (context.NG2Status.IsSync)
                 {
                     ng2Service.SyncCustomer(context);
-                }
-
-                if (context.ExistingCustomerInfo.SyncCasino)
-                {
-                    casinoService.SyncCustomer(context);
                 }
             }
             catch (Exception ex)

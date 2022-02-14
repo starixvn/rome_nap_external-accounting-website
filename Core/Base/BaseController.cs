@@ -1,29 +1,21 @@
 ﻿namespace Fanex.ExternalAccount.Core.Base
 {
-    using System;
-    using System.Configuration;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Web;
-    using System.Web.Mvc;
     using Authorization;
-    using CasinoLibrary.Model.UserException;
     using Context;
     using CustomerSetting.Module.Core.Criteria;
     using CustomerSetting.Module.Core.Models;
     using CustomerSetting.Module.Core.Services.Impl;
     using CustomerSetting.Module.Core.Web;
-    using CustomerSetting.Security.Authenticate;
-    using Logging.Extensions.Web;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using PTEngine.BusinessObjects;
-    using Service.Impl.Customer.Casino;
-    using Shared;
+    using System;
+    using System.Configuration;
+    using System.IO;
+    using System.Web;
+    using System.Web.Mvc;
     using Utilities;
     using CurrentContext = Context.CurrentContext;
     using CurrentSession = Context.CurrentSession;
-    using Result = PTEngine.BusinessObjects.Result;
 
     public class BaseController : Controller
     {
