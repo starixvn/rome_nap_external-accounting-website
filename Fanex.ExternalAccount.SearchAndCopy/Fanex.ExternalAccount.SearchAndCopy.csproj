@@ -159,13 +159,11 @@
     <Compile Include="Criteria\SuperPrefixCriteria.cs" />
     <Compile Include="Criteria\UpdateCRMHeadlineInfoCriteria.cs" />
     <Compile Include="Criteria\UpdateSyncBaseForIBCCriteria.cs" />
-    <Compile Include="Criteria\UpdateSyncCasinoForIBCCriteria.cs" />
     <Compile Include="Models\CloneSettingContext.cs" />
     <Compile Include="Models\CustomerInfo.cs" />
     <Compile Include="Models\NG2Status.cs" />
     <Compile Include="Models\SuperPrefix.cs" />
     <Compile Include="Models\SearchCustomerContext.cs" />
-    <Compile Include="Repositories\CasinoRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
     <Compile Include="Repositories\NG2Repository.cs" />
     <Compile Include="Requests\CloneSettingRequest.cs" />

@@ -14,8 +14,6 @@
 
         public int RoleId { get; set; }
 
-        public bool SyncCasino { get; set; }        
-
         public bool AllowDoubleComm { get; set; }
 
         public bool DisableTransfer { get; set; }

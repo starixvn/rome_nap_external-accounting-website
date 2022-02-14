@@ -32,10 +32,6 @@
     HideSportsbook2: false,
     UplineProductSettings: [],
 
-    superSyncCasino: false,
-    masterSyncCasino: false,
-    agentSyncCasino: false,
-
     isSuperEditMember: false,
     isMasterEditMember: false,
     isSuperEditAgent: false,

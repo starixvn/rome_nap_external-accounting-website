@@ -186,9 +186,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 Fanex.ExtAcc.Customer.AllowDoubleComm = result.CustomerList[0].UplineDoubleCommLosing;
                 $.post(resolveClientUrl('CustomerList/GetCustomerStatus'), { custId: firstCustId, groupName: $("#selectedGroupName").html() }, function (custStatusResult) {
                     Fanex.ExtAcc.Customer.HideKeno = custStatusResult.HideKeno;
-                    Fanex.ExtAcc.Customer.HideCasino = custStatusResult.HideCasino;
                     Fanex.ExtAcc.Customer.HideVirtualSports = custStatusResult.HideVirtualSports;
-                    Fanex.ExtAcc.Customer.UplineSyncCasino = custStatusResult.UplineSyncedCasino;
                     Fanex.ExtAcc.Customer.UplineProductSettings = Fanex.ExtAcc.Customer.GetProductSettings(custStatusResult, !isSuperList);
                 });
             }
@@ -227,7 +225,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 return '<div id="editMult" class="editMult"></div>';
             },
             CustomCellRender: function (cell) {
-                return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.CustId + '" data-username="' + cell.Value.UserName + '" data-sync-casino=' + cell.Value.SyncCasino + ' class="menuInactive"></div>';
+                return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.CustId + '" data-username="' + cell.Value.UserName + '" class="menuInactive"></div>';
             }
         });
         columns.push({
