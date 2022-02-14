@@ -23,7 +23,6 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab4').css('display', Fanex.ExtAcc.Customer.HideCasino ? 'none' : 'block');
         $('#tab8').css('display', Fanex.ExtAcc.Customer.HideVirtualSports ? 'none' : 'block');
         $('#tab9').css('display', Fanex.ExtAcc.Customer.HideKeno ? 'none' : 'block');
-        $('#tab10').css('display', Fanex.ExtAcc.Customer.HideGoldDeluxe ? 'none' : 'block');
 
         $('#tab1').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
@@ -43,11 +42,6 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab9').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.GetKenoSetting();
-        });
-
-        $('#tab10').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.GetGoldDeluxeSetting();
         });
 
         $('.dynamic-setting-tab').bind('click', function () {
@@ -100,32 +94,7 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tabs-9').height($('#leftFrame').height() - 10);
         $('#tabs-9').css('display', 'block');
         Fanex.ExtAcc.Customer.Settings.LoadProductSetting('#kenoFrame', url);
-    },   
-
-
-    GetGoldDeluxeSetting: function () {
-        Fanex.ExtAcc.Customer.IsMultiple = false;
-        Fanex.ExtAcc.Customer.UserId = this.UserId;
-        var action = '';
-        var url = '';
-
-        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-            url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=4&formType=1&level=3" + "&uplineId=" + Fanex.ExtAcc.Customer.superId;
-        }
-        else if (this.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-            url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=3&formType=1&level=2" + "&uplineId=" + Fanex.ExtAcc.Customer.masterId;
-        }
-        else {
-            url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=2&formType=1&level=1" + "&uplineId=" + Fanex.ExtAcc.Customer.agentId;
-        }
-
-
-        var url = resolveClientUrl(url + "&actorId=" + parent.userId + "&custId=" + this.UserId + "&groupName=" + $('#selectedGroupName').html());
-        $('#tabs-10').height($('#leftFrame').height() - 10);
-        $('#tabs-10').css('display', 'block');
-        Fanex.ExtAcc.Customer.Settings.LoadProductSetting('#goldDeluxeFrame', url);
     },
-
     RenderDCS: function (productId, frameId, tabId) {
         Fanex.ExtAcc.Customer.IsMultiple = false;
         Fanex.ExtAcc.Customer.UserId = this.UserId;

@@ -347,7 +347,6 @@
             ViewBag.HideCasino = custStatus.HideCasino;
             ViewBag.HideVirtualSports = custStatus.HideVirtualSport;
             ViewBag.HideKeno = custStatus.HideKeno;
-            ViewBag.HideGoldDeluxe = custStatus.HideGoldDeluxe;
             var visibledProducts = GetVisibledProducts(id, custId);
 
             return PartialViewBase(visibledProducts);

@@ -66,20 +66,6 @@
                         }
                     }
 
-                    if (!result.UplineHideGoldDeluxe) {
-                        items.goldDeluxe = {
-                            name: "Gold Deluxe",
-                            className: "iconViewEdit",
-                            callback: function () {
-                                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                                var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 400) : 400;
-                                url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=0&uplineId=0&formType=2&level=4" + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + parent.$('#selectedGroupName').html();
-                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Gold Deluxe Setting <font color="#6dcff6">' + title + '</font>', 900, height, false, false, 1);
-
-                            }
-                        }
-                    }
-
                     for (var i = 0, max = result.DCSProductsSetting.length; i < max; i++) {
                         var productSetting = result.DCSProductsSetting[i];
                         if (!productSetting.IsHidden && productSetting.IsSyncedUpline) {

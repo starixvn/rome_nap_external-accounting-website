@@ -6,13 +6,11 @@
     var HideCasino = ViewBag.HideCasino;
     var HideVirtualSports = ViewBag.HideVirtualSports;
     var HideKeno = ViewBag.HideKeno;
-    var HideGoldDeluxe = ViewBag.HideGoldDeluxe;
     var status = new
     {
         hideCasino = HideCasino,
         hideVirtualSports = HideVirtualSports,
         hideKeno = HideKeno,
-        hideGoldDeluxe = HideGoldDeluxe
     };
     var statusJSON = JsonConvert.SerializeObject(status, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
 }
@@ -32,7 +30,6 @@
 
         <li id="tab8"><a class="height-auto" href="#tabs-8">Virtual Sports</a></li>
         <li id="tab9"><a class="height-auto" href="#tabs-9">RNG Keno</a></li>
-        <li id="tab10"><a class="height-auto" href="#tabs-10">Gold Deluxe</a></li>
 
         @foreach (var product in Model)
         {
@@ -62,12 +59,6 @@
     {
         <div id="tabs-9" class="divTab" style="padding: 0px">
             <iframe id="kenoFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-        </div>
-    }
-    @if (!HideGoldDeluxe)
-    {
-        <div id="tabs-10" class="divTab" style="padding: 0px">
-            <iframe id="goldDeluxeFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
         </div>
     }
 
@@ -104,7 +95,6 @@
     Fanex.ExtAcc.Customer.HideCasino = custStatus.hideCasino;
     Fanex.ExtAcc.Customer.HideVirtualSports = custStatus.hideVirtualSports;
     Fanex.ExtAcc.Customer.HideKeno = custStatus.hideKeno;
-    Fanex.ExtAcc.Customer.HideGoldDeluxe = custStatus.hideGoldDeluxe;
     Fanex.ExtAcc.Customer.isSuperEditAgent = Fanex.ExtAcc.Customer.isSuperEditMember = Fanex.ExtAcc.Customer.isMasterEditMember = false;
     Fanex.ExtAcc.Customer.CurrentLevel = parseInt(Fanex.ExtAcc.Customer.CurrentLevel);
 

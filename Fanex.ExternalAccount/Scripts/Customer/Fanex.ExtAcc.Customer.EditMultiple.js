@@ -8,7 +8,6 @@
     this.IsMultiple = true;
     var ret = this.IdsAndNames();
     var info = this.CustomerInfo();
-    // this.HideGoldDeluxe = showGoldDeluxeSetting == 0;
     var productIds = [];
 
     if (this.CurrentLevel == this.Super) {
@@ -94,17 +93,6 @@
             productIds.push(8);
         }
 
-        if (!this.HideGoldDeluxe) {
-            menuItems.goldDeluxe = {
-                name: "Edit Multiple Gold Deluxe",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe(Fanex.ExtAcc.Customer.superId, 4, 3);
-                }
-            };
-            productIds.push(12);
-        }
-
         if (!this.HideSportsbook2) {
             addSuperEditMultipleMastersMenuItem(16, 'Sportsbook 2');
         }
@@ -176,17 +164,6 @@
                 }
             };
             productIds.push(8);
-        }
-
-        if (!this.HideGoldDeluxe) {
-            menuItems.goldDeluxe = {
-                name: "Edit Multiple Gold Deluxe",
-                className: "iconEnableEdit",
-                callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe(Fanex.ExtAcc.Customer.masterId, 3, 2);
-                }
-            };
-            productIds.push(12);
         }
 
         if (!this.HideSportsbook2) {
@@ -344,40 +321,6 @@
             productIds.push(8);
         }
 
-        if (!this.HideGoldDeluxe) {
-            menuItems.goldDeluxe = {
-                name: "Gold Deluxe",
-                className: "iconEnableEdit",
-                items: {
-                    agentGD: {
-                        name: "Edit Multiple Gold Deluxe",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe(Fanex.ExtAcc.Customer.agentId, 2, 1);
-                        }
-                    },
-                    superGD: {
-                        name: "Super Edit Multiple Gold Deluxe",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = true;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe(Fanex.ExtAcc.Customer.superId, 4, 1);
-                        }
-                    },
-                    masterGD: {
-                        name: "Master Edit Multiple Gold Deluxe",
-                        callback: function () {
-                            Fanex.ExtAcc.Customer.isSuperEditMember = false;
-                            Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                            Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe(Fanex.ExtAcc.Customer.masterId, 3, 1);
-                        }
-                    }
-                }
-            };
-            productIds.push(12);
-        }
-
         if (!this.HideSportsbook2) {
             addUplineEditMemberMenuItems(16, 'Sportsbook 2');
         }
@@ -485,78 +428,6 @@ Fanex.ExtAcc.Customer.ShowEditMultiplePT = function () {
             894,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);
-};
-
-Fanex.ExtAcc.Customer.ShowEditMultipleGoldDeluxe = function (uplineId, uplineRoleId, targetRoleId) {
-    var ret = this.IdsAndNames();
-
-    var actionName = '';
-    var levelText = '';
-
-    if (this.CurrentLevel == this.Master) {
-        actionName = 'EditMaster';
-    } else if (this.CurrentLevel == this.Agent) {
-        actionName = 'EditAgent';
-    } else {
-        if (this.isSuperEditMember) {
-            actionName = 'SuperEditMember';
-            levelText = 'Super ';
-        } else if (this.isMasterEditMember) {
-            actionName = 'MasterEditMember';
-            levelText = 'Master ';
-        } else {
-            actionName = 'EditMember';
-        }
-    }
-
-    top.shouldCalculatePopupHeight = true;
-    if (this.IsMultiple) {
-        var goldDeluxeUsernames = '';
-        var goldDeluxeCustIds = '';
-        var userNamesArr = this.Names();
-        var custIdsArr = this.Ids()
-
-        var customerlength = userNamesArr.length;
-        for (var i = 0; i < customerlength; i++) {
-            var linkChar = i == customerlength - 1 ? "" : ", ";
-            goldDeluxeUsernames += userNamesArr[i] + linkChar;
-            goldDeluxeCustIds += custIdsArr[i] + linkChar;
-        }
-
-        document.getElementById('uplineId').value = uplineId;
-        document.getElementById('customerIds').value = goldDeluxeCustIds;
-        document.getElementById('usernames').value = goldDeluxeUsernames;
-        document.getElementById('uplineLevel').value = uplineRoleId;
-        document.getElementById('customerLevel').value = targetRoleId;
-        document.getElementById('actorId').value = parent.userId;
-        document.getElementById('subAccId').value = 0;
-        document.getElementById('language').value = 'E';
-        document.getElementById('groupName').value = Fanex.ExtAcc.Customer.GroupName().groupName;
-
-        Fanex.ExtAcc.Form.ShowFrame(
-            resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSettingMultiple'), levelText + 'Edit Multiple Gold Deluxe Setting',
-            900,
-            Fanex.ExtAcc.Customer.GetPopupHeight(270, 400),
-            false, false, 1);
-        $("#targetForm").attr("action", resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSettingMultiple')).submit();
-    }
-    else {
-        var url = '';
-        switch (uplineRoleId) {
-            case 4: url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=" + uplineRoleId + "&formType=1&level=" + targetRoleId + "&uplineId=" + Fanex.ExtAcc.Customer.superId;
-                break;
-            case 3: url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=" + uplineRoleId + "&formType=1&level=" + targetRoleId + "&uplineId=" + Fanex.ExtAcc.Customer.masterId;
-                break;
-            default: url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=" + uplineRoleId + "&formType=1&level=" + targetRoleId + "&uplineId=" + Fanex.ExtAcc.Customer.agentId;
-                break;
-        }
-
-        Fanex.ExtAcc.Form.ShowFrame(
-            resolveClientUrl(url + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Gold Deluxe Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
-            900,
-            Fanex.ExtAcc.Customer.GetPopupHeight(270, 400),
-            false, false, 1);
-    }
 };
 
 Fanex.ExtAcc.Customer.ShowEditProductForSingleCust = function (custid, uplineRoleId, targetRoleId, productId, productName) {

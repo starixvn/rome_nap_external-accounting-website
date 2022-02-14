@@ -25,8 +25,6 @@
                 [ProductConstants.Cashout] = new Product(12, ProductConstants.Cashout, "Cashout", true),
             };
 
-        public static bool IsShowGoldDeluxe => IsShowProduct(ProductConstants.GoldDeluxe);
-
         public static bool IsShowKeno => IsShowProduct(ProductConstants.Keno);
 
         public static bool ShowKenoSetting => Configs["ShowKenoSetting"] == "true";

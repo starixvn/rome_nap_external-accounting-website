@@ -568,6 +568,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
     </Content>
+    <Content Include="assets\styles\base\_alpha-admin-fonts.min.css">
+      <DependentUpon>_alpha-admin-fonts.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\images\cross.png" />
     <Content Include="assets\styles\images\medium-network.svg" />
     <Content Include="assets\styles\images\network\medium-network.svg" />

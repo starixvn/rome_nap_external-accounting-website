@@ -38,15 +38,9 @@
 
         public bool DisableKeno { get; set; }
 
-        public bool DisableGoldDeluxe { get; set; }
-
-        public bool HideGoldDeluxe { get; set; }
-
         public bool DisableSportsbook2 { get; set; }
 
         public bool HideSportsbook2 { get; set; }
-
-        public bool SyncGoldDeluxeDownlines { get; set; }
 
         public Dictionary<int, ProductStatus> ProductStatusDic { get; set; }
     }

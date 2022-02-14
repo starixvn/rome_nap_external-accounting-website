@@ -807,17 +807,6 @@
         $scope.EnableThirdpartyProduct(24, "Fishing World");
     };
 
-    $scope.EnableGoldDeluxe = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(12, "Gold Deluxe");
-    };
-
-
     $scope.EnableLiveCasino = function (enable, id, disabled) {
         if (disabled) {
             return;
@@ -1044,14 +1033,6 @@
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custId=' + $scope.model.personalInfo.custId.value + "&userId=" + parent.userId));
     };
 
-    $scope.SuperGoldDeluxe = function () {
-        var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Customer.superId = superId;
-        $scope.ResetGlobalValueAtSuperOnMember();
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=4&formType=1&uplineId=' + superId + '&level=1&custId=' + $scope.model.personalInfo.custId.value + "&actorId=" + parent.userId + "&groupName=" + parent.$('#selectedGroupName').html()));
-    };
-
     $scope.MasterPT = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
         var masterId = $scope.model.personalInfo.downlines[1].key;
@@ -1078,14 +1059,6 @@
         $scope.ResetGlobalValueAtMasterOnMember();
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value + "&userId=" + parent.userId));
-    };
-
-    $scope.MasterGoldDeluxe = function () {
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Customer.masterId = masterId;
-        $scope.ResetGlobalValueAtMasterOnMember();
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=3&formType=1&uplineId=' + masterId + '&level=1&custId=' + $scope.model.personalInfo.custId.value + "&actorId=" + parent.userId + "&groupName=" + parent.$('#selectedGroupName').html()));
     };
 
     $scope.SuperSBPT = function () {

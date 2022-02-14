@@ -29,7 +29,6 @@
     HideCasino: false,
     HideVirtualSports: false,
     HideKeno: false,
-    HideGoldDeluxe: false,
     HideSportsbook2: false,
     UplineProductSettings: [],
 
@@ -653,100 +652,6 @@
                 }
             }
         }
-    },
-
-    Render: function (options) {
-        try {
-            if (this.DataSource.length == 0) {
-                $('#msgNoinfo').css('display', 'block');
-                $('#jqgrid').css('display', 'none');
-                $('#exporttoexcel').css('display', 'none');
-            } else {
-                $('#msgNoinfo').css('display', 'none');
-                $('#jqgrid').css('display', 'block');
-
-                $('#exporttoexcel').show();
-
-                setPagerOptionOnMobile(options);
-                // Init Grid jqgrid
-                $('#jqgrid').fanexGrid(options);
-
-                workaroundForGridOnPhone();
-            }
-
-            $('#editMult').attr('style', 'cursor: default !important');
-
-            $('#editMult').attr('onclick', '');
-            $('#editMult').contextMenu(false);
-
-            Fanex.ExtAcc.UnBlockUI();
-        } catch (e) {
-            if (typeof console != 'undefined') {
-                console.log(e);
-            }
-
-            Fanex.ExtAcc.UnBlockUI();
-        }
-    },
-
-    SearchList: function () {
-        if ($('#txtUserName').val() == '' && this.CurrentLevel == this.Super) {
-            Fanex.ExtAcc.Customer.GetSuperList();
-        } else {
-            this.GetSearchList();
-        }
-    },
-
-    GetSearchList: function () {
-        Fanex.ExtAcc.BlockUI();
-
-        var data = this.GetParams();
-
-        var url = resolveClientUrl('Customer/SearchListPost');
-
-        $.ajax({
-            url: url,
-            data: data,
-            dataType: 'json',
-            type: 'post'
-        })
-            .success(function (result) {
-                var rows = $.parseJSON(result.rows);
-
-                Fanex.ExtAcc.Customer.DataSource = rows;
-
-                if (result.roleId != 0 && rows.length > 0) {
-                    var custId = rows[0].custid;
-
-                    Fanex.ExtAcc.Customer.directSuperId = result.srecommend;
-                    Fanex.ExtAcc.Customer.directMasterId = result.mrecommend;
-                    Fanex.ExtAcc.Customer.directAgentId = result.recommend;
-                    Fanex.ExtAcc.Customer.custId = Fanex.ExtAcc.Customer.UserId = result.custId;
-                    Fanex.ExtAcc.Customer.AllowDoubleComm = result.allowDoubleComm;
-                    Fanex.ExtAcc.Customer.HideGoldDeluxe = rows[0].HideGoldDeluxe;
-                    Fanex.ExtAcc.Customer.HideKeno = rows[0].HideKeno;
-                    Fanex.ExtAcc.Customer.HideVirtualSports = rows[0].HideVirtualSports;
-
-                    if (result.roleId == 4) {
-                        Fanex.ExtAcc.Customer.GetSuperList(rows[0].custid, result);
-                    } else if (result.roleId == 3) {
-                        Fanex.ExtAcc.Customer.superSyncCasino = result.syncCasino;
-                        Fanex.ExtAcc.Customer.GetMasterList(result.srecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.superSyncCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe);
-                    } else if (result.roleId == 2) {
-                        Fanex.ExtAcc.Customer.masterSyncCasino = result.syncCasino;
-                        Fanex.ExtAcc.Customer.GetAgentList(result.mrecommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.masterSyncCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe);
-                    } else {
-                        Fanex.ExtAcc.Customer.agentSyncCasino = result.syncCasino;
-                        Fanex.ExtAcc.Customer.GetMemberList(result.recommend, Fanex.ExtAcc.Customer.AllowDoubleComm, custId, result, Fanex.ExtAcc.Customer.agentSyncCasino, Fanex.ExtAcc.Customer.HideKeno, Fanex.ExtAcc.Customer.HideVirtualSports, Fanex.ExtAcc.Customer.HideGoldDeluxe);
-                    }
-                } else {
-                    $('#msgNoinfo').css('display', 'block');
-                    $('#jqgrid').css('display', 'none');
-                    $('#exporttoexcel').css('display', 'none');
-
-                    Fanex.ExtAcc.UnBlockUI();
-                }
-            });
     },
 
     AppendInputToForm: function (id, name, value, targetForm) {

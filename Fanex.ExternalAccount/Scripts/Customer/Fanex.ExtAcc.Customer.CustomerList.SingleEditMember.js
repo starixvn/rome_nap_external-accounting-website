@@ -94,21 +94,6 @@
                         };
                     }
 
-                    if (!result.HideGoldDeluxe) {
-                        has3rdParty = true;
-
-                        items.goldDeluxe = {
-                            name: "Gold Deluxe",
-                            className: result.DisableGoldDeluxe == true ? "iconDisableEdit" : "iconEnableEdit",
-                            callback: function () {
-                                var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 400) : 400;
-                                Fanex.ExtAcc.Customer.UserId = custId;
-                                url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=2&formType=1&level=1" + "&uplineId=" + Fanex.ExtAcc.Customer.agentId + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + parent.$('#selectedGroupName').html();
-                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Gold Deluxe Setting <font color="#6dcff6">' + title + '</font>', 900, height, false, false, 1);
-                            }
-                        };
-                    }
-
                     for (var i = 0, max = result.DCSProductsSetting.length; i < max; i++) {
                         has3rdParty = true;
                         var productSetting = result.DCSProductsSetting[i];

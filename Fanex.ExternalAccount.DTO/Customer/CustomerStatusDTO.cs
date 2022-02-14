@@ -16,12 +16,6 @@ namespace Fanex.ExternalAccount.DTO.Customer
 
         public bool DisableKeno { get; set; }
 
-        public bool HideGoldDeluxe { get; set; }
-
-        public bool UplineHideGoldDeluxe { get; set; }
-
-        public bool DisableGoldDeluxe { get; set; }
-
         public bool DisableTransfer { get; set; }
 
         public bool HasSecurityCode { get; set; }
