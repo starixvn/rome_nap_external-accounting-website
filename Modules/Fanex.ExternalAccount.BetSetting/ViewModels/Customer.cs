@@ -4,6 +4,8 @@ namespace Fanex.CustomerSetting.Module.BetSetting.ViewModels
     {
         public int CustId { get; set; }
 
+        public bool HideCasino { get; set; }
+
         public string Username { get; set; }
 
         public string FirstName { get; set; }

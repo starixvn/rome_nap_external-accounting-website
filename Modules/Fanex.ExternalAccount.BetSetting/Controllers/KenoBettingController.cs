@@ -30,6 +30,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             }
 
             ViewBag.Username = customer.Username;
+            ViewBag.HideCasino = customer.HideCasino;
             ViewBag.DefaultMinBetValue = GetDefaultMinBetValue();
 
             var model = KenoService.GetSuperSetting(new Keno.KenoSetting.ViewModels.CustomerInformationViewModel

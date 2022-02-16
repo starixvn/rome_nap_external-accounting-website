@@ -37,6 +37,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Repositories.Impl
                                 Email = reader.ToString("email"),
                                 Fax = reader.ToString("fax"),
                                 RoleId = reader.ToInt("roleid"),
+                                HideCasino = reader.ToBool("HideSabaCasino"),
                                 CurrencyName = reader.ToString("currencyName")
                             };
                         }
