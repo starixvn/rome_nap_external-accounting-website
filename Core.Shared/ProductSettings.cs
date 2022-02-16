@@ -17,7 +17,7 @@
                 [ProductConstants.FishingWorld] = new Product(4, ProductConstants.FishingWorld, "Fishing World"),
                 [ProductConstants.Sportsbook2] = new Product(5, ProductConstants.Sportsbook2, "Sportsbook 2"),
                 [ProductConstants.VirtualGames] = new Product(6, ProductConstants.VirtualGames, "Virtual Games"),
-                [ProductConstants.Sabaclub] = new Product(7, ProductConstants.Sabaclub, "Saba.club"),
+                [ProductConstants.Sabaclub] = new Product(7, ProductConstants.Sabaclub, "Saba.games"),
                 [ProductConstants.RNGLottery] = new Product(8, ProductConstants.RNGLottery, "RNG Lottery"),
                 [ProductConstants.SabaVirtualSports] = new Product(9, ProductConstants.SabaVirtualSports, "Saba Virtual Sports"),
                 [ProductConstants.VGaming] = new Product(10, ProductConstants.VGaming, "Vgaming"),
