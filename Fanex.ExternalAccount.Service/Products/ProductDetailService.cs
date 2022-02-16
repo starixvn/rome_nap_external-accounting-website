@@ -109,6 +109,11 @@
                 canView[ProductConstants.SpadeGaming] = true;
             }
 
+            if (Config.IsOfferAllbetProductDetailsGroup(groupName))
+            {
+                canView[ProductConstants.AllBet] = true;
+            }
+            
             return canView;
         }
 
@@ -179,7 +184,8 @@
                 {
                     if ((group.Key == ProductConstants.PragmaticPlay && Config.IsOfferJackpotProductDetailsGroup(groupName)) ||
                     (group.Key == ProductConstants.SexyGaming && Config.IsOfferSexyGamingProductDetailsGroup(groupName)) ||
-                    (group.Key == ProductConstants.SpadeGaming && Config.IsOfferSpadeGamingProductDetailsGroup(groupName)))
+                    (group.Key == ProductConstants.SpadeGaming && Config.IsOfferSpadeGamingProductDetailsGroup(groupName)) ||
+                    (group.Key == ProductConstants.AllBet && Config.IsOfferAllbetProductDetailsGroup(groupName)))
                     {
                         var intersectResourceIds = group.Select(p => p.ResourceId).Intersect(resourceIds);
 
