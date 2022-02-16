@@ -294,7 +294,7 @@
                     int productId = Utils.ToInt32(reader["ProductID"]);
                     if (productId == ProductConstants.Casino)
                     {
-                        result.HideCasino = Utils.ToBoolean(reader["isHidden"]);
+                        result.HideCasino = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]);
                         result.DisableCasino = Utils.ToBoolean(reader["isDisabled"]);
                         continue;
                     }
