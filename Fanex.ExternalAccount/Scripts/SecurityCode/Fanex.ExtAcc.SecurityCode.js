@@ -6,7 +6,7 @@
     Fishing World           24
     Virtual Games           38
     Live Casino             41
-    Saba.club               42
+    Saba.games              42
     RNG Lottery             44
 */
 

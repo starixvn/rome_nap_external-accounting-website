@@ -181,7 +181,7 @@
         $scope.collapseSidebar();
     };
 
-    $scope.Sabaclub = function () {
+    $scope.Sabagames = function () {
         $scope.RenderDCS(42);
         $scope.collapseSidebar();
     };
