@@ -97,12 +97,16 @@
             if (Config.IsOfferJackpotProductDetailsGroup(groupName))
             {
                 canView[ProductConstants.PragmaticPlay] = true;
-                canView[ProductConstants.SpadeGaming] = true;
             }
 
             if (Config.IsOfferSexyGamingProductDetailsGroup(groupName))
             {
                 canView[ProductConstants.SexyGaming] = true;
+            }
+
+            if (Config.IsOfferSpadeGamingProductDetailsGroup(groupName))
+            {
+                canView[ProductConstants.SpadeGaming] = true;
             }
 
             return canView;
@@ -173,8 +177,9 @@
                 .ToList()
                 .ForEach(group =>
                 {
-                    if (((group.Key == ProductConstants.PragmaticPlay || group.Key == ProductConstants.SpadeGaming) && Config.IsOfferJackpotProductDetailsGroup(groupName)) ||
-                    (group.Key == ProductConstants.SexyGaming && Config.IsOfferSexyGamingProductDetailsGroup(groupName)))
+                    if ((group.Key == ProductConstants.PragmaticPlay && Config.IsOfferJackpotProductDetailsGroup(groupName)) ||
+                    (group.Key == ProductConstants.SexyGaming && Config.IsOfferSexyGamingProductDetailsGroup(groupName)) ||
+                    (group.Key == ProductConstants.SpadeGaming && Config.IsOfferSpadeGamingProductDetailsGroup(groupName)))
                     {
                         var intersectResourceIds = group.Select(p => p.ResourceId).Intersect(resourceIds);
 

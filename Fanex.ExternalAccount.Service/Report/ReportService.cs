@@ -179,13 +179,19 @@
             if (string.IsNullOrWhiteSpace(resourceIds)
                 && Config.IsOfferJackpotProductDetailsGroup(groupName))
             {
-                productIdList = productIdList.Where(id => id != ProductConstants.PragmaticPlay && id != ProductConstants.SpadeGaming);
+                productIdList = productIdList.Where(id => id != ProductConstants.PragmaticPlay);
             }
 
             if (string.IsNullOrWhiteSpace(resourceIds)
                 && Config.IsOfferSexyGamingProductDetailsGroup(groupName))
             {
                 productIdList = productIdList.Where(id => id != ProductConstants.SexyGaming);
+            }
+
+            if (string.IsNullOrWhiteSpace(resourceIds)
+                && Config.IsOfferSpadeGamingProductDetailsGroup(groupName))
+            {
+                productIdList = productIdList.Where(id => id != ProductConstants.SpadeGaming);
             }
 
             return ConcatProductName(productIdList, resourceIds, groupName);
