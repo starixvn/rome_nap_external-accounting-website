@@ -69,10 +69,6 @@
             productIds.push(productId);
         }
 
-        if (!this.HideCasino) {
-            addSuperEditMultipleMastersMenuItem(6, 'Saba Casino');
-        }
-
         if (!this.HideVirtualSports) {
             addSuperEditMultipleMastersMenuItem(5, 'Virtual Sports');
         }
@@ -140,10 +136,6 @@
                 }
             };
             productIds.push(productId);
-        }
-
-        if (!this.HideCasino) {
-            addMasterEditMultipleAgentsMenuItem(6, 'Saba Casino');
         }
 
         if (!this.HideVirtualSports) {
@@ -262,10 +254,6 @@
             };
 
             productIds.push(productId);
-        }
-
-        if (!this.HideCasino) {
-            addUplineEditMemberMenuItems(6, 'Saba Casino');
         }
 
         if (!this.HideVirtualSports) {

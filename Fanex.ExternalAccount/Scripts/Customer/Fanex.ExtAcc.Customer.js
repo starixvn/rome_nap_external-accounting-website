@@ -26,7 +26,6 @@
     AllowDoubleCommMaster: false,
     AllowDoubleCommAgent: false,
     AllowDoubleComm: false,
-    HideCasino: false,
     HideVirtualSports: false,
     HideKeno: false,
     HideSportsbook2: false,

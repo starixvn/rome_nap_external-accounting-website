@@ -72,11 +72,6 @@
                     }
 
                     var has3rdParty = false;
-                    if (!result.HideCasino) {
-                        has3rdParty = true;
-                        addEditProductMemberContextMenuItem(6, 'casino', 'Saba Casino', result.DisableCasino);
-                    }
-
                     if (!result.HideVirtualSport) {
                         has3rdParty = true;
                         addEditProductMemberContextMenuItem(5, 'virtualSport', 'Virtual Sports', result.DisableVirtualSport);

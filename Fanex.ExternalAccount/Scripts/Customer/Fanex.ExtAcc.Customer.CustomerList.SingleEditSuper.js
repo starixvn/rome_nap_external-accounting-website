@@ -51,8 +51,6 @@
                         }
                     }
 
-                    addEditProductSuperContextMenuItem(6, 'Product-6', 'Saba Casino');
-
                     addEditProductSuperContextMenuItem(5, 'Product-5', 'Virtual Sports');
 
                     if (showKenoSetting == 'true') {

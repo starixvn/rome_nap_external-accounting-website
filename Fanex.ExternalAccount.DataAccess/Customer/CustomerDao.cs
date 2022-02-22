@@ -292,13 +292,7 @@
                 while (reader.Read())
                 {
                     int productId = Utils.ToInt32(reader["ProductID"]);
-                    if (productId == ProductConstants.Casino)
-                    {
-                        result.HideCasino = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]);
-                        result.DisableCasino = Utils.ToBoolean(reader["isDisabled"]);
-                        continue;
-                    }
-
+                    
                     if (productId == ProductConstants.VirtualSports)
                     {
                         result.HideVirtualSport = Utils.ToBoolean(reader["isHidden"]);
