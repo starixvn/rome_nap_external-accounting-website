@@ -845,7 +845,6 @@
         }
 
         top.shouldCalculatePopupHeight = false;
-        document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(22, "Macau Games");
     };
 

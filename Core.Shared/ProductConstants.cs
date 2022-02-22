@@ -54,7 +54,8 @@ namespace Fanex.ExternalAccount.Core.Shared
         public static readonly List<int> ProductListHasProductDetail = new List<int>
         {
             ProductConstants.PragmaticPlay,
-            ProductConstants.SexyGaming
+            ProductConstants.SexyGaming,
+            ProductConstants.SpadeGaming
         };
     }
 }

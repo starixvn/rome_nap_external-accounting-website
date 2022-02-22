@@ -188,6 +188,12 @@
                 productIdList = productIdList.Where(id => id != ProductConstants.SexyGaming);
             }
 
+            if (string.IsNullOrWhiteSpace(resourceIds)
+                && Config.IsOfferSpadeGamingProductDetailsGroup(groupName))
+            {
+                productIdList = productIdList.Where(id => id != ProductConstants.SpadeGaming);
+            }
+
             return ConcatProductName(productIdList, resourceIds, groupName);
         }
 

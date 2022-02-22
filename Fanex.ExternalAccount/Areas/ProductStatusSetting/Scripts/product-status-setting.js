@@ -10984,8 +10984,8 @@ var ProductStatusSettingBase = /** @class */ (function () {
         this.isChangeState = function (originValue, currentValue) {
             return originValue != currentValue;
         };
-        this.buildElementId = function (className, roleId, betType) {
-            return ["#", className, "_", roleId, "_", betType].join("");
+        this.buildElementId = function (className, roleId, sportType, betType) {
+            return ["#", className, "_", roleId, "_", sportType, "_", betType].join("");
         };
         this.parseInt = function (value) { return parseInt(value.replace(/,/g, "")); };
         this.parseBoolean = function (value) { return _this.$.parseJSON(value.toLowerCase()); };
@@ -11019,7 +11019,6 @@ var ProductStatusSettingBase = /** @class */ (function () {
                 cache: false,
                 headers: _this.setupAntiXSRF(),
                 data: JSON.stringify(updateViewModel),
-                dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (data) { return _this.onSuccess(data); },
                 error: _this.onDefaultError
@@ -11133,7 +11132,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -11210,7 +11209,7 @@ var ProductStatusSetting = /** @class */ (function (_super) {
                     .removeAttr('class')
                     .attr('class', labelText.toLowerCase())
                     .text(labelText);
-                _this.toggleStatusDownlines(_this.getRoleId(toggle) - 1, enable, _this.getBetType(toggle));
+                _this.toggleStatusDownlines(_this.getRoleId(toggle) - 1, enable, _this.getSportType(toggle), _this.getBetType(toggle));
             }
         };
         _this.toggleDownline = function (toggle) {
@@ -11218,15 +11217,16 @@ var ProductStatusSetting = /** @class */ (function (_super) {
                 var enable = _this.isEnabledElement(toggle);
                 var roleId = _this.getRoleId(toggle);
                 var betType = _this.getBetType(toggle);
+                var sportType = _this.getSportType(toggle);
                 var oppositeClassName = enable ? _this.$resources.disabledClass : _this.$resources.enabledClass;
-                var oppositeId = _this.buildElementId(oppositeClassName, roleId, betType);
+                var oppositeId = _this.buildElementId(oppositeClassName, roleId, sportType, betType);
                 var oppositeStatusSpan = _this.$(oppositeId);
                 var oppositeTotal = _this.parseInt(oppositeStatusSpan.text());
                 if (oppositeTotal > 0) {
                     oppositeStatusSpan.text("0");
                     _this.$(toggle).text(_this.getTotalStatus(toggle, "total"));
                 }
-                _this.toggleStatusDownlines(roleId - 1, enable, betType);
+                _this.toggleStatusDownlines(roleId - 1, enable, sportType, betType);
             }
         };
         _this.watchHeader = function (roleId) {
@@ -11256,11 +11256,11 @@ var ProductStatusSetting = /** @class */ (function (_super) {
                 _this.enableElement(disabledAllToggle);
             }
         };
-        _this.toggleStatusDownlines = function (downlineRoleId, enable, betType, totalDisabledUpline) {
+        _this.toggleStatusDownlines = function (downlineRoleId, enable, sportType, betType, totalDisabledUpline) {
             if (totalDisabledUpline === void 0) { totalDisabledUpline = 0; }
             if (downlineRoleId > 0) {
-                var enabledToggle = _this.getDownlineElement(_this.$enableToggles, downlineRoleId, betType);
-                var disabledToggle = _this.getDownlineElement(_this.$disableToggles, downlineRoleId, betType);
+                var enabledToggle = _this.getDownlineElement(_this.$enableToggles, downlineRoleId, sportType, betType);
+                var disabledToggle = _this.getDownlineElement(_this.$disableToggles, downlineRoleId, sportType, betType);
                 var total = _this.getTotalStatus(enabledToggle, "total");
                 if (enable && total > 0) {
                     totalDisabledUpline == 0 ? _this.enableElement(enabledToggle) : _this.disableElement(enabledToggle);
@@ -11276,12 +11276,12 @@ var ProductStatusSetting = /** @class */ (function (_super) {
                 var currentTotalEnabled = _this.$(enabledToggle).text();
                 var enableDownline = enable ? (_this.parseInt(currentTotalEnabled) > 0) : false;
                 var currentTotalDisabled = _this.parseInt(_this.$(disabledToggle).text());
-                _this.toggleStatusDownlines(downlineRoleId - 1, enableDownline, betType, currentTotalDisabled);
+                _this.toggleStatusDownlines(downlineRoleId - 1, enableDownline, sportType, betType, currentTotalDisabled);
             }
         };
-        _this.getDownlineElement = function (elements, roleId, bettype) {
+        _this.getDownlineElement = function (elements, roleId, sportType, bettype) {
             for (var index = 0; index < elements.length; index++) {
-                if (_this.getRoleId(elements[index]) == roleId && _this.getBetType(elements[index]) == bettype) {
+                if (_this.getRoleId(elements[index]) == roleId && _this.getSportType(elements[index]) == sportType && _this.getBetType(elements[index]) == bettype) {
                     return elements[index];
                 }
             }
