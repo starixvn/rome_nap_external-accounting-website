@@ -112,6 +112,7 @@ class SuperWinLossDetailBySubGroup {
         this.gridOptions = this.gridOptions || this.initGridOptions();
         setPagerOptionOnMobile(this.gridOptions);
         this.gridOptions.titleInfo.text = this.buildGridTitle();
+        this.gridOptions.columns = this.initGridHeaderColumns();
         this.gridOptions.bodyRows = this.buildBodyRows(data.superWinLossDetails);
         this.gridOptions.footerRows = [this.buildGrandTotalColumns(data.total)];
 
@@ -124,6 +125,8 @@ class SuperWinLossDetailBySubGroup {
         this.msgNoInfo.removeAttr("style");
 
         this.grid.fanexGrid(this.gridOptions);
+        this.addTitleToSubGroupUsernameColumn();
+
         workaroundForGridOnPhone();
     }
 
@@ -153,12 +156,16 @@ class SuperWinLossDetailBySubGroup {
             },
             showFooter: true,
             showTree: true,
-            allowTruncate: true,
             marginRight: 10,
             bottomBorderWidth: 0,
             sortOption: {
-                customGridSort: (rows, sortField, sortDirection, customSortFunction, sortType) => this.getSortedBodyRows(rows, sortField, sortDirection, customSortFunction, sortType)
-            }
+                customGridSort: (rows, sortField, sortDirection, customSortFunction, sortType) => this.getSortedBodyRows(rows, sortField, sortDirection, customSortFunction, sortType),
+                afterGridSorted: (rows, sortField, sortDirection) => {
+                    this.addTitleToSubGroupUsernameColumn();
+                    return rows;
+                }
+            },
+            allowTruncate: true
         };
     }
 
@@ -197,7 +204,7 @@ class SuperWinLossDetailBySubGroup {
         };
 
         return [
-            { HeaderText: "Sub Group/Username", Name: "colSubGroupUsername", Sort: true, SortType: "string", Width: 150, ShowCollapseExpand: true },
+            { HeaderText: "Sub Group/Username", Name: "colSubGroupUsername", Sort: true, SortDirection: "asc", SortType: "string", Width: 150, ShowCollapseExpand: true },
             initGridHeaderColumn("Turnover", "colTurnover"),
             initGridHeaderColumn("Net Turnover", "colNetTurnover"),
             initGridHeaderColumn("GrossComm", "colGrossComm"),
@@ -268,7 +275,7 @@ class SuperWinLossDetailBySubGroup {
 
     private buildGridColumns(subGroupOrUsername: string, winloss) {
         return [
-            { Name: "colSubGroupUsername", Value: subGroupOrUsername },
+            { Name: "colSubGroupUsername", Value: subGroupOrUsername, CssClass: "cellSubGroupOrUsername" },
             { Name: "colTurnover", Value: winloss.turnover },
             { Name: "colNetTurnover", Value: winloss.netTurnover },
             { Name: "colGrossComm", Value: winloss.grossComm },
@@ -305,7 +312,7 @@ class SuperWinLossDetailBySubGroup {
         this.ddlSubGroup.next("input.ui-autocomplete-input")
             .val(this.ddlSubGroup.find("option:selected").text())
             .attr("readonly", "true")
-            .css("width", "150px")
+            //.css("width", "150px")
             .bind("click", event => this.$(event.currentTarget).autocomplete("search", ""));
     }
 
@@ -422,6 +429,13 @@ class SuperWinLossDetailBySubGroup {
         }
 
         return 0;
+    }
+
+    private addTitleToSubGroupUsernameColumn() {
+        $(".cellSubGroupOrUsername").each(function () {
+            const $this = $(this);
+            $this.attr("title", $this.text());
+        });
     }
 }
 

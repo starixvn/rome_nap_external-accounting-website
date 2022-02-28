@@ -47,15 +47,24 @@
 
         public override void BuildMainTitle(ISheet resultSheet)
         {
-            const string DateFormat = "MMM, dd yyyy";
+            const string DateFormat = "MMM dd, yyyy";
 
             var mainTitle = new StringBuilder();
-            mainTitle.Append("Super Win Loss Detail By Sub Group");
-            mainTitle
-                .Append("; ")
-                .Append(fromDate.ToStringExt(DateFormat))
-                .Append(" To ")
-                .Append(toDate.ToStringExt(DateFormat));
+            mainTitle.Append("Super Win Loss Detail By Sub Group; ");
+
+            if (fromDate == toDate)
+            {
+                mainTitle
+                    .Append("On ")
+                    .Append(fromDate.ToStringExt(DateFormat));
+            }
+            else
+            {
+                mainTitle
+                    .Append(fromDate.ToStringExt(DateFormat))
+                   .Append(" To ")
+                   .Append(toDate.ToStringExt(DateFormat));
+            }
 
             if (!string.IsNullOrWhiteSpace(subGroup))
             {

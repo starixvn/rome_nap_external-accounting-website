@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Controllers
 {
+    using System;
     using System.Linq;
     using System.Web.Mvc;
     using System.Web.Mvc.Filters;
@@ -18,27 +19,30 @@
     {
         private readonly IGroupService groupService;
         private readonly ISuperWinLossDetailBySubGroupService service;
+        private readonly CurrentSession currentSession;
 
         public SuperWinLossDetailBySubGroupController()
-            : this(new GroupService(), new SuperWinLossDetailBySubGroupService())
+            : this(new GroupService(), new SuperWinLossDetailBySubGroupService(), new CurrentSession())
         {
         }
 
         internal SuperWinLossDetailBySubGroupController(
             IGroupService groupService,
-            ISuperWinLossDetailBySubGroupService service)
+            ISuperWinLossDetailBySubGroupService service,
+            CurrentSession currentSession)
         {
             this.groupService = groupService;
             this.service = service;
+            this.currentSession = currentSession;
         }
 
         public ActionResult Index()
         {
             int groupId;
             string groupName;
-            var parentGroupName = new CurrentSession().ParentGroupName;
+            var parentGroupName = currentSession.ParentGroupName;
 
-            if (CurrentSession.IsITAdmin || CurrentSession.IsInternalAdmin)
+            if (currentSession.IsITAdmin || currentSession.IsInternalAdmin)
             {
                 var group = groupService.GetGroupByName(parentGroupName);
                 groupId = group.GroupID;
@@ -46,7 +50,7 @@
             }
             else
             {
-                groupId = CurrentSession.GroupId;
+                groupId = currentSession.GroupId;
                 groupName = parentGroupName;
             }
 
@@ -60,7 +64,7 @@
 
         public ActionResult GetData(GetSuperWinLossDetailBySubGroupRequest request)
         {
-            request.UserId = CurrentSession.UserId;
+            request.UserId = currentSession.UserId;
 
             return JsonBase(service.GetSuperWinLossDetailBySubGroupReport(request));
         }
@@ -69,7 +73,7 @@
         {
             request.PageIndex = 0;
             request.PageSize = int.MaxValue - 1;
-            request.UserId = CurrentSession.UserId;
+            request.UserId = currentSession.UserId;
             var report = service.GetSuperWinLossDetailBySubGroupReport(request);
 
             var excelBuilder = new SuperWinLossDetailBySubGroupExcelBuilder(
@@ -89,11 +93,17 @@
         {
             base.OnAuthentication(filterContext);
 
-            if (!CurrentSession.IsITAdmin
-                && !CurrentSession.IsInternalAdmin
-                && !groupService.GetGroupWithSubGroups(CurrentSession.GroupId).Any())
+            if (!currentSession.IsITAdmin
+                && !currentSession.IsInternalAdmin
+                && !groupService.GetGroupWithSubGroups(currentSession.GroupId).Any())
             {
                 filterContext.Result = new ViewResult { ViewName = "~/Views/Shared/NoPermission.cshtml" };
+            }
+
+            // Logged in user is selecting sub-group
+            if (!currentSession.CurrencyGroup.Equals(currentSession.ParentGroupName, StringComparison.OrdinalIgnoreCase))
+            {
+                filterContext.Result = new ViewResult { ViewName = "~/Views/SuperWinLossDetailBySubGroup/_NoPermission.cshtml" };
             }
         }
     }

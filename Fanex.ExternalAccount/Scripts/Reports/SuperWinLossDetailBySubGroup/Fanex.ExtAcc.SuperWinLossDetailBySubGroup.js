@@ -86,6 +86,7 @@ var SuperWinLossDetailBySubGroup = /** @class */ (function () {
         this.gridOptions = this.gridOptions || this.initGridOptions();
         setPagerOptionOnMobile(this.gridOptions);
         this.gridOptions.titleInfo.text = this.buildGridTitle();
+        this.gridOptions.columns = this.initGridHeaderColumns();
         this.gridOptions.bodyRows = this.buildBodyRows(data.superWinLossDetails);
         this.gridOptions.footerRows = [this.buildGrandTotalColumns(data.total)];
         this.gridOptions.pagerOption.currentPage = this.cacheFormData.pageIndex;
@@ -95,6 +96,7 @@ var SuperWinLossDetailBySubGroup = /** @class */ (function () {
         this.btnExportExcel.removeClass("hide");
         this.msgNoInfo.removeAttr("style");
         this.grid.fanexGrid(this.gridOptions);
+        this.addTitleToSubGroupUsernameColumn();
         workaroundForGridOnPhone();
     };
     SuperWinLossDetailBySubGroup.prototype.initGridOptions = function () {
@@ -124,12 +126,16 @@ var SuperWinLossDetailBySubGroup = /** @class */ (function () {
             },
             showFooter: true,
             showTree: true,
-            allowTruncate: true,
             marginRight: 10,
             bottomBorderWidth: 0,
             sortOption: {
-                customGridSort: function (rows, sortField, sortDirection, customSortFunction, sortType) { return _this.getSortedBodyRows(rows, sortField, sortDirection, customSortFunction, sortType); }
-            }
+                customGridSort: function (rows, sortField, sortDirection, customSortFunction, sortType) { return _this.getSortedBodyRows(rows, sortField, sortDirection, customSortFunction, sortType); },
+                afterGridSorted: function (rows, sortField, sortDirection) {
+                    _this.addTitleToSubGroupUsernameColumn();
+                    return rows;
+                }
+            },
+            allowTruncate: true
         };
     };
     SuperWinLossDetailBySubGroup.prototype.initGridGroupHeaderColumns = function () {
@@ -165,7 +171,7 @@ var SuperWinLossDetailBySubGroup = /** @class */ (function () {
             };
         };
         return [
-            { HeaderText: "Sub Group/Username", Name: "colSubGroupUsername", Sort: true, SortType: "string", Width: 150, ShowCollapseExpand: true },
+            { HeaderText: "Sub Group/Username", Name: "colSubGroupUsername", Sort: true, SortDirection: "asc", SortType: "string", Width: 150, ShowCollapseExpand: true },
             initGridHeaderColumn("Turnover", "colTurnover"),
             initGridHeaderColumn("Net Turnover", "colNetTurnover"),
             initGridHeaderColumn("GrossComm", "colGrossComm"),
@@ -229,7 +235,7 @@ var SuperWinLossDetailBySubGroup = /** @class */ (function () {
     };
     SuperWinLossDetailBySubGroup.prototype.buildGridColumns = function (subGroupOrUsername, winloss) {
         return [
-            { Name: "colSubGroupUsername", Value: subGroupOrUsername },
+            { Name: "colSubGroupUsername", Value: subGroupOrUsername, CssClass: "cellSubGroupOrUsername" },
             { Name: "colTurnover", Value: winloss.turnover },
             { Name: "colNetTurnover", Value: winloss.netTurnover },
             { Name: "colGrossComm", Value: winloss.grossComm },
@@ -264,7 +270,7 @@ var SuperWinLossDetailBySubGroup = /** @class */ (function () {
         this.ddlSubGroup.next("input.ui-autocomplete-input")
             .val(this.ddlSubGroup.find("option:selected").text())
             .attr("readonly", "true")
-            .css("width", "150px")
+            //.css("width", "150px")
             .bind("click", function (event) { return _this.$(event.currentTarget).autocomplete("search", ""); });
     };
     SuperWinLossDetailBySubGroup.prototype.getSortedBodyRows = function (rows, sortField, sortDirection, customSortFunction, sortType) {
@@ -355,6 +361,12 @@ var SuperWinLossDetailBySubGroup = /** @class */ (function () {
             return 1;
         }
         return 0;
+    };
+    SuperWinLossDetailBySubGroup.prototype.addTitleToSubGroupUsernameColumn = function () {
+        $(".cellSubGroupOrUsername").each(function () {
+            var $this = $(this);
+            $this.attr("title", $this.text());
+        });
     };
     return SuperWinLossDetailBySubGroup;
 }());

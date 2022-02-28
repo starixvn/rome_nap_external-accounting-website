@@ -3087,6 +3087,7 @@
     <Content Include="Views\ParlayMaxPayout\Index.cshtml" />
     <Content Include="Views\ProtectedStatus\OpenMultiple.cshtml" />
     <Content Include="Views\SuperWinLossDetailBySubGroup\Index.cshtml" />
+    <Content Include="Views\SuperWinLossDetailBySubGroup\_NoPermission.cshtml" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailBySubGroup\Fanex.ExtAcc.SuperWinLossDetailBySubGroup.ts" />
   </ItemGroup>
   <ItemGroup>
