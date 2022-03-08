@@ -55,7 +55,8 @@ namespace Fanex.ExternalAccount.Core.Shared
         {
             ProductConstants.PragmaticPlay,
             ProductConstants.SexyGaming,
-            ProductConstants.SpadeGaming
+            ProductConstants.SpadeGaming,
+            ProductConstants.AllBet
         };
     }
 }

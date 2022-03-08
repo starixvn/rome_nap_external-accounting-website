@@ -194,6 +194,12 @@
                 productIdList = productIdList.Where(id => id != ProductConstants.SpadeGaming);
             }
 
+            if (string.IsNullOrWhiteSpace(resourceIds)
+                && Config.IsOfferAllbetProductDetailsGroup(groupName))
+            {
+                productIdList = productIdList.Where(id => id != ProductConstants.AllBet);
+            }
+            
             return ConcatProductName(productIdList, resourceIds, groupName);
         }
 

@@ -177,7 +177,25 @@ class ProductControls {
     }
 
     public GetParameterProducts() {
+        var productDetails = this.productDetailsData;
         var productIds = this.$multiSelectProduct.fanexMultiSelect("getItems", true);
+        if (this.$multiSelectProductDetail) {
+            var resourceIds = this.$multiSelectProductDetail.fanexMultiSelect("getItems", true);
+            console.log(productIds);
+            console.log(resourceIds);
+            $.each(productIds, function (i, productId) {
+                var isHaveSubProduct = productDetails.some(function (detail) { return detail.ProductId == productId; });
+                if (isHaveSubProduct) {
+                    var isHasSelectedResource = resourceIds.some(function (rsId) {
+                        return productDetails.some(function (detail) { return detail.ProductId == productId && detail.ResourceId == rsId; });
+                    });
+                    if (!isHasSelectedResource) {
+                        productIds.splice(i, 1);
+                        $("input[id^='fanex-multiselect-ddl-product-" + productId + "-']").prop("checked", false).trigger("change");
+                    }
+                }
+            });
+        }
         return productIds.length ? "&productIds=" + productIds.join(",") : "";
     }
 

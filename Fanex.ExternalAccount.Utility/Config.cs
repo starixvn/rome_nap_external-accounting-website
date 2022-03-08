@@ -109,6 +109,13 @@
         public static bool IsOfferProductDetail(string currentGroup)
             => IsOfferJackpotProductDetailsGroup(currentGroup) || IsOfferSexyGamingProductDetailsGroup(currentGroup) || IsOfferSpadeGamingProductDetailsGroup(currentGroup);
 
+        public static bool IsOfferAllbetProductDetailsGroup(string currentGroup)
+        {
+            var allGroups = GetValue("OfferAllbetProductDetailsGroups");
+
+            return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
+        }
+
         public static bool IsOfferJackpotProductDetailsGroup(string currentGroup)
         {
             var allGroups = GetValue("OfferJackpotProductDetailsGroups");

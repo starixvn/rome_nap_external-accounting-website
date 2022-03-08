@@ -130,9 +130,24 @@ Fanex.ExtAcc.WinLossDetail = {
         }
         return dayNo;
     },
-    getParameterProducts: function () {
+    getParameterProducts: function (productDetails) {
         var productIds = Fanex.ExtAcc.WinLossDetail.$multiSelectProduct.fanexMultiSelect("getItems", true);
-        return productIds.length ? "&productIds=" + productIds.join(",") : "";
+        if (Fanex.ExtAcc.WinLossDetail.$multiSelectProductDetail) {
+            var resourceIds = Fanex.ExtAcc.WinLossDetail.$multiSelectProductDetail.fanexMultiSelect("getItems", true);
+            $.each(productIds, function (i, productId) {
+                var isHaveSubProduct = productDetails.some(function (detail) { return detail.ProductId == productId; });
+                if (isHaveSubProduct) {
+                    var isHasSelectedResource = resourceIds.some(function (rsId) {
+                        return productDetails.some(function (detail) { return detail.ProductId == productId && detail.ResourceId == rsId; });
+                    });
+                    if (!isHasSelectedResource) {
+                        productIds.splice(i, 1);
+                        $("input[id^='fanex-multiselect-ddl-product-" + productId + "-']").attr("checked", false).trigger("change");
+                    }
+                }
+            });
+            return productIds.length ? "&productIds=" + productIds.join(",") : "";
+        }
     },
     getParameterProductDetails: function () {
         if (Fanex.ExtAcc.WinLossDetail.$multiSelectProductDetail) {
@@ -395,6 +410,7 @@ Fanex.ExtAcc.WinLossDetail = {
         });
 
         $("#exporttoexcel").click(function () {
+            console.log(Fanex.ExtAcc.WinLossDetail);
             var params = "fromdate=" + $this.fromdate +
                 "&todate=" + $this.todate +
                 "&viewlevel=" + $this.viewlevel +
@@ -404,7 +420,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 "&username=" + Fanex.ExtAcc.WinLossDetail.username;
             var url = resolveClientUrl("WinLossDetail/ExportWinLossDetailToExcel?") +
                 params +
-                Fanex.ExtAcc.WinLossDetail.getParameterProducts() +
+                Fanex.ExtAcc.WinLossDetail.getParameterProducts(Fanex.ExtAcc.WinLossDetail.productDetailsData) +
                 Fanex.ExtAcc.WinLossDetail.getParameterProductDetails();
 
             top.exportExcel(url, document);
@@ -1067,6 +1083,7 @@ Fanex.ExtAcc.WinLossDetail = {
             dateInfo = 'from ' + (new Date(Date.parse(this.fromdate))).toStringFormat('MMM dd, yyyy') + ' to ' + (new Date(Date.parse(this.todate))).toStringFormat('MMM dd, yyyy');
         }
 
+        console.log(Fanex.ExtAcc.WinLossDetail);
         var parameterUrl = "?groupid=" + this.groupId
             + "&groupname=" + this.groupName
             + "&srecommend=" + this.srecommend
@@ -1077,7 +1094,7 @@ Fanex.ExtAcc.WinLossDetail = {
             + "&fromdate=" + this.fromdate
             + "&todate=" + this.todate
             + "&viewlevel=" + this.viewlevel
-            + this.getParameterProducts()
+            + this.getParameterProducts(Fanex.ExtAcc.WinLossDetail.productDetailsData)
             + this.getParameterProductDetails();
 
         Fanex.ExtAcc.BlockUI();
