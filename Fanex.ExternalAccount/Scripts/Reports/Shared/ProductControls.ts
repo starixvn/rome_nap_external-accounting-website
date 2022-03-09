@@ -3,6 +3,7 @@
 class ProductControls {
     private $: JQueryStatic;
     private productDetailsData: any;
+    private productDetailsDataMapToProductId: any;
     private $multiSelectProduct: any;
     private $multiSelectProductDetail: any;
 
@@ -32,7 +33,9 @@ class ProductControls {
     }
 
     private InitProductDetailsList(productDetails) {
+        var self = this;
         var dataList = [];
+        this.productDetailsDataMapToProductId = {};
         this.$.each(productDetails, function (i, item) {
             dataList.push({
                 id: item.ResourceId,
@@ -41,18 +44,23 @@ class ProductControls {
                 checked: true,
                 enable: true
             });
+
+            if (self.productDetailsDataMapToProductId.hasOwnProperty(item.ProductId)) {
+                self.productDetailsDataMapToProductId[item.ProductId].push(item.ResourceId);
+            } else {
+                self.productDetailsDataMapToProductId[item.ProductId] = [item.ResourceId];
+            }
         });
 
-        this.$multiSelectProductDetail = this.$("#ddl-product-detail").fanexMultiSelect(
-            {
-                minWidth: 180,
-                checkAllText: "Select all",
-                noneSelectedText: "Select none",
-                useCustomCheckAllText: true,
-                customCheckAllText: "Select all",
-                isCheckAll: true,
-                listData: dataList
-            });
+        this.$multiSelectProductDetail = this.$("#ddl-product-detail").fanexMultiSelect({
+            minWidth: 180,
+            checkAllText: "Select all",
+            noneSelectedText: "Select none",
+            useCustomCheckAllText: true,
+            customCheckAllText: "Select all",
+            isCheckAll: true,
+            listData: dataList
+        });
 
         $("#ddl-product-detail-container").removeClass("hidden");
         this.productDetailsData = productDetails;
@@ -177,7 +185,7 @@ class ProductControls {
     }
 
     public GetParameterProducts() {
-        var productIds = this.$multiSelectProduct.fanexMultiSelect("getItems", true);
+        var productIds = this.GetProductIds();
         return productIds.length ? "&productIds=" + productIds.join(",") : "";
     }
 
@@ -191,6 +199,7 @@ class ProductControls {
     }
 
     public GetProductIds() {
+        this.UpdateUncheckedProductsDropdown();
         return this.$multiSelectProduct.fanexMultiSelect("getItems", true);
     }
 
@@ -198,5 +207,26 @@ class ProductControls {
         return this.$multiSelectProductDetail
             ? this.$multiSelectProductDetail.fanexMultiSelect("getItems", true)
             : [];
+    }
+
+    private UpdateUncheckedProductsDropdown() {
+        if (this.productDetailsDataMapToProductId) {
+            const self = this;
+            Object.keys(self.productDetailsDataMapToProductId).forEach(function (productId) {
+                if (self.IsProductDetailsUnChecked(self.productDetailsDataMapToProductId[productId])) {
+                    $('input[id^="fanex-multiselect-ddl-product-' + productId + '-"]').prop("checked", false).trigger("change");
+                }
+            });
+        }
+    }
+
+    private IsProductDetailsUnChecked(resourceIds) {
+        for (let i = 0, max = resourceIds.length; i < max; i++) {
+            if ($('input[id^="fanex-multiselect-ddl-product-detail-' + resourceIds[i] + '-"]').is(":checked")) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
