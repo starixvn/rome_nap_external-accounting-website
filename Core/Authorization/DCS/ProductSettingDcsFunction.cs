@@ -9,7 +9,7 @@
         FishingWorldSetting = 24,
         RNGLotterySetting = 44,
         VirtualSports = 5,
-        VirtualGamesSetting = 38,
+        VirtualGamesSetting = 64,
         SabaclubSetting = 42,
         VGamingSetting = 66,
         BitcoinSetting = 69
