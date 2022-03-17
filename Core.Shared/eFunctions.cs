@@ -17,6 +17,7 @@
         public const string WinlossDetail = "WinlossDetail";
         public const string WinLossDetailIBCBetLiveCasino = "WinLossDetailIBCBetLiveCasino";
         public const string SuperWinLossDetailByPT = "SuperWinLossDetailByPT";
+        public const string SuperWinLossDetailBySubGroup = "SuperWinLossDetailBySubGroup";
 
         public const string Statement = "Statement";
         public const string EnableGoldDeluxe = "EnableGoldDeluxe";

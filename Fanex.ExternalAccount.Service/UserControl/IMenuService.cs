@@ -8,7 +8,11 @@
     {
         IEnumerable<Menu> GetAllMenus();
 
-        IEnumerable<Menu> GetMenusByUserId(int userId, string currentGroup, bool isShowAssignSubGroup);
+        IEnumerable<Menu> GetMenusByUserId(
+            int userId,
+            string currentGroup,
+            bool isShowAssignSubGroup,
+            bool isShowSuperWinLossDetailBySubGroup);
 
         Result CreateMenu(Menu menu, int custId, string ip);
 

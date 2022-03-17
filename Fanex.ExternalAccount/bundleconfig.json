@@ -279,5 +279,15 @@
       "Scripts/Customer/Fanex.ExtAcc.Customer.ProtectedStatus.js"
     ],
     "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/SuperWinLossDetailBySubGroup/index.js",
+    "inputFiles": [
+      "Scripts/monthPicker/monPickr-0.0.1.js",
+      "Scripts/Reports/Shared/ProductControls.js",
+      "Scripts/Reports/Shared/DateTimeControls.js",
+      "Scripts/Reports/SuperWinLossDetailBySubGroup/Fanex.ExtAcc.SuperWinLossDetailBySubGroup.js"
+    ],
+    "sourceMap": true
   }
 ]

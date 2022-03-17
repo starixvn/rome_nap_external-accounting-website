@@ -70,6 +70,7 @@ Fanex.ExtAcc.WinLossDetail = {
     viewlevel: 5,
     dataSource: [],
     productDetailsData: [],
+    productDetailsDataMapToProductId: null,
     $multiSelectProduct: null,
     $multiSelectProductDetail: null,
     $this: null,
@@ -131,8 +132,28 @@ Fanex.ExtAcc.WinLossDetail = {
         return dayNo;
     },
     getParameterProducts: function () {
+        Fanex.ExtAcc.WinLossDetail.updateUncheckedProductsDropdown();
         var productIds = Fanex.ExtAcc.WinLossDetail.$multiSelectProduct.fanexMultiSelect("getItems", true);
         return productIds.length ? "&productIds=" + productIds.join(",") : "";
+    },
+    updateUncheckedProductsDropdown: function () {
+        if (Fanex.ExtAcc.WinLossDetail.productDetailsDataMapToProductId) {
+            Object.keys(Fanex.ExtAcc.WinLossDetail.productDetailsDataMapToProductId).forEach(function (productId) {
+                var resourceIds = Fanex.ExtAcc.WinLossDetail.productDetailsDataMapToProductId[productId];
+                if (Fanex.ExtAcc.WinLossDetail.isProductDetailsUnChecked(resourceIds)) {
+                    $('input[id^="fanex-multiselect-ddl-product-' + productId + '-"]').prop("checked", false).trigger("change");
+                }
+            });
+        }
+    },
+    isProductDetailsUnChecked: function (resourceIds) {
+        for (var i = 0, max = resourceIds.length; i < max; i++) {
+            if ($('input[id^="fanex-multiselect-ddl-product-detail-' + resourceIds[i] + '-"]').is(":checked")) {
+                return false;
+            }
+        }
+
+        return true;
     },
     getParameterProductDetails: function () {
         if (Fanex.ExtAcc.WinLossDetail.$multiSelectProductDetail) {
@@ -280,6 +301,7 @@ Fanex.ExtAcc.WinLossDetail = {
 
     InitProductDetailsList: function (productDetails) {
         var dataList = [];
+        var dataListMapToProductId = {};
         $.each(productDetails, function (i, item) {
             dataList.push({
                 id: item.ResourceId,
@@ -288,6 +310,12 @@ Fanex.ExtAcc.WinLossDetail = {
                 checked: true,
                 enable: true
             });
+
+            if (dataListMapToProductId.hasOwnProperty(item.ProductId)) {
+                dataListMapToProductId[item.ProductId].push(item.ResourceId);
+            } else {
+                dataListMapToProductId[item.ProductId] = [item.ResourceId];
+            }
         });
 
         Fanex.ExtAcc.WinLossDetail.$multiSelectProductDetail = $("#ddl-product-detail").fanexMultiSelect(
@@ -303,6 +331,7 @@ Fanex.ExtAcc.WinLossDetail = {
 
         $("#ddl-product-detail-container").removeClass("hidden");
         Fanex.ExtAcc.WinLossDetail.productDetailsData = productDetails;
+        Fanex.ExtAcc.WinLossDetail.productDetailsDataMapToProductId = dataListMapToProductId;
     },
     Init: function () {
         $this = this;

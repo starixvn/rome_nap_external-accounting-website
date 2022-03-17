@@ -67,8 +67,18 @@
 
         public ActionResult _Menu()
         {
-            var isShowAssignSubGroup = CurrentSession.GroupId > 0 && (CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin || groupService.GetGroupWithSubGroups(CurrentSession.GroupId).Any());
-            var menuList = menuService.GetMenusByUserId(CurrentSession.UserId, _currentSession.ParentGroupName, isShowAssignSubGroup);
+            var groupId = CurrentSession.GroupId;
+            var isMainGroupHasSubGroups = groupId > 0
+                && (CurrentSession.IsInternalAdmin || CurrentSession.IsITAdmin || groupService.GetGroupWithSubGroups(groupId).Any());
+
+            var isShowAssignSubGroup = isMainGroupHasSubGroups;
+            var isShowSuperWinLossDetailBySubGroup = isMainGroupHasSubGroups;
+
+            var menuList = menuService.GetMenusByUserId(
+                CurrentSession.UserId,
+                _currentSession.ParentGroupName,
+                isShowAssignSubGroup,
+                isShowSuperWinLossDetailBySubGroup);
             var rootMenuList = menuList.Where(x => x.ParentId == 0);
             var menuDict = new Dictionary<string, MenuItem>();
 
