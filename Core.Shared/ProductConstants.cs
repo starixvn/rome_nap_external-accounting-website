@@ -41,22 +41,23 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int VGaming = 66;
         public const int Bitcoin = 69;
         public const int Cashout = 25;
+        public const int FGG = 70;
 
         public const int DummyRNGProductId = 53;
 
         public static readonly List<int> ProductListForTooltipsRNGCasino = new List<int>
         {
-            ProductConstants.RNGWar,
-            ProductConstants.Sabaclub,
-            ProductConstants.VGaming
+            RNGWar,
+            Sabaclub,
+            VGaming
         };
 
         public static readonly List<int> ProductListHasProductDetail = new List<int>
         {
-            ProductConstants.PragmaticPlay,
-            ProductConstants.SexyGaming,
-            ProductConstants.SpadeGaming,
-            ProductConstants.AllBet
+            PragmaticPlay,
+            SexyGaming,
+            SpadeGaming,
+            AllBet
         };
     }
 }
