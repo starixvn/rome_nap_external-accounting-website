@@ -139,9 +139,12 @@
 
         public string BuildTooltipsForLiveCasino(int userId, int groupId)
         {
-            var offeredLiveCasino = _productService
-                .GetProducts(userId, groupId)
+            var products = _productService
+                .GetProducts(userId, groupId);
+            var offeredLiveCasino = products
                 .FirstOrDefault(p => p.ProductId == ProductConstants.DummyLiveCasinoProductId);
+            var offeredLiveCasinoFGG= products
+                .FirstOrDefault(p => p.ProductId == ProductConstants.FGG);
 
             if (offeredLiveCasino != null && offeredLiveCasino.IsParent)
             {
@@ -151,6 +154,9 @@
                 };
 
                 var liveCasinoName = Utils.JoinToString(offeredLiveCasino.Products.Where(p => !ignoreProductIds.ContainsKey(p.ProductId)).Select(p => p.ProductName), ", ");
+                var fggName = offeredLiveCasinoFGG != null ? $", {offeredLiveCasinoFGG.ProductName}" : string.Empty;
+
+                liveCasinoName = !string.IsNullOrWhiteSpace(liveCasinoName) ? $"{liveCasinoName}{fggName}" : $"{fggName}";
 
                 return string.Format(ViewLang.Tooltip_NetTurnover_LiveCasino, liveCasinoName);
             }

@@ -11,6 +11,7 @@
         VirtualSportsBetting = 5,
         SabaclubBetting = 42,
         VGamingBetting = 66,
-        BitcoinBetting = 69
+        BitcoinBetting = 69,
+        VirtualGamesBetting = 64
     }
 }

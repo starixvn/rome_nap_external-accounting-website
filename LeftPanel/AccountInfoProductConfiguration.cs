@@ -19,7 +19,7 @@
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.FishingWorld], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.RNGLottery], StatusType.Link),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Sportsbook2], StatusType.OnlyDetail),
-                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.VirtualGames], StatusType.Checkbox),
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.VirtualGames], StatusType.Link),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Sabaclub], StatusType.Link),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.SabaVirtualSports], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.VGaming], StatusType.Link),

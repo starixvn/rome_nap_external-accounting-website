@@ -177,7 +177,7 @@
     };
 
     $scope.VirtualGames = function () {
-        $scope.RenderDCS(38);
+        $scope.RenderDCS(64);
         $scope.collapseSidebar();
     };
 

@@ -27,7 +27,7 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int Lottery = 28;
         public const int TableGames = 40;
         public const int RNGLottery = 44;
-        public const int VirtualGames = 38;
+        public const int VirtualGames = 64;
         public const int RNGWar = 50;
         public const int Sabaclub = 42;
         public const int DummyLiveCasinoProductId = 41;
@@ -41,22 +41,23 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int VGaming = 66;
         public const int Bitcoin = 69;
         public const int Cashout = 25;
+        public const int FGG = 70;
 
         public const int DummyRNGProductId = 53;
 
         public static readonly List<int> ProductListForTooltipsRNGCasino = new List<int>
         {
-            ProductConstants.RNGWar,
-            ProductConstants.Sabaclub,
-            ProductConstants.VGaming
+            RNGWar,
+            Sabaclub,
+            VGaming
         };
 
         public static readonly List<int> ProductListHasProductDetail = new List<int>
         {
-            ProductConstants.PragmaticPlay,
-            ProductConstants.SexyGaming,
-            ProductConstants.SpadeGaming,
-            ProductConstants.AllBet
+            PragmaticPlay,
+            SexyGaming,
+            SpadeGaming,
+            AllBet
         };
     }
 }

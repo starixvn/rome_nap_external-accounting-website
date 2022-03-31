@@ -13,7 +13,7 @@
         EnableNG2 = 23,
         EnableFishingWorld = 24,
         EnableRNGLottery = 44,
-        EnableVirtualGames = 38,
+        EnableVirtualGames = 64,
         EnableSabaclub = 42,
         EnableSabaVirtualSports = 54,
         EnableVGaming = 66,
