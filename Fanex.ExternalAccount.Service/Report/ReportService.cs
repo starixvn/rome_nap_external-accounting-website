@@ -148,12 +148,7 @@
 
             if (offeredLiveCasino != null && offeredLiveCasino.IsParent)
             {
-                var ignoreProductIds = new Dictionary<int, bool>
-                {
-                    [ProductConstants.GoldDeluxe] = true
-                };
-
-                var liveCasinoName = Utils.JoinToString(offeredLiveCasino.Products.Where(p => !ignoreProductIds.ContainsKey(p.ProductId)).Select(p => p.ProductName), ", ");
+                var liveCasinoName = Utils.JoinToString(offeredLiveCasino.Products.Select(p => p.ProductName), ", ");
                 var fggName = offeredLiveCasinoFGG != null ? $", {offeredLiveCasinoFGG.ProductName}" : string.Empty;
 
                 liveCasinoName = !string.IsNullOrWhiteSpace(liveCasinoName) ? $"{liveCasinoName}{fggName}" : $"{fggName}";

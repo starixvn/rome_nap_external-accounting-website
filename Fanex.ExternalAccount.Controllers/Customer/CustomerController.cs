@@ -344,7 +344,6 @@
             ViewBag.CurrentLevel = id;
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
-            ViewBag.HideCasino = custStatus.HideCasino;
             ViewBag.HideVirtualSports = custStatus.HideVirtualSport;
             ViewBag.HideKeno = custStatus.HideKeno;
             var visibledProducts = GetVisibledProducts(id, custId);
