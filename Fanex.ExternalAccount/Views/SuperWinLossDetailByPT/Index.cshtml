@@ -1,8 +1,10 @@
 ﻿@using Fanex.ExternalAccount.Utilities
+
 @{
     ViewBag.Title = "Super WinLoss Detail By PT";
     Layout = null;
     var minDate = DateTime.Now.AddMonths(-3).AddDays((-DateTime.Now.Day) + 1);
+    var note = "You can view the report data from " + minDate.ToString("MMMM dd") + "<sup>" + Utils.GetDaySuffix(minDate.Day) + "</sup>, " + minDate.ToString("yyyy");
 }
 
 <div>
@@ -84,7 +86,8 @@
         <div class="form-group">
             <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel hide"></span>
         </div>
-        <div class="form-group" style="display:block;">You can view the report data from @minDate.ToString("dd MMMM, yyyy")</div>
+        <div class="form-group" style="display:block;">@Html.Raw(note)</div>
+        <div class="form-group" style="display:block;">@Html.Raw(ViewLang.SabaSupportNote)</div>
     </div>
     <div id="mainGrid" class="hide tbl-winloss-detail">
         <div id="jqgrid" class="removeRadius freegrid content-grid"></div>

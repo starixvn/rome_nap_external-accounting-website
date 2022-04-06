@@ -114,6 +114,7 @@
                 canView[ProductConstants.AllBet] = true;
             }
             
+            canView[ProductConstants.Sportsbook] = true;
             return canView;
         }
 
@@ -144,13 +145,23 @@
         private static string BuildProductDetailsXML(IEnumerable<ProductDetailEntity> productDetails)
         {
             var xml = new StringBuilder("<ROOT>");
-            productDetails.ToList().ForEach(product => xml.AppendFormat(
-                "<ProductDetail ProductId=\"{0}\" Sporttype=\"{1}\" Bettype=\"{2}\"/>",
-                product.ProductId,
-                product.SportType,
-                product.BetType));
+            foreach (var product in productDetails)
+            {
+                foreach (var leagueId in product.LeagueGroupIds)
+                {
+                    foreach (var typeId in product.TicketTypeIds)
+                    {
+                        xml.AppendFormat(
+                            "<ProductDetail ProductId=\"{0}\" Sporttype=\"{1}\" Bettype=\"{2}\" LeagueGroupId=\"{3}\" TicketType=\"{4}\"/>",
+                            product.ProductId,
+                            product.SportType,
+                            product.BetType,
+                            leagueId,
+                            typeId);
+                    }
+                }
+            }
             xml.Append("</ROOT>");
-
             return xml.ToString();
         }
 
@@ -182,7 +193,8 @@
                 .ToList()
                 .ForEach(group =>
                 {
-                    if ((group.Key == ProductConstants.PragmaticPlay && Config.IsOfferJackpotProductDetailsGroup(groupName)) ||
+                    if (group.Key == ProductConstants.Sportsbook ||
+                    (group.Key == ProductConstants.PragmaticPlay && Config.IsOfferJackpotProductDetailsGroup(groupName)) ||
                     (group.Key == ProductConstants.SexyGaming && Config.IsOfferSexyGamingProductDetailsGroup(groupName)) ||
                     (group.Key == ProductConstants.SpadeGaming && Config.IsOfferSpadeGamingProductDetailsGroup(groupName)) ||
                     (group.Key == ProductConstants.AllBet && Config.IsOfferAllbetProductDetailsGroup(groupName)))

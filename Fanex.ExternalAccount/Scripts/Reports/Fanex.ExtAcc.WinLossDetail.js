@@ -320,7 +320,7 @@ Fanex.ExtAcc.WinLossDetail = {
 
         Fanex.ExtAcc.WinLossDetail.$multiSelectProductDetail = $("#ddl-product-detail").fanexMultiSelect(
             {
-                minWidth: 180,
+                minWidth: 220,
                 checkAllText: "Select all",
                 noneSelectedText: "Select none",
                 useCustomCheckAllText: true,

@@ -177,28 +177,28 @@
         public string ConcatProductName(string productIds, string resourceIds, string groupName)
         {
             var productIdList = Utils.ToEnumerableInt(productIds);
-            if (string.IsNullOrWhiteSpace(resourceIds)
-                && Config.IsOfferJackpotProductDetailsGroup(groupName))
+            if(string.IsNullOrWhiteSpace(resourceIds))
             {
-                productIdList = productIdList.Where(id => id != ProductConstants.PragmaticPlay);
-            }
+                if (Config.IsOfferJackpotProductDetailsGroup(groupName))
+                {
+                    productIdList = productIdList.Where(id => id != ProductConstants.PragmaticPlay);
+                }
 
-            if (string.IsNullOrWhiteSpace(resourceIds)
-                && Config.IsOfferSexyGamingProductDetailsGroup(groupName))
-            {
-                productIdList = productIdList.Where(id => id != ProductConstants.SexyGaming);
-            }
+                if (Config.IsOfferSexyGamingProductDetailsGroup(groupName))
+                {
+                    productIdList = productIdList.Where(id => id != ProductConstants.SexyGaming);
+                }
 
-            if (string.IsNullOrWhiteSpace(resourceIds)
-                && Config.IsOfferSpadeGamingProductDetailsGroup(groupName))
-            {
-                productIdList = productIdList.Where(id => id != ProductConstants.SpadeGaming);
-            }
+                if (Config.IsOfferSpadeGamingProductDetailsGroup(groupName))
+                {
+                    productIdList = productIdList.Where(id => id != ProductConstants.SpadeGaming);
+                }
+                productIdList = productIdList.Where(id => id != ProductConstants.Sportsbook);
 
-            if (string.IsNullOrWhiteSpace(resourceIds)
-                && Config.IsOfferAllbetProductDetailsGroup(groupName))
-            {
-                productIdList = productIdList.Where(id => id != ProductConstants.AllBet);
+                if (Config.IsOfferAllbetProductDetailsGroup(groupName))
+                {
+                    productIdList = productIdList.Where(id => id != ProductConstants.AllBet);
+                }
             }
             
             return ConcatProductName(productIdList, resourceIds, groupName);
