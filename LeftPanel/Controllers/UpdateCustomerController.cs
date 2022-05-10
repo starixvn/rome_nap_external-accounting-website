@@ -112,7 +112,7 @@
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
         public ActionResult UpdateSecurityCode(int custId, string code, bool force, int roleId = 2)
-            => JsonBase(customerCommandService.UpdateSecurityCode(custId, code, force, roleId));
+            => JsonBase(customerCommandService.UpdateSecurityCode(custId, code, force, roleId, CurrentContext.Ip4Address));
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP,

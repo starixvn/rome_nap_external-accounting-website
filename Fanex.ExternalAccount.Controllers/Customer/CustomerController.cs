@@ -1,5 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
     using Core.Authorization;
     using Core.Base;
     using Core.Context;
@@ -7,17 +14,12 @@
     using CustomerSetting.Security.Authenticate;
     using DataAccess.Criteria.Customer;
     using DataAccess.Criteria.Customer.CustomerStatus;
+    using Fanex.ExternalAccount.Service.TelegramBot;
     using Fanex.Module.NG2.Entities;
     using Newtonsoft.Json;
     using PTEngine.BusinessObjects;
     using Service;
     using Service.Impl.Customer;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Threading;
-    using System.Web;
-    using System.Web.Mvc;
     using Utilities;
     using ViewModel;
     using ViewModel.Customer;
@@ -33,6 +35,7 @@
         private readonly MasterService _masterService = new MasterService();
         private readonly SuperService _superService = new SuperService();
         private readonly IIPInformatonService ipInformationService = new IPInformationService();
+        private readonly ITelegramBotService _telegramChatbotService = new TelegramBotService();
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public ActionResult IsValidUsername(string username)
@@ -489,6 +492,12 @@
 
             if (result.ErrorCode.Equals("0"))
             {
+                if (roleId != (byte)CustomerRole.Member)
+                {
+                    var ip = CurrentContext.Ip4Address;
+                    Task.Run(() => _telegramChatbotService.NotifyChangePassword(custId, 0, ip));
+                }
+
                 _customerService.KickoutCustomer(custId, roleId, CurrentContext.Ip4Address);
             }
 
