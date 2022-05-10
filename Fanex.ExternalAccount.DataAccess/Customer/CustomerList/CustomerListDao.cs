@@ -45,7 +45,6 @@
                         Closed = Utils.ToBoolean(reader["Closed"]),
                         ClosedReason = Utils.ToByte(reader["ClosedReason"]),
                         LockedAccess = new CustomerLockedAccess(Utils.ToByte(reader["Locked"])),
-                        SyncCasino = Utils.ToBoolean(reader["SyncCasino"]),
                         CreateDate = Utils.ToStringExt(Utils.ToDateTime(reader["CreateDate"])),
                         Discount1x2 = Utils.ToDecimal(reader["Discount1x2"]).Format(decimalPrecision),
                         DiscountCS = Utils.ToDecimal(reader["DiscountCS"]).Format(decimalPrecision),

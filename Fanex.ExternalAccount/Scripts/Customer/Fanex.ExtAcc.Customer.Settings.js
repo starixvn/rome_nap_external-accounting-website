@@ -20,9 +20,9 @@ Fanex.ExtAcc.Customer.Settings = {
         Fanex.ExtAcc.Customer.IsMultiple = false;
         $('#tabs').tabs();
 
+        $('#tab4').css('display', Fanex.ExtAcc.Customer.HideCasino ? 'none' : 'block');
         $('#tab8').css('display', Fanex.ExtAcc.Customer.HideVirtualSports ? 'none' : 'block');
         $('#tab9').css('display', Fanex.ExtAcc.Customer.HideKeno ? 'none' : 'block');
-        $('#tab10').css('display', Fanex.ExtAcc.Customer.HideGoldDeluxe ? 'none' : 'block');
 
         $('#tab1').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
@@ -31,7 +31,7 @@ Fanex.ExtAcc.Customer.Settings = {
         
         $('#tab4').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.GetCasinoSetting();
+            Fanex.ExtAcc.Customer.Settings.RenderDCS(6, "#casinoFrame", "#tabs-4");
         });        
 
         $('#tab8').bind('click', function () {
@@ -42,11 +42,6 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab9').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.GetKenoSetting();
-        });
-
-        $('#tab10').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.GetGoldDeluxeSetting();
         });
 
         $('.dynamic-setting-tab').bind('click', function () {
@@ -69,38 +64,6 @@ Fanex.ExtAcc.Customer.Settings = {
             $('#tabs-1').html(result);
             Fanex.ExtAcc.UnBlockUI();
         });
-    },
-
-
-
-    GetCasinoSetting: function () {
-        Fanex.ExtAcc.Customer.IsMultiple = false;
-        Fanex.ExtAcc.Customer.UserId = this.UserId;
-        var action = '';
-
-        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-            action = 'Master/EditMaster';
-        }
-        else if (this.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-            action = 'Agent/EditAgent';
-        }
-        else {
-            action = 'Member/EditMember';
-        }
-
-        Fanex.ExtAcc.Customer.Ids = function () {
-            return [this.UserId];
-        };
-
-        Fanex.ExtAcc.Customer.Names = function () {
-            return [''];
-        };
-
-        var url = resolveClientUrl('CustomerSetting/Casino/' + action + '?id=' + this.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupname=' + $('#selectedGroupName').html());
-
-        $('#tabs-4').height($('#leftFrame').height() - 10);
-        $('#tabs-4').css('display', 'block');
-        Fanex.ExtAcc.Customer.Settings.LoadProductSetting('#casinoFrame', url);
     },
 
     GetKenoSetting: function () {
@@ -131,32 +94,7 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tabs-9').height($('#leftFrame').height() - 10);
         $('#tabs-9').css('display', 'block');
         Fanex.ExtAcc.Customer.Settings.LoadProductSetting('#kenoFrame', url);
-    },   
-
-
-    GetGoldDeluxeSetting: function () {
-        Fanex.ExtAcc.Customer.IsMultiple = false;
-        Fanex.ExtAcc.Customer.UserId = this.UserId;
-        var action = '';
-        var url = '';
-
-        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-            url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=4&formType=1&level=3" + "&uplineId=" + Fanex.ExtAcc.Customer.superId;
-        }
-        else if (this.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-            url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=3&formType=1&level=2" + "&uplineId=" + Fanex.ExtAcc.Customer.masterId;
-        }
-        else {
-            url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=2&formType=1&level=1" + "&uplineId=" + Fanex.ExtAcc.Customer.agentId;
-        }
-
-
-        var url = resolveClientUrl(url + "&actorId=" + parent.userId + "&custId=" + this.UserId + "&groupName=" + $('#selectedGroupName').html());
-        $('#tabs-10').height($('#leftFrame').height() - 10);
-        $('#tabs-10').css('display', 'block');
-        Fanex.ExtAcc.Customer.Settings.LoadProductSetting('#goldDeluxeFrame', url);
     },
-
     RenderDCS: function (productId, frameId, tabId) {
         Fanex.ExtAcc.Customer.IsMultiple = false;
         Fanex.ExtAcc.Customer.UserId = this.UserId;

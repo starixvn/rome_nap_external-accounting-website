@@ -31,8 +31,7 @@
             new Dictionary<int, string>
             {
                 // Show edit bet setting tab for edit super setting
-                {ProductConstants.RNGCasino, eFunctions.CasinoBetting},
-                {ProductConstants.GoldDeluxe, eFunctions.GoldDeluxeBetting},
+                {ProductConstants.Casino, eFunctions.CasinoBetting},
                 {ProductConstants.Keno, eFunctions.KenoBetting},
                 {ProductConstants.Sportsbook, eFunctions.SportsbookBetting},
                 {ProductConstants.LiveCasino, eFunctions.LiveCasinoBetting},
@@ -63,7 +62,6 @@
         public static List<ObjectInfo> CreateSyncAndHiddenItems(DataRow nonDCSProductStatusRow,DataTable dcsProductStatusTable)
             => new List<ObjectInfo>
             {
-                new ObjectInfo("SyncCasino", nonDCSProductStatusRow.IsSyncedCasino(), "Casino Synced"),
                 new ObjectInfo("HideLiveCasino", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.LiveCasino)),
                 new ObjectInfo("HideVoidbridge", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.VoidBridge)),
                 new ObjectInfo("HideNG2", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.NG2)),

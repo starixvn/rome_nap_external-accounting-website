@@ -64,8 +64,6 @@
 
         public static string InternalLoginUrl8 => GetValue("int_agent_url8");
 
-        public static bool HideGoldDeluxe => Utils.ToBoolean(GetValue("HideGoldDeluxe"));
-
         public static bool IsCache => Utils.ToBoolean(GetValue("IsCache"));
 
         public static IList<int> AdminUsersEditSuperStatus

@@ -4,5 +4,3 @@
 /// <reference path="angular.min.js" />
 /// <reference path="Fanex.CustomerSetting.Core.js" />
 /// <reference path="ptarea.js" />
-/// <reference path="../Views/Casino/Scripts/CustomerController.js" />
-/// <reference path="../Views/Casino/Scripts/CasinoController.js" />

@@ -284,12 +284,6 @@
                 reader.NextResult();
                 if (reader.Read())
                 {
-                    result.SyncedCasino = Utils.ToBoolean(reader["SyncCasino"]);
-                    result.UplineSyncedCasino = Utils.ToBoolean(reader["uplineSyncCasino"]);
-                    result.DisableCasino = Utils.ToBoolean(reader["DisableCasino"]);
-                    result.HideGoldDeluxe = !ProductSettings.IsShowGoldDeluxe || Utils.ToBoolean(reader["HideGoldDeluxe"]);
-                    result.DisableGoldDeluxe = Utils.ToBoolean(reader["DisableGoldDeluxe"]);
-                    result.UplineHideGoldDeluxe = Utils.ToBoolean(reader["uplineHideGoldDeluxe"]);
                     result.HideKeno = !ProductSettings.IsShowKeno || Utils.ToBoolean(reader["HideKeno"]);
                     result.DisableKeno = Utils.ToBoolean(reader["DisableKeno"]);
                 }
@@ -298,6 +292,7 @@
                 while (reader.Read())
                 {
                     int productId = Utils.ToInt32(reader["ProductID"]);
+                    
                     if (productId == ProductConstants.VirtualSports)
                     {
                         result.HideVirtualSport = Utils.ToBoolean(reader["isHidden"]);

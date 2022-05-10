@@ -34,9 +34,8 @@
         <ul class="tabs">
             <li id="tab1" onclick="LoadSB()"><a href="#tabs-1">Sportsbook</a></li>
             <li id="tab5" onclick="LoadVirtualSports()"><a href="#tabs-5">Virtual Sports</a></li>
-            <li id="tab6" onclick="LoadCasino()"><a href="#tabs-6">Casino</a></li>
+            <li id="tab6" onclick="LoadCasino()"><a href="#tabs-6">Saba Casino</a></li>
             <li id="tab8" onclick="LoadKeno()"><a href="#tabs-8">RNG Keno</a></li>
-            <li id="tab12" onclick="LoadGoldDeluxe()"><a href="#tabs-12">Gold Deluxe</a></li>
 
             @foreach (var tab in visibleTabs)
             {
@@ -55,13 +54,11 @@
             <div><iframe id="product-5" width="100%" height="450px" frameborder="0" src=""></iframe></div>
         </div>
         <div id="tabs-6">
-            @RenderSection("Casino", false)
+            <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
+            <div><iframe id="product-6" width="100%" height="450px" frameborder="0" src=""></iframe></div>
         </div>
         <div id="tabs-8">
             @RenderSection("Keno", false)
-        </div>
-        <div id="tabs-12">
-            @RenderSection("GoldDeluxe", false)
         </div>
 
         @foreach (var tab in visibleTabs)
@@ -89,40 +86,22 @@
             var url = document.URL.toLowerCase();
             var index = url.indexOf('sportsbook') != -1 ? 0 :
                 url.indexOf('virtualsportsbetting') != -1 ? 1 :
-                url.indexOf('casinobetting') != -1 ? 2 :
+                url.indexOf('product-6') != -1 ? 2 :
                 url.indexOf('kenobetting') != -1 ? 3 :
-                url.indexOf('golddeluxebetting') != -1 ? 4 :
-                url.indexOf('livecasino') != -1 ? 5 :
-                url.indexOf('voidbridge') != -1 ? 6 :
-                url.indexOf('ng2') != -1 ? 7 :
-                url.indexOf('rnglottery') != -1 ? 8 :
-                url.indexOf('product-30') != -1 ? 9 :
-                url.indexOf('product-42') != -1 ? 10 : 0
-                url.indexOf('product-66') != -1 ? 11 : 0
-                url.indexOf('product-69') != -1 ? 12 : 0;
+                url.indexOf('livecasino') != -1 ? 4 :
+                url.indexOf('voidbridge') != -1 ? 5 :
+                url.indexOf('ng2') != -1 ? 6 :
+                url.indexOf('rnglottery') != -1 ? 7 :
+                url.indexOf('product-30') != -1 ? 8 :
+                url.indexOf('product-42') != -1 ? 9 : 0
+                url.indexOf('product-66') != -1 ? 10 : 0
+                url.indexOf('product-69') != -1 ? 11 : 0;
             var custInfo = @Html.Raw(custInfo);
 
             if (parent.showNG2Betting)
             {
                 $('').insertAfter('#tab23');
                 $('').insertAfter('#tabs-23');
-            }
-
-            if (!custInfo.syncCasino) {
-                $('#tab6').remove();
-                $('#tabs-6').remove();
-                if (index > 2) {
-                    --index;
-                }
-            }
-
-            if (custInfo.hideGoldDeluxe)
-            {
-                $('#tab12').remove();
-                $('#tabs-12').remove();
-                if (index > 4) {
-                    --index;
-                }
             }
 
             $('#tabs').tabs({ selected: index });

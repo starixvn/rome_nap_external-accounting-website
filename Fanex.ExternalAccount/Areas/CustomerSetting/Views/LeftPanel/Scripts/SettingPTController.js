@@ -42,33 +42,7 @@
     };
 
     $scope.Casino = function () {
-        $scope.ResetGlobalValue();
-
-        var roleId = $scope.model.personalInfo.roleId.value;
-        var custId = $scope.model.personalInfo.custId.value;
-        var url = '';
-
-        switch (roleId) {
-            case 4:
-                url = parent.resolveClientUrl('CustomerSetting/Casino/Super/EditSuper?id=' + $scope.model.personalInfo.custId.value + '&uplineid=0');
-                break;
-            case 3:
-                url = parent.resolveClientUrl('CustomerSetting/Casino/Master/EditMaster?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + $scope.model.personalInfo.uplineId.value);
-                break;
-            case 2:
-                url = parent.resolveClientUrl('CustomerSetting/Casino/Agent/EditAgent?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + $scope.model.personalInfo.uplineId.value);
-                break;
-            case 1:
-                url = parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMember?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + $scope.model.personalInfo.uplineId.value);
-                break;
-            default:
-                break;
-        }
-
-        if (url !== '') {
-            parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupname=' + parent.$('#selectedGroupName').html());
-        }
-
+        $scope.RenderDCS(6);
         $scope.collapseSidebar();
     };
 
@@ -113,35 +87,6 @@
         if (url !== '') {
             parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupName=' + parent.$('#selectedGroupName').html());
         }
-
-        $scope.collapseSidebar();
-    };
-
-    $scope.GoldDeluxe = function () {
-        $scope.ResetGlobalValue();
-
-        var roleId = $scope.model.personalInfo.roleId.value;
-        var custId = $scope.model.personalInfo.custId.value;
-        var uplineId = roleId === 4 ? userId : $scope.model.personalInfo.uplineId.value;
-        var url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?actorId=" + parent.userId + "&custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html();
-        switch (roleId) {
-            case 4:
-                url = url + "&upLineLevel=0&uplineId=0&formType=2&level=4";
-                break;
-            case 3:
-                url = url + "&upLineLevel=4&formType=1&level=3" + "&uplineId=" + $scope.model.personalInfo.uplineId.value;
-                break;
-            case 2:
-                url = url + "&upLineLevel=3&formType=1&level=2" + "&uplineId=" + $scope.model.personalInfo.uplineId.value;
-                break;
-            case 1:
-                url = url + "&upLineLevel=2&formType=1&level=1" + "&uplineId=" + $scope.model.personalInfo.uplineId.value;
-                break;
-            default:
-                break;
-        }
-
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(url));
 
         $scope.collapseSidebar();
     };

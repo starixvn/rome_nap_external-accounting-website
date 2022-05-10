@@ -14,8 +14,6 @@
 
         public int RoleId { get; set; }
 
-        public bool SyncCasino { get; set; }        
-
         public bool AllowDoubleComm { get; set; }
 
         public bool DisableTransfer { get; set; }
@@ -38,15 +36,9 @@
 
         public bool DisableKeno { get; set; }
 
-        public bool DisableGoldDeluxe { get; set; }
-
-        public bool HideGoldDeluxe { get; set; }
-
         public bool DisableSportsbook2 { get; set; }
 
         public bool HideSportsbook2 { get; set; }
-
-        public bool SyncGoldDeluxeDownlines { get; set; }
 
         public Dictionary<int, ProductStatus> ProductStatusDic { get; set; }
     }

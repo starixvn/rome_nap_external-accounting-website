@@ -33,12 +33,10 @@
         "Filter/ProductsList",
         "DailyWinloss/Index",
         "WinlossDetail/Index",
-        "WinLossDetailIBCBetLiveCasino/Index",
         "PokerGamesWinloss/Index",
         "PokerGamesWinLossDetail/GetData",
         "DailyWinLoss/GetDailyWinLoss",
-        "WinLossDetail/GetData",
-        "WinLossDetailIBCBetLiveCasino/GetData"
+        "WinLossDetail/GetData"
       ]
     },
     {

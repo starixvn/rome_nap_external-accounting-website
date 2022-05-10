@@ -61,18 +61,6 @@
                         separator1: "-----"
                     };
 
-                    var has3rdParty = false;
-                    if (result.UplineSyncedCasino) {
-                        has3rdParty = true;
-                        items.casino = {
-                            name: "Casino",
-                            className: result.SyncedCasino ? (result.DisableCasino ? "iconDisableEdit" : "iconEnableEdit") : 'iconUnsyncEdit',
-                            callback: function () {
-                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('CustomerSetting/Casino/Master/EditMaster?id=' + Fanex.ExtAcc.Customer.UserId + '&uplineid=' + Fanex.ExtAcc.Customer.superId + '&groupname=' + $('#selectedGroupName').html()), 'Edit Casino Setting <font color="#6dcff6">' + title + '</font>', 1150, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, null, 1);
-                            }
-                        };
-                    }
-
                     function addEditProductMasterContextMenuItem(productId, productKey, productName, isDisabled, isSynced) {
                         isSynced = typeof (isSynced) == 'undefined' ? true : isSynced;
                         items[productKey] = {
@@ -90,6 +78,7 @@
                         };
                     }
 
+                    var has3rdParty = false;
                     if (!result.HideVirtualSport) {
                         has3rdParty = true;
                         addEditProductMasterContextMenuItem(5, 'virtualSport', 'Virtual Sports', result.DisableVirtualSport);
@@ -104,19 +93,6 @@
                                 Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId), 'Edit RNG Keno Setting <font color="#6dcff6">' + title + '</font>', 900, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, null, 1);
                             }
                         };
-                    }
-
-                    if (!result.UplineHideGoldDeluxe) {
-                        has3rdParty = true;
-                        items.goldDeluxe = {
-                            name: "Gold Deluxe",
-                            className: result.DisableGoldDeluxe == true ? "iconDisableEdit" : "iconEnableEdit",
-                            callback: function () {
-                                var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 400) : 400;
-                                url = "GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=4&formType=1&level=3" + "&uplineId=" + Fanex.ExtAcc.Customer.superId + "&actorId=" + parent.userId + "&custId=" + Fanex.ExtAcc.Customer.UserId + "&groupName=" + parent.$('#selectedGroupName').html();
-                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl(url), 'Edit Gold Deluxe Setting <font color="#6dcff6">' + title + '</font>', 900, height, false, false, 1);
-                            }
-                        }
                     }
 
                     for (var i = 0, max = result.DCSProductsSetting.length; i < max; i++) {

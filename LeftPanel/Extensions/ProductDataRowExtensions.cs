@@ -13,12 +13,6 @@
 
         internal static bool EnableOutright(this DataRow dataRow) => !DisableOutright(dataRow);
 
-        internal static bool DisableCasinoUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineDisableCasino"]);
-
-        internal static bool DisableCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableCasino"]);
-
-        internal static bool EnableCasino(this DataRow dataRow) => !DisableCasino(dataRow);
-
         internal static bool DisableNumberGameUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineDisabledNumber"]);
 
         internal static bool DisableNumberGame(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableNumber"]);
@@ -31,15 +25,7 @@
 
         internal static bool EnableDoubleCommUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineDoubleCommLosing"], true);
 
-        internal static bool EnableGoldDeluxe(this DataRow dataRow) => !Utils.ToBoolean(dataRow["DisableGoldDeluxe"]);
-
-        internal static bool IsSyncedCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncCasino"]);
-
         internal static bool DisableTransfer(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableTransfer"]);
-
-        internal static bool SyncCasino(this DataRow dataRow) => Utils.ToBoolean(dataRow["syncCasino"]);
-
-        internal static bool SyncCasinoUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineSyncCasino"]);
 
         internal static bool HideVirtualSports(this DataRow dataRow) => Utils.ToBoolean(dataRow["hideVirtualSports"]);
 
@@ -48,16 +34,6 @@
         internal static bool HideKeno(this DataRow dataRow) => Utils.ToBoolean(dataRow["HideKeno"]);
 
         internal static bool DisableKeno(this DataRow dataRow) => Utils.ToBoolean(dataRow["DisableKeno"]);
-
-        internal static bool HideGoldDeluxe(this DataRow dataRow) => Utils.ToBoolean(dataRow["HideGoldDeluxe"]);
-
-        internal static bool HideGoldDeluxeUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineHideGoldDeluxe"]);
-
-        internal static bool DisableGoldDeluxeUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineDisableGoldDeluxe"]);
-
-        internal static bool DisableGoldDeluxe(this DataRow dataRow) => Utils.ToBoolean(dataRow["DisableGoldDeluxe"]);
-
-        internal static bool SyncedGoldDeluxeDownline(this DataRow dataRow) => Utils.ToBoolean(dataRow["SyncedGoldDeluxeDownline"]);
 
         internal static bool IsHiddenUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["isHiddenUpline"]);
 

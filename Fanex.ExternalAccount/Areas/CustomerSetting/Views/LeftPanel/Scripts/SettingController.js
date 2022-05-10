@@ -69,25 +69,13 @@
                     $scope.setting.editItems[i].isHide = true;
                 }
             }
-
-            var syncCasino = true;
-
-            for (var j = 0; j < $scope.setting.syncItems.length; j++) {
-                if (!$scope.setting.syncItems[j].value && $scope.setting.syncItems[j].key == 'SyncCasino') {
-                    syncCasino = false;
-                }
-            }
-
+            
             for (var i = 0; i < $scope.setting.enableItems.length; i++) {
                 if ($scope.model.personalInfo.roleId.value == 4 && ($scope.setting.enableItems[i].key == 'Closed') &&
                     !allowAdmins.contains(parseInt(parent.userId)) && $scope.setting.enableItems[i].value == true) {
                     $scope.setting.enableItems[i].disabled = true;
                     $scope.setting.enableItems[i].tooltip = 'You are not authorized on this function';
                 }
-
-                if ($scope.setting.enableItems[i].key == 'EnableCasino')
-                    $scope.setting.enableItems[i].isHide = !syncCasino;
-
             }
 
             for (var i = 0; i < $scope.setting.masterPts.length; i++) {
@@ -713,7 +701,7 @@
         }
         top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(6, "Casino");
+        $scope.EnableThirdpartyProduct(6, "Saba Casino");
     };
 
     $scope.EnableNumberGame = function (enable, id, disabled) {
@@ -818,17 +806,6 @@
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(24, "Fishing World");
     };
-
-    $scope.EnableGoldDeluxe = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(12, "Gold Deluxe");
-    };
-
 
     $scope.EnableLiveCasino = function (enable, id, disabled) {
         if (disabled) {
@@ -1041,9 +1018,7 @@
     };
 
     $scope.SuperCasino = function () {
-        $scope.ResetGlobalValueAtSuperOnMember();
-        var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberBySuper?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + superId + '&groupname=' + parent.$('#selectedGroupName').html()));
+        $scope.RenderSupeOnMemberDCS(6);
     };
 
     $scope.SuperVirtualSports = function () {
@@ -1056,14 +1031,6 @@
         parent.Fanex.ExtAcc.Customer.superId = superId;
         $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custId=' + $scope.model.personalInfo.custId.value + "&userId=" + parent.userId));
-    };
-
-    $scope.SuperGoldDeluxe = function () {
-        var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Customer.superId = superId;
-        $scope.ResetGlobalValueAtSuperOnMember();
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=4&formType=1&uplineId=' + superId + '&level=1&custId=' + $scope.model.personalInfo.custId.value + "&actorId=" + parent.userId + "&groupName=" + parent.$('#selectedGroupName').html()));
     };
 
     $scope.MasterPT = function () {
@@ -1081,9 +1048,7 @@
     };
 
     $scope.MasterCasino = function () {
-        $scope.ResetGlobalValueAtMasterOnMember();
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('CustomerSetting/Casino/Member/EditMemberByMaster?id=' + $scope.model.personalInfo.custId.value + '&uplineid=' + masterId + '&groupname=' + parent.$('#selectedGroupName').html()));
+        $scope.RenderMasterOnMemberDCS(6);
     };
 
     $scope.MasterVirtualSports = function () {
@@ -1094,14 +1059,6 @@
         $scope.ResetGlobalValueAtMasterOnMember();
         var masterId = $scope.model.personalInfo.downlines[1].key;
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value + "&userId=" + parent.userId));
-    };
-
-    $scope.MasterGoldDeluxe = function () {
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Customer.masterId = masterId;
-        $scope.ResetGlobalValueAtMasterOnMember();
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('GoldDeluxeSetting/GoldDeluxe/EditSetting?upLineLevel=3&formType=1&uplineId=' + masterId + '&level=1&custId=' + $scope.model.personalInfo.custId.value + "&actorId=" + parent.userId + "&groupName=" + parent.$('#selectedGroupName').html()));
     };
 
     $scope.SuperSBPT = function () {

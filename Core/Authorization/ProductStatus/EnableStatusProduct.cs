@@ -6,7 +6,6 @@
         EnableVirtualSports = 5,
         EnableCasino = 6,
         Keno = 8,
-        EnableGoldDeluxe = 12,
         EnableESports = 16,
         EnableLiveCasino = 41,
         EnableVoidbridge = 22,

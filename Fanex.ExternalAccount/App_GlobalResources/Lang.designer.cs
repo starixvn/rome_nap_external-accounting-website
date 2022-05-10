@@ -268,15 +268,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Agent Real Time Casino Winloss.
-        /// </summary>
-        internal static string agentRealTimeWinloss {
-            get {
-                return ResourceManager.GetString("agentRealTimeWinloss", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Agent Total.
         /// </summary>
         internal static string agenttotal {
@@ -1073,51 +1064,6 @@ namespace Resources {
         internal static string canoeing {
             get {
                 return ResourceManager.GetString("canoeing", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Casino.
-        /// </summary>
-        internal static string casino {
-            get {
-                return ResourceManager.GetString("casino", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Previous enabled downlines.
-        /// </summary>
-        internal static string casinodownlines {
-            get {
-                return ResourceManager.GetString("casinodownlines", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Casino downlines will be disabled as well.
-        /// </summary>
-        internal static string casinodownlinesdisabled {
-            get {
-                return ResourceManager.GetString("casinodownlinesdisabled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Casino Games.
-        /// </summary>
-        internal static string casinoGame {
-            get {
-                return ResourceManager.GetString("casinoGame", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Casino Position Taking (%).
-        /// </summary>
-        internal static string casinoPositionTaking {
-            get {
-                return ResourceManager.GetString("casinoPositionTaking", resourceCulture);
             }
         }
         
@@ -1932,15 +1878,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Multiple Casino PT.
-        /// </summary>
-        internal static string editmultcs {
-            get {
-                return ResourceManager.GetString("editmultcs", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Edit Multiple Sportsbook&apos;s PT.
         /// </summary>
         internal static string editmultsportbook {
@@ -2126,15 +2063,6 @@ namespace Resources {
         internal static string eway {
             get {
                 return ResourceManager.GetString("eway", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to exit without saving your casino setting?.
-        /// </summary>
-        internal static string exitCSConfirmMsg {
-            get {
-                return ResourceManager.GetString("exitCSConfirmMsg", resourceCulture);
             }
         }
         
@@ -2931,15 +2859,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Insert Casino Setting.
-        /// </summary>
-        internal static string insertCS {
-            get {
-                return ResourceManager.GetString("insertCS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Internal.
         /// </summary>
         internal static string Internal {
@@ -3662,24 +3581,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to disable Casino on this customer?.
-        /// </summary>
-        internal static string lblAlertDisableCSMember {
-            get {
-                return ResourceManager.GetString("lblAlertDisableCSMember", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to enable Casino on this customer?.
-        /// </summary>
-        internal static string lblAlertEnableCS {
-            get {
-                return ResourceManager.GetString("lblAlertEnableCS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Max Bet must be greater than zero..
         /// </summary>
         internal static string lblalertMaxBetNegativeHR {
@@ -3919,24 +3820,6 @@ namespace Resources {
         internal static string lblCashBalance {
             get {
                 return ResourceManager.GetString("lblCashBalance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Casino Hand History.
-        /// </summary>
-        internal static string lblCasinoHandHistory {
-            get {
-                return ResourceManager.GetString("lblCasinoHandHistory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Casino Win Loss.
-        /// </summary>
-        internal static string lblCasinoWinLoss {
-            get {
-                return ResourceManager.GetString("lblCasinoWinLoss", resourceCulture);
             }
         }
         
@@ -4301,24 +4184,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Casino Outstanding.
-        /// </summary>
-        internal static string lblCSOutstanding {
-            get {
-                return ResourceManager.GetString("lblCSOutstanding", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Casino Transfer.
-        /// </summary>
-        internal static string lblCSTransfer {
-            get {
-                return ResourceManager.GetString("lblCSTransfer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Customer Information.
         /// </summary>
         internal static string lblCustomerInfomation {
@@ -4369,15 +4234,6 @@ namespace Resources {
         internal static string lbleditbetsetting {
             get {
                 return ResourceManager.GetString("lbleditbetsetting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Casino.
-        /// </summary>
-        internal static string lbleditcasino {
-            get {
-                return ResourceManager.GetString("lbleditcasino", resourceCulture);
             }
         }
         
@@ -4468,15 +4324,6 @@ namespace Resources {
         internal static string lblEI {
             get {
                 return ResourceManager.GetString("lblEI", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable Casino.
-        /// </summary>
-        internal static string lblEnableCS {
-            get {
-                return ResourceManager.GetString("lblEnableCS", resourceCulture);
             }
         }
         
@@ -5606,15 +5453,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Real Time Casino Win Loss.
-        /// </summary>
-        internal static string lblRealTimeCSWinloss {
-            get {
-                return ResourceManager.GetString("lblRealTimeCSWinloss", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Reset Password.
         /// </summary>
         internal static string lblresetpassword {
@@ -5890,33 +5728,6 @@ namespace Resources {
         internal static string lblTotalCash {
             get {
                 return ResourceManager.GetString("lblTotalCash", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Total Casino Outstanding.
-        /// </summary>
-        internal static string lblTotalCSOutstanding {
-            get {
-                return ResourceManager.GetString("lblTotalCSOutstanding", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Total Casino Transfer.
-        /// </summary>
-        internal static string lblTotalCSTransfer {
-            get {
-                return ResourceManager.GetString("lblTotalCSTransfer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Total Casino Transfer|Outstanding.
-        /// </summary>
-        internal static string lblTotalCSTransferOutstanding {
-            get {
-                return ResourceManager.GetString("lblTotalCSTransferOutstanding", resourceCulture);
             }
         }
         
@@ -6398,15 +6209,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Master Real Time Casino Winloss.
-        /// </summary>
-        internal static string masterRealTimeWinloss {
-            get {
-                return ResourceManager.GetString("masterRealTimeWinloss", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Master Total.
         /// </summary>
         internal static string mastertotal {
@@ -6601,15 +6403,6 @@ namespace Resources {
         internal static string memberoutstanding {
             get {
                 return ResourceManager.GetString("memberoutstanding", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Member Real Time Casino Winloss.
-        /// </summary>
-        internal static string memberRealTimeWinloss {
-            get {
-                return ResourceManager.GetString("memberRealTimeWinloss", resourceCulture);
             }
         }
         
@@ -8820,38 +8613,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WARNING!!! \n\n Are you sure you want to disable Casino on this customer and all downlines?.
-        /// </summary>
-        internal static string strConfirmDisableCS {
-            get {
-                return ResourceManager.GetString("strConfirmDisableCS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WARNING!!! \n\n Are you sure you want to disable Casino on these customers and all downlines?.
-        /// </summary>
-        internal static string strConfirmDisableCSMult {
-            get {
-                return ResourceManager.GetString("strConfirmDisableCSMult", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to WARNING!!! \n\n Are you sure you want to disable Number Game on this customer and all downlines?.
         /// </summary>
         internal static string strConfirmDisableNumber {
             get {
                 return ResourceManager.GetString("strConfirmDisableNumber", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Do you want to enable Casino for this customer?.
-        /// </summary>
-        internal static string strConfirmEnableCS {
-            get {
-                return ResourceManager.GetString("strConfirmEnableCS", resourceCulture);
             }
         }
         
@@ -9150,15 +8916,6 @@ namespace Resources {
         internal static string sync {
             get {
                 return ResourceManager.GetString("sync", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sync Casino.
-        /// </summary>
-        internal static string synccasino {
-            get {
-                return ResourceManager.GetString("synccasino", resourceCulture);
             }
         }
         
@@ -9772,15 +9529,6 @@ namespace Resources {
         internal static string UpdateCloseSuccess {
             get {
                 return ResourceManager.GetString("UpdateCloseSuccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Update Casino Setting.
-        /// </summary>
-        internal static string updateCS {
-            get {
-                return ResourceManager.GetString("updateCS", resourceCulture);
             }
         }
         

@@ -4,9 +4,7 @@ namespace Fanex.ExternalAccount.DTO.Customer
 {
     public class CustomerStatusDTO
     {
-        public bool SyncedCasino { get; set; }
-
-        public bool UplineSyncedCasino { get; set; }
+        public bool HideCasino { get; set; } = true;
 
         public bool DisableCasino { get; set; }
 
@@ -17,12 +15,6 @@ namespace Fanex.ExternalAccount.DTO.Customer
         public bool HideKeno { get; set; }
 
         public bool DisableKeno { get; set; }
-
-        public bool HideGoldDeluxe { get; set; }
-
-        public bool UplineHideGoldDeluxe { get; set; }
-
-        public bool DisableGoldDeluxe { get; set; }
 
         public bool DisableTransfer { get; set; }
 

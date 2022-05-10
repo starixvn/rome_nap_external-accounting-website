@@ -44,10 +44,6 @@
     "inputFile": "assets/styles/pages/customer/virtual-sport.scss"
   },
   {
-    "outputFile": "assets/styles/pages/customer/casino.css",
-    "inputFile": "assets/styles/pages/customer/casino.scss"
-  },
-  {
     "outputFile": "assets/styles/pages/statement/statement.css",
     "inputFile": "assets/styles/pages/statement/statement.scss"
   },
@@ -62,10 +58,6 @@
   {
     "outputFile": "assets/styles/vendors/bootstrap.css",
     "inputFile": "assets/styles/vendors/bootstrap.scss"
-  },
-  {
-    "outputFile": "assets/styles/pages/customer/gold-deluxe-setting.css",
-    "inputFile": "assets/styles/pages/customer/gold-deluxe-setting.scss"
   },
   {
     "outputFile": "assets/styles/pages/admin/product.css",

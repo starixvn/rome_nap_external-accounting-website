@@ -23,9 +23,8 @@
                 [ProductConstants.VGaming] = new Product(10, ProductConstants.VGaming, "Vgaming"),
                 [ProductConstants.Bitcoin] = new Product(11, ProductConstants.Bitcoin, "Bitcoin"),
                 [ProductConstants.Cashout] = new Product(12, ProductConstants.Cashout, "Cashout", true),
+                [ProductConstants.Casino] = new Product(13, ProductConstants.Casino, "Saba Casino", true),
             };
-
-        public static bool IsShowGoldDeluxe => IsShowProduct(ProductConstants.GoldDeluxe);
 
         public static bool IsShowKeno => IsShowProduct(ProductConstants.Keno);
 

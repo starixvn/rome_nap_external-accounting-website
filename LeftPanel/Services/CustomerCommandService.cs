@@ -1,9 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services
 {
-    using System;
-    using System.Diagnostics;
-    using CasinoLibrary.Model.UserException;
-    using CasinoLibrary.SBAgent;
     using Core.Authorization;
     using Core.Shared;
     using Criteria;
@@ -11,10 +7,12 @@
     using CustomerSetting.Security.Authenticate;
     using DataAccesses;
     using DTO;
-    using Logging.Extensions.Web;
-    using Service.Impl.Customer.Casino;
+    using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Service.Impl.Report;
+    using Fanex.ExternalAccount.Service.Interface.Report;
     using Sunplus.Agent.Utilities;
     using Utilities;
+    using Encryptor = Sunplus.Agent.Utilities.Encryptor;
 
     public interface CustomerCommandService
     {
@@ -43,21 +41,21 @@
         private const int AlphaAdminSystem = 3;
         private const string Salt = "1qaw3+{:P)";
         private readonly AuthorizationService authorizationService;
-        private readonly ICasinoManager casinoManager;
 
         private readonly CustomerDataAccess customerDataAccess;
         private readonly Encryptor encryptor;
+        private readonly IReportService reportService;
 
         public CustomerCommandServiceImpl(
             CustomerDataAccess customerDataAccess = null,
-            ICasinoManager casinoManager = null,
             AuthorizationService authorizationService = null,
+            IReportService reportService = null,
             Encryptor encryptor = null)
         {
             this.customerDataAccess = customerDataAccess ?? new CustomerDataAccessImpl();
-            this.casinoManager = casinoManager ?? new CasinoManager();
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
             this.encryptor = encryptor ?? new EncryptorImpl();
+            this.reportService = reportService ?? new ReportService();
         }
 
         public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
@@ -72,15 +70,14 @@
         public Result CloseCutomer(int custId, int uplineId, ICurrentSession currentSession,
             ICurrentContext currentContext, bool close, bool clearCredit, string custName)
         {
-            var casinoCustomer = casinoManager.GetCustInfoIBC(custId, uplineId);
-
-            if (casinoCustomer?.RoleId == Role.Super
+            var custInfo = reportService.SearchCustomerInfo(ExtRequest.Instance.GetGroupName(), custId, custName, true);
+            if (custInfo.RoleId == Role.Super
                 && !close
                 && !authorizationService.IsAuthorized(currentSession.UserId, eFunctions.OpenSuper,
                     AuthenticateAction.AuthenticationType.Host))
             {
                 return new Result(1, ViewLang.DontHavePermission);
-            }           
+            }
 
             return customerDataAccess.CloseCutomer(custId, close, clearCredit, custName);
         }
@@ -91,35 +88,7 @@
         public Result AllowOutright(int custId, bool allow)
             => customerDataAccess.AllowOutright(custId, allow);
 
-        public Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress)
-        {
-            var result = customerDataAccess.AutoMasterPT(custId, allow);
-            var custInfo = casinoManager.GetCustInfoIBC(custId, uplineId);
-
-            if (!custInfo.CasinoSync)
-            {
-                return result;
-            }
-
-            var casinoSync = new Customer();
-
-            try
-            {
-                casinoSync.UpdateMasterDisableAutoMPT(
-                    custId,
-                    allow,
-                    ipAddress,
-                    userId,
-                    username,
-                    AlphaAdminSystem);
-            }
-            catch (ErrorException casinoEx)
-            {
-                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
-            }
-
-            return result;
-        }
+        public Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress) => customerDataAccess.AutoMasterPT(custId, allow);
 
         public Result UpdateSecurityCode(int custId, string code, bool force, int roleId)
         {
@@ -142,6 +111,6 @@
                 Custid = custId,
                 Userid = userId,
                 IP = ip4Address
-            });        
+            });
     }
 }

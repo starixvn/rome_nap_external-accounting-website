@@ -88,7 +88,7 @@
 
             if (!this.currentSession.IsBelongToSpecialGroups)
             {
-                AddCasinoStatus(nonDCSProductStatusRow, enableItems);
+                AddCasinoStatus(table3rdDCS, enableItems);
                 AddNumberGameStatus(nonDCSProductStatusRow, enableItems);
                 AddVirtualSportsStatus(table3rdDCS, enableItems);
             }
@@ -97,7 +97,6 @@
             if (!this.currentSession.IsBelongToSpecialGroups)
             {
                 AddESportsStatus(table3rdDCS, enableItems);
-                AddGoldDeluxeStatus(nonDCSProductStatusRow, enableItems);
             }
 
             return enableItems;
@@ -119,24 +118,6 @@
             }
 
             enableItems.Add(virtualSportsStatus);
-        }
-
-        private static void AddGoldDeluxeStatus(DataRow nonDCSProductStatusRow, ICollection<ObjectInfo> enableItems)
-        {
-            if (nonDCSProductStatusRow.HideGoldDeluxe() || !ProductSettings.IsShowProduct(ProductConstants.GoldDeluxe))
-            {
-                return;
-            }
-
-            var goldDeluxeStatus =
-                new ObjectInfo("EnableGoldDeluxe", nonDCSProductStatusRow.EnableGoldDeluxe(), "Gold Deluxe");
-
-            if (nonDCSProductStatusRow.DisableGoldDeluxeUpline())
-            {
-                goldDeluxeStatus = DisableStatus(goldDeluxeStatus);
-            }
-
-            enableItems.Add(goldDeluxeStatus);
         }
 
         private void AddESportsStatus(DataTable table3rdDCS, List<ObjectInfo> enableItems)
@@ -259,16 +240,17 @@
             enableItems.Add(numberGameStatus);
         }
 
-        private static void AddCasinoStatus(DataRow nonDCSProductStatusRow, ICollection<ObjectInfo> enableItems)
+        private static void AddCasinoStatus(DataTable table3rdDCS, ICollection<ObjectInfo> enableItems)
         {
-            if (!nonDCSProductStatusRow.SyncCasino())
+            if (table3rdDCS.IsProductHidden(ProductConstants.Casino))
             {
                 return;
             }
 
-            var casinoStatus = new ObjectInfo("EnableCasino", nonDCSProductStatusRow.EnableCasino(), "Enable Casino");
+            var casinoStatus = new ObjectInfo("EnableCasino",
+               !table3rdDCS.IsProductDisabled(ProductConstants.Casino), "Saba Casino");
 
-            if (nonDCSProductStatusRow.DisableCasinoUpline())
+            if (table3rdDCS.IsProductDisabledUpline(ProductConstants.Casino))
             {
                 casinoStatus = DisableStatus(casinoStatus);
             }
@@ -359,10 +341,9 @@
             }
 
             AddParlayMaxPayoutLink(details);
-            AddCasinoEditLink(nonDCSProductStatusRow, details);
+            AddCasinoEditLink(table3rdDCS, details);
             AddVirtualSportsEditLink(table3rdDCS, details);
             AddKenoEditLink(details);
-            AddGoldDeluxeEditLink(nonDCSProductStatusRow, details);
             return details;
         }
 
@@ -384,19 +365,13 @@
             }
         }
 
-        private static void AddGoldDeluxeEditLink(DataRow nonDCSProductStatusRow, ICollection<ObjectInfo> details)
+        private void AddCasinoEditLink(DataTable table3rdDCS, ICollection<ObjectInfo> details)
         {
-            if (!nonDCSProductStatusRow.HideGoldDeluxeUpline())
+            if (_roleId.IsMember() ?
+                !table3rdDCS.IsProductHiddenUpline(ProductConstants.Casino) :
+                !table3rdDCS.IsProductHidden(ProductConstants.Casino))
             {
-                details.Add(new ObjectInfo("GoldDeluxe", "Gold Deluxe"));
-            }
-        }
-
-        private void AddCasinoEditLink(DataRow nonProductStatusRow, ICollection<ObjectInfo> details)
-        {
-            if (_roleId.IsSuper() || nonProductStatusRow.SyncCasinoUpline())
-            {
-                details.Add(new ObjectInfo("Casino", "Casino"));
+                details.Add(new ObjectInfo("Casino", "Saba Casino"));
             }
         }
 

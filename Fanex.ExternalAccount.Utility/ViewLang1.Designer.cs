@@ -934,15 +934,6 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gold Deluxe.
-        /// </summary>
-        public static string GoldDeluxe {
-            get {
-                return ResourceManager.GetString("GoldDeluxe", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Grant Permission.
         /// </summary>
         public static string GrantPermission {

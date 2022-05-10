@@ -20,9 +20,6 @@
         public const string SuperWinLossDetailBySubGroup = "SuperWinLossDetailBySubGroup";
 
         public const string Statement = "Statement";
-        public const string EnableGoldDeluxe = "EnableGoldDeluxe";
-        public const string UpdateGoldDeluxe = "UpdateGoldDeluxe";
-        public const string GoldDeluxeBetting = "GoldDeluxeBetting";
         public const string Sportsbook = "Sportsbook";
         public const string Casino = "Casino";
         public const string VirtualSports = "VirtualSports";

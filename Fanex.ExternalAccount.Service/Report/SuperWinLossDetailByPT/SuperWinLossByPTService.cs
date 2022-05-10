@@ -3,10 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using System.Diagnostics;
     using System.Linq;
-    using CasinoLibrary.Model.UserException;
-    using CasinoLibrary.SBAgent;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DataAccess.Criteria.SuperWinLossDetailByPT;
     using Fanex.ExternalAccount.DataAccess.Impl.Report;
@@ -14,7 +11,6 @@
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.Logging.Extensions.Web;
 
     public interface SuperWinLossDetailByPTService
     {
@@ -64,11 +60,9 @@
             if (model.WinLossByProducts.Any())
             {
                 var superIds = model.WinLossByProducts.Select(item => item.CustId).Distinct();
-                var superPositionTakingByRnG = GetSuperPositionTakingByRnG(superIds);
 
                 var postionTakings = superWinLossDetailByPTDataAccess
-                    .GetSuperPositionTakingList(new SuperPTCriteria(Utils.JoinToString(superIds)))
-                    .Concat(superPositionTakingByRnG);
+                    .GetSuperPositionTakingList(new SuperPTCriteria(Utils.JoinToString(superIds)));
 
                 var winlossByUsernames = model.WinLossByProducts.Join(
                     postionTakings,
@@ -166,37 +160,6 @@
             }
 
             return new SuperWinLossDetailByPTModel();
-        }
-
-        internal IEnumerable<SuperPositionTakingModel> GetSuperPositionTakingByRnG(IEnumerable<int> superIds)
-        {
-            try
-            {
-                var customer = new Customer();
-                var rngCasinoPositionTakingsTable = customer.GetSuperDesktopPT(superIds.Select(id => id.ToString()).ToArray());
-                var rngCasinoPTs = new List<SuperPositionTakingModel>();
-
-                foreach (DataRow row in rngCasinoPositionTakingsTable.Rows)
-                {
-                    rngCasinoPTs.Add(new SuperPositionTakingModel(
-                        Fanex.Common.Converter.ToInt(row["OBSuperID"]),
-                        Fanex.Common.Converter.ToDecimal(row["SPositionTaking"]),
-                        ProductConstants.RNGCasino,
-                        ""));
-                }
-
-                return rngCasinoPTs;
-            }
-            catch (ErrorException casinoEx)
-            {
-                ExceptionHandler.Handle(new Exception(casinoEx.Message, casinoEx), TraceEventType.Information);
-                return Enumerable.Empty<SuperPositionTakingModel>();
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-                return Enumerable.Empty<SuperPositionTakingModel>();
-            }
         }
     }
 }
