@@ -1,9 +1,11 @@
 ﻿@using GlobalViewLang = Fanex.ExternalAccount.Utilities.ViewLang
+@using Fanex.ExternalAccount.Utilities
 @{
     Layout = null;
     ViewBag.Title = "Super Win Loss Detail By Sub Group";
     var currentDate = DateTime.Today;
     var minDate = currentDate.AddMonths(-3).AddDays((-currentDate.Day) + 1);
+    var minDateText = minDate.ToString("MMMM dd") + " <sup>" + Utils.GetDaySuffix(minDate.Day) + "</sup>, " + minDate.ToString("yyyy");
 }
 @model Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.ViewModels.SuperWinLossDetailBySubGroupViewModel
 <div id="report-container">
@@ -61,8 +63,10 @@
         <div class="form-group">
             <span id="exporttoexcel" title="@GlobalViewLang.ExportExcel" class="icon-excel hide"></span>
         </div>
-        <div class="form-group" style="display:block;">@GlobalViewLang.ViewReportMinDate @minDate.ToString("dd MMMM, yyyy")</div>
+        <div class="form-group" style="display:block;">@GlobalViewLang.ViewReportMinDate @Html.Raw(minDateText)</div>
         <div class="form-group" style="display:block;">If a super is assigned in multiple sub groups it will be shown multiple times. However, the Grand Total only sum each super once.</div>
+        <div class="form-group" style="display:block;">@Html.Raw(GlobalViewLang.SabaSupportNote)</div>
+
     </div>
     <div class="freegrid-container hide" id="mainGrid">
         <div class="freegrid" id="jqgrid"></div>

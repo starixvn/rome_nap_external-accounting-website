@@ -56,7 +56,8 @@ namespace Fanex.ExternalAccount.Core.Shared
             PragmaticPlay,
             SexyGaming,
             SpadeGaming,
-            AllBet
+            AllBet,
+            ProductConstants.Sportsbook
         };
     }
 }

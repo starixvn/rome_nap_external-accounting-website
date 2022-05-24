@@ -13,5 +13,13 @@
         public int BetType { get; set; }
 
         public int Order { get; set; }
+
+        public string LeagueGroupId { get; set; }
+
+        public string[] LeagueGroupIds => LeagueGroupId != null ? LeagueGroupId.Split(',') : new string[] { };
+
+        public string TicketType { get; set; }
+
+        public string[] TicketTypeIds => TicketType != null ? TicketType.Split(',') : new string[] { };
     }
 }

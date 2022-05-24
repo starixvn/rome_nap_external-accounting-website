@@ -886,4 +886,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="ViewReportMinDate" xml:space="preserve">
     <value>You can view the report data from</value>
   </data>
+  <data name="SabaSupportNote" xml:space="preserve">
+    <value>The dedicated performance report of SABA Sports is only available from May 24&lt;sup&gt;th&lt;/sup&gt;, 2022 onwards. Before May 24&lt;sup&gt;th&lt;/sup&gt;, 2022, data is the combination of Sportsbook and SABA Sports.</value>
+  </data>
 </root>

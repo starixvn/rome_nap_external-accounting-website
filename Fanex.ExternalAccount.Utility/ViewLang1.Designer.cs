@@ -1844,6 +1844,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The dedicated performance report of SABA Sports is only available from May 24&lt;sup&gt;th&lt;/sup&gt;, 2022 onwards. Before May 24&lt;sup&gt;th&lt;/sup&gt;, 2022, data is the combination of Sportsbook and SABA Sports..
+        /// </summary>
+        public static string SabaSupportNote {
+            get {
+                return ResourceManager.GetString("SabaSupportNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sat.
         /// </summary>
         public static string Sat {

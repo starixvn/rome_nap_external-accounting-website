@@ -53,7 +53,7 @@ class ProductControls {
         });
 
         this.$multiSelectProductDetail = this.$("#ddl-product-detail").fanexMultiSelect({
-            minWidth: 180,
+            minWidth: 220,
             checkAllText: "Select all",
             noneSelectedText: "Select none",
             useCustomCheckAllText: true,
