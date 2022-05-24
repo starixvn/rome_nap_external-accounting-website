@@ -105,7 +105,7 @@
         }
 
         public static bool IsOfferProductDetail(string currentGroup)
-            => IsOfferJackpotProductDetailsGroup(currentGroup) || IsOfferSexyGamingProductDetailsGroup(currentGroup) || IsOfferSpadeGamingProductDetailsGroup(currentGroup);
+            => IsOfferJackpotProductDetailsGroup(currentGroup) || IsOfferSexyGamingProductDetailsGroup(currentGroup) || IsOfferSpadeGamingProductDetailsGroup(currentGroup) || IsOfferSabaProductDetailsGroup(currentGroup);
 
         public static bool IsOfferAllbetProductDetailsGroup(string currentGroup)
         {
@@ -117,6 +117,13 @@
         public static bool IsOfferJackpotProductDetailsGroup(string currentGroup)
         {
             var allGroups = GetValue("OfferJackpotProductDetailsGroups");
+
+            return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
+        }
+
+        public static bool IsOfferSabaProductDetailsGroup(string currentGroup)
+        {
+            var allGroups = GetValue("OfferSabaProductDetailsGroups");
 
             return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
         }
