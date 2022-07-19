@@ -10,7 +10,9 @@
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Interface.Report;
+    using Fanex.ExternalAccount.Service.TelegramBot;
     using Sunplus.Agent.Utilities;
+    using System.Threading.Tasks;
     using Utilities;
     using Encryptor = Sunplus.Agent.Utilities.Encryptor;
 
@@ -31,7 +33,7 @@
 
         Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress);
 
-        Result UpdateSecurityCode(int custId, string code, bool force, int roleId);
+        Result UpdateSecurityCode(int custId, string code, bool force, int roleId, string ipAddress);
 
         Result RemoveOtp(int custId, int userId, string ip4Address);
     }
@@ -41,6 +43,7 @@
         private const int AlphaAdminSystem = 3;
         private const string Salt = "1qaw3+{:P)";
         private readonly AuthorizationService authorizationService;
+        private readonly ITelegramBotService telegramBotService;
 
         private readonly CustomerDataAccess customerDataAccess;
         private readonly Encryptor encryptor;
@@ -50,12 +53,14 @@
             CustomerDataAccess customerDataAccess = null,
             AuthorizationService authorizationService = null,
             IReportService reportService = null,
-            Encryptor encryptor = null)
+            Encryptor encryptor = null,
+            ITelegramBotService telegramBotService = null)
         {
             this.customerDataAccess = customerDataAccess ?? new CustomerDataAccessImpl();
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
-            this.encryptor = encryptor ?? new EncryptorImpl();
             this.reportService = reportService ?? new ReportService();
+            this.encryptor = encryptor ?? new EncryptorImpl();
+            this.telegramBotService = telegramBotService ?? new TelegramBotService();
         }
 
         public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
@@ -90,7 +95,7 @@
 
         public Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress) => customerDataAccess.AutoMasterPT(custId, allow);
 
-        public Result UpdateSecurityCode(int custId, string code, bool force, int roleId)
+        public Result UpdateSecurityCode(int custId, string code, bool force, int roleId, string ipAddress)
         {
             var hashCode = encryptor.CfsEnCode(code);
 
@@ -102,7 +107,14 @@
             var md5 = encryptor.ComputeHash("MD5", custId.ToString(), Salt); //DevSkim: ignore DS126858
             hashCode = encryptor.ComputeHash("SHA1", code, md5); //DevSkim: ignore DS126858
 
-            return customerDataAccess.ResetSecurityCode(custId, hashCode, force || roleId.IsNotSuper());
+            var result = customerDataAccess.ResetSecurityCode(custId, hashCode, force || roleId.IsNotSuper());
+
+            if (result != null && result.IsSuccess && roleId.IsNotMember())
+            {
+                Task.Run(() => telegramBotService.NotifyChangeSecurityCode(custId, 0, ipAddress));
+            }
+
+            return result;
         }
 
         public Result RemoveOtp(int custId, int userId, string ip4Address)
