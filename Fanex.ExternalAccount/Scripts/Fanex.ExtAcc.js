@@ -152,7 +152,6 @@ Fanex.ExtAcc = {
         var fullUrl = dontNeedGroupName ? url : url + '/' + $('#selectedGroupName').html();
         $.ajax({
             url: fullUrl, type: 'post', success: function (result) {
-
                 if (Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.ExtAcc.UnBlockUI)) {
                     return;
                 }
@@ -205,11 +204,15 @@ Fanex.ExtAcc = {
                 }
             })
             .done(function (data) {
-                $('#contentSplitter').ready(function () {
-                    //$('#contentSplitter').height($('#mainContent').height() - 20);
-                    $('#contentSplitter').show();
+                try {
+                    $('#contentSplitter').ready(function () {
+                        //$('#contentSplitter').height($('#mainContent').height() - 20);
+                        $('#contentSplitter').show();
 
-                });
+                    });
+                } finally {
+                    Fanex.ExtAcc.UnBlockUI();
+                }
             });
     },
 
