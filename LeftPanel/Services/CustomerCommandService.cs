@@ -33,7 +33,7 @@
 
         Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress);
 
-        Result UpdateSecurityCode(int custId, string code, bool force, int roleId, string ipAddress);
+        Result UpdateSecurityCode(int custId, string code, bool force, int roleId);
 
         Result RemoveOtp(int custId, int userId, string ip4Address);
     }
@@ -95,7 +95,7 @@
 
         public Result AutoMasterPt(int custId, bool allow, int uplineId, int userId, string username, string ipAddress) => customerDataAccess.AutoMasterPT(custId, allow);
 
-        public Result UpdateSecurityCode(int custId, string code, bool force, int roleId, string ipAddress)
+        public Result UpdateSecurityCode(int custId, string code, bool force, int roleId)
         {
             var hashCode = encryptor.CfsEnCode(code);
 
@@ -111,7 +111,7 @@
 
             if (result != null && result.IsSuccess && roleId.IsNotMember())
             {
-                Task.Run(() => telegramBotService.NotifyChangeSecurityCode(custId, 0, ipAddress));
+                Task.Run(() => telegramBotService.NotifyChangeSecurityCode(custId, 0));
             }
 
             return result;

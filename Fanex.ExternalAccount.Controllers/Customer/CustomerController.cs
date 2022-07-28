@@ -494,8 +494,7 @@
             {
                 if (roleId != (byte)CustomerRole.Member)
                 {
-                    var ip = CurrentContext.Ip4Address;
-                    Task.Run(() => _telegramChatbotService.NotifyChangePassword(custId, 0, ip));
+                    Task.Run(() => _telegramChatbotService.NotifyChangePassword(custId, 0));
                 }
 
                 _customerService.KickoutCustomer(custId, roleId, CurrentContext.Ip4Address);

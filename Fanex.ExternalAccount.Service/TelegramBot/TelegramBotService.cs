@@ -29,14 +29,14 @@
             return telegramClient;
         }
 
-        public void NotifyChangePassword(int custId, int subAccId, string ip)
-            => NotifyChangePasswordAsync(custId, subAccId, ip).GetAwaiter().GetResult();
+        public void NotifyChangePassword(int custId, int subAccId)
+            => NotifyChangePasswordAsync(custId, subAccId).GetAwaiter().GetResult();
 
-        public async Task NotifyChangePasswordAsync(int custId, int subAccId, string ip)
+        public async Task NotifyChangePasswordAsync(int custId, int subAccId)
         {
             try
             {
-                await notificationService.NotifyChangePassword(custId, subAccId, ip);
+                await notificationService.NotifyChangePassword(custId, subAccId);
             }
             catch (Exception ex)
             {
@@ -44,14 +44,14 @@
             }
         }
 
-        public void NotifyChangeSecurityCode(int custId, int subAccId, string ip)
-           => NotifyChangeSecurityCodeAsync(custId, subAccId, ip).GetAwaiter().GetResult();
+        public void NotifyChangeSecurityCode(int custId, int subAccId)
+           => NotifyChangeSecurityCodeAsync(custId, subAccId).GetAwaiter().GetResult();
 
-        public async Task NotifyChangeSecurityCodeAsync(int custId, int subAccId, string ip)
+        public async Task NotifyChangeSecurityCodeAsync(int custId, int subAccId)
         {
             try
             {
-                await notificationService.NotifyChangeSecurityCode(custId, subAccId, ip);
+                await notificationService.NotifyChangeSecurityCode(custId, subAccId);
             }
             catch (Exception ex)
             {
