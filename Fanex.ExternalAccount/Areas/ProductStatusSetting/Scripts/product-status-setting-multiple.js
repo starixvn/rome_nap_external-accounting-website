@@ -15362,7 +15362,9 @@ var ProductStatusSettingBase = /** @class */ (function () {
         this.getRoleId = function (element) { return _this.$(element).data("roleid"); };
         this.isEnablebUpline = function (element) { return !_this.parseBoolean(_this.$(element).data("disabledupline")); };
         this.getBetType = function (element) { return _this.$(element).data("bettype"); };
+        this.getParentBetType = function (element) { return _this.$(element).data("parent-bettype"); };
         this.getSportType = function (element) { return _this.$(element).data("sporttype"); };
+        this.getParentSportType = function (element) { return _this.$(element).data("parent-sporttype"); };
         this.isChecked = function (element) { return _this.$(element).is(":checked"); };
         this.isChangeState = function (originValue, currentValue) {
             return originValue != currentValue;
@@ -15385,6 +15387,14 @@ var ProductStatusSettingBase = /** @class */ (function () {
         this.getFirstToggle = function (toggles, roleId) {
             return _this.getToggles(toggles, roleId)[0];
         };
+        this.getTogglesByParentSportTypeBetType = function (toggles, roleId, parentSportType, parentBetType) {
+            return toggles.filter(function (toggle) {
+                if (_this.getRoleId(toggle) == roleId && _this.getParentSportType(toggle) == parentSportType && _this.getParentBetType(toggle) == parentBetType) {
+                    return toggle;
+                }
+            });
+        };
+        this.isParentRow = function (toggles) { return _this.getParentSportType(toggles) === 0 && _this.getParentBetType(toggles) === 0; };
         this.onSubmit = function (e) {
             e.preventDefault();
             var updateViewModel = _this.getUpdateViewModel();
@@ -15515,7 +15525,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    };
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -15665,16 +15675,42 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
         }
     };
     ProductStatusSettingMultipe.prototype.toogleStatus = function (toogle) {
+        var _this = this;
         if (this.allowActionOnElement(toogle)) {
             this.toggleStatus(toogle);
-            var roleId = this.getRoleId(toogle);
-            this.watchHeader(roleId, false);
-            if (roleId > 1) {
-                var sportType = this.getSportType(toogle);
-                var bettype = this.getBetType(toogle);
-                var enable = this.isChecked(toogle);
-                var downlineToggle = this.getToggleElements(this.$toggleArray, roleId - 1, sportType, bettype);
-                this.toogleStatusDownline(downlineToggle, enable);
+            var roleId_1 = this.getRoleId(toogle);
+            var sportType = this.getSportType(toogle);
+            var bettype = this.getBetType(toogle);
+            var enable_2 = this.isChecked(toogle);
+            var isMacauGames = this.$("#productId").val() == "22";
+            this.watchHeader(roleId_1, false);
+            if (roleId_1 > 1) {
+                var downlineToggle = this.getToggleElements(this.$toggleArray, roleId_1 - 1, sportType, bettype);
+                this.toogleStatusDownline(downlineToggle, enable_2);
+            }
+            if (isMacauGames && this.isParentRow(toogle)) {
+                var parentSportType = this.getParentSportType(toogle);
+                var parentBettype = this.getParentBetType(toogle);
+                var childToggles = this.getTogglesByParentSportTypeBetType(this.$toggleArray, roleId_1, sportType, bettype);
+                childToggles.forEach(function (childToogle) {
+                    if (!enable_2) {
+                        _this.toggleStatusByValue(childToogle, enable_2);
+                        _this.toogleStatus(childToogle);
+                        _this.disableElement(childToogle);
+                    }
+                    else {
+                        if (roleId_1 < 4) {
+                            var uplineToggle = _this.getToggleElements(_this.$toggleArray, roleId_1 + 1, _this.getSportType(childToogle), _this.getBetType(childToogle));
+                            var uplineEnable = _this.isChecked(uplineToggle);
+                            if (uplineEnable) {
+                                _this.enableElement(childToogle);
+                            }
+                        }
+                        else {
+                            _this.enableElement(childToogle);
+                        }
+                    }
+                });
             }
         }
     };
