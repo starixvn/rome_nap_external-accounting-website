@@ -91,16 +91,17 @@ Fanex.ExtAcc.Customer.PTSetting = {
     errorMessage: '',
     CustIdIndex: 0,
     BetSettings: ['min bet', 'max bet', 'max per match', 'max per ball'],
+    RenderBetlimitCompleted: false,
 
     Init: function () {
         // Extend some methods of PTEngine Core.js
         extendPTEngine();
-
+        this.RenderBetlimitCompleted = false;
         if (this.IsFullInfo) {
-            setTimeout(function () {
-                if (Fanex.ExtAcc.Customer.PTSetting.customer) {
+            var interval = setInterval(function () {
+                if (Fanex.ExtAcc.Customer.PTSetting.customer && !Fanex.ExtAcc.Customer.PTSetting.RenderBetlimitCompleted) {
                     clearInterval(interval);
-
+                    Fanex.ExtAcc.Customer.PTSetting.RenderBetlimitCompleted = true;
                     Fanex.ExtAcc.Customer.PTSetting.bettingLimit = new Fanex.PTEngine.BettingLimit(Fanex.ExtAcc.Customer.PTSetting.customer.bettingLimit)
                     var bettingLimitContainer = document.getElementById('betSetting');
 
@@ -112,7 +113,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                         Fanex.ExtAcc.Customer.PTSetting.bettingLimit.Render(bettingLimitContainer, true);
                     }
                 }
-            }, 200);
+            }, 100);
         }
 
         if (Fanex.ExtAcc.Customer.CurrentLevel == 4) {
