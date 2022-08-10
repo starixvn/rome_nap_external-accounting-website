@@ -1,9 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer.Sportsbook
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
@@ -12,16 +8,21 @@
     using CustomerSetting.Security.Authenticate;
     using Fanex.CustomerSetting.Module.Core.Constants;
     using Fanex.CustomerSetting.Module.Core.Services.Interface;
+    using Fanex.Logging.Extensions.Web;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using PTEngine.BusinessObjects;
     using PTEngine.Services;
     using Service.Impl.Customer;
     using Service.Interface.Customer;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Web.Mvc;
     using Utilities;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
     using CustomerService = PTEngine.Services.CustomerService;
-    using Result = DTO.Result;
 
     [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
     public class SportsbookSettingController : BaseController
@@ -166,7 +167,15 @@
                 LangKey = "E"
             };
 
-            var commissionSetting = commissionService.GetCommission(currentContext);
+            ICommissionSetting commissionSetting = null;
+            try
+            {
+                commissionSetting = commissionService.GetCommission(currentContext);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
 
             return JsonBase(new { commission = commissionSetting, context = currentContext });
         }
@@ -240,7 +249,15 @@
                 UserName = CurrentSession.UserName.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            var customer = superService.GetCustomerForCompanyEditSuper(context);
+            ICustomer customer = null;
+            try
+            {
+                customer = superService.GetCustomerForCompanyEditSuper(context);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
 
             return JsonBase(new { context, customer });
         }
@@ -264,7 +281,16 @@
                 UserName = CurrentSession.UserName.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            var customer = customerService.GetCustomerForSuperEditMaster(context);
+            ICustomer customer = null;
+            try
+            {
+                customer = customerService.GetCustomerForSuperEditMaster(context);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
+
             var defaultMinBetValue = GetDefaultMinBetValue();
 
             return JsonBase(new { context, customer, defaultMinBetValue });
@@ -319,7 +345,16 @@
                 UserName = CurrentSession.UserName.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            var customer = customerService.GetCustomerForMasterEditAgent(context);
+            ICustomer customer = null;
+            try
+            {
+                customer = customerService.GetCustomerForMasterEditAgent(context);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
+
             var defaultMinBetValue = GetDefaultMinBetValue();
 
             return JsonBase(new { context, customer, defaultMinBetValue });
@@ -350,7 +385,7 @@
             var result = !string.IsNullOrWhiteSpace(mult) && mult.Equals("true")
                 ? customerService.MasterUpdateMultipleAgents(customer, requestContext, isUpdateAllMember, newPositionTaking,
                     param)
-                : customerService.MasterUpdateAgent(customer, requestContext, isUpdateAllMember, newPositionTaking);           
+                : customerService.MasterUpdateAgent(customer, requestContext, isUpdateAllMember, newPositionTaking);
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage });
         }
@@ -374,7 +409,16 @@
                 UserName = CurrentSession.UserName.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            var customer = customerService.GetCustomerForAgentUpdateMember(context);
+            ICustomer customer = null;
+            try
+            {
+                customer = customerService.GetCustomerForAgentUpdateMember(context);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
+
             var defaultMinBetValue = GetDefaultMinBetValue();
 
             return JsonBase(new { context, customer, defaultMinBetValue });
@@ -403,7 +447,7 @@
             var mult = Request["isMult"];
             var result = !string.IsNullOrWhiteSpace(mult) && mult.Equals("true")
                 ? customerService.AgentUpdateMultipleMembers(customer, requestContext, param)
-                : customerService.AgentUpdateMember(customer, requestContext);            
+                : customerService.AgentUpdateMember(customer, requestContext);
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage });
         }
@@ -428,7 +472,15 @@
                 UserName = CurrentSession.UserName.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            var customer = customerService.GetCustomerForSuperEditMember(context);
+            ICustomer customer = null;
+            try
+            {
+                customer = customerService.GetCustomerForSuperEditMember(context);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
 
             return JsonBase(new { context, customer });
         }
@@ -464,7 +516,7 @@
 
             var result = param.Count > 0
                 ? customerService.SuperUpdateMultipleMembers(customer, requestContext, param)
-                : customerService.SuperUpdateMember(customer, requestContext);           
+                : customerService.SuperUpdateMember(customer, requestContext);
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage });
         }
@@ -489,7 +541,15 @@
                 UserName = CurrentSession.UserName.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            var customer = customerService.GetCustomerForMasterEditMember(context);
+            ICustomer customer = null;
+            try
+            {
+                customer = customerService.GetCustomerForMasterEditMember(context);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
 
             return JsonBase(new { context, customer });
         }
@@ -525,7 +585,7 @@
 
             var result = param.Count > 0
                 ? customerService.MasterUpdateMultipleMembers(customer, requestContext, param)
-                : customerService.MasterUpdateMember(customer, requestContext);            
+                : customerService.MasterUpdateMember(customer, requestContext);
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage });
         }
@@ -555,12 +615,23 @@
                 UserName = CurrentSession.UserName.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            var customer = customerService.GetCustomerForSuperEditMinPTMaster(context);
+            ICustomer customer = null;
+            try
+            {
+                customer = customerService.GetCustomerForSuperEditMinPTMaster(context);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
 
-            customer.BettingLimit = null;
-            customer.StatusSetting = null;
-            customer.CommissionSetting = null;
-            customer.CommissionSetting2 = null;
+            if (customer != null)
+            {
+                customer.BettingLimit = null;
+                customer.StatusSetting = null;
+                customer.CommissionSetting = null;
+                customer.CommissionSetting2 = null;
+            }
 
             return JsonBase(new { context, customer });
         }
@@ -584,12 +655,23 @@
                 UserName = CurrentSession.UserName.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            var customer = customerService.GetCustomerForMasterEditMinPTAgent(context);
+            ICustomer customer = null;
+            try
+            {
+                customer = customerService.GetCustomerForMasterEditMinPTAgent(context);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
 
-            customer.BettingLimit = null;
-            customer.StatusSetting = null;
-            customer.CommissionSetting = null;
-            customer.CommissionSetting2 = null;
+            if (customer != null)
+            {
+                customer.BettingLimit = null;
+                customer.StatusSetting = null;
+                customer.CommissionSetting = null;
+                customer.CommissionSetting2 = null;
+            }
 
             return JsonBase(new { context, customer });
         }

@@ -92,6 +92,7 @@ Fanex.ExtAcc.Customer.MinPT = {
             type: 'post'
         })
             .success(function (result) {
+                try {
                 if (result.customer.custId == 0) {
                     Fanex.ExtAcc.UnBlockUI();
                     Fanex.ExtAcc.Form.Close();
@@ -189,7 +190,10 @@ Fanex.ExtAcc.Customer.MinPT = {
 
                 ko.applyBindings(new CustomerModel());
 
-                Fanex.ExtAcc.UnBlockUI();
+                    Fanex.ExtAcc.UnBlockUI();
+                } finally {
+                    Fanex.ExtAcc.UnBlockUI();
+                }
             });
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
@@ -15,6 +16,7 @@
     using DataAccess.Criteria.Customer;
     using DataAccess.Criteria.Customer.CustomerStatus;
     using Fanex.ExternalAccount.Service.TelegramBot;
+    using Fanex.Logging.Extensions.Web;
     using Fanex.Module.NG2.Entities;
     using Newtonsoft.Json;
     using PTEngine.BusinessObjects;
@@ -89,9 +91,18 @@
                 UserName = parentUsername.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            var customer = ptCustomerService.GetCustomerForAddNewMaster(context);
-            customer.CurrencyId = parentCurrencyId;
-            var defaultMinBetValue = GetDefaultMinBetValue();
+            ICustomer customer = null;
+            int defaultMinBetValue = 0;
+            try
+            {
+                customer = ptCustomerService.GetCustomerForAddNewMaster(context);
+                customer.CurrencyId = parentCurrencyId;
+                defaultMinBetValue = GetDefaultMinBetValue();
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
 
             return JsonBase(new { context, customer, defaultMinBetValue });
         }
@@ -184,9 +195,18 @@
                 UserName = parentUsername.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            var customer = ptCustomerService.GetCustomerForAddNewAgent(context);
-            customer.CurrencyId = parentCurrencyId;
-            var defaultMinBetValue = GetDefaultMinBetValue();
+            ICustomer customer = null;
+            int defaultMinBetValue = 0;
+            try
+            {
+                customer = ptCustomerService.GetCustomerForAddNewAgent(context);
+                customer.CurrencyId = parentCurrencyId;
+                defaultMinBetValue = GetDefaultMinBetValue();
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
 
             return JsonBase(new { context, customer, defaultMinBetValue });
         }
@@ -286,9 +306,18 @@
                 UserName = parentUsername.ToUpper(CultureInfo.InvariantCulture)
             };
 
-            var customer = ptCustomerService.GetCustomerForAddNewMember(context);
-            customer.CurrencyId = parentCurrencyId;
-            var defaultMinBetValue = GetDefaultMinBetValue();
+            ICustomer customer = null;
+            int defaultMinBetValue = 0;
+            try
+            {
+                customer = ptCustomerService.GetCustomerForAddNewMember(context);
+                customer.CurrencyId = parentCurrencyId;
+                defaultMinBetValue = GetDefaultMinBetValue();
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
 
             return JsonBase(new { context, customer, defaultMinBetValue });
         }

@@ -31,74 +31,78 @@ Fanex.ExtAcc.Customer.BetSetting = {
             type: 'post'
         })
             .success(function (result) {
-                if (!result.betting) {
-                    Fanex.ExtAcc.UnBlockUI();
-                    Fanex.ExtAcc.Form.Close();
-                    var timeout = setTimeout(function () {
-                        clearTimeout(timeout);
-                        Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
-                    }, 1000);
+                try {
+                    if (!result.betting) {
+                        Fanex.ExtAcc.UnBlockUI();
+                        Fanex.ExtAcc.Form.Close();
+                        var timeout = setTimeout(function () {
+                            clearTimeout(timeout);
+                            Fanex.ExtAcc.Form.Alert('Error', "There is no information available".formatErrorMessage(), 450, 150);
+                        }, 1000);
 
-                    return;
-                }
+                        return;
+                    }
 
-                var bettingLimit = null;
-                var context = result.context;
-                bettingLimit = new Fanex.PTEngine.BettingLimit(result.betting);
+                    var bettingLimit = null;
+                    var context = result.context;
+                    bettingLimit = new Fanex.PTEngine.BettingLimit(result.betting);
 
-                var bettingLimitContainer = document.getElementById('bettingLimitContainer');
-                bettingLimit.Render(bettingLimitContainer);
+                    var bettingLimitContainer = document.getElementById('bettingLimitContainer');
+                    bettingLimit.Render(bettingLimitContainer);
 
-                var BetSettingModel = function () {
-                    this.saveCustomer = function () {
-                        $('#windowPopup').scrollTop(0);
-                        if (!bettingLimit.Validate(result.defaultMinBetValue)) return;
+                    var BetSettingModel = function () {
+                        this.saveCustomer = function () {
+                            $('#windowPopup').scrollTop(0);
+                            if (!bettingLimit.Validate(result.defaultMinBetValue)) return;
 
-                        Fanex.ExtAcc.BlockUI();
+                            Fanex.ExtAcc.BlockUI();
 
-                        if (bettingLimit) {
-                            betting = bettingLimit.Save();
-                            var text = JSON.stringify(betting);
+                            if (bettingLimit) {
+                                betting = bettingLimit.Save();
+                                var text = JSON.stringify(betting);
 
-                            var para = {
-                                custId: Fanex.ExtAcc.Customer.UserId,
-                                parentId: Fanex.ExtAcc.Customer.superId,
-                                txtCustomerObject: text,
-                                groupName: Fanex.ExtAcc.Customer.GroupName().groupName
-                            };
-                        }
+                                var para = {
+                                    custId: Fanex.ExtAcc.Customer.UserId,
+                                    parentId: Fanex.ExtAcc.Customer.superId,
+                                    txtCustomerObject: text,
+                                    groupName: Fanex.ExtAcc.Customer.GroupName().groupName
+                                };
+                            }
 
-                        $.ajax({
-                            url: resolveClientUrl('SportsbookSetting/EditBetSettingPost'),
-                            data: para
-                        })
-                            .success(function (result) {
+                            $.ajax({
+                                url: resolveClientUrl('SportsbookSetting/EditBetSettingPost'),
+                                data: para
+                            })
+                                .success(function (result) {
 
-                                if (Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.ExtAcc.UnBlockUI)) {
-                                    return;
-                                }
+                                    if (Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.ExtAcc.UnBlockUI)) {
+                                        return;
+                                    }
 
-                                if (result.errorCode == 0) {
-                                    var timeout = setTimeout(function () {
-                                        clearTimeout(timeout);
+                                    if (result.errorCode == 0) {
+                                        var timeout = setTimeout(function () {
+                                            clearTimeout(timeout);
+                                            Fanex.ExtAcc.UnBlockUI();
+
+                                            Fanex.ExtAcc.Form.Close(false);
+                                        }, 2000);
+                                    }
+                                    else {
                                         Fanex.ExtAcc.UnBlockUI();
 
-                                        Fanex.ExtAcc.Form.Close(false);
-                                    }, 2000);
-                                }
-                                else {
-                                    Fanex.ExtAcc.UnBlockUI();
-
-                                    $('#errMsg').css('display', 'block');
-                                    $('#errMsg').html(result.errorMessage.formatErrorMessage());
-                                }
-                            });
+                                        $('#errMsg').css('display', 'block');
+                                        $('#errMsg').html(result.errorMessage.formatErrorMessage());
+                                    }
+                                });
+                        };
                     };
-                };
 
-                ko.applyBindings(new BetSettingModel());
+                    ko.applyBindings(new BetSettingModel());
 
-                Fanex.ExtAcc.UnBlockUI();
+                    Fanex.ExtAcc.UnBlockUI();
+                } finally {
+                    Fanex.ExtAcc.UnBlockUI();
+                }
             });
     },
 
