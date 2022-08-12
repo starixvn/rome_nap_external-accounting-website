@@ -61,6 +61,22 @@
             return !(bool)result.Outputs["isexists"];
         }
 
+        public bool IsArchivedCustId(int custId)
+        {
+            if (custId <= 0)
+            {
+                return false;
+            }
+
+#pragma warning disable S1192 // String literals should not be duplicated
+            var parameters = new Hashtable { { "custid", custId } };
+#pragma warning restore S1192 // String literals should not be duplicated
+
+            var result = DbHelper.ExecuteDbResult("Acc_GetCustArchiveStatus", parameters);
+
+            return (bool)result.Outputs["isarchived"];
+        }
+
         public Customer UserInfo(int custId, byte settingStatus)
         {
 #pragma warning disable S1192 // String literals should not be duplicated
@@ -292,7 +308,7 @@
                 while (reader.Read())
                 {
                     int productId = Utils.ToInt32(reader["ProductID"]);
-                    
+
                     if (productId == ProductConstants.VirtualSports)
                     {
                         result.HideVirtualSport = Utils.ToBoolean(reader["isHidden"]);

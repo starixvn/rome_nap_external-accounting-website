@@ -66,7 +66,7 @@
                 return LimitationPage(limitNewDownlineResult.ErrorMessage);
             }
 
-            return PartialViewBase();
+            return PartialViewBase(_customerService.IsArchivedCustId(custId));
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
@@ -170,7 +170,7 @@
                 return LimitationPage(limitNewDownlineResult.ErrorMessage);
             }
 
-            return PartialViewBase();
+            return PartialViewBase(_customerService.IsArchivedCustId(custId));
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
@@ -281,7 +281,7 @@
                 return LimitationPage(limitNewDownlineResult.ErrorMessage);
             }
 
-            return PartialViewBase();
+            return PartialViewBase(_customerService.IsArchivedCustId(custId));
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]

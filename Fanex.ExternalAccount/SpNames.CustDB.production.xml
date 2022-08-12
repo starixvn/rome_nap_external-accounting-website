@@ -100,6 +100,7 @@
     <Setting Key="EAS_UserInfoAddNew" SpName="EAS_UserInfoAddNew" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_UserInfoUpdAll" SpName="EAS_UserInfoUpdAll" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_UserInfoUpdUserPwd" SpName="EAS_UserInfoUpdUserPwd" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_GetCustArchiveStatus" SpName="Acc_GetCustArchiveStatus" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Menu and Function">
     <Setting Key="EAS_FunctionIns" SpName="EAS_FunctionIns" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />

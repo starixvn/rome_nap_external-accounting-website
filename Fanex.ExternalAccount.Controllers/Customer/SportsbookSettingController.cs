@@ -35,8 +35,9 @@
         private readonly PTEngine.Services.ICustomerService customerService = new CustomerService();
         private readonly ISuperService superService = new SuperService();
         private readonly IServiceBase serviceBase = new ServiceBase();
+        private readonly Fanex.ExternalAccount.Service.Interface.Customer.ICustomerService externalCustomerService = new Fanex.ExternalAccount.Service.Impl.Customer.CustomerService();
 
-        public ActionResult EditBetSetting() => PartialViewBase();
+        public ActionResult EditBetSetting(int custId) => PartialViewBase(externalCustomerService.IsArchivedCustId(custId));
 
         [AntiXSRFFilter]
         public ActionResult EditBetSettingMasterGet(int custId, int parentId)
@@ -144,11 +145,11 @@
 
         public ActionResult EditCommission() => PartialViewBase();
 
-        public ActionResult EditCommissionDetail() => PartialViewBase();
+        public ActionResult EditCommissionDetail(int custId) => PartialViewBase(externalCustomerService.IsArchivedCustId(custId));
 
         public ActionResult EditCommissionMember() => PartialViewBase();
 
-        public ActionResult EditCommissionMemberDetail() => PartialViewBase();
+        public ActionResult EditCommissionMemberDetail(int custId) => PartialViewBase(externalCustomerService.IsArchivedCustId(custId));
 
         [AntiXSRFFilter]
         public ActionResult EditCommissionGet(int custId, int parentId)
@@ -227,9 +228,9 @@
             return JsonBase(new { updateResult.ErrorCode, updateResult.ErrorMessage });
         }
 
-        public ActionResult EditPT() => PartialViewBase();
+        public ActionResult EditPT(int custId) => PartialViewBase(externalCustomerService.IsArchivedCustId(custId));
 
-        public ActionResult SuperMasterEditSB() => PartialViewBase();
+        public ActionResult SuperMasterEditSB(int custId) => PartialViewBase(externalCustomerService.IsArchivedCustId(custId));
 
         [AntiXSRFFilter]
         public ActionResult EditPTSuperGet(int custId, int parentId)
@@ -590,11 +591,11 @@
             return JsonBase(new { result.ErrorCode, result.ErrorMessage });
         }
 
-        public ActionResult EditMultiplePT() => PartialViewBase();
+        public ActionResult EditMultiplePT(int custId) => PartialViewBase(externalCustomerService.IsArchivedCustId(custId));
 
-        public ActionResult SuperMasterEditMultiplePTMember() => PartialViewBase();
+        public ActionResult SuperMasterEditMultiplePTMember(int custId) => PartialViewBase(externalCustomerService.IsArchivedCustId(custId));
 
-        public ActionResult EditMinPT() => PartialViewBase();
+        public ActionResult EditMinPT(int custId) => PartialViewBase(externalCustomerService.IsArchivedCustId(custId));
 
         [AntiXSRFFilter]
         public ActionResult SuperEditMinPTMasterGet(int custId, int parentId)
