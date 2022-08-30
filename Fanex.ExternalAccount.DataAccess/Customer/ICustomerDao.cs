@@ -15,6 +15,8 @@
 
         bool IsValidUsername(string userName, int uplineId);
 
+        bool IsArchivedCustId(int custId);
+
         Customer UserInfo(int custId, byte settingStatus);
 
         Result EditUserInfo(

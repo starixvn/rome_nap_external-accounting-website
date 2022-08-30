@@ -91,17 +91,14 @@ Fanex.ExtAcc.Customer.PTSetting = {
     errorMessage: '',
     CustIdIndex: 0,
     BetSettings: ['min bet', 'max bet', 'max per match', 'max per ball'],
-    RenderBetlimitCompleted: false,
 
     Init: function () {
         // Extend some methods of PTEngine Core.js
         extendPTEngine();
-        this.RenderBetlimitCompleted = false;
         if (this.IsFullInfo) {
             var interval = setInterval(function () {
-                if (Fanex.ExtAcc.Customer.PTSetting.customer && !Fanex.ExtAcc.Customer.PTSetting.RenderBetlimitCompleted) {
+                if (Fanex.ExtAcc.Customer.PTSetting.customer) {
                     clearInterval(interval);
-                    Fanex.ExtAcc.Customer.PTSetting.RenderBetlimitCompleted = true;
                     Fanex.ExtAcc.Customer.PTSetting.bettingLimit = new Fanex.PTEngine.BettingLimit(Fanex.ExtAcc.Customer.PTSetting.customer.bettingLimit)
                     var bettingLimitContainer = document.getElementById('betSetting');
 

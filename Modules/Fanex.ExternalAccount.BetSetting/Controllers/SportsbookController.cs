@@ -15,8 +15,10 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
     public class SportsbookController : BettingControllerBase
     {
+        private readonly Fanex.ExternalAccount.Service.Interface.Customer.ICustomerService externalCustomerService = new Fanex.ExternalAccount.Service.Impl.Customer.CustomerService();
+
         public ActionResult Index(int custId, int uplineId, int userId, string groupName)
-            => PartialView("~/Areas/CustomerSetting/Views/BetSetting/Sportsbook/Index.cshtml");
+            => PartialView("~/Areas/CustomerSetting/Views/BetSetting/Sportsbook/Index.cshtml", externalCustomerService.IsArchivedCustId(custId));
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "SportsbookBetting")]
         public ActionResult Content(int custId, int uplineId, int userId, string groupName)

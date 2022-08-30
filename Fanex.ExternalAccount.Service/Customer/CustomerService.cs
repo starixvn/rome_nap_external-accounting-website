@@ -34,6 +34,9 @@
         public bool IsValidUsername(string userName, int uplineId)
             => dataAccess.IsValidUsername(userName, uplineId);
 
+        public bool IsArchivedCustId(int custId)
+            => dataAccess.IsArchivedCustId(custId);
+
         public Customer UserInfo(int custId, byte settingStatus) => dataAccess.UserInfo(custId, settingStatus);
 
         public CustomerStatusDTO GetCustomerAllStatus(int custId, byte settingStatus)
