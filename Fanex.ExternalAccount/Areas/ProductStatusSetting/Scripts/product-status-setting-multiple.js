@@ -15682,7 +15682,7 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
             var sportType = this.getSportType(toogle);
             var bettype = this.getBetType(toogle);
             var enable_2 = this.isChecked(toogle);
-            var isMacauGames = this.$("#productId").val() == "22";
+            var isMacauGames = this.$("#productId").val() == "53";
             this.watchHeader(roleId_1, false);
             if (roleId_1 > 1) {
                 var downlineToggle = this.getToggleElements(this.$toggleArray, roleId_1 - 1, sportType, bettype);

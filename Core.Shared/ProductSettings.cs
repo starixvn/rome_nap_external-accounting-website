@@ -12,7 +12,7 @@
             {
                 [ProductConstants.AllBet] = new Product(0, ProductConstants.AllBet, "Allbet"),
                 [ProductConstants.LiveCasino] = new Product(1, ProductConstants.LiveCasino, "Live Casino"),
-                [ProductConstants.VoidBridge] = new Product(2,ProductConstants.VoidBridge, "Macau Games", substituteProductKey: "VoidBridge"),
+                [ProductConstants.VoidBridge] = new Product(2,ProductConstants.VoidBridge, "RNG Slot", substituteProductKey: "VoidBridge"),
                 [ProductConstants.NG2] = new Product(3, ProductConstants.NG2, "NG2", true),
                 [ProductConstants.FishingWorld] = new Product(4, ProductConstants.FishingWorld, "Fishing World"),
                 [ProductConstants.Sportsbook2] = new Product(5, ProductConstants.Sportsbook2, "Sportsbook 2"),

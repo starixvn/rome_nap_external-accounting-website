@@ -20,7 +20,7 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int ION = 52;
         public const int BigGame = 57;
         public const int BBin = 47;
-        public const int VoidBridge = 22;  // Real name is Macau Game
+        public const int VoidBridge = 53;  // Real name is Macau Game
         public const int NG2 = 23;
         public const int FishingWorld = 24;
         public const int Lottery = 28;
