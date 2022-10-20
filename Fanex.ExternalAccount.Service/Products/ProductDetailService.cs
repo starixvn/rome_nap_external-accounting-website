@@ -113,7 +113,12 @@
             {
                 canView[ProductConstants.AllBet] = true;
             }
-            
+
+            if (Config.IsOfferMGRNGCasinoProductDetailsGroup(groupName))
+            {
+                canView[ProductConstants.MGRNGCasino] = true;
+            }
+
             canView[ProductConstants.Sportsbook] = true;
             return canView;
         }

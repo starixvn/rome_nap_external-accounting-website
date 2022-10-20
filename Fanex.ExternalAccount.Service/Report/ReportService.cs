@@ -199,6 +199,11 @@
                 {
                     productIdList = productIdList.Where(id => id != ProductConstants.AllBet);
                 }
+
+                if (Config.IsOfferMGRNGCasinoProductDetailsGroup(groupName))
+                {
+                    productIdList = productIdList.Where(id => id != ProductConstants.MGRNGCasino);
+                }
             }
             
             return ConcatProductName(productIdList, resourceIds, groupName);

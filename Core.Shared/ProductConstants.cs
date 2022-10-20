@@ -41,6 +41,7 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int Bitcoin = 69;
         public const int Cashout = 25;
         public const int FGG = 70;
+        public const int MGRNGCasino = 73;
 
         public const int DummyRNGProductId = 53;
 
@@ -57,7 +58,8 @@ namespace Fanex.ExternalAccount.Core.Shared
             SexyGaming,
             SpadeGaming,
             AllBet,
-            ProductConstants.Sportsbook
+            ProductConstants.Sportsbook,
+            MGRNGCasino
         };
     }
 }

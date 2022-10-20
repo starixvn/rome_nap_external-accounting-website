@@ -105,7 +105,18 @@
         }
 
         public static bool IsOfferProductDetail(string currentGroup)
-            => IsOfferJackpotProductDetailsGroup(currentGroup) || IsOfferSexyGamingProductDetailsGroup(currentGroup) || IsOfferSpadeGamingProductDetailsGroup(currentGroup) || IsOfferSabaProductDetailsGroup(currentGroup);
+            => IsOfferJackpotProductDetailsGroup(currentGroup) || 
+            IsOfferSexyGamingProductDetailsGroup(currentGroup) || 
+            IsOfferSpadeGamingProductDetailsGroup(currentGroup) || 
+            IsOfferSabaProductDetailsGroup(currentGroup) ||
+            IsOfferMGRNGCasinoProductDetailsGroup(currentGroup);
+
+        public static bool IsOfferMGRNGCasinoProductDetailsGroup(string currentGroup)
+        {
+            var allGroups = GetValue("OfferMGRNGCasinoProductDetailsGroups");
+
+            return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
+        }
 
         public static bool IsOfferAllbetProductDetailsGroup(string currentGroup)
         {
