@@ -298,11 +298,11 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
         var uplineToDate = formData.toDate;
         var $dtpFromDate = selector("#dtp-fromdate-" + targetRoleId);
         $dtpFromDate
-            .val(uplineFromDate)
+            .datepicker("setDate", uplineFromDate)
             .datepicker("option", "maxDate", new Date(uplineToDate));
         var $dtpToDate = selector("#dtp-todate-" + targetRoleId);
         $dtpToDate
-            .val(uplineToDate)
+            .datepicker("setDate", uplineToDate)
             .datepicker("option", "minDate", new Date(uplineFromDate));
 
         var uplineReviewStatus = formData.reviewStatus;
@@ -310,6 +310,8 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
         $ddlReviewStatus
             .val(uplineReviewStatus)
             .next("input.ui-autocomplete-input").val($ddlReviewStatus.find("option:selected").text());
+
+        selector("#txt-searchUsername-" + targetRoleId).val("");
 
         selector("#form-problem-account-" + targetRoleId).trigger("submit");
     }
