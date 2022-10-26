@@ -14,7 +14,7 @@
             = new List<ProductSettingElement>
             {
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.LiveCasino], StatusType.Link),
-                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.VoidBridge], StatusType.Link),
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.RNGSlot], StatusType.Link),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.NG2], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.FishingWorld], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.RNGLottery], StatusType.Link),
@@ -35,7 +35,7 @@
                 {ProductConstants.Keno, eFunctions.KenoBetting},
                 {ProductConstants.Sportsbook, eFunctions.SportsbookBetting},
                 {ProductConstants.LiveCasino, eFunctions.LiveCasinoBetting},
-                {ProductConstants.VoidBridge, eFunctions.VoidbridgeBetting},
+                {ProductConstants.RNGSlot, eFunctions.VoidbridgeBetting},
                 {ProductConstants.NG2, eFunctions.NG2Betting},
                 {ProductConstants.RNGLottery, eFunctions.RNGLotteryBetting},
                 {ProductConstants.VirtualGames, eFunctions.VirtualGamesBetting},
@@ -49,7 +49,7 @@
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.RNGLottery], statusRow, isSetUplineStatus: isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.FishingWorld], statusRow, isSetUplineStatus: isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.NG2], statusRow, isSetUplineStatus: isSetUplineStatus),
-                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.VoidBridge], statusRow, false, isSetUplineStatus),
+                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.RNGSlot], statusRow, false, isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.LiveCasino], statusRow, false, isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Sportsbook2], statusRow, isSetUplineStatus:isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.VirtualGames], statusRow, isSetUplineStatus:isSetUplineStatus),
@@ -63,7 +63,7 @@
             => new List<ObjectInfo>
             {
                 new ObjectInfo("HideLiveCasino", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.LiveCasino)),
-                new ObjectInfo("HideVoidbridge", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.VoidBridge)),
+                new ObjectInfo("HideVoidbridge", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.RNGSlot)),
                 new ObjectInfo("HideNG2", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.NG2)),
                 new ObjectInfo("HideFishingWorld", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.FishingWorld)),
                 new ObjectInfo("HideRNGLottery", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.RNGLottery)),
