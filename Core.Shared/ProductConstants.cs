@@ -20,7 +20,7 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int ION = 52;
         public const int BigGame = 57;
         public const int BBin = 47;
-        public const int RNGSlot = 53;
+        public const int RNGSlot = 18;
         public const int NG2 = 23;
         public const int FishingWorld = 24;
         public const int Lottery = 28;

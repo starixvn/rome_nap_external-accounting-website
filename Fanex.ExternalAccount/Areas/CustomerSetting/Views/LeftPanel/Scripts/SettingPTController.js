@@ -102,7 +102,7 @@
     };
 
     $scope.VoidBridge = function () {
-        $scope.RenderDCS(53);
+        $scope.RenderDCS(18);
         $scope.collapseSidebar();
     };
 

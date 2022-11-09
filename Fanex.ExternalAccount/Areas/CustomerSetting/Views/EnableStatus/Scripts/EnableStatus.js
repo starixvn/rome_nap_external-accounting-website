@@ -10,7 +10,7 @@ function EnableStatusController($scope) {
     $scope.entities = model.entities;
     $scope.isDisabledAll = true;
 
-    $scope.checkSyncProducts = [21, 53];
+    $scope.checkSyncProducts = [21, 18];
 
     var length = $scope.entities.length;
     for (var i = 0; i < length; i++) {

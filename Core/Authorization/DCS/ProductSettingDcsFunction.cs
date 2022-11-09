@@ -4,7 +4,7 @@
     {
         Sportsbook2Setting = 16,
         LiveCasinoSetting = 41,
-        VoidbridgeSetting = 53,
+        VoidbridgeSetting = 18,
         NG2Setting = 23,
         FishingWorldSetting = 24,
         RNGLotterySetting = 44,
