@@ -1,6 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Services
 {
+    using Fanex.CustomerSetting.Module.Core.Criteria;
+    using Fanex.CustomerSetting.Module.Core.Services.Impl;
+    using Fanex.CustomerSetting.Module.Core.Services.Interface;
     using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.SearchAndCopy.Criteria;
     using Fanex.ExternalAccount.SearchAndCopy.Models;
@@ -27,20 +31,23 @@
         private readonly ISearchAndCopyRepository searchAndCopyRepository;
         private readonly ICustomerRepository customerRepository;
         private readonly ING2Service ng2Service;
+        private readonly IServiceBase serviceBase;
 
         public SearchAndCopyService()
-            : this(null, null, null)
+            : this(null, null, null, null)
         {
         }
 
         public SearchAndCopyService(
             ISearchAndCopyRepository searchAndCopyRepository,
             ICustomerRepository customerRepository,
-            ING2Service ng2Service)
+            ING2Service ng2Service,
+            IServiceBase serviceBase)
         {
             this.searchAndCopyRepository = searchAndCopyRepository ?? new SearchAndCopyRepository();
             this.customerRepository = customerRepository ?? new CustomerRepository();
             this.ng2Service = ng2Service ?? new NG2Service();
+            this.serviceBase = serviceBase ?? new ServiceBase();
         }
 
         public Result SearchCustomer(SearchCustomerContext context)
@@ -81,7 +88,7 @@
 
         private Result CloneCustomerAndSettings(CloneSettingContext context)
         {
-            var rawPassword =  Encryptor.Decrypt(context.Request.Password, Encryptor.RandomCaptcha);
+            var rawPassword = Encryptor.Decrypt(context.Request.Password, Encryptor.RandomCaptcha);
 
             var cloneSettingComCriteria = new CloneSettingComCriteria
             {
@@ -109,8 +116,9 @@
             {
                 return context.Result;
             }
-
+            
             context.CustId = Convert.ToInt32(context.Result.ResultData);
+            serviceBase.AddMsgAfterCreateNewSMA(new AddMsgAfterCreateNewSMACriteria(context.CustId, 0, Role.Super));
 
             var cloneSettingExtraPTCriteria = new CloneSettingExtraPTCriteria
             {
