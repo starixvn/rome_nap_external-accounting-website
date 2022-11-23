@@ -121,8 +121,8 @@
     <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=2.0.3.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.2.0.3.4\lib\net461\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.5\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+    <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.5.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.5.1\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Keno.KenoResources, Version=1.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Keno.KenoResources.1.0.2.4\lib\net461\Fanex.CustomerSetting.Module.Keno.KenoResources.dll</HintPath>
@@ -1431,10 +1431,6 @@
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
     <Content Include="Configurations\connectionStrings.mnl.config">
-      <SubType>Designer</SubType>
-      <DependentUpon>connectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\connectionStrings.ng2.config">
       <SubType>Designer</SubType>
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
