@@ -13,7 +13,6 @@
                 [ProductConstants.AllBet] = new Product(0, ProductConstants.AllBet, "Allbet"),
                 [ProductConstants.LiveCasino] = new Product(1, ProductConstants.LiveCasino, "Live Casino"),
                 [ProductConstants.RNGSlot] = new Product(2,ProductConstants.RNGSlot, "RNG Slot", substituteProductKey: "VoidBridge"),              
-                [ProductConstants.FishingWorld] = new Product(4, ProductConstants.FishingWorld, "Fishing World"),
                 [ProductConstants.Sportsbook2] = new Product(5, ProductConstants.Sportsbook2, "Sportsbook 2"),
                 [ProductConstants.VirtualGames] = new Product(6, ProductConstants.VirtualGames, "Virtual Games"),
                 [ProductConstants.Sabaclub] = new Product(7, ProductConstants.Sabaclub, "Saba.games"),
@@ -30,8 +29,6 @@
         public static bool IsShowLiveCasino => IsShowProduct(ProductConstants.LiveCasino);
 
         public static bool IsShowVoidBridge => IsShowProduct(ProductConstants.RNGSlot);       
-
-        public static bool IsShowFishingWorld => IsShowProduct(ProductConstants.FishingWorld);
 
         public static bool IsShowRNGLottery => IsShowProduct(ProductConstants.RNGLottery);
 

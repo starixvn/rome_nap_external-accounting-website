@@ -54,7 +54,6 @@
         public const string VoidbridgeBetting = "VoidbridgeBetting";
         public const string VoidbridgeSetting = "VoidbridgeSetting";
         public const string RemoveOTP = "RemoveOTP";
-        public const string FishingWorldSetting = "FishingWorldSetting";
         public const string RNGLotteryBetting = "RNGLotteryBetting";
         public const string RNGLotterySetting = "RNGLotterySetting";
 

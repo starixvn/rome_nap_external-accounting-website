@@ -52,8 +52,6 @@
     VoidbridgeSyncList: [],
     VoidbridgeSyncIdList: [],
 
-    FishingWorldSyncList: [],
-    FishingWorldSyncIdList: [],
 
     RnGCasinoStatuses: [],
     TitleEditInfo: '',
@@ -536,10 +534,6 @@
             }
           
 
-            if ($(div).attr('sync-fishingworld') == 'true' && !Fanex.ExtAcc.Customer.FishingWorldSyncIdList.contains($(div).attr('id'))) {
-                Fanex.ExtAcc.Customer.FishingWorldSyncIdList.push($(div).attr('id'));
-                Fanex.ExtAcc.Customer.FishingWorldSyncList.push($(div).attr('name'));
-            }
         } else {
             div.className = 'menuInactive';
             $('#editMult').attr('style', 'cursor: default !important');
@@ -556,10 +550,6 @@
                 Fanex.ExtAcc.Customer.VoidbridgeSyncList.pop($(div).attr('name'));
             }           
 
-            if ($(div).attr('sync-fishingworld') == 'true') {
-                Fanex.ExtAcc.Customer.FishingWorldSyncIdList.pop($(div).attr('id'));
-                Fanex.ExtAcc.Customer.FishingWorldSyncList.pop($(div).attr('name'));
-            }
         }
 
         var divs = $('div');
@@ -615,15 +605,6 @@
                     Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.pop($(divs[i]).attr('id'));
                     Fanex.ExtAcc.Customer.VoidbridgeSyncList.pop($(divs[i]).attr('name'));
                 }
-
-                if ($(divs[i]).attr('sync-fishingworld') == 'true' && divs[i].className == 'menuActive' && !Fanex.ExtAcc.Customer.FishingWorldSyncIdList.contains($(divs[i]).attr('id'))) {
-                    Fanex.ExtAcc.Customer.FishingWorldSyncIdList.push($(divs[i]).attr('id'));
-                    Fanex.ExtAcc.Customer.FishingWorldSyncList.push($(divs[i]).attr('name'));
-                }
-                else if ($(divs[i]).attr('sync-fishingworld') == 'true' && divs[i].className == 'menuInactive') {
-                    Fanex.ExtAcc.Customer.FishingWorldSyncIdList.pop($(divs[i]).attr('id'));
-                    Fanex.ExtAcc.Customer.FishingWorldSyncList.pop($(divs[i]).attr('name'));
-                }              
               
             }
         }

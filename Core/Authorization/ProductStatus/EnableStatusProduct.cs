@@ -7,7 +7,6 @@
         EnableESports = 16,
         EnableLiveCasino = 41,
         EnableVoidbridge = 18,
-        EnableFishingWorld = 24,
         EnableRNGLottery = 44,
         EnableVirtualGames = 64,
         EnableSabaclub = 42,
