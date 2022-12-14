@@ -83,7 +83,7 @@
 
             if (result == null)
             {
-                result = dynamicRepository.Fetch<ProductDetailEntity>(new GetProductsDetailCriteria());
+                result = dynamicRepository.Fetch<ProductDetailEntity>(new GetProductsDetailCriteria()).OrderBy(product => product.ProductId).ThenBy(product => product.Order);
                 Cache.Set(key, result);
             }
 
