@@ -7903,7 +7903,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Removed the registered device and turn off receiving OTP successfully..
+        ///   Looks up a localized string similar to Removed Mobile Authenticator account and disabled Telegram OTP notification..
         /// </summary>
         internal static string removeOTPsuccessfully {
             get {

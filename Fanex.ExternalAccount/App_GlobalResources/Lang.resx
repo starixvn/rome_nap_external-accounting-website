@@ -3389,7 +3389,7 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
     <value>Removing a user's OTP will remove the registered Sophos key, disable his OTP status and turn off receiving OTP via Telegram Chatbot.</value>
   </data>
   <data name="removeOTPsuccessfully" xml:space="preserve">
-    <value>Removed the registered device and turn off receiving OTP successfully.</value>
+    <value>Removed Mobile Authenticator account and disabled Telegram OTP notification.</value>
   </data>
   <data name="removeOTPtitle" xml:space="preserve">
     <value>Remove OTP</value>
