@@ -8,14 +8,19 @@
     using Fanex.ExternalAccount.Core.Shared;
     using System.Threading;
     using global::TelegramBot.Client.Services;
+    using System.Linq;
+    using global::TelegramBot.Constants;
+    using global::TelegramBot.Client.Models;
 
     public class TelegramBotService : ITelegramBotService
     {
         private readonly INotificationService notificationService;
+        private readonly ISettingService settingService;
 
-        public TelegramBotService(INotificationService notificationService = null)
+        public TelegramBotService(INotificationService notificationService = null, ISettingService settingService=null)
         {
             this.notificationService = notificationService ?? new NotificationService(CreateTelegramBotHttpClient());
+            this.settingService = settingService ?? new SettingService(CreateTelegramBotHttpClient());
         }
 
         private static HttpClient CreateTelegramBotHttpClient()
@@ -57,6 +62,21 @@
             {
                 ExceptionHandler.Handle(ex);
             }
+        }
+
+        public Task<CustBotMessenger> GetMessenger(int custId, int subAccId)
+        {
+            return settingService.GetCustBotMessengerAsync(custId, subAccId, "en-US");
+        }
+
+        public bool IsEnabledOTPViaTelegram(CustBotMessenger messenger)
+        {
+            return messenger != null && messenger.Functions.FirstOrDefault(f => f.FunctionId == FunctionIds.OTP).Enabled;
+        }
+
+        public Task<Result> DisableSendOTPViaTelegram(int userId,int botId, int actorId ,string ip)
+        {
+            return settingService.UpdateUserFunction(userId, botId, new Function { FunctionId = FunctionIds.OTP, Enabled = false }, actorId, ip);
         }
     }
 }

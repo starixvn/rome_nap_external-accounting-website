@@ -35,7 +35,7 @@
 
         Result UpdateSecurityCode(int custId, string code, bool force, int roleId);
 
-        Result RemoveOtp(int custId, int userId, string ip4Address);
+        Task<Result> RemoveOtp(int custId, int userId, string ip4Address);
     }
 
     public class CustomerCommandServiceImpl : CustomerCommandService
@@ -117,12 +117,23 @@
             return result;
         }
 
-        public Result RemoveOtp(int custId, int userId, string ip4Address)
-            => customerDataAccess.RemoveOTP(new RemoveOtpCriteria
+        public async Task<Result> RemoveOtp(int custId, int userId, string ip4Address)
+        {
+            var result= customerDataAccess.RemoveOTP(new RemoveOtpCriteria
             {
                 Custid = custId,
                 Userid = userId,
                 IP = ip4Address
             });
+
+            var messenger = await telegramBotService.GetMessenger(custId, 0);
+            if (telegramBotService.IsEnabledOTPViaTelegram(messenger))
+            {
+                var disableResult = await telegramBotService.DisableSendOTPViaTelegram(messenger.UserId, messenger.BotId, userId, ip4Address);
+                return new Result { ErrorCode = disableResult.Code.ToString(), ErrorMessage = disableResult.Message };
+            }
+
+            return result;
+        }
     }
 }

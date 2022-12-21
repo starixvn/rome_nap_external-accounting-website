@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 {
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
@@ -118,7 +119,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult RemoveOTP(int custId)
-            => JsonBase(customerCommandService.RemoveOtp(custId, CurrentSession.UserId, CurrentContext.Ip4Address));
+        public async Task<ActionResult> RemoveOTP(int custId)
+            => JsonBase(await customerCommandService.RemoveOtp(custId, CurrentSession.UserId, CurrentContext.Ip4Address));
     }
 }
