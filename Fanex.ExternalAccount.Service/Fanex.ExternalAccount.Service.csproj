@@ -226,12 +226,15 @@
     <Compile Include="IPInformatonService.cs" />
     <Compile Include="Login\ILoginService.cs" />
     <Compile Include="OTP\CustomerOtpService.cs" />
+    <Compile Include="Params\GetTotalBetParam.cs" />
     <Compile Include="Products\ProductDetailService.cs" />
     <Compile Include="Products\ProductService.cs" />
     <Compile Include="Report\IReportService.cs" />
+    <Compile Include="TotalBet\ITotalBetService.cs" />
     <Compile Include="Report\IViewExtraPTRequest.cs" />
     <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossByPTParam.cs" />
     <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossByPTService.cs" />
+    <Compile Include="TotalBet\TotalBetService.cs" />
     <Compile Include="Report\WinLossDetailIBCBetLiveCasinoRequests.cs" />
     <Compile Include="Report\WinLossDetailRequests.cs" />
     <Compile Include="Report\IWinLossDetailIBCBetLiveCasinoService.cs" />

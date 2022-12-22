@@ -328,4 +328,9 @@
     <Setting Key="EAS_CustomerSelProtectionModeList" SpName="EAS_CustomerSelProtectionModeList" DbName="DBCUST.CustDB.bodbExtAccNet" />
     <Setting Key="Age_CustomerUpdProtectedMode" SpName="Age_CustomerUpdProtectedMode" DbName="DBCUST.CustDB.bodbExtAccNet" />
   </Function>
+  <Function Name="Total Bet">
+    <Setting Key="EAS_TotalBet_LeagueSel" SpName="EAS_TotalBet_LeagueSel" DbName="DBBOF.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_TotalBet_EventSel" SpName="EAS_TotalBet_EventSel" DbName="DBBOF.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_TotalBet_1378Sel" SpName="EAS_TotalBet_1378Sel" DbName="DBBOF.bodb02.bodbExtAccNet" Plain="0" />
+  </Function>
 </Functions>

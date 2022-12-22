@@ -935,7 +935,9 @@ function workaroundForGridOnPhone() {
                         var firstHeaderColumnTop = $("#jqgrid .free-top-left table tr th div.table-cell").first();
                         if (firstHeaderColumn && firstHeaderColumnTop) {
                             var currentWidth = firstHeaderColumnTop.width();
-                            firstHeaderColumn.width(currentWidth + 1).width(currentWidth - 1);
+                            if (currentWidth) {
+                                firstHeaderColumn.width(currentWidth + 1).width(currentWidth - 1);
+                            }
                         }
                     });
         }

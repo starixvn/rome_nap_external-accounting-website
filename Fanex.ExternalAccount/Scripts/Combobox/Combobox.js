@@ -3,12 +3,19 @@
         _create: function () {
             var self = this;
             var select = this.element.hide();
-            var wasOpen = true;
+            var wasOpen = true; 
             var input = $("<input>")
 				.insertAfter(select)
 				.autocomplete({
-				    source: function (request, response) {
-				        var matcher = new RegExp(request.term, "i");
+                    source: function (request, response) {
+                        var matcher;
+
+                        try {
+                             matcher = new RegExp(request.term, "i");
+                        } catch (e) {
+                            matcher = new RegExp(request.term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), "i");
+                        }
+
 				        response(select.children("option").map(function () {
 				            var text = $(this).text();
 				            if (this.value && (!request.term || matcher.test(text)))

@@ -149,11 +149,13 @@
     <Compile Include="Customer\Status\SingleUpdateAffectedDownline.cs" />
     <Compile Include="Customer\Status\UnsuspendDownlineDetail.cs" />
     <Compile Include="DataRange\CustomerDataRange.cs" />
+    <Compile Include="EventModel.cs" />
     <Compile Include="GlobalSuppressions2.cs" />
     <Compile Include="IPInformation\IPInformation.cs" />
     <Compile Include="IPInformation\IpRange.cs" />
     <Compile Include="IPInformation\Ipv6Range.cs" />
     <Compile Include="IPInformation\Ipv4Range.cs" />
+    <Compile Include="LeagueModel.cs" />
     <Compile Include="OTP\CustomerOtp.cs" />
     <Compile Include="Customer\LineInfo.cs" />
     <Compile Include="Customer\Customer.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="Products\ProductDto.cs" />
     <Compile Include="Products\ProductEntity.cs" />
     <Compile Include="Products\ProductStatusDto.cs" />
+    <Compile Include="TotalBet\TotalBetModel.cs" />
     <Compile Include="Report\ExtraPTModel.cs" />
     <Compile Include="Report\SuperWinLossDetailByPT\SuperPositionTakingModel.cs" />
     <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailByProductModel.cs" />

@@ -105,9 +105,9 @@
         }
 
         public static bool IsOfferProductDetail(string currentGroup)
-            => IsOfferJackpotProductDetailsGroup(currentGroup) || 
-            IsOfferSexyGamingProductDetailsGroup(currentGroup) || 
-            IsOfferSpadeGamingProductDetailsGroup(currentGroup) || 
+            => IsOfferJackpotProductDetailsGroup(currentGroup) ||
+            IsOfferSexyGamingProductDetailsGroup(currentGroup) ||
+            IsOfferSpadeGamingProductDetailsGroup(currentGroup) ||
             IsOfferSabaProductDetailsGroup(currentGroup) ||
             IsOfferMGRNGCasinoProductDetailsGroup(currentGroup);
 
@@ -181,7 +181,12 @@
                 .Select(group => group.Trim())
                 .ToArray();
         }
-        
+
+        public static string[] TestGroups()
+        {
+            return GetValue("TestGroups").Split(',').ToArray();
+        }
+
         private static string GetValue(string key) => ConfigurationManager.AppSettings[key];
     }
 }
