@@ -822,7 +822,7 @@
         }
 
         top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(22, "Macau Games");
+        $scope.EnableThirdpartyProduct(18, "RNG Slot");
     };
 
     $scope.EnableNG2 = function (enable, id, disabled) {
@@ -1100,7 +1100,7 @@
     };
 
     $scope.SuperVoidBridge = function () {
-        $scope.RenderSupeOnMemberDCS(22);
+        $scope.RenderSupeOnMemberDCS(18);
     };
 
     $scope.SuperNG2 = function () {
@@ -1145,7 +1145,7 @@
     };
 
     $scope.MasterVoidBridge = function () {
-        $scope.RenderMasterOnMemberDCS(22);
+        $scope.RenderMasterOnMemberDCS(18);
     };
 
     $scope.MasterNG2 = function () {

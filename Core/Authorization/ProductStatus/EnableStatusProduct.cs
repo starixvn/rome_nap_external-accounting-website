@@ -8,7 +8,7 @@
         Keno = 8,
         EnableESports = 16,
         EnableLiveCasino = 41,
-        EnableVoidbridge = 22,
+        EnableVoidbridge = 18,
         EnableNG2 = 23,
         EnableFishingWorld = 24,
         EnableRNGLottery = 44,

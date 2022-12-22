@@ -398,7 +398,7 @@
                         continue;
                     }
 
-                    if (productId == ProductConstants.VoidBridge)
+                    if (productId == ProductConstants.RNGSlot)
                     {
                         if (macauGames == null)
                         {
