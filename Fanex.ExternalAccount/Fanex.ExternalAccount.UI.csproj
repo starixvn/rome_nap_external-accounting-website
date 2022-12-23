@@ -177,8 +177,8 @@
     <Reference Include="Fanex.Module.Logs, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Module.Logs.2.0.0.2\lib\net40\Fanex.Module.Logs.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Module.NG2, Version=1.0.1.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.NG2.NAP.1.0.1.8\lib\net40\Fanex.Module.NG2.dll</HintPath>
+    <Reference Include="Fanex.Module.NG2, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Module.NG2.NAP.1.0.1.9-beta01\lib\net40\Fanex.Module.NG2.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Module.Statement, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Module.Statement.1.0.0.8\lib\net40\Fanex.Module.Statement.dll</HintPath>
@@ -187,15 +187,14 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.3.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.3.12\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.3.14, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.3.14-beta01\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.6.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTEngine.1.0.6.5\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTSetting.BettypeReference, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTSetting.BettypeReference.1.0.0.2\lib\net461\Fanex.PTSetting.BettypeReference.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.PTSetting.BettypeReference, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTSetting.BettypeReference.1.0.0.5-UnifyVS001\lib\net461\Fanex.PTSetting.BettypeReference.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.RemotingRef, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.RemotingRef.1.1.1\lib\net461\Fanex.RemotingRef.dll</HintPath>

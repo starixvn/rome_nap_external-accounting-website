@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization.ProductStatus
 {
+    using Fanex.ExternalAccount.Utilities;
     using Fanex.NAP.Framework.Data;
 
     internal class GetProductListCriteria : CriteriaBase
@@ -10,6 +11,8 @@
         }
 
         public int GroupId { get; }
+
+        public byte SettingStatus => Config.SettingStatus;
 
         public override string GetSettingKey()
             => "EAS_ProductSettingByGroup_Sel";

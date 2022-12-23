@@ -3,6 +3,7 @@
     using Fanex.ExternalAccount.SearchAndCopy.Criteria;
     using Fanex.ExternalAccount.SearchAndCopy.Models;
     using Fanex.ExternalAccount.SearchAndCopy.Repositories;
+    using Fanex.ExternalAccount.Utilities;
     using Fanex.Module.NG2.Entities;
     using Fanex.Module.NG2.Repository;
     using Fanex.Module.NG2.Services;
@@ -51,7 +52,8 @@
                 SiteId.NAP,
                 context.ExistingCustomerInfo.CurrencyId,
                 context.CurrentSession.UserId,
-                (byte)context.CurrentSession.FromSystem);
+                (byte)context.CurrentSession.FromSystem,
+                Config.SettingStatus);
             if (!result.IsSuccess)
             {
                 throw new Exception(result.ErrorMessage);
