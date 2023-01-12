@@ -272,46 +272,5 @@
         </BetTypeGroupSet>
       </BetTypeGroupSets>
     </SportType>
-
-    <SportType id="161" name="Number Game" resourcekey="numbergame">
-      <BetTypeGroupSets>
-        <BetTypeGroupSet isLive="false" showGroupSetLabel="true">
-          <BetTypeGroups>
-            <BetTypeGroup>
-              <BetTypes>
-                <BetType id="81" name="1st/Last O/U" resourcekey="firstlastoverunder">
-                </BetType>
-                <BetType id="83" name="1st/Last O/E" minWidth="160" resourcekey="firstlastoddeven">
-                </BetType>
-                <BetType id="88" name="Warrior" minWidth="139" resourcekey="warrior">
-                </BetType>
-                <BetType id="86" name="Odd/Even" minWidth="130" resourcekey="lblOddEven">
-                </BetType>
-              </BetTypes>
-            </BetTypeGroup>
-          </BetTypeGroups>
-        </BetTypeGroupSet>
-
-        <BetTypeGroupSet isLive="true" showGroupSetLabel="true">
-          <BetTypeGroups>
-            <BetTypeGroup>
-              <BetTypes>
-                <BetType id="85" name="Over/Under" resourcekey="lblOverUnder">
-                </BetType>
-                <BetType id="86" name="Odd/Even" minWidth="129" resourcekey="lblOddEven">
-                </BetType>
-                <BetType id="87" name="High/Low" minWidth="80" resourcekey="highlow">
-                </BetType>
-                <BetType id="89" name="Next Combo" minWidth="115" resourcekey="nextcombo">
-                </BetType>
-                <BetType id="90" name="Number Wheel" minWidth="100" resourcekey="numberGroup">
-                </BetType>
-              </BetTypes>
-            </BetTypeGroup>
-          </BetTypeGroups>
-        </BetTypeGroupSet>
-      </BetTypeGroupSets>
-    </SportType>
-
   </SportTypes>
 </PTGrid>
