@@ -5,7 +5,6 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Base
     using Fanex.CustomerSetting.Module.Core.Services.Impl;
     using Fanex.CustomerSetting.Module.Core.Services.Interface;
     using Fanex.ExternalAccount.Core.Context;
-    using Keno.KenoSetting.Services;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Services.Impl;
@@ -17,12 +16,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Base
     {
         private readonly PTEngine.Services.IBettingLimitService _sportsBookService = new PTEngine.Services.BettingLimitService();
 
-        private readonly IKenoSettingService _kenoService = new KenoSettingService();
-
         public PTEngine.Services.IBettingLimitService SportsBookService => _sportsBookService ?? new PTEngine.Services.BettingLimitService();
-
-        public IKenoSettingService KenoService => _kenoService ?? new KenoSettingService();
-
         public IServiceBase serviceBase = new ServiceBase();
 
         public Customer CustomerInfo(int id, int userId)

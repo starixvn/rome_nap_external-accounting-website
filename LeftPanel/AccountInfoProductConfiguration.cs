@@ -32,7 +32,6 @@
             {
                 // Show edit bet setting tab for edit super setting
                 {ProductConstants.Casino, eFunctions.CasinoBetting},
-                {ProductConstants.Keno, eFunctions.KenoBetting},
                 {ProductConstants.Sportsbook, eFunctions.SportsbookBetting},
                 {ProductConstants.LiveCasino, eFunctions.LiveCasinoBetting},
                 {ProductConstants.RNGSlot, eFunctions.VoidbridgeBetting},

@@ -318,7 +318,6 @@
             AddParlayMaxPayoutLink(details);
             AddCasinoEditLink(table3rdDCS, details);
             AddVirtualSportsEditLink(table3rdDCS, details);
-            AddKenoEditLink(details);
             return details;
         }
 
@@ -329,14 +328,6 @@
                 !table3rdDCS.IsProductHidden(ProductConstants.VirtualSports))
             {
                 details.Add(new ObjectInfo("VirtualSports", "Virtual Sports"));
-            }
-        }
-
-        private static void AddKenoEditLink(List<ObjectInfo> details)
-        {
-            if (ProductSettings.IsShowKeno)
-            {
-                details.Add(new ObjectInfo("Keno", "RNG Keno"));
             }
         }
 
@@ -354,11 +345,6 @@
         {
             details.Add(new ObjectInfo("ParlayMaxPayout", "Parlay Max Payout"));
         }
-
-        internal List<ObjectInfo> EnableKenoItem(DataRow nonDCSProductStatusRow)
-            => (!nonDCSProductStatusRow.HideKeno() && !this.currentSession.IsBelongToSpecialGroups) ?
-            new List<ObjectInfo> { new ObjectInfo { Key = "EnableKeno", Text = "Enable RNG Keno" } } :
-            new List<ObjectInfo>();
 
 #pragma warning disable S1541 // Methods and properties should not be too complex
         internal Setting AddProductSetting(

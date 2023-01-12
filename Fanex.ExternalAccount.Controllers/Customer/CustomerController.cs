@@ -377,7 +377,6 @@
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
             ViewBag.HideVirtualSports = custStatus.HideVirtualSport;
-            ViewBag.HideKeno = custStatus.HideKeno;
             var visibledProducts = GetVisibledProducts(id, custId);
 
             return PartialViewBase(visibledProducts);

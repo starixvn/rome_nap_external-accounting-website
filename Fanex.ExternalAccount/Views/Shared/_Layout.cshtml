@@ -22,8 +22,6 @@
     var hasSuspend = authenService.HasSuspendCustomerPermission(userId) ? 1 : 0;
     var allowAutoPT = authenService.HasAllowAutoMPTPermission(userId) ? 1 : 0;
     var hasClearCredit = authenService.HasClearCreditPermission(userId) ? 1 : 0;
-    var enableKeno = ProductSettings.IsShowKeno ? 1 : 0;
-    var showKenoSetting = ProductSettings.ShowKenoSetting ? "true" : "false";
     var showLiveCasino = ProductSettings.IsShowLiveCasino ? 1 : 0;
     var showVoidbridge = ProductSettings.IsShowVoidBridge ? 1 : 0;
     var showNG2 = ProductSettings.IsShowNG2 ? 1 : 0;
@@ -142,9 +140,7 @@
         var hasClose = '@hasClose';
         var hasSuspend = '@hasSuspend';
         var allowAutoPT = '@allowAutoPT';
-        var hasClearCredit = '@hasClearCredit';
-        var enableKeno = '@enableKeno';
-        var showKenoSetting = '@showKenoSetting';
+        var hasClearCredit = '@hasClearCredit';      
         var showLiveCasino = @showLiveCasino;
         var showVoidbridge = @showVoidbridge;
         var showFishingWorld = @showFishingWorld;

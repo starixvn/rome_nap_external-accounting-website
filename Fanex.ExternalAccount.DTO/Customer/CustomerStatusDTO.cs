@@ -12,10 +12,6 @@ namespace Fanex.ExternalAccount.DTO.Customer
 
         public bool DisableVirtualSport { get; set; }
 
-        public bool HideKeno { get; set; }
-
-        public bool DisableKeno { get; set; }
-
         public bool DisableTransfer { get; set; }
 
         public bool HasSecurityCode { get; set; }

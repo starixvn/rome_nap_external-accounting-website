@@ -28,8 +28,6 @@
 
         public static bool IsShowKeno => IsShowProduct(ProductConstants.Keno);
 
-        public static bool ShowKenoSetting => Configs["ShowKenoSetting"] == "true";
-
         public static bool IsShowLiveCasino => IsShowProduct(ProductConstants.LiveCasino);
 
         public static bool IsShowVoidBridge => IsShowProduct(ProductConstants.RNGSlot);

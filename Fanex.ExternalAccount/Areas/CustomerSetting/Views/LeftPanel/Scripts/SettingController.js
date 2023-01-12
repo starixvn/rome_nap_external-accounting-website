@@ -62,13 +62,7 @@
                     ($scope.setting.details[i].key == 'BetSetting' && parent.showBetSetting == '0')) {
                     $scope.setting.details[i].isHide = true;
                 }
-            }
-
-            for (var i = 0; i < $scope.setting.editItems.length; i++) {
-                if ($scope.setting.editItems[i].key == 'EnableKeno' && parent.enableKeno == '0') {
-                    $scope.setting.editItems[i].isHide = true;
-                }
-            }
+            }          
             
             for (var i = 0; i < $scope.setting.enableItems.length; i++) {
                 if ($scope.model.personalInfo.roleId.value == 4 && ($scope.setting.enableItems[i].key == 'Closed') &&
@@ -702,17 +696,7 @@
         top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(6, "Saba Casino");
-    };
-
-    $scope.EnableNumberGame = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(3, "Number Game");
-    };
+    };  
 
     $scope.EnableVirtualSports = function (enable, id, disabled) {
         if (disabled) {
@@ -784,17 +768,6 @@
         //    'Parlay Max Payout: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
         //    'auto', 'auto', false, false, 1);
 
-    };
-
-    $scope.EnableKeno = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        var landscapeHeight = 250;
-        var portraitHeight = isMobile.phone || isMobile.tablet ? 400 : 730;
-        top.shouldCalculatePopupHeight = true;
-        $scope.EnableThirdpartyProduct(8, "RNG Keno", 720, $scope.getPopupHeight(landscapeHeight, portraitHeight));
     };
 
     $scope.EnableFishingWorld = function (enable, id, disabled) {
@@ -1025,14 +998,6 @@
         $scope.RenderSupeOnMemberDCS(5);
     };
 
-    $scope.SuperKeno = function () {
-        var superId = $scope.model.personalInfo.downlines[0].key;
-        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Customer.superId = superId;
-        $scope.ResetGlobalValueAtSuperOnMember();
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/SuperEditMember?custId=' + $scope.model.personalInfo.custId.value + "&userId=" + parent.userId));
-    };
-
     $scope.MasterPT = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
         var masterId = $scope.model.personalInfo.downlines[1].key;
@@ -1053,12 +1018,6 @@
 
     $scope.MasterVirtualSports = function () {
         $scope.RenderMasterOnMemberDCS(5);
-    };
-
-    $scope.MasterKeno = function () {
-        $scope.ResetGlobalValueAtMasterOnMember();
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/MasterEditMember?custId=' + $scope.model.personalInfo.custId.value + "&userId=" + parent.userId));
     };
 
     $scope.SuperSBPT = function () {

@@ -27,7 +27,6 @@
     AllowDoubleCommAgent: false,
     AllowDoubleComm: false,
     HideVirtualSports: false,
-    HideKeno: false,
     HideSportsbook2: false,
     UplineProductSettings: [],
 

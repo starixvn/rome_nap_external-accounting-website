@@ -295,14 +295,7 @@
                     result.HasSecurityCode = Utils.ToBoolean(reader["HasSecurityCode"]);
                     result.UplineHasSecurityCode = Utils.ToBoolean(reader["UplineHasSecurityCode"]);
                     result.DisableTransfer = Utils.ToBoolean(reader["DisableTransfer"]);
-                }
-
-                reader.NextResult();
-                if (reader.Read())
-                {
-                    result.HideKeno = !ProductSettings.IsShowKeno || Utils.ToBoolean(reader["HideKeno"]);
-                    result.DisableKeno = Utils.ToBoolean(reader["DisableKeno"]);
-                }
+                }           
 
                 reader.NextResult();
                 while (reader.Read())

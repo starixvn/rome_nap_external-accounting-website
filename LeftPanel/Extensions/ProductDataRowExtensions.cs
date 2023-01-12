@@ -13,12 +13,6 @@
 
         internal static bool EnableOutright(this DataRow dataRow) => !DisableOutright(dataRow);
 
-        internal static bool DisableNumberGameUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["uplineDisabledNumber"]);
-
-        internal static bool DisableNumberGame(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableNumber"]);
-
-        internal static bool EnableNumberGame(this DataRow dataRow) => !DisableNumberGame(dataRow);        
-        
         internal static bool EnableAutoMasterPT(this DataRow dataRow) => !Utils.ToBoolean(dataRow["disableAutoMPT"]);
 
         internal static bool EnableDoubleComm(this DataRow dataRow) => Utils.ToBoolean(dataRow["doubleCommLosing"]);
@@ -30,10 +24,6 @@
         internal static bool HideVirtualSports(this DataRow dataRow) => Utils.ToBoolean(dataRow["hideVirtualSports"]);
 
         internal static bool DisableVirtualSports(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableVirtualSports"]);
-
-        internal static bool HideKeno(this DataRow dataRow) => Utils.ToBoolean(dataRow["HideKeno"]);
-
-        internal static bool DisableKeno(this DataRow dataRow) => Utils.ToBoolean(dataRow["DisableKeno"]);
 
         internal static bool IsHiddenUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["isHiddenUpline"]);
 

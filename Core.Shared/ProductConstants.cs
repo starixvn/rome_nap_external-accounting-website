@@ -5,7 +5,6 @@ namespace Fanex.ExternalAccount.Core.Shared
     public static class ProductConstants
     {
         public const int Sportsbook = 1;
-        public const int NumberGame = 3;
         public const int VirtualSports = 5;
         public const int Keno = 8;
         public const int Sportsbook2 = 16;

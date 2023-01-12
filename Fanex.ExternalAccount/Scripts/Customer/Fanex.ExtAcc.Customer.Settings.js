@@ -22,7 +22,6 @@ Fanex.ExtAcc.Customer.Settings = {
 
         $('#tab4').css('display', Fanex.ExtAcc.Customer.HideCasino ? 'none' : 'block');
         $('#tab8').css('display', Fanex.ExtAcc.Customer.HideVirtualSports ? 'none' : 'block');
-        $('#tab9').css('display', Fanex.ExtAcc.Customer.HideKeno ? 'none' : 'block');
 
         $('#tab1').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
@@ -41,7 +40,6 @@ Fanex.ExtAcc.Customer.Settings = {
 
         $('#tab9').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.GetKenoSetting();
         });
 
         $('.dynamic-setting-tab').bind('click', function () {
@@ -64,37 +62,7 @@ Fanex.ExtAcc.Customer.Settings = {
             $('#tabs-1').html(result);
             Fanex.ExtAcc.UnBlockUI();
         });
-    },
-
-    GetKenoSetting: function () {
-        Fanex.ExtAcc.Customer.IsMultiple = false;
-        Fanex.ExtAcc.Customer.UserId = this.UserId;
-        var action = '';
-
-        if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
-            action = 'customersetting/kenosetting/kenosetting/editmaster';
-        }
-        else if (this.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
-            action = 'customersetting/kenosetting/kenosetting/EditAgent';
-        }
-        else {
-            action = 'customersetting/kenosetting/kenosetting/AgentEditMember';
-        }
-
-        Fanex.ExtAcc.Customer.Ids = function () {
-            return [this.UserId];
-        };
-
-        Fanex.ExtAcc.Customer.Names = function () {
-            return [''];
-        };
-
-        var url = resolveClientUrl(action + "?custId=" + this.UserId + '&userId=' + userId + '&groupName=' + $('#selectedGroupName').html());
-
-        $('#tabs-9').height($('#leftFrame').height() - 10);
-        $('#tabs-9').css('display', 'block');
-        Fanex.ExtAcc.Customer.Settings.LoadProductSetting('#kenoFrame', url);
-    },
+    },   
     RenderDCS: function (productId, frameId, tabId) {
         Fanex.ExtAcc.Customer.IsMultiple = false;
         Fanex.ExtAcc.Customer.UserId = this.UserId;
