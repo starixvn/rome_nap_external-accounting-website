@@ -19,7 +19,7 @@
             IEnumerable<ProductSettingElement> productSettingElements = null,
             AuthorizationService authorizationService = null,
             CurrentSession currentSession = null,
-            Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null) 
+            Func<DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null) 
             : base(userId, roleId, productSettingElements, authorizationService, currentSession, hiddenAndSyncItemsCreator)
         { }
 

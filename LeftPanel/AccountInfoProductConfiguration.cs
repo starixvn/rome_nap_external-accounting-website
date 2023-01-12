@@ -59,7 +59,7 @@
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Cashout], statusRow, isSetUplineStatus:isSetUplineStatus)
             };
 
-        public static List<ObjectInfo> CreateSyncAndHiddenItems(DataRow nonDCSProductStatusRow,DataTable dcsProductStatusTable)
+        public static List<ObjectInfo> CreateSyncAndHiddenItems(DataTable dcsProductStatusTable)
             => new List<ObjectInfo>
             {
                 new ObjectInfo("HideLiveCasino", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.LiveCasino)),

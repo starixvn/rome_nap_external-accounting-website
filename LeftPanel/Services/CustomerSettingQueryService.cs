@@ -19,7 +19,7 @@
     public class CustomerSettingServiceImpl : CustomerSettingQueryService
     {
         private readonly IEnumerable<ProductSettingElement> productSettingElements;
-        private readonly Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator;
+        private readonly Func<DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator;
         private readonly AuthorizationService authorizationService;
         private readonly CurrentSession currentSession;
         private readonly int _roleId;
@@ -29,7 +29,7 @@
             IEnumerable<ProductSettingElement> productSettingElements = null,
             AuthorizationService authorizationService = null,
             CurrentSession currentSession = null,
-            Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null)
+            Func<DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null)
         {
             _roleId = roleId;
             _userId = userId;
@@ -41,13 +41,11 @@
 
         public virtual Setting GetSetting(DataSet customerStatusInfoDataset)
         {
-            var nonDCSProductStatusRow = customerStatusInfoDataset.Tables[1].Rows[0];
-            var table3rdDCS = customerStatusInfoDataset.Tables[2];
+            var table3rdDCS = customerStatusInfoDataset.Tables[1];
             var setting = new Setting
             (
                 EnableItems(customerStatusInfoDataset),
-                hiddenAndSyncItemsCreator(nonDCSProductStatusRow, table3rdDCS),
-                EnableKenoItem(nonDCSProductStatusRow),
+                hiddenAndSyncItemsCreator(table3rdDCS),            
                 Details(customerStatusInfoDataset)
             );
 
@@ -58,7 +56,7 @@
 
             if (!this.currentSession.IsBelongToSpecialGroups)
             {
-                AddDummyProductStatus(table3rdDCS, setting.EditItems);
+                AddDummyProductStatus(table3rdDCS);
             }
 
             AddDummyProductLink(table3rdDCS, setting.Details);
@@ -68,9 +66,8 @@
 
         internal List<ObjectInfo> EnableItems(DataSet customerStatusInfoDataset)
         {
-            var nonProductStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];
-            var nonDCSProductStatusRow = customerStatusInfoDataset.Tables[1].Rows[0];
-            var table3rdDCS = customerStatusInfoDataset.Tables[2];
+            var nonProductStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];           
+            var table3rdDCS = customerStatusInfoDataset.Tables[1];
             var enableItems = new List<ObjectInfo>
             {
                 ClosedStatus(nonProductStatusRow),
@@ -89,7 +86,6 @@
             if (!this.currentSession.IsBelongToSpecialGroups)
             {
                 AddCasinoStatus(table3rdDCS, enableItems);
-                AddNumberGameStatus(nonDCSProductStatusRow, enableItems);
                 AddVirtualSportsStatus(table3rdDCS, enableItems);
             }
 
@@ -139,13 +135,12 @@
             enableItems.Add(eSportsStatus);
         }
 
-        private void AddDummyProductStatus(DataTable table3rdDCS, List<ObjectInfo> editItems)
+        private void AddDummyProductStatus(DataTable table3rdDCS)
         {
             if (ProductSettings.IsShowLiveCasino)
             {
                 AddDummyProductStatus(
                     table3rdDCS,
-                    editItems,
                     ProductConstants.LiveCasino,
                     new ObjectInfo("EnableLiveCasino", "Enable Live Casino", "Enable Live Casino"));
             }
@@ -154,13 +149,12 @@
             {
                 AddDummyProductStatus(
                     table3rdDCS,
-                    editItems,
                     ProductConstants.RNGLottery,
                     new ObjectInfo("EnableRNGLottery", "Enable RNG Lottery", "Enable RNG Lottery"));
             }
         }
 
-        private void AddDummyProductStatus(DataTable table3rdDCS, List<ObjectInfo> editItems, int productId, ObjectInfo productStatus)
+        private void AddDummyProductStatus(DataTable table3rdDCS, int productId, ObjectInfo productStatus)
         {
             var disableUpline = false;
             var isHideUpline = true;
@@ -173,14 +167,9 @@
             }
 
             var isShowProduct = !IsHiddenProduct(_roleId, isHideUpline, isHide);
-            if (isShowProduct)
+            if (isShowProduct && disableUpline)
             {
-                if (disableUpline)
-                {
-                    productStatus = DisableStatus(productStatus);
-                }
-
-                editItems.Add(productStatus);
+                DisableStatus(productStatus);
             }
         }
 
@@ -225,19 +214,6 @@
             }
 
             enableItems.Add(doubleCommStatus);
-        }
-
-        private static void AddNumberGameStatus(DataRow nonDCSProductStatusRow, ICollection<ObjectInfo> enableItems)
-        {
-            var numberGameStatus = new ObjectInfo("EnableNumberGame", nonDCSProductStatusRow.EnableNumberGame(), "Enable Num Game",
-                "Enable Number Game");
-
-            if (nonDCSProductStatusRow.DisableNumberGameUpline())
-            {
-                numberGameStatus = DisableStatus(numberGameStatus);
-            }
-
-            enableItems.Add(numberGameStatus);
         }
 
         private static void AddCasinoStatus(DataTable table3rdDCS, ICollection<ObjectInfo> enableItems)
@@ -325,9 +301,8 @@
         }
 
         internal List<ObjectInfo> Details(DataSet customerStatusInfoDataset)
-        {
-            var nonDCSProductStatusRow = customerStatusInfoDataset.Tables[1].Rows[0];
-            var table3rdDCS = customerStatusInfoDataset.Tables[2];
+        {           
+            var table3rdDCS = customerStatusInfoDataset.Tables[1];
             var details = new List<ObjectInfo>
             {
                 new ObjectInfo("Info", "Info"),
@@ -459,10 +434,6 @@
                     }
 
                     setting.EnableItems.Add(enableItem);
-                }
-                else
-                {
-                    setting.EditItems.Add(CreateEnableLinkItem(productSettingElement.Key, productSettingElement.Name));
                 }
             }
         }
