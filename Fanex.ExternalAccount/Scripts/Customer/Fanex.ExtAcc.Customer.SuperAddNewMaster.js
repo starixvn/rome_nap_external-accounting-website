@@ -34,7 +34,7 @@ Fanex.ExtAcc.Customer.SuperAddNewMaster = {
             type: 'post'
         })
             .success(function (result) {
-                Fanex.PTEngine.PT_STEP = $('#PT3DecimalSites').val().splitAndContains(result.customer.siteName) ? 0.005 : 0.01;
+                Fanex.PTEngine.PT_STEP = $('#PT3DecimalSites').val().splitAndContains(result.customer.siteLabel) ? 0.005 : 0.01;
                 if (result.customer.bettingLimit.bettingLimitItems.length == 0) {
                     Fanex.ExtAcc.UnBlockUI();
                     Fanex.ExtAcc.Form.Close();

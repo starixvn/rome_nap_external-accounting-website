@@ -61,7 +61,7 @@
 
             var loginInfos = new List<ObjectInfo>
             {
-                ObjectInfo.CreateInstance("Site", site),
+                ObjectInfo.CreateInstance("Site", $"{site} ({loginInfoDataRow.SiteLabel()})"),
                 ObjectInfo.CreateInstance("Created Date", loginInfoDataRow.CreatedDate()),
                 ObjectInfo.CreateInstance("Last Login", loginInfoDataRow.LastLoggedIn()),
                 new ObjectInfo
