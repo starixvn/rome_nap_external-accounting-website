@@ -149,6 +149,7 @@
     <Compile Include="Customer\TransferConditionViewModel.cs" />
     <Compile Include="Extension\EASDisplayAttribute.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="TotalBet\TotalBetFilterViewModel.cs" />
     <Compile Include="Shared\MenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubGroup\SubGroupViewModel.cs" />
@@ -180,6 +181,9 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\Google.Protobuf.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Report\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

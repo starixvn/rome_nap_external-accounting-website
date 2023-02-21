@@ -78,5 +78,13 @@
   {
     "outputFile": "assets/styles/pages/customer/protected-status-multiple.css",
     "inputFile": "assets/styles/pages/customer/protected-status-multiple.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/totalbet/total-bet.css",
+    "inputFile": "assets/styles/pages/totalbet/total-bet.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/totalbet/multiselect-custom.css",
+    "inputFile": "assets/styles/pages/totalbet/multiselect-custom.scss"
   }
 ]

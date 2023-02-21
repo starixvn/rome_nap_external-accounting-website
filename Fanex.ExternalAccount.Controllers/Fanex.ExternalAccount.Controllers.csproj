@@ -363,6 +363,7 @@
     <Compile Include="OTP\OTPController.cs" />
     <Compile Include="Report\BaseReportController.cs" />
     <Compile Include="Report\SuperWinLossDetailByPTController.cs" />
+    <Compile Include="TotalBet\TotalBetController.cs" />
     <Compile Include="Requests\CustomerList\SeachCustomerListRequest.cs" />
     <Compile Include="Requests\DrillDownWinLossDetailRequest.cs" />
     <Compile Include="Requests\SearchWinLossDetailIBCBetLiveCasinoRequest.cs" />
@@ -373,6 +374,7 @@
     <Compile Include="Requests\ViewExtraPTRequest.cs" />
     <Compile Include="Requests\WinLossDetailIBCBetLiveCasinoRequest.cs" />
     <Compile Include="Requests\SuperWinLossDetail\SuperWinLossDetailByPTRequest.cs" />
+    <Compile Include="Requests\TotalBetRequest.cs" />
     <Compile Include="Requests\WinLossDetailRequest.cs" />
     <Compile Include="SecurityCode\SecurityCodeController.cs" />
     <Compile Include="Statement\StatementController.cs" />

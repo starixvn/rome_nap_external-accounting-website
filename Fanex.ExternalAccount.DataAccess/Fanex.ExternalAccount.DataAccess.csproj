@@ -176,6 +176,9 @@
     <Compile Include="Criteria\SubGroup\GetSubGroupCustomerCriteria.cs" />
     <Compile Include="Criteria\SubGroup\UpdateCustomerSubGroupCriteria.cs" />
     <Compile Include="Criteria\SubGroup\UpdateSubGroupAdminPwdCriteria.cs" />
+    <Compile Include="Criteria\TotalBet\GetEventsCriteria.cs" />
+    <Compile Include="Criteria\TotalBet\GetTotalBetCriteria.cs" />
+    <Compile Include="Criteria\TotalBet\GetLeaguesCriteria.cs" />
     <Compile Include="Criteria\UserControl\GetGroupPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\GetUserPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateMultipleGroupPolicyCriteria.cs" />

@@ -1,0 +1,76 @@
+﻿
+.div-refresh, .div-loading {
+    background-image: url("images/btRefresh-large.png");
+    height: 24px;
+    line-height: 24px;
+    padding: 0 0 0 17px;
+    width: 100px;
+    float: left;
+    font-size: 12px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.div-down {
+    background-image: url("images/btDown-large.png");
+    height: 24px;
+    line-height: 24px;
+    width: 24px;
+    float: right;
+    position: relative;
+    left: -4px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+    .div-down:hover {
+        opacity: 0.6;
+    }
+
+.panel-options {
+    list-style: none;
+    border: solid 1px #cecece;
+    background-color: #fff;
+    width: 118px;
+    top: 24px;
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    cursor: default;
+    z-index: 2;
+}
+
+.count-down-item {
+    padding: 4px 0 4px 15px;
+    cursor: pointer;
+}
+
+    .count-down-item:hover {
+        background-color: #ddd;
+        color: #333;
+    }
+
+.menuitemcheck {
+    background: url(images/check.png) no-repeat 3px center;
+}
+
+.miniloading {
+    font-size: 9px;
+    margin-left: -10px;
+}
+
+.dropdown-refresh {
+    position: relative;
+}
+
+.div-count-down {
+    display: table;
+    margin: 8px 0;
+    width: 124px;
+    overflow: hidden;
+}
+
+.div_min_bottom {
+    border-bottom: solid 1px white;
+}

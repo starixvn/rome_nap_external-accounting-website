@@ -571,11 +571,21 @@
       <SubType>Designer</SubType>
       <DependentUpon>ONEbook.NG2.API.config</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\totalbet\index.css" />
+    <Content Include="assets\bundles\totalbet\index.js" />
+    <Content Include="assets\bundles\totalbet\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\totalbet\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\styles\base\_alpha-admin-fonts.min.css">
       <DependentUpon>_alpha-admin-fonts.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\images\cross.png" />
+    <Content Include="assets\styles\images\icon-refresh.png" />
     <Content Include="assets\styles\images\medium-network.svg" />
+    <Content Include="assets\styles\images\multiselect-sprites.png" />
     <Content Include="assets\styles\images\network\medium-network.svg" />
     <Content Include="assets\styles\images\network\strength-network.svg" />
     <Content Include="assets\styles\images\network\weak-network.svg" />
@@ -1064,6 +1074,18 @@
     <Content Include="assets\styles\pages\reports\daily-winloss.min.css">
       <DependentUpon>daily-winloss.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\totalbet\multiselect-custom.css">
+      <DependentUpon>multiselect-custom.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\totalbet\multiselect-custom.min.css">
+      <DependentUpon>multiselect-custom.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\totalbet\total-bet.css">
+      <DependentUpon>total-bet.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\totalbet\total-bet.min.css">
+      <DependentUpon>total-bet.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\pages\reports\winloss-detail.css">
       <DependentUpon>winloss-detail.scss</DependentUpon>
     </Content>
@@ -1485,6 +1507,11 @@
     <Content Include="Configurations\connectionStrings.staging.config">
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
+    <Content Include="Scripts\AutoRefresh\AutoRefresh.css" />
+    <Content Include="Scripts\AutoRefresh\AutoRefresh.js" />
+    <Content Include="Scripts\AutoRefresh\images\btDown-large.png" />
+    <Content Include="Scripts\AutoRefresh\images\btRefresh-large.png" />
+    <Content Include="Scripts\AutoRefresh\images\check.png" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.AssociationAccount.js" />
     <TypeScriptCompile Include="Scripts\Reports\BonusDetail\Fanex.ExtAcc.BonusDetail.ts" />
     <TypeScriptCompile Include="Scripts\Reports\BonusDetail\Fanex.ExtAcc.AddNewBonus.ts" />
@@ -1493,6 +1520,7 @@
     <TypeScriptCompile Include="Scripts\Reports\Shared\ProductControls.ts" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\SuperWinLossDetailByPT.ts" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.ClosedStatus.js" />
+    <Content Include="Scripts\Fanex.Multiselect\fanex.singleSelect.js" />
     <Content Include="Scripts\Fanex.Multiselect\fanex.multiSelect.css" />
     <Content Include="Scripts\Fanex.Multiselect\fanex.multiSelect.js" />
     <Content Include="Scripts\Fanex.Multiselect\images\BottomLine.png" />
@@ -1507,6 +1535,7 @@
     <Content Include="Scripts\Fanex.Multiselect\images\ui-icons_2e83ff_256x240.png" />
     <Content Include="Scripts\ProblemAccount\Fanex.ExtAcc.ProblemAccount.js" />
     <Content Include="Scripts\Manage\Fanex.ExtAcc.SubGroup.js" />
+    <Content Include="Scripts\TotalBet\Fanex.ExtAcc.TotalBet.js" />
     <Content Include="Views\Customer\MultipleOpenCustomer.cshtml" />
     <Content Include="Views\Customer\SingleOpenCustomer.cshtml" />
     <Content Include="SpNames.CustDB.aws.xml">
@@ -2764,6 +2793,11 @@
     <Content Include="assets\bundles\SuperWinLossDetailBySubGroup\index.min.js.map">
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\totalbet\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\totalbet\total-bet.scss" />
+    <Content Include="assets\styles\pages\totalbet\multiselect-custom.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2939,6 +2973,7 @@
     <Content Include="Views\ProtectedStatus\OpenMultiple.cshtml" />
     <Content Include="Views\SuperWinLossDetailBySubGroup\Index.cshtml" />
     <Content Include="Views\SuperWinLossDetailBySubGroup\_NoPermission.cshtml" />
+    <Content Include="Views\TotalBet\Index.cshtml" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailBySubGroup\Fanex.ExtAcc.SuperWinLossDetailBySubGroup.ts" />
   </ItemGroup>
   <ItemGroup>

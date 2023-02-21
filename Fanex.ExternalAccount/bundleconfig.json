@@ -257,5 +257,25 @@
       "Scripts/Reports/SuperWinLossDetailBySubGroup/Fanex.ExtAcc.SuperWinLossDetailBySubGroup.js"
     ],
     "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/totalbet/index.js",
+    "inputFiles": [
+      "Scripts/Fanex.Multiselect/fanex.multiSelectSearchable.js",
+      "Scripts/Fanex.Multiselect/fanex.singleSelect.js",
+      "Scripts/Combobox/Combobox.js",
+      "Scripts/AutoRefresh/AutoRefresh.js",
+      "Scripts/TotalBet/Fanex.ExtAcc.TotalBet.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/totalbet/index.css",
+    "inputFiles": [
+      "Scripts/AutoRefresh/AutoRefresh.css",
+      "assets/styles/pages/totalbet/multiselect-custom.css",
+      "assets/styles/pages/totalbet/total-bet.css"
+    ],
+    "sourceMap": true
   }
 ]

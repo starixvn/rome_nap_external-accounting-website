@@ -1,0 +1,23 @@
+﻿namespace Fanex.ExternalAccount.Controllers.Requests
+{
+    using System;
+    using System.Collections.Generic;
+    using Core.Context;
+
+    public class TotalBetRequest
+    {
+        private readonly IExtRequest extRequest;
+
+        public TotalBetRequest() : this(null) { }
+
+        public TotalBetRequest(IExtRequest extRequest)
+        {
+            this.extRequest = extRequest ?? new ExtRequest();
+        }
+
+        public string GroupName => extRequest.GetGroupName();
+        public int ViewMode { get; set; }
+        public int League { get; set; }
+        public IEnumerable<int> Events { get; set; }
+    }
+}

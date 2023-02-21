@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option or rebuild the Visual Studio project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Lang {
@@ -2648,6 +2648,15 @@ namespace Resources {
         internal static string hdp {
             get {
                 return ResourceManager.GetString("hdp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Headline.
+        /// </summary>
+        internal static string Headline {
+            get {
+                return ResourceManager.GetString("Headline", resourceCulture);
             }
         }
         
@@ -7008,6 +7017,15 @@ namespace Resources {
         internal static string noothers {
             get {
                 return ResourceManager.GetString("noothers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No refresh.
+        /// </summary>
+        internal static string NoRefresh {
+            get {
+                return ResourceManager.GetString("NoRefresh", resourceCulture);
             }
         }
         
