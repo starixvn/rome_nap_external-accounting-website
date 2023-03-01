@@ -7,10 +7,10 @@
 (function ($) {
 
     //// Method expose for user use
-    var fanexMultiSelectMethods =
+    var fanexMultiSelectSearchableMethods =
         {
-            createfanexMultiSelect: function (opts) {
-                opts = $.extend({}, $.fn.fanexMultiSelect.defaults, opts);
+            createfanexMultiSelectSearchable: function (opts) {
+                opts = $.extend({}, $.fn.fanexMultiSelectSearchable.defaults, opts);
                 return this.each(function () {
                     return new fanex.MultiSelect(this, opts);
                 });
@@ -65,12 +65,12 @@
         };
 
     //// Plugin
-    $.fn.fanexMultiSelect = function (options) {
-        if (fanexMultiSelectMethods[options]) {
-            return fanexMultiSelectMethods[options].apply(this, Array.prototype.slice.call(arguments, 1));
+    $.fn.fanexMultiSelectSearchable = function (options) {
+        if (fanexMultiSelectSearchableMethods[options]) {
+            return fanexMultiSelectSearchableMethods[options].apply(this, Array.prototype.slice.call(arguments, 1));
         }
         else if (typeof options === 'object' || !options) {
-            return fanexMultiSelectMethods.createfanexMultiSelect.apply(this, arguments);
+            return fanexMultiSelectSearchableMethods.createfanexMultiSelectSearchable.apply(this, arguments);
         }
         else {
             throw 'Method does not supported!';
@@ -78,7 +78,7 @@
     };
 
     //// Default Options
-    $.fn.fanexMultiSelect.defaults =
+    $.fn.fanexMultiSelectSearchable.defaults =
         {
             showHeader: true,
             showFooter: false,

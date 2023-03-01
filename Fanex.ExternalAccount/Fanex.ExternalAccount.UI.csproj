@@ -1365,6 +1365,7 @@
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\SuperWinLossDetailByPT.ts" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.ClosedStatus.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.MarkAccountType.js" />
+    <Content Include="Scripts\Fanex.Multiselect\fanex.multiSelectSearchable.js" />
     <Content Include="Scripts\Fanex.Multiselect\fanex.singleSelect.js" />
     <Content Include="Scripts\Fanex.Multiselect\fanex.multiSelect.css" />
     <Content Include="Scripts\Fanex.Multiselect\fanex.multiSelect.js" />
