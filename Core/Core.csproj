@@ -89,14 +89,14 @@
       <HintPath>..\packages\Fanex.Logging.Extensions.Web.1.0.8\lib\net461\Fanex.Logging.Extensions.Web.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Module.NG2, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.NG2.NAP.1.0.1.9-beta01\lib\net40\Fanex.Module.NG2.dll</HintPath>
+      <HintPath>..\packages\Fanex.Module.NG2.NAP.1.0.1.9\lib\net40\Fanex.Module.NG2.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.3.14, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.3.14-beta01\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.3.14\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.6.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTEngine.1.0.6.5\lib\net40\Fanex.PTEngine.dll</HintPath>
