@@ -24,7 +24,7 @@
             {
                 ING2StatusService service = new NG2StatusService();
                 return service.AutoInsertAccount(custId, username, roleId, uplineId, dcsStatuses.IsDisabledUpline,
-                    siteId, currencyId, CurrentSession.UserId, (byte)Config.SystemId);
+                    siteId, currencyId, CurrentSession.UserId, (byte)Config.SystemId, settingStatus);
             }
 
             return new Module.NG2.Entities.Result();
