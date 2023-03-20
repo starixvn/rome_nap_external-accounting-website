@@ -54,9 +54,6 @@
             }
         };
 
-        // Number Game
-        productIds.push(3);
-
         function addSuperEditMultipleMastersMenuItem(productId, productName) {
             var productKey = 'product_super_master_' + productId;
             menuItems[productKey] = {
@@ -106,9 +103,6 @@
                 }
             }
         };
-
-        // Number Game
-        productIds.push(3);
 
         function addMasterEditMultipleAgentsMenuItem(productId, productName) {
             var productKey = 'product_master_agent_' + productId;
@@ -183,9 +177,6 @@
                 }
             }
         };
-
-        // Number Game
-        productIds.push(3);
 
         function addUplineEditMemberMenuItems(productId, productName) {
             var productKey = 'product_' + productId;

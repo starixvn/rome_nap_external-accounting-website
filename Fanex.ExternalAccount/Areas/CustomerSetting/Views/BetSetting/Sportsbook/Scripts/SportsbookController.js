@@ -444,7 +444,7 @@ Fanex.CustomerSetting.Betting.Sportsbook.Update = function (ondone) {
         }
 
         if (maxPerMatch > maxPayoutPerMatch) {
-            Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch' + subFix).get(0), betting.name + ' - Max Per Match must be less than or equal to Max Payout Per Match', undefined, undefined, 3000);
+            Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch').get(0), betting.name + ' - Max Per Match must be less than or equal to Max Payout Per Match', undefined, undefined, 3000);
 
             return false;
         }
