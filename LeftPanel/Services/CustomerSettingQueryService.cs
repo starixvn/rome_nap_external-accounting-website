@@ -45,7 +45,8 @@
             var setting = new Setting
             (
                 EnableItems(customerStatusInfoDataset),
-                hiddenAndSyncItemsCreator(table3rdDCS),            
+                hiddenAndSyncItemsCreator(table3rdDCS),
+                new List<ObjectInfo>(),
                 Details(customerStatusInfoDataset)
             );
 
@@ -56,7 +57,7 @@
 
             if (!this.currentSession.IsBelongToSpecialGroups)
             {
-                AddDummyProductStatus(table3rdDCS);
+                AddDummyProductStatus(table3rdDCS, setting.EditItems);
             }
 
             AddDummyProductLink(table3rdDCS, setting.Details);
@@ -135,12 +136,13 @@
             enableItems.Add(eSportsStatus);
         }
 
-        private void AddDummyProductStatus(DataTable table3rdDCS)
+        private void AddDummyProductStatus(DataTable table3rdDCS, List<ObjectInfo> editItems)
         {
             if (ProductSettings.IsShowLiveCasino)
             {
                 AddDummyProductStatus(
                     table3rdDCS,
+                    editItems,
                     ProductConstants.LiveCasino,
                     new ObjectInfo("EnableLiveCasino", "Enable Live Casino", "Enable Live Casino"));
             }
@@ -149,12 +151,13 @@
             {
                 AddDummyProductStatus(
                     table3rdDCS,
+                    editItems,
                     ProductConstants.RNGLottery,
                     new ObjectInfo("EnableRNGLottery", "Enable RNG Lottery", "Enable RNG Lottery"));
             }
         }
 
-        private void AddDummyProductStatus(DataTable table3rdDCS, int productId, ObjectInfo productStatus)
+        private void AddDummyProductStatus(DataTable table3rdDCS, List<ObjectInfo> editItems, int productId, ObjectInfo productStatus)
         {
             var disableUpline = false;
             var isHideUpline = true;
@@ -167,9 +170,15 @@
             }
 
             var isShowProduct = !IsHiddenProduct(_roleId, isHideUpline, isHide);
-            if (isShowProduct && disableUpline)
+
+            if (isShowProduct)
             {
-                DisableStatus(productStatus);
+                if (disableUpline)
+                {
+                    productStatus = DisableStatus(productStatus);
+                }
+
+                editItems.Add(productStatus);
             }
         }
 
@@ -420,6 +429,10 @@
                     }
 
                     setting.EnableItems.Add(enableItem);
+                }
+                else
+                {
+                    setting.EditItems.Add(CreateEnableLinkItem(productSettingElement.Key, productSettingElement.Name));
                 }
             }
         }

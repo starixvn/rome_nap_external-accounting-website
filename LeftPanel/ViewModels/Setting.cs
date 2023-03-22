@@ -7,10 +7,12 @@
         public Setting(
             List<ObjectInfo> enableItems,
             List<ObjectInfo> syncItems,
+            List<ObjectInfo> editItems,
             List<ObjectInfo> details)
         {
             EnableItems = enableItems;
             SyncItems = syncItems;
+            EditItems = editItems;
             Details = details;
             MinMaxPts = new List<ObjectInfo>
             {
@@ -23,6 +25,8 @@
         public List<ObjectInfo> EnableItems { get; }
 
         public List<ObjectInfo> SyncItems { get; }
+
+        public List<ObjectInfo> EditItems { get; }
 
         public List<ObjectInfo> Details { get; }
 
