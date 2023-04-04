@@ -1127,10 +1127,6 @@ Fanex.ExtAcc.Customer.PTSetting = {
         // Render for Basket ball
         Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportContainCopyallIcon(items[3], 3);
 
-        // Render for Number Game
-        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportContainCopyallIcon(items[12], 12);
-        Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportWithoutCopyallIcon(items[13], 13);
-
         // Render for soccer parlay
         Fanex.ExtAcc.Customer.PTSetting.GenerateCheckBoxBettingLimitForSportWithoutCopyallIcon(items[2], 2);
 
@@ -2192,7 +2188,7 @@ function initBettingLimit() {
                     headerBasketBall.className = "BettingLimitHeaderCopied";
                 }
 
-                for (var i = 1; i < c - 2; i++) {
+                for (var i = 1; i < c; i++) {
                     var item = items[i];
                     item.copiedItem = {
                         id: 0
@@ -2531,27 +2527,6 @@ function getUpdateParamaters() {
     }
     else {
         for (var i = 0; i < items.length; i++) {
-            if (document.getElementById("bettingLimit" + i).checked) {
-                paramaters += "1";
-                if (!isUpdate) {
-                    isUpdate = true;
-                }
-            }
-            else {
-                paramaters += "0";
-            }
-        }
-    }
-
-    if (document.getElementById("bettingLimit12").checked && items[12].active === true) {
-        for (var i = 12; i < items.length; i++) {
-            paramaters += "1";
-            if (!isUpdate) {
-                isUpdate = true;
-            }
-        }
-    } else {
-        for (var i = 12; i < items.length; i++) {
             if (document.getElementById("bettingLimit" + i).checked) {
                 paramaters += "1";
                 if (!isUpdate) {
