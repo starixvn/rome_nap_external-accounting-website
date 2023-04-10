@@ -16,7 +16,7 @@
                 string[] configSites = element.Sites.Split(',');
                 foreach (var configSite in configSites)
                 {
-                    if (configSite.Trim().Equals(site))
+                    if (configSite.Trim().Contains(site))
                     {
                         return element.Url;
                     }

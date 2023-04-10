@@ -260,7 +260,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
             type: 'post'
         })
             .success(function (result) {
-                Fanex.PTEngine.PT_STEP = $('#PT3DecimalSites').val().splitAndContains(result.customer.siteName) ? 0.005 : 0.01;
+                Fanex.PTEngine.PT_STEP = $('#PT3DecimalSites').val().splitAndContains(result.customer.siteLabel) ? 0.005 : 0.01;
                 if (result.customer.custId == 0) {
                     console.log(result.customer.custId);
                     Fanex.ExtAcc.UnBlockUI();
@@ -332,7 +332,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         })
             .success(function (result) {
                 try {
-                    Fanex.PTEngine.PT_STEP = $('#PT3DecimalSites').val().splitAndContains(result.customer.siteName) ? 0.005 : 0.01;
+                    Fanex.PTEngine.PT_STEP = $('#PT3DecimalSites').val().splitAndContains(result.customer.siteLabel) ? 0.005 : 0.01;
                     if (result.customer.custId == 0) {
                         Fanex.ExtAcc.UnBlockUI();
                         Fanex.ExtAcc.Form.Close();
@@ -507,7 +507,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         })
             .success(function (result) {
                 try {
-                    Fanex.PTEngine.PT_STEP = $('#PT3DecimalSites').val().splitAndContains(result.customer.siteName) ? 0.005 : 0.01;
+                    Fanex.PTEngine.PT_STEP = $('#PT3DecimalSites').val().splitAndContains(result.customer.siteLabel) ? 0.005 : 0.01;
                     if (result.customer.custId == 0) {
                         Fanex.ExtAcc.UnBlockUI();
                         Fanex.ExtAcc.Form.Close();
@@ -693,7 +693,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
         })
             .success(function (result) {
                 try {
-                    Fanex.PTEngine.PT_STEP = $('#PT3DecimalSites').val().splitAndContains(result.customer.siteName) ? 0.005 : 0.01;
+                    Fanex.PTEngine.PT_STEP = $('#PT3DecimalSites').val().splitAndContains(result.customer.siteLabel) ? 0.005 : 0.01;
                     if (result.customer.custId == 0) {
                         Fanex.ExtAcc.UnBlockUI();
                         Fanex.ExtAcc.Form.Close();

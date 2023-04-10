@@ -40,5 +40,7 @@
         internal static int Recommend(this DataRow dataRow) => Utils.ToInt32(dataRow["recommend"]);
 
         internal static string Site(this DataRow dataRow) => Utils.ToString(dataRow["site"]);
+
+        internal static string SiteLabel(this DataRow dataRow) => Utils.ToString(dataRow["sitelabel"]);
     }
 }
