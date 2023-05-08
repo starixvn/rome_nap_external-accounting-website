@@ -34,11 +34,6 @@ function LoadCasino() {
     }, 1000);
 };
 
-function LoadKeno() {
-    Fanex.CustomerSetting.Core.BlockUI();
-    document.location.href = toUrl('KenoBetting/Index?custId=' + custId + '&uplineId=' + uplineId + '&userId=' + userId + '&groupName=' + siteName);
-};
-
 function LoadLiveCasino() {
     Fanex.CustomerSetting.Core.BlockUI();
     var url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=41&customerId=" + custId + "&sssss=v&customerLevel=4&isreadonly=false&groupName=" + parent.$('#selectedGroupName').html() + '&v=0001');

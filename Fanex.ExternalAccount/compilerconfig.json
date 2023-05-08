@@ -24,10 +24,6 @@
     "inputFile": "assets/styles/pages/default/left-panel.scss"
   },
   {
-    "outputFile": "assets/styles/pages/customer/keno-setting.css",
-    "inputFile": "assets/styles/pages/customer/keno-setting.scss"
-  },
-  {
     "outputFile": "assets/styles/pages/customer/customer-setting.css",
     "inputFile": "assets/styles/pages/customer/customer-setting.scss"
   },

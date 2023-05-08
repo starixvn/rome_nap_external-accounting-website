@@ -52,18 +52,7 @@
                     }
 
                     addEditProductSuperContextMenuItem(5, 'Product-5', 'Virtual Sports');
-
-                    if (showKenoSetting == 'true') {
-                        items.keno = {
-                            name: "RNG Keno",
-                            className: "iconViewEdit",
-                            callback: function () {
-                                Fanex.ExtAcc.Customer.IsFullInfo = true;
-                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/EditSuper?custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit RNG Keno Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>', 880, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
-                            }
-                        }
-                    }
-
+                  
                     for (var i = 0, max = result.DCSProductsSetting.length; i < max; i++) {
                         var productSetting = result.DCSProductsSetting[i];
                         if (!productSetting.IsHidden && productSetting.IsSyncedUpline) {

@@ -5,12 +5,10 @@
 @{
     var HideCasino = ViewBag.HideCasino;
     var HideVirtualSports = ViewBag.HideVirtualSports;
-    var HideKeno = ViewBag.HideKeno;
     var status = new
     {
         hideCasino = HideCasino,
-        hideVirtualSports = HideVirtualSports,
-        hideKeno = HideKeno,
+        hideVirtualSports = HideVirtualSports
     };
     var statusJSON = JsonConvert.SerializeObject(status, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
 }
@@ -26,8 +24,7 @@
             <li id="tab1"><a class="height-auto" href="#tabs-1">Sportsbook's Min PT</a></li>
         }
 
-        <li id="tab8"><a class="height-auto" href="#tabs-8">Virtual Sports</a></li>
-        <li id="tab9"><a class="height-auto" href="#tabs-9">RNG Keno</a></li>
+        <li id="tab8"><a class="height-auto" href="#tabs-8">Virtual Sports</a></li>    
 
         @foreach (var product in Model)
         {
@@ -47,14 +44,7 @@
 
     <div id="tabs-8" class="divTab">
         <iframe id="virtualSportsFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-    </div>
-
-    @if (!HideKeno)
-    {
-        <div id="tabs-9" class="divTab" style="padding: 0px">
-            <iframe id="kenoFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-        </div>
-    }
+    </div>  
 
     @foreach (var product in Model)
     {
@@ -88,7 +78,6 @@
     Fanex.ExtAcc.Customer.superId = Fanex.ExtAcc.Customer.masterId = Fanex.ExtAcc.Customer.agentId = '@ViewBag.UplineId';
     Fanex.ExtAcc.Customer.HideCasino = custStatus.hideCasino;
     Fanex.ExtAcc.Customer.HideVirtualSports = custStatus.hideVirtualSports;
-    Fanex.ExtAcc.Customer.HideKeno = custStatus.hideKeno;
     Fanex.ExtAcc.Customer.isSuperEditAgent = Fanex.ExtAcc.Customer.isSuperEditMember = Fanex.ExtAcc.Customer.isMasterEditMember = false;
     Fanex.ExtAcc.Customer.CurrentLevel = parseInt(Fanex.ExtAcc.Customer.CurrentLevel);
 

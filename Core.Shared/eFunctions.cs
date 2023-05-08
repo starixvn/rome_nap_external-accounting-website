@@ -33,7 +33,6 @@
         public const string AllowOutright = "AllowOutright";
         public const string AllowAutoMPT = "AllowAutoMPT";
         public const string EnableCasino = "EnableCasino";
-        public const string EnableNumberGame = "EnableNumberGame";
         public const string EnableVirtualSports = "EnableVirtualSports";
         public const string EnableDoubleComm = "EnableDoubleComm";
         public const string UpdateCredit = "UpdateCredit";
@@ -45,10 +44,8 @@
         public const string CustomerList = "CustomerList";
         public const string AssociationAccountList = "AssociationAccountList";
         public const string Keno = "Keno";
-        public const string KenoSetting = "KenoSetting";
         public const string ShowEnableEsports = "ShowEnableEsports";
         public const string EnableESports = "EnableESports";
-        public const string KenoBetting = "KenoBetting";
         public const string OpenSuper = "OpenSuper";
         public const string Sportsbook2Setting = "Sportsbook2Setting";
         public const string LiveCasinoSetting = "LiveCasinoSetting";

@@ -19,7 +19,7 @@
     public class CustomerSettingServiceImpl : CustomerSettingQueryService
     {
         private readonly IEnumerable<ProductSettingElement> productSettingElements;
-        private readonly Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator;
+        private readonly Func<DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator;
         private readonly AuthorizationService authorizationService;
         private readonly CurrentSession currentSession;
         private readonly int _roleId;
@@ -29,7 +29,7 @@
             IEnumerable<ProductSettingElement> productSettingElements = null,
             AuthorizationService authorizationService = null,
             CurrentSession currentSession = null,
-            Func<DataRow, DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null)
+            Func<DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null)
         {
             _roleId = roleId;
             _userId = userId;
@@ -41,13 +41,12 @@
 
         public virtual Setting GetSetting(DataSet customerStatusInfoDataset)
         {
-            var nonDCSProductStatusRow = customerStatusInfoDataset.Tables[1].Rows[0];
-            var table3rdDCS = customerStatusInfoDataset.Tables[2];
+            var table3rdDCS = customerStatusInfoDataset.Tables[1];
             var setting = new Setting
             (
                 EnableItems(customerStatusInfoDataset),
-                hiddenAndSyncItemsCreator(nonDCSProductStatusRow, table3rdDCS),
-                EnableKenoItem(nonDCSProductStatusRow),
+                hiddenAndSyncItemsCreator(table3rdDCS),
+                new List<ObjectInfo>(),
                 Details(customerStatusInfoDataset)
             );
 
@@ -68,9 +67,8 @@
 
         internal List<ObjectInfo> EnableItems(DataSet customerStatusInfoDataset)
         {
-            var nonProductStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];
-            var nonDCSProductStatusRow = customerStatusInfoDataset.Tables[1].Rows[0];
-            var table3rdDCS = customerStatusInfoDataset.Tables[2];
+            var nonProductStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];           
+            var table3rdDCS = customerStatusInfoDataset.Tables[1];
             var enableItems = new List<ObjectInfo>
             {
                 ClosedStatus(nonProductStatusRow),
@@ -89,7 +87,6 @@
             if (!this.currentSession.IsBelongToSpecialGroups)
             {
                 AddCasinoStatus(table3rdDCS, enableItems);
-                AddNumberGameStatus(nonDCSProductStatusRow, enableItems);
                 AddVirtualSportsStatus(table3rdDCS, enableItems);
             }
 
@@ -173,6 +170,7 @@
             }
 
             var isShowProduct = !IsHiddenProduct(_roleId, isHideUpline, isHide);
+
             if (isShowProduct)
             {
                 if (disableUpline)
@@ -225,19 +223,6 @@
             }
 
             enableItems.Add(doubleCommStatus);
-        }
-
-        private static void AddNumberGameStatus(DataRow nonDCSProductStatusRow, ICollection<ObjectInfo> enableItems)
-        {
-            var numberGameStatus = new ObjectInfo("EnableNumberGame", nonDCSProductStatusRow.EnableNumberGame(), "Enable Num Game",
-                "Enable Number Game");
-
-            if (nonDCSProductStatusRow.DisableNumberGameUpline())
-            {
-                numberGameStatus = DisableStatus(numberGameStatus);
-            }
-
-            enableItems.Add(numberGameStatus);
         }
 
         private static void AddCasinoStatus(DataTable table3rdDCS, ICollection<ObjectInfo> enableItems)
@@ -325,9 +310,8 @@
         }
 
         internal List<ObjectInfo> Details(DataSet customerStatusInfoDataset)
-        {
-            var nonDCSProductStatusRow = customerStatusInfoDataset.Tables[1].Rows[0];
-            var table3rdDCS = customerStatusInfoDataset.Tables[2];
+        {           
+            var table3rdDCS = customerStatusInfoDataset.Tables[1];
             var details = new List<ObjectInfo>
             {
                 new ObjectInfo("Info", "Info"),
@@ -343,7 +327,6 @@
             AddParlayMaxPayoutLink(details);
             AddCasinoEditLink(table3rdDCS, details);
             AddVirtualSportsEditLink(table3rdDCS, details);
-            AddKenoEditLink(details);
             return details;
         }
 
@@ -354,14 +337,6 @@
                 !table3rdDCS.IsProductHidden(ProductConstants.VirtualSports))
             {
                 details.Add(new ObjectInfo("VirtualSports", "Virtual Sports"));
-            }
-        }
-
-        private static void AddKenoEditLink(List<ObjectInfo> details)
-        {
-            if (ProductSettings.IsShowKeno)
-            {
-                details.Add(new ObjectInfo("Keno", "RNG Keno"));
             }
         }
 
@@ -379,11 +354,6 @@
         {
             details.Add(new ObjectInfo("ParlayMaxPayout", "Parlay Max Payout"));
         }
-
-        internal List<ObjectInfo> EnableKenoItem(DataRow nonDCSProductStatusRow)
-            => (!nonDCSProductStatusRow.HideKeno() && !this.currentSession.IsBelongToSpecialGroups) ?
-            new List<ObjectInfo> { new ObjectInfo { Key = "EnableKeno", Text = "Enable RNG Keno" } } :
-            new List<ObjectInfo>();
 
 #pragma warning disable S1541 // Methods and properties should not be too complex
         internal Setting AddProductSetting(

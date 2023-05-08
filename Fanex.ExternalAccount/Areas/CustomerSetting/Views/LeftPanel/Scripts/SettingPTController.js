@@ -58,38 +58,7 @@
     $scope.VirtualSports = function () {
         $scope.RenderDCS(5);
         $scope.collapseSidebar();
-    };
-
-    $scope.Keno = function () {
-        $scope.ResetGlobalValue();
-
-        var roleId = $scope.model.personalInfo.roleId.value;
-        var custId = $scope.model.personalInfo.custId.value;
-        var uplineId = roleId === 4 ? userId : $scope.model.personalInfo.uplineId.value;
-        var url = '';
-        switch (roleId) {
-            case 4:
-                url = parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/EditSuper?custId=' + custId + "&userId=" + parent.userId);
-                break;
-            case 3:
-                url = parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/EditMaster?custId=' + custId + "&userId=" + parent.userId);
-                break;
-            case 2:
-                url = parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/EditAgent?custId=' + custId + "&userId=" + parent.userId);
-                break;
-            case 1:
-                url = parent.resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custId=' + custId + "&userId=" + parent.userId);
-                break;
-            default:
-                break;
-        }
-
-        if (url !== '') {
-            parent.Fanex.ExtAcc.LoadMainIFrame(url + '&groupName=' + parent.$('#selectedGroupName').html());
-        }
-
-        $scope.collapseSidebar();
-    };
+    };    
 
     $scope.Sportsbook2 = function () {
         $scope.RenderDCS(16);

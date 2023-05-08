@@ -138,28 +138,6 @@
       <MaxBetMin></MaxBetMin>
       <MaxPerMatchMin></MaxPerMatchMin>
       <MaxPerMatchMax></MaxPerMatchMax>
-    </BettingLimitItem>    
-
-    <BettingLimitItem id="161" name="Number Game" key="Number Game" resourcekey="numbergame">
-      <MinBet></MinBet>
-      <MaxBet></MaxBet>
-      <MaxPerMatch></MaxPerMatch>
-      <MinBetMax></MinBetMax>
-      <MaxBetMin></MaxBetMin>
-      <MaxPerMatchMin></MaxPerMatchMin>
-      <MaxPerMatchMax></MaxPerMatchMax>
-      <MaxPerBallMax></MaxPerBallMax>
-      <MaxPerBallMin></MaxPerBallMin>
-    </BettingLimitItem>
-
-    <BettingLimitItem id="164" name="Happy 5" key="Happy 5" resourcekey="happy5">
-      <MinBet></MinBet>
-      <MaxBet></MaxBet>
-      <MaxPerMatch></MaxPerMatch>
-      <MinBetMax></MinBetMax>
-      <MaxBetMin></MaxBetMin>
-      <MaxPerMatchMin></MaxPerMatchMin>
-      <MaxPerMatchMax></MaxPerMatchMax>
-    </BettingLimitItem>
+    </BettingLimitItem>       
   </BettingLimitItems>
 </BettingLimit>

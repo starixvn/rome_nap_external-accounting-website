@@ -76,18 +76,7 @@
                         has3rdParty = true;
                         addEditProductMemberContextMenuItem(5, 'virtualSport', 'Virtual Sports', result.DisableVirtualSport);
                     }
-
-                    if (!result.HideKeno) {
-                        has3rdParty = true;
-
-                        items.keno = {
-                            name: "RNG Keno",
-                            className: result.DisableKeno ? "iconDisableEdit" : "iconEnableEdit",
-                            callback: function () {
-                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('customersetting/KenoSetting/kenosetting/AgentEditMember?custId=' + Fanex.ExtAcc.Customer.UserId + "&userId=" + parent.userId), 'Edit RNG Keno Setting <font color="#6dcff6">' + title + '</font>', 900, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, null, 1);
-                            }
-                        };
-                    }
+                   
 
                     for (var i = 0, max = result.DCSProductsSetting.length; i < max; i++) {
                         has3rdParty = true;
