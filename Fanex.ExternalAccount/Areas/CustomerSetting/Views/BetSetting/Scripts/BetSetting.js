@@ -76,3 +76,31 @@ function LoadProduct(productId) {
     document.getElementById("product-" + productId).src = url;
     setTimeout(Fanex.CustomerSetting.Core.UnBlockUI, 1000);
 };
+
+function CopySB() {
+    Fanex.CustomerSetting.Core.BlockUI();
+    var url = toUrl('Sportsbook/EditMultipleBetSetting?copy=1&custId=' + custId + '&uplineId=' + uplineId + '&userId=' + userId + '&groupName=' + siteName);
+    $.get(url, function (data) {
+        $('#contentSplitter').empty().append(data);
+
+        setTimeout(function () {
+            Fanex.CustomerSetting.Core.UnBlockUI();
+            $('#tab2').removeClass('ui-tabs-active').removeClass('ui-state-active');
+            $('#tabs').tabs({ selected: 0 });
+        }, 200);
+    });
+};
+
+function EditSB() {
+    Fanex.CustomerSetting.Core.BlockUI();
+    var url = toUrl('Sportsbook/EditMultipleBetSetting?edit=1&custId=0&uplineId=0&userId=' + userId + '&groupName=' + siteName);
+    $.get(url, function (data) {
+        $('#contentSplitter').empty().append(data);
+
+        setTimeout(function () {
+            Fanex.CustomerSetting.Core.UnBlockUI();
+            $('#tab1').removeClass('ui-tabs-active').removeClass('ui-state-active');
+            $('#tabs').tabs({ selected: 1 });
+        }, 200);
+    });
+};

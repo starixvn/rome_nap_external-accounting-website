@@ -23,6 +23,11 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Base
         {
             ICustomerService customerService = new CustomerService();
 
+            if (id == 0)
+            {
+                return new Customer();
+            }
+
             var customer = customerService.UserInfo(id);
             customer.GroupId = customerService.UserGroupId(userId);
 

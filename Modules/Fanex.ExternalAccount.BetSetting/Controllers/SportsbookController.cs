@@ -12,6 +12,8 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
     using Newtonsoft.Json.Serialization;
     using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.CustomerSetting.Module.Core.Constants;
+    using System.Linq;
+    using System.Collections.Generic;
 
     public class SportsbookController : BettingControllerBase
     {
@@ -19,6 +21,9 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
         public ActionResult Index(int custId, int uplineId, int userId, string groupName)
             => PartialView("~/Areas/CustomerSetting/Views/BetSetting/Sportsbook/Index.cshtml", externalCustomerService.IsArchivedCustId(custId));
+
+        public ActionResult EditMultipleBetSetting(int? custId, int? uplineId, int? userId, string groupName = null)
+            => PartialView("~/Areas/CustomerSetting/Views/BetSetting/MultipleSportsbook/Index.cshtml", externalCustomerService.IsArchivedCustId(custId ?? 0));
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "SportsbookBetting")]
         public ActionResult Content(int custId, int uplineId, int userId, string groupName)
@@ -51,6 +56,56 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             var bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
 
             return PartialView("~/Areas/CustomerSetting/Views/BetSetting/Sportsbook/Content.cshtml", bettingLimit);
+        }
+
+        [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "SportsbookBetting")]
+        public ActionResult EditMultipleBetSettingContent(int? custId, int? uplineId, int? userId, string groupName = null)
+        {
+            var customer = CustomerInfo(custId.Value, userId.Value);
+
+            if (customer.RoleId > 0 && customer.RoleId.IsNotSuper())
+            {
+                return PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+            }
+
+            ViewBag.Username = customer.Username;
+            ViewBag.HideCasino = customer.HideCasino;
+            ViewBag.DefaultMinBetValue = GetDefaultMinBetValue();
+
+            var bettingLimitService = SportsBookService;
+
+            var currentContext = new RequestContext()
+            {
+                FormId = FormType.EditPT,
+                CustId = uplineId.Value,
+                TargetCustId = custId.Value,
+                SubAccId = 0,
+                AdminId = userId.Value,
+                SiteName = groupName,
+                Language = "En",
+                LangKey = "E",
+            };
+
+            IBettingLimit<BettingLimitItem> bettingLimit = null;
+            if (custId == 0)
+            {
+                bettingLimit = new BettingLimit { BettingLimitItems = new List<BettingLimitItem>() };
+                bettingLimit.Populate();
+
+                foreach (BettingLimitItem bettingLimitItem in bettingLimit.BettingLimitItems)
+                {
+                    bettingLimitItem.MinBet = 0;
+                    bettingLimitItem.MaxBet = 0;
+                    bettingLimitItem.MaxPerMatch = 0;
+                    bettingLimitItem.MaxPayoutPerMatch = 0;
+                }
+            }
+            else
+            {
+                bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
+            }
+
+            return PartialView("~/Areas/CustomerSetting/Views/BetSetting/MultipleSportsbook/Content.cshtml", bettingLimit);
         }
 
         [HttpPost]

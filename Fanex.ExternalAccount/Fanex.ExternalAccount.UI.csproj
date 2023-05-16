@@ -498,6 +498,9 @@
     <Content Include="Areas\Common\Views\Shared\Images\Loading.gif" />
     <Content Include="Areas\Common\Views\Shared\Scripts\Fanex.CustomerSetting.js" />
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Scripts\MultipleSportsbookController.js" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Styles\layout.css" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Styles\MultipleSportsbook.css" />
     <Content Include="Areas\CustomerSetting\Views\ThirdPartyProductStatus\Index.cshtml" />
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.min.js">
       <DependentUpon>product-status-setting-multiple.js</DependentUpon>
@@ -2415,6 +2418,9 @@
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Templates\Products.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Content.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Index.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\_Layout.cshtml" />
     <None Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Templates\Template.xsd">
       <SubType>Designer</SubType>
     </None>

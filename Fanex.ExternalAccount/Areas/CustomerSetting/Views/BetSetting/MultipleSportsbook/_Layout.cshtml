@@ -1,0 +1,67 @@
+﻿@using Newtonsoft.Json;
+@using Newtonsoft.Json.Serialization;
+@using Utils = Fanex.CustomerSetting.Module.Core.Utils;
+@{
+    var id = Utils.ToInt32(Request["custId"]);
+    var uplineId = Utils.ToInt32(Request["uplineId"]);
+    var userId = Utils.ToInt32(Request["userId"]);
+    var siteName = Request["groupName"];
+    var customer = new Fanex.CustomerSetting.Module.BetSetting.Services.Impl.CustomerService();
+    var cust = customer.UserInfo(id);
+    var custInfo = JsonConvert.SerializeObject(cust, Formatting.None, new JsonSerializerSettings
+    {
+        ContractResolver = new CamelCasePropertyNamesContractResolver(),
+        NullValueHandling = NullValueHandling.Ignore
+    });
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    <link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/MultipleSportsbook/Styles/layout.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="edit-super-betsetting-title">Edit Super Bet Setting
+    <hr />
+    </div>
+    <div id="tabs">
+        <ul class="tabs">
+            <li id="tab1" onclick="CopySB()"><a href="#tabs-1">Copy Bet Settings</a></li>
+            <li id="tab2" onclick="EditSB()"><a href="#tabs-2">Edit Bet Settings</a></li>
+        </ul>
+        @RenderSection("BetSettings", false)
+
+    </div>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/Scripts/BetSetting.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        function toUrl(relativeUrl) {
+            return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
+        }
+
+        $(document).ready(function () {
+            var url = document.URL.toLowerCase();
+            var index = url.indexOf('copy') != -1 ? 0 :
+                url.indexOf('edit') != -1 ? 1 : 0;
+            var custInfo = @Html.Raw(custInfo);
+
+            $('#tabs').tabs({ selected: index });
+        });
+
+        var custId = parseInt('@id');
+        var uplineId = parseInt('@uplineId');
+        var userId = parseInt('@userId');
+        var siteName = '@siteName';
+    </script>
+    @RenderSection("Scripts", false)
+    @Fanex.ExternalAccount.Core.Helpers.GoogleAnalyticHepler.Render()
+    @Fanex.ExternalAccount.Core.Helpers.TrackJSHelper.Render()
+    @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
+</body>
+</html>
