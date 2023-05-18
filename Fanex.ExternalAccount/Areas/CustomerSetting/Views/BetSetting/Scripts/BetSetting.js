@@ -1,5 +1,4 @@
 ﻿var module = angular.module("bettingApp", []);
-
 angular.element($('#ng-app')).ready(function () {
     $('#ng-app').show();
     try {
@@ -78,13 +77,13 @@ function LoadProduct(productId) {
 };
 
 function CopySB() {
-    Fanex.CustomerSetting.Core.BlockUI();
-    var url = toUrl('Sportsbook/EditMultipleBetSetting?copy=1&custId=' + custId + '&uplineId=' + uplineId + '&userId=' + userId + '&groupName=' + siteName);
+    top.Fanex.ExtAcc.BlockUI();
+    var url = toUrl('Sportsbook/EditMultipleBetSetting?copy=1&custId=' + custId + '&groupName=' + siteName);
     $.get(url, function (data) {
         $('#contentSplitter').empty().append(data);
 
         setTimeout(function () {
-            Fanex.CustomerSetting.Core.UnBlockUI();
+            top.Fanex.ExtAcc.UnBlockUI();
             $('#tab2').removeClass('ui-tabs-active').removeClass('ui-state-active');
             $('#tabs').tabs({ selected: 0 });
         }, 200);
@@ -92,15 +91,66 @@ function CopySB() {
 };
 
 function EditSB() {
-    Fanex.CustomerSetting.Core.BlockUI();
-    var url = toUrl('Sportsbook/EditMultipleBetSetting?edit=1&custId=0&uplineId=0&userId=' + userId + '&groupName=' + siteName);
+    top.Fanex.ExtAcc.BlockUI();
+    var url = toUrl('Sportsbook/EditMultipleBetSetting?edit=1&custId=0&groupName=' + siteName);
     $.get(url, function (data) {
         $('#contentSplitter').empty().append(data);
 
         setTimeout(function () {
-            Fanex.CustomerSetting.Core.UnBlockUI();
+            top.Fanex.ExtAcc.UnBlockUI();
             $('#tab1').removeClass('ui-tabs-active').removeClass('ui-state-active');
             $('#tabs').tabs({ selected: 1 });
         }, 200);
     });
 };
+
+function LoadBetSetting(sourceUser, destUsers, isCopy) {
+    $("#errMsg").empty().hide();
+    if (isCopy && $.trim(sourceUser) === "") {
+        $("#errMsg").empty().html("Please input source super").show();
+        return;
+    }
+
+    if (isCopy && sourceUser.indexOf(",") !== -1) {
+        $("#errMsg").empty().html("Please input a single source super").show();
+        return;
+    }
+
+    if ($.trim(destUsers) === "") {
+        $("#errMsg").empty().html("Please input destination super").show();
+        return;
+    }
+
+    var groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
+    var url = toUrl("Sportsbook/CheckMultipleSupersBetSetting?sourceUser=" + sourceUser + "&destUsers=" + destUsers + "&isCopy=" + isCopy + "&groupName=" + groupName);
+
+    top.Fanex.ExtAcc.BlockUI();
+    $.post(url, function (result) {
+        if (result.errorCode !== '0') {
+            $("#errMsg").empty().html(result.errorMessage).show();
+        }
+        else {
+            top.superIds = result.superIds;
+            $("#selectButton").addClass("-disabled").attr("disabled", true);
+            $("#sourceSuper").addClass("-disabled").attr("disabled", true);
+            $("#superList").addClass("-disabled").attr("disabled", true);
+
+            if (isCopy) {
+                $("#product-1-0").attr("src", toUrl("Sportsbook/EditMultipleBetSettingContent?copy=1&custId=" + result.superIds.split(',')[0] + "&groupName=" + groupName));
+            }
+            else {
+                $("#product-1-1").attr("src", toUrl("Sportsbook/EditMultipleBetSettingContent?edit=1&custId=0&groupName=" + groupName));
+            }
+        }
+
+        top.Fanex.ExtAcc.UnBlockUI();
+    });
+}
+
+function ReplaceChars(textarea) {
+    textarea.value = textarea.value
+        .replace(/\s/g, ',')
+        .replace(/\t/g, ',')
+        .replace(/;/g, ',')
+        .replace(/\\n|\\r\\n|\\r/g, ',');
+}

@@ -1,7 +1,7 @@
 ﻿.edit-super-betsetting-title {
     font-weight: bold;
     color: #2489CE;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 #tabs > ul > li > a {
@@ -16,11 +16,55 @@
     border: none
 }
 
-#tabs-1,#tabs-2{
+#tabs-1, #tabs-2 {
     width: 100%;
+    margin-left: -2px;
 }
 
 #ng-app {
     width: 815px;
     display: none
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 0 !important;
+}
+
+.source-super {
+    width: 300px !important;
+    text-align: left !important;
+    text-indent: 0 !important;
+    margin-bottom: 5px;
+}
+
+.source-super-title {
+    color: #ff0000;
+}
+
+.super-list {
+    width: 635px;
+    height: 70px;
+    max-width: 822px;
+    margin-bottom: 2px;
+    text-indent: 0;
+    padding-left: 5px;
+}
+
+.succMsg {
+    max-height: none;
+    background-color: #eefbe9;
+    border: 1px solid #1db51a;
+    color: #52a220;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+}
+
+.ui-widget-overlay{
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.-disabled{
+    opacity: 0.7;
+    cursor: not-allowed !important;
 }

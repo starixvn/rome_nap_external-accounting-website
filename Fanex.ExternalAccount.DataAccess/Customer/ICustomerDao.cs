@@ -57,5 +57,7 @@
         IEnumerable<CustomerProtectedStatus> GetMultipleProtectedStatus(GetMultipleProtectedStatusCriteria criteria);
 
         Result UpdateProtectedStatus(UpdateProtectedStatusCriteria criteria);
+
+        Result CheckMultipleSupersBetSetting(CheckMultipleSupersBetSettingCriteria criteria);
     }
 }

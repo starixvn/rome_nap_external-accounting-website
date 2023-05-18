@@ -11,10 +11,9 @@
         NullValueHandling = NullValueHandling.Ignore
     });
     var id = Utils.ToInt32(Request["custId"]);
-    var uplineId = Utils.ToInt32(Request["uplineId"]);
-    var userId = Utils.ToInt32(Request["userId"]);
     var siteName = Request["groupName"];
     var session = CurrentSession.Instance;
+    var isSpecialGroup = session.IsBelongToSpecialGroups ? 1 : 0;
 }
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
@@ -22,19 +21,12 @@
 <link href="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/MultipleSportsbook/Styles/MultipleSportsbook.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/assets/styles/pages/customer/bet-limit.css")" rel="stylesheet" type="text/css" />
 <div id="ng-app" data-ng-app="bettingApp" data-ng-controller="Fanex.CustomerSetting.Betting.MultipleSportsbook" data-ng-init="Init()">
-    <div id="errMsg" style="display: none" class="errMsg">
-    </div>
-    <div class="title C bold header">
-        Bet Setting
-    </div>
-    <div class="noteMsg" style="margin: 5px 0">
-        @(session.IsBelongToSpecialGroups ? 
-            Html.Raw(Resources.Lang.SMAUnlimitedBetSettingWarningMessageDirectionV3) : 
-            Html.Raw(Resources.Lang.SMAUnlimitedBetSettingWarningMessage))
-    </div>
     <table class="tableInfo" border="1" cellpadding="0" cellspacing="0">
         <tr>
-            <td class="title titleWidth"></td>
+            <td id="notes" colspan="5" class="title bold C"><span class="betsetting-title">Bet Setting </span><span data-ng-click="ShowBetSettingNotes()" class="bet-type-detail-icon sport-type-detail-icon betsetting-icon"></span></td>
+        </tr>
+        <tr>
+            <td class="title titleWidth"><label><input id="All" type="checkbox" data-ng-click="Check('All')" checked />All</label></td>
             <td class="title bold C numberGameWidth">Min Bet</td>
             <td class="title bold C numberGameWidth">Max Bet</td>
             <td class="title bold C numberGameWidth">Max Per Match</td>
@@ -46,27 +38,27 @@
             </td>
         </tr>
         <tr data-ng-model="betting.bgClass" class="{{betting.bgClass}}" id="{{betting.resourceKey}}" data-ng-hide="" data-ng-init="betting.bgClass = ''; betting.className = betting.key == 'Soccer' || betting.key == 'Basketball'|| betting.key == 'Number Game'" data-ng-repeat="betting in bettingLimits">
-            <td title="{{betting.title}}" id="_{{betting.resourceKey}}" class="title {{betting.className}} {{betting.bgClass}}" data-ng-click="Copy(this)">{{betting.name}}</td>
-            <td>
-                <input style="text-align: right; width: 100px" id="txt{{betting.resourceKey}}Min" data-ng-readonly="betting.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" maxlength="14" data-ng-init="betting.showminBetMax = betting.minBetMax > 0; betting.minBetFormated = betting.minBet.formatNumber(); betting.preValMinBet = betting.minBetFormated" type="text" class="BettingLimitTextBox9" data-ng-model="betting.minBetFormated" data-ng-change="betting.minBet = betting.minBetFormated.replaceAll(',', '').formatNumber()" />
-                <span data-ng-show="betting.showminBetMax">>={{betting.minBetMax.formatNumber()}}</span>
+            <td class="title {{betting.bgClass}}">
+                <label><input id="chk{{betting.resourceKey}}" type="checkbox" data-ng-click="Check('{{betting.resourceKey}}')" checked />{{betting.name}}</label>
+                <label style="float: right" title="{{betting.title}}" id="_{{betting.resourceKey}}" class="{{betting.className}} {{betting.bgClass}}" data-ng-click="Copy(this)"></label>
+                <span data-ng-click="ShowMixSportsParlay()" style="float: right; padding-top: 3px" data-ng-show="betting.resourceKey == 'mixsports'" class="bet-type-detail-icon sport-type-detail-icon betsetting-icon"></span>
             </td>
             <td>
-                <input style="text-align: right; width: 100px" id="txt{{betting.resourceKey}}Max" data-ng-readonly="betting.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" maxlength="14" data-ng-init="betting.showmaxBetMin = betting.maxBetMin > 0; betting.maxBetFormated = betting.maxBet.formatNumber(); betting.preValMaxBet = betting.maxBetFormated" type="text" class="BettingLimitTextBox9" data-ng-model="betting.maxBetFormated" data-ng-change="betting.maxBet = betting.maxBetFormated.replaceAll(',', '').formatNumber()" />
-                <span data-ng-show="betting.showmaxBetMin"><={{betting.maxBetMin.formatNumber()}}</span>
+                <input class="input-betting-limit" id="txt{{betting.resourceKey}}Min" data-ng-readonly="betting.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" maxlength="14" data-ng-init="betting.showminBetMax = betting.minBetMax > 0; betting.minBetFormated = betting.minBet.formatNumber(); betting.preValMinBet = betting.minBetFormated" type="text" class="BettingLimitTextBox9" data-ng-model="betting.minBetFormated" data-ng-change="betting.minBet = betting.minBetFormated.replaceAll(',', '').formatNumber()" />
             </td>
             <td>
-                <input style="text-align: right; width: 100px" id="txt{{betting.resourceKey}}MaxPerMatch" data-ng-readonly="betting.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" maxlength="14" data-ng-init="betting.showmaxPerMatchMax = betting.maxPerMatchMax > 0; betting.maxPerMatchFormated = betting.maxPerMatch.formatNumber(); betting.preValMaxPerMatch = betting.maxPerMatchFormated" type="text" class="BettingLimitTextBox9" data-ng-model="betting.maxPerMatchFormated" data-ng-change="betting.maxPerMatch = betting.maxPerMatchFormated.replaceAll(',', '').formatNumber()" />
-                <span data-ng-show="betting.showmaxPerMatchMax"><={{betting.maxPerMatchMax.formatNumber()}}</span>
+                <input class="input-betting-limit" id="txt{{betting.resourceKey}}Max" data-ng-readonly="betting.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" maxlength="14" data-ng-init="betting.showmaxBetMin = betting.maxBetMin > 0; betting.maxBetFormated = betting.maxBet.formatNumber(); betting.preValMaxBet = betting.maxBetFormated" type="text" class="BettingLimitTextBox9" data-ng-model="betting.maxBetFormated" data-ng-change="betting.maxBet = betting.maxBetFormated.replaceAll(',', '').formatNumber()" />
             </td>
             <td>
-                <input style="text-align: right; width: 100px" id="txt{{betting.resourceKey}}MaxPayoutPerMatch" data-ng-readonly="betting.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" maxlength="14" data-ng-init="betting.showmaxPayoutPerMatchMax = betting.maxPayoutPerMatchMax > 0; betting.maxPayoutPerMatchFormated = betting.maxPayoutPerMatch.formatNumber(); betting.preValMaxPayoutPerMatch = betting.maxPayoutPerMatchFormated" type="text" class="BettingLimitTextBox9" data-ng-model="betting.maxPayoutPerMatchFormated" data-ng-change="betting.maxPayoutPerMatch = betting.maxPayoutPerMatchFormated.replaceAll(',', '').formatNumber()" />
-                <span data-ng-show="betting.showmaxPayoutPerMatchMax"><={{betting.maxPayoutPerMatchMax.formatNumber()}}</span>
+                <input class="input-betting-limit" id="txt{{betting.resourceKey}}MaxPerMatch" data-ng-readonly="betting.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" maxlength="14" data-ng-init="betting.showmaxPerMatchMax = betting.maxPerMatchMax > 0; betting.maxPerMatchFormated = betting.maxPerMatch.formatNumber(); betting.preValMaxPerMatch = betting.maxPerMatchFormated" type="text" class="BettingLimitTextBox9" data-ng-model="betting.maxPerMatchFormated" data-ng-change="betting.maxPerMatch = betting.maxPerMatchFormated.replaceAll(',', '').formatNumber()" />
+            </td>
+            <td>
+                <input class="input-betting-limit" id="txt{{betting.resourceKey}}MaxPayoutPerMatch" data-ng-readonly="betting.bgClass == 'inactive'" oncut="return false;" onpaste="return false;" onkeyup="return Fanex.CustomerSetting.Core.CheckNumber(event, this, true)" maxlength="14" data-ng-init="betting.showmaxPayoutPerMatchMax = betting.maxPayoutPerMatchMax > 0; betting.maxPayoutPerMatchFormated = betting.maxPayoutPerMatch.formatNumber(); betting.preValMaxPayoutPerMatch = betting.maxPayoutPerMatchFormated" type="text" class="BettingLimitTextBox9" data-ng-model="betting.maxPayoutPerMatchFormated" data-ng-change="betting.maxPayoutPerMatch = betting.maxPayoutPerMatchFormated.replaceAll(',', '').formatNumber()" />
             </td>
         </tr> 
     </table>
     <div style="text-align: right">
-        <input class="btn -submit buttonPopup" type="button" value="Submit" />
+        <input id="btnSubmit" class="btn -submit buttonPopup" type="button" value="Submit" />
     </div>
 </div>
 <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/jquery.js")" type="text/javascript"></script>
@@ -79,11 +71,9 @@
 <script src="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/MultipleSportsbook/Scripts/MultipleSportsbookController.js")" type="text/javascript"></script>
 <script type="text/javascript">
     var model = @Html.Raw(bettingLimit);
+    var isSpecialGroup = @isSpecialGroup;
     var custId = parseInt('@id');
-    var uplineId = parseInt('@uplineId');
-    var userId = parseInt('@userId');
     var siteName = '@siteName';
-    var hideCasino = '@ViewBag.HideCasino';
     var defaultMinBetValue = @ViewBag.DefaultMinBetValue;
 
     function toUrl(relativeUrl) {
@@ -92,19 +82,7 @@
 
     $(document).ready(function () {
         $('.buttonPopup').bind('click', function () {
-            Fanex.CustomerSetting.Betting.MultipleSportsbook.Update(function (data) {
-                if (data.errorCode == "0") {
-                    var timeout = setTimeout(function () {
-                        clearTimeout(timeout);
-
-                        $('#ng-app').hide();
-
-                        Fanex.CustomerSetting.Core.BlockUI();
-
-                        document.location.reload(true);
-                    }, 2000);
-                }
-            });
+            Fanex.CustomerSetting.Betting.MultipleSportsbook.Update(@(Request.Url.ToString().IndexOf("copy") != -1 ? 1 : 0));
         });
     });
 </script>

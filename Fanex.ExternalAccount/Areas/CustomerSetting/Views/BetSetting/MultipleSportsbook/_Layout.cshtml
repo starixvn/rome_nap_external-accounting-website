@@ -3,8 +3,6 @@
 @using Utils = Fanex.CustomerSetting.Module.Core.Utils;
 @{
     var id = Utils.ToInt32(Request["custId"]);
-    var uplineId = Utils.ToInt32(Request["uplineId"]);
-    var userId = Utils.ToInt32(Request["userId"]);
     var siteName = Request["groupName"];
     var customer = new Fanex.CustomerSetting.Module.BetSetting.Services.Impl.CustomerService();
     var cust = customer.UserInfo(id);
@@ -35,7 +33,6 @@
             <li id="tab2" onclick="EditSB()"><a href="#tabs-2">Edit Bet Settings</a></li>
         </ul>
         @RenderSection("BetSettings", false)
-
     </div>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
@@ -55,8 +52,6 @@
         });
 
         var custId = parseInt('@id');
-        var uplineId = parseInt('@uplineId');
-        var userId = parseInt('@userId');
         var siteName = '@siteName';
     </script>
     @RenderSection("Scripts", false)
