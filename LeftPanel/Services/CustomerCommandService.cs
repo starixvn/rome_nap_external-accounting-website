@@ -86,7 +86,12 @@
             customerDataAccess.ResetMemberCredit(custId, agentId, closedOnly);
 
         public Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip)
-            => customerDataAccess.CustomerInsertClearBalance(custId, custIds, isCheckedAll, ip);
+        {
+            var siteDB = siteDBService.GetSiteDBConfig(custId);
+
+            return customerDataAccess.CustomerInsertClearBalance(custId, custIds, isCheckedAll, ip, siteDB);
+        }
+
 
         public Result CloseCutomer(int custId, int uplineId, ICurrentSession currentSession,
             ICurrentContext currentContext, bool close, bool clearCredit, string custName)

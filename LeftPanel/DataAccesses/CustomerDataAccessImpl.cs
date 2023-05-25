@@ -174,9 +174,10 @@
             }
         }
 
-        public Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip)
+        public Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip, SiteDB siteDB)
         {
-            using (var db = new ObjectDb("Acc_CustomerInsClearBalance"))
+            var prefixSp = siteDB.IsSiteDB ? $"SiteDB{siteDB.SiteDBGroupID}_" : string.Empty;
+            using (var db = new ObjectDb($"{prefixSp}Acc_CustomerInsClearBalance"))
             {
                 var param = new Hashtable
                 {
@@ -191,8 +192,7 @@
                     {"system", "EXTERNAL"}
                 };
 
-                db.AssignParamValues(param);
-                db.ExecuteNonQuery();
+                db.ExecuteNonQueryScaleoutDB(param, siteDB.AGIP);
 
                 return new Result
                 {
@@ -412,7 +412,6 @@
                 {"ip", CurrentContext.Instance.Ip4Address},
                 {"system", "EXTERNAL"}
             };
-
             return ClearCredit(hash);
         }
 
@@ -446,17 +445,17 @@
             }
         }
 
-        public MemberBalanceInfoModel GetMemberBalanceModel(int custId)
+        public MemberBalanceInfoModel GetMemberBalanceModel(int custId, SiteDB siteDB)
         {
-            using (ObjectDb objdb = new ObjectDb("Acc_BalanceMemberSel", 180))
+            var prefixSp = siteDB.IsSiteDB ? $"SiteDB{siteDB.SiteDBGroupID}_" : string.Empty;
+            using (ObjectDb objdb = new ObjectDb($"{prefixSp}Acc_BalanceMemberSel", 180))
             {
                 var param = new Hashtable
                 {
                     { "custid", custId }
                 };
 
-                objdb.AssignParamValues(param);
-                objdb.ExecuteNonQuery();
+                objdb.ExecuteNonQueryScaleoutDB(param, siteDB.AGIP);
                 return new MemberBalanceInfoModel(
                     FanexCommonConverter.ToDecimal(objdb.GetParameterValue("balance")),
                     FanexCommonConverter.ToDecimal(objdb.GetParameterValue("PendingTransfer3rd")),

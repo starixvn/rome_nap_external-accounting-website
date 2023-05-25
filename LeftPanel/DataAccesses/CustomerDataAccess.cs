@@ -37,7 +37,7 @@
 
         Result ResetMemberCredit(int custId, int agentId, bool closedOnly);
 
-        Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip);
+        Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip, SiteDB siteDB);
 
         DataTable CustomerSelectClearBalance(int custId);
 
@@ -53,7 +53,7 @@
 
         Result RemoveOTP(RemoveOtpCriteria criteria);
 
-        MemberBalanceInfoModel GetMemberBalanceModel(int custId);
+        MemberBalanceInfoModel GetMemberBalanceModel(int custId, SiteDB siteDB);
 
         decimal GetMemberOustanding(int custId);
 

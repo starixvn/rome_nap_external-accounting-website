@@ -5,6 +5,8 @@
     <Setting Key="SiteDB3_Dot_BalanceDebitRemove" SpName="Dot_BalanceDebitRemove" DbName="SiteDB.bodb02.bodbExtAccNet" />
     <Setting Key="SiteDB3_Dot_BalanceCreditRemove" SpName="Dot_BalanceCreditRemove" DbName="SiteDB.bodb02.bodbExtAccNet" />
     <Setting Key="SiteDB3_Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="SiteDB.bodb02.bodbExtAccNet" />
+    <Setting Key="SiteDB3_Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="SiteDB.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="SiteDB3_Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="SiteDB.BODB02.bodbExtAccNet" Plain="0" />
   </Function>
 
   <Function Name="PT Setting Information">
