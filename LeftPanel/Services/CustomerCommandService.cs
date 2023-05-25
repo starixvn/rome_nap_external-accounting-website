@@ -8,6 +8,7 @@
     using DataAccesses;
     using DTO;
     using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Service.TelegramBot;
@@ -48,23 +49,38 @@
         private readonly CustomerDataAccess customerDataAccess;
         private readonly Encryptor encryptor;
         private readonly IReportService reportService;
+        private readonly ISiteDBConfigService siteDBService;
 
         public CustomerCommandServiceImpl(
             CustomerDataAccess customerDataAccess = null,
             AuthorizationService authorizationService = null,
             IReportService reportService = null,
             Encryptor encryptor = null,
-            ITelegramBotService telegramBotService = null)
+            ITelegramBotService telegramBotService = null,
+            ISiteDBConfigService siteDBService = null)
         {
             this.customerDataAccess = customerDataAccess ?? new CustomerDataAccessImpl();
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
             this.reportService = reportService ?? new ReportService();
             this.encryptor = encryptor ?? new EncryptorImpl();
             this.telegramBotService = telegramBotService ?? new TelegramBotService();
+            this.siteDBService = siteDBService ?? new SiteDBConfigService();
         }
 
         public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
-            => customerDataAccess.UpdateGivenCredit(id, uplineId, newGivenCredit);
+        {
+            var custInfo = reportService.SearchCustomerInfo(ExtRequest.Instance.GetGroupName(), id, string.Empty, false);
+            if (custInfo.RoleId == Role.Member)
+            {
+                var siteDB = siteDBService.GetSiteDBConfig(id);
+                var totalAmt = customerDataAccess.GetTotalAmount(id, siteDB);
+
+                return customerDataAccess.UpdateMemberGivenCredit(id, uplineId, newGivenCredit, totalAmt);
+            }
+
+            return customerDataAccess.UpdateSMAGivenCredit(id, uplineId, newGivenCredit);
+        }
+
 
         public Result ResetMemberCredit(int custId, int agentId, bool closedOnly) =>
             customerDataAccess.ResetMemberCredit(custId, agentId, closedOnly);
@@ -84,7 +100,21 @@
                 return new Result(1, ViewLang.DontHavePermission);
             }
 
-            return customerDataAccess.CloseCutomer(custId, close, clearCredit, custName);
+            var result = customerDataAccess.CloseCutomer(custId, close, clearCredit, custName);
+            if (result.IsSuccess && clearCredit)
+            {
+                if (custInfo.RoleId == Role.Member)
+                {
+                    var siteDB = siteDBService.GetSiteDBConfig(custId);
+                    var totalAmt = customerDataAccess.GetTotalAmount(custId, siteDB);
+
+                    return customerDataAccess.ClearMemberCredit(custId, totalAmt, custName);
+                }
+
+                return customerDataAccess.ClearSMACredit(custId, custName);
+            }
+
+            return result;
         }
 
         public Result UnlockAccess(int custId, int userId, string ip4Address)
@@ -119,7 +149,7 @@
 
         public async Task<Result> RemoveOtp(int custId, int userId, string ip4Address)
         {
-            var result= customerDataAccess.RemoveOTP(new RemoveOtpCriteria
+            var result = customerDataAccess.RemoveOTP(new RemoveOtpCriteria
             {
                 Custid = custId,
                 Userid = userId,

@@ -13,6 +13,7 @@
     using DTO;
     using Extensions;
     using Fanex.ExternalAccount.Module.LeftPanel.Models;
+    using Fanex.ExternalAccount.Service;
     using Fanex.NAP.Framework.Data;
     using Utilities;
     using ViewModels;
@@ -65,11 +66,26 @@
             return DbHelper.ExecuteDataSet("EAS_CustomerSelBalanceInfo", param);
         }
 
-        public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
+
+        public Result UpdateMemberGivenCredit(int id, int uplineId, decimal newGivenCredit, decimal totalAmt)
         {
-            using (var objDb = new ObjectDb("Acc_CustomerUpdCredit"))
-            {
-                var param = new Hashtable
+            var param = new Hashtable
+                {
+                    {"userid", uplineId},
+                    {"custid", id},
+                    {"newcredit", newGivenCredit},
+                    {"ip", CurrentContext.Instance.Ip4Address},
+                    {"errcode", 0},
+                    {"errmsg", string.Empty},
+                    {"totalamt", totalAmt}
+                };
+
+            return UpdateGivenCredit(param);
+        }
+
+        public Result UpdateSMAGivenCredit(int id, int uplineId, decimal newGivenCredit)
+        {
+            var param = new Hashtable
                 {
                     {"userid", uplineId},
                     {"custid", id},
@@ -79,12 +95,7 @@
                     {"errmsg", string.Empty}
                 };
 
-                objDb.AssignParamValues(param);
-
-                objDb.ExecuteNonQuery();
-
-                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
-            }
+            return UpdateGivenCredit(param);
         }
 
         public DbResult GetDownlineList(int custid, int pageSize, int pageIndex)
@@ -202,6 +213,22 @@
             }
         }
 
+        public decimal GetTotalAmount(int custId, SiteDB siteDB)
+        {
+            var prefixSp = siteDB.IsSiteDB ? $"SiteDB{siteDB.SiteDBGroupID}_" : string.Empty;
+            using (ObjectDb objDb = new ObjectDb($"{prefixSp}Acc_CustomerTotalAmountSel", 600))
+            {
+                var hash = new Hashtable
+                {
+                    { "custid", custId }
+                };
+
+                objDb.ExecuteNonQueryScaleoutDB(hash, siteDB.AGIP);
+
+                return Utils.ToDecimal(objDb.GetParameterValue("totalamt"));
+            }
+        }
+
         public Result CloseCutomer(int custId, bool close, bool clearCredit, string custName)
         {
             using (var objDb = new ObjectDb("Acc_CustomerUpdClosed", 600))
@@ -221,11 +248,6 @@
                 objDb.AssignParamValues(param);
 
                 objDb.ExecuteNonQuery();
-
-                if (Utils.ToInt32(objDb.GetParameterValue("errcode")) <= 0 && clearCredit)
-                {
-                    return ClearCredit(CurrentSession.Instance.UserId, custName);
-                }
 
                 return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
             }
@@ -361,22 +383,44 @@
             return items;
         }
 
-        private static Result ClearCredit(int userId, string username = null)
+        public Result ClearMemberCredit(int userId, decimal totalAmt, string username = null)
+        {
+            var hash = new Hashtable
+            {
+                {"username", username},
+                {"userid", userId},
+                {"returnerrcode", 1},
+                {"errcode", 0},
+                {"errmsg", string.Empty},
+                {"ip", CurrentContext.Instance.Ip4Address},
+                {"system", "EXTERNAL"},
+                {"totalamt", totalAmt}
+            };
+
+            return ClearCredit(hash);
+        }
+
+        public Result ClearSMACredit(int userId, string username = null)
+        {
+            var hash = new Hashtable
+            {
+                {"username", username},
+                {"userid", userId},
+                {"returnerrcode", 1},
+                {"errcode", 0},
+                {"errmsg", string.Empty},
+                {"ip", CurrentContext.Instance.Ip4Address},
+                {"system", "EXTERNAL"}
+            };
+
+            return ClearCredit(hash);
+        }
+
+        private static Result ClearCredit(Hashtable hash)
         {
             using (var objDb = new ObjectDb("Acc_CustomerUpdClearCredit", 600))
             {
-                var hash = new Hashtable
-                {
-                    {"username", username},
-                    {"userid", userId},
-                    {"returnerrcode", 1},
-                    {"errcode", 0},
-                    {"errmsg", string.Empty},
-                    {"ip", CurrentContext.Instance.Ip4Address},
-                    {"system", "EXTERNAL"}
-                };
                 objDb.AssignParamValues(hash);
-
                 objDb.ExecuteNonQuery();
 
                 return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
@@ -447,6 +491,18 @@
                     ErrorCode = outputParams["errcode"].ToString(),
                     ErrorMessage = outputParams["errmsg"].ToString()
                 };
+            }
+        }
+
+        private static Result UpdateGivenCredit(Hashtable param)
+        {
+            using (var objDb = new ObjectDb("Acc_CustomerUpdCredit"))
+            {
+                objDb.AssignParamValues(param);
+
+                objDb.ExecuteNonQuery();
+
+                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
             }
         }
     }

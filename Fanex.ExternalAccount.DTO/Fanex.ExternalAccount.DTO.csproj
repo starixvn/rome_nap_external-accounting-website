@@ -169,6 +169,7 @@
     <Compile Include="Products\ProductDto.cs" />
     <Compile Include="Products\ProductEntity.cs" />
     <Compile Include="Products\ProductStatusDto.cs" />
+    <Compile Include="SiteDB.cs" />
     <Compile Include="TotalBet\TotalBetModel.cs" />
     <Compile Include="Report\ExtraPTModel.cs" />
     <Compile Include="Report\SuperWinLossDetailByPT\SuperPositionTakingModel.cs" />

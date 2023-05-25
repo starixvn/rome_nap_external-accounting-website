@@ -36,7 +36,7 @@
         private readonly ISuperService superService = new SuperService();
         private readonly IServiceBase serviceBase = new ServiceBase();
         private readonly Fanex.ExternalAccount.Service.Interface.Customer.ICustomerService externalCustomerService = new Fanex.ExternalAccount.Service.Impl.Customer.CustomerService();
-
+        private readonly ISiteDBConfigService siteDBConfigService = new SiteDBConfigService();
         public ActionResult EditBetSetting(int custId) => PartialViewBase(externalCustomerService.IsArchivedCustId(custId));
 
         [AntiXSRFFilter]
@@ -432,6 +432,9 @@
             var param = GetParamFromRequest();
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
+            var siteDB = siteDBConfigService.GetSiteDBConfig(custId);
+            customer.DBServerIp = siteDB.AGIP;
+            customer.SiteDBGroupId = siteDB.SiteDBGroupID;
 
             var requestContext = new RequestContext
             {
