@@ -51,7 +51,8 @@
 }
 
 .succMsg {
-    max-height: none;
+    max-height: 300px;
+    overflow: auto;
     background-color: #eefbe9;
     border: 1px solid #1db51a;
     color: #52a220;

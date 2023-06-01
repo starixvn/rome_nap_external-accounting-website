@@ -650,8 +650,9 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook = function ($scope, $element) {
 var superIds = top.superIds.split(',');
 var superNames = top.$("#superList").val().split(',');
 var hasUpdateError = false;
-var successAccountsMsg = "";
+var successAccountsMsg = false;
 var numberOfDestUsers = 0;
+var failedMessages = "";
 
 Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper = function (isCopy, custIdIndex, usernameIndex, model, para) {
     numberOfDestUsers = isCopy ? superIds.length - 1 : superIds.length;
@@ -666,20 +667,20 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper = function (
         }
     }).success(function (data) {
         if (top.Fanex.ExtAcc.ShowSecurityCodePage(data)) {
-            Fanex.CustomerSetting.Core.UnBlockUI();
+            top.Fanex.ExtAcc.UnBlockUI();
             return;
         }
 
         if (data.errorCode === "0") {
-            successAccountsMsg += $.trim(superNames[usernameIndex]) + ", ";
+            successAccountsMsg = true;
         }
         else {
             hasUpdateError = true;
-            top.$('#errMsg').append('<div class="bold" style="color: #444">' + $.trim(superNames[usernameIndex]) + '</div>' + data.errorMessage.formatErrorMessage()).show();
+            failedMessages += '<div class="bold" style="color: #444">' + $.trim(superNames[usernameIndex] + '</div>' + data.errorMessage.formatErrorMessage()).show();
         }
 
         if (usernameIndex === numberOfDestUsers - 1) {
-            Fanex.CustomerSetting.Core.UnBlockUI();
+            top.Fanex.ExtAcc.UnBlockUI();
 
             if (data.errorCode === "0" && !hasUpdateError && numberOfDestUsers > 1) {
                 top.$('#errMsg').append('All accounts have been successfully edited.').show();
@@ -690,7 +691,8 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper = function (
             }
 
             if (successAccountsMsg && hasUpdateError) {
-                top.$('#errMsg').append('<div class="bold" style="color: #444">' + successAccountsMsg.substr(0, successAccountsMsg.length - 2) + '</div>These accounts have been successfully edited.').show();
+                top.$('#errMsg').append('All accounts have been successfully edited except the following accounts:')
+                    .append(failedMessages).show();
             }
 
             if (typeof ondone === 'function') {
@@ -705,7 +707,7 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper = function (
         hasUpdateError = true;
 
         if (top.Fanex.ExtAcc.ShowSecurityCodePage(data)) {
-            Fanex.CustomerSetting.Core.UnBlockUI();
+            top.Fanex.ExtAcc.UnBlockUI();
             return;
         }
 
@@ -714,7 +716,7 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper = function (
         }
 
         if (usernameIndex === numberOfDestUsers - 1) {
-            Fanex.CustomerSetting.Core.UnBlockUI();
+            top.Fanex.ExtAcc.UnBlockUI();
 
             if (typeof ondone === 'function') {
                 ondone({ errorCode: "1", errorMessage: "Error on updating..." });
@@ -728,7 +730,8 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper = function (
 
 Fanex.CustomerSetting.Betting.MultipleSportsbook.Update = function (isCopy, ondone) {
     hasUpdateError = false;
-    successAccountsMsg = "";
+    successAccountsMsg = false;
+    failedMessages = "";
 
     var checkboxes = $("input[type=checkbox]");
     var hasCheckedAnyBettype = false;
@@ -832,6 +835,7 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.Update = function (isCopy, ondo
         return true;
     };
 
+    var checkboxIndex = 1;
     for (var betting of bettings) {
         var curValMinBet = parseFloat(betting.minBetFormated.replace(/,/g, ''));
         var curValMaxBet = parseFloat(betting.maxBetFormated.replace(/,/g, ''));
@@ -841,8 +845,11 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.Update = function (isCopy, ondo
 
         var curValMinMin = betting.minBetMin;
         var curValMaxMax = betting.maxBetMin;
+        var bettingIsChecked = checkboxes[checkboxIndex].checked;
 
-        if (!this.IsValid(curValMinBet, curValMaxBet, curValMaxPerMatch, curValMinMin, curValMaxMax, curValMaxPerMatchMax, betting)) {
+        ++checkboxIndex;
+
+        if (bettingIsChecked && !this.IsValid(curValMinBet, curValMaxBet, curValMaxPerMatch, curValMinMin, curValMaxMax, curValMaxPerMatchMax, betting)) {
             return;
         }
     }
@@ -850,7 +857,7 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.Update = function (isCopy, ondo
     top.Fanex.ExtAcc.Form.ConfirmBox("Confirmation", "Are you sure you want to edit Bet Setting to Destination Users?", 470, 130, false,
         function () {
             top.Fanex.ExtAcc.Form.Close();
-            Fanex.CustomerSetting.Core.BlockUI();
+            top.Fanex.ExtAcc.BlockUI();
 
             var para = "00";
             var startAtBasketball = false;
