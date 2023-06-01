@@ -149,8 +149,18 @@ function LoadBetSetting(sourceUser, destUsers, isCopy) {
 
 function ReplaceChars(textarea) {
     textarea.value = textarea.value
+        .replace(/\s\s/g, ' ')
         .replace(/\s/g, ',')
         .replace(/\t/g, ',')
         .replace(/;/g, ',')
-        .replace(/\\n|\\r\\n|\\r/g, ',');
+        .replace(/\\n|\\r\\n|\\r/g, ',')
+        .replaceAll(',,', ',');
+
+    if (textarea.value.startsWith(',')) {
+        textarea.value = textarea.value.substr(1);
+    }
+
+    if (textarea.value.endsWith(',')) {
+        textarea.value = textarea.value.substr(0, textarea.value.length - 1);
+    }
 }
