@@ -349,6 +349,7 @@
     <Compile Include="Customer\CustomerListController.cs" />
     <Compile Include="Customer\MainSuperController.cs" />
     <Compile Include="Customer\CustomerController.cs" />
+    <Compile Include="Customer\MarkAccountTypeController.cs" />
     <Compile Include="Customer\ParlayMaxPayoutController.cs" />
     <Compile Include="Customer\OpenCustomerController.cs" />
     <Compile Include="Customer\ProtectedStatusController.cs" />
@@ -363,6 +364,11 @@
     <Compile Include="OTP\OTPController.cs" />
     <Compile Include="Report\BaseReportController.cs" />
     <Compile Include="Report\SuperWinLossDetailByPTController.cs" />
+    <Compile Include="Requests\MarkAccountType\NewMarkAccountRequest.cs" />
+    <Compile Include="Requests\MarkAccountType\SearchMarkAccountRequest.cs" />
+    <Compile Include="Requests\MarkAccountType\UnmarkAccountRequest.cs" />
+    <Compile Include="Requests\MarkAccountType\UpdateMarkAccountRequest.cs" />
+    <Compile Include="Requests\MarkAccountType\UpdateMultipelMarkAccountRequest.cs" />
     <Compile Include="TotalBet\TotalBetController.cs" />
     <Compile Include="Requests\CustomerList\SeachCustomerListRequest.cs" />
     <Compile Include="Requests\DrillDownWinLossDetailRequest.cs" />

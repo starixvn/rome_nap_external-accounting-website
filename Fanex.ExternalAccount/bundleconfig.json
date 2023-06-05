@@ -62,7 +62,8 @@
       "assets/styles/pages/customer/pt-engine.css",
       "assets/styles/pages/admin/product.css",
       "assets/styles/pages/searchandcopy/index.css",
-      "assets/styles/pages/customer/subgroup.css"
+      "assets/styles/pages/customer/subgroup.css",
+      "assets/styles/pages/customer/mark-account.css"
     ],
     "sourceMap": true
   },
@@ -99,6 +100,7 @@
       "Scripts/Customer/Fanex.ExtAcc.Customer.CustomerList.SingleEditAgent.js",
       "Scripts/Customer/Fanex.ExtAcc.Customer.CustomerList.SingleEditMember.js",
       "Scripts/Customer/Fanex.ExtAcc.Customer.EditMultiple.js",
+      "Scripts/Customer/Fanex.ExtAcc.MarkAccountType.js",
       "Scripts/isMobile.min.js",
       "Scripts/knockout.min-2.0.js",
       "Scripts/Fanex.ExtAcc.Utils.js",

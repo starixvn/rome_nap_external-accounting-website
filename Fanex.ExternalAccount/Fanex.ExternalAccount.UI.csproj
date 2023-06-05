@@ -1360,6 +1360,7 @@
     <TypeScriptCompile Include="Scripts\Reports\Shared\ProductControls.ts" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\SuperWinLossDetailByPT.ts" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.ClosedStatus.js" />
+    <Content Include="Scripts\Customer\Fanex.ExtAcc.MarkAccountType.js" />
     <Content Include="Scripts\Fanex.Multiselect\fanex.singleSelect.js" />
     <Content Include="Scripts\Fanex.Multiselect\fanex.multiSelect.css" />
     <Content Include="Scripts\Fanex.Multiselect\fanex.multiSelect.js" />
@@ -2637,6 +2638,7 @@
     </Content>
     <Content Include="assets\styles\pages\totalbet\total-bet.scss" />
     <Content Include="assets\styles\pages\totalbet\multiselect-custom.scss" />
+    <Content Include="assets\styles\pages\customer\mark-account.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2816,6 +2818,9 @@
     <Content Include="Views\SuperWinLossDetailBySubGroup\Index.cshtml" />
     <Content Include="Views\SuperWinLossDetailBySubGroup\_NoPermission.cshtml" />
     <Content Include="Views\TotalBet\Index.cshtml" />
+    <Content Include="Views\MarkAccountType\Index.cshtml" />
+    <Content Include="Views\MarkAccountType\MarkAccount.cshtml" />
+    <Content Include="Views\MarkAccountType\MultipleEditAccountType.cshtml" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailBySubGroup\Fanex.ExtAcc.SuperWinLossDetailBySubGroup.ts" />
   </ItemGroup>
   <ItemGroup>

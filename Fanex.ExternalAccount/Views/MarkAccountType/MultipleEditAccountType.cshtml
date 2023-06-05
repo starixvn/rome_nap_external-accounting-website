@@ -1,0 +1,17 @@
+﻿@using Fanex.ExternalAccount.Utilities
+
+<form class="form-add mark-account">
+    <div id="errMsg" class="successMsg hide"> </div>
+
+    <div id="multiple-update-grid">
+        <div id="multiEditGrid" class="removeRadius freegrid content-grid">
+        </div>
+    </div>
+    <div class="group form-action">
+        <input class="btn btn-default pull-right" type="button" value="Cancel" onclick="Fanex.ExtAcc.Form.Close(false);" />
+        <input class="btn -submit pull-right mr10" type="button" value="Submit" onclick="Fanex.ExtAcc.MarkAccountType.Add()" />
+    </div>
+</form>
+<script>
+    Fanex.ExtAcc.MarkAccountType.InitDataMultipleUpdate();
+</script>

@@ -133,6 +133,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agent.
+        /// </summary>
+        public static string Agent {
+            get {
+                return ResourceManager.GetString("Agent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agent Max Credit.
         /// </summary>
         public static string AgentMaxCredit {
@@ -1268,6 +1277,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Master.
+        /// </summary>
+        public static string Master {
+            get {
+                return ResourceManager.GetString("Master", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Master Max Credit.
         /// </summary>
         public static string MasterMaxCredit {
@@ -1754,6 +1772,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Problem.
+        /// </summary>
+        public static string Problem {
+            get {
+                return ResourceManager.GetString("Problem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product Details.
         /// </summary>
         public static string ProductDetails {
@@ -2051,11 +2078,29 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Super.
+        /// </summary>
+        public static string Super {
+            get {
+                return ResourceManager.GetString("Super", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Suspended.
         /// </summary>
         public static string Suspended {
             get {
                 return ResourceManager.GetString("Suspended", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suspicious.
+        /// </summary>
+        public static string Suspicious {
+            get {
+                return ResourceManager.GetString("Suspicious", resourceCulture);
             }
         }
         
@@ -2231,6 +2276,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Under.
         /// </summary>
         public static string Under {
@@ -2276,6 +2330,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Usernames.
+        /// </summary>
+        public static string Usernames {
+            get {
+                return ResourceManager.GetString("Usernames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User Permission.
         /// </summary>
         public static string UserPermission {
@@ -2308,6 +2371,15 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string ViewReportMinDate {
             get {
                 return ResourceManager.GetString("ViewReportMinDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VIP.
+        /// </summary>
+        public static string VIP {
+            get {
+                return ResourceManager.GetString("VIP", resourceCulture);
             }
         }
         
