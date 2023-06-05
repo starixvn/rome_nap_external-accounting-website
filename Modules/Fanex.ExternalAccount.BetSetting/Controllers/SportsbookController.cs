@@ -23,6 +23,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
         public ActionResult Index(int custId, int uplineId, int userId, string groupName)
             => PartialView("~/Areas/CustomerSetting/Views/BetSetting/Sportsbook/Index.cshtml", externalCustomerService.IsArchivedCustId(custId));
 
+        [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "SportsbookBettingNew")]
         public ActionResult EditMultipleBetSetting()
             => PartialView("~/Areas/CustomerSetting/Views/BetSetting/MultipleSportsbook/Index.cshtml", false);
 
@@ -59,7 +60,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             return PartialView("~/Areas/CustomerSetting/Views/BetSetting/Sportsbook/Content.cshtml", bettingLimit);
         }
 
-        [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "SportsbookBetting")]
+        [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "SportsbookBettingNew")]
         public ActionResult EditMultipleBetSettingContent(int? custId, string groupName = null)
         {
             var customer = CustomerInfo(custId.Value, Fanex.ExternalAccount.Core.Context.CurrentSession.Instance.CustId);
@@ -146,7 +147,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
         }
 
         [HttpPost]
-        [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "SportsbookBetting")]
+        [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "SportsbookBettingNew")]
         public ActionResult EditMultipleBetSettingPost(int custId, string txtCustomerObject, string para)
         {
             var checkUmResult = serviceBase.CheckUM(custId, NonDcsProduct.Sportsbook, AppSession.CurrentSession.LangKey);
@@ -191,7 +192,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
         }
 
         [HttpPost]
-        [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "SportsbookBetting")]
+        [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "SportsbookBettingNew")]
         public ActionResult CheckMultipleSupersBetSetting(string sourceUser, string destUsers, string groupName, bool isCopy = true)
         {
             var result = externalCustomerService.CheckMultipleSupersBetSetting(sourceUser, destUsers, groupName, Fanex.ExternalAccount.Core.Context.CurrentSession.Instance.CustId, isCopy);
