@@ -7,6 +7,7 @@
     using Fanex.ExternalAccount.ViewModel.Customer.MarkAccountType;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     public class MarkAccountTypeService : IMarkAccountTypeService
     {
@@ -27,7 +28,7 @@
 
         public Result Add(NewMarkAccountTypeParams newMarkAccountTypeParams)
         {
-            var usernames = newMarkAccountTypeParams.Usernames.Trim(' ').Split(',').Distinct();
+            var usernames = newMarkAccountTypeParams.Usernames.Replace(" ", "").Split(',').Distinct();
 
             if(usernames.Count() > MaxUsernames)
             {

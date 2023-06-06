@@ -1,4 +1,5 @@
 ﻿.mark-account {
+    padding-top: 0px;
     .btn-default {
         margin-right: 20px;
     }
@@ -52,6 +53,7 @@
 .line-viewing {
     .view-item {
         display: normal;
+        overflow: hidden;
         text-overflow: ellipsis;
     }
 

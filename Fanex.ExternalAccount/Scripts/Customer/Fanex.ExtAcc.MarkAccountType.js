@@ -136,7 +136,7 @@ Fanex.ExtAcc.MarkAccountType = {
 
         this.DOMElements.btnMarkAccountType.off().click(function () {
             top.shouldCalculatePopupHeight = false;
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('MarkAccountType/MarkAccount'), 'Mark Account', 470, 410, false);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('MarkAccountType/MarkAccount'), 'Mark Account', 470, "auto", false);
         });
     },
 
@@ -146,7 +146,7 @@ Fanex.ExtAcc.MarkAccountType = {
             setTimeout(function () {
                 var context = $(element).val();
                 context = context.replace(/(\r\n|\n|\r)/gm, " ");
-                context = context.replace(/\s+/g, ",");
+                context = context.trim().replace(/\s+/g, ",");
                 $('#Usernames').empty().val(context);
             }, 100);
         });
@@ -173,7 +173,6 @@ Fanex.ExtAcc.MarkAccountType = {
             pageIndex: pageIndex
         };
 
-        $this.cachedParams.previousParams = params;
         $this.Search(params);
     },
 
@@ -183,10 +182,17 @@ Fanex.ExtAcc.MarkAccountType = {
     },
 
     Search: function (params) {
+        var $this = Fanex.ExtAcc.MarkAccountType;
+        $this.cachedParams.previousParams = params;
         $('#errUpdateMsg').html('');
         $('#errUpdateMsg').css('display', 'none');
         $.post(resolveClientUrl('MarkAccountType/Seach'), params, function (result) {
-            var $this = Fanex.ExtAcc.MarkAccountType;
+            if (result.Customers.length === 0 && params.pageIndex >= 1) {
+                params.pageIndex = params.pageIndex - 1;
+                $this.Search(params);
+                return;
+            }
+
             $this.cachedAccountTypes = result.Customers;
             var bodyRows = [];
             var rowLength = result.Customers.length;
@@ -379,7 +385,7 @@ Fanex.ExtAcc.MarkAccountType = {
                     $('#errMsg').removeClass('successMsg');
                     $('#errMsg').addClass('errMsg');
                     $('#errMsg').css('display', 'block');
-                    $('#errMsg').html(data.ErrorMessage);
+                    $('#errMsg').html(data.ErrorMessage || data.errorMessage);
                 }
                 else {
                     $('#errMsg').removeClass('errMsg');
@@ -439,7 +445,7 @@ Fanex.ExtAcc.MarkAccountType = {
                     $('#errUpdateMsg').removeClass('successMsg');
                     $('#errUpdateMsg').addClass('errMsg');
                     $('#errUpdateMsg').css('display', 'block');
-                    $('#errUpdateMsg').html(data.ErrorMessage);
+                    $('#errUpdateMsg').html(data.ErrorMessage || data.errorMessage);
                 }
                 else {
                     var timeout = setTimeout(function () {
@@ -478,7 +484,7 @@ Fanex.ExtAcc.MarkAccountType = {
                     $('#errUpdateMsg').removeClass('successMsg');
                     $('#errUpdateMsg').addClass('errMsg');
                     $('#errUpdateMsg').css('display', 'block');
-                    $('#errUpdateMsg').html(data.ErrorMessage);
+                    $('#errUpdateMsg').html(data.ErrorMessage || data.errorMessage);
                 }
                 else {
                     var timeout = setTimeout(function () {
@@ -504,7 +510,7 @@ Fanex.ExtAcc.MarkAccountType = {
                     $('#errUpdateMsg').removeClass('successMsg');
                     $('#errUpdateMsg').addClass('errMsg');
                     $('#errUpdateMsg').css('display', 'block');
-                    $('#errUpdateMsg').html(data.ErrorMessage);
+                    $('#errUpdateMsg').html(data.ErrorMessage || data.errorMessage);
                 }
                 else {
 
@@ -678,7 +684,7 @@ Fanex.ExtAcc.MarkAccountType = {
                     $('#errMultEditMsg').removeClass('successMsg');
                     $('#errMultEditMsg').addClass('errMsg');
                     $('#errMultEditMsg').css('display', 'block');
-                    $('#errMultEditMsg').html(data.ErrorMessage);
+                    $('#errMultEditMsg').html(data.ErrorMessage || data.errorMessage);
                 }
                 else {
 
@@ -717,7 +723,7 @@ Fanex.ExtAcc.MarkAccountType.EditMultiple = function (div) {
         className: "iconEnableEdit",
         callback: function (key, opt) {
             top.shouldCalculatePopupHeight = false;
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('MarkAccountType/MultipleEditAccountType'), 'Edit Account Type', 600, 410, false);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('MarkAccountType/MultipleEditAccountType'), 'Edit Account Type', 'auto', 410, false);
         }
     };
     menuItems.unmarkMultiple = {
