@@ -29,7 +29,10 @@
             <div>Copy setting to Supers<span class="source-super-title">*</span> (Maximum 50 supers, separated by comma ',')</div>
             <div><textarea id="superList" class="super-list" onblur="ReplaceChars(this)"></textarea></div>
         }
-        <div><input type="button" id="selectButton" class="btn -submit" value="Select" /></div>
+        <div>
+            <input type="button" id="selectButton" class="btn -submit" value="Select" />
+            <input type="button" id="resetButton" class="btn -submit" value="Reset" />
+        </div>
         <div id="tabs-1">
             <div><iframe id="product-1-0" width="100%" height="600px" frameborder="0" src=""></iframe></div>
         </div>
@@ -41,7 +44,19 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#selectButton").on("click", function () {
-            LoadBetSetting($("#sourceSuper").val() || "", $("#superList").val(), @isCopy)
+            LoadBetSetting($("#sourceSuper").val() || "", $("#superList").val(), @isCopy);
+        });
+
+        $("#resetButton").on("click", function () {
+            $("#selectButton").removeClass("-disabled").attr("disabled", false);
+            $("#sourceSuper").removeClass("-disabled").attr("disabled", false);
+            $("#superList").removeClass("-disabled").attr("disabled", false);
+
+            $("#superList").val("").focus();
+            $("#sourceSuper").val("").focus();
+
+            $("#product-1-0").attr("src", "");
+            $("#product-1-1").attr("src", "");
         });
     });
 </script>
