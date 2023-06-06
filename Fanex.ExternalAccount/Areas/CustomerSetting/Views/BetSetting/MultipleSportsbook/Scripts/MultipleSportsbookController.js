@@ -676,18 +676,28 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper = function (
         }
         else {
             hasUpdateError = true;
-            failedMessages += '<div class="bold" style="color: #444">' + $.trim(superNames[usernameIndex] + '</div>' + data.errorMessage.formatErrorMessage()).show();
+            failedMessages += '<div class="bold" style="color: #444">' + $.trim(superNames[usernameIndex]) + '</div>' + data.errorMessage.formatErrorMessage();
         }
 
         if (usernameIndex === numberOfDestUsers - 1) {
             top.Fanex.ExtAcc.UnBlockUI();
 
             if (data.errorCode === "0" && !hasUpdateError && numberOfDestUsers > 1) {
-                top.$('#errMsg').append('All accounts have been successfully edited.').show();
+                top.$('#errMsg').append('All accounts have been successfully edited.')
+                    .show();
+
+                setTimeout(function () {
+                    top.$('#errMsg').hide(300);
+                }, 3000);
             }
 
             if (data.errorCode === "0" && !hasUpdateError && numberOfDestUsers === 1) {
-                top.$('#errMsg').append('<div class="bold" style="color: #444">' + $.trim(superNames[usernameIndex]) + '</div>' + 'This account has been successfully edited.').show();
+                top.$('#errMsg').append('<div class="bold" style="color: #444">' + $.trim(superNames[usernameIndex]) + '</div>' + 'This account has been successfully edited.')
+                    .show();
+
+                setTimeout(function () {
+                    top.$('#errMsg').hide(300);
+                }, 3000);
             }
 
             if (successAccountsMsg && hasUpdateError) {

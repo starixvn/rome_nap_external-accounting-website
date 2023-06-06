@@ -69,3 +69,8 @@
     opacity: 0.7;
     cursor: not-allowed !important;
 }
+
+.ui-dialog .ui-dialog-buttonpane{
+    padding: 0 !important;
+    margin: 0 !important;
+}
