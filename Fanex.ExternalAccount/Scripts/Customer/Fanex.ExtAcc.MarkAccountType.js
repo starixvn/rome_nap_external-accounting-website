@@ -668,10 +668,24 @@ Fanex.ExtAcc.MarkAccountType = {
 
     SubmitUpdateMultiple: function () {
         var $this = Fanex.ExtAcc.MarkAccountType;
+        var hasChangeData = false;
         for (var i = 0; i < $this.cachedEdittingAccountTypes.length; i++) {
-            $this.cachedEdittingAccountTypes[i].TypeId = $("#selMultipleType" + $this.cachedEdittingAccountTypes[i].CustId).val();
-            $this.cachedEdittingAccountTypes[i].Remark = $("#inputMultipleRemark" + $this.cachedEdittingAccountTypes[i].CustId).val();
+            var typeId = $("#selMultipleType" + $this.cachedEdittingAccountTypes[i].CustId).val();
+            var remark = $("#inputMultipleRemark" + $this.cachedEdittingAccountTypes[i].CustId).val();
+            if ($this.cachedEdittingAccountTypes[i].TypeId.toString() !== typeId || $this.cachedEdittingAccountTypes[i].Remark.toString() !== remark) {
+                hasChangeData = true;
+            }
+            $this.cachedEdittingAccountTypes[i].TypeId = typeId;
+            $this.cachedEdittingAccountTypes[i].Remark = remark;
         }
+        if (!hasChangeData) {
+            $('#errMultEditMsg').removeClass('successMsg');
+            $('#errMultEditMsg').addClass('errMsg');
+            $('#errMultEditMsg').css('display', 'block');
+            $('#errMultEditMsg').html("There is no change to update.");
+            return;
+        }
+
         var params = {
             UpdateAccounts: $this.cachedEdittingAccountTypes
         };
