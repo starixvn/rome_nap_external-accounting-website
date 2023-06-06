@@ -1,11 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Service.Customer.MarkAccountType.Params
 {
+    using Fanex.ExternalAccount.DTO.Customer.MarkAccount;
     using System.Collections;
     using System.Collections.Generic;
     
     public class UnmarkAccountTypeParams
     {
-        public IEnumerable<int> CustIds { get; set; }
+        public IEnumerable<MarkAccount> Accounts { get; set; }
 
         public int CustId { get; set; }
 

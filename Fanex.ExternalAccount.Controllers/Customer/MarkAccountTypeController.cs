@@ -96,6 +96,7 @@
         {
             var updateAccountTypes = request.UpdateAccounts.Select(account => new UpdateMarkAccountTypeParams {
                 CustId = account.CustId,
+                Username = account.Username,
                 TypeId = account.TypeId,
                 Remark = account.Remark,
                 UserId = CurrentSession.UserId,
@@ -125,18 +126,16 @@
         {
             return Json(markAccountTypeService.UnmarkAll(new UnmarkAccountTypeParams
             {
-                CustIds = request.CustIds,
+                Accounts = request.Accounts,
                 UserId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address
             }));
         }
 
-
-
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult MultipleEditAccountType()
+        public ActionResult MultipleEditAccountType(UnmarkAccountRequest request)
         {
             return PartialViewBase();
         }

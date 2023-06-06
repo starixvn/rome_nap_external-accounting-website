@@ -8,7 +8,7 @@
 
         public int Level { get; set; }
 
-        public int Type { get; set; }
+        public int TypeId { get; set; }
 
         public string MarkDateTime { get; set; }
 

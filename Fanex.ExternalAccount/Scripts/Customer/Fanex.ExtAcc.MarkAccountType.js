@@ -4,7 +4,8 @@
 
 Fanex.ExtAcc.MarkAccountType = {
     AccountTypes: [ { Id: 1, Name: "VIP" }, { Id: 2, Name: "Suspicious" }, { Id: 3, Name: "Problem" }],
-    cachedAccountTypes : [],
+    cachedAccountTypes: [],
+    cachedEdittingAccountTypes: [],
     DOMElements: {},
     cachedParams: {
         pageSize: 50,
@@ -182,6 +183,8 @@ Fanex.ExtAcc.MarkAccountType = {
     },
 
     Search: function (params) {
+        $('#errUpdateMsg').html('');
+        $('#errUpdateMsg').css('display', 'none');
         $.post(resolveClientUrl('MarkAccountType/Seach'), params, function (result) {
             var $this = Fanex.ExtAcc.MarkAccountType;
             $this.cachedAccountTypes = result.Customers;
@@ -218,7 +221,7 @@ Fanex.ExtAcc.MarkAccountType = {
             headers.push({
                 HeaderText: 'Type', Name: 'Type', Width: 100, CellAlign: 'center',
                 CustomCellRender: function (cell) {
-                    return `<div id="sglTypeId${cell.Value.CustId}" class="line-viewing"><div class="view-item">${$this.GetTypeName(cell.Value.Type)}</div><select id="selType${cell.Value.CustId}" class="edit-item">'${Fanex.ExtAcc.MarkAccountType.BuildEditTypeOption(cell.Value.Type)}</select> </div>`;
+                    return `<div id="sglTypeId${cell.Value.CustId}" class="line-viewing"><div class="view-item">${$this.GetTypeName(cell.Value.TypeId)}</div><select id="selType${cell.Value.CustId}" class="edit-item">'${Fanex.ExtAcc.MarkAccountType.BuildEditTypeOption(cell.Value.TypeId)}</select> </div>`;
                 }
             });
             headers.push({ HeaderText: 'Marked Date', Name: 'MarkedDate', Width: 180, CellAlign: 'center' });
@@ -379,6 +382,11 @@ Fanex.ExtAcc.MarkAccountType = {
                     $('#errMsg').html(data.ErrorMessage);
                 }
                 else {
+                    $('#errMsg').removeClass('errMsg');
+                    $('#errMsg').addClass('successMsg');
+                    $('#errMsg').css('display', 'block');
+                    $('#errMsg').html("Accounts marked successfully!");
+
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
 
@@ -481,11 +489,11 @@ Fanex.ExtAcc.MarkAccountType = {
             });
     },
 
-    UnmarkAll: function (custIds) {
+    UnmarkAll: function (accounts) {
         Fanex.ExtAcc.Form.Close(false, false, "unmark-modal");
         var $this = Fanex.ExtAcc.MarkAccountType;
         var params = {
-            CustIds: custIds
+            Accounts: accounts
         };
         Fanex.ExtAcc.BlockUI();
         $.ajax({ url: resolveClientUrl("MarkAccountType/UnmarkAll"), data: params, type: 'POST' })
@@ -499,6 +507,11 @@ Fanex.ExtAcc.MarkAccountType = {
                     $('#errUpdateMsg').html(data.ErrorMessage);
                 }
                 else {
+
+                    $('#errUpdateMsg').removeClass('errMsg');
+                    $('#errUpdateMsg').addClass('successMsg');
+                    $('#errUpdateMsg').css('display', 'block');
+                    $('#errUpdateMsg').html("Accounts unmarked successfully.");
                     var timeout = setTimeout(function () {
                         clearTimeout(timeout);
                         $this.Search($this.cachedParams.previousParams);
@@ -509,8 +522,18 @@ Fanex.ExtAcc.MarkAccountType = {
 
     UnmarkMultiple: function () {
         var $this = Fanex.ExtAcc.MarkAccountType;
-        var custIdAndNames = Fanex.ExtAcc.MarkAccountType.IdsAndNames();
-        Fanex.ExtAcc.Form.ConfirmBox("Unmark Account Type", `Selected account(s):<b>${custIdAndNames.Names}</b></br>Are you going to unmark account type of the following accounts?`, 450, "auto", false, function () { return $this.UnmarkAll(custIdAndNames.CustIds); }, null, "unmark-modal");
+
+        $this.cachedEdittingAccountTypes = [];
+        var usernames = [];
+
+        for (var i = 0; i < $this.cachedAccountTypes.length; i++) {
+            if ($("#ckbEdit" + $this.cachedAccountTypes[i].CustId).hasClass('menuActive')) {
+                $this.cachedEdittingAccountTypes.push($this.cachedAccountTypes[i]);
+                usernames.push($this.cachedAccountTypes[i].Username);
+            }
+        }
+
+        Fanex.ExtAcc.Form.ConfirmBox("Unmark Account Type", `<div style="display:block;max-height: 300px;overflow-y: scroll;">Selected account(s): <b>${usernames.join(", ")}</b></div></br><div style="margin-top: 15px">Are you going to unmark account type of the following accounts?</div>`, 450, "auto", false, function () { return $this.UnmarkAll($this.cachedEdittingAccountTypes); }, null, "unmark-modal");
     },
 
     IdsAndNames: function () {
@@ -587,29 +610,33 @@ Fanex.ExtAcc.MarkAccountType = {
         }
     },
 
-    OpenMultipleUpdate: function () {
-        Fanex.ExtAcc.Form.Show(resolveClientUrl('MarkAccountType/MultipleEditAccoutType'), 'Edit Account Type', 450, 800, false);
-    },
-
     InitDataMultipleUpdate: function () {
         var $this = Fanex.ExtAcc.MarkAccountType;
+
+        $this.cachedEdittingAccountTypes = [];
+
+        for (var i = 0; i < $this.cachedAccountTypes.length; i++) {
+            if ($("#ckbEdit" + $this.cachedAccountTypes[i].CustId).hasClass('menuActive')) {
+                $this.cachedEdittingAccountTypes.push($this.cachedAccountTypes[i]);
+            }
+        }
 
         var tableDiv = $("<table>").addClass("tbl-multiple-mark-account");
         tableDiv.append(`<thead><tr><th>No.</th><th class="mul-edit-username">Username</th><th class="mul-edit-type">Type</th><th class="mul-edit-remark">Remark</th></tr></thead>`);
 
         var divBody = $("<tbody>");
-        for (var currentIndex = 0; currentIndex < $this.cachedAccountTypes.length; currentIndex++) {
+        for (var currentIndex = 0; currentIndex < $this.cachedEdittingAccountTypes.length; currentIndex++) {
             var iconCopyType = "";
             var iconCopyRemark = "";
             if (currentIndex === 0) {
-                iconCopyType = `<span class="icon-note-multiple"></span>`;
-                iconCopyRemark = `<span class="icon-note-multiple"></span>`;
+                iconCopyType = `<span id="mulTypeApplyAll" class="icon-note-multiple"></span>`;
+                iconCopyRemark = `<span id="mulRemarkApplyAll" class="icon-note-multiple"></span>`;
             }
-            var currentRow = $this.cachedAccountTypes[currentIndex];
+            var currentRow = $this.cachedEdittingAccountTypes[currentIndex];
             var divTR = $("<tr>");
             divTR.append(`<td>${currentIndex + 1}</td>`);
             divTR.append(`<td class="mul-edit-username">${currentRow.Username}</td>`);
-            divTR.append(`<td><div class="mul-edit-row"><select id="selMultipleType${currentRow.CustId}" class="mul-edit-type" >${Fanex.ExtAcc.MarkAccountType.BuildEditTypeOption(currentRow.Type)}</select>${iconCopyType}</div></td>`);
+            divTR.append(`<td><div class="mul-edit-row"><select id="selMultipleType${currentRow.CustId}" class="mul-edit-type" >${Fanex.ExtAcc.MarkAccountType.BuildEditTypeOption(currentRow.TypeId)}</select>${iconCopyType}</div></td>`);
             divTR.append(`<td><div class="mul-edit-row"><input id="inputMultipleRemark${currentRow.CustId}" type="text" class="mul-edit-remark" value="${currentRow.Remark}" />${iconCopyRemark}</div></td>`);
             divBody.append(divTR);
         }   
@@ -617,6 +644,68 @@ Fanex.ExtAcc.MarkAccountType = {
         tableDiv.append(divBody);
         
         $("#multiple-update-grid").append(tableDiv);
+
+        $("#mulTypeApplyAll").on("click", function () {
+            var typeSelected = $("#selMultipleType" + $this.cachedEdittingAccountTypes[0].CustId).val();
+            $(".mul-edit-type").each(function(_, selType){
+                $(selType).val(typeSelected).trigger('change');
+            });
+        });
+
+        $("#mulRemarkApplyAll").on("click", function () {
+            var remarktxt = $("#inputMultipleRemark" + $this.cachedEdittingAccountTypes[0].CustId).val();
+            $(".mul-edit-remark").each(function (_, iptRemark) {
+                $(iptRemark).val(remarktxt).trigger('change');
+            });
+        });
+    },
+
+    SubmitUpdateMultiple: function () {
+        var $this = Fanex.ExtAcc.MarkAccountType;
+        for (var i = 0; i < $this.cachedEdittingAccountTypes.length; i++) {
+            $this.cachedEdittingAccountTypes[i].TypeId = $("#selMultipleType" + $this.cachedEdittingAccountTypes[i].CustId).val();
+            $this.cachedEdittingAccountTypes[i].Remark = $("#inputMultipleRemark" + $this.cachedEdittingAccountTypes[i].CustId).val();
+        }
+        var params = {
+            UpdateAccounts: $this.cachedEdittingAccountTypes
+        };
+        Fanex.ExtAcc.BlockUI();
+        $.ajax({ url: resolveClientUrl("MarkAccountType/UpdateMultiple"), data: params, type: 'POST' })
+            .done(function (data) {
+                if (!data.IsSuccess) {
+                    Fanex.ExtAcc.UnBlockUI();
+
+                    $('#errMultEditMsg').removeClass('successMsg');
+                    $('#errMultEditMsg').addClass('errMsg');
+                    $('#errMultEditMsg').css('display', 'block');
+                    $('#errMultEditMsg').html(data.ErrorMessage);
+                }
+                else {
+
+                    $('#errMultEditMsg').removeClass('errMsg');
+                    $('#errMultEditMsg').addClass('successMsg');
+                    $('#errMultEditMsg').css('display', 'block');
+                    $('#errMultEditMsg').html("Accounts updated successfully.");
+
+                    var timeout = setTimeout(function () {
+                        clearTimeout(timeout);
+                        Fanex.ExtAcc.Form.Close(false);
+                        $this.Search($this.cachedParams.previousParams);
+                    }, 2000);
+                }
+            });
+    },
+    ResetMultipleEdit: function () {
+        var $this = Fanex.ExtAcc.MarkAccountType;
+        $this.cachedEdittingAccountTypes = [];
+
+        for (var i = 0; i < $this.cachedAccountTypes.length; i++) {
+            if ($("#ckbEdit" + $this.cachedAccountTypes[i].CustId).hasClass('menuActive')) {
+                $this.cachedEdittingAccountTypes.push($this.cachedAccountTypes[i]);
+                $("#selMultipleType" + $this.cachedAccountTypes[i].CustId).val($this.cachedAccountTypes[i].TypeId).trigger('change');
+                $("#inputMultipleRemark" + $this.cachedAccountTypes[i].CustId).val($this.cachedAccountTypes[i].Remark);
+            }
+        }
     }
 };
 
@@ -628,7 +717,7 @@ Fanex.ExtAcc.MarkAccountType.EditMultiple = function (div) {
         className: "iconEnableEdit",
         callback: function (key, opt) {
             top.shouldCalculatePopupHeight = false;
-            Fanex.ExtAcc.Form.Show(resolveClientUrl('MarkAccountType/MultipleEditAccountType'), 'Edit Account Type', 470, 410, false);
+            Fanex.ExtAcc.Form.Show(resolveClientUrl('MarkAccountType/MultipleEditAccountType'), 'Edit Account Type', 600, 410, false);
         }
     };
     menuItems.unmarkMultiple = {

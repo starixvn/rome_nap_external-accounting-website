@@ -99,7 +99,7 @@
                         CustId = Utils.ToInt32(reader["CustID"]),
                         Username = Utils.ToString(reader["Username"]),
                         Level = Utils.ToInt32(reader["RoleID"]),
-                        Type = Utils.ToInt32(reader["TypeID"]),
+                        TypeId = Utils.ToInt32(reader["TypeID"]),
                         MarkDateTime = Utils.ToStringExt(Utils.HasColumn(reader, "MarkedDate") ? Utils.ToDateTime(reader["MarkedDate"]) : DateTime.MinValue),
                         Remark = Utils.ToString(reader["Remark"])
                     });

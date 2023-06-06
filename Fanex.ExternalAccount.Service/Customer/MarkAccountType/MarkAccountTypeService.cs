@@ -13,6 +13,8 @@
         private readonly IMarkAccountTypeDao markAccountTypeDao;
 
         private const int MaxUsernames = 500;
+        private const string UmarkUpdateError = "The following usernames are being unmarked: ";
+        private const string FailUpdateError = "</br>The following usernames are failed to update: ";
 
         public MarkAccountTypeService() : this(null)
         {
@@ -53,7 +55,31 @@
 
         public Result MultipleUpdate(IEnumerable<UpdateMarkAccountTypeParams> updateAccountTypes)
         {
-            throw new System.NotImplementedException();
+            var unmarksUsername = new List<string>();
+            var failedUsername = new List<string>();
+            foreach (var request in updateAccountTypes)
+            {
+                var result = SingleUpdate(request);
+                if (!result.IsSuccess)
+                {
+                    if (result.ErrorCode == "99") {
+                        unmarksUsername.Add(request.Username);
+                    } else {
+                        failedUsername.Add(request.Username);
+                    }
+                } 
+            }
+
+            var errorMsg = unmarksUsername.Count > 0 ? UmarkUpdateError + string.Join(", ", unmarksUsername) : "";
+
+            errorMsg += failedUsername.Count > 0 ? FailUpdateError + string.Join(", ", failedUsername) : "";
+
+            if (string.IsNullOrEmpty(errorMsg))
+            {
+                return new Result();
+            }
+
+            return new Result(1, errorMsg);
         }
 
         public MarkAccountViewModel Search(SearchMarkAccountTypeParams parameters)
@@ -101,25 +127,25 @@
 
         public Result UnmarkAll(UnmarkAccountTypeParams unmarkAccountTypeParams)
         {
-            var errorDeleteCustIds = new List<int>();
-            foreach (var custId in unmarkAccountTypeParams.CustIds)
+            var errorDeleteUsernames = new List<string>();
+            foreach (var account in unmarkAccountTypeParams.Accounts)
             {
                 var result = markAccountTypeDao.Unmark(new UnmarkMarkAccountCriteria
                 {
-                    CustID = custId,
+                    CustID = account.CustId,
                     IP = unmarkAccountTypeParams.IP,
                     UserID = unmarkAccountTypeParams.UserId,
                 });
 
                 if (!result.IsSuccess)
                 {
-                    errorDeleteCustIds.Add(custId);
+                    errorDeleteUsernames.Add(account.Username);
                 }
             }
 
-            if(errorDeleteCustIds.Count > 0)
+            if(errorDeleteUsernames.Count > 0)
             {
-                return new Result("1", string.Join(", ", errorDeleteCustIds));
+                return new Result("1", string.Join(", ", errorDeleteUsernames));
             }
 
             return new Result();
