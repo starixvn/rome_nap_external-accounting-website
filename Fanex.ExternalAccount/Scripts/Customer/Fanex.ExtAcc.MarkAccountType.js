@@ -3,7 +3,7 @@
 }
 
 Fanex.ExtAcc.MarkAccountType = {
-    AccountTypes: [{ Id: 0, Name: "All" }, { Id: 1, Name: "VIP" }, { Id: 2, Name: "Suspicious" }, { Id: 3, Name: "Problem" }],
+    AccountTypes: [ { Id: 1, Name: "VIP" }, { Id: 2, Name: "Suspicious" }, { Id: 3, Name: "Problem" }],
     cachedAccountTypes : [],
     DOMElements: {},
     cachedParams: {
@@ -13,17 +13,111 @@ Fanex.ExtAcc.MarkAccountType = {
         selType: 0
     },
     Init: function () {
-        this.DOMElements.txtUsername = $('#txtUserName');
-        this.DOMElements.selLevel = $('#selLevel');
-        this.DOMElements.selType = $('#selType');
-        this.DOMElements.btnSearch = $('#btnSearch');
-        this.DOMElements.btnMarkAccountType = $('#btnMarkAccountType');
-        this.DOMElements.markaccountListGrid = $('#markaccountListGrid');
-        this.DOMElements.jqgrid = $('#jqgrid');
-        this.DOMElements.msgNoinfo = $('#msgNoinfo');
-        this.DOMElements.editMult = $('#editMult');
-        this.BindingEvents();
-        this.DOMElements.btnSearch.click();
+        var $this = Fanex.ExtAcc.MarkAccountType;
+        $this.DOMElements.txtUsername = $('#txtUserName');
+        $this.DOMElements.selLevel = $('#selLevel');
+        $this.DOMElements.selType = $('#selType');
+        $this.DOMElements.btnSearch = $('#btnSearch');
+        $this.DOMElements.btnMarkAccountType = $('#btnMarkAccountType');
+        $this.DOMElements.markaccountListGrid = $('#markaccountListGrid');
+        $this.DOMElements.jqgrid = $('#jqgrid');
+        $this.DOMElements.msgNoinfo = $('#msgNoinfo');
+        $this.DOMElements.editMult = $('#editMult');
+        $this.BindingEvents();
+        $this.DOMElements.btnSearch.click();
+
+        var dataList = [];
+        dataList.push({
+            id: "optSuper",
+            value: 4,
+            text: "Super",
+            checked: true,
+            enable: true
+        });
+        dataList.push({
+            id: "optMaster",
+            value: 3,
+            text: "Master",
+            checked: true,
+            enable: true
+        });
+        dataList.push({
+            id: "optAgent",
+            value: 2,
+            text: "Agent",
+            checked: true,
+            enable: true
+        });
+        dataList.push({
+            id: "Member",
+            value: 1,
+            text: "Member",
+            checked: true,
+            enable: true
+        });
+
+        $this.DOMElements.selLevel = $("#selLevel").fanexMultiSelect({
+            minWidth: 220,
+            checkAllText: "All",
+            noneSelectedText: "Select none",
+            useCustomCheckAllText: true,
+            customCheckAllText: "All",
+            isCheckAll: true,
+            listData: dataList,
+            onCheck: function () {
+                $this.UpdateSearchBtnStatus();
+            }
+        });
+
+        var typeList = [];
+        typeList.push({
+            id: "optVIP",
+            value: 1,
+            text: "VIP",
+            checked: true,
+            enable: true
+        });
+        typeList.push({
+            id: "optSuspicious",
+            value: 2,
+            text: "Suspicious",
+            checked: true,
+            enable: true
+        });
+        typeList.push({
+            id: "optProblem",
+            value: 3,
+            text: "Problem",
+            checked: true,
+            enable: true
+        });
+
+        $this.DOMElements.selType = $("#selType").fanexMultiSelect({
+            minWidth: 220,
+            checkAllText: "All",
+            noneSelectedText: "Select none",
+            useCustomCheckAllText: true,
+            customCheckAllText: "All",
+            isCheckAll: true,
+            listData: typeList,
+            onCheck: function () {
+                $this.UpdateSearchBtnStatus();
+            }
+        });
+        
+    },
+
+    UpdateSearchBtnStatus: function () {
+        var $this = Fanex.ExtAcc.MarkAccountType;
+
+        var level = $this.DOMElements.selLevel.fanexMultiSelect("getItems", true);
+        var type = $this.DOMElements.selType.fanexMultiSelect("getItems", true);
+
+        if (level.length && type.length) {
+            $this.DOMElements.btnSearch.prop('disabled', false);
+        } else {
+            $this.DOMElements.btnSearch.prop('disabled', true);
+        }
     },
 
     BindingEvents: function () {
@@ -45,6 +139,18 @@ Fanex.ExtAcc.MarkAccountType = {
         });
     },
 
+    BindingAddNewEvents: function () {
+        $("#Usernames").on("paste", function (e) {
+            var element = this;
+            setTimeout(function () {
+                var context = $(element).val();
+                context = context.replace(/(\r\n|\n|\r)/gm, " ");
+                context = context.replace(/\s+/g, ",");
+                $('#Usernames').empty().val(context);
+            }, 100);
+        });
+    },
+
     SubmitSearch: function (selLevel, selType, itemsPerPage, currentIndex) {
         var $this = Fanex.ExtAcc.MarkAccountType;
         var pageSize = !isNullOrUndefined(itemsPerPage) ? itemsPerPage : $this.cachedParams.pageSize;
@@ -54,13 +160,14 @@ Fanex.ExtAcc.MarkAccountType = {
         $this.cachedParams.pageSize = pageSize;
 
         Fanex.ExtAcc.BlockUI();
-
+        var level = $this.DOMElements.selLevel.fanexMultiSelect("getItems", true);
+        var type = $this.DOMElements.selType.fanexMultiSelect("getItems", true);
         var params = {
             groupName: $('#selectedGroupName').html() === '' ? 'ACCDDD' : $('#selectedGroupName').html(),
             groupId: $('#ddlGroupName').val(),
-            userName: Fanex.encodeHtml(encodeURIComponent($.trim(this.DOMElements.txtUsername.val()))).replace(/[^a-zA-Z0-9~!*()-._]/g, ""),
-            level: this.DOMElements.selLevel.val(),
-            type: this.DOMElements.selType.val(),
+            userName: Fanex.encodeHtml($.trim(this.DOMElements.txtUsername.val())),
+            level: level.length ? level.join(",") : "",
+            type: type.length ? type.join(",") : "",
             pageSize: pageSize,
             pageIndex: pageIndex
         };
@@ -86,7 +193,7 @@ Fanex.ExtAcc.MarkAccountType = {
                 columns.push({ Name: 'RowNumber', Value: currentIndex + params.pageSize * params.pageIndex + 1 });
                 columns.push({ Name: 'Check', Value: currentRow });
                 columns.push({ Name: 'Username', Value: currentRow.Username });
-                columns.push({ Name: 'Level', Value: currentRow.Level });
+                columns.push({ Name: 'Level', Value: $this.GetLevelName(currentRow.Level) });
                 columns.push({ Name: 'Type', Value: currentRow });
                 columns.push({ Name: 'MarkedDate', Value: currentRow.MarkDateTime });
                 columns.push({ Name: 'Remark', Value: currentRow });
@@ -106,21 +213,21 @@ Fanex.ExtAcc.MarkAccountType = {
                     return `<div onclick="Fanex.ExtAcc.MarkAccountType.Select(this)" id=ckbEdit${cell.Value.CustId} style="margin-left: 0px !important" data-cust-id="${cell.Value.CustId}" data-username="${cell.Value.Username}" class="menuInactive"></div>`;
                 }
             });
-            headers.push({ HeaderText: 'Username', Name: 'Username', Width: 100, CellAlign: 'center' });
-            headers.push({ HeaderText: 'Level', Name: 'Level', Width: 50, CellAlign: 'center' });
+            headers.push({ HeaderText: 'Username', Name: 'Username', Width: 180, CellAlign: 'left' });
+            headers.push({ HeaderText: 'Level', Name: 'Level', Width: 60, CellAlign: 'center' });
             headers.push({
                 HeaderText: 'Type', Name: 'Type', Width: 100, CellAlign: 'center',
                 CustomCellRender: function (cell) {
-                    return `<div id="sglTypeId${cell.Value.CustId}" class="line-viewing"><div class="view-item">${cell.Value.Type}</div><select id="selType${cell.Value.CustId}" class="edit-item">'${Fanex.ExtAcc.MarkAccountType.BuildEditTypeOption(cell.Value.Type)}</select> </div>`;
+                    return `<div id="sglTypeId${cell.Value.CustId}" class="line-viewing"><div class="view-item">${$this.GetTypeName(cell.Value.Type)}</div><select id="selType${cell.Value.CustId}" class="edit-item">'${Fanex.ExtAcc.MarkAccountType.BuildEditTypeOption(cell.Value.Type)}</select> </div>`;
                 }
             });
-            headers.push({ HeaderText: 'MarkedDate', Name: 'MarkedDate', Width: 180, CellAlign: 'center' });
+            headers.push({ HeaderText: 'Marked Date', Name: 'MarkedDate', Width: 180, CellAlign: 'center' });
             headers.push({
-                HeaderText: 'Remark', Name: 'Remark', Width: 200, CellAlign: 'center',
+                HeaderText: 'Remark', Name: 'Remark', Width: 250, CellAlign: 'center', AllowTruncate: true,
                 CustomCellRender: function (cell) {
                     return `<div id="sglRemark${cell.Value.CustId}" class="line-viewing">`
-                        + `<div class="view-item">${cell.Value.Remark}</div>`
-                        + `<input id="inputRemark${cell.Value.CustId}" type="text" class="edit-item" value="${cell.Value.Remark}" />`
+                        + `<div class="view-item" title="${cell.Value.Remark}">${cell.Value.Remark}</div>`
+                        + `<textarea id="inputRemark${cell.Value.CustId}" type="text" class="edit-item" maxLength=2000 >${cell.Value.Remark}</textarea>`
                         + `</div>`;
                 }
             });
@@ -187,6 +294,34 @@ Fanex.ExtAcc.MarkAccountType = {
                 .attr('style', 'cursor: default !important')
                 .attr('onclick', '')
                 .contextMenu(false);
+        }
+    },
+
+    GetLevelName: function(level) {
+        switch (level) {
+            case 4:
+                return "Super";
+            case 3:
+                return "Master";
+            case 2:
+                return "Agent";
+            case 1:
+                return "Member";
+            default:
+                return "";
+        }
+    },
+
+    GetTypeName: function(type) {
+        switch (type) {
+            case 1:
+                return "VIP";
+            case 2:
+                return "Suspicious";
+            case 3:
+                return "Problem";
+            default:
+                return "";
         }
     },
 
@@ -453,53 +588,35 @@ Fanex.ExtAcc.MarkAccountType = {
     },
 
     OpenMultipleUpdate: function () {
-        Fanex.ExtAcc.Form.Show(resolveClientUrl('MarkAccountType/MultipleEditAccoutType'), 'Edit Account Type', 470, 410, false);
+        Fanex.ExtAcc.Form.Show(resolveClientUrl('MarkAccountType/MultipleEditAccoutType'), 'Edit Account Type', 450, 800, false);
     },
 
     InitDataMultipleUpdate: function () {
         var $this = Fanex.ExtAcc.MarkAccountType;
 
-        var bodyRows = [];
-        for (var currentIndex = 0; currentIndex < 10; currentIndex++) {
-            var currentRow = $this.cachedAccountTypes[0];
-            var columns = [];
-            columns.push({ Name: 'RowNumber', Value: currentIndex + 1 });
-            columns.push({ Name: 'Username', Value: currentRow.Username });
-            columns.push({ Name: 'Type', Value: currentRow });
-            columns.push({ Name: 'Remark', Value: currentRow });
-            bodyRows.push({ Columns: columns });
-        }
+        var tableDiv = $("<table>").addClass("tbl-multiple-mark-account");
+        tableDiv.append(`<thead><tr><th>No.</th><th class="mul-edit-username">Username</th><th class="mul-edit-type">Type</th><th class="mul-edit-remark">Remark</th></tr></thead>`);
 
-        var headers = [];
-
-        headers.push({ HeaderText: 'No.', Name: 'RowNumber', Width: 25, CellAlign: 'center' });
-        headers.push({ HeaderText: 'Username', Name: 'Username', Width: 100, CellAlign: 'center' });
-        headers.push({
-            HeaderText: 'Type', Name: 'Type', Width: 100, CellAlign: 'center',
-            CustomCellRender: function (cell) {
-                return `<select id="selMultipleType${cell.Value.CustId}" >${Fanex.ExtAcc.MarkAccountType.BuildEditTypeOption(cell.Value.Type)}</select>`;
+        var divBody = $("<tbody>");
+        for (var currentIndex = 0; currentIndex < $this.cachedAccountTypes.length; currentIndex++) {
+            var iconCopyType = "";
+            var iconCopyRemark = "";
+            if (currentIndex === 0) {
+                iconCopyType = `<span class="icon-note-multiple"></span>`;
+                iconCopyRemark = `<span class="icon-note-multiple"></span>`;
             }
-        });
-        headers.push({
-            HeaderText: 'Remark', Name: 'Remark', Width: 200, CellAlign: 'center',
-            CustomCellRender: function (cell) {
-                return `<input id="inputMultipleRemark${cell.Value.CustId}" type="text" value="${cell.Value.Remark}" />`;
-            }
-        });
+            var currentRow = $this.cachedAccountTypes[currentIndex];
+            var divTR = $("<tr>");
+            divTR.append(`<td>${currentIndex + 1}</td>`);
+            divTR.append(`<td class="mul-edit-username">${currentRow.Username}</td>`);
+            divTR.append(`<td><div class="mul-edit-row"><select id="selMultipleType${currentRow.CustId}" class="mul-edit-type" >${Fanex.ExtAcc.MarkAccountType.BuildEditTypeOption(currentRow.Type)}</select>${iconCopyType}</div></td>`);
+            divTR.append(`<td><div class="mul-edit-row"><input id="inputMultipleRemark${currentRow.CustId}" type="text" class="mul-edit-remark" value="${currentRow.Remark}" />${iconCopyRemark}</div></td>`);
+            divBody.append(divTR);
+        }   
 
-        var gridOptions = {
-            columns: headers,
-            bodyRows: bodyRows,
-            autoCalculateGridExpandHeight: true,
-            bodyRowHeight: isMobile.phone ? 28 : 25,
-            fullHeight: !isMobile.phone,
-            gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
-            marginRight: 12,
-            showDistinctRow: false,
-            allowTruncate: true
-        };
-
-        $("#multiEditGrid").fanexGrid(gridOptions);
+        tableDiv.append(divBody);
+        
+        $("#multiple-update-grid").append(tableDiv);
     }
 };
 

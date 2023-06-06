@@ -12,6 +12,8 @@
     {
         private readonly IMarkAccountTypeDao markAccountTypeDao;
 
+        private const int MaxUsernames = 500;
+
         public MarkAccountTypeService() : this(null)
         {
         }
@@ -23,12 +25,17 @@
 
         public Result Add(NewMarkAccountTypeParams newMarkAccountTypeParams)
         {
-            var usernames = string.Join(",", newMarkAccountTypeParams.Usernames.Trim(' ').Split(',').Distinct());
+            var usernames = newMarkAccountTypeParams.Usernames.Trim(' ').Split(',').Distinct();
+
+            if(usernames.Count() > MaxUsernames)
+            {
+                return new Result(1, "The system supports up to 500 usernames at one time.");
+            }
 
             var result = markAccountTypeDao.Check(new CheckMarkAccountCriteria
             {
                 GroupName = newMarkAccountTypeParams.GroupName,
-                Usernames = usernames
+                Usernames = string.Join(",", usernames)
             });
 
             return !result.IsSuccess
@@ -36,7 +43,7 @@
                 : markAccountTypeDao.Add(new AddMarkAccountCriteria
             {
                 GroupName = newMarkAccountTypeParams.GroupName,
-                Usernames = usernames,
+                Usernames = string.Join(",", usernames),
                 TypeId = newMarkAccountTypeParams.TypeId,
                 Remark = newMarkAccountTypeParams.Remark,
                 UserId = newMarkAccountTypeParams.UserId,

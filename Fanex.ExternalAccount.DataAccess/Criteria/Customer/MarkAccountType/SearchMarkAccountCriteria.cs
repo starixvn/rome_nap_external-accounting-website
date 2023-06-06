@@ -13,9 +13,9 @@
 
         public int UserId { get; set; }
 
-        public int RoleId { get; set; }
+        public string RoleId { get; set; }
 
-        public int TypeId { get; set; }
+        public string TypeId { get; set; }
 
         public int PageIndex { get; set; }
 

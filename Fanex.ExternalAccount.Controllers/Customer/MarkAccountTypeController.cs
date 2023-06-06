@@ -40,8 +40,8 @@
             return Json(markAccountTypeService.Search(new SearchMarkAccountTypeParams {
                 GroupId = request.GroupId,
                 GroupName = request.GroupName,
-                Level = request.Level ?? 0,
-                Type = request.Type ?? 0,
+                Level = request.Level,
+                Type = request.Type,
                 UserId = CurrentSession.UserId,
                 UserName = request.UserName,
                 PageIndex = request.PageIndex ?? 1,

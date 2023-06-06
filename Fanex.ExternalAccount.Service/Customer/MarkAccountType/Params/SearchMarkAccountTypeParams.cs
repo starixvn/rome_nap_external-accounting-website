@@ -8,9 +8,9 @@
 
         public string UserName { get; set; }
 
-        public int Level { get; set; }
+        public string Level { get; set; }
 
-        public int Type { get; set; }
+        public string Type { get; set; }
 
         public int UserId { get; set; }
 
