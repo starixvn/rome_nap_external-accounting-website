@@ -662,7 +662,7 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper = function (
         url: toUrl('Sportsbook/EditMultipleBetSettingPost'),
         data: {
             custId: superIds[custIdIndex],
-            txtCustomerObject: JSON.stringify(model),
+            txtCustomerObject: model,
             para: para
         }
     }).success(function (data) {
@@ -704,10 +704,6 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper = function (
                 top.$('#errMsg').append('All accounts have been successfully edited except the following accounts:')
                     .append(failedMessages).show();
             }
-
-            if (typeof ondone === 'function') {
-                ondone(data);
-            }
         }
         else {
             Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper(isCopy, ++custIdIndex, ++usernameIndex, model, para);
@@ -727,10 +723,6 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper = function (
 
         if (usernameIndex === numberOfDestUsers - 1) {
             top.Fanex.ExtAcc.UnBlockUI();
-
-            if (typeof ondone === 'function') {
-                ondone({ errorCode: "1", errorMessage: "Error on updating..." });
-            }
         }
         else {
             Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper(isCopy, ++custIdIndex, ++usernameIndex, model, para);
@@ -738,7 +730,7 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper = function (
     });
 };
 
-Fanex.CustomerSetting.Betting.MultipleSportsbook.Update = function (isCopy, ondone) {
+Fanex.CustomerSetting.Betting.MultipleSportsbook.Update = function (isCopy) {
     hasUpdateError = false;
     successAccountsMsg = false;
     failedMessages = "";
@@ -896,6 +888,6 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.Update = function (isCopy, ondo
 
             top.$('#errMsg').empty().attr('class', 'succMsg').hide();
 
-            Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper(isCopy, isCopy ? 1 : 0, 0, model, para);
+            Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper(isCopy, isCopy ? 1 : 0, 0, JSON.stringify(model), para);
         });
 };

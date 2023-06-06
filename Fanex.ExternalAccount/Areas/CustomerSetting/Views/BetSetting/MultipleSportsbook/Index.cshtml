@@ -1,8 +1,6 @@
 ﻿@using Fanex.CustomerSetting.Module.Core
 @model bool
 @{
-    var id = Utils.ToInt32(Request["custId"]);
-    var siteName = Request["groupName"];
     var isEdit = Request.Url.ToString().IndexOf("edit") != -1;
     var isCopy = isEdit ?  "false" : "true";
     Layout = "~/Areas/CustomerSetting/Views/BetSetting/MultipleSportsbook/_Layout.cshtml";
@@ -43,6 +41,11 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        setTimeout(function () {
+            $("#superList").focus();
+            $("#sourceSuper").focus();
+        }, 1000);
+
         $("#selectButton").on("click", function () {
             LoadBetSetting($("#sourceSuper").val() || "", $("#superList").val(), @isCopy);
         });
@@ -57,6 +60,7 @@
 
             $("#product-1-0").attr("src", "");
             $("#product-1-1").attr("src", "");
+            $("#errMsg").empty().removeClass("succMsg").addClass("errMsg").hide();
         });
     });
 </script>

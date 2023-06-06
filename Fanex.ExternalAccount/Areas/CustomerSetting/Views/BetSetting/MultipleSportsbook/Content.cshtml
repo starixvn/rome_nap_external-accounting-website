@@ -1,5 +1,4 @@
 ﻿@using Fanex.PTEngine.BusinessObjects
-@using Fanex.CustomerSetting.Module.Core
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
 @using Fanex.ExternalAccount.Core.Context
@@ -10,8 +9,6 @@
         ContractResolver = new CamelCasePropertyNamesContractResolver(),
         NullValueHandling = NullValueHandling.Ignore
     });
-    var id = Utils.ToInt32(Request["custId"]);
-    var siteName = Request["groupName"];
     var session = CurrentSession.Instance;
     var isSpecialGroup = session.IsBelongToSpecialGroups ? 1 : 0;
 }
@@ -72,9 +69,6 @@
 <script type="text/javascript">
     var model = @Html.Raw(bettingLimit);
     var isSpecialGroup = @isSpecialGroup;
-    var custId = parseInt('@id');
-    var siteName = '@siteName';
-    var defaultMinBetValue = @ViewBag.DefaultMinBetValue;
 
     function toUrl(relativeUrl) {
         return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;

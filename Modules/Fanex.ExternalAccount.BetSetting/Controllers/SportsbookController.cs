@@ -70,8 +70,6 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
                 return PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
-            ViewBag.DefaultMinBetValue = GetDefaultMinBetValue();
-
             var bettingLimitService = SportsBookService;
 
             var currentContext = new RequestContext()

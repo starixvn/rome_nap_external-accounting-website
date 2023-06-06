@@ -78,7 +78,7 @@ function LoadProduct(productId) {
 
 function CopySB() {
     top.Fanex.ExtAcc.BlockUI();
-    var url = toUrl('Sportsbook/EditMultipleBetSetting?copy=1&custId=' + custId + '&groupName=' + siteName);
+    var url = toUrl('Sportsbook/EditMultipleBetSetting?copy=1');
     $.get(url, function (data) {
         $('#contentSplitter').empty().append(data);
 
@@ -92,7 +92,7 @@ function CopySB() {
 
 function EditSB() {
     top.Fanex.ExtAcc.BlockUI();
-    var url = toUrl('Sportsbook/EditMultipleBetSetting?edit=1&custId=0&groupName=' + siteName);
+    var url = toUrl('Sportsbook/EditMultipleBetSetting?edit=1');
     $.get(url, function (data) {
         $('#contentSplitter').empty().append(data);
 
