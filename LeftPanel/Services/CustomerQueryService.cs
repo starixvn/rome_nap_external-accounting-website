@@ -5,8 +5,10 @@
     using DataAccesses;
     using Extensions;
     using Fanex.ExternalAccount.Core.Shared;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.Models;
     using Fanex.ExternalAccount.Utilities;
+    using System;
     using System.Collections.Generic;
     using System.Data;
     using ViewModels;
@@ -15,7 +17,7 @@
     public interface CustomerQueryService
 #pragma warning restore IDE1006 // Naming Styles
     {
-        CustomerModel SearchCustomer(int actorId, string custName, string groupName, byte settingStatus);
+        CustomerModel SearchCustomer(int actorId, string custName, string groupName, byte settingStatus, Result result);
 
         OnlineList GetOnlineList(int custId);
 
@@ -44,7 +46,7 @@
             this.customerInfoQueryService = customerInfoQueryService ?? new CustomerInfoQueryServiceImpl();
         }
 
-        public CustomerModel SearchCustomer(int actorId, string custName, string groupName, byte settingStatus)
+        public CustomerModel SearchCustomer(int actorId, string custName, string groupName, byte settingStatus, Result result)
         {
             var personalInfoDataSet = customerDataAccess.GetPersonalInfo(
                 string.IsNullOrWhiteSpace(custName)
@@ -53,13 +55,15 @@
                 groupName,
                 actorId);
 
-            if (personalInfoDataSet == null || personalInfoDataSet.Tables.Count <= 0)
+            if (personalInfoDataSet.ResultSet == null || personalInfoDataSet.ResultSet.Tables.Count <= 0)
             {
+                result.ErrorCode = personalInfoDataSet.Outputs["errcode"].ToString();
+                result.ErrorMessage = Convert.ToInt32(result.ErrorCode) > 0 ? personalInfoDataSet.Outputs["errmsg"].ToString() : "There is no information.";
                 return null;
             }
 
-            var custId = personalInfoDataSet.Tables[0].Rows[0].CustId();
-            var roleId = personalInfoDataSet.Tables[0].Rows[0].RoleId();
+            var custId = personalInfoDataSet.ResultSet.Tables[0].Rows[0].CustId();
+            var roleId = personalInfoDataSet.ResultSet.Tables[0].Rows[0].RoleId();
             var memberBalanceInfoModel = new MemberBalanceInfoModel();
             if(roleId == Role.Member)
             {
@@ -69,8 +73,8 @@
             return customerInfoQueryService.GetCustomerModel(
                 actorId, 
                 custName, 
-                groupName, 
-                personalInfoDataSet,
+                groupName,
+                personalInfoDataSet.ResultSet,
                 customerDataAccess.GetLoginInfo(custId, groupName),
                 customerDataAccess.GetBalanceInfo(custId),
                 customerDataAccess.GetCustomerStatusInfo(custId, settingStatus),
