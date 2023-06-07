@@ -655,7 +655,7 @@ Fanex.ExtAcc.MarkAccountType = {
             }
             var currentRow = $this.cachedEdittingAccountTypes[currentIndex];
             var divTR = $("<tr>");
-            divTR.append(`<td>${currentIndex + 1}</td>`);
+            divTR.append(`<td class="text-center">${currentIndex + 1}</td>`);
             divTR.append(`<td>${currentRow.Username}</td>`);
             divTR.append(`<td><div class="mul-edit-row mul-edit-type"><select id="selMultipleType${currentRow.CustId}" class="select-mul-type">${Fanex.ExtAcc.MarkAccountType.BuildEditTypeOption(currentRow.TypeId)}</select>${iconCopyType}</div></td>`);
             divTR.append(`<td><div class="mul-edit-row mul-edit-remark"><input id="inputMultipleRemark${currentRow.CustId}" class="input-mul-remark" type="text" value="${currentRow.Remark}" />${iconCopyRemark}</div></td>`);
