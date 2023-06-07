@@ -449,7 +449,7 @@ Fanex.ExtAcc.MarkAccountType = {
             remark: Fanex.ExtAcc.EscapeHtml($("#inputRemark" + custId).val())
         };
 
-        var editAccount = $this.cachedAccountTypes.find(function (account) { return account.CustId === custId && account.TypeId.toString() === params.typeId && account.Remark === params.remark});
+        var editAccount = $this.cachedAccountTypes.find(function (account) { return account.CustId === custId && account.TypeId.toString() === params.typeId && account.Remark === params.remark;});
         if (editAccount) {
             
             $('#errUpdateMsg').removeClass('successMsg');
@@ -702,10 +702,10 @@ Fanex.ExtAcc.MarkAccountType = {
         var changedAccounts = [];
         for (var i = 0; i < $this.cachedEdittingAccountTypes.length; i++) {
             var typeId = $("#selMultipleType" + $this.cachedEdittingAccountTypes[i].CustId).val();
-            var remark = $("#inputMultipleRemark" + $this.cachedEdittingAccountTypes[i].CustId).val();
+            var remark = Fanex.ExtAcc.EscapeHtml($("#inputMultipleRemark" + $this.cachedEdittingAccountTypes[i].CustId).val());
             if ($this.cachedEdittingAccountTypes[i].TypeId.toString() !== typeId || $this.cachedEdittingAccountTypes[i].Remark.toString() !== remark) {
                 $this.cachedEdittingAccountTypes[i].TypeId = typeId;
-                $this.cachedEdittingAccountTypes[i].Remark = Fanex.ExtAcc.EscapeHtml(remark);
+                $this.cachedEdittingAccountTypes[i].Remark = remark;
                 changedAccounts.push($this.cachedEdittingAccountTypes[i]);
             }
         }
