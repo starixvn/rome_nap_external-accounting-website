@@ -66,6 +66,9 @@
     border-width: 0 0 0 1px;
     border-style: solid;
     border-color: #c5c5c5;
+    table-layout: fixed;
+    overflow: auto;
+    max-height: 250px;
 
     th {
         background: #6f7d95;
@@ -76,6 +79,7 @@
         box-sizing: content-box;
         border-color: #c5c5c5;
         border-style: solid;
+        padding: 2px;
         border-width: 0 1px 1px 0;
         height: 25px;
     }
@@ -99,20 +103,32 @@
         }
     }
 
+    .mul-edit-no {
+        width: 50px
+    }
+
     .mul-edit-username {
-        width: 100px
+        width: 200px
     }
 
     .mul-edit-remark {
-        width: 250px;
+        width: 300px;
     }
 
     .mul-edit-type {
-        width: 100px
+        width: 120px;
     }
 
     .mul-edit-row {
         display: inline-flex;
+
+        select {
+            width: 100px;
+        }
+
+        input {
+            width: 280px;
+        }
     }
 }
 
