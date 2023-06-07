@@ -208,11 +208,12 @@ Fanex.ExtAcc.MarkAccountType = {
                 return;
             }
 
-            $this.cachedAccountTypes = result.Customers;
             var bodyRows = [];
             var rowLength = result.Customers.length;
             for (var currentIndex = 0; currentIndex < rowLength; currentIndex++) {
                 var currentRow = result.Customers[currentIndex];
+
+                currentRow.Remark = Fanex.ExtAcc.EscapeHtml(currentRow.Remark);
                 var columns = [];
                 columns.push({ Name: 'RowNumber', Value: currentIndex + params.pageSize * params.pageIndex + 1 });
                 columns.push({ Name: 'Check', Value: currentRow });
@@ -237,7 +238,7 @@ Fanex.ExtAcc.MarkAccountType = {
                     return `<div onclick="Fanex.ExtAcc.MarkAccountType.Select(this)" id=ckbEdit${cell.Value.CustId} style="margin-left: 0px !important" data-cust-id="${cell.Value.CustId}" data-username="${cell.Value.Username}" class="menuInactive"></div>`;
                 }
             });
-            headers.push({ HeaderText: 'Username', Name: 'Username', Width: 180, CellAlign: 'left' });
+            headers.push({ HeaderText: 'Username', Name: 'Username', Width: 180, CellAlign: 'left', HeaderAlign: 'center' });
             headers.push({ HeaderText: 'Level', Name: 'Level', Width: 60, CellAlign: 'center' });
             headers.push({
                 HeaderText: 'Type', Name: 'Type', Width: 100, CellAlign: 'center',
@@ -247,7 +248,7 @@ Fanex.ExtAcc.MarkAccountType = {
             });
             headers.push({ HeaderText: 'Marked Date', Name: 'MarkedDate', Width: 180, CellAlign: 'center' });
             headers.push({
-                HeaderText: 'Remark', Name: 'Remark', Width: 250, CellAlign: 'left', AllowTruncate: true,
+                HeaderText: 'Remark', Name: 'Remark', Width: 250, CellAlign: 'left', HeaderAlign: 'center', AllowTruncate: true,
                 CustomCellRender: function (cell) {
                     return `<div id="sglRemark${cell.Value.CustId}" class="line-viewing">`
                         + `<div class="view-item" title="${cell.Value.Remark}">${cell.Value.Remark}</div>`
@@ -305,6 +306,7 @@ Fanex.ExtAcc.MarkAccountType = {
                 workaroundForGridOnPhone();
             }
 
+            $this.cachedAccountTypes = result.Customers;
             $this.DOMElements.editMult.attr('style', 'cursor: default !important');
             $this.DOMElements.editMult.attr('onclick', '');
             $this.DOMElements.editMult.contextMenu(false);

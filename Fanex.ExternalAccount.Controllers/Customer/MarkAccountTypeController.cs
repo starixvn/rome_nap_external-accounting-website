@@ -16,7 +16,6 @@
     public class MarkAccountTypeController : BaseController
     {
         private readonly IMarkAccountTypeService markAccountTypeService;
-        private readonly AuthorizationService authorizationService;
         private const int DefaultPageSize = 50;
 
         public MarkAccountTypeController() : this(null, null)
@@ -26,7 +25,6 @@
         public MarkAccountTypeController(IMarkAccountTypeService markAccountTypeService, AuthorizationService authorizationService)
         {
             this.markAccountTypeService = markAccountTypeService ?? new MarkAccountTypeService();
-            this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
         }
 
         public ActionResult Index()

@@ -8,6 +8,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using System.Web;
 
     public class MarkAccountTypeService : IMarkAccountTypeService
     {
@@ -48,7 +49,7 @@
                 GroupName = newMarkAccountTypeParams.GroupName,
                 Usernames = string.Join(",", usernames),
                 TypeId = newMarkAccountTypeParams.TypeId,
-                Remark = newMarkAccountTypeParams.Remark,
+                Remark = HttpUtility.HtmlDecode(newMarkAccountTypeParams.Remark),
                 UserId = newMarkAccountTypeParams.UserId,
                 IP = newMarkAccountTypeParams.IP
             });
@@ -106,7 +107,7 @@
             {
                 CustID = updateMarkAccountTypeParams.CustId,
                 TypeID = updateMarkAccountTypeParams.TypeId,
-                Remark = updateMarkAccountTypeParams.Remark,
+                Remark = HttpUtility.HtmlDecode(updateMarkAccountTypeParams.Remark),
                 IP = updateMarkAccountTypeParams.IP,
                 UserID = updateMarkAccountTypeParams.UserId,
             });
