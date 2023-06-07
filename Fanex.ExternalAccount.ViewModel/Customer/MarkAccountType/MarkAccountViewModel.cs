@@ -10,7 +10,7 @@
             Customers = new List<MarkAccount>();
         }
 
-        public IList<MarkAccount> Customers { get; set; }
+        public IEnumerable<MarkAccount> Customers { get; set; }
 
         public int PageSize { get; set; }
 

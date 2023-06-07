@@ -197,6 +197,9 @@ Fanex.ExtAcc.MarkAccountType = {
                 $('#errUpdateMsg').css('display', 'block');
                 $('#errUpdateMsg').html(result.errorMessage);
 
+                $this.DOMElements.msgNoinfo.css('display', 'block');
+                $this.DOMElements.jqgrid.css('display', 'none');
+
                 return;
             }
             if (result.Customers.length === 0 && params.pageIndex >= 1) {
@@ -248,7 +251,7 @@ Fanex.ExtAcc.MarkAccountType = {
                 CustomCellRender: function (cell) {
                     return `<div id="sglRemark${cell.Value.CustId}" class="line-viewing">`
                         + `<div class="view-item" title="${cell.Value.Remark}">${cell.Value.Remark}</div>`
-                        + `<textarea id="inputRemark${cell.Value.CustId}" type="text" class="edit-item" maxLength=2000 >${cell.Value.Remark}</textarea>`
+                        + `<textarea id="inputRemark${cell.Value.CustId}" type="text" class="edit-item width-250" maxLength=2000 >${cell.Value.Remark}</textarea>`
                         + `</div>`;
                 }
             });
@@ -442,7 +445,7 @@ Fanex.ExtAcc.MarkAccountType = {
         var params = {
             custId: custId,
             typeId: $("#selType" + custId).val(),
-            remark: $("#inputRemark" + custId).val()
+            remark: Fanex.ExtAcc.EscapeHtml($("#inputRemark" + custId).val())
         };
 
         $('#errUpdateMsg').css('display', 'hidden');
@@ -654,8 +657,8 @@ Fanex.ExtAcc.MarkAccountType = {
             var divTR = $("<tr>");
             divTR.append(`<td>${currentIndex + 1}</td>`);
             divTR.append(`<td>${currentRow.Username}</td>`);
-            divTR.append(`<td><div class="mul-edit-row mul-edit-type"><select id="selMultipleType${currentRow.CustId}">${Fanex.ExtAcc.MarkAccountType.BuildEditTypeOption(currentRow.TypeId)}</select>${iconCopyType}</div></td>`);
-            divTR.append(`<td><div class="mul-edit-row mul-edit-remark"><input id="inputMultipleRemark${currentRow.CustId}" type="text" value="${currentRow.Remark}" />${iconCopyRemark}</div></td>`);
+            divTR.append(`<td><div class="mul-edit-row mul-edit-type"><select id="selMultipleType${currentRow.CustId}" class="select-mul-type">${Fanex.ExtAcc.MarkAccountType.BuildEditTypeOption(currentRow.TypeId)}</select>${iconCopyType}</div></td>`);
+            divTR.append(`<td><div class="mul-edit-row mul-edit-remark"><input id="inputMultipleRemark${currentRow.CustId}" class="input-mul-remark" type="text" value="${currentRow.Remark}" />${iconCopyRemark}</div></td>`);
             divBody.append(divTR);
         }   
 
@@ -665,14 +668,14 @@ Fanex.ExtAcc.MarkAccountType = {
 
         $("#mulTypeApplyAll").on("click", function () {
             var typeSelected = $("#selMultipleType" + $this.cachedEdittingAccountTypes[0].CustId).val();
-            $(".mul-edit-type").each(function(_, selType){
+            $(".select-mul-type").each(function(_, selType){
                 $(selType).val(typeSelected).trigger('change');
             });
         });
 
         $("#mulRemarkApplyAll").on("click", function () {
             var remarktxt = $("#inputMultipleRemark" + $this.cachedEdittingAccountTypes[0].CustId).val();
-            $(".mul-edit-remark").each(function (_, iptRemark) {
+            $(".input-mul-remark").each(function (_, iptRemark) {
                 $(iptRemark).val(remarktxt).trigger('change');
             });
         });
@@ -686,7 +689,7 @@ Fanex.ExtAcc.MarkAccountType = {
             var remark = $("#inputMultipleRemark" + $this.cachedEdittingAccountTypes[i].CustId).val();
             if ($this.cachedEdittingAccountTypes[i].TypeId.toString() !== typeId || $this.cachedEdittingAccountTypes[i].Remark.toString() !== remark) {
                 $this.cachedEdittingAccountTypes[i].TypeId = typeId;
-                $this.cachedEdittingAccountTypes[i].Remark = remark;
+                $this.cachedEdittingAccountTypes[i].Remark = Fanex.ExtAcc.EscapeHtml(remark);
                 changedAccounts.push($this.cachedEdittingAccountTypes[i]);
             }
         }

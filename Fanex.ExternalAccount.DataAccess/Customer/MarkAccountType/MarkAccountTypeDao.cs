@@ -89,12 +89,13 @@
         public MarkAccountViewModel SearchMarkAccount(SearchMarkAccountCriteria criteria)
         {
             var result = new MarkAccountViewModel();
+            var customers = new List<MarkAccount>();
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 var reader = objDb.ExecuteReader(criteria.GetSpParams());
                 while (reader.Read())
                 {
-                    result.Customers.Add(new MarkAccount
+                    customers.Add(new MarkAccount
                     {
                         CustId = Utils.ToInt32(reader["CustID"]),
                         Username = Utils.ToString(reader["Username"]),
@@ -105,6 +106,7 @@
                     });
                 }
 
+                result.Customers = customers;
                 reader.Close();
                 result.PageIndex = criteria.PageIndex;
                 result.TotalRows = Utils.ToInt32(objDb.GetOuputParams()["totalrows"]);

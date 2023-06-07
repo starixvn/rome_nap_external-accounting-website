@@ -67,9 +67,9 @@
     border-style: solid;
     border-color: #c5c5c5;
     table-layout: fixed;
-    overflow: auto;
-    max-height: 250px;
-
+    overflow-y: scroll;
+    max-height: 400px;
+    display: block;
     th {
         background: #6f7d95;
         color: #fff;
