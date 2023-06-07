@@ -247,7 +247,7 @@ Fanex.ExtAcc.MarkAccountType = {
             });
             headers.push({ HeaderText: 'Marked Date', Name: 'MarkedDate', Width: 180, CellAlign: 'center' });
             headers.push({
-                HeaderText: 'Remark', Name: 'Remark', Width: 250, CellAlign: 'center', AllowTruncate: true,
+                HeaderText: 'Remark', Name: 'Remark', Width: 250, CellAlign: 'left', AllowTruncate: true,
                 CustomCellRender: function (cell) {
                     return `<div id="sglRemark${cell.Value.CustId}" class="line-viewing">`
                         + `<div class="view-item" title="${cell.Value.Remark}">${cell.Value.Remark}</div>`
@@ -429,8 +429,8 @@ Fanex.ExtAcc.MarkAccountType = {
         $("#sglAction" + custId).addClass("line-editting");
     },
 
-    CancelEdit: function (div) {
-        var custId = $(div).data("custId");
+    CancelEdit: function (div, custId) {
+        custId = custId || $(div).data("custId");
         $("#sglTypeId" + custId).removeClass("line-editting");
         $("#sglRemark" + custId).removeClass("line-editting");
         $("#sglAction" + custId).removeClass("line-editting");
@@ -442,11 +442,27 @@ Fanex.ExtAcc.MarkAccountType = {
     UpdateSingle: function (div) {
         var $this = Fanex.ExtAcc.MarkAccountType;
         var custId = $(div).data("custId");
+
         var params = {
             custId: custId,
             typeId: $("#selType" + custId).val(),
             remark: Fanex.ExtAcc.EscapeHtml($("#inputRemark" + custId).val())
         };
+
+        var editAccount = $this.cachedAccountTypes.find(function (account) { return account.CustId === custId && account.TypeId.toString() === params.typeId && account.Remark === params.remark});
+        if (editAccount) {
+            
+            $('#errUpdateMsg').removeClass('successMsg');
+            $('#errUpdateMsg').addClass('errMsg');
+            $('#errUpdateMsg').css('display', 'block');
+            $('#errUpdateMsg').html("There is no change to update.");
+            $this.CancelEdit(null, custId);
+            var timeout = setTimeout(function () {
+                clearTimeout(timeout);
+                $('#errUpdateMsg').css('display', 'none');
+            }, 2000);
+            return;
+        }
 
         $('#errUpdateMsg').css('display', 'hidden');
         $('#errUpdateMsg').html("");
