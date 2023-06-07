@@ -676,7 +676,7 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper = function (
         }
         else {
             hasUpdateError = true;
-            failedMessages += '<div class="bold" style="color: #444">' + $.trim(superNames[usernameIndex]) + '</div>' + data.errorMessage.formatErrorMessage();
+            failedMessages += '<div class="bold" style="color: #444">' + $.trim(superNames[usernameIndex]) + '</div><font color="#fe0000">' + data.errorMessage + '</font>';
         }
 
         if (usernameIndex === numberOfDestUsers - 1) {
@@ -704,6 +704,10 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper = function (
                 top.$('#errMsg').append('All accounts have been successfully edited except the following accounts:')
                     .append(failedMessages).show();
             }
+
+            if (!successAccountsMsg && hasUpdateError) {
+                top.$('#errMsg').append(failedMessages).show();
+            }
         }
         else {
             Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper(isCopy, ++custIdIndex, ++usernameIndex, model, para);
@@ -717,9 +721,7 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper = function (
             return;
         }
 
-        if (JSON.parse(data.responseText).errorCode) {
-            top.$('#errMsg').append('<div class="bold" style="color: #444">' + $.trim(superNames[usernameIndex]) + '</div>' + JSON.parse(data.responseText).errorMessage.formatErrorMessage()).show();
-        }
+        top.$('#errMsg').append('<div class="bold" style="color: #444">' + $.trim(superNames[usernameIndex]) + '</div>' + "Sorry, there was an unexpected issue with the system. Please seek help from our customer support.".formatErrorMessage()).show();
 
         if (usernameIndex === numberOfDestUsers - 1) {
             top.Fanex.ExtAcc.UnBlockUI();
@@ -756,7 +758,7 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.Update = function (isCopy) {
     this.IsValid = function (min, max, maxPerMatch, minMin, maxMax, maxPerMatchMax, betting) {
         var maxPayoutPerMatch;
         var maxPayoutPerMatchMax;
-        if (typeof betting.maxPayoutPerMatch != 'undefined') {
+        if (!isNaN(betting.maxPayoutPerMatchFormated.replace(/,/g, ''))) {
             maxPayoutPerMatch = parseFloat(betting.maxPayoutPerMatchFormated.replace(/,/g, ''));
             maxPayoutPerMatchMax = betting.maxPayoutPerMatchMax;
         }

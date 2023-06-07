@@ -134,6 +134,7 @@ function LoadBetSetting(sourceUser, destUsers, isCopy) {
             $("#selectButton").addClass("-disabled").attr("disabled", true);
             $("#sourceSuper").addClass("-disabled").attr("disabled", true);
             $("#superList").addClass("-disabled").attr("disabled", true);
+            $("#resetButton").removeClass("-disabled").attr("disabled", false);
 
             if (isCopy) {
                 $("#product-1-0").attr("src", toUrl("Sportsbook/EditMultipleBetSettingContent?copy=1&custId=" + result.superIds.split(',')[0] + "&groupName=" + groupName));
