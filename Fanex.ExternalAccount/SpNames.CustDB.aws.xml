@@ -299,4 +299,12 @@
     <Setting Key="EAS_TotalBet_EventSel" SpName="EAS_TotalBet_EventSel" DbName="DBBOF.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_TotalBet_1378Sel" SpName="EAS_TotalBet_1378Sel" DbName="DBBOF.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
+  <Function Name="Mark Account Type">
+    <Setting Key="EAS_AccountType_Check" SpName="EAS_AccountType_Check" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_AccountType_Ins" SpName="EAS_AccountType_Ins" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_AccountType_Del" SpName="EAS_AccountType_Del" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_AccountType_Multiple_Ins" SpName="EAS_AccountType_Multiple_Ins" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_AccountType_Sel" SpName="EAS_AccountType_Sel" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_AccountType_Upd" SpName="EAS_AccountType_Upd" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+  </Function>
 </Functions>

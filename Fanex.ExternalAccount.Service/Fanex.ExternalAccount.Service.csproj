@@ -215,9 +215,15 @@
     <Compile Include="Customer\ICommissionService.cs" />
     <Compile Include="Customer\ICustomerService.cs" />
     <Compile Include="Customer\IDataService.cs" />
+    <Compile Include="Customer\MarkAccountType\IMarkAccountTypeService.cs" />
     <Compile Include="Customer\IMasterService.cs" />
     <Compile Include="Customer\IMemberService.cs" />
     <Compile Include="Customer\ISuperService.cs" />
+    <Compile Include="Customer\MarkAccountType\MarkAccountTypeService.cs" />
+    <Compile Include="Customer\MarkAccountType\Params\NewMarkAccountTypeParams.cs" />
+    <Compile Include="Customer\MarkAccountType\Params\SearchMarkAccountTypeParams.cs" />
+    <Compile Include="Customer\MarkAccountType\Params\UnmarkAccountTypeParams.cs" />
+    <Compile Include="Customer\MarkAccountType\Params\UpdateMarkAccountTypeParams.cs" />
     <Compile Include="Customer\ParlayMaxPayout\ParlayMaxPayoutService.cs" />
     <Compile Include="DataRange\DataRangeService.cs" />
     <Compile Include="DataRange\IDataRangeService.cs" />

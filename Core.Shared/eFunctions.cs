@@ -75,5 +75,6 @@
 
         public const string ProtectCustomer = "ProtectCustomer";
         public const string TotalBetSoccer = "TotalBetSoccer";
+        public const string MarkAccountType = "MarkAccountType";
     }
 }

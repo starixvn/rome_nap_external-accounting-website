@@ -1,0 +1,15 @@
+﻿@using Fanex.ExternalAccount.Utilities
+
+<form class="form-add mark-account">
+    <div id="errMultEditMsg" class="successMsg hide"> </div>
+
+    <div id="multiple-update-grid">
+    </div>
+    <div class="group form-action" style="margin: 10px 0;">
+        <input class="btn -submit pull-right" type="button" value="Submit" onclick="Fanex.ExtAcc.MarkAccountType.SubmitUpdateMultiple()" />
+        <input class="btn -submit pull-right mr10" type="button" value="Reset" onclick="Fanex.ExtAcc.MarkAccountType.ResetMultipleEdit();" />
+    </div>
+</form>
+<script>
+    Fanex.ExtAcc.MarkAccountType.InitDataMultipleUpdate();
+</script>

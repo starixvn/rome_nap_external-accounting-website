@@ -155,6 +155,11 @@
     <Compile Include="Criteria\Customer\CustomerStatus\GetSuspendCustomerDetailInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\UpdateSuspendCustomerCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckLimitNewDownlineCriteria.cs" />
+    <Compile Include="Criteria\Customer\MarkAccountType\AddMarkAccountCriteria.cs" />
+    <Compile Include="Criteria\Customer\MarkAccountType\CheckMarkAccountCriteria.cs" />
+    <Compile Include="Criteria\Customer\MarkAccountType\SearchMarkAccountCriteria.cs" />
+    <Compile Include="Criteria\Customer\MarkAccountType\UnmarkMarkAccountCriteria.cs" />
+    <Compile Include="Criteria\Customer\MarkAccountType\UpdateMarkAccountCriteria.cs" />
     <Compile Include="Criteria\Customer\UpdateSuperInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\GetSuperInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\UpdateDoubleCommCriteria.cs" />
@@ -192,6 +197,8 @@
     <Compile Include="Customer\IMasterDao.cs" />
     <Compile Include="Customer\IMemberDao.cs" />
     <Compile Include="Customer\ISuperDao.cs" />
+    <Compile Include="Customer\MarkAccountType\IMarkAccountTypeDao.cs" />
+    <Compile Include="Customer\MarkAccountType\MarkAccountTypeDao.cs" />
     <Compile Include="Customer\ParlayMaxPayout\ParlayMaxPayoutDao.cs" />
     <Compile Include="DataRange\DataRangeDao.cs" />
     <Compile Include="DataRange\IDataRangeDao.cs" />

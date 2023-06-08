@@ -82,5 +82,9 @@
   {
     "outputFile": "assets/styles/pages/totalbet/multiselect-custom.css",
     "inputFile": "assets/styles/pages/totalbet/multiselect-custom.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/mark-account.css",
+    "inputFile": "assets/styles/pages/customer/mark-account.scss"
   }
 ]

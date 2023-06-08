@@ -142,6 +142,8 @@
     <Compile Include="Customer\CustomerLockedAccess.cs" />
     <Compile Include="Customer\CustomerProtectedStatus.cs" />
     <Compile Include="Customer\CustomerStatusDTO.cs" />
+    <Compile Include="Customer\MarkAccount\ErrorMarkAccount.cs" />
+    <Compile Include="Customer\MarkAccount\MarkAccount.cs" />
     <Compile Include="Customer\Status\CustomerClosedStatusRow.cs" />
     <Compile Include="Customer\Status\CustomerSuspendStatusRow.cs" />
     <Compile Include="Customer\Status\SingleOpenAffectedDownline.cs" />
