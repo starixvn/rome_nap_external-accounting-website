@@ -271,11 +271,44 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook = function ($scope, $element) {
 
         for (var i in checkboxes) {
             if (!isNaN(i)) {
-                checkboxes[i].disabled = false;
+                if (i > 0 && i <= $scope.model.bettingLimitItems.length && id !== "Basketball" &&
+                    $scope.model.bettingLimitItems[i - 1].resourceKey === "Basketball" && $scope.model.bettingLimitItems[i - 1].checked) {
+                    break;
+                }
+                else {
+                    checkboxes[i].disabled = false;
+                }
             }
         }
 
         if (id === "All") {
+            if ($scope.model.bettingLimitItems[0].checked) {
+                for (var item of $scope.model.bettingLimitItems) {
+                    if (item.resourceKey !== "Soccer") {
+                        item.minBet = item.minBetFormated = item.preValMinBet;
+                        item.maxBet = item.maxBetFormated = item.preValMaxBet;
+                        item.maxPerMatch = item.maxPerMatchFormated = item.preValMaxPerMatch;
+                        item.maxPayoutPerMatch = item.maxPayoutPerMatchFormated = item.preValMaxPayoutPerMatch;
+                    }
+                }
+            }
+
+            if ($scope.model.bettingLimitItems[3].checked) {
+                for (var item2 of $scope.model.bettingLimitItems) {
+                    if (item2.resourceKey !== "Basketball" && item2.resourceKey !== "Soccer") {
+                        item2.minBet = item2.minBetFormated = item2.preValMinBet;
+                        item2.maxBet = item2.maxBetFormated = item2.preValMaxBet;
+                        item2.maxPerMatch = item2.maxPerMatchFormated = item2.preValMaxPerMatch;
+                        item2.maxPayoutPerMatch = item2.maxPayoutPerMatchFormated = item2.preValMaxPayoutPerMatch;
+                    }
+                }
+            }
+
+            $scope.model.bettingLimitItems[0].checked = false;
+            $scope.model.bettingLimitItems[3].checked = false;
+            $("#_Basketball").removeClass("copied").removeClass("copyActive").addClass("true");
+            $("#_Soccer").removeClass("copied").removeClass("copyActive").addClass("true");            
+
             if ($("#" + id).is(":checked")) {
                 $("#btnSubmit").removeClass("-disabled");
 
@@ -379,12 +412,12 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook = function ($scope, $element) {
                         bettingItem.maxPayoutPerMatch = bettingItem.maxPayoutPerMatchFormated = bettingItem.preValMaxPayoutPerMatch;
                     }
 
-                    if (id === 'Soccer' && bettingItem.resourceKey === id) {
+                    if (id === 'Soccer' && bettingItem.resourceKey === id && bettingItem.checked) {
                         bettingItem.checked = false;
                         isSoccer = true;
                     }
 
-                    if (id === 'Basketball' && bettingItem.resourceKey === id) {
+                    if (id === 'Basketball' && bettingItem.resourceKey === id && bettingItem.checked) {
                         bettingItem.checked = false;
                         isBasketball = true;
                     }
