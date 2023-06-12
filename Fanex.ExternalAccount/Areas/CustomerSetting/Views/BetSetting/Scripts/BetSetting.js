@@ -77,31 +77,13 @@ function LoadProduct(productId) {
 };
 
 function CopySB() {
-    top.Fanex.ExtAcc.BlockUI();
-    var url = toUrl('Sportsbook/EditMultipleBetSetting?copy=1');
-    $.get(url, function (data) {
-        $('#contentSplitter').empty().append(data);
-
-        setTimeout(function () {
-            top.Fanex.ExtAcc.UnBlockUI();
-            $('#tab2').removeClass('ui-tabs-active').removeClass('ui-state-active');
-            $('#tabs').tabs({ selected: 0 });
-        }, 200);
-    });
+    $("#errMsg").empty().hide();
+    $("#sourceSuper").focus();
 };
 
 function EditSB() {
-    top.Fanex.ExtAcc.BlockUI();
-    var url = toUrl('Sportsbook/EditMultipleBetSetting?edit=1');
-    $.get(url, function (data) {
-        $('#contentSplitter').empty().append(data);
-
-        setTimeout(function () {
-            top.Fanex.ExtAcc.UnBlockUI();
-            $('#tab1').removeClass('ui-tabs-active').removeClass('ui-state-active');
-            $('#tabs').tabs({ selected: 1 });
-        }, 200);
-    });
+    $("#errMsg").empty().hide();
+    $("#superList2").focus();
 };
 
 function LoadBetSetting(sourceUser, destUsers, isCopy) {
@@ -131,10 +113,17 @@ function LoadBetSetting(sourceUser, destUsers, isCopy) {
         }
         else {
             top.superIds = result.superIds;
-            $("#selectButton").addClass("-disabled").attr("disabled", true);
-            $("#sourceSuper").addClass("-disabled").attr("disabled", true);
-            $("#superList").addClass("-disabled").attr("disabled", true);
-            $("#resetButton").removeClass("-disabled").attr("disabled", false);
+            if (isCopy) {
+                $("#selectButton").addClass("-disabled").attr("disabled", true);
+                $("#sourceSuper").addClass("-disabled").attr("disabled", true);
+                $("#superList").addClass("-disabled").attr("disabled", true);
+                $("#resetButton").removeClass("-disabled").attr("disabled", false);
+            }
+            else {
+                $("#selectButton2").addClass("-disabled").attr("disabled", true);
+                $("#superList2").addClass("-disabled").attr("disabled", true);
+                $("#resetButton2").removeClass("-disabled").attr("disabled", false);
+            }
 
             if (isCopy) {
                 $("#product-1-0").attr("src", toUrl("Sportsbook/EditMultipleBetSettingContent?copy=1&custId=" + result.superIds.split(',')[0] + "&groupName=" + groupName));

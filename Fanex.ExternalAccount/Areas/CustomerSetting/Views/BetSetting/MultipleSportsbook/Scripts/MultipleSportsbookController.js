@@ -681,15 +681,13 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook = function ($scope, $element) {
 };
 
 var superIds = top.superIds.split(',');
-var superNames = top.$("#superList").val().split(',');
+var superNames = "";
 var hasUpdateError = false;
 var successAccountsMsg = false;
 var numberOfDestUsers = 0;
 var failedMessages = "";
 
 Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper = function (isCopy, custIdIndex, usernameIndex, model, para) {
-    numberOfDestUsers = isCopy ? superIds.length - 1 : superIds.length;
-
     $.ajax({
         type: 'post',
         url: toUrl('Sportsbook/EditMultipleBetSettingPost'),
@@ -766,6 +764,8 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.ProcessUpdateSuper = function (
 };
 
 Fanex.CustomerSetting.Betting.MultipleSportsbook.Update = function (isCopy) {
+    numberOfDestUsers = isCopy ? superIds.length - 1 : superIds.length;
+    superNames = isCopy ? top.$("#superList").val().split(',') : top.$("#superList2").val().split(',');
     hasUpdateError = false;
     successAccountsMsg = false;
     failedMessages = "";
