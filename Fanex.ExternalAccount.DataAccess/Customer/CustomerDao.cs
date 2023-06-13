@@ -295,7 +295,7 @@
                     result.HasSecurityCode = Utils.ToBoolean(reader["HasSecurityCode"]);
                     result.UplineHasSecurityCode = Utils.ToBoolean(reader["UplineHasSecurityCode"]);
                     result.DisableTransfer = Utils.ToBoolean(reader["DisableTransfer"]);
-                }           
+                }
 
                 reader.NextResult();
                 while (reader.Read())
@@ -604,5 +604,32 @@
 
         public Result UpdateProtectedStatus(UpdateProtectedStatusCriteria criteria)
             => ExecuteNonQuery(criteria);
+
+        public Result CheckMultipleSupersBetSetting(CheckMultipleSupersBetSettingCriteria criteria)
+        {
+            if (!criteria.IsValid())
+            {
+                return new Result(1, "Please input all required fields.");
+            }
+
+            var result = new Result();
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader != null && reader.Read())
+                    {
+                        result.ResultData += reader.ToInt32("CustID") + ",";
+                    }
+                }
+
+                var output = db.GetOuputParams();
+                result.ErrorCode = output["errcode"].ToString();
+                result.ErrorMessage = output["errmsg"].ToString();
+                result.ResultData = result.ResultData.ToString().TrimEnd(new[] { ',' });
+            }
+
+            return result;
+        }
     }
 }

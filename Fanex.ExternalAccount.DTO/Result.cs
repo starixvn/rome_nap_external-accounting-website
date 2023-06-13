@@ -8,7 +8,7 @@
         {
             ErrorCode = (errCode ?? string.Empty).ToString();
             ErrorMessage = (errMsg ?? string.Empty).ToString();
-            ResultData = resultData;
+            ResultData = resultData ?? string.Empty;
         }
 
         public string ErrorCode { get; set; }

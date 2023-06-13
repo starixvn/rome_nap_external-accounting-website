@@ -307,4 +307,7 @@
     <Setting Key="EAS_AccountType_Sel" SpName="EAS_AccountType_Sel" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_AccountType_Upd" SpName="EAS_AccountType_Upd" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
   </Function>
+  <Function Name="Edit Multiple Bet Settings">
+    <Setting Key="EAS_CustomerBetSettingMultipleCheck" SpName="EAS_CustomerBetSettingMultipleCheck" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+  </Function>
 </Functions>

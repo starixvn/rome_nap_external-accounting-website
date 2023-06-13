@@ -184,8 +184,8 @@
     <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.3.15, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.3.15\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.7.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.7.1\lib\net40\Fanex.PTEngine.dll</HintPath>
+    <Reference Include="Fanex.PTEngine, Version=1.0.7.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTEngine.1.0.7.4\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTSetting.BettypeReference, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTSetting.BettypeReference.1.0.0.5\lib\net461\Fanex.PTSetting.BettypeReference.dll</HintPath>
@@ -498,6 +498,10 @@
     <Content Include="Areas\Common\Views\Shared\Images\Loading.gif" />
     <Content Include="Areas\Common\Views\Shared\Scripts\Fanex.CustomerSetting.js" />
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\CustomerSetting\Styles\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Scripts\MultipleSportsbookController.js" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Styles\layout.css" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Styles\MultipleSportsbook.css" />
     <Content Include="Areas\CustomerSetting\Views\ThirdPartyProductStatus\Index.cshtml" />
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.min.js">
       <DependentUpon>product-status-setting-multiple.js</DependentUpon>
@@ -2415,6 +2419,8 @@
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Templates\Products.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Content.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Index.cshtml" />
     <None Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Templates\Template.xsd">
       <SubType>Designer</SubType>
     </None>
