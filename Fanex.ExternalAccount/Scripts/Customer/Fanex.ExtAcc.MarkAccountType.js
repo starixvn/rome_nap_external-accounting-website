@@ -22,6 +22,7 @@ Fanex.ExtAcc.MarkAccountType = {
         $this.DOMElements.btnMarkAccountType = $('#btnMarkAccountType');
         $this.DOMElements.markaccountListGrid = $('#markaccountListGrid');
         $this.DOMElements.jqgrid = $('#jqgrid');
+        $this.DOMElements.selectBar = $('#selectBar');
         $this.DOMElements.msgNoinfo = $('#msgNoinfo');
         $this.DOMElements.editMult = $('#editMult');
         $this.BindingEvents();
@@ -297,9 +298,11 @@ Fanex.ExtAcc.MarkAccountType = {
             if (bodyRows.length === 0) {
                 $this.DOMElements.msgNoinfo.css('display', 'block');
                 $this.DOMElements.jqgrid.css('display', 'none');
+                $this.DOMElements.selectBar.css('display', 'none');
             } else {
                 $this.DOMElements.msgNoinfo.css('display', 'none');
                 $this.DOMElements.jqgrid.css('display', 'block');
+                $this.DOMElements.selectBar.css('display', 'block');
                 setPagerOptionOnMobile(gridOptions);
                 $this.DOMElements.jqgrid.fanexGrid(gridOptions);
 
