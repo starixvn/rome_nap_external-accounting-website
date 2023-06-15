@@ -33,7 +33,7 @@
             <input id="btnMarkAccountType" type="button" value="Mark Account" class="btn -add" />
         </div>
     </div>
-    <div class="bgTitle titleSearch">
+    <div id="selectBar" class="bgTitle titleSearch">
         <div class="pull-left searchBar">
             <span class="text-select">@ViewLang.Select:</span>
             <span id="spanSelectAll" class="status-select" onclick="Fanex.ExtAcc.MarkAccountType.SelectAll('menuActive')">@ViewLang.All</span>
@@ -47,9 +47,9 @@
         <div id="errUpdateMsg" class="successMsg hide"> </div>
         <div id="jqgrid" class="removeRadius freegrid content-grid">
         </div>
-        <div id="msgNoinfo">
-            There is no data.
-        </div>
+    </div>
+    <div id="msgNoinfo">
+        There is no data.
     </div>
     @Html.AntiForgeryToken()
 </div>
