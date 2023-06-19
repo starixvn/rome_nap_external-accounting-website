@@ -15,6 +15,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
     using System.Linq;
     using System.Collections.Generic;
     using System.Collections;
+    using Fanex.Logging.Extensions.Web;
 
     public class SportsbookController : BettingControllerBase
     {
@@ -138,8 +139,16 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
             };
 
             var bettingLimitService = SportsBookService;
-
-            var result = bettingLimitService.UpdateBetting(bettingLimit, requestContext);
+            Result result;
+            try
+            {
+                result = bettingLimitService.UpdateBetting(bettingLimit, requestContext);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+                result = new Result("1", "Sorry, there was an unexpected issue with the system. Please seek help from our customer support.");
+            }
 
             return JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage }, settings);
         }

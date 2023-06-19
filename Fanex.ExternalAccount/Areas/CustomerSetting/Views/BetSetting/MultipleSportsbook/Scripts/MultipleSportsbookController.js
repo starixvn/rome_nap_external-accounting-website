@@ -796,19 +796,19 @@ Fanex.CustomerSetting.Betting.MultipleSportsbook.Update = function (isCopy) {
             maxPayoutPerMatchMax = betting.maxPayoutPerMatchMax;
         }
 
-        if (isNaN(betting.minBetFormated.replace(/,/g, ''))) {
+        if (isNaN(betting.minBetFormated.replace(/,/g, '')) || isNaN(parseFloat(betting.minBet))) {
             Validators.show($('#txt' + betting.resourceKey + 'Min').get(0), betting.name + ' - Min Bet must be a value', undefined, undefined, 3000);
 
             return false;
         }
 
-        if (isNaN(betting.maxBetFormated.replace(/,/g, ''))) {
+        if (isNaN(betting.maxBetFormated.replace(/,/g, '')) || isNaN(parseFloat(betting.maxBet))) {
             Validators.show($('#txt' + betting.resourceKey + 'Max').get(0), betting.name + ' - Max Bet must be a value', undefined, undefined, 3000);
 
             return false;
         }
 
-        if (isNaN(betting.maxPerMatchFormated.replace(/,/g, ''))) {
+        if (isNaN(betting.maxPerMatchFormated.replace(/,/g, '')) || isNaN(parseFloat(betting.maxPerMatch))) {
             Validators.show($('#txt' + betting.resourceKey + 'MaxPerMatch').get(0), betting.name + ' - Max Per Match must be a value', undefined, undefined, 3000);
 
             return false;
