@@ -20,7 +20,6 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int BigGame = 57;
         public const int BBin = 47;
         public const int RNGSlot = 18;
-        public const int NG2 = 23;
         public const int FishingWorld = 24;
         public const int Lottery = 28;
         public const int TableGames = 40;

@@ -1,13 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using System.Web;
-    using System.Web.Mvc;
     using Core.Authorization;
     using Core.Base;
     using Core.Context;
@@ -17,11 +9,17 @@
     using DataAccess.Criteria.Customer.CustomerStatus;
     using Fanex.ExternalAccount.Service.TelegramBot;
     using Fanex.Logging.Extensions.Web;
-    using Fanex.Module.NG2.Entities;
     using Newtonsoft.Json;
     using PTEngine.BusinessObjects;
     using Service;
     using Service.Impl.Customer;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
     using Utilities;
     using ViewModel;
     using ViewModel.Customer;
@@ -138,15 +136,7 @@
                 SettingStatus = Config.SettingStatus
             };
 
-            var result = ptCustomerService.AddNewMaster(customer, requestContext, out int masterId);
-            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
-            {
-#pragma warning disable S109 // Magic numbers should not be used
-                Thread.Sleep(3000);
-#pragma warning restore S109 // Magic numbers should not be used
-                AutoInsertNG2Product(masterId, customer.UserName, RoleId.Master, parentId, SiteId.NAP,
-                    customer.CurrencyId, Config.SettingStatus);
-            }
+            var result = ptCustomerService.AddNewMaster(customer, requestContext, out int masterId);       
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = masterId });
         }
@@ -242,16 +232,7 @@
                 SettingStatus = Config.SettingStatus
             };
 
-            var result = ptCustomerService.AddNewAgent(customer, requestContext, out int agentId);
-
-            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
-            {
-#pragma warning disable S109 // Magic numbers should not be used
-                Thread.Sleep(3000);
-#pragma warning restore S109 // Magic numbers should not be used
-                AutoInsertNG2Product(agentId, customer.UserName, RoleId.Agent, parentId, SiteId.NAP,
-                    customer.CurrencyId, Config.SettingStatus);
-            }
+            var result = ptCustomerService.AddNewAgent(customer, requestContext, out int agentId);         
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = agentId });
         }
@@ -354,15 +335,6 @@
             };
 
             var result = ptCustomerService.AddNewMember(customer, requestContext, out int memberId);
-
-            if (string.IsNullOrWhiteSpace(result.ErrorCode) || result.ErrorCode == "0")
-            {
-#pragma warning disable S109 // Magic numbers should not be used
-                Thread.Sleep(3000);
-#pragma warning restore S109 // Magic numbers should not be used
-                AutoInsertNG2Product(memberId, customer.UserName, RoleId.Member, parentId, SiteId.NAP,
-                    customer.CurrencyId, Config.SettingStatus);
-            }
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = memberId });
         }

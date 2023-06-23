@@ -22,8 +22,6 @@
 
         public ICurrentSession CurrentSession { get; }
 
-        public NG2Status NG2Status { get; set; }
-
         public CustomerInfo ExistingCustomerInfo { get; set; }
 
         public Result Result { get; set; }
