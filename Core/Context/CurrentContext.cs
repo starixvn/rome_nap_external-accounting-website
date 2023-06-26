@@ -16,8 +16,14 @@
         {
             get
             {
-                var ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-                return ip.Split(',')[0];
+                var serverVars = HttpContext.Current.Request.ServerVariables;
+                var ip = serverVars["HTTP_X_REAL_IP"] ??
+                    serverVars["HTTP_CLIENT_IP"] ??
+                    serverVars["HTTP_CF_CONNECTING_IP"] ??
+                    serverVars["HTTP_X_FORWARDED_FOR"] ??
+                    serverVars["REMOTE_ADDR"];
+                var ips = ip.Split(',');
+                return ips.Length > 1 ? ips[1] : ips[0];
             }
         }
 

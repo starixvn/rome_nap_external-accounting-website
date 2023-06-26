@@ -134,7 +134,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
                 FormId = FormType.EditPT,
                 SubAccId = 0,
                 AdminId = userId,
-                IP = Request.UserHostAddress,
+                IP = Fanex.ExternalAccount.Core.Context.CurrentContext.Instance.Ip4Address,
                 Language = "En"
             };
 
@@ -188,7 +188,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
                 TargetCustId = custId,
                 FormId = FormType.EditPT,
                 SubAccId = 0,
-                IP = Request.UserHostAddress,
+                IP = Fanex.ExternalAccount.Core.Context.CurrentContext.Instance.Ip4Address,
                 Language = "En"
             };
 

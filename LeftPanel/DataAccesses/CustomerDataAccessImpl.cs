@@ -147,7 +147,7 @@
                     {"userid", custId},
                     {"agentid", agentId},
                     {"closedonly", closedOnly},
-                    {"ip", HttpContext.Current.Request.UserHostAddress},
+                    {"ip", CurrentContext.Instance.Ip4Address},
                     {"system", "EXTERNAL"},
                     {"errcode", 0},
                     {"errmsg", string.Empty}
