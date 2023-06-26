@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Home
 {
     using System;
+    using System.Collections.Specialized;
     using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
@@ -62,6 +63,19 @@
             ExceptionHandler.Handle(new Exception("Testing log"));
 
             return View();
+        }
+
+        [AllowAnonymous]
+        public string TestVars()
+        {
+            var vars = Request.ServerVariables;
+            var strVars = string.Empty;
+            foreach (var key in vars.AllKeys)
+            {
+                strVars += key + ": " + vars[key] + "<br/>";
+            }
+
+            return strVars;
         }
 
         [AllowAnonymous]
