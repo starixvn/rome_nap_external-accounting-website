@@ -6,6 +6,7 @@
     using Core.Shared;
     using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Utilities;
     using Services;
     using ViewModels;
@@ -47,6 +48,10 @@
             var userId = CurrentSession.UserId;
             ViewBag.UserId = userId;
             ViewBag.Code = Encryptor.RandomCaptcha;
+            var result = new Result {
+                ErrorCode = string.Empty,
+                ErrorMessage = string.Empty
+            };
 
             if (string.IsNullOrWhiteSpace(custName))
             {
@@ -64,7 +69,9 @@
                 userId,
                 custName,
                 ExtRequest.GetGroupName(groupName),
-                Config.SettingStatus);
+                Config.SettingStatus, result);
+
+            ViewBag.ErrorMessage = result.ErrorMessage;
 
             return View(LeftPanelIndexView, customerInfo);
         }

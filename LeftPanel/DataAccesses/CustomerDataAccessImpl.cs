@@ -21,7 +21,7 @@
 #pragma warning disable S1192 // String literals should not be duplicated
     public class CustomerDataAccessImpl : CustomerDataAccess
     {
-        public DataSet GetPersonalInfo(string username, string groupName, int userId)
+        public DbResult GetPersonalInfo(string username, string groupName, int userId)
         {
             var param = new Hashtable
             {
@@ -30,7 +30,7 @@
                 { "userid", userId }
             };
 
-            return DbHelper.ExecuteDataSet("EAS_CustomerSelAllInfo", param);
+            return DbHelper.ExecuteDbResult("EAS_CustomerSelAllInfo", param);
         }
 
         public DataSet GetLoginInfo(int custId, string groupName)

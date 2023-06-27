@@ -13,7 +13,7 @@
     public interface CustomerDataAccess
 #pragma warning restore IDE1006 // Naming Styles
     {
-        DataSet GetPersonalInfo(string username, string groupName, int userId);
+        DbResult GetPersonalInfo(string username, string groupName, int userId);
 
         DataSet GetLoginInfo(int custId, string groupName);
 
