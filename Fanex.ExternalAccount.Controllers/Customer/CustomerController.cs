@@ -112,13 +112,6 @@
         [AntiXSRFFilter]
         public ActionResult SuperAddNewMasterPost(int parentId, string txtCustomerObject)
         {
-            var limitNewDownlineResult = _customerService.CheckLimitNewDownline(parentId, Role.Super);
-
-            if (!limitNewDownlineResult.IsSuccess)
-            {
-                return JsonBase(limitNewDownlineResult);
-            }
-
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
@@ -208,13 +201,6 @@
         [AntiXSRFFilter]
         public ActionResult MasterAddNewAgentPost(int parentId, string txtCustomerObject)
         {
-            var limitNewDownlineResult = _customerService.CheckLimitNewDownline(parentId, Role.Master);
-
-            if (!limitNewDownlineResult.IsSuccess)
-            {
-                return JsonBase(limitNewDownlineResult);
-            }
-
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
@@ -310,13 +296,6 @@
         [AntiXSRFFilter]
         public ActionResult AgentAddNewMemberPost(int parentId, string txtCustomerObject)
         {
-            var limitNewDownlineResult = _customerService.CheckLimitNewDownline(parentId, Role.Agent);
-
-            if (!limitNewDownlineResult.IsSuccess)
-            {
-                return JsonBase(limitNewDownlineResult);
-            }
-
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
 
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
