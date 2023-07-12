@@ -130,7 +130,7 @@
                 SettingStatus = Config.SettingStatus
             };
 
-            var result = ptCustomerService.AddNewMaster(customer, requestContext, out int masterId);       
+            var result = ptCustomerService.AddNewMaster(customer, requestContext, out int masterId);
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = masterId });
         }
@@ -219,7 +219,7 @@
                 SettingStatus = Config.SettingStatus
             };
 
-            var result = ptCustomerService.AddNewAgent(customer, requestContext, out int agentId);         
+            var result = ptCustomerService.AddNewAgent(customer, requestContext, out int agentId);
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = agentId });
         }
@@ -229,17 +229,17 @@
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
         public ActionResult AgentAddNewMember(int custId, string username)
         {
-            var reachLimitationResult = CheckReachLimitationResult(custId, Role.Agent, username);
-            if (!reachLimitationResult.IsSuccess)
-            {
-                return LimitationPage(reachLimitationResult.ErrorMessage);
-            }
-
             var limitedMemberBySuperResult = CheckMemberLimitedBySuperResult(custId);
 
             if (!limitedMemberBySuperResult.IsSuccess)
             {
                 return LimitationPage(limitedMemberBySuperResult.ErrorMessage);
+            }
+
+            var reachLimitationResult = CheckReachLimitationResult(custId, Role.Agent, username);
+            if (!reachLimitationResult.IsSuccess)
+            {
+                return LimitationPage(reachLimitationResult.ErrorMessage);
             }
 
             var limitNewDownlineResult = _customerService.CheckLimitNewDownline(custId, Role.Agent);
