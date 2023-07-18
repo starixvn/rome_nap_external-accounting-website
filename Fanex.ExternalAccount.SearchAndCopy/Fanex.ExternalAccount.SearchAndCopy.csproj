@@ -69,9 +69,6 @@
     <Reference Include="Fanex.MailDelivery.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.MailStation.1.1.0.1\lib\net40\Fanex.MailDelivery.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Module.NG2, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.NG2.NAP.1.0.1.9\lib\net40\Fanex.Module.NG2.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
@@ -101,9 +98,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="ONEbook.NG2.API, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ONEbook.NG2.API.NAP.1.0.0.4\lib\net40\ONEbook.NG2.API.dll</HintPath>
     </Reference>
     <Reference Include="ONEbook.UM.ThirdParty, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ONEbook.UM.ThirdParty.1.0.0.0\lib\net40\ONEbook.UM.ThirdParty.dll</HintPath>
@@ -154,18 +148,15 @@
     <Compile Include="Criteria\CloneSettingComCriteria.cs" />
     <Compile Include="Criteria\CloneSettingExtraPTCriteria.cs" />
     <Compile Include="Criteria\GetCustomerInfoByUserIdCriteria.cs" />
-    <Compile Include="Criteria\GetNG2StatusCriteria.cs" />
     <Compile Include="Criteria\SearchCustomerCriteria.cs" />
     <Compile Include="Criteria\SuperPrefixCriteria.cs" />
     <Compile Include="Criteria\UpdateCRMHeadlineInfoCriteria.cs" />
     <Compile Include="Criteria\UpdateSyncBaseForIBCCriteria.cs" />
     <Compile Include="Models\CloneSettingContext.cs" />
     <Compile Include="Models\CustomerInfo.cs" />
-    <Compile Include="Models\NG2Status.cs" />
     <Compile Include="Models\SuperPrefix.cs" />
     <Compile Include="Models\SearchCustomerContext.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
-    <Compile Include="Repositories\NG2Repository.cs" />
     <Compile Include="Requests\CloneSettingRequest.cs" />
     <Compile Include="Models\SearchCustomerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -177,7 +168,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Lang.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\NG2Service.cs" />
     <Compile Include="Services\SearchAndCopyService.cs" />
   </ItemGroup>
   <ItemGroup>

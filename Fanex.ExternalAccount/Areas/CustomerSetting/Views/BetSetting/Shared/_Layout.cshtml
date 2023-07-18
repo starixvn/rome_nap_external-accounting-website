@@ -84,19 +84,13 @@
                 url.indexOf('product-6') != -1 ? 2 :
                 url.indexOf('livecasino') != -1 ? 3 :
                 url.indexOf('voidbridge') != -1 ? 4 :
-                url.indexOf('ng2') != -1 ? 5 :
-                url.indexOf('rnglottery') != -1 ? 6 :
-                url.indexOf('product-30') != -1 ? 7 :
-                url.indexOf('product-42') != -1 ? 8 :
-                url.indexOf('product-66') != -1 ? 9 :
-                url.indexOf('product-69') != -1 ? 10 : 0;
+                url.indexOf('rnglottery') != -1 ? 5 :
+                url.indexOf('product-30') != -1 ? 6 :
+                url.indexOf('product-42') != -1 ? 7 :
+                url.indexOf('product-66') != -1 ? 8 :
+                url.indexOf('product-69') != -1 ? 9 : 0;
             var custInfo = @Html.Raw(custInfo);
-
-            if (parent.showNG2Betting)
-            {
-                $('').insertAfter('#tab23');
-                $('').insertAfter('#tabs-23');
-            }
+          
 
             $('#tabs').tabs({ selected: index });
         });

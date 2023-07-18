@@ -5,7 +5,6 @@
         Sportsbook2Betting = 16,
         LiveCasinoBetting = 41,
         VoidbridgeBetting = 18,
-        NG2Betting = 23,
         FishingWorldBetting = 24,
         RNGLotteryBetting = 44,
         VirtualSportsBetting = 5,

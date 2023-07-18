@@ -727,51 +727,18 @@
 
         public ActionResult ViewPtInfo()
         {
-            if (!IsSpecialSiteCustomer())
+            
+            var exclusiveRefSportIds = new List<int>(8);
+
+            for (var i = NG2Start; i <= NG2End; i++)
             {
-                var exclusiveRefSportIds = new List<int>(8);
-
-                for (var i = NG2Start; i <= NG2End; i++)
-                {
-                    exclusiveRefSportIds.Add(i);
-                }
-
-                ViewData["ExclusiveRefSportIds"] = exclusiveRefSportIds.ToArray();
+                exclusiveRefSportIds.Add(i);
             }
+
+            ViewData["ExclusiveRefSportIds"] = exclusiveRefSportIds.ToArray();
+            
 
             return View("~/Views/BettypeReference/Index.cshtml");
-        }
-
-        private bool IsSpecialSiteCustomer()
-        {
-            var hasNG2Permission = AuthorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.NG2Setting);
-            if (!hasNG2Permission)
-            {
-                return false;
-            }
-
-            var permisisonService = new ServiceBase();
-            var checkCustomerIsInternalAdminResult = permisisonService.CheckCustomerIsInternalAdmin(
-                new CheckCustomerIsInternalAdminCriteria
-                {
-                    CustID = CurrentSession.CustId
-                });
-
-            if (checkCustomerIsInternalAdminResult.IsInternalAdmin)
-            {
-                if (!checkCustomerIsInternalAdminResult.IsAllowAccess)
-                {
-                    return false;
-                }
-
-                return permisisonService.CheckCustomerHasSpecialSitePermission(
-                    new CheckCustomerHasSpecialSiteFunctionPermissionCriteria
-                    {
-                        CustID = CurrentSession.CustId
-                    });
-            }
-
-            return true;
         }
 
         private Hashtable GetParamFromRequest()

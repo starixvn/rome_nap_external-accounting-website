@@ -798,16 +798,6 @@
         $scope.EnableThirdpartyProduct(18, "RNG Slot");
     };
 
-    $scope.EnableNG2 = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(23, parent.ng2Text);
-    };
-
     $scope.EnableRNGLottery = function (enable, id, disabled) {
         if (disabled) {
             return;
@@ -1062,9 +1052,6 @@
         $scope.RenderSupeOnMemberDCS(18);
     };
 
-    $scope.SuperNG2 = function () {
-        $scope.RenderSupeOnMemberDCS(23);
-    };
 
     $scope.SuperFishingWorld = function () {
         $scope.RenderSupeOnMemberDCS(24);
@@ -1107,9 +1094,6 @@
         $scope.RenderMasterOnMemberDCS(18);
     };
 
-    $scope.MasterNG2 = function () {
-        $scope.RenderMasterOnMemberDCS(23);
-    };
 
     $scope.MasterFishingWorld = function () {
         $scope.RenderMasterOnMemberDCS(24);

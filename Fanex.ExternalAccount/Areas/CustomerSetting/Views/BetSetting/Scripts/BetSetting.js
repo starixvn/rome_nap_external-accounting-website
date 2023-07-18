@@ -51,15 +51,6 @@ function LoadVoidbridge() {
     }, 1000);
 };
 
-function LoadNG2() {
-    Fanex.CustomerSetting.Core.BlockUI();
-    var url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=23&customerId=" + custId + "&sssss=v&customerLevel=4&isreadonly=false&groupName=" + parent.$('#selectedGroupName').html() + '&v=0001');
-    document.getElementById('ng2').src = url;
-    setTimeout(function () {
-        Fanex.CustomerSetting.Core.UnBlockUI();
-    }, 1000);
-};
-
 function LoadRNGLottery() {
     Fanex.CustomerSetting.Core.BlockUI();
     var url = parent.resolveClientUrl("DCS/ViewCustomerSetting?language=en-US&productId=44&customerId=" + custId + "&sssss=v&customerLevel=4&isreadonly=false&groupName=" + parent.$('#selectedGroupName').html() + '&v=0001');

@@ -42,14 +42,7 @@
                    || productRow.IsHidden()
                    || !productRow.IsSync();
         }
-
-        internal static bool GetNG2ProductStatus(this DataTable table3RdDcs)
-        {
-            var productRow = GetProductRow(table3RdDcs, ProductConstants.NG2);
-
-            return productRow == null || !productRow.IsSync();
-        }
-
+     
         internal static bool IsProductHidden(this DataTable productTable, int productId)
         {
             var productRows = productTable.Select($"ProductID = {productId}");

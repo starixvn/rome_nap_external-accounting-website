@@ -75,10 +75,6 @@
         $scope.collapseSidebar();
     };
 
-    $scope.NG2 = function () {
-        $scope.RenderDCS(23);
-        $scope.collapseSidebar();
-    };
 
     $scope.FishingWorld = function () {
         $scope.RenderDCS(24);

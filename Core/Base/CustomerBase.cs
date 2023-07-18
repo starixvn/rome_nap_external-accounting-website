@@ -1,7 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Core.Base
 {
-    using Module.NG2.Entities;
-    using Module.NG2.Services;
     using Service.Impl.Report;
     using Service.Interface.Report;
     using Service.Products;
@@ -13,22 +11,6 @@
     {
         private readonly IReportService _report = new ReportService();
         protected readonly ProductStatusService productStatusService = new ProductStatusServiceImpl();
-
-
-        protected Module.NG2.Entities.Result AutoInsertNG2Product(int custId, string username, RoleId roleId,
-            int uplineId, SiteId siteId, int currencyId, byte settingStatus)
-        {
-            var dcsStatuses = productStatusService.GetProductStatus(custId, (int)roleId, 23, settingStatus);
-
-            if (dcsStatuses.IsSyncedUpline)
-            {
-                ING2StatusService service = new NG2StatusService();
-                return service.AutoInsertAccount(custId, username, roleId, uplineId, dcsStatuses.IsDisabledUpline,
-                    siteId, currencyId, CurrentSession.UserId, (byte)Config.SystemId, settingStatus);
-            }
-
-            return new Module.NG2.Entities.Result();
-        }
 
         protected CustInfo GetCustomerInfo(int custId, string groupName)
         {

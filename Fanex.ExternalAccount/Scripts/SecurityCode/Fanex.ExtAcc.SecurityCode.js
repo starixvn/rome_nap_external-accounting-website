@@ -2,7 +2,6 @@
     Virtual Soports          5
     Sportbook 2             16
     Macau Games             22
-    NG2                     23
     Fishing World           24
     Virtual Games           38
     Live Casino             41

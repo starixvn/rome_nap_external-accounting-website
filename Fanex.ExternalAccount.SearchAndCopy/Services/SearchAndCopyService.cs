@@ -11,11 +11,9 @@
     using Fanex.ExternalAccount.SearchAndCopy.Repositories;
     using Fanex.ExternalAccount.SearchAndCopy.Resources;
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.Logging.Extensions.Web;
     using IBCUtils;
     using System;
     using System.Linq;
-    using System.Threading;
 
     public interface ISearchAndCopyService
     {
@@ -29,24 +27,21 @@
     public class SearchAndCopyService : ISearchAndCopyService
     {
         private readonly ISearchAndCopyRepository searchAndCopyRepository;
-        private readonly ICustomerRepository customerRepository;
-        private readonly ING2Service ng2Service;
+        private readonly ICustomerRepository customerRepository;      
         private readonly IServiceBase serviceBase;
 
         public SearchAndCopyService()
-            : this(null, null, null, null)
+            : this(null, null, null)
         {
         }
 
         public SearchAndCopyService(
             ISearchAndCopyRepository searchAndCopyRepository,
             ICustomerRepository customerRepository,
-            ING2Service ng2Service,
             IServiceBase serviceBase)
         {
             this.searchAndCopyRepository = searchAndCopyRepository ?? new SearchAndCopyRepository();
             this.customerRepository = customerRepository ?? new CustomerRepository();
-            this.ng2Service = ng2Service ?? new NG2Service();
             this.serviceBase = serviceBase ?? new ServiceBase();
         }
 
@@ -69,13 +64,7 @@
 
         public Result CloneSetting(CloneSettingContext context)
         {
-            var result = CloneCustomerAndSettings(context);
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            return Sync3rdProducts(context);
+            return CloneCustomerAndSettings(context);           
         }
 
         public dynamic GetSuperPrefixes(SuperPrefixCriteria criteria)
@@ -156,32 +145,6 @@
             }
 
             return context.Result;
-        }
-
-        private Result Sync3rdProducts(CloneSettingContext context)
-        {
-            try
-            {
-                context.NG2Status = ng2Service.GetStatus(context.ExistingCustId);
-                context.ExistingCustomerInfo = customerRepository.GetCustomerInfoByUserId(context.ExistingCustId, false);
-                if (!context.NG2Status.IsSync)
-                {
-                    return new Result(0, string.Empty);
-                }
-
-                Thread.Sleep(3000);
-                if (context.NG2Status.IsSync)
-                {
-                    ng2Service.SyncCustomer(context);
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-                return new Result(1, Lang.SearchAndCopyFailureMessage);
-            }
-
-            return new Result(0, string.Empty);
-        }
+        }       
     }
 }

@@ -52,8 +52,6 @@
     VoidbridgeSyncList: [],
     VoidbridgeSyncIdList: [],
 
-    NG2SyncList: [],
-    NG2SyncIdList: [],
     FishingWorldSyncList: [],
     FishingWorldSyncIdList: [],
 
@@ -536,11 +534,7 @@
                 Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.push($(div).attr('id'));
                 Fanex.ExtAcc.Customer.VoidbridgeSyncList.push($(div).attr('name'));
             }
-
-            if ($(div).attr('sync-ng2') == 'true' && !Fanex.ExtAcc.Customer.NG2SyncIdList.contains($(div).attr('id'))) {
-                Fanex.ExtAcc.Customer.NG2SyncIdList.push($(div).attr('id'));
-                Fanex.ExtAcc.Customer.NG2SyncList.push($(div).attr('name'));
-            }
+          
 
             if ($(div).attr('sync-fishingworld') == 'true' && !Fanex.ExtAcc.Customer.FishingWorldSyncIdList.contains($(div).attr('id'))) {
                 Fanex.ExtAcc.Customer.FishingWorldSyncIdList.push($(div).attr('id'));
@@ -560,12 +554,7 @@
             if ($(div).attr('sync-voidbridge') == 'true') {
                 Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.pop($(div).attr('id'));
                 Fanex.ExtAcc.Customer.VoidbridgeSyncList.pop($(div).attr('name'));
-            }
-
-            if ($(div).attr('sync-ng2') == 'true') {
-                Fanex.ExtAcc.Customer.NG2SyncIdList.pop($(div).attr('id'));
-                Fanex.ExtAcc.Customer.NG2SyncList.pop($(div).attr('name'));
-            }
+            }           
 
             if ($(div).attr('sync-fishingworld') == 'true') {
                 Fanex.ExtAcc.Customer.FishingWorldSyncIdList.pop($(div).attr('id'));
@@ -634,16 +623,8 @@
                 else if ($(divs[i]).attr('sync-fishingworld') == 'true' && divs[i].className == 'menuInactive') {
                     Fanex.ExtAcc.Customer.FishingWorldSyncIdList.pop($(divs[i]).attr('id'));
                     Fanex.ExtAcc.Customer.FishingWorldSyncList.pop($(divs[i]).attr('name'));
-                }
-
-                if ($(divs[i]).attr('sync-ng2') == 'true' && divs[i].className == 'menuActive' && !Fanex.ExtAcc.Customer.NG2SyncIdList.contains($(divs[i]).attr('id'))) {
-                    Fanex.ExtAcc.Customer.NG2SyncIdList.push($(divs[i]).attr('id'));
-                    Fanex.ExtAcc.Customer.NG2SyncList.push($(divs[i]).attr('name'));
-                }
-                else if ($(divs[i]).attr('sync-ng2') == 'true' && divs[i].className == 'menuInactive') {
-                    Fanex.ExtAcc.Customer.NG2SyncIdList.pop($(divs[i]).attr('id'));
-                    Fanex.ExtAcc.Customer.NG2SyncList.pop($(divs[i]).attr('name'));
-                }
+                }              
+              
             }
         }
     },
