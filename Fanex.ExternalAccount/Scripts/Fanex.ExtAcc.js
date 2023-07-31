@@ -739,7 +739,7 @@ Fanex.ExtAcc = {
         return '';
     },
 
-    AddPtInfoPage: function () {
+    AddPtInfoPage: function (custId) {
         if ($('.icon-alert-circle-outline').length > 0) {
             return;
         }
@@ -750,7 +750,7 @@ Fanex.ExtAcc = {
         infoDiv.setAttribute('style', 'float: right; margin: 5px; z-index: 999999');
         infoDiv.innerHTML = '&nbsp;';
 
-        infoDiv.setAttribute('onclick', "window.open(resolveClientUrl('SportsbookSetting/ViewPtInfo'), '_blank')");
+        infoDiv.setAttribute('onclick', "window.open(resolveClientUrl('SportsbookSetting/ViewPtInfo?custId="+custId+"'), '_blank')");
 
         headerPt.append(infoDiv);
     },

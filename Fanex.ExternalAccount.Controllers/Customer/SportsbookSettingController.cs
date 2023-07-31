@@ -8,6 +8,7 @@
     using CustomerSetting.Security.Authenticate;
     using Fanex.CustomerSetting.Module.Core.Constants;
     using Fanex.CustomerSetting.Module.Core.Services.Interface;
+    using Fanex.ExternalAccount.Service;
     using Fanex.Logging.Extensions.Web;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
@@ -728,7 +729,7 @@
             return JsonBase(new { result.ErrorCode, result.ErrorMessage });
         }
 
-        public ActionResult ViewPtInfo()
+        public ActionResult ViewPtInfo(int custId)
         {
             
             var exclusiveRefSportIds = new List<int>(8);
@@ -739,7 +740,7 @@
             }
 
             ViewData["ExclusiveRefSportIds"] = exclusiveRefSportIds.ToArray();
-            
+            ViewData["SiteDB"] = siteDBConfigService.GetSiteDBConfig(custId);
 
             return View("~/Views/BettypeReference/Index.cshtml");
         }
