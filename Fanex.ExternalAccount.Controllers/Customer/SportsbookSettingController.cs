@@ -8,6 +8,7 @@
     using CustomerSetting.Security.Authenticate;
     using Fanex.CustomerSetting.Module.Core.Constants;
     using Fanex.CustomerSetting.Module.Core.Services.Interface;
+    using Fanex.ExternalAccount.Service;
     using Fanex.Logging.Extensions.Web;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
@@ -36,7 +37,7 @@
         private readonly ISuperService superService = new SuperService();
         private readonly IServiceBase serviceBase = new ServiceBase();
         private readonly Fanex.ExternalAccount.Service.Interface.Customer.ICustomerService externalCustomerService = new Fanex.ExternalAccount.Service.Impl.Customer.CustomerService();
-
+        private readonly ISiteDBConfigService siteDBConfigService = new SiteDBConfigService();
         public ActionResult EditBetSetting(int custId) => PartialViewBase(externalCustomerService.IsArchivedCustId(custId));
 
         [AntiXSRFFilter]
@@ -432,6 +433,9 @@
             var param = GetParamFromRequest();
             var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
             var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
+            var siteDB = siteDBConfigService.GetSiteDBConfig(custId);
+            customer.DBServerIp = siteDB.AGIP;
+            customer.SiteDBGroupId = siteDB.SiteDBGroupID;
 
             var requestContext = new RequestContext
             {
@@ -725,7 +729,7 @@
             return JsonBase(new { result.ErrorCode, result.ErrorMessage });
         }
 
-        public ActionResult ViewPtInfo()
+        public ActionResult ViewPtInfo(int custId)
         {
             
             var exclusiveRefSportIds = new List<int>(8);
@@ -736,7 +740,7 @@
             }
 
             ViewData["ExclusiveRefSportIds"] = exclusiveRefSportIds.ToArray();
-            
+            ViewData["SiteDB"] = siteDBConfigService.GetSiteDBConfig(custId);
 
             return View("~/Views/BettypeReference/Index.cshtml");
         }

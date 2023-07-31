@@ -22,8 +22,10 @@
         DataSet GetBalanceInfo(int custId);
 
         DataTable EAS_CustomerSelUserInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
+        
+        Result UpdateSMAGivenCredit(int id, int uplineId, decimal newGivenCredit);
 
-        Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit);
+        Result UpdateMemberGivenCredit(int id, int uplineId, decimal newGivenCredit, decimal totalAmt);
 
         DbResult GetDownlineList(int custid, int pageSize, int pageIndex);
 
@@ -35,7 +37,7 @@
 
         Result ResetMemberCredit(int custId, int agentId, bool closedOnly);
 
-        Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip);
+        Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip, SiteDB siteDB);
 
         DataTable CustomerSelectClearBalance(int custId);
 
@@ -51,8 +53,14 @@
 
         Result RemoveOTP(RemoveOtpCriteria criteria);
 
-        MemberBalanceInfoModel GetMemberBalanceModel(int custId);
+        MemberBalanceInfoModel GetMemberBalanceModel(int custId, SiteDB siteDB);
 
         decimal GetMemberOustanding(int custId);
+
+        decimal GetTotalAmount(int custId, SiteDB siteDB);
+
+        Result ClearMemberCredit(int userId, decimal totalAmt, string username = null);
+
+        Result ClearSMACredit(int userId, string username = null);
     }
 }

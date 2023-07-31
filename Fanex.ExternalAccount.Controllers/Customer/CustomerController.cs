@@ -36,6 +36,7 @@
         private readonly SuperService _superService = new SuperService();
         private readonly IIPInformatonService ipInformationService = new IPInformationService();
         private readonly ITelegramBotService _telegramChatbotService = new TelegramBotService();
+        private readonly ISiteDBConfigService siteDBService = new SiteDBConfigService();
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public ActionResult IsValidUsername(string username)
@@ -333,7 +334,9 @@
                 SystemId = (byte)Config.SystemId,
                 SettingStatus = Config.SettingStatus
             };
-
+            var siteDB = siteDBService.GetSiteDBConfig(customer.SRecommend);
+            customer.DBServerIp = siteDB.AGIP;
+            customer.SiteDBGroupId = siteDB.SiteDBGroupID;
             var result = ptCustomerService.AddNewMember(customer, requestContext, out int memberId);
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = memberId });

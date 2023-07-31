@@ -66,8 +66,8 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.7.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.7.4\lib\net40\Fanex.PTEngine.dll</HintPath>
+    <Reference Include="Fanex.PTEngine, Version=1.0.7.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTEngine.1.0.7.5\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
     <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Crypt.1.1.0.0\lib\net40\IBCCrypt.dll</HintPath>
@@ -191,6 +191,7 @@
     <Compile Include="Criteria\UserControl\UpdateMultipleUserPolicyCriteria.cs" />
     <Compile Include="Customer\AssociationAccount\AssociationAccountDao.cs" />
     <Compile Include="Customer\CustomerList\CustomerListDao.cs" />
+    <Compile Include="Customer\GetSiteDBConfigCriteria.cs" />
     <Compile Include="Customer\IAgentDao.cs" />
     <Compile Include="Customer\ICommissionDao.cs" />
     <Compile Include="Customer\ICustomerDao.cs" />

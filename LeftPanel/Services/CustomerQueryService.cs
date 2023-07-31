@@ -7,6 +7,7 @@
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.Models;
+    using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Utilities;
     using System;
     using System.Collections.Generic;
@@ -35,15 +36,18 @@
         private readonly AuthorizationService authorizationService;
         private readonly CustomerDataAccess customerDataAccess;
         private readonly CustomerInfoQueryService customerInfoQueryService;
+        private readonly ISiteDBConfigService siteDBService;
 
         public CustomerQueryServiceImpl(
             CustomerDataAccess customerDataAccess = null,
             AuthorizationService authorizationService = null,
-            CustomerInfoQueryService customerInfoQueryService = null)
+            CustomerInfoQueryService customerInfoQueryService = null,
+            ISiteDBConfigService siteDBService = null)
         {
             this.customerDataAccess = customerDataAccess ?? new CustomerDataAccessImpl();
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();
             this.customerInfoQueryService = customerInfoQueryService ?? new CustomerInfoQueryServiceImpl();
+            this.siteDBService = siteDBService ?? new SiteDBConfigService();
         }
 
         public CustomerModel SearchCustomer(int actorId, string custName, string groupName, byte settingStatus, Result result)
@@ -67,7 +71,8 @@
             var memberBalanceInfoModel = new MemberBalanceInfoModel();
             if(roleId == Role.Member)
             {
-                memberBalanceInfoModel = customerDataAccess.GetMemberBalanceModel(custId);
+                var siteDB = siteDBService.GetSiteDBConfig(custId);
+                memberBalanceInfoModel = customerDataAccess.GetMemberBalanceModel(custId, siteDB);
             }
 
             return customerInfoQueryService.GetCustomerModel(

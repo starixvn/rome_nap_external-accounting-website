@@ -1,4 +1,4 @@
-﻿Fanex.ExtAcc.AddPtInfoPage();
+﻿Fanex.ExtAcc.AddPtInfoPage(custid);
 
 if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
     alert("Fanex.ExtAcc.js module is required!")
