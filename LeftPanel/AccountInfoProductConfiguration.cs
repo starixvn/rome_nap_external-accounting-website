@@ -13,7 +13,7 @@
         public static readonly IEnumerable<ProductSettingElement> ProductSettingParamList
             = new List<ProductSettingElement>
             {
-                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.LiveCasino], StatusType.Link),
+                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.LiveCasino], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.RNGSlot], StatusType.Link),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.FishingWorld], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.RNGLottery], StatusType.Link),

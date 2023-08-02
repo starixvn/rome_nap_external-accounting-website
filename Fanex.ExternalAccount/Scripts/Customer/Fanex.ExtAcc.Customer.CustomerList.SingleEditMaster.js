@@ -65,7 +65,7 @@
                         isSynced = typeof (isSynced) == 'undefined' ? true : isSynced;
                         items[productKey] = {
                             name: productName,
-                            className: !isSynced ? "iconUnsyncEdit" : (isDisabled == true ? "iconDisableEdit" : "iconEnableEdit"),
+                            className: "iconEnableEdit",
                             callback: function () {
                                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                                 Fanex.ExtAcc.Customer.ShowEditProductForSingleCust(

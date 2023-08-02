@@ -50,14 +50,14 @@
                 Details(customerStatusInfoDataset)
             );
 
+            if (!this.currentSession.IsBelongToSpecialGroups)
+            {
+                AddDummyProductStatus(table3rdDCS, setting.EditItems, setting.EnableItems);
+            }
+
             foreach (var productSettingParam in productSettingElements)
             {
                 setting = AddProductSetting(setting, table3rdDCS, productSettingParam);
-            }
-
-            if (!this.currentSession.IsBelongToSpecialGroups)
-            {
-                AddDummyProductStatus(table3rdDCS, setting.EditItems);
             }
 
             AddDummyProductLink(table3rdDCS, setting.Details);
@@ -136,15 +136,17 @@
             enableItems.Add(eSportsStatus);
         }
 
-        private void AddDummyProductStatus(DataTable table3rdDCS, List<ObjectInfo> editItems)
+        private void AddDummyProductStatus(DataTable table3rdDCS, List<ObjectInfo> editItems, List<ObjectInfo> enableItems)
         {
             if (ProductSettings.IsShowLiveCasino)
             {
                 AddDummyProductStatus(
                     table3rdDCS,
                     editItems,
+                    enableItems,
                     ProductConstants.LiveCasino,
-                    new ObjectInfo("EnableLiveCasino", "Enable Live Casino", "Enable Live Casino"));
+                    new ObjectInfo("EnableLiveCasino", !table3rdDCS.IsProductDisabled(ProductConstants.LiveCasino), "Live Casino", "Enable Live Casino"),
+                    false);
             }
 
             if (ProductSettings.IsShowRNGLottery)
@@ -152,12 +154,14 @@
                 AddDummyProductStatus(
                     table3rdDCS,
                     editItems,
+                    enableItems,
                     ProductConstants.RNGLottery,
-                    new ObjectInfo("EnableRNGLottery", "Enable RNG Lottery", "Enable RNG Lottery"));
+                    new ObjectInfo("EnableRNGLottery", "Enable RNG Lottery", "Enable RNG Lottery"),
+                    true);
             }
         }
 
-        private void AddDummyProductStatus(DataTable table3rdDCS, List<ObjectInfo> editItems, int productId, ObjectInfo productStatus)
+        private void AddDummyProductStatus(DataTable table3rdDCS, List<ObjectInfo> editItems, List<ObjectInfo> enableItems, int productId, ObjectInfo productStatus, bool isLink)
         {
             var disableUpline = false;
             var isHideUpline = true;
@@ -178,7 +182,14 @@
                     productStatus = DisableStatus(productStatus);
                 }
 
-                editItems.Add(productStatus);
+                if (isLink)
+                {
+                    editItems.Add(productStatus);
+                }
+                else
+                {
+                    enableItems.Add(productStatus);
+                }
             }
         }
 
