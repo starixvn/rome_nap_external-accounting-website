@@ -36,7 +36,7 @@
             this.searchAndCopyService = searchAndCopyService ?? new SearchAndCopyService();
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Read)]
         [AntiXSRFFilter]
         public JsonResult SearchCustomer(SearchCustomerRequest request)
         {
@@ -45,7 +45,7 @@
             return Json(result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Read)]
         public ActionResult Super()
         {
             ViewBag.Code = Encryptor.RandomCaptcha;
@@ -81,7 +81,7 @@
             return Json(cloneSettingContext.Result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Read)]
         [AntiXSRFFilter]
         [HttpPost]
         public ActionResult GetSuperPrefixes(SuperPrefixRequest query)
