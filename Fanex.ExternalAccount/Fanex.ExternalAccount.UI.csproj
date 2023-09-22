@@ -180,8 +180,8 @@
     <Reference Include="Fanex.PTEngine, Version=1.0.7.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTEngine.1.0.7.5\lib\net40\Fanex.PTEngine.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.PTSetting.BettypeReference, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTSetting.BettypeReference.1.0.0.6\lib\net461\Fanex.PTSetting.BettypeReference.dll</HintPath>
+    <Reference Include="Fanex.PTSetting.BettypeReference, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.PTSetting.BettypeReference.1.0.0.8-HFScaleout-01\lib\net461\Fanex.PTSetting.BettypeReference.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.RemotingRef, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.RemotingRef.1.1.1\lib\net461\Fanex.RemotingRef.dll</HintPath>
