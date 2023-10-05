@@ -15,7 +15,6 @@
             {
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.LiveCasino], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.RNGSlot], StatusType.Link),
-                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.FishingWorld], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.RNGLottery], StatusType.Link),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Sportsbook2], StatusType.OnlyDetail),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.VirtualGames], StatusType.Link),
@@ -44,7 +43,6 @@
             => new List<ProductStatus>
             {
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.RNGLottery], statusRow, isSetUplineStatus: isSetUplineStatus),
-                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.FishingWorld], statusRow, isSetUplineStatus: isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.RNGSlot], statusRow, false, isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.LiveCasino], statusRow, false, isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Sportsbook2], statusRow, isSetUplineStatus:isSetUplineStatus),
@@ -60,7 +58,6 @@
             {
                 new ObjectInfo("HideLiveCasino", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.LiveCasino)),
                 new ObjectInfo("HideVoidbridge", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.RNGSlot)),              
-                new ObjectInfo("HideFishingWorld", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.FishingWorld)),
                 new ObjectInfo("HideRNGLottery", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.RNGLottery)),
                 new ObjectInfo("HideVirtualGames", dcsProductStatusTable.IsProductHidden(ProductConstants.VirtualGames)),
                 new ObjectInfo("HideSabaclub", dcsProductStatusTable.IsProductHidden(ProductConstants.Sabaclub)),

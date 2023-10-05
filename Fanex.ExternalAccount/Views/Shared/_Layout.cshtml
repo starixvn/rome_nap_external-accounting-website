@@ -24,7 +24,6 @@
     var hasClearCredit = authenService.HasClearCreditPermission(userId) ? 1 : 0;
     var showLiveCasino = ProductSettings.IsShowLiveCasino ? 1 : 0;
     var showVoidbridge = ProductSettings.IsShowVoidBridge ? 1 : 0;
-    var showFishingWorld = ProductSettings.IsShowFishingWorld ? 1 : 0;
     var showRNGLottery = ProductSettings.IsShowRNGLottery ? 1 : 0;
     var productsExcludeSabaVS = ProductSettings.SiteProducts.Where(i => i.Key != 54).ToDictionary(p => p.Key, p => p.Value);
 
@@ -141,7 +140,6 @@
         var hasClearCredit = '@hasClearCredit';      
         var showLiveCasino = @showLiveCasino;
         var showVoidbridge = @showVoidbridge;
-        var showFishingWorld = @showFishingWorld;
         var showLiveCasinoBetting = true;
         var showVoidbridgeBetting = true; 
         var showRNGLottery = @showRNGLottery;

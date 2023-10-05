@@ -76,11 +76,6 @@
     };
 
 
-    $scope.FishingWorld = function () {
-        $scope.RenderDCS(24);
-        $scope.collapseSidebar();
-    };
-
     $scope.RNGLottery = function () {
         $scope.RenderDCS(44);
         $scope.collapseSidebar();

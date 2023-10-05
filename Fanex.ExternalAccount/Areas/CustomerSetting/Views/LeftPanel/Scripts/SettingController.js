@@ -770,16 +770,6 @@
 
     };
 
-    $scope.EnableFishingWorld = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        document.getElementById(id).checked = enable;
-        $scope.EnableThirdpartyProduct(24, "Fishing World");
-    };
-
     $scope.EnableLiveCasino = function (enable, id, disabled) {
         if (disabled) {
             return;

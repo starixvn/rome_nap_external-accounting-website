@@ -5,7 +5,6 @@
         Sportsbook2Setting = 16,
         LiveCasinoSetting = 41,
         VoidbridgeSetting = 18,
-        FishingWorldSetting = 24,
         RNGLotterySetting = 44,
         VirtualSports = 5,
         VirtualGamesSetting = 64,
