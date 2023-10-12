@@ -4,7 +4,7 @@
     <Setting Key="SiteDB3_Dot_BalanceCreditInitialize" SpName="Dot_BalanceCreditInitialize" DbName="SiteDB.bodb02.bodbExtAccNet" />
     <Setting Key="SiteDB3_Dot_BalanceDebitRemove" SpName="Dot_BalanceDebitRemove" DbName="SiteDB.bodb02.bodbExtAccNet" />
     <Setting Key="SiteDB3_Dot_BalanceCreditRemove" SpName="Dot_BalanceCreditRemove" DbName="SiteDB.bodb02.bodbExtAccNet" />
-    <Setting Key="SiteDB3_Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="SiteDB.bodb02.bodbExtAccNet" />    
+    <Setting Key="SiteDB3_Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="SiteDB.bodb02.bodbExtAccNet" />
     <Setting Key="SiteDB3_Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="SiteDB.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="SiteDB3_Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="SiteDB.BODB02.bodbExtAccNet" Plain="0" />
     <Setting Key="SiteDB3_PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="SiteDB.bodb02.bodbExtAccNet" Plain="0" />
@@ -12,7 +12,7 @@
 
   <Function Name="PT Setting Information">
     <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
-  </Function> 
+  </Function>
   <Function Name="Login">
     <Setting Key="EAS_UserLogin" SpName="EAS_UserLogin" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_UserLogout" SpName="EAS_UserLogout" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
@@ -326,5 +326,12 @@
   </Function>
   <Function Name="Edit Multiple Bet Settings">
     <Setting Key="EAS_CustomerBetSettingMultipleCheck" SpName="EAS_CustomerBetSettingMultipleCheck" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
+  </Function>
+  <Function Name="Auto Transfer">
+    <Setting Key="Age_ClearBalanceCust_Job_StatusCheck" SpName="Age_ClearBalanceCust_Job_StatusCheck" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="SiteDB3_Age_ClearBalanceCust_Job_StatusCheck" SpName="Age_ClearBalanceCust_Job_StatusCheck" DbName="SiteDB.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="Age_ToastMessage_Ins" SpName="Age_ToastMessage_Ins" DbName="DBMSG.bodb_Message.bodbExtAccNet" />
+    <Setting Key="Age_Msg_SetMessage" SpName="Age_Msg_SetMessage" DbName="DBMSG.bodb_Message.bodbExtAccNet" />
+    <Setting Key="Age_Msg_SetUsrMessage" SpName="Age_Msg_SetUsrMessage" DbName="DBMSG.bodb_Message.bodbExtAccNet" />
   </Function>
 </Functions>

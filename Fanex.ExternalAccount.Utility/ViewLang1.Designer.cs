@@ -349,6 +349,51 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Note: Changing the Transfer Condition will affect the Auto Transfer status and schedule of all downlines under this account. Please select an action:.
+        /// </summary>
+        public static string changeTransferCondition_Note {
+            get {
+                return ResourceManager.GetString("changeTransferCondition_Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note: Changing Transfer Condition will Disable Auto Transfer for all downlines and CLEAR the Auto Transfer schedule.
+        /// </summary>
+        public static string changeTransferCondition_NoteOff {
+            get {
+                return ResourceManager.GetString("changeTransferCondition_NoteOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note: Changing Transfer Condition will Keep Auto Transfer enabled with the current schedule adjusted to the new transfer condition..
+        /// </summary>
+        public static string changeTransferCondition_NoteOn {
+            get {
+                return ResourceManager.GetString("changeTransferCondition_NoteOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable Auto Transfer for all downlines and CLEAR the Auto Transfer schedule.
+        /// </summary>
+        public static string changeTransferCondition_Off {
+            get {
+                return ResourceManager.GetString("changeTransferCondition_Off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keep Auto Transfer enabled with the current schedule adjusted to the new transfer condition..
+        /// </summary>
+        public static string changeTransferCondition_On {
+            get {
+                return ResourceManager.GetString("changeTransferCondition_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chart.
         /// </summary>
         public static string Chart {

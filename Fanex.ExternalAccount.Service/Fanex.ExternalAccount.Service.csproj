@@ -231,13 +231,17 @@
     <Compile Include="Customer\CommissionService.cs" />
     <Compile Include="IPInformatonService.cs" />
     <Compile Include="Login\ILoginService.cs" />
-    <Compile Include="ObjectDbExtensions.cs" />
     <Compile Include="OTP\CustomerOtpService.cs" />
     <Compile Include="Params\GetTotalBetParam.cs" />
     <Compile Include="Products\ProductDetailService.cs" />
     <Compile Include="Products\ProductService.cs" />
     <Compile Include="Report\IReportService.cs" />
     <Compile Include="Customer\SiteDBConfigService.cs" />
+    <Compile Include="Resources\Lang.Designer.cs">
+      <DependentUpon>Lang.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="TotalBet\ITotalBetService.cs" />
     <Compile Include="Report\IViewExtraPTRequest.cs" />
     <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossByPTParam.cs" />
@@ -314,6 +318,12 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\Google.Protobuf.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Lang.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Lang.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

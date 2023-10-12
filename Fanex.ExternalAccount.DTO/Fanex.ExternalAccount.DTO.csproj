@@ -133,6 +133,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoTransfer\ToastContentDto.cs" />
+    <Compile Include="AutoTransfer\ToastMessageSiteFunctionIds.cs" />
+    <Compile Include="AutoTransfer\MessageTypeConstants.cs" />
+    <Compile Include="AutoTransfer\ToastMessageTypes.cs" />
     <Compile Include="Customer\AssociationAccountViewModel.cs" />
     <Compile Include="Customer\Commission.cs" />
     <Compile Include="Customer\Casino\CasinoCustomer.cs" />

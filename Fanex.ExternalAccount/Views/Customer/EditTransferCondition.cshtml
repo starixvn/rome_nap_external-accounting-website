@@ -1,5 +1,4 @@
 ﻿@using Fanex.ExternalAccount.Utilities
-@using Fanex.ExternalAccount.DTO.Customer
 @model TransferConditionViewModel
 @{
     var custId = ViewBag.CustId;
@@ -123,6 +122,21 @@
                 @Html.LabelFor(m => m.Transfer.Sun)
             </td>
         </tr>
+        <tr class="rowTransferCondition note @(Model.Transfer.Daily ? "hidden":"")">
+            <td class="l" colspan="8">
+                <div>
+                    @ViewLang.changeTransferCondition_Note
+                </div>
+                <div>
+                    <input id="rad-on-auto-transfer" type="radio" name="rad-change-affect" class="rad-change-affect" value="0" checked="checked" />
+                    <label for="rad-on-auto-transfer">@ViewLang.changeTransferCondition_On</label>
+                </div>
+                <div>
+                    <input id="rad-off-auto-transfer" type="radio" name="rad-change-affect" class="rad-change-affect" value="1" />
+                    <label for="rad-off-auto-transfer">@ViewLang.changeTransferCondition_Off</label>
+                </div>
+            </td>
+        </tr>
         <tr>
             <td colspan="8">
                 <div style="float: right; padding-top: 10px; padding-right: 0px; margin-right: 0px">
@@ -136,4 +150,5 @@
 <script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.TransferCondition.js")" type="text/javascript"></script>
 <script type="text/javascript">
     var custId = parseInt('@custId');
+    var messages = ['@ViewLang.changeTransferCondition_NoteOn', '@ViewLang.changeTransferCondition_NoteOff'];
 </script>
