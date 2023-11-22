@@ -297,6 +297,7 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -376,7 +377,6 @@
     <Compile Include="Customer\MainSuperController.cs" />
     <Compile Include="Customer\CustomerController.cs" />
     <Compile Include="Customer\MarkAccountTypeController.cs" />
-    <Compile Include="Customer\ParlayMaxPayoutController.cs" />
     <Compile Include="Customer\OpenCustomerController.cs" />
     <Compile Include="Customer\ProtectedStatusController.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusController.cs" />
@@ -393,6 +393,7 @@
     <Compile Include="Report\SuperWinLossDetailMCByPTController.cs" />
     <Compile Include="Report\WinLossDetailMCController.cs" />
     <Compile Include="Report\SuperWinLossDetailByPTController.cs" />
+    <Compile Include="Requests\Customer\CreateCustomerRequest.cs" />
     <Compile Include="Requests\GetExchangeRateRequest.cs" />
     <Compile Include="Requests\MarkAccountType\NewMarkAccountRequest.cs" />
     <Compile Include="Requests\MarkAccountType\SearchMarkAccountRequest.cs" />
@@ -438,7 +439,10 @@
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
     <Compile Include="ViewMaxPayoutSettingInformation\ViewMaxPayoutSettingInformationController.cs" />
+    <Compile Include="ViewModels\Customer\AppConfiguration.cs" />
+    <Compile Include="ViewModels\Customer\CreateCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerDataRangeViewModel.cs" />
+    <Compile Include="ViewModels\Customer\GeneralInfo.cs" />
     <Compile Include="ViewModels\GroupConfigurationViewModel.cs" />
     <Compile Include="ViewModels\VerifyOtpCommand.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />

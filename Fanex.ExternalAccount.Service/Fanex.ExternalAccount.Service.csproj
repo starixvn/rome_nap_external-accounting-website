@@ -236,7 +236,6 @@
     <Compile Include="Customer\MarkAccountType\Params\SearchMarkAccountTypeParams.cs" />
     <Compile Include="Customer\MarkAccountType\Params\UnmarkAccountTypeParams.cs" />
     <Compile Include="Customer\MarkAccountType\Params\UpdateMarkAccountTypeParams.cs" />
-    <Compile Include="Customer\ParlayMaxPayout\ParlayMaxPayoutService.cs" />
     <Compile Include="DataRange\DataRangeService.cs" />
     <Compile Include="DataRange\IDataRangeService.cs" />
     <Compile Include="GlobalSuppressions.cs" />

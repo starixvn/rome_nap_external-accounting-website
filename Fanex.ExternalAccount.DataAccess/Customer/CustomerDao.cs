@@ -285,7 +285,6 @@
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 var result = new CustomerStatusDTO();
-                CustomerStatusDCS sportsbook2 = null;
                 CustomerStatusDCS liveCasino = null;
                 CustomerStatusDCS rngLottery = null;
                 CustomerStatusDCS macauGames = null;
@@ -306,30 +305,6 @@
                     {
                         result.HideVirtualSport = Utils.ToBoolean(reader["isHidden"]);
                         result.DisableVirtualSport = Utils.ToBoolean(reader["isDisabled"]);
-                        continue;
-                    }
-
-                    if (productId == ProductConstants.Sportsbook2)
-                    {
-                        if (sportsbook2 == null)
-                        {
-                            sportsbook2 = new CustomerStatusDCS
-                            {
-                                ProductID = productId,
-                                ProductName = ProductSettings.SiteProducts[productId]?.Name,
-                                IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
-                                IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
-                                IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
-                                IsSynced = Utils.ToBoolean(reader["isSync"]),
-                                IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
-                            };
-                        }
-                        else
-                        {
-                            sportsbook2.IsDisabled = sportsbook2.IsDisabled && Utils.ToBoolean(reader["isDisabled"]);
-                            sportsbook2.IsSynced = sportsbook2.IsSynced && Utils.ToBoolean(reader["isSync"]);
-                        }
-
                         continue;
                     }
 
@@ -435,7 +410,6 @@
                     }
                 }
 
-                result.DCSProductsSetting.Add(sportsbook2);
                 if (liveCasino != null)
                 {
                     result.DCSProductsSetting.Add(liveCasino);

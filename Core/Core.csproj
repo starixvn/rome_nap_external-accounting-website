@@ -376,7 +376,6 @@
     <Compile Include="Authorization\ProductStatus\ProductStatusActor.cs" />
     <Compile Include="Base\BaseController.cs" />
     <Compile Include="Base\ControllerExtentions.cs" />
-    <Compile Include="Base\CustomerBase.cs" />
     <Compile Include="Base\JsonBase.cs" />
     <Compile Include="Authorization\AuthorizationService.cs" />
     <Compile Include="Configurations\InternalLogin\InternalLoginManager.cs" />

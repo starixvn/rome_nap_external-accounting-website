@@ -212,7 +212,6 @@
     <Compile Include="Customer\ISuperDao.cs" />
     <Compile Include="Customer\MarkAccountType\IMarkAccountTypeDao.cs" />
     <Compile Include="Customer\MarkAccountType\MarkAccountTypeDao.cs" />
-    <Compile Include="Customer\ParlayMaxPayout\ParlayMaxPayoutDao.cs" />
     <Compile Include="DataRange\DataRangeDao.cs" />
     <Compile Include="DataRange\IDataRangeDao.cs" />
     <Compile Include="ExchangeRate\ExchangeRateDAO.cs" />

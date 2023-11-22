@@ -36,7 +36,6 @@
                             '</td>' +
                             '<td>' + online.loginTime.text + '</td></tr>';
                         $('#onlines').append(item);
-
                     }
 
                     $('#onlines').scrollTop(0);
@@ -62,8 +61,8 @@
                     ($scope.setting.details[i].key == 'BetSetting' && parent.showBetSetting == '0')) {
                     $scope.setting.details[i].isHide = true;
                 }
-            }          
-            
+            }
+
             for (var i = 0; i < $scope.setting.enableItems.length; i++) {
                 if ($scope.model.personalInfo.roleId.value == 4 && ($scope.setting.enableItems[i].key == 'Closed') &&
                     !allowAdmins.contains(parseInt(parent.userId)) && $scope.setting.enableItems[i].value == true) {
@@ -87,8 +86,6 @@
                     }
                 }
             }
-
-
         }
     };
 
@@ -106,13 +103,13 @@
 
         switch (roleId) {
             case 2:
-                actionName = 'Customer/AgentAddNewMember/?currencyId=' + $scope.model.currencyId + '&custId=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html();
+                actionName = 'Customer/CreateCustomer?uplineId=' + $scope.model.personalInfo.custId.value + '&uplineRoleId=' + roleId + '&uplineUsername=' + $scope.model.personalInfo.currentLevel.value;
                 break;
             case 3:
-                actionName = 'Customer/MasterAddNewAgent/?currencyId=' + $scope.model.currencyId + '&custId=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html();
+                actionName = 'Customer/CreateCustomer?uplineId=' + $scope.model.personalInfo.custId.value + '&uplineRoleId=' + roleId + '&uplineUsername=' + $scope.model.personalInfo.currentLevel.value;
                 break;
             case 4:
-                actionName = 'Customer/SuperAddNewMaster/?currencyId=' + $scope.model.currencyId + '&custId=' + $scope.model.personalInfo.custId.value + '&username=' + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html();
+                actionName = 'Customer/CreateCustomer?uplineId=' + $scope.model.personalInfo.custId.value + '&uplineRoleId=' + roleId + '&uplineUsername=' + $scope.model.personalInfo.currentLevel.value;
                 break;
             default:
                 break;
@@ -120,7 +117,7 @@
 
         if (actionName != '') {
             parent.Fanex.ExtAcc.BlockUI();
-            parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl(actionName), null, null, true);
+            parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl(actionName), true);
         }
         $scope.collapseSidebar();
     };
@@ -158,7 +155,6 @@
                     }
                 })
                     .success(function (result) {
-
                         if (parent.Fanex.ExtAcc.ShowSecurityCodePage(result, parent.Fanex.ExtAcc.UnBlockUI)) {
                             return;
                         }
@@ -280,7 +276,7 @@
                 });
         }
         else {
-            var confirmMessage = roleId !== 1 
+            var confirmMessage = roleId !== 1
                 ? 'Are you sure you want to change Closed status for this customer? Warning, all downlines will be closed as well!'
                 : 'Are you sure you want to change Closed status for this customer?';
 
@@ -388,7 +384,7 @@
                         custId: $scope.model.personalInfo.custId.value,
                         groupName: parent.$('#selectedGroupName').html()
                     },
-                    success: function(result) {
+                    success: function (result) {
                         if (result.isSuccess) {
                             var timeout = setTimeout(function () {
                                 clearTimeout(timeout);
@@ -696,7 +692,7 @@
         top.shouldCalculatePopupHeight = false;
         document.getElementById(id).checked = enable;
         $scope.EnableThirdpartyProduct(6, "Saba Casino");
-    };  
+    };
 
     $scope.EnableVirtualSports = function (enable, id, disabled) {
         if (disabled) {
@@ -755,19 +751,6 @@
             'Customer/EditTransferCondition/?roleId=' + $scope.model.personalInfo.roleId.value + '&custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()),
             parent.titles[1] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
             600, 300, false, false, 1);
-
-    };
-
-    $scope.ParlayMaxPayout = function () {
-        top.shouldCalculatePopupHeight = false;
-        url = parent.resolveClientUrl('ParlayMaxPayout/Index?custId=' + $scope.model.personalInfo.custId.value + "&custName=" + $scope.model.personalInfo.currentLevel.value + "&roleid=" + $scope.model.personalInfo.roleId.value + "&groupName=" + parent.$('#selectedGroupName').html());
-        parent.Fanex.ExtAcc.LoadMainIFrame(url, true);
-        $scope.collapseSidebar();
-        //parent.Fanex.ExtAcc.Form.Show(parent.resolveClientUrl(
-        //    'ParlayMaxPayout/Index?custId=' + $scope.model.personalInfo.custId.value + "&custName=" + $scope.model.personalInfo.currentLevel.value + "&groupName=" + parent.$('#selectedGroupName').html()),
-        //    'Parlay Max Payout: <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>',
-        //    'auto', 'auto', false, false, 1);
-
     };
 
     $scope.EnableLiveCasino = function (enable, id, disabled) {
@@ -842,7 +825,6 @@
         $scope.EnableThirdpartyProduct(25, "Cashout");
     };
 
-
     $scope.EnableSabaVirtualSports = function (enable, id, disabled) {
         if (disabled) {
             return;
@@ -864,7 +846,6 @@
             try {
                 document.getElementById(id).checked = enable;
             } catch (e) {
-
             }
         }, 1, null);
     };
@@ -1042,7 +1023,6 @@
         $scope.RenderSupeOnMemberDCS(18);
     };
 
-
     $scope.SuperFishingWorld = function () {
         $scope.RenderSupeOnMemberDCS(24);
     };
@@ -1083,7 +1063,6 @@
     $scope.MasterVoidBridge = function () {
         $scope.RenderMasterOnMemberDCS(18);
     };
-
 
     $scope.MasterFishingWorld = function () {
         $scope.RenderMasterOnMemberDCS(24);

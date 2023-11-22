@@ -67,7 +67,7 @@
 
         internal List<ObjectInfo> EnableItems(DataSet customerStatusInfoDataset)
         {
-            var nonProductStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];           
+            var nonProductStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];
             var table3rdDCS = customerStatusInfoDataset.Tables[1];
             var enableItems = new List<ObjectInfo>
             {
@@ -321,7 +321,7 @@
         }
 
         internal List<ObjectInfo> Details(DataSet customerStatusInfoDataset)
-        {           
+        {
             var table3rdDCS = customerStatusInfoDataset.Tables[1];
             var details = new List<ObjectInfo>
             {
@@ -335,7 +335,6 @@
                 details.Add(new ObjectInfo("Transfer", "Transfer Condition"));
             }
 
-            AddParlayMaxPayoutLink(details);
             AddCasinoEditLink(table3rdDCS, details);
             AddVirtualSportsEditLink(table3rdDCS, details);
             return details;
@@ -361,12 +360,8 @@
             }
         }
 
-        private void AddParlayMaxPayoutLink(ICollection<ObjectInfo> details)
-        {
-            details.Add(new ObjectInfo("ParlayMaxPayout", "Parlay Max Payout"));
-        }
-
 #pragma warning disable S1541 // Methods and properties should not be too complex
+
         internal Setting AddProductSetting(
 #pragma warning restore S1541 // Methods and properties should not be too complex
             Setting setting,
@@ -391,8 +386,8 @@
                 return setting;
             }
 
-            if ((syncUpline || _roleId.IsSuper()) 
-                && productElement.Id != ProductConstants.SabaVirtualSports 
+            if ((syncUpline || _roleId.IsSuper())
+                && productElement.Id != ProductConstants.SabaVirtualSports
                 && productElement.Id != ProductConstants.Cashout)
             {
                 setting.Details.Add(

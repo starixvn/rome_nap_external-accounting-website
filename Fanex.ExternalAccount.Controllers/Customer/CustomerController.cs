@@ -7,19 +7,31 @@
     using CustomerSetting.Security.Authenticate;
     using DataAccess.Criteria.Customer;
     using DataAccess.Criteria.Customer.CustomerStatus;
+    using Fanex.CustomerSetting.Module.Core.Web;
+    using Fanex.ExternalAccount.Controllers.Authentication;
+    using Fanex.ExternalAccount.Controllers.Requests.Customer;
+    using Fanex.ExternalAccount.Controllers.ViewModels.Customer;
+    using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Service.TelegramBot;
     using Fanex.Logging.Extensions.Web;
+    using IBCUtils;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
     using PTEngine.BusinessObjects;
     using Service;
     using Service.Impl.Customer;
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Globalization;
     using System.Linq;
+    using System.Net.Http;
+    using System.Runtime.Caching;
+    using System.Text;
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
+    using TelegramBot.Client.Extensions;
     using Utilities;
     using ViewModel;
     using ViewModel.Customer;
@@ -27,8 +39,18 @@
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
     using Customer = PTEngine.BusinessObjects.Customer;
 
-    public partial class CustomerController : CustomerBase //DevSkim: ignore DS184626
+    public partial class CustomerController : BaseController //DevSkim: ignore DS184626
     {
+        private const string AssetsVersionCacheKey = "Customer:AssetsVersion";
+        private const string HashKeySessionKey = "Fanex.ExternalAccount.Controllers.Customer.CustomerController.HashKey";
+        private readonly string cdnUri = ConfigurationManager.AppSettings["Customer:CdnUri"];
+        private readonly int SystemId = int.Parse(ConfigurationManager.AppSettings["Customer:SystemId"]);
+
+        private readonly HttpClient httpClient = new HttpClient
+        {
+            BaseAddress = new Uri(ConfigurationManager.AppSettings["Customer:ApiUri"])
+        };
+
         private readonly AgentService _agentService = new AgentService();
         private readonly CustomerService _customerService = new CustomerService();
         private readonly PTEngine.Services.ICustomerService ptCustomerService = new PTEngine.Services.CustomerService();
@@ -37,6 +59,104 @@
         private readonly IIPInformatonService ipInformationService = new IPInformationService();
         private readonly ITelegramBotService _telegramChatbotService = new TelegramBotService();
         private readonly ISiteDBConfigService siteDBService = new SiteDBConfigService();
+        private readonly ProductStatusService productStatusService = new ProductStatusServiceImpl();
+
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
+        public async Task<ActionResult> CreateCustomer(int uplineId, byte uplineRoleId, string uplineUsername)
+        {
+            var viewModel = new CreateCustomerViewModel(
+                new AppConfiguration(GetApplicationPath(), SystemId),
+                cdnUri,
+                GetAssetsVersion(),
+                GetHashKey(),
+                uplineId,
+                uplineRoleId,
+                await GetSuggestUsername(uplineUsername, uplineRoleId));
+
+            return PartialViewBase(viewModel, HttpContext.IsDebuggingEnabled ? "CreateCustomer-Debug" : "CreateCustomer");
+        }
+
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
+        [AntiXSRFFilter]
+        public async Task<ActionResult> Create(CreateCustomerRequest request)
+        {
+            var generalInfo = request.GeneralInfo;
+            var rawPassword = Encryptor.Decrypt(generalInfo.Password, HttpContext.Session[HashKeySessionKey].ToString());
+            generalInfo.Password = Encryption.CfsEnCode(rawPassword);
+
+            var response = await PostAsStringAsync("customer", new
+            {
+                context = new { creatorId = AppSession.AccId, systemId = 1, ip = CurrentContext.Ip4Address, Mode = 1 },
+                settings = new { generalInfo, productGroups = JArray.Parse(request.ProductGroups) }
+            });
+            return Content(response);
+        }
+
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
+        public async Task<ActionResult> GetCustomerSetting(int custId, int roleId, int productGroupId = 1, string language = "en-US")
+            => Content(await httpClient.GetStringAsync($"customer?custId={custId}&roleId={roleId}&productGroupId={productGroupId}&language={language}"));
+
+        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
+        public async Task<ActionResult> CheckExistedCustomer(string username)
+            => Content(await httpClient.GetStringAsync($"customer/{username}/exist"));
+
+        public async Task<string> PostAsStringAsync(string requestUri, object payload = null)
+        {
+            using (var stringContent =
+                   new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"))
+            {
+                using (var request = new HttpRequestMessage(HttpMethod.Post, requestUri) { Content = stringContent })
+                {
+                    using (var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
+                               .ConfigureAwait(false))
+                    {
+                        response.EnsureSuccessStatusCode();
+                        return await response.Content.ReadAsStringAsync();
+                    }
+                }
+            }
+        }
+
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
+        private Task<string> GetSuggestUsername(string actorName, byte roleId)
+            => httpClient.PostAsJsonAsync<string>("customer/suggest-username", new { actorName, roleId });
+
+        private string GetApplicationPath()
+        {
+            var applicationPath = Response.ApplyAppPathModifier(Request.ApplicationPath);
+            if (!applicationPath.EndsWith("/"))
+            {
+                applicationPath += "/";
+            }
+
+            return applicationPath;
+        }
+
+        private string GetHashKey()
+        {
+            var hashKey = CaptchaUtil.GetCaptchaString(4);
+            HttpContext.Session.Add(HashKeySessionKey, hashKey);
+
+            return hashKey;
+        }
+
+        private static string GetAssetsVersion()
+        {
+            ObjectCache cache = MemoryCache.Default;
+            var version = cache.Get(AssetsVersionCacheKey) as string;
+            if (string.IsNullOrWhiteSpace(version))
+            {
+                version = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
+                cache.Set(AssetsVersionCacheKey, version, DateTime.Now.AddHours(4));
+            }
+            return version;
+        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public ActionResult IsValidUsername(string username)

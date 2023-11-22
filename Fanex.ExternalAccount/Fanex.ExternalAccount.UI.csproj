@@ -538,6 +538,10 @@
     <Content Include="assets\bundles\BonusDetail\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\customer\create.js" />
+    <Content Include="assets\bundles\customer\create.min.js">
+      <DependentUpon>create.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\mcwinlossdetail\index.js" />
     <Content Include="assets\bundles\mcwinlossdetail\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -1445,7 +1449,6 @@
     <Content Include="SpNames.CustDB.aws.xml">
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
     </Content>
-    <Content Include="Views\ParlayMaxPayout\Scripts\Index.js" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
@@ -2698,6 +2701,9 @@
     <Content Include="assets\styles\pages\totalbet\total-bet.scss" />
     <Content Include="assets\styles\pages\totalbet\multiselect-custom.scss" />
     <Content Include="assets\styles\pages\customer\mark-account.scss" />
+    <Content Include="assets\bundles\customer\create.min.js.map">
+      <DependentUpon>create.min.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\mcwinlossdetail\index.min.js.map">
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
@@ -2905,7 +2911,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\MaxPayoutSettingInformation\Index.cshtml" />
-    <Content Include="Views\ParlayMaxPayout\Index.cshtml" />
     <Content Include="Views\ProtectedStatus\OpenMultiple.cshtml" />
     <Content Include="Views\SuperWinLossDetailBySubGroup\Index.cshtml" />
     <Content Include="Views\SuperWinLossDetailBySubGroup\_NoPermission.cshtml" />
@@ -2913,6 +2918,8 @@
     <Content Include="Views\MarkAccountType\Index.cshtml" />
     <Content Include="Views\MarkAccountType\MarkAccount.cshtml" />
     <Content Include="Views\MarkAccountType\MultipleEditAccountType.cshtml" />
+    <Content Include="Views\Customer\CreateCustomer-Debug.cshtml" />
+    <Content Include="Views\Customer\CreateCustomer.cshtml" />
     <Content Include="Views\WinLossDetailMC\Index.cshtml" />
     <Content Include="Views\SuperWinLossDetailMCByPT\Index.cshtml" />
     <Content Include="Views\TotalBetMC\Index.cshtml" />

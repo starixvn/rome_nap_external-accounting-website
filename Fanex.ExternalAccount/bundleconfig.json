@@ -342,5 +342,12 @@
       "Scripts/Reports/OandaExchange/Fanex.ExtAcc.OandaExchange.js"
     ],
     "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/customer/create.js",
+    "inputFiles": [
+      "Scripts/aes.js"
+    ],
+    "sourceMap": true
   }
 ]
