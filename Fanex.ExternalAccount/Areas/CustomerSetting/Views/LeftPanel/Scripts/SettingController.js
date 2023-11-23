@@ -704,15 +704,6 @@
         $scope.EnableThirdpartyProduct(5, "Virtual Sports");
     };
 
-    $scope.EnableESports = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-        var esportTypeId = 43;
-        top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(16, "E-Sports", 800, 320, esportTypeId);
-    };
-
     $scope.getPopupHeight = function (landscapeHeight, portraitHeight) {
         var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
             landscapeHeight : portraitHeight;

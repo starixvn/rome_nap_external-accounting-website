@@ -47,8 +47,6 @@
         public const string CustomerList = "CustomerList";
         public const string AssociationAccountList = "AssociationAccountList";
         public const string Keno = "Keno";
-        public const string ShowEnableEsports = "ShowEnableEsports";
-        public const string EnableESports = "EnableESports";
         public const string OpenSuper = "OpenSuper";
         public const string Sportsbook2Setting = "Sportsbook2Setting";
         public const string LiveCasinoSetting = "LiveCasinoSetting";

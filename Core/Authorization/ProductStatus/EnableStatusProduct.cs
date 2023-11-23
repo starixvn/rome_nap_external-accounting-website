@@ -4,7 +4,6 @@
     {
         EnableVirtualSports = 5,
         EnableCasino = 6,
-        EnableESports = 16,
         EnableLiveCasino = 41,
         EnableVoidbridge = 18,
         EnableRNGLottery = 44,

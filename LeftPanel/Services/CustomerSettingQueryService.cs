@@ -91,10 +91,6 @@
             }
 
             AddDoubleCommStatus(nonProductStatusRow, enableItems);
-            if (!this.currentSession.IsBelongToSpecialGroups)
-            {
-                AddESportsStatus(table3rdDCS, enableItems);
-            }
 
             return enableItems;
         }
@@ -115,25 +111,6 @@
             }
 
             enableItems.Add(virtualSportsStatus);
-        }
-
-        private void AddESportsStatus(DataTable table3rdDCS, List<ObjectInfo> enableItems)
-        {
-            if (!authorizationService.IsAuthorized(_userId, eFunctions.ShowEnableEsports)
-                || ProductSettings.HideEsports)
-            {
-                return;
-            }
-
-            var eSportsStatus =
-                new ObjectInfo("EnableESports", !table3rdDCS.IsProductDisabled(ProductConstants.Sportsbook2), "E-Sports", "Enable E-Sports");
-
-            if (table3rdDCS.IsProductDisabledUpline(ProductConstants.Sportsbook2))
-            {
-                eSportsStatus = DisableStatus(eSportsStatus);
-            }
-
-            enableItems.Add(eSportsStatus);
         }
 
         private void AddDummyProductStatus(DataTable table3rdDCS, List<ObjectInfo> editItems, List<ObjectInfo> enableItems)
