@@ -7,9 +7,10 @@
     using CustomerSetting.Client40;
     using Data.Configuration;
     using Fanex.Caching;
-    using Fanex.ExternalAccount.ActivityTracking.Web;
     using Fanex.ExternalAccount.UI.Helpers;
-    using Fanex.Logging.Extensions.Database;
+    using Fanex.Logging.RabbitMQ;
+    using Fanex.Logging.Sentry.RavenClient;
+    using Fanex.Logging;
     using Logging.Extensions.Web;
     using ONEbook.UM;
     using ONEbook.UM.AspNetMVC.Filters;
@@ -25,6 +26,11 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Fanex.ExternalAccount.Core.Shared;
+    using SharpRaven;
+    using Fanex.Logging.Extensions;
+    using System.Linq;
+    using Fanex.Logging.Extensions.Database;
 
     public class MvcApplication : HttpApplication
     {
@@ -90,7 +96,30 @@
 
         protected void Application_Start()
         {
-            LoggingConfig.Init(new[] { "pass", "pwd", "security", "Password" }, getDbExceptionInfo: DatabaseInfoGetters.GetDbExceptionInfo);
+            var logEngines = new List<ILogEngine>();
+            if (!string.IsNullOrWhiteSpace(AppSettings.RabbitMQConnectionStrings))
+            {
+                logEngines.Add(new RabbitMQLogging(AppSettings.RabbitMQConnectionStrings));
+            }
+            if (!string.IsNullOrWhiteSpace(AppSettings.SentryBackendUrl))
+            {
+                logEngines.Add(new SentryLogging(new SentryEngineOptions
+                {
+                    Dsn = new Dsn(AppSettings.SentryBackendUrl)
+                })); ;
+            }
+            LogManager
+                .SetDefaultLogCategory(AppSettings.LoggingDefaultCategory)
+                .Use(logEngines);
+
+            ExceptionHandler
+                .UseConfig(new LoggingConfiguration()
+                .IgnoreException<DivideByZeroException>()
+                .HideSensitiveInfo(new List<string> { "pass", "pwd", "security", "Password" })
+                .GetHttpHeaderInfo()
+                .GetHttpSessionInfo())
+                .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
+
             AreaRegistration.RegisterAllAreas();
             CustomerSettingRegistration.Init();
 

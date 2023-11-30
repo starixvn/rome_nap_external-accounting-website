@@ -105,12 +105,6 @@
     <Reference Include="Enums.NET, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7ea1c1650d506225, processorArchitecture=MSIL">
       <HintPath>..\packages\Enums.NET.4.0.1\lib\net45\Enums.NET.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.ActivityTracking, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ActivityTracking.1.0.0.3\lib\net40\Fanex.ActivityTracking.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.ActivityTracking.Web, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ActivityTracking.Web.1.0.0.3\lib\net40\Fanex.ActivityTracking.Web.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.Caching, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Caching.2.2.2\lib\net461\Fanex.Caching.dll</HintPath>
     </Reference>
@@ -2938,10 +2932,6 @@
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{3521A845-D2BF-4916-B02C-0B0E02F774DB}</Project>
       <Name>Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.ExternalAccount.ActivityTracking\Fanex.ExternalAccount.ActivityTracking.csproj">
-      <Project>{e507530a-e438-48a5-98ef-b1291c29e34c}</Project>
-      <Name>Fanex.ExternalAccount.ActivityTracking</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
       <Project>{4C610986-FD5A-4729-A5C7-747667A0EF9E}</Project>

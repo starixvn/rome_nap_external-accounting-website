@@ -12,8 +12,6 @@
 
     public interface ICustomerService
     {
-        bool IsValidUsername(string userName, int uplineId);
-
         bool IsArchivedCustId(int custId);
 
         Customer UserInfo(int custId, byte settingStatus);
@@ -27,8 +25,6 @@
         Result ResetPassword(ResetPasswordCriteria criteria);
 
         Result ConfigDoubleComm(UpdateDoubleCommCriteria criteria);
-
-        Result CheckNewCustomerIsReachLimitation(CheckNewCustomerLimitationCriteria criteria);
 
         void KickoutCustomer(int custId, byte roleId, string ip, string mode = null);
 

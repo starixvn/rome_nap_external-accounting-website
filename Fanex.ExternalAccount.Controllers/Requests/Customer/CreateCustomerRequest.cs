@@ -1,4 +1,4 @@
-﻿using Fanex.ExternalAccount.Controllers.ViewModels.Customer;
+﻿using Fanex.Customer.Client.Models;
 
 namespace Fanex.ExternalAccount.Controllers.Requests.Customer
 {

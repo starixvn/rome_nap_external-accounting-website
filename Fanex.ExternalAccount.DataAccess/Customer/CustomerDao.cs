@@ -17,8 +17,8 @@
     using DTO.Customer;
     using DTO.Customer.Status;
     using Fanex.ExternalAccount.Utilities;
+    using Fanex.ExternalAccount.ViewModel.Customer.Suspend;
     using Interface.Customer;
-    using ViewModel.Customer.Suspend;
 
     public class CustomerDao : DAOBase, ICustomerDao
     {
@@ -43,22 +43,6 @@
 
                 return null;
             }
-        }
-
-        public bool IsValidUsername(string userName, int uplineId)
-        {
-            if (string.IsNullOrEmpty(userName))
-            {
-                return false;
-            }
-
-#pragma warning disable S1192 // String literals should not be duplicated
-            var parameters = new Hashtable { { "username", userName }, { "isexists", false } };
-#pragma warning restore S1192 // String literals should not be duplicated
-
-            var result = DbHelper.ExecuteDbResult("Age_CustomerCheckExists", parameters);
-
-            return !(bool)result.Outputs["isexists"];
         }
 
         public bool IsArchivedCustId(int custId)
@@ -153,21 +137,6 @@
                 result.ResultSet);
         }
 
-        public Result CheckNewCustomerIsReachLimitation(CheckNewCustomerLimitationCriteria criteria)
-        {
-            var result = new Result();
-            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                objDb.ExecuteNonQuery();
-                var outputs = objDb.GetOuputParams();
-                result.ErrorCode = outputs["errcode"].ToString();
-                result.ErrorMessage = outputs["errmsg"].ToString();
-            }
-
-            return result;
-        }
-
         public List<SingleUpdateAffectedDownline> GetSingleUpdateSuspendAffectedDownlines(GetSingleSuspendCustomerInfoCriteria criteria)
         {
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
@@ -189,16 +158,6 @@
             }
         }
 
-        public Result SuspendCustomer(UpdateSuspendCustomerCriteria criteria)
-        {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                objDb.ExecuteNonQuery(criteria.GetSpParams());
-                var outputs = objDb.GetOuputParams();
-                return new Result(outputs["errcode"].ToString(), outputs["errmsg"].ToString());
-            }
-        }
-
         public SuspendedCustomerDetailViewModel GetSuspendDownlinesDetail(GetSuspendCustomerDetailInfoCriteria criteria)
         {
             var listDownlines = new List<UnsuspendDownlineDetail>();
@@ -213,6 +172,16 @@
                 reader.Close();
                 var outputs = objDb.GetOuputParams();
                 return new SuspendedCustomerDetailViewModel(Utilities.Utils.ToInt32(outputs["totalrows"]), listDownlines);
+            }
+        }
+
+        public Result SuspendCustomer(UpdateSuspendCustomerCriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.ExecuteNonQuery(criteria.GetSpParams());
+                var outputs = objDb.GetOuputParams();
+                return new Result(outputs["errcode"].ToString(), outputs["errmsg"].ToString());
             }
         }
 

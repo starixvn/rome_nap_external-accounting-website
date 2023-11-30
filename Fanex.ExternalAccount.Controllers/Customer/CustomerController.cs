@@ -1,5 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Linq;
+    using System.Runtime.Caching;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
     using Core.Authorization;
     using Core.Base;
     using Core.Context;
@@ -7,58 +15,38 @@
     using CustomerSetting.Security.Authenticate;
     using DataAccess.Criteria.Customer;
     using DataAccess.Criteria.Customer.CustomerStatus;
+    using Fanex.Customer.Client.NETFramework;
     using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Controllers.Authentication;
     using Fanex.ExternalAccount.Controllers.Requests.Customer;
     using Fanex.ExternalAccount.Controllers.ViewModels.Customer;
     using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Service.TelegramBot;
-    using Fanex.Logging.Extensions.Web;
     using IBCUtils;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
     using PTEngine.BusinessObjects;
     using Service;
     using Service.Impl.Customer;
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Globalization;
-    using System.Linq;
-    using System.Net.Http;
-    using System.Runtime.Caching;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Web;
-    using System.Web.Mvc;
-    using TelegramBot.Client.Extensions;
     using Utilities;
     using ViewModel;
     using ViewModel.Customer;
     using ViewModel.Customer.Suspend;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
-    using Customer = PTEngine.BusinessObjects.Customer;
+    using CustomerClient = Fanex.Customer.Client;
 
     public partial class CustomerController : BaseController //DevSkim: ignore DS184626
     {
         private const string AssetsVersionCacheKey = "Customer:AssetsVersion";
         private const string HashKeySessionKey = "Fanex.ExternalAccount.Controllers.Customer.CustomerController.HashKey";
-        private readonly string cdnUri = ConfigurationManager.AppSettings["Customer:CdnUri"];
-        private readonly int SystemId = int.Parse(ConfigurationManager.AppSettings["Customer:SystemId"]);
+        private readonly string cdnUri = ConfigurationManager.AppSettings["Fanex.Customer:CdnUri"];
+        private readonly int SystemId = int.Parse(ConfigurationManager.AppSettings["Fanex.Customer:SystemId"]);
 
-        private readonly HttpClient httpClient = new HttpClient
-        {
-            BaseAddress = new Uri(ConfigurationManager.AppSettings["Customer:ApiUri"])
-        };
+        private readonly CustomerClient.Services.ICustomerService customerServiceClient = new CustomerClient.Services.CustomerService(new CustomerClient.Configurations.CustomerClientConfiguration().Initialize());
 
-        private readonly AgentService _agentService = new AgentService();
         private readonly CustomerService _customerService = new CustomerService();
-        private readonly PTEngine.Services.ICustomerService ptCustomerService = new PTEngine.Services.CustomerService();
         private readonly MasterService _masterService = new MasterService();
         private readonly SuperService _superService = new SuperService();
         private readonly IIPInformatonService ipInformationService = new IPInformationService();
         private readonly ITelegramBotService _telegramChatbotService = new TelegramBotService();
-        private readonly ISiteDBConfigService siteDBService = new SiteDBConfigService();
         private readonly ProductStatusService productStatusService = new ProductStatusServiceImpl();
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
@@ -66,6 +54,12 @@
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
         public async Task<ActionResult> CreateCustomer(int uplineId, byte uplineRoleId, string uplineUsername)
         {
+            var limitedRulesResult = await customerServiceClient.CheckAllLimitedRules(uplineId, uplineRoleId, uplineUsername);
+            if (limitedRulesResult.IsFailed)
+            {
+                return LimitationPage(limitedRulesResult.Message);
+            }
+
             var viewModel = new CreateCustomerViewModel(
                 new AppConfiguration(GetApplicationPath(), SystemId),
                 cdnUri,
@@ -88,44 +82,24 @@
             var rawPassword = Encryptor.Decrypt(generalInfo.Password, HttpContext.Session[HashKeySessionKey].ToString());
             generalInfo.Password = Encryption.CfsEnCode(rawPassword);
 
-            var response = await PostAsStringAsync("customer", new
-            {
-                context = new { creatorId = AppSession.AccId, systemId = 1, ip = CurrentContext.Ip4Address, Mode = 1 },
-                settings = new { generalInfo, productGroups = JArray.Parse(request.ProductGroups) }
-            });
+            var response = await customerServiceClient.CreateCustomer(new CustomerClient.Params.CreateCustomerParam(
+                generalInfo, request.ProductGroups, AppSession.AccId, 0, CurrentContext.Ip4Address, CustomerClient.Constants.CreationModes.FullMode));
             return Content(response);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public async Task<ActionResult> GetCustomerSetting(int custId, int roleId, int productGroupId = 1, string language = "en-US")
-            => Content(await httpClient.GetStringAsync($"customer?custId={custId}&roleId={roleId}&productGroupId={productGroupId}&language={language}"));
+        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId)
+            => Content(await customerServiceClient.GetCustomerSetting(custId, roleId));
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public async Task<ActionResult> CheckExistedCustomer(string username)
-            => Content(await httpClient.GetStringAsync($"customer/{username}/exist"));
-
-        public async Task<string> PostAsStringAsync(string requestUri, object payload = null)
-        {
-            using (var stringContent =
-                   new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"))
-            {
-                using (var request = new HttpRequestMessage(HttpMethod.Post, requestUri) { Content = stringContent })
-                {
-                    using (var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
-                               .ConfigureAwait(false))
-                    {
-                        response.EnsureSuccessStatusCode();
-                        return await response.Content.ReadAsStringAsync();
-                    }
-                }
-            }
-        }
+            => Json(await customerServiceClient.CheckExistedCustomer(username), JsonRequestBehavior.AllowGet);
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
         private Task<string> GetSuggestUsername(string actorName, byte roleId)
-            => httpClient.PostAsJsonAsync<string>("customer/suggest-username", new { actorName, roleId });
+            => customerServiceClient.GetSuggestUsername(actorName, roleId);
 
         private string GetApplicationPath()
         {
@@ -156,289 +130,6 @@
                 cache.Set(AssetsVersionCacheKey, version, DateTime.Now.AddHours(4));
             }
             return version;
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
-        public ActionResult IsValidUsername(string username)
-        {
-            var isValidUser = _customerService.IsValidUsername(username.Trim(), CurrentSession.CustId);
-
-            return Json(isValidUser);
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public ActionResult SuperAddNewMaster(int custId, string username)
-        {
-            var reachLimitationResult = CheckReachLimitationResult(custId, Role.Super, username);
-
-            if (!reachLimitationResult.IsSuccess)
-            {
-                return LimitationPage(reachLimitationResult.ErrorMessage);
-            }
-
-            var limitNewDownlineResult = _customerService.CheckLimitNewDownline(custId, Role.Super);
-
-            if (!limitNewDownlineResult.IsSuccess)
-            {
-                return LimitationPage(limitNewDownlineResult.ErrorMessage);
-            }
-
-            return PartialViewBase(_customerService.IsArchivedCustId(custId));
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        [AntiXSRFFilter]
-        public ActionResult SuperAddNewMasterGet(int custId, int parentId, string parentUsername, int parentCurrencyId)
-        {
-            var context = new RequestContext
-            {
-                AdminId = parentId,
-                TargetCustId = custId,
-                CustId = parentId,
-                FormId = FormType.Add,
-                IP = CurrentContext.Ip4Address,
-                Language = "En",
-                LangKey = "E",
-                RoleId = (int)CustomerRole.Super,
-                TargetRoleId = (int)CustomerRole.Master,
-                SiteName = SiteName,
-                SubAccId = 0,
-                UserName = parentUsername.ToUpper(CultureInfo.InvariantCulture)
-            };
-
-            ICustomer customer = null;
-            int defaultMinBetValue = 0;
-            try
-            {
-                customer = ptCustomerService.GetCustomerForAddNewMaster(context);
-                customer.CurrencyId = parentCurrencyId;
-                defaultMinBetValue = GetDefaultMinBetValue();
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-
-            return JsonBase(new { context, customer, defaultMinBetValue });
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult SuperAddNewMasterPost(int parentId, string txtCustomerObject)
-        {
-            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-
-            var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
-            var requestContext = new RequestContext
-            {
-                CustId = parentId,
-                TargetCustId = 0,
-                RoleId = (int)CustomerRole.Super,
-                TargetRoleId = (int)CustomerRole.Master,
-                FormId = FormType.Add,
-                SubAccId = 0,
-                AdminId = CurrentSession.UserId,
-                IP = CurrentContext.Ip4Address,
-                Language = "En",
-                SystemId = (byte)Config.SystemId,
-                SettingStatus = Config.SettingStatus
-            };
-
-            var result = ptCustomerService.AddNewMaster(customer, requestContext, out int masterId);
-
-            return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = masterId });
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public ActionResult MasterAddNewAgent(int custId, string username)
-        {
-            var reachLimitationResult = CheckReachLimitationResult(custId, Role.Master, username);
-
-            if (!reachLimitationResult.IsSuccess)
-            {
-                return LimitationPage(reachLimitationResult.ErrorMessage);
-            }
-
-            var limitNewDownlineResult = _customerService.CheckLimitNewDownline(custId, Role.Master);
-
-            if (!limitNewDownlineResult.IsSuccess)
-            {
-                return LimitationPage(limitNewDownlineResult.ErrorMessage);
-            }
-
-            return PartialViewBase(_customerService.IsArchivedCustId(custId));
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        [AntiXSRFFilter]
-        public ActionResult MasterAddNewAgentGet(int custId, int parentId, string parentUsername, int parentCurrencyId)
-        {
-            var context = new RequestContext
-            {
-                AdminId = parentId,
-                TargetCustId = custId,
-                CustId = parentId,
-                FormId = FormType.Add,
-                IP = CurrentContext.Ip4Address,
-                Language = "En",
-                LangKey = "E",
-                RoleId = (int)CustomerRole.Master,
-                TargetRoleId = (int)CustomerRole.Agent,
-                SiteName = SiteName,
-                SubAccId = 0,
-                UserName = parentUsername.ToUpper(CultureInfo.InvariantCulture)
-            };
-
-            ICustomer customer = null;
-            int defaultMinBetValue = 0;
-            try
-            {
-                customer = ptCustomerService.GetCustomerForAddNewAgent(context);
-                customer.CurrencyId = parentCurrencyId;
-                defaultMinBetValue = GetDefaultMinBetValue();
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-
-            return JsonBase(new { context, customer, defaultMinBetValue });
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult MasterAddNewAgentPost(int parentId, string txtCustomerObject)
-        {
-            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-
-            var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
-            var requestContext = new RequestContext
-            {
-                CustId = parentId,
-                TargetCustId = 0,
-                RoleId = (int)CustomerRole.Master,
-                TargetRoleId = (int)CustomerRole.Agent,
-                FormId = FormType.Add,
-                SubAccId = 0,
-                AdminId = CurrentSession.UserId,
-                IP = CurrentContext.Ip4Address,
-                Language = "En",
-                SystemId = (byte)Config.SystemId,
-                SettingStatus = Config.SettingStatus
-            };
-
-            var result = ptCustomerService.AddNewAgent(customer, requestContext, out int agentId);
-
-            return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = agentId });
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public ActionResult AgentAddNewMember(int custId, string username)
-        {
-            var limitedMemberBySuperResult = CheckMemberLimitedBySuperResult(custId);
-
-            if (!limitedMemberBySuperResult.IsSuccess)
-            {
-                return LimitationPage(limitedMemberBySuperResult.ErrorMessage);
-            }
-
-            var reachLimitationResult = CheckReachLimitationResult(custId, Role.Agent, username);
-            if (!reachLimitationResult.IsSuccess)
-            {
-                return LimitationPage(reachLimitationResult.ErrorMessage);
-            }
-
-            var limitNewDownlineResult = _customerService.CheckLimitNewDownline(custId, Role.Agent);
-
-            if (!limitNewDownlineResult.IsSuccess)
-            {
-                return LimitationPage(limitNewDownlineResult.ErrorMessage);
-            }
-
-            return PartialViewBase(_customerService.IsArchivedCustId(custId));
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        [AntiXSRFFilter]
-        public ActionResult AgentAddNewMemberGet(int custId, int parentId, string parentUsername, int parentCurrencyId)
-        {
-            var context = new RequestContext
-            {
-                AdminId = parentId,
-                TargetCustId = custId,
-                CustId = parentId,
-                FormId = FormType.Add,
-                IP = CurrentContext.Ip4Address,
-                Language = "En",
-                LangKey = "E",
-                RoleId = (int)CustomerRole.Agent,
-                TargetRoleId = (int)CustomerRole.Member,
-                SiteName = SiteName,
-                SubAccId = 0,
-                UserName = parentUsername.ToUpper(CultureInfo.InvariantCulture)
-            };
-
-            ICustomer customer = null;
-            int defaultMinBetValue = 0;
-            try
-            {
-                customer = ptCustomerService.GetCustomerForAddNewMember(context);
-                customer.CurrencyId = parentCurrencyId;
-                defaultMinBetValue = GetDefaultMinBetValue();
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-
-            return JsonBase(new { context, customer, defaultMinBetValue });
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult AgentAddNewMemberPost(int parentId, string txtCustomerObject)
-        {
-            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-
-            var customer = JsonConvert.DeserializeObject<Customer>(txtCustomerObject, settings);
-            var requestContext = new RequestContext
-            {
-                CustId = parentId,
-                TargetCustId = 0,
-                RoleId = (int)CustomerRole.Agent,
-                TargetRoleId = (int)CustomerRole.Member,
-                FormId = FormType.Add,
-                SubAccId = 0,
-                AdminId = CurrentSession.UserId,
-                IP = CurrentContext.Ip4Address,
-                Language = "En",
-                SystemId = (byte)Config.SystemId,
-                SettingStatus = Config.SettingStatus
-            };
-            var siteDB = siteDBService.GetSiteDBConfig(customer.SRecommend);
-            customer.DBServerIp = siteDB.AGIP;
-            customer.SiteDBGroupId = siteDB.SiteDBGroupID;
-            var result = ptCustomerService.AddNewMember(customer, requestContext, out int memberId);
-
-            return JsonBase(new { result.ErrorCode, result.ErrorMessage, CustId = memberId });
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
@@ -659,19 +350,5 @@
 
         private ActionResult LimitationPage(string message)
             => PartialView("~/Views/Customer/LimitMemberCreation.cshtml", message);
-
-        private DTO.Result CheckReachLimitationResult(int custId, int roleId, string username)
-            => _customerService.CheckNewCustomerIsReachLimitation(new CheckNewCustomerLimitationCriteria
-            {
-                CustId = custId,
-                RoleId = roleId,
-                Username = username
-            });
-
-        private DTO.Result CheckMemberLimitedBySuperResult(int custId)
-            => _agentService.IsLimitMemberCreationBySuper(new CheckMemberCreationCriteria
-            {
-                AgentId = custId
-            });
     }
 }
