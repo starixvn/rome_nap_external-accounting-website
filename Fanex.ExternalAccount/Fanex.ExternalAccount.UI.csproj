@@ -467,9 +467,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Error.resx</DependentUpon>
     </Compile>
-    <Content Include="App_Data\activitytracking.mnl.json">
-      <DependentUpon>activitytracking.json</DependentUpon>
-    </Content>
     <Content Include="App_Data\activitytracking.production.json">
       <DependentUpon>activitytracking.json</DependentUpon>
     </Content>
@@ -1238,10 +1235,6 @@
       <DependentUpon>appSettings.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configurations\appSettings.mnl.config">
-      <SubType>Designer</SubType>
-      <DependentUpon>appSettings.config</DependentUpon>
-    </Content>
     <Content Include="Configurations\appSettings.production.config">
       <SubType>Designer</SubType>
       <DependentUpon>appSettings.config</DependentUpon>
@@ -1265,10 +1258,6 @@
       <SubType>Designer</SubType>
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
-    <Content Include="Configurations\connectionStrings.mnl.config">
-      <SubType>Designer</SubType>
-      <DependentUpon>connectionStrings.config</DependentUpon>
-    </Content>
     <Content Include="Configurations\connectionStrings.production.config">
       <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
@@ -1285,9 +1274,6 @@
     </Content>
     <Content Include="Configurations\InternalUrlSection.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configurations\InternalUrlSection.mnl.config">
-      <DependentUpon>InternalUrlSection.config</DependentUpon>
     </Content>
     <Content Include="Configurations\InternalUrlSection.Production.config">
       <DependentUpon>InternalUrlSection.config</DependentUpon>
@@ -1346,6 +1332,9 @@
     <Content Include="Scripts\ProblemAccount\Fanex.ExtAcc.ProblemAccount.js" />
     <Content Include="Scripts\Manage\Fanex.ExtAcc.SubGroup.js" />
     <Content Include="Scripts\TotalBet\Fanex.ExtAcc.TotalBet.js" />
+    <Content Include="SpNames.CustDB.DR.xml">
+      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
+    </Content>
     <Content Include="Views\Customer\MultipleOpenCustomer.cshtml" />
     <Content Include="Views\Customer\SingleOpenCustomer.cshtml" />
     <Content Include="SpNames.CustDB.aws.xml">
@@ -1636,10 +1625,6 @@
     <Content Include="Scripts\_Libs\PopUp\dialogbox.js" />
     <Content Include="Scripts\_Libs\PopUp\dialogbox.js" />
     <Content Include="Images\Content\view.png" />
-    <Content Include="SpNames.CustDB.mnl.xml">
-      <SubType>Designer</SubType>
-      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
-    </Content>
     <Content Include="SpNames.CustDB.production.xml">
       <SubType>Designer</SubType>
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
@@ -2629,11 +2614,19 @@
     <Content Include="Configurations\SecurityCodeSection.uat.config">
       <DependentUpon>SecurityCodeSection.config</DependentUpon>
     </Content>
-    <None Include="Content\Images\Thumbs.db" />
-    <Content Include="Web.ng2.config">
-      <SubType>Designer</SubType>
-      <DependentUpon>Web.config</DependentUpon>
+    <Content Include="Configurations\connectionStrings.DR.config">
+      <DependentUpon>connectionStrings.config</DependentUpon>
     </Content>
+    <Content Include="Configurations\InternalUrlSection.DR.config">
+      <DependentUpon>InternalUrlSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\SecurityCodeSection.DR.config">
+      <DependentUpon>SecurityCodeSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\appSettings.DR.config">
+      <DependentUpon>appSettings.config</DependentUpon>
+    </Content>
+    <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.production.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
@@ -2677,10 +2670,6 @@
     <Content Include="IbcKeys\ibckeydec.snk" />
     <Content Include="IbcKeys\ibcpkey.snk" />
     <Content Include="IbcKeys\Web.config" />
-    <Content Include="Web.mnl.config">
-      <SubType>Designer</SubType>
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="deployment.ignore" />
     <Content Include="IbcKeys\ibckey.snk" />
     <Content Include="Fanex.ExternalAccount.UI.ruleset" />
@@ -2786,6 +2775,10 @@
     <Content Include="Views\MarkAccountType\Index.cshtml" />
     <Content Include="Views\MarkAccountType\MarkAccount.cshtml" />
     <Content Include="Views\MarkAccountType\MultipleEditAccountType.cshtml" />
+    <Content Include="Web.DR.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailBySubGroup\Fanex.ExtAcc.SuperWinLossDetailBySubGroup.ts" />
   </ItemGroup>
   <ItemGroup>

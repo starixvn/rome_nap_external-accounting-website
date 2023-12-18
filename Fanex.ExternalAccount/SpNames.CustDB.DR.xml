@@ -4,7 +4,7 @@
     <Setting Key="SiteDB3_Dot_BalanceCreditInitialize" SpName="Dot_BalanceCreditInitialize" DbName="SiteDB.bodb02.bodbExtAccNet" />
     <Setting Key="SiteDB3_Dot_BalanceDebitRemove" SpName="Dot_BalanceDebitRemove" DbName="SiteDB.bodb02.bodbExtAccNet" />
     <Setting Key="SiteDB3_Dot_BalanceCreditRemove" SpName="Dot_BalanceCreditRemove" DbName="SiteDB.bodb02.bodbExtAccNet" />
-    <Setting Key="SiteDB3_Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="SiteDB.bodb02.bodbExtAccNet" />
+    <Setting Key="SiteDB3_Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="SiteDB.bodb02.bodbExtAccNet" />    
     <Setting Key="SiteDB3_Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="SiteDB.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="SiteDB3_Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="SiteDB.BODB02.bodbExtAccNet" Plain="0" />
     <Setting Key="SiteDB3_PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="SiteDB.bodb02.bodbExtAccNet" Plain="0" />
@@ -14,10 +14,10 @@
     <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Login">
-    <Setting Key="EAS_UserLogin" SpName="EAS_UserLogin_mnl" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_UserLogout" SpName="EAS_UserLogout_mnl" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_UserCheckIn" SpName="EAS_UserCheckIn_mnl" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_UserRecheckIn" SpName="EAS_UserRecheckIn_mnl" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_UserLogin" SpName="EAS_UserLogin" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_UserLogout" SpName="EAS_UserLogout" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_UserCheckIn" SpName="EAS_UserCheckIn" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_UserRecheckIn" SpName="EAS_UserRecheckIn" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_UserCheckPermission" SpName="EAS_UserCheckPermission" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Report">
