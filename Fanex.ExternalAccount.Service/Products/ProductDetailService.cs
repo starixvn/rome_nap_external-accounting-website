@@ -120,6 +120,7 @@
             }
 
             canView[ProductConstants.Sportsbook] = true;
+            canView[ProductConstants.Live22] = true;
             return canView;
         }
 

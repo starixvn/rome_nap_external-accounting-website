@@ -39,6 +39,7 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int Cashout = 25;
         public const int FGG = 70;
         public const int MGRNGCasino = 73;
+        public const int Live22 = 79;
 
         public const int DummyRNGProductId = 53;
 
