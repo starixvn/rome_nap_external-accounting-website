@@ -70,12 +70,13 @@
             return null;
         }
 
-        public Result EditTransferOption(string transferOption, int custId, int userId, string ip, int subAccId, string language)
+        public DbResult EditTransferOption(string transferOption, int autoTransferCondition, int custId, int userId, string ip, int subAccId, string language)
         {
             var param = new Hashtable
             {
                 {"custid", custId},
                 {"transferoption", transferOption},
+                {"turnoffautotransfer", autoTransferCondition},
                 {"userid", userId},
                 {"ip", ip},
                 {"subaccid", subAccId},
@@ -86,8 +87,7 @@
             };
 
             var result = DbHelper.ExecuteDbResult("EAS_CustomerUpdTransferOption", param);
-
-            return new Result(result.Outputs["errcode"].ToString(), result.Outputs["errmsg"].ToString(), result.ResultSet);
+            return result;
         }
     }
 }

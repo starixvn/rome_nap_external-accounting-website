@@ -13,6 +13,6 @@
 
         IEnumerable<int> GetSuperInAutomateTransfer(int custId);
 
-        Result EditTransferOption(string transferOption, int custId, int userId, string ip, int subAccId, string language);
+        Result EditTransferOption(string transferOption, int autoTransferCondition, int custId, int userId, string ip, int subAccId, string language);
     }
 }

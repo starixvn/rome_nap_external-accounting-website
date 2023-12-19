@@ -32,6 +32,9 @@
     <CodeAnalysisRuleSet>Core.Shared.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fanex.Data, Version=0.5.404.59, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Data.0.5.404.59\lib\net40\Fanex.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.RemotingRef, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.RemotingRef.1.1.1\lib\net461\Fanex.RemotingRef.dll</HintPath>
       <Private>True</Private>
@@ -106,6 +109,7 @@
     <Compile Include="CustomerDataRangeType.cs" />
     <Compile Include="eFunctions.cs" />
     <Compile Include="Extensions\DateTimeExtension.cs" />
+    <Compile Include="Extensions\ObjectDbExtensions.cs" />
     <Compile Include="PagingConstants.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductSettings.cs" />

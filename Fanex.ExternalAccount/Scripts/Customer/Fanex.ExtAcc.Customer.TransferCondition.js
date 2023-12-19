@@ -23,6 +23,7 @@ Fanex.ExtAcc.Customer.TransferCondition = {
             }
 
             $('input:radio[name="Transfer.Weekly"]').attr("checked", false);
+            $('.rowTransferCondition.note').addClass('hidden');
         });
 
         $('#Transfer_Weekly').bind('click', function () {
@@ -31,6 +32,7 @@ Fanex.ExtAcc.Customer.TransferCondition = {
             }
 
             $('input:radio[name="Transfer.Daily"]').attr("checked", false);
+            $('.rowTransferCondition.note').removeClass('hidden');
         });
 
         $self = this;
@@ -82,7 +84,12 @@ Fanex.ExtAcc.Customer.TransferCondition = {
             return;
         }
 
-        $self.ShowConfirm(titles[1], titles[2], 400, 150, function () {
+        var autoTransferCondition = $('.rad-change-affect:checked').val();
+
+        var message = titles[2] +
+            ($('.rowTransferCondition.note').hasClass('hidden') ? "" : '<br />' + messages[autoTransferCondition == "0" ? 0 : 1]);
+
+        $self.ShowConfirm(titles[1], message, 400, 180, function () {
             if ($('input:radio[name="Transfer.Weekly"]').is(':checked')) {
                 for (var i = 0; i < Fanex.ExtAcc.Customer.TransferCondition.arrWeekly.length; i++) {
                     if ($(Fanex.ExtAcc.Customer.TransferCondition.arrWeekly[i]).is(':checked')) {
@@ -102,7 +109,8 @@ Fanex.ExtAcc.Customer.TransferCondition = {
             var data = {
                 transferOption: str,
                 custId: custId,
-                groupName: Fanex.ExtAcc.Customer.GroupName().groupName
+                groupName: Fanex.ExtAcc.Customer.GroupName().groupName,
+                autoTransferCondition: autoTransferCondition
             };
 
             Fanex.ExtAcc.BlockUI();

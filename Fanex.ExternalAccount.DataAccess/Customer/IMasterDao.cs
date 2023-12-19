@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Data;
-    using Fanex.ExternalAccount.DTO;
+    using Fanex.Data.DNAide;
     using Fanex.ExternalAccount.DTO.Customer;
 
     public interface IMasterDao
@@ -13,6 +13,6 @@
 
         Transfer GetTransferOption(int custId);
 
-        Result EditTransferOption(string transferOption, int custId, int userId, string ip, int subAccId, string language);
+        DbResult EditTransferOption(string transferOption, int autoTransferCondition, int custId, int userId, string ip, int subAccId, string language);
     }
 }

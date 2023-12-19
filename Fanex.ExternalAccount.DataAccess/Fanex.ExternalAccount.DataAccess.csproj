@@ -113,6 +113,9 @@
       <HintPath>..\packages\NetUtility.4.5.6325.30210\lib\net40\NetUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Libraries.AOP.1.0.4218.28561\lib\net40\Sunplus.Libraries.AOP.dll</HintPath>
       <Private>True</Private>
@@ -131,7 +134,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoTransfer\AutoTransferDao.cs" />
     <Compile Include="Belonging\BelongingDataAccess.cs" />
+    <Compile Include="Criteria\AutoTransfer\AssignPersonalMessageCriteria.cs" />
+    <Compile Include="Criteria\AutoTransfer\InsertPersonalMessageCriteria.cs" />
+    <Compile Include="Criteria\AutoTransfer\InsertToastMessageCriteria.cs" />
+    <Compile Include="Criteria\AutoTransfer\GetAutoTransferJobStatusCriteria.cs" />
     <Compile Include="Criteria\Belonging\CheckBelongingCriteria.cs" />
     <Compile Include="Criteria\Customer\AssociationAccount\GetAssociationAccountCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckMultipleSupersBetSettingCriteria.cs" />
@@ -212,7 +220,6 @@
     <Compile Include="Customer\AgentDao.cs" />
     <Compile Include="Customer\MasterDao.cs" />
     <Compile Include="Customer\SuperDao.cs" />
-    <Compile Include="GlobalSuppressions2.cs" />
     <Compile Include="Login\ILoginDao.cs" />
     <Compile Include="Login\LoginDao.cs" />
     <Compile Include="OTP\CustomerOtpDataAccess.cs" />

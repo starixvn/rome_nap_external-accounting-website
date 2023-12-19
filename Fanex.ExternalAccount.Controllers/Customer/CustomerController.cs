@@ -444,9 +444,9 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult EditTransferConditionPost(string transferOption, int custId)
+        public ActionResult EditTransferConditionPost(string transferOption, int autoTransferCondition, int custId)
         {
-            var result = _masterService.EditTransferOption(transferOption, custId, CurrentSession.CustId,
+            var result = _masterService.EditTransferOption(transferOption, autoTransferCondition, custId, CurrentSession.CustId,
                 CurrentContext.Ip4Address, 0, "E");
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, result.IsSuccess });
