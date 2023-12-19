@@ -67,7 +67,7 @@ Fanex.ExtAcc.Customer.TransferCondition = {
             }
 
             if (!isSelect) {
-                Validators.show($('#Transfer.Mon').get(0), titles[4], -10, 7, -40, 35, 15, 5000);
+                Validators.show($('#Transfer_Mon').get(0), titles[4], -10, 7, -40, 35, 15, 5000);
 
                 return false;
             }
