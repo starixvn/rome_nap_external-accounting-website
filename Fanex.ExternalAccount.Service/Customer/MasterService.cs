@@ -48,6 +48,12 @@
 
             var dbResult = _dao.EditTransferOption(transferOption, autoTransferCondition, custId, userId, ip, subAccId, language);
             var result = new Result(dbResult.Outputs["errcode"].ToString(), dbResult.Outputs["errmsg"].ToString(), dbResult.ResultSet);
+
+            if (int.Parse(result.ErrorCode) != 0)
+            {
+                return result;
+            }
+
             var rows = dbResult.ResultSet.Tables[0].Rows;
 
             if (rows.Count == 0)
