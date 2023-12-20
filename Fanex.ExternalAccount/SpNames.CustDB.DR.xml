@@ -14,10 +14,10 @@
     <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Login">
-    <Setting Key="EAS_UserLogin" SpName="EAS_UserLogin" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_UserLogout" SpName="EAS_UserLogout" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_UserCheckIn" SpName="EAS_UserCheckIn" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
-    <Setting Key="EAS_UserRecheckIn" SpName="EAS_UserRecheckIn" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_UserLogin" SpName="EAS_UserLogin_KL" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_UserLogout" SpName="EAS_UserLogout_KL" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_UserCheckIn" SpName="EAS_UserCheckIn_KL" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_UserRecheckIn" SpName="EAS_UserRecheckIn_KL" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_UserCheckPermission" SpName="EAS_UserCheckPermission" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Report">
