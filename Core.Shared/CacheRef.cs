@@ -21,5 +21,14 @@
 
         public static string GetBettype(string betTypeId)
             => remotingRefService.GetBetTypeName(betTypeId, DefaultLanguage);
+
+        public static string GetParlayMaxPayoutBetSettingInfoSportName(string settingId, bool isSaba)
+        {
+            return remotingRefService.GetResourceDataByRefIdAndResourceId(
+                    isSaba ? "BetSettingRef_Saba" : "BetSettingRef",
+                    settingId,
+                    DefaultLanguage,
+                    settingId);
+        }
     }
 }

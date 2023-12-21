@@ -335,4 +335,7 @@
     <Setting Key="Age_Msg_SetMessage" SpName="Age_Msg_SetMessage" DbName="DBMSG.bodb_Message.bodbExtAccNet" />
     <Setting Key="Age_Msg_SetUsrMessage" SpName="Age_Msg_SetUsrMessage" DbName="DBMSG.bodb_Message.bodbExtAccNet" />
   </Function>
+  <Function Name="Parlay Max Payout Info">
+    <Setting Key="Acc_SabaVirtualSportsBetSettingRef_Sel" SpName="Acc_SabaVirtualSportsBetSettingRef_Sel" DbName="DBTXN.bodb02.bodbExtAccNet" />
+  </Function>
 </Functions>

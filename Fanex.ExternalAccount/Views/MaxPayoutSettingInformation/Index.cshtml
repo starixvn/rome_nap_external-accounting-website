@@ -1,8 +1,11 @@
-﻿@{
+﻿@using Fanex.ExternalAccount.ViewModel.ViewMaxPayoutSettingInformation;
+
+@{
     Layout = null;
 
     var betTypeNames = ViewData["BetTypeNames"] as string[];
     var sportTypeNames = ViewData["SportTypeNames"] as string;
+    var sabaSports = ViewData["SabaSports"] as IEnumerable<SabaSportViewModel>;
 }
 
 <!DOCTYPE html>
@@ -10,6 +13,40 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Max Payout Setting Information</title>
+    <style type="text/css">
+        body {
+            background-color: #F4F4F4;
+            margin: 0;
+            padding: 20px 10px;
+            color: #333;
+        }
+
+        .tbl-sport {
+            width: 50%;
+            border-collapse: collapse;
+            background: #fff;
+        }
+            .tbl-sport thead {
+                color: #fff;
+                background: #666;
+                font-weight: bold;
+                text-align: center;
+            }
+                .tbl-sport thead th {
+                    height: 30px;
+                    padding: 0 8px;
+                    border: 1px solid #d1d1d1;
+                    border-top: none;
+                }
+            .tbl-sport tbody td {
+                padding: 5px;
+                border: 1px solid #d1d1d1;
+            }
+                .tbl-sport tbody td.sport {
+                    background: #F3F5E0;
+                    text-align: center;
+                }
+    </style>
 </head>
 <body>
     <p>
@@ -34,10 +71,35 @@
     </p>
 
     <p>
-        <strong>Saba Sports:</strong>
+        <strong>Saba Virtual Sports Bet Setting Information</strong>
         <br>
-        <span>&nbsp;- The Saba Futsal uses the bet settings of Saba Soccer.</span><br>
-        <span>&nbsp;- The Saba Cricket uses the bet settings of Other Sports.</span><br>
+        <span>&nbsp;In the table below, Saba Virtual Sports follows the bet settings of the listed sports.</span>
+        <br>
+        <table class="tbl-sport">
+            <thead>
+                <tr>
+                    <th>Virtual Sports</th>
+                    <th>Bet Settings Followed</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var group in sabaSports.GroupBy(g => g.SettingIdFollowed))
+                {
+                    var first = true;
+                    foreach (var item in group)
+                    {
+                        <tr>
+                            <td style="text-align: left;">@CacheRef.GetParlayMaxPayoutBetSettingInfoSportName(item.SettingId, false)</td>
+                            @if (first)
+                            {
+                                <td style="text-align: left;" class="sport" rowspan="@group.Count() ">@CacheRef.GetParlayMaxPayoutBetSettingInfoSportName(item.SettingIdFollowed, false)</td>
+                            }
+                        </tr>
+                        first = false;
+                    }
+                }
+            </tbody>
+        </table>
     </p>
 
     <p style="margin-top:6.0pt; margin-bottom:6.0pt; margin-left:0in">
