@@ -3,12 +3,10 @@
     using Core.Base;
     using Core.Context;
     using Core.Shared;
-    using CustomerSetting.Module.Core.Criteria;
     using CustomerSetting.Module.Core.Services.Impl;
     using CustomerSetting.Security.Authenticate;
     using Fanex.CustomerSetting.Module.Core.Constants;
     using Fanex.CustomerSetting.Module.Core.Services.Interface;
-    using Fanex.ExternalAccount.Service;
     using Fanex.Logging.Extensions.Web;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
@@ -34,115 +32,9 @@
         private readonly ICommissionService commissionService = new CommissionService();
         private readonly IBettingLimitService bettingLimitService = new BettingLimitService();
         private readonly PTEngine.Services.ICustomerService customerService = new CustomerService();
-        private readonly ISuperService superService = new SuperService();
         private readonly IServiceBase serviceBase = new ServiceBase();
         private readonly Fanex.ExternalAccount.Service.Interface.Customer.ICustomerService externalCustomerService = new Fanex.ExternalAccount.Service.Impl.Customer.CustomerService();
         private readonly ISiteDBConfigService siteDBConfigService = new SiteDBConfigService();
-        public ActionResult EditBetSetting(int custId) => PartialViewBase(externalCustomerService.IsArchivedCustId(custId));
-
-        [AntiXSRFFilter]
-        public ActionResult EditBetSettingMasterGet(int custId, int parentId)
-        {
-            var settings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-
-            var currentContext = new RequestContext
-            {
-                FormId = FormType.EditPT,
-                UserName = CurrentSession.UserName.ToUpper(CultureInfo.InvariantCulture),
-                CustId = parentId,
-                TargetCustId = custId,
-                RoleId = (int)CustomerRole.Super,
-                SubAccId = 0,
-                AdminId = CurrentSession.UserId,
-                SiteName = SiteName,
-                Language = "En",
-                LangKey = "E"
-            };
-
-            var bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
-            var defaultMinBetValue = GetDefaultMinBetValue();
-
-            return JsonBase(new { betting = bettingLimit, context = currentContext, defaultMinBetValue }, settings);
-        }
-
-        [AntiXSRFFilter]
-        public ActionResult EditBetSettingAgentGet(int custId, int parentId)
-        {
-            var currentContext = new RequestContext
-            {
-                FormId = FormType.EditPT,
-                UserName = CurrentSession.UserName.ToUpper(CultureInfo.InvariantCulture),
-                CustId = parentId,
-                TargetCustId = custId,
-                RoleId = (int)CustomerRole.Master,
-                SubAccId = 0,
-                AdminId = CurrentSession.UserId,
-                SiteName = SiteName,
-                Language = "En",
-                LangKey = "E"
-            };
-
-            var bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
-            var defaultMinBetValue = GetDefaultMinBetValue();
-
-            return JsonBase(new
-            {
-                betting = bettingLimit,
-                context = currentContext,
-                defaultMinBetValue
-            });
-        }
-
-        [AntiXSRFFilter]
-        public ActionResult EditBetSettingMemberGet(int custId, int parentId)
-        {
-            var currentContext = new RequestContext
-            {
-                FormId = FormType.EditPT,
-                UserName = CurrentSession.UserName.ToUpper(CultureInfo.InvariantCulture),
-                CustId = parentId,
-                TargetCustId = custId,
-                RoleId = (int)CustomerRole.Agent,
-                SubAccId = 0,
-                AdminId = CurrentSession.UserId,
-                SiteName = SiteName,
-                Language = "En",
-                LangKey = "E"
-            };
-
-            var bettingLimit = bettingLimitService.GetBettingForEdit(currentContext);
-            var defaultMinBetValue = GetDefaultMinBetValue();
-
-            return JsonBase(new { betting = bettingLimit, context = currentContext, defaultMinBetValue });
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult EditBetSettingPost(int custId, int parentId, string txtCustomerObject)
-        {
-            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-
-            var bettingLimit = JsonConvert.DeserializeObject<BettingLimit>(txtCustomerObject, settings);
-
-            var requestContext = new RequestContext
-            {
-                CustId = CurrentSession.UserId,
-                TargetCustId = custId,
-                FormId = FormType.EditPT,
-                SubAccId = 0,
-                AdminId = CurrentSession.UserId,
-                IP = CurrentContext.Ip4Address,
-                Language = "En"
-            };
-
-            var result = bettingLimitService.UpdateBetting(bettingLimit, requestContext);
-
-            return JsonBase(new { result.ErrorCode, result.ErrorMessage });
-        }
 
         public ActionResult EditCommission() => PartialViewBase();
 
@@ -389,21 +281,6 @@
             ViewData["SiteDB"] = siteDBConfigService.GetSiteDBConfig(custId);
 
             return View("~/Views/BettypeReference/Index.cshtml");
-        }
-
-        private Hashtable GetParamFromRequest()
-        {
-            var para = Request["para"];
-            var param = new Hashtable();
-            if (!string.IsNullOrWhiteSpace(para))
-            {
-                for (var i = 0; i < para.Length; i++)
-                {
-                    param.Add(i, para[i].ToString());
-                }
-            }
-
-            return param;
         }
     }
 }

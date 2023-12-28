@@ -107,54 +107,6 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 
         [HttpPost]
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "SportsbookBetting")]
-        public ActionResult EditBetSettingPost(int custId, int uplineId, int userId, string txtCustomerObject)
-        {
-            var checkUmResult = serviceBase.CheckUM(custId, NonDcsProduct.Sportsbook, AppSession.CurrentSession.LangKey);
-            if (!checkUmResult.IsSuccess)
-            {
-                return UmJsonResult(checkUmResult);
-            }
-
-            var customer = CustomerInfo(custId, userId);
-            var settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
-            if (customer.RoleId.IsNotSuper())
-            {
-                return JsonBase(new { ErrorCode = 1, ErrorMessage = "You're not authorized on this function" }, settings);
-            }
-
-            var bettingLimit = JsonConvert.DeserializeObject<BettingLimit>(txtCustomerObject, settings);
-
-            var requestContext = new RequestContext()
-            {
-                CustId = userId,
-                TargetCustId = custId,
-                FormId = FormType.EditPT,
-                SubAccId = 0,
-                AdminId = userId,
-                IP = Request.UserHostAddress,
-                Language = "En"
-            };
-
-            var bettingLimitService = SportsBookService;
-            Result result;
-            try
-            {
-                result = bettingLimitService.UpdateBetting(bettingLimit, requestContext);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-                result = new Result("1", "Sorry, there was an unexpected issue with the system. Please seek help from our customer support.");
-            }
-
-            return JsonBase(new { ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage }, settings);
-        }
-
-        [HttpPost]
-        [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "SportsbookBetting")]
         public ActionResult EditMultipleBetSettingPost(int custId, string txtCustomerObject, string para)
         {
             var checkUmResult = serviceBase.CheckUM(custId, NonDcsProduct.Sportsbook, AppSession.CurrentSession.LangKey);
