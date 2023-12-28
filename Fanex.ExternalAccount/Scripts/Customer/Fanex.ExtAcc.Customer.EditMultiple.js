@@ -325,9 +325,9 @@ Fanex.ExtAcc.Customer.ShowEditMultiplePT = function () {
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);
     else
-        Fanex.ExtAcc.Form.Show(
-            resolveClientUrl('SportsbookSetting/EditMultiplePT?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Multiple Sportsbook Setting',
-            894,
+        Fanex.ExtAcc.Form.ShowFrame(
+            resolveClientUrl('Customer/EditCustomer?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Multiple Sportsbook Setting',
+            1250,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);
 };
