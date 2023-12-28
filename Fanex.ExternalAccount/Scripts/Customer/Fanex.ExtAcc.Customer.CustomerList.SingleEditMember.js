@@ -27,14 +27,6 @@
                                 Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Customer/EditCustomer?roleId=1&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + title + '</font>', 1250, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
                             }
                         },
-                        commission: {
-                            name: "Commission",
-                            className: "iconEnableEdit",
-                            callback: function (key, opt) {
-                                var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 350) : 350;
-                                Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditCommissionMemberDetail?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Commission ' + '<font color="#6dcff6">' + title + '</font>', 876, height, false, false, 1);
-                            }
-                        },
                         separator1: "-----"
                     };
 

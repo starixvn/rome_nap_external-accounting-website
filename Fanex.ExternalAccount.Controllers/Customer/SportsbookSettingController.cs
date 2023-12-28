@@ -29,99 +29,9 @@
         private const int NG2Start = 213;
         private const int NG2End = 220;
 
-        private readonly ICommissionService commissionService = new CommissionService();
-        private readonly IBettingLimitService bettingLimitService = new BettingLimitService();
         private readonly PTEngine.Services.ICustomerService customerService = new CustomerService();
-        private readonly IServiceBase serviceBase = new ServiceBase();
         private readonly Fanex.ExternalAccount.Service.Interface.Customer.ICustomerService externalCustomerService = new Fanex.ExternalAccount.Service.Impl.Customer.CustomerService();
         private readonly ISiteDBConfigService siteDBConfigService = new SiteDBConfigService();
-
-        public ActionResult EditCommission() => PartialViewBase();
-
-        public ActionResult EditCommissionDetail(int custId) => PartialViewBase(externalCustomerService.IsArchivedCustId(custId));
-
-        public ActionResult EditCommissionMember() => PartialViewBase();
-
-        public ActionResult EditCommissionMemberDetail(int custId) => PartialViewBase(externalCustomerService.IsArchivedCustId(custId));
-
-        [AntiXSRFFilter]
-        public ActionResult EditCommissionGet(int custId, int parentId)
-        {
-            var currentContext = new RequestContext
-            {
-                FormId = FormType.EditPT,
-                UserName = CurrentSession.UserName.ToUpper(CultureInfo.InvariantCulture),
-                CustId = parentId,
-                TargetCustId = custId,
-                RoleId = Utils.ToInt32(Request["roleId"]),
-                SubAccId = 0,
-                AdminId = CurrentSession.UserId,
-                SiteName = SiteName,
-                Language = "En",
-                LangKey = "E"
-            };
-
-            ICommissionSetting commissionSetting = null;
-            try
-            {
-                commissionSetting = commissionService.GetCommission(currentContext);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-
-            return JsonBase(new { commission = commissionSetting, context = currentContext });
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult EditCommissionPost(int custId, int parentId, int currentLevel, string txtCustomerObject)
-        {
-            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-
-            var commissionSetting = JsonConvert.DeserializeObject<CommissionSetting>(txtCustomerObject, settings);
-
-            var requestContext = new RequestContext
-            {
-                CustId = CurrentSession.UserId,
-                TargetCustId = custId,
-                FormId = FormType.EditPT,
-                SubAccId = 0,
-                AdminId = CurrentSession.UserId,
-                IP = CurrentContext.Ip4Address,
-                Language = "En"
-            };
-
-            PTEngine.BusinessObjects.Result result;
-            var checkUmResult = serviceBase.CheckUM(requestContext.TargetCustId, NonDcsProduct.Sportsbook, requestContext.LangKey);
-            if (!checkUmResult.IsSuccess)
-            {
-                result = new PTEngine.BusinessObjects.Result(checkUmResult.ErrorCode.ToString(), checkUmResult.ErrorMessage);
-                return JsonBase(new { result.ErrorCode, result.ErrorMessage });
-            }
-
-            DTO.Result updateResult;
-
-            switch (currentLevel)
-            {
-                case Role.Master:
-                    updateResult = commissionService.UpdateCommissionMaster(commissionSetting, requestContext);
-                    break;
-
-                case (int)CustomerRole.Agent:
-                    updateResult = commissionService.UpdateCommissionAgent(commissionSetting, requestContext);
-                    break;
-
-                default:
-                    updateResult = commissionService.UpdateCommissionMember(commissionSetting, requestContext);
-                    break;
-            }
-
-            return JsonBase(new { updateResult.ErrorCode, updateResult.ErrorMessage });
-        }
-
-        public ActionResult EditPT(int custId) => PartialViewBase(externalCustomerService.IsArchivedCustId(custId));
 
         public ActionResult SuperMasterEditSB(int custId) => PartialViewBase(externalCustomerService.IsArchivedCustId(custId));
 
