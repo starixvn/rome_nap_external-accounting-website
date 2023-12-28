@@ -457,6 +457,7 @@
     <Compile Include="ViewModels\Customer\AppConfiguration.cs" />
     <Compile Include="ViewModels\Customer\CreateCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerDataRangeViewModel.cs" />
+    <Compile Include="ViewModels\Customer\EditCustomerViewModel.cs" />
     <Compile Include="ViewModels\GroupConfigurationViewModel.cs" />
     <Compile Include="ViewModels\VerifyOtpCommand.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />

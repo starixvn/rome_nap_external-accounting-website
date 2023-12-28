@@ -2914,6 +2914,8 @@
     <Content Include="Views\MarkAccountType\MultipleEditAccountType.cshtml" />
     <Content Include="Views\Customer\CreateCustomer-Debug.cshtml" />
     <Content Include="Views\Customer\CreateCustomer.cshtml" />
+    <Content Include="Views\Customer\EditCustomer.cshtml" />
+    <Content Include="Views\Customer\EditCustomer-Debug.cshtml" />
     <Content Include="Views\WinLossDetailMC\Index.cshtml" />
     <Content Include="Views\SuperWinLossDetailMCByPT\Index.cshtml" />
     <Content Include="Views\TotalBetMC\Index.cshtml" />
