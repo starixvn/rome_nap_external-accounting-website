@@ -303,7 +303,7 @@
             var details = new List<ObjectInfo>
             {
                 new ObjectInfo("Info", "Info"),
-                new ObjectInfo("PT", "Position Taking")
+                new ObjectInfo("PT", "Sportsbook")
             };
 
             if (_roleId.IsNotMember())

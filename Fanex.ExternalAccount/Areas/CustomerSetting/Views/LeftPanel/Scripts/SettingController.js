@@ -964,36 +964,6 @@
         $scope.RenderMasterOnMemberDCS(5);
     };
 
-    $scope.SuperSBPT = function () {
-        parent.Fanex.ExtAcc.Customer.IsFullInfo = false;
-        var superId = $scope.model.personalInfo.downlines[0].key;
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        var agentId = $scope.model.personalInfo.downlines[2].key;
-
-        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Customer.agentId = agentId;
-        parent.Fanex.ExtAcc.Customer.masterId = masterId;
-        parent.Fanex.ExtAcc.Customer.superId = superId;
-        $scope.ResetGlobalValueAtSuperOnMember();
-
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditPT?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
-    };
-
-    $scope.MasterSBPT = function () {
-        parent.Fanex.ExtAcc.Customer.IsFullInfo = false;
-        var superId = $scope.model.personalInfo.downlines[0].key;
-        var masterId = $scope.model.personalInfo.downlines[1].key;
-        var agentId = $scope.model.personalInfo.downlines[2].key;
-
-        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
-        parent.Fanex.ExtAcc.Customer.agentId = agentId;
-        parent.Fanex.ExtAcc.Customer.masterId = masterId;
-        parent.Fanex.ExtAcc.Customer.superId = superId;
-        $scope.ResetGlobalValueAtMasterOnMember();
-
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditPT?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
-    };
-
     $scope.SuperSportsbook2 = function () {
         $scope.RenderSupeOnMemberDCS(16);
     };
