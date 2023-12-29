@@ -48,10 +48,8 @@
         public const string AssociationAccountList = "AssociationAccountList";
         public const string Keno = "Keno";
         public const string OpenSuper = "OpenSuper";
-        public const string Sportsbook2Setting = "Sportsbook2Setting";
         public const string LiveCasinoSetting = "LiveCasinoSetting";
         public const string LiveCasinoBetting = "LiveCasinoBetting";
-        public const string Sportsbook2Betting = "Sportsbook2Betting";
         public const string VoidbridgeBetting = "VoidbridgeBetting";
         public const string VoidbridgeSetting = "VoidbridgeSetting";
         public const string RemoveOTP = "RemoveOTP";

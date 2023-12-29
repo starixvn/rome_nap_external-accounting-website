@@ -17,7 +17,6 @@
         {
             ProductConstants.LiveCasino,
             ProductConstants.RNGLottery,
-            ProductConstants.Sportsbook2,
             ProductConstants.VirtualGames,
             ProductConstants.Sabaclub,
             ProductConstants.VGaming,

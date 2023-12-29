@@ -60,11 +60,6 @@
         $scope.collapseSidebar();
     };    
 
-    $scope.Sportsbook2 = function () {
-        $scope.RenderDCS(16);
-        $scope.collapseSidebar();
-    };
-
     $scope.LiveCasino = function () {
         $scope.RenderDCS(41);
         $scope.collapseSidebar();

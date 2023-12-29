@@ -27,7 +27,6 @@
     AllowDoubleCommAgent: false,
     AllowDoubleComm: false,
     HideVirtualSports: false,
-    HideSportsbook2: false,
     UplineProductSettings: [],
 
     isSuperEditMember: false,

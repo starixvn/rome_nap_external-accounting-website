@@ -70,10 +70,6 @@
             addSuperEditMultipleMastersMenuItem(5, 'Virtual Sports');
         }      
 
-        if (!this.HideSportsbook2) {
-            addSuperEditMultipleMastersMenuItem(16, 'Sportsbook 2');
-        }
-
         for (var i = 0, max = this.UplineProductSettings.length; i < max; i++) {
             var productSetting = this.UplineProductSettings[i];
 
@@ -118,11 +114,6 @@
 
         if (!this.HideVirtualSports) {
             addMasterEditMultipleAgentsMenuItem(5, 'Virtual Sports');
-        }
-             
-
-        if (!this.HideSportsbook2) {
-            addMasterEditMultipleAgentsMenuItem(16, 'Sportsbook 2');
         }
 
         for (var i = 0, max = this.UplineProductSettings.length; i < max; i++) {
@@ -219,10 +210,6 @@
         if (!this.HideVirtualSports) {
             addUplineEditMemberMenuItems(5, 'Virtual Sports');
         }       
-
-        if (!this.HideSportsbook2) {
-            addUplineEditMemberMenuItems(16, 'Sportsbook 2');
-        }
 
         for (var i = 0, max = this.UplineProductSettings.length; i < max; i++) {
             var productSetting = this.UplineProductSettings[i];

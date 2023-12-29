@@ -964,10 +964,6 @@
         $scope.RenderMasterOnMemberDCS(5);
     };
 
-    $scope.SuperSportsbook2 = function () {
-        $scope.RenderSupeOnMemberDCS(16);
-    };
-
     $scope.SuperLiveCasino = function () {
         $scope.RenderSupeOnMemberDCS(41);
     };
@@ -1003,10 +999,6 @@
     $scope.RenderSupeOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtSuperOnMember();
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=' + productId + '&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
-    };
-
-    $scope.MasterSportsbook2 = function () {
-        $scope.RenderMasterOnMemberDCS(16);
     };
 
     $scope.MasterLiveCasino = function () {
