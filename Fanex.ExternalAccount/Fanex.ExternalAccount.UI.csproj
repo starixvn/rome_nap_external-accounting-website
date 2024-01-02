@@ -174,7 +174,7 @@
       <HintPath>..\packages\Fanex.Module.Logs.2.0.0.2\lib\net40\Fanex.Module.Logs.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Module.Statement, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.Statement.1.0.1.1-DR001\lib\net40\Fanex.Module.Statement.dll</HintPath>
+      <HintPath>..\packages\Fanex.Module.Statement.1.0.1.1\lib\net40\Fanex.Module.Statement.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
