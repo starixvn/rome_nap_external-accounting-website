@@ -347,6 +347,6 @@
     <Setting Key="Acc_SabaVirtualSportsBetSettingRef_Sel" SpName="Acc_SabaVirtualSportsBetSettingRef_Sel" DbName="DBTXN.bodb02.bodbExtAccNet" />
   </Function>
   <Function Name="Exchange Rate">
-    <Setting Key="EAS_Rpt_OandaExchangeRate" SpName="EAS_Rpt_OandaExchangeRate" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_Rpt_OandaExchangeRate" SpName="EAS_Rpt_OandaExchangeRate_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
 </Functions>

@@ -266,7 +266,6 @@ class SuperWinLossMCDetailByPT {
             showTree: true,
             gridExpandHeight: 256,
             showPager: true,
-            customPager: true,
             pagerOption: {
                 itemsPerPageArray: [50, 100, 500],
                 currentPage: 0,

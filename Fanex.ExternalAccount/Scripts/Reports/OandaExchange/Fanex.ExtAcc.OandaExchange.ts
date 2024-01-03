@@ -33,10 +33,10 @@ class OandaExchange {
             { HeaderText: "Date", Name: "Date", Width: 130, HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Currency Name", Name: "Currency", Width: 130, HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Currency Code", Name: "CurrencyCode", Width: 130, HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: "MYR/Unit", Name: "MYRUnit", Width: 130, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00000", FormatNegative: "$" },
-            { HeaderText: "CNY/Unit", Name: "CNYUnit", Width: 130, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00000", FormatNegative: "$" },
-            { HeaderText: "THB/Unit", Name: "THBUnit", Width: 130, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00000", FormatNegative: "$" },
-            { HeaderText: "IDR/Unit", Name: "IDRUnit", Width: 130, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00000", FormatNegative: "$" }
+            { HeaderText: "MYR/Unit", Name: "MYRUnit", Width: 130, HeaderAlign: "center", CellAlign: "right", FormatNegative: "$" },
+            { HeaderText: "CNY/Unit", Name: "CNYUnit", Width: 130, HeaderAlign: "center", CellAlign: "right", FormatNegative: "$" },
+            { HeaderText: "THB/Unit", Name: "THBUnit", Width: 130, HeaderAlign: "center", CellAlign: "right", FormatNegative: "$" },
+            { HeaderText: "IDR/Unit", Name: "IDRUnit", Width: 130, HeaderAlign: "center", CellAlign: "right", FormatNegative: "$" }
         ];
     }
 
@@ -50,10 +50,10 @@ class OandaExchange {
                     { Name: "Date", Value: exchangeByDate.ExchangeDateString, MergeRowNumber: exchangeByDate.Rates.length },
                     { Name: "Currency", Value: exchangeByDate.Rates[0].CurrencyName },
                     { Name: "CurrencyCode", Value: exchangeByDate.Rates[0].CurrencyCode },
-                    { Name: "MYRUnit", Value: exchangeByDate.Rates[0].MYRRate },
-                    { Name: "CNYUnit", Value: exchangeByDate.Rates[0].CNYRate },
-                    { Name: "THBUnit", Value: exchangeByDate.Rates[0].THBRate },
-                    { Name: "IDRUnit", Value: exchangeByDate.Rates[0].IDRRate }
+                    { Name: "MYRUnit", Value: parseFloat(exchangeByDate.Rates[0].MYRRate.toFixed(5)) },
+                    { Name: "CNYUnit", Value: parseFloat(exchangeByDate.Rates[0].CNYRate.toFixed(5)) },
+                    { Name: "THBUnit", Value: parseFloat(exchangeByDate.Rates[0].THBRate.toFixed(5)) },
+                    { Name: "IDRUnit", Value: parseFloat(exchangeByDate.Rates[0].IDRRate.toFixed(5)) }
                 ]
             });
 
@@ -63,10 +63,10 @@ class OandaExchange {
                     Columns: [
                         { Name: "Currency", Value: rate.CurrencyName },
                         { Name: "CurrencyCode", Value: rate.CurrencyCode },
-                        { Name: "MYRUnit", Value: rate.MYRRate },
-                        { Name: "CNYUnit", Value: rate.CNYRate },
-                        { Name: "THBUnit", Value: rate.THBRate },
-                        { Name: "IDRUnit", Value: rate.IDRRate }
+                        { Name: "MYRUnit", Value: parseFloat(rate.MYRRate.toFixed(5)) },
+                        { Name: "CNYUnit", Value: parseFloat(rate.CNYRate.toFixed(5)) },
+                        { Name: "THBUnit", Value: parseFloat(rate.THBRate.toFixed(5)) },
+                        { Name: "IDRUnit", Value: parseFloat(rate.IDRRate.toFixed(5)) }
                     ]
                 });
             }
@@ -97,11 +97,6 @@ class OandaExchange {
         const dateRange = this.dateRangePickerComponent.getDateRangeValues();
         this.fromdate = dateRange.fromDate;
         this.todate = dateRange.toDate;
-
-        if (moment(this.todate).diff(moment(this.fromdate), "d") > 90) {
-            Fanex.ExtAcc.Form.Alert('Date Range Error', "Date range exceeds 3 months. Please try again!", 400, 150, null, null, 0);
-            return;
-        }
 
         Fanex.ExtAcc.BlockUI();
 
