@@ -538,6 +538,18 @@
     <Content Include="assets\bundles\BonusDetail\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\mcwinlossdetail\index.js" />
+    <Content Include="assets\bundles\mcwinlossdetail\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\oandaexchange\index.css" />
+    <Content Include="assets\bundles\oandaexchange\index.js" />
+    <Content Include="assets\bundles\oandaexchange\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\oandaexchange\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\protectedstatus\multiple.css" />
     <Content Include="assets\bundles\protectedstatus\multiple.js" />
     <Content Include="assets\bundles\protectedstatus\multiple.min.css">
@@ -569,6 +581,18 @@
     <Content Include="assets\bundles\SuperWinLossDetailBySubGroup\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\SuperWinLossMCDetailByPT\index.js" />
+    <Content Include="assets\bundles\SuperWinLossMCDetailByPT\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\totalbetmc\index.css" />
+    <Content Include="assets\bundles\totalbetmc\index.js" />
+    <Content Include="assets\bundles\totalbetmc\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\totalbetmc\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\totalbet\index.css" />
     <Content Include="assets\bundles\totalbet\index.js" />
     <Content Include="assets\bundles\totalbet\index.min.css">
@@ -577,8 +601,25 @@
     <Content Include="assets\bundles\totalbet\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\mcwinlossdetail\index.js" />
+    <Content Include="assets\bundles\mcwinlossdetail\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\exchangerate.css">
+      <DependentUpon>exchangerate.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\exchangerate.min.css">
+      <DependentUpon>exchangerate.css</DependentUpon>
+    </Content>
+    <Content Include="Scripts\clipboard.js" />
     <Content Include="assets\styles\base\_alpha-admin-fonts.min.css">
       <DependentUpon>_alpha-admin-fonts.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\components\daterangepicker-customize.css">
+      <DependentUpon>daterangepicker-customize.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\components\daterangepicker-customize.min.css">
+      <DependentUpon>daterangepicker-customize.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\images\cross.png" />
     <Content Include="assets\styles\images\icon-refresh.png" />
@@ -873,6 +914,12 @@
     <Content Include="assets\styles\pages\customer\images\tick.png" />
     <Content Include="assets\styles\pages\customer\images\warning.png" />
     <Content Include="assets\styles\pages\customer\images\save_s.png" />
+    <Content Include="assets\styles\pages\customer\mark-account.css">
+      <DependentUpon>mark-account.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\mark-account.min.css">
+      <DependentUpon>mark-account.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\pages\customer\protected-status-multiple.css">
       <DependentUpon>protected-status-multiple.scss</DependentUpon>
     </Content>
@@ -915,11 +962,23 @@
     <Content Include="assets\styles\pages\reports\daily-winloss.min.css">
       <DependentUpon>daily-winloss.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\reports\report-by-cur.css">
+      <DependentUpon>report-by-cur.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\report-by-cur.min.css">
+      <DependentUpon>report-by-cur.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\pages\totalbet\multiselect-custom.css">
       <DependentUpon>multiselect-custom.scss</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\totalbet\multiselect-custom.min.css">
       <DependentUpon>multiselect-custom.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\totalbet\total-bet-mc.css">
+      <DependentUpon>total-bet-mc.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\totalbet\total-bet-mc.min.css">
+      <DependentUpon>total-bet-mc.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\totalbet\total-bet.css">
       <DependentUpon>total-bet.scss</DependentUpon>
@@ -958,6 +1017,12 @@
       <DependentUpon>bootstrap.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\vendors\bootstrap.scss" />
+    <Content Include="assets\styles\vendors\daterangepicker\jquery.daterangepicker.css">
+      <DependentUpon>jquery.daterangepicker.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\vendors\daterangepicker\jquery.daterangepicker.min.css">
+      <DependentUpon>jquery.daterangepicker.css</DependentUpon>
+    </Content>
     <Content Include="bootstrap\arrows-ffffff.png" />
     <Content Include="bootstrap\dailywinloss\images\arrow-icn-right.png" />
     <Content Include="bootstrap\dailywinloss\images\arrow-icn.png" />
@@ -1340,14 +1405,19 @@
     <Content Include="Scripts\AutoRefresh\images\btRefresh-large.png" />
     <Content Include="Scripts\AutoRefresh\images\check.png" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.AssociationAccount.js" />
+    <TypeScriptCompile Include="Scripts\CopyTable\winlossdetail-copyhtml.ts" />
     <TypeScriptCompile Include="Scripts\Reports\BonusDetail\Fanex.ExtAcc.BonusDetail.ts" />
     <TypeScriptCompile Include="Scripts\Reports\BonusDetail\Fanex.ExtAcc.AddNewBonus.ts" />
     <TypeScriptCompile Include="Scripts\Reports\BonusDetail\Fanex.ExtAcc.CancelBonus.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\Fanex.ExtAcc.WinLossDetailMC.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\OandaExchange\Fanex.ExtAcc.OandaExchange.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\Shared\daterangepicker-jquery.ts" />
     <TypeScriptCompile Include="Scripts\Reports\Shared\DateTimeControls.ts" />
     <TypeScriptCompile Include="Scripts\Reports\Shared\ProductControls.ts" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\SuperWinLossDetailByPT.ts" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.ClosedStatus.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.MarkAccountType.js" />
+    <Content Include="Scripts\DateRangePicker\jquery.daterangepicker.js" />
     <Content Include="Scripts\Fanex.Multiselect\fanex.singleSelect.js" />
     <Content Include="Scripts\Fanex.Multiselect\fanex.multiSelect.css" />
     <Content Include="Scripts\Fanex.Multiselect\fanex.multiSelect.js" />
@@ -1361,9 +1431,11 @@
     <Content Include="Scripts\Fanex.Multiselect\images\ui-icons_2e83ff_256x240-1.png" />
     <Content Include="Scripts\Fanex.Multiselect\images\ui-icons_2e83ff_256x240-2.png" />
     <Content Include="Scripts\Fanex.Multiselect\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Scripts\Moment\moment.js" />
     <Content Include="Scripts\ProblemAccount\Fanex.ExtAcc.ProblemAccount.js" />
     <Content Include="Scripts\Manage\Fanex.ExtAcc.SubGroup.js" />
     <Content Include="Scripts\TotalBet\Fanex.ExtAcc.TotalBet.js" />
+    <Content Include="Scripts\TotalBet\Fanex.ExtAcc.TotalBetMC.js" />
     <Content Include="SpNames.CustDB.DR.xml">
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
     </Content>
@@ -1377,6 +1449,7 @@
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\SuperWinLossMCDetailByPT.ts" />
     <TypeScriptCompile Include="typings\globals\jasmine-jquery\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\jasmine\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\jquery.blockui\index.d.ts" />
@@ -2624,6 +2697,26 @@
     <Content Include="assets\styles\pages\totalbet\total-bet.scss" />
     <Content Include="assets\styles\pages\totalbet\multiselect-custom.scss" />
     <Content Include="assets\styles\pages\customer\mark-account.scss" />
+    <Content Include="assets\bundles\mcwinlossdetail\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\mcwinlossdetail\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\vendors\daterangepicker\jquery.daterangepicker.scss" />
+    <Content Include="assets\styles\components\daterangepicker-customize.scss" />
+    <Content Include="assets\styles\pages\reports\report-by-cur.scss" />
+    <Content Include="assets\bundles\SuperWinLossMCDetailByPT\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\totalbetmc\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\totalbet\total-bet-mc.scss" />
+    <Content Include="assets\bundles\oandaexchange\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\exchangerate.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2730,6 +2823,10 @@
     <Content Include="ExcelTemplates\Customer\SuperListSGMO.xls" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.ProtectedStatus.js" />
     <Content Include="ExcelTemplates\Reports\SuperWinLossDetailBySubGroup.xls" />
+    <Content Include="ExcelTemplates\Reports\WinLossMCDetail.xls" />
+    <Content Include="ExcelTemplates\Reports\WinLossMCDetailAg.xls" />
+    <Content Include="ExcelTemplates\Reports\WinLossMCDetailMAg.xls" />
+    <Content Include="ExcelTemplates\Reports\SuperWinLossDetailMCByPT.xls" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />
@@ -2807,6 +2904,10 @@
     <Content Include="Views\MarkAccountType\Index.cshtml" />
     <Content Include="Views\MarkAccountType\MarkAccount.cshtml" />
     <Content Include="Views\MarkAccountType\MultipleEditAccountType.cshtml" />
+    <Content Include="Views\WinLossDetailMC\Index.cshtml" />
+    <Content Include="Views\SuperWinLossDetailMCByPT\Index.cshtml" />
+    <Content Include="Views\TotalBetMC\Index.cshtml" />
+    <Content Include="Views\OandaExchange\Index.cshtml" />
     <Content Include="Web.DR.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -20,4 +20,9 @@
         public int League { get; set; }
         public IEnumerable<int> Events { get; set; }
     }
+
+    public class TotalBetMCRequest : TotalBetRequest
+    {
+        public int BaseCurrency { get; set; }
+    }
 }

@@ -158,6 +158,7 @@
     <Compile Include="AutoTransfer\ToastMessageSiteFunctionIds.cs" />
     <Compile Include="AutoTransfer\MessageTypeConstants.cs" />
     <Compile Include="AutoTransfer\ToastMessageTypes.cs" />
+    <Compile Include="Currency\CurrencyEntity.cs" />
     <Compile Include="Customer\AssociationAccountViewModel.cs" />
     <Compile Include="Customer\Commission.cs" />
     <Compile Include="Customer\Casino\CasinoCustomer.cs" />
@@ -194,6 +195,14 @@
     <Compile Include="Products\ProductDto.cs" />
     <Compile Include="Products\ProductEntity.cs" />
     <Compile Include="Products\ProductStatusDto.cs" />
+    <Compile Include="Report\ExchangeRateModel.cs" />
+    <Compile Include="Report\MultipleCurrency\WinLossByCurrency.cs" />
+    <Compile Include="Report\MultipleCurrency\WinLossByCurrencyAg.cs" />
+    <Compile Include="Report\MultipleCurrency\WinLossByCurrencyMAg.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailMCByProductDTO.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailMCByProductModel.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailMCByPTModel.cs" />
+    <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailMCByUsernameModel.cs" />
     <Compile Include="SiteDB.cs" />
     <Compile Include="TotalBet\TotalBetModel.cs" />
     <Compile Include="Report\ExtraPTModel.cs" />

@@ -31,6 +31,9 @@
         public int Viewlevel { get; set; }
         public string ProductIds { get; set; }
         public string ResourceIds { get; set; }
+        public string Currencies { get; set; }
+        public int BaseCurrency { get; set; }
+        public string BaseCurrencyName { get; set; }
         public int UserId => currentSession.CustId;
 
         public bool IsSearch() => CustId == 0;

@@ -89,5 +89,33 @@ namespace Fanex.ExternalAccount.Service.TotalBet
 
         private static decimal? RoundNumber(decimal? d)
             => d.HasValue ? (decimal?)int.Parse(d.Value.ToString("N0").Replace(",", string.Empty)) : null;
+
+        public IEnumerable<TotalBetModel> GetDataMC(GetTotalBetMCParam param)
+        {
+            var criteria = new GetTotalBetMCCriteria
+            {
+                GroupName = param.GroupName,
+                ViewMode = param.ViewMode,
+                LeagueIds = param.League.ToString(),
+                MatchIds = string.Join(",", param.Events),
+                BaseCurrency = param.BaseCurrency
+            };
+
+            var data = dynamicRepository.Fetch<TotalBetModel>(criteria).ToList();
+
+            foreach (var d in data)
+            {
+                d.HDPFT = RoundNumber(d.HDPFT);
+                d.OUFT = RoundNumber(d.OUFT);
+                d.HDPHT = RoundNumber(d.HDPHT);
+                d.OUHT = RoundNumber(d.OUHT);
+
+                d.IsLatest = !data.Any(x => x.MatchId == d.MatchId && x.TotalScore > d.TotalScore);
+                d.HomeName = CacheRef.GetTeamName(d.HomeId);
+                d.AwayName = CacheRef.GetTeamName(d.AwayId);
+            }
+
+            return data;
+        }
     }
 }

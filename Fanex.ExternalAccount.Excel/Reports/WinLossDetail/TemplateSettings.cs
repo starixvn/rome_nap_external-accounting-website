@@ -30,5 +30,19 @@
                     return Path.Combine(_dir, "WinLossDetailExtra.xls");
             }
         }
+        public string WinLossByCurrencyDetailPath(int roleId)
+        {
+            switch (roleId)
+            {
+                case Role.Member:
+                    return Path.Combine(_dir, "WinLossMCDetailAg.xls");
+
+                case Role.Agent:
+                    return Path.Combine(_dir, "WinLossMCDetailMAg.xls");
+
+                default:
+                    return Path.Combine(_dir, "WinLossMCDetail.xls");
+            }
+        }
     }
 }

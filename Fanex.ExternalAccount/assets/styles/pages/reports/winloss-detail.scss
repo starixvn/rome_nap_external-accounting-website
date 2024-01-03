@@ -225,7 +225,12 @@ span.selectedMonth {
     max-height: 625px !important;
 }
 
-@media screen and (-webkit-min-device-pixel-ratio:0) { 
+.report-username {
+    text-decoration: none;
+    margin: 0;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
     .monPickrDropDown, .dayPickrDropDown {
         overflow: auto !important;
     }

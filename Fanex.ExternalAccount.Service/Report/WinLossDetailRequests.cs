@@ -20,6 +20,9 @@
         int UserId { get; }
         bool IsValid { get; }
         bool IsNotValid { get; }
+        string CurrencyIds { get; }
+        int BaseCurrency { get; }
+        bool IsMultipleCurrency { get; }
     }
 
     public interface ISearchWinLossDetailRequest
@@ -34,5 +37,8 @@
         dynamic ToolTipsProducts { get; }
         string ResourceIds { get; }
         int UserId { get; }
+        string CurrencyIds { get; }
+        int BaseCurrency { get; }
+        bool IsMultipleCurrency { get; }
     }
 }

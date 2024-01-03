@@ -46,6 +46,12 @@
 
         public string ResourceIds { get; }
 
+        public string Currencies { get; set; }
+
+        public int BaseCurrency { get; set; }
+
+        public string BaseCurrencyName { get; set; }
+
         public string TooltipsForLiveCasino { get; }
 
         public string TooltipsForRNGCasino { get; }

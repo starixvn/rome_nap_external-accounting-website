@@ -7,7 +7,6 @@
     using DTO.Report;
     using Fanex.Caching.Memory;
     using Fanex.ExternalAccount.Core.Shared;
-    using Fanex.ExternalAccount.DTO.Products;
     using Fanex.ExternalAccount.Service.Products;
     using Interface.Report;
     using System;
@@ -143,7 +142,7 @@
                 .GetProducts(userId, groupId);
             var offeredLiveCasino = products
                 .FirstOrDefault(p => p.ProductId == ProductConstants.DummyLiveCasinoProductId);
-            var offeredLiveCasinoFGG= products
+            var offeredLiveCasinoFGG = products
                 .FirstOrDefault(p => p.ProductId == ProductConstants.FGG);
 
             if (offeredLiveCasino != null && offeredLiveCasino.IsParent)
@@ -177,7 +176,7 @@
         public string ConcatProductName(string productIds, string resourceIds, string groupName)
         {
             var productIdList = Utils.ToEnumerableInt(productIds);
-            if(string.IsNullOrWhiteSpace(resourceIds))
+            if (string.IsNullOrWhiteSpace(resourceIds))
             {
                 if (Config.IsOfferJackpotProductDetailsGroup(groupName))
                 {
@@ -205,7 +204,7 @@
                     productIdList = productIdList.Where(id => id != ProductConstants.MGRNGCasino);
                 }
             }
-            
+
             return ConcatProductName(productIdList, resourceIds, groupName);
         }
 
@@ -244,7 +243,6 @@
            => productIds == null
            ? string.Empty
            : string.Join(", ", productIds.Select(id => productNames.TryGetValue(id, out var name) ? name : CacheRef.GetProductName(id)));
-    }
-
 #pragma warning restore S109 // Magic numbers should not be used
+    }
 }

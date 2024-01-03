@@ -82,5 +82,56 @@
         ArrayList EAS_Rpt_WinLossDaily_SortingOrder(string groupname);
 
         List<ExtraPTModel> EAS_Rpt_ViewExtraPT2(string groupName);
+
+
+#pragma warning disable S107 // Methods should not have too many parameters
+        List<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_Com(
+            string groupname,
+            int custId,
+            string currencyIds,
+            int baseCurrency,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            string productDetailsXML,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay);
+
+        List<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_SAg(
+            int custId,
+            int masterId,
+            string currencyIds,
+            int baseCurrency,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            string productDetailsXML,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay);
+
+        List<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_MAg(
+            int custId,
+            int agentId,
+            string currencyIds,
+            int baseCurrency,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            string productDetailsXML,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay);
+
+        List<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_Ag(
+            int custId,
+            int memberId,
+            string currencyIds,
+            int baseCurrency,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            string productDetailsXML,
+            DateTime balanceUpDay,
+            DateTime moveBetsDay);
+#pragma warning restore S107 // Methods should not have too many parameters
     }
 }

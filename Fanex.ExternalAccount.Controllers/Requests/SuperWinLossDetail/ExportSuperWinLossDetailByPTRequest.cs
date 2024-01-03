@@ -5,6 +5,6 @@
         private const string DateFormat = "yyyyMMdd";
 
         public string FileName =>
-            $"SuperWinLossDetailByPT_{Fromdate.ToString(DateFormat)}_{Todate.ToString(DateFormat)}.xls";
+            $"SuperWinLossDetailByPT_{Fromdate.ToString(DateFormat)}_{Todate.ToString(DateFormat)}_in_{(BaseCurrency == 0 ? "customer_currency" : BaseCurrencyName)}.xls";
     }
 }

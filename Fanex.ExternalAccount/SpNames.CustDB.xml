@@ -10,7 +10,6 @@
     <Setting Key="SiteDB3_Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="SiteDB.BODB02.bodbExtAccNet" Plain="0" />
     <Setting Key="SiteDB3_PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="SiteDB.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
-
   <Function Name="PT Setting Information">
     <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
@@ -44,6 +43,14 @@
     <Setting Key="EAS_Rpt_WinLossDetail_byPT" SpName="EAS_Rpt_WinLossDetail_byPT" DbName="DBAGE.bodb02.bodbExtAccNet" />
     <Setting Key="EAS_GetPTProductBySuper" SpName="EAS_GetPTProductBySuper" DbName="DBACC.bodb02.bodbExtAccNet" />
     <Setting Key="EAS_Rpt_WinLossDetail_bySubGroup" SpName="EAS_Rpt_WinLossDetail_bySubGroup" DbName="DBAGE.bodb02.bodbExtAccNet" />
+  </Function>
+  <Function Name="Report By Currency">
+    <Setting Key="EAS_GetCurrencyList" SpName="EAS_GetCurrencyList_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_Com" SpName="EAS_Rpt_WinLossDetailByCurrency_Com_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_SAg" SpName="EAS_Rpt_WinLossDetailByCurrency_SAg_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_MAg" SpName="EAS_Rpt_WinLossDetailByCurrency_MAg_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_Ag" SpName="EAS_Rpt_WinLossDetailByCurrency_Ag_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_ByPT" SpName="EAS_Rpt_WinLossDetailByCurrency_ByPT_xtest" DbName="DBAGE.bodb02.bodbExtAccNet" />
   </Function>
   <Function Name="Group">
     <Setting Key="EAS_GroupInfoDel" SpName="EAS_GroupInfoDel" DbName="DBPOL.Nap_UserControl.bodbExtAccNet" Plain="0" />
@@ -184,7 +191,7 @@
     <Setting Key="Acc_CustomerUpdMember_All" SpName="Acc_CustomerUpdMember_All" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdMember_Super" SpName="Acc_CustomerUpdMember_Super" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerUpdMember_Master" SpName="Acc_CustomerUpdMember_Master" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
-    <Setting Key="Acc_CustOverrideUpd" SpName="Acc_custoverrideUpd" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
+    <Setting Key="Acc_CustOverrideUpd" SpName="Acc_CustOverrideUpd" DbName="DBCust.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Acc_CustomerSelComEditOverride_SAg" SpName="Acc_CustomerSelComEditOverride_SAg" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
     <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
@@ -241,7 +248,7 @@
   </Function>
   <Function Name="Product Status Setting">
     <!--Select functions-->
-    <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductID" DbName="DBCust.CustDB.bodbExtAccNet" />
+    <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductId" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_Admin_DisableGameStatusSelect" SpName="Acc_Admin_DisableGameStatusSelect" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect" DbName="DBCust.CustDB.bodbExtAccNet" />
     <Setting Key="Acc_Admin_DisableNewProductStatusSelect_Esports" SpName="Acc_Admin_DisableNewProductStatusSelect_Esports" DbName="DBCust.CustDB.bodbExtAccNet" />
@@ -316,6 +323,7 @@
     <Setting Key="EAS_TotalBet_LeagueSel" SpName="EAS_TotalBet_LeagueSel" DbName="DBBOF.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_TotalBet_EventSel" SpName="EAS_TotalBet_EventSel" DbName="DBBOF.bodb02.bodbExtAccNet" Plain="0" />
     <Setting Key="EAS_TotalBet_1378Sel" SpName="EAS_TotalBet_1378Sel" DbName="DBBOF.bodb02.bodbExtAccNet" Plain="0" />
+    <Setting Key="EAS_TotalBet_1378Sel_ByCurrency" SpName="EAS_TotalBet_1378Sel_ByCurrency_xtest" DbName="DBBOF.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
   <Function Name="Mark Account Type">
     <Setting Key="EAS_AccountType_Check" SpName="EAS_AccountType_Check" DbName="DBCUST.CustDB.bodbExtAccNet" Plain="0" />
@@ -337,5 +345,8 @@
   </Function>
   <Function Name="Parlay Max Payout Info">
     <Setting Key="Acc_SabaVirtualSportsBetSettingRef_Sel" SpName="Acc_SabaVirtualSportsBetSettingRef_Sel" DbName="DBTXN.bodb02.bodbExtAccNet" />
+  </Function>
+  <Function Name="Exchange Rate">
+    <Setting Key="EAS_Rpt_OandaExchangeRate" SpName="EAS_Rpt_OandaExchangeRate" DbName="DBAGE.bodb02.bodbExtAccNet" Plain="0" />
   </Function>
 </Functions>

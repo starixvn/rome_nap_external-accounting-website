@@ -65,3 +65,8 @@
 @mixin transform($params) {
   @include css3-prefix('transform', $params);
 }
+
+@mixin effect-textbox() {
+    @include border-radius(1px);
+    @include box-shadow(0px, 1px, 1px, rgba(0, 0, 0, 0.3));
+}

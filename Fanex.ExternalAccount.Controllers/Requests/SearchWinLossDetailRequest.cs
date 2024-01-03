@@ -22,6 +22,9 @@
             ProductIds = request.ProductIds;
             ResourceIds = request.ResourceIds;
             UserId = request.UserId;
+            CurrencyIds = request.Currencies;
+            BaseCurrency = request.BaseCurrency;
+            IsMultipleCurrency = !string.IsNullOrWhiteSpace(request.Currencies);
         }
 
         public string MainGroupName { get; }
@@ -34,5 +37,8 @@
         public dynamic ToolTipsProducts { get; }
         public string ResourceIds { get; }
         public int UserId { get; }
+        public string CurrencyIds { get; }
+        public int BaseCurrency { get; }
+        public bool IsMultipleCurrency { get; }
     }
 }

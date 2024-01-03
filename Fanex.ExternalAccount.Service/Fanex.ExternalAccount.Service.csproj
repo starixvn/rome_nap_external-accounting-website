@@ -244,11 +244,15 @@
     <Compile Include="IPInformatonService.cs" />
     <Compile Include="Login\ILoginService.cs" />
     <Compile Include="OTP\CustomerOtpService.cs" />
+    <Compile Include="Params\GetTotalBetMCParam.cs" />
     <Compile Include="Params\GetTotalBetParam.cs" />
     <Compile Include="Products\ProductDetailService.cs" />
     <Compile Include="Products\ProductService.cs" />
     <Compile Include="Report\IReportService.cs" />
     <Compile Include="Customer\SiteDBConfigService.cs" />
+    <Compile Include="Report\MultipleCurrency\IReportByCurrencyService.cs" />
+    <Compile Include="Report\MultipleCurrency\ReportByCurrencyService.cs" />
+    <Compile Include="Report\ExchangeService.cs" />
     <Compile Include="Resources\Lang.Designer.cs">
       <DependentUpon>Lang.resx</DependentUpon>
       <AutoGen>True</AutoGen>

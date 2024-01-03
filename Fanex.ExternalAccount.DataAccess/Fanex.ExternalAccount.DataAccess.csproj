@@ -175,6 +175,7 @@
     <Compile Include="Criteria\Customer\ResetPasswordCriteria.cs" />
     <Compile Include="Criteria\DataRange\SelectDataRangeCriteria.cs" />
     <Compile Include="Criteria\DataRange\UpdateDataRangeCriteria.cs" />
+    <Compile Include="Criteria\ExchangeRate\SelectOandaExchangeRateCriteria.cs" />
     <Compile Include="Criteria\GroupConfiguration\GroupConfigurationDetail.cs" />
     <Compile Include="Criteria\GroupConfiguration\UpdateGroupConfigurationCriteria.cs" />
     <Compile Include="Criteria\GroupConfiguration\GetGroupConfigurationCriteria.cs" />
@@ -190,9 +191,11 @@
     <Compile Include="Criteria\SubGroup\GetSubGroupCustomerCriteria.cs" />
     <Compile Include="Criteria\SubGroup\UpdateCustomerSubGroupCriteria.cs" />
     <Compile Include="Criteria\SubGroup\UpdateSubGroupAdminPwdCriteria.cs" />
+    <Compile Include="Criteria\SuperWinLossDetailByPT\SuperWinLossDetailMCByPTCriteria.cs" />
     <Compile Include="Criteria\TotalBet\GetEventsCriteria.cs" />
     <Compile Include="Criteria\TotalBet\GetTotalBetCriteria.cs" />
     <Compile Include="Criteria\TotalBet\GetLeaguesCriteria.cs" />
+    <Compile Include="Criteria\TotalBet\GetTotalBetMCCriteria.cs" />
     <Compile Include="Criteria\UserControl\GetGroupPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\GetUserPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateMultipleGroupPolicyCriteria.cs" />
@@ -212,6 +215,7 @@
     <Compile Include="Customer\ParlayMaxPayout\ParlayMaxPayoutDao.cs" />
     <Compile Include="DataRange\DataRangeDao.cs" />
     <Compile Include="DataRange\IDataRangeDao.cs" />
+    <Compile Include="ExchangeRate\ExchangeRateDAO.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Base\DAOBase.cs" />
@@ -226,10 +230,13 @@
     <Compile Include="Products\GetProductsCriteria.cs" />
     <Compile Include="Products\GetProductsDetailCriteria.cs" />
     <Compile Include="IPInformatonRepository.cs" />
+    <Compile Include="Report\IReportByCurrencyDAO.cs" />
     <Compile Include="Report\IReportDAO.cs" />
+    <Compile Include="Report\ReportByCurrencyDAO.cs" />
     <Compile Include="Report\ReportDao.partial.cs" />
     <Compile Include="Report\ReportDao.cs" />
     <Compile Include="Report\SuperWinLossByPTDataAccess.cs" />
+    <Compile Include="Report\SuperWinLossMCByPTDao.cs" />
     <Compile Include="Statement\IStatementDAO.cs" />
     <Compile Include="Statement\StatementDao.cs" />
     <Compile Include="UserControl\FunctionDao.cs" />

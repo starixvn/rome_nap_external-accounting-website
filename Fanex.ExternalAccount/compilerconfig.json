@@ -86,5 +86,25 @@
   {
     "outputFile": "assets/styles/pages/customer/mark-account.css",
     "inputFile": "assets/styles/pages/customer/mark-account.scss"
+  },
+  {
+    "outputFile": "assets/styles/vendors/daterangepicker/jquery.daterangepicker.css",
+    "inputFile": "assets/styles/vendors/daterangepicker/jquery.daterangepicker.scss"
+  },
+  {
+    "outputFile": "assets/styles/components/daterangepicker-customize.css",
+    "inputFile": "assets/styles/components/daterangepicker-customize.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/reports/report-by-cur.css",
+    "inputFile": "assets/styles/pages/reports/report-by-cur.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/totalbet/total-bet-mc.css",
+    "inputFile": "assets/styles/pages/totalbet/total-bet-mc.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/reports/exchangerate.css",
+    "inputFile": "assets/styles/pages/reports/exchangerate.scss"
   }
 ]
