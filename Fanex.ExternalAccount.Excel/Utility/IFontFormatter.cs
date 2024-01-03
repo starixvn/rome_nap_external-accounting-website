@@ -10,7 +10,7 @@
     public class RtfFontFormatter : IFontFormatter
     {
         private readonly string _fontName;
-        private readonly short _fontHeightInPoints;
+        private readonly double _fontHeightInPoints;
 
         public RtfFontFormatter(string fontName, short fontHeightInPoints)
         {
