@@ -56,8 +56,9 @@ namespace Fanex.ExternalAccount.Core.Shared
             SexyGaming,
             SpadeGaming,
             AllBet,
-            ProductConstants.Sportsbook,
-            MGRNGCasino
+            Sportsbook,
+            MGRNGCasino,
+            Live22
         };
     }
 }

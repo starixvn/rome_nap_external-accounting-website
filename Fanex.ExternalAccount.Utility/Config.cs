@@ -153,6 +153,13 @@
             return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
         }
 
+        public static bool IsOfferLive22ProductDetailsGroup(string currentGroup)
+        {
+            var allGroups = GetValue("OfferLive22ProductDetailsGroups");
+
+            return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
+        }
+
         private static bool IsOfferJackpotProductDetailsGroup(string allGroups, string currentGroup)
             => !string.IsNullOrWhiteSpace(allGroups)
                 && allGroups.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
