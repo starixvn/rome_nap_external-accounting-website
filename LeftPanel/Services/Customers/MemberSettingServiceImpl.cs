@@ -36,8 +36,6 @@
                 }
             }
 
-            setting.MasterPts.Add(new ObjectInfo("SBPT", "Sportsbook's PT"));
-
             SetEditSportsbookTextForIndirectUplineEditMember(setting.MasterPts);
 
             // Set edit links for super same as master edit member

@@ -931,7 +931,7 @@
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         parent.Fanex.ExtAcc.Customer.superId = superId;
         $scope.ResetGlobalValueAtSuperOnMember();
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/SuperMasterEditSB?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
     };
 
     $scope.SuperCasino = function () {
@@ -953,7 +953,7 @@
         parent.Fanex.ExtAcc.Customer.agentId = agentId;
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         parent.Fanex.ExtAcc.Customer.superId = superId;
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/SuperMasterEditSB?custId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
     };
 
     $scope.MasterCasino = function () {

@@ -120,7 +120,7 @@ function LoadBetSetting(sourceUser, destUsers, isCopy) {
                 $("#product-1-0").attr("src", toUrl("Sportsbook/EditMultipleBetSettingContent?copy=1&custId=" + result.superIds.split(',')[0] + "&groupName=" + groupName));
             }
             else {
-                $("#product-1-1").attr("src", toUrl("Sportsbook/EditMultipleBetSettingContent?edit=1&custId=0&groupName=" + groupName));
+                $("#product-1-1").attr("src", resolveClientUrl("Customer/EditCustomer?edit=1&custId=" + result.superIds.split(',')[0] + "&roleId=4&groupName=" + groupName));
             }
         }
 
