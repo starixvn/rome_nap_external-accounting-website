@@ -25,7 +25,7 @@ class DateRangePickerJQueryComponent {
     render(options: DateRangePickerJQueryOption) {
         const dateRangePicker = $("#" + options.selectorId);
         this.historicPivotDateText = dateRangePicker.data("historicpivotdate");
-        const historicPivotDate = moment(this.historicPivotDateText);
+        const historicPivotDate = moment(this.historicPivotDateText, "MM/dd/yyyy");
         this.fromDate = dateRangePicker.data("fromdate");
         this.toDate = dateRangePicker.data("todate");
         this.historyMaxDateRange = dateRangePicker.data("historymaxdaterange");
@@ -46,11 +46,11 @@ class DateRangePickerJQueryComponent {
                 monthSelect: true,
                 yearSelect: true
             }).bind("datepicker-change", (_, obj) => {
-                const startDate = moment(obj.date1)
-                const endDate = moment(obj.date2);
+                const startDate = moment(obj.date1, "MM/dd/yyyy")
+                const endDate = moment(obj.date2, "MM/dd/yyyy");
                 if (endDate.isBefore(historicPivotDate)
                     && (this.historyMaxDateRange != undefined && endDate.diff(startDate, "d") > this.historyMaxDateRange
-                    || this.historyMaxMonthRange != undefined && endDate.diff(startDate, "months") > this.historyMaxMonthRange)) {
+                    || this.historyMaxMonthRange != undefined && endDate.diff(startDate, "months") >= this.historyMaxMonthRange)) {
                     try {
                         Fanex.ExtAcc.Form.Alert('Date Range Error', dateRangePicker.data("label-maxdataretrievehistoryerror"), 400, 150, null, null, 0);
                     } catch (e) {
@@ -62,7 +62,7 @@ class DateRangePickerJQueryComponent {
 
                 if (startDate.isBefore(historicPivotDate) && endDate.isSameOrAfter(historicPivotDate)
                     && (this.historyMaxDateRange != undefined && endDate.diff(startDate, "d") > this.historyMaxDateRange
-                    || this.historyMaxMonthRange != undefined && endDate.diff(startDate, "months") > this.historyMaxMonthRange)) {
+                    || this.historyMaxMonthRange != undefined && endDate.diff(startDate, "months") >= this.historyMaxMonthRange)) {
                     try {
                         Fanex.ExtAcc.Form.Alert('Date Range Error', dateRangePicker.data("label-maxdataretrievehistoryerror"), 400, 150, null, null, 0);
                     } catch (e) {

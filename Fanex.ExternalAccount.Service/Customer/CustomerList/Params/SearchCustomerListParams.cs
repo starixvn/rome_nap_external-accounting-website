@@ -8,6 +8,8 @@
 
         public string UserName { get; set; }
 
+        public string CurrencyIds { get; set; }
+
         public short Status { get; set; }
 
         public bool IsDataLimited { get; set; }

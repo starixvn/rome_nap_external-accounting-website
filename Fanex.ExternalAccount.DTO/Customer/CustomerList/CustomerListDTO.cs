@@ -65,5 +65,7 @@
         public decimal PlayerDiscountMyanmarOdds { get; set; }
 
         public string SubGroup { get; set; }
+
+        public string Currency { get; set; }
     }
 }

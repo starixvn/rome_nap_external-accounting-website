@@ -34,6 +34,11 @@
 
         public SearchCustomerListViewModel Search(SearchCustomerListParams parameters, bool IsViewIPVN)
         {
+            if(Config.IsMultipleCurrencyGroup(parameters.GroupName) && string.IsNullOrWhiteSpace(parameters.CurrencyIds))
+            {
+                return new SearchCustomerListViewModel();
+            }
+
             var result = _customerListDao.SearchCustomerList(GetSearchCriteria(parameters));
             result.HasSubGroups = parameters.GroupId > 0 && _groupService.GetGroupWithSubGroups(parameters.GroupId).Any();
             if (!IsViewIPVN)
@@ -59,6 +64,7 @@
                     {
                         SRecommend = parameters.UplineId,
                         UserName = parameters.UserName,
+                        Currencies = parameters.CurrencyIds,
                         UserId = parameters.UserId,
                         Status = parameters.Status,
                         PageIndex = parameters.PageIndex,
@@ -69,6 +75,7 @@
                     {
                         MRecommend = parameters.UplineId,
                         UserName = parameters.UserName,
+                        Currencies = parameters.CurrencyIds,
                         UserId = parameters.UserId,
                         Status = parameters.Status,
                         PageIndex = parameters.PageIndex,
@@ -79,6 +86,7 @@
                     {
                         Recommend = parameters.UplineId,
                         UserName = parameters.UserName,
+                        Currencies = parameters.CurrencyIds,
                         UserId = parameters.UserId,
                         Status = parameters.Status,
                         PageIndex = parameters.PageIndex,
@@ -89,6 +97,7 @@
                     {
                         GroupName = parameters.GroupName,
                         UserName = parameters.UserName,
+                        Currencies = parameters.CurrencyIds,
                         UserId = parameters.UserId,
                         Status = parameters.Status,
                         IsDataLimited = parameters.IsDataLimited,

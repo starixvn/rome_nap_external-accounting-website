@@ -7,5 +7,7 @@
         public int? RoleId { get; set; }
 
         public bool HasReadProtectCustomerFunction { get; set; }
+
+        public bool IsMultipleCurrencyGroup { get; set; }
     }
 }

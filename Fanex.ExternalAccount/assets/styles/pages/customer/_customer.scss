@@ -446,6 +446,16 @@ span.spanPT {
     text-align: right;
 }
 
+.filter-customer-list {
+    .multiple-currency {
+        display: inline-flex;
+    }
+
+    .ddl-product{
+        padding-left: 10px;
+    }
+}
+
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     .context-menu-list.context-menu-root {
         overflow: unset !important;

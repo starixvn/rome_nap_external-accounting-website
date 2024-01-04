@@ -2827,6 +2827,14 @@
     <Content Include="ExcelTemplates\Reports\WinLossMCDetailAg.xls" />
     <Content Include="ExcelTemplates\Reports\WinLossMCDetailMAg.xls" />
     <Content Include="ExcelTemplates\Reports\SuperWinLossDetailMCByPT.xls" />
+    <Content Include="ExcelTemplates\Customer\CustomerListMC.xls" />
+    <Content Include="ExcelTemplates\Customer\CustomerListMOMC.xls" />
+    <Content Include="ExcelTemplates\Customer\MemberListMC.xls" />
+    <Content Include="ExcelTemplates\Customer\MemberListMOMC.xls" />
+    <Content Include="ExcelTemplates\Customer\SuperListMC.xls" />
+    <Content Include="ExcelTemplates\Customer\SuperListMOMC.xls" />
+    <Content Include="ExcelTemplates\Customer\SuperListSGMC.xls" />
+    <Content Include="ExcelTemplates\Customer\SuperListSGMOMC.xls" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />

@@ -50,10 +50,10 @@ class OandaExchange {
                     { Name: "Date", Value: exchangeByDate.ExchangeDateString, MergeRowNumber: exchangeByDate.Rates.length },
                     { Name: "Currency", Value: exchangeByDate.Rates[0].CurrencyName },
                     { Name: "CurrencyCode", Value: exchangeByDate.Rates[0].CurrencyCode },
-                    { Name: "MYRUnit", Value: parseFloat(exchangeByDate.Rates[0].MYRRate.toFixed(5)) },
-                    { Name: "CNYUnit", Value: parseFloat(exchangeByDate.Rates[0].CNYRate.toFixed(5)) },
-                    { Name: "THBUnit", Value: parseFloat(exchangeByDate.Rates[0].THBRate.toFixed(5)) },
-                    { Name: "IDRUnit", Value: parseFloat(exchangeByDate.Rates[0].IDRRate.toFixed(5)) }
+                    { Name: "MYRUnit", Value: parseFloat(exchangeByDate.Rates[0].MYRRate) },
+                    { Name: "CNYUnit", Value: parseFloat(exchangeByDate.Rates[0].CNYRate) },
+                    { Name: "THBUnit", Value: parseFloat(exchangeByDate.Rates[0].THBRate) },
+                    { Name: "IDRUnit", Value: parseFloat(exchangeByDate.Rates[0].IDRRate) }
                 ]
             });
 
@@ -63,10 +63,10 @@ class OandaExchange {
                     Columns: [
                         { Name: "Currency", Value: rate.CurrencyName },
                         { Name: "CurrencyCode", Value: rate.CurrencyCode },
-                        { Name: "MYRUnit", Value: parseFloat(rate.MYRRate.toFixed(5)) },
-                        { Name: "CNYUnit", Value: parseFloat(rate.CNYRate.toFixed(5)) },
-                        { Name: "THBUnit", Value: parseFloat(rate.THBRate.toFixed(5)) },
-                        { Name: "IDRUnit", Value: parseFloat(rate.IDRRate.toFixed(5)) }
+                        { Name: "MYRUnit", Value: parseFloat(rate.MYRRate) },
+                        { Name: "CNYUnit", Value: parseFloat(rate.CNYRate) },
+                        { Name: "THBUnit", Value: parseFloat(rate.THBRate) },
+                        { Name: "IDRUnit", Value: parseFloat(rate.IDRRate) }
                     ]
                 });
             }

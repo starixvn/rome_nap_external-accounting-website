@@ -618,7 +618,14 @@ class WinLossDetailMC {
                 itemsPerPageArray: [50, 100, 500],
                 currentPage: 0,
                 totalItem: this.totalRows,
-                itemsPerPage: 50
+                itemsPerPage: 50,
+                afterPagedFunction: () => {
+                    $(".report-username").unbind('click').click((event) => {
+                        event.preventDefault();
+                        var custID = $(event.currentTarget).data("custid");
+                        this.GetDownlineWinLossDetail(custID);
+                    });
+                }
             },
             marginRight: 10,
             bottomBorderWidth: 0,

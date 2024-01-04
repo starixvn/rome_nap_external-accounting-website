@@ -13,22 +13,27 @@
             _dir = HttpContext.Current.Server.MapPath("~/ExcelTemplates/Customer");
         }
 
-        public string CustomerListPath(int roleId, bool isMyanmarOdds = false, bool hasSubGroup = false)
+        public string CustomerListPath(int roleId, bool isMyanmarOdds = false, bool hasSubGroup = false, bool isMultipleCurrency = false)
         {
+            var fileName = "";
             switch (roleId)
             {
                 case Role.Member:
-                    return Path.Combine(_dir, (isMyanmarOdds ? "MemberListMO.xls" : "MemberList.xls"));
+                    fileName = "MemberList";
+                    break;
                 case Role.Super:
-                    var fileName = "SuperList";
+                    fileName = "SuperList";
                     fileName += hasSubGroup ? "SG" : "";
-                    fileName += isMyanmarOdds ? "MO" : "";
-                    fileName += ".xls";
-
-                    return Path.Combine(_dir, fileName);
+                    break;
                 default:
-                    return Path.Combine(_dir, (isMyanmarOdds ? "CustomerListMO.xls" : "CustomerList.xls"));
+                    fileName = "CustomerList";
+                    break;
             }
+
+            fileName += isMyanmarOdds ? "MO" : "";
+            fileName += isMultipleCurrency ? "MC.xls" : ".xls";
+
+            return Path.Combine(_dir, fileName);
         }
     }
 }
