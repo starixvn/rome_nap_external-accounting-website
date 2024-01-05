@@ -103,7 +103,7 @@ Fanex.ExtAcc.TotalBetMC = {
             });
         });
 
-        $("#ddl-events").fanexMultiSelect({
+        $("#ddl-events").fanexMultiSelectSearchable({
             showFilter: true,
             toggleWidth: isMobile.phone ? 243 : 193,
             minWidth: isMobile.phone ? 300 : 500,
@@ -123,7 +123,7 @@ Fanex.ExtAcc.TotalBetMC = {
         var baseCurrency = $("#ddl-base-currency").val();
 
         var league = $("#ddl-leagues").fanexSingleSelect("getItems", true);
-        var events = $("#ddl-events").fanexMultiSelect("getItems", true);
+        var events = $("#ddl-events").fanexMultiSelectSearchable("getItems", true);
         var param = {
             viewMode: viewMode,
             league: league,
