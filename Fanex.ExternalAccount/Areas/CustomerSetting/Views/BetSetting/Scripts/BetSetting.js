@@ -12,7 +12,7 @@ angular.element($('#ng-app')).ready(function () {
 
 function LoadSB() {
     Fanex.CustomerSetting.Core.BlockUI();
-    document.location.href = toUrl('Sportsbook/Index?custId=' + custId + '&uplineId=' + uplineId + '&userId=' + userId + '&groupName=' + siteName);
+    document.location.href = toUrl('Sportsbook/Index?theme=nap&custId=' + custId + '&uplineId=' + uplineId + "&roleId=4" + '&userId=' + userId + '&groupName=' + siteName);
 };
 
 function LoadVirtualSports() {

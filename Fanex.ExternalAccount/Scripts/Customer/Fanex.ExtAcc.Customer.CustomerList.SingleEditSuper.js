@@ -133,7 +133,7 @@
                             className: "iconEnableEdit editInfoBg",
                             callback: function (key, opt) {
                                 Fanex.ExtAcc.Form.ShowFrame(
-                                    resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index?custId=' + Fanex.ExtAcc.Customer.UserId + '&uplineId=' + Fanex.ExtAcc.Customer.UserId + '&userId=' + userId + '&groupName=' + $('#selectedGroupName').html()), 'Edit Bet Setting',
+                                    resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index?custId=' + Fanex.ExtAcc.Customer.UserId + "&roleId=" + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineId=' + Fanex.ExtAcc.Customer.UserId + '&userId=' + userId + '&groupName=' + $('#selectedGroupName').html()), 'Edit Bet Setting',
                                     900,
                                     Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
                                     false,
