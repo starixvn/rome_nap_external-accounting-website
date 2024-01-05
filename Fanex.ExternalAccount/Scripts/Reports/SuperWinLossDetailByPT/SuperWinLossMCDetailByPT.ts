@@ -238,8 +238,8 @@ class SuperWinLossMCDetailByPT {
 
     Render(data) {
         const dateInfo = this.fromdate === this.todate ?
-            `on ${this.fromdate}` :
-            `from ${this.fromdate} to ${this.todate}`;
+            `on ${moment(this.fromdate).format('MMM DD, yyyy')}` :
+            `from ${moment(this.fromdate).format('MMM DD, yyyy')} to ${moment(this.todate).format('MMM DD, yyyy')}`;
 
         var currencyInfo = "";
         if ($("#ckbBaseCurrency").prop("checked")) {

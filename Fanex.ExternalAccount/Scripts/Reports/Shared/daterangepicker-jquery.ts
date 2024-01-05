@@ -50,7 +50,7 @@ class DateRangePickerJQueryComponent {
                 const endDate = moment(obj.date2, "MM/dd/yyyy");
                 if (endDate.isBefore(historicPivotDate)
                     && (this.historyMaxDateRange != undefined && endDate.diff(startDate, "d") > this.historyMaxDateRange
-                    || this.historyMaxMonthRange != undefined && endDate.diff(startDate, "months") >= this.historyMaxMonthRange)) {
+                    || this.historyMaxMonthRange != undefined && endDate.diff(moment(obj.date1, "MM/dd/yyyy").add(this.historyMaxMonthRange, "months"), "d") > 0 )) {
                     try {
                         Fanex.ExtAcc.Form.Alert('Date Range Error', dateRangePicker.data("label-maxdataretrievehistoryerror"), 400, 150, null, null, 0);
                     } catch (e) {
@@ -62,7 +62,7 @@ class DateRangePickerJQueryComponent {
 
                 if (startDate.isBefore(historicPivotDate) && endDate.isSameOrAfter(historicPivotDate)
                     && (this.historyMaxDateRange != undefined && endDate.diff(startDate, "d") > this.historyMaxDateRange
-                    || this.historyMaxMonthRange != undefined && endDate.diff(startDate, "months") >= this.historyMaxMonthRange)) {
+                    || this.historyMaxMonthRange != undefined && endDate.diff(moment(obj.date1, "MM/dd/yyyy").add(this.historyMaxMonthRange, "months"), "d") > 0 )) {
                     try {
                         Fanex.ExtAcc.Form.Alert('Date Range Error', dateRangePicker.data("label-maxdataretrievehistoryerror"), 400, 150, null, null, 0);
                     } catch (e) {

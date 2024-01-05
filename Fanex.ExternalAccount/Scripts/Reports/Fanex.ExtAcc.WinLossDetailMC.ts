@@ -403,7 +403,7 @@ class WinLossDetailMC {
         var dateInfo;
 
         if (dateRange.fromDate == dateRange.toDate) {
-            dateInfo = 'on ' + dateRange.fromDate;
+            dateInfo = 'on ' + moment(dateRange.fromDate).format('MMM DD, yyyy');
         }
         else {
             dateInfo = 'from ' + moment(dateRange.fromDate).format('MMM DD, yyyy') + ' to ' + moment(dateRange.toDate).format('MMM DD, yyyy');
