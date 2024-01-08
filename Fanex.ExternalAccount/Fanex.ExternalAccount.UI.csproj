@@ -79,18 +79,6 @@
       <HintPath>..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="BetListNPOI, Version=2.6.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\BetListNPOI.2.6.0\lib\netstandard2.0\BetListNPOI.dll</HintPath>
-    </Reference>
-    <Reference Include="BetListNPOI.OOXML, Version=2.6.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\BetListNPOI.2.6.0\lib\netstandard2.0\BetListNPOI.OOXML.dll</HintPath>
-    </Reference>
-    <Reference Include="BetListNPOI.OpenXml4Net, Version=2.6.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\BetListNPOI.2.6.0\lib\netstandard2.0\BetListNPOI.OpenXml4Net.dll</HintPath>
-    </Reference>
-    <Reference Include="BetListNPOI.OpenXmlFormats, Version=2.6.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\BetListNPOI.2.6.0\lib\netstandard2.0\BetListNPOI.OpenXmlFormats.dll</HintPath>
-    </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -188,9 +176,6 @@
     <Reference Include="Fanex.Module.Logs, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Module.Logs.2.0.0.2\lib\net40\Fanex.Module.Logs.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Module.Statement, Version=1.0.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.Statement.1.0.1.1\lib\net40\Fanex.Module.Statement.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
@@ -206,9 +191,6 @@
     </Reference>
     <Reference Include="Fanex.RemotingRef, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.RemotingRef.1.5.1\lib\net461\Fanex.RemotingRef.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.Tarus.Infrastructure, Version=1.0.4.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Tarus.Infrastructure.1.0.4.14\lib\net461\Fanex.Tarus.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation, Version=3.2.0.0, Culture=neutral, PublicKeyToken=a82054b837897c66, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.3.2.0.0\lib\Net40\FluentValidation.dll</HintPath>
@@ -2899,6 +2881,10 @@
     <ProjectReference Include="..\Modules\Fanex.ExternalAccount.ProblemAccount\Fanex.ExternalAccount.ProblemAccount.csproj">
       <Project>{be8d34fe-39ca-447e-bd10-71991c08ceb6}</Project>
       <Name>Fanex.ExternalAccount.ProblemAccount</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.ExternalAccount.Statement\Fanex.ExternalAccount.Statement.csproj">
+      <Project>{9d37c623-ea9d-4066-b5fc-c8ec378e9ac4}</Project>
+      <Name>Fanex.ExternalAccount.Statement</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.ExternalAccount.WinLossDetailBySubGroup\Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.csproj">
       <Project>{5f20bea2-febf-4ce2-8ff8-129dd93b3386}</Project>
