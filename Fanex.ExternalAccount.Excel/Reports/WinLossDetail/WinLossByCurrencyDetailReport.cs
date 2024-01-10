@@ -108,7 +108,7 @@
 #pragma warning restore S3358 // Ternary operators should not be nested
 
             mainTitle += _builder.FromDate.Equals(_builder.ToDate)
-                ? $" Win Loss Detail on {_builder.FromDate}"
+                ? $" Win Loss Detail on {_builder.FromDate} in {(string.IsNullOrWhiteSpace(_builder.BaseCurrency) ? "customer currency" : _builder.BaseCurrency)}"
                 : $" Win Loss Detail From {_builder.FromDate} To {_builder.ToDate} in {(string.IsNullOrWhiteSpace(_builder.BaseCurrency) ? "customer currency" : _builder.BaseCurrency)}";
 
             mainTitle += string.IsNullOrEmpty(Products) ? string.Empty : $" - {Products}";

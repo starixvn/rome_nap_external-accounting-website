@@ -152,7 +152,7 @@
         public override void BuildMainTitle(ISheet resultSheet)
         {
             var mainTitle = _builder.FromDate.Equals(_builder.ToDate)
-                 ? $"Super Win Loss Detail By PT on {_builder.FromDate}"
+                 ? $"Super Win Loss Detail By PT on {_builder.FromDate} in {(string.IsNullOrWhiteSpace(_builder.BaseCurrency) ? "customer currency" : _builder.BaseCurrency)}"
                  : $"Super Win Loss Detail By PT {_builder.FromDate} To {_builder.ToDate} in {(string.IsNullOrWhiteSpace(_builder.BaseCurrency) ? "customer currency" : _builder.BaseCurrency)}";
 
             mainTitle += string.IsNullOrEmpty(Products) ? string.Empty : $" - {Products}";
