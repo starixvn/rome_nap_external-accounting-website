@@ -76,7 +76,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Customer.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Customer.Client.1.0.0-beta11\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
+      <HintPath>..\packages\Fanex.Customer.Client.1.0.0-beta26\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Customer.Client.NETFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Customer.Client.NETFramework.1.0.0-beta02\lib\net461\Fanex.Customer.Client.NETFramework.dll</HintPath>
@@ -409,6 +409,7 @@
     <Compile Include="Report\WinLossDetailMCController.cs" />
     <Compile Include="Report\SuperWinLossDetailByPTController.cs" />
     <Compile Include="Requests\Customer\CreateCustomerRequest.cs" />
+    <Compile Include="Requests\Customer\UpdateCustomerRequest.cs" />
     <Compile Include="Requests\GetExchangeRateRequest.cs" />
     <Compile Include="Requests\MarkAccountType\NewMarkAccountRequest.cs" />
     <Compile Include="Requests\MarkAccountType\SearchMarkAccountRequest.cs" />
