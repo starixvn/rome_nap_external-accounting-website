@@ -40,6 +40,11 @@
         private readonly string cdnUri = ConfigurationManager.AppSettings["Fanex.Customer:CdnUri"];
         private readonly int SystemId = int.Parse(ConfigurationManager.AppSettings["Fanex.Customer:SystemId"]);
 
+        private const byte SystemCode_ExternalNapBetSetting = 5;
+        private const byte SystemCode_ExternalNapBetSettingSpecialSite = 9;
+        private const byte SystemCode_ExternalNapSpecialSite = 8;
+        private const byte SystemCode_ExternalNap = 4;
+
         private readonly CustomerClient.Services.ICustomerService customerServiceClient = new CustomerClient.Services.CustomerService(new CustomerClient.Configurations.CustomerClientConfiguration().Initialize());
 
         private readonly CustomerService _customerService = new CustomerService();
@@ -110,7 +115,7 @@
                 new CustomerClient.Params.UpdateCustomerParam(
                     request.GeneralInfo,
                     request.ProductGroups,
-                    AppSession.AccId,
+                    AppSession.AccId, 
                     0,
                     request.CustId,
                     "",
@@ -125,8 +130,8 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, string language = "en-US", bool isGetUpline = false)
-            => Content(await customerServiceClient.GetCustomerSetting(custId, roleId, language, isGetUpline));
+        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, int pageId = 4, string language = "en-US", bool isGetUpline = false)
+            => Content(await customerServiceClient.GetCustomerSetting(custId, roleId, pageId, language, isGetUpline));
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public async Task<ActionResult> CheckExistedCustomer(string username)
