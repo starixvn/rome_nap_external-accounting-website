@@ -5,6 +5,8 @@
     using System.Linq;
     using Core.Shared;
     using DTO.Customer;
+    using Fanex.ExternalAccount.Service.Impl.Report.MultipleCurrency;
+    using Fanex.ExternalAccount.Service.Interface.Report.MultipleCurrency;
     using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Utilities;
     using Interface.Report;
@@ -12,15 +14,18 @@
     public class WinLossDetailServiceImpl : WinLossDetailService
     {
         private readonly IReportService reportService;
+        private readonly IReportByCurrencyService reportByCurrencyService;
         private readonly IProductService productService;
         private readonly IProductDetailService productDetailService;
 
         public WinLossDetailServiceImpl(
             IReportService reportService = null,
+            IReportByCurrencyService reportByCurrencyService = null,
             IProductService productService = null,
             IProductDetailService productDetailService = null)
         {
             this.reportService = reportService ?? new ReportService();
+            this.reportByCurrencyService = reportByCurrencyService ?? new ReportByCurrencyService();
             this.productService = productService ?? new ProductService();
             this.productDetailService = productDetailService ?? new ProductDetailService();
         }
@@ -37,6 +42,23 @@
 
                 case Role.Agent:
                     return reportService.GetMemberWinLossDetail;
+
+                default:
+                    throw new InvalidOperationException(nameof(roleId));
+            }
+        }
+        private Func<string, int, int, DateTime, DateTime, string, string, string, int, object> GetWinLossByCurrencyDetailFunction(int roleId)
+        {
+            switch (roleId)
+            {
+                case Role.Super:
+                    return reportByCurrencyService.GetMasterWinLossMCDetail;
+
+                case Role.Master:
+                    return reportByCurrencyService.GetAgentWinLossMCDetail;
+
+                case Role.Agent:
+                    return reportByCurrencyService.GetMemberWinLossMCDetail;
 
                 default:
                     throw new InvalidOperationException(nameof(roleId));
@@ -79,6 +101,45 @@
                 };
         }
 
+        public dynamic DrillDownWinLossMCDetail(IDrillDownWinLossDetailRequest request)
+        {
+            if (request.IsNotValid)
+            {
+                throw new InvalidOperationException(nameof(request.IsValid));
+            }
+
+            var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
+            var getWinLossDetail = GetWinLossByCurrencyDetailFunction(request.ViewLevel);
+
+            var validProductIds = productService.ValidateProductIds(request.UserId, request.GroupId, Utils.ToEnumerableInt(request.ProductIds));
+            validProductIds = productDetailService.RemoveProductIds(validProductIds, request.ResourceIds, request.GroupName);
+
+            var productDetailsXML = productDetailService.BuildProductDetailsXML(validProductIds, request.ResourceIds, request.GroupName);
+
+            var winLossDetailData = getWinLossDetail(
+                request.GroupName,
+                request.CustId,
+                0,
+                request.FromDate,
+                request.ToDate,
+                Utils.JoinToString(validProductIds),
+                productDetailsXML,
+                request.CurrencyIds,
+                request.BaseCurrency);
+
+            return
+                new
+                {
+                    viewlevel = request.ViewLevel.DirectDownlineLevel(),
+                    srecommend = request.SuperId,
+                    mrecommend = request.MasterId,
+                    recommend = request.AgentId,
+                    rows = winLossDetailData,
+                    sortingorderlist = sortingOrderList,
+                    tooltips = request.ToolTipsProducts
+                };
+        }
+
         public dynamic SearchWinLossDetail(ISearchWinLossDetailRequest request)
         {
             var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
@@ -99,9 +160,19 @@
             validProductIds = productDetailService.RemoveProductIds(validProductIds, request.ResourceIds, request.GroupName);
 
             var productDetailsXML = productDetailService.BuildProductDetailsXML(validProductIds, request.ResourceIds, request.GroupName);
-
-            var winLossDetailData = SearchWinLossDetailData(request.GroupName, request.FromDate, request.ToDate, Utils.JoinToString(validProductIds), productDetailsXML, customerInfo);
-
+            dynamic winLossDetailData = request.IsMultipleCurrency
+                ? SearchWinLossMCDetailData(
+                    request,
+                    Utils.JoinToString(validProductIds),
+                    productDetailsXML,
+                    customerInfo)
+                : SearchWinLossDetailData(
+                    request.GroupName,
+                    request.FromDate,
+                    request.ToDate,
+                    Utils.JoinToString(validProductIds),
+                    productDetailsXML,
+                    customerInfo);
             return
                 new
                 {
@@ -163,6 +234,39 @@
                 toDate,
                 productIds,
                 productDetailsXML);
+        }
+
+        private dynamic SearchWinLossMCDetailData(
+            ISearchWinLossDetailRequest request,
+            string productIds,
+            string productDetailsXML,
+            LineInfo customerInfo)
+        {
+            if (customerInfo.RoleId >= Role.Super)
+            {
+                return reportByCurrencyService.GetSuperWinLossMCDetail(
+                    request.GroupName,
+                    customerInfo.CustId,
+                    request.FromDate,
+                    request.ToDate,
+                    productIds,
+                    productDetailsXML,
+                    request.CurrencyIds,
+                    request.BaseCurrency);
+            }
+
+            var getWinLossDetail = GetWinLossByCurrencyDetailFunction(customerInfo.RoleId.DirectUplineLevel());
+
+            return getWinLossDetail(
+                request.GroupName,
+                customerInfo.GetUplineId(),
+                customerInfo.CustId,
+                request.FromDate,
+                request.ToDate,
+                productIds,
+                productDetailsXML,
+                request.CurrencyIds,
+                request.BaseCurrency);
         }
 
         private static dynamic NoInfoResult(string username, ArrayList sortingOrderList, dynamic toolTipsProducts) => new

@@ -59,11 +59,14 @@
       "assets/styles/pages/statement/statement.css",
       "assets/styles/pages/reports/daily-winloss.css",
       "assets/styles/pages/reports/winloss-detail.css",
+      "assets/styles/pages/reports/report-by-cur.css",
       "assets/styles/pages/customer/pt-engine.css",
       "assets/styles/pages/admin/product.css",
       "assets/styles/pages/searchandcopy/index.css",
       "assets/styles/pages/customer/subgroup.css",
-      "assets/styles/pages/customer/mark-account.css"
+      "assets/styles/pages/customer/mark-account.css",
+      "assets/styles/vender/daterangepicker/jquery.daterangepicker.css",
+      "assets/styles/components/daterangepicker-customize.css"
     ],
     "sourceMap": true
   },
@@ -74,6 +77,8 @@
       "Scripts/Lib/jquery-ui-1.9.1/ui/jquery-ui.js",
       "Scripts/jquery.ui.touch-punch.js",
       "Scripts/Fanex.Grid/moment.min.js",
+      "Scripts/Moment/moment.js",
+      "Scripts/DateRangePicker/jquery.daterangepicker.js",
       "Scripts/ContextMenu/jquery.contextMenu.js",
       "Scripts/Fanex.Grid/Fanex.Pagination.js",
       "Scripts/Fanex.Grid/Fanex.Grid.js",
@@ -153,6 +158,16 @@
     "sourceMap": true
   },
   {
+    "outputFileName": "assets/bundles/mcwinlossdetail/index.js",
+    "inputFiles": [
+      "Scripts/Combobox/Combobox.js",
+      "Scripts/Reports/Shared/daterangepicker-jquery.js",
+      "Scripts/Reports/Shared/ProductControls.js",
+      "Scripts/Reports/Fanex.ExtAcc.WinLossDetailMC.js"
+    ],
+    "sourceMap": true
+  },
+  {
     "outputFileName": "assets/bundles/dailywinloss/index.js",
     "inputFiles": [
       "Scripts/Reports/Fanex.ExtAcc.DailyWinLoss.js"
@@ -224,6 +239,16 @@
     "sourceMap": true
   },
   {
+    "outputFileName": "assets/bundles/SuperWinLossMCDetailByPT/index.js",
+    "inputFiles": [
+      "Scripts/Combobox/Combobox.js",
+      "Scripts/Reports/Shared/ProductControls.js",
+      "Scripts/Reports/Shared/daterangepicker-jquery.js",
+      "Scripts/Reports/SuperWinLossDetailByPT/SuperWinLossMCDetailByPT.js"
+    ],
+    "sourceMap": true
+  },
+  {
     "outputFileName": "assets/bundles/BonusDetail/index.js",
     "inputFiles": [
       "Scripts/monthPicker/monPickr-0.0.1.js",
@@ -277,6 +302,44 @@
       "Scripts/AutoRefresh/AutoRefresh.css",
       "assets/styles/pages/totalbet/multiselect-custom.css",
       "assets/styles/pages/totalbet/total-bet.css"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/totalbetmc/index.js",
+    "inputFiles": [
+      "Scripts/Fanex.Multiselect/fanex.multiSelectSearchable.js",
+      "Scripts/Fanex.Multiselect/fanex.singleSelect.js",
+      "Scripts/Combobox/Combobox.js",
+      "Scripts/AutoRefresh/AutoRefresh.js",
+      "Scripts/TotalBet/Fanex.ExtAcc.TotalBetMC.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/totalbetmc/index.css",
+    "inputFiles": [
+      "Scripts/AutoRefresh/AutoRefresh.css",
+      "assets/styles/pages/totalbet/multiselect-custom.css",
+      "assets/styles/pages/totalbet/total-bet-mc.css",
+      "assets/styles/pages/totalbet/total-bet.css"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/oandaexchange/index.css",
+    "inputFiles": [
+      "assets/styles/pages/reports/exchangerate.css"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/oandaexchange/index.js",
+    "inputFiles": [
+      "Scripts/Reports/Shared/daterangepicker-jquery.js",
+      "Scripts/clipboard.js",
+      "Scripts/CopyTable/winlossdetail-copyhtml.js",
+      "Scripts/Reports/OandaExchange/Fanex.ExtAcc.OandaExchange.js"
     ],
     "sourceMap": true
   }

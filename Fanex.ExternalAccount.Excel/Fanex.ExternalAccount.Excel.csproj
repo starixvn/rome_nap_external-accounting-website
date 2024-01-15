@@ -154,6 +154,8 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IReportBuilder.cs" />
     <Compile Include="Reports\SuperWinLossDetailByPT\IWinLossDetailReportBuilder.cs" />
+    <Compile Include="Reports\SuperWinLossDetailByPT\SuperWinLossDetailMCByPTReport.cs" />
+    <Compile Include="Reports\SuperWinLossDetailByPT\SuperWinLossDetailMCByPTReportBuilder.cs" />
     <Compile Include="Reports\SuperWinLossDetailByPT\TemplateSettings.cs" />
     <Compile Include="Reports\SuperWinLossDetailByPT\SuperWinLossDetailByPTReport.cs" />
     <Compile Include="Reports\SuperWinLossDetailByPT\SuperWinLossDetailByPTReportBuilder.cs" />
@@ -161,9 +163,15 @@
     <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\TemplateSettings.cs" />
     <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\WinLossDetailIBCBetLiveCasinoReport.cs" />
     <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\WinLossDetailIBCBetLiveCasinoReportBuilder.cs" />
+    <Compile Include="Reports\WinLossDetail\AgentWinLossByCurrencyDetailReportBuilder.cs" />
     <Compile Include="Reports\WinLossDetail\IWinLossDetailReportBuilder.cs" />
+    <Compile Include="Reports\WinLossDetail\MemberWinLossByCurrencyReportBuilder.cs" />
+    <Compile Include="Reports\WinLossDetail\WinLossByCurrencyDetailReportAg.cs" />
+    <Compile Include="Reports\WinLossDetail\WinLossByCurrencyDetailReportBuilder.cs" />
+    <Compile Include="Reports\WinLossDetail\WinLossByCurrencyDetailReportMAg.cs" />
     <Compile Include="Reports\WinLossDetail\WinLossDetailExtraReport.cs" />
     <Compile Include="Reports\WinLossDetail\WinLossDetailExtraReportBuilder.cs" />
+    <Compile Include="Reports\WinLossDetail\WinLossByCurrencyDetailReport.cs" />
     <Compile Include="Statement\StatementPage\StatementPage.cs" />
     <Compile Include="Statement\StatementPage\StatementPageBuilder.cs" />
     <Compile Include="Statement\StatementPage\TemplateSettings.cs" />

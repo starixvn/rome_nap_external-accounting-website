@@ -490,7 +490,7 @@ Fanex.ExtAcc.WinLossDetail = {
         $this.sorters = $(".col-sorter");
         $this.sorters.click(function () {
             var elem = $(this);
-            $this.sortTable(elem);
+            this.sortTable(elem);
         });
 
         Fanex.ExtAcc.OnResize = $this.resizeReportGrid;

@@ -389,7 +389,11 @@
     <Compile Include="Home\NetworkSpeedController.cs" />
     <Compile Include="OTP\OTPController.cs" />
     <Compile Include="Report\BaseReportController.cs" />
+    <Compile Include="Report\OandaExchangeController.cs" />
+    <Compile Include="Report\SuperWinLossDetailMCByPTController.cs" />
+    <Compile Include="Report\WinLossDetailMCController.cs" />
     <Compile Include="Report\SuperWinLossDetailByPTController.cs" />
+    <Compile Include="Requests\GetExchangeRateRequest.cs" />
     <Compile Include="Requests\MarkAccountType\NewMarkAccountRequest.cs" />
     <Compile Include="Requests\MarkAccountType\SearchMarkAccountRequest.cs" />
     <Compile Include="Requests\MarkAccountType\UnmarkAccountRequest.cs" />
@@ -410,6 +414,7 @@
     <Compile Include="Requests\WinLossDetailRequest.cs" />
     <Compile Include="SecurityCode\SecurityCodeController.cs" />
     <Compile Include="Statement\StatementController.cs" />
+    <Compile Include="TotalBet\TotalBetMCController.cs" />
     <Compile Include="UserControl\FunctionController.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>

@@ -187,6 +187,18 @@
             return GetValue("TestGroups").Split(',').ToArray();
         }
 
+        public static bool IsMultipleCurrencyGroup(string currentGroup)
+        {
+            var allGroups = GetValue("MultipleCurrencyGroup");
+
+            return "*" == allGroups || !string.IsNullOrWhiteSpace(allGroups)
+                && allGroups.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(g => g.Trim())
+                    .Contains(currentGroup, StringComparer.CurrentCultureIgnoreCase);
+        }
+
+        
+
         private static string GetValue(string key) => ConfigurationManager.AppSettings[key];
     }
 }

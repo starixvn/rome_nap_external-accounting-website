@@ -13,7 +13,7 @@
         </div>
         <span class="icon-filter active"></span>
     </div>
-    <div id="searchBar" class="search-form filterbox filter-winloss-detail">
+    <div id="searchBar" class="search-form filterbox filter-winloss-detail filter-customer-list">
         <div class="searchBar">
             <div class="form-group">
                 <div class="label">@ViewLang.Username</div>
@@ -30,6 +30,15 @@
                     <option value="5">@ViewLang.Locked</option>
                 </select>
             </div>
+            @if (Model.IsMultipleCurrencyGroup)
+            {
+                <div class="form-group multiple-currency">
+                    <label for="selStatus" class="pointer">@ViewLang.Currency</label>
+                    <div class="user-group ddl-product">
+                        <div id="ddl-currency"></div>
+                    </div>
+                </div>
+            }
             <div class="form-group @(!Model.RoleId.HasValue || Model.RoleId.Value.IsSuper() ? string.Empty: "hidden") customer-limit-date">
                 <input id="chkShowSuperLimitDate" type="checkbox" />
                 <div class="label lbl-show-limit-date">@ViewLang.CustomersWithDataLimited</div>
@@ -100,6 +109,7 @@
     <input type="hidden" id="protectedstatus-roleId" name="roleId" />
 </form>
 <script>
+    var isShowCurrency = @Json.Encode(Model.IsMultipleCurrencyGroup);
     Fanex.ExtAcc.Customer.CustomerList.Init(@Html.Raw(Json.Encode(Model.CustId)), @Html.Raw(Json.Encode(Model.RoleId)));
     var isBelongToSpecialGroups = @Json.Encode(currentSession.IsBelongToSpecialGroups);
     var hasReadProtectCustomerFunction = @Json.Encode(Model.HasReadProtectCustomerFunction);

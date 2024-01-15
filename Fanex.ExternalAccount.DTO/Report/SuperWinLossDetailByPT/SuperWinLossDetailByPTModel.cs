@@ -31,6 +31,8 @@
 
         public SuperWinLossDetailByProductDTO GrandTotal { get; }
 
+        public IEnumerable<SuperWinLossDetailMCByProductDTO> TotalByCurrencies { get; set; }
+
         public string TooltipsForLiveCasino { get; }
 
         public string TooltipsForRNGCasino { get; }

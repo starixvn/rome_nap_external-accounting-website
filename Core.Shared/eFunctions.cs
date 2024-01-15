@@ -15,9 +15,12 @@
         public const string GrantPermission = "GrantPermission";
         public const string DailyWinloss = "DailyWinloss";
         public const string WinlossDetail = "WinlossDetail";
+        public const string WinLossDetailsBaseCurrency = "WinLossDetailsBaseCurrency";
         public const string WinLossDetailIBCBetLiveCasino = "WinLossDetailIBCBetLiveCasino";
         public const string SuperWinLossDetailByPT = "SuperWinLossDetailByPT";
+        public const string SuperWinLossDetailByPTBaseCurrency = "SuperWinLossDetailByPTBaseCurrency";
         public const string SuperWinLossDetailBySubGroup = "SuperWinLossDetailBySubGroup";
+        public const string OandaExchangeRate = "OandaExchangeRate";
 
         public const string Statement = "Statement";
         public const string Sportsbook = "Sportsbook";
@@ -72,6 +75,7 @@
 
         public const string ProtectCustomer = "ProtectCustomer";
         public const string TotalBetSoccer = "TotalBetSoccer";
+        public const string TotalBetSoccerBaseCurrency = "TotalBetSoccerBaseCurrency";
         public const string MarkAccountType = "MarkAccountType";
     }
 }

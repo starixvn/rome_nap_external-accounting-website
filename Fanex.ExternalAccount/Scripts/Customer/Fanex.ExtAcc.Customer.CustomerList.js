@@ -35,7 +35,41 @@ Fanex.ExtAcc.Customer.CustomerList = {
         this.DOMElements.editMult = $('#editMult');
         this.DOMElements.breadcrumbs = $('#breadcrumbs');
         this.BindingEvents();
-        this.DOMElements.btnSearch.click();
+        if (isShowCurrency) {
+            this.InitCurrencyList();
+        } else {
+            this.DOMElements.btnSearch.click();
+        }
+
+    },
+
+    InitCurrencyList: function () {
+        var self = this;
+        var groupName = $('#selectedGroupName').html() === '' ? 'ACCDDD' : $('#selectedGroupName').html();
+        $.post(resolveClientUrl('Filter/CurrencyList'), { groupName: groupName }, function (result) {
+            var dataList = [];
+            $.each(result, function (i, currency) {
+                dataList.push({
+                    id: "ctm_cur_" + currency.CurrencyId,
+                    value: currency.CurrencyId,
+                    text: currency.CurrencyName,
+                    checked: true,
+                    enable: true
+                });
+            });
+
+            self.DOMElements.$multiSelectCurrency = $("#ddl-currency").fanexMultiSelect({
+                minWidth: 140,
+                checkAllText: "Select all",
+                noneSelectedText: "Select Currencies",
+                useCustomCheckAllText: true,
+                customCheckAllText: "All Currencies",
+                isCheckAll: true,
+                listData: dataList
+            });
+
+            self.DOMElements.btnSearch.click();
+        });
     },
 
     BindingEvents: function () {
@@ -79,6 +113,10 @@ Fanex.ExtAcc.Customer.CustomerList = {
             pageSize: pageSize,
             pageIndex: pageIndex + 1
         };
+
+        if (isShowCurrency) {
+            params.currencyIds = _this.DOMElements.$multiSelectCurrency.fanexMultiSelect("getItems", true).join(",");
+        }
 
         _this.cachedParams.previousParams = params;
         _this.Search(params);
@@ -179,6 +217,10 @@ Fanex.ExtAcc.Customer.CustomerList = {
                         uplineId: _this.cachedParams.uplineId
                     };
 
+                    if (isShowCurrency) {
+                        params.currencyIds = _this.DOMElements.$multiSelectCurrency.fanexMultiSelect("getItems", true).join(",");
+                    }
+
                     top.exportExcel(resolveClientUrl("CustomerList/GetExportToExcel?") + top.serialize(params), document);
                 });
 
@@ -246,6 +288,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                     '<a id="usr-' + cell.Value.CustId + '" href="' + func + '" title="' + tooltipUsername + '">' + shortUsername + '</a>' + unlockIcon;
             }
         });
+        if (isShowCurrency) { columns.push({ HeaderText: 'Currency', Name: 'currency', Width: 75 }); }
         columns.push({
             HeaderText: 'Edit', Name: 'Edit', Width: 30,
             CustomCellRender: function (cell) {
@@ -316,6 +359,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push({ HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 });
         columns.push({ HeaderText: '', Name: 'Check', MergeRowNumber: 2 });
         columns.push({ HeaderText: 'Username', Name: 'username', MergeRowNumber: 2 });
+        if (isShowCurrency) { columns.push({ HeaderText: 'Currency', Name: 'currency', MergeRowNumber: 2 }); }
         columns.push({ HeaderText: 'Edit', Name: 'Edit', MergeRowNumber: 2 });
         columns.push({ HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 });
         columns.push({ HeaderText: 'Double Comm', Name: 'DoubleCommLosing', MergeRowNumber: 2 });
@@ -340,6 +384,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push({ Name: 'RowNumber', Value: currentIndex + pageSize * (pageIndex) });
         columns.push({ Name: 'Check', Value: currentRow });
         columns.push({ Name: 'username', Value: currentRow });
+        if (isShowCurrency) { columns.push({ Name: 'currency', Value: currentRow.Currency }); }
         columns.push({ Name: 'Edit', Value: currentRow });
         columns.push({ Name: 'Status', Value: currentRow });
         columns.push({ Name: 'DoubleCommLosing', Value: currentRow });

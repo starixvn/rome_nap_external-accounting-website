@@ -287,13 +287,16 @@
         };
     }
 
-    menuItems.parlayMaxPayout = {
-        name: "Edit Multiple Parlay Max Payout",
-        className: "iconEnableEdit",
-        callback: function (key, opt) {
-            Fanex.ExtAcc.Customer.ShowEditMultipleParlayMaxPayout(Fanex.ExtAcc.Customer.IdsAndNames().Ids, Fanex.ExtAcc.Customer.IdsAndNames().Names, Fanex.ExtAcc.Customer.CurrentLevel);
+    if (!isShowCurrency || this.CurrentLevel !== this.Super) {
+        menuItems.parlayMaxPayout = {
+            name: "Edit Multiple Parlay Max Payout",
+            className: "iconEnableEdit",
+            callback: function (key, opt) {
+                Fanex.ExtAcc.Customer.ShowEditMultipleParlayMaxPayout(Fanex.ExtAcc.Customer.IdsAndNames().Ids, Fanex.ExtAcc.Customer.IdsAndNames().Names, Fanex.ExtAcc.Customer.CurrentLevel);
+            }
         }
     }
+    
 
     if ($.contextMenu) $.contextMenu('destroy');
 

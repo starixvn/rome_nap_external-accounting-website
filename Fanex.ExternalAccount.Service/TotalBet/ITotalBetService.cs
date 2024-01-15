@@ -10,5 +10,6 @@ namespace Fanex.ExternalAccount.Service.TotalBet
         IEnumerable<LeagueModel> GetLeagues(bool isTest);
         IEnumerable<EventModel> GetEvents(int leagueId);
         IEnumerable<TotalBetModel> GetData(GetTotalBetParam param);
+        IEnumerable<TotalBetModel> GetDataMC(GetTotalBetMCParam param);
     }
 }

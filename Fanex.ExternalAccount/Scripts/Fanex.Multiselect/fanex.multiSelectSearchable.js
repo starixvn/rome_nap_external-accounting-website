@@ -7,12 +7,12 @@
 (function ($) {
 
     //// Method expose for user use
-    var fanexMultiSelectMethods =
+    var fanexMultiSelectSearchableMethods =
         {
             createfanexMultiSelect: function (opts) {
-                opts = $.extend({}, $.fn.fanexMultiSelect.defaults, opts);
+                opts = $.extend({}, $.fn.fanexMultiSelectSearchable.defaults, opts);
                 return this.each(function () {
-                    return new fanex.MultiSelect(this, opts);
+                    return new fanex.MultiSelectSearchable(this, opts);
                 });
             },
             getItems: function (checked) {
@@ -65,12 +65,12 @@
         };
 
     //// Plugin
-    $.fn.fanexMultiSelect = function (options) {
-        if (fanexMultiSelectMethods[options]) {
-            return fanexMultiSelectMethods[options].apply(this, Array.prototype.slice.call(arguments, 1));
+    $.fn.fanexMultiSelectSearchable = function (options) {
+        if (fanexMultiSelectSearchableMethods[options]) {
+            return fanexMultiSelectSearchableMethods[options].apply(this, Array.prototype.slice.call(arguments, 1));
         }
         else if (typeof options === 'object' || !options) {
-            return fanexMultiSelectMethods.createfanexMultiSelect.apply(this, arguments);
+            return fanexMultiSelectSearchableMethods.createfanexMultiSelect.apply(this, arguments);
         }
         else {
             throw 'Method does not supported!';
@@ -78,7 +78,7 @@
     };
 
     //// Default Options
-    $.fn.fanexMultiSelect.defaults =
+    $.fn.fanexMultiSelectSearchable.defaults =
         {
             showHeader: true,
             showFooter: false,
@@ -116,7 +116,7 @@
 
     var fanex = fanex || {};
 
-    fanex.MultiSelect = function (multiSelect, options) {
+    fanex.MultiSelectSearchable = function (multiSelect, options) {
         var me = this;
         me.options = options;
         me.id = multiSelect.id;
@@ -128,7 +128,7 @@
         return me.$multiSelect;
     };
 
-    fanex.MultiSelect.prototype =
+    fanex.MultiSelectSearchable.prototype =
         {
             getjQueryInstance: function () {
                 return this.$multiSelect;
@@ -138,7 +138,7 @@
                     html = [],
                     options = me.options,
                     id = me.id;
-                me.browser = fanex.MultiSelect.helper.detectBrowser();
+                me.browser = fanex.MultiSelectSearchable.helper.detectBrowser();
                 me.isOpenning = false;
                 me.checkShowGroup();
                 me.bodyId = 'fanex-multiselect-options-' + id;
@@ -840,7 +840,7 @@
         };
 
     //// multiSelect Helper
-    fanex.MultiSelect.helper =
+    fanex.MultiSelectSearchable.helper =
         {
             detectBrowser: function () {
                 //// multiSelect Scroller
@@ -884,9 +884,9 @@
             }
         };
 
-    fanex.MultiSelect.list = fanex.MultiSelect.list || {};
+    fanex.MultiSelectSearchable.list = fanex.MultiSelectSearchable.list || {};
 
-    fanex.MultiSelect.constant = fanex.MultiSelect.constant || {};
+    fanex.MultiSelectSearchable.constant = fanex.MultiSelectSearchable.constant || {};
 
 
 })(jQuery);

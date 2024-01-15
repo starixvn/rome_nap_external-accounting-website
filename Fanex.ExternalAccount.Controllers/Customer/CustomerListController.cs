@@ -35,12 +35,19 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public ActionResult Index(int? custId, int? roleId)
-            => PartialViewBase(new CustomerListViewModel
+        {
+            
+            var groupName = HttpContext.Request["groupName"];
+            groupName = string.IsNullOrEmpty(groupName) ? CurrentSession.CurrencyGroup : groupName;
+
+            return PartialViewBase(new CustomerListViewModel
             {
                 CustId = custId,
                 RoleId = roleId,
-                HasReadProtectCustomerFunction = _authorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ProtectCustomer)
+                HasReadProtectCustomerFunction = _authorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ProtectCustomer),
+                IsMultipleCurrencyGroup = Config.IsMultipleCurrencyGroup(groupName)
             });
+        }
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
@@ -57,6 +64,7 @@
                 Status = request.Status ?? 0,
                 UserId = CurrentSession.UserId,
                 UserName = request.UserName,
+                CurrencyIds = request.CurrencyIds,
                 PageIndex = request.PageIndex ?? 1,
                 PageSize = request.PageSize ?? DefaultPageSize
             }, _authorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP)));
@@ -92,6 +100,7 @@
                 Status = request.Status ?? 0,
                 UserId = CurrentSession.UserId,
                 UserName = request.UserName,
+                CurrencyIds = request.CurrencyIds,
                 PageIndex = 1,
                 PageSize = Int32.MaxValue - 1
             }, _authorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP));
@@ -103,7 +112,8 @@
                 roleId,
                 customerList.IsMyanmarOdds,
                 request.IsShowSuperLimitDate ?? false,
-                customerList.HasSubGroups);
+                customerList.HasSubGroups,
+                Config.IsMultipleCurrencyGroup(request.GroupName));
             var excelStream = builder.Build();
             var fileName = $"{status}{roleId.DisplayRoleName()}List{DateTime.Now.ToString("yyyyMMdd")}.xls";
 

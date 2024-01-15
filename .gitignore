@@ -44,3 +44,7 @@ Fanex.ExternalAccount/Properties/PublishProfiles/**
 /Fanex.ExternalAccount/Scripts/Reports/Shared/*.js.map
 /Fanex.ExternalAccount/Scripts/Reports/BonusDetail/*.js
 /Fanex.ExternalAccount/Scripts/Reports/BonusDetail/*.js.map
+/Fanex.ExternalAccount/Scripts/Reports/Fanex.ExtAcc.WinLossDetailMC.js
+/Fanex.ExternalAccount/Scripts/Reports/Fanex.ExtAcc.WinLossDetailMC.js.map
+/Fanex.ExternalAccount/Scripts/Reports/Fanex.ExtAcc.WinLossDetailMC.js
+/Fanex.ExternalAccount/Scripts/Reports/Fanex.ExtAcc.WinLossDetailMC.js.map

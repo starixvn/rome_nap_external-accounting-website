@@ -51,6 +51,7 @@
         public override void WriteBodyReport(ISheet resultSheet)
         {
             var totalColumn = _builder.IsMyanmarOdds || _builder.RoleId.IsSuper() ? 16 : 15;
+
             if (_builder.RoleId.IsSuper())
             {
                 totalColumn++;
@@ -61,16 +62,21 @@
                 }
             }
 
+            if (_builder.IsMultipleCurrencyGroup)
+            {
+                totalColumn++;
+            }
+
             var lastColumnIndex = FirstColumnIndex + totalColumn - 1;
             if (_builder.RoleId.IsNotMember())
             {
-                WriteOthersReport(resultSheet, _builder.Data, lastColumnIndex, _builder.IsMyanmarOdds, _builder.HasSubGroups);
+                WriteOthersReport(resultSheet, _builder.Data, lastColumnIndex, _builder.IsMyanmarOdds, _builder.HasSubGroups, _builder.IsMultipleCurrencyGroup);
             }
             else
             {
-                totalColumn = 19;
+                totalColumn = _builder.IsMultipleCurrencyGroup ? 20 : 19;
                 lastColumnIndex = FirstColumnIndex + totalColumn - 1;
-                WriteMemberReport(resultSheet, _builder.Data, lastColumnIndex, _builder.IsMyanmarOdds);
+                WriteMemberReport(resultSheet, _builder.Data, lastColumnIndex, _builder.IsMyanmarOdds, _builder.IsMultipleCurrencyGroup);
             }
         }
 
@@ -78,7 +84,8 @@
             ISheet resultSheet,
             List<CustomerListDTO> data,
             int lastColumnIndex,
-            bool isMyanmarOdds)
+            bool isMyanmarOdds,
+            bool isMultipleCurrency)
         {
             var id = 1;
             var rowId = 3;
@@ -112,6 +119,12 @@
                     values.Insert(12, item.DiscountMyanmarOdds.ToString());
                     values.Insert(16, item.PlayerDiscountMyanmarOdds.ToString());
                 }
+
+                if (isMultipleCurrency)
+                {
+                    values.Insert(2, item.Currency);
+                }
+
                 resultSheet.GetRow(rowId).WriteCells(FirstColumnIndex, values);
 
                 id++;
@@ -124,7 +137,8 @@
             List<CustomerListDTO> data,
             int lastColumnIndex,
             bool isMyanmarOdds,
-            bool hasSubGroups)
+            bool hasSubGroups,
+            bool isMultipleCurrency)
         {
             var id = 1;
             var rowId = 3;
@@ -165,6 +179,11 @@
                         item.DiscountCS,
                         item.DiscountMyanmarOdds
                     };
+                }
+
+                if (isMultipleCurrency)
+                {
+                    values.Insert(2, item.Currency);
                 }
 
                 if (_builder.RoleId.IsSuper())

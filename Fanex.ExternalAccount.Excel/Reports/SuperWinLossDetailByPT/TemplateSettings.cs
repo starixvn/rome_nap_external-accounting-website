@@ -13,5 +13,6 @@
         }
 
         public string SuperWinLossDetailByPTPath() => Path.Combine(_dir, "SuperWinLossDetailByPT.xls");
+        public string SuperWinLossDetailMCByPTPath() => Path.Combine(_dir, "SuperWinLossDetailMCByPT.xls");
     }
 }
