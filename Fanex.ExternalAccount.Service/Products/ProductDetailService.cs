@@ -119,7 +119,13 @@
                 canView[ProductConstants.MGRNGCasino] = true;
             }
 
+            if (Config.IsOfferLive22ProductDetailsGroup(groupName))
+            {
+                canView[ProductConstants.Live22] = true;
+            }
+
             canView[ProductConstants.Sportsbook] = true;
+
             return canView;
         }
 
@@ -202,7 +208,8 @@
                     (group.Key == ProductConstants.PragmaticPlay && Config.IsOfferJackpotProductDetailsGroup(groupName)) ||
                     (group.Key == ProductConstants.SexyGaming && Config.IsOfferSexyGamingProductDetailsGroup(groupName)) ||
                     (group.Key == ProductConstants.SpadeGaming && Config.IsOfferSpadeGamingProductDetailsGroup(groupName)) ||
-                    (group.Key == ProductConstants.AllBet && Config.IsOfferAllbetProductDetailsGroup(groupName)))
+                    (group.Key == ProductConstants.AllBet && Config.IsOfferAllbetProductDetailsGroup(groupName)) ||
+                    (group.Key == ProductConstants.AllBet && Config.IsOfferLive22ProductDetailsGroup(groupName)))
                     {
                         var intersectResourceIds = group.Select(p => p.ResourceId).Intersect(resourceIds);
 
