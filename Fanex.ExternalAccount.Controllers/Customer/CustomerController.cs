@@ -80,14 +80,27 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public async Task<ActionResult> EditCustomer(int custId, int roleId)
+        public async Task<ActionResult> EditCustomer(int custId, int roleId, bool isBetSettingOnly = false)
         {
+            var currentSession = new Core.Context.CurrentSession();
+            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, isBetSettingOnly);
             var editCustomerViewModel = new EditCustomerViewModel(
-                new AppConfiguration(GetApplicationPath(), SystemId),
+                new AppConfiguration(GetApplicationPath(), SystemId, systemCode),
                 cdnUri,
                 GetAssetsVersion());
 
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditCustomer-Debug" : "EditCustomer");
+        }
+
+        private static int GetSystemCode(bool isSpecialSite, bool isBetSettingOnly)
+        {
+            if (isSpecialSite)
+            {
+                return isBetSettingOnly ? SystemCode_ExternalNapBetSettingSpecialSite : SystemCode_ExternalNapSpecialSite;
+            }
+
+
+            return isBetSettingOnly ? SystemCode_ExternalNapBetSetting : SystemCode_ExternalNap;
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Host)]
@@ -130,8 +143,8 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, int pageId = 4, string language = "en-US", bool isGetUpline = false)
-            => Content(await customerServiceClient.GetCustomerSetting(custId, roleId, pageId, language, isGetUpline));
+        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, int systemId, string language = "en-US", bool isGetUpline = false)
+            => Content(await customerServiceClient.GetCustomerSetting(custId, roleId, systemId, language, isGetUpline));
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public async Task<ActionResult> CheckExistedCustomer(string username)
