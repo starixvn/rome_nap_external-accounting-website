@@ -66,12 +66,18 @@
                         </div>
                         <div>{{personalInfo.phone.value.decodeHtml()}}</div>
                     </div>
-                    <div class="row">
-                        <div class="pull-left width-90">
-                            {{personalInfo.mobile.text}}:
-                        </div>
-                        <div>{{personalInfo.mobile.value.decodeHtml()}}</div>
-                    </div>
+	                <div class="row">
+		                <div class="pull-left width-90">
+			                {{personalInfo.mobile.text}}:
+		                </div>
+		                <div>{{personalInfo.mobile.value.decodeHtml()}}</div>
+	                </div>
+	                <div class="row">
+		                <div class="pull-left width-90">
+			                {{personalInfo.headline.text}}:
+		                </div>
+                        <div>{{personalInfo.headline.value.decodeHtml()}}</div>
+	                </div>
                 </div>
             </div>
             <div id="viewInfo" class="view-info" data-ng-controller="ViewInfoController" data-ng-hide="{{model==null}}">
