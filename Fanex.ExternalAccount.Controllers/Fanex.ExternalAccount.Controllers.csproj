@@ -408,7 +408,10 @@
     <Compile Include="Report\SuperWinLossDetailMCByPTController.cs" />
     <Compile Include="Report\WinLossDetailMCController.cs" />
     <Compile Include="Report\SuperWinLossDetailByPTController.cs" />
+    <Compile Include="Requests\Customer\CreateCustomerCommand.cs" />
     <Compile Include="Requests\Customer\CreateCustomerRequest.cs" />
+    <Compile Include="Requests\Customer\EditCustomerRequest.cs" />
+    <Compile Include="Requests\Customer\EditMultipleCustomerRequest.cs" />
     <Compile Include="Requests\Customer\UpdateCustomerRequest.cs" />
     <Compile Include="Requests\GetExchangeRateRequest.cs" />
     <Compile Include="Requests\MarkAccountType\NewMarkAccountRequest.cs" />
@@ -458,6 +461,7 @@
     <Compile Include="ViewModels\Customer\AppConfiguration.cs" />
     <Compile Include="ViewModels\Customer\CreateCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerDataRangeViewModel.cs" />
+    <Compile Include="ViewModels\Customer\CustomerBaseViewModel.cs" />
     <Compile Include="ViewModels\Customer\EditCustomerViewModel.cs" />
     <Compile Include="ViewModels\GroupConfigurationViewModel.cs" />
     <Compile Include="ViewModels\VerifyOtpCommand.cs" />

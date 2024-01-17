@@ -8,7 +8,7 @@
         window.$RefreshReg$ = () => { };
         window.$RefreshSig$ = () => (type) => type;
         window.__vite_plugin_react_preamble_installed__ = true;
-    </script
+    </script>
     <script type="module" src=@("http://localhost:4200/@vite/client")></script>
     <link rel="stylesheet" href="http://localhost:4200/src/styles.scss" />
 </head>
@@ -22,7 +22,7 @@
             return '@Url.Content("~/")' + relativeUrl;
         }
         const appConfig = @Html.Raw(Model.AppConfig);
-
+        const params = @Html.Raw(Model.Params);
     </script>
     @StaticResources.RenderScripts("~/assets/bundles/common")
     <script type="module" src="http://localhost:4200/src/main.tsx"></script>

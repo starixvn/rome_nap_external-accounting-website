@@ -2921,6 +2921,8 @@
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Customer\EditMultiple.cshtml" />
+    <Content Include="Views\Customer\EditMultiple-Debug.cshtml" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailBySubGroup\Fanex.ExtAcc.SuperWinLossDetailBySubGroup.ts" />
   </ItemGroup>
   <ItemGroup>

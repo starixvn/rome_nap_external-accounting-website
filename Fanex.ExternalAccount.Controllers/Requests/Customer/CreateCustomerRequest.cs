@@ -1,11 +1,11 @@
-﻿using Fanex.Customer.Client.Models;
-
-namespace Fanex.ExternalAccount.Controllers.Requests.Customer
+﻿namespace Fanex.ExternalAccount.Controllers.Requests.Customer
 {
     public class CreateCustomerRequest
     {
-        public GeneralInfo GeneralInfo { get; set; }
+        public int UplineId { get; set; }
 
-        public string ProductGroups { get; set; }
+        public byte UplineRoleId { get; set; }
+
+        public string UplineUsername { get; set; }
     }
 }

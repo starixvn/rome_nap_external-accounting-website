@@ -15,6 +15,7 @@
     using CustomerSetting.Security.Authenticate;
     using DataAccess.Criteria.Customer;
     using DataAccess.Criteria.Customer.CustomerStatus;
+    using Fanex.Customer.Client.Configurations;
     using Fanex.Customer.Client.NETFramework;
     using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Controllers.Authentication;
@@ -23,6 +24,8 @@
     using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Service.TelegramBot;
     using IBCUtils;
+    using Newtonsoft.Json.Serialization;
+    using Newtonsoft.Json;
     using PTEngine.BusinessObjects;
     using Service;
     using Service.Impl.Customer;
@@ -33,19 +36,19 @@
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
     using CustomerClient = Fanex.Customer.Client;
 
-    public partial class CustomerController : BaseController //DevSkim: ignore DS184626
+    public partial class CustomerController : BaseController
     {
         private const string AssetsVersionCacheKey = "Customer:AssetsVersion";
         private const string HashKeySessionKey = "Fanex.ExternalAccount.Controllers.Customer.CustomerController.HashKey";
         private readonly string cdnUri = ConfigurationManager.AppSettings["Fanex.Customer:CdnUri"];
-        private readonly int SystemId = int.Parse(ConfigurationManager.AppSettings["Fanex.Customer:SystemId"]);
 
         private const byte SystemCode_ExternalNapBetSetting = 5;
         private const byte SystemCode_ExternalNapBetSettingSpecialSite = 9;
         private const byte SystemCode_ExternalNapSpecialSite = 8;
         private const byte SystemCode_ExternalNap = 4;
 
-        private readonly CustomerClient.Services.ICustomerService customerServiceClient = new CustomerClient.Services.CustomerService(new CustomerClient.Configurations.CustomerClientConfiguration().Initialize());
+        private static readonly CustomerClientConfiguration configuration = new CustomerClientConfiguration().Initialize();
+        private readonly CustomerClient.Services.ICustomerService customerServiceClient = new CustomerClient.Services.CustomerService(configuration);
 
         private readonly CustomerService _customerService = new CustomerService();
         private readonly MasterService _masterService = new MasterService();
@@ -57,37 +60,62 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public async Task<ActionResult> CreateCustomer(int uplineId, byte uplineRoleId, string uplineUsername)
+        public async Task<ActionResult> CreateCustomer(CreateCustomerRequest request)
         {
-            var limitedRulesResult = await customerServiceClient.CheckAllLimitedRules(uplineId, uplineRoleId, uplineUsername);
+            var limitedRulesResult = await customerServiceClient.CheckAllLimitedRules(request.UplineId, request.UplineRoleId, request.UplineUsername);
             if (limitedRulesResult.IsFailed)
             {
                 return LimitationPage(limitedRulesResult.Message);
             }
 
+            var suggestUsername = await GetSuggestUsername(request.UplineUsername, request.UplineRoleId);
+
+            var parameters = JsonConvert.SerializeObject(
+                new { uplineId = request.UplineId, uplineRoleId = request.UplineRoleId, suggestUsername },
+                new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+
             var viewModel = new CreateCustomerViewModel(
-                new AppConfiguration(GetApplicationPath(), SystemId),
+                new AppConfiguration(GetApplicationPath(), configuration.SystemId),
                 cdnUri,
                 GetAssetsVersion(),
+                parameters,
                 GetHashKey(),
-                uplineId,
-                uplineRoleId,
-                await GetSuggestUsername(uplineUsername, uplineRoleId));
+                BuildPageTitle(request.UplineRoleId)
+              );
 
             return PartialViewBase(viewModel, HttpContext.IsDebuggingEnabled ? "CreateCustomer-Debug" : "CreateCustomer");
+        }
+
+        private static string BuildPageTitle(byte uplineRoleId)
+        {
+            switch (uplineRoleId)
+            {
+                case (byte)CustomerRole.Super:
+                    return "Add New Master";
+
+                case (byte)CustomerRole.Master:
+                    return "Add New Agent";
+
+                case (byte)CustomerRole.Agent:
+                    return "Add New Member";
+
+                default:
+                    return "Add New Super";
+            }
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public async Task<ActionResult> EditCustomer(int custId, int roleId, bool isBetSettingOnly = false)
+        public ActionResult EditCustomer(EditCustomerRequest request)
         {
             var currentSession = new Core.Context.CurrentSession();
-            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, isBetSettingOnly);
+            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, request.IsBetSettingOnly);
             var editCustomerViewModel = new EditCustomerViewModel(
-                new AppConfiguration(GetApplicationPath(), SystemId, systemCode),
+                new AppConfiguration(GetApplicationPath(), systemCode),
                 cdnUri,
-                GetAssetsVersion());
+                GetAssetsVersion(),
+                request.ToJson());
 
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditCustomer-Debug" : "EditCustomer");
         }
@@ -99,7 +127,6 @@
                 return isBetSettingOnly ? SystemCode_ExternalNapBetSettingSpecialSite : SystemCode_ExternalNapSpecialSite;
             }
 
-
             return isBetSettingOnly ? SystemCode_ExternalNapBetSetting : SystemCode_ExternalNap;
         }
 
@@ -107,7 +134,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public async Task<ActionResult> Create(CreateCustomerRequest request)
+        public async Task<ActionResult> Create(CreateCustomerCommand request)
         {
             var generalInfo = request.GeneralInfo;
             var rawPassword = Encryptor.Decrypt(generalInfo.Password, HttpContext.Session[HashKeySessionKey].ToString());
@@ -128,7 +155,7 @@
                 new CustomerClient.Params.UpdateCustomerParam(
                     request.GeneralInfo,
                     request.ProductGroups,
-                    AppSession.AccId, 
+                    AppSession.AccId,
                     0,
                     request.CustId,
                     "",
@@ -138,6 +165,22 @@
                     "en-US"));
 
             return Content(response);
+        }
+
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
+        public ActionResult EditMultiple(EditMultipleCustomerRequest request)
+        {
+            var currentSession = new Core.Context.CurrentSession();
+            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, request.IsBetSettingOnly);
+            var editCustomerViewModel = new EditCustomerViewModel(
+                new AppConfiguration(GetApplicationPath(), configuration.SystemId, systemCode),
+                cdnUri,
+                GetAssetsVersion(),
+                request.ToJson());
+
+            return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditMultiple-Debug" : "EditMultiple");
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
@@ -352,24 +395,21 @@
 
         public ActionResult AccessDenied() => ActionDenied(Request);
 
-        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer, Policy = AuthenticationType.Read)]
         public ActionResult UnsuspendSingle(int custId, string userName)
         {
             return PartialViewBase(_customerService.GetSingleUpdateSuspendViewModel(custId, userName));
         }
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer, Policy = AuthenticationType.Read)]
         public ActionResult MultipleSuspend(string custIdList, int roleId)
         {
             return PartialViewBase(new MultipleUpdateViewModel(roleId, _customerService.GetMultipleSuspendCustomerViewModel(new GetMultipleSuspendCustomerInfoCriteria(custIdList, roleId))));
         }
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer, Policy = AuthenticationType.Read)]
         [AntiXSRFFilter]
         public JsonResult GetSuspendDownlinesDetail(int custId, bool isAffected, int downlineRoleId, int pageSize = 50, int pageIndex = 0)
         {
@@ -377,16 +417,14 @@
         }
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer,
-            Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer, Policy = AuthenticationType.Host)]
         public JsonResult UpdateSuspendSingle(int custId, bool suspended)
         {
             return Json(_customerService.SuspendCustomer(new UpdateSuspendCustomerCriteria(CurrentSession.UserId, custId, suspended, "E", CurrentContext.Ip4Address)));
         }
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer,
-            Policy = AuthenticateAction.AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer, Policy = AuthenticationType.Host)]
         public JsonResult UpdateSuspendMultiple(
             List<MultipleUpdateSuspendRequest> request,
             string groupName,
