@@ -3,15 +3,15 @@
 <html>
 <head>
     <script type="module">
-        import RefreshRuntime from "http://localhost:4200/@@react-refresh";
+        import RefreshRuntime from "http://localhost:4201/@@react-refresh";
         RefreshRuntime.injectIntoGlobalHook(window);
         window.$RefreshReg$ = () => { };
         window.$RefreshSig$ = () => (type) => type;
         window.__vite_plugin_react_preamble_installed__ = true;
     </script>
     @StaticResources.RenderStyles("~/assets/bundles/common")
-    <script type="module" src=@("http://localhost:4200/@vite/client")></script>
-    <link rel="stylesheet" href="http://localhost:4200/src/styles.scss" />
+    <script type="module" src=@("http://localhost:4201/@vite/client")></script>
+    <link rel="stylesheet" href="http://localhost:4201/src/styles.scss" />
 </head>
 <body>
     <div class="page-title">
@@ -38,6 +38,6 @@
     </script>
     @StaticResources.RenderScripts("~/assets/bundles/common")
     @StaticResources.RenderScripts("~/assets/bundles/customer/create")
-    <script type="module" src="http://localhost:4200/src/main.tsx"></script>
+    <script type="module" src="http://localhost:4201/src/main.tsx"></script>
 </body>
 </html>

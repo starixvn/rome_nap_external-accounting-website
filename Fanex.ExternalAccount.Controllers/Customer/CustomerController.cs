@@ -112,7 +112,7 @@
             var currentSession = new Core.Context.CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, request.IsBetSettingOnly);
             var editCustomerViewModel = new EditCustomerViewModel(
-                new AppConfiguration(GetApplicationPath(), systemCode),
+                new AppConfiguration(GetApplicationPath(), configuration.SystemId, systemCode),
                 cdnUri,
                 GetAssetsVersion(),
                 request.ToJson());
@@ -162,6 +162,28 @@
                     request.RoleId,
                     request.RoleId + 1,
                     CurrentContext.Ip4Address,
+                    "en-US"));
+
+            return Content(response);
+        }
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
+        [AntiXSRFFilter]
+        public async Task<ActionResult> UpdateMultipleCustomers(UpdateMultipleCustomerCommand request)
+        {
+            var response = await customerServiceClient.UpdateMultipleCustomers(
+                new CustomerClient.Params.UpdateMultipleCustomerParam(
+                    request.ProductGroups,
+                    AppSession.AccId,
+                    0,
+                    request.CustId,
+                    "",
+                    request.RoleId,
+                    request.RoleId + 1,
+                    CurrentContext.Ip4Address,
+                    request.CustomerIds,
+                    request.CustomerNames,
                     "en-US"));
 
             return Content(response);

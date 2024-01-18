@@ -1,5 +1,4 @@
-﻿using Fanex.ExternalAccount.DTO.Report;
-using Newtonsoft.Json.Serialization;
+﻿using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 
 namespace Fanex.ExternalAccount.Controllers.Requests.Customer

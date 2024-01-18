@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="@(Model.CdnUri)edit-customer/index.css?version=@(Model.AssetsVersion)" />
+    <link rel="stylesheet" href="@(Model.CdnUri)edit-multiple-customers/index.css?version=@(Model.AssetsVersion)" />
 </head>
 <body>
     <div id="mainGrid" style="margin: 0px 3px; visibility: visible; width: 841px;">
@@ -15,7 +15,8 @@
         }
 
         const appConfig = @Html.Raw(Model.AppConfig);
+        const params = @Html.Raw(Model.Params);
     </script>
-    <script type="module" src="@(Model.CdnUri)edit-customer/index.js?version=@(Model.AssetsVersion)"></script>
+    <script type="module" src="@(Model.CdnUri)edit-multiple-customers/index.js?version=@(Model.AssetsVersion)"></script>
 </body>
 </html>

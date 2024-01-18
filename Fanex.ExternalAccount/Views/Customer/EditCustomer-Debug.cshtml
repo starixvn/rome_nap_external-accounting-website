@@ -3,14 +3,14 @@
 <html>
 <head>
     <script type="module">
-        import RefreshRuntime from "http://localhost:4200/@@react-refresh";
+        import RefreshRuntime from "http://localhost:4202/@@react-refresh";
         RefreshRuntime.injectIntoGlobalHook(window);
         window.$RefreshReg$ = () => { };
         window.$RefreshSig$ = () => (type) => type;
         window.__vite_plugin_react_preamble_installed__ = true;
     </script>
-    <script type="module" src=@("http://localhost:4200/@vite/client")></script>
-    <link rel="stylesheet" href="http://localhost:4200/src/styles.scss" />
+    <script type="module" src=@("http://localhost:4202/@vite/client")></script>
+    <link rel="stylesheet" href="http://localhost:4202/src/styles.scss" />
 </head>
 <body>
     <div id="mainGrid" style="margin: 0px 3px; visibility: visible; width: 841px;">
@@ -25,6 +25,6 @@
         const params = @Html.Raw(Model.Params);
     </script>
     @StaticResources.RenderScripts("~/assets/bundles/common")
-    <script type="module" src="http://localhost:4200/src/main.tsx"></script>
+    <script type="module" src="http://localhost:4202/src/main.tsx"></script>
 </body>
 </html>
