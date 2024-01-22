@@ -76,7 +76,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Customer.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Customer.Client.1.0.0-beta30\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
+      <HintPath>..\packages\Fanex.Customer.Client.1.0.0-beta31\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Customer.Client.NETFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Customer.Client.NETFramework.1.0.0-beta02\lib\net461\Fanex.Customer.Client.NETFramework.dll</HintPath>
@@ -412,6 +412,7 @@
     <Compile Include="Requests\Customer\CreateCustomerRequest.cs" />
     <Compile Include="Requests\Customer\EditCustomerRequest.cs" />
     <Compile Include="Requests\Customer\EditMultipleCustomerRequest.cs" />
+    <Compile Include="Requests\Customer\IndirectEditMemberRequest.cs" />
     <Compile Include="Requests\Customer\UpdateCustomerRequest.cs" />
     <Compile Include="Requests\Customer\UpdateMultipleCustomerCommand.cs" />
     <Compile Include="Requests\GetExchangeRateRequest.cs" />
@@ -464,6 +465,7 @@
     <Compile Include="ViewModels\CustomerDataRangeViewModel.cs" />
     <Compile Include="ViewModels\Customer\CustomerBaseViewModel.cs" />
     <Compile Include="ViewModels\Customer\EditCustomerViewModel.cs" />
+    <Compile Include="ViewModels\Customer\IndirectEditMemberViewModel.cs" />
     <Compile Include="ViewModels\GroupConfigurationViewModel.cs" />
     <Compile Include="ViewModels\VerifyOtpCommand.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />

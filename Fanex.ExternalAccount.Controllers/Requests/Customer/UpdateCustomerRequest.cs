@@ -16,5 +16,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         public int CustId { get; set; }
 
         public int RoleId { get; set; }
+
+        public int UplineRoleId { get; set; }
     }
 }

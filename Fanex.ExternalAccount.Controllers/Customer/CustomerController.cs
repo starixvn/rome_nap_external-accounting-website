@@ -120,6 +120,22 @@
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditCustomer-Debug" : "EditCustomer");
         }
 
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
+        public ActionResult IndirectEditMember(IndirectEditMemberRequest request)
+        {
+            var currentSession = new Core.Context.CurrentSession();
+            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
+            var editCustomerViewModel = new IndirectEditMemberViewModel(
+                new AppConfiguration(GetApplicationPath(), configuration.SystemId, systemCode),
+                cdnUri,
+                GetAssetsVersion(),
+                request.ToJson());
+
+            return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "IndirectEditMember-Debug" : "IndirectEditMember");
+        }
+
         private static int GetSystemCode(bool isSpecialSite, bool isBetSettingOnly)
         {
             if (isSpecialSite)
@@ -166,6 +182,29 @@
 
             return Content(response);
         }
+
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
+        [AntiXSRFFilter]
+        public async Task<ActionResult> IndirectUpdateMember(UpdateCustomerRequest request)
+        {
+            var response = await customerServiceClient.UpdateCustomer(
+                new CustomerClient.Params.UpdateCustomerParam(
+                    request.GeneralInfo,
+                    request.ProductGroups,
+                    AppSession.AccId,
+                    0,
+                    request.CustId,
+                    "",
+                    request.RoleId,
+                    request.UplineRoleId,
+                    CurrentContext.Ip4Address,
+                    "en-US"));
+
+            return Content(response);
+        }
+
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
@@ -208,8 +247,8 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, int systemId, string language = "en-US", bool isGetUpline = false)
-            => Content(await customerServiceClient.GetCustomerSetting(custId, roleId, systemId, language, isGetUpline));
+        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, byte systemId, byte uplineRoleId, string language = "en-US", bool isGetUpline = false)
+            => Content(await customerServiceClient.GetCustomerSetting(custId, roleId, systemId, uplineRoleId, language, isGetUpline));
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public async Task<ActionResult> CheckExistedCustomer(string username)
