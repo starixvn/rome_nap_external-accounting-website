@@ -2,13 +2,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script type="module">
-        import RefreshRuntime from "http://localhost:4200/@@react-refresh";
-        RefreshRuntime.injectIntoGlobalHook(window);
-        window.$RefreshReg$ = () => { };
-        window.$RefreshSig$ = () => (type) => type;
-        window.__vite_plugin_react_preamble_installed__ = true;
-    </script>
     @StaticResources.RenderStyles("~/assets/bundles/common")
     <link rel="stylesheet" href="@(Model.CdnUri)create-customer/index.css?version=@(Model.AssetsVersion)" />
 </head>
@@ -32,7 +25,8 @@
         const params = @Html.Raw(Model.Params);
         window.redirectToSettingPage = (response) => {
             const custId = response.custId;
-            parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl("Customer/Settings/3/" + custId + "/" + params.uplineId + "/" + "@(Request["uplineUsername"])"), true);
+            const roleId = params.uplineRoleId - 1;
+            parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl("Customer/Settings/" + roleId + "/" + custId + "/" + params.uplineId + "/" + "@(Request["uplineUsername"])"), true);
         };
     </script>
     @StaticResources.RenderScripts("~/assets/bundles/common")

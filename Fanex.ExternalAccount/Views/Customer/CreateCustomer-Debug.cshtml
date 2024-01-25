@@ -33,7 +33,8 @@
         const params = @Html.Raw(Model.Params);
         window.redirectToSettingPage = (response) => {
             const custId = response.custId;
-            parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl("Customer/Settings/3/" + custId + "/" + params.uplineId + "/" + "@(Request["uplineUsername"])"), true);
+            const roleId = params.uplineRoleId - 1;
+            parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl("Customer/Settings/" + roleId + "/" + custId + "/" + params.uplineId + "/" + "@(Request["uplineUsername"])"), true);
         };
     </script>
     @StaticResources.RenderScripts("~/assets/bundles/common")
