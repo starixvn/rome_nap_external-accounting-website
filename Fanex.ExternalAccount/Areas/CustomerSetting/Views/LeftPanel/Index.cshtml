@@ -27,7 +27,7 @@
         <div id="leftPanel" class="left-panel-content" data-ng-controller="LeftPanelController">
             <div data-ng-controller="NoInfoController" data-ng-init="model.hide = model != null" data-ng-hide="model.hide">
                 @Html.Raw(ViewBag.ErrorMessage)
-            </div>           
+            </div>
             <div id="usernameInfo" data-ng-controller="LineInfoController" data-ng-hide="{{model==null}}">
                 <div class="row" data-ng-repeat="person in personalInfo.downlines">
                     <div class="pull-left width-90">{{person.text}}</div>
@@ -192,9 +192,8 @@
                 <div class="tab-content detail-tab" id="tab-2">
                     <div class="subTab-parent">
                         <div data-ng-click="ViewSubTab('sub-edit')" id="sub-edit"
+                             data-ng-hide="model.personalInfo.roleId.value != 1"
                              class="pull-left subTab subTab-active">Edit</div>
-                        <div data-ng-click="ViewSubTab('sub-min-max')" id="sub-min-max" class="subTab"
-                             data-ng-hide="model.personalInfo.roleId.value == 4 || model.personalInfo.roleId.value == 1">Min/Max PT</div>
                         <div data-ng-click="ViewSubTab('sub-super-pt')" id="sub-super-pt" class="subTab"
                              data-ng-hide="model.personalInfo.roleId.value != 1">Super PT</div>
                         <div data-ng-click="ViewSubTab('sub-master-pt')" id="sub-master-pt" class="subTab"
@@ -204,12 +203,6 @@
                         <div class="edit-item" data-ng-repeat="item in setting.details">
                             <div data-ng-hide="item.isHide || !item.visibled" class="settingEdit"
                                  data-ng-click="{{item.key}}();"><span class="icon-bullet"></span><span class="product-name">{{item.value}}</span></div>
-                        </div>
-                    </div>
-                    <div id="minMax" style="display: none">
-                        <div class="edit-item" data-ng-repeat="item in setting.minMaxPts">
-                            <div data-ng-hide="item.isHide || !item.visibled" class="settingEdit"
-                                 data-ng-click="{{item.key}}(); collapseSidebar();"><span class="icon-bullet"></span><span class="product-name">{{item.value}}</span></div>
                         </div>
                     </div>
                     <div id="superPT" style="display: none">
@@ -333,5 +326,3 @@
     @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
 </body>
 </html>
-
-
