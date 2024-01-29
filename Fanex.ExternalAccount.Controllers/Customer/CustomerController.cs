@@ -157,7 +157,7 @@
             generalInfo.Password = Encryption.CfsEnCode(rawPassword);
 
             var response = await customerServiceClient.CreateCustomer(new CustomerClient.Params.CreateCustomerParam(
-                generalInfo, request.ProductGroups, AppSession.AccId, 0, CurrentContext.Ip4Address, CustomerClient.Constants.CreationModes.FullMode));
+                generalInfo, request.ProductGroups, CurrentSession.UserId, 0, CurrentContext.Ip4Address, CustomerClient.Constants.CreationModes.FullMode));
             return Content(response);
         }
 
@@ -171,14 +171,13 @@
                 new CustomerClient.Params.UpdateCustomerParam(
                     request.GeneralInfo,
                     request.ProductGroups,
-                    AppSession.AccId,
+                    CurrentSession.UserId,
                     0,
                     request.CustId,
                     "",
                     request.RoleId,
                     request.RoleId + 1,
-                    CurrentContext.Ip4Address,
-                    "en-US"));
+                    CurrentContext.Ip4Address));
 
             return Content(response);
         }
@@ -193,7 +192,7 @@
                 new CustomerClient.Params.UpdateCustomerParam(
                     request.GeneralInfo,
                     request.ProductGroups,
-                    AppSession.AccId,
+                    CurrentSession.UserId,
                     0,
                     request.CustId,
                     "",
@@ -214,7 +213,7 @@
             var response = await customerServiceClient.UpdateMultipleCustomers(
                 new CustomerClient.Params.UpdateMultipleCustomerParam(
                     request.ProductGroups,
-                    AppSession.AccId,
+                    CurrentSession.UserId,
                     0,
                     request.CustId,
                     "",
