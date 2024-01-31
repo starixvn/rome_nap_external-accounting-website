@@ -36,6 +36,7 @@
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
     using CustomerClient = Fanex.Customer.Client;
 
+    [SessionState(System.Web.SessionState.SessionStateBehavior.ReadOnly)]
     public partial class CustomerController : BaseController
     {
         private const string AssetsVersionCacheKey = "Customer:AssetsVersion";
