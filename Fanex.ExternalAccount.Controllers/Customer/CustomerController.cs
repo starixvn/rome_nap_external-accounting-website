@@ -17,7 +17,6 @@
     using DataAccess.Criteria.Customer.CustomerStatus;
     using Fanex.Customer.Client.Configurations;
     using Fanex.Customer.Client.NETFramework;
-    using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Controllers.Authentication;
     using Fanex.ExternalAccount.Controllers.Requests.Customer;
     using Fanex.ExternalAccount.Controllers.ViewModels.Customer;
@@ -57,9 +56,9 @@
         private readonly ITelegramBotService _telegramChatbotService = new TelegramBotService();
         private readonly ProductStatusService productStatusService = new ProductStatusServiceImpl();
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
         public async Task<ActionResult> CreateCustomer(CreateCustomerRequest request)
         {
             var limitedRulesResult = await customerServiceClient.CheckAllLimitedRules(request.UplineId, request.UplineRoleId, request.UplineUsername);
@@ -104,9 +103,9 @@
             }
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult EditCustomer(EditCustomerRequest request)
         {
             var currentSession = new Core.Context.CurrentSession();
@@ -120,9 +119,9 @@
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditCustomer-Debug" : "EditCustomer");
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult IndirectEditMember(IndirectEditMemberRequest request)
         {
             var currentSession = new Core.Context.CurrentSession();
@@ -227,9 +226,9 @@
             return Content(response);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
+        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult EditMultiple(EditMultipleCustomerRequest request)
         {
             var currentSession = new Core.Context.CurrentSession();
