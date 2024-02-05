@@ -10,8 +10,10 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         public byte RoleId { get; set; }
 
         public byte UplineRoleId { get; set; }
+        
+        public bool NoPermissionEditCredit { get; set; } = false;
 
         internal string ToJson()
-            => JsonConvert.SerializeObject(new { CustId, RoleId, UplineRoleId }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            => JsonConvert.SerializeObject(new { CustId, RoleId, UplineRoleId ,NoPermissionEditCredit}, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
     }
 }

@@ -67,17 +67,16 @@
                 return LimitationPage(limitedRulesResult.Message);
             }
 
-            var suggestUsername = await GetSuggestUsername(request.UplineUsername, request.UplineRoleId);
-
-            var parameters = JsonConvert.SerializeObject(
-                new { uplineId = request.UplineId, uplineRoleId = request.UplineRoleId, suggestUsername },
-                new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            request.SuggestUsername  = await GetSuggestUsername(request.UplineUsername, request.UplineRoleId);
+            
+            var userId = CurrentSession.UserId;
+            request.NoPermissionEditCredit  = !AuthorizationService.HasUpdateCreditPermission(userId);
 
             var viewModel = new CreateCustomerViewModel(
                 new AppConfiguration(GetApplicationPath(), configuration.SystemId),
                 cdnUri,
                 GetAssetsVersion(),
-                parameters,
+                request.ToJson(),
                 GetHashKey(),
                 BuildPageTitle(request.UplineRoleId)
               );
@@ -110,6 +109,9 @@
         {
             var currentSession = new Core.Context.CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, request.IsBetSettingOnly);
+            var userId = CurrentSession.UserId;
+            request.NoPermissionEditCredit = !AuthorizationService.HasUpdateCreditPermission(userId);
+            
             var editCustomerViewModel = new EditCustomerViewModel(
                 new AppConfiguration(GetApplicationPath(), configuration.SystemId, systemCode),
                 cdnUri,
@@ -126,6 +128,9 @@
         {
             var currentSession = new Core.Context.CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
+            var userId = CurrentSession.UserId;
+            request.NoPermissionEditCredit = !AuthorizationService.HasUpdateCreditPermission(userId);
+            
             var editCustomerViewModel = new IndirectEditMemberViewModel(
                 new AppConfiguration(GetApplicationPath(), configuration.SystemId, systemCode),
                 cdnUri,

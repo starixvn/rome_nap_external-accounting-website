@@ -10,7 +10,9 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         public int RoleId { get; set; }
 
         public bool IsBetSettingOnly { get; set; }
+        
+        public bool NoPermissionEditCredit { get; set; } = false;
 
-        internal string ToJson() => JsonConvert.SerializeObject(new { CustId, RoleId }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+        internal string ToJson() => JsonConvert.SerializeObject(new { CustId, RoleId , NoPermissionEditCredit }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
     }
 }
