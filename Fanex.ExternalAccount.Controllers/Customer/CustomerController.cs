@@ -225,7 +225,7 @@
             var currentSession = new CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, request.IsBetSettingOnly);
             var editCustomerViewModel = new EditCustomerViewModel(
-                new AppConfiguration(GetApplicationPath(), configuration.SystemId, systemCode),
+                new AppConfiguration(GetApplicationPath(), systemCode),
                 cdnUri,
                 GetAssetsVersion(),
                 request.ToJson());
