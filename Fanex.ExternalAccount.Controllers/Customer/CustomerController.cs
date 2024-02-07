@@ -23,8 +23,6 @@
     using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Service.TelegramBot;
     using IBCUtils;
-    using Newtonsoft.Json.Serialization;
-    using Newtonsoft.Json;
     using PTEngine.BusinessObjects;
     using Service;
     using Service.Impl.Customer;
@@ -67,10 +65,10 @@
                 return LimitationPage(limitedRulesResult.Message);
             }
 
-            request.SuggestUsername  = await GetSuggestUsername(request.UplineUsername, request.UplineRoleId);
-            
+            request.SuggestUsername = await GetSuggestUsername(request.UplineUsername, request.UplineRoleId);
+
             var userId = CurrentSession.UserId;
-            request.NoPermissionEditCredit  = !AuthorizationService.HasUpdateCreditPermission(userId);
+            request.NoPermissionEditCredit = !AuthorizationService.HasUpdateCreditPermission(userId);
 
             var viewModel = new CreateCustomerViewModel(
                 new AppConfiguration(GetApplicationPath(), configuration.SystemId),
@@ -102,16 +100,14 @@
             }
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult EditCustomer(EditCustomerRequest request)
         {
-            var currentSession = new Core.Context.CurrentSession();
+            var currentSession = new CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, request.IsBetSettingOnly);
             var userId = CurrentSession.UserId;
             request.NoPermissionEditCredit = !AuthorizationService.HasUpdateCreditPermission(userId);
-            
+
             var editCustomerViewModel = new EditCustomerViewModel(
                 new AppConfiguration(GetApplicationPath(), configuration.SystemId, systemCode),
                 cdnUri,
@@ -121,16 +117,14 @@
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditCustomer-Debug" : "EditCustomer");
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult IndirectEditMember(IndirectEditMemberRequest request)
         {
-            var currentSession = new Core.Context.CurrentSession();
+            var currentSession = new CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
             var userId = CurrentSession.UserId;
             request.NoPermissionEditCredit = !AuthorizationService.HasUpdateCreditPermission(userId);
-            
+
             var editCustomerViewModel = new IndirectEditMemberViewModel(
                 new AppConfiguration(GetApplicationPath(), configuration.SystemId, systemCode),
                 cdnUri,
@@ -165,9 +159,7 @@
             return Content(response);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
         public async Task<ActionResult> Update(UpdateCustomerRequest request)
         {
@@ -186,9 +178,7 @@
             return Content(response);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
         public async Task<ActionResult> IndirectUpdateMember(UpdateCustomerRequest request)
         {
@@ -208,9 +198,7 @@
             return Content(response);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Host)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
         public async Task<ActionResult> UpdateMultipleCustomers(UpdateMultipleCustomerCommand request)
         {
@@ -231,9 +219,7 @@
             return Content(response);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult EditMultiple(EditMultipleCustomerRequest request)
         {
             var currentSession = new Core.Context.CurrentSession();
@@ -247,9 +233,7 @@
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditMultiple-Debug" : "EditMultiple");
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
         public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, byte systemId, byte uplineRoleId, string language = "en-US", bool isGetUpline = false)
             => Content(await customerServiceClient.GetCustomerSetting(custId, roleId, systemId, uplineRoleId, language, isGetUpline));
 
