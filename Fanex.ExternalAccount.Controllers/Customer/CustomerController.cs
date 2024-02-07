@@ -210,7 +210,7 @@
                     request.CustId,
                     "",
                     request.RoleId,
-                    request.RoleId + 1,
+                    request.UplineRoleId,
                     CurrentContext.Ip4Address,
                     request.CustomerIds,
                     request.CustomerNames,
@@ -222,7 +222,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult EditMultiple(EditMultipleCustomerRequest request)
         {
-            var currentSession = new Core.Context.CurrentSession();
+            var currentSession = new CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, request.IsBetSettingOnly);
             var editCustomerViewModel = new EditCustomerViewModel(
                 new AppConfiguration(GetApplicationPath(), configuration.SystemId, systemCode),

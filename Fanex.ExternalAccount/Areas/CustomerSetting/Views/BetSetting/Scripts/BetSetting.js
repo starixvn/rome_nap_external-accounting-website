@@ -7,7 +7,7 @@ angular.element($('#ng-app')).ready(function () {
         if (typeof console != 'undefined') {
             console.log(e);
         }
-    }    
+    }
 });
 
 function LoadSB() {
@@ -120,7 +120,7 @@ function LoadBetSetting(sourceUser, destUsers, isCopy) {
                 $("#product-1-0").attr("src", toUrl("Sportsbook/EditMultipleBetSettingContent?copy=1&custId=" + result.superIds.split(',')[0] + "&groupName=" + groupName));
             }
             else {
-                $("#product-1-1").attr("src", resolveClientUrl("Customer/EditCustomer?edit=1&custId=" + result.superIds.split(',')[0] + "&roleId=4&groupName=" + groupName));
+                $("#product-1-1").attr("src", resolveClientUrl("Customer/EditMultiples?custIds=" + result.superIds + '&uplineRoleId=5' + "&roleId=4&groupName=" + groupName));
             }
         }
 
