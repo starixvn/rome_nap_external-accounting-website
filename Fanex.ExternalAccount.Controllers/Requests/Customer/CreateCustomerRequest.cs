@@ -10,11 +10,11 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         public byte UplineRoleId { get; set; }
 
         public string UplineUsername { get; set; }
-        
+
         public string SuggestUsername { get; set; }
-        
-        public bool NoPermissionEditCredit { get; set; } = false;
-        
-        internal string ToJson() => JsonConvert.SerializeObject(new { UplineId, UplineRoleId , NoPermissionEditCredit, SuggestUsername }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+
+        public bool NoPermissionEditCredit { get; set; }
+
+        internal string ToJson() => JsonConvert.SerializeObject(new { UplineId, UplineRoleId, NoPermissionEditCredit, SuggestUsername }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
     }
 }

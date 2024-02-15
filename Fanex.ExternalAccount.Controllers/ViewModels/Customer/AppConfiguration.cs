@@ -2,17 +2,14 @@
 {
     public class AppConfiguration
     {
-        public AppConfiguration(string appPath, int systemId = 4, int systemCode = 4)
+        public AppConfiguration(string appPath, int systemId)
         {
             ApplicationPath = appPath;
             SystemId = systemId;
-            SystemCode = systemCode;
         }
 
         public string ApplicationPath { get; }
 
         public int SystemId { get; }
-
-        public int SystemCode { get; }
     }
 }

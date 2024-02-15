@@ -109,29 +109,12 @@
             request.NoPermissionEditCredit = !AuthorizationService.HasUpdateCreditPermission(userId);
 
             var editCustomerViewModel = new EditCustomerViewModel(
-                new AppConfiguration(GetApplicationPath(), configuration.SystemId, systemCode),
+                new AppConfiguration(GetApplicationPath(), systemCode),
                 cdnUri,
                 GetAssetsVersion(),
                 request.ToJson());
 
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditCustomer-Debug" : "EditCustomer");
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult IndirectEditMember(IndirectEditMemberRequest request)
-        {
-            var currentSession = new CurrentSession();
-            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
-            var userId = CurrentSession.UserId;
-            request.NoPermissionEditCredit = !AuthorizationService.HasUpdateCreditPermission(userId);
-
-            var editCustomerViewModel = new IndirectEditMemberViewModel(
-                new AppConfiguration(GetApplicationPath(), configuration.SystemId, systemCode),
-                cdnUri,
-                GetAssetsVersion(),
-                request.ToJson());
-
-            return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "IndirectEditMember-Debug" : "IndirectEditMember");
         }
 
         private static int GetSystemCode(bool isSpecialSite, bool isBetSettingOnly)
@@ -172,28 +155,8 @@
                     request.CustId,
                     "",
                     request.RoleId,
-                    request.RoleId + 1,
-                    CurrentContext.Ip4Address));
-
-            return Content(response);
-        }
-
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public async Task<ActionResult> IndirectUpdateMember(UpdateCustomerRequest request)
-        {
-            var response = await customerServiceClient.UpdateCustomer(
-                new CustomerClient.Params.UpdateCustomerParam(
-                    request.GeneralInfo,
-                    request.ProductGroups,
-                    CurrentSession.UserId,
-                    0,
-                    request.CustId,
-                    "",
-                    request.RoleId,
                     request.UplineRoleId,
-                    CurrentContext.Ip4Address,
-                    "en-US"));
+                    CurrentContext.Ip4Address));
 
             return Content(response);
         }

@@ -27,9 +27,8 @@
                             callback: function () {
                                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                                 Fanex.ExtAcc.Form.ShowFrame(
-                                    resolveClientUrl('Customer/EditCustomer' + '/?roleId=4&groupName=' + $('#selectedGroupName').html() + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                                    resolveClientUrl('Customer/EditCustomer' + '/?roleId=4&uplineRoleId=5&groupName=' + $('#selectedGroupName').html() + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                                     1250, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
-
                             }
                         },
                         separator1: "-----",
@@ -52,7 +51,7 @@
                     }
 
                     addEditProductSuperContextMenuItem(5, 'Product-5', 'Virtual Sports');
-                  
+
                     for (var i = 0, max = result.DCSProductsSetting.length; i < max; i++) {
                         var productSetting = result.DCSProductsSetting[i];
                         if (!productSetting.IsHidden && productSetting.IsSyncedUpline) {
