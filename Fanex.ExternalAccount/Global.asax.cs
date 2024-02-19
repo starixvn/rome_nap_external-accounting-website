@@ -31,6 +31,9 @@
     using Fanex.Logging.Extensions;
     using System.Linq;
     using Fanex.Logging.Extensions.Database;
+    using Fanex.Customer.Client;
+    using Fanex.Customer.Client.Configurations;
+    using Fanex.Customer.Client.NETFramework;
 
     public class MvcApplication : HttpApplication
     {
@@ -106,7 +109,7 @@
                 logEngines.Add(new SentryLogging(new SentryEngineOptions
                 {
                     Dsn = new Dsn(AppSettings.SentryBackendUrl)
-                })); ;
+                }));
             }
             LogManager
                 .SetDefaultLogCategory(AppSettings.LoggingDefaultCategory)
@@ -122,6 +125,7 @@
 
             AreaRegistration.RegisterAllAreas();
             CustomerSettingRegistration.Init();
+            CustomerClientManager.UseConfig(new CustomerClientConfiguration().Initialize());
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);

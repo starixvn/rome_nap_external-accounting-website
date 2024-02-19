@@ -15,8 +15,7 @@
     using CustomerSetting.Security.Authenticate;
     using DataAccess.Criteria.Customer;
     using DataAccess.Criteria.Customer.CustomerStatus;
-    using Fanex.Customer.Client.Configurations;
-    using Fanex.Customer.Client.NETFramework;
+    using Fanex.Customer.Client;
     using Fanex.ExternalAccount.Controllers.Authentication;
     using Fanex.ExternalAccount.Controllers.Requests.Customer;
     using Fanex.ExternalAccount.Controllers.ViewModels.Customer;
@@ -31,6 +30,7 @@
     using ViewModel.Customer;
     using ViewModel.Customer.Suspend;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
+
     using CustomerClient = Fanex.Customer.Client;
 
     public partial class CustomerController : BaseController
@@ -44,8 +44,7 @@
         private const byte SystemCode_ExternalNapSpecialSite = 8;
         private const byte SystemCode_ExternalNap = 4;
 
-        private static readonly CustomerClientConfiguration configuration = new CustomerClientConfiguration().Initialize();
-        private readonly CustomerClient.Services.ICustomerService customerServiceClient = new CustomerClient.Services.CustomerService(configuration);
+        private readonly CustomerClient.Services.ICustomerService customerServiceClient = new CustomerClient.Services.CustomerService();
 
         private readonly CustomerService _customerService = new CustomerService();
         private readonly MasterService _masterService = new MasterService();
@@ -54,9 +53,9 @@
         private readonly ITelegramBotService _telegramChatbotService = new TelegramBotService();
         private readonly ProductStatusService productStatusService = new ProductStatusServiceImpl();
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalCustomerAuthFilter(Function = eFunctions.CreateNew)]
+        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
+        [ExternalCustomerAuthFilter(Function = eFunctions.Transfer)]
         public async Task<ActionResult> CreateCustomer(CreateCustomerRequest request)
         {
             var limitedRulesResult = await customerServiceClient.CheckAllLimitedRules(request.UplineId, request.UplineRoleId, request.UplineUsername);
@@ -71,7 +70,7 @@
             request.NoPermissionEditCredit = !AuthorizationService.HasUpdateCreditPermission(userId);
 
             var viewModel = new CreateCustomerViewModel(
-                new AppConfiguration(GetApplicationPath(), configuration.SystemId),
+                new AppConfiguration(GetApplicationPath(), CustomerClientManager.ClientConfigs.SystemId),
                 cdnUri,
                 GetAssetsVersion(),
                 request.ToJson(),
@@ -100,7 +99,7 @@
             }
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
         public ActionResult EditCustomer(EditCustomerRequest request)
         {
             var currentSession = new CurrentSession();
@@ -127,9 +126,9 @@
             return isBetSettingOnly ? SystemCode_ExternalNapBetSetting : SystemCode_ExternalNap;
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
-        [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
+        [ExternalCustomerAuthFilter(Function = eFunctions.CreateNew, IsHost = true)]
+        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook, IsHost = true)]
+        [ExternalCustomerAuthFilter(Function = eFunctions.Transfer, IsHost = true)]
         [AntiXSRFFilter]
         public async Task<ActionResult> Create(CreateCustomerCommand request)
         {
@@ -142,7 +141,7 @@
             return Content(response);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
+        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook, IsHost = true)]
         [AntiXSRFFilter]
         public async Task<ActionResult> Update(UpdateCustomerRequest request)
         {
@@ -161,8 +160,8 @@
             return Content(response);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
+        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook, IsHost = true)]
         public async Task<ActionResult> UpdateMultipleCustomers(UpdateMultipleCustomerCommand request)
         {
             var response = await customerServiceClient.UpdateMultipleCustomers(
@@ -182,7 +181,7 @@
             return Content(response);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
+        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
         public ActionResult EditMultiple(EditMultipleCustomerRequest request)
         {
             var currentSession = new CurrentSession();
@@ -196,15 +195,15 @@
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditMultiple-Debug" : "EditMultiple");
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
+        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
         public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, byte systemId, byte uplineRoleId, string language = "en-US", bool isGetUpline = false)
             => Content(await customerServiceClient.GetCustomerSetting(custId, roleId, systemId, uplineRoleId, language, isGetUpline));
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
+        [ExternalCustomerAuthFilter(Function = eFunctions.CustomerList)]
         public async Task<ActionResult> CheckExistedCustomer(string username)
             => Json(await customerServiceClient.CheckExistedCustomer(username), JsonRequestBehavior.AllowGet);
 
-        [ExternalAccountAuthenticate(Function = eFunctions.CreateNew, Policy = AuthenticationType.Read)]
+        [ExternalCustomerAuthFilter(Function = eFunctions.CreateNew)]
         private Task<string> GetSuggestUsername(string actorName, byte roleId)
             => customerServiceClient.GetSuggestUsername(actorName, roleId);
 
