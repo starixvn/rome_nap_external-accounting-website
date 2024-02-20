@@ -11,8 +11,6 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
 
         public int UplineRoleId { get; set; }
 
-        public bool IsBetSettingOnly { get; set; }
-
         public bool NoPermissionEditCredit { get; set; }
 
         internal string ToJson() => JsonConvert.SerializeObject(new { CustId, RoleId, UplineRoleId, NoPermissionEditCredit }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });

@@ -9,7 +9,13 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     public class ExternalCustomerAuthFilterAttribute : CustomerAuthFilterAttribute
     {
-        private readonly AuthorizationService authorization = new AuthorizationServiceImpl();
+        private readonly AuthorizationService authorization;
+
+        public ExternalCustomerAuthFilterAttribute()
+            : base(null)
+        {
+            authorization = new AuthorizationServiceImpl();
+        }
 
         public string Function { get; set; }
 

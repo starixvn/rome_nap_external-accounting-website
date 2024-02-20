@@ -76,10 +76,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Customer.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Customer.Client.1.0.0-beta35\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
+      <HintPath>..\packages\Fanex.Customer.Client.1.0.0-beta36\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Customer.Client.NETFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Customer.Client.NETFramework.1.0.0-beta06\lib\net461\Fanex.Customer.Client.NETFramework.dll</HintPath>
+      <HintPath>..\packages\Fanex.Customer.Client.NETFramework.1.0.0-beta08\lib\net461\Fanex.Customer.Client.NETFramework.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.5.2\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>

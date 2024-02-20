@@ -103,7 +103,7 @@
         public ActionResult EditCustomer(EditCustomerRequest request)
         {
             var currentSession = new CurrentSession();
-            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, request.IsBetSettingOnly);
+            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
             var userId = CurrentSession.UserId;
             request.NoPermissionEditCredit = !AuthorizationService.HasUpdateCreditPermission(userId);
 
@@ -114,6 +114,40 @@
                 request.ToJson());
 
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditCustomer-Debug" : "EditCustomer");
+        }
+
+        [ExternalCustomerAuthFilter(Function = eFunctions.SportsbookBetting)]
+        public ActionResult EditSuperBetSetting(EditCustomerRequest request)
+        {
+            var currentSession = new CurrentSession();
+            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, true);
+
+            var editCustomerViewModel = new EditCustomerViewModel(
+                new AppConfiguration(GetApplicationPath(), systemCode),
+                cdnUri,
+                GetAssetsVersion(),
+                request.ToJson());
+
+            return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditCustomer-Debug" : "EditCustomer");
+        }
+
+        [HttpPost]
+        [ExternalCustomerAuthFilter(Function = eFunctions.SportsbookBetting, IsHost = true)]
+        public async Task<ActionResult> EditSuperBetSetting(UpdateCustomerRequest request)
+        {
+            var response = await customerServiceClient.UpdateCustomer(
+                new CustomerClient.Params.UpdateCustomerParam(
+                    null,
+                    request.ProductGroups,
+                    CurrentSession.UserId,
+                    0,
+                    request.CustId,
+                    "",
+                    request.RoleId,
+                    request.UplineRoleId,
+                    CurrentContext.Ip4Address));
+
+            return Content(response);
         }
 
         private static int GetSystemCode(bool isSpecialSite, bool isBetSettingOnly)
