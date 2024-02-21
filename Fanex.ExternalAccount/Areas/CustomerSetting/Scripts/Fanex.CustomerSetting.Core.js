@@ -297,7 +297,7 @@ String.prototype.formatErrorMessage = function () {
         orgMsg = subMsg = '';
     }
 
-    var formatMsg = '<font color="#fe0000">' + preMsg + '</font>' + orgMsg +
+    var formatMsg = '<font color="#fe0000">' + preMsg + '' + orgMsg + '</font>' +
     '<font color="#fe0000">' + subMsg + '</font>';
 
     return formatMsg;
