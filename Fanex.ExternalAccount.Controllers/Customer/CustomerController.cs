@@ -52,6 +52,7 @@
         private readonly IIPInformatonService ipInformationService = new IPInformationService();
         private readonly ITelegramBotService _telegramChatbotService = new TelegramBotService();
         private readonly ProductStatusService productStatusService = new ProductStatusServiceImpl();
+        private readonly AuthorizationService authorizationService = new AuthorizationServiceImpl();
 
         [ExternalCustomerAuthFilter(Function = eFunctions.CreateNew)]
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
@@ -279,9 +280,15 @@
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditMultiple-Debug" : "EditMultiple");
         }
 
-        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
         public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, byte systemId, byte uplineRoleId, string language = "en-US", bool isGetUpline = false)
-            => Content(await customerServiceClient.GetCustomerSetting(custId, roleId, systemId, uplineRoleId, language, isGetUpline));
+        {
+            if (!authorizationService.HasReadPermissionOnFunctions(new List<string> { eFunctions.Sportsbook, eFunctions.SportsbookBetting }, CurrentSession.UserId))
+            {
+                return Redirect(CustomerClientManager.ClientConfigs.AccessDeniedUrl);
+            }
+
+            return Content(await customerServiceClient.GetCustomerSetting(custId, roleId, systemId, uplineRoleId, language, isGetUpline));
+        }
 
         [ExternalCustomerAuthFilter(Function = eFunctions.CustomerList)]
         public async Task<ActionResult> CheckExistedCustomer(string username)
