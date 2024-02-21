@@ -35,7 +35,7 @@
         <ul class="tabs">
             <li id="tab1" onclick="LoadSB()"><a href="#tabs-1">Sportsbook</a></li>
             <li id="tab5" onclick="LoadVirtualSports()"><a href="#tabs-5">Virtual Sports</a></li>
-            <li id="tab6" onclick="LoadCasino()"><a href="#tabs-6">Saba Casino</a></li>  
+            <li id="tab6" onclick="LoadCasino()"><a href="#tabs-6">Saba Casino</a></li>
             @foreach (var tab in visibleTabs)
             {
                 <li id="tab@(tab.Id)"
@@ -55,7 +55,7 @@
         <div id="tabs-6">
             <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
             <div><iframe id="product-6" width="100%" height="450px" frameborder="0" src=""></iframe></div>
-        </div>      
+        </div>
 
         @foreach (var tab in visibleTabs)
         {
@@ -91,7 +91,6 @@
                 url.indexOf('product-66') != -1 ? 8 :
                 url.indexOf('product-69') != -1 ? 9 : 0;
             var custInfo = @Html.Raw(custInfo);
-          
 
             $('#tabs').tabs({ selected: index });
         });

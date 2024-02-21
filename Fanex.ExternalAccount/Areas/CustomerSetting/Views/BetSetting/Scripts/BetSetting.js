@@ -117,10 +117,13 @@ function LoadBetSetting(sourceUser, destUsers, isCopy) {
             }
 
             if (isCopy) {
-                $("#product-1-0").attr("src", toUrl("Sportsbook/EditMultipleBetSettingContent?copy=1&custId=" + result.superIds.split(',')[0] + "&groupName=" + groupName));
+                var superIds = result.superIds.split(',');
+                var sourceId = superIds[0];
+                superIds.shift();
+                $("#product-1-0").attr("src", resolveClientUrl("Customer/EditMultipleSuperBetSetting?isCopy=true&custId=" + sourceId + "&custIds=" + superIds.toString() + "&usernames=" + destUsers  + "&uplineRoleId=5&roleId=4&groupName=" + groupName));
             }
             else {
-                $("#product-1-1").attr("src", resolveClientUrl("Customer/EditMultiple?custIds=" + result.superIds + '&usernames=' + destUsers + '&uplineRoleId=5' + '&isBetSettingOnly=true' + "&roleId=4&groupName=" + groupName));
+                $("#product-1-1").attr("src", resolveClientUrl("Customer/EditMultipleSuperBetSetting?custIds=" + result.superIds + '&usernames=' + destUsers + '&uplineRoleId=5&roleId=4&groupName=' + groupName));
             }
         }
 

@@ -132,6 +132,7 @@
         }
 
         [HttpPost]
+        [AntiXSRFFilter]
         [ExternalCustomerAuthFilter(Function = eFunctions.SportsbookBetting, IsHost = true)]
         public async Task<ActionResult> EditSuperBetSetting(UpdateCustomerRequest request)
         {
@@ -150,6 +151,52 @@
             return Content(response);
         }
 
+        [ExternalCustomerAuthFilter(Function = eFunctions.SportsbookBetting)]
+        public ActionResult EditMultipleSuperBetSetting(EditMultipleSuperBetSettingRequest request)
+        {
+            if (Role.IsNotSuper(request.RoleId))
+            {
+                return PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+            }
+
+            var currentSession = new CurrentSession();
+            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, true);
+            var editCustomerViewModel = new EditCustomerViewModel(
+                new AppConfiguration(GetApplicationPath(), systemCode),
+                cdnUri,
+                GetAssetsVersion(),
+                request.ToJson());
+
+            return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditMultiple-Debug" : "EditMultiple");
+        }
+
+        [HttpPost]
+        [AntiXSRFFilter]
+        [ExternalCustomerAuthFilter(Function = eFunctions.SportsbookBetting, IsHost = true)]
+        public async Task<ActionResult> EditMultipleSuperBetSetting(UpdateMultipleCustomerCommand request)
+        {
+            if (Role.IsNotSuper(request.RoleId))
+            {
+                return PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+            }
+
+            var response = await customerServiceClient.UpdateMultipleCustomers(
+                new CustomerClient.Params.UpdateMultipleCustomerParam(
+                    request.ProductGroups,
+                    CurrentSession.UserId,
+                    0,
+                    request.CustId,
+                    "",
+                    request.RoleId,
+                    request.UplineRoleId,
+                    CurrentContext.Ip4Address,
+                    request.CustomerIds,
+                    request.CustomerNames,
+                    "en-US"));
+
+            return Content(response);
+        }
+
         private static int GetSystemCode(bool isSpecialSite, bool isBetSettingOnly)
         {
             if (isSpecialSite)
@@ -160,6 +207,7 @@
             return isBetSettingOnly ? SystemCode_ExternalNapBetSetting : SystemCode_ExternalNap;
         }
 
+        [HttpPost]
         [ExternalCustomerAuthFilter(Function = eFunctions.CreateNew, IsHost = true)]
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook, IsHost = true)]
         [ExternalCustomerAuthFilter(Function = eFunctions.Transfer, IsHost = true)]
@@ -175,6 +223,7 @@
             return Content(response);
         }
 
+        [HttpPost]
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook, IsHost = true)]
         [AntiXSRFFilter]
         public async Task<ActionResult> Update(UpdateCustomerRequest request)
@@ -194,6 +243,7 @@
             return Content(response);
         }
 
+        [HttpPost]
         [AntiXSRFFilter]
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook, IsHost = true)]
         public async Task<ActionResult> UpdateMultipleCustomers(UpdateMultipleCustomerCommand request)
@@ -219,7 +269,7 @@
         public ActionResult EditMultiple(EditMultipleCustomerRequest request)
         {
             var currentSession = new CurrentSession();
-            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, request.IsBetSettingOnly);
+            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
             var editCustomerViewModel = new EditCustomerViewModel(
                 new AppConfiguration(GetApplicationPath(), systemCode),
                 cdnUri,

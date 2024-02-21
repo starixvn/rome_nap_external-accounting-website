@@ -413,6 +413,7 @@
     <Compile Include="Requests\Customer\CreateCustomerRequest.cs" />
     <Compile Include="Requests\Customer\EditCustomerRequest.cs" />
     <Compile Include="Requests\Customer\EditMultipleCustomerRequest.cs" />
+    <Compile Include="Requests\Customer\EditMultipleSuperBetSettingRequest.cs" />
     <Compile Include="Requests\Customer\IndirectEditMemberRequest.cs" />
     <Compile Include="Requests\Customer\UpdateCustomerRequest.cs" />
     <Compile Include="Requests\Customer\UpdateMultipleCustomerCommand.cs" />
