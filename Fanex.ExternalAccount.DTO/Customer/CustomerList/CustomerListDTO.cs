@@ -30,6 +30,8 @@
 
         public bool DoubleCommLosing { get; set; }
 
+        public int NoOfDownlines { get; set; }
+
         public int? LimitDays { get; set; }
 
         public string MinDate { get; set; }
