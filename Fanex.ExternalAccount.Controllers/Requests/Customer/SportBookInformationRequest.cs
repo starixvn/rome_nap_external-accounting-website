@@ -31,7 +31,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         {
             get => new
             {
-                name = "Max Payout Setting",
+                name = "Max Payout",
                 id = "MaxPayoutSetting",
                 napUrl = "/Customer/GetMaxPayoutSettingInformation?site=" + Site + "&isSpecialPlatform=false",
                 index = 1,
@@ -67,7 +67,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         {
             get => new
             {
-                name = "Product Category",
+                name = "Product Categories",
                 id = "ProductCategorySetting",
                 napUrl = "/Customer/GetProductCategories?custId=" + CustId,
                 index = 4,
