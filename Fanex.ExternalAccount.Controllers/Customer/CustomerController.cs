@@ -279,7 +279,21 @@
 
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditMultiple-Debug" : "EditMultiple");
         }
+        
+        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
+        public ActionResult SportBookInformation(SportBookInformationRequest request)
+        {
+            var currentSession = new CurrentSession();
+            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
 
+            var editCustomerViewModel = new SportBookInformationViewModel(
+                new AppConfiguration(GetApplicationPath(), systemCode),
+                cdnUri,
+                GetAssetsVersion(),
+                request.ToJson());
+
+            return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "SportBookInformation-Debug" : "SportBookInformation");
+        }
         public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, byte systemId, byte uplineRoleId, string language = "en-US", bool isGetUpline = false)
         {
             if (!authorizationService.HasReadPermissionOnFunctions(new List<string> { eFunctions.Sportsbook, eFunctions.SportsbookBetting }, CurrentSession.UserId))
@@ -298,6 +312,23 @@
         private Task<string> GetSuggestUsername(string actorName, byte roleId)
             => customerServiceClient.GetSuggestUsername(actorName, roleId);
 
+
+        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
+        public Task<string> GetMaxPayoutSettingInformation(string site, bool isSpecialPlatform = false, string language = "en-US")
+            => customerServiceClient.GetMaxPayoutSettingInformation(site, isSpecialPlatform, language);
+
+        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
+        public Task<string> GetPTSettingInformation(int custId, string language = "en-US")
+            => customerServiceClient.GetPTSettingInformation(custId, false, language);
+        
+        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
+        public Task<string> GetCommissionHint(int custId, string language = "en-US")
+            => customerServiceClient.GetCommissionHint(custId, language);
+        
+        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
+        public Task<string> GetProductCategories(int custId, string language = "en-US")
+            => customerServiceClient.GetProductCategories(custId, language);
+        
         private string GetApplicationPath()
         {
             var applicationPath = Response.ApplyAppPathModifier(Request.ApplicationPath);
