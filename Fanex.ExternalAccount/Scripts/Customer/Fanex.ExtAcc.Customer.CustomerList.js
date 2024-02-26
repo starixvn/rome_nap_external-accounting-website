@@ -32,6 +32,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         this.DOMElements.msgNoinfo = $('#msgNoinfo');
         this.DOMElements.divSuperLimitDate = $('#chkShowSuperLimitDate').parent();
         this.DOMElements.chkShowSuperLimitDate = $('#chkShowSuperLimitDate');
+        this.DOMElements.chkIsNoDownlines = $('#chkIsNoDownlines');
         this.DOMElements.editMult = $('#editMult');
         this.DOMElements.breadcrumbs = $('#breadcrumbs');
         this.BindingEvents();
@@ -109,6 +110,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
             status: this.DOMElements.selStatus.val(),
             uplineRoleId: uplineRoleId,
             isShowSuperLimitDate: this.DOMElements.chkShowSuperLimitDate.is(":checked"),
+            IsNoDownlines: this.DOMElements.chkIsNoDownlines.is(":checked"),
             uplineId: uplineId,
             pageSize: pageSize,
             pageIndex: pageIndex + 1
@@ -214,6 +216,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                         status: _this.DOMElements.selStatus.val(),
                         uplineRoleId: _this.cachedParams.uplineRoleId,
                         isShowSuperLimitDate: _this.DOMElements.chkShowSuperLimitDate.is(":checked"),
+                        IsNoDownlines: this.DOMElements.chkIsNoDownlines.is(":checked"),
                         uplineId: _this.cachedParams.uplineId
                     };
 
@@ -341,7 +344,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
             columns.push(!isMemberList ? { HeaderText: 'Myanmar Odds', Name: 'discountmyanmarodds', Width: 100, CellAlign: 'center' } : undefined);
         }
         columns.push(showSubGroups ? { HeaderText: 'Assigned Sub Groups', Name: 'AssignedSubGroups', HeaderAlign: 'center', CellAlign: 'left', Width: 160 } : undefined);
-        columns.push({ HeaderText: 'No. of Downlines', Name: 'NoOfDownlines', CellAlign: 'center', Width: 100 });
+        columns.push({ HeaderText: 'No. of Downlines', Name: 'NoOfDownlines', CellAlign: 'center', Width: 60 });
         columns.push(isSuperList ? { HeaderText: 'Data Available', Name: 'DateLimit', CellAlign: 'center', Width: 100 } : undefined);
         columns.push({ HeaderText: 'Created Date', Name: 'createdate', CellAlign: 'center', Width: 160 });
         columns.push({
@@ -368,12 +371,12 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push({ HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 });
         columns.push({ HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 });
         columns.push(!isMemberList ? { HeaderText: 'Commission', Name: 'commision', MergeColNumber: isMyanmarOdds ? 4 : 6 } : undefined);
-        columns.push(showSubGroups ? { HeaderText: 'Assigned Sub Groups', Name: 'AssignedSubGroups', MergeRowNumber: 2 } : undefined);
-        columns.push({ HeaderText: 'No. of Downlines', Name: 'NoOfDownlines', MergeRowNumber: 2 });
-        columns.push(isSuperList ? { HeaderText: 'Data Available', Name: 'DateLimit', MergeRowNumber: 2 } : undefined);
+        columns.push(showSubGroups ? { HeaderText: 'Assigned Sub Groups', Name: 'AssignedSubGroups', MergeRowNumber: 2 } : undefined);       
         columns.push(isMemberList ? { HeaderText: 'User Group', Name: 'ugroup', MergeRowNumber: 2 } : undefined);
         columns.push(isMemberList ? { HeaderText: 'Agent Commission', Name: 'discount', MergeColNumber: isMyanmarOdds ? 4 : 3 } : undefined);
         columns.push(isMemberList ? { HeaderText: 'Player Commission', Name: 'playerdiscount', MergeColNumber: isMyanmarOdds ? 4 : 3 } : undefined);
+        columns.push({ HeaderText: 'No. of Downlines', Name: 'NoOfDownlines', MergeRowNumber: 2 });
+        columns.push(isSuperList ? { HeaderText: 'Data Available', Name: 'DateLimit', MergeRowNumber: 2 } : undefined);
         columns.push({ HeaderText: 'Created Date', Name: 'createdate', MergeRowNumber: 2 });
         columns.push({ HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 });
         return [{ Columns: columns.filter(function (item) { return item !== undefined }) }];
@@ -424,7 +427,6 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push(showSubGroups ? { Name: 'AssignedSubGroups', Value: currentRow.SubGroup } : undefined);
         columns.push({ Name: 'NoOfDownlines', Value: currentRow.NoOfDownlines });
         columns.push(isSuperList ? { Name: 'DateLimit', Value: currentRow.MinDate ? moment(currentRow.MinDate).format("MM/DD/YYYY") : currentRow.LimitDays !== "" ? currentRow.LimitDays : "" } : undefined);
-
         columns.push({ Name: 'createdate', Value: currentRow.CreateDate, FormatDateTime: 'MM/DD/YYYY hh:mm:ss A' });
         columns.push({ Name: 'lastloginip', Value: currentRow.LastLoginIP });
         return columns.filter(function (item) { return item !== undefined });

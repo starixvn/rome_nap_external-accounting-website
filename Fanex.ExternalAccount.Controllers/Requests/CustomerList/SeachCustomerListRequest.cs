@@ -17,6 +17,8 @@
 
         public bool? IsShowSuperLimitDate { get; set; }
 
+        public bool? IsNoDownlines { get; set; }
+
         public int? UplineId { get; set; }
 
         public int? PageSize { get; set; }

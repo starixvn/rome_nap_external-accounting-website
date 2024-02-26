@@ -59,6 +59,7 @@
                 GroupName = request.GroupName,
                 GroupId = request.GroupId,
                 IsDataLimited = request.IsShowSuperLimitDate ?? false,
+                IsNoDownlines = request.IsNoDownlines ?? false,
                 UplineId = request.UplineId ?? 0,
                 UplineRoleId = request.UplineRoleId ?? 0,
                 Status = request.Status ?? 0,

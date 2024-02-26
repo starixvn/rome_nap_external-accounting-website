@@ -67,6 +67,7 @@
                         Currencies = parameters.CurrencyIds,
                         UserId = parameters.UserId,
                         Status = parameters.Status,
+                        IsNoDownlines = parameters.IsNoDownlines,
                         PageIndex = parameters.PageIndex,
                         PageSize = parameters.PageSize
                     };
@@ -78,6 +79,7 @@
                         Currencies = parameters.CurrencyIds,
                         UserId = parameters.UserId,
                         Status = parameters.Status,
+                        IsNoDownlines = parameters.IsNoDownlines,
                         PageIndex = parameters.PageIndex,
                         PageSize = parameters.PageSize
                     };
@@ -101,6 +103,7 @@
                         UserId = parameters.UserId,
                         Status = parameters.Status,
                         IsDataLimited = parameters.IsDataLimited,
+                        IsNoDownlines = parameters.IsNoDownlines,
                         PageIndex = parameters.PageIndex,
                         PageSize = parameters.PageSize
                     };
