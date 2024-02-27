@@ -18,6 +18,8 @@
 
         internal static string Phone(this DataRow dataRow) => Utils.ToString(dataRow["Phone"]);
 
+        internal static string Headline(this DataRow dataRow) => Utils.ToString(dataRow["Headline"]);
+
         internal static CustomerClosedReason CustomerClosedReason(this DataRow dataRow) => new CustomerClosedReason(dataRow["closedreason"]);
 
         internal static bool HasDownline(this DataRow dataRow) => Utils.ToBoolean(dataRow["HasDownline"]);

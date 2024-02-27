@@ -21,6 +21,7 @@
             Name = ObjectInfo.CreateInstance("Name", customerInfoRow.Name());
             Nickname = ObjectInfo.CreateInstance("Nickname", customerInfoRow.Nickname());
             Phone = ObjectInfo.CreateInstance("Phone", customerInfoRow.Phone());
+            Headline = ObjectInfo.CreateInstance("Headline", customerInfoRow.Headline());
             RoleId = ObjectInfo.CreateInstance("Role Id", role);
             UplineRoleId = ObjectInfo.CreateInstance("Upline Role Id", role.DirectUplineLevel());
             CustList = new ObjectInfo
@@ -88,6 +89,8 @@
         public ObjectInfo Phone { get; set; }
 
         public ObjectInfo Mobile { get; set; }
+
+        public ObjectInfo Headline { get; set; }
 
         public ObjectInfo Fax { get; set; }
 
