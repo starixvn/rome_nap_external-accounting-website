@@ -10,7 +10,6 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         public int RoleId { get; set; }
 
         public int UplineRoleId { get; set; }
-
         public int TabIndex { get; set; }
 
         public string Site { get; set; }
@@ -19,8 +18,8 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         {
             get => new
             {
-                name = "Bet Setting",
-                id = "BetSetting",
+                name = "BetSetting",
+                id = "BetSettingTab",
                 napUrl = "",
                 index = 0,
                 isActive = TabIndex == 0,
@@ -31,8 +30,8 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         {
             get => new
             {
-                name = "Max Payout",
-                id = "MaxPayoutSetting",
+                name = "MaxPayoutSetting", // chua dich
+                id = "MaxPayoutSettingTab", 
                 napUrl = "/Customer/GetMaxPayoutSettingInformation?site=" + Site + "&isSpecialPlatform=false",
                 index = 1,
                 isActive = TabIndex == 1,
@@ -43,8 +42,8 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         {
             get => new
             {
-                name = "Position Taking",
-                id = "PTSetting",
+                name = "PositionTaking",
+                id = "PTSettingTab",
                 napUrl = "/Customer/GetPTSettingInformation?custId=" + CustId,
                 index = 2,
                 isActive = TabIndex == 2,
@@ -56,7 +55,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
             get => new
             {
                 name = "Commission",
-                id = "Commission",
+                id = "CommissionHintTab",
                 napUrl = "/Customer/GetCommissionHint?custId=" + CustId,
                 index = 3,
                 isActive = TabIndex == 3,
@@ -67,8 +66,8 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         {
             get => new
             {
-                name = "Product Categories",
-                id = "ProductCategorySetting",
+                name = "ProductCategories",
+                id = "ProductCategorySettingTab",
                 napUrl = "/Customer/GetProductCategories?custId=" + CustId,
                 index = 4,
                 isActive = TabIndex == 4,
