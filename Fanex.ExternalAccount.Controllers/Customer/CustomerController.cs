@@ -456,6 +456,7 @@
         public ActionResult ResetPassword(int custId)
         {
             var user = _customerService.UserInfo(custId, Config.SettingStatus);
+            ViewBag.SCode = Encryptor.RandomCaptcha;
             return PartialViewBase(user);
         }
 
