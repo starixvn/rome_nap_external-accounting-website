@@ -185,15 +185,19 @@
                 {
                     values.Insert(2, item.Currency);
                 }
-
+                
                 if (_builder.RoleId.IsSuper())
                 {
                     if (hasSubGroups)
                     {
                         values.Add(item.SubGroup);
                     }
-
+                    values.Add(item.NoOfDownlines);
                     values.Add(item.LimitDays?.ToString() ?? item.MinDate);
+                }
+                else
+                {
+                    values.Add(item.NoOfDownlines);
                 }
 
                 values.Add(item.CreateDate);

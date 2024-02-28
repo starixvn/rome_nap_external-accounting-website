@@ -43,7 +43,7 @@
 	            <input id="chkShowSuperLimitDate" type="checkbox" />
 	            <div class="label lbl-show-limit-date">@ViewLang.CustomersWithDataLimited</div>
             </div>
-            <div class="form-group">
+            <div class="form-group @(!Model.RoleId.HasValue || Model.RoleId.Value.IsNotMember() ? string.Empty: "hidden") customer-limit-date">
 	            <input id="chkIsNoDownlines" type="checkbox" />
                 <div class="label lbl-show-limit-date">No Downline</div>
             </div>
