@@ -1,4 +1,6 @@
-﻿namespace Fanex.ExternalAccount.Controllers.Customer
+﻿using System.Linq;
+
+namespace Fanex.ExternalAccount.Controllers.Customer
 {
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Controllers.Requests.CustomerList;
@@ -76,7 +78,7 @@
         public JsonResult GetCustomerStatus(int custId)
         {
             var products = _customerService.GetCustomerAllStatus(custId, Config.SettingStatus);
-            if (products != null && products.DCSProductsSetting != null)
+            if (products?.DCSProductsSetting != null && products.DCSProductsSetting.Any())
             {
                 products.DCSProductsSetting.RemoveAll(
                     i => i.ProductID == ProductConstants.SabaVirtualSports
@@ -118,7 +120,7 @@
                 customerList.HasSubGroups,
                 Config.IsMultipleCurrencyGroup(request.GroupName));
             var excelStream = builder.Build();
-            var fileName = $"{status}{roleId.DisplayRoleName()}List{DateTime.Now.ToString("yyyyMMdd")}.xls";
+            var fileName = $"{status}{roleId.DisplayRoleName()}List{DateTime.Now:yyyyMMdd}.xls";
 
             ExportToExcel(excelStream, fileName);
         }

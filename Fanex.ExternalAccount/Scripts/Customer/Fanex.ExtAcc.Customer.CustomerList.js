@@ -31,6 +31,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         this.DOMElements.jqgrid = $('#jqgrid');
         this.DOMElements.msgNoinfo = $('#msgNoinfo');
         this.DOMElements.divSuperLimitDate = $('#chkShowSuperLimitDate').parent();
+        this.DOMElements.divIsNoDownlines = $('#chkIsNoDownlines').parent();
         this.DOMElements.chkShowSuperLimitDate = $('#chkShowSuperLimitDate');
         this.DOMElements.chkIsNoDownlines = $('#chkIsNoDownlines');
         this.DOMElements.editMult = $('#editMult');
@@ -93,6 +94,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         var pageSize = !isNullOrUndefined(itemsPerPage) ? itemsPerPage : _this.cachedParams.pageSize;
         var pageIndex = !isNullOrUndefined(currentIndex) ? currentIndex : _this.cachedParams.pageIndex;
         var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
+        var isMember = uplineRoleId == 2 ? true : false;
 
         _this.cachedParams.pageIndex = pageIndex;
         _this.cachedParams.pageSize = pageSize;
@@ -100,6 +102,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         Fanex.ExtAcc.BlockUI();
         Fanex.ExtAcc.Customer.CurrentLevel = isSuperList ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1;
         this.DOMElements.divSuperLimitDate.toggle(isSuperList);
+        this.DOMElements.divIsNoDownlines.toggle(!isMember);
         Fanex.ExtAcc.Customer.superId = uplineRoleId === Fanex.ExtAcc.Customer.Super ? uplineId : Fanex.ExtAcc.Customer.superId;
         Fanex.ExtAcc.Customer.masterId = uplineRoleId === Fanex.ExtAcc.Customer.Master ? uplineId : Fanex.ExtAcc.Customer.masterId;
         Fanex.ExtAcc.Customer.agentId = uplineRoleId === Fanex.ExtAcc.Customer.Agent ? uplineId : Fanex.ExtAcc.Customer.agentId;

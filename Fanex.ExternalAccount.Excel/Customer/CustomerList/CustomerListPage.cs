@@ -50,7 +50,7 @@
 
         public override void WriteBodyReport(ISheet resultSheet)
         {
-            var totalColumn = _builder.IsMyanmarOdds || _builder.RoleId.IsSuper() ? 16 : 15;
+            var totalColumn = _builder.IsMyanmarOdds || _builder.RoleId.IsSuper() ? 17 : 16;
 
             if (_builder.RoleId.IsSuper())
             {
