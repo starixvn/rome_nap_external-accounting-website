@@ -481,31 +481,32 @@
             return entityList;
         }
 
-        private static WinLossDetail CreateWinLossDetailEntity(IDataReader reader) => new WinLossDetail
-        {
-            CustId = reader.ToInt("custid"),
-            Username = reader.To<string>("username"),
-            Turnover = reader.ToDouble("Turnover"),
-            NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-            GrossComm = reader.ToDouble("GrossComm"),
-            MemberWinlost = reader.ToDouble("MemberWinlost"),
-            PlayerComm = reader.ToDouble("PlayerComm"),
-            MemberTotal = reader.ToDouble("MemberTotal"),
+        private static WinLossDetail CreateWinLossDetailEntity(IDataReader reader)
+            => new WinLossDetail
+            {
+                CustId = reader.ToInt("custid"),
+                Username = reader.To<string>("username"),
+                Turnover = reader.ToDouble("Turnover"),
+                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
+                GrossComm = reader.ToDouble("GrossComm"),
+                MemberWinlost = reader.ToDouble("MemberWinlost"),
+                PlayerComm = reader.ToDouble("PlayerComm"),
+                MemberTotal = reader.ToDouble("MemberTotal"),
 #pragma warning disable S1192 // String literals should not be duplicated
-            AgWinlost = reader.ToDouble("AgWinlost"),
-            AgComm = reader.ToDouble("AgComm"),
-            AgTotal = reader.ToDouble("AgTotal"),
-            MAgWinlost = reader.ToDouble("MAgWinlost"),
-            MAgComm = reader.ToDouble("MAgComm"),
-            MAgTotal = reader.ToDouble("MAgTotal"),
-            SAgWinlost = reader.ToDouble("SAgWinlost"),
-            SAgComm = reader.ToDouble("SAgComm"),
-            SAgTotal = reader.ToDouble("SAgTotal"),
-            Company = reader.ToDouble("Company")
+                AgWinlost = reader.ToDouble("AgWinlost"),
+                AgComm = reader.ToDouble("AgComm"),
+                AgTotal = reader.ToDouble("AgTotal"),
+                MAgWinlost = reader.ToDouble("MAgWinlost"),
+                MAgComm = reader.ToDouble("MAgComm"),
+                MAgTotal = reader.ToDouble("MAgTotal"),
+                SAgWinlost = reader.ToDouble("SAgWinlost"),
+                SAgComm = reader.ToDouble("SAgComm"),
+                SAgTotal = reader.ToDouble("SAgTotal"),
+                Company = reader.ToDouble("Company")
 #pragma warning restore S1192 // String literals should not be duplicated
-        };
+            };
 
-        private List<WinLossDetailMAg> GetCommonWinLossDetailMAg(string spname, Hashtable parameters)
+    private List<WinLossDetailMAg> GetCommonWinLossDetailMAg(string spname, Hashtable parameters)
         {
             var entityList = new List<WinLossDetailMAg>();
 
@@ -524,24 +525,25 @@
             return entityList;
         }
 
-        private static WinLossDetailMAg CreateWinLossDetailMAgEntity(IDataReader reader) => new WinLossDetailMAg
-        {
-            CustId = reader.ToInt("custid"),
-            Username = reader.To<string>("username"),
-            Turnover = reader.ToDouble("Turnover"),
-            NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-            GrossComm = reader.ToDouble("GrossComm"),
-            MemberWinlost = reader.ToDouble("MemberWinlost"),
-            PlayerComm = reader.ToDouble("PlayerComm"),
-            MemberTotal = reader.ToDouble("MemberTotal"),
-            AgWinlost = reader.ToDouble("AgWinlost"),
-            AgComm = reader.ToDouble("AgComm"),
-            AgTotal = reader.ToDouble("AgTotal"),
-            MAgWinlost = reader.ToDouble("MAgWinlost"),
-            MAgComm = reader.ToDouble("MAgComm"),
-            MAgTotal = reader.ToDouble("MAgTotal"),
-            Company = reader.ToDouble("Company")
-        };
+        private static WinLossDetailMAg CreateWinLossDetailMAgEntity(IDataReader reader)
+            => new WinLossDetailMAg
+            {
+                CustId = reader.ToInt("custid"),
+                Username = reader.To<string>("username"),
+                Turnover = reader.ToDouble("Turnover"),
+                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
+                GrossComm = reader.ToDouble("GrossComm"),
+                MemberWinlost = reader.ToDouble("MemberWinlost"),
+                PlayerComm = reader.ToDouble("PlayerComm"),
+                MemberTotal = reader.ToDouble("MemberTotal"),
+                AgWinlost = reader.ToDouble("AgWinlost"),
+                AgComm = reader.ToDouble("AgComm"),
+                AgTotal = reader.ToDouble("AgTotal"),
+                MAgWinlost = reader.ToDouble("MAgWinlost"),
+                MAgComm = reader.ToDouble("MAgComm"),
+                MAgTotal = reader.ToDouble("MAgTotal"),
+                Company = reader.ToDouble("Company")
+            };
 
         private List<WinLossDetailAg> GetCommonWinLossDetailAg(string spname, Hashtable parameters)
         {
@@ -562,21 +564,22 @@
             return entityList;
         }
 
-        private static WinLossDetailAg CreateWinLossDetailAgEntity(IDataReader reader) => new WinLossDetailAg
-        {
-            CustId = reader.ToInt("custid"),
-            Username = reader.To<string>("username"),
-            Turnover = reader.ToDouble("Turnover"),
-            NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-            GrossComm = reader.ToDouble("GrossComm"),
-            MemberWinlost = reader.ToDouble("MemberWinlost"),
-            PlayerComm = reader.ToDouble("PlayerComm"),
-            MemberTotal = reader.ToDouble("MemberTotal"),
-            AgWinlost = reader.ToDouble("AgWinlost"),
-            AgComm = reader.ToDouble("AgComm"),
-            AgTotal = reader.ToDouble("AgTotal"),
-            Company = reader.ToDouble("Company")
-        };
+        private static WinLossDetailAg CreateWinLossDetailAgEntity(IDataReader reader)
+            => new WinLossDetailAg
+            {
+                CustId = reader.ToInt("custid"),
+                Username = reader.To<string>("username"),
+                Turnover = reader.ToDouble("Turnover"),
+                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
+                GrossComm = reader.ToDouble("GrossComm"),
+                MemberWinlost = reader.ToDouble("MemberWinlost"),
+                PlayerComm = reader.ToDouble("PlayerComm"),
+                MemberTotal = reader.ToDouble("MemberTotal"),
+                AgWinlost = reader.ToDouble("AgWinlost"),
+                AgComm = reader.ToDouble("AgComm"),
+                AgTotal = reader.ToDouble("AgTotal"),
+                Company = reader.ToDouble("Company")
+            };
 
         private ArrayList GetSortingOrderList(string spname, Hashtable parameters)
         {

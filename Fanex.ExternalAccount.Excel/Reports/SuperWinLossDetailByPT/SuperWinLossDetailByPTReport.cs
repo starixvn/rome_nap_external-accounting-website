@@ -51,7 +51,7 @@
 
                 var parentRowValues = new List<object>
                 {
-                    winlossUsernameTotal.Username,
+                    winlossUsernameTotal.Username ?? "Dormant Accounts",
                     winlossUsernameTotal.Turnover,
                     winlossUsernameTotal.NetTurnover,
                     winlossUsernameTotal.GrossComm,

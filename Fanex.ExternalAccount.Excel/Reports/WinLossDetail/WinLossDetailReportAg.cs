@@ -46,7 +46,7 @@
 
                 var values = new List<object>
                 {
-                    item.Username,
+                    item.Username ?? "Dormant Accounts",
                     item.Turnover,
                     item.NetTurnover,
                     item.GrossComm,

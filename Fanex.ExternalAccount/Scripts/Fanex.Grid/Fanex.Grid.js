@@ -1219,8 +1219,7 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
             var currentPageStartIndex = 0,
                 currentRow;
 
-            if (options.sortOption.serverSortFunction == null &&
-                options.sortOption.customGridSort == null) {
+            if (options.sortOption.serverSortFunction == null) {
                 var defaultSort = false,
                 customSortFunction = null,
                 sortType = null,
@@ -1239,11 +1238,9 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
                 }
 
                 if (defaultSort) {
-                    options.bodyRows = Fanex.Grid.Helper.GetSortedArray(options.bodyRows,
-                                                                    columnName,
-                                                                    currentDirection,
-                                                                    customSortFunction,
-                                                                    sortType);
+                    options.bodyRows = typeof (options.sortOption.customGridSort) === 'function'
+                        ? options.sortOption.customGridSort(options.bodyRows, columnName, currentDirection, customSortFunction, sortType)
+                        : Fanex.Grid.Helper.GetSortedArray(options.bodyRows, columnName, currentDirection, customSortFunction, sortType);
                 }
             }
 
@@ -3140,7 +3137,9 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
                         customSortFunction = options.columns[colIndex].CustomSortFunction;
                     }
                 }
-                options.bodyRows = Fanex.Grid.Helper.GetSortedArray(options.bodyRows, sortOption.SortColumnName, sortOption.SortDirection, customSortFunction);
+                options.bodyRows = typeof (options.sortOption.customGridSort) === 'function'
+                    ? options.sortOption.customGridSort(options.bodyRows, sortOption.SortColumnName, sortOption.SortDirection, customSortFunction)
+                    : Fanex.Grid.Helper.GetSortedArray(options.bodyRows, sortOption.SortColumnName, sortOption.SortDirection, customSortFunction);
             }
         },
         RemoveSpaceIE9: function (html) {

@@ -83,16 +83,17 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
         };
     };
     SuperWinLossDetailByPT.prototype.BuildBodyData = function (dataSource) {
+        var _this = this;
         var bodyData = [];
-        for (var i = 0; i < dataSource.length; i++) {
+        var _loop_1 = function (i) {
             var subRows = [];
             for (var j = 0; j < dataSource[i].WinLossByProducts.length; j++) {
-                subRows.push(this.BuildSubRowData(dataSource[i].WinLossByProducts[j]));
+                subRows.push(this_1.BuildSubRowData(dataSource[i].WinLossByProducts[j]));
             }
             var totalRow = dataSource[i].Total;
             bodyData.push({
                 Columns: [
-                    { Name: "Username", Value: totalRow.Username },
+                    { Name: "Username", Value: totalRow.Username, CustomCellRender: function () { return totalRow.CustId === 0 ? _this.RenderDormantAccountsCell() : totalRow.Username; } },
                     { Name: "Turnover", Value: totalRow.Turnover },
                     { Name: "NetTurnover", Value: totalRow.NetTurnover },
                     { Name: "GrossComm", Value: totalRow.GrossComm },
@@ -113,6 +114,10 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
                 SubRows: subRows,
                 CssClass: 'sub-row-class'
             });
+        };
+        var this_1 = this;
+        for (var i = 0; i < dataSource.length; i++) {
+            _loop_1(i);
         }
         return bodyData;
     };
@@ -183,6 +188,9 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
             showDistinctRow: false,
             allowTruncate: true,
             sortOption: {
+                customGridSort: function (rows, sortField, sortDirection, customSortFunction, sortType) {
+                    return _this.CustomGridSort(rows, sortField, sortDirection, customSortFunction, sortType);
+                },
                 afterGridSorted: function (rows) { return _this.Customsortfunc(rows); }
             },
             numOfPaddingForGridExpandHeight: 40
@@ -310,6 +318,39 @@ var SuperWinLossDetailByPT = /** @class */ (function () {
         }
         this.ResizeReportGrid();
         this.hideFilter = !this.hideFilter;
+    };
+    SuperWinLossDetailByPT.prototype.CustomGridSort = function (rows, sortField, sortDirection, customSortFunction, sortType) {
+        if (!rows.length || !sortField) {
+            return rows;
+        }
+        var sortColIndex = this.GetSortedColumnIndex(rows, sortField);
+        if (sortColIndex === -1) {
+            return rows;
+        }
+        rows.sort(function (row1, row2) {
+            if (row1.Columns[0].Value === null) { // 'Dormant Accounts'
+                return 1;
+            }
+            var num1 = row1.Columns[sortColIndex].Value;
+            var num2 = row2.Columns[sortColIndex].Value;
+            if (sortDirection === 'asc') {
+                return num1 > num2 ? 1 : -1;
+            }
+            return num1 < num2 ? 1 : -1;
+        });
+        return rows;
+    };
+    SuperWinLossDetailByPT.prototype.GetSortedColumnIndex = function (rows, sortField) {
+        var firstRowColumns = rows[0].Columns;
+        for (var i = 0, max = firstRowColumns.length; i < max; i++) {
+            if (firstRowColumns[i].Name === sortField) {
+                return i;
+            }
+        }
+        return -1;
+    };
+    SuperWinLossDetailByPT.prototype.RenderDormantAccountsCell = function () {
+        return '<span>Dormant Accounts</span><span class="icon-alert-circle-outline product-tooltip" style="padding-left:3px" title="Summary of dormant accounts."></span>';
     };
     return SuperWinLossDetailByPT;
 }());
