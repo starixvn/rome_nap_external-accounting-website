@@ -318,16 +318,16 @@
             => customerServiceClient.GetMaxPayoutSettingInformation(site, isSpecialPlatform, language);
 
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
-        public Task<string> GetPTSettingInformation(int custId, string language = "en-US")
-            => customerServiceClient.GetPTSettingInformation(custId, false, language);
+        public Task<string> GetPTSettingInformation(int? custId, string site, string language = "en-US")
+            => customerServiceClient.GetPTSettingInformation(custId, false, site, language);
         
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
-        public Task<string> GetCommissionHint(int custId, string language = "en-US")
-            => customerServiceClient.GetCommissionHint(custId, language);
-        
+        public Task<string> GetCommissionHint(int? custId,string site, string language = "en-US")
+            => customerServiceClient.GetCommissionHint(custId ?? 0, site, language);
+
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
-        public Task<string> GetProductCategories(int custId, string language = "en-US")
-            => customerServiceClient.GetProductCategories(custId, language);
+        public Task<string> GetProductCategories(int? custId, string site, int currency, string language = "en-US")
+            => customerServiceClient.GetProductCategories(custId, site, currency, language);
         
         private string GetApplicationPath()
         {

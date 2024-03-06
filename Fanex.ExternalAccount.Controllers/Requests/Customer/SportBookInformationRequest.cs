@@ -14,6 +14,8 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
 
         public string Site { get; set; }
         
+        public int Currency { get; set; }
+        
         public object BetSettingTab
         {
             get => new
@@ -44,7 +46,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
             {
                 name = "PositionTaking",
                 id = "PTSettingTab",
-                napUrl = "/Customer/GetPTSettingInformation?custId=" + CustId,
+                napUrl = "/Customer/GetPTSettingInformation?custId=" + CustId + "&site=" + Site,
                 index = 2,
                 isActive = TabIndex == 2,
             };
@@ -56,7 +58,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
             {
                 name = "Commission",
                 id = "CommissionHintTab",
-                napUrl = "/Customer/GetCommissionHint?custId=" + CustId,
+                napUrl = "/Customer/GetCommissionHint?custId=" + CustId + "&site=" + Site,
                 index = 3,
                 isActive = TabIndex == 3,
             };
@@ -68,7 +70,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
             {
                 name = "ProductCategories",
                 id = "ProductCategorySettingTab",
-                napUrl = "/Customer/GetProductCategories?custId=" + CustId,
+                napUrl = "/Customer/GetProductCategories?custId=" + CustId + "&site=" + Site + "&currency=" + Currency,
                 index = 4,
                 isActive = TabIndex == 4,
             };
