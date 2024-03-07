@@ -8,8 +8,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         public int CustId { get; set; }
 
         public int RoleId { get; set; }
-
-        public int UplineRoleId { get; set; }
+        
         public int TabIndex { get; set; }
 
         public string Site { get; set; }
@@ -32,7 +31,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         {
             get => new
             {
-                name = "MaxPayoutSetting", // chua dich
+                name = "MaxPayout",
                 id = "MaxPayoutSettingTab", 
                 napUrl = "/Customer/GetMaxPayoutSettingInformation?site=" + Site + "&isSpecialPlatform=false",
                 index = 1,
