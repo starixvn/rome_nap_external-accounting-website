@@ -8,72 +8,65 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         public int CustId { get; set; }
 
         public int RoleId { get; set; }
-        
+
         public int TabIndex { get; set; }
 
         public string Site { get; set; }
-        
+
         public int Currency { get; set; }
-        
-        public object BetSettingTab
-        {
-            get => new
-            {
-                name = "BetSetting",
-                id = "BetSettingTab",
-                napUrl = "",
-                index = 0,
-                isActive = TabIndex == 0,
-            };
-        }
 
-        public object MaxPayoutSettingTab
+        private object BetSettingTab => new
         {
-            get => new
-            {
-                name = "MaxPayout",
-                id = "MaxPayoutSettingTab", 
-                napUrl = "/Customer/GetMaxPayoutSettingInformation?site=" + Site + "&isSpecialPlatform=false",
-                index = 1,
-                isActive = TabIndex == 1,
-            };
-        }
+            name = "BetSetting",
+            id = "BetSettingTab",
+            napUrl = "",
+            isActive = TabIndex == 0,
+        };
 
-        public object PTSettingTab
-        {
-            get => new
-            {
-                name = "PositionTaking",
-                id = "PTSettingTab",
-                napUrl = "/Customer/GetPTSettingInformation?custId=" + CustId + "&site=" + Site,
-                index = 2,
-                isActive = TabIndex == 2,
-            };
-        }
 
-        public object CommissionSettingTab
+        private object MaxPayoutSettingTab => new
         {
-            get => new
-            {
-                name = "Commission",
-                id = "CommissionHintTab",
-                napUrl = "/Customer/GetCommissionHint?custId=" + CustId + "&site=" + Site,
-                index = 3,
-                isActive = TabIndex == 3,
-            };
-        }
+            name = "MaxPayout",
+            id = "MaxPayoutSettingTab",
+            napUrl = "/Customer/GetMaxPayoutSettingInformation?site=" + Site + "&isSpecialPlatform=false",
+            index = 1,
+            isActive = TabIndex == 1,
+        };
 
-        public object ProductCategorySettingTab
+
+        private object PTSettingTab => new
         {
-            get => new
-            {
-                name = "ProductCategories",
-                id = "ProductCategorySettingTab",
-                napUrl = "/Customer/GetProductCategories?custId=" + CustId + "&site=" + Site + "&currency=" + Currency,
-                index = 4,
-                isActive = TabIndex == 4,
-            };
-        }
+            name = "PositionTaking",
+            id = "PTSettingTab",
+            napUrl = "/Customer/GetPTSettingInformation?custId=" + CustId + "&site=" + Site,
+            isActive = TabIndex == 2,
+        };
+
+
+        private object CommissionSettingTab => new
+        {
+            name = "Commission",
+            id = "CommissionHintTab",
+            napUrl = "/Customer/GetCommissionHint?custId=" + CustId + "&site=" + Site,
+            isActive = TabIndex == 3,
+        };
+
+
+        private object ProductCategorySettingTab => new
+        {
+            name = "ProductCategories",
+            id = "ProductCategorySettingTab",
+            napUrl = "/Customer/GetProductCategories?custId=" + CustId + "&site=" + Site + "&currency=" + Currency,
+            isActive = TabIndex == 4,
+        };
+
+
+        private object WinLossLimitTab => new
+        {
+            name = "WinLossLimit",
+            id = "WinLossLimitTab",
+            isActive = TabIndex == 5,
+        };
 
         internal string ToJson() => JsonConvert.SerializeObject(new
         {
@@ -84,6 +77,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
                 PTSettingTab,
                 CommissionSettingTab,
                 ProductCategorySettingTab,
+                WinLossLimitTab
             },
             is789y = false,
             roleId = RoleId,
