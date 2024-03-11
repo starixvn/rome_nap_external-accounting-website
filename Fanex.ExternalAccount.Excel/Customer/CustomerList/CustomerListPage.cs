@@ -193,7 +193,7 @@
                         values.Add(item.SubGroup);
                     }
                     values.Add(item.NoOfDownlines);
-                    values.Add(item.LimitDays?.ToString() ?? item.MinDate);
+                    values.Add(string.IsNullOrEmpty(item.MinDate) ? item.LimitDays?.ToString() : item.MinDate);
                 }
                 else
                 {
