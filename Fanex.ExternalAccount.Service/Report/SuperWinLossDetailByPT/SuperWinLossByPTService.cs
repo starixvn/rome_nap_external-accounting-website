@@ -68,8 +68,14 @@
                 var postionTakings = superWinLossDetailByPTDataAccess
                     .GetSuperPositionTakingList(new SuperPTCriteria(Utils.JoinToString(superIds)));
 
+                var winLossByUsernames = BuildWinLossByUsernames(model.WinLossByProducts, postionTakings)
+                    .OrderByDescending(winloss => winloss.Total.Turnover)
+                    .ToList();
 
-                var winLossByUsernames = BuildWinLossByUsernames(model.WinLossByProducts, postionTakings);
+                if (model.DormantAccount != null)
+                {
+                    winLossByUsernames.Add(new SuperWinLossDetailByUsernameModel(model.DormantAccount));
+                }
 
                 return new SuperWinLossDetailByPTModel(
                     winLossByUsernames,

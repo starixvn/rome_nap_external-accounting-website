@@ -1,15 +1,14 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Report
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
     using Fanex.Common;
     using Fanex.Common.Extensions;
     using Fanex.Data;
     using Fanex.ExternalAccount.DataAccess.Criteria.SuperWinLossDetailByPT;
     using Fanex.ExternalAccount.DataAccess.Impl.Base;
     using Fanex.ExternalAccount.DTO.Report;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
 
     public interface SuperWinLossDetailByPTDataAccess
     {
@@ -57,34 +56,46 @@
             var winlossByBettypeData = new List<SuperWinLossDetailByProductDTO>();
             var grandTotal = new SuperWinLossDetailByProductDTO();
             var totalRecords = 0;
+            SuperWinLossDetailByProductDTO dormantAccount = null;
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                var reader = db.ExecuteReader(criteria.GetSpParams());
-
-                while (reader.Read())
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    winlossByBettypeData.Add(BuildWinLossByBetType(reader));
+                    while (reader.Read())
+                    {
+                        var winLossByBetType = BuildWinLossByBetType(reader);
+                        if (winLossByBetType.CustId == 0)
+                        {
+                            dormantAccount = winLossByBetType;
+                            dormantAccount.ProductNames = new List<string>();
+                        }
+                        else
+                        {
+                            winlossByBettypeData.Add(winLossByBetType);
+                        }
+                    }
+
+                    reader.NextResult();
+                    while (reader.Read())
+                    {
+                        grandTotal = BuildWinLossByBetType(reader);
+                    }
                 }
 
-                reader.NextResult();
-                while (reader.Read())
-                {
-                    grandTotal = BuildWinLossByBetType(reader);
-                }
-
-                reader.Close();
                 totalRecords = Converter.ToInt(db.GetOuputParams()["totalrecords"]);
             }
 
-            return new SuperWinLossDetailByProductModel(winlossByBettypeData, grandTotal, totalRecords);
+            return new SuperWinLossDetailByProductModel(winlossByBettypeData, grandTotal, totalRecords, dormantAccount);
         }
 
         private SuperWinLossDetailByProductDTO BuildWinLossByBetType(IDataReader reader)
         {
+            var custId = Converter.ToInt(reader["custid"]);
+
             return new SuperWinLossDetailByProductDTO(
-                Converter.ToInt(reader["custid"]),
-                reader["username"].ToString(),
+                custId,
+                custId == 0 ? null : reader["username"].ToString(),
                 Converter.ToInt(reader["ProductID"]),
                 reader["ProductName"].ToString(),
                 Converter.ToDecimal(reader["Turnover"]),

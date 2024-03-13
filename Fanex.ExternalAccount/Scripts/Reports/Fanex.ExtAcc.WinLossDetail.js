@@ -539,8 +539,15 @@ Fanex.ExtAcc.WinLossDetail = {
     },
 
     RenderUsernameColumn: function (cell) {
+        var isDormantAccounts = cell.Value.CustId === 0;
         if (cell == null || cell.Value.Username == "Grand Total" || $this.viewlevel < 2) {
-            return '<div class="text-truncate" style="line-height: 22px; text-align: left; padding-left: 3px" title="' + cell.Value.Username + '">' + cell.Value.Username + "</div>";
+            return isDormantAccounts
+                ? $this.RenderDormantAccountsCell()
+                : '<div class="text-truncate" style="line-height: 22px; text-align: left; padding-left: 3px" title="' + cell.Value.Username + '">' + cell.Value.Username + "</div>";
+        }
+
+        if (isDormantAccounts) {
+            return $this.RenderDormantAccountsCell();
         }
 
         var func = "javascript: Fanex.ExtAcc.WinLossDetail.GetDownlineWinLossDetail('" + cell.Value.CustId + "')";
@@ -548,20 +555,15 @@ Fanex.ExtAcc.WinLossDetail = {
             '<a class="text-truncate" style="text-decoration: none; margin: 0" href="' + func + '" title="' + cell.Value.Username + '">' + cell.Value.Username + '</a>' +
             '</div>';
     },
-    CustomUsernameSortFunction: function (cell1Value, cell2Value, sortDirection) {
-        if (sortDirection == 'asc') {
-            return cell1Value.Username > cell2Value.Username ? 1 : -1;
-        }
-
-        return cell1Value.Username < cell2Value.Username ? 1 : -1;
+    RenderDormantAccountsCell: function () {
+        return '<span style="line-height:22px;text-align:left;padding-left:3px">Dormant Accounts</span><span class="icon-alert-circle-outline" style="padding-left:3px" title="Summary of dormant accounts."></span>';
     },
     defaultColumns: [
         {
             HeaderText: "Username", Name: "Username", Width: 130, Sort: true, HeaderAlign: "center",
-            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); },
-            CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection); }
+            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }
         },
-        { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right" },
         { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Win/Loss", Name: "MemberWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -585,10 +587,9 @@ Fanex.ExtAcc.WinLossDetail = {
     SAgColumns: [
         {
             HeaderText: "Username", Name: "Username", Width: 130, Sort: true, HeaderAlign: "center",
-            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); },
-            CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection); }
+            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }
         },
-        { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNegative: "$" },
         { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Win/Loss", Name: "MemberWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -609,8 +610,7 @@ Fanex.ExtAcc.WinLossDetail = {
         {
             HeaderText: "Username", Name: "Username", Width: 130,
             Sort: true, HeaderAlign: "center",
-            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); },
-            CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection); }
+            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }
         },
         { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -630,8 +630,7 @@ Fanex.ExtAcc.WinLossDetail = {
         {
             HeaderText: "Username", Name: "Username", Width: 130,
             Sort: true, HeaderAlign: "center",
-            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); },
-            CustomSortFunction: function (cell1Value, cell2Value, sortDirection) { return $this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection); }
+            CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }
         },
         { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -748,6 +747,7 @@ Fanex.ExtAcc.WinLossDetail = {
             allowTruncate: true,
             sortOption:
                 {
+                    customGridSort: $this.CustomGridSort,
                     afterGridSorted: function (rows) {
                         return $this.customsortfunc(rows);
                     }
@@ -1019,6 +1019,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 }
             }
         }
+
         return rows;
     },
     InitSort: function () {
@@ -1234,6 +1235,50 @@ Fanex.ExtAcc.WinLossDetail = {
         var extraPTMessage = 'Extra PT% Details <ul>' + extraPT + '</ul>';
 
         Fanex.ExtAcc.Form.Alert("View Extra PT%", extraPTMessage, 500, height);
+    },
+    CustomGridSort: function (rows, sortField, sortDirection, customSortFunction, sortType) {
+        if (!rows.length || !sortField) {
+            return rows;
+        }
+
+        var sortColIndex = $this.GetSortedColumnIndex(rows, sortField);
+        if (sortColIndex === -1) {
+            return rows;
+        }
+
+        rows.sort(function (row1, row2) {
+            if (row1.Columns[0].Value.Username === null) { // 'Dormant Accounts'
+                return 1;
+            }
+
+            var num1, num2;
+            if (sortColIndex === 0) { // Username
+                num1 = row1.Columns[sortColIndex].Value.Username;
+                num2 = row2.Columns[sortColIndex].Value.Username;
+            } else {
+                num1 = row1.Columns[sortColIndex].Value;
+                num2 = row2.Columns[sortColIndex].Value;
+            }
+            
+            if (sortDirection === 'asc') {
+                return num1 > num2 ? 1 : -1;
+            }
+
+            return num1 < num2 ? 1 : -1;
+        });
+
+        return rows;
+    },
+    GetSortedColumnIndex: function (rows, sortField) {
+        var firstRowColumns = rows[0].Columns;
+
+        for (var i = 0, max = firstRowColumns.length; i < max; i++) {
+            if (firstRowColumns[i].Name === sortField) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 };
 

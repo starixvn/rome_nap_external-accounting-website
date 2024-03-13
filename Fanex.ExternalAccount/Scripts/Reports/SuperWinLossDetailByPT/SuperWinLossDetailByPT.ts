@@ -119,7 +119,7 @@ class SuperWinLossDetailByPT {
             let totalRow = dataSource[i].Total;
             bodyData.push({
                 Columns: [
-                    { Name: "Username", Value: totalRow.Username },
+                    { Name: "Username", Value: totalRow.Username, CustomCellRender: () =>  totalRow.CustId === 0 ? this.RenderDormantAccountsCell() : totalRow.Username },
                     { Name: "Turnover", Value: totalRow.Turnover },
                     { Name: "NetTurnover", Value: totalRow.NetTurnover },
                     { Name: "GrossComm", Value: totalRow.GrossComm },
@@ -217,6 +217,8 @@ class SuperWinLossDetailByPT {
             showDistinctRow: false,
             allowTruncate: true,
             sortOption: {
+                customGridSort: (rows, sortField, sortDirection, customSortFunction, sortType) =>
+                    this.CustomGridSort(rows, sortField, sortDirection, customSortFunction, sortType),
                 afterGridSorted: rows => { return this.Customsortfunc(rows); }
             },
             numOfPaddingForGridExpandHeight: 40
@@ -367,6 +369,50 @@ class SuperWinLossDetailByPT {
 
         this.ResizeReportGrid();
         this.hideFilter = !this.hideFilter;
+    }
+
+    CustomGridSort(rows, sortField, sortDirection, customSortFunction, sortType) {
+        if (!rows.length || !sortField) {
+            return rows;
+        }
+
+        var sortColIndex = this.GetSortedColumnIndex(rows, sortField);
+        if (sortColIndex === -1) {
+            return rows;
+        }
+
+        rows.sort(function (row1, row2) {
+            if (row1.Columns[0].Value === null) { // 'Dormant Accounts'
+                return 1;
+            }
+
+            var num1 = row1.Columns[sortColIndex].Value;
+            var num2 = row2.Columns[sortColIndex].Value;
+
+            if (sortDirection === 'asc') {
+                return num1 > num2 ? 1 : -1;
+            }
+
+            return num1 < num2 ? 1 : -1;
+        });
+
+        return rows;
+    }
+
+    GetSortedColumnIndex(rows, sortField) {
+        var firstRowColumns = rows[0].Columns;
+
+        for (var i = 0, max = firstRowColumns.length; i < max; i++) {
+            if (firstRowColumns[i].Name === sortField) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    RenderDormantAccountsCell() {
+        return '<span>Dormant Accounts</span><span class="icon-alert-circle-outline product-tooltip" style="padding-left:3px" title="Summary of dormant accounts."></span>';
     }
 }
 
