@@ -314,8 +314,8 @@
 
 
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
-        public Task<string> GetMaxPayoutSettingInformation(string site, bool isSpecialPlatform = false, string language = "en-US")
-            => customerServiceClient.GetMaxPayoutSettingInformation(site, isSpecialPlatform, language);
+        public Task<string> GetMaxPayoutSettingInformation(string site, string siteLabel, string language = "en-US")
+            => customerServiceClient.GetMaxPayoutSettingInformation(site, siteLabel, language);
 
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
         public Task<string> GetPTSettingInformation(int? custId, string site, string language = "en-US")

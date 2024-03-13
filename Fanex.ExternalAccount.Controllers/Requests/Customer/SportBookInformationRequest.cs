@@ -12,6 +12,8 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         public int TabIndex { get; set; }
 
         public string Site { get; set; }
+        
+        public string SiteLabel { get; set; }
 
         public int Currency { get; set; }
 
@@ -28,7 +30,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         {
             name = "MaxPayout",
             id = "MaxPayoutSettingTab",
-            napUrl = "/Customer/GetMaxPayoutSettingInformation?site=" + Site + "&isSpecialPlatform=false",
+            napUrl = "/Customer/GetMaxPayoutSettingInformation?site=" + Site + "&siteLabel=" + SiteLabel,
             index = 1,
             isActive = TabIndex == 1,
         };
