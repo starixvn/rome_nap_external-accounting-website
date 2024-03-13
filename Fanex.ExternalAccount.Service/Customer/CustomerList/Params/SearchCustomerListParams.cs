@@ -14,6 +14,8 @@
 
         public bool IsDataLimited { get; set; }
 
+        public bool IsNoDownlines { get; set; }
+
         public int UserId { get; set; }
 
         public int UplineId { get; set; }

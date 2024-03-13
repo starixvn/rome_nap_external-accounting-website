@@ -50,7 +50,7 @@
 
         public override void WriteBodyReport(ISheet resultSheet)
         {
-            var totalColumn = _builder.IsMyanmarOdds || _builder.RoleId.IsSuper() ? 16 : 15;
+            var totalColumn = _builder.IsMyanmarOdds || _builder.RoleId.IsSuper() ? 17 : 16;
 
             if (_builder.RoleId.IsSuper())
             {
@@ -185,15 +185,19 @@
                 {
                     values.Insert(2, item.Currency);
                 }
-
+                
                 if (_builder.RoleId.IsSuper())
                 {
                     if (hasSubGroups)
                     {
                         values.Add(item.SubGroup);
                     }
-
-                    values.Add(item.LimitDays?.ToString() ?? item.MinDate);
+                    values.Add(item.NoOfDownlines);
+                    values.Add(string.IsNullOrEmpty(item.MinDate) ? item.LimitDays?.ToString() : item.MinDate);
+                }
+                else
+                {
+                    values.Add(item.NoOfDownlines);
                 }
 
                 values.Add(item.CreateDate);

@@ -58,6 +58,7 @@
                         LastLoginIP = Utils.ToString(reader["LastLoginIP"]),
                         LastName = Utils.ToString(reader["LastName"]),
                         LimitDays = Utils.HasColumn(reader, "LimitDays") ? Utils.ToInt32(reader["LimitDays"]) : 0,
+                        NoOfDownlines = Utils.HasColumn(reader, "Downlines") ? Utils.ToInt32(reader["Downlines"]) : 0,
                         MinDate = Utils.ToStringExt(Utils.HasColumn(reader, "MinDate") ? Utils.ToDateTime(reader["MinDate"]) : DateTime.MinValue),
                         NickName = Utils.HasColumn(reader, "NickName") ? Utils.ToString(reader["NickName"]) : null,
                         RoleId = Utils.ToInt32(reader["RoleId"]),

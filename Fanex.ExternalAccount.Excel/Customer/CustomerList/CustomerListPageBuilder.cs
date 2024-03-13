@@ -6,7 +6,7 @@
 
     public class CustomerListPageBuilder
     {
-        public CustomerListPageBuilder(List<CustomerListDTO> customerList, bool isBold, string status, int roleId, bool isMyanmarOdds = false, bool withDataLimited = false, bool hasSubGroups = false, bool isMultipleCurrencyGroup = false)
+        public CustomerListPageBuilder(List<CustomerListDTO> customerList, bool isBold, string status, int roleId, bool isMyanmarOdds = false, bool withDataLimited = false,bool IsNoDownlines =false, bool hasSubGroups = false, bool isMultipleCurrencyGroup = false)
         {
             Status = status;
             RoleId = roleId;
@@ -14,6 +14,7 @@
             Data = customerList;
             IsMyanmarOdds = isMyanmarOdds;
             WithDataLimited = withDataLimited;
+            WithNoDownlines = IsNoDownlines;
             HasSubGroups = hasSubGroups;
             IsMultipleCurrencyGroup = isMultipleCurrencyGroup;
         }
@@ -29,6 +30,8 @@
         public bool IsMyanmarOdds { get; }
 
         public bool WithDataLimited { get; }
+
+        public bool WithNoDownlines { get; }
 
         public bool HasSubGroups { get; }
 
