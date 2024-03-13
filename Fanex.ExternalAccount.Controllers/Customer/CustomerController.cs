@@ -294,14 +294,14 @@
 
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "SportBookInformation-Debug" : "SportBookInformation");
         }
-        public async Task<ActionResult> GetCustomerSetting(int custId, byte roleId, byte systemId, byte uplineRoleId, string language = "en-US", bool isGetUpline = false)
+        public async Task<ActionResult> GetCustomerSetting(GetCustomerSettingRequest request)
         {
             if (!authorizationService.HasReadPermissionOnFunctions(new List<string> { eFunctions.Sportsbook, eFunctions.SportsbookBetting }, CurrentSession.UserId))
             {
                 return Redirect(CustomerClientManager.ClientConfigs.AccessDeniedUrl);
             }
 
-            return Content(await customerServiceClient.GetCustomerSetting(custId, roleId, systemId, uplineRoleId, language, isGetUpline));
+            return Content(await customerServiceClient.GetCustomerSetting(request.CustId, request.RoleId, request.SystemId, request.UplineRoleId, request.Language, request.IsGetUpLine, request.ProductGroupId, request.SiteLabel));
         }
 
         [ExternalCustomerAuthFilter(Function = eFunctions.CustomerList)]
