@@ -81,9 +81,9 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
                 ProductCategorySettingTab,
                 WinLossLimitTab
             },
-            is789y = false,
             roleId = RoleId,
-            site = Site
+            site = Site,
+            siteLabel = SiteLabel
         }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
     }
 }
