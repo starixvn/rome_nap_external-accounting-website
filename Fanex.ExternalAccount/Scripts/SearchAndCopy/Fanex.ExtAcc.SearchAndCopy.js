@@ -132,13 +132,12 @@ if (typeof Fanex == "undefined" || typeof Fanex.ExtAcc == "undefined") {
             groupName: $('#selectedGroupName').html() === '' ? 'ACCDDD' : $('#selectedGroupName').html()
         };
         $.post(resolveClientUrl('SearchAndCopy/SuperPost'), requestParams, function (result) {
-
             if (Fanex.ExtAcc.ShowSecurityCodePage(result)) {
                 return;
             }
 
-            if (!result.IsSuccess) {
-                ShowErrorMessage(result.ErrorMessage);
+            if ((result.IsSuccess !== undefined && !result.IsSuccess) || (result.isSuccess !== undefined && !result.isSuccess)) {
+                ShowErrorMessage(result.ErrorMessage || result.errorMessage);
                 return;
             }
 

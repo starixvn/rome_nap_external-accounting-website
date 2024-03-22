@@ -12,8 +12,7 @@
             {
                 [ProductConstants.AllBet] = new Product(0, ProductConstants.AllBet, "Allbet"),
                 [ProductConstants.LiveCasino] = new Product(1, ProductConstants.LiveCasino, "Live Casino"),
-                [ProductConstants.RNGSlot] = new Product(2,ProductConstants.RNGSlot, "RNG Slot", substituteProductKey: "VoidBridge"),              
-                [ProductConstants.Sportsbook2] = new Product(5, ProductConstants.Sportsbook2, "Sportsbook 2"),
+                [ProductConstants.RNGSlot] = new Product(2, ProductConstants.RNGSlot, "RNG Slot", substituteProductKey: "VoidBridge"),
                 [ProductConstants.VirtualGames] = new Product(6, ProductConstants.VirtualGames, "Virtual Games"),
                 [ProductConstants.Sabaclub] = new Product(7, ProductConstants.Sabaclub, "Saba.games"),
                 [ProductConstants.RNGLottery] = new Product(8, ProductConstants.RNGLottery, "RNG Lottery"),
@@ -28,7 +27,7 @@
 
         public static bool IsShowLiveCasino => IsShowProduct(ProductConstants.LiveCasino);
 
-        public static bool IsShowVoidBridge => IsShowProduct(ProductConstants.RNGSlot);       
+        public static bool IsShowVoidBridge => IsShowProduct(ProductConstants.RNGSlot);
 
         public static bool IsShowRNGLottery => IsShowProduct(ProductConstants.RNGLottery);
 
@@ -47,6 +46,5 @@
 
             return value == "1" || value.Equals("true", StringComparison.CurrentCultureIgnoreCase);
         }
-
     }
 }

@@ -16,7 +16,6 @@
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.LiveCasino], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.RNGSlot], StatusType.Link),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.RNGLottery], StatusType.Link),
-                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Sportsbook2], StatusType.OnlyDetail),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.VirtualGames], StatusType.Link),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Sabaclub], StatusType.Link),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.SabaVirtualSports], StatusType.Checkbox),
@@ -45,7 +44,6 @@
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.RNGLottery], statusRow, isSetUplineStatus: isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.RNGSlot], statusRow, false, isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.LiveCasino], statusRow, false, isSetUplineStatus),
-                new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Sportsbook2], statusRow, isSetUplineStatus:isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.VirtualGames], statusRow, isSetUplineStatus:isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.Sabaclub], statusRow, isSetUplineStatus:isSetUplineStatus),
                 new ProductStatus(ProductSettings.SiteProducts[ProductConstants.VGaming], statusRow, isSetUplineStatus:isSetUplineStatus),
@@ -57,7 +55,7 @@
             => new List<ObjectInfo>
             {
                 new ObjectInfo("HideLiveCasino", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.LiveCasino)),
-                new ObjectInfo("HideVoidbridge", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.RNGSlot)),              
+                new ObjectInfo("HideVoidbridge", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.RNGSlot)),
                 new ObjectInfo("HideRNGLottery", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.RNGLottery)),
                 new ObjectInfo("HideVirtualGames", dcsProductStatusTable.IsProductHidden(ProductConstants.VirtualGames)),
                 new ObjectInfo("HideSabaclub", dcsProductStatusTable.IsProductHidden(ProductConstants.Sabaclub)),

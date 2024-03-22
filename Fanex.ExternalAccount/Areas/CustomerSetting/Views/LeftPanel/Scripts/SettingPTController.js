@@ -11,8 +11,8 @@
         };
 
         parent.Fanex.ExtAcc.Customer.superId = $scope.model.personalInfo.downlines[0] ? $scope.model.personalInfo.downlines[0].key : 0;
-        parent.Fanex.ExtAcc.Customer.masterId= $scope.model.personalInfo.downlines[1] ? $scope.model.personalInfo.downlines[1].key : 0;
-        parent.Fanex.ExtAcc.Customer.agentId= $scope.model.personalInfo.downlines[2] ? $scope.model.personalInfo.downlines[2].key : 0;
+        parent.Fanex.ExtAcc.Customer.masterId = $scope.model.personalInfo.downlines[1] ? $scope.model.personalInfo.downlines[1].key : 0;
+        parent.Fanex.ExtAcc.Customer.agentId = $scope.model.personalInfo.downlines[2] ? $scope.model.personalInfo.downlines[2].key : 0;
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('CustomerList/Index') + '?custid=' + custId + '&roleId=' + roleId, null, false, true);
     };
 
@@ -29,7 +29,7 @@
         parent.Fanex.ExtAcc.Customer.isSuperEditAgent = false;
         $scope.ResetGlobalValue();
 
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('SportsbookSetting/EditMultiplePT' + "?roleId=" + $scope.model.personalInfo.roleId.value + "&custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer' + "?roleId=" + $scope.model.personalInfo.roleId.value + "&uplineRoleId=" + ($scope.model.personalInfo.roleId.value + 1) + "&custId=" + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
         $scope.collapseSidebar();
     };
 
@@ -48,7 +48,9 @@
 
     $scope.BetSetting = function () {
         var custId = $scope.model.personalInfo.custId.value;
-        var param = 'custId=' + custId + '&uplineId=' + custId + '&userId=' + parent.userId + '&groupName=' + parent.$('#selectedGroupName').html();
+        var roleId = $scope.model.personalInfo.roleId.value;
+        var uplineId = roleId === 4 ? userId : $scope.model.personalInfo.uplineId.value;
+        var param = 'custId=' + custId + '&roleId=' + roleId + '&userId=' + parent.userId + '&uplineId=' + uplineId + '&groupName=' + parent.$('#selectedGroupName').html();
         var url = parent.resolveClientUrl('CustomerSetting/BetSetting/Sportsbook/Index?' + param);
 
         parent.Fanex.ExtAcc.LoadMainIFrame(url);
@@ -57,11 +59,6 @@
 
     $scope.VirtualSports = function () {
         $scope.RenderDCS(5);
-        $scope.collapseSidebar();
-    };    
-
-    $scope.Sportsbook2 = function () {
-        $scope.RenderDCS(16);
         $scope.collapseSidebar();
     };
 
@@ -74,7 +71,6 @@
         $scope.RenderDCS(18);
         $scope.collapseSidebar();
     };
-
 
     $scope.RNGLottery = function () {
         $scope.RenderDCS(44);
@@ -137,7 +133,6 @@
     $scope.collapseSidebar = function () {
         var widthDevice = top.$(top.window).width();
         if (widthDevice <= 768) {
-
             top.$("#contentSplitter").removeClass("collapse-content").addClass("expand-content");
             top.$("#sidebar").removeClass("expand-sidebar").addClass("collapse-sidebar");
             top.$("#leftSplitter").removeClass("expand-leftpanel").addClass("collapse-leftpanel");

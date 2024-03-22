@@ -7,12 +7,12 @@ angular.element($('#ng-app')).ready(function () {
         if (typeof console != 'undefined') {
             console.log(e);
         }
-    }    
+    }
 });
 
 function LoadSB() {
     Fanex.CustomerSetting.Core.BlockUI();
-    document.location.href = toUrl('Sportsbook/Index?custId=' + custId + '&uplineId=' + uplineId + '&userId=' + userId + '&groupName=' + siteName);
+    document.location.href = toUrl('Sportsbook/Index?theme=nap&custId=' + custId + '&uplineId=' + uplineId + "&roleId=4" + '&userId=' + userId + '&groupName=' + siteName);
 };
 
 function LoadVirtualSports() {
@@ -117,10 +117,13 @@ function LoadBetSetting(sourceUser, destUsers, isCopy) {
             }
 
             if (isCopy) {
-                $("#product-1-0").attr("src", toUrl("Sportsbook/EditMultipleBetSettingContent?copy=1&custId=" + result.superIds.split(',')[0] + "&groupName=" + groupName));
+                var superIds = result.superIds.split(',');
+                var sourceId = superIds[0];
+                superIds.shift();
+                $("#product-1-0").attr("src", resolveClientUrl("Customer/EditMultipleSuperBetSetting?isCopy=true&custId=" + sourceId + "&custIds=" + superIds.toString() + "&usernames=" + destUsers  + "&uplineRoleId=5&roleId=4&groupName=" + groupName));
             }
             else {
-                $("#product-1-1").attr("src", toUrl("Sportsbook/EditMultipleBetSettingContent?edit=1&custId=0&groupName=" + groupName));
+                $("#product-1-1").attr("src", resolveClientUrl("Customer/EditMultipleSuperBetSetting?custIds=" + result.superIds + '&usernames=' + destUsers + '&uplineRoleId=5&roleId=4&groupName=' + groupName));
             }
         }
 

@@ -1,0 +1,43 @@
+﻿@model Fanex.ExternalAccount.Controllers.ViewModels.Customer.CreateCustomerViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="module">
+        import RefreshRuntime from "http://localhost:4201/@@react-refresh";
+        RefreshRuntime.injectIntoGlobalHook(window);
+        window.$RefreshReg$ = () => { };
+        window.$RefreshSig$ = () => (type) => type;
+        window.__vite_plugin_react_preamble_installed__ = true;
+    </script>
+    <script type="module" src=@("http://localhost:4201/@vite/client")></script>
+    <link rel="stylesheet" href="http://localhost:4201/src/styles.scss" />
+</head>
+<body>
+    <div class="page-title">
+        <div class="wlDetail">
+            @Model.PageTitle
+        </div>
+    </div>
+    <div id="mainGrid" style="margin: 0px 3px; visibility: visible; width: 841px;">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="SecretKey" id="SecretKey" value="@Model.SecretKey" />
+        <div id="root"></div>
+    </div>
+    <script type="text/javascript">
+        function resolveClientUrl(relativeUrl) {
+            return '@Url.Content("~/")' + relativeUrl;
+        }
+
+        const appConfig = @Html.Raw(Model.AppConfig);
+        const params = @Html.Raw(Model.Params);
+        window.redirectToSettingPage = (response) => {
+            const custId = response.custId;
+            const roleId = params.uplineRoleId - 1;
+            parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl("Customer/Settings/" + roleId + "/" + custId + "/" + params.uplineId + "/" + "@(Request["uplineUsername"])"), true);
+        };
+    </script>
+    @StaticResources.RenderScripts("~/assets/bundles/common")
+    @StaticResources.RenderScripts("~/assets/bundles/customer/create")
+    <script type="module" src="http://localhost:4201/src/main.tsx"></script>
+</body>
+</html>

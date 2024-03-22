@@ -67,7 +67,7 @@
 
         internal List<ObjectInfo> EnableItems(DataSet customerStatusInfoDataset)
         {
-            var nonProductStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];           
+            var nonProductStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];
             var table3rdDCS = customerStatusInfoDataset.Tables[1];
             var enableItems = new List<ObjectInfo>
             {
@@ -91,10 +91,6 @@
             }
 
             AddDoubleCommStatus(nonProductStatusRow, enableItems);
-            if (!this.currentSession.IsBelongToSpecialGroups)
-            {
-                AddESportsStatus(table3rdDCS, enableItems);
-            }
 
             return enableItems;
         }
@@ -115,25 +111,6 @@
             }
 
             enableItems.Add(virtualSportsStatus);
-        }
-
-        private void AddESportsStatus(DataTable table3rdDCS, List<ObjectInfo> enableItems)
-        {
-            if (!authorizationService.IsAuthorized(_userId, eFunctions.ShowEnableEsports)
-                || ProductSettings.HideEsports)
-            {
-                return;
-            }
-
-            var eSportsStatus =
-                new ObjectInfo("EnableESports", !table3rdDCS.IsProductDisabled(ProductConstants.Sportsbook2), "E-Sports", "Enable E-Sports");
-
-            if (table3rdDCS.IsProductDisabledUpline(ProductConstants.Sportsbook2))
-            {
-                eSportsStatus = DisableStatus(eSportsStatus);
-            }
-
-            enableItems.Add(eSportsStatus);
         }
 
         private void AddDummyProductStatus(DataTable table3rdDCS, List<ObjectInfo> editItems, List<ObjectInfo> enableItems)
@@ -321,12 +298,12 @@
         }
 
         internal List<ObjectInfo> Details(DataSet customerStatusInfoDataset)
-        {           
+        {
             var table3rdDCS = customerStatusInfoDataset.Tables[1];
             var details = new List<ObjectInfo>
             {
                 new ObjectInfo("Info", "Info"),
-                new ObjectInfo("PT", "Position Taking")
+                new ObjectInfo("PT", "Sportsbook")
             };
 
             if (_roleId.IsNotMember())
@@ -335,7 +312,6 @@
                 details.Add(new ObjectInfo("Transfer", "Transfer Condition"));
             }
 
-            AddParlayMaxPayoutLink(details);
             AddCasinoEditLink(table3rdDCS, details);
             AddVirtualSportsEditLink(table3rdDCS, details);
             return details;
@@ -361,12 +337,8 @@
             }
         }
 
-        private void AddParlayMaxPayoutLink(ICollection<ObjectInfo> details)
-        {
-            details.Add(new ObjectInfo("ParlayMaxPayout", "Parlay Max Payout"));
-        }
-
 #pragma warning disable S1541 // Methods and properties should not be too complex
+
         internal Setting AddProductSetting(
 #pragma warning restore S1541 // Methods and properties should not be too complex
             Setting setting,
@@ -391,8 +363,8 @@
                 return setting;
             }
 
-            if ((syncUpline || _roleId.IsSuper()) 
-                && productElement.Id != ProductConstants.SabaVirtualSports 
+            if ((syncUpline || _roleId.IsSuper())
+                && productElement.Id != ProductConstants.SabaVirtualSports
                 && productElement.Id != ProductConstants.Cashout)
             {
                 setting.Details.Add(

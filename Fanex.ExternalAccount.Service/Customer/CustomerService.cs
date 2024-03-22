@@ -31,9 +31,6 @@
             this.dataAccess = dataAccess ?? new CustomerDao();
         }
 
-        public bool IsValidUsername(string userName, int uplineId)
-            => dataAccess.IsValidUsername(userName, uplineId);
-
         public bool IsArchivedCustId(int custId)
             => dataAccess.IsArchivedCustId(custId);
 
@@ -50,9 +47,6 @@
 
         public Result ConfigDoubleComm(UpdateDoubleCommCriteria criteria)
             => dataAccess.ConfigDoubleComm(criteria);
-
-        public Result CheckNewCustomerIsReachLimitation(CheckNewCustomerLimitationCriteria criteria)
-            => dataAccess.CheckNewCustomerIsReachLimitation(criteria);
 
         public void KickoutCustomer(int custId, byte roleId, string ip, string mode = null)
         {

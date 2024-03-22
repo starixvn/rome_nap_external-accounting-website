@@ -1,0 +1,30 @@
+﻿@model Fanex.ExternalAccount.Controllers.ViewModels.Customer.EditCustomerViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="module">
+        import RefreshRuntime from "http://localhost:4203/@@react-refresh";
+        RefreshRuntime.injectIntoGlobalHook(window);
+        window.$RefreshReg$ = () => { };
+        window.$RefreshSig$ = () => (type) => type;
+        window.__vite_plugin_react_preamble_installed__ = true;
+    </script>
+    <script type="module" src=@("http://localhost:4203/@vite/client")></script>
+    <link rel="stylesheet" href="http://localhost:4203/src/styles.scss" />
+</head>
+<body>
+    <div id="mainGrid" style="margin: 0px 3px; visibility: visible; width: 841px;">
+        @Html.AntiForgeryToken()
+        <div id="root"></div>
+    </div>
+    <script type="text/javascript">
+        function resolveClientUrl(relativeUrl) {
+            return '@Url.Content("~/")' + relativeUrl;
+        }
+        const appConfig = @Html.Raw(Model.AppConfig);
+        const params = @Html.Raw(Model.Params);
+    </script>
+    @StaticResources.RenderScripts("~/assets/bundles/common")
+    <script type="module" src="http://localhost:4203/src/main.tsx"></script>
+</body>
+</html>

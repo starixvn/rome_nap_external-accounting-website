@@ -7,6 +7,7 @@
     var id = Utils.ToInt32(Request["custId"]);
     var uplineId = Utils.ToInt32(Request["uplineId"]);
     var userId = Utils.ToInt32(Request["userId"]);
+    var roleId = Utils.ToInt32(Request["roleId"]);
     var siteName = Request["groupName"];
     var customer = new Fanex.CustomerSetting.Module.BetSetting.Services.Impl.CustomerService();
     var cust = customer.UserInfo(id);
@@ -30,11 +31,11 @@
     <link href="@Url.Content("~/Areas/CustomerSetting/Styles/Common.css")" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <div id="tabs" style="float: left; width: 870px; border: none">
+    <div id="tabs" style="float: left; width: 1255px; border: none">
         <ul class="tabs">
             <li id="tab1" onclick="LoadSB()"><a href="#tabs-1">Sportsbook</a></li>
             <li id="tab5" onclick="LoadVirtualSports()"><a href="#tabs-5">Virtual Sports</a></li>
-            <li id="tab6" onclick="LoadCasino()"><a href="#tabs-6">Saba Casino</a></li>  
+            <li id="tab6" onclick="LoadCasino()"><a href="#tabs-6">Saba Casino</a></li>
             @foreach (var tab in visibleTabs)
             {
                 <li id="tab@(tab.Id)"
@@ -44,22 +45,25 @@
             }
         </ul>
         <div id="tabs-1">
+            <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; line-height:22px; background-color: #e7f7ff; margin-left: 2px; width: 1215px;">
+                Update Bet Setting: @cust.Username
+            </div>
             @RenderSection("Sportsbook", false)
         </div>
 
         <div id="tabs-5">
-            <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
+            <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; line-height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 1225px;">Update Bet Setting: @cust.Username</div>
             <div><iframe id="product-5" width="100%" height="450px" frameborder="0" src=""></iframe></div>
         </div>
         <div id="tabs-6">
-            <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">Update Bet Setting: @cust.Username</div>
+            <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; line-height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 1225px;">Update Bet Setting: @cust.Username</div>
             <div><iframe id="product-6" width="100%" height="450px" frameborder="0" src=""></iframe></div>
-        </div>      
+        </div>
 
         @foreach (var tab in visibleTabs)
         {
             <div id="tabs-@(tab.Id)">
-                <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 840px;">
+                <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; line-height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 1225px;">
                     Update Bet Setting: @cust.Username
                 </div>
                 <div><iframe id="product-@(tab.Id)" width="100%" height="500px" frameborder="0" src=""></iframe></div>
@@ -90,7 +94,6 @@
                 url.indexOf('product-66') != -1 ? 8 :
                 url.indexOf('product-69') != -1 ? 9 : 0;
             var custInfo = @Html.Raw(custInfo);
-          
 
             $('#tabs').tabs({ selected: index });
         });

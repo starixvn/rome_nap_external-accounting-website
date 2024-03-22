@@ -1,0 +1,18 @@
+﻿using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
+
+namespace Fanex.ExternalAccount.Controllers.Requests.Customer
+{
+    public class EditCustomerRequest
+    {
+        public int CustId { get; set; }
+
+        public int RoleId { get; set; }
+
+        public int UplineRoleId { get; set; }
+
+        public bool NoPermissionEditCredit { get; set; }
+
+        internal string ToJson() => JsonConvert.SerializeObject(new { CustId, RoleId, UplineRoleId, NoPermissionEditCredit }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+    }
+}

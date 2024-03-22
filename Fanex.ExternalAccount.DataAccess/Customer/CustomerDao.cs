@@ -17,8 +17,8 @@
     using DTO.Customer;
     using DTO.Customer.Status;
     using Fanex.ExternalAccount.Utilities;
+    using Fanex.ExternalAccount.ViewModel.Customer.Suspend;
     using Interface.Customer;
-    using ViewModel.Customer.Suspend;
 
     public class CustomerDao : DAOBase, ICustomerDao
     {
@@ -43,22 +43,6 @@
 
                 return null;
             }
-        }
-
-        public bool IsValidUsername(string userName, int uplineId)
-        {
-            if (string.IsNullOrEmpty(userName))
-            {
-                return false;
-            }
-
-#pragma warning disable S1192 // String literals should not be duplicated
-            var parameters = new Hashtable { { "username", userName }, { "isexists", false } };
-#pragma warning restore S1192 // String literals should not be duplicated
-
-            var result = DbHelper.ExecuteDbResult("Age_CustomerCheckExists", parameters);
-
-            return !(bool)result.Outputs["isexists"];
         }
 
         public bool IsArchivedCustId(int custId)
@@ -153,21 +137,6 @@
                 result.ResultSet);
         }
 
-        public Result CheckNewCustomerIsReachLimitation(CheckNewCustomerLimitationCriteria criteria)
-        {
-            var result = new Result();
-            using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                objDb.ExecuteNonQuery();
-                var outputs = objDb.GetOuputParams();
-                result.ErrorCode = outputs["errcode"].ToString();
-                result.ErrorMessage = outputs["errmsg"].ToString();
-            }
-
-            return result;
-        }
-
         public List<SingleUpdateAffectedDownline> GetSingleUpdateSuspendAffectedDownlines(GetSingleSuspendCustomerInfoCriteria criteria)
         {
             using (ObjectDb objDb = new ObjectDb(criteria.GetSettingKey()))
@@ -189,16 +158,6 @@
             }
         }
 
-        public Result SuspendCustomer(UpdateSuspendCustomerCriteria criteria)
-        {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                objDb.ExecuteNonQuery(criteria.GetSpParams());
-                var outputs = objDb.GetOuputParams();
-                return new Result(outputs["errcode"].ToString(), outputs["errmsg"].ToString());
-            }
-        }
-
         public SuspendedCustomerDetailViewModel GetSuspendDownlinesDetail(GetSuspendCustomerDetailInfoCriteria criteria)
         {
             var listDownlines = new List<UnsuspendDownlineDetail>();
@@ -213,6 +172,16 @@
                 reader.Close();
                 var outputs = objDb.GetOuputParams();
                 return new SuspendedCustomerDetailViewModel(Utilities.Utils.ToInt32(outputs["totalrows"]), listDownlines);
+            }
+        }
+
+        public Result SuspendCustomer(UpdateSuspendCustomerCriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.ExecuteNonQuery(criteria.GetSpParams());
+                var outputs = objDb.GetOuputParams();
+                return new Result(outputs["errcode"].ToString(), outputs["errmsg"].ToString());
             }
         }
 
@@ -285,7 +254,6 @@
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 var result = new CustomerStatusDTO();
-                CustomerStatusDCS sportsbook2 = null;
                 CustomerStatusDCS liveCasino = null;
                 CustomerStatusDCS rngLottery = null;
                 CustomerStatusDCS macauGames = null;
@@ -306,30 +274,6 @@
                     {
                         result.HideVirtualSport = Utils.ToBoolean(reader["isHidden"]);
                         result.DisableVirtualSport = Utils.ToBoolean(reader["isDisabled"]);
-                        continue;
-                    }
-
-                    if (productId == ProductConstants.Sportsbook2)
-                    {
-                        if (sportsbook2 == null)
-                        {
-                            sportsbook2 = new CustomerStatusDCS
-                            {
-                                ProductID = productId,
-                                ProductName = ProductSettings.SiteProducts[productId]?.Name,
-                                IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
-                                IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
-                                IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
-                                IsSynced = Utils.ToBoolean(reader["isSync"]),
-                                IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
-                            };
-                        }
-                        else
-                        {
-                            sportsbook2.IsDisabled = sportsbook2.IsDisabled && Utils.ToBoolean(reader["isDisabled"]);
-                            sportsbook2.IsSynced = sportsbook2.IsSynced && Utils.ToBoolean(reader["isSync"]);
-                        }
-
                         continue;
                     }
 
@@ -435,7 +379,6 @@
                     }
                 }
 
-                result.DCSProductsSetting.Add(sportsbook2);
                 if (liveCasino != null)
                 {
                     result.DCSProductsSetting.Add(liveCasino);

@@ -105,12 +105,6 @@
     <Reference Include="Enums.NET, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7ea1c1650d506225, processorArchitecture=MSIL">
       <HintPath>..\packages\Enums.NET.4.0.1\lib\net45\Enums.NET.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.ActivityTracking, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ActivityTracking.1.0.0.3\lib\net40\Fanex.ActivityTracking.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.ActivityTracking.Web, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ActivityTracking.Web.1.0.0.3\lib\net40\Fanex.ActivityTracking.Web.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.Caching, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Caching.2.2.2\lib\net461\Fanex.Caching.dll</HintPath>
     </Reference>
@@ -123,6 +117,12 @@
     <Reference Include="Fanex.Cryptography.Aes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Cryptography.Aes.1.0.0.0\lib\net461\Fanex.Cryptography.Aes.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Customer.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Customer.Client.1.0.0\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Customer.Client.NETFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Customer.Client.NETFramework.1.0.0\lib\net461\Fanex.Customer.Client.NETFramework.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Client40, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.1.2.0\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
@@ -232,8 +232,8 @@
     <Reference Include="MessagePack.Annotations, Version=2.4.0.0, Culture=neutral, PublicKeyToken=b4a0369545f0a1be, processorArchitecture=MSIL">
       <HintPath>..\packages\MessagePack.Annotations.2.4.35\lib\netstandard2.0\MessagePack.Annotations.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\netstandard2.0\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -242,8 +242,8 @@
     <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=2.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.2.3.2\lib\netstandard2.0\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.NET.StringTools.net35, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.NET.StringTools.1.0.0\lib\net35\Microsoft.NET.StringTools.net35.dll</HintPath>
+    <Reference Include="Microsoft.NET.StringTools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.NET.StringTools.17.6.3\lib\netstandard2.0\Microsoft.NET.StringTools.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\EnterpriseLibrary.Caching.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
@@ -430,6 +430,12 @@
     <Reference Include="System.Text.Encoding.CodePages, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encoding.CodePages.6.0.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
     </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.8.0.0\lib\netstandard2.0\System.Text.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Threading.Channels, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Channels.4.5.0\lib\netstandard2.0\System.Threading.Channels.dll</HintPath>
     </Reference>
@@ -537,6 +543,10 @@
     <Content Include="assets\bundles\BonusDetail\index.js" />
     <Content Include="assets\bundles\BonusDetail\index.min.js">
       <DependentUpon>index.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\customer\create.js" />
+    <Content Include="assets\bundles\customer\create.min.js">
+      <DependentUpon>create.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\mcwinlossdetail\index.js" />
     <Content Include="assets\bundles\mcwinlossdetail\index.min.js">
@@ -1445,7 +1455,8 @@
     <Content Include="SpNames.CustDB.aws.xml">
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
     </Content>
-    <Content Include="Views\ParlayMaxPayout\Scripts\Index.js" />
+    <Content Include="Views\Customer\SportBookInformation-Debug.cshtml" />
+    <Content Include="Views\Customer\SportBookInformation.cshtml" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
@@ -2098,12 +2109,9 @@
     <Content Include="Scripts\cookie.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Settings.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.AgentAddNewMember.js" />
-    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.BetSetting.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MasterAddNewAgent.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.SuperAddNewMaster.js" />
-    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MinPT.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.PTSetting.js" />
-    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Commission.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.TransferCondition.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MemberInfo.js" />
@@ -2698,6 +2706,9 @@
     <Content Include="assets\styles\pages\totalbet\total-bet.scss" />
     <Content Include="assets\styles\pages\totalbet\multiselect-custom.scss" />
     <Content Include="assets\styles\pages\customer\mark-account.scss" />
+    <Content Include="assets\bundles\customer\create.min.js.map">
+      <DependentUpon>create.min.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\mcwinlossdetail\index.min.js.map">
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
@@ -2905,7 +2916,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\MaxPayoutSettingInformation\Index.cshtml" />
-    <Content Include="Views\ParlayMaxPayout\Index.cshtml" />
     <Content Include="Views\ProtectedStatus\OpenMultiple.cshtml" />
     <Content Include="Views\SuperWinLossDetailBySubGroup\Index.cshtml" />
     <Content Include="Views\SuperWinLossDetailBySubGroup\_NoPermission.cshtml" />
@@ -2913,6 +2923,10 @@
     <Content Include="Views\MarkAccountType\Index.cshtml" />
     <Content Include="Views\MarkAccountType\MarkAccount.cshtml" />
     <Content Include="Views\MarkAccountType\MultipleEditAccountType.cshtml" />
+    <Content Include="Views\Customer\CreateCustomer-Debug.cshtml" />
+    <Content Include="Views\Customer\CreateCustomer.cshtml" />
+    <Content Include="Views\Customer\EditCustomer.cshtml" />
+    <Content Include="Views\Customer\EditCustomer-Debug.cshtml" />
     <Content Include="Views\WinLossDetailMC\Index.cshtml" />
     <Content Include="Views\SuperWinLossDetailMCByPT\Index.cshtml" />
     <Content Include="Views\TotalBetMC\Index.cshtml" />
@@ -2921,6 +2935,10 @@
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Customer\EditMultiple.cshtml" />
+    <Content Include="Views\Customer\EditMultiple-Debug.cshtml" />
+    <Content Include="Views\Customer\IndirectEditMember-Debug.cshtml" />
+    <Content Include="Views\Customer\IndirectEditMember.cshtml" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailBySubGroup\Fanex.ExtAcc.SuperWinLossDetailBySubGroup.ts" />
   </ItemGroup>
   <ItemGroup>
@@ -2931,10 +2949,6 @@
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{3521A845-D2BF-4916-B02C-0B0E02F774DB}</Project>
       <Name>Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.ExternalAccount.ActivityTracking\Fanex.ExternalAccount.ActivityTracking.csproj">
-      <Project>{e507530a-e438-48a5-98ef-b1291c29e34c}</Project>
-      <Name>Fanex.ExternalAccount.ActivityTracking</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj">
       <Project>{4C610986-FD5A-4729-A5C7-747667A0EF9E}</Project>

@@ -293,9 +293,6 @@
     <Compile Include="App_Start\ModuleRegistrator.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
-    <Compile Include="Base\BettingControllerBase.cs">
-      <SonarQubeExclude>true</SonarQubeExclude>
-    </Compile>
     <Compile Include="BetSettingProductIntegration.cs" />
     <Compile Include="Controllers\SportsbookController.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
@@ -303,26 +300,15 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
-    <Compile Include="Repositories\Impl\CustomerDao.cs">
-      <SonarQubeExclude>true</SonarQubeExclude>
-    </Compile>
-    <Compile Include="Repositories\Interface\ICustomerDao.cs">
-      <SonarQubeExclude>true</SonarQubeExclude>
-    </Compile>
-    <Compile Include="Services\Impl\CustomerService.cs">
-      <SonarQubeExclude>true</SonarQubeExclude>
-    </Compile>
-    <Compile Include="Services\Interface\ICustomerService.cs">
-      <SonarQubeExclude>true</SonarQubeExclude>
-    </Compile>
+    <Compile Include="Repositories\Impl\CustomerDao.cs" />
+    <Compile Include="Repositories\Interface\ICustomerDao.cs" />
+    <Compile Include="Services\Impl\CustomerService.cs" />
+    <Compile Include="Services\Interface\ICustomerService.cs" />
     <Compile Include="ViewModels\Customer.cs">
       <SonarQubeExclude>true</SonarQubeExclude>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Criteria\" />
-    <Folder Include="Entities\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>

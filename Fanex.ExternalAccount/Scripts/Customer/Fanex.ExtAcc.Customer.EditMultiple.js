@@ -49,7 +49,7 @@
                 className: "iconEnableEdit",
                 callback: function () {
                     top.shouldCalculatePopupHeight = true;
-                    Fanex.ExtAcc.Customer.ShowEditMultiplePT();
+                    Fanex.ExtAcc.Customer.ShowEditMultiplePT(4);
                 }
             }
         };
@@ -68,10 +68,6 @@
 
         if (!this.HideVirtualSports) {
             addSuperEditMultipleMastersMenuItem(5, 'Virtual Sports');
-        }      
-
-        if (!this.HideSportsbook2) {
-            addSuperEditMultipleMastersMenuItem(16, 'Sportsbook 2');
         }
 
         for (var i = 0, max = this.UplineProductSettings.length; i < max; i++) {
@@ -99,7 +95,7 @@
                 name: "Edit Multiple Sportsbook",
                 className: "iconEnableEdit",
                 callback: function () {
-                    Fanex.ExtAcc.Customer.ShowEditMultiplePT();
+                    Fanex.ExtAcc.Customer.ShowEditMultiplePT(3);
                 }
             }
         };
@@ -118,11 +114,6 @@
 
         if (!this.HideVirtualSports) {
             addMasterEditMultipleAgentsMenuItem(5, 'Virtual Sports');
-        }
-             
-
-        if (!this.HideSportsbook2) {
-            addMasterEditMultipleAgentsMenuItem(16, 'Sportsbook 2');
         }
 
         for (var i = 0, max = this.UplineProductSettings.length; i < max; i++) {
@@ -155,7 +146,7 @@
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowEditMultiplePT();
+                            Fanex.ExtAcc.Customer.ShowEditMultiplePT(2);
                         }
                     },
                     superSB: {
@@ -163,7 +154,7 @@
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = true;
                             Fanex.ExtAcc.Customer.isMasterEditMember = false;
-                            Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT();
+                            Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT(4);
                         }
                     },
                     maserSB: {
@@ -171,7 +162,7 @@
                         callback: function () {
                             Fanex.ExtAcc.Customer.isSuperEditMember = false;
                             Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                            Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT();
+                            Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT(3);
                         }
                     }
                 }
@@ -218,10 +209,6 @@
 
         if (!this.HideVirtualSports) {
             addUplineEditMemberMenuItems(5, 'Virtual Sports');
-        }       
-
-        if (!this.HideSportsbook2) {
-            addUplineEditMemberMenuItems(16, 'Sportsbook 2');
         }
 
         for (var i = 0, max = this.UplineProductSettings.length; i < max; i++) {
@@ -287,17 +274,6 @@
         };
     }
 
-    if (!isShowCurrency || this.CurrentLevel !== this.Super) {
-        menuItems.parlayMaxPayout = {
-            name: "Edit Multiple Parlay Max Payout",
-            className: "iconEnableEdit",
-            callback: function (key, opt) {
-                Fanex.ExtAcc.Customer.ShowEditMultipleParlayMaxPayout(Fanex.ExtAcc.Customer.IdsAndNames().Ids, Fanex.ExtAcc.Customer.IdsAndNames().Names, Fanex.ExtAcc.Customer.CurrentLevel);
-            }
-        }
-    }
-    
-
     if ($.contextMenu) $.contextMenu('destroy');
 
     $.contextMenu({
@@ -315,21 +291,40 @@ Fanex.ExtAcc.Customer.UpdateMultipleDoubleComm = function (allow) {
     this.ConfigMultipleDoubleComm(ret.Ids, allow, 0);
 };
 
-Fanex.ExtAcc.Customer.ShowEditMultiplePT = function () {
+Fanex.ExtAcc.Customer.ShowEditMultiplePT = function (uplineRoleId) {
     var ret = this.IdsAndNames();
     top.shouldCalculatePopupHeight = true;
-    if (!this.IsMultiple)
-        Fanex.ExtAcc.Form.Show(
-            resolveClientUrl('SportsbookSetting/EditPT?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit PT Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
-            888,
+    if (!this.IsMultiple) {
+        Fanex.ExtAcc.Form.ShowFrame(
+            resolveClientUrl('Customer/EditCustomer?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
+            1250,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);
-    else
-        Fanex.ExtAcc.Form.Show(
-            resolveClientUrl('SportsbookSetting/EditMultiplePT?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Multiple Sportsbook Setting',
-            894,
+    }
+    else {
+        var Usernames = '';
+        var CustIds = '';
+        var userNamesArr = [];
+        var custIdsArr = [];
+
+        if (Fanex.ExtAcc.Customer.CustIds.length > 0 && Fanex.ExtAcc.Customer.CustIds.indexOf(',') != -1)
+            custIdsArr = Fanex.ExtAcc.Customer.CustIds.substring(0, Fanex.ExtAcc.Customer.CustIds.length - 1).split(',');
+
+        if (Fanex.ExtAcc.Customer.Usernames.length > 0 && Fanex.ExtAcc.Customer.Usernames.indexOf(',') != -1)
+            userNamesArr = Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2).split(', ');
+
+        var customerlength = userNamesArr.length;
+        for (var i = 0; i < customerlength; i++) {
+            var linkChar = i == customerlength - 1 ? "" : ", ";
+            Usernames += userNamesArr[i] + linkChar;
+            CustIds += custIdsArr[i] + linkChar;
+        }
+        Fanex.ExtAcc.Form.ShowFrame(
+            resolveClientUrl('Customer/EditMultiple?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custIds=' + CustIds + '&usernames=' + Usernames + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Multiple Sportsbook Setting',
+            1250,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);
+    }
 };
 
 Fanex.ExtAcc.Customer.ShowEditProductForSingleCust = function (custid, uplineRoleId, targetRoleId, productId, productName) {
@@ -427,7 +422,7 @@ Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts = function (uplineRoleId, 
     }
 };
 
-Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT = function () {
+Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT = function (uplineRoleId) {
     var ret = this.IdsAndNames();
     var levelText = '';
 
@@ -438,9 +433,35 @@ Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT = function () {
     }
 
     if (!this.IsMultiple) {
-        Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditPT?custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit PT Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>', 888, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
+        Fanex.ExtAcc.Form.ShowFrame(
+            resolveClientUrl('Customer/EditCustomer?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
+            1250,
+            Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+            false, false, 1);
     } else {
-        Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/SuperMasterEditMultiplePTMember?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Multiple Sportsbook Setting', 894, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
+        var Usernames = '';
+        var CustIds = '';
+        var userNamesArr = [];
+        var custIdsArr = [];
+
+        if (Fanex.ExtAcc.Customer.CustIds.length > 0 && Fanex.ExtAcc.Customer.CustIds.indexOf(',') != -1)
+            custIdsArr = Fanex.ExtAcc.Customer.CustIds.substring(0, Fanex.ExtAcc.Customer.CustIds.length - 1).split(',');
+
+        if (Fanex.ExtAcc.Customer.Usernames.length > 0 && Fanex.ExtAcc.Customer.Usernames.indexOf(',') != -1)
+            userNamesArr = Fanex.ExtAcc.Customer.Usernames.substring(0, Fanex.ExtAcc.Customer.Usernames.length - 2).split(', ');
+
+        var customerlength = userNamesArr.length;
+        for (var i = 0; i < customerlength; i++) {
+            var linkChar = i == customerlength - 1 ? "" : ", ";
+            Usernames += userNamesArr[i] + linkChar;
+            CustIds += custIdsArr[i] + linkChar;
+        }
+
+        Fanex.ExtAcc.Form.ShowFrame(
+            resolveClientUrl('Customer/EditMultiple?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custIds=' + CustIds + '&usernames=' + Usernames + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Multiple Sportsbook Setting',
+            1250,
+            Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
+            false, false, 1);
     }
 };
 
@@ -513,7 +534,6 @@ Fanex.ExtAcc.Customer.ConfigMultipleDoubleComm = function (custids, allow, index
         }
     })
         .success(function (result) {
-
             if (Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.ExtAcc.UnBlockUI)) {
                 return;
             }
@@ -538,7 +558,6 @@ Fanex.ExtAcc.Customer.ConfigMultipleDoubleComm = function (custids, allow, index
                         }
 
                         Fanex.ExtAcc.Customer.CallBackCustomerList();
-
                     }, 2000);
                 }
 
@@ -634,15 +653,6 @@ Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus = function (productIds) {
         Fanex.ExtAcc.Form.ShowFrame(blankUrl, title, width, height, false, false, 1);
         $('#targetProductStatusSettingForm').attr('action', resolveClientUrl('ProductStatusSetting/MultipleView')).submit();
     }
-};
-
-Fanex.ExtAcc.Customer.ShowEditMultipleParlayMaxPayout = function (custIds, userNames, roleId) {
-    var $targetForm = $('#targetParlayMaxPayoutForm');
-    $targetForm.find('#custIds').val(custIds);
-    $targetForm.find('#custNames').val(userNames);
-    $targetForm.find('#custRole').val(roleId);
-    Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Views/_blank.html'), 'Edit Multiple Parlay Max Payout', 1050, 350, false, false, 1, null, null, true);
-    $targetForm.attr('action', resolveClientUrl('ParlayMaxPayout/Index')).submit();
 };
 
 Fanex.ExtAcc.Customer.ShowEditMultipleProtectedStatus = function (groupName, custIds, roleId) {

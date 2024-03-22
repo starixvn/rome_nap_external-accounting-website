@@ -23,51 +23,27 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab4').css('display', Fanex.ExtAcc.Customer.HideCasino ? 'none' : 'block');
         $('#tab8').css('display', Fanex.ExtAcc.Customer.HideVirtualSports ? 'none' : 'block');
 
-        $('#tab1').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
-            Fanex.ExtAcc.Customer.Settings.GetSportsbookMinPT();
-        });
-        
         $('#tab4').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.RenderDCS(6, "#casinoFrame", "#tabs-4");
-        });        
+        });
 
         $('#tab8').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.RenderDCS(5, "#virtualSportsFrame", "#tabs-8");
-        });
-
-        $('#tab9').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
         });
 
         $('.dynamic-setting-tab').bind('click', function () {
             var productId = $(this).attr('data-product-id');
-            Fanex.ExtAcc.Customer.Settings.EmptyAllTabs();
             Fanex.ExtAcc.Customer.Settings.RenderDCS(productId, "#Frame_" + productId, "#tabs-" + productId);
         });
 
         $('#tabs-list>li:first').click();
     },
 
-    GetSportsbookMinPT: function () {
-        Fanex.ExtAcc.Customer.IsMultiple = false;
-
-        Fanex.ExtAcc.Customer.UserId = this.UserId;
-        $.ajax({
-            url: resolveClientUrl('SportsbookSetting/EditMinPT?custId=' + Fanex.ExtAcc.Customer.Settings.UserId + '&groupName=' + $('#selectedGroupName').html())
-        }).success(function (result) {
-            $('#tabs-1').css('display', 'block');
-            $('#tabs-1').html(result);
-            Fanex.ExtAcc.UnBlockUI();
-        });
-    },   
     RenderDCS: function (productId, frameId, tabId) {
         Fanex.ExtAcc.Customer.IsMultiple = false;
         Fanex.ExtAcc.Customer.UserId = this.UserId;
         var action = '';
-        var url = "DCS/ViewCustomerSetting?language=en-US&productId=" + productId + "&customerId=" + this.UserId + "&groupName=" + $('#selectedGroupName').html() + "&customerLevel=";
+        var url = "DCS/ViewCustomerSetting?language=en-US&productId=" + productId + "&customerId=" + this.UserId + "&groupName=" + parent.$('#selectedGroupName').html() + "&customerLevel=";
 
         if (this.CurrentLevel == Fanex.ExtAcc.Customer.Master) {
             url += 3;
@@ -78,18 +54,10 @@ Fanex.ExtAcc.Customer.Settings = {
         else {
             url += 1 + "&UplineLevel=2";
         }
-        $(tabId).height($('#leftFrame').height() - 10);
+        $(tabId).height(parent.$('#leftFrame').height() - 10);
 
         $(tabId).css('display', 'block');
         Fanex.ExtAcc.Customer.Settings.LoadProductSetting(frameId, resolveClientUrl(url));
-    },
-
-    EmptyAllTabs: function () {
-        $('#tabs-1').html('');
-        // $('#tabs-7').html('');
-
-        $('#tabs-1').css('display', 'none');
-        // $('#tabs-7').css('display', 'none');
     },
 
     LoadProductSetting: function (frameId, url) {

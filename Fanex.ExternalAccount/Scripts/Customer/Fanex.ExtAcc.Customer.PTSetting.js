@@ -125,7 +125,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                 $('#memberSection3').remove();
             }
 
-            this.GetSuperPTSetting();
+            //this.GetSuperPTSetting();
         }
         else if (Fanex.ExtAcc.Customer.CurrentLevel == 3) {
             if (!Fanex.ExtAcc.Customer.PTSetting.IsMultiple) {
@@ -252,9 +252,10 @@ Fanex.ExtAcc.Customer.PTSetting = {
         data.custId = Fanex.ExtAcc.Customer.UserId;
         data.parentId = Fanex.ExtAcc.Customer.superId;
         data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
+        data.roleId = Fanex.ExtAcc.Customer.CurrentLevel;
 
         $.ajax({
-            url: resolveClientUrl('SportsbookSetting/EditPTSuperGet'),
+            url: resolveClientUrl('Customer/EditCustomer'),
             data: data,
             dataType: 'json',
             type: 'post'
@@ -838,12 +839,13 @@ Fanex.ExtAcc.Customer.PTSetting = {
         var data = new Object();
 
         data.custId = Fanex.ExtAcc.Customer.UserId;
+        data.roleId = Fanex.ExtAcc.Customer.CurrentLevel;
         data.parentId = Fanex.ExtAcc.Customer.superId;
         data.agentId = Fanex.ExtAcc.Customer.agentId;
         data.groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
 
         $.ajax({
-            url: resolveClientUrl('SportsbookSetting/SuperEditPTMemberGet'),
+            url: resolveClientUrl('Customer/EditCustomer'),
             data: data,
             dataType: 'json',
             type: 'post'

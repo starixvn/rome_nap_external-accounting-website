@@ -24,6 +24,12 @@
 
         public static Uri TelegramBotClientUri => new Uri(Configs["TelegramBotClientUri"]);
 
+        public static string LoggingDefaultCategory => Configs["Fanex.Logging:DefaultCategory"];
+
+        public static string RabbitMQConnectionStrings => Configs["Fanex.Logging:RabbitMQConnectionStrings"];
+
+        public static string SentryBackendUrl => Configs["Fanex.Logging:SentryBackendUrl"];
+
         internal static NameValueCollection Configs { get; set; } = ConfigurationManager.AppSettings;
     }
 }

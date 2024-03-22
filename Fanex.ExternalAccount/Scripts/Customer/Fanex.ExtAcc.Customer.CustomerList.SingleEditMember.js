@@ -24,30 +24,7 @@
                             className: "iconEnableEdit",
                             callback: function () {
                                 Fanex.ExtAcc.Customer.IsFullInfo = true;
-                                Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditMultiplePT?roleId=1&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + title + '</font>', 900, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
-                            }
-                        },
-                        ptSportbook: {
-                            name: "PT",
-                            className: "iconEnableEdit",
-                            callback: function (key, opt) {
-                                Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditPT?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit PT Setting ' + '<font color="#6dcff6">' + title + '</font>', 888, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
-                            }
-                        },
-                        betSetting: {
-                            name: "Bet Setting",
-                            className: "iconEnableEdit",
-                            callback: function (key, opt) {
-                                var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 480) : 560;
-                                Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditBetSetting?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId) + '&roleid=1', 'Edit Bet Setting ' + '<font color="#6dcff6">' + title + '</font>', 871, height, false, false, 1);
-                            }
-                        },
-                        commission: {
-                            name: "Commission",
-                            className: "iconEnableEdit",
-                            callback: function (key, opt) {
-                                var height = isMobile.phone ? Fanex.ExtAcc.Customer.GetPopupHeight(270, 350) : 350;
-                                Fanex.ExtAcc.Form.Show(resolveClientUrl('SportsbookSetting/EditCommissionMemberDetail?groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Commission ' + '<font color="#6dcff6">' + title + '</font>', 876, height, false, false, 1);
+                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Customer/EditCustomer?roleId=1&uplineRoleId=2&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + title + '</font>', 1250, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
                             }
                         },
                         separator1: "-----"
@@ -76,7 +53,6 @@
                         has3rdParty = true;
                         addEditProductMemberContextMenuItem(5, 'virtualSport', 'Virtual Sports', result.DisableVirtualSport);
                     }
-                   
 
                     for (var i = 0, max = result.DCSProductsSetting.length; i < max; i++) {
                         has3rdParty = true;
@@ -117,16 +93,6 @@
                                 height,
                                 false,
                                 false);
-                        }
-                    };
-
-                    items.parlayMaxPayout = {
-                        name: "Parlay Max Payout",
-                        className: "iconEnableEdit editInfoBg",
-                        callback: function (key, opt) {
-                            top.shouldCalculatePopupHeight = false;
-                            var url = resolveClientUrl('ParlayMaxPayout/Index?custId=' + custId + '&custName=' + title + '&roleId=1' + '&groupName=' + $('#selectedGroupName').html());
-                            Fanex.ExtAcc.Form.ShowFrame(url, 'Edit Parlay Max Payout: <font color="#6dcff6">' + title + '</font>', 1050, 350, false, false, 1, null, null, true);
                         }
                     };
                 }

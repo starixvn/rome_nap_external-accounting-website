@@ -19,14 +19,16 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using System.Web.Mvc;
     using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
 
-    public class CustomerListController : CustomerBase
+    public class CustomerListController : BaseController
     {
         private readonly ICustomerListService _customerListService;
         private readonly ICustomerService _customerService;
         private readonly AuthorizationService _authorizationService;
         private const int DefaultPageSize = 50;
 
-        public CustomerListController() : this(null, null, null) { }
+        public CustomerListController() : this(null, null, null)
+        {
+        }
 
         public CustomerListController(ICustomerService customerService, ICustomerListService customerListService, AuthorizationService authorizationService)
         {
