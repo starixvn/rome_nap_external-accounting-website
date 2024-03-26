@@ -228,6 +228,13 @@
     "sourceMap": true
   },
   {
+    "outputFileName": "assets/bundles/headlinelist/index.js",
+    "inputFiles": [
+      "Scripts/HeadlineList/Fanex.ExtAcc.HeadlineList.js"
+    ],
+    "sourceMap": true
+  },
+  {
     "outputFileName": "assets/bundles/SuperWinLossDetailByPT/index.js",
     "inputFiles": [
       "Scripts/monthPicker/monPickr-0.0.1.js",
