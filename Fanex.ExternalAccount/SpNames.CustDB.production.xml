@@ -352,4 +352,7 @@
     <Setting Key="Age_CustomerUpdPwd_Multiple" SpName="Age_CustomerUpdPwd_Multiple" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerUpdSecurityCode_Multiple" SpName="Acc_CustomerUpdSecurityCode_Multiple" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
   </Function>
+  <Function Name="Headline List">
+    <Setting Key="EAS_CustomerSelByGroupHeadline" SpName="EAS_CustomerSelByGroupHeadline" DbName="DBACC.bodb02.wsv_xnap" Plain="0" />
+  </Function>
 </Functions>
