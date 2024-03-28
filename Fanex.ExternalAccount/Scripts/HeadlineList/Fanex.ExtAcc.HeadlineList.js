@@ -2,6 +2,7 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
     alert("Fanex.ExtAcc.js module is required!")
 }
 
+
 Fanex.ExtAcc.HeadlineList = {
     DOMElements: {},
 
@@ -23,6 +24,7 @@ Fanex.ExtAcc.HeadlineList = {
         sortClass: "",
         sortCol: ""
     },
+    backupResult: {},
     currentHeadlines: [],
     Init: function (uplineId, uplineRoleId) {
         // $(".icon-filter").click(Fanex.ExtAcc.Customer.showHideFilter);
@@ -134,33 +136,37 @@ Fanex.ExtAcc.HeadlineList = {
         var _this = Fanex.ExtAcc.Customer.CustomerList;
         _this.Search(_this.cachedParams.previousParams);
     },
+    RenderBodyRows: function (groupHeadlines) {
+        let bodyRows = [];
+        const numberRow = groupHeadlines.length;
+        for (let i = 0; i < numberRow; i++) {
+            const groupHeadline = groupHeadlines[i];
+            const groupHeadlineLength = groupHeadline.HeadlineEntities.length;
+            let rowMerge = groupHeadlineLength;
+            for (let j = 0; j < groupHeadlineLength; j++) {
+                const headline = groupHeadline.HeadlineEntities[j];
+                let columns = [];
+                if (j === 0) {
+                    columns.push({Name: "RowNumber", Value: i, MergeRowNumber: rowMerge});
+                    columns.push({Name: 'GroupName', Value: groupHeadline.GroupName, MergeRowNumber: rowMerge});
+                }
+                columns.push({Name: 'Username', Value: headline.Username});
+                columns.push({Name: 'Status', Value: headline.Status});
+                bodyRows.push({Columns: columns});
+            }
+        }
+        return bodyRows;
+    },
 
     Search: function (params) {
         $.post(parent.resolveClientUrl('HeadlineList/Search'), params, function (result) {
             var _this = Fanex.ExtAcc.HeadlineList;
-            // var isSuperList = isNullOrUndefinedOrEmpty(params.uplineRoleId);
-            // var hasSubGroups = result.HasSubGroups;
-            // _this.cachedParams.uplineId = params.uplineId;
-            // _this.cachedParams.uplineRoleId = params.uplineRoleId;
-            // var numberOfFrozenColumn = 6;
-            // var widthDevice = top.$(top.window).width();
-            // if (widthDevice <= 768) {
-            //     numberOfFrozenColumn = 3;
-            // }
-            let bodyRows = [];
-            const rowLength = result.GroupHeadlines.length;
-            for (let i = 0; i < rowLength; i++) {
-                var currentRow = result.GroupHeadlines[i];
-                var columns = _this.GetGridBodyRows(currentRow, i, params.pageSize, params.pageIndex - 1);
-                bodyRows.push({
-                    Columns: columns,
-                    // CssClass: Fanex.ExtAcc.Customer.CustomerList.GetCSSRow(currentRow)
-                });
-            }
+            backupResult = result;
+            let bodyRows = _this.RenderBodyRows(result.GroupHeadlines);
 
             gridOptions = {
                 //groupHeaderRows: _this.GetGridGroupHeader(params.uplineRoleId, result.IsMyanmarOdds, result.HasSubGroups),
-                columns: _this.GetGridHeader(params.uplineRoleId, result.IsMyanmarOdds, result.HasSubGroups),
+                columns: _this.GetGridHeader(),
                 bodyRows: bodyRows,
                 autoCalculateGridExpandHeight: true,
                 // numberOfFrozenColumn: numberOfFrozenColumn,
@@ -171,7 +177,7 @@ Fanex.ExtAcc.HeadlineList = {
                 highlightFrozenWidth: 2,
                 showPager: true,
                 customPager: true,
-                showNumberColumn: true,
+                // showNumberColumn: true,
                 pagerOption: {
                     itemsPerPageArray: [50, 100, 500],
                     currentPage: result.PageIndex - 1,
@@ -184,24 +190,40 @@ Fanex.ExtAcc.HeadlineList = {
                         _this.SubmitSearch(params.uplineId, params.uplineRoleId);
                     }
                 },
+                sortOption:
+                    {
+                        serverSortFunction: function (sortColumnName, sortDirection) {
+            
+                            if(sortColumnName==='GroupName'){
+                                backupResult.GroupHeadlines = _this.SortByNameExceptFirst(backupResult.GroupHeadlines, 'GroupName', sortDirection,true);
+                            }
+                            if(sortColumnName==='Username'){
+                                for(const element of backupResult.GroupHeadlines) {
+                                    element.HeadlineEntities = _this.SortByNameExceptFirst(element.HeadlineEntities, 'Username', sortDirection);
+                                }
+                            }
+                            gridOptions.bodyRows = _this.RenderBodyRows(backupResult.GroupHeadlines);
+                            _this.DOMElements.jqgrid.fanexGrid('reRenderBodyAfterSort', gridOptions, sortColumnName, sortDirection);
+                        }
+                    },
                 marginRight: 12,
                 showDistinctRow: false,
                 allowTruncate: true
             };
-            //
-            // if (bodyRows.length === 0) {
-            //     _this.DOMElements.msgNoinfo.css('display', 'block');
-            //     _this.DOMElements.jqgrid.css('display', 'none');
-            //     _this.DOMElements.icoExportExcel.css('display', 'none');
-            // } else {
-            _this.DOMElements.msgNoinfo.css('display', 'none');
-            _this.DOMElements.jqgrid.css('display', 'block');
-            _this.DOMElements.icoExportExcel.show();
-            setPagerOptionOnMobile(gridOptions);
-            _this.DOMElements.jqgrid.fanexGrid(gridOptions);
-            //
-            //     workaroundForGridOnPhone();
-            // }
+
+            if (bodyRows.length === 0) {
+                _this.DOMElements.msgNoinfo.css('display', 'block');
+                _this.DOMElements.jqgrid.css('display', 'none');
+                _this.DOMElements.icoExportExcel.css('display', 'none');
+            } else {
+                _this.DOMElements.msgNoinfo.css('display', 'none');
+                _this.DOMElements.jqgrid.css('display', 'block');
+                _this.DOMElements.icoExportExcel.show();
+                setPagerOptionOnMobile(gridOptions);
+                _this.DOMElements.jqgrid.fanexGrid(gridOptions);
+
+                //  workaroundForGridOnPhone();
+            }
             //
             // _this.DOMElements.editMult.attr('style', 'cursor: default !important');
             // _this.DOMElements.editMult.attr('onclick', '');
@@ -241,14 +263,14 @@ Fanex.ExtAcc.HeadlineList = {
             // $("#divSortingByUsername").click(function () {
             //     this.Sorting(this, "Username");
             // });
-            $("#jqgrid_header_sort_headline").click(function () {
-                const _this = Fanex.ExtAcc.HeadlineList;
-                _this.Sorting(this, "Headline");
-            });
-            $("#jqgrid_header_sort_username").click(function () {
-                const _this = Fanex.ExtAcc.HeadlineList;
-                _this.Sorting(this, "Username");
-            });
+            // $("#jqgrid_header_sort_headline").off().click(function () {
+            //     const _this = Fanex.ExtAcc.HeadlineList;
+            //     _this.Sorting(this, "Headline");
+            // });
+            // $("#jqgrid_header_sort_username").off().click(function () {
+            //     const _this = Fanex.ExtAcc.HeadlineList;
+            //     _this.Sorting(this, "Username");
+            // });
         });
     },
     ResetSorting: function () {
@@ -264,57 +286,55 @@ Fanex.ExtAcc.HeadlineList = {
             $(obj).addClass("desc");
         }
     },
-    Sorting: function (obj, sortCol) {
-        if (this.sortInfo.sortClass === "" || this.sortInfo.sortClass === "desc") {
-            this.sortInfo.sortClass = "asc";
-            this.sortInfo.sortType = "";
-        } else {
-            this.sortInfo.sortClass = "desc";
-            this.sortInfo.sortType = "-";
-        }
-        this.sortInfo.sortCol = sortCol;
-
-        if (sortCol === "Username") {
-            var newGroup = [];
-            var memberNotAssignedToGroup = [];
-            console.log("Username sorting...");
-            // $.each(this.currentHeadlines, function () {
-            //     if (this.GroupId === 0 && this.SMAEntities && this.SMAEntities.length > 0) {
-            //         memberNotAssignedToGroup.push(this.SMAEntities[0]);
-            //     }
-            //     else {
-            //         var smaList = jlinq.from(this.SMAEntities).sort(sortType + "Username").select();
-            //         newGroup.push({
-            //             GroupId: this.GroupId,
-            //             GroupName: this.GroupName,
-            //             Owner: this.Owner,
-            //             SMAEntities: smaList
-            //         });
-            //     }
-            // });
-            //
-            // if (memberNotAssignedToGroup && memberNotAssignedToGroup.length > 0) {
-            //     var sortingMembers = jlinq.from(memberNotAssignedToGroup).sort(sortType + "Username").select();
-            //     $.each(sortingMembers, function () {
-            //         sortedSMAGroupHeadlines = sortedSMAGroupHeadlines.concat({
-            //             GroupId: this.GroupId,
-            //             GroupName: this.GroupName,
-            //             Owner: this.Owner,
-            //             SMAEntities: [this]
-            //         });
-            //     });
-            // }
-            //
-            // if (newGroup && newGroup.length > 0) {
-            //     sortedSMAGroupHeadlines = sortedSMAGroupHeadlines.concat(newGroup);
-            // }
-        }
-        if(sortCol === 'Headline'){
-            console.log("Headline sorting")
-        }
-        //renderSMAGroupHeadlines(sortedSMAGroupHeadlines); // render lai sau khi sort
-        //this.AddSortingIconAfterRender(obj);
-    },
+    // Sorting: function (obj, sortCol) {
+    //     if (this.sortInfo.sortClass === "" || this.sortInfo.sortClass === "desc") {
+    //         this.sortInfo.sortClass = "asc";
+    //         this.sortInfo.sortType = "";
+    //     } else {
+    //         this.sortInfo.sortClass = "desc";
+    //         this.sortInfo.sortType = "-";
+    //     }
+    //     this.sortInfo.sortCol = sortCol;
+    //
+    //     if (sortCol === "Username") {
+    //         console.log("Username sorting...");
+    //         // $.each(this.currentHeadlines, function () {
+    //         //     if (this.GroupId === 0 && this.SMAEntities && this.SMAEntities.length > 0) {
+    //         //         memberNotAssignedToGroup.push(this.SMAEntities[0]);
+    //         //     }
+    //         //     else {
+    //         //         var smaList = jlinq.from(this.SMAEntities).sort(sortType + "Username").select();
+    //         //         newGroup.push({
+    //         //             GroupId: this.GroupId,
+    //         //             GroupName: this.GroupName,
+    //         //             Owner: this.Owner,
+    //         //             SMAEntities: smaList
+    //         //         });
+    //         //     }
+    //         // });
+    //         //
+    //         // if (memberNotAssignedToGroup && memberNotAssignedToGroup.length > 0) {
+    //         //     var sortingMembers = jlinq.from(memberNotAssignedToGroup).sort(sortType + "Username").select();
+    //         //     $.each(sortingMembers, function () {
+    //         //         sortedSMAGroupHeadlines = sortedSMAGroupHeadlines.concat({
+    //         //             GroupId: this.GroupId,
+    //         //             GroupName: this.GroupName,
+    //         //             Owner: this.Owner,
+    //         //             SMAEntities: [this]
+    //         //         });
+    //         //     });
+    //         // }
+    //         //
+    //         // if (newGroup && newGroup.length > 0) {
+    //         //     sortedSMAGroupHeadlines = sortedSMAGroupHeadlines.concat(newGroup);
+    //         // }
+    //     }
+    //     if (sortCol === 'Headline') {
+    //         console.log("Headline sorting")
+    //     }
+    //     //renderSMAGroupHeadlines(sortedSMAGroupHeadlines); // render lai sau khi sort
+    //     //this.AddSortingIconAfterRender(obj);
+    // },
 
 
     GetCSSRow: function (currentRow) {
@@ -337,80 +357,60 @@ Fanex.ExtAcc.HeadlineList = {
         return '';
     },
 
-    GetGridHeader: function (uplineRoleId, isMyanmarOdds, hasSubGroups) {
+    GetGridHeader: function () {
         var columns = [];
-        var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
-        var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
-        var showSubGroups = isSuperList && hasSubGroups;
         columns.push({HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center'});
         columns.push({
-            HeaderText: 'Headline', Name: 'headline', Width: 200, CellAlign: 'center',
+            HeaderText: 'Headline', Name: 'GroupName', Width: 200, CellAlign: 'center',
             CellId: 'HeadlineSorting',
             Sort: true,
-            // CssClass: 'divSorter',
-            // CustomHeaderRender: function (cell) {
-            //     return '<div onclick="Fanex.ExtAcc.HeadlineList.Sorting(this.parentElement,\'Headline\')">Headline</div>';
-            // },
         });
         columns.push({
-            HeaderText: 'Username', Name: 'username', Width: 200, CellAlign: 'center',
+            HeaderText: 'Username', Name: 'Username', Width: 200, CellAlign: 'center',
             CellId: 'UsernameSorting',
             Sort: true,
-            // CssClass: 'divSorter',
-            // CustomHeaderRender: function (cell) {
-            //     return '<div onclick="Fanex.ExtAcc.HeadlineList.Sorting(this.parentElement,\'username\')">Username</div>';
-            // },
+            // CustomCellRender: function (cell) {
+            //     console.log(cell)
+            //     return Fanex.ExtAcc.HeadlineList.RenderHeadlineEntities(cell, "Username");
+            // }
         });
-        // columns.push({
-        //     HeaderText: '', Name: 'Check', Width: 30, CellAlign: 'center',
-        //     CustomHeaderRender: function (cell) {
-        //         return '<div id="editMult" class="editMult"></div>';
-        //     },
-        //     CustomCellRender: function (cell) {
-        //         return '<div onclick="Fanex.ExtAcc.Customer.Select(this)" style="margin-left: 0px !important" id="' + cell.Value.CustId + '" data-username="' + cell.Value.UserName + '" class="menuInactive"></div>';
-        //     }
-        // });
-        // columns.push({
-        //     HeaderText: 'Username', Name: 'username', Width: 125,
-        //     CustomCellRender: function (cell) {
-        //         var usernameValue = cell.Value.UserName,
-        //             shortUsername = usernameValue,
-        //             tooltipUsername = "";
-        //         if (usernameValue.length >= 15) {
-        //             shortUsername = usernameValue.substring(0, 15) + "...";
-        //             tooltipUsername = usernameValue;
-        //         }
-        //         var func = 'javascript:Fanex.ExtAcc.Customer.CustomerList.SubmitSearch(' + cell.Value.CustId + ', ' + (isNullOrUndefinedOrEmpty(uplineRoleId) ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1) + ', null, 0)';
-        //         var unlockIcon = cell.Value.LockedAccess.IsLocked
-        //             ? '<span class="locked-icon" onclick="javascript:Fanex.ExtAcc.Customer.UnlockAccess(' + cell.Value.CustId + ',' + cell.Value.LockedAccess.Locked + ')" title="Click to unlock"></span>'
-        //             : "";
-        //         return uplineRoleId === Fanex.ExtAcc.Customer.Agent ?
-        //             '<span title="' + tooltipUsername + '">' + shortUsername + '</span>' + unlockIcon :
-        //             '<a id="usr-' + cell.Value.CustId + '" href="' + func + '" title="' + tooltipUsername + '">' + shortUsername + '</a>' + unlockIcon;
-        //     }
-        // });
-        // if (isShowCurrency) { columns.push({ HeaderText: 'Currency', Name: 'currency', Width: 75 }); }
-        // columns.push({
-        //     HeaderText: 'Edit', Name: 'Edit', Width: 30,
-        //     CustomCellRender: function (cell) {
-        //         return '<div onclick="javascript:Fanex.ExtAcc.Customer.CustomerList.SingleEdit' + Fanex.ExtAcc.Customer.RoleNameConst[cell.Value.RoleId] + '(' + cell.Value.CustId + ', \'' + cell.Value.UserName + '\')" id="edit-' + cell.Value.CustId + '" class="editInfo"></div>';
-        //     }
-        // });
+
         columns.push({
             HeaderText: 'Status', Name: 'Status', Width: 100, CellAlign: 'center',
-            CustomCellRender: function (cell) {
-                return !cell.Value.Enabled ? 'Disabled' : cell.Value.Closed ? 'Closed' : cell.Value.Suspended ? 'Suspended' : 'Open';
-            }
+            // CustomCellRender: function (cell) {
+            //     console.log(cell)
+            //     return Fanex.ExtAcc.HeadlineList.RenderHeadlineEntities(cell, "Status");
+            // }
         });
-       
+
         return columns.filter(function (item) {
             return item !== undefined
         });
     },
+
+    RenderHeadlineEntities: function (cell, property) {
+        const headlineEntities = cell.Value.HeadlineEntities || [];
+        const containerDiv = [];
+
+        function createDiv(entity, isLast) {
+            const style = isLast ? '' : 'border-color: #c5c5c5; border-style: solid; border-width: 0 0 1px 0; width: inherit;';
+            return `<div style="${style}">${entity[property]}</div>`;
+        }
+
+        for (let i = 0; i < headlineEntities.length; i++) {
+            if (i === headlineEntities.length - 1) {
+                containerDiv.push(createDiv(headlineEntities[i], true));
+            } else {
+                containerDiv.push(createDiv(headlineEntities[i], false));
+            }
+        }
+
+        return containerDiv.join('');
+    },
     // GetGridGroupHeader: function (uplineRoleId, isMyanmarOdds, hasSubGroups) {
     //     var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
     //     var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
-    //     var showSubGroups = isSuperList && hasSubGroups;
+    //     var showSubGroups = isSuperList && hasSubGroups;   v
     //     var columns = [];
     //     columns.push({HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2});
     //     columns.push({HeaderText: '', Name: 'Check', MergeRowNumber: 2});
@@ -460,19 +460,29 @@ Fanex.ExtAcc.HeadlineList = {
     //     }];
     // },
     GetGridBodyRows: function (currentRow, currentIndex, pageSize, pageIndex) {
-        console.log("currentRow",currentRow)
-        console.log("currentIndex",currentIndex)
-        console.log("pageSize",pageSize)
-        console.log("pageIndex",pageIndex)
+
         var columns = [];
-        columns.push({Name: 'RowNumber', Value: currentIndex + pageSize * (pageIndex)});
-        // columns.push({Name: 'Check', Value: currentRow});
+        //columns.push({Name: 'RowNumber', Value: currentIndex + pageSize * (pageIndex)});
+        columns.push({Name: 'RowNumber', Value: currentIndex + 1});
         columns.push({Name: 'headline', Value: currentRow.GroupName});
-        columns.push({Name: 'username', Value: currentRow});
-        columns.push({Name: 'Status', Value: currentRow});
+        // columns.push({Name: 'username', Value: currentRow});
+        //columns.push({Name: 'Status', Value: currentRow});
+        columns.push({Name: 'username', Value: currentRow.Username});
+        columns.push({Name: 'Status', Value: currentRow.Status});
         return columns.filter(function (item) {
             return item !== undefined
         });
+    },
+    SortByNameExceptFirst: function(arr, sortColumnName, sortDirection,ignoreFirst = false) {
+        const firstElement = ignoreFirst ? arr.shift() : null;
+        const sorted = arr.sort(function (a, b) {
+            const comparison = a[sortColumnName].localeCompare(b[sortColumnName]);
+            return sortDirection === "asc" ? comparison : -comparison;
+        });
+   
+        const result=  ignoreFirst ? [firstElement].concat(sorted) : sorted;
+        console.log("call sort", sortColumnName,sortDirection,result)
+        return result;
     },
     RenderBreadScrumbs: function (uplineId, uplineRoleId) {
         var _breadScrumbs = this.cachedParams.breadcrumbs;
