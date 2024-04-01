@@ -76,5 +76,14 @@ namespace Fanex.ExternalAccount.HeadlineList.Resources {
                 return ResourceManager.GetString("HeadlineList", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no data..
+        /// </summary>
+        public static string NoData {
+            get {
+                return ResourceManager.GetString("NoData", resourceCulture);
+            }
+        }
     }
 }

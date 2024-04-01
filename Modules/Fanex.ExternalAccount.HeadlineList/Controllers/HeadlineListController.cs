@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Fanex.ExternalAccount.Core.Base;
-
-using Fanex.ExternalAccount.Core.Context;
-using Fanex.ExternalAccount.Core.Shared;
-using Fanex.ExternalAccount.HeadlineList.Services;
-using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
-
-namespace Fanex.ExternalAccount.HeadlineList.Controllers
+﻿namespace Fanex.ExternalAccount.HeadlineList.Controllers
 {
+    using System;
     using System.Web.Mvc;
+    using Core.Base;
+    using Core.Context;
+    using Core.Shared;
+    using Services;
+    using ViewModels;
+    using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
+    
     public class HeadlineListController : BaseController
     {
         private readonly IHeadlineListService service;
         private readonly IHeadlineListExcel excel;
+        private readonly string SessionKeyHeadlines = "Fanex.ExternalAccount.HeadlineList";
 
-        public HeadlineListController()
-            : this(null, null)
-        {
-        }
+        public HeadlineListController() : this(null, null) { }
 
         public HeadlineListController(IHeadlineListService service, IHeadlineListExcel excel)
         {
@@ -32,12 +27,23 @@ namespace Fanex.ExternalAccount.HeadlineList.Controllers
         public ActionResult Index()
             => PartialViewBase();
 
-     
+
         [ExternalAccountAuthenticate(Function = eFunctions.HeadlineList, Policy = AuthenticationType.Read)]
-        public ActionResult Search()
+        public ActionResult Search(SearchHeadlineViewModel query)
         {
-            var data = service.GetHeadlines(CurrentSession.UserId,1,100);
-           return Json(data, JsonRequestBehavior.AllowGet);
+            var headlineResult = service.GetHeadlines(query, CurrentSession.UserId);
+            return Json(headlineResult, JsonRequestBehavior.AllowGet);
+        }
+
+        [ExternalAccountAuthenticate(Function = eFunctions.HeadlineList, Policy = AuthenticationType.Read)]
+        public ActionResult ExportHeadlines(SearchHeadlineViewModel query)
+        {
+            var data = service.GetHeadlines(query, CurrentSession.UserId);
+            var excelFile = excel.ExportHeadlinesExcel(data).ToArray();
+            var today = DateTime.Now.ToString("yyyyMMdd");
+            var fileName = $"SMAListByHeadline{today}.xls";
+
+            return File(excelFile, "application/vnd.ms-excel", fileName);
         }
     }
-}     
+}

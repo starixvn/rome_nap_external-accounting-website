@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Data;
 using Fanex.CustomerSetting.Module.Core;
@@ -10,15 +9,15 @@ namespace Fanex.ExternalAccount.HeadlineList.DataAccesses
 {
     public interface IHeadlinesDataAccess
     {
-        IEnumerable<GroupHeadline> GetGroupHeadlines(GetHeadlinesCriteria criteria);
+        GetGroupHeadlinesResult GetGroupHeadlines(GetHeadlinesCriteria criteria);
     }
 
     public class HeadlinesDataAccess : IHeadlinesDataAccess
     {
-        public IEnumerable<GroupHeadline> GetGroupHeadlines(GetHeadlinesCriteria criteria)
+        public GetGroupHeadlinesResult GetGroupHeadlines(GetHeadlinesCriteria criteria)
         {
-            IDictionary<int, GroupHeadline> groupHeadlinesHash = new Dictionary<int, GroupHeadline>(1000);
-
+            IDictionary<int, GroupHeadline> groupHeadlinesHash = new Dictionary<int, GroupHeadline>();
+            var countHeadline = 0;
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
@@ -29,14 +28,14 @@ namespace Fanex.ExternalAccount.HeadlineList.DataAccesses
                     while (reader.Read())
                     {
                         entity = ParseHeadlineEntity(reader);
-
+                        countHeadline++;
                         if (!groupHeadlinesHash.TryGetValue(entity.GroupId, out groupHeadline))
                         {
                             groupHeadline = new GroupHeadline
                             {
                                 GroupId = entity.GroupId,
                                 GroupName = entity.GroupName,
-                                HeadlineEntities = new List<HeadlineEntity>(1000)
+                                HeadlineEntities = new List<HeadlineEntity>()
                             };
 
                             groupHeadlinesHash.Add(entity.GroupId, groupHeadline);
@@ -46,12 +45,17 @@ namespace Fanex.ExternalAccount.HeadlineList.DataAccesses
                     }
                 }
             }
-            return groupHeadlinesHash.Values;
+
+            return new GetGroupHeadlinesResult
+            {
+                GroupHeadlines = groupHeadlinesHash.Values,
+                TotalHeadlines = countHeadline
+            };
         }
+
 
         private HeadlineEntity ParseHeadlineEntity(IDataReader reader)
         {
-            
             var entity = new HeadlineEntity()
             {
                 GroupId = reader.ToInt32("custheadlineid"),

@@ -9,7 +9,7 @@
 <div id="headline-list-container">
     <div class="page-title">
         <div class="wlDetail">
-            @Fanex.ExternalAccount.HeadlineList.Resources.ViewLang.HeadlineList
+            @ViewLang.HeadlineList
         </div>
         <div id="breadcrumbs">
         </div>
@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <div class="label">@Fanex.ExternalAccount.HeadlineList.Resources.ViewLang.Headline</div>
-                <input id="txtUserName" type="text" class="usernameInput" autocomplete="off"/>
+                <input id="txtGroupHeadline" type="text" class="usernameInput" autocomplete="off"/>
             </div>
             <div class="form-group">
                 <label for="selStatus" class="pointer">@ViewLang.Status</label>
@@ -33,7 +33,6 @@
                     <option value="2">@ViewLang.Suspended</option>
                     <option value="3">@ViewLang.Closed</option>
                     <option value="4">@ViewLang.Disabled</option>
-                    <option value="5">@ViewLang.Locked</option>
                 </select>
             </div>
             @* <div class="form-group"> *@

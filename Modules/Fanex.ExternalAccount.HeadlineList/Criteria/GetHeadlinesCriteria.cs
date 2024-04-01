@@ -12,6 +12,18 @@ namespace Fanex.ExternalAccount.HeadlineList.Criteria
         public int PageSize { get; }
 
         public int TotalRows { get; set; }
+        public int Status { get; set; }
+        
+        public string Username { get; set; }
+        public string GroupHeadline { get; set; }
+
+        public GetHeadlinesCriteria(string username, string groupHeadline, int status, int userId)
+        {
+            Status = status;
+            Username = username;
+            GroupHeadline = groupHeadline;
+            UserID = userId;
+        }
         
         public int UserID { get; set; }
         public override string GetSettingKey()
@@ -23,9 +35,9 @@ namespace Fanex.ExternalAccount.HeadlineList.Criteria
         {
             return new Hashtable
             {
-                { "username", "" },
-                { "groupheadline", "" },
-                { "status", 0 },
+                { "username", Username },
+                { "groupheadline", GroupHeadline },
+                { "status", Status },
                 { "groupname", "ACCUUS" },
                 { "userid", UserID },
             };

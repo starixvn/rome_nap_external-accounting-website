@@ -24,4 +24,7 @@
     <data name="Headline" xml:space="preserve">
         <value>Headline</value>
     </data>
+    <data name="NoData" xml:space="preserve">
+        <value>There is no data.</value>
+    </data>
 </root>

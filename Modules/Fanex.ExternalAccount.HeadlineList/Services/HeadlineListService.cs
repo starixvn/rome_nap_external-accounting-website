@@ -1,38 +1,36 @@
-using System.Collections.Generic;
-using System.Linq;
-using Fanex.ExternalAccount.HeadlineList.Criteria;
-using Fanex.ExternalAccount.HeadlineList.DataAccesses;
-using Fanex.ExternalAccount.HeadlineList.Models;
-
 namespace Fanex.ExternalAccount.HeadlineList.Services
 {
+    using System.Linq;
+    using Criteria;
+    using DataAccesses;
+    using Models;
+    using ViewModels;
+
     public interface IHeadlineListService
     {
-        SearchHeadlineResult GetHeadlines(int userId, int pageIndex, int pageSize);
+        SearchHeadlineResult GetHeadlines(SearchHeadlineViewModel query, int userId);
     }
 
     public class HeadlineListService : IHeadlineListService
     {
-        private readonly IHeadlinesDataAccess dataAccess;
+        private readonly IHeadlinesDataAccess _dataAccess;
 
         public HeadlineListService(IHeadlinesDataAccess dataAccess = null)
         {
-            this.dataAccess = dataAccess ?? new HeadlinesDataAccess();
+            _dataAccess = dataAccess ?? new HeadlinesDataAccess();
         }
 
-        public SearchHeadlineResult GetHeadlines(int userId, int pageIndex, int pageSize)
+        public SearchHeadlineResult GetHeadlines(SearchHeadlineViewModel query, int userId)
         {
-            int totalGroups = 0,
-                totalMemberNotAssignedToGroup = 0;
-            IList<GroupHeadline> groupHeadlines = new List<GroupHeadline>(512);
-            var data = this.dataAccess.GetGroupHeadlines(new GetHeadlinesCriteria { UserID = userId });
-            var pagingResult = new SearchHeadlineResult()
+            var dbResult = _dataAccess.GetGroupHeadlines(new GetHeadlinesCriteria(query.Username, query.GroupHeadline, query.Status, userId));
+            var pagingResult = new SearchHeadlineResult
             {
-                TotalGroups = data.Count(),
-                PageIndex = pageIndex,
-                GroupHeadlines = data.ToList()
-                    .Skip(pageSize * (pageIndex - 1))
-                    .Take(pageSize)
+                TotalGroups = dbResult.TotalHeadlineGroups,
+                PageIndex = query.PageIndex,
+                TotalHeadlines = dbResult.TotalHeadlines,
+                GroupHeadlines = dbResult.GroupHeadlines
+                    .Skip(query.PageSize * (query.PageIndex - 1))
+                    .Take(query.PageSize)
                     .ToList()
             };
             return pagingResult;

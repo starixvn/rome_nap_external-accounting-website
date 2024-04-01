@@ -554,6 +554,9 @@
     <Content Include="assets\bundles\customer\create.min.js">
       <DependentUpon>create.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\headlinelist\index.js" />
+    <Content Include="assets\bundles\headlinelist\index.min.js" />
+    <Content Include="assets\bundles\headlinelist\index.min.js.map" />
     <Content Include="assets\bundles\customer\superinfo.css" />
     <Content Include="assets\bundles\customer\superinfo.js" />
     <Content Include="assets\bundles\customer\superinfo.min.js">

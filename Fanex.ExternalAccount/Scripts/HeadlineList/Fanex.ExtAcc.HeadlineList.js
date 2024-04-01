@@ -30,8 +30,9 @@ Fanex.ExtAcc.HeadlineList = {
         // $(".icon-filter").click(Fanex.ExtAcc.Customer.showHideFilter);
         // this.cachedParams.uplineId = uplineId;
         // this.cachedParams.uplineRoleId = uplineRoleId;
-        // this.DOMElements.txtUsername = $('#txtUserName');
-        // this.DOMElements.selStatus = $('#selStatus');
+        this.DOMElements.txtUsername = $('#txtUserName');
+        this.DOMElements.txtGroupHeadline = $('#txtGroupHeadline');
+        this.DOMElements.selStatus = $('#selStatus');
         this.DOMElements.btnSearch = $('#btnSearch');
         this.DOMElements.icoExportExcel = $('#icoExportExcel');
         // this.DOMElements.customerListGrid = $('#customerListGrid');
@@ -94,7 +95,7 @@ Fanex.ExtAcc.HeadlineList = {
         // });
     },
 
-    SubmitSearch: function (uplineId, uplineRoleId, itemsPerPage, currentIndex) {
+    SubmitSearch: function (itemsPerPage, currentIndex) {
         var _this = Fanex.ExtAcc.HeadlineList;
         var pageSize = !isNullOrUndefined(itemsPerPage) ? itemsPerPage : _this.cachedParams.pageSize;
         var pageIndex = !isNullOrUndefined(currentIndex) ? currentIndex : _this.cachedParams.pageIndex;
@@ -114,14 +115,15 @@ Fanex.ExtAcc.HeadlineList = {
         var params = {
             // groupName: $('#selectedGroupName').html() === '' ? 'ACCDDD' : $('#selectedGroupName').html(),
             // groupId: $('#ddlGroupName').val(),
-            // userName: Fanex.encodeHtml(encodeURIComponent($.trim(this.DOMElements.txtUsername.val()))).replace(/[^a-zA-Z0-9~!*()-._]/g, ""),
-            // status: this.DOMElements.selStatus.val(),
+            UserName: Fanex.encodeHtml(encodeURIComponent($.trim(this.DOMElements.txtUsername.val()))).replace(/[^a-zA-Z0-9~!*()-._]/g, ""),
+            GroupHeadline: Fanex.encodeHtml(encodeURIComponent($.trim(this.DOMElements.txtGroupHeadline.val()))).replace(/[^a-zA-Z0-9~!*()-._]/g, ""),
+            Status: this.DOMElements.selStatus.val(),
             // uplineRoleId: uplineRoleId,
             // isShowSuperLimitDate: this.DOMElements.chkShowSuperLimitDate.is(":checked"),
             // IsNoDownlines: this.DOMElements.chkIsNoDownlines.is(":checked"),
             // uplineId: uplineId,
-            pageSize: pageSize,
-            pageIndex: pageIndex + 1
+            PageSize: pageSize,
+            PageIndex: pageIndex + 1
         };
         //
         // if (isShowCurrency) {
@@ -132,10 +134,10 @@ Fanex.ExtAcc.HeadlineList = {
         _this.Search(params);
     },
 
-    ReloadAfterEdit: function () {
-        var _this = Fanex.ExtAcc.Customer.CustomerList;
-        _this.Search(_this.cachedParams.previousParams);
-    },
+    // ReloadAfterEdit: function () {
+    //     var _this = Fanex.ExtAcc.Customer.CustomerList;
+    //     _this.Search(_this.cachedParams.previousParams);
+    // },
     RenderBodyRows: function (groupHeadlines) {
         let bodyRows = [];
         const numberRow = groupHeadlines.length;
@@ -147,10 +149,10 @@ Fanex.ExtAcc.HeadlineList = {
                 const headline = groupHeadline.HeadlineEntities[j];
                 let columns = [];
                 if (j === 0) {
-                    columns.push({Name: "RowNumber", Value: i, MergeRowNumber: rowMerge});
-                    columns.push({Name: 'GroupName', Value: groupHeadline.GroupName, MergeRowNumber: rowMerge});
+                    columns.push({Name: "RowNumber", Value: i+1, MergeRowNumber: rowMerge});
+                    columns.push({Name: 'GroupName', Value: groupHeadline.GroupName, MergeRowNumber: rowMerge,  CellAlign: 'center'});
                 }
-                columns.push({Name: 'Username', Value: headline.Username});
+                columns.push({Name: 'Username', Value: headline.Username,  CellAlign: 'center'});
                 columns.push({Name: 'Status', Value: headline.Status});
                 bodyRows.push({Columns: columns});
             }
@@ -179,21 +181,20 @@ Fanex.ExtAcc.HeadlineList = {
                 customPager: true,
                 // showNumberColumn: true,
                 pagerOption: {
-                    itemsPerPageArray: [50, 100, 500],
+                    itemsPerPageArray: [100,200,300,400,500],
                     currentPage: result.PageIndex - 1,
                     totalItem: result.TotalGroups,
-                    itemsPerPage: params.pageSize,
+                    itemsPerPage: params.PageSize,
                     pagerSelectCallBack: function (currentPageIndex, itemsPerPage) {
-                        Fanex.ExtAcc.Customer.DisableMultipleContextMenu();
-                        _this.cachedParams.pageIndex = currentPageIndex;
-                        _this.cachedParams.pageSize = itemsPerPage;
-                        _this.SubmitSearch(params.uplineId, params.uplineRoleId);
+                        // Fanex.ExtAcc.Customer.DisableMultipleContextMenu();
+                        _this.cachedParams.PageIndex = currentPageIndex;
+                        _this.cachedParams.PageSize = itemsPerPage;
+                        _this.SubmitSearch(itemsPerPage,currentPageIndex);
                     }
                 },
                 sortOption:
                     {
                         serverSortFunction: function (sortColumnName, sortDirection) {
-            
                             if(sortColumnName==='GroupName'){
                                 backupResult.GroupHeadlines = _this.SortByNameExceptFirst(backupResult.GroupHeadlines, 'GroupName', sortDirection,true);
                             }
@@ -208,7 +209,8 @@ Fanex.ExtAcc.HeadlineList = {
                     },
                 marginRight: 12,
                 showDistinctRow: false,
-                allowTruncate: true
+                allowTruncate: true,
+                showHighlightRow: false
             };
 
             if (bodyRows.length === 0) {
@@ -231,33 +233,34 @@ Fanex.ExtAcc.HeadlineList = {
             // _this.RenderBreadScrumbs(params.uplineId, params.uplineRoleId);
             // _this.DOMElements.icoExportExcel.off();
             // $('#editMult').contextMenu(false);
-            // if (bodyRows.length > 0) {
-            //     _this.DOMElements.icoExportExcel.click(function () {
-            //         var params = {
-            //             groupName: $('#selectedGroupName').html() === '' ? 'ACCDDD' : $('#selectedGroupName').html(),
-            //             groupId: $('#ddlGroupName').val(),
-            //             userName: _this.DOMElements.txtUsername.val(),
-            //             status: _this.DOMElements.selStatus.val(),
-            //             uplineRoleId: _this.cachedParams.uplineRoleId,
-            //             isShowSuperLimitDate: _this.DOMElements.chkShowSuperLimitDate.is(":checked"),
-            //             IsNoDownlines: _this.DOMElements.chkIsNoDownlines.is(":checked"),
-            //             uplineId: _this.cachedParams.uplineId
-            //         };
-            //
-            //         if (isShowCurrency) {
-            //             params.currencyIds = _this.DOMElements.$multiSelectCurrency.fanexMultiSelect("getItems", true).join(",");
-            //         }
-            //
-            //         top.exportExcel(resolveClientUrl("CustomerList/GetExportToExcel?") + top.serialize(params), document);
-            //     });
-            //
-            //     var firstCustId = result.CustomerList[0].CustId;
-            //     Fanex.ExtAcc.Customer.AllowDoubleComm = result.CustomerList[0].UplineDoubleCommLosing;
-            //     $.post(resolveClientUrl('CustomerList/GetCustomerStatus'), { custId: firstCustId, groupName: $("#selectedGroupName").html() }, function (custStatusResult) {
-            //         Fanex.ExtAcc.Customer.HideVirtualSports = custStatusResult.HideVirtualSports;
-            //         Fanex.ExtAcc.Customer.UplineProductSettings = Fanex.ExtAcc.Customer.GetProductSettings(custStatusResult, !isSuperList);
-            //     });
-            // }
+            if (bodyRows.length > 0) {
+                _this.DOMElements.icoExportExcel.off().click(function () {
+                    var params = {
+                        // groupName: $('#selectedGroupName').html() === '' ? 'ACCDDD' : $('#selectedGroupName').html(),
+                        // groupId: $('#ddlGroupName').val(),
+                        UserName: _this.DOMElements.txtUsername.val(),
+                        GroupHeadline: _this.DOMElements.txtGroupHeadline.val(),
+                        Status: _this.DOMElements.selStatus.val(),
+                        // uplineRoleId: _this.cachedParams.uplineRoleId,
+                        // isShowSuperLimitDate: _this.DOMElements.chkShowSuperLimitDate.is(":checked"),
+                        // IsNoDownlines: _this.DOMElements.chkIsNoDownlines.is(":checked"),
+                        // uplineId: _this.cachedParams.uplineId
+                    };
+
+                    // if (isShowCurrency) {
+                    //     params.currencyIds = _this.DOMElements.$multiSelectCurrency.fanexMultiSelect("getItems", true).join(",");
+                    // }
+
+                    top.exportExcel(resolveClientUrl("HeadlineList/ExportHeadlines?") + top.serialize(params), document);
+                });
+
+                // var firstCustId = result.CustomerList[0].CustId;
+                // Fanex.ExtAcc.Customer.AllowDoubleComm = result.CustomerList[0].UplineDoubleCommLosing;
+                // $.post(resolveClientUrl('CustomerList/GetCustomerStatus'), { custId: firstCustId, groupName: $("#selectedGroupName").html() }, function (custStatusResult) {
+                //     Fanex.ExtAcc.Customer.HideVirtualSports = custStatusResult.HideVirtualSports;
+                //     Fanex.ExtAcc.Customer.UplineProductSettings = Fanex.ExtAcc.Customer.GetProductSettings(custStatusResult, !isSuperList);
+                // });
+            }
         }).always(function () {
             Fanex.ExtAcc.UnBlockUI();
             // $("#divSortingByUsername").click(function () {
@@ -359,28 +362,20 @@ Fanex.ExtAcc.HeadlineList = {
 
     GetGridHeader: function () {
         var columns = [];
-        columns.push({HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center'});
+        columns.push({HeaderText: 'No.', Name: 'RowNumber', Width: 50, CellAlign: 'center'});
         columns.push({
-            HeaderText: 'Headline', Name: 'GroupName', Width: 200, CellAlign: 'center',
+            HeaderText: 'Headline', Name: 'GroupName', Width: 250, CellAlign: 'center',
             CellId: 'HeadlineSorting',
             Sort: true,
         });
         columns.push({
-            HeaderText: 'Username', Name: 'Username', Width: 200, CellAlign: 'center',
+            HeaderText: 'Username', Name: 'Username', Width: 250, CellAlign: 'center',
             CellId: 'UsernameSorting',
             Sort: true,
-            // CustomCellRender: function (cell) {
-            //     console.log(cell)
-            //     return Fanex.ExtAcc.HeadlineList.RenderHeadlineEntities(cell, "Username");
-            // }
         });
 
         columns.push({
-            HeaderText: 'Status', Name: 'Status', Width: 100, CellAlign: 'center',
-            // CustomCellRender: function (cell) {
-            //     console.log(cell)
-            //     return Fanex.ExtAcc.HeadlineList.RenderHeadlineEntities(cell, "Status");
-            // }
+            HeaderText: 'Status', Name: 'Status', Width: 80, CellAlign: 'center',
         });
 
         return columns.filter(function (item) {

@@ -42,6 +42,9 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+          <HintPath>..\..\packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+        </Reference>
         <Reference Include="Fanex.Common">
           <HintPath>..\..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
         </Reference>
@@ -58,6 +61,18 @@
           <HintPath>..\..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.CSharp"/>
+        <Reference Include="NPOI.Core, Version=2.6.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+          <HintPath>..\..\packages\NPOI.2.6.1\lib\netstandard2.0\NPOI.Core.dll</HintPath>
+        </Reference>
+        <Reference Include="NPOI.OOXML, Version=2.6.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+          <HintPath>..\..\packages\NPOI.2.6.1\lib\netstandard2.0\NPOI.OOXML.dll</HintPath>
+        </Reference>
+        <Reference Include="NPOI.OpenXml4Net, Version=2.6.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+          <HintPath>..\..\packages\NPOI.2.6.1\lib\netstandard2.0\NPOI.OpenXml4Net.dll</HintPath>
+        </Reference>
+        <Reference Include="NPOI.OpenXmlFormats, Version=2.6.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+          <HintPath>..\..\packages\NPOI.2.6.1\lib\netstandard2.0\NPOI.OpenXmlFormats.dll</HintPath>
+        </Reference>
         <Reference Include="System"/>
         <Reference Include="System.Data"/>
         <Reference Include="System.Drawing"/>
@@ -142,6 +157,7 @@
         </Compile>
         <Compile Include="Services\HeadlineListExcel.cs" />
         <Compile Include="Services\HeadlineListService.cs" />
+        <Compile Include="ViewModels\SearchHeadlineViewModel.cs" />
     </ItemGroup>
     <ItemGroup>
         <None Include="app.config" />
@@ -163,9 +179,6 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>ViewLang.Designer.cs</LastGenOutput>
       </EmbeddedResource>
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="ViewModels\" />
     </ItemGroup>
     <PropertyGroup>
         <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
