@@ -174,7 +174,7 @@
         {
             if (ProductSettings.IsShowLiveCasino)
             {
-                AddDummyProductLink(table3rdDCS, editLinks, ProductConstants.LiveCasino, new ObjectInfo("LiveCasino", "Live Casino"));
+                AddDummyProductLink(table3rdDCS, editLinks, ProductConstants.LiveCasino, new ObjectInfo("LiveCasino", "Live & RNG Casino"));
             }
 
             if (ProductSettings.IsShowRNGLottery)

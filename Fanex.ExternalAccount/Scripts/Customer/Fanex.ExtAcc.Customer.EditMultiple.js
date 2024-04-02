@@ -296,7 +296,7 @@ Fanex.ExtAcc.Customer.ShowEditMultiplePT = function (uplineRoleId) {
     top.shouldCalculatePopupHeight = true;
     if (!this.IsMultiple) {
         Fanex.ExtAcc.Form.ShowFrame(
-            resolveClientUrl('Customer/EditCustomer?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
+            resolveClientUrl('Customer/EditCustomer?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&productGroupId=1' + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
             1250,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);
@@ -434,7 +434,7 @@ Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT = function (uplineRoleId) {
 
     if (!this.IsMultiple) {
         Fanex.ExtAcc.Form.ShowFrame(
-            resolveClientUrl('Customer/EditCustomer?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
+            resolveClientUrl('Customer/EditCustomer?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&productGroupId=1' + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
             1250,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);
