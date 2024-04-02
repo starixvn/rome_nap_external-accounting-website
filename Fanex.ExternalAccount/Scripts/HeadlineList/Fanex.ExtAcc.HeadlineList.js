@@ -139,6 +139,38 @@ Fanex.ExtAcc.HeadlineList = {
     //     _this.Search(_this.cachedParams.previousParams);
     // },
     RenderBodyRows: function (groupHeadlines) {
+        function GetCSSRow(status) {
+            switch (status) {
+                case 'Disabled':
+                    return 'rowDisabled';
+                case 'Suspended':
+                    return 'rowSuspended';
+                default:
+                    return '';
+            }
+        }
+
+        // const GetClassRow = function (currentRow) {
+        //     const status = currentRow.Status;
+        //   
+        //     if (status === 'Disabled') {
+        //         return 'rowDisabled';
+        //     }
+        //
+        //     if (currentRow.Closed) {
+        //         return Fanex.ExtAcc.Customer.GetClosedClassName(currentRow);
+        //     }
+        //
+        //     if (status === 'Suspended') {
+        //         return 'rowSuspended';
+        //     }
+        //
+        //     if (currentRow.LockedAccess.IsLocked) {
+        //         return currentRow.LockedAccess.ClassName;
+        //     }
+        //
+        //     return '';
+        // };
         let bodyRows = [];
         const numberRow = groupHeadlines.length;
         for (let i = 0; i < numberRow; i++) {
@@ -149,12 +181,17 @@ Fanex.ExtAcc.HeadlineList = {
                 const headline = groupHeadline.HeadlineEntities[j];
                 let columns = [];
                 if (j === 0) {
-                    columns.push({Name: "RowNumber", Value: i+1, MergeRowNumber: rowMerge});
-                    columns.push({Name: 'GroupName', Value: groupHeadline.GroupName, MergeRowNumber: rowMerge,  CellAlign: 'center'});
+                    columns.push({Name: "RowNumber", Value: i + 1, MergeRowNumber: rowMerge});
+                    columns.push({
+                        Name: 'GroupName',
+                        Value: groupHeadline.GroupName,
+                        MergeRowNumber: rowMerge,
+                        CellAlign: 'center'
+                    });
                 }
-                columns.push({Name: 'Username', Value: headline.Username,  CellAlign: 'center'});
+                columns.push({Name: 'Username', Value: headline.Username, CellAlign: 'center'});
                 columns.push({Name: 'Status', Value: headline.Status});
-                bodyRows.push({Columns: columns});
+                bodyRows.push({Columns: columns, CssClass: GetCSSRow(headline.Status)});
             }
         }
         return bodyRows;
@@ -181,7 +218,7 @@ Fanex.ExtAcc.HeadlineList = {
                 customPager: true,
                 // showNumberColumn: true,
                 pagerOption: {
-                    itemsPerPageArray: [100,200,300,400,500],
+                    itemsPerPageArray: [100, 200, 300, 400, 500],
                     currentPage: result.PageIndex - 1,
                     totalItem: result.TotalGroups,
                     itemsPerPage: params.PageSize,
@@ -189,17 +226,17 @@ Fanex.ExtAcc.HeadlineList = {
                         // Fanex.ExtAcc.Customer.DisableMultipleContextMenu();
                         _this.cachedParams.PageIndex = currentPageIndex;
                         _this.cachedParams.PageSize = itemsPerPage;
-                        _this.SubmitSearch(itemsPerPage,currentPageIndex);
+                        _this.SubmitSearch(itemsPerPage, currentPageIndex);
                     }
                 },
                 sortOption:
                     {
                         serverSortFunction: function (sortColumnName, sortDirection) {
-                            if(sortColumnName==='GroupName'){
-                                backupResult.GroupHeadlines = _this.SortByNameExceptFirst(backupResult.GroupHeadlines, 'GroupName', sortDirection,true);
+                            if (sortColumnName === 'GroupName') {
+                                backupResult.GroupHeadlines = _this.SortByNameExceptFirst(backupResult.GroupHeadlines, 'GroupName', sortDirection, true);
                             }
-                            if(sortColumnName==='Username'){
-                                for(const element of backupResult.GroupHeadlines) {
+                            if (sortColumnName === 'Username') {
+                                for (const element of backupResult.GroupHeadlines) {
                                     element.HeadlineEntities = _this.SortByNameExceptFirst(element.HeadlineEntities, 'Username', sortDirection);
                                 }
                             }
@@ -340,26 +377,6 @@ Fanex.ExtAcc.HeadlineList = {
     // },
 
 
-    GetCSSRow: function (currentRow) {
-        if (!currentRow.Enabled) {
-            return 'rowDisabled';
-        }
-
-        if (currentRow.Closed) {
-            return Fanex.ExtAcc.Customer.GetClosedClassName(currentRow);
-        }
-
-        if (currentRow.Suspended) {
-            return 'rowSuspended';
-        }
-
-        if (currentRow.LockedAccess.IsLocked) {
-            return currentRow.LockedAccess.ClassName;
-        }
-
-        return '';
-    },
-
     GetGridHeader: function () {
         var columns = [];
         columns.push({HeaderText: 'No.', Name: 'RowNumber', Width: 50, CellAlign: 'center'});
@@ -468,15 +485,15 @@ Fanex.ExtAcc.HeadlineList = {
             return item !== undefined
         });
     },
-    SortByNameExceptFirst: function(arr, sortColumnName, sortDirection,ignoreFirst = false) {
+    SortByNameExceptFirst: function (arr, sortColumnName, sortDirection, ignoreFirst = false) {
         const firstElement = ignoreFirst ? arr.shift() : null;
         const sorted = arr.sort(function (a, b) {
             const comparison = a[sortColumnName].localeCompare(b[sortColumnName]);
             return sortDirection === "asc" ? comparison : -comparison;
         });
-   
-        const result=  ignoreFirst ? [firstElement].concat(sorted) : sorted;
-        console.log("call sort", sortColumnName,sortDirection,result)
+
+        const result = ignoreFirst ? [firstElement].concat(sorted) : sorted;
+        console.log("call sort", sortColumnName, sortDirection, result)
         return result;
     },
     RenderBreadScrumbs: function (uplineId, uplineRoleId) {

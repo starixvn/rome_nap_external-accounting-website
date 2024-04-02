@@ -13,7 +13,6 @@
     {
         private readonly IHeadlineListService service;
         private readonly IHeadlineListExcel excel;
-        private readonly string SessionKeyHeadlines = "Fanex.ExternalAccount.HeadlineList";
 
         public HeadlineListController() : this(null, null) { }
 
@@ -24,25 +23,24 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.HeadlineList, Policy = AuthenticationType.Read)]
-        public ActionResult Index()
-            => PartialViewBase();
+        public ActionResult Index() => PartialViewBase();
 
 
         [ExternalAccountAuthenticate(Function = eFunctions.HeadlineList, Policy = AuthenticationType.Read)]
         public ActionResult Search(SearchHeadlineViewModel query)
         {
-            var headlineResult = service.GetHeadlines(query, CurrentSession.UserId);
+            var headlineResult = service.GetHeadlines(query, CurrentSession.UserId, ExtRequest.GetGroupName());
             return Json(headlineResult, JsonRequestBehavior.AllowGet);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.HeadlineList, Policy = AuthenticationType.Read)]
         public ActionResult ExportHeadlines(SearchHeadlineViewModel query)
         {
-            var data = service.GetHeadlines(query, CurrentSession.UserId);
+            var data = service.GetHeadlines(query, CurrentSession.UserId,ExtRequest.GetGroupName());
             var excelFile = excel.ExportHeadlinesExcel(data).ToArray();
             var today = DateTime.Now.ToString("yyyyMMdd");
             var fileName = $"SMAListByHeadline{today}.xls";
-
+           
             return File(excelFile, "application/vnd.ms-excel", fileName);
         }
     }

@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using Fanex.CustomerSetting.Module.Core.Web;
 using Fanex.NAP.Framework.Data;
 
 namespace Fanex.ExternalAccount.HeadlineList.Criteria
@@ -13,16 +11,17 @@ namespace Fanex.ExternalAccount.HeadlineList.Criteria
 
         public int TotalRows { get; set; }
         public int Status { get; set; }
-        
         public string Username { get; set; }
         public string GroupHeadline { get; set; }
+        public string GroupName { get; set; }
 
-        public GetHeadlinesCriteria(string username, string groupHeadline, int status, int userId)
+        public GetHeadlinesCriteria(string username, string groupHeadline, int status, int userId, string groupName)
         {
             Status = status;
             Username = username;
             GroupHeadline = groupHeadline;
             UserID = userId;
+            GroupName = groupName;
         }
         
         public int UserID { get; set; }
@@ -38,7 +37,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Criteria
                 { "username", Username },
                 { "groupheadline", GroupHeadline },
                 { "status", Status },
-                { "groupname", "ACCUUS" },
+                { "groupname", GroupName },
                 { "userid", UserID },
             };
         }
