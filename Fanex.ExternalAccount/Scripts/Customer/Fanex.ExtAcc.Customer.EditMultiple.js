@@ -320,7 +320,7 @@ Fanex.ExtAcc.Customer.ShowEditMultiplePT = function (uplineRoleId) {
             CustIds += custIdsArr[i] + linkChar;
         }
         Fanex.ExtAcc.Form.ShowFrame(
-            resolveClientUrl('Customer/EditMultiple?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custIds=' + CustIds + '&usernames=' + Usernames + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Multiple Sportsbook Setting',
+            resolveClientUrl('Customer/EditMultiple?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custIds=' + CustIds + '&productGroupId=1' + '&usernames=' + Usernames + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Multiple Sportsbook Setting',
             1250,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);
@@ -458,7 +458,7 @@ Fanex.ExtAcc.Customer.ShowSuperMasterEditMultiplePT = function (uplineRoleId) {
         }
 
         Fanex.ExtAcc.Form.ShowFrame(
-            resolveClientUrl('Customer/EditMultiple?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custIds=' + CustIds + '&usernames=' + Usernames + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Multiple Sportsbook Setting',
+            resolveClientUrl('Customer/EditMultiple?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custIds=' + CustIds + '&productGroupId=1' + '&usernames=' + Usernames + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Multiple Sportsbook Setting',
             1250,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);

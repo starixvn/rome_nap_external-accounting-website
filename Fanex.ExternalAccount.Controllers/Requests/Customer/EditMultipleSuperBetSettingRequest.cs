@@ -16,7 +16,8 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
             Usernames,
             RoleId,
             UplineRoleId,
-            IsCopyBetSetting = IsCopy
+            ProductGroupId,
+            IsCopyBetSetting = IsCopy,
         }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
     }
 }
