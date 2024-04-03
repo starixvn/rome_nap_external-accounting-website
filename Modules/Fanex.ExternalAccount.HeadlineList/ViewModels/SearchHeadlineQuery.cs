@@ -1,12 +1,15 @@
 namespace Fanex.ExternalAccount.HeadlineList.ViewModels
 {
-    public class SearchHeadlineViewModel
+    public class SearchHeadlineQuery
     {
         public string Username { get; set; }
+        
         public string GroupHeadline { get; set; }
+        
         public int Status { get; set; }
         
         public int PageIndex { get; set; } = 1;
+        
         public int PageSize { get; set; } = 100;
     }
 }

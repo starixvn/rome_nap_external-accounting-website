@@ -1,19 +1,14 @@
-using System.Collections;
-using Fanex.NAP.Framework.Data;
-
 namespace Fanex.ExternalAccount.HeadlineList.Criteria
 {
+    using System.Collections;
+    using Fanex.NAP.Framework.Data;
     public class GetHeadlinesCriteria : CriteriaBase
     {
-        public int PageIndex { get; }
-
-        public int PageSize { get; }
-
-        public int TotalRows { get; set; }
         public int Status { get; set; }
         public string Username { get; set; }
         public string GroupHeadline { get; set; }
         public string GroupName { get; set; }
+        public int UserID { get; set; }
 
         public GetHeadlinesCriteria(string username, string groupHeadline, int status, int userId, string groupName)
         {
@@ -24,7 +19,6 @@ namespace Fanex.ExternalAccount.HeadlineList.Criteria
             GroupName = groupName;
         }
         
-        public int UserID { get; set; }
         public override string GetSettingKey()
         {
             return "EAS_CustomerSelByGroupHeadline";
@@ -44,7 +38,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Criteria
         
         public override bool IsValid()
         {
-            return UserID >0;
+            return UserID > 0 && !string.IsNullOrWhiteSpace(GroupName);
         }
     }
 }

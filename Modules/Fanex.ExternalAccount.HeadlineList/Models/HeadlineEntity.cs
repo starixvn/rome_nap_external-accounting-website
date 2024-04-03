@@ -11,5 +11,15 @@ namespace Fanex.ExternalAccount.HeadlineList.Models
         public string Username { get; set; }
         
         public string Status { get; set; }
+        
+        public bool IsEnable { get; set; }
+        
+        public bool IsSuspend { get; set; }
+        
+        public bool IsClosed { get; set; }
+        
+        public byte ClosedReason { get; set; }
+        
+        
     }
 }

@@ -8,7 +8,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
 
     public interface IHeadlineListService
     {
-        SearchHeadlineResult GetHeadlines(SearchHeadlineViewModel query, int userId, string groupName);
+        SearchHeadlineResult GetHeadlines(SearchHeadlineQuery query, int userId, string groupName);
     }
 
     public class HeadlineListService : IHeadlineListService
@@ -20,15 +20,21 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
             _dataAccess = dataAccess ?? new HeadlinesDataAccess();
         }
 
-        public SearchHeadlineResult GetHeadlines(SearchHeadlineViewModel query, int userId, string groupName)
+        public SearchHeadlineResult GetHeadlines(SearchHeadlineQuery query, int userId, string groupName)
         {
-            var dbResult = _dataAccess.GetGroupHeadlines(new GetHeadlinesCriteria(query.Username, query.GroupHeadline, query.Status, userId, groupName));
+            var criteria = new GetHeadlinesCriteria(
+                query.Username,
+                query.GroupHeadline,
+                query.Status, userId,
+                groupName
+            );
+            var dbResult = _dataAccess.GetGroupHeadlines(criteria);
             var pagingResult = new SearchHeadlineResult
             {
                 TotalGroups = dbResult.TotalHeadlineGroups,
                 PageIndex = query.PageIndex,
                 TotalHeadlines = dbResult.TotalHeadlines,
-                GroupHeadlines = dbResult.GroupHeadlines
+                GroupHeadlines = dbResult.Groups
                     .Skip(query.PageSize * (query.PageIndex - 1))
                     .Take(query.PageSize)
                     .ToList()

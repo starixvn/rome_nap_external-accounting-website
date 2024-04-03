@@ -1,20 +1,19 @@
-using System.Collections.Generic;
-using System.Data;
-using Fanex.CustomerSetting.Module.Core;
-using Fanex.ExternalAccount.HeadlineList.Criteria;
-using Fanex.Data;
-using Fanex.ExternalAccount.HeadlineList.Models;
-
 namespace Fanex.ExternalAccount.HeadlineList.DataAccesses
 {
+    using System.Collections.Generic;
+    using System.Data;
+    using Fanex.CustomerSetting.Module.Core;
+    using Criteria;
+    using Data;
+    using Models;
     public interface IHeadlinesDataAccess
     {
-        GetGroupHeadlinesResult GetGroupHeadlines(GetHeadlinesCriteria criteria);
+        GroupsHeadline GetGroupHeadlines(GetHeadlinesCriteria criteria);
     }
 
     public class HeadlinesDataAccess : IHeadlinesDataAccess
     {
-        public GetGroupHeadlinesResult GetGroupHeadlines(GetHeadlinesCriteria criteria)
+        public GroupsHeadline GetGroupHeadlines(GetHeadlinesCriteria criteria)
         {
             IDictionary<int, GroupHeadline> groupHeadlinesHash = new Dictionary<int, GroupHeadline>();
             var countHeadline = 0;
@@ -46,9 +45,9 @@ namespace Fanex.ExternalAccount.HeadlineList.DataAccesses
                 }
             }
 
-            return new GetGroupHeadlinesResult
+            return new GroupsHeadline
             {
-                GroupHeadlines = groupHeadlinesHash.Values,
+                Groups = groupHeadlinesHash.Values,
                 TotalHeadlines = countHeadline
             };
         }
@@ -56,13 +55,22 @@ namespace Fanex.ExternalAccount.HeadlineList.DataAccesses
 
         private HeadlineEntity ParseHeadlineEntity(IDataReader reader)
         {
-            var entity = new HeadlineEntity()
+            var isSuspend = reader.ToBoolean("issuspend");
+            var isClosed = reader.ToBoolean("isclosed");
+            var isEnable = reader.ToBoolean("isenable");
+            var StatusMapping = !isEnable ? "Disabled" : isClosed ? "Closed" : isSuspend ? "Suspended" : "Open";
+
+            var entity = new HeadlineEntity
             {
                 GroupId = reader.ToInt32("custheadlineid"),
                 GroupName = reader.ToString("groupheadline"),
                 CustId = reader.ToInt32("custid"),
                 Username = reader.ToString("username"),
-                Status = reader.ToString("status"),
+                Status = StatusMapping,
+                IsSuspend = isSuspend,
+                IsClosed = isClosed,
+                IsEnable = isEnable,
+                ClosedReason = reader.ToByte("closedreason"),
             };
             return entity;
         }

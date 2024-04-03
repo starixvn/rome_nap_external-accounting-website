@@ -27,14 +27,14 @@
 
 
         [ExternalAccountAuthenticate(Function = eFunctions.HeadlineList, Policy = AuthenticationType.Read)]
-        public ActionResult Search(SearchHeadlineViewModel query)
+        public ActionResult Search(SearchHeadlineQuery query)
         {
             var headlineResult = service.GetHeadlines(query, CurrentSession.UserId, ExtRequest.GetGroupName());
             return Json(headlineResult, JsonRequestBehavior.AllowGet);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.HeadlineList, Policy = AuthenticationType.Read)]
-        public ActionResult ExportHeadlines(SearchHeadlineViewModel query)
+        public ActionResult ExportHeadlines(SearchHeadlineQuery query)
         {
             var data = service.GetHeadlines(query, CurrentSession.UserId,ExtRequest.GetGroupName());
             var excelFile = excel.ExportHeadlinesExcel(data).ToArray();
