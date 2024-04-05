@@ -1,5 +1,5 @@
 ﻿// tag for later search :D
-// Fanex.ExtAcc.Customer.CustomerList.SingleEditSuper 
+// Fanex.ExtAcc.Customer.CustomerList.SingleEditSuper
 // Fanex.ExtAcc.Customer.CustomerList.SingleEditMaster
 // Fanex.ExtAcc.Customer.CustomerList.SingleEditAgent
 // Fanex.ExtAcc.Customer.CustomerList.SingleEditMember
@@ -42,7 +42,6 @@ Fanex.ExtAcc.Customer.CustomerList = {
         } else {
             this.DOMElements.btnSearch.click();
         }
-
     },
 
     InitCurrencyList: function () {
@@ -232,8 +231,9 @@ Fanex.ExtAcc.Customer.CustomerList = {
 
                 var firstCustId = result.CustomerList[0].CustId;
                 Fanex.ExtAcc.Customer.AllowDoubleComm = result.CustomerList[0].UplineDoubleCommLosing;
-                $.post(resolveClientUrl('CustomerList/GetCustomerStatus'), { custId: firstCustId, groupName: $("#selectedGroupName").html() }, function (custStatusResult) {                  
+                $.post(resolveClientUrl('CustomerList/GetCustomerStatus'), { custId: firstCustId, groupName: $("#selectedGroupName").html() }, function (custStatusResult) {
                     Fanex.ExtAcc.Customer.HideVirtualSports = custStatusResult.HideVirtualSports;
+                    Fanex.ExtAcc.Customer.ProductGroups = custStatusResult.ProductGroups;
                     Fanex.ExtAcc.Customer.UplineProductSettings = Fanex.ExtAcc.Customer.GetProductSettings(custStatusResult, !isSuperList);
                 });
             }
@@ -374,7 +374,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push({ HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 });
         columns.push({ HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 });
         columns.push(!isMemberList ? { HeaderText: 'Commission', Name: 'commision', MergeColNumber: isMyanmarOdds ? 4 : 6 } : undefined);
-        columns.push(showSubGroups ? { HeaderText: 'Assigned Sub Groups', Name: 'AssignedSubGroups', MergeRowNumber: 2 } : undefined);       
+        columns.push(showSubGroups ? { HeaderText: 'Assigned Sub Groups', Name: 'AssignedSubGroups', MergeRowNumber: 2 } : undefined);
         columns.push(isMemberList ? { HeaderText: 'User Group', Name: 'ugroup', MergeRowNumber: 2 } : undefined);
         columns.push(isMemberList ? { HeaderText: 'Agent Commission', Name: 'discount', MergeColNumber: isMyanmarOdds ? 4 : 3 } : undefined);
         columns.push(isMemberList ? { HeaderText: 'Player Commission', Name: 'playerdiscount', MergeColNumber: isMyanmarOdds ? 4 : 3 } : undefined);
