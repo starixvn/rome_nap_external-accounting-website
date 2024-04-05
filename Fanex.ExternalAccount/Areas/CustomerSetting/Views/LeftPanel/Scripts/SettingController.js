@@ -913,8 +913,18 @@
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=4" + "&productGroupId=1" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
     };
 
-    $scope.SuperCasino = function () {
-        $scope.RenderSupeOnMemberDCS(6);
+    $scope.SuperLiveAndRNGCasino = function () {
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        var agentId = $scope.model.personalInfo.downlines[2].key;
+
+        parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.agentId = agentId;
+        parent.Fanex.ExtAcc.Customer.masterId = masterId;
+        parent.Fanex.ExtAcc.Customer.superId = superId;
+        $scope.ResetGlobalValueAtSuperOnMember();
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=4" + "&productGroupId=3" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
     };
 
     $scope.SuperVirtualSports = function () {
@@ -935,20 +945,22 @@
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=3" + "&productGroupId=1" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
     };
 
-    $scope.MasterCasino = function () {
-        $scope.RenderMasterOnMemberDCS(6);
+    $scope.MasterLiveAndRNGCasino = function () {
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        var agentId = $scope.model.personalInfo.downlines[2].key;
+
+        $scope.ResetGlobalValueAtMasterOnMember();
+        parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.agentId = agentId;
+        parent.Fanex.ExtAcc.Customer.masterId = masterId;
+        parent.Fanex.ExtAcc.Customer.superId = superId;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=3" + "&productGroupId=3" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
     };
 
     $scope.MasterVirtualSports = function () {
         $scope.RenderMasterOnMemberDCS(5);
-    };
-
-    $scope.SuperLiveCasino = function () {
-        $scope.RenderSupeOnMemberDCS(41);
-    };
-
-    $scope.SuperVoidBridge = function () {
-        $scope.RenderSupeOnMemberDCS(18);
     };
 
     $scope.SuperFishingWorld = function () {
@@ -957,18 +969,6 @@
 
     $scope.SuperRNGLottery = function () {
         $scope.RenderSupeOnMemberDCS(44);
-    };
-
-    $scope.SuperVirtualGames = function () {
-        $scope.RenderSupeOnMemberDCS(64);
-    };
-
-    $scope.SuperSabagames = function () {
-        $scope.RenderSupeOnMemberDCS(42);
-    };
-
-    $scope.SuperVgaming = function () {
-        $scope.RenderSupeOnMemberDCS(66);
     };
 
     $scope.SuperBitcoin = function () {
@@ -980,32 +980,12 @@
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=' + productId + '&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
     };
 
-    $scope.MasterLiveCasino = function () {
-        $scope.RenderMasterOnMemberDCS(41);
-    };
-
-    $scope.MasterVoidBridge = function () {
-        $scope.RenderMasterOnMemberDCS(18);
-    };
-
     $scope.MasterFishingWorld = function () {
         $scope.RenderMasterOnMemberDCS(24);
     };
 
     $scope.MasterRNGLottery = function () {
         $scope.RenderMasterOnMemberDCS(44);
-    };
-
-    $scope.MasterVirtualGames = function () {
-        $scope.RenderMasterOnMemberDCS(64);
-    };
-
-    $scope.MasterSabagames = function () {
-        $scope.RenderMasterOnMemberDCS(42);
-    };
-
-    $scope.MasterVgaming = function () {
-        $scope.RenderMasterOnMemberDCS(66);
     };
 
     $scope.MasterBitcoin = function () {

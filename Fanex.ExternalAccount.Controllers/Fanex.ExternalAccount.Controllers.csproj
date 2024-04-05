@@ -469,6 +469,7 @@
     <Compile Include="ViewModels\Customer\CreateCustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerDataRangeViewModel.cs" />
     <Compile Include="ViewModels\Customer\CustomerBaseViewModel.cs" />
+    <Compile Include="ViewModels\Customer\CustomerSettingsViewModel.cs" />
     <Compile Include="ViewModels\Customer\EditCustomerViewModel.cs" />
     <Compile Include="ViewModels\Customer\IndirectEditMemberViewModel.cs" />
     <Compile Include="ViewModels\Customer\SportBookInformationViewModel.cs" />

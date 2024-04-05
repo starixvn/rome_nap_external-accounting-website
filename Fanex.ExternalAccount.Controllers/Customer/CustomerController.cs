@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
+    using System.Web.Security;
     using Core.Authorization;
     using Core.Base;
     using Core.Context;
@@ -19,9 +20,11 @@
     using Fanex.ExternalAccount.Controllers.Authentication;
     using Fanex.ExternalAccount.Controllers.Requests.Customer;
     using Fanex.ExternalAccount.Controllers.ViewModels.Customer;
+    using Fanex.ExternalAccount.DTO.Products;
     using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Service.TelegramBot;
     using IBCUtils;
+    using NPOI.SS.Formula.Functions;
     using PTEngine.BusinessObjects;
     using Service;
     using Service.Impl.Customer;
@@ -279,7 +282,7 @@
 
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditMultiple-Debug" : "EditMultiple");
         }
-        
+
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
         public ActionResult SportBookInformation(SportBookInformationRequest request)
         {
@@ -294,6 +297,7 @@
 
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "SportBookInformation-Debug" : "SportBookInformation");
         }
+
         public async Task<ActionResult> GetCustomerSetting(GetCustomerSettingRequest request)
         {
             if (!authorizationService.HasReadPermissionOnFunctions(new List<string> { eFunctions.Sportsbook, eFunctions.SportsbookBetting }, CurrentSession.UserId))
@@ -315,7 +319,6 @@
         private Task<string> GetSuggestUsername(string actorName, byte roleId)
             => customerServiceClient.GetSuggestUsername(actorName, roleId);
 
-
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
         public Task<string> GetMaxPayoutSettingInformation(string site, string siteLabel, string language = "en-US")
             => customerServiceClient.GetMaxPayoutSettingInformation(site, siteLabel, language);
@@ -323,15 +326,15 @@
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
         public Task<string> GetPTSettingInformation(int? custId, string site, string language = "en-US")
             => customerServiceClient.GetPTSettingInformation(custId, false, site, language);
-        
+
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
-        public Task<string> GetCommissionHint(int? custId,string site, string language = "en-US")
+        public Task<string> GetCommissionHint(int? custId, string site, string language = "en-US")
             => customerServiceClient.GetCommissionHint(custId ?? 0, site, language);
 
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
         public Task<string> GetProductCategories(int? custId, string site, int currency, string language = "en-US")
             => customerServiceClient.GetProductCategories(custId, site, currency, language);
-        
+
         private string GetApplicationPath()
         {
             var applicationPath = Response.ApplyAppPathModifier(Request.ApplicationPath);
@@ -373,22 +376,33 @@
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
             ViewBag.HideVirtualSports = custStatus.HideVirtualSport;
-            var visibledProducts = GetVisibledProducts(id, custId);
+            var productStatusList = productStatusService.GetProductStatusList(custId, id, Config.SettingStatus);
+            var visibledProductGroups = GetVisibleProductGroups(productStatusList);
+            var visibledProducts = GetVisibledProducts(productStatusList);
 
-            return PartialViewBase(visibledProducts);
+            return PartialViewBase(new CustomerSettingsViewModel(visibledProductGroups, visibledProducts));
         }
 
-        private List<Product> GetVisibledProducts(int roleId, int custId)
+        private static IEnumerable<Product> GetVisibleProductGroups(IList<ProductStatusDto> productStatusList)
+        {
+            var visibledProductGroups = productStatusList
+                .Where(p => p.GroupId != null && p.GroupId != ProductGroupConstants.Sportsbook && !p.IsHidden)
+                .Select(p => p.GroupId.Value)
+                .Distinct()
+                .Select(groupId => new Product(groupId, groupId, CacheRef.GetProductGroupName(groupId)));
+
+            return visibledProductGroups;
+        }
+
+        private static IEnumerable<Product> GetVisibledProducts(IList<ProductStatusDto> productStatusList)
         {
             var visibledProducts = new List<Product>();
-            var productStatusList = productStatusService.GetProductStatusList(custId, roleId, Config.SettingStatus);
 
             foreach (var product in ProductSettings.SiteProducts.Values)
             {
-                var productStatus = productStatusList.FirstOrDefault(p => p.ProductId == product.Id);
+                var productStatus = productStatusList.FirstOrDefault(p => p.ProductId == product.Id && p.GroupId == null);
                 if (productStatus != null
                     && !productStatus.IsHidden
-                    && productStatus.IsSyncedUpline
                     && ProductSettings.IsShowProduct(product.Id)
                     && product.Id != ProductConstants.SabaVirtualSports)
                 {

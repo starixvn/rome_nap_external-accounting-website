@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using Data;
     using DTO.Products;
+    using Fanex.Common.Extensions;
     using Fanex.ExternalAccount.Utilities;
 
     public interface ProductStatusDataAccess
@@ -40,7 +41,8 @@
                         IsSynced = reader.ToBoolean("IsSync"),
                         IsDisabled = reader.ToBoolean("IsDisabled"),
                         IsDisabledDownline = reader.ToBoolean("IsDisabledDownline"),
-                        IsHiddenUpline = reader.ToBoolean("IsHiddenUpline")
+                        IsHiddenUpline = reader.ToBoolean("IsHiddenUpline"),
+                        GroupId = reader.IsDBNull(reader.GetOrdinal("GroupId")) ? (int?)null : reader.ToInt32("GroupId")
                     });
                 }
 
