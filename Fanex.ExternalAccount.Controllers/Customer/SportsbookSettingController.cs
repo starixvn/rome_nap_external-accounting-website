@@ -3,17 +3,11 @@
     using Core.Base;
     using Core.Context;
     using Core.Shared;
-    using CustomerSetting.Module.Core.Services.Impl;
     using CustomerSetting.Security.Authenticate;
-    using Fanex.CustomerSetting.Module.Core.Constants;
-    using Fanex.CustomerSetting.Module.Core.Services.Interface;
     using Fanex.Logging.Extensions.Web;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
     using PTEngine.BusinessObjects;
-    using PTEngine.Services;
     using Service.Impl.Customer;
-    using Service.Interface.Customer;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -179,7 +173,6 @@
 
         public ActionResult ViewPtInfo(int custId)
         {
-            
             var exclusiveRefSportIds = new List<int>(8);
 
             for (var i = NG2Start; i <= NG2End; i++)

@@ -9,6 +9,7 @@
     using ExternalAccount.Module.LeftPanel.Services;
     using Fanex.ExternalAccount.Service.Customer.CustomerList;
     using Fanex.ExternalAccount.Service.Impl.Customer;
+    using Fanex.ExternalAccount.Service.Products;
     using ViewModels;
 
     public static class BetSettingProductIntegration
@@ -25,6 +26,19 @@
         };
 
         private static CustomerService customerService = new CustomerService();
+        private static ProductStatusService productStatusService = new ProductStatusServiceImpl();
+
+        public static IEnumerable<Product> GetVisibledProductGroupBetSettingTabs(int custId, int roleId, byte settingStatus)
+        {
+            var productStatusList = productStatusService.GetProductStatusList(custId, roleId, settingStatus);
+            var visibledProductGroups = productStatusList
+                .Where(p => p.GroupId != null && p.GroupId != ProductGroupConstants.Sportsbook && !p.IsHidden)
+                .Select(p => p.GroupId.Value)
+                .Distinct()
+                .Select(groupId => new Product(groupId, groupId, CacheRef.GetProductGroupName(groupId)));
+
+            return visibledProductGroups;
+        }
 
         public static IList<Product> GetVisibledBetSettingTabs(int custId, byte settingStatus)
         {

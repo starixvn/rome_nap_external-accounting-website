@@ -327,6 +327,10 @@
       <Project>{3521a845-d2bf-4916-b02c-0b0e02f774db}</Project>
       <Name>Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Fanex.ExternalAccount.DataAccess\Fanex.ExternalAccount.DataAccess.csproj">
+      <Project>{E0A7A640-964E-4ED8-A065-6109BD505107}</Project>
+      <Name>Fanex.ExternalAccount.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj">
       <Project>{aa1ea660-0e91-4c46-8100-f39c6a0bfc0b}</Project>
       <Name>Fanex.ExternalAccount.DTO</Name>

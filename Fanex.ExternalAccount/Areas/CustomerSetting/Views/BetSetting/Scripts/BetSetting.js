@@ -67,6 +67,13 @@ function LoadProduct(productId) {
     setTimeout(Fanex.CustomerSetting.Core.UnBlockUI, 1000);
 };
 
+function LoadProductGroup(productGroupId) {
+    Fanex.CustomerSetting.Core.BlockUI();
+    var url = parent.resolveClientUrl("Customer/EditSuperBetSetting?productGroupId=" + productGroupId + "&custId=" + custId + "&roleId=4&uplineRoleId=5&groupName=" + parent.$('#selectedGroupName').html());
+    document.getElementById("product-group-" + productGroupId).src = url;
+    setTimeout(Fanex.CustomerSetting.Core.UnBlockUI, 1000);
+};
+
 function CopySB() {
     $("#errMsg").empty().hide();
     $("#sourceSuper").focus();
