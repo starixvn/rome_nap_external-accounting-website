@@ -50,6 +50,7 @@
     <Compile Include="Customer\OpenCustomer\UpdateCloseStatusBaseQuery.cs" />
     <Compile Include="Customer\OpenCustomer\UpdateMultipleClosedStatusQuery.cs" />
     <Compile Include="Customer\OpenCustomer\UpdateSingleClosedStatusQuery.cs" />
+    <Compile Include="Customer\SuperList\UpdateMultipleSuperRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -395,6 +395,7 @@
     <Compile Include="Customer\MarkAccountTypeController.cs" />
     <Compile Include="Customer\OpenCustomerController.cs" />
     <Compile Include="Customer\ProtectedStatusController.cs" />
+    <Compile Include="Customer\SuperInfoController.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusController.cs" />
     <Compile Include="DataRange\DataRangeController.cs" />
     <Compile Include="Customer\SportsbookSettingController.cs" />
