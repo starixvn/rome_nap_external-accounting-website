@@ -3,15 +3,14 @@
     public enum EnableStatusProductFunction
     {
         EnableVirtualSports = 5,
-        EnableCasino = 6,
-        EnableLiveCasino = 41,
-        EnableVoidbridge = 18,
         EnableRNGLottery = 44,
-        EnableVirtualGames = 64,
-        EnableSabaclub = 42,
         EnableSabaVirtualSports = 54,
-        EnableVGaming = 66,
         EnableBitcoin = 69,
         EnableCashout = 25
+    }
+
+    public enum EnableStatusProductGroupFunction
+    {
+        EnableLiveAndRNGCasino = 3
     }
 }

@@ -135,6 +135,7 @@
     <Compile Include="Extensions\ObjectDbExtensions.cs" />
     <Compile Include="PagingConstants.cs" />
     <Compile Include="Product.cs" />
+    <Compile Include="ProductGroupConstants.cs" />
     <Compile Include="ProductSettings.cs" />
     <Compile Include="ProductConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

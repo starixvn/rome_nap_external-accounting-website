@@ -254,9 +254,7 @@
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 var result = new CustomerStatusDTO();
-                CustomerStatusDCS liveCasino = null;
                 CustomerStatusDCS rngLottery = null;
-                CustomerStatusDCS macauGames = null;
                 var reader = objDb.ExecuteReader(criteria.GetSpParams());
                 if (reader.Read())
                 {
@@ -274,35 +272,6 @@
                     {
                         result.HideVirtualSport = Utils.ToBoolean(reader["isHidden"]);
                         result.DisableVirtualSport = Utils.ToBoolean(reader["isDisabled"]);
-                        continue;
-                    }
-
-                    if (productId == ProductConstants.LiveCasino)
-                    {
-                        if (liveCasino == null)
-                        {
-                            liveCasino = new CustomerStatusDCS
-                            {
-                                ProductID = productId,
-                                ProductName = ProductSettings.SiteProducts[productId]?.Name,
-                                IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
-                                IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
-                                IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
-                                IsSynced = Utils.ToBoolean(reader["isSync"]),
-                                IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
-                            };
-                        }
-                        else
-                        {
-                            if (!Utils.ToBoolean(reader["isHidden"]))
-                            {
-                                liveCasino.IsDisabled = liveCasino.IsDisabled || Utils.ToBoolean(reader["isDisabled"]);
-                                liveCasino.IsDisabledUpline = liveCasino.IsDisabledUpline || Utils.ToBoolean(reader["isDisabledUpline"]);
-                            }
-
-                            liveCasino.IsHidden = liveCasino.IsHidden && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
-                        }
-
                         continue;
                     }
 
@@ -335,35 +304,6 @@
                         continue;
                     }
 
-                    if (productId == ProductConstants.RNGSlot)
-                    {
-                        if (macauGames == null)
-                        {
-                            macauGames = new CustomerStatusDCS
-                            {
-                                ProductID = productId,
-                                ProductName = ProductSettings.SiteProducts[productId]?.Name,
-                                IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
-                                IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
-                                IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
-                                IsSynced = Utils.ToBoolean(reader["isSync"]),
-                                IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
-                            };
-                        }
-                        else
-                        {
-                            if (!Utils.ToBoolean(reader["isHidden"]))
-                            {
-                                macauGames.IsDisabled = macauGames.IsDisabled || Utils.ToBoolean(reader["isDisabled"]);
-                                macauGames.IsDisabledUpline = macauGames.IsDisabledUpline || Utils.ToBoolean(reader["isDisabledUpline"]);
-                            }
-
-                            macauGames.IsHidden = macauGames.IsHidden && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
-                        }
-
-                        continue;
-                    }
-
                     if (!result.IsDCSProductExisted(productId))
                     {
                         result.DCSProductsSetting.Add(new CustomerStatusDCS
@@ -379,19 +319,9 @@
                     }
                 }
 
-                if (liveCasino != null)
-                {
-                    result.DCSProductsSetting.Add(liveCasino);
-                }
-
                 if (rngLottery != null)
                 {
                     result.DCSProductsSetting.Add(rngLottery);
-                }
-
-                if (macauGames != null)
-                {
-                    result.DCSProductsSetting.Add(macauGames);
                 }
 
                 return result;

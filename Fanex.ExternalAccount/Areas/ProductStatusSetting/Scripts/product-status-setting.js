@@ -10979,7 +10979,9 @@ var ProductStatusSettingBase = /** @class */ (function () {
         this.getRoleId = function (element) { return _this.$(element).data("roleid"); };
         this.isEnablebUpline = function (element) { return !_this.parseBoolean(_this.$(element).data("disabledupline")); };
         this.getBetType = function (element) { return _this.$(element).data("bettype"); };
+        this.getParentBetType = function (element) { return _this.$(element).data("parent-bettype"); };
         this.getSportType = function (element) { return _this.$(element).data("sporttype"); };
+        this.getParentSportType = function (element) { return _this.$(element).data("parent-sporttype"); };
         this.isChecked = function (element) { return _this.$(element).is(":checked"); };
         this.isChangeState = function (originValue, currentValue) {
             return originValue != currentValue;
@@ -11002,6 +11004,14 @@ var ProductStatusSettingBase = /** @class */ (function () {
         this.getFirstToggle = function (toggles, roleId) {
             return _this.getToggles(toggles, roleId)[0];
         };
+        this.getTogglesByParentSportTypeBetType = function (toggles, roleId, parentSportType, parentBetType) {
+            return toggles.filter(function (toggle) {
+                if (_this.getRoleId(toggle) == roleId && _this.getParentSportType(toggle) == parentSportType && _this.getParentBetType(toggle) == parentBetType) {
+                    return toggle;
+                }
+            });
+        };
+        this.isParentRow = function (toggles) { return _this.getParentSportType(toggles) === 0 && _this.getParentBetType(toggles) === 0; };
         this.onSubmit = function (e) {
             e.preventDefault();
             var updateViewModel = _this.getUpdateViewModel();
@@ -11044,6 +11054,7 @@ var ProductStatusSettingBase = /** @class */ (function () {
         this.$custRole = this.$('#custRole').val();
         this.$productId = this.$('#productId').val();
         this.$isMultipleBetTypes = this.parseBoolean(this.$("#isMultipleBetTypes").val());
+        this.$isGroup = this.parseBoolean(this.$("#isGroup").val());
         this.$errorCodeDefault = 101;
         this.$timeoutDefault = 3000;
         this.$isReloadLeftPanel = false;
@@ -11079,7 +11090,8 @@ var ProductStatusSettingBase = /** @class */ (function () {
             custRole: this.$custRole,
             custIds: [],
             custNames: [],
-            productStatus: []
+            productStatus: [],
+            isGroup: this.$isGroup
         };
     };
     ProductStatusSettingBase.prototype.setupAntiXSRF = function () {
@@ -11130,10 +11142,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());

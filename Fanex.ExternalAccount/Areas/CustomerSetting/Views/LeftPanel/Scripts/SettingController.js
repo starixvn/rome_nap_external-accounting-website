@@ -744,24 +744,6 @@
             600, 300, false, false, 1);
     };
 
-    $scope.EnableLiveCasino = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(41, "Live Casino", 800, 420);
-    };
-
-    $scope.EnableVoidBridge = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(18, "RNG Slot");
-    };
-
     $scope.EnableRNGLottery = function (enable, id, disabled) {
         if (disabled) {
             return;
@@ -771,31 +753,13 @@
         $scope.EnableThirdpartyProduct(44, "RNG Lottery", 800, 320);
     };
 
-    $scope.EnableVirtualGames = function (enable, id, disabled) {
+    $scope.EnableLiveAndRNGCasino = function (enable, id, disabled) {
         if (disabled) {
             return;
         }
 
         top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(64, "Virtual Games");
-    };
-
-    $scope.EnableSabagames = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(42, "Saba.games");
-    };
-
-    $scope.EnableVgaming = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(66, "Vgaming");
+        $scope.EnableProductGroup(3, "Live & RNG Casino", 800, 320);
     };
 
     $scope.EnableBitcoin = function (enable, id, disabled) {
@@ -852,6 +816,21 @@
             + '&productid=' + productId
             + '&height=' + height
             + '&sporttypeid=' + sportTypeId;
+        var url = parent.resolveClientUrl(url_SELECT);
+        var title = 'Update ' + productName + ' Status: <font color="#6dcff6">' + personalInfo.currentLevel.value + '</font>';
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, title, width, height, false);
+    };
+
+    $scope.EnableProductGroup = function (productId, productName, width, height) {
+        width = width || 680;
+        height = height || 320;
+        var personalInfo = $scope.model.personalInfo;
+        var url_SELECT = 'ProductStatusSetting/Index?isGroup=true'
+            + '&custid=' + personalInfo.custId.value
+            + '&custname=' + personalInfo.currentLevel.value
+            + '&custRole=' + personalInfo.roleId.value
+            + '&productid=' + productId
+            + '&height=' + height;
         var url = parent.resolveClientUrl(url_SELECT);
         var title = 'Update ' + productName + ' Status: <font color="#6dcff6">' + personalInfo.currentLevel.value + '</font>';
         parent.Fanex.ExtAcc.Form.ShowFrame(url, title, width, height, false);

@@ -29,9 +29,22 @@
         parent.Fanex.ExtAcc.Customer.isSuperEditAgent = false;
         $scope.ResetGlobalValue();
 
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer' + "?roleId=" + $scope.model.personalInfo.roleId.value + "&uplineRoleId=" + ($scope.model.personalInfo.roleId.value + 1) + "&custId=" + $scope.model.personalInfo.custId.value + "&productGroupId=1" +  "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer' + "?roleId=" + $scope.model.personalInfo.roleId.value + "&uplineRoleId=" + ($scope.model.personalInfo.roleId.value + 1) + "&custId=" + $scope.model.personalInfo.custId.value + "&productGroupId=1" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
         $scope.collapseSidebar();
     };
+
+    $scope.LiveAndRNGCasino = function () {
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = $scope.model.personalInfo.roleId.value;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = parent.Fanex.ExtAcc.Customer.agentId = $scope.model.personalInfo.roleId.value === 4 ? userId : $scope.model.personalInfo.uplineId.value;
+
+        parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
+        parent.Fanex.ExtAcc.Customer.isSuperEditAgent = false;
+        $scope.ResetGlobalValue();
+
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer' + "?roleId=" + $scope.model.personalInfo.roleId.value + "&uplineRoleId=" + ($scope.model.personalInfo.roleId.value + 1) + "&custId=" + $scope.model.personalInfo.custId.value + "&productGroupId=3" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
+        $scope.collapseSidebar();
+    }
 
     $scope.getPopupHeight = function () {
         var height = isMobile.phone && window.matchMedia("(orientation: landscape)").matches ?
@@ -39,11 +52,6 @@
             $scope.portraitHeight;
 
         return height;
-    };
-
-    $scope.Casino = function () {
-        $scope.RenderDCS(6);
-        $scope.collapseSidebar();
     };
 
     $scope.BetSetting = function () {
@@ -62,33 +70,8 @@
         $scope.collapseSidebar();
     };
 
-    $scope.LiveCasino = function () {
-        $scope.RenderDCS(41);
-        $scope.collapseSidebar();
-    };
-
-    $scope.VoidBridge = function () {
-        $scope.RenderDCS(18);
-        $scope.collapseSidebar();
-    };
-
     $scope.RNGLottery = function () {
         $scope.RenderDCS(44);
-        $scope.collapseSidebar();
-    };
-
-    $scope.VirtualGames = function () {
-        $scope.RenderDCS(64);
-        $scope.collapseSidebar();
-    };
-
-    $scope.Sabagames = function () {
-        $scope.RenderDCS(42);
-        $scope.collapseSidebar();
-    };
-
-    $scope.Vgaming = function () {
-        $scope.RenderDCS(66);
         $scope.collapseSidebar();
     };
 

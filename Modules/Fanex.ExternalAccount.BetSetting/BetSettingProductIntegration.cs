@@ -15,17 +15,12 @@
     {
         private static readonly int[] BetSettingTabProductConfigs = new[]
         {
-            ProductConstants.LiveCasino,
             ProductConstants.RNGLottery,
-            ProductConstants.VirtualGames,
-            ProductConstants.Sabaclub,
-            ProductConstants.VGaming,
             ProductConstants.Bitcoin
         };
 
         private static readonly int[] DummyProducts = new[]
         {
-            ProductConstants.LiveCasino,
             ProductConstants.RNGLottery
         };
 
