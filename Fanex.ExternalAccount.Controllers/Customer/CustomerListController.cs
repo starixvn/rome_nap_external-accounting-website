@@ -13,6 +13,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Fanex.ExternalAccount.Service.Customer.CustomerList.Params;
     using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Service.Interface.Customer;
+    using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer.CustomerList;
     using System;
@@ -26,11 +27,15 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         private readonly AuthorizationService _authorizationService;
         private const int DefaultPageSize = 50;
 
-        public CustomerListController() : this(null, null, null)
+        public CustomerListController()
+            : this(null, null, null)
         {
         }
 
-        public CustomerListController(ICustomerService customerService, ICustomerListService customerListService, AuthorizationService authorizationService)
+        public CustomerListController(
+            ICustomerService customerService,
+            ICustomerListService customerListService,
+            AuthorizationService authorizationService)
         {
             _customerService = customerService ?? new CustomerService();
             _customerListService = customerListService ?? new CustomerListService();
@@ -40,7 +45,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public ActionResult Index(int? custId, int? roleId)
         {
-            
             var groupName = HttpContext.Request["groupName"];
             groupName = string.IsNullOrEmpty(groupName) ? CurrentSession.CurrencyGroup : groupName;
 

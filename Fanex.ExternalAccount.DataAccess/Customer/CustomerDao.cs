@@ -266,56 +266,68 @@
                 reader.NextResult();
                 while (reader.Read())
                 {
-                    int productId = Utils.ToInt32(reader["ProductID"]);
-
-                    if (productId == ProductConstants.VirtualSports)
+                    if (reader.IsDBNull(reader.GetOrdinal("GroupId")))
                     {
-                        result.HideVirtualSport = Utils.ToBoolean(reader["isHidden"]);
-                        result.DisableVirtualSport = Utils.ToBoolean(reader["isDisabled"]);
-                        continue;
-                    }
+                        int productId = Utils.ToInt32(reader["ProductID"]);
 
-                    if (productId == ProductConstants.RNGLottery)
-                    {
-                        if (rngLottery == null)
+                        if (productId == ProductConstants.VirtualSports)
                         {
-                            rngLottery = new CustomerStatusDCS
+                            result.HideVirtualSport = Utils.ToBoolean(reader["isHidden"]);
+                            result.DisableVirtualSport = Utils.ToBoolean(reader["isDisabled"]);
+                            continue;
+                        }
+
+                        if (productId == ProductConstants.RNGLottery)
+                        {
+                            if (rngLottery == null)
+                            {
+                                rngLottery = new CustomerStatusDCS
+                                {
+                                    ProductID = productId,
+                                    ProductName = ProductSettings.SiteProducts[productId]?.Name,
+                                    IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
+                                    IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
+                                    IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
+                                    IsSynced = Utils.ToBoolean(reader["isSync"]),
+                                    IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
+                                };
+                            }
+                            else
+                            {
+                                if (!Utils.ToBoolean(reader["isHidden"]))
+                                {
+                                    rngLottery.IsDisabled = rngLottery.IsDisabled || Utils.ToBoolean(reader["isDisabled"]);
+                                    rngLottery.IsDisabledUpline = rngLottery.IsDisabledUpline || Utils.ToBoolean(reader["isDisabledUpline"]);
+                                }
+
+                                rngLottery.IsHidden = rngLottery.IsHidden && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
+                            }
+
+                            continue;
+                        }
+
+                        if (!result.IsDCSProductExisted(productId))
+                        {
+                            result.DCSProductsSetting.Add(new CustomerStatusDCS
                             {
                                 ProductID = productId,
-                                ProductName = ProductSettings.SiteProducts[productId]?.Name,
+                                ProductName = ProductSettings.SiteProducts.ContainsKey(productId) ? ProductSettings.SiteProducts[productId].Name : string.Empty,
                                 IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
                                 IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
                                 IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
                                 IsSynced = Utils.ToBoolean(reader["isSync"]),
                                 IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
-                            };
+                            });
                         }
-                        else
-                        {
-                            if (!Utils.ToBoolean(reader["isHidden"]))
-                            {
-                                rngLottery.IsDisabled = rngLottery.IsDisabled || Utils.ToBoolean(reader["isDisabled"]);
-                                rngLottery.IsDisabledUpline = rngLottery.IsDisabledUpline || Utils.ToBoolean(reader["isDisabledUpline"]);
-                            }
-
-                            rngLottery.IsHidden = rngLottery.IsHidden && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
-                        }
-
-                        continue;
                     }
-
-                    if (!result.IsDCSProductExisted(productId))
+                    else
                     {
-                        result.DCSProductsSetting.Add(new CustomerStatusDCS
+                        var isHidden = Utils.ToBoolean(reader["isHidden"]);
+                        var groupId = reader.ToInt32("GroupId");
+                        if (!isHidden && !result.ProductGroups.Any(x => x.Id == groupId))
                         {
-                            ProductID = productId,
-                            ProductName = ProductSettings.SiteProducts.ContainsKey(productId) ? ProductSettings.SiteProducts[productId].Name : string.Empty,
-                            IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
-                            IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
-                            IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
-                            IsSynced = Utils.ToBoolean(reader["isSync"]),
-                            IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
-                        });
+                            result.ProductGroups.Add(new Product(groupId, groupId, CacheRef.GetProductGroupName(groupId)));
+                        }
                     }
                 }
 

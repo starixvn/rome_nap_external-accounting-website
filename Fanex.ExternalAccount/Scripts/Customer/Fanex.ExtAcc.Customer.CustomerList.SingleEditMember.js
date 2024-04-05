@@ -19,20 +19,20 @@
                     Fanex.ExtAcc.Customer.TitleEditInfo = unescape(title);
                     Fanex.ExtAcc.Customer.ResetFlags();
                     items = {
-                        sportbook: {
-                            name: "Sportsbook",
+                    };
+
+                    function addEditProductGroupMemberContextMenuItem(id, key, name) {
+                        items[key] = {
+                            name: name,
                             className: "iconEnableEdit",
                             callback: function () {
                                 Fanex.ExtAcc.Customer.IsFullInfo = true;
-                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Customer/EditCustomer?roleId=1&uplineRoleId=2&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + "&productGroupId=1" + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + title + '</font>', 1250, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
+                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Customer/EditCustomer?roleId=1&uplineRoleId=2&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + "&productGroupId=" + id + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit ' + name + ' Setting ' + '<font color="#6dcff6">' + title + '</font>', 1250, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
                             }
-                        },
-                        separator1: "-----"
-                    };
+                        };
+                    }
 
-                    function addEditProductMemberContextMenuItem(productId, productKey, productName, isDisabled, isSynced) {
-                        isSynced = typeof (isSynced) == 'undefined' ? true : isSynced;
-
+                    function addEditProductMemberContextMenuItem(productId, productKey, productName) {
                         items[productKey] = {
                             name: productName,
                             className: "iconEnableEdit",
@@ -48,10 +48,18 @@
                         };
                     }
 
+                    for (var i = 0, max = result.ProductGroups.length; i < max; i++) {
+                        var productGroup = result.ProductGroups[i];
+                        addEditProductGroupMemberContextMenuItem(
+                            productGroup.Id,
+                            'Product-' + productGroup.Id,
+                            productGroup.Name);
+                    }
+
                     var has3rdParty = false;
                     if (!result.HideVirtualSport) {
                         has3rdParty = true;
-                        addEditProductMemberContextMenuItem(5, 'virtualSport', 'Virtual Sports', result.DisableVirtualSport);
+                        addEditProductMemberContextMenuItem(5, 'virtualSport', 'Virtual Sports');
                     }
 
                     for (var i = 0, max = result.DCSProductsSetting.length; i < max; i++) {
@@ -61,9 +69,7 @@
                             addEditProductMemberContextMenuItem(
                                 productSetting.ProductID,
                                 'Product-' + productSetting.ProductID,
-                                productSetting.ProductName,
-                                productSetting.IsDisabled,
-                                productSetting.IsSynced);
+                                productSetting.ProductName);
                         }
                     }
 

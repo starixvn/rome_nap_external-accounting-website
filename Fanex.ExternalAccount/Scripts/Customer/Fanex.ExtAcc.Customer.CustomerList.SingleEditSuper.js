@@ -21,17 +21,19 @@
                     Fanex.ExtAcc.Customer.ResetFlags();
                     top.shouldCalculatePopupHeight = true;
                     items = {
-                        sportbook: {
-                            name: "Sportsbook",
+                    }
+
+                    function addEditProductGroupSuperContextMenuItem(productGroupId, key, name) {
+                        items[key] = {
+                            name: name,
                             className: "iconViewEdit",
                             callback: function () {
                                 Fanex.ExtAcc.Customer.IsFullInfo = true;
                                 Fanex.ExtAcc.Form.ShowFrame(
-                                    resolveClientUrl('Customer/EditCustomer' + '/?roleId=4&uplineRoleId=5&groupName=' + $('#selectedGroupName').html() + "&productGroupId=1" +  '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit Sportsbook Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
+                                    resolveClientUrl('Customer/EditCustomer' + '/?roleId=4&uplineRoleId=5&groupName=' + $('#selectedGroupName').html() + "&productGroupId=" + productGroupId +  '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit ' + name +' Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                                     1250, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
                             }
-                        },
-                        separator1: "-----",
+                        }
                     }
 
                     function addEditProductSuperContextMenuItem(productId, productKey, productName) {
@@ -48,6 +50,11 @@
                                     productName);
                             }
                         }
+                    }
+
+                    for (var i = 0, max = result.ProductGroups.length; i < max; i++) {
+                        var productGroup = result.ProductGroups[i];
+                        addEditProductGroupSuperContextMenuItem(productGroup.Id, 'ProductGroup-' + productGroup.Id, productGroup.Name);
                     }
 
                     addEditProductSuperContextMenuItem(5, 'Product-5', 'Virtual Sports');

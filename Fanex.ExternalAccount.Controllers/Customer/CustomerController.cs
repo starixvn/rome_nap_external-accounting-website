@@ -377,7 +377,7 @@
             ViewBag.UplineId = uplineId;
             ViewBag.HideVirtualSports = custStatus.HideVirtualSport;
             var productStatusList = productStatusService.GetProductStatusList(custId, id, Config.SettingStatus);
-            var visibledProductGroups = GetVisibleProductGroups(productStatusList);
+            var visibledProductGroups = GetVisibleProductGroups(productStatusList).Where(p => p.Id != ProductGroupConstants.Sportsbook);
             var visibledProducts = GetVisibledProducts(productStatusList);
 
             return PartialViewBase(new CustomerSettingsViewModel(visibledProductGroups, visibledProducts));

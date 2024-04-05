@@ -30,14 +30,7 @@
 
         public static IEnumerable<Product> GetVisibledProductGroupBetSettingTabs(int custId, int roleId, byte settingStatus)
         {
-            var productStatusList = productStatusService.GetProductStatusList(custId, roleId, settingStatus);
-            var visibledProductGroups = productStatusList
-                .Where(p => p.GroupId != null && p.GroupId != ProductGroupConstants.Sportsbook && !p.IsHidden)
-                .Select(p => p.GroupId.Value)
-                .Distinct()
-                .Select(groupId => new Product(groupId, groupId, CacheRef.GetProductGroupName(groupId)));
-
-            return visibledProductGroups;
+            return productStatusService.GetVisibleProductGroups(custId, roleId, settingStatus).Where(p => p.Id != ProductGroupConstants.Sportsbook);
         }
 
         public static IList<Product> GetVisibledBetSettingTabs(int custId, byte settingStatus)
