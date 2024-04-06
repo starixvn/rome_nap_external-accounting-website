@@ -6,7 +6,7 @@
     using Context;
     using CustomerSetting.Security.Authenticate;
     using Fanex.ProductStatus.Setting.Services;
-    using CurrentSession = Fanex.ExternalAccount.Core.Context.CurrentSession;
+    using CurrentSession = Context.CurrentSession;
 
     public class ProductStatusAuthorizeService : IProductStatusAuthorizeService
     {

@@ -8,7 +8,6 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
-    using System.Web.Security;
     using Core.Authorization;
     using Core.Base;
     using Core.Context;
@@ -24,7 +23,6 @@
     using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Service.TelegramBot;
     using IBCUtils;
-    using NPOI.SS.Formula.Functions;
     using PTEngine.BusinessObjects;
     using Service;
     using Service.Impl.Customer;
@@ -103,7 +101,7 @@
             }
         }
 
-        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
+        [ExternalCustomerAuthFilter()]
         public ActionResult EditCustomer(EditCustomerRequest request)
         {
             var currentSession = new CurrentSession();
@@ -120,7 +118,7 @@
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditCustomer-Debug" : "EditCustomer");
         }
 
-        [ExternalCustomerAuthFilter(Function = eFunctions.SportsbookBetting)]
+        [ExternalCustomerAuthFilter(IsBettingLimit = true)]
         public ActionResult EditSuperBetSetting(EditCustomerRequest request)
         {
             var currentSession = new CurrentSession();
@@ -137,7 +135,7 @@
 
         [HttpPost]
         [AntiXSRFFilter]
-        [ExternalCustomerAuthFilter(Function = eFunctions.SportsbookBetting, IsHost = true)]
+        [ExternalCustomerAuthFilter(IsBettingLimit = true, IsHost = true)]
         public async Task<ActionResult> EditSuperBetSetting(UpdateCustomerRequest request)
         {
             var response = await customerServiceClient.UpdateCustomer(
@@ -155,7 +153,7 @@
             return Content(response);
         }
 
-        [ExternalCustomerAuthFilter(Function = eFunctions.SportsbookBetting)]
+        [ExternalCustomerAuthFilter(IsBettingLimit = true)]
         public ActionResult EditMultipleSuperBetSetting(EditMultipleSuperBetSettingRequest request)
         {
             if (Role.IsNotSuper(request.RoleId))
@@ -176,7 +174,7 @@
 
         [HttpPost]
         [AntiXSRFFilter]
-        [ExternalCustomerAuthFilter(Function = eFunctions.SportsbookBetting, IsHost = true)]
+        [ExternalCustomerAuthFilter(IsHost = true, IsBettingLimit = true)]
         public async Task<ActionResult> EditMultipleSuperBetSetting(UpdateMultipleCustomerCommand request)
         {
             if (Role.IsNotSuper(request.RoleId))
@@ -228,7 +226,7 @@
         }
 
         [HttpPost]
-        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook, IsHost = true)]
+        [ExternalCustomerAuthFilter(IsHost = true)]
         [AntiXSRFFilter]
         public async Task<ActionResult> Update(UpdateCustomerRequest request)
         {
@@ -249,7 +247,7 @@
 
         [HttpPost]
         [AntiXSRFFilter]
-        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook, IsHost = true)]
+        [ExternalCustomerAuthFilter(IsHost = true)]
         public async Task<ActionResult> UpdateMultipleCustomers(UpdateMultipleCustomerCommand request)
         {
             var response = await customerServiceClient.UpdateMultipleCustomers(
@@ -269,7 +267,7 @@
             return Content(response);
         }
 
-        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
+        [ExternalCustomerAuthFilter()]
         public ActionResult EditMultiple(EditMultipleCustomerRequest request)
         {
             var currentSession = new CurrentSession();
@@ -300,7 +298,7 @@
 
         public async Task<ActionResult> GetCustomerSetting(GetCustomerSettingRequest request)
         {
-            if (!authorizationService.HasReadPermissionOnFunctions(new List<string> { eFunctions.Sportsbook, eFunctions.SportsbookBetting }, CurrentSession.UserId))
+            if (!authorizationService.HasReadPermissionOnFunctions(new List<string> { eFunctions.Sportsbook, eFunctions.SportsbookBetting, eFunctions.LiveAndRNGCasino, eFunctions.LiveAndRNGCasinoBetting }, CurrentSession.UserId))
             {
                 return Redirect(CustomerClientManager.ClientConfigs.AccessDeniedUrl);
             }

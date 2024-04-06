@@ -128,7 +128,7 @@
                     editItems,
                     enableItems,
                     ProductConstants.RNGLottery,
-                    new ObjectInfo("EnableRNGLottery", "Enable RNG Lottery", "Enable RNG Lottery"),
+                    new ObjectInfo("EnableRNGLottery", "RNG Lottery", "RNG Lottery"),
                     true);
             }
         }
