@@ -4,35 +4,38 @@
     using System.Collections.Generic;
     using Fanex.Data;
     using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.Service.Products;
-    using Fanex.ExternalAccount.Utilities;
     using Shared;
 
     public static class MultipleEditProductStatus
     {
+        private const byte ProductGroupType = 2;
+
+        private class Product
+        {
+            public Product(int id, byte type)
+            {
+                Id = id;
+                Type = type;
+            }
+
+            public int Id { get; }
+
+            public byte Type { get; }
+        }
+
         public static IEnumerable<KeyValuePair<int, string>> GetProductList()
         {
-            var specialProductIds = Config.SpecialProductIds();
-            
+            var products = GetProductIds(ExtRequest.Instance.GetGroupId());
 
-
-            IProductService productService = new ProductService();
-            var adminDoesNotHavePermissionOnSpecialProduct = productService.AdminDoesNotHavePermissionOnSpecialProduct(CurrentSession.Instance.CustId);
-
-            var productIds = GetProductIds(ExtRequest.Instance.GetGroupId());
-
-            foreach (var id in productIds)
+            foreach (var product in products)
             {
-                if (specialProductIds.ContainsKey(id) && adminDoesNotHavePermissionOnSpecialProduct)
-                {
-                    continue;
-                }
-
-                yield return new KeyValuePair<int, string>(id, CacheRef.GetProductName(id));
+                yield return new KeyValuePair<int, string>(
+                    product.Id,
+                    product.Type == ProductGroupType ? CacheRef.GetProductGroupName(product.Id) : CacheRef.GetProductName(product.Id));
             }
         }
 
-        private static IEnumerable<int> GetProductIds(int groupId)
+        private static IEnumerable<Product> GetProductIds(int groupId)
         {
             var criteria = new GetProductListCriteria(groupId);
 
@@ -44,7 +47,7 @@
                     {
                         while (reader.Read())
                         {
-                            yield return Convert.ToInt32(reader["productid"]);
+                            yield return new Product(Convert.ToInt32(reader["productid"]), Convert.ToByte(reader["product_type"]));
                         }
                     }
                 }

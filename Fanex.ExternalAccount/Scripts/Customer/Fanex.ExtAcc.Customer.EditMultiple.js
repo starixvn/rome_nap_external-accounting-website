@@ -67,7 +67,7 @@
                     Fanex.ExtAcc.Customer.ShowEditMultipleProductGroup(4, groupId, groupName);
                 }
             };
-            productIds.push(productId);
+            productIds.push(groupId);
         }
 
         for (var i = 0, max = this.ProductGroups.length; i < max; i++) {
@@ -124,7 +124,7 @@
                     Fanex.ExtAcc.Customer.ShowEditMultipleProductGroup(3, groupId, groupName);
                 }
             };
-            productIds.push(productId);
+            productIds.push(groupId);
         }
 
         for (var i = 0, max = this.ProductGroups.length; i < max; i++) {
@@ -229,11 +229,11 @@
                 callback: function () {
                     Fanex.ExtAcc.Customer.isSuperEditMember = false;
                     Fanex.ExtAcc.Customer.isMasterEditMember = true;
-                    Fanex.ExtAcc.Customer.ShowSuperMasterEditMultipleGroup(3, 1, groupId, groupName);
+                    Fanex.ExtAcc.Customer.ShowSuperMasterEditMultipleGroup(3, groupId, groupName);
                 }
             };
 
-            productIds.push(productId);
+            productIds.push(groupId);
         }
 
         for (var i = 0, max = this.ProductGroups.length; i < max; i++) {
