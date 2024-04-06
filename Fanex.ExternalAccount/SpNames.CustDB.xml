@@ -357,4 +357,7 @@
     <Setting Key="Age_CustomerUpdPwd_Multiple" SpName="Age_CustomerUpdPwd_Multiple" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerUpdSecurityCode_Multiple" SpName="Acc_CustomerUpdSecurityCode_Multiple" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
   </Function>
+  <Function Name="Customer Setting">
+    <Setting Key="Acc_LiteMode_CustSetting_ProductProfileSelect" SpName="Acc_LiteMode_CustSetting_ProductProfileSelect" DbName="DBCUST.CustDB.wsv_xnap" />
+  </Function>
 </Functions>
