@@ -1,7 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization.ProductStatus
 {
     using System;
-    using System.Linq;
     using System.Web.Mvc;
     using Context;
     using CustomerSetting.Security.Authenticate;
