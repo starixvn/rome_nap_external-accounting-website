@@ -101,7 +101,7 @@
             }
         }
 
-        [ExternalCustomerAuthFilter()]
+        [ExternalCustomerAuthFilter]
         public ActionResult EditCustomer(EditCustomerRequest request)
         {
             var currentSession = new CurrentSession();
@@ -267,7 +267,7 @@
             return Content(response);
         }
 
-        [ExternalCustomerAuthFilter()]
+        [ExternalCustomerAuthFilter]
         public ActionResult EditMultiple(EditMultipleCustomerRequest request)
         {
             var currentSession = new CurrentSession();

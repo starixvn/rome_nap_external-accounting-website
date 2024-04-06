@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
-using Fanex.Customer.Client.NETFramework.Filters;
+using Fanex.Customer.Client;
+using Fanex.Customer.Client.Configurations;
 using Fanex.CustomerSetting.Security.Authenticate;
 using Fanex.ExternalAccount.Core.Authorization;
 using Fanex.ExternalAccount.Core.Context;
@@ -9,10 +11,13 @@ using Fanex.ExternalAccount.Core.Shared;
 
 namespace Fanex.ExternalAccount.Controllers.Authentication
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public class ExternalCustomerAuthFilterAttribute : CustomerAuthFilterAttribute, IAuthenticate
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
+    public class ExternalCustomerAuthFilterAttribute : AuthorizeAttribute, IAuthenticate
     {
         private readonly AuthorizationService authorization;
+        private readonly CustomerClientConfiguration clientConfig;
+
+        public bool IsHost { get; set; }
 
         private readonly IDictionary<int, string> ProductGroupPermissions = new Dictionary<int, string>
         {
@@ -26,9 +31,13 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             { ProductGroupConstants.LiveAndRNGCasino, eFunctions.LiveAndRNGCasinoBetting}
         };
 
-        public ExternalCustomerAuthFilterAttribute()
-            : base(null)
+        public ExternalCustomerAuthFilterAttribute() : this(null)
         {
+        }
+
+        internal ExternalCustomerAuthFilterAttribute(CustomerClientConfiguration clientConfig)
+        {
+            this.clientConfig = clientConfig ?? CustomerClientManager.ClientConfigs;
             authorization = new AuthorizationServiceImpl();
         }
 
@@ -42,36 +51,51 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            if (string.IsNullOrWhiteSpace(Function))
-            {
-                var productGroupIdParam = IsHost
-                ? filterContext.HttpContext.Request["productGroupId"]
-                : GetActionParameterValue(filterContext.Controller.ValueProvider, "productGroupId");
-
-                if (int.TryParse(productGroupIdParam, out int productGroupId))
-                {
-                    var permissions = IsBettingLimit ? ProductGroupBettingPermissions : ProductGroupPermissions;
-                    Function = permissions.ContainsKey(productGroupId) ? permissions[productGroupId] : string.Empty;
-                }
-            }
-
             base.OnAuthorization(filterContext);
 
-            Function = string.Empty;
+            var isAuthorized = HasPermission(filterContext);
+
+            if (!isAuthorized)
+            {
+                UnAuthorizedAction(filterContext);
+            }
         }
 
-        public override bool AllowRead() => FunctionAuthorization(CurrentSession.Instance.UserId, Function, AuthenticateAction.AuthenticationType.Read);
+        private bool HasPermission(AuthorizationContext filterContext)
+        {
+            if (!string.IsNullOrWhiteSpace(Function))
+            {
+                return FunctionAuthorization(
+                    CurrentSession.Instance.UserId,
+                    Function,
+                    IsHost ? AuthenticateAction.AuthenticationType.Host : AuthenticateAction.AuthenticationType.Read);
+            }
 
-        public override bool AllowHost() => FunctionAuthorization(CurrentSession.Instance.UserId, Function, AuthenticateAction.AuthenticationType.Host);
+            var productGroupIdParam = IsHost
+                ? GetActionParameterValue(filterContext.Controller.ValueProvider, "productGroupId")
+                : filterContext.HttpContext.Request["productGroupId"];
+
+            if (int.TryParse(productGroupIdParam, out int productGroupId))
+            {
+                var permissions = IsBettingLimit ? ProductGroupBettingPermissions : ProductGroupPermissions;
+                var function = permissions.ContainsKey(productGroupId) ? permissions[productGroupId] : string.Empty;
+                return FunctionAuthorization(
+                    CurrentSession.Instance.UserId,
+                    function,
+                    IsHost ? AuthenticateAction.AuthenticationType.Host : AuthenticateAction.AuthenticationType.Read);
+            }
+
+            return false;
+        }
 
         public bool FunctionAuthorization(int userId, string functionKey, AuthenticateAction.AuthenticationType authenticateActionType) =>
             authorization.IsAuthorized(userId, functionKey, authenticateActionType, true);
 
         public bool AllowRead(string action)
-            => AllowRead();
+             => FunctionAuthorization(CurrentSession.Instance.UserId, Function, Policy);
 
         public bool AllowUpdate(string action)
-            => AllowHost();
+            => FunctionAuthorization(CurrentSession.Instance.UserId, Function, Policy);
 
         public bool IsBelong(int custId, string username, string groupName = null, bool getUplineInfo = true)
             => authorization.IsBelong(ExtRequest.Instance.GetGroupName(groupName), custId, username);
@@ -83,6 +107,26 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             return valueProviderResult != null
                 ? valueProviderResult.AttemptedValue
                 : string.Empty;
+        }
+
+        private void UnAuthorizedAction(AuthorizationContext filterContext)
+        {
+            HttpResponseBase response = filterContext.HttpContext.Response;
+
+            if (filterContext.HttpContext.Request.IsAjaxRequest()
+                || filterContext.HttpContext.Request.HttpMethod.Equals("POST", StringComparison.CurrentCultureIgnoreCase))
+            {
+                response.Clear();
+                response.Write("{ \"message\": \"You are not authorized on this function!\" }");
+                filterContext.Result = new HttpUnauthorizedResult();
+                filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
+                response.TrySkipIisCustomErrors = true;
+                response.End();
+            }
+            else
+            {
+                filterContext.Result = new RedirectResult(clientConfig.AccessDeniedUrl);
+            }
         }
     }
 }
