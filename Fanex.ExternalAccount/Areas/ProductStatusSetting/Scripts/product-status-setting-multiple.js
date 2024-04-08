@@ -15542,7 +15542,11 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
         var _this = _super.call(this, $, topWindow) || this;
         _this.loadMultiple = function () {
             return _this.$("#productIds").change(function () {
-                _this.$("#productId").val(_this.$("#productIds").val());
+                var _a;
+                var productId = _this.$("#productIds").val();
+                _this.$("#productId").val(productId);
+                var isGroup = ((_a = _this.$products.filter(function (x) { return x.Id == productId && x.IsGroup; })) === null || _a === void 0 ? void 0 : _a.length) > 0;
+                _this.$("#isGroup").val(isGroup.toString());
                 _this.$("#product-form").submit();
             });
         };
@@ -15613,6 +15617,7 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
         this.$resources.enabled = this.$('#enableAll').val();
         this.$resources.disabled = this.$('#disableAll').val();
         this.$resources.updateActionName = "MultipleUpdate";
+        this.$products = JSON.parse(this.$("#productsList").val());
     };
     ProductStatusSettingMultipe.prototype.registerEvents = function () {
         var _this = this;

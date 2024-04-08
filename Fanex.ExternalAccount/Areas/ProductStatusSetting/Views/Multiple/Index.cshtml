@@ -1,4 +1,5 @@
-﻿@model MultipleQueryViewModel
+﻿@using Newtonsoft.Json
+@model MultipleQueryViewModel
 
 @{
     Layout = null;
@@ -21,7 +22,7 @@
 
             @Html.DropDownListFor(model => model.Products,
              new List<SelectListItem>(
-                 Model.Products.Select(product => new SelectListItem { Value = product.Key.ToString(), Text = product.Value })),
+                 Model.Products.Select(product => new SelectListItem { Value = product.Id.ToString(), Text = product.Name })),
                      "Select Product",
                      new { @class = "form-control", id = "productIds" })
 
@@ -37,9 +38,11 @@
             @Html.Hidden("custRole", Model.CustRole)
             @Html.Hidden("custId", Model.CustIds.Split(',')[0])
             @Html.Hidden("groupId", HttpContext.Current.Request["groupid"])
+            @Html.Hidden("isGroup", Model.IsGroup)
+
         }
     </div>
-
+    @Html.Hidden("productsList", JsonConvert.SerializeObject(Model.Products))
     @Html.Hidden("isMultipleBetTypes", Model.ProductStatus.Count() > 1)
     @Html.Hidden("enableAll", Resources.EnableAll)
     @Html.Hidden("disableAll", Resources.DisableAll)

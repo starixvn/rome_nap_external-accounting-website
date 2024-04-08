@@ -4,40 +4,16 @@
     using System.Collections.Generic;
     using Fanex.Data;
     using Fanex.ExternalAccount.Core.Context;
-    using Shared;
+    using Fanex.ExternalAccount.Core.Shared;
+    using Product = Fanex.ProductStatus.Setting.Configuration.Product;
 
     public static class MultipleEditProductStatus
     {
         private const byte ProductGroupType = 2;
 
-        private class Product
+        public static IEnumerable<Product> GetProductList()
         {
-            public Product(int id, byte type)
-            {
-                Id = id;
-                Type = type;
-            }
-
-            public int Id { get; }
-
-            public byte Type { get; }
-        }
-
-        public static IEnumerable<KeyValuePair<int, string>> GetProductList()
-        {
-            var products = GetProductIds(ExtRequest.Instance.GetGroupId());
-
-            foreach (var product in products)
-            {
-                yield return new KeyValuePair<int, string>(
-                    product.Id,
-                    product.Type == ProductGroupType ? CacheRef.GetProductGroupName(product.Id) : CacheRef.GetProductName(product.Id));
-            }
-        }
-
-        private static IEnumerable<Product> GetProductIds(int groupId)
-        {
-            var criteria = new GetProductListCriteria(groupId);
+            var criteria = new GetProductListCriteria(ExtRequest.Instance.GetGroupId());
 
             if (criteria.IsValid())
             {
@@ -47,7 +23,12 @@
                     {
                         while (reader.Read())
                         {
-                            yield return new Product(Convert.ToInt32(reader["productid"]), Convert.ToByte(reader["product_type"]));
+                            var productType = Convert.ToByte(reader["product_type"]);
+                            var productId = Convert.ToInt32(reader["productid"]);
+                            yield return new Product(
+                                productId,
+                                productType == ProductGroupType ? CacheRef.GetProductGroupName(productId) : CacheRef.GetProductName(productId),
+                                productType == ProductGroupType);
                         }
                     }
                 }
