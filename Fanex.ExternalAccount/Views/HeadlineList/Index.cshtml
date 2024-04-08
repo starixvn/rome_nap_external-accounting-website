@@ -2,9 +2,6 @@
 @{
     Layout = null;
 }
-@* @model Fanex.ExternalAccount.ProblemAccount.ViewModels.IndexViewModel *@
-@* @using (Html.BeginForm("Search", "HeadlineList", FormMethod.Get, new { @class = "search-form filterbox filter-winloss-detail", id = "form-bonusDetail" })) *@
-@* { *@
 
 <div id="headline-list-container">
     <div class="page-title">
@@ -18,13 +15,15 @@
     <div id="searchBar" class="search-form filterbox filter-winloss-detail filter-customer-list">
         <div class="searchBar">
             <div class="form-group">
-                <div class="label">@ViewLang.Username</div>
-                <input id="txtUserName" type="text" class="usernameInput" autocomplete="off"/>
-            </div>
-            <div class="form-group">
                 <div class="label">@Fanex.ExternalAccount.HeadlineList.Resources.ViewLang.Headline</div>
                 <input id="txtGroupHeadline" type="text" class="usernameInput" autocomplete="off"/>
             </div>
+            
+            <div class="form-group">
+                <div class="label">@ViewLang.Username</div>
+                <input id="txtUserName" type="text" class="usernameInput" autocomplete="off"/>
+            </div>
+
             <div class="form-group">
                 <label for="selStatus" class="pointer">@ViewLang.Status</label>
                 <select id="selStatus" class="usernameInput group">
@@ -35,9 +34,7 @@
                     <option value="4">@ViewLang.Disabled</option>
                 </select>
             </div>
-            @* <div class="form-group"> *@
-            @*     <input id="btnSearch" type="button" value="Submit" class="btn -submit"/> *@
-            @* </div> *@
+           
             <div class="form-group">
                 <input type="submit" value="@ViewLang.Submit" class="btn -submit btnSearch" id="btnSearch"/>
             </div>
@@ -57,81 +54,7 @@
 </div>
 @Html.AntiForgeryToken()
 @StaticResources.RenderScripts("~/assets/bundles/headlinelist/index")
-
-@* @if (Model.HasHostPermission) *@
-@* { *@
-@*     <div class="hide" id="div-popup-container"> *@
-@*         <div id="msgContainer" class="hide"></div> *@
-@*         <p class="selected-accounts">@ViewLang.SelectedAccounts: <span id="span-selected-accounts"></span></p> *@
-@*         <a href="javascript:;" class="show-all-accounts hide" id="link-show-all-accounts">@ViewLang.ShowAllnAccounts</a> *@
-@*         @using (Html.BeginForm("SetToReviewed", "ProblemAccount", FormMethod.Post, new { @class = "form-set-to-reviewed", id = "form-set-to-reviewed" })) *@
-@*         { *@
-@*             @Html.AntiForgeryToken() *@
-@*             <input type="hidden" name="custIds" id="hidden-set-to-reviewed-custIds" /> *@
-@*             <input type="hidden" name="roleId" id="hidden-set-to-reviewed-roleId" /> *@
-@*             <div id="reviewed-option-container"> *@
-@*                 <label class="reviewed-option"> *@
-@*                     <input type="radio" name="isAffectedAllDownlines" value="false" checked="checked" /> @ViewLang.STRSelectedAccountsOnly *@
-@*                 </label> *@
-@*                 <label class="reviewed-option"> *@
-@*                     <input type="radio" name="isAffectedAllDownlines" value="true" /> @ViewLang.STRSelectedAccountsAndDownlines *@
-@*                 </label> *@
-@*             </div> *@
-@*         } *@
-@*     </div> *@
-@* } *@
-@* @StaticResources.RenderScripts("~/assets/bundles/problemaccount/index") *@
-
-@* @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger()) *@
-@* @helper RenderSMATab(byte searchRoleId, string uplineLabel) *@
-@* { *@
-@*     using (Html.BeginForm("GetList", "ProblemAccount", FormMethod.Get, new { @class = "search-form filterbox", id = "form-problem-account-" + searchRoleId })) *@
-@*     { *@
-@*         <div class="searchBar"> *@
-@*             <div class="form-group"> *@
-@*                 <label for="txt-uplineName-@searchRoleId" class="label">@uplineLabel</label> *@
-@*                 <input type="text" autocomplete="off" id="txt-uplineUsername-@searchRoleId" /> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label class="label">@ViewLang.DateNotifiedFrom</label> *@
-@*                 <input type="text" readonly="readonly" value="@Model.DefaultFromDate" id="dtp-fromdate-@searchRoleId" /> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label class="label">To</label> *@
-@*                 <input type="text" readonly="readonly" value="@Model.DefaultToDate" id="dtp-todate-@searchRoleId" /> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label class="label">@ViewLang.ReviewStatus</label> *@
-@*                 <div class="select-box pull-left"> *@
-@*                     @Html.DropDownList("reviewStatus", Model.ReviewStatus, new { id = "ddl-reviewStatus-" + searchRoleId }) *@
-@*                 </div> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <input type="text" placeholder="@ViewLang.Username" autocomplete="off" id="txt-searchUsername-@searchRoleId" /> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <input type="submit" value="@ViewLang.Submit" class="btn -submit btnSearch" /> *@
-@*             </div> *@
-@*             <div class="form-group icon-excel-container"> *@
-@*                 <span title="@ViewLang.ExportExcel" class="icon-excel hide" id="icon-excel-@searchRoleId"></span> *@
-@*             </div> *@
-@*         </div> *@
-@*     } *@
-@*     <div class="freegrid-container hide" id="freegrid-container-@searchRoleId"> *@
-@*         @if (Model.HasHostPermission) *@
-@*         { *@
-@*             <div class="select-container"> *@
-@*                 <span class="text-select">@ViewLang.Select:</span> *@
-@*                 <span class="status-select">@ViewLang.All</span> *@
-@*                 <span class="character">|</span> *@
-@*                 <span class="status-select">@ViewLang.None</span> *@
-@*             </div> *@
-@*         } *@
-@*         <div class="freegrid clearBoth" id="freegrid-@searchRoleId"></div> *@
-@*     </div> *@
-@*     <div class="div-noData hide" id="div-noData-@searchRoleId">@ViewLang.NoData</div> *@
-@* } *@
-
+@Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
 <script>
    function resolveClientUrl(relativeUrl) {
                return '@Url.Content("~/")' + relativeUrl;
