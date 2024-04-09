@@ -380,6 +380,7 @@
     <Compile Include="Authorization\AuthorizationService.cs" />
     <Compile Include="Configurations\InternalLogin\InternalLoginManager.cs" />
     <Compile Include="Configurations\InternalLogin\InternalLoginSection.cs" />
+    <Compile Include="Configurations\RedisCachingRegister.cs" />
     <Compile Include="Configurations\SecurityCode\SecurityCodeManager.cs" />
     <Compile Include="Configurations\SecurityCode\SecurityCodeSection.cs" />
     <Compile Include="Context\CurrentContext.cs" />

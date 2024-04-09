@@ -34,6 +34,7 @@
     using Fanex.Customer.Client;
     using Fanex.Customer.Client.Configurations;
     using Fanex.Customer.Client.NETFramework;
+    using Fanex.ExternalAccount.Core.Configurations;
 
     public class MvcApplication : HttpApplication
     {
@@ -150,10 +151,7 @@
                 .FromApplication("Ext NAP")
                 .SupportOnlyDefaultLanguage();
 
-            Fanex.Caching.CacheServiceManager.Use(() => new Fanex.Caching.Redis.RedisCache(new Fanex.Caching.Redis.RedisCacheOptions
-            {
-                ConnectionOptions = StackExchange.Redis.ConfigurationOptions.Parse(ConfigurationManager.AppSettings["Redis:ConnectionString"])
-            }));
+            RedisCachingRegister.Register();
         }
 
         protected void Application_Error(object sender, EventArgs e)
