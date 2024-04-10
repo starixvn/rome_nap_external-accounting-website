@@ -52,10 +52,10 @@ namespace Fanex.ExternalAccount.Service.Customer
                 var criteriaInfo = new UpdateMultipleSuperInfoCriteria
                 {
                     CustIDList = custIds,
-                    FirstName = request.FirstName,
-                    LastName = request.LastName,
-                    Phone = request.Phone,
-                    MobilePhone = request.MobilePhone,
+                    FirstName = request.IsChangeFirstName && string.IsNullOrEmpty(request.FirstName)? string.Empty : request.FirstName,
+                    LastName = request.IsChangeLastName && string.IsNullOrEmpty(request.LastName) ? string.Empty : request.LastName,
+                    Phone = request.IsChangePhone && string.IsNullOrEmpty(request.Phone) ? string.Empty : request.Phone,
+                    MobilePhone = request.IsChangeMobilePhone && string.IsNullOrEmpty(request.MobilePhone) ? string.Empty : request.MobilePhone,
                     UserId = userId,
                     IP = ip
                 };
@@ -89,10 +89,10 @@ namespace Fanex.ExternalAccount.Service.Customer
                 var criteriaInfo = new UpdateMultipleSuperSecurityCodeCriteria
                 {
                     CustIDList = BuildUpdateCodeXML(custIds, request.SecurityCode),
-                    
                     IsForcedChangeSecurityCode = request.IsForceChange,
                     UserId = userId,
-                    IP = ip
+                    IP = ip,
+                    System = "EXTERNAL"
                 };
 
                 var resultCode = dataAccess.ExecuteUpdate(criteriaInfo);

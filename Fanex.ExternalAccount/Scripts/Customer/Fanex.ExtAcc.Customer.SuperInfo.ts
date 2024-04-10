@@ -85,21 +85,45 @@ class SuperInfo {
         }
     }
 
+    ValidateSuperList(superList) {
+
+        if (superList === "") {
+            this.$("#errMsg").empty().html("Please input username of supers.").show();
+            return false;
+        }
+
+        var usernameList = superList.split(",");
+
+        if (usernameList.length > 50) {
+            this.$("#errMsg").empty().html("The function can only edit up to 50 accounts per request.").show();
+            return false;
+        }
+
+        var duplicateUsernames = [];
+        for (var i = 0; i < usernameList.length; i++) {
+            if (duplicateUsernames.indexOf(usernameList[i]) < 0 && i < usernameList.findLastIndex(un => un.toLowerCase() === usernameList[i].toLowerCase())) {
+                duplicateUsernames.push(usernameList[i]);
+            }
+        }
+        if (duplicateUsernames.length > 0) {
+            this.$("#errMsg").empty().html(`Duplicate super account(s): ${duplicateUsernames.join(', ')}`).show();
+            return false;
+        }
+
+        return true;
+    }
+
     CheckValidSuperList() {
         this.selectedSuperIdWithUsername = null;
         var superList = this.superInfoList.val();
         this.$("#errMsg").empty().hide();
         this.selectedSupers.empty().hide();
-        if (superList === "") {
-            this.$("#errMsg").empty().html("Please input username of supers").show();
+        if (!this.ValidateSuperList(superList)) {
             return;
         }
 
-        var groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
-
         Fanex.ExtAcc.BlockUI();
-
-
+        var groupName = Fanex.ExtAcc.Customer.GroupName().groupName;
         var params = "destusers=" + superList +
             "&groupname=" + this.groupName;
         var url = resolveClientUrl("SuperInfo/CheckMultipleSupers?");
@@ -151,7 +175,18 @@ class SuperInfo {
         this.$("#SuperForceChange").prop("checked", true).trigger("change");
     }
 
+    EnableDisableBtnSubmit() {
+        if ((this.$("#ckbPersonalInfo").prop('checked') && (this.$("#ckbSuperFirstName").prop('checked') || this.$("#ckbSuperLastName").prop('checked') || this.$("#ckbSuperPhone").prop('checked') || this.$("#ckbSuperMobilePhone").prop('checked'))) ||
+            this.$("#ckbResetPwd").prop('checked') ||
+            this.$("#ckbResetSecCode").prop('checked')) {
+            this.btnSubmitUpdate.removeClass("-disabled").attr("disabled", false);
+        } else {
+            this.btnSubmitUpdate.addClass("-disabled").attr("disabled", true);
+        }
+    }
+
     ShowHideTab(tabId, isShow) {
+        this.EnableDisableBtnSubmit();
         if (isShow) {
             this.$(tabId).removeClass("hidden");
         } else {
@@ -160,6 +195,7 @@ class SuperInfo {
     }
 
     EnableDisableEditField(fieldId, isEnable) {
+        this.EnableDisableBtnSubmit();
         if (isEnable) {
             this.$(fieldId).removeClass("-disabled").prop("disabled", false);
         } else {
@@ -167,10 +203,32 @@ class SuperInfo {
         }
     }
 
-    SubmitUpdate() {
-        this.$("#errMsg").empty().removeClass("succMsg").addClass("errMsg").hide();
+    ValidateBeforUpdate() {
+
         var errorMessage = "";
         var errorField;
+
+        if (this.$("#ckbPersonalInfo").prop('checked') == true) {
+            if (this.$("#ckbSuperFirstName").prop('checked') && this.ContainsHTML($("#SuperFirstName").val())) {
+                errorField = $('#SuperFirstName');
+                errorMessage = 'Invalid parameter value.';
+            } else if (this.$("#ckbSuperLastName").prop('checked') && this.ContainsHTML($("#SuperLastName").val())) {
+                errorField = $('#SuperFirstName');
+                errorMessage = 'Invalid parameter value.';
+            } else if (this.$("#ckbSuperPhone").prop('checked') && this.ContainsHTML($("#SuperPhone").val())) {
+                errorField = $('#SuperFirstName');
+                errorMessage = 'Invalid parameter value.';
+            } else if (this.$("#ckbSuperMobilePhone").prop('checked') && this.ContainsHTML($("#SuperMobilePhone").val())) {
+                errorField = $('#SuperFirstName');
+                errorMessage = 'Invalid parameter value.';
+            }
+
+            if (errorMessage !== "") {
+                $("#errMsg").html(errorMessage).show();
+                errorField.addClass("invalid-field").focus();
+                return false;
+            }
+        }
 
         if (this.$("#ckbResetPwd").prop('checked') == true) {
             if (!Validators.validateInput($('#SuperPassword').val())) {
@@ -194,7 +252,7 @@ class SuperInfo {
             }
         }
 
-        if(this.$("#ckbResetSecCode").prop('checked') == true){
+        if (this.$("#ckbResetSecCode").prop('checked') == true) {
             if (!Validators.validateInput($('#SuperSecCode').val())) {
                 errorMessage = "Sorry, security code can't be empty";
                 errorField = $('#SuperSecCode');
@@ -212,22 +270,35 @@ class SuperInfo {
             if (errorMessage !== "") {
                 $("#errMsg").html(errorMessage).show();
                 errorField.addClass("invalid-field").focus();
-                return;
+                return false;
             }
         }
 
+        return true;
+    }
+
+    SubmitUpdate() {
+        this.$("#errMsg").empty().removeClass("succMsg").addClass("errMsg").hide();
+
+        if (!this.ValidateBeforUpdate()) {
+            return;
+        }
 
         var requestData = {
-            FirstName: this.$("#ckbSuperFirstName").prop('checked') == true ? $("#SuperFirstName").val() : null,
-            LastName: this.$("#ckbSuperLastName").prop('checked') == true ? $("#SuperLastName").val() : null,
-            Phone: this.$("#ckbSuperPhone").prop('checked') == true ? $("#SuperPhone").val() : null,
-            MobilePhone: this.$("#ckbSuperMobilePhone").prop('checked') == true ? $("#SuperMobilePhone").val() : null,
+            FirstName: $("#SuperFirstName").val(),
+            IsChangeFirstName: this.$("#ckbSuperFirstName").prop('checked'),
+            LastName: $("#SuperLastName").val(),
+            IsChangeLastName: this.$("#ckbSuperLastName").prop('checked'),
+            Phone:$("#SuperPhone").val(),
+            IsChangePhone: this.$("#ckbSuperPhone").prop('checked'),
+            MobilePhone: $("#SuperMobilePhone").val(),
+            IsChangeMobilePhone: this.$("#ckbSuperMobilePhone").prop('checked'),
             Password: $('#SuperPassword').val().encrypt(this.scode),
             SecurityCode: $("#SuperSecCode").val(),
-            IsForceChange: this.$("#SuperForceChange").prop('checked') == true,
-            IsUpdateInfo: this.$("#ckbPersonalInfo").prop('checked') == true,
-            IsUpdatePassword: this.$("#ckbResetPwd").prop('checked') == true,
-            IsUpdateSecurityCode: this.$("#ckbResetSecCode").prop('checked') == true,
+            IsForceChange: this.$("#SuperForceChange").prop('checked'),
+            IsUpdateInfo: this.$("#ckbPersonalInfo").prop('checked'),
+            IsUpdatePassword: this.$("#ckbResetPwd").prop('checked'),
+            IsUpdateSecurityCode: this.$("#ckbResetSecCode").prop('checked'),
             SuperIdNameList: this.selectedSuperIdWithUsername
         };
 
@@ -245,7 +316,7 @@ class SuperInfo {
                     this.$("#errMsg").empty().html(this.BuildErrorUpdate(result)).show();
                 }
                 else {
-                    var message = this.selectedSuperIdWithUsername.split(',').length === 1 ? "This account has been successfully edited." : "All accounts have been successfully edited.";
+                    var message = this.selectedSuperIdWithUsername.split(',').length === 1 ? "This account has been successfully updated." : "All accounts have been successfully updated.";
                     this.$("#errMsg").empty().html(message).removeClass("errMsg").addClass("succMsg").show();
                     setTimeout(() => {
                         this.$("#errMsg").empty().removeClass("succMsg").addClass("errMsg").hide();
@@ -329,7 +400,11 @@ class SuperInfo {
         }
 
         return errorMessage;
-    }                                     
+    }
+
+    ContainsHTML(str) {
+        return str.match(/^<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>$/);
+    }
 }
 
 $(document).ready(function () {
