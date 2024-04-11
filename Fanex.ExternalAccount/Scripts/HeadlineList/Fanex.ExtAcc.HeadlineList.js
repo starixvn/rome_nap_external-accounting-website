@@ -24,6 +24,7 @@ Fanex.ExtAcc.HeadlineList = {
     },
     backupResult: {},
     currentHeadlines: [],
+    
     Init: function () {
         this.DOMElements.txtUsername = $('#txtUserName');
         this.DOMElements.txtGroupHeadline = $('#txtGroupHeadline');
@@ -60,6 +61,86 @@ Fanex.ExtAcc.HeadlineList = {
         });
     },
 
+    Search: function (params) {
+        $.post(parent.resolveClientUrl('HeadlineList/Search'), params, function (result) {
+            var _this = Fanex.ExtAcc.HeadlineList;
+            backupResult = result;
+            let bodyRows = _this.RenderBodyRows(result.GroupHeadlines);
+
+            gridOptions = {
+                columns: _this.GetGridHeader(),
+                bodyRows: bodyRows,
+                autoCalculateGridExpandHeight: true,
+                // numberOfFrozenColumn: numberOfFrozenColumn,
+                bodyRowHeight: isMobile.phone ? 28 : 25,
+                fullHeight: !isMobile.phone,
+                gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
+                customizeHeader: false,
+                highlightFrozenWidth: 2,
+                showPager: true,
+                customPager: true,
+                // showNumberColumn: true,
+                pagerOption: {
+                    itemsPerPageArray: [100, 200, 300, 400, 500],
+                    currentPage: result.PageIndex - 1,
+                    totalItem: result.TotalGroups,
+                    itemsPerPage: params.PageSize,
+                    pagerSelectCallBack: function (currentPageIndex, itemsPerPage) {
+                        _this.cachedParams.PageIndex = currentPageIndex;
+                        _this.cachedParams.PageSize = itemsPerPage;
+                        _this.SubmitSearch(itemsPerPage, currentPageIndex);
+                    }
+                },
+                sortOption:
+                    {
+                        serverSortFunction: function (sortColumnName, sortDirection) {
+                            if (sortColumnName === 'GroupName') {
+                                backupResult.GroupHeadlines = _this.SortByNameExceptFirst(backupResult.GroupHeadlines, 'GroupName', sortDirection, true);
+                            }
+                            if (sortColumnName === 'Username') {
+                                for (const element of backupResult.GroupHeadlines) {
+                                    element.HeadlineEntities = _this.SortByNameExceptFirst(element.HeadlineEntities, 'Username', sortDirection);
+                                }
+                            }
+                            gridOptions.bodyRows = _this.RenderBodyRows(backupResult.GroupHeadlines);
+                            _this.DOMElements.jqgrid.fanexGrid('reRenderBodyAfterSort', gridOptions, sortColumnName, sortDirection);
+                        }
+                    },
+                marginRight: 12,
+                showDistinctRow: false,
+                allowTruncate: true,
+                showHighlightRow: false
+            };
+
+            if (bodyRows.length === 0) {
+                _this.DOMElements.msgNoinfo.css('display', 'block');
+                _this.DOMElements.jqgrid.css('display', 'none');
+                _this.DOMElements.icoExportExcel.css('display', 'none');
+            } else {
+                _this.DOMElements.msgNoinfo.css('display', 'none');
+                _this.DOMElements.jqgrid.css('display', 'block');
+                _this.DOMElements.icoExportExcel.show();
+                setPagerOptionOnMobile(gridOptions);
+                _this.DOMElements.jqgrid.fanexGrid(gridOptions);
+                workaroundForGridOnPhone();
+            }
+
+            if (bodyRows.length > 0) {
+                _this.DOMElements.icoExportExcel.off().click(function () {
+                    var params = {
+                        UserName: _this.DOMElements.txtUsername.val(),
+                        GroupHeadline: _this.DOMElements.txtGroupHeadline.val(),
+                        Status: _this.DOMElements.selStatus.val(),
+                    };
+
+                    top.exportExcel(resolveClientUrl("HeadlineList/ExportHeadlines?") + top.serialize(params), document);
+                });
+            }
+        }).always(function () {
+            Fanex.ExtAcc.UnBlockUI();
+        });
+    },
+    
     SubmitSearch: function (itemsPerPage, currentIndex) {
         const _this = Fanex.ExtAcc.HeadlineList;
         const pageSize = !isNullOrUndefined(itemsPerPage) ? itemsPerPage : _this.cachedParams.pageSize;
@@ -106,6 +187,7 @@ Fanex.ExtAcc.HeadlineList = {
         }
         return '';
     },
+    
     RenderBodyRows: function (groupHeadlines) {
         let bodyRows = [];
         const numberRow = groupHeadlines.length;
@@ -122,10 +204,10 @@ Fanex.ExtAcc.HeadlineList = {
                         Name: 'GroupName',
                         Value: groupHeadline.GroupName,
                         MergeRowNumber: rowMerge,
-                        CellAlign: 'center'
+                        CellAlign: 'left'
                     });
                 }
-                columns.push({Name: 'Username', Value: headline.Username, CellAlign: 'center'});
+                columns.push({Name: 'Username', Value: headline.Username, CellAlign: 'left'});
                 columns.push({
                     Name: 'Status',
                     Value: !headline.IsEnable ? 'Disabled' : headline.IsClosed ? 'Closed' : headline.IsSuspend ? 'Suspended' : 'Open'
@@ -134,87 +216,6 @@ Fanex.ExtAcc.HeadlineList = {
             }
         }
         return bodyRows;
-    },
-
-    Search: function (params) {
-        $.post(parent.resolveClientUrl('HeadlineList/Search'), params, function (result) {
-            var _this = Fanex.ExtAcc.HeadlineList;
-            backupResult = result;
-            let bodyRows = _this.RenderBodyRows(result.GroupHeadlines);
-
-            gridOptions = {
-                columns: _this.GetGridHeader(),
-                bodyRows: bodyRows,
-                autoCalculateGridExpandHeight: true,
-                // numberOfFrozenColumn: numberOfFrozenColumn,
-                bodyRowHeight: isMobile.phone ? 28 : 25,
-                fullHeight: !isMobile.phone,
-                gridHeight: isMobile.phone ? $(window).height() - 70 : 0,
-                customizeHeader: false,
-                highlightFrozenWidth: 2,
-                showPager: true,
-                customPager: true,
-                // showNumberColumn: true,
-                pagerOption: {
-                    itemsPerPageArray: [100, 200, 300, 400, 500],
-                    currentPage: result.PageIndex - 1,
-                    totalItem: result.TotalGroups,
-                    itemsPerPage: params.PageSize,
-                    pagerSelectCallBack: function (currentPageIndex, itemsPerPage) {
-                        // Fanex.ExtAcc.Customer.DisableMultipleContextMenu();
-                        _this.cachedParams.PageIndex = currentPageIndex;
-                        _this.cachedParams.PageSize = itemsPerPage;
-                        _this.SubmitSearch(itemsPerPage, currentPageIndex);
-                    }
-                },
-                sortOption:
-                    {
-                        serverSortFunction: function (sortColumnName, sortDirection) {
-                            if (sortColumnName === 'GroupName') {
-                                backupResult.GroupHeadlines = _this.SortByNameExceptFirst(backupResult.GroupHeadlines, 'GroupName', sortDirection, true);
-                            }
-                            if (sortColumnName === 'Username') {
-                                for (const element of backupResult.GroupHeadlines) {
-                                    element.HeadlineEntities = _this.SortByNameExceptFirst(element.HeadlineEntities, 'Username', sortDirection);
-                                }
-                            }
-                            gridOptions.bodyRows = _this.RenderBodyRows(backupResult.GroupHeadlines);
-                            _this.DOMElements.jqgrid.fanexGrid('reRenderBodyAfterSort', gridOptions, sortColumnName, sortDirection);
-                        }
-                    },
-                marginRight: 12,
-                showDistinctRow: false,
-                allowTruncate: true,
-                showHighlightRow: false
-            };
-
-            if (bodyRows.length === 0) {
-                _this.DOMElements.msgNoinfo.css('display', 'block');
-                _this.DOMElements.jqgrid.css('display', 'none');
-                _this.DOMElements.icoExportExcel.css('display', 'none');
-            } else {
-                _this.DOMElements.msgNoinfo.css('display', 'none');
-                _this.DOMElements.jqgrid.css('display', 'block');
-                _this.DOMElements.icoExportExcel.show();
-                setPagerOptionOnMobile(gridOptions);
-                _this.DOMElements.jqgrid.fanexGrid(gridOptions);
-                workaroundForGridOnPhone();
-            }
-            
-            if (bodyRows.length > 0) {
-                _this.DOMElements.icoExportExcel.off().click(function () {
-                    var params = {
-                        UserName: _this.DOMElements.txtUsername.val(),
-                        GroupHeadline: _this.DOMElements.txtGroupHeadline.val(),
-                        Status: _this.DOMElements.selStatus.val(),
-                    };
-
-                    top.exportExcel(resolveClientUrl("HeadlineList/ExportHeadlines?") + top.serialize(params), document);
-                });
-            }
-        }).always(function () {
-            Fanex.ExtAcc.UnBlockUI();
-        });
     },
     
     GetGridHeader: function () {
@@ -259,7 +260,6 @@ Fanex.ExtAcc.HeadlineList = {
 
         return containerDiv.join('');
     },
-   
     
     SortByNameExceptFirst: function (arr, sortColumnName, sortDirection, ignoreFirst = false) {
         const firstElement = ignoreFirst ? arr.shift() : null;

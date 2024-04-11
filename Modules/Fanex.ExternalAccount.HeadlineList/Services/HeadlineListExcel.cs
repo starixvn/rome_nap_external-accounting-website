@@ -26,8 +26,8 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
             HSSFWorkbook workbook = new HSSFWorkbook();
             var worksheet = workbook.CreateSheet(sheetName);
 
-            CreateHeaderHeadlinesExcel(workbook, worksheet);
             CreateBodyHeadlinesExcel(workbook, worksheet, data);
+            CreateHeaderHeadlinesExcel(workbook, worksheet);
 
             workbook.Write(result);
             return result;
@@ -39,7 +39,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
 
             currentRow++;
             var headerRow = worksheet.CreateRow(currentRow);
-            var columnWidths = new int[] { 10, 25, 25, 10 };
+            var columnWidths = new [] { 8, 27, 27, 10 };
             for (var i = 0; i <= columnWidths.Length - 1; i++)
             {
                 headerRow.Sheet.SetColumnWidth(i, columnWidths[i] * 256);
@@ -189,8 +189,8 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
 
             var palette = workbook.GetCustomPalette();
             var colorIndex = palette.FindSimilarColor(131, 202, 255).Indexed;
-            var borderColorIndex = palette.FindSimilarColor(128, 100, 162).Indexed;
-
+           // var borderColorIndex = palette.FindSimilarColor(128, 100, 162).Indexed;
+            var borderColorIndex = HSSFColor.Black.Index;
             headerStyle.SetFont(font);
             headerStyle.Alignment = HorizontalAlignment.Center;
             headerStyle.VerticalAlignment = VerticalAlignment.Center;
@@ -213,7 +213,8 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
         {
             var reportStyle = workbook.CreateCellStyle();
             var palette = workbook.GetCustomPalette();
-            var borderColorIndex = palette.FindSimilarColor(128, 100, 162).Indexed;
+           // var borderColorIndex = palette.FindSimilarColor(128, 100, 162).Indexed;
+            var borderColorIndex = HSSFColor.Black.Index;
             var mediumBlackNormal = workbook.CreateFont();
             mediumBlackNormal.FontName = "Tahoma";
             mediumBlackNormal.FontHeightInPoints = 9;
@@ -230,9 +231,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
             reportStyle.RightBorderColor = borderColorIndex;
             reportStyle.BorderRight = BorderStyle.Thin;
             reportStyle.WrapText = true;
-
-            reportStyle.FillPattern = FillPattern.SolidForeground;
-
+            
             return reportStyle;
         }
 
@@ -243,7 +242,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
             var leftDisableColorTextStyle = workbook.CreateCellStyle();
             leftDisableColorTextStyle.CloneStyleFrom(DefaultStyle(workbook));
             leftDisableColorTextStyle.FillBackgroundColor = disableColor;
-
+            leftDisableColorTextStyle.FillPattern = FillPattern.SolidForeground;
             return leftDisableColorTextStyle;
         }
 
@@ -270,7 +269,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
             var leftDisableColorTextStyle = workbook.CreateCellStyle();
             leftDisableColorTextStyle.CloneStyleFrom(DefaultStyle(workbook));
             leftDisableColorTextStyle.FillForegroundColor = closeColor;
-
+            leftDisableColorTextStyle.FillPattern = FillPattern.SolidForeground;
             return leftDisableColorTextStyle;
         }
 
@@ -281,7 +280,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
             var leftDisableColorTextStyle = workbook.CreateCellStyle();
             leftDisableColorTextStyle.CloneStyleFrom(DefaultStyle(workbook));
             leftDisableColorTextStyle.FillForegroundColor = suspendedColor;
-
+            leftDisableColorTextStyle.FillPattern = FillPattern.SolidForeground;
             return leftDisableColorTextStyle;
         }
     }
