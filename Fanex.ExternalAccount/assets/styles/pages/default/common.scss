@@ -1963,3 +1963,31 @@ ul, li {
     font-weight: bold;
     text-align: center !important;
 }
+
+td.cell-disabled {
+    background-color: #a0a97a !important;
+}
+
+td.cell-suspended {
+    background-color: #f8ded7 !important;
+}
+
+td.locked-falsePassword {
+    background-color: #ccc7ba !important;
+}
+
+td.locked-falseOTPSC {
+    background-color: #86c5e4 !important;
+}
+td.closed-byAdmin {
+    background-color: #b3a2c7 !important;
+}
+
+td.closed-byUpline {
+    background-color: #f79646 !important;
+}
+
+td.closed-byArchive {
+    background-color: #969696;
+}
+

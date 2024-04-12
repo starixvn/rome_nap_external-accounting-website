@@ -175,7 +175,7 @@ Fanex.ExtAcc.HeadlineList = {
         }
 
         if (!currentRow.IsEnable) {
-            return 'rowDisabled';
+            return 'cell-disabled';
         }
 
         if (currentRow.IsClosed) {
@@ -183,7 +183,7 @@ Fanex.ExtAcc.HeadlineList = {
         }
 
         if (currentRow.IsSuspend) {
-            return 'rowSuspended';
+            return 'cell-suspended';
         }
         return '';
     },
@@ -207,12 +207,18 @@ Fanex.ExtAcc.HeadlineList = {
                         CellAlign: 'left'
                     });
                 }
-                columns.push({Name: 'Username', Value: headline.Username, CellAlign: 'left'});
+                columns.push({
+                    Name: 'Username', 
+                    Value: headline.Username, 
+                    CellAlign: 'left', 
+                    TdClass:  Fanex.ExtAcc.HeadlineList.GetCSSRow(headline)
+                });
                 columns.push({
                     Name: 'Status',
-                    Value: !headline.IsEnable ? 'Disabled' : headline.IsClosed ? 'Closed' : headline.IsSuspend ? 'Suspended' : 'Open'
+                    Value: !headline.IsEnable ? 'Disabled' : headline.IsClosed ? 'Closed' : headline.IsSuspend ? 'Suspended' : 'Open',
+                    TdClass:  Fanex.ExtAcc.HeadlineList.GetCSSRow(headline)
                 });
-                bodyRows.push({Columns: columns, CssClass: Fanex.ExtAcc.HeadlineList.GetCSSRow(headline)});
+                bodyRows.push({ Columns: columns });
             }
         }
         return bodyRows;
