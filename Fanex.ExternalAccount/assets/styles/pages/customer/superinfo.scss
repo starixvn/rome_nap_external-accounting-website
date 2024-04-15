@@ -75,3 +75,24 @@
 #SuperForceChange {
     margin-left: 6px;
 }
+.input-password-container {
+    position: relative;
+}
+
+.ic-pwd-eye {
+    margin-right: 4px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #444;
+    width: 25px;
+    height: 25px;
+}
+.ic-pwd-eye-visible {
+    background-image: url(../../images/eye-visible.png);
+}
+.ic-pwd-eye-visible-off {
+    background-image: url(../../images/eye-visible-off.png);
+}

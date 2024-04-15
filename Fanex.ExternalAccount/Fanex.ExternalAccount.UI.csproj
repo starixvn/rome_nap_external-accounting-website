@@ -626,6 +626,8 @@
     <Content Include="assets\bundles\mcwinlossdetail\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="assets\styles\images\eye-visible-off.png" />
+    <Content Include="assets\styles\images\eye-visible.png" />
     <Content Include="assets\styles\pages\customer\superinfo.css">
       <DependentUpon>superinfo.scss</DependentUpon>
     </Content>

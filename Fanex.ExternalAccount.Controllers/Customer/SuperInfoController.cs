@@ -23,6 +23,7 @@
             this.superListSevice = superListSevice ?? new EditSuperListService();
         }
 
+        [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "EditCustomer")]
         public ActionResult Index()
         {
 
@@ -32,7 +33,7 @@
         }
         
         [HttpPost]
-        [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "EditCustomer")]
+        [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "EditCustomer")]
         public ActionResult CheckMultipleSupers(string destUsers, string groupName)
         {
             var result = superListSevice.CheckMultipleSupers(destUsers, groupName, CurrentSession.UserId);
@@ -41,7 +42,7 @@
         }
 
         [HttpPost]
-        [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "EditCustomer")]
+        [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "EditCustomer")]
         public ActionResult UpdateMultipleSupers(UpdateMultipleSuperRequest request)
         {
             request.Password = Encryptor.Decrypt(request.Password, Encryptor.RandomCaptcha);

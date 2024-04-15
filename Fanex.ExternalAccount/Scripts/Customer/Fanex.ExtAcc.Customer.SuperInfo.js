@@ -29,6 +29,7 @@ var SuperInfo = /** @class */ (function () {
     };
     SuperInfo.prototype.BindingEvents = function () {
         var _this = this;
+        var $this = this;
         this.superInfoList.blur(function () { return _this.ReplaceChars(); });
         this.btnSelectSupers.click(function () { return _this.CheckValidSuperList(); });
         this.btnResetSelect.click(function () { return _this.ResetSuperList(); });
@@ -43,6 +44,19 @@ var SuperInfo = /** @class */ (function () {
         $("#notesPwd").tooltip();
         $("#notesSecCode").tooltip();
         $('[data-toggle="tooltip"]').tooltip();
+        $('.ic-pwd-eye').click(function () { $this.HideUnHidePwd($(this)); });
+    };
+    SuperInfo.prototype.HideUnHidePwd = function (iConSpan) {
+        var targetId = iConSpan.data("id");
+        var currentType = $("#" + targetId).prop("type");
+        if (currentType === "text") {
+            $("#" + targetId).prop("type", "password");
+            iConSpan.removeClass("ic-pwd-eye-visible-off").addClass("ic-pwd-eye-visible");
+        }
+        else {
+            $("#" + targetId).prop("type", "text");
+            iConSpan.removeClass("ic-pwd-eye-visible").addClass("ic-pwd-eye-visible-off");
+        }
     };
     SuperInfo.prototype.ReplaceChars = function () {
         this.superInfoList.val(this.superInfoList.val()
@@ -140,6 +154,11 @@ var SuperInfo = /** @class */ (function () {
         this.$("#ckbSuperPhone").prop("checked", true).trigger("change");
         this.$("#ckbSuperMobilePhone").prop("checked", false).trigger("change");
         this.$("#SuperForceChange").prop("checked", true).trigger("change");
+        this.$(".ic-pwd-eye").each(function () {
+            var targetId = $(this).data("id");
+            $("#" + targetId).prop("type", "password");
+            $(this).removeClass("ic-pwd-eye-visible-off").addClass("ic-pwd-eye-visible");
+        });
     };
     SuperInfo.prototype.EnableDisableBtnSubmit = function () {
         if ((this.$("#ckbPersonalInfo").prop('checked') && (this.$("#ckbSuperFirstName").prop('checked') || this.$("#ckbSuperLastName").prop('checked') || this.$("#ckbSuperPhone").prop('checked') || this.$("#ckbSuperMobilePhone").prop('checked'))) ||
@@ -178,15 +197,15 @@ var SuperInfo = /** @class */ (function () {
                 errorMessage = 'Invalid parameter value.';
             }
             else if (this.$("#ckbSuperLastName").prop('checked') && this.ContainsHTML($("#SuperLastName").val())) {
-                errorField = $('#SuperFirstName');
+                errorField = $('#SuperLastName');
                 errorMessage = 'Invalid parameter value.';
             }
             else if (this.$("#ckbSuperPhone").prop('checked') && this.ContainsHTML($("#SuperPhone").val())) {
-                errorField = $('#SuperFirstName');
+                errorField = $('#SuperPhone');
                 errorMessage = 'Invalid parameter value.';
             }
             else if (this.$("#ckbSuperMobilePhone").prop('checked') && this.ContainsHTML($("#SuperMobilePhone").val())) {
-                errorField = $('#SuperFirstName');
+                errorField = $('#SuperMobilePhone');
                 errorMessage = 'Invalid parameter value.';
             }
             if (errorMessage !== "") {
@@ -275,7 +294,10 @@ var SuperInfo = /** @class */ (function () {
             data: requestData,
             cache: false,
             success: function (result) {
-                if (_this.$.isArray(result) && result.length > 0) {
+                if (result.errorMessage) {
+                    _this.$("#errMsg").empty().html(result.errorMessage).show();
+                }
+                else if (_this.$.isArray(result) && result.length > 0) {
                     _this.$("#errMsg").empty().html(_this.BuildErrorUpdate(result)).show();
                 }
                 else {
@@ -358,7 +380,7 @@ var SuperInfo = /** @class */ (function () {
         return errorMessage;
     };
     SuperInfo.prototype.ContainsHTML = function (str) {
-        return str.match(/^<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>$/);
+        return str.match(/^<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>/);
     };
     return SuperInfo;
 }());
