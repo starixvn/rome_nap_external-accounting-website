@@ -81,7 +81,7 @@ Fanex.ExtAcc.HeadlineList = {
                 customPager: true,
                 // showNumberColumn: true,
                 pagerOption: {
-                    itemsPerPageArray: [100, 200, 300, 400, 500],
+                    itemsPerPageArray: [10,100, 200, 300, 400, 500],
                     currentPage: result.PageIndex - 1,
                     totalItem: result.TotalGroups,
                     itemsPerPage: params.PageSize,
