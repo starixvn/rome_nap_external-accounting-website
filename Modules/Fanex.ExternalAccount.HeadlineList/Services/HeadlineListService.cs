@@ -33,6 +33,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
             {
                 TotalGroups = dbResult.TotalHeadlineGroups,
                 PageIndex = query.PageIndex,
+                PageSize = query.PageSize,
                 TotalHeadlines = dbResult.TotalHeadlines,
                 GroupHeadlines = dbResult.Groups
                     .Skip(query.PageSize * (query.PageIndex - 1))

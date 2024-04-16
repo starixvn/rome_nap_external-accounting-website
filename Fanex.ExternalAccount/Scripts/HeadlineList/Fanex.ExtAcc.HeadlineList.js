@@ -10,7 +10,7 @@ Fanex.ExtAcc.HeadlineList = {
             MasterId: 0,
             AgentId: 0
         },
-        pageSize: 50,
+        pageSize: 10,
         pageIndex: 0,
         uplineId: 0,
         uplineRoleId: 0,
@@ -24,7 +24,7 @@ Fanex.ExtAcc.HeadlineList = {
     },
     backupResult: {},
     currentHeadlines: [],
-    
+
     Init: function () {
         this.DOMElements.txtUsername = $('#txtUserName');
         this.DOMElements.txtGroupHeadline = $('#txtGroupHeadline');
@@ -37,7 +37,7 @@ Fanex.ExtAcc.HeadlineList = {
         this.DOMElements.btnSearch.click();
 
     },
-    
+
     BindingEvents: function () {
         this.DOMElements.btnSearch.off().click(function () {
             const _this = Fanex.ExtAcc.HeadlineList;
@@ -45,7 +45,7 @@ Fanex.ExtAcc.HeadlineList = {
         });
 
         this.DOMElements.txtUsername.keypress(function (e) {
-           const _this = Fanex.ExtAcc.HeadlineList;
+            const _this = Fanex.ExtAcc.HeadlineList;
             const code = e.keyCode ? e.keyCode : e.which;
             if (code === 13) {
                 _this.DOMElements.btnSearch.click()
@@ -63,9 +63,9 @@ Fanex.ExtAcc.HeadlineList = {
 
     Search: function (params) {
         $.post(parent.resolveClientUrl('HeadlineList/Search'), params, function (result) {
-            var _this = Fanex.ExtAcc.HeadlineList;
+            const _this = Fanex.ExtAcc.HeadlineList;
             backupResult = result;
-            let bodyRows = _this.RenderBodyRows(result.GroupHeadlines);
+            let bodyRows = _this.RenderBodyRows(result.GroupHeadlines, result.PageIndex, result.PageSize);
 
             gridOptions = {
                 columns: _this.GetGridHeader(),
@@ -81,7 +81,7 @@ Fanex.ExtAcc.HeadlineList = {
                 customPager: true,
                 // showNumberColumn: true,
                 pagerOption: {
-                    itemsPerPageArray: [10,100, 200, 300, 400, 500],
+                    itemsPerPageArray: [10, 100, 200, 300, 400, 500],
                     currentPage: result.PageIndex - 1,
                     totalItem: result.TotalGroups,
                     itemsPerPage: params.PageSize,
@@ -102,7 +102,7 @@ Fanex.ExtAcc.HeadlineList = {
                                     element.HeadlineEntities = _this.SortByNameExceptFirst(element.HeadlineEntities, 'Username', sortDirection);
                                 }
                             }
-                            gridOptions.bodyRows = _this.RenderBodyRows(backupResult.GroupHeadlines);
+                            gridOptions.bodyRows = _this.RenderBodyRows(backupResult.GroupHeadlines, _this.cachedParams.PageIndex, _this.cachedParams.PageSize);
                             _this.DOMElements.jqgrid.fanexGrid('reRenderBodyAfterSort', gridOptions, sortColumnName, sortDirection);
                         }
                     },
@@ -127,7 +127,7 @@ Fanex.ExtAcc.HeadlineList = {
 
             if (bodyRows.length > 0) {
                 _this.DOMElements.icoExportExcel.off().click(function () {
-                    var params = {
+                    const params = {
                         UserName: _this.DOMElements.txtUsername.val(),
                         GroupHeadline: _this.DOMElements.txtGroupHeadline.val(),
                         Status: _this.DOMElements.selStatus.val(),
@@ -140,14 +140,14 @@ Fanex.ExtAcc.HeadlineList = {
             Fanex.ExtAcc.UnBlockUI();
         });
     },
-    
+
     SubmitSearch: function (itemsPerPage, currentIndex) {
         const _this = Fanex.ExtAcc.HeadlineList;
         const pageSize = !isNullOrUndefined(itemsPerPage) ? itemsPerPage : _this.cachedParams.pageSize;
         const pageIndex = !isNullOrUndefined(currentIndex) ? currentIndex : _this.cachedParams.pageIndex;
-        
+
         Fanex.ExtAcc.BlockUI();
-        
+
         const params = {
             UserName: Fanex.encodeHtml(encodeURIComponent($.trim(this.DOMElements.txtUsername.val()))).replace(/[^a-zA-Z0-9~!*()-._]/g, ""),
             GroupHeadline: Fanex.encodeHtml(encodeURIComponent($.trim(this.DOMElements.txtGroupHeadline.val()))).replace(/[^a-zA-Z0-9~!*()-._]/g, ""),
@@ -155,11 +155,11 @@ Fanex.ExtAcc.HeadlineList = {
             PageSize: pageSize,
             PageIndex: pageIndex + 1
         };
-      
+
         _this.cachedParams.previousParams = params;
         _this.Search(params);
     },
-    
+
     GetCSSRow: function (currentRow) {
         function GetClosedClassName(currentRow) {
             switch (currentRow.ClosedReason) {
@@ -187,11 +187,13 @@ Fanex.ExtAcc.HeadlineList = {
         }
         return '';
     },
-    
-    RenderBodyRows: function (groupHeadlines) {
+
+    RenderBodyRows: function (groupHeadlines, currentPageIndex, itemsPerPage) {
         let bodyRows = [];
-        const numberRow = groupHeadlines.length;
-        for (let i = 0; i < numberRow; i++) {
+        const totalGroup = groupHeadlines.length;
+        let rowNumber = (currentPageIndex - 1) * itemsPerPage + 1;
+        
+        for (let i = 0; i < totalGroup; i++) {
             const groupHeadline = groupHeadlines[i];
             const groupHeadlineLength = groupHeadline.HeadlineEntities.length;
             let rowMerge = groupHeadlineLength;
@@ -199,31 +201,32 @@ Fanex.ExtAcc.HeadlineList = {
                 const headline = groupHeadline.HeadlineEntities[j];
                 let columns = [];
                 if (j === 0) {
-                    columns.push({Name: "RowNumber", Value: i + 1, MergeRowNumber: rowMerge});
+                    columns.push({Name: "RowNumber", Value: rowNumber, MergeRowNumber: rowMerge});
                     columns.push({
                         Name: 'GroupName',
                         Value: groupHeadline.GroupName,
                         MergeRowNumber: rowMerge,
                         CellAlign: 'left'
                     });
+                    rowNumber++;
                 }
                 columns.push({
-                    Name: 'Username', 
-                    Value: headline.Username, 
-                    CellAlign: 'left', 
-                    TdClass:  Fanex.ExtAcc.HeadlineList.GetCSSRow(headline)
+                    Name: 'Username',
+                    Value: headline.Username,
+                    CellAlign: 'left',
+                    TdClass: Fanex.ExtAcc.HeadlineList.GetCSSRow(headline)
                 });
                 columns.push({
                     Name: 'Status',
                     Value: !headline.IsEnable ? 'Disabled' : headline.IsClosed ? 'Closed' : headline.IsSuspend ? 'Suspended' : 'Open',
-                    TdClass:  Fanex.ExtAcc.HeadlineList.GetCSSRow(headline)
+                    TdClass: Fanex.ExtAcc.HeadlineList.GetCSSRow(headline)
                 });
-                bodyRows.push({ Columns: columns });
+                bodyRows.push({Columns: columns});
             }
         }
         return bodyRows;
     },
-    
+
     GetGridHeader: function () {
         const columns = [];
         columns.push({HeaderText: 'No.', Name: 'RowNumber', Width: 50, CellAlign: 'center'});
@@ -266,7 +269,7 @@ Fanex.ExtAcc.HeadlineList = {
 
         return containerDiv.join('');
     },
-    
+
     SortByNameExceptFirst: function (arr, sortColumnName, sortDirection, ignoreFirst = false) {
         const firstElement = ignoreFirst ? arr.shift() : null;
         const sorted = arr.sort(function (a, b) {
