@@ -32,11 +32,11 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
             var pagingResult = new SearchHeadlineResult
             {
                 TotalGroups = dbResult.TotalHeadlineGroups,
-                PageIndex = query.PageIndex,
+                Page = query.Page,
                 PageSize = query.PageSize,
                 TotalHeadlines = dbResult.TotalHeadlines,
                 GroupHeadlines = dbResult.Groups
-                    .Skip(query.PageSize * (query.PageIndex - 1))
+                    .Skip(query.PageSize * (query.Page - 1))
                     .Take(query.PageSize)
                     .ToList()
             };

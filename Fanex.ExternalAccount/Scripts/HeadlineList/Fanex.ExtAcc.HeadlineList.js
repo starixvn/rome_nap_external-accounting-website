@@ -11,7 +11,7 @@ Fanex.ExtAcc.HeadlineList = {
             AgentId: 0
         },
         pageSize: 10,
-        pageIndex: 0,
+        page: 1,
         uplineId: 0,
         uplineRoleId: 0,
         previousParams: null,
@@ -41,7 +41,7 @@ Fanex.ExtAcc.HeadlineList = {
     BindingEvents: function () {
         this.DOMElements.btnSearch.off().click(function () {
             const _this = Fanex.ExtAcc.HeadlineList;
-            _this.SubmitSearch(_this.uplineId, _this.uplineRoleId, undefined, 0);
+            _this.SubmitSearch(_this.uplineId, _this.uplineRoleId, undefined, 1);
         });
 
         this.DOMElements.txtUsername.keypress(function (e) {
@@ -65,8 +65,8 @@ Fanex.ExtAcc.HeadlineList = {
         $.post(parent.resolveClientUrl('HeadlineList/Search'), params, function (result) {
             const _this = Fanex.ExtAcc.HeadlineList;
             backupResult = result;
-            let bodyRows = _this.RenderBodyRows(result.GroupHeadlines, result.PageIndex, result.PageSize);
-
+            let bodyRows = _this.RenderBodyRows(result.GroupHeadlines, result.Page, result.PageSize);
+            
             gridOptions = {
                 columns: _this.GetGridHeader(),
                 bodyRows: bodyRows,
@@ -82,13 +82,13 @@ Fanex.ExtAcc.HeadlineList = {
                 // showNumberColumn: true,
                 pagerOption: {
                     itemsPerPageArray: [10, 100, 200, 300, 400, 500],
-                    currentPage: result.PageIndex - 1,
+                    currentPage: result.Page - 1,
                     totalItem: result.TotalGroups,
                     itemsPerPage: params.PageSize,
                     pagerSelectCallBack: function (currentPageIndex, itemsPerPage) {
-                        _this.cachedParams.PageIndex = currentPageIndex;
-                        _this.cachedParams.PageSize = itemsPerPage;
-                        _this.SubmitSearch(itemsPerPage, currentPageIndex);
+                        _this.cachedParams.page = currentPageIndex + 1;
+                        _this.cachedParams.pageSize = itemsPerPage;
+                        _this.SubmitSearch(itemsPerPage, currentPageIndex + 1);
                     }
                 },
                 sortOption:
@@ -102,7 +102,7 @@ Fanex.ExtAcc.HeadlineList = {
                                     element.HeadlineEntities = _this.SortByNameExceptFirst(element.HeadlineEntities, 'Username', sortDirection);
                                 }
                             }
-                            gridOptions.bodyRows = _this.RenderBodyRows(backupResult.GroupHeadlines, _this.cachedParams.PageIndex, _this.cachedParams.PageSize);
+                            gridOptions.bodyRows = _this.RenderBodyRows(backupResult.GroupHeadlines, _this.cachedParams.page, _this.cachedParams.pageSize);
                             _this.DOMElements.jqgrid.fanexGrid('reRenderBodyAfterSort', gridOptions, sortColumnName, sortDirection);
                         }
                     },
@@ -141,10 +141,10 @@ Fanex.ExtAcc.HeadlineList = {
         });
     },
 
-    SubmitSearch: function (itemsPerPage, currentIndex) {
+    SubmitSearch: function (itemsPerPage, currentPage) {
         const _this = Fanex.ExtAcc.HeadlineList;
-        const pageSize = !isNullOrUndefined(itemsPerPage) ? itemsPerPage : _this.cachedParams.pageSize;
-        const pageIndex = !isNullOrUndefined(currentIndex) ? currentIndex : _this.cachedParams.pageIndex;
+        const pageSize = isNullOrUndefined(itemsPerPage) ? _this.cachedParams.pageSize : itemsPerPage;
+        const page = isNullOrUndefined(currentPage) ? _this.cachedParams.page : currentPage;
 
         Fanex.ExtAcc.BlockUI();
 
@@ -153,7 +153,7 @@ Fanex.ExtAcc.HeadlineList = {
             GroupHeadline: Fanex.encodeHtml(encodeURIComponent($.trim(this.DOMElements.txtGroupHeadline.val()))).replace(/[^a-zA-Z0-9~!*()-._]/g, ""),
             Status: this.DOMElements.selStatus.val(),
             PageSize: pageSize,
-            PageIndex: pageIndex + 1
+            Page: page
         };
 
         _this.cachedParams.previousParams = params;
@@ -188,11 +188,11 @@ Fanex.ExtAcc.HeadlineList = {
         return '';
     },
 
-    RenderBodyRows: function (groupHeadlines, currentPageIndex, itemsPerPage) {
+    RenderBodyRows: function (groupHeadlines, currentPage, itemsPerPage) {
         let bodyRows = [];
         const totalGroup = groupHeadlines.length;
-        let rowNumber = (currentPageIndex - 1) * itemsPerPage + 1;
-        
+        let rowNumber = (currentPage - 1) * itemsPerPage + 1;
+
         for (let i = 0; i < totalGroup; i++) {
             const groupHeadline = groupHeadlines[i];
             const groupHeadlineLength = groupHeadline.HeadlineEntities.length;

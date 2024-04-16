@@ -8,7 +8,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Models
         
         public int TotalHeadlines { get; set; }
         
-        public int PageIndex { get; set; }
+        public int Page { get; set; }
         
         public int PageSize { get; set; }
         
