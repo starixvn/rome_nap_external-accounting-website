@@ -15691,7 +15691,7 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
             var sportType = this.getSportType(toogle);
             var bettype = this.getBetType(toogle);
             var enable_2 = this.isChecked(toogle);
-            var isMacauGames = this.$("#productId").val() == "22";
+            var isMacauGames = this.$("#productId").val() == "18";
             this.watchHeader(roleId_1, false);
             if (roleId_1 > 1) {
                 var downlineToggle = this.getToggleElements(this.$toggleArray, roleId_1 - 1, sportType, bettype);
@@ -15827,8 +15827,10 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
             html.push('<div class="');
             html.push(result.Code !== 0 ? "alerterror" : "alertsuccess");
             html.push('"><div>');
-            html.push(result.CustName);
-            html.push(": ");
+            if (result.CustName) {
+                html.push(result.CustName);
+                html.push(": ");
+            }
             html.push(result.Message);
             html.push("</div></div>");
         });
