@@ -1646,7 +1646,8 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter list of Supers Account usernames* (Maximum 500 supers, separated by comma &apos;,&apos;).
+        ///   Looks up a localized string similar to Enter list of Supers Account usernames* (Maximum 50 supers, separated by comma &apos;,&apos;)
+        ///.
         /// </summary>
         public static string NoteUsernameSuperInfo {
             get {

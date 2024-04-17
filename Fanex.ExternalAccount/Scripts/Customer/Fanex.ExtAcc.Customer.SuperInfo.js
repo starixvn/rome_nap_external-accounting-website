@@ -78,6 +78,10 @@ var SuperInfo = /** @class */ (function () {
             this.$("#errMsg").empty().html("Please input username of supers.").show();
             return false;
         }
+        if (this.ContainsHTML(superList)) {
+            this.$("#errMsg").empty().html("Invalid parameter value.").show();
+            return false;
+        }
         var usernameList = superList.split(",");
         if (usernameList.length > 50) {
             this.$("#errMsg").empty().html("The function can only edit up to 50 accounts per request.").show();
@@ -122,7 +126,7 @@ var SuperInfo = /** @class */ (function () {
                     _this.superInfoList.addClass("-disabled").attr("disabled", true);
                     _this.btnSelectSupers.addClass("-disabled").attr("disabled", true);
                     _this.btnResetSelect.removeClass("-disabled").attr("disabled", false);
-                    _this.selectedSupers.empty().html(superList).show();
+                    _this.selectedSupers.empty().html(superList.split(',').join(', ')).show();
                     _this.updateSuperInfoContent.show();
                     _this.selectedSuperIdWithUsername = data.superIds;
                 }

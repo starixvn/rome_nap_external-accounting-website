@@ -106,6 +106,11 @@ class SuperInfo {
             return false;
         }
 
+        if (this.ContainsHTML(superList)) {
+            this.$("#errMsg").empty().html("Invalid parameter value.").show();
+            return false;
+        }
+
         var usernameList = superList.split(",");
 
         if (usernameList.length > 50) {
@@ -154,7 +159,7 @@ class SuperInfo {
                     this.superInfoList.addClass("-disabled").attr("disabled", true);
                     this.btnSelectSupers.addClass("-disabled").attr("disabled", true);
                     this.btnResetSelect.removeClass("-disabled").attr("disabled", false);
-                    this.selectedSupers.empty().html(superList).show();
+                    this.selectedSupers.empty().html(superList.split(',').join(', ')).show();
                     this.updateSuperInfoContent.show();
                     this.selectedSuperIdWithUsername = data.superIds;
                 }
