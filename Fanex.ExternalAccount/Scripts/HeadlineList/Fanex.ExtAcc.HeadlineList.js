@@ -41,7 +41,7 @@ Fanex.ExtAcc.HeadlineList = {
     BindingEvents: function () {
         this.DOMElements.btnSearch.off().click(function () {
             const _this = Fanex.ExtAcc.HeadlineList;
-            _this.SubmitSearch(_this.uplineId, _this.uplineRoleId, undefined, 1);
+            _this.SubmitSearch(undefined, 1);
         });
 
         this.DOMElements.txtUsername.keypress(function (e) {
