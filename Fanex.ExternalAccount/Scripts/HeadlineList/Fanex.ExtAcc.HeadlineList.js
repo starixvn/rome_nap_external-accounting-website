@@ -66,7 +66,7 @@ Fanex.ExtAcc.HeadlineList = {
             const _this = Fanex.ExtAcc.HeadlineList;
             backupResult = result;
             let bodyRows = _this.RenderBodyRows(result.GroupHeadlines, result.Page, result.PageSize);
-            
+
             gridOptions = {
                 columns: _this.GetGridHeader(),
                 bodyRows: bodyRows,
@@ -95,11 +95,11 @@ Fanex.ExtAcc.HeadlineList = {
                     {
                         serverSortFunction: function (sortColumnName, sortDirection) {
                             if (sortColumnName === 'GroupName') {
-                                backupResult.GroupHeadlines = _this.SortByNameExceptFirst(backupResult.GroupHeadlines, 'GroupName', sortDirection, true);
+                                backupResult.GroupHeadlines = _this.SortByProperty(backupResult.GroupHeadlines, sortDirection, 'GroupName', "Not assigned to group");
                             }
                             if (sortColumnName === 'Username') {
                                 for (const element of backupResult.GroupHeadlines) {
-                                    element.HeadlineEntities = _this.SortByNameExceptFirst(element.HeadlineEntities, 'Username', sortDirection);
+                                    element.HeadlineEntities = _this.SortByProperty(element.HeadlineEntities, sortDirection, 'Username');
                                 }
                             }
                             gridOptions.bodyRows = _this.RenderBodyRows(backupResult.GroupHeadlines, _this.cachedParams.page, _this.cachedParams.pageSize);
@@ -270,14 +270,24 @@ Fanex.ExtAcc.HeadlineList = {
         return containerDiv.join('');
     },
 
-    SortByNameExceptFirst: function (arr, sortColumnName, sortDirection, ignoreFirst = false) {
-        const firstElement = ignoreFirst ? arr.shift() : null;
-        const sorted = arr.sort(function (a, b) {
+    SortByProperty: function (arr, sortDirection, sortColumnName, ignoreValue) {
+        const ignoreIndex = arr.findIndex(function (arr) {
+            return arr[sortColumnName] === ignoreValue;
+        });
+        const sortFunction = function (a, b) {
             const comparison = a[sortColumnName].localeCompare(b[sortColumnName]);
             return sortDirection === "asc" ? comparison : -comparison;
-        });
+        };
 
-        const result = ignoreFirst ? [firstElement].concat(sorted) : sorted;
-        return result;
+        if (ignoreIndex === -1) {
+            return arr.sort(sortFunction);
+        }
+
+        const filterFunction = function (item) {
+            return item[sortColumnName] !== ignoreValue;
+        };
+
+        const sorted = arr.filter(filterFunction).sort(sortFunction);
+        return [...sorted.slice(0, ignoreIndex), arr[ignoreIndex], ...sorted.slice(ignoreIndex, sorted.length)];
     }
 }
