@@ -10,7 +10,7 @@ Fanex.ExtAcc.HeadlineList = {
             MasterId: 0,
             AgentId: 0
         },
-        pageSize: 10,
+        pageSize: 100,
         page: 1,
         uplineId: 0,
         uplineRoleId: 0,
@@ -81,7 +81,7 @@ Fanex.ExtAcc.HeadlineList = {
                 customPager: true,
                 // showNumberColumn: true,
                 pagerOption: {
-                    itemsPerPageArray: [10, 100, 200, 300, 400, 500],
+                    itemsPerPageArray: [100, 200, 300, 400, 500],
                     currentPage: result.Page - 1,
                     totalItem: result.TotalGroups,
                     itemsPerPage: params.PageSize,

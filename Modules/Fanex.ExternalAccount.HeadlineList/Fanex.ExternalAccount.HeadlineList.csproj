@@ -156,6 +156,7 @@
           <AutoGen>True</AutoGen>
           <DependentUpon>ViewLang.resx</DependentUpon>
         </Compile>
+        <Compile Include="Services\ConfigCell.cs" />
         <Compile Include="Services\HeadlineListExcel.cs" />
         <Compile Include="Services\HeadlineListService.cs" />
         <Compile Include="ViewModels\SearchHeadlineQuery.cs" />

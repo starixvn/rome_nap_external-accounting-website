@@ -1,5 +1,3 @@
-using System.Linq;
-
 namespace Fanex.ExternalAccount.HeadlineList.Services
 {
     using NPOI.HSSF.UserModel;
@@ -9,7 +7,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
     using Models;
     using Resources;
     using NPOI.SS.Util;
-
+    using System.Linq;
     public interface IHeadlineListExcel
     {
         MemoryStream ExportHeadlinesExcel(SearchHeadlineResult data);
@@ -20,31 +18,21 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
         private const byte ClosedByAdmin = 1;
         private const byte ClosedByUpline = 2;
         private const byte ClosedByArchive = 4;
-        private const string DefaultFontName = "Tahoma";
-        private const byte DefaultFontHeight = 9;
-        private short SuspendedColor;
-        private short ClosedByAdminColor;
-        private short ClosedByUplineColor;
-        private short ClosedByArchiveColor;
-        private short DisableColor;
+      
+        private ConfigCell configCell;
 
         public MemoryStream ExportHeadlinesExcel(SearchHeadlineResult data)
         {
             var result = new MemoryStream();
             var sheetName = "HeadlineList";
             HSSFWorkbook workbook = new HSSFWorkbook();
+            configCell = new ConfigCell(workbook);
             var worksheet = workbook.CreateSheet(sheetName);
-
-            var palette = workbook.GetCustomPalette();
-            SuspendedColor = palette.FindSimilarColor(255, 204, 153).Indexed;
-            ClosedByAdminColor = palette.FindSimilarColor(153, 153, 255).Indexed;
-            ClosedByUplineColor = palette.FindSimilarColor(255, 102, 0).Indexed;
-            ClosedByArchiveColor = palette.FindSimilarColor(150, 150, 150).Indexed;
-            DisableColor = palette.FindSimilarColor(148, 189, 94).Indexed;
-
-            CreateBodyHeadlinesExcel(workbook, worksheet, data);
+            
+            
             CreateHeaderHeadlinesExcel(workbook, worksheet);
-
+            CreateBodyHeadlinesExcel(workbook, worksheet, data);
+            
             workbook.Write(result);
             return result;
         }
@@ -54,9 +42,10 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
             var currentRow = 0;
 
             var headerRow = worksheet.CreateRow(currentRow);
-            var headerStyle = HeaderStyle(workbook);
+            var headerStyle = configCell.HeaderStyle(workbook);
             var headerContents = new[] { "No.", "Headline", "Username", "Status" };
             var columnWidths = new[] { 8, 27, 27, 10 };
+
             for (var columnIndex = 0; columnIndex < headerContents.Length; columnIndex++)
             {
                 var currentCell = headerRow.CreateCell(columnIndex);
@@ -65,38 +54,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
                 headerRow.Sheet.SetColumnWidth(columnIndex, columnWidths[columnIndex] * 256);
             }
         }
-
-
-        private ICellStyle SuspendedCellStyle(HSSFWorkbook workbook, HorizontalAlignment horizontalAlignment)
-        {
-            var suspendedCellStyle = FillColor(workbook, SuspendedColor);
-            suspendedCellStyle.Alignment = horizontalAlignment;
-            return suspendedCellStyle;
-        }
-
-        private ICellStyle CellByStatus(HSSFWorkbook workbook, HeadlineEntity headline, HorizontalAlignment horizontalAlignment)
-        {
-            if (!headline.IsEnable)
-            {
-                return DisableCellStyle(workbook, horizontalAlignment);
-            }
-
-            if (headline.IsClosed)
-            {
-                return CloseCellStyle(workbook, horizontalAlignment, headline.ClosedReason);
-            }
-
-            if (headline.IsSuspend)
-            {
-                return SuspendedCellStyle(workbook, horizontalAlignment);
-            }
-
-            var defaultStyle = DefaultStyle(workbook);
-            defaultStyle.Alignment = horizontalAlignment;
-
-            return defaultStyle;
-        }
-
+        
         private void CreateBodyHeadlinesExcel(HSSFWorkbook workbook, ISheet worksheet, SearchHeadlineResult data)
         {
             var currentRow = 1;
@@ -105,6 +63,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
                 ExportEmptyReport(workbook, worksheet, currentRow);
                 return;
             }
+
             var groups = data.GroupHeadlines.ToList();
 
             for (int i = 0; i < data.TotalGroups; i++)
@@ -128,22 +87,22 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
                     var column = row.CreateCell(4);
                     column = row.CreateCell(currentColumn);
                     column.SetCellValue(i + 1);
-                    column.CellStyle = CellByStatus(workbook, headline, HorizontalAlignment.Center);
-
+                    column.CellStyle = configCell.DefaultCellStyle_Center;
+                    
                     currentColumn = 1;
                     column = row.CreateCell(currentColumn);
                     column.SetCellValue(headline.GroupName);
-                    column.CellStyle = CellByStatus(workbook, headline, HorizontalAlignment.Left);
-
+                    column.CellStyle = configCell.DefaultCellStyle;
+                    
                     currentColumn = 2;
                     column = row.CreateCell(currentColumn);
                     column.SetCellValue(headline.Username);
-                    column.CellStyle = CellByStatus(workbook, headline, HorizontalAlignment.Left);
-
+                    column.CellStyle = LeftCell(headline);
+                    
                     currentColumn = 3;
                     column = row.CreateCell(currentColumn);
                     column.SetCellValue(headline.Status);
-                    column.CellStyle = CellByStatus(workbook, headline, HorizontalAlignment.Center);
+                    column.CellStyle = CenterCell(headline);
                     row.GetCell(4).SetBlank();
                     currentRow++;
                 }
@@ -154,8 +113,8 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
         {
             var textStyle = workbook.CreateCellStyle();
             var font = workbook.CreateFont();
-            font.FontName = DefaultFontName;
-            font.FontHeightInPoints = DefaultFontHeight;
+            font.FontName = configCell.DefaultFontName;
+            font.FontHeightInPoints = configCell.DefaultFontHeight;
             font.Color = HSSFColor.Red.Index;
             font.IsBold = true;
             textStyle.SetFont(font);
@@ -165,76 +124,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
             column.SetCellValue(ViewLang.NoData);
             column.CellStyle = textStyle;
         }
-
-        private ICellStyle HeaderStyle(HSSFWorkbook workbook)
-        {
-            var style = workbook.CreateCellStyle();
-            var headerFont = DefaultFontStyle(workbook);
-            headerFont.IsBold = true;
-            style.SetFont(headerFont);
-
-
-            var palette = workbook.GetCustomPalette();
-            var colorIndex = palette.FindSimilarColor(131, 202, 255).Indexed;
-            
-            style.Alignment = HorizontalAlignment.Center;
-            style.VerticalAlignment = VerticalAlignment.Center;
-
-            DefaultBorderStyle(ref style);
-
-            style.FillForegroundColor = colorIndex;
-            style.FillPattern = FillPattern.SolidForeground;
-
-            return style;
-        }
-
-        private ICellStyle DefaultStyle(HSSFWorkbook workbook)
-        {
-            var style = workbook.CreateCellStyle();
-
-            style.SetFont(DefaultFontStyle(workbook));
-
-            style.VerticalAlignment = VerticalAlignment.Center;
-
-            DefaultBorderStyle(ref style);
-
-            style.WrapText = true;
-
-            return style;
-        }
-
-        private void DefaultBorderStyle(ref ICellStyle style)
-        {
-            var borderColorIndex = HSSFColor.Black.Index;
-            style.BottomBorderColor = borderColorIndex;
-            style.BorderBottom = BorderStyle.Thin;
-            style.TopBorderColor = borderColorIndex;
-            style.BorderTop = BorderStyle.Thin;
-            style.LeftBorderColor = borderColorIndex;
-            style.BorderLeft = BorderStyle.Thin;
-            style.RightBorderColor = borderColorIndex;
-            style.BorderRight = BorderStyle.Thin;
-        }
-
-        private IFont DefaultFontStyle(HSSFWorkbook workbook)
-        {
-            var font = workbook.CreateFont();
-            font.FontName = DefaultFontName;
-            font.FontHeightInPoints = DefaultFontHeight;
-            font.Color = HSSFColor.Black.Index;
-            return font;
-        }
-
-
-        private ICellStyle FillColor(HSSFWorkbook workbook, short color)
-        {
-            var cellStyle = workbook.CreateCellStyle();
-            cellStyle.CloneStyleFrom(DefaultStyle(workbook));
-            cellStyle.FillForegroundColor = color;
-            cellStyle.FillPattern = FillPattern.SolidForeground;
-            return cellStyle;
-        }
-
+        
         private void MergedRegion(ISheet worksheet, int firstCellIndex, int lastCellIndex)
         {
             if (lastCellIndex <= firstCellIndex) return;
@@ -243,36 +133,66 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
             worksheet.AddMergedRegion(mergedNumberCol);
             worksheet.AddMergedRegion(mergedHeadlineCol);
         }
-
-        private ICellStyle DisableCellStyle(HSSFWorkbook workbook, HorizontalAlignment horizontalAlignment)
+        
+        private ICellStyle LeftCell(HeadlineEntity headline)
         {
-            var disableCellStyle = FillColor(workbook, DisableColor);
-            disableCellStyle.Alignment = horizontalAlignment;
-            return disableCellStyle;
-        }
-
-        private ICellStyle CloseCellStyle(HSSFWorkbook workbook, HorizontalAlignment horizontalAlignment, byte closedReason)
-        {
-            short closeColor;
-            switch (closedReason)
+            if (!headline.IsEnable)
             {
-                case ClosedByAdmin:
-                    closeColor = ClosedByAdminColor;
-                    break;
-                case ClosedByUpline:
-                    closeColor = ClosedByUplineColor;
-                    break;
-                case ClosedByArchive:
-                    closeColor = ClosedByArchiveColor;
-                    break;
-                default:
-                    closeColor = HSSFColor.White.Index;
-                    break;
+                return configCell.DisableCellStyle;
             }
 
-            var closeCellStyle = FillColor(workbook, closeColor);
-            closeCellStyle.Alignment = horizontalAlignment;
-            return closeCellStyle;
+            if (headline.IsClosed)
+            {
+                switch (headline.ClosedReason)
+                {
+                    case ClosedByAdmin:
+                        return configCell.ClosedByAdminCellStyle;
+                    case ClosedByUpline:
+                        return configCell.ClosedByUplineCellStyle;
+                    case ClosedByArchive:
+                        return configCell.ClosedByArchiveCellStyle;
+                    default:
+                        return configCell.DefaultCellStyle;
+                }
+            }
+
+            if (headline.IsSuspend)
+            {
+                return configCell.SuspendedCellStyle;
+            }
+            
+            return configCell.DefaultCellStyle;
         }
+        
+        private ICellStyle CenterCell(HeadlineEntity headline)
+        {
+            if (!headline.IsEnable)
+            {
+                return configCell.DisableCellStyle_Center;
+            }
+
+            if (headline.IsClosed)
+            {
+                switch (headline.ClosedReason)
+                {
+                    case ClosedByAdmin:
+                        return configCell.ClosedByAdminCellStyle_Center;
+                    case ClosedByUpline:
+                        return configCell.ClosedByUplineCellStyle_Center;
+                    case ClosedByArchive:
+                        return configCell.ClosedByArchiveCellStyle_Center;
+                    default:
+                        return configCell.DefaultCellStyle_Center;
+                }
+            }
+
+            if (headline.IsSuspend)
+            {
+                return configCell.SuspendedCellStyle_Center;
+            }
+            
+            return configCell.DefaultCellStyle_Center;
+        }
+        
     }
 }
