@@ -12,6 +12,6 @@ namespace Fanex.ExternalAccount.HeadlineList.Models
         
         public int PageSize { get; set; }
         
-        public IList<GroupHeadline> GroupHeadlines { get; set; }
+        public IEnumerable<GroupHeadline> GroupHeadlines { get; set; }
     }
 }

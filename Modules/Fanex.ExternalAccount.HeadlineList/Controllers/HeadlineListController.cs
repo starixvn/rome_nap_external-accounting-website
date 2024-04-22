@@ -36,6 +36,8 @@
         [ExternalAccountAuthenticate(Function = eFunctions.HeadlineList, Policy = AuthenticationType.Read)]
         public ActionResult ExportHeadlines(SearchHeadlineQuery query)
         {
+            query.PageSize = int.MaxValue;
+            query.Page = 1;
             var data = service.GetHeadlines(query, CurrentSession.UserId,ExtRequest.GetGroupName());
             var excelFile = excel.ExportHeadlinesExcel(data).ToArray();
             var today = DateTime.Now.ToString("yyyyMMdd");

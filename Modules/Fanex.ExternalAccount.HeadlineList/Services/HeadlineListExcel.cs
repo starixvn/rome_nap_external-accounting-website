@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Fanex.ExternalAccount.HeadlineList.Services
 {
     using NPOI.HSSF.UserModel;
@@ -55,7 +57,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
             var headerStyle = HeaderStyle(workbook);
             var headerContents = new[] { "No.", "Headline", "Username", "Status" };
             var columnWidths = new[] { 8, 27, 27, 10 };
-            for (var columnIndex = 0; columnIndex <= headerContents.Length - 1; columnIndex++)
+            for (var columnIndex = 0; columnIndex < headerContents.Length; columnIndex++)
             {
                 var currentCell = headerRow.CreateCell(columnIndex);
                 currentCell.SetCellValue(headerContents[columnIndex]);
@@ -103,16 +105,17 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
                 ExportEmptyReport(workbook, worksheet, currentRow);
                 return;
             }
+            var groups = data.GroupHeadlines.ToList();
 
             for (int i = 0; i < data.TotalGroups; i++)
             {
-                var groupHeadlines = data.GroupHeadlines[i];
+                var groupHeadlines = groups[i];
                 var numberHeadlines = groupHeadlines.HeadlineEntities.Count;
 
                 for (int j = 0; j < numberHeadlines; j++)
                 {
                     var row = worksheet.CreateRow(currentRow);
-                    var headline = data.GroupHeadlines[i].HeadlineEntities[j];
+                    var headline = groups[i].HeadlineEntities[j];
 
                     if (j == 0)
                     {

@@ -62,7 +62,7 @@ Fanex.ExtAcc.HeadlineList = {
     },
 
     Search: function (params) {
-        $.post(parent.resolveClientUrl('HeadlineList/Search'), params, function (result) {
+        $.get(parent.resolveClientUrl('HeadlineList/Search'), params, function (result) {
             const _this = Fanex.ExtAcc.HeadlineList;
             backupResult = result;
             let bodyRows = _this.RenderBodyRows(result.GroupHeadlines, result.Page, result.PageSize);

@@ -58,7 +58,7 @@ namespace Fanex.ExternalAccount.HeadlineList.DataAccesses
             var isSuspend = reader.ToBoolean("issuspend");
             var isClosed = reader.ToBoolean("isclosed");
             var isEnable = reader.ToBoolean("isenable");
-            var StatusMapping = !isEnable ? "Disabled" : isClosed ? "Closed" : isSuspend ? "Suspended" : "Open";
+            var statusMapping = !isEnable ? "Disabled" : isClosed ? "Closed" : isSuspend ? "Suspended" : "Open";
 
             var entity = new HeadlineEntity
             {
@@ -66,7 +66,7 @@ namespace Fanex.ExternalAccount.HeadlineList.DataAccesses
                 GroupName = reader.ToString("groupheadline"),
                 CustId = reader.ToInt32("custid"),
                 Username = reader.ToString("username"),
-                Status = StatusMapping,
+                Status = statusMapping,
                 IsSuspend = isSuspend,
                 IsClosed = isClosed,
                 IsEnable = isEnable,

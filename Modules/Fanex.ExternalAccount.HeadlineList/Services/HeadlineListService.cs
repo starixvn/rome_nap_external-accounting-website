@@ -38,7 +38,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
                 GroupHeadlines = dbResult.Groups
                     .Skip(query.PageSize * (query.Page - 1))
                     .Take(query.PageSize)
-                    .ToList()
+                
             };
             return pagingResult;
         }
