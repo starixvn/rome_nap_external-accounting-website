@@ -554,6 +554,9 @@
     <Content Include="assets\bundles\customer\create.min.js">
       <DependentUpon>create.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\headlinelist\index.js" />
+    <Content Include="assets\bundles\headlinelist\index.min.js" />
+    <Content Include="assets\bundles\headlinelist\index.min.js.map" />
     <Content Include="assets\bundles\customer\superinfo.css" />
     <Content Include="assets\bundles\customer\superinfo.js" />
     <Content Include="assets\bundles\customer\superinfo.min.js">
@@ -1462,6 +1465,7 @@
     <Content Include="Scripts\Fanex.Multiselect\images\ui-icons_2e83ff_256x240-1.png" />
     <Content Include="Scripts\Fanex.Multiselect\images\ui-icons_2e83ff_256x240-2.png" />
     <Content Include="Scripts\Fanex.Multiselect\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Scripts\HeadlineList\Fanex.ExtAcc.HeadlineList.js" />
     <Content Include="Scripts\Moment\moment.js" />
     <Content Include="Scripts\ProblemAccount\Fanex.ExtAcc.ProblemAccount.js" />
     <Content Include="Scripts\Manage\Fanex.ExtAcc.SubGroup.js" />
@@ -1477,6 +1481,7 @@
     </Content>
     <Content Include="Views\Customer\SportBookInformation-Debug.cshtml" />
     <Content Include="Views\Customer\SportBookInformation.cshtml" />
+    <Content Include="Views\HeadlineList\Index.cshtml" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
@@ -3023,6 +3028,10 @@
       <Project>{c318c8c1-4b85-480e-8451-839a0bd8eea4}</Project>
       <Name>Fanex.ExternalAccount.HeadlineBonus</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.ExternalAccount.HeadlineList\Fanex.ExternalAccount.HeadlineList.csproj">
+      <Project>{647a6fb0-3765-40be-a19f-ddf142193819}</Project>
+      <Name>Fanex.ExternalAccount.HeadlineList</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.ExternalAccount.ProblemAccount\Fanex.ExternalAccount.ProblemAccount.csproj">
       <Project>{be8d34fe-39ca-447e-bd10-71991c08ceb6}</Project>
       <Name>Fanex.ExternalAccount.ProblemAccount</Name>
@@ -3058,7 +3067,6 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
