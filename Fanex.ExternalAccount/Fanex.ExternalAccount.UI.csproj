@@ -554,6 +554,11 @@
     <Content Include="assets\bundles\customer\create.min.js">
       <DependentUpon>create.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\customer\superinfo.css" />
+    <Content Include="assets\bundles\customer\superinfo.js" />
+    <Content Include="assets\bundles\customer\superinfo.min.js">
+      <DependentUpon>superinfo.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\mcwinlossdetail\index.js" />
     <Content Include="assets\bundles\mcwinlossdetail\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -620,6 +625,14 @@
     <Content Include="assets\bundles\mcwinlossdetail\index.js" />
     <Content Include="assets\bundles\mcwinlossdetail\index.min.js">
       <DependentUpon>index.js</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\images\eye-visible-off.png" />
+    <Content Include="assets\styles\images\eye-visible.png" />
+    <Content Include="assets\styles\pages\customer\superinfo.css">
+      <DependentUpon>superinfo.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\customer\superinfo.min.css">
+      <DependentUpon>superinfo.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\reports\exchangerate.css">
       <DependentUpon>exchangerate.scss</DependentUpon>
@@ -1422,6 +1435,7 @@
     <Content Include="Scripts\AutoRefresh\images\check.png" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.AssociationAccount.js" />
     <TypeScriptCompile Include="Scripts\CopyTable\winlossdetail-copyhtml.ts" />
+    <TypeScriptCompile Include="Scripts\Customer\Fanex.ExtAcc.Customer.SuperInfo.ts" />
     <TypeScriptCompile Include="Scripts\Reports\BonusDetail\Fanex.ExtAcc.BonusDetail.ts" />
     <TypeScriptCompile Include="Scripts\Reports\BonusDetail\Fanex.ExtAcc.AddNewBonus.ts" />
     <TypeScriptCompile Include="Scripts\Reports\BonusDetail\Fanex.ExtAcc.CancelBonus.ts" />
@@ -2735,6 +2749,10 @@
       <DependentUpon>index.min.js</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\reports\exchangerate.scss" />
+    <Content Include="assets\styles\pages\customer\superinfo.scss" />
+    <Content Include="assets\bundles\customer\superinfo.min.js.map">
+      <DependentUpon>superinfo.min.js</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2941,6 +2959,7 @@
     <Content Include="Views\Customer\EditMultiple-Debug.cshtml" />
     <Content Include="Views\Customer\IndirectEditMember-Debug.cshtml" />
     <Content Include="Views\Customer\IndirectEditMember.cshtml" />
+    <Content Include="Views\SuperInfo\Index.cshtml" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailBySubGroup\Fanex.ExtAcc.SuperWinLossDetailBySubGroup.ts" />
   </ItemGroup>
   <ItemGroup>

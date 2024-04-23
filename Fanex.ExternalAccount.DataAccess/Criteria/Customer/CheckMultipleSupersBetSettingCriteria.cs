@@ -23,7 +23,7 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer
 
         public bool IsCopy { get; }
 
-        public override string GetSettingKey() => "EAS_CustomerBetSettingMultipleCheck";
+        public override string GetSettingKey() => "EAS_CustomerInfo_MultiCheck";
 
         public override bool IsValid() => IsCopy ?
             !string.IsNullOrWhiteSpace(SourceUser) && !string.IsNullOrWhiteSpace(DestUsers) :

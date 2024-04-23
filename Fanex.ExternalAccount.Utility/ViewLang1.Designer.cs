@@ -1646,6 +1646,16 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter list of Supers Account usernames* (Maximum 50 supers, separated by comma &apos;,&apos;)
+        ///.
+        /// </summary>
+        public static string NoteUsernameSuperInfo {
+            get {
+                return ResourceManager.GetString("NoteUsernameSuperInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data is up to 3 months. For more historical data, please click.
         /// </summary>
         public static string NoteViewHistory {

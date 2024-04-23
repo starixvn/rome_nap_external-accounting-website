@@ -967,4 +967,8 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="Copied" xml:space="preserve">
     <value>Copied</value>
   </data>
+  <data name="NoteUsernameSuperInfo" xml:space="preserve">
+    <value>Enter list of Supers Account usernames* (Maximum 50 supers, separated by comma ',')
+</value>
+  </data>
 </root>

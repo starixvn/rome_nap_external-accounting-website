@@ -1,0 +1,11 @@
+var SuperInfo = /** @class */ (function () {
+    function SuperInfo($, topWindow) {
+        this.$ = $;
+        this.topWindow = topWindow;
+    }
+    return SuperInfo;
+}());
+$(document).ready(function () {
+    var superInfoController = new SuperInfo($, window.top);
+});
+//# sourceMappingURL=Fanex.ExtAcc.Customer.SuperInfo.js.map

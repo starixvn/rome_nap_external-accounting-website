@@ -106,5 +106,9 @@
   {
     "outputFile": "assets/styles/pages/reports/exchangerate.css",
     "inputFile": "assets/styles/pages/reports/exchangerate.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/superinfo.css",
+    "inputFile": "assets/styles/pages/customer/superinfo.scss"
   }
 ]

@@ -349,5 +349,12 @@
       "Scripts/aes.js"
     ],
     "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/customer/superinfo.js",
+    "inputFiles": [
+      "Scripts/Customer/Fanex.ExtAcc.Customer.SuperInfo.js"
+    ],
+    "sourceMap": true
   }
 ]
