@@ -286,14 +286,15 @@
         {
             var currentSession = new CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
-
-            var editCustomerViewModel = new SportBookInformationViewModel(
-                new AppConfiguration(GetApplicationPath(), systemCode),
+            var appPath= GetApplicationPath();
+            request.ApplicationPath = appPath;
+            var viewModel = new SportBookInformationViewModel(
+                new AppConfiguration(appPath, systemCode),
                 cdnUri,
                 GetAssetsVersion(),
                 request.ToJson());
 
-            return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "SportBookInformation-Debug" : "SportBookInformation");
+            return PartialViewBase(viewModel, HttpContext.IsDebuggingEnabled ? "SportBookInformation-Debug" : "SportBookInformation");
         }
 
         public async Task<ActionResult> GetCustomerSetting(GetCustomerSettingRequest request)
