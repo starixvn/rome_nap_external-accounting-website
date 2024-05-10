@@ -286,7 +286,7 @@
         {
             var currentSession = new CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
-            var appPath= GetApplicationPath();
+            var appPath = GetApplicationPath();
             request.ApplicationPath = appPath;
             var viewModel = new SportBookInformationViewModel(
                 new AppConfiguration(appPath, systemCode),
@@ -331,8 +331,8 @@
             => customerServiceClient.GetCommissionHint(custId ?? 0, site, language);
 
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
-        public Task<string> GetProductCategories(int? custId, string site, int currency, string language = "en-US")
-            => customerServiceClient.GetProductCategories(custId, site, currency, language);
+        public Task<string> GetProductCategories(int? custId, string site, string siteLabel, int currency, string language = "en-US")
+            => customerServiceClient.GetProductCategories(custId, site, siteLabel, currency, language);
 
         private string GetApplicationPath()
         {
