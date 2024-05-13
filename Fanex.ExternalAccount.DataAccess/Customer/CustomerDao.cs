@@ -254,9 +254,7 @@
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 var result = new CustomerStatusDTO();
-                CustomerStatusDCS liveCasino = null;
                 CustomerStatusDCS rngLottery = null;
-                CustomerStatusDCS macauGames = null;
                 var reader = objDb.ExecuteReader(criteria.GetSpParams());
                 if (reader.Read())
                 {
@@ -268,130 +266,74 @@
                 reader.NextResult();
                 while (reader.Read())
                 {
-                    int productId = Utils.ToInt32(reader["ProductID"]);
-
-                    if (productId == ProductConstants.VirtualSports)
+                    if (reader.IsDBNull(reader.GetOrdinal("GroupId")))
                     {
-                        result.HideVirtualSport = Utils.ToBoolean(reader["isHidden"]);
-                        result.DisableVirtualSport = Utils.ToBoolean(reader["isDisabled"]);
-                        continue;
-                    }
+                        int productId = Utils.ToInt32(reader["ProductID"]);
 
-                    if (productId == ProductConstants.LiveCasino)
-                    {
-                        if (liveCasino == null)
+                        if (productId == ProductConstants.VirtualSports)
                         {
-                            liveCasino = new CustomerStatusDCS
+                            result.HideVirtualSport = Utils.ToBoolean(reader["isHidden"]);
+                            result.DisableVirtualSport = Utils.ToBoolean(reader["isDisabled"]);
+                            continue;
+                        }
+
+                        if (productId == ProductConstants.RNGLottery)
+                        {
+                            if (rngLottery == null)
+                            {
+                                rngLottery = new CustomerStatusDCS
+                                {
+                                    ProductID = productId,
+                                    ProductName = ProductSettings.SiteProducts[productId]?.Name,
+                                    IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
+                                    IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
+                                    IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
+                                    IsSynced = Utils.ToBoolean(reader["isSync"]),
+                                    IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
+                                };
+                            }
+                            else
+                            {
+                                if (!Utils.ToBoolean(reader["isHidden"]))
+                                {
+                                    rngLottery.IsDisabled = rngLottery.IsDisabled || Utils.ToBoolean(reader["isDisabled"]);
+                                    rngLottery.IsDisabledUpline = rngLottery.IsDisabledUpline || Utils.ToBoolean(reader["isDisabledUpline"]);
+                                }
+
+                                rngLottery.IsHidden = rngLottery.IsHidden && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
+                            }
+
+                            continue;
+                        }
+
+                        if (!result.IsDCSProductExisted(productId))
+                        {
+                            result.DCSProductsSetting.Add(new CustomerStatusDCS
                             {
                                 ProductID = productId,
-                                ProductName = ProductSettings.SiteProducts[productId]?.Name,
+                                ProductName = ProductSettings.SiteProducts.ContainsKey(productId) ? ProductSettings.SiteProducts[productId].Name : string.Empty,
                                 IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
                                 IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
                                 IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
                                 IsSynced = Utils.ToBoolean(reader["isSync"]),
                                 IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
-                            };
+                            });
                         }
-                        else
-                        {
-                            if (!Utils.ToBoolean(reader["isHidden"]))
-                            {
-                                liveCasino.IsDisabled = liveCasino.IsDisabled || Utils.ToBoolean(reader["isDisabled"]);
-                                liveCasino.IsDisabledUpline = liveCasino.IsDisabledUpline || Utils.ToBoolean(reader["isDisabledUpline"]);
-                            }
-
-                            liveCasino.IsHidden = liveCasino.IsHidden && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
-                        }
-
-                        continue;
                     }
-
-                    if (productId == ProductConstants.RNGLottery)
+                    else
                     {
-                        if (rngLottery == null)
+                        var isHidden = Utils.ToBoolean(reader["isHidden"]);
+                        var groupId = reader.ToInt32("GroupId");
+                        if (!isHidden && !result.ProductGroups.Any(x => x.Id == groupId))
                         {
-                            rngLottery = new CustomerStatusDCS
-                            {
-                                ProductID = productId,
-                                ProductName = ProductSettings.SiteProducts[productId]?.Name,
-                                IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
-                                IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
-                                IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
-                                IsSynced = Utils.ToBoolean(reader["isSync"]),
-                                IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
-                            };
+                            result.ProductGroups.Add(new Product(groupId, groupId, CacheRef.GetProductGroupName(groupId)));
                         }
-                        else
-                        {
-                            if (!Utils.ToBoolean(reader["isHidden"]))
-                            {
-                                rngLottery.IsDisabled = rngLottery.IsDisabled || Utils.ToBoolean(reader["isDisabled"]);
-                                rngLottery.IsDisabledUpline = rngLottery.IsDisabledUpline || Utils.ToBoolean(reader["isDisabledUpline"]);
-                            }
-
-                            rngLottery.IsHidden = rngLottery.IsHidden && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
-                        }
-
-                        continue;
                     }
-
-                    if (productId == ProductConstants.RNGSlot)
-                    {
-                        if (macauGames == null)
-                        {
-                            macauGames = new CustomerStatusDCS
-                            {
-                                ProductID = productId,
-                                ProductName = ProductSettings.SiteProducts[productId]?.Name,
-                                IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
-                                IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
-                                IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
-                                IsSynced = Utils.ToBoolean(reader["isSync"]),
-                                IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
-                            };
-                        }
-                        else
-                        {
-                            if (!Utils.ToBoolean(reader["isHidden"]))
-                            {
-                                macauGames.IsDisabled = macauGames.IsDisabled || Utils.ToBoolean(reader["isDisabled"]);
-                                macauGames.IsDisabledUpline = macauGames.IsDisabledUpline || Utils.ToBoolean(reader["isDisabledUpline"]);
-                            }
-
-                            macauGames.IsHidden = macauGames.IsHidden && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
-                        }
-
-                        continue;
-                    }
-
-                    if (!result.IsDCSProductExisted(productId))
-                    {
-                        result.DCSProductsSetting.Add(new CustomerStatusDCS
-                        {
-                            ProductID = productId,
-                            ProductName = ProductSettings.SiteProducts.ContainsKey(productId) ? ProductSettings.SiteProducts[productId].Name : string.Empty,
-                            IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
-                            IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
-                            IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
-                            IsSynced = Utils.ToBoolean(reader["isSync"]),
-                            IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
-                        });
-                    }
-                }
-
-                if (liveCasino != null)
-                {
-                    result.DCSProductsSetting.Add(liveCasino);
                 }
 
                 if (rngLottery != null)
                 {
                     result.DCSProductsSetting.Add(rngLottery);
-                }
-
-                if (macauGames != null)
-                {
-                    result.DCSProductsSetting.Add(macauGames);
                 }
 
                 return result;

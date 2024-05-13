@@ -9,27 +9,29 @@
     using ExternalAccount.Module.LeftPanel.Services;
     using Fanex.ExternalAccount.Service.Customer.CustomerList;
     using Fanex.ExternalAccount.Service.Impl.Customer;
+    using Fanex.ExternalAccount.Service.Products;
     using ViewModels;
 
     public static class BetSettingProductIntegration
     {
         private static readonly int[] BetSettingTabProductConfigs = new[]
         {
-            ProductConstants.LiveCasino,
             ProductConstants.RNGLottery,
-            ProductConstants.VirtualGames,
-            ProductConstants.Sabaclub,
-            ProductConstants.VGaming,
             ProductConstants.Bitcoin
         };
 
         private static readonly int[] DummyProducts = new[]
         {
-            ProductConstants.LiveCasino,
             ProductConstants.RNGLottery
         };
 
         private static CustomerService customerService = new CustomerService();
+        private static ProductStatusService productStatusService = new ProductStatusServiceImpl();
+
+        public static IEnumerable<Product> GetVisibledProductGroupBetSettingTabs(int custId, int roleId, byte settingStatus)
+        {
+            return productStatusService.GetVisibleProductGroups(custId, roleId, settingStatus).Where(p => p.Id != ProductGroupConstants.Sportsbook);
+        }
 
         public static IList<Product> GetVisibledBetSettingTabs(int custId, byte settingStatus)
         {

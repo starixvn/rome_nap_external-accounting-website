@@ -22,8 +22,6 @@
     var hasSuspend = authenService.HasSuspendCustomerPermission(userId) ? 1 : 0;
     var allowAutoPT = authenService.HasAllowAutoMPTPermission(userId) ? 1 : 0;
     var hasClearCredit = authenService.HasClearCreditPermission(userId) ? 1 : 0;
-    var showLiveCasino = ProductSettings.IsShowLiveCasino ? 1 : 0;
-    var showVoidbridge = ProductSettings.IsShowVoidBridge ? 1 : 0;
     var showRNGLottery = ProductSettings.IsShowRNGLottery ? 1 : 0;
     var productsExcludeSabaVS = ProductSettings.SiteProducts.Where(i => i.Key != 54).ToDictionary(p => p.Key, p => p.Value);
 
@@ -68,7 +66,6 @@
                     <li><span class="circle">@CurrentSession.Instance.UserName</span></li>
                     <li><span class="icon-lock-reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')" title="Reset Password"></span></li>
                     <li><span class="icon-logout" onclick="Fanex.ExtAcc.Account.Logout()" title="Log out"></span></li>
-
                 </ul>
             </div>
             <!-- For mobile -->
@@ -137,11 +134,9 @@
         var hasClose = '@hasClose';
         var hasSuspend = '@hasSuspend';
         var allowAutoPT = '@allowAutoPT';
-        var hasClearCredit = '@hasClearCredit';      
-        var showLiveCasino = @showLiveCasino;
-        var showVoidbridge = @showVoidbridge;
+        var hasClearCredit = '@hasClearCredit';
         var showLiveCasinoBetting = true;
-        var showVoidbridgeBetting = true; 
+        var showVoidbridgeBetting = true;
         var showRNGLottery = @showRNGLottery;
         var siteLevelProducts = @(Html.Raw(products));
 

@@ -15437,6 +15437,7 @@ var ProductStatusSettingBase = /** @class */ (function () {
         this.$custRole = this.$('#custRole').val();
         this.$productId = this.$('#productId').val();
         this.$isMultipleBetTypes = this.parseBoolean(this.$("#isMultipleBetTypes").val());
+        this.$isGroup = this.parseBoolean(this.$("#isGroup").val());
         this.$errorCodeDefault = 101;
         this.$timeoutDefault = 3000;
         this.$isReloadLeftPanel = false;
@@ -15472,7 +15473,8 @@ var ProductStatusSettingBase = /** @class */ (function () {
             custRole: this.$custRole,
             custIds: [],
             custNames: [],
-            productStatus: []
+            productStatus: [],
+            isGroup: this.$isGroup
         };
     };
     ProductStatusSettingBase.prototype.setupAntiXSRF = function () {
@@ -15523,10 +15525,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -15538,7 +15542,11 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
         var _this = _super.call(this, $, topWindow) || this;
         _this.loadMultiple = function () {
             return _this.$("#productIds").change(function () {
-                _this.$("#productId").val(_this.$("#productIds").val());
+                var _a;
+                var productId = _this.$("#productIds").val();
+                _this.$("#productId").val(productId);
+                var isGroup = ((_a = _this.$products.filter(function (x) { return x.Id == productId && x.IsGroup; })) === null || _a === void 0 ? void 0 : _a.length) > 0;
+                _this.$("#isGroup").val(isGroup.toString());
                 _this.$("#product-form").submit();
             });
         };
@@ -15609,6 +15617,7 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
         this.$resources.enabled = this.$('#enableAll').val();
         this.$resources.disabled = this.$('#disableAll').val();
         this.$resources.updateActionName = "MultipleUpdate";
+        this.$products = JSON.parse(this.$("#productsList").val());
     };
     ProductStatusSettingMultipe.prototype.registerEvents = function () {
         var _this = this;
@@ -15818,8 +15827,10 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
             html.push('<div class="');
             html.push(result.Code !== 0 ? "alerterror" : "alertsuccess");
             html.push('"><div>');
-            html.push(result.CustName);
-            html.push(": ");
+            if (result.CustName) {
+                html.push(result.CustName);
+                html.push(": ");
+            }
             html.push(result.Message);
             html.push("</div></div>");
         });

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Fanex.ExternalAccount.Core.Shared;
 
 namespace Fanex.ExternalAccount.DTO.Customer
 {
@@ -20,9 +21,12 @@ namespace Fanex.ExternalAccount.DTO.Customer
 
         public List<CustomerStatusDCS> DCSProductsSetting { get; set; }
 
+        public List<Product> ProductGroups { get; set; }
+
         public CustomerStatusDTO()
         {
             DCSProductsSetting = new List<CustomerStatusDCS>();
+            ProductGroups = new List<Product>();
         }
 
         public int GetIndexOfDCSProduct(int productId)

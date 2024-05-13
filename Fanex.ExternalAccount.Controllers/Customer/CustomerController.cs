@@ -19,6 +19,7 @@
     using Fanex.ExternalAccount.Controllers.Authentication;
     using Fanex.ExternalAccount.Controllers.Requests.Customer;
     using Fanex.ExternalAccount.Controllers.ViewModels.Customer;
+    using Fanex.ExternalAccount.DTO.Products;
     using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Service.TelegramBot;
     using IBCUtils;
@@ -100,7 +101,7 @@
             }
         }
 
-        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
+        [ExternalCustomerAuthFilter]
         public ActionResult EditCustomer(EditCustomerRequest request)
         {
             var currentSession = new CurrentSession();
@@ -117,7 +118,7 @@
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditCustomer-Debug" : "EditCustomer");
         }
 
-        [ExternalCustomerAuthFilter(Function = eFunctions.SportsbookBetting)]
+        [ExternalCustomerAuthFilter(IsBettingLimit = true)]
         public ActionResult EditSuperBetSetting(EditCustomerRequest request)
         {
             var currentSession = new CurrentSession();
@@ -134,7 +135,7 @@
 
         [HttpPost]
         [AntiXSRFFilter]
-        [ExternalCustomerAuthFilter(Function = eFunctions.SportsbookBetting, IsHost = true)]
+        [ExternalCustomerAuthFilter(IsBettingLimit = true, IsHost = true)]
         public async Task<ActionResult> EditSuperBetSetting(UpdateCustomerRequest request)
         {
             var response = await customerServiceClient.UpdateCustomer(
@@ -152,7 +153,7 @@
             return Content(response);
         }
 
-        [ExternalCustomerAuthFilter(Function = eFunctions.SportsbookBetting)]
+        [ExternalCustomerAuthFilter(IsBettingLimit = true)]
         public ActionResult EditMultipleSuperBetSetting(EditMultipleSuperBetSettingRequest request)
         {
             if (Role.IsNotSuper(request.RoleId))
@@ -173,7 +174,7 @@
 
         [HttpPost]
         [AntiXSRFFilter]
-        [ExternalCustomerAuthFilter(Function = eFunctions.SportsbookBetting, IsHost = true)]
+        [ExternalCustomerAuthFilter(IsHost = true, IsBettingLimit = true)]
         public async Task<ActionResult> EditMultipleSuperBetSetting(UpdateMultipleCustomerCommand request)
         {
             if (Role.IsNotSuper(request.RoleId))
@@ -225,7 +226,7 @@
         }
 
         [HttpPost]
-        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook, IsHost = true)]
+        [ExternalCustomerAuthFilter(IsHost = true)]
         [AntiXSRFFilter]
         public async Task<ActionResult> Update(UpdateCustomerRequest request)
         {
@@ -246,7 +247,7 @@
 
         [HttpPost]
         [AntiXSRFFilter]
-        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook, IsHost = true)]
+        [ExternalCustomerAuthFilter(IsHost = true)]
         public async Task<ActionResult> UpdateMultipleCustomers(UpdateMultipleCustomerCommand request)
         {
             var response = await customerServiceClient.UpdateMultipleCustomers(
@@ -266,7 +267,7 @@
             return Content(response);
         }
 
-        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
+        [ExternalCustomerAuthFilter]
         public ActionResult EditMultiple(EditMultipleCustomerRequest request)
         {
             var currentSession = new CurrentSession();
@@ -279,30 +280,35 @@
 
             return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditMultiple-Debug" : "EditMultiple");
         }
-        
+
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
         public ActionResult SportBookInformation(SportBookInformationRequest request)
         {
             var currentSession = new CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
-
-            var editCustomerViewModel = new SportBookInformationViewModel(
-                new AppConfiguration(GetApplicationPath(), systemCode),
+            var appPath = GetApplicationPath();
+            request.ApplicationPath = appPath;
+            var viewModel = new SportBookInformationViewModel(
+                new AppConfiguration(appPath, systemCode),
                 cdnUri,
                 GetAssetsVersion(),
                 request.ToJson());
 
-            return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "SportBookInformation-Debug" : "SportBookInformation");
+            return PartialViewBase(viewModel, HttpContext.IsDebuggingEnabled ? "SportBookInformation-Debug" : "SportBookInformation");
         }
+
         public async Task<ActionResult> GetCustomerSetting(GetCustomerSettingRequest request)
         {
-            if (!authorizationService.HasReadPermissionOnFunctions(new List<string> { eFunctions.Sportsbook, eFunctions.SportsbookBetting }, CurrentSession.UserId))
+            if (!authorizationService.HasReadPermissionOnFunctions(new List<string> { eFunctions.Sportsbook, eFunctions.SportsbookBetting, eFunctions.LiveAndRNGCasino, eFunctions.LiveAndRNGCasinoBetting }, CurrentSession.UserId))
             {
                 return Redirect(CustomerClientManager.ClientConfigs.AccessDeniedUrl);
             }
 
             return Content(await customerServiceClient.GetCustomerSetting(request.CustId, request.RoleId, request.SystemId, request.UplineRoleId, request.Language, request.IsGetUpLine, request.ProductGroupId, request.SiteLabel));
         }
+
+        public async Task<ActionResult> GetCurrentWinLossAmount(int custId, int sportType, int betType, string language = "en-US")
+            => Content(await customerServiceClient.GetCustomerCurrentWinLossAmounts(custId, sportType, betType, language));
 
         [ExternalCustomerAuthFilter(Function = eFunctions.CustomerList)]
         public async Task<ActionResult> CheckExistedCustomer(string username)
@@ -312,7 +318,6 @@
         private Task<string> GetSuggestUsername(string actorName, byte roleId)
             => customerServiceClient.GetSuggestUsername(actorName, roleId);
 
-
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
         public Task<string> GetMaxPayoutSettingInformation(string site, string siteLabel, string language = "en-US")
             => customerServiceClient.GetMaxPayoutSettingInformation(site, siteLabel, language);
@@ -320,15 +325,15 @@
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
         public Task<string> GetPTSettingInformation(int? custId, string site, string language = "en-US")
             => customerServiceClient.GetPTSettingInformation(custId, false, site, language);
-        
+
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
-        public Task<string> GetCommissionHint(int? custId,string site, string language = "en-US")
+        public Task<string> GetCommissionHint(int? custId, string site, string language = "en-US")
             => customerServiceClient.GetCommissionHint(custId ?? 0, site, language);
 
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
-        public Task<string> GetProductCategories(int? custId, string site, int currency, string language = "en-US")
-            => customerServiceClient.GetProductCategories(custId, site, currency, language);
-        
+        public Task<string> GetProductCategories(int? custId, string site, string siteLabel, int currency, string language = "en-US")
+            => customerServiceClient.GetProductCategories(custId, site, siteLabel, currency, language);
+
         private string GetApplicationPath()
         {
             var applicationPath = Response.ApplyAppPathModifier(Request.ApplicationPath);
@@ -370,22 +375,33 @@
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
             ViewBag.HideVirtualSports = custStatus.HideVirtualSport;
-            var visibledProducts = GetVisibledProducts(id, custId);
+            var productStatusList = productStatusService.GetProductStatusList(custId, id, Config.SettingStatus);
+            var visibledProductGroups = GetVisibleProductGroups(productStatusList).Where(p => p.Id != ProductGroupConstants.Sportsbook);
+            var visibledProducts = GetVisibledProducts(productStatusList);
 
-            return PartialViewBase(visibledProducts);
+            return PartialViewBase(new CustomerSettingsViewModel(visibledProductGroups, visibledProducts));
         }
 
-        private List<Product> GetVisibledProducts(int roleId, int custId)
+        private static IEnumerable<Product> GetVisibleProductGroups(IList<ProductStatusDto> productStatusList)
+        {
+            var visibledProductGroups = productStatusList
+                .Where(p => p.GroupId != null && p.GroupId != ProductGroupConstants.Sportsbook && !p.IsHidden)
+                .Select(p => p.GroupId.Value)
+                .Distinct()
+                .Select(groupId => new Product(groupId, groupId, CacheRef.GetProductGroupName(groupId)));
+
+            return visibledProductGroups;
+        }
+
+        private static IEnumerable<Product> GetVisibledProducts(IList<ProductStatusDto> productStatusList)
         {
             var visibledProducts = new List<Product>();
-            var productStatusList = productStatusService.GetProductStatusList(custId, roleId, Config.SettingStatus);
 
             foreach (var product in ProductSettings.SiteProducts.Values)
             {
-                var productStatus = productStatusList.FirstOrDefault(p => p.ProductId == product.Id);
+                var productStatus = productStatusList.FirstOrDefault(p => p.ProductId == product.Id && p.GroupId == null);
                 if (productStatus != null
                     && !productStatus.IsHidden
-                    && productStatus.IsSyncedUpline
                     && ProductSettings.IsShowProduct(product.Id)
                     && product.Id != ProductConstants.SabaVirtualSports)
                 {

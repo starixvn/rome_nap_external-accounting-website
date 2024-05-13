@@ -1,12 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization.ProductStatus
 {
     using System;
-    using System.Linq;
     using System.Web.Mvc;
     using Context;
     using CustomerSetting.Security.Authenticate;
     using Fanex.ProductStatus.Setting.Services;
-    using CurrentSession = Fanex.ExternalAccount.Core.Context.CurrentSession;
+    using CurrentSession = Context.CurrentSession;
 
     public class ProductStatusAuthorizeService : IProductStatusAuthorizeService
     {
@@ -40,8 +39,13 @@
         {
             var productIdParam = role == AuthenticateAction.AuthenticationType.Read
                 ? filterContext.HttpContext.Request["productid"]
-                : GetActionParameterValue(filterContext.Controller.ValueProvider, "productid");          
+                : GetActionParameterValue(filterContext.Controller.ValueProvider, "productid");
 
+            var isGroupParam = role == AuthenticateAction.AuthenticationType.Read
+                ? filterContext.HttpContext.Request["isGroup"]
+                : GetActionParameterValue(filterContext.Controller.ValueProvider, "isGroup");
+
+            bool.TryParse(isGroupParam, out bool isGroup);
             if (int.TryParse(productIdParam, out int productId))
             {
                 if (_currentSession.IsBelongToSpecialGroups && productId != eSportId)
@@ -49,7 +53,7 @@
                     return false;
                 }
 
-                var enableFunction = Enum.GetName(typeof(EnableStatusProductFunction), productId);
+                var enableFunction = isGroup ? Enum.GetName(typeof(EnableStatusProductGroupFunction), productId) : Enum.GetName(typeof(EnableStatusProductFunction), productId);
                 var hasPermission = role == AuthenticateAction.AuthenticationType.Read
                     ? _authenticationService.AllowReadByAuthenticationParam(enableFunction)
                     : _authenticationService.AllowUpdateByAuthenticationParam(enableFunction);

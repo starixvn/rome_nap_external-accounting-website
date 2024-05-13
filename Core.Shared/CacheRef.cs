@@ -10,6 +10,9 @@
         public static string GetProductName(int productId, string defaultName = null)
             => GetResourceDataByRefIdAndResourceId("Product", productId.ToString(), defaultName);
 
+        public static string GetProductGroupName(int productGroupId, string defaultName = null)
+            => GetResourceDataByRefIdAndResourceId("ProductGroup", productGroupId.ToString(), defaultName);
+
         public static string GetProductDetailName(int resourceId, string defaultName = null)
             => GetResourceDataByRefIdAndResourceId("ProductDetail", resourceId.ToString(), defaultName);
 

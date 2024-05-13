@@ -53,6 +53,13 @@
             if (!this.currentSession.IsBelongToSpecialGroups)
             {
                 AddDummyProductStatus(table3rdDCS, setting.EditItems, setting.EnableItems);
+                AddProductGroupStatus(
+                    table3rdDCS,
+                    setting.EditItems,
+                    setting.EnableItems,
+                    ProductGroupConstants.LiveAndRNGCasino,
+                    new ObjectInfo("EnableLiveAndRNGCasino", "LiveAndRNGCasino", "Live & RNG Casino"),
+                    true);
             }
 
             foreach (var productSettingParam in productSettingElements)
@@ -86,7 +93,6 @@
 
             if (!this.currentSession.IsBelongToSpecialGroups)
             {
-                AddCasinoStatus(table3rdDCS, enableItems);
                 AddVirtualSportsStatus(table3rdDCS, enableItems);
             }
 
@@ -115,17 +121,6 @@
 
         private void AddDummyProductStatus(DataTable table3rdDCS, List<ObjectInfo> editItems, List<ObjectInfo> enableItems)
         {
-            if (ProductSettings.IsShowLiveCasino)
-            {
-                AddDummyProductStatus(
-                    table3rdDCS,
-                    editItems,
-                    enableItems,
-                    ProductConstants.LiveCasino,
-                    new ObjectInfo("EnableLiveCasino", !table3rdDCS.IsProductDisabled(ProductConstants.LiveCasino), "Live Casino", "Enable Live Casino"),
-                    false);
-            }
-
             if (ProductSettings.IsShowRNGLottery)
             {
                 AddDummyProductStatus(
@@ -133,8 +128,33 @@
                     editItems,
                     enableItems,
                     ProductConstants.RNGLottery,
-                    new ObjectInfo("EnableRNGLottery", "Enable RNG Lottery", "Enable RNG Lottery"),
+                    new ObjectInfo("EnableRNGLottery", "RNG Lottery", "RNG Lottery"),
                     true);
+            }
+        }
+
+        private static void AddProductGroupStatus(DataTable table3rdDCS, List<ObjectInfo> editItems, List<ObjectInfo> enableItems, int productGroupId, ObjectInfo productStatus, bool isLink)
+        {
+            var rows = table3rdDCS.Select($"GroupID = {productGroupId} AND isHidden = 0");
+            if (rows != null && rows.Length > 0)
+            {
+                if (isLink)
+                {
+                    editItems.Add(productStatus);
+                }
+                else
+                {
+                    enableItems.Add(productStatus);
+                }
+            }
+        }
+
+        private static void AddProductGroupLink(DataTable table3rdDCS, List<ObjectInfo> editLinks, int productGroupId, ObjectInfo productSetting)
+        {
+            var rows = table3rdDCS.Select($"GroupID = {productGroupId} AND isHidden = 0");
+            if (rows != null && rows.Length > 0)
+            {
+                editLinks.Add(productSetting);
             }
         }
 
@@ -172,11 +192,6 @@
 
         private void AddDummyProductLink(DataTable table3rdDCS, List<ObjectInfo> editLinks)
         {
-            if (ProductSettings.IsShowLiveCasino)
-            {
-                AddDummyProductLink(table3rdDCS, editLinks, ProductConstants.LiveCasino, new ObjectInfo("LiveCasino", "Live Casino"));
-            }
-
             if (ProductSettings.IsShowRNGLottery)
             {
                 AddDummyProductLink(table3rdDCS, editLinks, ProductConstants.RNGLottery, new ObjectInfo("RNGLottery", "RNG Lottery"));
@@ -211,24 +226,6 @@
             }
 
             enableItems.Add(doubleCommStatus);
-        }
-
-        private static void AddCasinoStatus(DataTable table3rdDCS, ICollection<ObjectInfo> enableItems)
-        {
-            if (table3rdDCS.IsProductHidden(ProductConstants.Casino))
-            {
-                return;
-            }
-
-            var casinoStatus = new ObjectInfo("EnableCasino",
-               !table3rdDCS.IsProductDisabled(ProductConstants.Casino), "Saba Casino");
-
-            if (table3rdDCS.IsProductDisabledUpline(ProductConstants.Casino))
-            {
-                casinoStatus = DisableStatus(casinoStatus);
-            }
-
-            enableItems.Add(casinoStatus);
         }
 
         private static ObjectInfo OutrightStatus(DataRow nonProductStatusRow)
@@ -280,19 +277,23 @@
             var locked = nonProductStatusRow.Locked();
             var isLocked = locked != 0;
 
-            var lockedAccess = new ObjectInfo($"UnlockAccess{locked}", isLocked, "Locked Access");
-            lockedAccess.Disabled = !isLocked;
+            var lockedAccess = new ObjectInfo($"UnlockAccess{locked}", isLocked, "Locked Access")
+            {
+                Disabled = !isLocked
+            };
 
             return lockedAccess;
         }
 
         private ObjectInfo ProtectedStatus(DataRow nonProductStatusRow)
         {
-            var protectedStatus = new ObjectInfo("ProtectedStatus", nonProductStatusRow.IsProtectedMode(), "Protected");
-            protectedStatus.Disabled = !authorizationService.IsAuthorized(
+            var protectedStatus = new ObjectInfo("ProtectedStatus", nonProductStatusRow.IsProtectedMode(), "Protected")
+            {
+                Disabled = !authorizationService.IsAuthorized(
                 currentSession.UserId,
                 eFunctions.ProtectCustomer,
-                AuthenticateAction.AuthenticationType.Host);
+                AuthenticateAction.AuthenticationType.Host)
+            };
 
             return protectedStatus;
         }
@@ -312,8 +313,9 @@
                 details.Add(new ObjectInfo("Transfer", "Transfer Condition"));
             }
 
-            AddCasinoEditLink(table3rdDCS, details);
             AddVirtualSportsEditLink(table3rdDCS, details);
+            AddProductGroupLink(table3rdDCS, details, ProductGroupConstants.LiveAndRNGCasino, new ObjectInfo("LiveAndRNGCasino", "Live & RNG Casino"));
+
             return details;
         }
 
@@ -327,16 +329,6 @@
             }
         }
 
-        private void AddCasinoEditLink(DataTable table3rdDCS, ICollection<ObjectInfo> details)
-        {
-            if (_roleId.IsMember() ?
-                !table3rdDCS.IsProductHiddenUpline(ProductConstants.Casino) :
-                !table3rdDCS.IsProductHidden(ProductConstants.Casino))
-            {
-                details.Add(new ObjectInfo("Casino", "Saba Casino"));
-            }
-        }
-
 #pragma warning disable S1541 // Methods and properties should not be too complex
 
         internal Setting AddProductSetting(
@@ -346,7 +338,6 @@
             ProductSettingElement productElement)
         {
             if (!IsProductVisibledToSite(productStatusTable, productElement.Id) ||
-                productElement.Id == ProductConstants.LiveCasino ||
                 productElement.Id == ProductConstants.RNGLottery)
             {
                 return setting;

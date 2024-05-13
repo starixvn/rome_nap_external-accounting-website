@@ -28,6 +28,7 @@
     AllowDoubleComm: false,
     HideVirtualSports: false,
     UplineProductSettings: [],
+    ProductGroups:[],
 
     isSuperEditMember: false,
     isMasterEditMember: false,
@@ -50,7 +51,6 @@
 
     VoidbridgeSyncList: [],
     VoidbridgeSyncIdList: [],
-
 
     RnGCasinoStatuses: [],
     TitleEditInfo: '',
@@ -150,7 +150,6 @@
                 data.groupName +
                 "&enabled=" +
 
-
                 data.enabled +
                 "&closed=" +
                 data.closed +
@@ -174,7 +173,6 @@
             }
 
             top.exportExcel(resolveClientUrl("Customer/GetExportToExcel?") + params, document);
-
         });
 
         $('#txtUserName').keypress(function (e) {
@@ -359,7 +357,6 @@
             type: 'POST'
         })
             .done(function (data) {
-
                 if (Fanex.ExtAcc.ShowSecurityCodePage(data, Fanex.ExtAcc.UnBlockUI)) {
                     return;
                 }
@@ -382,7 +379,6 @@
                     Fanex.ExtAcc.UnBlockUI();
                     Fanex.ExtAcc.Form.Close();
                 }
-
             })
             .error(function (data) {
                 if (data.responseText) { console.log(data.responseText); }
@@ -426,7 +422,6 @@
             data: Fanex.ExtAcc.Customer.GroupName()
         })
             .done(function (data) {
-
                 if (Fanex.ExtAcc.ShowSecurityCodePage(data, Fanex.ExtAcc.UnBlockUI)) {
                     return;
                 }
@@ -496,7 +491,6 @@
                     }
                 })
                     .success(function (result) {
-
                         if (Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.ExtAcc.UnBlockUI)) {
                             return;
                         }
@@ -534,8 +528,6 @@
                 Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.push($(div).attr('id'));
                 Fanex.ExtAcc.Customer.VoidbridgeSyncList.push($(div).attr('name'));
             }
-          
-
         } else {
             div.className = 'menuInactive';
             $('#editMult').attr('style', 'cursor: default !important');
@@ -550,8 +542,7 @@
             if ($(div).attr('sync-voidbridge') == 'true') {
                 Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.pop($(div).attr('id'));
                 Fanex.ExtAcc.Customer.VoidbridgeSyncList.pop($(div).attr('name'));
-            }           
-
+            }
         }
 
         var divs = $('div');
@@ -607,7 +598,6 @@
                     Fanex.ExtAcc.Customer.VoidbridgeSyncIdList.pop($(divs[i]).attr('id'));
                     Fanex.ExtAcc.Customer.VoidbridgeSyncList.pop($(divs[i]).attr('name'));
                 }
-              
             }
         }
     },

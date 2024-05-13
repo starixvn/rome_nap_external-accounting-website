@@ -67,6 +67,13 @@ function LoadProduct(productId) {
     setTimeout(Fanex.CustomerSetting.Core.UnBlockUI, 1000);
 };
 
+function LoadProductGroup(productGroupId) {
+    Fanex.CustomerSetting.Core.BlockUI();
+    var url = parent.resolveClientUrl("Customer/EditSuperBetSetting?productGroupId=" + productGroupId + "&custId=" + custId + "&roleId=4&uplineRoleId=5&groupName=" + parent.$('#selectedGroupName').html());
+    document.getElementById("product-group-" + productGroupId).src = url;
+    setTimeout(Fanex.CustomerSetting.Core.UnBlockUI, 1000);
+};
+
 function CopySB() {
     $("#errMsg").empty().hide();
     $("#sourceSuper").focus();
@@ -120,10 +127,10 @@ function LoadBetSetting(sourceUser, destUsers, isCopy) {
                 var superIds = result.superIds.split(',');
                 var sourceId = superIds[0];
                 superIds.shift();
-                $("#product-1-0").attr("src", resolveClientUrl("Customer/EditMultipleSuperBetSetting?isCopy=true&custId=" + sourceId + "&custIds=" + superIds.toString() + "&usernames=" + destUsers  + "&uplineRoleId=5&roleId=4&groupName=" + groupName));
+                $("#product-1-0").attr("src", resolveClientUrl("Customer/EditMultipleSuperBetSetting?isCopy=true&custId=" + sourceId + "&custIds=" + superIds.toString() + "&usernames=" + destUsers  + "&uplineRoleId=5&roleId=4&productGroupId=1&groupName=" + groupName));
             }
             else {
-                $("#product-1-1").attr("src", resolveClientUrl("Customer/EditMultipleSuperBetSetting?custIds=" + result.superIds + '&usernames=' + destUsers + '&uplineRoleId=5&roleId=4&groupName=' + groupName));
+                $("#product-1-1").attr("src", resolveClientUrl("Customer/EditMultipleSuperBetSetting?custIds=" + result.superIds + '&usernames=' + destUsers + '&uplineRoleId=5&roleId=4&productGroupId=1&groupName=' + groupName));
             }
         }
 

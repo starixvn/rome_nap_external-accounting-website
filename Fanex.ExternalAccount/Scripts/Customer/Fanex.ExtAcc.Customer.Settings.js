@@ -23,10 +23,6 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tab4').css('display', Fanex.ExtAcc.Customer.HideCasino ? 'none' : 'block');
         $('#tab8').css('display', Fanex.ExtAcc.Customer.HideVirtualSports ? 'none' : 'block');
 
-        $('#tab4').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(6, "#casinoFrame", "#tabs-4");
-        });
-
         $('#tab8').bind('click', function () {
             Fanex.ExtAcc.Customer.Settings.RenderDCS(5, "#virtualSportsFrame", "#tabs-8");
         });
@@ -36,7 +32,24 @@ Fanex.ExtAcc.Customer.Settings = {
             Fanex.ExtAcc.Customer.Settings.RenderDCS(productId, "#Frame_" + productId, "#tabs-" + productId);
         });
 
+        $('.group-setting-tab').bind('click', function () {
+            var productGroupId = $(this).attr('data-product-group-id');
+            Fanex.ExtAcc.Customer.Settings.RenderProductGroupSetting(productGroupId, "#Frame_group_" + productGroupId, "#content-group-" + productGroupId);
+        });
+
         $('#tabs-list>li:first').click();
+    },
+
+    RenderProductGroupSetting: function (producGrouptId, frameId, tabId) {
+        Fanex.ExtAcc.Customer.IsMultiple = false;
+        Fanex.ExtAcc.Customer.UserId = this.UserId;
+        var action = '';
+        var url = "Customer/EditCustomer?productGroupId=" + producGrouptId + "&custId=" + this.UserId + "&groupName=" + parent.$('#selectedGroupName').html() + "&roleId=" + this.CurrentLevel + "&uplineRoleId=" +(this.CurrentLevel+1);
+
+        $(tabId).height(parent.$('#leftFrame').height() - 10);
+
+        $(tabId).css('display', 'block');
+        Fanex.ExtAcc.Customer.Settings.LoadProductSetting(frameId, resolveClientUrl(url));
     },
 
     RenderDCS: function (productId, frameId, tabId) {

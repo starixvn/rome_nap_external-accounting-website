@@ -16,6 +16,8 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         public string SiteLabel { get; set; }
 
         public int Currency { get; set; }
+        
+        public string ApplicationPath { get; set; }
 
         private object BetSettingTab => new
         {
@@ -30,8 +32,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         {
             name = "MaxPayout",
             id = "MaxPayoutSettingTab",
-            napUrl = "/Customer/GetMaxPayoutSettingInformation?site=" + Site + "&siteLabel=" + SiteLabel,
-            index = 1,
+            url = ApplicationPath + "Customer/GetMaxPayoutSettingInformation?site=" + Site + "&siteLabel=" + SiteLabel,
             isActive = TabIndex == 1,
         };
 
@@ -40,7 +41,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         {
             name = "PositionTaking",
             id = "PTSettingTab",
-            napUrl = "/Customer/GetPTSettingInformation?custId=" + CustId + "&site=" + Site,
+            url = ApplicationPath + "Customer/GetPTSettingInformation?custId=" + CustId + "&site=" + Site,
             isActive = TabIndex == 2,
         };
 
@@ -49,7 +50,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         {
             name = "Commission",
             id = "CommissionHintTab",
-            napUrl = "/Customer/GetCommissionHint?custId=" + CustId + "&site=" + Site,
+            url = ApplicationPath + "Customer/GetCommissionHint?custId=" + CustId + "&site=" + Site,
             isActive = TabIndex == 3,
         };
 
@@ -58,7 +59,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         {
             name = "ProductCategories",
             id = "ProductCategorySettingTab",
-            napUrl = "/Customer/GetProductCategories?custId=" + CustId + "&site=" + Site + "&currency=" + Currency,
+            url = ApplicationPath + "Customer/GetProductCategories?custId=" + CustId + "&site=" + Site + "&currency=" + Currency,
             isActive = TabIndex == 4,
         };
 

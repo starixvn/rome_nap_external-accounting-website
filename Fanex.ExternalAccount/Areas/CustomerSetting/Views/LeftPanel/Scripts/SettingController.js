@@ -744,24 +744,6 @@
             600, 300, false, false, 1);
     };
 
-    $scope.EnableLiveCasino = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(41, "Live Casino", 800, 420);
-    };
-
-    $scope.EnableVoidBridge = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(18, "RNG Slot");
-    };
-
     $scope.EnableRNGLottery = function (enable, id, disabled) {
         if (disabled) {
             return;
@@ -771,31 +753,13 @@
         $scope.EnableThirdpartyProduct(44, "RNG Lottery", 800, 320);
     };
 
-    $scope.EnableVirtualGames = function (enable, id, disabled) {
+    $scope.EnableLiveAndRNGCasino = function (enable, id, disabled) {
         if (disabled) {
             return;
         }
 
         top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(64, "Virtual Games");
-    };
-
-    $scope.EnableSabagames = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(42, "Saba.games");
-    };
-
-    $scope.EnableVgaming = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(66, "Vgaming");
+        $scope.EnableProductGroup(3, "Live & RNG Casino", 800, 320);
     };
 
     $scope.EnableBitcoin = function (enable, id, disabled) {
@@ -852,6 +816,21 @@
             + '&productid=' + productId
             + '&height=' + height
             + '&sporttypeid=' + sportTypeId;
+        var url = parent.resolveClientUrl(url_SELECT);
+        var title = 'Update ' + productName + ' Status: <font color="#6dcff6">' + personalInfo.currentLevel.value + '</font>';
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, title, width, height, false);
+    };
+
+    $scope.EnableProductGroup = function (productId, productName, width, height) {
+        width = width || 680;
+        height = height || 320;
+        var personalInfo = $scope.model.personalInfo;
+        var url_SELECT = 'ProductStatusSetting/Index?isGroup=true'
+            + '&custid=' + personalInfo.custId.value
+            + '&custname=' + personalInfo.currentLevel.value
+            + '&custRole=' + personalInfo.roleId.value
+            + '&productid=' + productId
+            + '&height=' + height;
         var url = parent.resolveClientUrl(url_SELECT);
         var title = 'Update ' + productName + ' Status: <font color="#6dcff6">' + personalInfo.currentLevel.value + '</font>';
         parent.Fanex.ExtAcc.Form.ShowFrame(url, title, width, height, false);
@@ -931,11 +910,21 @@
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         parent.Fanex.ExtAcc.Customer.superId = superId;
         $scope.ResetGlobalValueAtSuperOnMember();
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=4" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=4" + "&productGroupId=1" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
     };
 
-    $scope.SuperCasino = function () {
-        $scope.RenderSupeOnMemberDCS(6);
+    $scope.SuperLiveAndRNGCasino = function () {
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        var agentId = $scope.model.personalInfo.downlines[2].key;
+
+        parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.agentId = agentId;
+        parent.Fanex.ExtAcc.Customer.masterId = masterId;
+        parent.Fanex.ExtAcc.Customer.superId = superId;
+        $scope.ResetGlobalValueAtSuperOnMember();
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=4" + "&productGroupId=3" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
     };
 
     $scope.SuperVirtualSports = function () {
@@ -953,23 +942,25 @@
         parent.Fanex.ExtAcc.Customer.agentId = agentId;
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         parent.Fanex.ExtAcc.Customer.superId = superId;
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=3" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=3" + "&productGroupId=1" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
     };
 
-    $scope.MasterCasino = function () {
-        $scope.RenderMasterOnMemberDCS(6);
+    $scope.MasterLiveAndRNGCasino = function () {
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        var agentId = $scope.model.personalInfo.downlines[2].key;
+
+        $scope.ResetGlobalValueAtMasterOnMember();
+        parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.agentId = agentId;
+        parent.Fanex.ExtAcc.Customer.masterId = masterId;
+        parent.Fanex.ExtAcc.Customer.superId = superId;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=3" + "&productGroupId=3" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
     };
 
     $scope.MasterVirtualSports = function () {
         $scope.RenderMasterOnMemberDCS(5);
-    };
-
-    $scope.SuperLiveCasino = function () {
-        $scope.RenderSupeOnMemberDCS(41);
-    };
-
-    $scope.SuperVoidBridge = function () {
-        $scope.RenderSupeOnMemberDCS(18);
     };
 
     $scope.SuperFishingWorld = function () {
@@ -978,18 +969,6 @@
 
     $scope.SuperRNGLottery = function () {
         $scope.RenderSupeOnMemberDCS(44);
-    };
-
-    $scope.SuperVirtualGames = function () {
-        $scope.RenderSupeOnMemberDCS(64);
-    };
-
-    $scope.SuperSabagames = function () {
-        $scope.RenderSupeOnMemberDCS(42);
-    };
-
-    $scope.SuperVgaming = function () {
-        $scope.RenderSupeOnMemberDCS(66);
     };
 
     $scope.SuperBitcoin = function () {
@@ -1001,32 +980,12 @@
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('DCS/ViewCustomerSetting?language=en-US&productId=' + productId + '&customerLevel=1&UplineLevel=4&customerId=' + $scope.model.personalInfo.custId.value + "&groupName=" + parent.$('#selectedGroupName').html()));
     };
 
-    $scope.MasterLiveCasino = function () {
-        $scope.RenderMasterOnMemberDCS(41);
-    };
-
-    $scope.MasterVoidBridge = function () {
-        $scope.RenderMasterOnMemberDCS(18);
-    };
-
     $scope.MasterFishingWorld = function () {
         $scope.RenderMasterOnMemberDCS(24);
     };
 
     $scope.MasterRNGLottery = function () {
         $scope.RenderMasterOnMemberDCS(44);
-    };
-
-    $scope.MasterVirtualGames = function () {
-        $scope.RenderMasterOnMemberDCS(64);
-    };
-
-    $scope.MasterSabagames = function () {
-        $scope.RenderMasterOnMemberDCS(42);
-    };
-
-    $scope.MasterVgaming = function () {
-        $scope.RenderMasterOnMemberDCS(66);
     };
 
     $scope.MasterBitcoin = function () {

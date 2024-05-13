@@ -13,6 +13,8 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
 
         public byte UplineRoleId { get; set; }
 
-        internal virtual string ToJson() => JsonConvert.SerializeObject(new { CustIds, Usernames, RoleId, UplineRoleId }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+        public int ProductGroupId { get; set; }
+
+        internal virtual string ToJson() => JsonConvert.SerializeObject(new { CustIds, Usernames, RoleId, UplineRoleId, ProductGroupId }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
     }
 }
