@@ -41,7 +41,7 @@
     <Setting Key="EAS_Rpt_WinLossDaily_SortingOrder" SpName="EAS_Rpt_WinLossDaily_SortingOrder" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_Rpt_ViewExtraPT2" SpName="EAS_Rpt_ViewExtraPT2" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="EAS_Rpt_WinLossDetail_byPT" SpName="EAS_Rpt_WinLossDetail_byPT" DbName="DBAGE.bodb02.wsv_xnap" />
-    <Setting Key="EAS_GetPTProductBySuper" SpName="EAS_GetPTProductBySuper_UAT4" DbName="DBACC.bodb02.wsv_xnap" />
+    <Setting Key="EAS_GetPTProductBySuper" SpName="EAS_GetPTProductBySuper" DbName="DBACC.bodb02.wsv_xnap" />
     <Setting Key="EAS_Rpt_WinLossDetail_bySubGroup" SpName="EAS_Rpt_WinLossDetail_bySubGroup" DbName="DBAGE.bodb02.wsv_xnap" />
   </Function>
   <Function Name="Report By Currency">
@@ -111,7 +111,7 @@
     <Setting Key="EAS_UserPolicyUpdMultiple" SpName="EAS_UserPolicyUpdMultiple" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="Left Panel">
-    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo_UAT4" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelList" SpName="Acc_CustomerSelList" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="DBONUSER.ON_USER.wsv_xnap" Plain="0" />
@@ -139,7 +139,7 @@
     <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_CustomerSelAllInfo" SpName="EAS_CustomerSelAllInfo" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerSelAllStatus" SpName="EAS_CustomerSelAllStatus_UAT4" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_CustomerSelAllStatus" SpName="EAS_CustomerSelAllStatus" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_CustomerSelLoginInfo" SpName="EAS_CustomerSelLoginInfo" DbName="DBACC.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_CustomerSelBalanceInfo" SpName="EAS_CustomerSelBalanceInfo" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerUpdLocked" SpName="Acc_CustomerUpdLocked" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
@@ -182,9 +182,9 @@
     <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelComEditOverride_MAg" SpName="Acc_CustomerSelComEditOverride_MAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelComEditOverride_Ag" SpName="Acc_CustomerSelComEditOverride_Ag" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg_UAT4" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg_UAT4" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag_UAT4" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerUpdMaster_All" SpName="Acc_CustomerUpdMaster_All" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
@@ -215,7 +215,7 @@
   </Function>
   <Function Name="DCS">
     <Function Name="Enable Status">
-      <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect_UAT4" DbName="DBCUST.CustDB.wsv_xnap" />
+      <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect" DbName="DBCUST.CustDB.wsv_xnap" />
       <Setting Key="Acc_CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd" DbName="DBCUST.CustDB.wsv_xnap" />
       <Setting Key="Acc_CustSetting_DisableNewProductStatusUpd" SpName="Acc_CustSetting_DisableNewProductStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
     </Function>
@@ -234,7 +234,7 @@
     <Setting Key="Acc_CustSetting_DisableGameStatusSelect" SpName="Acc_CustSetting_DisableGameStatusSelect" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow_UAT4" DbName="DBCust.CustDB.wsv_xnap" />
+    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBCust.CustDB.wsv_xnap" />
   </Function>
   <Function Name="API Logger">
     <Setting Key="WriteLog_UserLog_ExternalAPI_Ins" SpName="WriteLog_UserLog_ExternalAPI_Ins" DbName="dblog" IgnoreImport="true" Plain="0" />
@@ -252,13 +252,13 @@
     <Setting Key="Acc_Admin_DisableGameStatusSelect" SpName="Acc_Admin_DisableGameStatusSelect" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_Admin_DisableNewProductStatusSelect_Esports" SpName="Acc_Admin_DisableNewProductStatusSelect_Esports" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_Admin_DisableNewProductStatus_160_Select" SpName="Acc_Admin_DisableNewProductStatus_160_Select_UAT4" DbName="DBCust.CustDB.wsv_xnap" />
+    <Setting Key="Acc_Admin_DisableNewProductStatus_160_Select" SpName="Acc_Admin_DisableNewProductStatus_160_Select" DbName="DBCust.CustDB.wsv_xnap" />
     <!--Update functions-->
     <Setting Key="Acc_AdminCheckAllowedDownlinesByLevel" SpName="Acc_AdminCheckAllowedDownlinesByLevel" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_AdminUpdCSStatus_Cust" SpName="Acc_AdminUpdCSStatus_Cust" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_Admin_DisableGameStatusUpd" SpName="Acc_Admin_DisableGameStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_Admin_DisableNewProductStatusUpd" SpName="Acc_Admin_DisableNewProductStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_Admin_DisableNewProductStatus_160_Upd" SpName="Acc_Admin_DisableNewProductStatus_160_Upd_UAT4" DbName="DBCust.CustDB.wsv_xnap" />
+    <Setting Key="Acc_Admin_DisableNewProductStatus_160_Upd" SpName="Acc_Admin_DisableNewProductStatus_160_Upd" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_CustSetting_ProductProfileSelect" SpName="Acc_CustSetting_ProductProfileSelect" DbName="DBCust.CustDB.wsv_xnap" />
   </Function>
   <Function Name="Check allow downlines">
@@ -292,7 +292,7 @@
   </Function>
   <Function Name="UM On product">
     <Setting Key="Acc_CheckUM" SpName="Acc_CheckUM" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_CheckUM_MultipleCustProductStatus" SpName="Acc_CheckUM_MultipleCustProductStatus_UAT4" DbName="DBCust.CustDB.wsv_xnap" />
+    <Setting Key="Acc_CheckUM_MultipleCustProductStatus" SpName="Acc_CheckUM_MultipleCustProductStatus" DbName="DBCust.CustDB.wsv_xnap" />
   </Function>
   <Function Name="Problem Account List">
     <Setting Key="EAS_ProblemAccount_CustomerList" SpName="EAS_ProblemAccount_CustomerList" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
@@ -302,7 +302,7 @@
     <Setting Key="EAS_UserCheckBelonging" SpName="EAS_UserCheckBelonging" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="Get Product List of Multiple Edit Product Status">
-    <Setting Key="EAS_ProductSettingByGroup_Sel" SpName="EAS_ProductSettingByGroup_Sel_UAT4" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_ProductSettingByGroup_Sel" SpName="EAS_ProductSettingByGroup_Sel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="Bonus Detail">
     <Setting Key="EAS_Bonus_Sel" SpName="EAS_Bonus_Sel" DbName="DBACC.bodb02.wsv_xnap" Plain="0" />
