@@ -8119,6 +8119,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data of {0} will be under {1}..
+        /// </summary>
+        internal static string SabaOtherSportsLegend {
+            get {
+                return ResourceManager.GetString("SabaOtherSportsLegend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to S.Agent.
         /// </summary>
         internal static string sagent {

@@ -9,11 +9,14 @@
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DataAccess.Products;
     using Fanex.ExternalAccount.DTO.Products;
+    using Fanex.ExternalAccount.Service.Resources;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.NAP.Framework.Data;
 
     public interface IProductDetailService
     {
+        string GetProductDetailBelongSabaOtherSports(string groupName);
+
         IEnumerable<ProductDetailDto> GetProductDetails(IEnumerable<ProductDto> products, string groupName);
 
         IEnumerable<ProductDetailEntity> GetProductDetails(string groupName);
@@ -33,6 +36,18 @@
             this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
+        public string GetProductDetailBelongSabaOtherSports(string groupName)
+        {
+            const string sabaOthers = "24";
+            var productDetails = GetProductDetails(groupName)
+                .Where(i => i.ResourceId == sabaOthers)
+                .OrderBy(i => i.Order)
+                .Select(i => CacheRef.GetResourceDataByRefIdAndResourceId(i.RefId, i.ChildResourceId.ToString(), string.Empty));
+
+            return string.Format(Lang.SabaOtherSportsLegend, string.Join(", ", productDetails), CacheRef.GetResourceDataByRefIdAndResourceId("ProductDetail", sabaOthers, string.Empty));
+        }
+
+
         public IEnumerable<ProductDetailDto> GetProductDetails(IEnumerable<ProductDto> products, string groupName)
         {
             var productHash = new Dictionary<int, bool>();
@@ -49,24 +64,19 @@
                 }
             });
 
-            var productDetails = new List<ProductDetailDto>();
-            GetProductDetails(groupName)
-                .GroupBy(p => p.ProductId)
-                .ToList()
-                .ForEach(group =>
-                {
-                    if (productHash.ContainsKey(group.Key))
-                    {
-                        productDetails.AddRange(group.Select(p => new ProductDetailDto
-                        {
-                            RefId = p.RefId,
-                            ResourceId = p.ResourceId,
-                            ProductId = p.ProductId
-                        }));
-                    }
-                });
+            return GetProductDetails(groupName)
+                 .GroupBy(p => p.ResourceId)
+                 .Select(p =>
+                 {
+                     var product = p.FirstOrDefault();
 
-            return productDetails;
+                     return new ProductDetailDto
+                     {
+                         RefId = product.RefId,
+                         ResourceId = product.ResourceId,
+                         ProductId = product.ProductId
+                     };
+                 });
         }
 
         public IEnumerable<ProductDetailEntity> GetProductDetails(string groupName)
@@ -158,19 +168,7 @@
             var xml = new StringBuilder("<ROOT>");
             foreach (var product in productDetails)
             {
-                foreach (var leagueId in product.LeagueGroupIds)
-                {
-                    foreach (var typeId in product.TicketTypeIds)
-                    {
-                        xml.AppendFormat(
-                            "<ProductDetail ProductId=\"{0}\" Sporttype=\"{1}\" Bettype=\"{2}\" LeagueGroupId=\"{3}\" TicketType=\"{4}\"/>",
-                            product.ProductId,
-                            product.SportType,
-                            product.BetType,
-                            leagueId,
-                            typeId);
-                    }
-                }
+                xml.Append(product.ToString());
             }
             xml.Append("</ROOT>");
             return xml.ToString();

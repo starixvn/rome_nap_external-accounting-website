@@ -70,6 +70,15 @@ namespace Fanex.ExternalAccount.Service.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data of {0} will be under {1}..
+        /// </summary>
+        public static string SabaOtherSportsLegend {
+            get {
+                return ResourceManager.GetString("SabaOtherSportsLegend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 您的轉賬設定已被上線更改。 以下客戶已調整自動轉賬狀態和日程表： {0}。 詳細信息可以在轉賬功能查詢。.
         /// </summary>
         public static string TransferCondition_PersonalMessage_ch {

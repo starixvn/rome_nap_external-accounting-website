@@ -220,21 +220,28 @@
         {
             var productNames = new Dictionary<int, string>();
 
-            _productDetailService.GetProductDetails(groupName)
-                .GroupBy(p => p.ProductId)
-                .ToList()
-                .ForEach(group =>
+            var details = _productDetailService.GetProductDetails(groupName)
+                .GroupBy(p => p.ResourceId)
+                .Select(p =>
                 {
-                    var allResourceIds = group.Select(p => int.Parse(p.ResourceId)).ToList();
-                    var intersectResourceIds = selectedResourceIds.Intersect(allResourceIds).ToList();
-
-                    if (intersectResourceIds.Count > 0
-                        && intersectResourceIds.Count != allResourceIds.Count
-                        && selectedResourceIds.Any())
-                    {
-                        productNames[group.Key] = string.Join(", ", intersectResourceIds.Select(id => CacheRef.GetProductDetailName(id)));
-                    }
+                    return p.FirstOrDefault();
                 });
+
+            details
+            .GroupBy(p => p.ProductId)
+            .ToList()
+            .ForEach(group =>
+            {
+                var allResourceIds = group.Select(p => int.Parse(p.ResourceId)).ToList();
+                var intersectResourceIds = selectedResourceIds.Intersect(allResourceIds).ToList();
+
+                if (intersectResourceIds.Count > 0
+                    && intersectResourceIds.Count != allResourceIds.Count
+                    && selectedResourceIds.Any())
+                {
+                    productNames[group.Key] = string.Join(", ", intersectResourceIds.Select(id => CacheRef.GetProductDetailName(id)));
+                }
+            });
 
             return productNames;
         }

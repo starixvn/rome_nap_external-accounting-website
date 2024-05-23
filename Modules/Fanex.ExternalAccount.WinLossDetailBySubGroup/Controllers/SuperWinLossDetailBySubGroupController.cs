@@ -9,6 +9,7 @@
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.Service.Interface.UserControl;
+    using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Requests;
     using Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Services;
     using Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.ViewModels;
@@ -20,20 +21,23 @@
         private readonly IGroupService groupService;
         private readonly ISuperWinLossDetailBySubGroupService service;
         private readonly CurrentSession currentSession;
+        private readonly ProductDetailService productDetailService;
 
         public SuperWinLossDetailBySubGroupController()
-            : this(new GroupService(), new SuperWinLossDetailBySubGroupService(), new CurrentSession())
+            : this(new GroupService(), new SuperWinLossDetailBySubGroupService(), new CurrentSession(), new ProductDetailService())
         {
         }
 
         internal SuperWinLossDetailBySubGroupController(
             IGroupService groupService,
             ISuperWinLossDetailBySubGroupService service,
-            CurrentSession currentSession)
+            CurrentSession currentSession,
+            ProductDetailService productDetailService)
         {
             this.groupService = groupService;
             this.service = service;
             this.currentSession = currentSession;
+            this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
         public ActionResult Index()
@@ -58,6 +62,8 @@
                 .GetGroupWithSubGroups(groupId)
                 .Where(g => g.ParentGroupId != 0)
                 .Select(g => g.GroupName);
+
+            ViewBag.NoteSabaOthers = productDetailService.GetProductDetailBelongSabaOtherSports(parentGroupName);
 
             return PartialViewBase(new SuperWinLossDetailBySubGroupViewModel(groupId, groupName, subGroupNames));
         }
