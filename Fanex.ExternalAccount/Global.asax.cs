@@ -119,7 +119,7 @@
             ExceptionHandler
                 .UseConfig(new LoggingConfiguration()
                 .IgnoreException<DivideByZeroException>()
-                .HideSensitiveInfo(new List<string> { "pass", "pwd", "security", "Password" })
+                .HideSensitiveInfo(GetRegexToHideSensitiveInfo(new List<string> { "pass", "pwd", "security", "Password" }))
                 .GetHttpHeaderInfo()
                 .GetHttpSessionInfo())
                 .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
@@ -207,6 +207,18 @@
                       UMClientManager.HttpContext);
 
             return new CheckUMFilterAttribute(maintenanceService, umConfig);
+        }
+
+        private static List<string> GetRegexToHideSensitiveInfo(IEnumerable<string> sensitiveInfo)
+        {
+            var result = new List<string>();
+            sensitiveInfo?.ToList().ForEach(info =>
+            {
+                result.Add($"(?:{info}=)(?<paramValue>[^&|^\\s]+)");
+                result.Add($"(\"{info}\":)(?<paramValue>[^,|^\r]+)");
+            });
+
+            return result;
         }
     }
 }
