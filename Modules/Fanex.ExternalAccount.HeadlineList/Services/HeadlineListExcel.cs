@@ -87,22 +87,22 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
                     var column = row.CreateCell(4);
                     column = row.CreateCell(currentColumn);
                     column.SetCellValue(i + 1);
-                    column.CellStyle = configCell.DefaultCellStyle_Center;
+                    column.CellStyle = configCell.NumberCellStyle;
                     
                     currentColumn = 1;
                     column = row.CreateCell(currentColumn);
                     column.SetCellValue(headline.GroupName);
-                    column.CellStyle = configCell.DefaultCellStyle;
+                    column.CellStyle = configCell.HeadlineCellStyle;
                     
                     currentColumn = 2;
                     column = row.CreateCell(currentColumn);
                     column.SetCellValue(headline.Username);
-                    column.CellStyle = LeftCell(headline);
+                    column.CellStyle = UsernameCellStyle(headline);
                     
                     currentColumn = 3;
                     column = row.CreateCell(currentColumn);
                     column.SetCellValue(headline.Status);
-                    column.CellStyle = CenterCell(headline);
+                    column.CellStyle = StatusCellStyle(headline);
                     row.GetCell(4).SetBlank();
                     currentRow++;
                 }
@@ -134,7 +134,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
             worksheet.AddMergedRegion(mergedHeadlineCol);
         }
         
-        private ICellStyle LeftCell(HeadlineEntity headline)
+        private ICellStyle UsernameCellStyle(HeadlineEntity headline)
         {
             if (!headline.IsEnable)
             {
@@ -164,7 +164,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
             return configCell.DefaultCellStyle;
         }
         
-        private ICellStyle CenterCell(HeadlineEntity headline)
+        private ICellStyle StatusCellStyle(HeadlineEntity headline)
         {
             if (!headline.IsEnable)
             {

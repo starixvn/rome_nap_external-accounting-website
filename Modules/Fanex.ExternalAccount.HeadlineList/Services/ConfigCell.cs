@@ -28,6 +28,9 @@
         public ICellStyle ClosedByUplineCellStyle_Center { get; }
         public ICellStyle ClosedByArchiveCellStyle_Center { get; }
         public ICellStyle DefaultCellStyle_Center { get; }
+        
+        public ICellStyle HeadlineCellStyle { get; }
+        public ICellStyle NumberCellStyle { get; }
 
         public ConfigCell(HSSFWorkbook workbook)
         {
@@ -45,23 +48,26 @@
             ClosedByUplineCellStyle = FillColor(workbook, ClosedByUplineColor, HorizontalAlignment.Left);
             ClosedByArchiveCellStyle = FillColor(workbook, ClosedByArchiveColor, HorizontalAlignment.Left);
             DisableCellStyle = FillColor(workbook, DisableColor, HorizontalAlignment.Left);
-            DefaultCellStyle = DefaultStyle(workbook,HorizontalAlignment.Left);
+            DefaultCellStyle = BaseStyle(workbook,HorizontalAlignment.Left, VerticalAlignment.Center);
+            HeadlineCellStyle = BaseStyle(workbook,HorizontalAlignment.Left, VerticalAlignment.Top);
 
             SuspendedCellStyle_Center = FillColor(workbook, SuspendedColor, HorizontalAlignment.Center);
             ClosedByAdminCellStyle_Center = FillColor(workbook, ClosedByAdminColor, HorizontalAlignment.Center);
             ClosedByUplineCellStyle_Center = FillColor(workbook, ClosedByUplineColor, HorizontalAlignment.Center);
             ClosedByArchiveCellStyle_Center = FillColor(workbook, ClosedByArchiveColor, HorizontalAlignment.Center);
             DisableCellStyle_Center = FillColor(workbook, DisableColor, HorizontalAlignment.Center);
-            DefaultCellStyle_Center = DefaultStyle(workbook, HorizontalAlignment.Center);
+            DefaultCellStyle_Center = BaseStyle(workbook, HorizontalAlignment.Center, VerticalAlignment.Center);
+            
+            NumberCellStyle = BaseStyle(workbook, HorizontalAlignment.Center, VerticalAlignment.Top);
         }
 
-        private ICellStyle DefaultStyle(HSSFWorkbook workbook, HorizontalAlignment align)
+        private ICellStyle BaseStyle(HSSFWorkbook workbook, HorizontalAlignment align, VerticalAlignment vertical)
         {
             var style = workbook.CreateCellStyle();
 
             style.SetFont(DefaultFontStyle(workbook));
 
-            style.VerticalAlignment = VerticalAlignment.Center;
+            style.VerticalAlignment = vertical;
             style.Alignment = align;
             DefaultBorderStyle(ref style);
 
@@ -73,7 +79,7 @@
         private ICellStyle FillColor(HSSFWorkbook workbook, short color, HorizontalAlignment align)
         {
             var cellStyle = workbook.CreateCellStyle();
-            cellStyle.CloneStyleFrom(DefaultStyle(workbook, align));
+            cellStyle.CloneStyleFrom(BaseStyle(workbook, align, VerticalAlignment.Center));
             cellStyle.FillForegroundColor = color;
             cellStyle.FillPattern = FillPattern.SolidForeground;
             cellStyle.Alignment = align;
