@@ -197,16 +197,23 @@ Fanex.ExtAcc.HeadlineList = {
             const groupHeadline = groupHeadlines[i];
             const groupHeadlineLength = groupHeadline.HeadlineEntities.length;
             let rowMerge = groupHeadlineLength;
+            let isHeadlineMultiLine = groupHeadlineLength > 1;
             for (let j = 0; j < groupHeadlineLength; j++) {
                 const headline = groupHeadline.HeadlineEntities[j];
                 let columns = [];
                 if (j === 0) {
-                    columns.push({Name: "RowNumber", Value: rowNumber, MergeRowNumber: rowMerge});
+                    columns.push({
+                        Name: "RowNumber", 
+                        Value: rowNumber, 
+                        MergeRowNumber: rowMerge, 
+                        TdClass: isHeadlineMultiLine ? "vertical-align-top" : ""
+                    });
                     columns.push({
                         Name: 'GroupName',
                         Value: groupHeadline.GroupName,
                         MergeRowNumber: rowMerge,
-                        CellAlign: 'left'
+                        CellAlign: 'left',
+                        TdClass: isHeadlineMultiLine ? "vertical-align-top" : ""
                     });
                     rowNumber++;
                 }
