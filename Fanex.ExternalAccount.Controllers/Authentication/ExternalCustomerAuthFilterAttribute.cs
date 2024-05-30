@@ -22,12 +22,14 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         private readonly IDictionary<int, string> ProductGroupPermissions = new Dictionary<int, string>
         {
             { ProductGroupConstants.Sportsbook, eFunctions.Sportsbook},
+            { ProductGroupConstants.RNGGames, eFunctions.RNGGames},
             { ProductGroupConstants.LiveAndRNGCasino, eFunctions.LiveAndRNGCasino}
         };
 
         private readonly IDictionary<int, string> ProductGroupBettingPermissions = new Dictionary<int, string>
         {
             { ProductGroupConstants.Sportsbook, eFunctions.SportsbookBetting},
+            { ProductGroupConstants.RNGGames, eFunctions.RNGGamesBetting},
             { ProductGroupConstants.LiveAndRNGCasino, eFunctions.LiveAndRNGCasinoBetting}
         };
 

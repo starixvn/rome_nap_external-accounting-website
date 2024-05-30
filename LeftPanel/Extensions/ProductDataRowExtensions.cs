@@ -21,10 +21,6 @@
 
         internal static bool DisableTransfer(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableTransfer"]);
 
-        internal static bool HideVirtualSports(this DataRow dataRow) => Utils.ToBoolean(dataRow["hideVirtualSports"]);
-
-        internal static bool DisableVirtualSports(this DataRow dataRow) => Utils.ToBoolean(dataRow["disableVirtualSports"]);
-
         internal static bool IsHiddenUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["isHiddenUpline"]);
 
         internal static bool IsDisabledUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["isDisabledUpline"]);
@@ -42,7 +38,7 @@
                    || productRow.IsHidden()
                    || !productRow.IsSync();
         }
-     
+
         internal static bool IsProductHidden(this DataTable productTable, int productId)
         {
             var productRows = productTable.Select($"ProductID = {productId}");

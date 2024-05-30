@@ -5,11 +5,9 @@
 @model CustomerSettingsViewModel
 @{
     var HideCasino = ViewBag.HideCasino;
-    var HideVirtualSports = ViewBag.HideVirtualSports;
     var status = new
     {
         hideCasino = HideCasino,
-        hideVirtualSports = HideVirtualSports
     };
     var statusJSON = JsonConvert.SerializeObject(status, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
 }
@@ -31,8 +29,6 @@
             </li>
         }
 
-        <li id="tab8"><a class="height-auto" href="#tabs-8">Virtual Sports</a></li>
-
         @foreach (var product in Model.Products)
         {
             <li id="tab@(product.Id)" class="dynamic-setting-tab" data-product-id="@(product.Id)">
@@ -49,10 +45,6 @@
             <iframe id="Frame_group_@(product.Id)" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
         </div>
     }
-
-    <div id="tabs-8" class="divTab">
-        <iframe id="virtualSportsFrame" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-    </div>
 
     @foreach (var product in Model.Products)
     {
@@ -92,7 +84,6 @@
     Fanex.ExtAcc.Customer.Member = @Role.Member;
     Fanex.ExtAcc.Customer.superId = Fanex.ExtAcc.Customer.masterId = Fanex.ExtAcc.Customer.agentId = '@ViewBag.UplineId';
     Fanex.ExtAcc.Customer.HideCasino = custStatus.hideCasino;
-    Fanex.ExtAcc.Customer.HideVirtualSports = custStatus.hideVirtualSports;
     Fanex.ExtAcc.Customer.isSuperEditAgent = Fanex.ExtAcc.Customer.isSuperEditMember = Fanex.ExtAcc.Customer.isMasterEditMember = false;
     Fanex.ExtAcc.Customer.CurrentLevel = parseInt(Fanex.ExtAcc.Customer.CurrentLevel);
 

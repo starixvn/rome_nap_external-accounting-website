@@ -243,18 +243,11 @@
             }
         }
 
-#pragma warning disable S1192 // String literals should not be duplicated
-#pragma warning disable S3776 // Cognitive Complexity of methods should not be too high
-#pragma warning disable S1541 // Methods and properties should not be too complex
-
         public CustomerStatusDTO GetCustomerAllStatus(GetCustomerAllStatusCriteria criteria)
-#pragma warning restore S1541 // Methods and properties should not be too complex
-#pragma warning restore S3776 // Cognitive Complexity of methods should not be too high
         {
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 var result = new CustomerStatusDTO();
-                CustomerStatusDCS rngLottery = null;
                 var reader = objDb.ExecuteReader(criteria.GetSpParams());
                 if (reader.Read())
                 {
@@ -269,42 +262,6 @@
                     if (reader.IsDBNull(reader.GetOrdinal("GroupId")))
                     {
                         int productId = Utils.ToInt32(reader["ProductID"]);
-
-                        if (productId == ProductConstants.VirtualSports)
-                        {
-                            result.HideVirtualSport = Utils.ToBoolean(reader["isHidden"]);
-                            result.DisableVirtualSport = Utils.ToBoolean(reader["isDisabled"]);
-                            continue;
-                        }
-
-                        if (productId == ProductConstants.RNGLottery)
-                        {
-                            if (rngLottery == null)
-                            {
-                                rngLottery = new CustomerStatusDCS
-                                {
-                                    ProductID = productId,
-                                    ProductName = ProductSettings.SiteProducts[productId]?.Name,
-                                    IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
-                                    IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
-                                    IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
-                                    IsSynced = Utils.ToBoolean(reader["isSync"]),
-                                    IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
-                                };
-                            }
-                            else
-                            {
-                                if (!Utils.ToBoolean(reader["isHidden"]))
-                                {
-                                    rngLottery.IsDisabled = rngLottery.IsDisabled || Utils.ToBoolean(reader["isDisabled"]);
-                                    rngLottery.IsDisabledUpline = rngLottery.IsDisabledUpline || Utils.ToBoolean(reader["isDisabledUpline"]);
-                                }
-
-                                rngLottery.IsHidden = rngLottery.IsHidden && (!ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]));
-                            }
-
-                            continue;
-                        }
 
                         if (!result.IsDCSProductExisted(productId))
                         {
@@ -331,16 +288,9 @@
                     }
                 }
 
-                if (rngLottery != null)
-                {
-                    result.DCSProductsSetting.Add(rngLottery);
-                }
-
                 return result;
             }
         }
-
-#pragma warning restore S1192 // String literals should not be duplicated
 
         public bool CheckLimitNewDownline(CheckLimitNewDownlineCriteria criteria)
         {

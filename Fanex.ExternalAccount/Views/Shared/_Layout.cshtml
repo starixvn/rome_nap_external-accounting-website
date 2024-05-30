@@ -22,7 +22,6 @@
     var hasSuspend = authenService.HasSuspendCustomerPermission(userId) ? 1 : 0;
     var allowAutoPT = authenService.HasAllowAutoMPTPermission(userId) ? 1 : 0;
     var hasClearCredit = authenService.HasClearCreditPermission(userId) ? 1 : 0;
-    var showRNGLottery = ProductSettings.IsShowRNGLottery ? 1 : 0;
     var productsExcludeSabaVS = ProductSettings.SiteProducts.Where(i => i.Key != 54).ToDictionary(p => p.Key, p => p.Value);
 
     var products = JsonConvert.SerializeObject(productsExcludeSabaVS.Values);
@@ -137,7 +136,6 @@
         var hasClearCredit = '@hasClearCredit';
         var showLiveCasinoBetting = true;
         var showVoidbridgeBetting = true;
-        var showRNGLottery = @showRNGLottery;
         var siteLevelProducts = @(Html.Raw(products));
 
         $(document).ready(function () {

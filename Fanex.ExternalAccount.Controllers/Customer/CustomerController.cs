@@ -385,11 +385,9 @@
 
         public ActionResult Settings(int id, int custId, int uplineId, string userName, string groupName)
         {
-            var custStatus = _customerService.GetCustomerAllStatus(custId, Config.SettingStatus);
             ViewBag.CurrentLevel = id;
             ViewBag.UserId = custId;
             ViewBag.UplineId = uplineId;
-            ViewBag.HideVirtualSports = custStatus.HideVirtualSport;
             var productStatusList = productStatusService.GetProductStatusList(custId, id, Config.SettingStatus);
             var visibledProductGroups = GetVisibleProductGroups(productStatusList).Where(p => p.Id != ProductGroupConstants.Sportsbook);
             var visibledProducts = GetVisibledProducts(productStatusList);
