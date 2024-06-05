@@ -8,6 +8,7 @@
     var todayString = today.ToString("MM/dd/yyyy");
     var historicpivotdateString = historicpivotdate.ToString("MM/dd/yyyy");
     var notes = "Data is up to 3 months.</br>OANDA Exchange Service will use the exchange rate of the each date when converting the figures.</br>Currency HKK applies standard code MYR instead of HKD.</br>The PT% displayed in the report is the Super Max PT given by House. It may not match with real taken PT which is used to calculate the report's figures.";
+    notes += "</br>" + ViewBag.NoteSabaOthers;
 }
 
 <div>

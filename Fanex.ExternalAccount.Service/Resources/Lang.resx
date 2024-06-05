@@ -165,4 +165,7 @@
   <data name="TransferCondition_PersonalMessage_vn" xml:space="preserve">
     <value>Điều Kiện Chuyển Khoản của bạn đã được cấp trên thay đổi. Trạng thái và lịch Chuyển Khoản Tự Động đã được điều chỉnh cho các tài khoản sau: {0}. Chi tiết có thể được tìm thấy trong chức năng Chuyển Khoản.</value>
   </data>
+  <data name="SabaOtherSportsLegend" xml:space="preserve">
+    <value>Data of {0} will be under {1}.</value>
+  </data>
 </root>

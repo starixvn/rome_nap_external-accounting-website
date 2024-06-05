@@ -3501,4 +3501,7 @@ Now, gross commission = (your commission percentage) * turnover (excluding Draw 
   <data name="NoRefresh" xml:space="preserve">
     <value>No refresh</value>
   </data>
+  <data name="SabaOtherSportsLegend" xml:space="preserve">
+    <value>Data of {0} will be under {1}.</value>
+  </data>
 </root>

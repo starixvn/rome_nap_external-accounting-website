@@ -7,6 +7,7 @@
     using CustomerSetting.Security.Authenticate;
     using DTO.Report;
     using Excel.Reports.WinLossDetailReport;
+    using Fanex.ExternalAccount.Service.Products;
     using Requests;
     using Service.Impl.Report;
     using Service.Interface.Report;
@@ -16,22 +17,27 @@
     public class WinLossDetailMCController : BaseReportController
     {
         private readonly WinLossDetailService winLossDetailService;
+        private readonly ProductDetailService productDetailService;
 
         public WinLossDetailMCController(
             CurrentSession currentSession,
             WinLossDetailService winLossDetailService,
+            ProductDetailService productDetailService,
             IReportService reportService)
             : base(currentSession, reportService)
         {
             this.winLossDetailService = winLossDetailService ?? new WinLossDetailServiceImpl();
+            this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
-        public WinLossDetailMCController() : this(null, null, null)
+        public WinLossDetailMCController() : this(null, null, null, null)
         {
         }
 
         public ActionResult Index()
         {
+            ViewBag.NoteSabaOthers = productDetailService.GetProductDetailBelongSabaOtherSports(currentSession.ParentGroupName);
+
             return View();
         }
 

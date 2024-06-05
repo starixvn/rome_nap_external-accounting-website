@@ -8,6 +8,7 @@
     using CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.DTO.Report;
     using Fanex.ExternalAccount.Excel.Reports.SuperWinLossDetailByPT;
+    using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Service.Report.SuperWinLossDetailByPT;
     using Requests;
     using Service.Interface.Report;
@@ -17,22 +18,30 @@
     public class SuperWinLossDetailByPTController : BaseReportController
     {
         private readonly SuperWinLossDetailByPTService services;
+        private readonly ProductDetailService productDetailService;
 
         public SuperWinLossDetailByPTController(
             CurrentSession currentSession,
             SuperWinLossDetailByPTService services,
+            ProductDetailService productDetailService,
             IReportService reportService)
             : base(currentSession, reportService)
         {
             this.services = services ?? new SuperWinLossDetailByPTServiceImpl();
+            this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
-        public SuperWinLossDetailByPTController() : this(null, null, null)
+        public SuperWinLossDetailByPTController() : this(null, null, null, null)
         {
         }
 
         public ActionResult Index()
-            => View();
+        {
+            ViewBag.NoteSabaOthers = productDetailService.GetProductDetailBelongSabaOtherSports(currentSession.ParentGroupName);
+
+            return View();
+        }
+            
 
         [AntiXSRFFilter]
         public ActionResult GetData(SuperWinLossDetailByPTRequest request)
