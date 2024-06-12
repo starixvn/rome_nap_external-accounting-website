@@ -148,6 +148,8 @@
                     "",
                     request.RoleId,
                     request.UplineRoleId,
+                    request.Site,
+                    request.SiteLabel,
                     CurrentContext.Ip4Address));
 
             return Content(response);
@@ -194,7 +196,8 @@
                     CurrentContext.Ip4Address,
                     request.CustomerIds,
                     request.CustomerNames,
-                    "en-US"));
+                    request.Site,
+                    request.SiteLabel));
 
             return Content(response);
         }
@@ -221,7 +224,14 @@
             generalInfo.Password = Encryption.CfsEnCode(rawPassword);
 
             var response = await customerServiceClient.CreateCustomer(new CustomerClient.Params.CreateCustomerParam(
-                generalInfo, request.ProductGroups, CurrentSession.UserId, 0, CurrentContext.Ip4Address, CustomerClient.Constants.CreationModes.FullMode));
+                generalInfo,
+                request.ProductGroups,
+                CurrentSession.UserId,
+                0,
+                CurrentContext.Ip4Address,
+                generalInfo.Site,
+                generalInfo.SiteLabel,
+                CustomerClient.Constants.CreationModes.FullMode));
             return Content(response);
         }
 
@@ -240,7 +250,9 @@
                     "",
                     request.RoleId,
                     request.UplineRoleId,
-                    CurrentContext.Ip4Address));
+                    CurrentContext.Ip4Address,
+                    request.Site,
+                    request.SiteLabel));
 
             return Content(response);
         }
@@ -262,7 +274,8 @@
                     CurrentContext.Ip4Address,
                     request.CustomerIds,
                     request.CustomerNames,
-                    "en-US"));
+                    request.Site,
+                    request.SiteLabel));
 
             return Content(response);
         }
