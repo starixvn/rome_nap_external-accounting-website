@@ -14,8 +14,8 @@
         {
             var result = DbHelper.ExecuteDbResult(criteria.GetSettingKey(), criteria.GetSpParams());
 
-            var errorCode = Converter.ToInt(result.Outputs["errorcode"]);
-            var errorMessage = Converter.ToInt(result.Outputs["errormessage"]);
+            var errorCode = Converter.ToInt(result.Outputs["errcode"]);
+            var errorMessage = Converter.ToString2(result.Outputs["errmsg"]);
 
             return new Result(errorCode, errorMessage);
         }
