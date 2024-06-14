@@ -158,7 +158,8 @@
         [ExternalCustomerAuthFilter(IsBettingLimit = true)]
         public ActionResult EditMultipleSuperBetSetting(EditMultipleSuperBetSettingRequest request)
         {
-            if (Role.IsNotSuper(request.RoleId))
+            if (Role.IsNotSuper(request.RoleId)
+                || !authorizationService.IsBelong(CurrentSession.CurrencyGroup, request.CustIds.Split(',').Select(Int32.Parse).ToList()))
             {
                 return PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
@@ -179,25 +180,26 @@
         [ExternalCustomerAuthFilter(IsHost = true, IsBettingLimit = true)]
         public async Task<ActionResult> EditMultipleSuperBetSetting(UpdateMultipleCustomerCommand request)
         {
-            if (Role.IsNotSuper(request.RoleId))
+            if (Role.IsNotSuper(request.RoleId)
+                || !authorizationService.IsBelong(CurrentSession.CurrencyGroup, request.CustomerIds.Split(',').Select(Int32.Parse).ToList()))
             {
                 return PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             var response = await customerServiceClient.UpdateMultipleCustomers(
-                new CustomerClient.Params.UpdateMultipleCustomerParam(
-                    request.ProductGroups,
-                    CurrentSession.UserId,
-                    0,
-                    request.CustId,
-                    "",
-                    request.RoleId,
-                    request.UplineRoleId,
-                    CurrentContext.Ip4Address,
-                    request.CustomerIds,
-                    request.CustomerNames,
-                    request.Site,
-                    request.SiteLabel));
+            new CustomerClient.Params.UpdateMultipleCustomerParam(
+                request.ProductGroups,
+                CurrentSession.UserId,
+                0,
+                request.CustId,
+                "",
+                request.RoleId,
+                request.UplineRoleId,
+                CurrentContext.Ip4Address,
+                request.CustomerIds,
+                request.CustomerNames,
+                request.Site,
+                request.SiteLabel));
 
             return Content(response);
         }
