@@ -148,6 +148,8 @@
                     "",
                     request.RoleId,
                     request.UplineRoleId,
+                    request.Site,
+                    request.SiteLabel,
                     CurrentContext.Ip4Address));
 
             return Content(response);
@@ -156,7 +158,8 @@
         [ExternalCustomerAuthFilter(IsBettingLimit = true)]
         public ActionResult EditMultipleSuperBetSetting(EditMultipleSuperBetSettingRequest request)
         {
-            if (Role.IsNotSuper(request.RoleId))
+            if (Role.IsNotSuper(request.RoleId)
+                || !authorizationService.IsBelong(CurrentSession.CurrencyGroup, request.CustIds.Split(',').Select(Int32.Parse).ToList()))
             {
                 return PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
@@ -177,24 +180,26 @@
         [ExternalCustomerAuthFilter(IsHost = true, IsBettingLimit = true)]
         public async Task<ActionResult> EditMultipleSuperBetSetting(UpdateMultipleCustomerCommand request)
         {
-            if (Role.IsNotSuper(request.RoleId))
+            if (Role.IsNotSuper(request.RoleId)
+                || !authorizationService.IsBelong(CurrentSession.CurrencyGroup, request.CustomerIds.Split(',').Select(Int32.Parse).ToList()))
             {
                 return PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
             }
 
             var response = await customerServiceClient.UpdateMultipleCustomers(
-                new CustomerClient.Params.UpdateMultipleCustomerParam(
-                    request.ProductGroups,
-                    CurrentSession.UserId,
-                    0,
-                    request.CustId,
-                    "",
-                    request.RoleId,
-                    request.UplineRoleId,
-                    CurrentContext.Ip4Address,
-                    request.CustomerIds,
-                    request.CustomerNames,
-                    "en-US"));
+            new CustomerClient.Params.UpdateMultipleCustomerParam(
+                request.ProductGroups,
+                CurrentSession.UserId,
+                0,
+                request.CustId,
+                "",
+                request.RoleId,
+                request.UplineRoleId,
+                CurrentContext.Ip4Address,
+                request.CustomerIds,
+                request.CustomerNames,
+                request.Site,
+                request.SiteLabel));
 
             return Content(response);
         }
@@ -221,7 +226,14 @@
             generalInfo.Password = Encryption.CfsEnCode(rawPassword);
 
             var response = await customerServiceClient.CreateCustomer(new CustomerClient.Params.CreateCustomerParam(
-                generalInfo, request.ProductGroups, CurrentSession.UserId, 0, CurrentContext.Ip4Address, CustomerClient.Constants.CreationModes.FullMode));
+                generalInfo,
+                request.ProductGroups,
+                CurrentSession.UserId,
+                0,
+                CurrentContext.Ip4Address,
+                generalInfo.Site,
+                generalInfo.SiteLabel,
+                CustomerClient.Constants.CreationModes.FullMode));
             return Content(response);
         }
 
@@ -240,7 +252,9 @@
                     "",
                     request.RoleId,
                     request.UplineRoleId,
-                    CurrentContext.Ip4Address));
+                    CurrentContext.Ip4Address,
+                    request.Site,
+                    request.SiteLabel));
 
             return Content(response);
         }
@@ -262,7 +276,8 @@
                     CurrentContext.Ip4Address,
                     request.CustomerIds,
                     request.CustomerNames,
-                    "en-US"));
+                    request.Site,
+                    request.SiteLabel));
 
             return Content(response);
         }
