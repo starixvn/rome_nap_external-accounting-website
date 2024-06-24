@@ -283,6 +283,7 @@ Fanex.ExtAcc.Permission = {
                     Name: "colActive",
                     Width: 50,
                     CellAlign: "center",
+                    TdClass: "bg-grey",
                     CustomCellRender: function (enabled) {
                         return '<div class="' + (enabled.Value ? "permActive" : "permInactive") + '" style="cursor:default"></div>';
                     }

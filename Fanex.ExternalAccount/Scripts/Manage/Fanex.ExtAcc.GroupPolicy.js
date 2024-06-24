@@ -2,7 +2,7 @@
 if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
     alert("Fanex.ExtAcc.js module is required!")
 }
-
+// value: 0 - no access, 1 - read access, 2 - write access
 Fanex.ExtAcc.GroupPolicy = {
     OldGroupPolicy: null,
 
@@ -185,8 +185,32 @@ Fanex.ExtAcc.GroupPolicy = {
                 $('#' + parentId.replace('w-', 'r-')).attr('val', '2');
             }
         }
+        
+        var divs = document.getElementById('tblInner').getElementsByTagName("div");
+        const allChildrenReadonly  = this.CheckAllChildrenReadonly(divs, parentId);
+        
+        if(allChildrenReadonly) {
+            //Uncheck parent node of write permission
+            this.CheckPermission(false, $('#' + parentId.replace('r-', 'w-')));
+        }
     },
 
+    CheckAllChildrenReadonly: function(elements, parentId){
+        const modifiedParentId = parentId.replace('r-', 'w-');
+
+        for (const element of elements) {
+            const idProp = element.id;
+            const parentProp = element.getAttribute('parent');
+           
+            if(idProp !== modifiedParentId && parentProp === modifiedParentId) {
+                if(element.classList.contains('permActive')) {
+                    return false; // Found a child has write permission
+                }
+            }
+        }
+        return true; 
+    },
+    
     GetGroupPolicy: function () {
         var divs = document.getElementById('tblInner').getElementsByTagName("div");
         var groupPolicy = '';
