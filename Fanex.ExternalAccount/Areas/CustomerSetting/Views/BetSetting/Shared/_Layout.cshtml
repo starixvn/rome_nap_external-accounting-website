@@ -42,13 +42,7 @@
                     <a href="#content-@(tab.Id)">@(tab.Name)</a>
                 </li>
             }
-            @foreach (var tab in visibleTabs)
-            {
-                <li id="tab@(tab.Id)"
-                    onclick="LoadProduct(@(tab.Id))">
-                    <a href="#tabs-@(tab.Id)">@(tab.Name)</a>
-                </li>
-            }
+            <li id="tab6" onclick="LoadProductGroup(4)"><a href="#tabs-6">Bitcoin</a></li>
         </ul>
         <div id="tabs-1">
             <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; line-height:22px; background-color: #e7f7ff; margin-left: 2px; width: 1215px;">

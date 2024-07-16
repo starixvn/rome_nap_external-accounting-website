@@ -89,7 +89,15 @@
     };
 
     $scope.Bitcoin = function () {
-        $scope.RenderDCS(69);
+        parent.Fanex.ExtAcc.Customer.CurrentLevel = $scope.model.personalInfo.roleId.value;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.superId = parent.Fanex.ExtAcc.Customer.masterId = parent.Fanex.ExtAcc.Customer.agentId = $scope.model.personalInfo.roleId.value === 4 ? userId : $scope.model.personalInfo.uplineId.value;
+
+        parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
+        parent.Fanex.ExtAcc.Customer.isSuperEditAgent = false;
+        $scope.ResetGlobalValue();
+
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer' + "?roleId=" + $scope.model.personalInfo.roleId.value + "&uplineRoleId=" + ($scope.model.personalInfo.roleId.value + 1) + "&custId=" + $scope.model.personalInfo.custId.value + "&productGroupId=4" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
         $scope.collapseSidebar();
     };
 

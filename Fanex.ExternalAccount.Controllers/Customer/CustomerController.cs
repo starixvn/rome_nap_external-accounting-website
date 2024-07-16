@@ -138,7 +138,24 @@
         [ExternalCustomerAuthFilter(IsBettingLimit = true, IsHost = true)]
         public async Task<ActionResult> EditSuperBetSetting(UpdateCustomerRequest request)
         {
-            var response = await customerServiceClient.UpdateCustomer(
+            if (request.ProductGroups.Contains("[{\"id\":4,"))
+            {
+                return Content(await customerServiceClient.UpdateBitcoinCustomer(
+                    new CustomerClient.Params.UpdateCustomerParam(
+                        null,
+                        request.ProductGroups,
+                        CurrentSession.UserId,
+                        0,
+                        request.CustId,
+                        "",
+                        request.RoleId,
+                        request.UplineRoleId,
+                    CurrentContext.Ip4Address,
+                        request.Site,
+                    request.SiteLabel));
+            }
+
+            return Content(await customerServiceClient.UpdateCustomer(
                 new CustomerClient.Params.UpdateCustomerParam(
                     null,
                     request.ProductGroups,
@@ -148,11 +165,9 @@
                     "",
                     request.RoleId,
                     request.UplineRoleId,
-                    CurrentContext.Ip4Address,
                     request.Site,
-                    request.SiteLabel));
-
-            return Content(response);
+                    request.SiteLabel,
+                    CurrentContext.Ip4Address)));
         }
 
         [ExternalCustomerAuthFilter(IsBettingLimit = true)]
@@ -242,7 +257,24 @@
         [AntiXSRFFilter]
         public async Task<ActionResult> Update(UpdateCustomerRequest request)
         {
-            var response = await customerServiceClient.UpdateCustomer(
+            if (request.ProductGroups.Contains("[{\"id\":4,"))
+            {
+                return Content(await customerServiceClient.UpdateBitcoinCustomer(
+                    new CustomerClient.Params.UpdateCustomerParam(
+                        request.GeneralInfo,
+                        request.ProductGroups,
+                        CurrentSession.UserId,
+                        0,
+                        request.CustId,
+                        "",
+                        request.RoleId,
+                        request.UplineRoleId,
+                        CurrentContext.Ip4Address,
+                        request.Site,
+                        request.SiteLabel)));
+            }
+
+            return Content(await customerServiceClient.UpdateCustomer(
                 new CustomerClient.Params.UpdateCustomerParam(
                     request.GeneralInfo,
                     request.ProductGroups,
@@ -254,9 +286,7 @@
                     request.UplineRoleId,
                     CurrentContext.Ip4Address,
                     request.Site,
-                    request.SiteLabel));
-
-            return Content(response);
+                    request.SiteLabel)));
         }
 
         [HttpPost]
@@ -264,7 +294,9 @@
         [ExternalCustomerAuthFilter(IsHost = true)]
         public async Task<ActionResult> UpdateMultipleCustomers(UpdateMultipleCustomerCommand request)
         {
-            var response = await customerServiceClient.UpdateMultipleCustomers(
+            if (request.ProductGroups.Contains("[{\"id\":4,"))
+            {
+                return Content(await customerServiceClient.UpdateBitcoinMultipleCustomers(
                 new CustomerClient.Params.UpdateMultipleCustomerParam(
                     request.ProductGroups,
                     CurrentSession.UserId,
@@ -277,9 +309,23 @@
                     request.CustomerIds,
                     request.CustomerNames,
                     request.Site,
-                    request.SiteLabel));
+                    request.SiteLabel)));
+            }
 
-            return Content(response);
+            return Content(await customerServiceClient.UpdateMultipleCustomers(
+                new CustomerClient.Params.UpdateMultipleCustomerParam(
+                    request.ProductGroups,
+                    CurrentSession.UserId,
+                    0,
+                    request.CustId,
+                    "",
+                    request.RoleId,
+                    request.UplineRoleId,
+                    CurrentContext.Ip4Address,
+                    request.CustomerIds,
+                    request.CustomerNames,
+                    request.Site,
+                    request.SiteLabel)));
         }
 
         [ExternalCustomerAuthFilter]
@@ -317,6 +363,11 @@
             if (!authorizationService.HasReadPermissionOnFunctions(new List<string> { eFunctions.Sportsbook, eFunctions.SportsbookBetting, eFunctions.LiveAndRNGCasino, eFunctions.LiveAndRNGCasinoBetting }, CurrentSession.UserId))
             {
                 return Redirect(CustomerClientManager.ClientConfigs.AccessDeniedUrl);
+            }
+
+            if (request.ProductGroupId == ProductGroupConstants.OtherGames)
+            {
+                return Content(await customerServiceClient.GetBitcoinCustomerSetting(request.CustId, request.RoleId, request.SystemId, request.UplineRoleId, request.Language, request.SiteLabel));
             }
 
             return Content(await customerServiceClient.GetCustomerSetting(request.CustId, request.RoleId, request.SystemId, request.UplineRoleId, request.Language, request.IsGetUpLine, request.ProductGroupId, request.SiteLabel));
