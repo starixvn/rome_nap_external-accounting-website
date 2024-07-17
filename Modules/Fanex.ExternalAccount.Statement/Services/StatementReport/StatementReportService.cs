@@ -34,7 +34,7 @@
             {
                 StatementList = new List<StatementModel>()
             };
-
+         
             try
             {
                 List<StatementReportCriteria> dateRangeList = GetReportDateRange(criteria);

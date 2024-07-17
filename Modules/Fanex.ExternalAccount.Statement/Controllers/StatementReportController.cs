@@ -112,5 +112,6 @@
         {
             return Json(_statementReportService.CheckInternalByUsername(criteria));
         }
+       
     }
 }
