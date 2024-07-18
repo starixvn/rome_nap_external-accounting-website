@@ -1,6 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.DataRange
 {
     using System;
+    using System.Configuration;
+    using Fanex.ExternalAccount.Utilities;
     using NAP.Framework.Data;
 
     public class UpdateDataRangeCriteria : CriteriaBase
@@ -16,6 +18,9 @@
         public int Choice { get; set; }
 
         public int UserId { get; set; }
+
+        public byte SystemId
+            => (byte)Utils.ToInt32(ConfigurationManager.AppSettings["SystemId"]);
 
         public int ErrCode { get; set; }
 
