@@ -519,7 +519,9 @@
       <DependentUpon>create.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\headlinelist\index.js" />
-    <Content Include="assets\bundles\headlinelist\index.min.js" />
+    <Content Include="assets\bundles\headlinelist\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\headlinelist\index.min.js.map" />
     <Content Include="assets\bundles\customer\superinfo.css" />
     <Content Include="assets\bundles\customer\superinfo.js" />
@@ -1462,6 +1464,7 @@
     <Content Include="Scripts\TotalBet\Fanex.ExtAcc.TotalBetMC.js" />
     <Content Include="SpNames.CustDB.DR.xml">
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Customer\MultipleOpenCustomer.cshtml" />
     <Content Include="Views\Customer\SingleOpenCustomer.cshtml" />

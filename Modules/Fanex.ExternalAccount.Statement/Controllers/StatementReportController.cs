@@ -1,8 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Statement.Controllers
 {
-    using CustomerSetting.Module.Core.Criteria;
-    using CustomerSetting.Module.Core.Services.Impl;
-    using CustomerSetting.Module.Core.Web;
     using Fanex.CustomerSetting.Module.Core.Web.Controllers;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Statement.Constants;
