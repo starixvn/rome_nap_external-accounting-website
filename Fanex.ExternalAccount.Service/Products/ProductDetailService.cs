@@ -139,6 +139,11 @@
                 canView[ProductConstants.FastSpin] = true;
             }
 
+            if (Config.IsOfferVGamingProductDetailsGroup(groupName))
+            {
+                canView[ProductConstants.VGaming] = true;
+            }
+
             canView[ProductConstants.Sportsbook] = true;
 
             return canView;
@@ -213,7 +218,8 @@
                     (group.Key == ProductConstants.SpadeGaming && Config.IsOfferSpadeGamingProductDetailsGroup(groupName)) ||
                     (group.Key == ProductConstants.AllBet && Config.IsOfferAllbetProductDetailsGroup(groupName)) ||
                     (group.Key == ProductConstants.Live22 && Config.IsOfferLive22ProductDetailsGroup(groupName)) ||
-                    (group.Key == ProductConstants.FastSpin && Config.IsOfferFastSpinProductDetailsGroup(groupName)))
+                    (group.Key == ProductConstants.FastSpin && Config.IsOfferFastSpinProductDetailsGroup(groupName)) ||
+                    (group.Key == ProductConstants.VGaming && Config.IsOfferVGamingProductDetailsGroup(groupName)))
                     {
                         var intersectResourceIds = group.Select(p => p.ResourceId).Intersect(resourceIds);
 
