@@ -1360,10 +1360,6 @@
     <Content Include="bundles\images\dec4_disable.gif" />
     <Content Include="bundles\images\error.gif" />
     <Content Include="bundles\images\sucess.gif" />
-    <Content Include="Configurations\appSettings.aws.config">
-      <DependentUpon>appSettings.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Configurations\appSettings.production.config">
       <SubType>Designer</SubType>
       <DependentUpon>appSettings.config</DependentUpon>
