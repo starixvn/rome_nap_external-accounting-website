@@ -226,13 +226,12 @@
     <Setting Key="RemoveCustomerOTP" SpName="Age_OTP_CustomerOTPDel" DbName="DBCust.CustDB.wsv_xnap" />
   </Function>
   <Function Name="SpecialSite">  
-    <Setting Key="Acc_Con_CheckPermission_All" SpName="Acc_Con_CheckPermission_All" DbName="DBPOL.NAP_UserControl.wsv_xnap" />
-    <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_CustomerIsInternalAdmin" SpName="Acc_CustomerIsInternalAdmin" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_CustSetting_DisableGameStatusSelect" SpName="Acc_CustSetting_DisableGameStatusSelect" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBCust.CustDB.wsv_xnap" />
+    <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.CustDB.wsv_xnap" />
   </Function>
   <Function Name="API Logger">
     <Setting Key="WriteLog_UserLog_ExternalAPI_Ins" SpName="WriteLog_UserLog_ExternalAPI_Ins" DbName="dblog" IgnoreImport="true" Plain="0" />
