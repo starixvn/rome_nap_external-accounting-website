@@ -1,11 +1,13 @@
-﻿namespace Fanex.ExternalAccount.Service.Impl.UserControl
+﻿using System;
+
+namespace Fanex.ExternalAccount.Service.Impl.UserControl
 {
-    using System.Collections.Generic;
     using DataAccess.Impl.UserControl;
     using DataAccess.Interface.UserControl;
     using DTO;
     using DTO.UserControl;
     using Interface.UserControl;
+    using System.Collections.Generic;
 
     public class UserService : IUserService
     {
@@ -22,7 +24,47 @@
 
         public Result CreateUser(int adminId, string userName, string password, string firstName, string lastName,
             int groupId, string ip)
-            => _userDao.CreateUser(adminId, userName, password, firstName, lastName, groupId, ip);
+        {
+            int custId;
+            DateTime startTime = DateTime.Now;
+            var result = _userDao.Acc_CustomerIns_Register(userName, out custId);
+            if (result.IsSuccess)
+            {
+                string logData = String.Empty;
+                result = _userDao.CreateUser(adminId, userName, custId, password, firstName, lastName, groupId, ip, out logData);
+                if (result.IsSuccess)
+                {
+                    try
+                    {
+                        if (!_userDao.EAS_eaUserInfo_Ins(custId, groupId, adminId).IsSuccess)
+                        {
+                            RollBackAction(custId);
+                        }
+                        else
+                        {
+                            _userDao.EAS_WriteLog_UserLog_UserControl_Wrapper(custId, logData, adminId, (int)DateTime.Now.Subtract(startTime).TotalMilliseconds);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        RollBackAction(custId);
+                        throw;
+                    }
+                }
+                else
+                {
+                    _userDao.Acc_CustomerIns_Rollback(custId);
+                }
+            }
+
+            return result;
+        }
+
+        private void RollBackAction(int custId)
+        {
+            _userDao.Acc_CustomerInsUserInfo_Rollback(custId);
+            _userDao.Acc_CustomerIns_Rollback(custId);
+        }
 
         public Result EditUser(int adminId, int userId, string firstName, string lastName, string ip, int groupId)
             => _userDao.EditUser(adminId, userId, firstName, lastName, ip, groupId);

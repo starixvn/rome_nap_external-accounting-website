@@ -86,7 +86,7 @@
     <Setting Key="EAS_UserInfoUpdUserGroup" SpName="EAS_UserInfoUpdUserGroup" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserPolicySel" SpName="EAS_UserPolicySel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserPolicyUpd" SpName="EAS_UserPolicyUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserInfoAddNew" SpName="EAS_UserInfoAddNew" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_UserInfoAddNew" SpName="EAS_UserInfoAddNew_uat2" DbName="DBCust3.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserInfoUpdAll" SpName="EAS_UserInfoUpdAll" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserInfoUpdUserPwd" SpName="EAS_UserInfoUpdUserPwd" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_GetCustArchiveStatus" SpName="Acc_GetCustArchiveStatus" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
@@ -361,5 +361,12 @@
   </Function>
   <Function Name="Customer Setting">
     <Setting Key="Acc_LiteMode_CustSetting_ProductProfileSelect" SpName="Acc_LiteMode_CustSetting_ProductProfileSelect" DbName="DBCUST.CustDB.wsv_xnap" />
+  </Function>
+  <Function Name="Manage Admin">
+    <Setting Key="Acc_CustomerIns_Register" SpName="Acc_CustomerIns_Register_uat2" DbName="DBCust.DBGLOB.wsv_xnap" Plain="0" />
+    <Setting Key="Acc_CustomerIns_Rollback" SpName="Acc_CustomerIns_Rollback_uat2" DbName="DBCust.DBGLOB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_eaUserInfo_Ins" SpName="EAS_eaUserInfo_Ins_uat2" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
+    <Setting Key="Acc_CustomerInsUserInfo_Rollback" SpName="Acc_CustomerInsUserInfo_Rollback" DbName="DBCust3.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_WriteLog_UserLog_UserControl_Wrapper" SpName="EAS_WriteLog_UserLog_UserControl_Wrapper" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />    
   </Function>
 </Functions>
