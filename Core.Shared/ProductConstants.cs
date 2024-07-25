@@ -33,6 +33,7 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int FGG = 70;
         public const int MGRNGCasino = 73;
         public const int Live22 = 79;
+        public const int FastSpin = 87;
 
         public const int DummyRNGProductId = 53;
 
@@ -49,7 +50,8 @@ namespace Fanex.ExternalAccount.Core.Shared
             AllBet,
             Sportsbook,
             MGRNGCasino,
-            Live22
+            Live22,
+            FastSpin
         };
     }
 }
