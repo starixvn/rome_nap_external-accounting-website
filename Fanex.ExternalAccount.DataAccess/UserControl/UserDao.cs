@@ -277,14 +277,15 @@
             }
         }
 
-        public void EAS_WriteLog_UserLog_UserControl_Wrapper(int custId, string trackingValue, int userId, int duration)
+        public void EAS_WriteLog_UserLog_UserControl_Wrapper(int custId, string trackingValue, int userId, int duration, int actionId)
         {
             using (var db = new ObjectDb("EAS_WriteLog_UserLog_UserControl_Wrapper"))
             {
                 db.AddInParameter("CustId", DbType.Int32, custId);
+                db.AddInParameter("UserId", DbType.Int32, userId);
                 db.AddInParameter("TrackingValue", DbType.String, trackingValue);
                 db.AddInParameter("TypeID", DbType.Int32, 1);
-                db.AddInParameter("ActionID", DbType.Int32, 20004);
+                db.AddInParameter("ActionID", DbType.Int32, actionId);
                 db.AddInParameter("Duration", DbType.Int32, duration);
                 db.ExecuteNonQuery();
             }

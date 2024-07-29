@@ -32,6 +32,6 @@
 
         void Acc_CustomerIns_Rollback(int custId);
 
-        void EAS_WriteLog_UserLog_UserControl_Wrapper(int custId, string trackingValue, int userId, int duration);
+        void EAS_WriteLog_UserLog_UserControl_Wrapper(int custId, string trackingValue, int userId, int duration, int actionId);
     }
 }

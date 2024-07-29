@@ -42,7 +42,7 @@ namespace Fanex.ExternalAccount.Service.Impl.UserControl
                         }
                         else
                         {
-                            _userDao.EAS_WriteLog_UserLog_UserControl_Wrapper(custId, logData, adminId, (int)DateTime.Now.Subtract(startTime).TotalMilliseconds);
+                            _userDao.EAS_WriteLog_UserLog_UserControl_Wrapper(custId, logData, adminId, (int)DateTime.Now.Subtract(startTime).TotalMilliseconds, 20004);
                         }
                     }
                     catch (Exception e)
