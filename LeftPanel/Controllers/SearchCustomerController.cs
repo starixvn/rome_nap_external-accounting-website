@@ -58,13 +58,6 @@
                 return View(LeftPanelIndexView);
             }
 
-            var checkingResult = CheckCustomerBelongToSpecialSite(custName);
-            if (!IsAdminHasPermissionOnCustomer(checkingResult.IsSpecialSite
-                                                || checkingResult.IsSpecialHeadline))
-            {
-                return Redirect("~/Shared/NoPermission");
-            }
-
             var customerInfo = customerQueryService.SearchCustomer(
                 userId,
                 custName,

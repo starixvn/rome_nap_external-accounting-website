@@ -96,41 +96,12 @@
             };
         }
 
-        protected bool IsAdminHasPermissionOnCustomer(bool isSpecialSiteCustomer)
-        {
-            var permisisonService = new ServiceBase();
-
-            if (!isSpecialSiteCustomer)
-            {
-                return true;
-            }
-
-            var isInternalAdminResult =
-                permisisonService.CheckCustomerIsInternalAdmin(
-                    new CheckCustomerIsInternalAdminCriteria { CustID = CurrentSession.CustId });
-
-            if (!isInternalAdminResult.IsInternalAdmin)
-            {
-                return true;
-            }
-
-            if (!isInternalAdminResult.IsAllowAccess)
-            {
-                return false;
-            }
-
-            return permisisonService.CheckCustomerHasSpecialSitePermission(
-                new CheckCustomerHasSpecialSiteFunctionPermissionCriteria { CustID = CurrentSession.CustId });
-        }
-
         protected CheckCustomerBelongToSpecialSiteResult CheckCustomerBelongToSpecialSite(string username)
         {
             var permissionService = new ServiceBase();
             return permissionService.CheckCustomerBelongToSpecialSite(
                 new CheckCustomerIsSpecialSiteCriteria { UserName = username });
         }
-
-        protected int GetDefaultMinBetValue()
-            => CurrentSession.IsBelongToSpecialGroups ? 1 : 0;
+       
     }
 }

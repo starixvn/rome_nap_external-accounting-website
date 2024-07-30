@@ -269,24 +269,24 @@
             return JsonBase(result);
         }
 
+        [ExternalAccountAuthenticate(Function = eFunctions.InternalLogin,
+            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
         public ActionResult InternalLogin(string username, string groupName)
         {
             var url = Url.Content("~") + "Shared/NoPermission";
             var checkCustomerBelongToSpecialSiteResult = CheckCustomerBelongToSpecialSite(username);
-            if (IsAdminHasPermissionOnCustomer(checkCustomerBelongToSpecialSiteResult.IsSpecialSite))
+          
+            var isBelonging = _authorization.IsBelong(ExtRequest.GetGroupName(groupName), 0, username);
+            if (isBelonging)
             {
-                var isBelonging = _authorization.IsBelong(ExtRequest.GetGroupName(groupName), 0, username);
-                if (isBelonging)
-                {
-                    var encryption = new EncryptionThread();
-                    var param = string.Join("&", username, CurrentSession.UserId, loginService.GetDbTime().Ticks,
-                        "NAPEXT");
-                    param = encryption.EncryptString(param, DwKeySize, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
+                var encryption = new EncryptionThread();
+                var param = string.Join("&", username, CurrentSession.UserId, loginService.GetDbTime().Ticks,
+                    "NAPEXT");
+                param = encryption.EncryptString(param, DwKeySize, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
 
-                    url =
-                        $"{GetInternalLoginUrl(checkCustomerBelongToSpecialSiteResult.Site)}" +
-                        $"?{(Session[Config.InternalAgentUMToken] == null ? string.Empty : $"UMToken={Session[Config.InternalAgentUMToken]}&")}params={param}";
-                }
+                url =
+                    $"{GetInternalLoginUrl(checkCustomerBelongToSpecialSiteResult.Site)}" +
+                    $"?{(Session[Config.InternalAgentUMToken] == null ? string.Empty : $"UMToken={Session[Config.InternalAgentUMToken]}&")}params={param}";
             }
 
             return Redirect(url);

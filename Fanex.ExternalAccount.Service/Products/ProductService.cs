@@ -6,12 +6,8 @@ namespace Fanex.ExternalAccount.Service.Products
     using System.Collections.Generic;
     using System.Linq;
     using DTO.Products;
-    using Fanex.CustomerSetting.Module.Core.Criteria;
-    using Fanex.CustomerSetting.Module.Core.Services.Impl;
-    using Fanex.CustomerSetting.Module.Core.Services.Interface;
     using Fanex.Data;
     using Fanex.ExternalAccount.DataAccess.Products;
-    using Fanex.ExternalAccount.Utilities;
     using Fanex.NAP.Framework.Data;
 
     public interface IProductService
@@ -21,21 +17,18 @@ namespace Fanex.ExternalAccount.Service.Products
         IEnumerable<ProductDto> GetProducts(int userId,string groupName, int groupId);
 
         IEnumerable<int> ValidateProductIds(int userId,string groupName, int groupId, IEnumerable<int> productIds);
-
-        bool AdminDoesNotHavePermissionOnSpecialProduct(int userId);
     }
 
     public class ProductService : IProductService
     {
         private readonly IDynamicRepository dynamicRepository;
-        private readonly IServiceBase permissionService;
+    
 
         public ProductService(
-            IDynamicRepository dynamicRepository = null,
-            IServiceBase permissionService = null)
+            IDynamicRepository dynamicRepository = null)
         {
             this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
-            this.permissionService = permissionService ?? new ServiceBase();
+          
         }
 
         public IEnumerable<ProductDto> GetAllProducts()
@@ -48,31 +41,13 @@ namespace Fanex.ExternalAccount.Service.Products
         public IEnumerable<ProductDto> GetProducts(int userId,string groupName, int groupId)
         {
             var products = GetRawProducts(groupName, groupId);
-            var filteredProducts = FilterProducts(userId, products);
-
-            return GroupProducts(filteredProducts);
         }
 
         private IEnumerable<ProductEntity> GetRawProducts(string groupName, int? groupId)
         {
             return dynamicRepository.Fetch<ProductEntity>(new GetProductsCriteria(groupName, (groupId== null) ? null : GetShowProducts(groupId)));
         }
-
-        private IEnumerable<ProductEntity> FilterProducts(int userId, IEnumerable<ProductEntity> products)
-        {
-            var specialProductIds = Config.SpecialProductIds();
-            var adminDoesNotHavePermissionOnSpecialProduct = AdminDoesNotHavePermissionOnSpecialProduct(userId);
-
-            foreach (var product in products)
-            {
-                if (specialProductIds.ContainsKey(product.ProductId) && adminDoesNotHavePermissionOnSpecialProduct)
-                {
-                    continue;
-                }
-
-                yield return product;
-            }
-        }
+     
 
         private string GetShowProducts(int? GroupId = null)
         {
@@ -106,21 +81,7 @@ namespace Fanex.ExternalAccount.Service.Products
             return productList;
         }
 
-        public bool AdminDoesNotHavePermissionOnSpecialProduct(int userId)
-        {
-            var checkIsInternalAdminResult =
-                permissionService.CheckCustomerIsInternalAdmin(
-                    new CheckCustomerIsInternalAdminCriteria { CustID = userId });
-
-            var isAuthorized = permissionService.CheckCustomerHasSpecialSitePermission(
-                new CheckCustomerHasSpecialSiteFunctionPermissionCriteria { CustID = userId });
-
-            return checkIsInternalAdminResult.IsInternalAdmin
-               && (!checkIsInternalAdminResult.IsAllowAccess || !isAuthorized);
-        }
-
         public IEnumerable<int> ValidateProductIds(int userId,string groupName, int groupId, IEnumerable<int> productIds)
-        {
             if (!productIds.Any())
             {
                 return Enumerable.Empty<int>();
@@ -129,7 +90,7 @@ namespace Fanex.ExternalAccount.Service.Products
             var productIdsHash = ToDictionary(productIds);
             var products = GetRawProducts(groupName, groupId);
 
-            return FilterProducts(userId, products)
+            return products
                 .Where(p => productIdsHash.ContainsKey(p.ProductId))
                 .Select(p => p.ProductId);
         }
