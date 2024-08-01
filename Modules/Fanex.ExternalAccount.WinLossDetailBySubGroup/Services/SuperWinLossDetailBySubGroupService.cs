@@ -1,4 +1,6 @@
-﻿namespace Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Services
+﻿using Fanex.ExternalAccount.DataAccess.Products;
+
+namespace Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Services
 {
     using System.Linq;
     using Fanex.ExternalAccount.Service.Impl.Report;
@@ -45,12 +47,13 @@
             var validProductIds = productService.ValidateProductIds(request.UserId, request.GroupId, Utils.ToEnumerableInt(request.ProductIds));
             validProductIds = productDetailService.RemoveProductIds(validProductIds, request.ProductDetails, request.GroupName);
             var productDetailsXML = productDetailService.BuildProductDetailsXML(validProductIds, request.ProductDetails, request.GroupName);
-
+          
             var criteria = new GetSuperWinLossDetailBySubGroupCriteria(
                 Utils.JoinToString(validProductIds),
                 productDetailsXML,
                 request.GroupName,
                 request.SubGroup,
+                dataAccess.GetSubGroupList(request.GroupId, request.GroupName),
                 request.FromDate,
                 request.ToDate,
                 ReportService.BalanceUpDate,

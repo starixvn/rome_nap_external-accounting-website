@@ -229,6 +229,7 @@
     <Compile Include="Login\ILoginDao.cs" />
     <Compile Include="Login\LoginDao.cs" />
     <Compile Include="OTP\CustomerOtpDataAccess.cs" />
+    <Compile Include="Products\GetShowProductsCriteria.cs" />
     <Compile Include="Products\GetProductsCriteria.cs" />
     <Compile Include="Products\GetProductsDetailCriteria.cs" />
     <Compile Include="IPInformatonRepository.cs" />

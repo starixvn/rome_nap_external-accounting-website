@@ -1,11 +1,15 @@
-﻿namespace Fanex.ExternalAccount.Service.Products
+﻿using Fanex.ExternalAccount.DataAccess.Impl.UserControl;
+
+namespace Fanex.ExternalAccount.Service.Products
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using DTO.Products;
     using Fanex.CustomerSetting.Module.Core.Criteria;
     using Fanex.CustomerSetting.Module.Core.Services.Impl;
     using Fanex.CustomerSetting.Module.Core.Services.Interface;
+    using Fanex.Data;
     using Fanex.ExternalAccount.DataAccess.Products;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.NAP.Framework.Data;
@@ -50,7 +54,9 @@
         }
 
         private IEnumerable<ProductEntity> GetRawProducts(int? groupId = null)
-            => dynamicRepository.Fetch<ProductEntity>(new GetProductsCriteria(groupId));
+        {
+            return dynamicRepository.Fetch<ProductEntity>(new GetProductsCriteria(groupId, GetShowProducts(groupId)));
+        }
 
         private IEnumerable<ProductEntity> FilterProducts(int userId, IEnumerable<ProductEntity> products)
         {
@@ -65,6 +71,17 @@
                 }
 
                 yield return product;
+            }
+        }
+
+        private string GetShowProducts(int? GroupId = null)
+        {
+            var criteria = new GetShowProductsCriteria(GroupId);
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var ouputParams = db.GetOuputParams();
+                return ouputParams["products"].ToString();
             }
         }
 
