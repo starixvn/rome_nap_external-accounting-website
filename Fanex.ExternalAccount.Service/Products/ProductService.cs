@@ -55,7 +55,7 @@ namespace Fanex.ExternalAccount.Service.Products
 
         private IEnumerable<ProductEntity> GetRawProducts(int? groupId = null)
         {
-            return dynamicRepository.Fetch<ProductEntity>(new GetProductsCriteria(groupId, GetShowProducts(groupId)));
+            return dynamicRepository.Fetch<ProductEntity>(new GetProductsCriteria(groupId, (groupId== null) ? null : GetShowProducts(groupId)));
         }
 
         private IEnumerable<ProductEntity> FilterProducts(int userId, IEnumerable<ProductEntity> products)
