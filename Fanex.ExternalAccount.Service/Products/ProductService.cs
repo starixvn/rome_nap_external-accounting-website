@@ -81,7 +81,7 @@ namespace Fanex.ExternalAccount.Service.Products
             {
                 db.ExecuteNonQuery(criteria.GetSpParams());
                 var ouputParams = db.GetOuputParams();
-                return ouputParams["products"].ToString();
+                return ouputParams["products"] == null ? string.Empty : ouputParams["products"].ToString();
             }
         }
 
