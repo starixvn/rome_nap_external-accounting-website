@@ -40,7 +40,7 @@
 
         public ActionResult ProductsList()
         {
-            var products = productService.GetProducts(CurrentSession.CustId, ExtRequest.GetGroupId());
+            var products = productService.GetProducts(CurrentSession.CustId, ExtRequest.GetGroupName(), ExtRequest.GetGroupId());
             var productDetails = productDetailService.GetProductDetails(products, currentSession.ParentGroupName);
 
             return JsonBase(new { products, productDetails }, new JsonSerializerSettings());

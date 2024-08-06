@@ -18,9 +18,9 @@ namespace Fanex.ExternalAccount.Service.Products
     {
         IEnumerable<ProductDto> GetAllProducts();
 
-        IEnumerable<ProductDto> GetProducts(int userId, int groupId);
+        IEnumerable<ProductDto> GetProducts(int userId,string groupName, int groupId);
 
-        IEnumerable<int> ValidateProductIds(int userId, int groupId, IEnumerable<int> productIds);
+        IEnumerable<int> ValidateProductIds(int userId,string groupName, int groupId, IEnumerable<int> productIds);
 
         bool AdminDoesNotHavePermissionOnSpecialProduct(int userId);
     }
@@ -40,22 +40,22 @@ namespace Fanex.ExternalAccount.Service.Products
 
         public IEnumerable<ProductDto> GetAllProducts()
         {
-            var products = GetRawProducts();
+            var products = GetRawProducts(string.Empty, null);
 
             return GroupProducts(products);
         }
 
-        public IEnumerable<ProductDto> GetProducts(int userId, int groupId)
+        public IEnumerable<ProductDto> GetProducts(int userId,string groupName, int groupId)
         {
-            var products = GetRawProducts(groupId);
+            var products = GetRawProducts(groupName, groupId);
             var filteredProducts = FilterProducts(userId, products);
 
             return GroupProducts(filteredProducts);
         }
 
-        private IEnumerable<ProductEntity> GetRawProducts(int? groupId = null)
+        private IEnumerable<ProductEntity> GetRawProducts(string groupName, int? groupId)
         {
-            return dynamicRepository.Fetch<ProductEntity>(new GetProductsCriteria(groupId, (groupId== null) ? null : GetShowProducts(groupId)));
+            return dynamicRepository.Fetch<ProductEntity>(new GetProductsCriteria(groupName, (groupId== null) ? null : GetShowProducts(groupId)));
         }
 
         private IEnumerable<ProductEntity> FilterProducts(int userId, IEnumerable<ProductEntity> products)
@@ -119,7 +119,7 @@ namespace Fanex.ExternalAccount.Service.Products
                && (!checkIsInternalAdminResult.IsAllowAccess || !isAuthorized);
         }
 
-        public IEnumerable<int> ValidateProductIds(int userId, int groupId, IEnumerable<int> productIds)
+        public IEnumerable<int> ValidateProductIds(int userId,string groupName, int groupId, IEnumerable<int> productIds)
         {
             if (!productIds.Any())
             {
@@ -127,7 +127,7 @@ namespace Fanex.ExternalAccount.Service.Products
             }
 
             var productIdsHash = ToDictionary(productIds);
-            var products = GetRawProducts(groupId);
+            var products = GetRawProducts(groupName, groupId);
 
             return FilterProducts(userId, products)
                 .Where(p => productIdsHash.ContainsKey(p.ProductId))

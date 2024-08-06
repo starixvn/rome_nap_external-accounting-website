@@ -136,10 +136,10 @@
         private bool CheckConstraintMoveBetsDay(DateTime fromDate)
             => DateTime.Compare(fromDate, MoveBetsDate) > 0;
 
-        public string BuildTooltipsForLiveCasino(int userId, int groupId)
+        public string BuildTooltipsForLiveCasino(int userId, string groupName, int groupId)
         {
             var products = _productService
-                .GetProducts(userId, groupId);
+                .GetProducts(userId, groupName, groupId);
             var offeredLiveCasino = products
                 .FirstOrDefault(p => p.ProductId == ProductConstants.DummyLiveCasinoProductId);
             var offeredLiveCasinoFGG = products
@@ -158,9 +158,9 @@
             return string.Empty;
         }
 
-        public string BuildTooltipsForRNGCasino(int userId, int groupId)
+        public string BuildTooltipsForRNGCasino(int userId, string groupName, int groupId)
         {
-            var products = _productService.GetProducts(userId, groupId);
+            var products = _productService.GetProducts(userId, groupName, groupId);
             var childProducts = products
                 .FirstOrDefault(p => p.ProductId == ProductConstants.DummyRNGProductId)
                 .Products.Select(p => p.ProductName);

@@ -44,7 +44,7 @@
                 throw new ArgumentNullException(nameof(param));
             }
 
-            var validProductIds = productService.ValidateProductIds(param.UserId, param.GroupId, Utils.ToEnumerableInt(param.UserSelectedProductIds));
+            var validProductIds = productService.ValidateProductIds(param.UserId, param.GroupName, param.GroupId, Utils.ToEnumerableInt(param.UserSelectedProductIds));
             validProductIds = productDetailService.RemoveProductIds(validProductIds, param.ResourceIds, param.GroupName);
             var productDetailsXML = productDetailService.BuildProductDetailsXML(validProductIds, param.ResourceIds, param.GroupName);
 
@@ -97,7 +97,7 @@
                 throw new ArgumentNullException(nameof(param));
             }
 
-            var validProductIds = productService.ValidateProductIds(param.UserId, param.GroupId, Utils.ToEnumerableInt(param.UserSelectedProductIds));
+            var validProductIds = productService.ValidateProductIds(param.UserId, param.GroupName, param.GroupId, Utils.ToEnumerableInt(param.UserSelectedProductIds));
             validProductIds = productDetailService.RemoveProductIds(validProductIds, param.ResourceIds, param.GroupName);
             var productDetailsXML = productDetailService.BuildProductDetailsXML(validProductIds, param.ResourceIds, param.GroupName);
 

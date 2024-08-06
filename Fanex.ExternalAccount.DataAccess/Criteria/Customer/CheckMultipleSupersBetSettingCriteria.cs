@@ -12,8 +12,6 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer
             IsCopy = isCopy;
         }
 
-        public int UserId { get; }
-
         public string SourceUser { get; }
 
         public string DestUsers { get; }

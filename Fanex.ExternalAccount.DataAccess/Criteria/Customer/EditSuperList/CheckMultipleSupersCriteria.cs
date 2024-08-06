@@ -10,8 +10,6 @@
             GroupName = groupName;
         }
 
-        public int UserId { get; }
-
         public string SourceUser { get; }
 
         public string DestUsers { get; }
