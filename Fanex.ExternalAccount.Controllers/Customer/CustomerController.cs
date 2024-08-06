@@ -148,9 +148,9 @@
                     "",
                     request.RoleId,
                     request.UplineRoleId,
+                    CurrentContext.Ip4Address,
                     request.Site,
-                    request.SiteLabel,
-                    CurrentContext.Ip4Address));
+                    request.SiteLabel));
 
             return Content(response);
         }
