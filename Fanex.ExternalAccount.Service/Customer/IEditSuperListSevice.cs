@@ -40,7 +40,7 @@ namespace Fanex.ExternalAccount.Service.Customer
         }
 
         public Result CheckMultipleSupers(string superNames, string groupName, int userId)
-            => dataAccess.CheckMultipleSupers(new CheckMultipleSupersCriteria(userId, superNames, groupName));
+            => dataAccess.CheckMultipleSupers(new CheckMultipleSupersCriteria(superNames, groupName));
 
         public IEnumerable<Result> UpdateMultipleSuperRequest(UpdateMultipleSuperRequest request, int userId, string ip)
         {

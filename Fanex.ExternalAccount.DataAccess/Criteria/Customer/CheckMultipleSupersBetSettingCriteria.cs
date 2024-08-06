@@ -4,9 +4,8 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer
 {
     public class CheckMultipleSupersBetSettingCriteria : CriteriaBase
     {
-        public CheckMultipleSupersBetSettingCriteria(int userId, string sourceUser, string destUsers, string groupName, bool isCopy)
+        public CheckMultipleSupersBetSettingCriteria(string sourceUser, string destUsers, string groupName, bool isCopy)
         {
-            UserId = userId;
             SourceUser = sourceUser;
             DestUsers = destUsers;
             GroupName = groupName;
