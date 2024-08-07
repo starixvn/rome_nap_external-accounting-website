@@ -53,7 +53,7 @@ namespace Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Services
                 productDetailsXML,
                 request.GroupName,
                 request.SubGroup,
-                dataAccess.GetSubGroupList(request.GroupId, request.GroupName),
+                dataAccess.GetSubGroupList(request.GroupId, request.SubGroup),
                 request.FromDate,
                 request.ToDate,
                 ReportService.BalanceUpDate,
