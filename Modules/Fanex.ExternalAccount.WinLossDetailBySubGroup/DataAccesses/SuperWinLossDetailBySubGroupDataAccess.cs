@@ -63,7 +63,7 @@ namespace Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.DataAccesses
             {
                 db.ExecuteNonQuery(criteria.GetSpParams());
                 var ouputParams = db.GetOuputParams();
-                return ouputParams["SubGroupList"] == null ? string.Empty : ouputParams["SubGroupList"].ToString();
+                return ouputParams["subgrouplist"] == null ? string.Empty : ouputParams["subgrouplist"].ToString();
             }
         }
 
