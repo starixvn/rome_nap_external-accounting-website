@@ -10,6 +10,7 @@
     using Fanex.ExternalAccount.SearchAndCopy.Models;
     using Fanex.ExternalAccount.SearchAndCopy.Repositories;
     using Fanex.ExternalAccount.SearchAndCopy.Resources;
+    using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Utilities;
     using IBCUtils;
     using System;
@@ -27,8 +28,8 @@
     public class SearchAndCopyService : ISearchAndCopyService
     {
         private readonly ISearchAndCopyRepository searchAndCopyRepository;
-        private readonly ICustomerRepository customerRepository;      
         private readonly IServiceBase serviceBase;
+        private readonly ISiteDBConfigService siteDBConfigService;
 
         public SearchAndCopyService()
             : this(null, null, null)
@@ -37,12 +38,12 @@
 
         public SearchAndCopyService(
             ISearchAndCopyRepository searchAndCopyRepository,
-            ICustomerRepository customerRepository,
+            ISiteDBConfigService siteDBConfigService,
             IServiceBase serviceBase)
         {
             this.searchAndCopyRepository = searchAndCopyRepository ?? new SearchAndCopyRepository();
-            this.customerRepository = customerRepository ?? new CustomerRepository();
             this.serviceBase = serviceBase ?? new ServiceBase();
+            this.siteDBConfigService = siteDBConfigService ?? new SiteDBConfigService();
         }
 
         public Result SearchCustomer(SearchCustomerContext context)
@@ -64,7 +65,7 @@
 
         public Result CloneSetting(CloneSettingContext context)
         {
-            return CloneCustomerAndSettings(context);           
+            return CloneCustomerAndSettings(context);
         }
 
         public dynamic GetSuperPrefixes(SuperPrefixCriteria criteria)
@@ -77,41 +78,24 @@
 
         private Result CloneCustomerAndSettings(CloneSettingContext context)
         {
-            var rawPassword = Encryptor.Decrypt(context.Request.Password, Encryptor.RandomCaptcha);
-
-            var cloneSettingComCriteria = new CloneSettingComCriteria
-            {
-                Username = context.Request.Username,
-                UserPwd = Encryption.CfsEnCode(rawPassword),
-                FirstName = context.Request.FirstName,
-                LastName = context.Request.LastName,
-                Phone = context.Request.Phone,
-                MobilePhone = context.Request.MobilePhone,
-                Fax = context.Request.Fax,
-                Credit = context.Request.Credit,
-                ExistingCustId = context.ExistingCustId,
-                GroupAdmin = context.Request.GroupName,
-                Creator = context.CurrentSession.CustId,
-                IP = context.CurrentContext.Ip4Address,
-                SettingStatus = Config.SettingStatus
-            };
-
-            int Case = 0;
-            int HeadlineID_Old = 0;
-            int HeadlineID_New = 0;
-            context.Result = searchAndCopyRepository.CloneSettingComm(cloneSettingComCriteria, ref Case, ref HeadlineID_Old, ref HeadlineID_New);
+            CopyCustomer(context);
 
             if (!context.Result.IsSuccess)
             {
                 return context.Result;
             }
-            
-            context.CustId = Convert.ToInt32(context.Result.ResultData);
-            serviceBase.AddMsgAfterCreateNewSMA(new AddMsgAfterCreateNewSMACriteria(context.CustId, 0, Role.Super));
+
+            var resultData = ((dynamic)context.Result.ResultData);
+            var newCustId = resultData.CustId;
+            var _case = resultData.Case;
+            var headlineID_Old = resultData.HeadlineID_Old;
+            var headlineID_New = resultData.HeadlineID_New;
+
+            serviceBase.AddMsgAfterCreateNewSMA(new AddMsgAfterCreateNewSMACriteria(newCustId, 0, Role.Super));
 
             var cloneSettingExtraPTCriteria = new CloneSettingExtraPTCriteria
             {
-                CustId = context.CustId,
+                CustId = newCustId,
                 ExistingCustId = context.ExistingCustId,
                 Creator = context.CurrentSession.CustId,
                 IP = context.CurrentContext.Ip4Address
@@ -123,17 +107,17 @@
                 return context.Result;
             }
 
-            if (Case != 0)
+            if (_case != 0)
             {
                 var updateCRMHeadlineInfoCriteria = new UpdateCrmHeadlineInfoCriteria
                 {
-                    CustId = context.CustId,
+                    CustId = newCustId,
                     UserName = string.Empty,
                     LoginIP = context.CurrentContext.Ip4Address,
                     UserId = context.CurrentSession.CustId,
-                    Case = Case,
-                    Old_Headline = HeadlineID_Old,
-                    New_Headline = HeadlineID_New
+                    Case = _case,
+                    Old_Headline = headlineID_Old,
+                    New_Headline = headlineID_New
                 };
 
                 context.Result = searchAndCopyRepository.UpdateCRMHeadlineInfo(updateCRMHeadlineInfoCriteria);
@@ -145,6 +129,67 @@
             }
 
             return context.Result;
-        }       
+        }
+
+        private void CopyCustomer(CloneSettingContext context)
+        {
+            context.Result = searchAndCopyRepository.ValidateSettingComm(new ValidateCloneSettingComCriteria
+            {
+                Username = context.Request.Username,
+                Credit = context.Request.Credit,
+                ExistingCustId = context.ExistingCustId,
+                IP = context.CurrentContext.Ip4Address
+            });
+            if (!context.Result.IsSuccess)
+            {
+                return;
+            }
+
+            context.Result = searchAndCopyRepository.RegisterCustomer(new RegisterCustomerCriteria
+            {
+                Username = context.Request.Username,
+                SiteDbGroupId = siteDBConfigService.GetSiteDBConfigByCustId(context.ExistingCustId).CustDBGroupID,
+                RoleId = Role.Super
+
+            });
+            if (!context.Result.IsSuccess)
+            {
+                return;
+            }
+
+            var newCustId = ((dynamic)context.Result.ResultData).NewCustId;
+            var groupNames = searchAndCopyRepository.GetGetGroupParentNameByGroupName(new GetGroupParentNameByGroupNameCriteria
+            {
+                GroupAdmin = context.CurrentSession.CurrencyGroup
+
+            });
+
+            context.Result = searchAndCopyRepository.CloneSettingComm(new CloneSettingComCriteria
+            {
+                CustId = newCustId,
+                Username = context.Request.Username,
+                UserPwd = Encryption.CfsEnCode(Encryptor.Decrypt(context.Request.Password, Encryptor.RandomCaptcha)),
+                FirstName = context.Request.FirstName,
+                LastName = context.Request.LastName,
+                Phone = context.Request.Phone,
+                MobilePhone = context.Request.MobilePhone,
+                Fax = context.Request.Fax,
+                Credit = context.Request.Credit,
+                ExistingCustId = context.ExistingCustId,
+                Creator = context.CurrentSession.CustId,
+                GroupAdmin = context.Request.GroupName,
+                GroupName = groupNames,
+                IP = context.CurrentContext.Ip4Address,
+                SettingStatus = Config.SettingStatus
+            });
+
+            if (!context.Result.IsSuccess)
+            {
+                searchAndCopyRepository.RollBackCustomer(new RollbackCustomerInsertCriteria
+                {
+                    CustId = newCustId
+                });
+            }
+        }
     }
 }

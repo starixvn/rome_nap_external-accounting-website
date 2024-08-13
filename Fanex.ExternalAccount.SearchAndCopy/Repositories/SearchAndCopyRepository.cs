@@ -7,12 +7,22 @@
     using Fanex.ExternalAccount.SearchAndCopy.Models;
     using Fanex.NAP.Framework.Data;
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
 
     public interface ISearchAndCopyRepository
     {
-        Result CloneSettingComm(CloneSettingComCriteria criteria, ref int Case, ref int HeadlineID_Old, ref int HeadlineID_New);
+        Result ValidateSettingComm(ValidateCloneSettingComCriteria criteria);
+
+        Result RegisterCustomer(RegisterCustomerCriteria criteria);
+
+        string GetGetGroupParentNameByGroupName(GetGroupParentNameByGroupNameCriteria criteria);
+
+        void RollBackCustomer(RollbackCustomerInsertCriteria criteria);
+
+        Result CloneSettingComm(CloneSettingComCriteria criteria);
 
         Result CloneSettingExtraPT(CloneSettingExtraPTCriteria criteria);
 
@@ -37,27 +47,74 @@
             this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public Result CloneSettingComm(CloneSettingComCriteria criteria, ref int Case, ref int HeadlineID_Old, ref int HeadlineID_New)
+        public Result ValidateSettingComm(ValidateCloneSettingComCriteria criteria)
         {
-            if (!criteria.IsValid())
-            {
-                return new Result(1, "Invalid operation");
-            }
-
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AssignParamValues(criteria.GetSpParams());
                 objDb.ExecuteNonQuery();
                 var outputs = objDb.GetOuputParams();
-                Case = Convert.ToInt32(outputs["case"]);
-                HeadlineID_Old = Convert.ToInt32(outputs["old_headline"]);
-                HeadlineID_New = Convert.ToInt32(outputs["new_headline"]);
-                return new Result
+                return new Result(outputs["errcode"].ToString(), outputs["errmsg"].ToString());
+            }
+        }
+
+        public Result RegisterCustomer(RegisterCustomerCriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                objDb.ExecuteNonQuery();
+                var outputs = objDb.GetOuputParams();
+                return new Result(outputs["errcode"].ToString(), outputs["errmsg"].ToString(), new { NewCustId = Convert.ToInt32(outputs["custid"]) });
+            }
+        }
+
+        public string GetGetGroupParentNameByGroupName(GetGroupParentNameByGroupNameCriteria criteria)
+        {   
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var reader = objDb.ExecuteReader(criteria.GetSpParams());
+                ArrayList groupNames = new ArrayList();
+                while (reader.Read())
                 {
-                    ErrorCode = outputs["errcode"].ToString(),
-                    ErrorMessage = outputs["errmsg"].ToString(),
-                    ResultData = outputs["custid"].ToString()
-                };
+                    groupNames.Add(reader["GroupName"].ToString());
+                }
+
+                return string.Join(",", groupNames.ToArray());
+            }
+        }
+
+        public Result CloneSettingComm(CloneSettingComCriteria criteria)
+        {
+            if (!criteria.IsValid())
+            {
+                return new Result(1, "Invalid operation");
+            }
+            
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                objDb.ExecuteNonQuery();
+                var outputs = objDb.GetOuputParams();
+                return new Result(
+                    outputs["errcode"].ToString(), 
+                    outputs["errmsg"].ToString(),
+                    new
+                    {
+                        criteria.CustId,
+                        Case = Convert.ToInt32(outputs["case"]),
+                        HeadlineID_Old = Convert.ToInt32(outputs["old_headline"]),
+                        HeadlineID_New = Convert.ToInt32(outputs["new_headline"])
+                    });
+            }
+        }
+
+        public void RollBackCustomer(RollbackCustomerInsertCriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                objDb.ExecuteNonQuery();
             }
         }
 
@@ -73,11 +130,7 @@
                 objDb.AssignParamValues(criteria.GetSpParams());
                 objDb.ExecuteNonQuery();
                 var outputs = objDb.GetOuputParams();
-                return new Result
-                {
-                    ErrorCode = outputs["errcode"].ToString(),
-                    ErrorMessage = outputs["errmsg"].ToString()
-                };
+                return new Result(outputs["errcode"].ToString(), outputs["errmsg"].ToString());
             }
         }
 
@@ -99,12 +152,7 @@
                 objDb.AssignParamValues(criteria.GetSpParams());
                 objDb.ExecuteNonQuery();
                 var outputs = objDb.GetOuputParams();
-
-                return new Result
-                {
-                    ErrorCode = outputs["errcode"].ToString(),
-                    ErrorMessage = outputs["errmsg"].ToString()
-                };
+                return new Result(outputs["errcode"].ToString(), outputs["errmsg"].ToString());
             }
         }
 

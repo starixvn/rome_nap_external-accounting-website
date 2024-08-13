@@ -205,6 +205,7 @@
     <Compile Include="Criteria\UserControl\UpdateMultipleUserPolicyCriteria.cs" />
     <Compile Include="Customer\AssociationAccount\AssociationAccountDao.cs" />
     <Compile Include="Customer\CustomerList\CustomerListDao.cs" />
+    <Compile Include="Customer\GetCustDBConfigCriteria.cs" />
     <Compile Include="Customer\GetSiteDBConfigCriteria.cs" />
     <Compile Include="Customer\IAgentDao.cs" />
     <Compile Include="Customer\ICommissionDao.cs" />

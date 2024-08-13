@@ -147,7 +147,6 @@
     <Compile Include="Controllers\SearchAndCopyController.cs" />
     <Compile Include="Criteria\CloneSettingComCriteria.cs" />
     <Compile Include="Criteria\CloneSettingExtraPTCriteria.cs" />
-    <Compile Include="Criteria\GetCustomerInfoByUserIdCriteria.cs" />
     <Compile Include="Criteria\SearchCustomerCriteria.cs" />
     <Compile Include="Criteria\SuperPrefixCriteria.cs" />
     <Compile Include="Criteria\UpdateCRMHeadlineInfoCriteria.cs" />
@@ -156,7 +155,6 @@
     <Compile Include="Models\CustomerInfo.cs" />
     <Compile Include="Models\SuperPrefix.cs" />
     <Compile Include="Models\SearchCustomerContext.cs" />
-    <Compile Include="Repositories\CustomerRepository.cs" />
     <Compile Include="Requests\CloneSettingRequest.cs" />
     <Compile Include="Models\SearchCustomerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -187,6 +185,10 @@
     <ProjectReference Include="..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj">
       <Project>{AA1EA660-0E91-4C46-8100-F39C6A0BFC0B}</Project>
       <Name>Fanex.ExternalAccount.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.Service\Fanex.ExternalAccount.Service.csproj">
+      <Project>{d172255e-6b0a-4602-b22c-8a4baba84d07}</Project>
+      <Name>Fanex.ExternalAccount.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
       <Project>{016F274C-1F76-450B-B80D-E7FB59BE6A2B}</Project>
