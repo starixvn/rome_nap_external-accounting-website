@@ -6,23 +6,18 @@
     {
         public CheckBelongingCriteria(
             int userId,
-            string groupName,
-            int custId,
-            string username)
+            string groupName
+          )
         {
             UserId = userId;
             GroupName = groupName;
-            CustId = custId;
-            Username = username;
+        
         }
 
         public int UserId { get; }
 
         public string GroupName { get; }
-
-        public int CustId { get; }
-
-        public string Username { get; }
+      
 
         public override string GetSettingKey()
             => "EAS_UserCheckBelonging";

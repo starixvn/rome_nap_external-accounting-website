@@ -141,6 +141,7 @@
     <Compile Include="Criteria\AutoTransfer\InsertToastMessageCriteria.cs" />
     <Compile Include="Criteria\AutoTransfer\GetAutoTransferJobStatusCriteria.cs" />
     <Compile Include="Criteria\Belonging\CheckBelongingCriteria.cs" />
+    <Compile Include="Criteria\Belonging\CheckCustomerBelongingCriteria.cs" />
     <Compile Include="Criteria\Customer\AssociationAccount\GetAssociationAccountCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckMultipleSupersBetSettingCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckMemberCreationCriteria.cs" />

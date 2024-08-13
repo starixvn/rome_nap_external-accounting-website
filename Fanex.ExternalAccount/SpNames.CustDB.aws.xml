@@ -301,7 +301,8 @@
     <Setting Key="EAS_ProblemAccount_ReviewStatusUpd" SpName="EAS_ProblemAccount_ReviewStatusUpd" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="User belong to Group">
-    <Setting Key="EAS_UserCheckBelonging" SpName="EAS_UserCheckBelonging" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_UserCheckBelonging" SpName="EAS_UserCheckBelonging" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_CustomerSelCheckBelonging" SpName="EAS_CustomerSelCheckBelonging" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="Get Product List of Multiple Edit Product Status">
     <Setting Key="EAS_ProductSettingByGroup_Sel" SpName="EAS_ProductSettingByGroup_Sel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
