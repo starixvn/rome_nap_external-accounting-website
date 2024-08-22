@@ -15,6 +15,7 @@
 
     public class UserDao : DAOBase, IUserDao
     {
+        private const int AdminSiteDBGroupId = 0;
         public IEnumerable<User> GetListUsers(string userName, int? groupId)
         {
             var result = new List<User>();
@@ -232,7 +233,8 @@
             using (var db = new ObjectDb("Acc_CustomerIns_Register"))
             {
                 db.AddInParameter("username", DbType.String, userName);
-                db.AddInParameter("sitedbgroupid", DbType.Int32, 3);
+                db.AddInParameter("sitedbgroupid", DbType.Int32, AdminSiteDBGroupId);
+                db.AddInParameter("roleid", DbType.Int32, 6);
                 db.AddOutParameter("custid", DbType.Int32, sizeof(int));
 
                 AddResultParams(db.Database, db.DbCommand);
