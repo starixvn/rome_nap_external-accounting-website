@@ -72,7 +72,7 @@
             var custInfo = reportService.SearchCustomerInfo(ExtRequest.Instance.GetGroupName(), id, string.Empty, false);
             if (custInfo.RoleId == Role.Member)
             {
-                var siteDB = siteDBService.GetSiteDBConfig(id);
+                var siteDB = siteDBService.GetSiteDBConfigByCustId(id);
                 var totalAmt = customerDataAccess.GetTotalAmount(id, siteDB);
 
                 return customerDataAccess.UpdateMemberGivenCredit(id, uplineId, newGivenCredit, totalAmt);
@@ -87,7 +87,7 @@
 
         public Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip)
         {
-            var siteDB = siteDBService.GetSiteDBConfig(custId);
+            var siteDB = siteDBService.GetSiteDBConfigByCustId(custId);
 
             return customerDataAccess.CustomerInsertClearBalance(custId, custIds, isCheckedAll, ip, siteDB);
         }
@@ -110,7 +110,7 @@
             {
                 if (custInfo.RoleId == Role.Member)
                 {
-                    var siteDB = siteDBService.GetSiteDBConfig(custId);
+                    var siteDB = siteDBService.GetSiteDBConfigByCustId(custId);
                     var totalAmt = customerDataAccess.GetTotalAmount(custId, siteDB);
 
                     return customerDataAccess.ClearMemberCredit(totalAmt, custName);

@@ -54,6 +54,7 @@
         private readonly ITelegramBotService _telegramChatbotService = new TelegramBotService();
         private readonly ProductStatusService productStatusService = new ProductStatusServiceImpl();
         private readonly AuthorizationService authorizationService = new AuthorizationServiceImpl();
+        private readonly ISiteDBConfigService siteDBConfigService = new SiteDBConfigService();
 
         [ExternalCustomerAuthFilter(Function = eFunctions.CreateNew)]
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
@@ -149,6 +150,7 @@
                     request.RoleId,
                     request.UplineRoleId,
                     CurrentContext.Ip4Address,
+                    siteDBConfigService.GetSiteDBConfigByCustId(request.CustId).CustDBGroupID,
                     request.Site,
                     request.SiteLabel));
 
@@ -196,6 +198,7 @@
                 request.RoleId,
                 request.UplineRoleId,
                 CurrentContext.Ip4Address,
+                siteDBConfigService.GetSiteDBConfigByCustId(request.CustId).CustDBGroupID,
                 request.CustomerIds,
                 request.CustomerNames,
                 request.Site,
@@ -233,6 +236,7 @@
                 CurrentContext.Ip4Address,
                 generalInfo.Site,
                 generalInfo.SiteLabel,
+                siteDBConfigService.GetSiteDBConfigBySite(generalInfo.Site).CustDBGroupID,
                 CustomerClient.Constants.CreationModes.FullMode));
             return Content(response);
         }
@@ -253,6 +257,7 @@
                     request.RoleId,
                     request.UplineRoleId,
                     CurrentContext.Ip4Address,
+                    siteDBConfigService.GetSiteDBConfigByCustId(request.CustId).CustDBGroupID,
                     request.Site,
                     request.SiteLabel));
 
@@ -274,6 +279,7 @@
                     request.RoleId,
                     request.UplineRoleId,
                     CurrentContext.Ip4Address,
+                    siteDBConfigService.GetSiteDBConfigByCustId(request.CustId).CustDBGroupID,
                     request.CustomerIds,
                     request.CustomerNames,
                     request.Site,
