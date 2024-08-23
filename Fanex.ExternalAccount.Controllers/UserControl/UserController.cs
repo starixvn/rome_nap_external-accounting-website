@@ -11,8 +11,9 @@
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
     using DTO.UserControl;
+    using Fanex.Cryptography.Aes;
+    using Fanex.ExternalAccount.Controllers.ViewModels;
     using Newtonsoft.Json;
-    using RSACryptoPad;
     using Service.Impl.Login;
     using Service.Impl.UserControl;
     using Service.Interface.Login;
@@ -22,7 +23,6 @@
 
     public class UserController : BaseController
     {
-        private const int DwKeySize = 1024;
         private readonly CachingService _cache = new CachingService();
         private readonly IUserService _userService = new UserService();
         private readonly IGroupService groupService = new GroupService();
@@ -275,36 +275,49 @@
         {
             var url = Url.Content("~") + "Shared/NoPermission";
             var checkCustomerBelongToSpecialSiteResult = CheckCustomerBelongToSpecialSite(username);
-          
             var isBelonging = _authorization.IsBelong(ExtRequest.GetGroupName(groupName), 0, username);
+
             if (isBelonging)
             {
-                var encryption = new EncryptionThread();
-                var param = string.Join("&", username, CurrentSession.UserId, loginService.GetDbTime().Ticks,
-                    "NAPEXT");
-                param = encryption.EncryptString(param, DwKeySize, Request.PhysicalApplicationPath + "/IbcKeys/ibcpkey.snk");
+                var param = string.Join("&", username, CurrentSession.UserId, loginService.GetDbTime().Ticks);
+                param = AesExtension.Encrypt(param, "!@#$");
 
-                url =
-                    $"{GetInternalLoginUrl(checkCustomerBelongToSpecialSiteResult.Site)}" +
-                    $"?{(Session[Config.InternalAgentUMToken] == null ? string.Empty : $"UMToken={Session[Config.InternalAgentUMToken]}&")}params={param}";
+                var CustomerSite = checkCustomerBelongToSpecialSiteResult.Site;
+                var internalAgentUrl = InternalLoginManager.GetInternalLoginUrl(CustomerSite);
+                var internalPaths = internalAgentUrl.Split(new[] { '+' }, StringSplitOptions.RemoveEmptyEntries);
+                var internalDomains = internalPaths[0].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                var internalLoginAction = internalPaths[1];
+                var configDomains = new List<InternLoginDomain>();
+                string randomDomain = null;
+
+                if (Session["InternalLoginDomains_" + CustomerSite] != null)
+                {
+                    configDomains = (List<InternLoginDomain>)Session["InternalLoginDomains_" + CustomerSite];
+                    randomDomain = configDomains.FirstOrDefault(domain => !domain.IsInUsed)?.Domain;
+                }
+                else
+                {
+                    foreach (var domain in internalDomains)
+                    {
+                        configDomains.Add(new InternLoginDomain { Domain = domain });
+                    }
+                }
+
+                randomDomain = randomDomain ?? internalDomains[new Random().Next(internalDomains.Length)];
+                var foundDomain = configDomains.Find(item => item.Domain == randomDomain);
+                if (foundDomain != null)
+                {
+                    foundDomain.IsInUsed = true;
+                }
+
+                Session["InternalLoginDomains_" + CustomerSite] = configDomains;
+
+                var internalDomain = randomDomain.StartsWith("http") ? $"{randomDomain}{internalLoginAction}" : $"http://{randomDomain}{internalLoginAction}";
+
+                url = $"{internalDomain}?{(Session[Config.InternalAgentUMToken] == null ? string.Empty : $"UMToken={Session[Config.InternalAgentUMToken]}&")}parameter={param}";
             }
 
             return Redirect(url);
-        }
-
-        private string GetInternalLoginUrl(string site)
-        {
-            var domain = CurrentContext.DomainName
-                .Replace("www.", string.Empty)
-                .Replace("staging.", string.Empty)
-                .Replace("h1.", string.Empty)
-                .Replace("h2.", string.Empty)
-                .Replace("h3.", string.Empty);
-            string url = Request.Url.ToString();
-            var isPublicDomain = Config.PublicDomains.Any(url.Contains);
-            domain = isPublicDomain ? domain : "focapts.com";
-            string internalUrl = InternalLoginManager.GetInternalLoginUrl(site);
-            return string.Format(internalUrl, domain);
         }
      
         public ActionResult ResetPwdOwner(int userId, string pwd)
