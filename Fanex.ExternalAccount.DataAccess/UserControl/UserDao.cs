@@ -240,7 +240,9 @@
                 AddResultParams(db.Database, db.DbCommand);
 
                 db.ExecuteNonQuery();
-                custId = (int)db.GetParameterValue("custid");
+
+                custId = Converter.ToInt(db.GetParameterValue("custid"), 0);
+                
                 return GetResultParams(db.Database, db.DbCommand);
             }
         }
@@ -266,7 +268,6 @@
             {
                 db.AddInParameter("CustId", DbType.Int32, custId);
                 db.ExecuteNonQuery();
-            
             }
         }
         
