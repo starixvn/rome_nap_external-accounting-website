@@ -66,7 +66,7 @@
     <Setting Key="EAS_GroupPolicyUpd" SpName="EAS_GroupPolicyUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="SubGroup">
-    <Setting Key="EAS_CustomerSelBySubGroup" SpName="EAS_CustomerSelBySubGroup" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_CustomerSelBySubGroup" SpName="EAS_CustomerSelBySubGroup_UAT3" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_CustomerUpdSubGroup" SpName="EAS_CustomerUpdSubGroup" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserInfoSelBySubGroup" SpName="EAS_UserInfoSelBySubGroup" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserInfoUpdSubGroupAdminPwd" SpName="EAS_UserInfoUpdSubGroupAdminPwd" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
