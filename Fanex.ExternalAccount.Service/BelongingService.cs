@@ -22,24 +22,22 @@ namespace Fanex.ExternalAccount.Service
         public bool IsBelonging(int userId, string groupName, int custId, string username)
         {
             var criteria = new CheckBelongingCriteria(userId, groupName);
-            bool isNotUserBelonging = !criteria.IsValid() || !belongingDataAccess.IsBelonging(criteria);
+            bool isUserBelonging = !criteria.IsValid() || belongingDataAccess.IsBelonging(criteria);
 
-            if (isNotUserBelonging)
+            if (isUserBelonging)
             {
-                return false;
-            }
-            else
-            {
-                if (custId == 0 && username.IsNullOrTrimEmpty())
+                var custCriteria = new CheckCustomerBelongingCriteria(groupName, custId, username);
+                if (!custCriteria.IsValid())
                 {
                     return true;
                 }
                 else
                 {
-                    var custCriteria = new CheckCustomerBelongingCriteria(groupName, custId, username);
                     return belongingDataAccess.CheckCustomerBelongingCriteria(custCriteria);
                 }
             }
+
+            return isUserBelonging;
         }
     }
 }

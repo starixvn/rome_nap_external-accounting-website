@@ -24,6 +24,6 @@
             => "EAS_UserCheckBelonging";
 
         public override bool IsValid()
-            => !string.IsNullOrEmpty(GroupName);
+            => !string.IsNullOrEmpty(Username) && CustId > 0;
     }
 }
