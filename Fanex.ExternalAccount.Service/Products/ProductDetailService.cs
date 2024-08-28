@@ -104,44 +104,12 @@
         {
             var canView = new Dictionary<int, bool>();
 
-            if (Config.IsOfferJackpotProductDetailsGroup(groupName))
+            if (Config.IsOfferProductDetailGroup(groupName))
             {
-                canView[ProductConstants.PragmaticPlay] = true;
-            }
-
-            if (Config.IsOfferSexyGamingProductDetailsGroup(groupName))
-            {
-                canView[ProductConstants.SexyGaming] = true;
-            }
-
-            if (Config.IsOfferSpadeGamingProductDetailsGroup(groupName))
-            {
-                canView[ProductConstants.SpadeGaming] = true;
-            }
-
-            if (Config.IsOfferAllbetProductDetailsGroup(groupName))
-            {
-                canView[ProductConstants.AllBet] = true;
-            }
-
-            if (Config.IsOfferMGRNGCasinoProductDetailsGroup(groupName))
-            {
-                canView[ProductConstants.MGRNGCasino] = true;
-            }
-
-            if (Config.IsOfferLive22ProductDetailsGroup(groupName))
-            {
-                canView[ProductConstants.Live22] = true;
-            }
-
-            if (Config.IsOfferFastSpinProductDetailsGroup(groupName))
-            {
-                canView[ProductConstants.FastSpin] = true;
-            }
-
-            if (Config.IsOfferVGamingProductDetailsGroup(groupName))
-            {
-                canView[ProductConstants.VGaming] = true;
+                foreach (var productId in Config.ProductOfferProductDetails())
+                {
+                    canView[productId] = true;
+                }
             }
 
             canView[ProductConstants.Sportsbook] = true;
@@ -164,7 +132,7 @@
                     if (ProductConstants.ProductListHasProductDetail.Any(i => i == group.Key))
                     {
                         validProductDetails.AddRange(
-                            Config.IsOfferProductDetail(groupName) ? group.Where(p => resourceIdsHash.ContainsKey(p.ResourceId)) : group);
+                            Config.IsOfferProductDetailGroup(groupName) ? group.Where(p => resourceIdsHash.ContainsKey(p.ResourceId)) : group);
                     }
                 });
 
@@ -212,14 +180,7 @@
                 .ToList()
                 .ForEach(group =>
                 {
-                    if (group.Key == ProductConstants.Sportsbook ||
-                    (group.Key == ProductConstants.PragmaticPlay && Config.IsOfferJackpotProductDetailsGroup(groupName)) ||
-                    (group.Key == ProductConstants.SexyGaming && Config.IsOfferSexyGamingProductDetailsGroup(groupName)) ||
-                    (group.Key == ProductConstants.SpadeGaming && Config.IsOfferSpadeGamingProductDetailsGroup(groupName)) ||
-                    (group.Key == ProductConstants.AllBet && Config.IsOfferAllbetProductDetailsGroup(groupName)) ||
-                    (group.Key == ProductConstants.Live22 && Config.IsOfferLive22ProductDetailsGroup(groupName)) ||
-                    (group.Key == ProductConstants.FastSpin && Config.IsOfferFastSpinProductDetailsGroup(groupName)) ||
-                    (group.Key == ProductConstants.VGaming && Config.IsOfferVGamingProductDetailsGroup(groupName)))
+                    if (group.Key == ProductConstants.Sportsbook || Config.ProductOfferProductDetails().Contains(group.Key) && Config.IsOfferProductDetailGroup(groupName))
                     {
                         var intersectResourceIds = group.Select(p => p.ResourceId).Intersect(resourceIds);
 

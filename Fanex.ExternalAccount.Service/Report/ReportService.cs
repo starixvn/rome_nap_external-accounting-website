@@ -176,33 +176,10 @@
         public string ConcatProductName(string productIds, string resourceIds, string groupName)
         {
             var productIdList = Utils.ToEnumerableInt(productIds);
-            if (string.IsNullOrWhiteSpace(resourceIds))
+            var productOfferProductDetails = Config.ProductOfferProductDetails();
+            if (string.IsNullOrWhiteSpace(resourceIds) && Config.IsOfferProductDetailGroup(groupName))
             {
-                if (Config.IsOfferJackpotProductDetailsGroup(groupName))
-                {
-                    productIdList = productIdList.Where(id => id != ProductConstants.PragmaticPlay);
-                }
-
-                if (Config.IsOfferSexyGamingProductDetailsGroup(groupName))
-                {
-                    productIdList = productIdList.Where(id => id != ProductConstants.SexyGaming);
-                }
-
-                if (Config.IsOfferSpadeGamingProductDetailsGroup(groupName))
-                {
-                    productIdList = productIdList.Where(id => id != ProductConstants.SpadeGaming);
-                }
-                productIdList = productIdList.Where(id => id != ProductConstants.Sportsbook);
-
-                if (Config.IsOfferAllbetProductDetailsGroup(groupName))
-                {
-                    productIdList = productIdList.Where(id => id != ProductConstants.AllBet);
-                }
-
-                if (Config.IsOfferMGRNGCasinoProductDetailsGroup(groupName))
-                {
-                    productIdList = productIdList.Where(id => id != ProductConstants.MGRNGCasino);
-                }
+                productIdList = productIdList.Where(id => !productOfferProductDetails.Contains(id));
             }
 
             return ConcatProductName(productIdList, resourceIds, groupName);
