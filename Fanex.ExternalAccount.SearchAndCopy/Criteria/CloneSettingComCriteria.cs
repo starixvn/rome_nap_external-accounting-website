@@ -12,9 +12,12 @@
 
         public string IP { get; set; }
 
+        [SpParam(Ignored = true)]
+        public int SiteDBGroupId { get; set; } 
+
         public override bool IsValid() => !string.IsNullOrWhiteSpace(Username);
 
-        public override string GetSettingKey() => "EAS_CustomerInsMember_CloneSetting_Com_Validate";
+        public override string GetSettingKey() => (SiteDBGroupId == 0 ? string.Empty : $"DBSite{SiteDBGroupId}_" ) + "EAS_CustomerInsMember_CloneSetting_Com_Validate";
     }
 
     public class RegisterCustomerCriteria : CriteriaBase
@@ -81,6 +84,9 @@
 
         public byte SettingStatus { get; set; }
 
+        [SpParam(Ignored = true)]
+        public int SiteDBGroupId { get; set; }
+
         public override bool IsValid() =>
 #pragma warning disable S1067 // Expressions should not be too complex
             Creator > 0
@@ -90,7 +96,7 @@
             && Credit >= 0;
 #pragma warning restore S1067 // Expressions should not be too complex
 
-        public override string GetSettingKey() => "EAS_CustomerInsMember_CloneSetting_Com";
+        public override string GetSettingKey() => (SiteDBGroupId == 0 ? string.Empty : $"DBSite{SiteDBGroupId}_") + "EAS_CustomerInsMember_CloneSetting_Com";
     }
 
     public class RollbackCustomerInsertCriteria : CriteriaBase

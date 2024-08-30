@@ -41,7 +41,7 @@
         public JsonResult SearchCustomer(SearchCustomerRequest request)
         {
             var searchCustomerContext = new SearchCustomerContext(request, Role.Super, CurrentSession);
-            var result = searchAndCopyService.SearchCustomer(searchCustomerContext);
+            var result = searchAndCopyService.ComposeSearchCustomerResult(searchAndCopyService.SearchCustomer(searchCustomerContext));
             return Json(result);
         }
 
@@ -58,14 +58,15 @@
         public JsonResult SuperPost(CloneSettingRequest request)
         {
             var searchCustomerContext = new SearchCustomerContext(new SearchCustomerRequest { Username = request.ExistingUsername }, Role.Super, CurrentSession);
-            var searchCustomerResult = searchAndCopyService.SearchCustomer(searchCustomerContext);
+            var searchCustomerModel = searchAndCopyService.SearchCustomer(searchCustomerContext);
+            var searchCustomerResult = searchAndCopyService.ComposeSearchCustomerResult(searchCustomerModel);
             if (!searchCustomerResult.IsSuccess)
             {
                 return Json(searchCustomerResult);
             }
 
             var existingCustomer = (SearchCustomerModel)searchCustomerResult.ResultData;
-            var cloneSettingContext = new CloneSettingContext(request, existingCustomer.CustId.Value, CurrentSession, CurrentContext);
+            var cloneSettingContext = new CloneSettingContext(request, existingCustomer.CustId.Value, searchCustomerModel.Currency, searchCustomerModel.Site, CurrentSession, CurrentContext);
             var cloneSettingResult = searchAndCopyService.CloneSetting(cloneSettingContext);
             if (!cloneSettingResult.IsSuccess)
             {

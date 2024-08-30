@@ -6,12 +6,14 @@
 
     public class CloneSettingContext
     {
-        public CloneSettingContext(CloneSettingRequest request, int existingCustId, ICurrentSession currentSession, ICurrentContext currentContext)
+        public CloneSettingContext(CloneSettingRequest request, int existingCustId, int currency, string site, ICurrentSession currentSession, ICurrentContext currentContext)
         {
             Request = request;
             ExistingCustId = existingCustId;
             CurrentSession = currentSession;
             CurrentContext = currentContext;
+            Currency = currency;
+            Site = site;
         }
 
         public CloneSettingRequest Request { get; }
@@ -27,5 +29,9 @@
         public Result Result { get; set; }
 
         public int CustId { get; set; }
+
+        public int Currency { get; }
+
+        public string Site { get; }
     }
 }

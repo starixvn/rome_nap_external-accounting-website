@@ -26,7 +26,7 @@
 
         Result CloneSettingExtraPT(CloneSettingExtraPTCriteria criteria);
 
-        IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName);
+        IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName, int custDBGroupId);
 
         Result UpdateCRMHeadlineInfo(UpdateCrmHeadlineInfoCriteria criteria);
 
@@ -134,9 +134,9 @@
             }
         }
 
-        public IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName)
+        public IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName, int custDBGroupId)
         {
-            var criteria = new SearchCustomerCriteria(username, groupName);
+            var criteria = new SearchCustomerCriteria(username, groupName, custDBGroupId);
             if (!criteria.IsValid())
             {
                 return Enumerable.Empty<SearchCustomerModel>();

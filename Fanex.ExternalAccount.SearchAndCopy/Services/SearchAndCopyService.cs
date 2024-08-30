@@ -18,7 +18,9 @@
 
     public interface ISearchAndCopyService
     {
-        Result SearchCustomer(SearchCustomerContext context);
+        SearchCustomerModel SearchCustomer(SearchCustomerContext context);
+
+        Result ComposeSearchCustomerResult(SearchCustomerModel customer);
 
         Result CloneSetting(CloneSettingContext context);
 
@@ -46,10 +48,15 @@
             this.siteDBConfigService = siteDBConfigService ?? new SiteDBConfigService();
         }
 
-        public Result SearchCustomer(SearchCustomerContext context)
-        {
-            var customer = searchAndCopyRepository.SearchCustomer(context.Request.Username, context.CurrentSession.CurrencyGroup)
+        public SearchCustomerModel SearchCustomer(SearchCustomerContext context)
+            => searchAndCopyRepository.SearchCustomer(
+                context.Request.Username,
+                context.CurrentSession.CurrencyGroup,
+                siteDBConfigService.GetSiteDBConfigByUserName(context.Request.Username).CustDBGroupID)
                 .FirstOrDefault(c => c.RoleId == context.RoleId && context.Request.Username.Equals(c.Username, StringComparison.InvariantCultureIgnoreCase) && c.IsExistGroup);
+
+        public Result ComposeSearchCustomerResult(SearchCustomerModel customer)
+        {
             if (customer == null)
             {
                 return new Result(1, Lang.SearchSuperNotExisted);
@@ -133,12 +140,14 @@
 
         private void CopyCustomer(CloneSettingContext context)
         {
+            var siteDBGroupId = siteDBConfigService.GetSiteDBConfigBySite(context.Site).CustDBGroupID;
             context.Result = searchAndCopyRepository.ValidateSettingComm(new ValidateCloneSettingComCriteria
             {
                 Username = context.Request.Username,
                 Credit = context.Request.Credit,
                 ExistingCustId = context.ExistingCustId,
-                IP = context.CurrentContext.Ip4Address
+                IP = context.CurrentContext.Ip4Address,
+                SiteDBGroupId = siteDBGroupId
             });
             if (!context.Result.IsSuccess)
             {
@@ -148,8 +157,10 @@
             context.Result = searchAndCopyRepository.RegisterCustomer(new RegisterCustomerCriteria
             {
                 Username = context.Request.Username,
-                SiteDbGroupId = siteDBConfigService.GetSiteDBConfigByCustId(context.ExistingCustId).CustDBGroupID,
-                RoleId = Role.Super
+                SiteDbGroupId = siteDBGroupId,
+                RoleId = Role.Super,
+                Site = context.Site,
+                Currency = context.Currency
 
             });
             if (!context.Result.IsSuccess)
@@ -180,7 +191,8 @@
                 GroupAdmin = context.Request.GroupName,
                 GroupName = groupNames,
                 IP = context.CurrentContext.Ip4Address,
-                SettingStatus = Config.SettingStatus
+                SettingStatus = Config.SettingStatus,
+                SiteDBGroupId = siteDBGroupId
             });
 
             if (!context.Result.IsSuccess)

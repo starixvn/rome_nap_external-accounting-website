@@ -23,6 +23,10 @@
 
         public bool IsExistGroup { get; private set; }
 
+        public int Currency { get; private set; }
+
+        public string Site { get; private set; }
+
         public bool IsValidSuperPrefix { get; private set; }
     }
 }
