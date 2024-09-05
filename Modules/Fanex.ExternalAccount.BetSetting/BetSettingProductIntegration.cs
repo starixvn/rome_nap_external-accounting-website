@@ -32,22 +32,5 @@
         {
             return productStatusService.GetVisibleProductGroups(custId, roleId, settingStatus).Where(p => p.Id != ProductGroupConstants.Sportsbook);
         }
-
-        public static IList<Product> GetVisibledBetSettingTabs(int custId, byte settingStatus)
-        {
-            var customerStatus = customerService.GetCustomerAllStatus(custId, settingStatus);
-            var visibleProductTabs = new List<Product>();
-            int index = 0;
-            foreach (var product in customerStatus.DCSProductsSetting)
-            {
-                if (Array.Exists(BetSettingTabProductConfigs, element => element == product.ProductID)
-                    && !product.IsHidden && (DummyProducts.Any(p => p == product.ProductID) || product.IsSynced))
-                {
-                    visibleProductTabs.Add(new Product(index++, product.ProductID, product.ProductName));
-                }
-            }
-
-            return visibleProductTabs;
-        }
     }
 }

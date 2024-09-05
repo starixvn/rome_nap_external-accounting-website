@@ -150,9 +150,9 @@
                         "",
                         request.RoleId,
                         request.UplineRoleId,
-                    CurrentContext.Ip4Address,
+                        CurrentContext.Ip4Address,
                         request.Site,
-                    request.SiteLabel));
+                        request.SiteLabel)));
             }
 
             return Content(await customerServiceClient.UpdateCustomer(
@@ -441,9 +441,8 @@
             ViewBag.UplineId = uplineId;
             var productStatusList = productStatusService.GetProductStatusList(custId, id, Config.SettingStatus);
             var visibledProductGroups = GetVisibleProductGroups(productStatusList).Where(p => p.Id != ProductGroupConstants.Sportsbook);
-            var visibledProducts = GetVisibledProducts(productStatusList);
 
-            return PartialViewBase(new CustomerSettingsViewModel(visibledProductGroups, visibledProducts));
+            return PartialViewBase(new CustomerSettingsViewModel(visibledProductGroups));
         }
 
         private static IEnumerable<Product> GetVisibleProductGroups(IList<ProductStatusDto> productStatusList)
@@ -455,25 +454,6 @@
                 .Select(groupId => new Product(groupId, groupId, CacheRef.GetProductGroupName(groupId)));
 
             return visibledProductGroups;
-        }
-
-        private static IEnumerable<Product> GetVisibledProducts(IList<ProductStatusDto> productStatusList)
-        {
-            var visibledProducts = new List<Product>();
-
-            foreach (var product in ProductSettings.SiteProducts.Values)
-            {
-                var productStatus = productStatusList.FirstOrDefault(p => p.ProductId == product.Id && p.GroupId == null);
-                if (productStatus != null
-                    && !productStatus.IsHidden
-                    && ProductSettings.IsShowProduct(product.Id)
-                    && product.Id != ProductConstants.SabaVirtualSports)
-                {
-                    visibledProducts.Add(product);
-                }
-            }
-
-            return visibledProducts;
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]

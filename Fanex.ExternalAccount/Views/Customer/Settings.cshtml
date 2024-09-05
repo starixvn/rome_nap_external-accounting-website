@@ -20,7 +20,7 @@
 <div id="tabs" style="border:none">
     <ul id="tabs-list" class="tabs">
 
-        @foreach (var product in Model.ProductGroups)
+        @foreach (var product in Model.ProductGroups.Concat(new[] { new Fanex.ExternalAccount.Core.Shared.Product(4, 4, Fanex.ExternalAccount.Core.Shared.CacheRef.GetProductName(69)) }))
         {
             <li id="tab-group-@(product.Id)" class="group-setting-tab" data-product-group-id="@(product.Id)">
                 <a class="height-auto" href="#content-group-@(product.Id)">
@@ -28,28 +28,12 @@
                 </a>
             </li>
         }
-
-        @foreach (var product in Model.Products)
-        {
-            <li id="tab@(product.Id)" class="dynamic-setting-tab" data-product-id="@(product.Id)">
-                <a class="height-auto" href="#tabs-@(product.Id)">
-                    @(product.Name)
-                </a>
-            </li>
-        }
     </ul>
 
-    @foreach (var product in Model.ProductGroups)
+    @foreach (var product in Model.ProductGroups.Concat(new[] { new Fanex.ExternalAccount.Core.Shared.Product(4, 4, Fanex.ExternalAccount.Core.Shared.CacheRef.GetProductName(69)) }))
     {
         <div id="content-group-@(product.Id)" class="divTab" data-product-group-id="@(product.Id)" style="padding: 0px">
             <iframe id="Frame_group_@(product.Id)" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
-        </div>
-    }
-
-    @foreach (var product in Model.Products)
-    {
-        <div id="tabs-@(product.Id)" class="divTab" data-product-id="@(product.Id)" style="padding: 0px">
-            <iframe id="Frame_@(product.Id)" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
         </div>
     }
 </div>

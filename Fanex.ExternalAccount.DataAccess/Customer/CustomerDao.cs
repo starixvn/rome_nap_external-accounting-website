@@ -288,6 +288,9 @@
                     }
                 }
 
+                //Hardcode for Bitcoin
+                result.ProductGroups.Add(new Product(4, 4, CacheRef.GetProductName(69)));
+
                 return result;
             }
         }

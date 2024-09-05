@@ -4,13 +4,19 @@
     using CaptchaMvc.Interface;
     using Core.Authorization.ProductStatus;
     using Core.Filters;
-    using CustomerSetting.Client40;
     using Data.Configuration;
     using Fanex.Caching;
+    using Fanex.Customer.Client;
+    using Fanex.Customer.Client.Configurations;
+    using Fanex.Customer.Client.NETFramework;
+    using Fanex.ExternalAccount.Core.Configurations;
+    using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.UI.Helpers;
+    using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.RabbitMQ;
     using Fanex.Logging.Sentry.RavenClient;
-    using Fanex.Logging;
     using Logging.Extensions.Web;
     using ONEbook.UM;
     using ONEbook.UM.AspNetMVC.Filters;
@@ -20,21 +26,14 @@
     using ONEbook.UM.Services;
     using ONEbook.UM.Transport;
     using ProductStatus.Setting.Configuration;
+    using SharpRaven;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
+    using System.Linq;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Fanex.ExternalAccount.Core.Shared;
-    using SharpRaven;
-    using Fanex.Logging.Extensions;
-    using System.Linq;
-    using Fanex.Logging.Extensions.Database;
-    using Fanex.Customer.Client;
-    using Fanex.Customer.Client.Configurations;
-    using Fanex.Customer.Client.NETFramework;
-    using Fanex.ExternalAccount.Core.Configurations;
 
     public class MvcApplication : HttpApplication
     {
@@ -125,7 +124,6 @@
                 .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
 
             AreaRegistration.RegisterAllAreas();
-            CustomerSettingRegistration.Init();
             CustomerClientManager.UseConfig(new CustomerClientConfiguration().Initialize());
 
             RegisterGlobalFilters(GlobalFilters.Filters);

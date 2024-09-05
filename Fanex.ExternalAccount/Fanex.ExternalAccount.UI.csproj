@@ -119,13 +119,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Customer.Client, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Customer.Client.1.0.0.9-bitcoin03\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
+      <HintPath>..\packages\Fanex.Customer.Client.1.0.0.9-bitcoin04\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Customer.Client.NETFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Customer.Client.NETFramework.1.0.0\lib\net461\Fanex.Customer.Client.NETFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.CustomerSetting.Client40, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.1.2.0\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=2.0.3.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.2.0.3.4\lib\net461\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
@@ -672,11 +669,6 @@
     <Content Include="Areas\ProductStatusSetting\Styles\product-status-setting-multiple.min.css" />
     <Content Include="Areas\ProductStatusSetting\Styles\simple-product-status-setting.min.css" />
     <Content Include="Areas\Web.config" />
-    <Content Include="Areas\CustomerSettingRenovation\Content\DCSCustom.css" />
-    <Content Include="Areas\CustomerSettingRenovation\Content\Images\bgHeader.jpg" />
-    <Content Include="Areas\CustomerSettingRenovation\Content\Images\btn-bgsubmit-original.png" />
-    <Content Include="Areas\CustomerSettingRenovation\Content\Images\loading.gif" />
-    <Content Include="Areas\CustomerSettingRenovation\Content\Images\save.png" />
     <Content Include="Areas\CustomerSetting\Images\arrowblue-icn.png" />
     <Content Include="Areas\CustomerSetting\Images\arrowdown-icn.png" />
     <Content Include="Areas\CustomerSetting\Images\btn-bgsubmit-hover.png" />

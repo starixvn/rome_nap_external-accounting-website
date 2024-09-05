@@ -86,11 +86,17 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var products = _customerService.GetCustomerAllStatus(custId, Config.SettingStatus);
             if (products?.DCSProductsSetting != null && products.DCSProductsSetting.Any())
             {
+                // Hardcode for Bitcoin
+                if (products.DCSProductsSetting.Any(p => p.ProductID == ProductConstants.Bitcoin))
+                {
+                    products.DCSProductsSetting.RemoveAll(i => i.ProductID == ProductConstants.Bitcoin);
+                    products.ProductGroups.Add(new Product(ProductGroupConstants.OtherGames, ProductGroupConstants.OtherGames, CacheRef.GetProductName(ProductConstants.Bitcoin)));
+                }
+
                 products.DCSProductsSetting.RemoveAll(
                     i => i.ProductID == ProductConstants.SabaVirtualSports
                     || i.ProductID == ProductConstants.Cashout);
             }
-
             return Json(products);
         }
 

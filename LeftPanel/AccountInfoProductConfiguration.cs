@@ -23,7 +23,6 @@
             {
                 // Show edit bet setting tab for edit super setting
                 {ProductConstants.Sportsbook, eFunctions.SportsbookBetting},
-                {ProductConstants.Bitcoin, eFunctions.BitcoinBetting}
             };
 
         public static List<ObjectInfo> CreateSyncAndHiddenItems(DataTable dcsProductStatusTable)
