@@ -38,7 +38,7 @@ namespace Fanex.ExternalAccount.Service.UserControl
             {
                 GroupName = groupName,
                 SubGroup = subGroupName,
-                ListGroups = string.Join(",", _groupDao.GetAllGroup(0).Select(group => group.GroupName)),
+                ListGroups = string.Join(",", _groupDao.GetAllGroup(1).Select(group => group.GroupName)),
                 Username = username,
                 PageSize = pageSize,
                 PageIndex = pageIndex
