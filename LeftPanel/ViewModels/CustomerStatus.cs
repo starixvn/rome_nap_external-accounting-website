@@ -18,21 +18,13 @@
 
         public bool DisableTransfer { get; set; }
 
-        public bool DisableVirtualSports { get; set; }
-
-        public bool AllowOutright { get; set; }       
+        public bool AllowOutright { get; set; }
 
         public bool DisableCasino { get; set; }
 
         public bool Closed { get; set; }
 
         public bool Suspended { get; set; }
-
-        public bool HideVirtualSports { get; set; }
-
-        public bool DisableSportsbook2 { get; set; }
-
-        public bool HideSportsbook2 { get; set; }
 
         public Dictionary<int, ProductStatus> ProductStatusDic { get; set; }
     }

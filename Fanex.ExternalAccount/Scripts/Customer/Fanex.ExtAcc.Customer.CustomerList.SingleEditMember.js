@@ -57,11 +57,6 @@
                     }
 
                     var has3rdParty = false;
-                    if (!result.HideVirtualSport) {
-                        has3rdParty = true;
-                        addEditProductMemberContextMenuItem(5, 'virtualSport', 'Virtual Sports');
-                    }
-
                     for (var i = 0, max = result.DCSProductsSetting.length; i < max; i++) {
                         has3rdParty = true;
                         var productSetting = result.DCSProductsSetting[i];

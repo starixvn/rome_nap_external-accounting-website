@@ -27,7 +27,7 @@
                             className: "iconEnableEdit",
                             callback: function () {
                                 Fanex.ExtAcc.Customer.IsFullInfo = true;
-                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Customer/EditCustomer?roleId=2&uplineRoleId=3&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + "&productGroupId=" + id +  '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit ' + name + ' Setting ' + '<font color="#6dcff6">' + title + '</font>', 1250, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
+                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Customer/EditCustomer?roleId=2&uplineRoleId=3&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + "&productGroupId=" + id + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit ' + name + ' Setting ' + '<font color="#6dcff6">' + title + '</font>', 1250, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
                             }
                         };
                     }
@@ -57,11 +57,6 @@
                     }
 
                     var has3rdParty = false;
-                    if (!result.HideVirtualSport) {
-                        has3rdParty = true;
-                        addEditProductAgentContextMenuItem(5, 'virtualSport', 'Virtual Sports');
-                    }
-
                     for (var i = 0, max = result.DCSProductsSetting.length; i < max; i++) {
                         has3rdParty = true;
                         var productSetting = result.DCSProductsSetting[i];

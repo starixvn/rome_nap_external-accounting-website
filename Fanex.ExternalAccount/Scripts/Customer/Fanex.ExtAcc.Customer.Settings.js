@@ -21,11 +21,6 @@ Fanex.ExtAcc.Customer.Settings = {
         $('#tabs').tabs();
 
         $('#tab4').css('display', Fanex.ExtAcc.Customer.HideCasino ? 'none' : 'block');
-        $('#tab8').css('display', Fanex.ExtAcc.Customer.HideVirtualSports ? 'none' : 'block');
-
-        $('#tab8').bind('click', function () {
-            Fanex.ExtAcc.Customer.Settings.RenderDCS(5, "#virtualSportsFrame", "#tabs-8");
-        });
 
         $('.dynamic-setting-tab').bind('click', function () {
             var productId = $(this).attr('data-product-id');

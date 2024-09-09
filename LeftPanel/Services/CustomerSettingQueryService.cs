@@ -50,9 +50,8 @@
                 Details(customerStatusInfoDataset)
             );
 
-            if (!this.currentSession.IsBelongToSpecialGroups)
+            if (!currentSession.IsBelongToSpecialGroups)
             {
-                AddDummyProductStatus(table3rdDCS, setting.EditItems, setting.EnableItems);
                 AddProductGroupStatus(
                     table3rdDCS,
                     setting.EditItems,
@@ -60,6 +59,14 @@
                     ProductGroupConstants.LiveAndRNGCasino,
                     new ObjectInfo("EnableLiveAndRNGCasino", "LiveAndRNGCasino", "Live & RNG Casino"),
                     true);
+
+                AddProductGroupStatus(
+                   table3rdDCS,
+                   setting.EditItems,
+                   setting.EnableItems,
+                   ProductGroupConstants.LiveAndRNGCasino,
+                   new ObjectInfo("EnableRNGGames", "RNGGames", "RNG Games"),
+                   true);
             }
 
             foreach (var productSettingParam in productSettingElements)
@@ -67,15 +74,12 @@
                 setting = AddProductSetting(setting, table3rdDCS, productSettingParam);
             }
 
-            AddDummyProductLink(table3rdDCS, setting.Details);
-
             return setting;
         }
 
         internal List<ObjectInfo> EnableItems(DataSet customerStatusInfoDataset)
         {
             var nonProductStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];
-            var table3rdDCS = customerStatusInfoDataset.Tables[1];
             var enableItems = new List<ObjectInfo>
             {
                 ClosedStatus(nonProductStatusRow),
@@ -91,46 +95,9 @@
             enableItems.Add(SuspendedStatus(nonProductStatusRow));
             enableItems.Add(OutrightStatus(nonProductStatusRow));
 
-            if (!this.currentSession.IsBelongToSpecialGroups)
-            {
-                AddVirtualSportsStatus(table3rdDCS, enableItems);
-            }
-
             AddDoubleCommStatus(nonProductStatusRow, enableItems);
 
             return enableItems;
-        }
-
-        private static void AddVirtualSportsStatus(DataTable table3rdDCS, ICollection<ObjectInfo> enableItems)
-        {
-            if (table3rdDCS.IsProductHidden(ProductConstants.VirtualSports))
-            {
-                return;
-            }
-
-            var virtualSportsStatus = new ObjectInfo("EnableVirtualSports",
-               !table3rdDCS.IsProductDisabled(ProductConstants.VirtualSports), "Virtual Sports");
-
-            if (table3rdDCS.IsProductDisabledUpline(ProductConstants.VirtualSports))
-            {
-                virtualSportsStatus = DisableStatus(virtualSportsStatus);
-            }
-
-            enableItems.Add(virtualSportsStatus);
-        }
-
-        private void AddDummyProductStatus(DataTable table3rdDCS, List<ObjectInfo> editItems, List<ObjectInfo> enableItems)
-        {
-            if (ProductSettings.IsShowRNGLottery)
-            {
-                AddDummyProductStatus(
-                    table3rdDCS,
-                    editItems,
-                    enableItems,
-                    ProductConstants.RNGLottery,
-                    new ObjectInfo("EnableRNGLottery", "RNG Lottery", "RNG Lottery"),
-                    true);
-            }
         }
 
         private static void AddProductGroupStatus(DataTable table3rdDCS, List<ObjectInfo> editItems, List<ObjectInfo> enableItems, int productGroupId, ObjectInfo productStatus, bool isLink)
@@ -153,63 +120,6 @@
         {
             var rows = table3rdDCS.Select($"GroupID = {productGroupId} AND isHidden = 0");
             if (rows != null && rows.Length > 0)
-            {
-                editLinks.Add(productSetting);
-            }
-        }
-
-        private void AddDummyProductStatus(DataTable table3rdDCS, List<ObjectInfo> editItems, List<ObjectInfo> enableItems, int productId, ObjectInfo productStatus, bool isLink)
-        {
-            var disableUpline = false;
-            var isHideUpline = true;
-            var isHide = true;
-            foreach (var sporttype in table3rdDCS.Select($"ProductID = {productId}"))
-            {
-                disableUpline = disableUpline || sporttype.IsDisabledUpline();
-                isHideUpline = isHideUpline && sporttype.IsHiddenUpline();
-                isHide = isHide && sporttype.IsHidden();
-            }
-
-            var isShowProduct = !IsHiddenProduct(_roleId, isHideUpline, isHide);
-
-            if (isShowProduct)
-            {
-                if (disableUpline)
-                {
-                    productStatus = DisableStatus(productStatus);
-                }
-
-                if (isLink)
-                {
-                    editItems.Add(productStatus);
-                }
-                else
-                {
-                    enableItems.Add(productStatus);
-                }
-            }
-        }
-
-        private void AddDummyProductLink(DataTable table3rdDCS, List<ObjectInfo> editLinks)
-        {
-            if (ProductSettings.IsShowRNGLottery)
-            {
-                AddDummyProductLink(table3rdDCS, editLinks, ProductConstants.RNGLottery, new ObjectInfo("RNGLottery", "RNG Lottery"));
-            }
-        }
-
-        private void AddDummyProductLink(DataTable table3rdDCS, List<ObjectInfo> editLinks, int productId, ObjectInfo productSetting)
-        {
-            var isHideUpline = true;
-            var isHide = true;
-            foreach (var sporttype in table3rdDCS.Select($"ProductID = {productId}"))
-            {
-                isHideUpline = isHideUpline && sporttype.IsHiddenUpline();
-                isHide = isHide && sporttype.IsHidden();
-            }
-
-            var isShowProduct = !IsHiddenProduct(_roleId, isHideUpline, isHide);
-            if (isShowProduct)
             {
                 editLinks.Add(productSetting);
             }
@@ -313,20 +223,10 @@
                 details.Add(new ObjectInfo("Transfer", "Transfer Condition"));
             }
 
-            AddVirtualSportsEditLink(table3rdDCS, details);
             AddProductGroupLink(table3rdDCS, details, ProductGroupConstants.LiveAndRNGCasino, new ObjectInfo("LiveAndRNGCasino", "Live & RNG Casino"));
+            AddProductGroupLink(table3rdDCS, details, ProductGroupConstants.RNGGames, new ObjectInfo("RNGGames", "RNG Games"));
 
             return details;
-        }
-
-        private void AddVirtualSportsEditLink(DataTable table3rdDCS, ICollection<ObjectInfo> details)
-        {
-            if (_roleId.IsMember() ?
-                !table3rdDCS.IsProductHiddenUpline(ProductConstants.VirtualSports) :
-                !table3rdDCS.IsProductHidden(ProductConstants.VirtualSports))
-            {
-                details.Add(new ObjectInfo("VirtualSports", "Virtual Sports"));
-            }
         }
 
 #pragma warning disable S1541 // Methods and properties should not be too complex

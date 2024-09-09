@@ -26,9 +26,8 @@
     AllowDoubleCommMaster: false,
     AllowDoubleCommAgent: false,
     AllowDoubleComm: false,
-    HideVirtualSports: false,
     UplineProductSettings: [],
-    ProductGroups:[],
+    ProductGroups: [],
 
     isSuperEditMember: false,
     isMasterEditMember: false,

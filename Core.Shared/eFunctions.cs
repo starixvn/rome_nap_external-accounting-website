@@ -24,6 +24,8 @@
 
         public const string Statement = "Statement";
         public const string Sportsbook = "Sportsbook";
+        public const string RNGGames = "RNGGames";
+        public const string RNGGamesBetting = "RNGGamesBetting";
         public const string LiveAndRNGCasino = "LiveAndRNGCasino";
         public const string LiveAndRNGCasinoBetting = "LiveAndRNGCasinoBetting";
         public const string Casino = "Casino";
