@@ -21,7 +21,7 @@
         public string Username { get; }
 
         public override string GetSettingKey()
-            => "EAS_UserCheckBelonging";
+            => "EAS_CustomerSelCheckBelonging";
 
         public override bool IsValid()
             => !string.IsNullOrEmpty(Username) || CustId > 0;
