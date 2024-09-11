@@ -1376,9 +1376,6 @@
       <SubType>Designer</SubType>
       <DependentUpon>appSettings.config</DependentUpon>
     </Content>
-    <Content Include="Configurations\connectionStrings.aws.config">
-      <DependentUpon>connectionStrings.config</DependentUpon>
-    </Content>
     <Content Include="Configurations\connectionStrings.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>connectionStrings.config</DependentUpon>
