@@ -106,7 +106,7 @@
 
         public static IList<int> ProductOfferProductDetails()
         {
-            var allProducts = GetValue("OfferProductDetailsGroups");
+            var allProducts = GetValue("ProductOfferProductDetails");
 
             return allProducts.Split(',').Select(id => Utils.ToInt32(id))
                 .ToList();

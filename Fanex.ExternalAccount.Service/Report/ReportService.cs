@@ -179,7 +179,7 @@
             var productOfferProductDetails = Config.ProductOfferProductDetails();
             if (string.IsNullOrWhiteSpace(resourceIds) && Config.IsOfferProductDetailGroup(groupName))
             {
-                productIdList = productIdList.Where(id => !productOfferProductDetails.Contains(id));
+                productIdList = productIdList.Where(id => !productOfferProductDetails.Contains(id) && id != ProductConstants.Sportsbook);
             }
 
             return ConcatProductName(productIdList, resourceIds, groupName);

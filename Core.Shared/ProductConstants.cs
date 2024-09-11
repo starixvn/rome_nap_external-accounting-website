@@ -35,6 +35,7 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int Live22 = 79;
         public const int FastSpin = 87;
         public const int VGaming = 66;
+        public const int FaChai = 89;
 
         public const int DummyRNGProductId = 53;
 
@@ -53,7 +54,8 @@ namespace Fanex.ExternalAccount.Core.Shared
             MGRNGCasino,
             Live22,
             FastSpin,
-            VGaming
+            VGaming,
+            FaChai
         };
     }
 }
