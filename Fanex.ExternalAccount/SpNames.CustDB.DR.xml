@@ -94,8 +94,6 @@
     <Setting Key="EAS_UserInfoUpdAll" SpName="EAS_UserInfoUpdAll" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserInfoUpdUserPwd" SpName="EAS_UserInfoUpdUserPwd" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_GetCustArchiveStatus" SpName="Acc_GetCustArchiveStatus" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_ServerDBConfigSel" SpName="Acc_ServerDBConfigSel" DbName="DBACC.bodb02.wsv_xnap" />
-    <Setting Key="Acc_ServerDBConfigSelByCust" SpName="Acc_ServerDBConfigSelByCust" DbName="DBACC.bodb02.wsv_xnap" />
   </Function>
   <Function Name="Menu and Function">
     <Setting Key="EAS_FunctionIns" SpName="EAS_FunctionIns" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
@@ -384,7 +382,8 @@
     <Setting Key="EAS_WriteLog_UserLog_UserControl_Wrapper" SpName="EAS_WriteLog_UserLog_UserControl_Wrapper" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="Scaleout DBCUST">
-    <Setting Key="Acc_ServerDBConfigSelByCust" SpName="Acc_ServerDBConfigSelByCust" DbName="DBACC.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="Acc_ServerDBConfigSel" SpName="Acc_ServerDBConfigSel" DbName="DBCust.DBGLOB.wsv_xnap" />
+    <Setting Key="Acc_ServerDBConfigSelByCust" SpName="Acc_ServerDBConfigSelByCust" DbName="DBCust.DBGLOB.wsv_xnap" />
     <Setting Key="Acc_CustomerIns_Register" SpName="Acc_CustomerIns_Register" DbName="DBCust.DBGLOB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerIns_Rollback" SpName="Acc_CustomerIns_Rollback" DbName="DBCust.DBGLOB.wsv_xnap" Plain="0" />
   </Function>

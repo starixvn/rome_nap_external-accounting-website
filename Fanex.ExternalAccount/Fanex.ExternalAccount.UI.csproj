@@ -1469,9 +1469,6 @@
     </Content>
     <Content Include="Views\Customer\MultipleOpenCustomer.cshtml" />
     <Content Include="Views\Customer\SingleOpenCustomer.cshtml" />
-    <Content Include="SpNames.CustDB.aws.xml">
-      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
-    </Content>
     <Content Include="Views\Customer\SportBookInformation-Debug.cshtml" />
     <Content Include="Views\Customer\SportBookInformation.cshtml" />
     <Content Include="Views\HeadlineList\Index.cshtml" />
