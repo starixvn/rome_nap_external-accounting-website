@@ -104,77 +104,22 @@
             return GetValue("SpecialGroups").Split(',').Select(g => g.Trim()).ToArray();
         }
 
-        public static bool IsOfferProductDetail(string currentGroup)
-            => IsOfferJackpotProductDetailsGroup(currentGroup) ||
-            IsOfferSexyGamingProductDetailsGroup(currentGroup) ||
-            IsOfferSpadeGamingProductDetailsGroup(currentGroup) ||
-            IsOfferSabaProductDetailsGroup(currentGroup) ||
-            IsOfferMGRNGCasinoProductDetailsGroup(currentGroup);
-
-        public static bool IsOfferMGRNGCasinoProductDetailsGroup(string currentGroup)
+        public static IList<int> ProductOfferProductDetails()
         {
-            var allGroups = GetValue("OfferMGRNGCasinoProductDetailsGroups");
+            var allProducts = GetValue("ProductOfferProductDetails");
 
-            return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
+            return allProducts.Split(',').Select(id => Utils.ToInt32(id))
+                .ToList();
         }
 
-        public static bool IsOfferAllbetProductDetailsGroup(string currentGroup)
+        public static bool IsOfferProductDetailGroup(string currentGroup)
         {
-            var allGroups = GetValue("OfferAllbetProductDetailsGroups");
+            var allGroups = GetValue("OfferProductDetailsGroups");
 
-            return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
+            return "*" == allGroups || IsOfferProductDetailsGroup(allGroups, currentGroup);
         }
 
-        public static bool IsOfferJackpotProductDetailsGroup(string currentGroup)
-        {
-            var allGroups = GetValue("OfferJackpotProductDetailsGroups");
-
-            return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
-        }
-
-        public static bool IsOfferSabaProductDetailsGroup(string currentGroup)
-        {
-            var allGroups = GetValue("OfferSabaProductDetailsGroups");
-
-            return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
-        }
-
-        public static bool IsOfferSexyGamingProductDetailsGroup(string currentGroup)
-        {
-            var allGroups = GetValue("OfferSexyGamingProductDetailsGroups");
-
-            return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
-        }
-
-        public static bool IsOfferSpadeGamingProductDetailsGroup(string currentGroup)
-        {
-            var allGroups = GetValue("OfferSpadeGamingProductDetailsGroups");
-
-            return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
-        }
-
-        public static bool IsOfferLive22ProductDetailsGroup(string currentGroup)
-        {
-            var allGroups = GetValue("OfferLive22ProductDetailsGroups");
-
-            return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
-        }
-
-        public static bool IsOfferFastSpinProductDetailsGroup(string currentGroup)
-        {
-            var allGroups = GetValue("OfferFastSpinProductDetailsGroups");
-
-            return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
-        }
-
-        public static bool IsOfferVGamingProductDetailsGroup(string currentGroup)
-        {
-            var allGroups = GetValue("OfferVGamingProductDetailsGroups");
-
-            return "*" == allGroups || IsOfferJackpotProductDetailsGroup(allGroups, currentGroup);
-        }
-
-        private static bool IsOfferJackpotProductDetailsGroup(string allGroups, string currentGroup)
+        private static bool IsOfferProductDetailsGroup(string allGroups, string currentGroup)
             => !string.IsNullOrWhiteSpace(allGroups)
                 && allGroups.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(g => g.Trim())
