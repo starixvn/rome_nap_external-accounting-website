@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Fanex.Caching;
-using Fanex.Caching.Memory;
 using Fanex.CustomerSetting.Module.Core.Services.Impl;
 using Fanex.ExternalAccount.DataAccess.Criteria.TotalBet;
 using Fanex.ExternalAccount.DTO;
@@ -14,12 +11,6 @@ namespace Fanex.ExternalAccount.Service.TotalBet
 {
     public class TotalBetService : ITotalBetService
     {
-        private const string EventsCachedKey = "Fanex.ExternalAccount.Service.Report.TotalBet.EventsCachedKey";
-        private const int EventsCachedTimeInMinutes = 2;
-
-        private static readonly ICacheService Cache
-            = new CacheService(new MemoryCache(new MemoryCacheOptions()));
-
         private readonly IDynamicRepository dynamicRepository;
 
         public TotalBetService() : this(null) { }
@@ -42,80 +33,60 @@ namespace Fanex.ExternalAccount.Service.TotalBet
             return data;
         }
 
-        public IEnumerable<EventModel> GetEvents(int leagueId)
+        public IEnumerable<EventModel> GetEvents(string leagueIds)
         {
-            return Cache.GetOrSet($"{EventsCachedKey}-{leagueId}",
-                () =>
-                {
-                    var criteria = new GetEventsCriteria(leagueId);
-                    var data = dynamicRepository.Fetch<EventModel>(criteria).ToList();
+            var criteria = new GetEventsCriteria(leagueIds);
+            var data = dynamicRepository.Fetch<EventModel>(criteria).ToList();
 
-                    foreach (var d in data)
-                    {
-                        d.MatchName = CacheRef.GetTeamName(d.HomeId) + (d.IsNeutral ? " (N)" : string.Empty) + " -vs- " + CacheRef.GetTeamName(d.AwayId);
-                    }
+            foreach (var d in data)
+            {
+                d.MatchName = CacheRef.GetTeamName(d.HomeId) + (d.IsNeutral ? " (N)" : string.Empty) + " -vs- " + CacheRef.GetTeamName(d.AwayId);
+            }
 
-                    return data;
-                },
-                new CacheItemOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(EventsCachedTimeInMinutes)));
+            return data;
         }
 
-        public IEnumerable<TotalBetModel> GetData(GetTotalBetParam param)
+        public IEnumerable<TotalBetLeagueModel> GetData(GetTotalBetParam param)
         {
             var criteria = new GetTotalBetCriteria
             {
                 GroupName = param.GroupName,
                 ViewMode = param.ViewMode,
-                LeagueIds = param.League.ToString(),
+                LeagueIds = string.Join(",", param.Leagues),
                 MatchIds = string.Join(",", param.Events),
+                BaseCurrency = param.BaseCurrency
             };
+            var leagues = dynamicRepository.Fetch<TotalBetModel>(criteria).GroupBy(d => d.LeagueId);
+            var result = new List<TotalBetLeagueModel>();
 
-            var data = dynamicRepository.Fetch<TotalBetModel>(criteria).ToList();
-
-            foreach (var d in data)
+            foreach (var league in leagues)
             {
-                d.HDPFT = RoundNumber(d.HDPFT);
-                d.OUFT = RoundNumber(d.OUFT);
-                d.HDPHT = RoundNumber(d.HDPHT);
-                d.OUHT = RoundNumber(d.OUHT);
+                var events = new List<TotalBetModel>();
+                foreach (var d in league)
+                {
+                    d.HDPFT = RoundNumber(d.HDPFT);
+                    d.OUFT = RoundNumber(d.OUFT);
+                    d.HDPHT = RoundNumber(d.HDPHT);
+                    d.OUHT = RoundNumber(d.OUHT);
 
-                d.IsLatest = !data.Any(x => x.MatchId == d.MatchId && x.TotalScore > d.TotalScore);
-                d.HomeName = CacheRef.GetTeamName(d.HomeId);
-                d.AwayName = CacheRef.GetTeamName(d.AwayId);
+                    d.IsLatest = !league.Any(x => x.MatchId == d.MatchId && x.TotalScore > d.TotalScore);
+                    d.HomeName = CacheRef.GetTeamName(d.HomeId);
+                    d.AwayName = CacheRef.GetTeamName(d.AwayId);
+                    events.Add(d);
+                }
+
+                result.Add(new TotalBetLeagueModel
+                {
+                    LeagueId = league.Key,
+                    LeagueName = CacheRef.GetLeagueName(league.Key),
+                    Events = events
+                });
             }
 
-            return data;
+            return result;
         }
 
         private static decimal? RoundNumber(decimal? d)
             => d.HasValue ? (decimal?)int.Parse(d.Value.ToString("N0").Replace(",", string.Empty)) : null;
-
-        public IEnumerable<TotalBetModel> GetDataMC(GetTotalBetMCParam param)
-        {
-            var criteria = new GetTotalBetMCCriteria
-            {
-                GroupName = param.GroupName,
-                ViewMode = param.ViewMode,
-                LeagueIds = param.League.ToString(),
-                MatchIds = string.Join(",", param.Events),
-                BaseCurrency = param.BaseCurrency
-            };
-
-            var data = dynamicRepository.Fetch<TotalBetModel>(criteria).ToList();
-
-            foreach (var d in data)
-            {
-                d.HDPFT = RoundNumber(d.HDPFT);
-                d.OUFT = RoundNumber(d.OUFT);
-                d.HDPHT = RoundNumber(d.HDPHT);
-                d.OUHT = RoundNumber(d.OUHT);
-
-                d.IsLatest = !data.Any(x => x.MatchId == d.MatchId && x.TotalScore > d.TotalScore);
-                d.HomeName = CacheRef.GetTeamName(d.HomeId);
-                d.AwayName = CacheRef.GetTeamName(d.AwayId);
-            }
-
-            return data;
-        }
     }
 }

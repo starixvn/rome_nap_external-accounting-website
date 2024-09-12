@@ -1,6 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Requests
 {
-    using System;
     using System.Collections.Generic;
     using Core.Context;
 
@@ -17,7 +16,7 @@
 
         public string GroupName => extRequest.GetGroupName();
         public int ViewMode { get; set; }
-        public int League { get; set; }
+        public IEnumerable<int> Leagues { get; set; }
         public IEnumerable<int> Events { get; set; }
     }
 

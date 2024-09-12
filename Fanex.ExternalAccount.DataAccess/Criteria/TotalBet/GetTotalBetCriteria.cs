@@ -8,6 +8,7 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.TotalBet
         public int ViewMode { get; set; }
         public string LeagueIds { get; set; }
         public string MatchIds { get; set; }
+        public int BaseCurrency { get; set; }
 
         public override string GetSettingKey() => "EAS_TotalBet_1378Sel";
     }

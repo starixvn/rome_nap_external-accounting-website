@@ -325,7 +325,6 @@
     <Setting Key="EAS_TotalBet_LeagueSel" SpName="EAS_TotalBet_LeagueSel" DbName="DBBOF.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_TotalBet_EventSel" SpName="EAS_TotalBet_EventSel" DbName="DBBOF.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_TotalBet_1378Sel" SpName="EAS_TotalBet_1378Sel" DbName="DBBOF.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_TotalBet_1378Sel_ByCurrency" SpName="EAS_TotalBet_1378Sel_ByCurrency" DbName="DBBOF.bodb02.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="Mark Account Type">
     <Setting Key="EAS_AccountType_Check" SpName="EAS_AccountType_Check" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />

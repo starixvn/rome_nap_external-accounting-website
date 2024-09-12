@@ -8,8 +8,7 @@ namespace Fanex.ExternalAccount.Service.TotalBet
     public interface ITotalBetService
     {
         IEnumerable<LeagueModel> GetLeagues(bool isTest);
-        IEnumerable<EventModel> GetEvents(int leagueId);
-        IEnumerable<TotalBetModel> GetData(GetTotalBetParam param);
-        IEnumerable<TotalBetModel> GetDataMC(GetTotalBetMCParam param);
+        IEnumerable<EventModel> GetEvents(string leagueIds);
+        IEnumerable<TotalBetLeagueModel> GetData(GetTotalBetParam param);
     }
 }

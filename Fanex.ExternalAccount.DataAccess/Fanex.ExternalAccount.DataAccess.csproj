@@ -198,7 +198,6 @@
     <Compile Include="Criteria\TotalBet\GetEventsCriteria.cs" />
     <Compile Include="Criteria\TotalBet\GetTotalBetCriteria.cs" />
     <Compile Include="Criteria\TotalBet\GetLeaguesCriteria.cs" />
-    <Compile Include="Criteria\TotalBet\GetTotalBetMCCriteria.cs" />
     <Compile Include="Criteria\UserControl\GetGroupPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\GetUserPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateMultipleGroupPolicyCriteria.cs" />
