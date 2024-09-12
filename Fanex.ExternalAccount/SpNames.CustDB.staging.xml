@@ -378,9 +378,9 @@
     <Setting Key="EAS_WriteLog_UserLog_UserControl_Wrapper" SpName="EAS_WriteLog_UserLog_UserControl_Wrapper" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="Scaleout DBCUST">
-    <Setting Key="Acc_ServerDBConfigSel" SpName="Acc_ServerDBConfigSel" DbName="DBCust.DBGLOB.wsv_xnap" />
-    <Setting Key="Acc_ServerDBConfigSelByCust" SpName="Acc_ServerDBConfigSelByCust" DbName="DBCust.DBGLOB.wsv_xnap" />
-    <Setting Key="Acc_CustomerIns_Register" SpName="Acc_CustomerIns_Register" DbName="DBCust.DBGLOB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerIns_Rollback" SpName="Acc_CustomerIns_Rollback" DbName="DBCust.DBGLOB.wsv_xnap" Plain="0" />
+    <Setting Key="Acc_ServerDBConfigSel" SpName="Acc_ServerDBConfigSel" DbName="DBGLOB.GlobCustDB.wsv_xnap" />
+    <Setting Key="Acc_ServerDBConfigSelByCust" SpName="Acc_ServerDBConfigSelByCust" DbName="DBGLOB.GlobCustDB.wsv_xnap" />
+    <Setting Key="Acc_CustomerIns_Register" SpName="Acc_CustomerIns_Register" DbName="DBGLOB.GlobCustDB.wsv_xnap" Plain="0" />
+    <Setting Key="Acc_CustomerIns_Rollback" SpName="Acc_CustomerIns_Rollback" DbName="DBGLOB.GlobCustDB.wsv_xnap" Plain="0" />
   </Function>
 </Functions>
