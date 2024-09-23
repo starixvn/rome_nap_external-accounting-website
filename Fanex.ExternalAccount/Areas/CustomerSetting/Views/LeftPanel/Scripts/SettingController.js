@@ -940,6 +940,20 @@
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=4" + "&productGroupId=2" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
     };
 
+    $scope.SuperBitcoin = function () {
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        var agentId = $scope.model.personalInfo.downlines[2].key;
+
+        parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.agentId = agentId;
+        parent.Fanex.ExtAcc.Customer.masterId = masterId;
+        parent.Fanex.ExtAcc.Customer.superId = superId;
+        $scope.ResetGlobalValueAtSuperOnMember();
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=4" + "&productGroupId=4" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
+    };
+
     $scope.MasterPT = function () {
         var superId = $scope.model.personalInfo.downlines[0].key;
         var masterId = $scope.model.personalInfo.downlines[1].key;
@@ -982,12 +996,22 @@
         parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=3" + "&productGroupId=2" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
     };
 
-    $scope.SuperFishingWorld = function () {
-        $scope.RenderSupeOnMemberDCS(24);
+    $scope.MasterBitcoin = function () {
+        var superId = $scope.model.personalInfo.downlines[0].key;
+        var masterId = $scope.model.personalInfo.downlines[1].key;
+        var agentId = $scope.model.personalInfo.downlines[2].key;
+
+        $scope.ResetGlobalValueAtMasterOnMember();
+        parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
+        parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        parent.Fanex.ExtAcc.Customer.agentId = agentId;
+        parent.Fanex.ExtAcc.Customer.masterId = masterId;
+        parent.Fanex.ExtAcc.Customer.superId = superId;
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=3" + "&productGroupId=4" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
     };
 
-    $scope.SuperBitcoin = function () {
-        $scope.RenderSupeOnMemberDCS(69);
+    $scope.SuperFishingWorld = function () {
+        $scope.RenderSupeOnMemberDCS(24);
     };
 
     $scope.RenderSupeOnMemberDCS = function (productId) {
@@ -997,10 +1021,6 @@
 
     $scope.MasterFishingWorld = function () {
         $scope.RenderMasterOnMemberDCS(24);
-    };
-
-    $scope.MasterBitcoin = function () {
-        $scope.RenderMasterOnMemberDCS(69);
     };
 
     $scope.RenderMasterOnMemberDCS = function (productId) {
