@@ -668,6 +668,11 @@ Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus = function (productIds) {
     if (custIds.len === 0) {
         Fanex.ExtAcc.Form.ShowFrame(blankUrl, title, width, height, false, false, 1);
     } else {
+        // Hardcode for Bitcoin
+        if (productIds.indexOf(4) > 0) {
+            productIds[productIds.indexOf(4)] = 69;
+        }
+
         document.getElementById('productIds').value = productIds.join(',');
         document.getElementById('custIds').value = custIds;
         document.getElementById('custNames').value = this.Names().join(', ');

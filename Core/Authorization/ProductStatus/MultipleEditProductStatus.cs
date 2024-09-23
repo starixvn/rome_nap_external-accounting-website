@@ -25,6 +25,7 @@
                         {
                             var productType = Convert.ToByte(reader["product_type"]);
                             var productId = Convert.ToInt32(reader["productid"]);
+
                             yield return new Product(
                                 productId,
                                 productType == ProductGroupType ? CacheRef.GetProductGroupName(productId) : CacheRef.GetProductName(productId),
