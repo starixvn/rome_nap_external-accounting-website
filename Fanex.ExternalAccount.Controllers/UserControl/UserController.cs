@@ -320,8 +320,7 @@
             return JsonBase(result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
-            Policy = AuthenticateAction.AuthenticationType.Host)]
+        [AntiXSRFFilter]
         public ActionResult ResetPasswordOwner(int id)
         {
             if (id != CurrentSession.UserId)
