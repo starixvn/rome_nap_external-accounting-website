@@ -383,12 +383,12 @@
             return items;
         }
 
-        public Result ClearMemberCredit(int userId, decimal totalAmt, string username = null)
+        public Result ClearMemberCredit(decimal totalAmt, string username = null)
         {
             var hash = new Hashtable
             {
                 {"username", username},
-                {"userid", userId},
+                {"userid", CurrentSession.Instance.UserId},
                 {"returnerrcode", 1},
                 {"errcode", 0},
                 {"errmsg", string.Empty},
@@ -400,12 +400,12 @@
             return ClearCredit(hash);
         }
 
-        public Result ClearSMACredit(int userId, string username = null)
+        public Result ClearSMACredit(string username = null)
         {
             var hash = new Hashtable
             {
                 {"username", username},
-                {"userid", userId},
+                {"userid", CurrentSession.Instance.UserId},
                 {"returnerrcode", 1},
                 {"errcode", 0},
                 {"errmsg", string.Empty},

@@ -59,8 +59,8 @@
 
         decimal GetTotalAmount(int custId, SiteDB siteDB);
 
-        Result ClearMemberCredit(int userId, decimal totalAmt, string username = null);
+        Result ClearMemberCredit(decimal totalAmt, string username = null);
 
-        Result ClearSMACredit(int userId, string username = null);
+        Result ClearSMACredit(string username = null);
     }
 }

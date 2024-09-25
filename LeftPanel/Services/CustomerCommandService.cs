@@ -113,10 +113,10 @@
                     var siteDB = siteDBService.GetSiteDBConfig(custId);
                     var totalAmt = customerDataAccess.GetTotalAmount(custId, siteDB);
 
-                    return customerDataAccess.ClearMemberCredit(custId, totalAmt, custName);
+                    return customerDataAccess.ClearMemberCredit(totalAmt, custName);
                 }
 
-                return customerDataAccess.ClearSMACredit(custId, custName);
+                return customerDataAccess.ClearSMACredit(custName);
             }
 
             return result;
