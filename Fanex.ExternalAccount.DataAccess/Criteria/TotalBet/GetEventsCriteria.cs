@@ -4,12 +4,12 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.TotalBet
 {
     public class GetEventsCriteria : CriteriaBase
     {
-        public GetEventsCriteria(int leagueId)
+        public GetEventsCriteria(string leagueIds)
         {
-            LeagueId = leagueId;
+            LeagueIds = leagueIds;
         }
 
-        public int LeagueId { get; set; }
+        public string LeagueIds { get; set; }
 
         public override string GetSettingKey() => "EAS_TotalBet_EventSel";
     }

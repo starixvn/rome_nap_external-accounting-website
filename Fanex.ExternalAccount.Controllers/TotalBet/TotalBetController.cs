@@ -46,11 +46,11 @@
             return View(filters);
         }
 
-        public ActionResult GetEvents(int leagueId)
+        public ActionResult GetEvents(string leagueIds)
         {
-            var events = leagueId == 0
+            var events = string.IsNullOrWhiteSpace(leagueIds)
                 ? Enumerable.Empty<EventModel>()
-                : totalBetService.GetEvents(leagueId);
+                : totalBetService.GetEvents(leagueIds);
 
             return Json(events);
         }
@@ -61,7 +61,7 @@
             {
                 GroupName = request.GroupName,
                 ViewMode = request.ViewMode,
-                League = request.League,
+                Leagues = request.Leagues,
                 Events = request.Events,
             };
 

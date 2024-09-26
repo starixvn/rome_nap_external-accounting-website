@@ -204,6 +204,7 @@
     <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailMCByPTModel.cs" />
     <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossDetailMCByUsernameModel.cs" />
     <Compile Include="SiteDB.cs" />
+    <Compile Include="TotalBet\TotalBetLeagueModel.cs" />
     <Compile Include="TotalBet\TotalBetModel.cs" />
     <Compile Include="Report\ExtraPTModel.cs" />
     <Compile Include="Report\SuperWinLossDetailByPT\SuperPositionTakingModel.cs" />

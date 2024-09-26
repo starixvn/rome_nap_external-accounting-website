@@ -40,8 +40,7 @@ Fanex.ExtAcc.TotalBetMC = {
         $this.hideFilter = !$this.hideFilter;
     },
     getEvents: function () {
-        Fanex.ExtAcc.TotalBetMC.leagueName = $("#ddl-leagues").fanexSingleSelect("getSelectedTexts", true);
-        var leagueId = $("#ddl-leagues").fanexSingleSelect("getItems", true);
+        var leagueIds = $("#ddl-leagues").fanexMultiSelectSearchable("getItems", true);
 
         Fanex.ExtAcc.BlockUI();
 
@@ -49,7 +48,7 @@ Fanex.ExtAcc.TotalBetMC = {
             context: this,
             url: resolveClientUrl("TotalBetMC/GetEvents"),
             type: "POST",
-            data: { leagueId: parseInt(leagueId) },
+            data: { leagueIds: leagueIds.join(",") },
             dataType: "json",
             cache: false,
             success: function (result) {
@@ -75,7 +74,7 @@ Fanex.ExtAcc.TotalBetMC = {
         });
 
         var $this = this;
-        $("#ddl-leagues").fanexSingleSelect({
+        $("#ddl-leagues").fanexMultiSelectSearchable({
             showFilter: true,
             toggleWidth: isMobile.phone ? 243 : 193,
             minWidth: isMobile.phone ? 300 : 500,
@@ -85,7 +84,7 @@ Fanex.ExtAcc.TotalBetMC = {
             customCheckAllText: "All Leagues",
             isCheckAll: false,
             listData: items,
-            multiple: false,
+            multiple: true,
             onCheck: function () { $this.getEvents(); }
         });
     },
@@ -122,12 +121,11 @@ Fanex.ExtAcc.TotalBetMC = {
         var viewMode = $("#ddl-view-by").val();
         var baseCurrency = $("#ddl-base-currency").val();
 
-        var league = $("#ddl-leagues").fanexSingleSelect("getItems", true);
+        var leagues = $("#ddl-leagues").fanexMultiSelectSearchable("getItems", true);
         var events = $("#ddl-events").fanexMultiSelectSearchable("getItems", true);
         var param = {
             viewMode: viewMode,
-            league: league,
-            leagueName: $("#ddl-leagues").fanexSingleSelect("getSelectedTexts", true),
+            leagues: leagues,
             events: events,
             baseCurrency: baseCurrency
         };
@@ -194,25 +192,16 @@ Fanex.ExtAcc.TotalBetMC = {
         var headers = [
             {
                 Columns: [
-                    { HeaderText: "Time", Name: "Time", HeaderAlign: "center" },
-                    { HeaderText: "Event", Name: "Event" },
+                    { HeaderText: "Time", Name: "Time", MergeRowNumber: 2, HeaderAlign: "center" },
+                    { HeaderText: "Event", Name: "Event", MergeRowNumber: 2 },
                     { HeaderText: "Full Time", Name: "FullTime_HDP", MergeColNumber: 2, ThClass: 'col-full-time' },
                     { HeaderText: "1st Half", Name: "_1stHalf_HDP", MergeColNumber: 2, ThClass: 'col-1st-half' }
-                ]
-            },
-            {
-                Columns: [
-                    { HeaderText: Fanex.ExtAcc.TotalBetMC.filters.leagueName, Name: "Time", HeaderAlign: "left", MergeColNumber: 2, MergeRowNumber: 2, ThClass: 'row-league-title league-name' },
-                    { HeaderText: "Handicap", Name: "FullTime_HDP", MergeRowNumber: 2, ThClass: 'row-league-title' },
-                    { HeaderText: "Over/Under", Name: "FullTime_OU", MergeRowNumber: 2, ThClass: 'row-league-title' },
-                    { HeaderText: "Handicap", Name: "_1stHalf_HDP", MergeRowNumber: 2, ThClass: 'row-league-title' },
-                    { HeaderText: "Over/Under", Name: "_1stHalf_OU", MergeRowNumber: 2, ThClass: 'row-league-title' }
                 ]
             },
         ];
 
         var arrColData = [
-            { HeaderText: Fanex.ExtAcc.TotalBetMC.filters.leagueName, Name: "Time", Width: 130, HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Time", Name: "Time", Width: 130, HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: "Event", Name: "Event", Width: 400 },
             { HeaderText: "Handicap", Name: "FullTime_HDP", Width: 130, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0", FormatNegative: "$" },
             { HeaderText: "Over/Under", Name: "FullTime_OU", Width: 130, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0", FormatNegative: "$" },
@@ -220,28 +209,36 @@ Fanex.ExtAcc.TotalBetMC = {
             { HeaderText: "Over/Under", Name: "_1stHalf_OU", Width: 130, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0", FormatNegative: "$" }];
 
         var bodyData = [];
-        report.forEach(function (v, i) {
-            var isLive = v.LiveIndicator === 2;
-            var rowClass = isLive ? 'row-live-match' : '';
-            var expandButton = isLive && v.IsLatest && v.TotalScore > 0
-                ? ' <span class="tgg-score icon-plus" match-id="' + v.MatchId + '" collapsed="1"></span>'
-                : '';
-            var time = isLive
-                ? '<span class="match-score">Live!</span> ' + v.LiveHomeScore + '-' + v.LiveAwayScore + expandButton
-                : v.ShowTime;
-            var event = v.HomeName + (v.IsNeutral ? ' (N)' : '') + " -vs- " + v.AwayName;
-
+        report.forEach(function (league, il) {
             bodyData.push({
-                CssClass: isLive && !v.IsLatest ? 'hide' : '',
-                CustomAttr: 'match-id="' + v.MatchId + '" latest="' + (v.IsLatest ? 1 : 0) + '"' + (isLive ? ' live="1"' : ''),
                 Columns: [
-                    { Name: "Time", TdClass: rowClass, CustomCellRender: function () { return time; } },
-                    { Name: "Event", TdClass: rowClass, Value: event },
-                    { Name: "FullTime_HDP", TdClass: rowClass, Value: v.Show_FullTime_HDP ? v.HDPFT : '' },
-                    { Name: "FullTime_OU", TdClass: rowClass, Value: v.Show_FullTime_OU ? v.OUFT : '' },
-                    { Name: "_1stHalf_HDP", TdClass: rowClass, Value: v.Show_1stHalf_HDP ? v.HDPHT : '' },
-                    { Name: "_1stHalf_OU", TdClass: rowClass, Value: v.Show_1stHalf_OU ? v.OUHT : '' },
+                    { Name: "Time", TdClass: 'row-league-title', CellAlign: "left", Value: league.LeagueName, MergeColNumber: 6 },
                 ]
+            });
+
+            league.Events.forEach(function (v, i) {
+                var isLive = v.LiveIndicator === 2;
+                var rowClass = isLive ? 'row-live-match' : '';
+                var expandButton = isLive && v.IsLatest && v.TotalScore > 0
+                    ? ' <span class="tgg-score icon-plus" league-id="' + league.LeagueId + '" match-id="' + v.MatchId + '" collapsed="1"></span>'
+                    : '';
+                var time = isLive
+                    ? '<span class="match-score">Live!</span> ' + v.LiveHomeScore + '-' + v.LiveAwayScore + expandButton
+                    : v.ShowTime;
+                var event = v.HomeName + (v.IsNeutral ? ' (N)' : '') + " -vs- " + v.AwayName;
+
+                bodyData.push({
+                    CssClass: isLive && !v.IsLatest ? 'hide' : '',
+                    CustomAttr: 'league-id="' + league.LeagueId + '" match-id="' + v.MatchId + '" latest="' + (v.IsLatest ? 1 : 0) + '"' + (isLive ? ' live="1"' : ''),
+                    Columns: [
+                        { Name: "Time", TdClass: rowClass, CustomCellRender: function () { return time; } },
+                        { Name: "Event", TdClass: rowClass, Value: event },
+                        { Name: "FullTime_HDP", TdClass: rowClass, Value: v.Show_FullTime_HDP ? v.HDPFT : '' },
+                        { Name: "FullTime_OU", TdClass: rowClass, Value: v.Show_FullTime_OU ? v.OUFT : '' },
+                        { Name: "_1stHalf_HDP", TdClass: rowClass, Value: v.Show_1stHalf_HDP ? v.HDPHT : '' },
+                        { Name: "_1stHalf_OU", TdClass: rowClass, Value: v.Show_1stHalf_OU ? v.OUHT : '' },
+                    ]
+                });
             });
         });
 
@@ -272,11 +269,11 @@ Fanex.ExtAcc.TotalBetMC = {
             var isCollapse = $this.attr('collapsed');
             if (isCollapse === '1') {
                 $this.attr('collapsed', '0');
-                $("tr[match-id='" + matchId + "'][live='1'][latest='0']").removeClass('hide');
+                $("tr[match-id='" + matchId + "'][match-id='" + matchId + "'][live='1'][latest='0']").removeClass('hide');
                 $this.removeClass('icon-plus').addClass('icon-minus');
             } else {
                 $this.attr('collapsed', '1');
-                $("tr[match-id='" + matchId + "'][live='1'][latest='0']").addClass('hide');
+                $("tr[match-id='" + matchId + "'][match-id='" + matchId + "'][live='1'][latest='0']").addClass('hide');
                 $this.removeClass('icon-minus').addClass('icon-plus');
             }
 
@@ -284,7 +281,7 @@ Fanex.ExtAcc.TotalBetMC = {
         });
     },
     validateParams: function (param) {
-        if (param.league === '' || param.league === '0' || param.league.length === 0) {
+        if (param.leagues === '') {
             Validators.show($("#ddl-leagues")[0], 'Required field!', undefined, undefined, undefined, undefined, undefined, 3000);
 
             return false;
