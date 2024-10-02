@@ -4,14 +4,11 @@
 
     public class CheckMultipleSupersCriteria : CriteriaBase
     {
-        public CheckMultipleSupersCriteria(int userId, string destUsers, string groupName)
+        public CheckMultipleSupersCriteria(string destUsers, string groupName)
         {
-            UserId = userId;
             DestUsers = destUsers;
             GroupName = groupName;
         }
-
-        public int UserId { get; }
 
         public string SourceUser { get; }
 

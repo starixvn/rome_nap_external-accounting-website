@@ -310,7 +310,6 @@
                 objDb.AddInParameter("Securitycode", DbType.String, code);
                 objDb.AddInParameter("Language", DbType.String, "En");
                 objDb.AddInParameter("IP", DbType.String, CurrentContext.Instance.Ip4Address);
-                objDb.AddInParameter("system", DbType.String, "EXTERNAL");
 #pragma warning disable S109 // Magic numbers should not be used
                 objDb.AddOutParameter("ErrCode", DbType.Int32, 8);
                 objDb.AddOutParameter("ErrMsg", DbType.String, 1000);

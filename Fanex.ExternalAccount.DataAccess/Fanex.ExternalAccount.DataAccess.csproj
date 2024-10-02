@@ -141,6 +141,7 @@
     <Compile Include="Criteria\AutoTransfer\InsertToastMessageCriteria.cs" />
     <Compile Include="Criteria\AutoTransfer\GetAutoTransferJobStatusCriteria.cs" />
     <Compile Include="Criteria\Belonging\CheckBelongingCriteria.cs" />
+    <Compile Include="Criteria\Belonging\CheckCustomerBelongingCriteria.cs" />
     <Compile Include="Criteria\Customer\AssociationAccount\GetAssociationAccountCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckMultipleSupersBetSettingCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckMemberCreationCriteria.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="Login\ILoginDao.cs" />
     <Compile Include="Login\LoginDao.cs" />
     <Compile Include="OTP\CustomerOtpDataAccess.cs" />
+    <Compile Include="Products\GetShowProductsCriteria.cs" />
     <Compile Include="Products\GetProductsCriteria.cs" />
     <Compile Include="Products\GetProductsDetailCriteria.cs" />
     <Compile Include="IPInformatonRepository.cs" />

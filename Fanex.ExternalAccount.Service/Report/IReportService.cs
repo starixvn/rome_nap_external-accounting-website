@@ -37,9 +37,9 @@
 
         List<ExtraPTModel> GetExtraPT(string groupName);
 
-        string BuildTooltipsForLiveCasino(int userId, int groupId);
+        string BuildTooltipsForLiveCasino(int userId,string groupName, int groupId);
 
-        string BuildTooltipsForRNGCasino(int userId, int groupId);
+        string BuildTooltipsForRNGCasino(int userId,string groupName, int groupId);
 
         string ConcatProductName(string productIds, string resourceIds, string groupName);
     }

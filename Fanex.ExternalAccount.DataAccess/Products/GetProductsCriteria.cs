@@ -1,16 +1,20 @@
-﻿namespace Fanex.ExternalAccount.DataAccess.Products
+﻿using Fanex.ExternalAccount.Core.Shared;
+
+namespace Fanex.ExternalAccount.DataAccess.Products
 {
     using Fanex.NAP.Framework.Data;
 
     public class GetProductsCriteria : CriteriaBase
     {
-        public GetProductsCriteria(int? groupId)
+        public GetProductsCriteria(string groupName, string products)
         {
-            GroupId = groupId;
+            GroupName = groupName;
+            Products = products;
         }
 
-        public int? GroupId { get; }
+        public string Products { get; }
 
+        public string GroupName { get; }
         public override string GetSettingKey() => "EAS_GetProductList";
 
         public override bool IsValid() => true;

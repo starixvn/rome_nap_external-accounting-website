@@ -306,8 +306,7 @@
             string internalUrl = InternalLoginManager.GetInternalLoginUrl(site);
             return string.Format(internalUrl, domain);
         }
-
-        [AntiXSRFFilter]
+     
         public ActionResult ResetPwdOwner(int userId, string pwd)
         {
             if (userId != CurrentSession.UserId)
@@ -319,7 +318,7 @@
 
             return JsonBase(result);
         }
-
+    
         public ActionResult ResetPasswordOwner(int id)
         {
             if (id != CurrentSession.UserId)

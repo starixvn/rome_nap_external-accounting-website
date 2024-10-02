@@ -1,4 +1,8 @@
-﻿namespace Fanex.ExternalAccount.Service.UserControl
+﻿using System.Linq;
+using Fanex.ExternalAccount.DataAccess.Impl.UserControl;
+using Fanex.ExternalAccount.DataAccess.Interface.UserControl;
+
+namespace Fanex.ExternalAccount.Service.UserControl
 {
     using System.Collections.Generic;
     using Fanex.ExternalAccount.DataAccess.Criteria.SubGroup;
@@ -10,10 +14,12 @@
     public class SubGroupService : ISubGroupService
     {
         private readonly ISubGroupDao _subGroupDao;
+        private readonly IGroupDao _groupDao;
 
         public SubGroupService()
         {
             _subGroupDao = new SubGroupDao();
+            _groupDao = new GroupDao();
         }
 
         public IEnumerable<SubGroupAdmin> GetListAdminSubGroup(string groupName)
@@ -32,11 +38,12 @@
             {
                 GroupName = groupName,
                 SubGroup = subGroupName,
+                ListGroups = string.Join(",", _groupDao.GetAllGroup(1).Select(group => group.GroupName)),
                 Username = username,
                 PageSize = pageSize,
                 PageIndex = pageIndex
             };
-
+            
             return _subGroupDao.GetSubGroupCustomer(criteria);
         }
 

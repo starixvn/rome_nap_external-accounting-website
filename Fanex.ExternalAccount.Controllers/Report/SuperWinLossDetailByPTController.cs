@@ -53,8 +53,8 @@
                 request.Todate,
                 request.ProductIds,
                 request.ResourceIds,
-                reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupId),
-                reportService.BuildTooltipsForRNGCasino(request.UserId, request.GroupId),
+                reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupName, request.GroupId),
+                reportService.BuildTooltipsForRNGCasino(request.UserId, request.GroupName, request.GroupId),
                 request.PageSize,
                 request.PageIndex,
                 request.UserId);
@@ -72,8 +72,8 @@
                 request.Todate,
                 request.ProductIds,
                 request.ResourceIds,
-                reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupId),
-                reportService.BuildTooltipsForRNGCasino(request.UserId, request.GroupId),
+                reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupName, request.GroupId),
+                reportService.BuildTooltipsForRNGCasino(request.UserId, request.GroupName, request.GroupId),
                 0,
                 0,
                 request.UserId));

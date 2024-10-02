@@ -10,6 +10,7 @@
             string productDetails,
             string groupName,
             string subGroup,
+            string subGroupList,
             DateTime fromDate,
             DateTime toDate,
             DateTime balanceUpDay,
@@ -21,6 +22,7 @@
             ProductDetails = productDetails;
             GroupName = groupName;
             SubGroup = subGroup;
+            SubGroupList = subGroupList;
             FromDate = fromDate;
             ToDate = toDate;
             BalanceUpDay = balanceUpDay;
@@ -36,6 +38,8 @@
         public string GroupName { get; }
 
         public string SubGroup { get; }
+
+        public string SubGroupList { get; }
 
         public DateTime FromDate { get; }
 

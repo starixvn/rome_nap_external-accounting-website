@@ -1,4 +1,6 @@
-﻿namespace Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.DataAccesses
+﻿using Fanex.ExternalAccount.DataAccess.Products;
+
+namespace Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.DataAccesses
 {
     using System;
     using System.Collections.Generic;
@@ -10,6 +12,7 @@
     public interface ISuperWinLossDetailBySubGroupDataAccess
     {
         SuperWinLossDetailBySubGroupReport GetSuperWinLossDetailBySubGroup(ICriteria criteria);
+        string GetSubGroupList(int groupId, string subGroup);
     }
 
     public class SuperWinLossDetailBySubGroupDataAccess : ISuperWinLossDetailBySubGroupDataAccess
@@ -51,6 +54,17 @@
                 : subGroup.ToString();
 
             return superWinLossDetail;
+        }
+
+        public string GetSubGroupList(int groupId, string subGroup)
+        {
+            var criteria = new GetSubGroupListCriteria(groupId, subGroup);
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var ouputParams = db.GetOuputParams();
+                return ouputParams["subgrouplist"] == null ? string.Empty : ouputParams["subgrouplist"].ToString();
+            }
         }
 
         private static SuperWinLossDetailBySubGroupModel GetTotal(IDataReader reader)

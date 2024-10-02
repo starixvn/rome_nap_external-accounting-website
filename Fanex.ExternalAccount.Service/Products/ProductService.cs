@@ -1,11 +1,15 @@
-﻿namespace Fanex.ExternalAccount.Service.Products
+﻿using Fanex.ExternalAccount.DataAccess.Impl.UserControl;
+
+namespace Fanex.ExternalAccount.Service.Products
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using DTO.Products;
     using Fanex.CustomerSetting.Module.Core.Criteria;
     using Fanex.CustomerSetting.Module.Core.Services.Impl;
     using Fanex.CustomerSetting.Module.Core.Services.Interface;
+    using Fanex.Data;
     using Fanex.ExternalAccount.DataAccess.Products;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.NAP.Framework.Data;
@@ -14,9 +18,9 @@
     {
         IEnumerable<ProductDto> GetAllProducts();
 
-        IEnumerable<ProductDto> GetProducts(int userId, int groupId);
+        IEnumerable<ProductDto> GetProducts(int userId,string groupName, int groupId);
 
-        IEnumerable<int> ValidateProductIds(int userId, int groupId, IEnumerable<int> productIds);
+        IEnumerable<int> ValidateProductIds(int userId,string groupName, int groupId, IEnumerable<int> productIds);
 
         bool AdminDoesNotHavePermissionOnSpecialProduct(int userId);
     }
@@ -36,21 +40,23 @@
 
         public IEnumerable<ProductDto> GetAllProducts()
         {
-            var products = GetRawProducts();
+            var products = GetRawProducts(string.Empty, null);
 
             return GroupProducts(products);
         }
 
-        public IEnumerable<ProductDto> GetProducts(int userId, int groupId)
+        public IEnumerable<ProductDto> GetProducts(int userId,string groupName, int groupId)
         {
-            var products = GetRawProducts(groupId);
+            var products = GetRawProducts(groupName, groupId);
             var filteredProducts = FilterProducts(userId, products);
 
             return GroupProducts(filteredProducts);
         }
 
-        private IEnumerable<ProductEntity> GetRawProducts(int? groupId = null)
-            => dynamicRepository.Fetch<ProductEntity>(new GetProductsCriteria(groupId));
+        private IEnumerable<ProductEntity> GetRawProducts(string groupName, int? groupId)
+        {
+            return dynamicRepository.Fetch<ProductEntity>(new GetProductsCriteria(groupName, (groupId== null) ? null : GetShowProducts(groupId)));
+        }
 
         private IEnumerable<ProductEntity> FilterProducts(int userId, IEnumerable<ProductEntity> products)
         {
@@ -65,6 +71,17 @@
                 }
 
                 yield return product;
+            }
+        }
+
+        private string GetShowProducts(int? GroupId = null)
+        {
+            var criteria = new GetShowProductsCriteria(GroupId);
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var ouputParams = db.GetOuputParams();
+                return ouputParams["products"] == null ? string.Empty : ouputParams["products"].ToString();
             }
         }
 
@@ -102,7 +119,7 @@
                && (!checkIsInternalAdminResult.IsAllowAccess || !isAuthorized);
         }
 
-        public IEnumerable<int> ValidateProductIds(int userId, int groupId, IEnumerable<int> productIds)
+        public IEnumerable<int> ValidateProductIds(int userId,string groupName, int groupId, IEnumerable<int> productIds)
         {
             if (!productIds.Any())
             {
@@ -110,7 +127,7 @@
             }
 
             var productIdsHash = ToDictionary(productIds);
-            var products = GetRawProducts(groupId);
+            var products = GetRawProducts(groupName, groupId);
 
             return FilterProducts(userId, products)
                 .Where(p => productIdsHash.ContainsKey(p.ProductId))

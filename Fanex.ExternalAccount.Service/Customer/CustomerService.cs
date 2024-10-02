@@ -300,6 +300,6 @@
         }
 
         public Result CheckMultipleSupersBetSetting(string sourceUser, string destUsers, string groupName, int userId, bool isCopy = true)
-            => dataAccess.CheckMultipleSupersBetSetting(new CheckMultipleSupersBetSettingCriteria(userId, sourceUser, destUsers, groupName, isCopy));
+            => dataAccess.CheckMultipleSupersBetSetting(new CheckMultipleSupersBetSettingCriteria(sourceUser, destUsers, groupName, isCopy));
     }
 }
