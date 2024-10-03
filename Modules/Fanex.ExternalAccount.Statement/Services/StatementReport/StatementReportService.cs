@@ -35,18 +35,6 @@
                 StatementList = new List<StatementModel>()
             };
 
-            var serviceBase = new ServiceBase();
-            var checkSpecialSite = serviceBase.CheckSpecialSitePermission(
-                new CheckSpecialSitePermissionCriteria()
-                {
-                    UserID = AppSession.CurrentSession.UserId,
-                    CustID = criteria.CustId
-                });
-            if (checkSpecialSite.ErrorCode > 0)
-            {
-                return result;
-            }
-
             try
             {
                 List<StatementReportCriteria> dateRangeList = GetReportDateRange(criteria);
@@ -80,18 +68,6 @@
             {
                 StatementList = new List<StatementModel>()
             };
-
-            var serviceBase = new ServiceBase();
-            var checkSpecialSite = serviceBase.CheckSpecialSitePermission(
-                new CheckSpecialSitePermissionCriteria()
-                {
-                    UserID = AppSession.CurrentSession.UserId,
-                    CustID = criteria.CustId
-                });
-            if (checkSpecialSite.ErrorCode > 0)
-            {
-                return result;
-            }
 
             if (criteria.IsValid())
             {

@@ -112,17 +112,5 @@
         {
             return Json(_statementReportService.CheckInternalByUsername(criteria));
         }
-
-        public JsonResult CheckSpecialSiteAccess(string userName)
-        {
-            var service = new ServiceBase();
-            var criteria = new CheckSpecialSitePermissionCriteria()
-            {
-                UserID = AppSession.AccId,
-                CustName = userName
-            };
-
-            return Json(service.CheckSpecialSitePermission(criteria));
-        }
     }
 }
