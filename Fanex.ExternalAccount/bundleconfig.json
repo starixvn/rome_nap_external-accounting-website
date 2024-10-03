@@ -398,5 +398,20 @@
       "Scripts/Reports/RewardManagement/RewardDetail.js"
     ],
     "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/white-label-report/index.js",
+    "inputFiles": [
+      "Scripts/Fanex.Multiselect/fanex.multiSelectSearchable.js",
+      "Scripts/Reports/Shared/DateTimeControls.js",
+      "Scripts/jquery.ui.month-picker-3.0.4.js",
+      "Scripts/Reports/Shared/ReportFilters.js",
+      "Scripts/Reports/Shared/ReportGrid.js",
+      "Scripts/Reports/WhiteLabelReport/WhiteLabelWinLossFilters.js",
+      "Scripts/Reports/WhiteLabelReport/WhiteLabelWinLossGrid.js",
+      "Scripts/Reports/WhiteLabelReport/SettlementReport.js",
+      "Scripts/Reports/WhiteLabelReport/DailyWinLossReport.js"
+    ],
+    "sourceMap": true
   }
 ]

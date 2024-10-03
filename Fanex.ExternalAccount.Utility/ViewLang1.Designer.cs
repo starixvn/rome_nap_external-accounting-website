@@ -438,6 +438,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Columns.
+        /// </summary>
+        public static string Columns {
+            get {
+                return ResourceManager.GetString("Columns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Combined sports.
         /// </summary>
         public static string Combinedsports {
@@ -587,6 +596,15 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string daily {
             get {
                 return ResourceManager.GetString("daily", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Daily Win Loss Report.
+        /// </summary>
+        public static string DailyWinLossReport {
+            get {
+                return ResourceManager.GetString("DailyWinLossReport", resourceCulture);
             }
         }
         
@@ -2131,6 +2149,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settlement Report.
+        /// </summary>
+        public static string SettlementReport {
+            get {
+                return ResourceManager.GetString("SettlementReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Since Last Month.
         /// </summary>
         public static string SinceLastMonth {
@@ -2595,6 +2622,24 @@ namespace Fanex.ExternalAccount.Utilities {
         public static string Weekly {
             get {
                 return ResourceManager.GetString("Weekly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to White Label.
+        /// </summary>
+        public static string WhiteLabel {
+            get {
+                return ResourceManager.GetString("WhiteLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate the Settlement Report 5 days after month-end for data accuracy..
+        /// </summary>
+        public static string WhiteLabelSettlementReportNote {
+            get {
+                return ResourceManager.GetString("WhiteLabelSettlementReportNote", resourceCulture);
             }
         }
         

@@ -393,8 +393,13 @@
     <Setting Key="EAS_MatchWinloss_EventSel" SpName="EAS_MatchWinloss_EventSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_MatchWinloss_BettypeSel" SpName="EAS_MatchWinloss_BettypeSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
   </Function>
-   <Function Name="Reward Detail">
+  <Function Name="Reward Detail">
     <Setting Key="Age_Rpt_GetProgramList" SpName="Age_Rpt_GetProgramList" DbName="DBAGE.bodb02.wsv_xnap" Plain="0"/>
     <Setting Key="EAS_Rpt_RewardDetail_Com" SpName="EAS_Rpt_RewardDetail_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+  </Function>
+  <Function Name="White Label">
+    <Setting Key="EAS_Rpt_WhiteLabelWinLoss" SpName="EAS_Rpt_WhiteLabelWinLoss" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_WhiteLabelListSel" SpName="EAS_WhiteLabelListSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_Rpt_WhiteLabelSettlement" SpName="EAS_Rpt_WhiteLabelSettlement" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
   </Function>
 </Functions>

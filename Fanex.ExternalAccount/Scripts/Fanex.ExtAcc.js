@@ -342,7 +342,6 @@ Fanex.ExtAcc = {
 
         var groupName = $('#selectedGroupName').html();
         var id = typeof txtUserName == 'undefined' ? '#txtUserName' : '#' + txtUserName;
-
         this.SuggestionXHR = $.ajax(resolveClientUrl("Filter/GetSuggestedUserName?username=" + Fanex.encodeHtml($(id).val()) + "&groupname=" + groupName))
             .success(function (data) {
                 var source = [];

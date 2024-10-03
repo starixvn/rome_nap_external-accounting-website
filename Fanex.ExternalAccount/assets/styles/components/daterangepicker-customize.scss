@@ -328,7 +328,7 @@
 
 .date-picker-wrapper {
     font-size: 13px;
-    font-family: 'Roboto';
+     
 
     &.inline-wrapper {
         position: relative;
@@ -354,7 +354,7 @@
         border-right: 1px solid #d1d1d1;
         flex: 1;
         font-size: 14px;
-        font-family: 'Roboto';
+        
 
         .shortcuts {
             b, a {
@@ -815,6 +815,11 @@
             font-weight: bold;
         }
     }
+}
+
+.date-picker-wrapper .select-wrapper select {
+    top: 0;
+    width: 100%;
 }
 
 @media only screen and (max-device-width: 767px) {

@@ -392,4 +392,9 @@
     <Setting Key="EAS_MatchWinloss_EventSel" SpName="EAS_MatchWinloss_EventSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_MatchWinloss_BettypeSel" SpName="EAS_MatchWinloss_BettypeSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
   </Function>
+   <Function Name="White Label">
+    <Setting Key="EAS_Rpt_WhiteLabelWinLoss" SpName="EAS_Rpt_WhiteLabelWinLoss_xtest" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_WhiteLabelListSel" SpName="EAS_WhiteLabelListSel_xtest" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_Rpt_WhiteLabelSettlement" SpName="EAS_Rpt_WhiteLabelSettlement_xtest" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+  </Function>
 </Functions>
