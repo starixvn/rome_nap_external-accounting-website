@@ -12,11 +12,11 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         public int TabIndex { get; set; }
 
         public string Site { get; set; }
-        
+
         public string SiteLabel { get; set; }
 
         public int Currency { get; set; }
-        
+
         public string ApplicationPath { get; set; }
 
         private object BetSettingTab => new
@@ -68,6 +68,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         {
             name = "WinLossLimit",
             id = "WinLossLimitTab",
+            url = ApplicationPath + "Customer/GetWinLossLimitInformation?custId=" + CustId + "&site=" + Site + "&currency=" + Currency,
             isActive = TabIndex == 5,
         };
 
