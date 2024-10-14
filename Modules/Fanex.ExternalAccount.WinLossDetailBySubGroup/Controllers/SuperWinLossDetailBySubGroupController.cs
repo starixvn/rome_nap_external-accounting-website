@@ -70,8 +70,6 @@
 
         public ActionResult GetData(GetSuperWinLossDetailBySubGroupRequest request)
         {
-            request.UserId = currentSession.UserId;
-
             return JsonBase(service.GetSuperWinLossDetailBySubGroupReport(request));
         }
 
@@ -79,7 +77,6 @@
         {
             request.PageIndex = 0;
             request.PageSize = int.MaxValue - 1;
-            request.UserId = currentSession.UserId;
             var report = service.GetSuperWinLossDetailBySubGroupReport(request);
 
             var excelBuilder = new SuperWinLossDetailBySubGroupExcelBuilder(

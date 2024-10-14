@@ -1,34 +1,29 @@
-﻿using Fanex.ExternalAccount.DataAccess.Impl.UserControl;
-
-namespace Fanex.ExternalAccount.Service.Products
+﻿namespace Fanex.ExternalAccount.Service.Products
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using DTO.Products;
     using Fanex.Data;
     using Fanex.ExternalAccount.DataAccess.Products;
     using Fanex.NAP.Framework.Data;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public interface IProductService
     {
         IEnumerable<ProductDto> GetAllProducts();
 
-        IEnumerable<ProductDto> GetProducts(int userId,string groupName, int groupId);
+        IEnumerable<ProductDto> GetProducts(string groupName, int groupId);
 
-        IEnumerable<int> ValidateProductIds(int userId,string groupName, int groupId, IEnumerable<int> productIds);
+        IEnumerable<int> ValidateProductIds(string groupName, int groupId, IEnumerable<int> productIds);
     }
 
     public class ProductService : IProductService
     {
         private readonly IDynamicRepository dynamicRepository;
-    
 
         public ProductService(
             IDynamicRepository dynamicRepository = null)
         {
             this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
-          
         }
 
         public IEnumerable<ProductDto> GetAllProducts()
@@ -38,16 +33,16 @@ namespace Fanex.ExternalAccount.Service.Products
             return GroupProducts(products);
         }
 
-        public IEnumerable<ProductDto> GetProducts(int userId,string groupName, int groupId)
+        public IEnumerable<ProductDto> GetProducts(string groupName, int groupId)
         {
             var products = GetRawProducts(groupName, groupId);
+            return GroupProducts(products);
         }
 
         private IEnumerable<ProductEntity> GetRawProducts(string groupName, int? groupId)
         {
-            return dynamicRepository.Fetch<ProductEntity>(new GetProductsCriteria(groupName, (groupId== null) ? null : GetShowProducts(groupId)));
+            return dynamicRepository.Fetch<ProductEntity>(new GetProductsCriteria(groupName, (groupId == null) ? null : GetShowProducts(groupId)));
         }
-     
 
         private string GetShowProducts(int? GroupId = null)
         {
@@ -81,7 +76,8 @@ namespace Fanex.ExternalAccount.Service.Products
             return productList;
         }
 
-        public IEnumerable<int> ValidateProductIds(int userId,string groupName, int groupId, IEnumerable<int> productIds)
+        public IEnumerable<int> ValidateProductIds(string groupName, int groupId, IEnumerable<int> productIds)
+        {
             if (!productIds.Any())
             {
                 return Enumerable.Empty<int>();
