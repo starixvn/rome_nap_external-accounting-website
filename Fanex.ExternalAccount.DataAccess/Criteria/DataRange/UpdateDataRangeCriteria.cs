@@ -19,9 +19,6 @@
 
         public int UserId { get; set; }
 
-        public byte SystemId
-            => (byte)Utils.ToInt32(ConfigurationManager.AppSettings["SystemId"]);
-
         public int ErrCode { get; set; }
 
         public string ErrMsg { get; set; }

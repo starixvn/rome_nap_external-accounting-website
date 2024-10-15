@@ -9,16 +9,10 @@
     {
         public string Username { get; set; }
 
-        public int UserId
-            => AppSession.CurrentSession.UserId;
-
-        public byte SystemId 
-            => (byte)Utils.ToInt32(ConfigurationManager.AppSettings["SystemId"]);
-
         public override string GetSettingKey()
             => "Statement_Report_GetCustomerInformationByUsername";
 
         public override bool IsValid()
-            => !string.IsNullOrWhiteSpace(Username) && UserId > 0;
+            => !string.IsNullOrWhiteSpace(Username);
     }
 }
