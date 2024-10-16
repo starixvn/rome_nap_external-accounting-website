@@ -19,7 +19,7 @@
                     Fanex.ExtAcc.Customer.TitleEditInfo = unescape(title);
                     Fanex.ExtAcc.Customer.ResetFlags();
                     items = {
-                    }
+                    };
 
                     function addEditProductGroupAgentContextMenuItem(id, key, name) {
                         items[key] = {
@@ -56,18 +56,7 @@
                             productGroup.Name);
                     }
 
-                    var has3rdParty = false;
-                    for (var i = 0, max = result.DCSProductsSetting.length; i < max; i++) {
-                        has3rdParty = true;
-                        var productSetting = result.DCSProductsSetting[i];
-
-                        if (!productSetting.IsHidden && productSetting.IsSyncedUpline) {
-                            addEditProductAgentContextMenuItem(
-                                productSetting.ProductID,
-                                'Product-' + productSetting.ProductID,
-                                productSetting.ProductName);
-                        }
-                    }
+                    var has3rdParty = false;                  
 
                     if (has3rdParty)
                         items.separator2 = "-----";

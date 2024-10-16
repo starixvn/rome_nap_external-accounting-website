@@ -64,9 +64,6 @@
       <HintPath>..\packages\Fanex.Cryptography.Aes.1.0.0.0\lib\net461\Fanex.Cryptography.Aes.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Client40, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.1.2.0\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.5.4\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
@@ -366,9 +363,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authorization\DCS\CustomerSettingClientRegistration.cs" />
-    <Compile Include="Authorization\DCS\ProductBettingLimitDcsFunction.cs" />
-    <Compile Include="Authorization\DCS\ProductSettingDcsFunction.cs" />
     <Compile Include="Authorization\ProductStatus\EnableStatusProduct.cs" />
     <Compile Include="Authorization\ProductStatus\GetProductListCriteria.cs" />
     <Compile Include="Authorization\ProductStatus\MultipleEditProductStatus.cs" />

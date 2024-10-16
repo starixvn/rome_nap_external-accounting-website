@@ -28,7 +28,6 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int PGSoft = 55;
         public const int Joker = 56;
         public const int GDG = 59;
-        public const int Bitcoin = 69;
         public const int Cashout = 25;
         public const int FGG = 70;
         public const int MGRNGCasino = 73;

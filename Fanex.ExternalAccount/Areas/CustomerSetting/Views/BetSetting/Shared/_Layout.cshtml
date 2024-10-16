@@ -16,8 +16,7 @@
         ContractResolver = new CamelCasePropertyNamesContractResolver(),
         NullValueHandling = NullValueHandling.Ignore
     });
-
-    var visibleTabs = BetSettingProductIntegration.GetVisibledBetSettingTabs(id, Config.SettingStatus);
+   
     var visibleGroupTabs = BetSettingProductIntegration.GetVisibledProductGroupBetSettingTabs(id, roleId, Config.SettingStatus);
 }
 <!DOCTYPE html>
@@ -42,13 +41,7 @@
                     <a href="#content-@(tab.Id)">@(tab.Name)</a>
                 </li>
             }
-            @foreach (var tab in visibleTabs)
-            {
-                <li id="tab@(tab.Id)"
-                    onclick="LoadProduct(@(tab.Id))">
-                    <a href="#tabs-@(tab.Id)">@(tab.Name)</a>
-                </li>
-            }
+         
         </ul>
         <div id="tabs-1">
             <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; line-height:22px; background-color: #e7f7ff; margin-left: 2px; width: 1215px;">
@@ -64,16 +57,6 @@
                     Update Bet Setting: @cust.Username
                 </div>
                 <div><iframe id="product-group-@(tab.Id)" width="100%" height="500px" frameborder="0" src=""></iframe></div>
-            </div>
-        }
-
-        @foreach (var tab in visibleTabs)
-        {
-            <div id="tabs-@(tab.Id)">
-                <div style="clear: both; border: 1px solid #ccc; font-weight: bold; text-align: center; height: 22px; line-height: 22px; background-color: #e7f7ff; margin-left: 2px; width: 1225px;">
-                    Update Bet Setting: @cust.Username
-                </div>
-                <div><iframe id="product-@(tab.Id)" width="100%" height="500px" frameborder="0" src=""></iframe></div>
             </div>
         }
     </div>

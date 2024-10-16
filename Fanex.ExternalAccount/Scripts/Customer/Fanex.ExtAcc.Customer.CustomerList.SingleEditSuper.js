@@ -21,7 +21,7 @@
                     Fanex.ExtAcc.Customer.ResetFlags();
                     top.shouldCalculatePopupHeight = true;
                     items = {
-                    }
+                    };
 
                     function addEditProductGroupSuperContextMenuItem(productGroupId, key, name) {
                         items[key] = {
@@ -33,7 +33,7 @@
                                     resolveClientUrl('Customer/EditCustomer' + '/?roleId=4&uplineRoleId=5&groupName=' + $('#selectedGroupName').html() + "&productGroupId=" + productGroupId + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit ' + name + ' Setting ' + '<font color="#6dcff6">' + Fanex.ExtAcc.Customer.TitleEditInfo + '</font>',
                                     1250, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
                             }
-                        }
+                        };
                     }
 
                     function addEditProductSuperContextMenuItem(productId, productKey, productName) {
@@ -49,19 +49,12 @@
                                     productId,
                                     productName);
                             }
-                        }
+                        };
                     }
 
                     for (var i = 0, max = result.ProductGroups.length; i < max; i++) {
                         var productGroup = result.ProductGroups[i];
                         addEditProductGroupSuperContextMenuItem(productGroup.Id, 'ProductGroup-' + productGroup.Id, productGroup.Name);
-                    }
-
-                    for (var i = 0, max = result.DCSProductsSetting.length; i < max; i++) {
-                        var productSetting = result.DCSProductsSetting[i];
-                        if (!productSetting.IsHidden && productSetting.IsSyncedUpline) {
-                            addEditProductSuperContextMenuItem(productSetting.ProductID, 'Product-' + productSetting.ProductID, productSetting.ProductName);
-                        }
                     }
 
                     items.separator4 = "-----";
