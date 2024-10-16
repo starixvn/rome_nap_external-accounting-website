@@ -12,8 +12,6 @@
 
         public int TotalRows { get; set; }
 
-        public bool IsMyanmarOdds => CustomerList.Any(i => i.IsMyanmarOdds);
-
         public bool HasSubGroups { get; set; }
 
         public SearchCustomerListViewModel()

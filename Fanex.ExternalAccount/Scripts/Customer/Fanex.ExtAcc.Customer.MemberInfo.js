@@ -351,9 +351,7 @@ Fanex.Customer = {
         commissionSettings.groupB = $("#groupB").val();
         commissionSettings.groupC = $("#groupC").val();
         commissionSettings.groupD = $("#groupD").val();
-        commissionSettings.discount1x2 = $("#discount1x2").val();
-        if (commissionSettings.isMyanmarOdds)
-            commissionSettings.discountMyanmarOdds = $("#discountMyanmarOdds").val();
+        commissionSettings.discount1x2 = $("#discount1x2").val();     
         commissionSettings.discountCS = $("#discountCS").val();
         return commissionSettings;
     },

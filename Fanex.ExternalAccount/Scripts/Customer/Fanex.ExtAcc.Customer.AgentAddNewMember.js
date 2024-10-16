@@ -81,30 +81,17 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
                     $("#textBoxDiscountAsian").val(commission.groupA);
                     $("#textBoxDiscount1x2").val(commission.discount1x2);
                     $("#textBoxDiscountCS").val(commission.discountCS);
-                    Fanex.ExtAcc.Customer.AgentAddNewMember.LoadGroupCommission(document.getElementById("group"), context.currencyId, context.siteName, commission.isMyanmarOdds);
+                    Fanex.ExtAcc.Customer.AgentAddNewMember.LoadGroupCommission(document.getElementById("group"), context.currencyId, context.siteName);
 
                     Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.groupAMax, Fanex.PTEngine.COMMISSION_STEP, commission.groupA);
                     Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2Max, Fanex.PTEngine.COMMISSION_STEP, commission.discount1x2);
-                    Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);
-                    if (customer.commissionSetting.isMyanmarOdds) {
-                        $("#textBoxDiscountMyanmarOdds").val(commission.discountMyanmarOdds);
-                        Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
-                    }
-                    else {
-                        $("#discountMyanmar").remove();
-                    }
+                    Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCSMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountCS);                  
                 }
                 else {
                     $("#textBoxDiscountAsian").val(commission.discount);
                     Fanex.PTEngine.PT_SetSelect($("#discountAsian")[0], 0, commission.discount, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount);
                     Fanex.PTEngine.PT_SetSelect($("#discount1x2")[0], 0, commission.discount1x2, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscount1x2);
-                    Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);
-                    if (customer.commissionSetting.isMyanmarOdds) {
-                        Fanex.PTEngine.PT_SetSelect($("#discountMyanmarOdds")[0], 0, commission.discountMyanmarOddsMax, Fanex.PTEngine.COMMISSION_STEP, commission.discountMyanmarOdds);
-                    }
-                    else {
-                        $("#discountMyanmar").remove();
-                    }
+                    Fanex.PTEngine.PT_SetSelect($("#discountCS")[0], 0, commission.discountCS, Fanex.PTEngine.COMMISSION_STEP, commission.playerDiscountCs);               
                     $this.currentStatusClose = customer.statusSetting.closed;
                     $this.currentStatusSuspend = customer.statusSetting.suspended;
                 }
@@ -138,9 +125,7 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
 
                         customer.commissionSetting.playerDiscount = $("#discountAsian").val();
                         customer.commissionSetting.playerDiscount1x2 = $("#discount1x2").val();
-                        customer.commissionSetting.playerDiscountCs = $("#discountCS").val();
-                        if (customer.commissionSetting.isMyanmarOdds)
-                            customer.commissionSetting.playerDiscountMyanmarOdds = $("#discountMyanmarOdds").val();
+                        customer.commissionSetting.playerDiscountCs = $("#discountCS").val();                      
                         customer.credit = Fanex.RoundNumber(parseFloat($("#credit").val(), true), 1); // Fix bug for IE7
 
                         // EscapeHTML String
@@ -227,13 +212,10 @@ Fanex.ExtAcc.Customer.AgentAddNewMember = {
     },
 
     // Load Group Commission
-    LoadGroupCommission: function (selectId, currencyId, siteName, isMyanmarOdds) {
+    LoadGroupCommission: function (selectId, currencyId, siteName) {
         var listGroupCommission;
         // If Currency name is Won
-        if (isMyanmarOdds) {
-            listGroupCommission = new Array("a");
-        }
-        else if (currencyId == 45) {
+        if (currencyId == 45) {
             listGroupCommission = new Array("dea", "deb", "dec", "ded");
         }
         else if (siteName == "IBSBET") {

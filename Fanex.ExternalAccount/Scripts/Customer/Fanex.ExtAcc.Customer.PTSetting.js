@@ -397,10 +397,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member) {
                                             customer.commissionSetting.discount = parseFloat($("#textBoxDiscountAsian").val());
                                             customer.commissionSetting.discount1x2 = parseFloat($("#textBoxDiscount1x2").val());
-                                            customer.commissionSetting.discountCS = parseFloat($("#textBoxDiscountCS").val());
-                                            if (Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.isMyanmarOdds) {
-                                                customer.commissionSetting.discountMyanmarOdds = parseFloat($("#textBoxDiscountMyanmarOdds").val());
-                                            }
+                                            customer.commissionSetting.discountCS = parseFloat($("#textBoxDiscountCS").val());                                           
                                         }
                                         else {
                                             if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
@@ -409,10 +406,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
                                             customer.commissionSetting.groupA = parseFloat($("#groupA").val());
                                             customer.commissionSetting.discount1x2 = parseFloat($("#discount1x2").val());
-                                            customer.commissionSetting.discountCS = parseFloat($("#discountCS").val());
-                                            if (Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.isMyanmarOdds) {
-                                                customer.commissionSetting.discountMyanmarOdds = parseFloat($("#discountMyanmarOdds").val());
-                                            }
+                                            customer.commissionSetting.discountCS = parseFloat($("#discountCS").val());                                         
                                             customer.commissionSetting.groupB = parseFloat($("#groupB").val());
                                             customer.commissionSetting.groupC = parseFloat($("#groupC").val());
                                             customer.commissionSetting.groupD = parseFloat($("#groupD").val());
@@ -573,10 +567,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member) {
                                             customer.commissionSetting.discount = parseFloat($("#textBoxDiscountAsian").val());
                                             customer.commissionSetting.discount1x2 = parseFloat($("#textBoxDiscount1x2").val());
-                                            customer.commissionSetting.discountCS = parseFloat($("#textBoxDiscountCS").val());
-                                            if (Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.isMyanmarOdds) {
-                                                customer.commissionSetting.discountMyanmarOdds = parseFloat($("#textBoxDiscountMyanmarOdds").val());
-                                            }
+                                            customer.commissionSetting.discountCS = parseFloat($("#textBoxDiscountCS").val());                                          
                                         }
                                         else {
                                             if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
@@ -585,10 +576,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
                                             customer.commissionSetting.groupA = parseFloat($("#groupA").val());
                                             customer.commissionSetting.discount1x2 = parseFloat($("#discount1x2").val());
-                                            customer.commissionSetting.discountCS = parseFloat($("#discountCS").val());
-                                            if (Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.isMyanmarOdds) {
-                                                customer.commissionSetting.discountMyanmarOdds = parseFloat($("#discountMyanmarOdds").val());
-                                            }
+                                            customer.commissionSetting.discountCS = parseFloat($("#discountCS").val());                                      
                                             customer.commissionSetting.groupB = parseFloat($("#groupB").val());
                                             customer.commissionSetting.groupC = parseFloat($("#groupC").val());
                                             customer.commissionSetting.groupD = parseFloat($("#groupD").val());
@@ -756,10 +744,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member) {
                                             customer.commissionSetting.playerDiscount = parseFloat($("#discountAsian").val());
                                             customer.commissionSetting.playerDiscount1x2 = parseFloat($("#discount1x2").val());
-                                            customer.commissionSetting.playerDiscountCS = parseFloat($("#discountCS").val());
-                                            if (Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.isMyanmarOdds) {
-                                                customer.commissionSetting.playerDiscountMyanmarOdds = parseFloat($("#discountMyanmarOdds").val());
-                                            }
+                                            customer.commissionSetting.playerDiscountCS = parseFloat($("#discountCS").val());                                   
                                         }
                                         else {
                                             if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Agent) {
@@ -769,11 +754,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
                                             customer.commissionSetting.groupA = parseFloat($("#groupA").val());
                                             customer.commissionSetting.groupB = parseFloat($("#groupB").val());
                                             customer.commissionSetting.groupC = parseFloat($("#groupC").val());
-                                            customer.commissionSetting.groupD = parseFloat($("#groupD").val());
-                                            //customer.commissionSetting.discount = parseFloat($("#discountAsian").val());
-                                            if (Fanex.ExtAcc.Customer.PTSetting.customer.commissionSetting.isMyanmarOdds) {
-                                                customer.commissionSetting.discountMyanmarOdds = parseFloat($("#discountMyanmarOdds").val());
-                                            }
+                                            customer.commissionSetting.groupD = parseFloat($("#groupD").val());                                           
                                             customer.commissionSetting.discount1x2 = parseFloat($("#discount1x2").val());
                                             customer.commissionSetting.discountCS = parseFloat($("#discountCS").val());
                                         }
@@ -1115,10 +1096,7 @@ Fanex.ExtAcc.Customer.PTSetting = {
 
         if (document.getElementById("discountCS")) {
             document.getElementById("discountCS").disabled = isDisable;
-        }
-        if (document.getElementById("discountMyanmarOdds")) {
-            document.getElementById("discountMyanmarOdds").disabled = isDisable;
-        }
+        }      
     },
 
     GenerateCheckBoxBettingLimit: function () {
@@ -2593,9 +2571,7 @@ function saveCommissionSettings(comm) {
             comm.playerDiscount1x2 = parseFloat($("#discount1x2").val());
 
         if (document.getElementById("discountCS"))
-            comm.playerDiscountCs = parseFloat($("#discountCS").val());
-        if (comm.isMyanmarOdds)
-            comm.playerDiscountMyanmarOdds = parseFloat($("#discountMyanmarOdds").val());
+            comm.playerDiscountCs = parseFloat($("#discountCS").val());       
     }
     else {
         if (document.getElementById("discountAsian"))
@@ -2605,9 +2581,7 @@ function saveCommissionSettings(comm) {
             comm.discount1x2 = parseFloat($("#discount1x2").val());
 
         if (document.getElementById("discountCS"))
-            comm.discountCs = parseFloat($("#discountCS").val());
-        if (comm.isMyanmarOdds)
-            comm.discountMyanmarOdds = parseFloat($("#discountMyanmarOdds").val());
+            comm.discountCs = parseFloat($("#discountCS").val());    
     }
 
     if (document.getElementById("groupA"))

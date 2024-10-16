@@ -60,12 +60,6 @@
 
         public decimal PlayerDiscount { get; set; }
 
-        public bool IsMyanmarOdds { get; set; }
-
-        public decimal DiscountMyanmarOdds { get; set; }
-
-        public decimal PlayerDiscountMyanmarOdds { get; set; }
-
         public string SubGroup { get; set; }
 
         public string Currency { get; set; }

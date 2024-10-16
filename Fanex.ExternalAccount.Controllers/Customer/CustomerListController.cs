@@ -120,7 +120,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 false,
                 status,
                 roleId,
-                customerList.IsMyanmarOdds,
                 request.IsShowSuperLimitDate ?? false,
                 request.IsNoDownlines ?? false,
                 customerList.HasSubGroups,

@@ -50,7 +50,7 @@
 
         public override void WriteBodyReport(ISheet resultSheet)
         {
-            var totalColumn = _builder.IsMyanmarOdds || _builder.RoleId.IsSuper() ? 17 : 16;
+            var totalColumn = _builder.RoleId.IsSuper() ? 17 : 16;
 
             if (_builder.RoleId.IsSuper())
             {
@@ -70,13 +70,13 @@
             var lastColumnIndex = FirstColumnIndex + totalColumn - 1;
             if (_builder.RoleId.IsNotMember())
             {
-                WriteOthersReport(resultSheet, _builder.Data, lastColumnIndex, _builder.IsMyanmarOdds, _builder.HasSubGroups, _builder.IsMultipleCurrencyGroup);
+                WriteOthersReport(resultSheet, _builder.Data, lastColumnIndex, _builder.HasSubGroups, _builder.IsMultipleCurrencyGroup);
             }
             else
             {
                 totalColumn = _builder.IsMultipleCurrencyGroup ? 20 : 19;
                 lastColumnIndex = FirstColumnIndex + totalColumn - 1;
-                WriteMemberReport(resultSheet, _builder.Data, lastColumnIndex, _builder.IsMyanmarOdds, _builder.IsMultipleCurrencyGroup);
+                WriteMemberReport(resultSheet, _builder.Data, lastColumnIndex, _builder.IsMultipleCurrencyGroup);
             }
         }
 
@@ -84,7 +84,6 @@
             ISheet resultSheet,
             List<CustomerListDTO> data,
             int lastColumnIndex,
-            bool isMyanmarOdds,
             bool isMultipleCurrency)
         {
             var id = 1;
@@ -114,12 +113,6 @@
                     item.LastLoginIP
                 };
 
-                if (isMyanmarOdds)
-                {
-                    values.Insert(12, item.DiscountMyanmarOdds.ToString());
-                    values.Insert(16, item.PlayerDiscountMyanmarOdds.ToString());
-                }
-
                 if (isMultipleCurrency)
                 {
                     values.Insert(2, item.Currency);
@@ -136,7 +129,6 @@
             ISheet resultSheet,
             List<CustomerListDTO> data,
             int lastColumnIndex,
-            bool isMyanmarOdds,
             bool hasSubGroups,
             bool isMultipleCurrency)
         {
@@ -163,24 +155,7 @@
                     item.Discount1x2,
                     item.DiscountCS
                 };
-                if (isMyanmarOdds)
-                {
-                    values = new List<object>
-                    {
-                        id,
-                        item.UserName,
-                        item.LockedAccess.IsLocked ? "Yes" : "No",
-                        custStatus,
-                        item.DoubleCommLosing ? "ALLOWED" : "DISALLOWED",
-                        item.FirstName,
-                        item.LastName,
-                        item.GroupA,
-                        item.Discount1x2,
-                        item.DiscountCS,
-                        item.DiscountMyanmarOdds
-                    };
-                }
-
+               
                 if (isMultipleCurrency)
                 {
                     values.Insert(2, item.Currency);

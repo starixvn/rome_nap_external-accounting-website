@@ -13,7 +13,7 @@
             _dir = HttpContext.Current.Server.MapPath("~/ExcelTemplates/Customer");
         }
 
-        public string CustomerListPath(int roleId, bool isMyanmarOdds = false, bool hasSubGroup = false, bool isMultipleCurrency = false)
+        public string CustomerListPath(int roleId, bool hasSubGroup = false, bool isMultipleCurrency = false)
         {
             var fileName = "";
             switch (roleId)
@@ -29,8 +29,7 @@
                     fileName = "CustomerList";
                     break;
             }
-
-            fileName += isMyanmarOdds ? "MO" : "";
+            
             fileName += isMultipleCurrency ? "MC.xls" : ".xls";
 
             return Path.Combine(_dir, fileName);
