@@ -5,8 +5,6 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
     using ExternalAccount.Core.Shared;
     using Security.Authenticate;
     using Security.Configurations;
-    using PTEngine.BusinessObjects;
-    using PTEngine.Services;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Fanex.CustomerSetting.Module.Core.Web;

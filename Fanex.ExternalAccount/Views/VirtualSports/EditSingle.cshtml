@@ -1,5 +1,4 @@
 ﻿@using Fanex.ExternalAccount.Utilities
-@using Fanex.PTEngine
 @model Fanex.ExternalAccount.ViewModel.Customer.PTVirtualSportsModel
 @{
     Layout = null;
@@ -9,7 +8,6 @@
         rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/assets/styles/pages/customer/virtual-sport.css")"
         rel="stylesheet" type="text/css" />
-<script src="@Fanex.PTEngine.HttpContextExtension._WebUtils.GetWebResourceUrl("Fanex.PTEngine.UI.Core.js")" type="text/javascript"></script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.Languages.en.js")" type="text/javascript"></script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.Core.js")" type="text/javascript"></script>
 <script src="@HttpContext.Current.GetWebResourceUrl("Fanex.PTVirtualSports.UI.BetType.js")" type="text/javascript"></script>

@@ -66,9 +66,6 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.7.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.7.5\lib\net40\Fanex.PTEngine.dll</HintPath>
-    </Reference>
     <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Crypt.1.1.0.0\lib\net40\IBCCrypt.dll</HintPath>
       <Private>True</Private>
@@ -208,7 +205,6 @@
     <Compile Include="Customer\GetCustDBConfigBySiteCriteria.cs" />
     <Compile Include="Customer\GetCustDBConfigCriteria.cs" />
     <Compile Include="Customer\IAgentDao.cs" />
-    <Compile Include="Customer\ICommissionDao.cs" />
     <Compile Include="Customer\ICustomerDao.cs" />
     <Compile Include="Customer\IData.cs" />
     <Compile Include="Customer\IEditSuperListDao.cs" />
@@ -223,7 +219,6 @@
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Base\DAOBase.cs" />
-    <Compile Include="Customer\CommissionDao.cs" />
     <Compile Include="Customer\CustomerDao.cs" />
     <Compile Include="Customer\AgentDao.cs" />
     <Compile Include="Customer\MasterDao.cs" />

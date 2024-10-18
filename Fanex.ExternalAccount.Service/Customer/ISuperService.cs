@@ -2,7 +2,6 @@
 {
     using DataAccess.Criteria.Customer;
     using DTO.Customer;
-    using PTEngine.BusinessObjects;
 
     public interface ISuperService
     {
@@ -10,6 +9,5 @@
 
         DTO.Result UpdateSuperInfo(UpdateSuperInfoCriteria criteria);
 
-        ICustomer GetCustomerForCompanyEditSuper(RequestContext context);
     }
 }

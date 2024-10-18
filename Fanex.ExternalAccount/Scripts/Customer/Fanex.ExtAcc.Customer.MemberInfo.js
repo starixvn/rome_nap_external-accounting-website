@@ -1,7 +1,7 @@
 ﻿Fanex.ExtAcc.AddPtInfoPage(custid);
 
 if (typeof Fanex == 'undefined' || typeof Fanex.ExtAcc == 'undefined') {
-    alert("Fanex.ExtAcc.js module is required!")
+    alert("Fanex.ExtAcc.js module is required!");
 }
 var validateExpr = /^(\$|)([0-9]\d{0,2}(\,\d{3})*|([0-9]\d*))(\.?\d*)?$/;
 Fanex.Customer = {
@@ -10,9 +10,9 @@ Fanex.Customer = {
         selectOne.options.length = 0;
         selectTwo.options.length = 0;
         var arrayAlphabet = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-                               "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
-                               "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
-                               "U", "V", "W", "X", "Y", "Z");
+            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+            "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
+            "U", "V", "W", "X", "Y", "Z");
 
         var noOne = currentValue.substring(0, 1);
         var noTwo = currentValue.substring(1, 2);
@@ -187,7 +187,7 @@ Fanex.Customer = {
         }
 
         if ((parseFloat($("#credit").val(), true) < parseFloat($("#minCredit").html(), true))
-			|| (parseFloat($("#credit").val(), true) > parseFloat($("maxCredit").html(), true))) {
+            || (parseFloat($("#credit").val(), true) > parseFloat($("maxCredit").html(), true))) {
             var valMin = document.getElementById("minCredit") ? $("#minCredit").html() : 0;
             var str = Language.ALERT_CREDIT_INVALID.replace("{1}", valMin);
             str = str.replace("{2}", $("#maxCredit").html());
@@ -202,8 +202,8 @@ Fanex.Customer = {
             }
 
             if (parseFloat($("#memberMaxCredit").val(), true) > 0
-				&& (parseFloat($("#memberMaxCredit").val(), true) > parseFloat($("#lblMemberMaxCredit").html(), true))
-				|| parseFloat($("#memberMaxCredit").val(), true) < parseFloat($("#lblMinCredit").html(), true)) {
+                && (parseFloat($("#memberMaxCredit").val(), true) > parseFloat($("#lblMemberMaxCredit").html(), true))
+                || parseFloat($("#memberMaxCredit").val(), true) < parseFloat($("#lblMinCredit").html(), true)) {
                 var str = Language.ALERT_MEMBER_CREDIT_INVALID.replace("{1}", document.getElementById("lblMinCredit") ? $("#lblMinCredit").html() : 0);
                 str = str.replace("{2}", $("#lblMemberMaxCredit").html());
                 this.ValidateMessage(document.getElementById("memberMaxCredit"), str);
@@ -351,7 +351,7 @@ Fanex.Customer = {
         commissionSettings.groupB = $("#groupB").val();
         commissionSettings.groupC = $("#groupC").val();
         commissionSettings.groupD = $("#groupD").val();
-        commissionSettings.discount1x2 = $("#discount1x2").val();     
+        commissionSettings.discount1x2 = $("#discount1x2").val();
         commissionSettings.discountCS = $("#discountCS").val();
         return commissionSettings;
     },
@@ -385,14 +385,14 @@ Fanex.Customer = {
                     dataType: 'json',
                     type: 'post'
                 })
-                .success(function (result) {
-                    if (result === true) {
-                        document.getElementById(msgId).className = 'successWarning';
-                    }
-                    else {
-                        document.getElementById(msgId).className = 'errorWarning';
-                    }
-                });
+                    .success(function (result) {
+                        if (result === true) {
+                            document.getElementById(msgId).className = 'successWarning';
+                        }
+                        else {
+                            document.getElementById(msgId).className = 'errorWarning';
+                        }
+                    });
             }
         }
     },
@@ -459,95 +459,5 @@ Fanex.Customer = {
             ageMsg.ShowMsgs(myTable, isSucc);
         }
     }
-}
+};
 
-// Overwrite some functions
-if (typeof (Fanex) != 'undefined' && typeof (Fanex.PTEngine) != 'undefined') { // Require Fanex.PTEngine namespace
-    Fanex.PTEngine.calculateMinWidth = function (text) {
-        if (typeof (text) != 'string') return 60;
-        var measure = 6; // Default for en-US
-        if (Fanex.PTEngine.CURRENT_CONTEXT.language == 'th-TH') {
-            measure = 4.5;
-        }
-        else if (Fanex.PTEngine.CURRENT_CONTEXT.language == 'zh-TW'
-			|| Fanex.PTEngine.CURRENT_CONTEXT.language == 'zh-CN'
-			|| Fanex.PTEngine.CURRENT_CONTEXT.language == 'ko-KR') {
-            measure = 7;
-        }
-        return Math.round(text.length * measure);
-    };
-}
-
-extendPTEngine();
-
-function extendPTEngine() {
-    Validators.utils.findPos = function (obj) {
-        var curleft = curtop = 0;
-        if (obj && typeof obj.focus === 'function') {
-            obj.focus();
-        }
-
-        if (obj.offsetParent) {
-            do {
-                curleft += obj.offsetLeft;
-                curtop += obj.offsetTop;
-            } while (obj = obj.offsetParent);
-        }
-
-        // windowPopup is id of popup form and need to re-define if your popup id is different from windowPopup
-        var parent = null;
-        if (!document.getElementById('windowPopup')) {
-            parent = document.getElementById('contentSplitter');
-        }
-        else {
-            parent = document.getElementById('windowPopup');
-        }
-
-        curleft -= parent.scrollLeft;
-        curtop -= parent.scrollTop;
-
-        return [curleft, curtop];
-    };
-
-    Validators.utils.findPosRelativeToViewport = function (obj) {
-        var curleft = curtop = 0;
-        if (obj && typeof obj.focus === 'function') {
-            obj.focus();
-        }
-
-        if (obj.offsetParent) {
-            do {
-                curleft += obj.offsetLeft;
-                curtop += obj.offsetTop;
-            } while (obj = obj.offsetParent);
-        }
-
-        // windowPopup is id of popup form and need to re-define if your popup id is different from windowPopup
-        var parent = null;
-        if (!document.getElementById('windowPopup')) {
-            parent = document.getElementById('contentSplitter');
-        }
-        else {
-            parent = document.getElementById('windowPopup');
-        }
-
-        curleft -= parent.scrollLeft;
-        curtop -= parent.scrollTop;
-
-        return [curleft, curtop];
-    };
-}
-
-//RegisterStartUp(function () {
-//    age.addEvent($('credit'), 'blur', function () {
-//        Fanex.Customer.AutoChangeMaxCredit('credit', 'lblMemberMaxCredit');
-//    });
-
-//    age.addEvent($('credit'), 'keyup', function () {
-//        Fanex.FormatNumber(arguments[0], true);
-//    });
-
-//    age.addEvent($('memberMaxCredit'), 'keyup', function () {
-//        Fanex.FormatNumber(arguments[0], true);
-//    });
-//});

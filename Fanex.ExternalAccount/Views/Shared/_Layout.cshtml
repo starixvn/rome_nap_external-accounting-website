@@ -1,7 +1,6 @@
 @using Fanex.ExternalAccount.Core.Context;
 @using Fanex.ExternalAccount.Utilities
 @using Fanex.ExternalAccount.Core.Authorization
-@using Fanex.PTEngine
 @using Fanex.ExternalAccount.Module.LeftPanel
 @using Newtonsoft.Json;
 @using System.Configuration;
@@ -38,8 +37,6 @@
     <meta name="copyright" content="Licensed under GPL and MIT." />
     <meta name="description" content="Adapt.js serves CSS based on screen width." />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <link href="@HttpContext.Current.GetWebResourceUrl("Fanex.PTEngine.UI.Core.css")" rel="stylesheet" />
-
     @StaticResources.RenderStyles("~/assets/bundles/common")
 
     @RenderSection("StyleSheet", false)

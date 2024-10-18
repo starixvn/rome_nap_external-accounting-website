@@ -82,9 +82,6 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.PTEngine, Version=1.0.7.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.PTEngine.1.0.7.5\lib\net40\Fanex.PTEngine.dll</HintPath>
-    </Reference>
     <Reference Include="Gma.QrCodeNet.Encoding, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\QrCode.Net.0.4.0.0\lib\net45\Gma.QrCodeNet.Encoding.dll</HintPath>
       <Private>True</Private>
@@ -228,7 +225,6 @@
     <Compile Include="Customer\CustomerList\Params\SearchCustomerListParams.cs" />
     <Compile Include="Customer\AssociationAccountService.cs" />
     <Compile Include="Customer\IAgentService.cs" />
-    <Compile Include="Customer\ICommissionService.cs" />
     <Compile Include="Customer\ICustomerService.cs" />
     <Compile Include="Customer\IDataService.cs" />
     <Compile Include="Customer\IEditSuperListSevice.cs" />
@@ -244,7 +240,6 @@
     <Compile Include="DataRange\DataRangeService.cs" />
     <Compile Include="DataRange\IDataRangeService.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Customer\CommissionService.cs" />
     <Compile Include="IPInformatonService.cs" />
     <Compile Include="Login\ILoginService.cs" />
     <Compile Include="OTP\CustomerOtpService.cs" />

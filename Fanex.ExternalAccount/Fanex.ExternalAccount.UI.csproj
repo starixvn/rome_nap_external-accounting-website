@@ -526,10 +526,7 @@
     <Content Include="Areas\Common\Views\Shared\Scripts\Fanex.CustomerSetting.js" />
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\CustomerSetting\Styles\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Scripts\MultipleSportsbookController.js" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Styles\info.gif" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Styles\layout.css" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Styles\MultipleSportsbook.css" />
     <Content Include="Areas\CustomerSetting\Views\ThirdPartyProductStatus\Index.cshtml" />
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.min.js">
       <DependentUpon>product-status-setting-multiple.js</DependentUpon>
@@ -738,10 +735,6 @@
     <Content Include="Areas\CustomerSetting\Views\BetSetting\AccessDenied\AccessDenied.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Scripts\BetSetting.js" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Shared\_Layout.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Content.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Index.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Scripts\SportsbookController.js" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Styles\Sportsbook.css" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Readme.txt" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Scripts\EnableStatus.js" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Scripts\EnableStatus.js" />
@@ -2161,10 +2154,6 @@
     <Content Include="Scripts\ContextMenu\jquery.contextMenu.js" />
     <Content Include="Scripts\cookie.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Settings.js" />
-    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.AgentAddNewMember.js" />
-    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MasterAddNewAgent.js" />
-    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.SuperAddNewMaster.js" />
-    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.PTSetting.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.TransferCondition.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MemberInfo.js" />
@@ -2536,8 +2525,6 @@
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Templates\Products.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Content.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Index.cshtml" />
     <None Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Templates\Template.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -2916,21 +2903,7 @@
     <Content Include="Views\Customer\ConfigMultipleDoubleComm.cshtml" />
     <Content Include="Views\Customer\EditTransferCondition.cshtml" />
     <Content Include="Views\Customer\ResetPassword.cshtml" />
-    <Content Include="Views\SportsbookSetting\EditBetSetting.cshtml" />
-    <Content Include="Views\SportsbookSetting\EditCommission.cshtml" />
-    <Content Include="Views\SportsbookSetting\EditPT.cshtml" />
-    <Content Include="Views\SportsbookSetting\EditMinPT.cshtml" />
-    <Content Include="Views\Customer\SuperAddNewMaster.cshtml" />
-    <Content Include="Views\SportsbookSetting\EditCommissionMember.cshtml" />
-    <Content Include="Views\SportsbookSetting\EditMultiplePT.cshtml" />
-    <Content Include="Views\Customer\MasterAddNewAgent.cshtml" />
-    <Content Include="Views\Customer\AgentAddNewMember.cshtml" />
-    <Content Include="Views\SportsbookSetting\EditCommissionDetail.cshtml" />
-    <Content Include="Views\SportsbookSetting\EditCommissionMemberDetail.cshtml" />
-    <Content Include="Views\SportsbookSetting\SuperMasterEditMultiplePTMember.cshtml" />
     <Content Include="Views\Customer\TransferCondition.cshtml" />
-    <Content Include="Views\SportsbookSetting\SuperMasterEditSB.cshtml" />
-    <Content Include="Views\Customer\Settings.cshtml" />
     <Content Include="Views\User\ResetPasswordOwner.cshtml" />
     <Content Include="Views\VirtualSports\EditSingle.cshtml" />
     <Content Include="Views\Home\TestLog.cshtml" />
