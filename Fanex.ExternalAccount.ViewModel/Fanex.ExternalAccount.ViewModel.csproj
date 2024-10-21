@@ -137,8 +137,6 @@
     <Compile Include="Customer\CustomerInfo.cs" />
     <Compile Include="Customer\CustomerModel.cs" />
     <Compile Include="Customer\IPInfo.cs" />
-    <Compile Include="Customer\PTModel.cs" />
-    <Compile Include="Customer\PTVirtualSportsModel.cs" />
     <Compile Include="Customer\Suspend\SuspendedCustomerDetailViewModel.cs" />
     <Compile Include="Customer\ThirdPartyProductStatusViewModel.cs" />
     <Compile Include="Customer\TransferConditionViewModel.cs" />
