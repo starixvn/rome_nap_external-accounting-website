@@ -244,32 +244,21 @@
             }
 
             var hide = productStatusTable.IsProductHidden(productElement.Id);
-            var sync = productStatusTable.IsProductSynced(productElement.Id);
             var hideUpline = productStatusTable.IsProductHiddenUpline(productElement.Id);
             var isUplineDisabled = productStatusTable.IsProductDisabledUpline(productElement.Id);
-            var syncUpline = productStatusTable.IsProductSyncedUpline(productElement.Id);
+           
 
             if (IsHiddenProduct(_roleId, hideUpline, hide))
             {
                 return setting;
             }
 
-            if ((syncUpline || _roleId.IsSuper())
+            if (_roleId.IsSuper()
                 && productElement.Id != ProductConstants.SabaVirtualSports
                 && productElement.Id != ProductConstants.Cashout)
             {
                 setting.Details.Add(
                     GetEditSettingLink(productElement.Key, productElement.Name));
-            }
-
-#pragma warning disable S1067 // Expressions should not be too complex
-            // Ricky: this code i cannot refactor because of the complexity
-            if (!syncUpline
-                || (!sync && _roleId.IsMember())
-                || (!hide && !sync))
-#pragma warning restore S1067 // Expressions should not be too complex
-            {
-                return setting;
             }
 
             if (!this.currentSession.IsBelongToSpecialGroups)

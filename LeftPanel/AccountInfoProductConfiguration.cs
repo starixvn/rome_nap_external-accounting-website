@@ -27,7 +27,7 @@
         public static List<ObjectInfo> CreateSyncAndHiddenItems(DataTable dcsProductStatusTable)
             => new List<ObjectInfo>
             {
-                new ObjectInfo("HideRNGLottery", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.RNGLottery)),
+                new ObjectInfo("HideRNGLottery", dcsProductStatusTable.IsHiddenProduct(ProductConstants.RNGLottery)),
             };
     }
 }
