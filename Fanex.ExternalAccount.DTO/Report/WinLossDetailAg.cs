@@ -25,5 +25,9 @@
         public double AgTotal { get; set; }
 
         public double Company { get; set; }
+        
+        public double RewardAmount { get; set; }
+        
+        public string RewardCurrency { get; set; }
     }
 }

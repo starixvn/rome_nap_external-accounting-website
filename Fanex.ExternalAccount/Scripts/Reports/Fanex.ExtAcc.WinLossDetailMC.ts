@@ -61,7 +61,9 @@ class WinLossDetailMC {
         { HeaderText: "Win/Loss", Name: "SAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Comm", Name: "SAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "SAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
+        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Reward", Name: "RewardAmount", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Reward Currency", Name: "RewardCurrency", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right" }
     ];
     private SAgColumns = [
         {
@@ -85,7 +87,9 @@ class WinLossDetailMC {
         { HeaderText: "Win/Loss", Name: "SAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Comm", Name: "SAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "SAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
+        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Reward", Name: "RewardAmount", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Reward Currency", Name: "RewardCurrency", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right" }
     ];
     private MAgColumns = [
         {
@@ -107,7 +111,9 @@ class WinLossDetailMC {
         { HeaderText: "Win/Loss", Name: "MAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Comm", Name: "MAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "MAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
+        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Reward", Name: "RewardAmount", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Reward Currency", Name: "RewardCurrency", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right" }
     ];
     private AgColumns = [
         {
@@ -126,7 +132,9 @@ class WinLossDetailMC {
         { HeaderText: "Win/Loss", Name: "AgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
+        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Reward", Name: "RewardAmount", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Reward Currency", Name: "RewardCurrency", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right" }
     ];
     private DefaultHeaderColumns = [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
@@ -138,7 +146,9 @@ class WinLossDetailMC {
         { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
         { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
         { HeaderText: "Super", Name: "SAgWinlost", MergeColNumber: 3 },
-        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 },
+        { HeaderText: "Reward", Name: "RewardAmount", MergeRowNumber: 2 },
+        { HeaderText: "Reward Currency", Name: "RewardCurrency", MergeRowNumber: 2 }
     ];
     private SAgHeaderColumns = [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
@@ -150,7 +160,9 @@ class WinLossDetailMC {
         { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
         { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
         { HeaderText: "Super", Name: "SAgWinlost", MergeColNumber: 3 },
-        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 },
+        { HeaderText: "Reward", Name: "RewardAmount", MergeRowNumber: 2 },
+        { HeaderText: "Reward Currency", Name: "RewardCurrency", MergeRowNumber: 2 }
     ];
     private MAgHeaderColumns = [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
@@ -161,7 +173,9 @@ class WinLossDetailMC {
         { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
         { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
         { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
-        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 },
+        { HeaderText: "Reward", Name: "RewardAmount", MergeRowNumber: 2 },
+        { HeaderText: "Reward Currency", Name: "RewardCurrency", MergeRowNumber: 2 }
     ];
     private AgHeaderColumns = [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
@@ -171,7 +185,9 @@ class WinLossDetailMC {
         { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
         { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
         { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
-        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 },
+        { HeaderText: "Reward", Name: "RewardAmount", MergeRowNumber: 2 },
+        { HeaderText: "Reward Currency", Name: "RewardCurrency", MergeRowNumber: 2 }
     ];
 
     RenderUsernameColumn(cell) {
@@ -660,7 +676,9 @@ class WinLossDetailMC {
                         { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
                         { Name: "AgComm", Value: this.dataSource[i].AgComm },
                         { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
-                        { Name: "Company", Value: this.dataSource[i].Company }
+                        { Name: "Company", Value: this.dataSource[i].Company },
+                        { Name: "RewardAmount", Value: this.dataSource[i].RewardAmount },
+                        { Name: "RewardCurrency", Value: this.dataSource[i].RewardCurrency }
                     ]
                 });
             } else if (this.viewlevel === 2) {
@@ -680,7 +698,9 @@ class WinLossDetailMC {
                         { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
                         { Name: "MAgComm", Value: this.dataSource[i].MAgComm },
                         { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
-                        { Name: "Company", Value: this.dataSource[i].Company }
+                        { Name: "Company", Value: this.dataSource[i].Company },
+                        { Name: "RewardAmount", Value: this.dataSource[i].RewardAmount },
+                        { Name: "RewardCurrency", Value: this.dataSource[i].RewardCurrency }
                     ]
                 });
             } else {
@@ -703,7 +723,9 @@ class WinLossDetailMC {
                         { Name: "SAgWinlost", Value: this.dataSource[i].SAgWinlost },
                         { Name: "SAgComm", Value: this.dataSource[i].SAgComm },
                         { Name: "SAgTotal", Value: this.dataSource[i].SAgTotal },
-                        { Name: "Company", Value: this.dataSource[i].Company }
+                        { Name: "Company", Value: this.dataSource[i].Company },
+                        { Name: "RewardAmount", Value: this.dataSource[i].RewardAmount },
+                        { Name: "RewardCurrency", Value: this.dataSource[i].RewardCurrency }
                     ]
                 });
             }
@@ -728,7 +750,9 @@ class WinLossDetailMC {
                         { Name: "AgWinlost", Value: this.totalSource[i].AgWinlost },
                         { Name: "AgComm", Value: this.totalSource[i].AgComm },
                         { Name: "AgTotal", Value: this.totalSource[i].AgTotal },
-                        { Name: "Company", Value: this.totalSource[i].Company }
+                        { Name: "Company", Value: this.totalSource[i].Company },
+                        { Name: "RewardAmount", Value: this.totalSource[i].RewardAmount },
+                        { Name: "RewardCurrency", Value: this.totalSource[i].RewardCurrency }
                     ]
                 });
             } else if (this.viewlevel === 2) {
@@ -747,7 +771,9 @@ class WinLossDetailMC {
                         { Name: "MAgWinlost", Value: this.totalSource[i].MAgWinlost },
                         { Name: "MAgComm", Value: this.totalSource[i].MAgComm },
                         { Name: "MAgTotal", Value: this.totalSource[i].MAgTotal },
-                        { Name: "Company", Value: this.totalSource[i].Company }
+                        { Name: "Company", Value: this.totalSource[i].Company },
+                        { Name: "RewardAmount", Value: this.totalSource[i].RewardAmount },
+                        { Name: "RewardCurrency", Value: this.totalSource[i].RewardCurrency }
                     ]
                 });
             } else {
@@ -769,7 +795,9 @@ class WinLossDetailMC {
                         { Name: "SAgWinlost", Value: this.totalSource[i].SAgWinlost },
                         { Name: "SAgComm", Value: this.totalSource[i].SAgComm },
                         { Name: "SAgTotal", Value: this.totalSource[i].SAgTotal },
-                        { Name: "Company", Value: this.totalSource[i].Company }
+                        { Name: "Company", Value: this.totalSource[i].Company },
+                        { Name: "RewardAmount", Value: this.totalSource[i].RewardAmount },
+                        { Name: "RewardCurrency", Value: this.totalSource[i].RewardCurrency }
                     ]
                 });
             }

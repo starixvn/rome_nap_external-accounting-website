@@ -9,7 +9,7 @@
     internal class WinLossByCurrencyDetailReportAg : TemplateReport, IReportBuilder
     {
         private readonly MemberWinLossByCurrencyDetailReportBuilder _builder;
-        private const int LastColumnIndex = 11;
+        private const int LastColumnIndex = 13;
 
         public WinLossByCurrencyDetailReportAg(string filePath, MemberWinLossByCurrencyDetailReportBuilder builder, string products = null)
             : base(filePath, products)
@@ -57,7 +57,9 @@
                     item.AgWinlost,
                     item.AgComm,
                     item.AgTotal,
-                    item.Company
+                    item.Company,
+                    item.RewardAmount,
+                    item.RewardCurrency ?? string.Empty
                 };
 
                 resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, values);
@@ -85,7 +87,9 @@
                     item.AgWinlost,
                     item.AgComm,
                     item.AgTotal,
-                    item.Company
+                    item.Company,
+                    item.RewardAmount,
+                    item.RewardCurrency ?? string.Empty
                 };
 
                 resultSheet.GetRow(toRowIndex).WriteCells(FirstColumnIndex, values);

@@ -458,7 +458,9 @@
             ExtraComm = reader.ToDouble("ExtraComm"),
             ExtraTotal = reader.ToDouble("ExtraTotal"),
             CompanyAfterExtraPT = reader.ToDouble("CompanyAfterExtraPT"),
-            Company = reader.ToDouble("Company")
+            Company = reader.ToDouble("Company"),
+            RewardAmount = reader.ToDouble("RewardAmount"),
+            RewardCurrency = reader.To<string>("RewardCurrency")
 #pragma warning restore S1192 // String literals should not be duplicated
         };
 
@@ -502,7 +504,9 @@
                 SAgWinlost = reader.ToDouble("SAgWinlost"),
                 SAgComm = reader.ToDouble("SAgComm"),
                 SAgTotal = reader.ToDouble("SAgTotal"),
-                Company = reader.ToDouble("Company")
+                Company = reader.ToDouble("Company"),
+                RewardAmount = reader.ToDouble("RewardAmount"),
+                RewardCurrency = reader.To<string>("RewardCurrency")
 #pragma warning restore S1192 // String literals should not be duplicated
             };
 
@@ -542,7 +546,9 @@
                 MAgWinlost = reader.ToDouble("MAgWinlost"),
                 MAgComm = reader.ToDouble("MAgComm"),
                 MAgTotal = reader.ToDouble("MAgTotal"),
-                Company = reader.ToDouble("Company")
+                Company = reader.ToDouble("Company"),
+                RewardAmount = reader.ToDouble("RewardAmount"),
+                RewardCurrency = reader.To<string>("RewardCurrency")
             };
 
         private List<WinLossDetailAg> GetCommonWinLossDetailAg(string spname, Hashtable parameters)
@@ -578,7 +584,9 @@
                 AgWinlost = reader.ToDouble("AgWinlost"),
                 AgComm = reader.ToDouble("AgComm"),
                 AgTotal = reader.ToDouble("AgTotal"),
-                Company = reader.ToDouble("Company")
+                Company = reader.ToDouble("Company"),
+                RewardAmount = reader.ToDouble("RewardAmount"),
+                RewardCurrency = reader.To<string>("RewardCurrency")
             };
 
         private ArrayList GetSortingOrderList(string spname, Hashtable parameters)
@@ -769,7 +777,9 @@
             SAgWinlost = reader.ToDouble("SAgWinlost"),
             SAgComm = reader.ToDouble("SAgComm"),
             SAgTotal = reader.ToDouble("SAgTotal"),
-            Company = reader.ToDouble("Company")
+            Company = reader.ToDouble("Company"),
+            RewardAmount = reader.ToDouble("RewardAmount"),
+            RewardCurrency = reader.To<string>("RewardCurrency")
 #pragma warning restore S1192 // String literals should not be duplicated
         };
 
@@ -871,7 +881,9 @@
             MAgWinlost = reader.ToDouble("MAgWinlost"),
             MAgComm = reader.ToDouble("MAgComm"),
             MAgTotal = reader.ToDouble("MAgTotal"),
-            Company = reader.ToDouble("Company")
+            Company = reader.ToDouble("Company"),
+            RewardAmount = reader.ToDouble("RewardAmount"),
+            RewardCurrency = reader.To<string>("RewardCurrency")
         };
 
         private List<WinLossByCurrencyDetail> GetCommonWinLossMCDetailAg(string spname, Hashtable parameters)
@@ -906,7 +918,9 @@
             AgWinlost = reader.ToDouble("AgWinlost"),
             AgComm = reader.ToDouble("AgComm"),
             AgTotal = reader.ToDouble("AgTotal"),
-            Company = reader.ToDouble("Company")
+            Company = reader.ToDouble("Company"),
+            RewardAmount = reader.ToDouble("RewardAmount"),
+            RewardCurrency = reader.To<string>("RewardCurrency")
         };
     }
 }

@@ -1,6 +1,7 @@
 ﻿function BalanceController($scope, $http) {
     if ($scope.$parent && $scope.$parent.$parent && $scope.$parent.$parent.model) {
         $scope.balanceInfo = $scope.$parent.$parent.model.balanceInfo;
+        $scope.rewardInfo = $scope.$parent.$parent.model.rewardInfo;
         $scope.model = $scope.balanceInfo;
     }
     else {

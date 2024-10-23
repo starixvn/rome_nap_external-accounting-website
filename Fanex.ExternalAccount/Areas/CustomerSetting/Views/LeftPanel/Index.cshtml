@@ -157,6 +157,18 @@
                             {{balances[8].value.toFixed(2).formatNumber()}}
                         </div>
                     </div>
+                    <div class="row" data-ng-hide="{{rewardInfo.rewardReceivable == null}}">
+                        <div class="pull-left">{{rewardInfo.rewardReceivable.text}} <span class="icon-alert-circle-outline" title="{{rewardInfo.rewardReceivable.tooltip}}"></span></div>
+                        <div class="{{myClass8}} pull-right bold" >
+                            {{rewardInfo.rewardCurrency.value}} {{rewardInfo.rewardReceivable.value.toFixed(2).formatNumber()}}
+                        </div>
+                    </div>
+                    <div class="row" data-ng-hide="{{rewardInfo.rewardPayable ==null}}">
+                        <div class="pull-left">{{rewardInfo.rewardPayable.text}}  <span class="icon-alert-circle-outline" title="{{rewardInfo.rewardPayable.tooltip}}"></span></div>
+                        <div class="{{myClass9}} pull-right bold" >
+                            {{rewardInfo.rewardCurrency.value}} {{rewardInfo.rewardPayable.value.toFixed(2).formatNumber()}}
+                        </div>
+                    </div>
                 </div>
                 <div class="tab-content" id="tabs-2" data-ng-controller="DownlineListController">
                     <div id="downlines" data-ng-hide="true"></div>

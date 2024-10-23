@@ -27,6 +27,12 @@
         internal static bool UplineHasSecurityCode(this DataRow dataRow) => Utils.ToBoolean(dataRow["UplineHasSecurityCode"]);
 
         internal static decimal Credit(this DataRow dataRow) => Utils.ToDecimal(dataRow["credit"]).Format();
+        
+        internal static decimal RewardReceivable(this DataRow dataRow) => Utils.ToDecimal(dataRow["rewardreceivable"]).Format();
+        
+        internal static decimal RewardPayable(this DataRow dataRow) => Utils.ToDecimal(dataRow["rewardpayable"]).Format();
+        
+        internal static string RewardCurrency(this DataRow dataRow) => Utils.ToString(dataRow["rewardcurrency"]);
 
         internal static string StatusTooltip(this DataRow dataRow, bool enabled, bool closed, bool suspended, byte locked)
         {

@@ -582,6 +582,9 @@
     <Content Include="assets\bundles\protectedstatus\multiple.min.js">
       <DependentUpon>multiple.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\reward-management-report\index.js" />
+    <Content Include="assets\bundles\reward-management-report\index.min.js" />
+    <Content Include="assets\bundles\reward-management-report\index.min.js.map" />
     <Content Include="assets\bundles\SuperWinLossDetailByPT\index.js" />
     <Content Include="assets\bundles\SuperWinLossDetailByPT\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -643,6 +646,11 @@
     <Content Include="assets\styles\pages\reports\exchangerate.min.css">
       <DependentUpon>exchangerate.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\reports\reward-detail.css" />
+    <Content Include="assets\styles\pages\reports\reward-detail.min.css" />
+    <Content Include="assets\styles\pages\reports\reward-detail.scss" />
+    <Content Include="assets\styles\pages\reports\_common.scss" />
+    <Content Include="ExcelTemplates\Reports\RewardDetail.xls" />
     <Content Include="Scripts\clipboard.js" />
     <Content Include="assets\styles\base\_alpha-admin-fonts.min.css">
       <DependentUpon>_alpha-admin-fonts.css</DependentUpon>
@@ -1437,9 +1445,14 @@
     <TypeScriptCompile Include="Scripts\Reports\BonusDetail\Fanex.ExtAcc.CancelBonus.ts" />
     <TypeScriptCompile Include="Scripts\Reports\Fanex.ExtAcc.WinLossDetailMC.ts" />
     <TypeScriptCompile Include="Scripts\Reports\OandaExchange\Fanex.ExtAcc.OandaExchange.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\RewardManagement\RewardDetailFilter.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\RewardManagement\RewardDetailGrid.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\RewardManagement\RewardDetail.ts" />
     <TypeScriptCompile Include="Scripts\Reports\Shared\daterangepicker-jquery.ts" />
     <TypeScriptCompile Include="Scripts\Reports\Shared\DateTimeControls.ts" />
     <TypeScriptCompile Include="Scripts\Reports\Shared\ProductControls.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\Shared\ReportFilters.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\Shared\ReportGrid.ts" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\SuperWinLossDetailByPT.ts" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.ClosedStatus.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.MarkAccountType.js" />
@@ -1472,6 +1485,7 @@
     <Content Include="Views\Customer\SportBookInformation-Debug.cshtml" />
     <Content Include="Views\Customer\SportBookInformation.cshtml" />
     <Content Include="Views\HeadlineList\Index.cshtml" />
+    <Content Include="Views\RewardManagement\Index.cshtml" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
@@ -3025,6 +3039,10 @@
     <ProjectReference Include="..\Modules\Fanex.ExternalAccount.ProblemAccount\Fanex.ExternalAccount.ProblemAccount.csproj">
       <Project>{be8d34fe-39ca-447e-bd10-71991c08ceb6}</Project>
       <Name>Fanex.ExternalAccount.ProblemAccount</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.ExternalAccount.RewardManagement\Fanex.ExternalAccount.RewardManagement.csproj">
+      <Project>{19291a82-88ca-4719-8287-b148021617fa}</Project>
+      <Name>Fanex.ExternalAccount.RewardManagement</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.ExternalAccount.Statement\Fanex.ExternalAccount.Statement.csproj">
       <Project>{9d37c623-ea9d-4066-b5fc-c8ec378e9ac4}</Project>

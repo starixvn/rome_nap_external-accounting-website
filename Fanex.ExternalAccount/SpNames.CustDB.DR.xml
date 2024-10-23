@@ -387,4 +387,8 @@
     <Setting Key="Acc_CustomerIns_Register" SpName="Acc_CustomerIns_Register" DbName="DBGLOB.GlobCustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerIns_Rollback" SpName="Acc_CustomerIns_Rollback" DbName="DBGLOB.GlobCustDB.wsv_xnap" Plain="0" />
   </Function>
+  <Function Name="Reward Detail">
+    <Setting Key="Age_Rpt_GetProgramList" SpName="Age_Rpt_GetProgramList" DbName="DBAGE.bodb02.wsv_xnap" Plain="0"/>
+    <Setting Key="EAS_Rpt_RewardDetail_Com" SpName="EAS_Rpt_RewardDetail_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+  </Function>
 </Functions>
