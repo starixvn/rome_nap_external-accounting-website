@@ -181,7 +181,7 @@
             }
 
             ViewData["ExclusiveRefSportIds"] = exclusiveRefSportIds.ToArray();
-            ViewData["SiteDB"] = siteDBConfigService.GetSiteDBConfig(custId);
+            ViewData["SiteDB"] = siteDBConfigService.GetSiteDBConfigByCustId(custId);
 
             return View("~/Views/BettypeReference/Index.cshtml");
         }

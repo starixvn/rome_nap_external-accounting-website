@@ -86,11 +86,10 @@
     <Setting Key="EAS_UserInfoUpdUserGroup" SpName="EAS_UserInfoUpdUserGroup" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserPolicySel" SpName="EAS_UserPolicySel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserPolicyUpd" SpName="EAS_UserPolicyUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserInfoAddNew" SpName="EAS_UserInfoAddNew" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_UserInfoAddNew" SpName="EAS_UserInfoAddNew" DbName="DBCust3.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserInfoUpdAll" SpName="EAS_UserInfoUpdAll" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserInfoUpdUserPwd" SpName="EAS_UserInfoUpdUserPwd" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_GetCustArchiveStatus" SpName="Acc_GetCustArchiveStatus" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_SiteDBConfigSel" SpName="Acc_SiteDBConfigSel" DbName="DBCUST.CustDB.wsv_xnap" />
   </Function>
   <Function Name="Menu and Function">
     <Setting Key="EAS_FunctionIns" SpName="EAS_FunctionIns" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
@@ -283,8 +282,19 @@
     <Setting Key="Acc_OutstandingMemberSel" SpName="Acc_OutstandingMemberSel" DbName="DB042.bodb02.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="Search And Copy">
-    <Setting Key="EAS_CustomerUplineUserNameSel" SpName="EAS_CustomerUplineUserNameSel" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="EAS_CustomerInsMember_CloneSetting_Com" SpName="EAS_CustomerInsMember_CloneSetting_Com" DbName="DBCust.CustDB.wsv_xnap" />
+    <Setting Key="DBSite1_EAS_CustomerInsMember_CloneSetting_Com" SpName="EAS_CustomerInsMember_CloneSetting_Com" DbName="DBCust1.CustDB.wsv_xnap" />
+    <Setting Key="DBSite2_EAS_CustomerInsMember_CloneSetting_Com" SpName="EAS_CustomerInsMember_CloneSetting_Com" DbName="DBCust2.CustDB.wsv_xnap" />
+    <Setting Key="DBSite3_EAS_CustomerInsMember_CloneSetting_Com" SpName="EAS_CustomerInsMember_CloneSetting_Com" DbName="DBCust3.CustDB.wsv_xnap" />
+    <Setting Key="EAS_CustomerInsMember_CloneSetting_Com_Validate" SpName="EAS_CustomerInsMember_CloneSetting_Com_Validate" DbName="DBCust.CustDB.wsv_xnap" />
+    <Setting Key="DBSite1_EAS_CustomerInsMember_CloneSetting_Com_Validate" SpName="EAS_CustomerInsMember_CloneSetting_Com_Validate" DbName="DBCust1.CustDB.wsv_xnap" />
+    <Setting Key="DBSite2_EAS_CustomerInsMember_CloneSetting_Com_Validate" SpName="EAS_CustomerInsMember_CloneSetting_Com_Validate" DbName="DBCust2.CustDB.wsv_xnap" />
+    <Setting Key="DBSite3_EAS_CustomerInsMember_CloneSetting_Com_Validate" SpName="EAS_CustomerInsMember_CloneSetting_Com_Validate" DbName="DBCust3.CustDB.wsv_xnap" />
+    <Setting Key="EAS_GroupAdmin_Sel" SpName="EAS_GroupAdmin_Sel" DbName="DBPOL.NAP_UserControl.wsv_xnap" />
+    <Setting Key="EAS_CustomerUplineUserNameSel" SpName="EAS_CustomerUplineUserNameSel" DbName="DBCust.CustDB.wsv_xnap" />
+    <Setting Key="DBSite1_EAS_CustomerUplineUserNameSel" SpName="EAS_CustomerUplineUserNameSel" DbName="DBCust1.CustDB.wsv_xnap" />
+    <Setting Key="DBSite2_EAS_CustomerUplineUserNameSel" SpName="EAS_CustomerUplineUserNameSel" DbName="DBCust2.CustDB.wsv_xnap" />
+    <Setting Key="DBSite3_EAS_CustomerUplineUserNameSel" SpName="EAS_CustomerUplineUserNameSel" DbName="DBCust3.CustDB.wsv_xnap" />
     <Setting Key="EAS_CustomerInsMember_CloneSetting_ExtraPT" SpName="EAS_CustomerInsMember_CloneSetting_ExtraPT" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_GameEnableJackpotSel" SpName="Acc_GameEnableJackpotSel" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_SuperPrefixByGroupSel" SpName="Acc_SuperPrefixByGroupSel" DbName="DBCust.CustDB.wsv_xnap" />
@@ -361,5 +371,16 @@
   </Function>
   <Function Name="Customer Setting">
     <Setting Key="Acc_LiteMode_CustSetting_ProductProfileSelect" SpName="Acc_LiteMode_CustSetting_ProductProfileSelect" DbName="DBCUST.CustDB.wsv_xnap" />
+  </Function>
+  <Function Name="Manage Admin">
+    <Setting Key="EAS_eaUserInfo_Ins" SpName="EAS_eaUserInfo_Ins" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
+    <Setting Key="Acc_CustomerInsUserInfo_Rollback" SpName="Acc_CustomerInsUserInfo_Rollback" DbName="DBCust3.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_WriteLog_UserLog_UserControl_Wrapper" SpName="EAS_WriteLog_UserLog_UserControl_Wrapper" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
+  </Function>
+  <Function Name="Scaleout DBCUST">
+    <Setting Key="Acc_ServerDBConfigSel" SpName="Acc_ServerDBConfigSel" DbName="DBGLOB.GlobCustDB.wsv_xnap" />
+    <Setting Key="Acc_ServerDBConfigSelByCust" SpName="Acc_ServerDBConfigSelByCust" DbName="DBGLOB.GlobCustDB.wsv_xnap" />
+    <Setting Key="Acc_CustomerIns_Register" SpName="Acc_CustomerIns_Register" DbName="DBGLOB.GlobCustDB.wsv_xnap" Plain="0" />
+    <Setting Key="Acc_CustomerIns_Rollback" SpName="Acc_CustomerIns_Rollback" DbName="DBGLOB.GlobCustDB.wsv_xnap" Plain="0" />
   </Function>
 </Functions>

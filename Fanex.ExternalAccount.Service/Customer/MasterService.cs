@@ -38,7 +38,7 @@
             int subAccId,
             string language)
         {
-            var siteDB = siteDBService.GetSiteDBConfig(custId);
+            var siteDB = siteDBService.GetSiteDBConfigByCustId(custId);
             var autoTransferStatus = autoTransferDao.GetAutoTransferJobStatus(custId, siteDB);
 
             if (autoTransferStatus)

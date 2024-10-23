@@ -2,13 +2,17 @@
 {
     public class SiteDB
     {
-        public System.Int16 SiteDBGroupID { get; set; }
+        public short SiteDBGroupID { get; set; }
+
+        public short CustDBGroupID { get; set; }
 
         public string LinkedServerName { get; set; }
 
         public string ClientAccessName { get; set; }
 
         public string AGIP { get; set; }
+
+        public string AGIP_DBCUST { get; set; }
 
         public bool IsSiteDB => SiteDBGroupID != 0;
     }

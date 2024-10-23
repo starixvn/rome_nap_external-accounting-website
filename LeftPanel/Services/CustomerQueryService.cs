@@ -71,7 +71,7 @@
             var memberBalanceInfoModel = new MemberBalanceInfoModel();
             if(roleId == Role.Member)
             {
-                var siteDB = siteDBService.GetSiteDBConfig(custId);
+                var siteDB = siteDBService.GetSiteDBConfigByCustId(custId);
                 memberBalanceInfoModel = customerDataAccess.GetMemberBalanceModel(custId, siteDB);
             }
 
