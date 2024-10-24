@@ -25,8 +25,6 @@
 
         internal static bool IsDisabledUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["isDisabledUpline"]);
 
-        internal static bool IsSyncUpline(this DataRow dataRow) => Utils.ToBoolean(dataRow["isSyncedUpline"]);
-
         private static DataRow GetProductRow(DataTable table3RdDcs, int productId)
             => table3RdDcs.Select($"ProductID = {productId}").FirstOrDefault();
 
