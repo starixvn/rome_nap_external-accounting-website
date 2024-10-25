@@ -29,7 +29,7 @@ class RewardDetailGrid extends BaseReportGrid {
         { HeaderText: "Master", Name: "MasterUsername", MergeColNumber: 3 },
         { HeaderText: "Super", Name: "SuperUsername", MergeColNumber: 3 },
     ];
-    
+
     constructor( options: IGridComponentConfig ) {
         super(options);
         this.gridOptions = {
@@ -69,14 +69,19 @@ class RewardDetailGrid extends BaseReportGrid {
 
     buildBodyRows( reportData: any ): Array<any> {
         const bodyData = [];
+
+        function StatusColor( status: boolean ) {
+            return status ? "green" : "red";
+        }
+
         if (reportData) {
             for (const element of reportData) {
                 const {
                     CreatedDate, ProgramName,
-                    MemberUsername, MemberAmount, MemberCurrency, MemberPaymentStatusMapped, MemberPaymentDateString, MemberFeedBackMapped,
-                    AgentUsername, AgentPaymentStatusMapped, AgentPaymentDateString,
-                    MasterUsername, MasterPaymentStatusMapped, MasterPaymentDateString,
-                    SuperUsername, SuperPaymentStatusMapped, SuperPaymentDateString
+                    MemberUsername, MemberAmount, MemberCurrency, MemberPaymentStatus, MemberPaymentStatusMapped, MemberPaymentDateString, MemberFeedBackMapped,
+                    AgentUsername, AgentPaymentStatus, AgentPaymentStatusMapped, AgentPaymentDateString,
+                    MasterUsername, MasterPaymentStatus, MasterPaymentStatusMapped, MasterPaymentDateString,
+                    SuperUsername, SuperPaymentStatus, SuperPaymentStatusMapped, SuperPaymentDateString
                 } = element
                 bodyData.push({
                     Columns: [
@@ -85,17 +90,17 @@ class RewardDetailGrid extends BaseReportGrid {
                         { Name: "MemberUsername", Value: MemberUsername },
                         { Name: "MemberAmount", Value: MemberAmount },
                         { Name: "MemberCurrency", Value: MemberCurrency, CellAlign: "center" },
-                        { Name: "MemberPaymentStatus", Value: MemberPaymentStatusMapped, CellAlign: "center" },
+                        { Name: "MemberPaymentStatus", Value: MemberPaymentStatusMapped, CellAlign: "center", CssClass: StatusColor(MemberPaymentStatus) },
                         { Name: "MemberPaymentDate", Value: MemberPaymentDateString, CellAlign: "center" },
                         { Name: "MemberFeedBack", Value: MemberFeedBackMapped, CellAlign: "center", CssClass: MemberFeedBackMapped === "Not Received" ? "red" : "" },
                         { Name: "AgentUsername", Value: AgentUsername },
-                        { Name: "AgentPaymentStatus", Value: AgentPaymentStatusMapped, CellAlign: "center" },
+                        { Name: "AgentPaymentStatus", Value: AgentPaymentStatusMapped, CellAlign: "center", CssClass: StatusColor(AgentPaymentStatus) },
                         { Name: "AgentPaymentDate", Value: AgentPaymentDateString, CellAlign: "center" },
                         { Name: "MasterUsername", Value: MasterUsername },
-                        { Name: "MasterPaymentStatus", Value: MasterPaymentStatusMapped, CellAlign: "center" },
+                        { Name: "MasterPaymentStatus", Value: MasterPaymentStatusMapped, CellAlign: "center", CssClass: StatusColor(MasterPaymentStatus) },
                         { Name: "MasterPaymentDate", Value: MasterPaymentDateString, CellAlign: "center" },
                         { Name: "SuperUsername", Value: SuperUsername },
-                        { Name: "SuperPaymentStatus", Value: SuperPaymentStatusMapped, CellAlign: "center" },
+                        { Name: "SuperPaymentStatus", Value: SuperPaymentStatusMapped, CellAlign: "center", CssClass: StatusColor(SuperPaymentStatus) },
                         { Name: "SuperPaymentDate", Value: SuperPaymentDateString, CellAlign: "center" }
                     ]
                 });
@@ -121,7 +126,7 @@ class RewardDetailGrid extends BaseReportGrid {
     getGroupHeaderColumns(): Array<any> {
         return RewardDetailGrid.GroupHeaderColumns;
     }
-    
+
     getDateTime( date: Date ): string {
         if (!date) return "";
         return moment(date).format("MM/DD/YYYY hh:mm:ss A");

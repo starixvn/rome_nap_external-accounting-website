@@ -160,7 +160,7 @@ class RewardDetail {
             '&ToDate=', calendarParams.toDate,
             '&Page=', page,
             '&PageSize=', pageSize,
-            '&Programs=', dropdownParams[0].currentValue,
+            '&ProgramIds=', dropdownParams[0].currentValue,
             '&MemberPaymentStatus=', dropdownParams[1].currentValue - 1,
             '&Username=', inputParams[0].currentValue,
         ].join('');

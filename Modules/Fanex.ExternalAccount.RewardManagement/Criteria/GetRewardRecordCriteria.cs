@@ -10,7 +10,7 @@ namespace Fanex.ExternalAccount.RewardManagement.Criteria
 
         public DateTime ToDate { get; }
         
-        public string ProgramId { get; set; }
+        public string ProgramIds { get; set; }
 
         public string UserName { get; }
         
@@ -31,7 +31,7 @@ namespace Fanex.ExternalAccount.RewardManagement.Criteria
             FromDate = request.FromDate;
             ToDate = request.ToDate;
             UserName = request.Username;
-            ProgramId = request.ProgramIds;
+            ProgramIds = request.ProgramIds;
             PaymentStatus = request.MemberPaymentStatus;
             GroupName = request.GroupName;
             PageSize = request.PageSize;

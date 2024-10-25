@@ -49,7 +49,7 @@ namespace Fanex.ExternalAccount.RewardManagement.Controllers
             request.GroupName = CurrentSession.CurrencyGroup;
             request.Username = HttpUtility.HtmlEncode(request.Username);
             var reportData = service.GetReport(request);
-            var fileName = $"RewardDetail_{request.FromDate.ToString("MMyyyy")}_{request.ToDate.ToString("MMyyyy")}.xls";
+            var fileName = $"RewardDetail_{request.FromDate.ToString("MMddyyyy")}_{request.ToDate.ToString("MMddyyyy")}.xls";
 
             using (var excel = new RewardDetailExcel
                    {
