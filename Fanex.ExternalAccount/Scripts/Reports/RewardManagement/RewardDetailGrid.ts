@@ -1,6 +1,17 @@
 class RewardDetailGrid extends BaseReportGrid {
+    static sortDateTime( col1Value, col2Value, sortDirection ) {
+        const parsedCol1Value = moment(col1Value);
+        const parsedCol2Value = moment(col2Value);
+
+        if (sortDirection === 'asc') {
+            return parsedCol1Value > parsedCol2Value ? 1 : -1;
+        } else {
+            return parsedCol1Value < parsedCol2Value ? 1 : -1;
+        }
+    }
+
     public static readonly DefaultColumns = [
-        { HeaderText: "Created Date", Name: "CreatedDate", Width: 170, Sort: true, HeaderAlign: "center", ColumnName2: "Created Date" },
+        { HeaderText: "Created Date", Name: "CreatedDate", Width: 170, Sort: true, HeaderAlign: "center", ColumnName2: "Created Date", CustomSortFunction: RewardDetailGrid.sortDateTime },
         { HeaderText: "Program", Name: "ProgramName", Width: 250, Sort: true, HeaderAlign: "center", AllowTruncate: true, ColumnName2: "Program" },
         { HeaderText: "Username", Name: "MemberUsername", Width: 160, Sort: true, HeaderAlign: "center", AllowTruncate: true, ColumnName2: "Member Username" },
         { HeaderText: "Amount", Name: "MemberAmount", Width: 150, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "Member Amount" },
