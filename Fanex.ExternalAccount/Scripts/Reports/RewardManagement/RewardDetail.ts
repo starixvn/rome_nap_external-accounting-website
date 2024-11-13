@@ -12,8 +12,7 @@ class RewardDetail {
     private typeReport: string = "reward-detail";
     private filterComponents: IReportFilters;
     private gridComponent: IReportGrid;
- //   private gridOptions: any;
-  //  private grid: JQuery;
+
     private cachePageSize: number = 10;
     private cachePage: number = 1;
     private readonly gridComponentConfig: IGridComponentConfig = {
@@ -40,8 +39,6 @@ class RewardDetail {
         this.initPaymentStatusDropdown();
         this.initUsernameInput();
         this.initSubmitBtn();
-        // this.initGrid();
-     
     }
 
     initDateRangePicker() {
@@ -95,10 +92,6 @@ class RewardDetail {
         });
     }
     
-    // initGrid(){
-    //     this.grid = $(`#${this.typeReport}-jqgrid`);
-    // }
-
     private submitSuccess( result ) {
         if (result.errorCode) {
             Fanex.ExtAcc.UnBlockUI();

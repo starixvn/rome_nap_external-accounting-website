@@ -18,7 +18,7 @@ interface IReportGrid {
 
     hideNoInfo( isHide: boolean );
 
-    getGridOptions(): string;
+    initSelectColumnsDropdown( columns: any, ignoreColumns: any )
 }
 
 type IGridComponentConfig = {
@@ -53,7 +53,7 @@ class BaseReportGrid implements IReportGrid {
         this.options = options;
     }
 
-    protected initSelectColumnsDropdown( columns: any, ignoreColumns: any ) {
+    initSelectColumnsDropdown( columns: any, ignoreColumns: any ) {
         const options = [];
         const numberOfColumns = columns.length;
         for (let i = 0; i < numberOfColumns; i++) {
@@ -67,21 +67,22 @@ class BaseReportGrid implements IReportGrid {
             })
         }
 
-        $(`#${this.options.selectColumnsId}`).fanexMultiSelect({
+        $(`#${this.options.selectColumnsId}`).fanexMultiSelectSearchable({
             showFilter: true,
-            minWidth: 280,
             checkAllText: "Select All",
             noneSelectedText: "None Selected",
             useCustomCheckAllText: true,
             customCheckAllText: "All",
             isCheckAll: true,
             listData: options,
-            onLeave: () => this.showHideColumns()
+            onLeave: () => this.showHideColumns(),
+            toggleWidth: this.options.isMobile.phone ? 243 : 193,
+            minWidth: this.options.isMobile.phone ? 250 : 200
         });
     }
 
     protected showHideColumns() {
-        const unSelectedColumns = $(`#${this.options.selectColumnsId}`).fanexMultiSelect("getItems", false);
+        const unSelectedColumns = $(`#${this.options.selectColumnsId}`).fanexMultiSelectSearchable("getItems", false);
         $(`#${this.options.gridId}`).fanexGrid("hideColumns", this.gridOptions, unSelectedColumns.map(colIndex => Number(colIndex)));
     }
 
@@ -210,7 +211,6 @@ class BaseReportGrid implements IReportGrid {
             for (const row of _self.gridBodyRowsCache) {
                 const tds = [];
                 const cols = row.Columns.filter(col => !hideColumnsName.includes(col.Name));
-                console.log("cols",cols)
                 cols.forEach(col => {
                         const definedCol = defaultColumns.find(e => e.Name === col.Name);
                         tds.push(`<td>${formatValue(col.Value, definedCol)}</td>`)

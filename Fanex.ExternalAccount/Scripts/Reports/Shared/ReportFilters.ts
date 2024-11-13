@@ -1,13 +1,16 @@
 type DropDownInfo = {
     dropdownId: any; dropdownName: any;
     dropdownData?: any; defaultValue?: any;
-    minWidth?: any; dropdownType?: "fanexMultiSelect" | "combobox" | "select2",
+    dropdownType?: "fanexMultiSelect" | "fanexMultiSelectSearchable" | "combobox" | "select2",
     onClosed?: any; allowRerender?: boolean,
     dropdownConfig?: any
+    toggleWidth?: any;
+    minWidth?: any;
 };
+
 type InputInfo = { inputName: string; inputId: string; inputType?: string; };
 type TimeRange = { fromDate: string, toDate: string };
-type CurrentValue = { name: string, currentValue: any };
+type CurrentValue = { name: string, currentValue: any, currentText?: string };
 type FilterValue = {
     inputParams: Array<CurrentValue>,
     dropdownParams: Array<CurrentValue>,
@@ -56,6 +59,10 @@ class BaseReportFilters implements IReportFilters {
                 this.renderFanexMultiSelectDDL(dropdownInfo);
                 !isExist && this.dropdowns.push(dropdownInfo);
                 return true;
+            case "fanexMultiSelectSearchable":
+                this.renderFanexMultiSelectSearchableDDL(dropdownInfo);
+                !isExist && this.dropdowns.push(dropdownInfo);
+                return true;
             case "combobox":
                 this.renderComboboxDDL(dropdownInfo);
                 !isExist && this.dropdowns.push(dropdownInfo);
@@ -82,9 +89,24 @@ class BaseReportFilters implements IReportFilters {
             switch (dropdownInfo.dropdownType) {
                 case "fanexMultiSelect":
                     return self.$(`#${dropdownInfo.dropdownId}`).fanexMultiSelect("getItems", true).toString();
+                case "fanexMultiSelectSearchable":
+                    return self.$(`#${dropdownInfo.dropdownId}`).fanexMultiSelectSearchable("getItems", true).toString();
                 case "combobox":
                 case "select2":
                     return self.$(`#${dropdownInfo.dropdownId}`).find(":selected").val();
+                default:
+                    throw new Error("Unknown dropdown type");
+            }
+        }
+        const getSelectedTextDropdown = ( dropdownInfo: DropDownInfo ) => {
+            switch (dropdownInfo.dropdownType) {
+                case "fanexMultiSelect":
+                    return self.$(`#${dropdownInfo.dropdownId}`).fanexMultiSelect("getSelectedTexts", true).toString();
+                case "fanexMultiSelectSearchable":
+                    return self.$(`#${dropdownInfo.dropdownId}`).fanexMultiSelectSearchable("getSelectedTexts", true).toString();
+                case "combobox":
+                case "select2":
+                    return self.$(`#${dropdownInfo.dropdownId}`).find(":selected").text();
                 default:
                     throw new Error("Unknown dropdown type");
             }
@@ -94,6 +116,7 @@ class BaseReportFilters implements IReportFilters {
             return {
                 name: elem.dropdownName,
                 currentValue: getSelectedValueDropdown(elem),
+                currentText: getSelectedTextDropdown(elem),
             }
         })
 
@@ -123,17 +146,43 @@ class BaseReportFilters implements IReportFilters {
 
     renderFanexMultiSelectDDL( options: DropDownInfo ) {
         if (!options.dropdownData || !options.dropdownId) return;
+        const { dropdownConfig } = options;
+        const { checkAllText, noneSelectedText } = dropdownConfig || { checkAllText: "Select All", noneSelectedText: "None Selected" };
         return this.$(`#${options.dropdownId}`).fanexMultiSelect({
             showFilter: true,
-            checkAllText: options.dropdownConfig ? options.dropdownConfig.checkAllText : "Select All",
-            noneSelectedText: options.dropdownConfig ? options.dropdownConfig.noneSelectedText : "None Selected",
-            useCustomCheckAllText: true,
+            checkAllText: checkAllText,
+            noneSelectedText: noneSelectedText,
+            useCustomCheckAllText: false,
             customCheckAllText: "All",
             isCheckAll: true,
             listData: options.dropdownData,
             minWidth: options.minWidth,
+            toggleWidth: options.toggleWidth,
             onLeave: function () {
                 const leagueIDs = $(`#${options.dropdownId}`).fanexMultiSelect("getItems", true).toString();
+                if (options.onClosed) {
+                    options.onClosed(leagueIDs);
+                }
+            },
+        });
+    }
+
+    renderFanexMultiSelectSearchableDDL( options: DropDownInfo ) {
+        if (!options.dropdownData || !options.dropdownId) return;
+        const { dropdownConfig } = options;
+        const { checkAllText, noneSelectedText } = dropdownConfig || { checkAllText: "Select All", noneSelectedText: "None Selected" };
+        return this.$(`#${options.dropdownId}`).fanexMultiSelectSearchable({
+            showFilter: true,
+            checkAllText: checkAllText,
+            noneSelectedText: noneSelectedText,
+            useCustomCheckAllText: false,
+            customCheckAllText: "All",
+            isCheckAll: true,
+            listData: options.dropdownData,
+            minWidth: options.minWidth,
+            toggleWidth: options.toggleWidth,
+            onLeave: function () {
+                const leagueIDs = $(`#${options.dropdownId}`).fanexMultiSelectSearchable("getItems", true).toString();
                 if (options.onClosed) {
                     options.onClosed(leagueIDs);
                 }
@@ -156,10 +205,10 @@ class BaseReportFilters implements IReportFilters {
             placeholder: "Select",
             data: options.dropdownData,
             dropdownAutoWidth: true, // Optional to auto-adjust the dropdown width
-            templateSelection: function (data) {
+            templateSelection: function ( data ) {
                 return data.text; // Customize how selected items are shown
             },
-            sorter: function(data) {
+            sorter: function ( data ) {
                 return data; // Keep original order, no sorting
             }
         }).bind("select2:select", () => {
