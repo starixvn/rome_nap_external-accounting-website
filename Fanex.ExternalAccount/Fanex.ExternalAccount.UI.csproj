@@ -2940,6 +2940,7 @@
     <Content Include="Views\Customer\IndirectEditMember-Debug.cshtml" />
     <Content Include="Views\Customer\IndirectEditMember.cshtml" />
     <Content Include="Views\SuperInfo\Index.cshtml" />
+    <Content Include="Views\Customer\Settings.cshtml" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailBySubGroup\Fanex.ExtAcc.SuperWinLossDetailBySubGroup.ts" />
   </ItemGroup>
   <ItemGroup>
