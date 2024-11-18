@@ -15,6 +15,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
     
     public class ReportByCurrencyDAO : DAOBase, IReportByCurrencyDAO
     {
+        private readonly string[] mappingBaseCurrency = { "MYR", "CNY", "THB", "IDR" };
         public List<CurrencyEntity> EAS_GetCurrencyList(string groupName)
         {
             var currencyList = new List<CurrencyEntity>();
@@ -53,6 +54,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             DateTime balanceUpDay,
             DateTime moveBetsDay)
         {
+            var baseCurrencyName = mappingBaseCurrency[baseCurrency - 1];
             var parameters = new Hashtable
             {
                 {"groupname", groupname},
@@ -62,7 +64,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 {"productids", productIds},
                 {"productdetails", productDetailsXML},
                 {"movebetsday", moveBetsDay},
-                {"basecurrency", baseCurrency},
+                {"basecurrency", baseCurrencyName},
                 {"currencyids", currencyIds}
             };
 
@@ -87,6 +89,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             DateTime balanceUpDay,
             DateTime moveBetsDay)
         {
+            var baseCurrencyName = mappingBaseCurrency[baseCurrency - 1];
             var parameters = new Hashtable
             {
                 {"groupname", groupname},
@@ -97,7 +100,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 {"productids", productIds},
                 {"productdetails", productDetailsXML},
                 {"movebetsday", moveBetsDay},
-                {"basecurrency", baseCurrency}
+                {"basecurrency", baseCurrencyName}
             };
 
             if (masterId != 0)
@@ -121,6 +124,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             DateTime balanceUpDay,
             DateTime moveBetsDay)
         {
+            var baseCurrencyName = mappingBaseCurrency[baseCurrency - 1];
             var parameters = new Hashtable
             {
                 {"groupname", groupname},
@@ -131,7 +135,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 {"productids", productIds},
                 {"productdetails", productDetailsXML},
                 {"movebetsday", moveBetsDay},
-                {"basecurrency", baseCurrency}
+                {"basecurrency", baseCurrencyName}
             };
 
             if (agentId != 0)
@@ -155,6 +159,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             DateTime balanceUpDay,
             DateTime moveBetsDay)
         {
+            var baseCurrencyName = mappingBaseCurrency[baseCurrency - 1];
             var parameters = new Hashtable
             {
                 {"groupname", groupname},
@@ -165,7 +170,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 {"productids", productIds},
                 {"productdetails", productDetailsXML},
                 {"movebetsday", moveBetsDay},
-                {"basecurrency", baseCurrency}
+                {"basecurrency", baseCurrencyName}
             };
 
             if (memberId != 0)

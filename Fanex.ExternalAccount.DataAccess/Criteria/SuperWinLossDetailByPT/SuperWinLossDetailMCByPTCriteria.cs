@@ -4,6 +4,7 @@
 
     public class SuperWinLossDetailMCByPTCriteria : SuperWinLossDetailByPTCriteria
     {
+        private readonly string[] mappingBaseCurrency = { "MYR", "CNY", "THB", "IDR" };
         public SuperWinLossDetailMCByPTCriteria(
             string groupName,
             DateTime fromDate,
@@ -15,11 +16,11 @@
             int baseCurrency,
             string currencyIds) : base(groupName, fromDate, toDate, balanceUpDay, moveBetsDay, productIds, productDetails, 0, 0)
         {
-            BaseCurrency = baseCurrency;
+            BaseCurrency = mappingBaseCurrency[baseCurrency-1];
             CurrencyIds = currencyIds;
         }
         
-        public int BaseCurrency { get; }
+        public string BaseCurrency { get; }
 
         public string CurrencyIds { get; }
 

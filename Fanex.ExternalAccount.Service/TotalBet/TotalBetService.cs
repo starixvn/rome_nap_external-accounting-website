@@ -13,7 +13,9 @@ namespace Fanex.ExternalAccount.Service.TotalBet
     {
         private readonly IDynamicRepository dynamicRepository;
 
-        public TotalBetService() : this(null) { }
+        public TotalBetService() : this(null)
+        {
+        }
 
         public TotalBetService(IDynamicRepository dynamicRepository)
         {
@@ -40,7 +42,8 @@ namespace Fanex.ExternalAccount.Service.TotalBet
 
             foreach (var d in data)
             {
-                d.MatchName = CacheRef.GetTeamName(d.HomeId) + (d.IsNeutral ? " (N)" : string.Empty) + " -vs- " + CacheRef.GetTeamName(d.AwayId);
+                d.MatchName = CacheRef.GetTeamName(d.HomeId) + (d.IsNeutral ? " (N)" : string.Empty) + " -vs- " +
+                              CacheRef.GetTeamName(d.AwayId);
             }
 
             return data;
@@ -48,14 +51,12 @@ namespace Fanex.ExternalAccount.Service.TotalBet
 
         public IEnumerable<TotalBetLeagueModel> GetData(GetTotalBetParam param)
         {
-            var criteria = new GetTotalBetCriteria
-            {
-                GroupName = param.GroupName,
-                ViewMode = param.ViewMode,
-                LeagueIds = string.Join(",", param.Leagues),
-                MatchIds = string.Join(",", param.Events),
-                BaseCurrency = param.BaseCurrency
-            };
+            var criteria = new GetTotalBetCriteria(
+                param.GroupName, param.ViewMode,
+                string.Join(",", param.Leagues),
+                string.Join(",", param.Events),
+                param.BaseCurrency
+            );
             var leagues = dynamicRepository.Fetch<TotalBetModel>(criteria).GroupBy(d => d.LeagueId);
             var result = new List<TotalBetLeagueModel>();
 
