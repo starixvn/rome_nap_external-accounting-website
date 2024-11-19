@@ -131,8 +131,9 @@
                 {
                     if (ProductConstants.ProductListHasProductDetail.Any(i => i == group.Key))
                     {
-                        validProductDetails.AddRange(
-                            Config.IsOfferProductDetailGroup(groupName) ? group.Where(p => resourceIdsHash.ContainsKey(p.ResourceId)) : group);
+                        var isSportsbook = group.Key == ProductConstants.Sportsbook;
+                        var productDetails = Config.IsOfferProductDetailGroup(groupName) ? group.Where(p => resourceIdsHash.ContainsKey(p.ResourceId)) : group;
+                        validProductDetails.AddRange(isSportsbook ? productDetails.Where(p => resourceIdsHash.ContainsKey(p.ResourceId)) : productDetails);
                     }
                 });
 
