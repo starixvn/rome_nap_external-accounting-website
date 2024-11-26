@@ -363,5 +363,17 @@
       "Scripts/Customer/Fanex.ExtAcc.Customer.SuperInfo.js"
     ],
     "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/reward-management-report/index.js",
+    "inputFiles": [
+      "Scripts/Fanex.Multiselect/fanex.multiSelectSearchable.js",
+      "Scripts/Reports/Shared/ReportFilters.js",
+      "Scripts/Reports/Shared/ReportGrid.js",
+      "Scripts/Reports/RewardManagement/RewardDetailFilter.js",
+      "Scripts/Reports/RewardManagement/RewardDetailGrid.js",
+      "Scripts/Reports/RewardManagement/RewardDetail.js"
+    ],
+    "sourceMap": true
   }
 ]

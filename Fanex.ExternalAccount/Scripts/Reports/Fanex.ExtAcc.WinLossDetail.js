@@ -582,7 +582,8 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: "Win/Loss", Name: "ExtraWinLost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Comm", Name: "ExtraComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "ExtraTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Company (After Extra)", Name: "CompanyAfterExtraPT", Width: 180, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
+        { HeaderText: "Company (After Extra)", Name: "CompanyAfterExtraPT", Width: 180, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Reward", Name: "RewardAmount", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
     ],
     SAgColumns: [
         {
@@ -604,7 +605,8 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: "Win/Loss", Name: "SAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Comm", Name: "SAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "SAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
+        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Reward", Name: "RewardAmount", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
     ],
     MAgColumns: [
         {
@@ -624,7 +626,8 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: "Win/Loss", Name: "MAgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Comm", Name: "MAgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "MAgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
+        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Reward", Name: "RewardAmount", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
     ],
     AgColumns: [
         {
@@ -641,7 +644,8 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: "Win/Loss", Name: "AgWinlost", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Comm", Name: "AgComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Total", Name: "AgTotal", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
-        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
+        { HeaderText: "Company", Name: "Company", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
+        { HeaderText: "Reward", Name: "RewardAmount", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" }
     ],
     defaultHeaderColumns: [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
@@ -654,7 +658,8 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: "Super", Name: "SAgWinlost", MergeColNumber: 3 },
         { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 },
         { HeaderText: "Extra", Name: "ExtraWinLost", MergeColNumber: 3 },
-        { HeaderText: "Company (After Extra)", Name: "CompanyAfterExtraPT", MergeRowNumber: 2 }
+        { HeaderText: "Company (After Extra)", Name: "CompanyAfterExtraPT", MergeRowNumber: 2 },
+        { HeaderText: "Reward", Name: "RewardAmount", MergeRowNumber: 2 }
     ],
     SAgHeaderColumns: [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
@@ -665,7 +670,8 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
         { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
         { HeaderText: "Super", Name: "SAgWinlost", MergeColNumber: 3 },
-        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 },
+        { HeaderText: "Reward", Name: "RewardAmount", MergeRowNumber: 2 }
     ],
     MAgHeaderColumns: [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
@@ -675,7 +681,8 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
         { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
         { HeaderText: "Master", Name: "MAgWinlost", MergeColNumber: 3 },
-        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 },
+        { HeaderText: "Reward", Name: "RewardAmount", MergeRowNumber: 2 }
     ],
     AgHeaderColumns: [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
@@ -684,7 +691,8 @@ Fanex.ExtAcc.WinLossDetail = {
         { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
         { HeaderText: "Member", Name: "MemberWinlost", MergeColNumber: 3 },
         { HeaderText: "Agent", Name: "AgWinlost", MergeColNumber: 3 },
-        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 }
+        { HeaderText: "Company", Name: "Company", MergeRowNumber: 2 },
+        { HeaderText: "Reward", Name: "RewardAmount", MergeRowNumber: 2 }
     ],
     Render: function (dateInfo) {
         var arrColData = new Array();
@@ -721,7 +729,9 @@ Fanex.ExtAcc.WinLossDetail = {
                     '<div id="showHideExtras" style="display: inline-block" class= "disallowDblComm"></div>'
             });
         }
-
+        arrColData[arrColData.length -1].HeaderText = `Reward (${this.dataSource[0].RewardCurrency})`;
+        arrGroupHeaders[arrGroupHeaders.length -1].HeaderText = `Reward (${this.dataSource[0].RewardCurrency})`;
+        
         var gridOption = {
             customizeHeader: true,
             groupHeaderRows: [{ Columns: arrGroupHeaders }],
@@ -776,6 +786,7 @@ Fanex.ExtAcc.WinLossDetail = {
         var sumExtraTotal = 0;
         var sumCompanyAfterExtraPT = 0;
         var sumCompany = 0;
+        var sumRewardAmount = 0;
 
         //// Assing BodyData
         $this.InitSort();
@@ -794,7 +805,8 @@ Fanex.ExtAcc.WinLossDetail = {
                         { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
                         { Name: "AgComm", Value: this.dataSource[i].AgComm },
                         { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
-                        { Name: "Company", Value: this.dataSource[i].Company }
+                        { Name: "Company", Value: this.dataSource[i].Company },
+                        { Name: "RewardAmount", Value: this.dataSource[i].RewardAmount }
                     ]
                 });
             } else if (this.viewlevel === 2) {
@@ -813,7 +825,8 @@ Fanex.ExtAcc.WinLossDetail = {
                         { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
                         { Name: "MAgComm", Value: this.dataSource[i].MAgComm },
                         { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
-                        { Name: "Company", Value: this.dataSource[i].Company }
+                        { Name: "Company", Value: this.dataSource[i].Company },
+                        { Name: "RewardAmount", Value: this.dataSource[i].RewardAmount }
                     ]
                 });
             } else if (this.viewlevel === 3) {
@@ -835,7 +848,8 @@ Fanex.ExtAcc.WinLossDetail = {
                         { Name: "SAgWinlost", Value: this.dataSource[i].SAgWinlost },
                         { Name: "SAgComm", Value: this.dataSource[i].SAgComm },
                         { Name: "SAgTotal", Value: this.dataSource[i].SAgTotal },
-                        { Name: "Company", Value: this.dataSource[i].Company }
+                        { Name: "Company", Value: this.dataSource[i].Company },
+                        { Name: "RewardAmount", Value: this.dataSource[i].RewardAmount }
                     ]
                 });
             } else {
@@ -861,7 +875,8 @@ Fanex.ExtAcc.WinLossDetail = {
                         { Name: 'ExtraWinLost', Value: this.dataSource[i].ExtraWinLost },
                         { Name: 'ExtraComm', Value: this.dataSource[i].ExtraComm },
                         { Name: 'ExtraTotal', Value: this.dataSource[i].ExtraTotal },
-                        { Name: "CompanyAfterExtraPT", Value: this.dataSource[i].CompanyAfterExtraPT }
+                        { Name: "CompanyAfterExtraPT", Value: this.dataSource[i].CompanyAfterExtraPT },
+                        { Name: "RewardAmount", Value: this.dataSource[i].RewardAmount }
                     ]
                 });
             }
@@ -892,6 +907,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 sumCompanyAfterExtraPT += this.dataSource[i].CompanyAfterExtraPT;
             }
             sumCompany += this.dataSource[i].Company;
+            sumRewardAmount += this.dataSource[i].RewardAmount;
         }
 
         gridOption.bodyRows = bodyData;
@@ -912,7 +928,8 @@ Fanex.ExtAcc.WinLossDetail = {
                     { Name: "AgWinlost", Value: sumAgWinlost },
                     { Name: "AgComm", Value: sumAgComm },
                     { Name: "AgTotal", Value: sumAgTotal },
-                    { Name: "Company", Value: sumCompany }
+                    { Name: "Company", Value: sumCompany },
+                    { Name: "RewardAmount", Value: sumRewardAmount }
                 ]
             });
         } else if (this.viewlevel === 2) {
@@ -931,7 +948,8 @@ Fanex.ExtAcc.WinLossDetail = {
                     { Name: "MAgWinlost", Value: sumMAgWinlost },
                     { Name: "MAgComm", Value: sumMAgComm },
                     { Name: "MAgTotal", Value: sumMAgTotal },
-                    { Name: "Company", Value: sumCompany }
+                    { Name: "Company", Value: sumCompany },
+                    { Name: "RewardAmount", Value: sumRewardAmount }
                 ]
             });
         } else if (this.viewlevel === 3) {
@@ -953,7 +971,8 @@ Fanex.ExtAcc.WinLossDetail = {
                     { Name: "SAgWinlost", Value: sumSAgWinlost },
                     { Name: "SAgComm", Value: sumSAgComm },
                     { Name: "SAgTotal", Value: sumSAgTotal },
-                    { Name: "Company", Value: sumCompany }
+                    { Name: "Company", Value: sumCompany },
+                    { Name: "RewardAmount", Value: sumRewardAmount }
                 ]
             });
         } else {
@@ -979,7 +998,8 @@ Fanex.ExtAcc.WinLossDetail = {
                     { Name: 'ExtraWinLost', Value: sumExtraWinLost },
                     { Name: 'ExtraComm', Value: sumExtraComm },
                     { Name: 'ExtraTotal', Value: sumExtraTotal },
-                    { Name: 'CompanyAfterExtraPT', Value: sumCompanyAfterExtraPT }
+                    { Name: 'CompanyAfterExtraPT', Value: sumCompanyAfterExtraPT },
+                    { Name: "RewardAmount", Value: sumRewardAmount }
                 ]
             });
         }

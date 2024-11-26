@@ -58,6 +58,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.State
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.HeadlineList", "Modules\Fanex.ExternalAccount.HeadlineList\Fanex.ExternalAccount.HeadlineList.csproj", "{647A6FB0-3765-40BE-A19F-DDF142193819}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.RewardManagement", "Modules\Fanex.ExternalAccount.RewardManagement\Fanex.ExternalAccount.RewardManagement.csproj", "{19291A82-88CA-4719-8287-B148021617FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -267,6 +269,16 @@ Global
 		{647A6FB0-3765-40BE-A19F-DDF142193819}.Development|Any CPU.Build.0 = Debug|Any CPU
 		{647A6FB0-3765-40BE-A19F-DDF142193819}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{647A6FB0-3765-40BE-A19F-DDF142193819}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19291A82-88CA-4719-8287-B148021617FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19291A82-88CA-4719-8287-B148021617FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19291A82-88CA-4719-8287-B148021617FA}.Debug-Alpha|Any CPU.ActiveCfg = Debug|Any CPU
+		{19291A82-88CA-4719-8287-B148021617FA}.Debug-Alpha|Any CPU.Build.0 = Debug|Any CPU
+		{19291A82-88CA-4719-8287-B148021617FA}.Debug-NAP|Any CPU.ActiveCfg = Debug|Any CPU
+		{19291A82-88CA-4719-8287-B148021617FA}.Debug-NAP|Any CPU.Build.0 = Debug|Any CPU
+		{19291A82-88CA-4719-8287-B148021617FA}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{19291A82-88CA-4719-8287-B148021617FA}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{19291A82-88CA-4719-8287-B148021617FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19291A82-88CA-4719-8287-B148021617FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -279,6 +291,7 @@ Global
 		{5F20BEA2-FEBF-4CE2-8FF8-129DD93B3386} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
 		{9D37C623-EA9D-4066-B5FC-C8EC378E9AC4} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
 		{647A6FB0-3765-40BE-A19F-DDF142193819} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
+		{19291A82-88CA-4719-8287-B148021617FA} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45

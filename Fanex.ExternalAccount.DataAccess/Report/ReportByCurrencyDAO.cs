@@ -227,7 +227,9 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             SAgWinlost = reader.ToDouble("SAgWinlost"),
             SAgComm = reader.ToDouble("SAgComm"),
             SAgTotal = reader.ToDouble("SAgTotal"),
-            Company = reader.ToDouble("Company")
+            Company = reader.ToDouble("Company"),
+            RewardAmount = reader.ToDouble("RewardAmount"),
+            RewardCurrency = reader.To<string>("RewardCurrency")
         };
 
         private static WinLossByCurrencyDetail CreateWinLossByCurrencyTotal(IDataReader reader) => new WinLossByCurrencyDetail
@@ -248,7 +250,9 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             SAgWinlost = reader.ToDouble("SAgWinlost"),
             SAgComm = reader.ToDouble("SAgComm"),
             SAgTotal = reader.ToDouble("SAgTotal"),
-            Company = reader.ToDouble("Company")
+            Company = reader.ToDouble("Company"),
+            RewardAmount = reader.ToDouble("RewardAmount"),
+            RewardCurrency = reader.To<string>("RewardCurrency")
         };
 
         private WinLossByCurrencyMAg GetWinLossByCurrencyDetailMAg(string spname, Hashtable parameters)
@@ -298,7 +302,9 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             MAgWinlost = reader.ToDouble("MAgWinlost"),
             MAgComm = reader.ToDouble("MAgComm"),
             MAgTotal = reader.ToDouble("MAgTotal"),
-            Company = reader.ToDouble("Company")
+            Company = reader.ToDouble("Company"),
+            RewardAmount = reader.ToDouble("RewardAmount"),
+            RewardCurrency = reader.To<string>("RewardCurrency")
         };
 
         private static WinLossByCurrencyDetailMAg CreateWinLossByCurrencyTotalMAg(IDataReader reader) => new WinLossByCurrencyDetailMAg
@@ -316,7 +322,9 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             MAgWinlost = reader.ToDouble("MAgWinlost"),
             MAgComm = reader.ToDouble("MAgComm"),
             MAgTotal = reader.ToDouble("MAgTotal"),
-            Company = reader.ToDouble("Company")
+            Company = reader.ToDouble("Company"),
+            RewardAmount = reader.ToDouble("RewardAmount"),
+            RewardCurrency = reader.To<string>("RewardCurrency")
         };
 
         private WinLossByCurrencyAg GetWinLossByCurrencyDetailAg(string spname, Hashtable parameters)
@@ -363,7 +371,9 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             AgWinlost = reader.ToDouble("AgWinlost"),
             AgComm = reader.ToDouble("AgComm"),
             AgTotal = reader.ToDouble("AgTotal"),
-            Company = reader.ToDouble("Company")
+            Company = reader.ToDouble("Company"),
+            RewardAmount = reader.ToDouble("RewardAmount"),
+            RewardCurrency = reader.To<string>("RewardCurrency")
         };
 
         private static WinLossByCurrencyDetailAg CreateWinLossByCurrencyTotalAg(IDataReader reader) => new WinLossByCurrencyDetailAg
@@ -378,7 +388,9 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             AgWinlost = reader.ToDouble("AgWinlost"),
             AgComm = reader.ToDouble("AgComm"),
             AgTotal = reader.ToDouble("AgTotal"),
-            Company = reader.ToDouble("Company")
+            Company = reader.ToDouble("Company"),
+            RewardAmount = reader.ToDouble("RewardAmount"),
+            RewardCurrency = reader.To<string>("RewardCurrency")
         };
 
     }

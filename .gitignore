@@ -29,6 +29,7 @@ $tf*/
 Fanex.ExternalAccount/Fanex.ExternalAccount.UI.Publish.xml
 *.suo
 .vs/*
+.idea/*
 packages/*
 Fanex.ExternalAccount.Controllers/Fanex.ExternalAccount.Controllers.csproj.user
 

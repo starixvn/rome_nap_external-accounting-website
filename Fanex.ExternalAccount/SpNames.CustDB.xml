@@ -66,7 +66,7 @@
     <Setting Key="EAS_GroupPolicyUpd" SpName="EAS_GroupPolicyUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="SubGroup">
-    <Setting Key="EAS_CustomerSelBySubGroup" SpName="EAS_CustomerSelBySubGroup_UAT3" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_CustomerSelBySubGroup" SpName="EAS_CustomerSelBySubGroup" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_CustomerUpdSubGroup" SpName="EAS_CustomerUpdSubGroup" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserInfoSelBySubGroup" SpName="EAS_UserInfoSelBySubGroup" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserInfoUpdSubGroupAdminPwd" SpName="EAS_UserInfoUpdSubGroupAdminPwd" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
@@ -311,8 +311,8 @@
     <Setting Key="EAS_ProblemAccount_ReviewStatusUpd" SpName="EAS_ProblemAccount_ReviewStatusUpd" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="User belong to Group">
-    <Setting Key="EAS_UserCheckBelonging" SpName="EAS_UserCheckBelonging_UAT3" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerSelCheckBelonging" SpName="EAS_CustomerSelCheckBelonging_UAT3" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_UserCheckBelonging" SpName="EAS_UserCheckBelonging" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_CustomerSelCheckBelonging" SpName="EAS_CustomerSelCheckBelonging" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="Get Product List of Multiple Edit Product Status">
     <Setting Key="EAS_ProductSettingByGroup_Sel" SpName="EAS_ProductSettingByGroup_Sel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
@@ -382,5 +382,9 @@
     <Setting Key="Acc_ServerDBConfigSelByCust" SpName="Acc_ServerDBConfigSelByCust" DbName="DBGLOB.GlobCustDB.wsv_xnap" />
     <Setting Key="Acc_CustomerIns_Register" SpName="Acc_CustomerIns_Register" DbName="DBGLOB.GlobCustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerIns_Rollback" SpName="Acc_CustomerIns_Rollback" DbName="DBGLOB.GlobCustDB.wsv_xnap" Plain="0" />
+  </Function>
+    <Function Name="Reward Detail">
+    <Setting Key="Age_Rpt_GetProgramList" SpName="Age_Rpt_GetProgramList" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_Rpt_RewardDetail_Com" SpName="EAS_Rpt_RewardDetail_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
   </Function>
 </Functions>

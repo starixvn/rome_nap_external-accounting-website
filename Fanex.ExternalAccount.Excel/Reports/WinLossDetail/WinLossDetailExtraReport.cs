@@ -10,7 +10,8 @@
     internal class WinLossDetailExtraReport : TemplateReport, IReportBuilder
     {
         private readonly WinLossDetailExtraReportBuilder _builder;
-        private const int LastColumnIndex = 21;
+        private const int LastColumnIndex = 22;
+
 
         public WinLossDetailExtraReport(string filePath, WinLossDetailExtraReportBuilder builder, string products = null)
             : base(filePath, products)
@@ -27,6 +28,7 @@
                 BoldAllFonts();
             }
 
+            CreateRewardCell(resultSheet,LastColumnIndex);
             BuildMainTitle(resultSheet);
             WriteBodyReport(resultSheet);
 
@@ -68,7 +70,8 @@
                     item.ExtraWinLost,
                     item.ExtraComm,
                     item.ExtraTotal,
-                    item.CompanyAfterExtraPT
+                    item.CompanyAfterExtraPT,
+                    item.RewardAmount
                 };
 
                 resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, values);
@@ -106,7 +109,8 @@
                 data.Sum(p => p.ExtraWinLost),
                 data.Sum(p => p.ExtraComm),
                 data.Sum(p => p.ExtraTotal),
-                data.Sum(p => p.CompanyAfterExtraPT)
+                data.Sum(p => p.CompanyAfterExtraPT),
+                data.Sum(p => p.RewardAmount)
             };
 
             resultSheet.GetRow(toRowIndex).WriteCells(FirstColumnIndex, values);
@@ -125,6 +129,14 @@
             mainTitle += string.IsNullOrEmpty(Products) ? string.Empty : $" - {Products}";
 
             resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
+        }
+
+        private void CreateRewardCell(ISheet resultSheet, int rewardColumnIndex)
+        {
+            var headerRow = resultSheet.GetRow(1);
+            var currentCell = headerRow.GetCell(rewardColumnIndex);
+            var valueCell = $"Reward ({_builder.Data[0].RewardCurrency ?? ""})";
+            currentCell.SetCellValue(valueCell);
         }
     }
 }

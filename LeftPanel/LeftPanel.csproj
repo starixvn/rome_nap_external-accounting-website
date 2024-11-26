@@ -265,6 +265,7 @@
     <Compile Include="ViewModels\OnlineList.cs" />
     <Compile Include="ViewModels\PersonalInfo.cs" />
     <Compile Include="ViewModels\CustomerStatus.cs" />
+    <Compile Include="ViewModels\RewardInfo.cs" />
     <Compile Include="ViewModels\Setting.cs" />
     <Compile Include="ViewModels\MasterAgentUsedCreditItem.cs" />
   </ItemGroup>
