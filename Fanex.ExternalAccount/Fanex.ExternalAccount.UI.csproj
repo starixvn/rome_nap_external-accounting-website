@@ -563,6 +563,14 @@
     <Content Include="assets\bundles\customer\superinfo.min.js">
       <DependentUpon>superinfo.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\matchwinlossreports\match-winloss-reports-style.css" />
+    <Content Include="assets\bundles\matchwinlossreports\match-winloss-reports-style.min.css">
+      <DependentUpon>match-winloss-reports-style.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\matchwinlossreports\match-winloss-reports.js" />
+    <Content Include="assets\bundles\matchwinlossreports\match-winloss-reports.min.js">
+      <DependentUpon>match-winloss-reports.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\mcwinlossdetail\index.js" />
     <Content Include="assets\bundles\mcwinlossdetail\index.min.js">
       <DependentUpon>index.js</DependentUpon>
@@ -647,6 +655,15 @@
     <Content Include="assets\styles\pages\reports\exchangerate.min.css">
       <DependentUpon>exchangerate.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\reports\match-win-loss-reports.css">
+      <DependentUpon>match-win-loss-reports.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\match-win-loss-reports.min.css">
+      <DependentUpon>match-win-loss-reports.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\match-win-loss-reports.scss" />
+    <Content Include="ExcelTemplates\Reports\MatchWinLossDetail.xls" />
+    <Content Include="ExcelTemplates\Reports\MatchWinLossSummary.xls" />
     <Content Include="assets\styles\pages\reports\reward-detail.css" />
     <Content Include="assets\styles\pages\reports\reward-detail.min.css" />
     <Content Include="assets\styles\pages\reports\reward-detail.scss" />
@@ -1445,6 +1462,12 @@
     <TypeScriptCompile Include="Scripts\Reports\BonusDetail\Fanex.ExtAcc.AddNewBonus.ts" />
     <TypeScriptCompile Include="Scripts\Reports\BonusDetail\Fanex.ExtAcc.CancelBonus.ts" />
     <TypeScriptCompile Include="Scripts\Reports\Fanex.ExtAcc.WinLossDetailMC.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\MatchWinLossReports\MatchWinLossFilter.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\MatchWinLossReports\MatchWinLossGrid.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\MatchWinLossReports\MatchWinLossReportDetailNew.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\MatchWinLossReports\MatchWinLossReportSummary.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\MatchWinLossReports\StateManager.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\MatchWinLossReports\Types.ts" />
     <TypeScriptCompile Include="Scripts\Reports\OandaExchange\Fanex.ExtAcc.OandaExchange.ts" />
     <TypeScriptCompile Include="Scripts\Reports\RewardManagement\RewardDetailFilter.ts" />
     <TypeScriptCompile Include="Scripts\Reports\RewardManagement\RewardDetailGrid.ts" />
@@ -1487,6 +1510,9 @@
     <Content Include="Views\Customer\SportBookInformation.cshtml" />
     <Content Include="Views\HeadlineList\Index.cshtml" />
     <Content Include="Views\RewardManagement\Index.cshtml" />
+    <Content Include="Views\MatchWinLossReports\DetailsFilter.cshtml" />
+    <Content Include="Views\MatchWinLossReports\Index.cshtml" />
+    <Content Include="Views\MatchWinLossReports\SummaryFilter.cshtml" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.config</DependentUpon>
@@ -2763,6 +2789,9 @@
     <Content Include="assets\bundles\customer\superinfo.min.js.map">
       <DependentUpon>superinfo.min.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\matchwinlossreports\match-winloss-reports.min.js.map">
+      <DependentUpon>match-winloss-reports.min.js</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -3036,6 +3065,10 @@
     <ProjectReference Include="..\Modules\Fanex.ExternalAccount.HeadlineList\Fanex.ExternalAccount.HeadlineList.csproj">
       <Project>{647a6fb0-3765-40be-a19f-ddf142193819}</Project>
       <Name>Fanex.ExternalAccount.HeadlineList</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.ExternalAccount.MatchWinLossReports\Fanex.ExternalAccount.MatchWinLossReports.csproj">
+      <Project>{bc9bf8ec-943b-468e-b0ab-97dbe2f17b49}</Project>
+      <Name>Fanex.ExternalAccount.MatchWinLossReports</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.ExternalAccount.ProblemAccount\Fanex.ExternalAccount.ProblemAccount.csproj">
       <Project>{be8d34fe-39ca-447e-bd10-71991c08ceb6}</Project>

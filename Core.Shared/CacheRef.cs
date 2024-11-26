@@ -24,6 +24,12 @@
 
         public static string GetBettype(string betTypeId)
             => remotingRefService.GetBetTypeName(betTypeId, DefaultLanguage);
+        
+        public static string GetTeamName(string teamId)
+            => remotingRefService.GetTeamName(teamId, DefaultLanguage);       
+        
+        public static string GetLeagueName(string leagueId)
+            => remotingRefService.GetLeagueName(leagueId, DefaultLanguage);
 
         public static string GetParlayMaxPayoutBetSettingInfoSportName(string settingId, bool isSaba)
         {

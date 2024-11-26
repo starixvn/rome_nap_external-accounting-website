@@ -27,6 +27,7 @@
 //          + 08/01/2018: Support Smartphone Friendly
 //          + 31/01/2018: Support Smartphone Friendly for pager
 //          + 10/09/2019: Workaround for IOS to display full column
+//          + 22/08/2024: Fix show/hide columns, case merge row
 // </copyright>
 // --------------------------------------------------------------------------
 /*jshint maxdepth:false, maxstatements:false, strict:false*/
@@ -253,7 +254,8 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
         fullWidth: true,
         autoCalculateGridExpandHeight: false,
         numOfPaddingForGridExpandHeight: 10,
-        iOSLastColumnPaddingRight: 15
+        iOSLastColumnPaddingRight: 15,
+        numberOfColumnHaveMergeRow: 0
     };
 
     var Fanex = Fanex || {};
@@ -399,9 +401,22 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
                         currentCol = options.hiddenColumns[colIndex1];
                         //selector.push('.free-grid-td-' + currentCol);
                         //me.$grid.find('.free-grid-td-' + currentCol).addClass("grid-show-hide-column");
-                        me.$grid.find('.free-cell, .row_header_wrapper, .col_header, .grid-container')
-                        .find('.free-grid-td-' + currentCol)
-                        .addClass("grid-show-hide-column");
+                       
+                        if(options.numberOfColumnHaveMergeRow > 0 && options.numberOfColumnHaveMergeRow <= currentCol) {
+                            var allRows = me.$grid.find('.free-cell, .row_header_wrapper, .col_header, .grid-container').find('tr[data-row-index]');
+                            allRows.filter(function() {
+                                return window.$(this).find('td[rowspan]').length > 0 || window.$(this).find('td[colspan]').length > 0;
+                            }).find(' .free-grid-td-' + currentCol).addClass("grid-show-hide-column");
+
+                            allRows.filter(function() {
+                                return window.$(this).find('td[rowspan]').length === 0 && window.$(this).find('td[colspan]').length === 0;
+                            }).find(' .free-grid-td-' + (currentCol - options.numberOfColumnHaveMergeRow)).addClass("grid-show-hide-column");
+                        }
+                        else {
+                            me.$grid.find('.free-cell, .row_header_wrapper, .col_header, .grid-container')
+                            .find('.free-grid-td-' + currentCol)
+                            .addClass("grid-show-hide-column");
+                        }
                     }
 
                     if (options.showFooter) {
