@@ -4,13 +4,13 @@
     font-size: 13px;
 }
 
-#tabs > ul > li > a {
+.tabs-container > ul > li > a {
     font-size: 12px;
     margin-top: -8px;
     height: 20px;
 }
 
-#tabs {
+.tabs-container {
     float: left;
     width: 870px;
     border: none
@@ -60,17 +60,75 @@
     margin-bottom: 20px;
 }
 
-.ui-widget-overlay{
+.ui-widget-overlay {
     width: 100% !important;
     height: 100% !important;
 }
 
-.-disabled{
+.-disabled {
     opacity: 0.7;
     cursor: not-allowed !important;
 }
 
-.ui-dialog .ui-dialog-buttonpane{
+.ui-dialog .ui-dialog-buttonpane {
     padding: 0 !important;
     margin: 0 !important;
 }
+
+.icon-info {
+    cursor: pointer;
+    margin-left: 3px;
+    width: 16px;
+    height: 16px;
+    background-image: url(info.gif);
+    cursor: pointer;
+    display: inline-block;
+    top: 3px;
+    position: relative;
+    background-size: 100% 100%;
+}
+
+.tabs-products {
+    margin-top: 20px;
+}
+
+
+#tabs-products-copy .tabs,
+#tabs-products-edit .tabs {
+    height: 30px;
+    border: 1px solid #aaaaaa;
+    padding: .2em .2em 0;
+}
+
+    #tabs-products-copy .tabs li,
+    #tabs-products-edit .tabs li {
+        border: 1px solid #aaaaaa;
+        background-color: #ffffff;
+        list-style: none;
+        float: left;
+        position: relative;
+        top: 0;
+        margin: 1px .2em 0 0;
+        margin-bottom: 0px;
+        padding: 0;
+        padding-bottom: 0px;
+        white-space: nowrap;
+        height: 26px;
+        font-weight: bold;
+    }
+
+        #tabs-products-copy .tabs li.current, #tabs-products-edit .tabs li.current {
+            margin-bottom: -1px;
+            padding-bottom: 1px;
+            border-bottom: 0;
+        }
+
+        #tabs-products-copy .tabs li a, #tabs-products-edit .tabs li a {
+            float: left;
+            padding: .5em 1em;
+            text-decoration: none;
+            font-size: 12px;
+            margin-top: -8px;
+            height: 20px;
+            color: #2489ce !important;
+        }

@@ -118,8 +118,8 @@
       <HintPath>..\packages\Fanex.Cryptography.Aes.1.0.0.0\lib\net461\Fanex.Cryptography.Aes.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Customer.Client, Version=1.0.1.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Customer.Client.1.0.1.3\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
+    <Reference Include="Fanex.Customer.Client, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Customer.Client.1.0.1.6\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Customer.Client.NETFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Customer.Client.NETFramework.1.0.0\lib\net461\Fanex.Customer.Client.NETFramework.dll</HintPath>
@@ -530,6 +530,7 @@
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\CustomerSetting\Styles\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Scripts\MultipleSportsbookController.js" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Styles\info.gif" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Styles\layout.css" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Styles\MultipleSportsbook.css" />
     <Content Include="Areas\CustomerSetting\Views\ThirdPartyProductStatus\Index.cshtml" />

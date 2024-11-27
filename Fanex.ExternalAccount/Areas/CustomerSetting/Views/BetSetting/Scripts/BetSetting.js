@@ -1,4 +1,6 @@
 ﻿var module = angular.module("bettingApp", []);
+var editSettingData = {};
+
 angular.element($('#ng-app')).ready(function () {
     $('#ng-app').show();
     try {
@@ -118,9 +120,23 @@ function LoadBetSetting(sourceUser, destUsers, isCopy) {
                 var superIds = result.superIds.split(',');
                 var sourceId = superIds[0];
                 superIds.shift();
-                $("#product-1-0").attr("src", resolveClientUrl("Customer/EditMultipleSuperBetSetting?isCopy=true&custId=" + sourceId + "&custIds=" + superIds.toString() + "&usernames=" + destUsers  + "&uplineRoleId=5&roleId=4&productGroupId=1&groupName=" + groupName));
+
+                editSettingData.sourceId = sourceId;
+                editSettingData.superIds = superIds.toString();
+                editSettingData.destUsers = destUsers;
+                editSettingData.groupName = groupName;
+
+                changeProduct_Copy(1);
+                $("#product-1-0").attr("src", resolveClientUrl("Customer/EditMultipleSuperBetSetting?isCopy=true&custId=" + sourceId + "&custIds=" + superIds.toString() + "&usernames=" + destUsers + "&uplineRoleId=5&roleId=4&productGroupId=1&groupName=" + groupName));
+                $("#tabs-products-copy").removeClass('hidden');
             }
             else {
+                editSettingData.superIds = result.superIds;
+                editSettingData.destUsers = destUsers;
+                editSettingData.groupName = groupName;
+
+                changeProduct_Edit(1);
+                $("#tabs-products-edit").removeClass('hidden');
                 $("#product-1-1").attr("src", resolveClientUrl("Customer/EditMultipleSuperBetSetting?custIds=" + result.superIds + '&usernames=' + destUsers + '&uplineRoleId=5&roleId=4&productGroupId=1&groupName=' + groupName));
             }
         }
@@ -145,4 +161,27 @@ function ReplaceChars(textarea) {
     if (textarea.value.endsWith(',')) {
         textarea.value = textarea.value.substr(0, textarea.value.length - 1);
     }
+}
+
+function changeProduct_Copy(productId) {
+    $('#tabs-products-copy .tabs-product').removeClass('current');
+    $('#tabs-products-copy #tabs-product-' + productId).addClass('current');
+
+    var url = resolveClientUrl("Customer/EditMultipleSuperBetSetting?isCopy=true&custId="
+        + editSettingData.sourceId + "&custIds="
+        + editSettingData.superIds + "&usernames=" + editSettingData.destUsers
+        + "&uplineRoleId=5&roleId=4&productGroupId=" + productId
+        + "&groupName=" + editSettingData.groupName);
+    $('.tabs-products-copy-frame').attr("src", url);
+}
+
+function changeProduct_Edit(productId) {
+    $('#tabs-products-edit .tabs-product').removeClass('current');
+    $('#tabs-products-edit #tabs-product-' + productId).addClass('current');
+
+    var url = resolveClientUrl("Customer/EditMultipleSuperBetSetting?custIds="
+        + editSettingData.superIds + "&usernames=" + editSettingData.destUsers
+        + "&uplineRoleId=5&roleId=4&productGroupId=" + productId
+        + "&groupName=" + editSettingData.groupName);
+    $('.tabs-products-edit-frame').attr("src", url);
 }

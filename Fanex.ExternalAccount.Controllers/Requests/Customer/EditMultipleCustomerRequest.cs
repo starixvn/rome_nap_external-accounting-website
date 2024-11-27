@@ -15,6 +15,8 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
 
         public int ProductGroupId { get; set; }
 
-        internal virtual string ToJson() => JsonConvert.SerializeObject(new { CustIds, Usernames, RoleId, UplineRoleId, ProductGroupId }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+        public string GroupName { get; set; }
+
+        internal virtual string ToJson() => JsonConvert.SerializeObject(new { CustIds, Usernames, RoleId, UplineRoleId, ProductGroupId, GroupName }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
     }
 }

@@ -17,5 +17,7 @@
         public string Site { get; set; }
 
         public string SiteLabel { get; set; }
+
+        public string GroupName { get; set; }
     }
 }
