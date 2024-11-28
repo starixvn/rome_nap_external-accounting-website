@@ -365,6 +365,29 @@
     "sourceMap": true
   },
   {
+    "outputFileName": "assets/bundles/matchwinlossreports/match-winloss-reports.js",
+    "inputFiles": [
+      "Scripts/Fanex.Multiselect/fanex.multiSelectSearchable.js",
+      "Scripts/Reports/Shared/ReportFilters.js",
+      "Scripts/Reports/Shared/ReportGrid.js",
+      "Scripts/Reports/MatchWinLossReports/Types.js",
+      "Scripts/Reports/MatchWinLossReports/StateManager.js",
+      "Scripts/Reports/MatchWinLossReports/MatchWinLossFilter.js",
+      "Scripts/Reports/MatchWinLossReports/MatchWinLossGrid.js",
+      "Scripts/Reports/MatchWinLossReports/MatchWinLossReportDetailNew.js",
+      "Scripts/Reports/MatchWinLossReports/MatchWinLossReportSummary.js"
+    ],
+    "sourceMap": true
+  },
+  {
+    "outputFileName": "assets/bundles/matchwinlossreports/match-winloss-reports-style.css",
+    "inputFiles": [
+      "assets/styles/pages/reports/match-win-loss-reports.css",
+      "assets/styles/pages/totalbet/multiselect-custom.css"
+    ],
+    "sourceMap": true
+  },
+  {
     "outputFileName": "assets/bundles/reward-management-report/index.js",
     "inputFiles": [
       "Scripts/Fanex.Multiselect/fanex.multiSelectSearchable.js",

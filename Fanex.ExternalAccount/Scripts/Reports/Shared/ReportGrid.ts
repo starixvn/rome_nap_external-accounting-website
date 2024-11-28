@@ -1,3 +1,4 @@
+declare var Fanex: any;
 declare var Promise: any;
 declare var numeral: any;
 
@@ -51,6 +52,16 @@ class BaseReportGrid implements IReportGrid {
 
     constructor( options: IGridComponentConfig ) {
         this.options = options;
+        Fanex.ExtAcc.OnResize = () => {
+            try {
+                if(this.gridOptions){
+                    $(`#${this.options.gridId}`).fanexGrid("resizeGrid");
+                }
+            }
+            catch (err) {
+                console.log(err);
+            }
+        };
     }
 
     initSelectColumnsDropdown( columns: any, ignoreColumns: any ) {

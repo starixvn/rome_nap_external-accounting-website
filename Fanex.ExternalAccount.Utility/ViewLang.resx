@@ -970,4 +970,13 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="HeadlineList" xml:space="preserve">
     <value>Headline List</value>
   </data>
+  <data name="sport" xml:space="preserve">
+    <value>Sport</value>
+  </data>
+  <data name="ViewColumn" xml:space="preserve">
+    <value>View columns</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>This is required field.</value>
+  </data>
 </root>

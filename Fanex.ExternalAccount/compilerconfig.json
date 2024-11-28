@@ -112,6 +112,10 @@
     "inputFile": "assets/styles/pages/customer/superinfo.scss"
   },
   {
+    "outputFile": "assets/styles/pages/reports/match-win-loss-reports.css",
+    "inputFile": "assets/styles/pages/reports/match-win-loss-reports.scss"
+  },
+  {
     "outputFile": "assets/styles/pages/reports/reward-detail.css",
     "inputFile": "assets/styles/pages/reports/reward-detail.scss"
   }

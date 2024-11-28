@@ -162,9 +162,17 @@
                     .Select(g => g.Trim())
                     .Contains(currentGroup, StringComparer.CurrentCultureIgnoreCase);
         }
-
         
-
         private static string GetValue(string key) => ConfigurationManager.AppSettings[key];
+        
+        public static bool IsMalaysiaGroup(string currentGroup)
+        {
+            var allGroups = GetValue("MalaysiaGroups");
+
+            return "*" == allGroups || !string.IsNullOrWhiteSpace(allGroups)
+                && allGroups.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(g => g.Trim())
+                    .Contains(currentGroup, StringComparer.CurrentCultureIgnoreCase);
+        }
     }
 }
