@@ -139,7 +139,7 @@
     <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_CustomerSelAllInfo" SpName="EAS_CustomerSelAllInfo" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerSelAllStatus" SpName="EAS_CustomerSelAllStatus_xtest" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_CustomerSelAllStatus" SpName="EAS_CustomerSelAllStatus" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_CustomerSelLoginInfo" SpName="EAS_CustomerSelLoginInfo" DbName="DBACC.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_CustomerSelBalanceInfo" SpName="EAS_CustomerSelBalanceInfo" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerUpdLocked" SpName="Acc_CustomerUpdLocked" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
@@ -150,11 +150,11 @@
     <Setting Key="Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="DBTXN.bodb02.wsv_xnap" />
   </Function>
   <Function Name="Customer List">
-    <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom_xtest" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg_xtest" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg_xtest" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg_xtest" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo_xtest" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
+    <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
       <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
     </Setting>
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
@@ -234,7 +234,7 @@
     <Setting Key="Acc_CustSetting_DisableGameStatusSelect" SpName="Acc_CustSetting_DisableGameStatusSelect" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow_xtest" DbName="DBCust.CustDB.wsv_xnap" />
+    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBCust.CustDB.wsv_xnap" />
   </Function>
   <Function Name="API Logger">
     <Setting Key="WriteLog_UserLog_ExternalAPI_Ins" SpName="WriteLog_UserLog_ExternalAPI_Ins" DbName="dblog" IgnoreImport="true" Plain="0" />
