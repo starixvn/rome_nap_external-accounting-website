@@ -6,13 +6,12 @@
 
     public class CustomerListPageBuilder
     {
-        public CustomerListPageBuilder(List<CustomerListDTO> customerList, bool isBold, string status, int roleId, bool isMyanmarOdds = false, bool withDataLimited = false,bool IsNoDownlines =false, bool hasSubGroups = false, bool isMultipleCurrencyGroup = false)
+        public CustomerListPageBuilder(List<CustomerListDTO> customerList, bool isBold, string status, int roleId, bool withDataLimited = false,bool IsNoDownlines =false, bool hasSubGroups = false, bool isMultipleCurrencyGroup = false)
         {
             Status = status;
             RoleId = roleId;
             IsBold = isBold;
             Data = customerList;
-            IsMyanmarOdds = isMyanmarOdds;
             WithDataLimited = withDataLimited;
             WithNoDownlines = IsNoDownlines;
             HasSubGroups = hasSubGroups;
@@ -27,8 +26,6 @@
 
         public string Status { get; }
 
-        public bool IsMyanmarOdds { get; }
-
         public bool WithDataLimited { get; }
 
         public bool WithNoDownlines { get; }
@@ -41,7 +38,7 @@
         {
             var mem = new MemoryStream();
             var settings = new TemplateSettings();
-            var filePath = settings.CustomerListPath(RoleId, IsMyanmarOdds, HasSubGroups, IsMultipleCurrencyGroup);
+            var filePath = settings.CustomerListPath(RoleId, HasSubGroups, IsMultipleCurrencyGroup);
 
             using (var report = new CustomerListPage(filePath, this))
             {

@@ -259,25 +259,7 @@
                 reader.NextResult();
                 while (reader.Read())
                 {
-                    if (reader.IsDBNull(reader.GetOrdinal("GroupId")))
-                    {
-                        int productId = Utils.ToInt32(reader["ProductID"]);
-
-                        if (!result.IsDCSProductExisted(productId))
-                        {
-                            result.DCSProductsSetting.Add(new CustomerStatusDCS
-                            {
-                                ProductID = productId,
-                                ProductName = ProductSettings.SiteProducts.ContainsKey(productId) ? ProductSettings.SiteProducts[productId].Name : string.Empty,
-                                IsDisabled = Utils.ToBoolean(reader["isDisabled"]),
-                                IsDisabledUpline = Utils.ToBoolean(reader["isDisabledUpline"]),
-                                IsHidden = !ProductSettings.IsShowProduct(productId) || Utils.ToBoolean(reader["isHidden"]),
-                                IsSynced = Utils.ToBoolean(reader["isSync"]),
-                                IsSyncedUpline = Utils.ToBoolean(reader["isSyncedUpline"])
-                            });
-                        }
-                    }
-                    else
+                    if (!reader.IsDBNull(reader.GetOrdinal("GroupId")))
                     {
                         var isHidden = Utils.ToBoolean(reader["isHidden"]);
                         var groupId = reader.ToInt32("GroupId");

@@ -14,7 +14,6 @@
             = new List<ProductSettingElement>
             {
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.SabaVirtualSports], StatusType.Checkbox),
-                new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Bitcoin], StatusType.Checkbox),
                 new ProductSettingElement(ProductSettings.SiteProducts[ProductConstants.Cashout], StatusType.Checkbox)
             };
 
@@ -22,14 +21,13 @@
             new Dictionary<int, string>
             {
                 // Show edit bet setting tab for edit super setting
-                {ProductConstants.Sportsbook, eFunctions.SportsbookBetting},
-                {ProductConstants.Bitcoin, eFunctions.BitcoinBetting}
+                {ProductConstants.Sportsbook, eFunctions.SportsbookBetting}
             };
 
         public static List<ObjectInfo> CreateSyncAndHiddenItems(DataTable dcsProductStatusTable)
             => new List<ObjectInfo>
             {
-                new ObjectInfo("HideRNGLottery", dcsProductStatusTable.IsHiddenOrUnsyncProduct(ProductConstants.RNGLottery)),
+                new ObjectInfo("HideRNGLottery", dcsProductStatusTable.IsHiddenProduct(ProductConstants.RNGLottery)),
             };
     }
 }

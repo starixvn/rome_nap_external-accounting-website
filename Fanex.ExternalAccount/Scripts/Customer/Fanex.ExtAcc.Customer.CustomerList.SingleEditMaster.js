@@ -57,19 +57,7 @@
                             productGroup.Name);
                     }
 
-                    var has3rdParty = false;
-
-                    for (var i = 0, max = result.DCSProductsSetting.length; i < max; i++) {
-                        has3rdParty = true;
-                        var productSetting = result.DCSProductsSetting[i];
-
-                        if (!productSetting.IsHidden && productSetting.IsSyncedUpline) {
-                            addEditProductMasterContextMenuItem(
-                                productSetting.ProductID,
-                                'Product-' + productSetting.ProductID,
-                                productSetting.ProductName);
-                        }
-                    }
+                    var has3rdParty = false;                 
 
                     if (has3rdParty)
                         items.separator2 = "-----";

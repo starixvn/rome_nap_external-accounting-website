@@ -35,10 +35,8 @@
                     {
                         ProductId = reader.ToInt32("ProductID"),
                         IsDisabledUpline = reader.ToBoolean("IsDisabledUpline"),
-                        IsSyncedUpline = reader.ToBoolean("IsSyncedUpline"),
                         IsHidden = reader.ToBoolean("IsHidden"),
                         HasDownline = reader.ToBoolean("HasDownline"),
-                        IsSynced = reader.ToBoolean("IsSync"),
                         IsDisabled = reader.ToBoolean("IsDisabled"),
                         IsDisabledDownline = reader.ToBoolean("IsDisabledDownline"),
                         IsHiddenUpline = reader.ToBoolean("IsHiddenUpline"),

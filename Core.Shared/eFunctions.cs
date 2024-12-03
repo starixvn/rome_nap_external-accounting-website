@@ -65,8 +65,6 @@
         public const string VirtualGamesSetting = "VirtualGamesSetting";
         public const string SabaclubSetting = "SabaclubSetting";
         public const string VGamingSetting = "VGamingSetting";
-        public const string BitcoinSetting = "BitcoinSetting";
-        public const string BitcoinBetting = "BitcoinBetting";
         public const string SearchAndCopySuper = "SearchAndCopySuper";
         public const string ProblemAccountList = "ProblemAccountList";
         public const string SubGroup = "ManageSubGroup";

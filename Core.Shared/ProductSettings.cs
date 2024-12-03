@@ -12,8 +12,7 @@
             {
                 [ProductConstants.AllBet] = new Product(0, ProductConstants.AllBet, "Allbet"),
                 [ProductConstants.SabaVirtualSports] = new Product(9, ProductConstants.SabaVirtualSports, "Saba Virtual Sports"),
-                [ProductConstants.Bitcoin] = new Product(11, ProductConstants.Bitcoin, "Bitcoin"),
-                [ProductConstants.Cashout] = new Product(12, ProductConstants.Cashout, "Cashout", true),
+                [ProductConstants.Cashout] = new Product(12, ProductConstants.Cashout, "Cashout", true)
             };
 
         internal static NameValueCollection Configs { get; set; } = ConfigurationManager.AppSettings;

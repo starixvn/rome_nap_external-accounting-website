@@ -3,7 +3,6 @@
     public enum EnableStatusProductFunction
     {
         EnableSabaVirtualSports = 54,
-        EnableBitcoin = 69,
         EnableCashout = 25
     }
 

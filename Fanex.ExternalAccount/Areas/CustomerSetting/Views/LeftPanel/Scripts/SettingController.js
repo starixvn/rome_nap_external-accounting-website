@@ -759,16 +759,7 @@
 
         top.shouldCalculatePopupHeight = false;
         $scope.EnableProductGroup(2, "RNG Games", 800, 320);
-    };
-
-    $scope.EnableBitcoin = function (enable, id, disabled) {
-        if (disabled) {
-            return;
-        }
-
-        top.shouldCalculatePopupHeight = false;
-        $scope.EnableThirdpartyProduct(69, "Bitcoin");
-    };
+    };   
 
     $scope.EnableCashout = function (enable, id, disabled) {
         if (disabled) {
@@ -984,11 +975,7 @@
 
     $scope.SuperFishingWorld = function () {
         $scope.RenderSupeOnMemberDCS(24);
-    };
-
-    $scope.SuperBitcoin = function () {
-        $scope.RenderSupeOnMemberDCS(69);
-    };
+    };  
 
     $scope.RenderSupeOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtSuperOnMember();
@@ -997,11 +984,7 @@
 
     $scope.MasterFishingWorld = function () {
         $scope.RenderMasterOnMemberDCS(24);
-    };
-
-    $scope.MasterBitcoin = function () {
-        $scope.RenderMasterOnMemberDCS(69);
-    };
+    }; 
 
     $scope.RenderMasterOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtMasterOnMember();

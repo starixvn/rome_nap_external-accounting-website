@@ -124,9 +124,6 @@
     <Reference Include="Fanex.Customer.Client.NETFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Customer.Client.NETFramework.1.0.0\lib\net461\Fanex.Customer.Client.NETFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.CustomerSetting.Client40, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.1.2.0\lib\net40\Fanex.CustomerSetting.Client40.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.CustomerSetting.EnableStatus.AllInOne, Version=2.0.3.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.2.0.3.4\lib\net461\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
     </Reference>
@@ -173,9 +170,6 @@
     <Reference Include="Fanex.MailDelivery.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.MailStation.1.1.0.1\lib\net40\Fanex.MailDelivery.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Module.Logs, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Module.Logs.2.0.0.2\lib\net40\Fanex.Module.Logs.dll</HintPath>
-    </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
@@ -196,10 +190,6 @@
       <HintPath>..\packages\FluentValidation.3.2.0.0\lib\Net40\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\IBCCrypt.1.1.0.0\lib\IBCCrypt.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="IBCDBLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.DBLibrary.1.0.0.0\lib\net40\IBCDBLibrary.dll</HintPath>
       <Private>True</Private>
@@ -211,16 +201,8 @@
     <Reference Include="ICSharpCode.SharpZipLib, Version=1.3.3.11, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.1.3.3\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="ILogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ILogger.1.0.0.0\lib\net40\ILogger.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Ionic.Zip, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.9.1.5\lib\net40\Ionic.Zip.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MathNet.Numerics, Version=4.15.0.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
@@ -317,10 +299,6 @@
     <Reference Include="ONEBook.UM.NETFramework, Version=3.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ONEBook.UM.NETFramework.3.1.5\lib\net461\ONEBook.UM.NETFramework.dll</HintPath>
     </Reference>
-    <Reference Include="ONEbook.UM.ThirdParty, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ONEbook.UM.ThirdParty.1.0.0.0\lib\net40\ONEbook.UM.ThirdParty.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Pipelines.Sockets.Unofficial, Version=1.0.0.0, Culture=neutral, PublicKeyToken=42ea0a778e13fbe2, processorArchitecture=MSIL">
       <HintPath>..\packages\Pipelines.Sockets.Unofficial.1.0.7\lib\net461\Pipelines.Sockets.Unofficial.dll</HintPath>
     </Reference>
@@ -357,14 +335,6 @@
     </Reference>
     <Reference Include="Sunplus.Agent.Utilities, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sunplus.Agent.Utilities.3.0.2\lib\net461\Sunplus.Agent.Utilities.dll</HintPath>
-    </Reference>
-    <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Libraries.AOP.1.0.4218.28561\lib\net40\Sunplus.Libraries.AOP.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Sunplus.Libraries.APILogger, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sunplus.Libraries.APILogger.2.0.0.1\lib\net40\Sunplus.Libraries.APILogger.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -491,14 +461,6 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TplCore, Version=1.0.4854.17253, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TplCore.1.0.4854.17254\lib\net40\TplCore.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="UMControllerLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UMControllerLibrary.1.0.0\lib\net40\UMControllerLibrary.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="WebGrease, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
@@ -530,9 +492,10 @@
     <Content Include="Areas\Common\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\CustomerSetting\Styles\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Scripts\MultipleSportsbookController.js" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Styles\info.gif" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Styles\layout.css" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Styles\MultipleSportsbook.css" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Scripts\SportsbookController.js" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Styles\Sportsbook.css" />
     <Content Include="Areas\CustomerSetting\Views\ThirdPartyProductStatus\Index.cshtml" />
     <Content Include="Areas\ProductStatusSetting\Scripts\product-status-setting-multiple.min.js">
       <DependentUpon>product-status-setting-multiple.js</DependentUpon>
@@ -741,10 +704,6 @@
     <Content Include="Areas\CustomerSetting\Views\BetSetting\AccessDenied\AccessDenied.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Scripts\BetSetting.js" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\Shared\_Layout.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Content.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Index.cshtml" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Scripts\SportsbookController.js" />
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Styles\Sportsbook.css" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Readme.txt" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Scripts\EnableStatus.js" />
     <Content Include="Areas\CustomerSetting\Views\EnableStatus\Scripts\EnableStatus.js" />
@@ -2164,10 +2123,6 @@
     <Content Include="Scripts\ContextMenu\jquery.contextMenu.js" />
     <Content Include="Scripts\cookie.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.Settings.js" />
-    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.AgentAddNewMember.js" />
-    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MasterAddNewAgent.js" />
-    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.SuperAddNewMaster.js" />
-    <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.PTSetting.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.TransferCondition.js" />
     <Content Include="Scripts\Customer\Fanex.ExtAcc.Customer.MemberInfo.js" />
@@ -2539,8 +2494,8 @@
     <Content Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Templates\Products.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Content.cshtml" />
     <Content Include="Areas\CustomerSetting\Views\BetSetting\MultipleSportsbook\Index.cshtml" />
+    <Content Include="Areas\CustomerSetting\Views\BetSetting\Sportsbook\Index.cshtml" />
     <None Include="Areas\CustomerSetting\Views\EnableStatusNotAllowDisabledDownline\Templates\Template.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -2919,21 +2874,7 @@
     <Content Include="Views\Customer\ConfigMultipleDoubleComm.cshtml" />
     <Content Include="Views\Customer\EditTransferCondition.cshtml" />
     <Content Include="Views\Customer\ResetPassword.cshtml" />
-    <Content Include="Views\SportsbookSetting\EditBetSetting.cshtml" />
-    <Content Include="Views\SportsbookSetting\EditCommission.cshtml" />
-    <Content Include="Views\SportsbookSetting\EditPT.cshtml" />
-    <Content Include="Views\SportsbookSetting\EditMinPT.cshtml" />
-    <Content Include="Views\Customer\SuperAddNewMaster.cshtml" />
-    <Content Include="Views\SportsbookSetting\EditCommissionMember.cshtml" />
-    <Content Include="Views\SportsbookSetting\EditMultiplePT.cshtml" />
-    <Content Include="Views\Customer\MasterAddNewAgent.cshtml" />
-    <Content Include="Views\Customer\AgentAddNewMember.cshtml" />
-    <Content Include="Views\SportsbookSetting\EditCommissionDetail.cshtml" />
-    <Content Include="Views\SportsbookSetting\EditCommissionMemberDetail.cshtml" />
-    <Content Include="Views\SportsbookSetting\SuperMasterEditMultiplePTMember.cshtml" />
     <Content Include="Views\Customer\TransferCondition.cshtml" />
-    <Content Include="Views\SportsbookSetting\SuperMasterEditSB.cshtml" />
-    <Content Include="Views\Customer\Settings.cshtml" />
     <Content Include="Views\User\ResetPasswordOwner.cshtml" />
     <Content Include="Views\VirtualSports\EditSingle.cshtml" />
     <Content Include="Views\Home\TestLog.cshtml" />
@@ -2999,6 +2940,7 @@
     <Content Include="Views\Customer\IndirectEditMember-Debug.cshtml" />
     <Content Include="Views\Customer\IndirectEditMember.cshtml" />
     <Content Include="Views\SuperInfo\Index.cshtml" />
+    <Content Include="Views\Customer\Settings.cshtml" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailBySubGroup\Fanex.ExtAcc.SuperWinLossDetailBySubGroup.ts" />
   </ItemGroup>
   <ItemGroup>

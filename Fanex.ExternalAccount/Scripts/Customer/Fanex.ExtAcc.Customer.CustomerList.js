@@ -151,7 +151,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                     ? currentRow.MinDate
                     : currentRow.LimitDays !== "" ? currentRow.LimitDays
                         : "";
-                var columns = _this.GetGridBodyRows(currentRow, i, params.pageSize, params.pageIndex - 1, params.uplineRoleId, result.IsMyanmarOdds, result.HasSubGroups);
+                var columns = _this.GetGridBodyRows(currentRow, i, params.pageSize, params.pageIndex - 1, params.uplineRoleId, result.HasSubGroups);
                 bodyRows.push({
                     Columns: columns,
                     CssClass: Fanex.ExtAcc.Customer.CustomerList.GetCSSRow(currentRow)
@@ -159,8 +159,8 @@ Fanex.ExtAcc.Customer.CustomerList = {
             }
 
             gridOptions = {
-                groupHeaderRows: _this.GetGridGroupHeader(params.uplineRoleId, result.IsMyanmarOdds, result.HasSubGroups),
-                columns: _this.GetGridHeader(params.uplineRoleId, result.IsMyanmarOdds, result.HasSubGroups),
+                groupHeaderRows: _this.GetGridGroupHeader(params.uplineRoleId, result.HasSubGroups),
+                columns: _this.GetGridHeader(params.uplineRoleId, result.HasSubGroups),
                 bodyRows: bodyRows,
                 autoCalculateGridExpandHeight: true,
                 numberOfFrozenColumn: numberOfFrozenColumn,
@@ -259,7 +259,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         return '';
     },
 
-    GetGridHeader: function (uplineRoleId, isMyanmarOdds, hasSubGroups) {
+    GetGridHeader: function (uplineRoleId, hasSubGroups) {
         var columns = [];
         var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
         var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
@@ -321,30 +321,19 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push(isMemberList ? { HeaderText: 'Group', Name: 'discount', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' } : undefined);
         columns.push(isMemberList ? { HeaderText: '1X2', Name: 'discount1x2', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all types of 1x2 bettype" ' } : undefined);
         columns.push(isMemberList ? { HeaderText: 'Others', Name: 'discountcs', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all other bettypes" ' } : undefined);
-        if (isMyanmarOdds) {
-            columns.push(isMemberList ? { HeaderText: 'Myanmar Odds', Name: 'discountmyanmarodds', Width: 100, CellAlign: 'center' } : undefined);
-        }
-
+    
         columns.push(isMemberList ? { HeaderText: 'Group', Name: 'playerdiscount', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' } : undefined);
         columns.push(isMemberList ? { HeaderText: '1X2', Name: 'playerdiscount1x2', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all types of 1x2 bettype" ' } : undefined);
         columns.push(isMemberList ? { HeaderText: 'Others', Name: 'playerdiscountcs', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all other bettypes" ' } : undefined);
-        if (isMyanmarOdds) {
-            columns.push(isMemberList ? { HeaderText: 'Myanmar Odds', Name: 'playerdiscountmyanmarodds', Width: 100, CellAlign: 'center' } : undefined);
-        }
-
+ 
         //SMA
         columns.push(!isMemberList ? { HeaderText: 'Group A', Name: 'commision', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' } : undefined);
-        if (!isMyanmarOdds) {
-            columns.push(!isMemberList ? { HeaderText: 'Group B', Name: 'groupb', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' } : undefined);
-            columns.push(!isMemberList ? { HeaderText: 'Group C', Name: 'groupc', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' } : undefined);
-            columns.push(!isMemberList ? { HeaderText: 'Group D', Name: 'groupd', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' } : undefined);
-        }
-
+        columns.push(!isMemberList ? { HeaderText: 'Group B', Name: 'groupb', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' } : undefined);
+        columns.push(!isMemberList ? { HeaderText: 'Group C', Name: 'groupc', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' } : undefined);
+        columns.push(!isMemberList ? { HeaderText: 'Group D', Name: 'groupd', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' } : undefined);
         columns.push(!isMemberList ? { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of 1x2 bettype" ' } : undefined);
         columns.push(!isMemberList ? { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all other bettypes" ' } : undefined);
-        if (isMyanmarOdds) {
-            columns.push(!isMemberList ? { HeaderText: 'Myanmar Odds', Name: 'discountmyanmarodds', Width: 100, CellAlign: 'center' } : undefined);
-        }
+    
         columns.push(showSubGroups ? { HeaderText: 'Assigned Sub Groups', Name: 'AssignedSubGroups', HeaderAlign: 'center', CellAlign: 'left', Width: 160 } : undefined);
         columns.push(!isMemberList ? { HeaderText: 'No. of Downlines', Name: 'NoOfDownlines', CellAlign: 'center', Width: 60 } : undefined);
         columns.push(isSuperList ? { HeaderText: 'Data Available', Name: 'DateLimit', CellAlign: 'center', Width: 100 } : undefined);
@@ -357,7 +346,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         });
         return columns.filter(function (item) { return item !== undefined });
     },
-    GetGridGroupHeader: function (uplineRoleId, isMyanmarOdds, hasSubGroups) {
+    GetGridGroupHeader: function (uplineRoleId, hasSubGroups) {
         var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
         var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
         var showSubGroups = isSuperList && hasSubGroups;
@@ -372,18 +361,18 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push(isMemberList ? { HeaderText: 'Nickname', Name: 'NickName', MergeRowNumber: 2 } : undefined);
         columns.push({ HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 });
         columns.push({ HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 });
-        columns.push(!isMemberList ? { HeaderText: 'Commission', Name: 'commision', MergeColNumber: isMyanmarOdds ? 4 : 6 } : undefined);
+        columns.push(!isMemberList ? { HeaderText: 'Commission', Name: 'commision', MergeColNumber: 6 } : undefined);
         columns.push(showSubGroups ? { HeaderText: 'Assigned Sub Groups', Name: 'AssignedSubGroups', MergeRowNumber: 2 } : undefined);
         columns.push(isMemberList ? { HeaderText: 'User Group', Name: 'ugroup', MergeRowNumber: 2 } : undefined);
-        columns.push(isMemberList ? { HeaderText: 'Agent Commission', Name: 'discount', MergeColNumber: isMyanmarOdds ? 4 : 3 } : undefined);
-        columns.push(isMemberList ? { HeaderText: 'Player Commission', Name: 'playerdiscount', MergeColNumber: isMyanmarOdds ? 4 : 3 } : undefined);
+        columns.push(isMemberList ? { HeaderText: 'Agent Commission', Name: 'discount', MergeColNumber: 3 } : undefined);
+        columns.push(isMemberList ? { HeaderText: 'Player Commission', Name: 'playerdiscount', MergeColNumber: 3 } : undefined);
         columns.push(!isMemberList ? { HeaderText: 'No. of Downlines', Name: 'NoOfDownlines', MergeRowNumber: 2 } : undefined);
         columns.push(isSuperList ? { HeaderText: 'Data Available', Name: 'DateLimit', MergeRowNumber: 2 } : undefined);
         columns.push({ HeaderText: 'Created Date', Name: 'createdate', MergeRowNumber: 2 });
         columns.push({ HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 });
-        return [{ Columns: columns.filter(function (item) { return item !== undefined }) }];
+        return [{ Columns: columns.filter(function (item) { return item !== undefined; }) }];
     },
-    GetGridBodyRows: function (currentRow, currentIndex, pageSize, pageIndex, uplineRoleId, isMyanmarOdds, hasSubGroups) {
+    GetGridBodyRows: function (currentRow, currentIndex, pageSize, pageIndex, uplineRoleId, hasSubGroups) {
         var columns = [];
         var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
         var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
@@ -400,32 +389,21 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push({ Name: 'lastname', Value: currentRow.LastName });
         columns.push(isMemberList ? { Name: 'ugroup', Value: currentRow.UserGroup } : undefined);
         columns.push(!isMemberList ? { Name: 'commision', Value: currentRow.GroupA } : undefined);
-        if (!isMyanmarOdds) {
-            columns.push(!isMemberList ? { Name: 'groupb', Value: currentRow.GroupB } : undefined);
-            columns.push(!isMemberList ? { Name: 'groupc', Value: currentRow.GroupC } : undefined);
-            columns.push(!isMemberList ? { Name: 'groupd', Value: currentRow.GroupD } : undefined);
-        }
-
+        columns.push(!isMemberList ? { Name: 'groupb', Value: currentRow.GroupB } : undefined);
+        columns.push(!isMemberList ? { Name: 'groupc', Value: currentRow.GroupC } : undefined);
+        columns.push(!isMemberList ? { Name: 'groupd', Value: currentRow.GroupD } : undefined);
+      
         columns.push(!isMemberList ? { Name: 'discount1x2', Value: currentRow.Discount1x2 } : undefined);
         columns.push(!isMemberList ? { Name: 'discountcs', Value: currentRow.DiscountCS } : undefined);
-        if (isMyanmarOdds) {
-            columns.push(!isMemberList ? { Name: 'discountmyanmarodds', Value: currentRow.DiscountMyanmarOdds ? currentRow.DiscountMyanmarOdds : 0 } : undefined);
-        }
-
+    
         columns.push(isMemberList ? { Name: 'discount', Value: currentRow.Discount } : undefined);
         columns.push(isMemberList ? { Name: 'discount1x2', Value: currentRow.Discount1x2 } : undefined);
         columns.push(isMemberList ? { Name: 'discountcs', Value: currentRow.DiscountCS } : undefined);
-        if (isMyanmarOdds) {
-            columns.push(isMemberList ? { Name: 'discountmyanmarodds', Value: currentRow.DiscountMyanmarOdds ? currentRow.DiscountMyanmarOdds : 0 } : undefined);
-        }
-
+      
         columns.push(isMemberList ? { Name: 'playerdiscount', Value: currentRow.PlayerDiscount } : undefined);
         columns.push(isMemberList ? { Name: 'playerdiscount1x2', Value: currentRow.PlayerDiscount1x2 } : undefined);
         columns.push(isMemberList ? { Name: 'playerdiscountcs', Value: currentRow.PlayerDiscountCS } : undefined);
-        if (isMyanmarOdds) {
-            columns.push(isMemberList ? { Name: 'playerdiscountmyanmarodds', Value: currentRow.PlayerDiscountMyanmarOdds ? currentRow.PlayerDiscountMyanmarOdds : 0 } : undefined);
-        }
-
+       
         columns.push(showSubGroups ? { Name: 'AssignedSubGroups', Value: currentRow.SubGroup } : undefined);
         if (!isMemberList) {
             columns.push({ Name: 'NoOfDownlines', Value: currentRow.NoOfDownlines });

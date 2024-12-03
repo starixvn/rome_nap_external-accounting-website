@@ -1,4 +1,6 @@
-﻿namespace Fanex.ExternalAccount.Controllers.Customer
+﻿using System.Web.Security;
+
+namespace Fanex.ExternalAccount.Controllers.Customer
 {
     using System;
     using System.Collections.Generic;
@@ -23,7 +25,6 @@
     using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Service.TelegramBot;
     using IBCUtils;
-    using PTEngine.BusinessObjects;
     using Service;
     using Service.Impl.Customer;
     using Utilities;
@@ -88,13 +89,13 @@
         {
             switch (uplineRoleId)
             {
-                case (byte)CustomerRole.Super:
+                case Role.Super:
                     return "Add New Master";
 
-                case (byte)CustomerRole.Master:
+                case Role.Master:
                     return "Add New Agent";
 
-                case (byte)CustomerRole.Agent:
+                case Role.Agent:
                     return "Add New Member";
 
                 default:
@@ -553,7 +554,7 @@
 
             if (result.ErrorCode.Equals("0"))
             {
-                if (roleId != (byte)CustomerRole.Member)
+                if (roleId != Role.Member)
                 {
                     Task.Run(() => _telegramChatbotService.NotifyChangePassword(custId, 0));
                 }

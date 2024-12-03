@@ -84,13 +84,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         public JsonResult GetCustomerStatus(int custId)
         {
             var products = _customerService.GetCustomerAllStatus(custId, Config.SettingStatus);
-            if (products?.DCSProductsSetting != null && products.DCSProductsSetting.Any())
-            {
-                products.DCSProductsSetting.RemoveAll(
-                    i => i.ProductID == ProductConstants.SabaVirtualSports
-                    || i.ProductID == ProductConstants.Cashout);
-            }
-
             return Json(products);
         }
 
@@ -120,7 +113,6 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 false,
                 status,
                 roleId,
-                customerList.IsMyanmarOdds,
                 request.IsShowSuperLimitDate ?? false,
                 request.IsNoDownlines ?? false,
                 customerList.HasSubGroups,
