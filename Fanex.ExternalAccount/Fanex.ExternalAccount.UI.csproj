@@ -128,7 +128,7 @@
       <HintPath>..\packages\Fanex.CustomerSetting.EnableStatus.AllInOne.2.0.3.4\lib\net461\Fanex.CustomerSetting.EnableStatus.AllInOne.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Core, Version=2.0.5.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.5.5-Beta1\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
+      <HintPath>..\packages\Fanex.CustomerSetting.Module.Core.2.0.5.5\lib\net461\Fanex.CustomerSetting.Module.Core.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.CustomerSetting.Module.Racebook.Resources">
       <HintPath>..\packages\Fanex.CustomerSetting.Module.Racebook.RacebookResources.1.0.0.0\lib\net40\Fanex.CustomerSetting.Module.Racebook.Resources.dll</HintPath>
