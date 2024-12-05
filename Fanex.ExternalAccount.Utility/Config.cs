@@ -124,11 +124,7 @@
                 && allGroups.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(g => g.Trim())
                     .Contains(currentGroup, StringComparer.CurrentCultureIgnoreCase);
-
-        public static IDictionary<int, bool> SpecialProductIds()
-            => GetValue("SpecialProductIds")
-            .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-            .ToDictionary(kvp => int.Parse(kvp), kvp => true);
+       
 
         public static int SearchAndCopySuperMailingListId => Utils.ToInt32(GetValue("SearchAndCopySuperMailingListId"));
 

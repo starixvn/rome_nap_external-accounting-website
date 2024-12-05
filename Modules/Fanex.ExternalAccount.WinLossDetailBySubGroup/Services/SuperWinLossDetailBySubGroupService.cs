@@ -44,7 +44,7 @@ namespace Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Services
         public SuperWinLossDetailBySubGroupReport GetSuperWinLossDetailBySubGroupReport(
             GetSuperWinLossDetailBySubGroupRequest request)
         {
-            var validProductIds = productService.ValidateProductIds(request.UserId, request.GroupName, request.GroupId, Utils.ToEnumerableInt(request.ProductIds));
+            var validProductIds = productService.ValidateProductIds(request.GroupName, request.GroupId, Utils.ToEnumerableInt(request.ProductIds));
             validProductIds = productDetailService.RemoveProductIds(validProductIds, request.ProductDetails, request.GroupName);
             var productDetailsXML = productDetailService.BuildProductDetailsXML(validProductIds, request.ProductDetails, request.GroupName);
           

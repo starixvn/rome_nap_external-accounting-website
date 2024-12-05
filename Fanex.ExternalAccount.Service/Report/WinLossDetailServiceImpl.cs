@@ -75,7 +75,7 @@
             var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
             var getWinLossDetail = GetWinLossDetailFunction(request.ViewLevel);
 
-            var validProductIds = productService.ValidateProductIds(request.UserId,request.GroupName, request.GroupId, Utils.ToEnumerableInt(request.ProductIds));
+            var validProductIds = productService.ValidateProductIds(request.GroupName, request.GroupId, Utils.ToEnumerableInt(request.ProductIds));
             validProductIds = productDetailService.RemoveProductIds(validProductIds, request.ResourceIds, request.GroupName);
 
             var productDetailsXML = productDetailService.BuildProductDetailsXML(validProductIds, request.ResourceIds, request.GroupName);
@@ -111,7 +111,7 @@
             var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
             var getWinLossDetail = GetWinLossByCurrencyDetailFunction(request.ViewLevel);
 
-            var validProductIds = productService.ValidateProductIds(request.UserId, request.GroupName, request.GroupId, Utils.ToEnumerableInt(request.ProductIds));
+            var validProductIds = productService.ValidateProductIds(request.GroupName, request.GroupId, Utils.ToEnumerableInt(request.ProductIds));
             validProductIds = productDetailService.RemoveProductIds(validProductIds, request.ResourceIds, request.GroupName);
 
             var productDetailsXML = productDetailService.BuildProductDetailsXML(validProductIds, request.ResourceIds, request.GroupName);
@@ -156,7 +156,7 @@
                 }
             }
 
-            var validProductIds = productService.ValidateProductIds(request.UserId, request.GroupName, request.GroupId, Utils.ToEnumerableInt(request.ProductIds));
+            var validProductIds = productService.ValidateProductIds(request.GroupName, request.GroupId, Utils.ToEnumerableInt(request.ProductIds));
             validProductIds = productDetailService.RemoveProductIds(validProductIds, request.ResourceIds, request.GroupName);
 
             var productDetailsXML = productDetailService.BuildProductDetailsXML(validProductIds, request.ResourceIds, request.GroupName);
@@ -195,7 +195,7 @@
 
             var extraPTs = reportService.GetExtraPT(request.ParentGroupName);
             var validProductIds = productService
-                .ValidateProductIds(request.UserId, request.GroupName, request.GroupId, extraPTs.Select(e => e.ProductId))
+                .ValidateProductIds(request.GroupName, request.GroupId, extraPTs.Select(e => e.ProductId))
                 .ToDictionary(kvp => kvp, kvp => true);
 
             return extraPTs

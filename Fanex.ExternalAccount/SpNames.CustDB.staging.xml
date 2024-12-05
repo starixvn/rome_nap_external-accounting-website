@@ -116,7 +116,6 @@
   </Function>
   <Function Name="Left Panel">
     <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelSiteByUserName" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelList" SpName="Acc_CustomerSelList" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="DBONUSER.ON_USER.wsv_xnap" Plain="0" />
     <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
@@ -231,7 +230,6 @@
     <Setting Key="RemoveCustomerOTP" SpName="Age_OTP_CustomerOTPDel" DbName="DBCust.CustDB.wsv_xnap" />
   </Function>
   <Function Name="NG2">
-    <Setting Key="Acc_CustomerIsAllowedAccess" SpName="Acc_CustomerIsAllowedAccess" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_Con_CheckPermission_All" SpName="Acc_Con_CheckPermission_All" DbName="DBPOL.NAP_UserControl.wsv_xnap" />
     <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_CustomerIsInternalAdmin" SpName="Acc_CustomerIsInternalAdmin" DbName="DBCust.CustDB.wsv_xnap" />

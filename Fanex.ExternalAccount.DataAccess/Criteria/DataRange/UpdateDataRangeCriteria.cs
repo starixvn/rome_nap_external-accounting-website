@@ -1,6 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.DataRange
 {
     using System;
+    using System.Configuration;
+    using Fanex.ExternalAccount.Utilities;
     using NAP.Framework.Data;
 
     public class UpdateDataRangeCriteria : CriteriaBase

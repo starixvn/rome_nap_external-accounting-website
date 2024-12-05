@@ -139,7 +139,7 @@
         public string BuildTooltipsForLiveCasino(int userId, string groupName, int groupId)
         {
             var products = _productService
-                .GetProducts(userId, groupName, groupId);
+                .GetProducts(groupName, groupId);
             var offeredLiveCasino = products
                 .FirstOrDefault(p => p.ProductId == ProductConstants.DummyLiveCasinoProductId);
             var offeredLiveCasinoFGG = products
@@ -160,7 +160,7 @@
 
         public string BuildTooltipsForRNGCasino(int userId, string groupName, int groupId)
         {
-            var products = _productService.GetProducts(userId, groupName, groupId);
+            var products = _productService.GetProducts(groupName, groupId);
             var childProducts = products
                 .FirstOrDefault(p => p.ProductId == ProductConstants.DummyRNGProductId)
                 .Products.Select(p => p.ProductName);

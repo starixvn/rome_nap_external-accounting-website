@@ -208,5 +208,6 @@
 
         public bool CanViewVNIP(string ip)
             => IsAuthorized(CurrentSession.Instance.UserId, eFunctions.ViewVNIP) || !ipInformationService.IsSpecialIP(ip);
+      
     }
 }
