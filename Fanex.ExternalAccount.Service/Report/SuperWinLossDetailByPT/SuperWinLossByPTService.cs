@@ -43,6 +43,11 @@
             {
                 throw new ArgumentNullException(nameof(param));
             }
+            
+            if (!param.IsValid())
+            {
+                return new SuperWinLossDetailByPTModel();
+            }
 
             var validProductIds = productService.ValidateProductIds(param.GroupName, param.GroupId, Utils.ToEnumerableInt(param.UserSelectedProductIds));
             validProductIds = productDetailService.RemoveProductIds(validProductIds, param.ResourceIds, param.GroupName);
@@ -95,6 +100,11 @@
             if (param == null)
             {
                 throw new ArgumentNullException(nameof(param));
+            }
+
+            if (!param.IsValid())
+            {
+                return new SuperWinLossDetailMCByPTModel();
             }
 
             var validProductIds = productService.ValidateProductIds(param.GroupName, param.GroupId, Utils.ToEnumerableInt(param.UserSelectedProductIds));

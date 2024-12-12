@@ -40,5 +40,6 @@
         string CurrencyIds { get; }
         int BaseCurrency { get; }
         bool IsMultipleCurrency { get; }
+        bool IsValid { get; }
     }
 }

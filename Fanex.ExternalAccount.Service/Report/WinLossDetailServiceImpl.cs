@@ -67,9 +67,9 @@
 
         public dynamic DrillDownWinLossDetail(IDrillDownWinLossDetailRequest request)
         {
-            if (request.IsNotValid)
+            if (!request.IsValid)
             {
-                throw new InvalidOperationException(nameof(request.IsValid));
+                return NoInfoResult("", new ArrayList(), request.ToolTipsProducts);
             }
 
             var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
@@ -103,9 +103,9 @@
 
         public dynamic DrillDownWinLossMCDetail(IDrillDownWinLossDetailRequest request)
         {
-            if (request.IsNotValid)
+            if (!request.IsValid)
             {
-                throw new InvalidOperationException(nameof(request.IsValid));
+                return NoInfoResult("", new ArrayList(), request.ToolTipsProducts);
             }
 
             var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
@@ -145,6 +145,11 @@
             var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
 
             var customerInfo = new LineInfo { RoleId = Role.Super };
+
+            if (!request.IsValid)
+            {
+                return NoInfoResult(request.Username, sortingOrderList, request.ToolTipsProducts);
+            }
 
             if (!string.IsNullOrWhiteSpace(request.Username))
             {
