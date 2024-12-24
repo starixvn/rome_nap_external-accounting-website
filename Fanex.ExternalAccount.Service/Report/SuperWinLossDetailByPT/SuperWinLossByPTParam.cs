@@ -61,5 +61,7 @@
         public int PageIndex { get; }
 
         public int UserId { get; }
+        
+        public bool IsValid() => FromDate <= ToDate;
     }
 }
