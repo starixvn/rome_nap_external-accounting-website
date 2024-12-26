@@ -70,14 +70,6 @@
                 line-height: normal;
             }
 
-            .div-noData {
-                color: #999;
-                font-size: 13px;
-                font-weight: bold;
-                text-align: center;
-                padding-bottom: 6px;
-            }
-
             .freegrid-container {
                 margin-bottom: 10px;
 
@@ -128,6 +120,14 @@
 .ui-tabs .ui-tabs-panel {
     padding: 2px;
     border: 1px solid #ccc;
+
+    .div-noData {
+        color: #999;
+        font-size: 13px;
+        font-weight: bold;
+        text-align: center;
+        padding-bottom: 6px;
+    }
 }
 .ui-tabs-anchor
 {

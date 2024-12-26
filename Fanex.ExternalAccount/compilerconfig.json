@@ -118,5 +118,9 @@
   {
     "outputFile": "assets/styles/pages/reports/reward-detail.css",
     "inputFile": "assets/styles/pages/reports/reward-detail.scss"
-  }
+  },
+  {
+    "outputFile": "assets/styles/pages/reports/white-label-report.css",
+    "inputFile": "assets/styles/pages/reports/white-label-report.scss"
+  },
 ]

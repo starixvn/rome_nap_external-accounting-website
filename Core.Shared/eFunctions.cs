@@ -78,6 +78,7 @@
         public const string MarkAccountType = "MarkAccountType";
         public const string RewardDetail = "RewardDetail";
         public const string MatchWinLoss = "MatchWinLoss";
+        public const string WhiteLabelSettlementReport = "SettlementReport";
         public const string InternalLogin = "InternalLogin";
     }
 }

@@ -606,6 +606,10 @@
     <Content Include="assets\bundles\mcwinlossdetail\index.min.js">
       <DependentUpon>index.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\white-label-report\index.js" />
+    <Content Include="assets\bundles\white-label-report\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\styles\images\eye-visible-off.png" />
     <Content Include="assets\styles\images\eye-visible.png" />
     <Content Include="assets\styles\pages\customer\superinfo.css">
@@ -629,11 +633,13 @@
     <Content Include="assets\styles\pages\reports\match-win-loss-reports.scss" />
     <Content Include="ExcelTemplates\Reports\MatchWinLossDetail.xls" />
     <Content Include="ExcelTemplates\Reports\MatchWinLossSummary.xls" />
-    <Content Include="assets\styles\pages\reports\reward-detail.css" />
-    <Content Include="assets\styles\pages\reports\reward-detail.min.css" />
-    <Content Include="assets\styles\pages\reports\reward-detail.scss" />
-    <Content Include="assets\styles\pages\reports\_common.scss" />
-    <Content Include="ExcelTemplates\Reports\RewardDetail.xls" />
+    <Content Include="assets\styles\pages\reports\white-label-report.css">
+      <DependentUpon>white-label-report.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\white-label-report.min.css">
+      <DependentUpon>white-label-report.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\reports\white-label-report.scss" />
     <Content Include="Scripts\clipboard.js" />
     <Content Include="assets\styles\base\_alpha-admin-fonts.min.css">
       <DependentUpon>_alpha-admin-fonts.css</DependentUpon>
@@ -644,6 +650,11 @@
     <Content Include="assets\styles\components\daterangepicker-customize.min.css">
       <DependentUpon>daterangepicker-customize.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\reports\reward-detail.css" />
+    <Content Include="assets\styles\pages\reports\reward-detail.min.css" />
+    <Content Include="assets\styles\pages\reports\reward-detail.scss" />
+    <Content Include="assets\styles\pages\reports\_common.scss" />
+    <Content Include="ExcelTemplates\Reports\RewardDetail.xls" />
     <Content Include="assets\styles\images\cross.png" />
     <Content Include="assets\styles\images\icon-refresh.png" />
     <Content Include="assets\styles\images\medium-network.svg" />
@@ -1458,6 +1469,7 @@
     <Content Include="Scripts\Fanex.Multiselect\images\ui-icons_2e83ff_256x240.png" />
     <Content Include="Scripts\HeadlineList\Fanex.ExtAcc.HeadlineList.js" />
     <Content Include="Scripts\Moment\moment.js" />
+    <Content Include="Scripts\jquery.ui.month-picker-3.0.4.js" />
     <Content Include="Scripts\ProblemAccount\Fanex.ExtAcc.ProblemAccount.js" />
     <Content Include="Scripts\Manage\Fanex.ExtAcc.SubGroup.js" />
     <Content Include="Scripts\TotalBet\Fanex.ExtAcc.TotalBet.js" />
@@ -1471,6 +1483,7 @@
     <Content Include="Views\Customer\SportBookInformation-Debug.cshtml" />
     <Content Include="Views\Customer\SportBookInformation.cshtml" />
     <Content Include="Views\HeadlineList\Index.cshtml" />
+    <Content Include="Views\WhiteLabelReport\Index.cshtml" />
     <Content Include="Views\RewardManagement\Index.cshtml" />
     <Content Include="Views\MatchWinLossReports\DetailsFilter.cshtml" />
     <Content Include="Views\MatchWinLossReports\Index.cshtml" />
@@ -1480,6 +1493,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailByPT\SuperWinLossMCDetailByPT.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\WhiteLabelReport\SettlementReport.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\WhiteLabelReport\DailyWinLossReport.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\WhiteLabelReport\WhiteLabelWinLossFilters.ts" />
+    <TypeScriptCompile Include="Scripts\Reports\WhiteLabelReport\WhiteLabelWinLossGrid.ts" />
     <TypeScriptCompile Include="typings\globals\jasmine-jquery\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\jasmine\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\jquery.blockui\index.d.ts" />
@@ -2750,6 +2767,9 @@
     <Content Include="assets\bundles\matchwinlossreports\match-winloss-reports.min.js.map">
       <DependentUpon>match-winloss-reports.min.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\white-label-report\index.min.js.map">
+      <DependentUpon>index.min.js</DependentUpon>
+    </Content>
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2868,6 +2888,8 @@
     <Content Include="ExcelTemplates\Customer\SuperListMOMC.xls" />
     <Content Include="ExcelTemplates\Customer\SuperListSGMC.xls" />
     <Content Include="ExcelTemplates\Customer\SuperListSGMOMC.xls" />
+    <Content Include="ExcelTemplates\Reports\WhiteLabelDailyWinLoss.xls" />
+    <Content Include="ExcelTemplates\Reports\WhiteLabelSettlement.xls" />
     <None Include="Scripts\Lib\jquery-ui-1.9.1\ui\.jshintrc" />
     <Content Include="Views\DailyWinLoss\Index.cshtml" />
     <Content Include="Views\WinLossDetail\Index.cshtml" />
@@ -3026,6 +3048,10 @@
     <ProjectReference Include="..\Modules\Fanex.ExternalAccount.Statement\Fanex.ExternalAccount.Statement.csproj">
       <Project>{9d37c623-ea9d-4066-b5fc-c8ec378e9ac4}</Project>
       <Name>Fanex.ExternalAccount.Statement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.ExternalAccount.WhiteLabelWinLossReports\Fanex.ExternalAccount.WhiteLabelWinLossReports.csproj">
+      <Project>{02eacb12-fc9b-4c53-9462-6f6deab75720}</Project>
+      <Name>Fanex.ExternalAccount.WhiteLabelWinLossReports</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.ExternalAccount.WinLossDetailBySubGroup\Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.csproj">
       <Project>{5f20bea2-febf-4ce2-8ff8-129dd93b3386}</Project>

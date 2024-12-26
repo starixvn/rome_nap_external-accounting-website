@@ -124,3 +124,149 @@ $font-family: 'Montserrat', sans-serif;
         content: '\e935';
     }
 }
+
+.month-picker {
+    display: inline-block;
+    position: absolute;
+    z-index: 9999;
+
+    table {
+        border-collapse: separate;
+        border-spacing: 2px 2px;
+    }
+
+    td {
+        padding: 0px;
+    }
+
+    .ui-button .ui-button-text {
+        padding: .4em 0;
+    }
+}
+
+.month-picker-header {
+    margin: 3px 3px 0px 3px;
+}
+
+.month-picker-year-table {
+    width: 100%;
+    -ms-user-select: none; /* IE 10+ */
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+
+    .ui-button {
+        font-size: 1.1em;
+        width: 1.5em;
+        height: 1.5em;
+        cursor: default;
+        margin: 0;
+    }
+
+    .month-picker-title {
+        text-align: center;
+
+        a {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .ui-button {
+            font-size: 1em;
+            padding: .1em 0;
+            width: 100%;
+            font-weight: bold;
+        }
+    }
+
+    .ui-button-text {
+        padding: 0;
+    }
+
+    .month-picker-previous, .month-picker-next {
+        a {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .ui-icon {
+            margin-top: -8px !important;
+        }
+    }
+}
+
+.month-picker-month-table {
+    td {
+        height: 35px;
+        text-align: center;
+    }
+
+    .ui-button {
+        width: 4.2em;
+        margin: .2em;
+    }
+
+    a {
+        &.ui-button {
+            &.ui-state-hover {
+                background: #e6e6e6 !important;
+            }
+
+            &.ui-state-active {
+                background: #6f7d95 !important;
+                color: #ededed !important;
+            }
+        }
+    }
+}
+
+.month-picker-open-button {
+    height: 20px;
+    width: 20px;
+    vertical-align: bottom;
+}
+
+.month-picker-invalid-message {
+    display: none;
+    background-color: Yellow;
+}
+
+.month-picker-disabled {
+    background-color: #e1e1e1;
+}
+
+.group-month-picker {
+    width: 100%;
+    position: relative;
+    padding-right: 30px;
+    background: #fff;
+    border: 1px solid #a6a6a6;
+    border-radius: 0 !important;
+     
+
+    input {
+        border: none !important;
+        max-width: 80px;
+        font-size: 13px;
+    }
+
+    .icon-calendar {
+        font-size: 24px;
+        color: #7f7f7f;
+        display: inline-block;
+        cursor: pointer;
+        position: absolute;
+        top: 3px;
+        right: 2px;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        text-align: end;
+    }
+}
+div.input-group.datepicker {
+    box-shadow: none;
+    border-color: #a6a6a6;
+}

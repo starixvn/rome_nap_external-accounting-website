@@ -60,6 +60,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.Headl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.MatchWinLossReports", "Modules\Fanex.ExternalAccount.MatchWinLossReports\Fanex.ExternalAccount.MatchWinLossReports.csproj", "{BC9BF8EC-943B-468E-B0AB-97DBE2F17B49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.WhiteLabelWinLossReports", "Modules\Fanex.ExternalAccount.WhiteLabelWinLossReports\Fanex.ExternalAccount.WhiteLabelWinLossReports.csproj", "{02EACB12-FC9B-4C53-9462-6F6DEAB75720}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.RewardManagement", "Modules\Fanex.ExternalAccount.RewardManagement\Fanex.ExternalAccount.RewardManagement.csproj", "{19291A82-88CA-4719-8287-B148021617FA}"
 EndProject
 Global
@@ -281,6 +283,16 @@ Global
 		{BC9BF8EC-943B-468E-B0AB-97DBE2F17B49}.Development|Any CPU.Build.0 = Debug|Any CPU
 		{BC9BF8EC-943B-468E-B0AB-97DBE2F17B49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC9BF8EC-943B-468E-B0AB-97DBE2F17B49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02EACB12-FC9B-4C53-9462-6F6DEAB75720}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02EACB12-FC9B-4C53-9462-6F6DEAB75720}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02EACB12-FC9B-4C53-9462-6F6DEAB75720}.Debug-Alpha|Any CPU.ActiveCfg = Debug|Any CPU
+		{02EACB12-FC9B-4C53-9462-6F6DEAB75720}.Debug-Alpha|Any CPU.Build.0 = Debug|Any CPU
+		{02EACB12-FC9B-4C53-9462-6F6DEAB75720}.Debug-NAP|Any CPU.ActiveCfg = Debug|Any CPU
+		{02EACB12-FC9B-4C53-9462-6F6DEAB75720}.Debug-NAP|Any CPU.Build.0 = Debug|Any CPU
+		{02EACB12-FC9B-4C53-9462-6F6DEAB75720}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{02EACB12-FC9B-4C53-9462-6F6DEAB75720}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{02EACB12-FC9B-4C53-9462-6F6DEAB75720}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02EACB12-FC9B-4C53-9462-6F6DEAB75720}.Release|Any CPU.Build.0 = Release|Any CPU
 		{19291A82-88CA-4719-8287-B148021617FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{19291A82-88CA-4719-8287-B148021617FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19291A82-88CA-4719-8287-B148021617FA}.Debug-Alpha|Any CPU.ActiveCfg = Debug|Any CPU
@@ -305,6 +317,7 @@ Global
 		{9D37C623-EA9D-4066-B5FC-C8EC378E9AC4} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
 		{647A6FB0-3765-40BE-A19F-DDF142193819} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
 		{BC9BF8EC-943B-468E-B0AB-97DBE2F17B49} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
+		{02EACB12-FC9B-4C53-9462-6F6DEAB75720} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
 		{19291A82-88CA-4719-8287-B148021617FA} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
