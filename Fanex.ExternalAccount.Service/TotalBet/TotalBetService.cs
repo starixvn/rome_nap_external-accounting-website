@@ -55,7 +55,7 @@ namespace Fanex.ExternalAccount.Service.TotalBet
                 param.GroupName, param.ViewMode,
                 string.Join(",", param.Leagues),
                 string.Join(",", param.Events),
-                param.BaseCurrency
+                param.BaseCurrencyName
             );
             var leagues = dynamicRepository.Fetch<TotalBetModel>(criteria).GroupBy(d => d.LeagueId);
             var result = new List<TotalBetLeagueModel>();

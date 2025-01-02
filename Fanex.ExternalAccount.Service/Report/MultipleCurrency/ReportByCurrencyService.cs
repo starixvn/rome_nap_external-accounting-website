@@ -52,8 +52,8 @@
             string productIds,
             string productDetailsXML,
             string currencyIds,
-            int baseCurrency)
-            => _reportDao.EAS_Rpt_WinLossByCurDaily_Com(groupname, custId, currencyIds, baseCurrency, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
+            string baseCurrencyName)
+            => _reportDao.EAS_Rpt_WinLossByCurDaily_Com(groupname, custId, currencyIds, baseCurrencyName, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
 
         public WinLossByCurrency GetMasterWinLossMCDetail(
             string groupname,
@@ -64,8 +64,8 @@
             string productIds,
             string productDetailsXML,
             string currencyIds,
-            int baseCurrency)
-            => _reportDao.EAS_Rpt_WinLossByCurDaily_SAg(groupname, custId, masterId, currencyIds, baseCurrency, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
+            string baseCurrencyName)
+            => _reportDao.EAS_Rpt_WinLossByCurDaily_SAg(groupname, custId, masterId, currencyIds, baseCurrencyName, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
 
         public WinLossByCurrencyMAg GetAgentWinLossMCDetail(
             string groupname,
@@ -76,8 +76,8 @@
             string productIds,
             string productDetailsXML,
             string currencyIds,
-            int baseCurrency)
-            => _reportDao.EAS_Rpt_WinLossByCurDaily_MAg(groupname, custId, agentId, currencyIds, baseCurrency, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
+            string baseCurrencyName)
+            => _reportDao.EAS_Rpt_WinLossByCurDaily_MAg(groupname, custId, agentId, currencyIds, baseCurrencyName, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
 
         public WinLossByCurrencyAg GetMemberWinLossMCDetail(
             string groupname,
@@ -88,8 +88,8 @@
             string productIds,
             string productDetailsXML,
             string currencyIds,
-            int baseCurrency)
-            => _reportDao.EAS_Rpt_WinLossByCurDaily_Ag(groupname, custId, memberId, currencyIds, baseCurrency, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
+            string baseCurrencyName)
+            => _reportDao.EAS_Rpt_WinLossByCurDaily_Ag(groupname, custId, memberId, currencyIds, baseCurrencyName, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
     }
 
 #pragma warning restore S109 // Magic numbers should not be used

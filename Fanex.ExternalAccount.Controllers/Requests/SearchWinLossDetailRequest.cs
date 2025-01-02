@@ -22,8 +22,8 @@
             ProductIds = request.ProductIds;
             ResourceIds = request.ResourceIds;
             UserId = request.UserId;
-            CurrencyIds = request.Currencies;
-            BaseCurrency = request.BaseCurrency;
+            Currencies = request.Currencies;
+            BaseCurrencyName = request.BaseCurrencyName;
             IsMultipleCurrency = !string.IsNullOrWhiteSpace(request.Currencies);
         }
 
@@ -37,8 +37,8 @@
         public dynamic ToolTipsProducts { get; }
         public string ResourceIds { get; }
         public int UserId { get; }
-        public string CurrencyIds { get; }
-        public int BaseCurrency { get; }
+        public string Currencies { get; }
+        public string BaseCurrencyName { get; }
         public bool IsMultipleCurrency { get; }
 
         public bool IsValid => (ToDate >= FromDate);

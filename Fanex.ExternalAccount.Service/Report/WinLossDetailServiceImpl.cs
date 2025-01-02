@@ -47,7 +47,7 @@
                     throw new InvalidOperationException(nameof(roleId));
             }
         }
-        private Func<string, int, int, DateTime, DateTime, string, string, string, int, object> GetWinLossByCurrencyDetailFunction(int roleId)
+        private Func<string, int, int, DateTime, DateTime, string, string, string, string, object> GetWinLossByCurrencyDetailFunction(int roleId)
         {
             switch (roleId)
             {
@@ -124,8 +124,8 @@
                 request.ToDate,
                 Utils.JoinToString(validProductIds),
                 productDetailsXML,
-                request.CurrencyIds,
-                request.BaseCurrency);
+                request.Currencies,
+                request.BaseCurrencyName);
 
             return
                 new
@@ -256,8 +256,8 @@
                     request.ToDate,
                     productIds,
                     productDetailsXML,
-                    request.CurrencyIds,
-                    request.BaseCurrency);
+                    request.Currencies,
+                    request.BaseCurrencyName);
             }
 
             var getWinLossDetail = GetWinLossByCurrencyDetailFunction(customerInfo.RoleId.DirectUplineLevel());
@@ -270,8 +270,8 @@
                 request.ToDate,
                 productIds,
                 productDetailsXML,
-                request.CurrencyIds,
-                request.BaseCurrency);
+                request.Currencies,
+                request.BaseCurrencyName);
         }
 
         private static dynamic NoInfoResult(string username, ArrayList sortingOrderList, dynamic toolTipsProducts) => new

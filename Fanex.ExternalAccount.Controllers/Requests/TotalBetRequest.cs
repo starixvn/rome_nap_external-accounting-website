@@ -23,5 +23,6 @@
     public class TotalBetMCRequest : TotalBetRequest
     {
         public int BaseCurrency { get; set; }
+        public string BaseCurrencyName { get; set; }
     }
 }

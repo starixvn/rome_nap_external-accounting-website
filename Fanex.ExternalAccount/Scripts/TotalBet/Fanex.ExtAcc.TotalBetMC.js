@@ -120,6 +120,7 @@ Fanex.ExtAcc.TotalBetMC = {
 
         var viewMode = $("#ddl-view-by").val();
         var baseCurrency = $("#ddl-base-currency").val();
+        var baseCurrencyName = $("#ddl-base-currency").find(":selected").text();
 
         var leagues = $("#ddl-leagues").fanexMultiSelectSearchable("getItems", true);
         var events = $("#ddl-events").fanexMultiSelectSearchable("getItems", true);
@@ -127,7 +128,8 @@ Fanex.ExtAcc.TotalBetMC = {
             viewMode: viewMode,
             leagues: leagues,
             events: events,
-            baseCurrency: baseCurrency
+            baseCurrency: baseCurrency,
+            baseCurrencyName: baseCurrencyName
         };
 
         if (!Fanex.ExtAcc.TotalBetMC.validateParams(param)) {

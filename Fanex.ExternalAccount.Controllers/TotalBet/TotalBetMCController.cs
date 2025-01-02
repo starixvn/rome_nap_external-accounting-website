@@ -63,7 +63,8 @@
                 ViewMode = request.ViewMode,
                 Leagues = request.Leagues,
                 Events = request.Events,
-                BaseCurrency = request.BaseCurrency
+                BaseCurrency = request.BaseCurrency,
+                BaseCurrencyName = request.BaseCurrencyName
             };
 
             return Json(totalBetService.GetData(param));

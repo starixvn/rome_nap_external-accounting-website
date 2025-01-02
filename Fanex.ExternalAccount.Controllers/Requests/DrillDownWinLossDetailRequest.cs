@@ -24,8 +24,8 @@
             ViewLevel = request.Viewlevel;
             ProductIds = request.ProductIds;
             ResourceIds = request.ResourceIds;
-            CurrencyIds = request.Currencies;
-            BaseCurrency = request.BaseCurrency;
+            Currencies = request.Currencies;
+            BaseCurrencyName = request.BaseCurrencyName;
             IsMultipleCurrency = !string.IsNullOrWhiteSpace(request.Currencies);
 
             switch (ViewLevel)
@@ -71,8 +71,8 @@
                                && CustId > 0;
 
         public bool IsNotValid => !IsValid;
-        public string CurrencyIds { get; }
-        public int BaseCurrency { get; }
+        public string Currencies { get; }
+        public string BaseCurrencyName { get; }
         public bool IsMultipleCurrency { get; }
     }
 }

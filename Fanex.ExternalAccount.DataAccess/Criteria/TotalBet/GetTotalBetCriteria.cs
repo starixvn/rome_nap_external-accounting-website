@@ -4,15 +4,13 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.TotalBet
 {
     public class GetTotalBetCriteria : CriteriaBase
     {
-        private readonly string[] mappingBaseCurrency = { "MYR", "CNY", "THB", "IDR" };
-
-        public GetTotalBetCriteria(string groupName, int viewMode, string leagueIds, string matchIds, int baseCurrency)
+        public GetTotalBetCriteria(string groupName, int viewMode, string leagueIds, string matchIds, string baseCurrencyName)
         {
             GroupName = groupName;
             ViewMode = viewMode;
             LeagueIds = leagueIds;
             MatchIds = matchIds;
-            BaseCurrency = mappingBaseCurrency[baseCurrency - 1];
+            BaseCurrency = baseCurrencyName;
         }
 
         public string GroupName { get; set; }
