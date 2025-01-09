@@ -6,6 +6,8 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
     {
         public GeneralInfo GeneralInfo { get; set; }
 
+        public string Group { get; set; }
+
         public string ProductGroups { get; set; }
     }
 }

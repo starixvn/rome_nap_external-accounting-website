@@ -153,7 +153,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     CurrentContext.Ip4Address,
                     siteDBConfigService.GetSiteDBConfigByCustId(request.CustId).CustDBGroupID,
                     request.Site,
-                    request.SiteLabel));
+                    request.SiteLabel,
+                    request.Group));
 
             return Content(response);
         }
@@ -203,7 +204,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 request.CustomerIds,
                 request.CustomerNames,
                 request.Site,
-                request.SiteLabel));
+                request.SiteLabel,
+                request.Group));
 
             return Content(response);
         }
@@ -238,6 +240,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 generalInfo.Site,
                 generalInfo.SiteLabel,
                 siteDBConfigService.GetSiteDBConfigBySite(generalInfo.Site).CustDBGroupID,
+                request.Group,
                 CustomerClient.Constants.CreationModes.FullMode));
             return Content(response);
         }
@@ -260,7 +263,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     CurrentContext.Ip4Address,
                     siteDBConfigService.GetSiteDBConfigByCustId(request.CustId).CustDBGroupID,
                     request.Site,
-                    request.SiteLabel));
+                    request.SiteLabel,
+                    request.Group));
 
             return Content(response);
         }
@@ -284,7 +288,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     request.CustomerIds,
                     request.CustomerNames,
                     request.Site,
-                    request.SiteLabel));
+                    request.SiteLabel,
+                    request.Group));
 
             return Content(response);
         }

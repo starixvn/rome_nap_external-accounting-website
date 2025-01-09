@@ -118,8 +118,8 @@
       <HintPath>..\packages\Fanex.Cryptography.Aes.1.0.0.0\lib\net461\Fanex.Cryptography.Aes.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Customer.Client, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Customer.Client.1.0.1.6\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
+    <Reference Include="Fanex.Customer.Client, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Customer.Client.1.0.1.9-editSBCommGroup001\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Customer.Client.NETFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Customer.Client.NETFramework.1.0.0\lib\net461\Fanex.Customer.Client.NETFramework.dll</HintPath>
@@ -557,7 +557,9 @@
       <DependentUpon>multiple.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\reward-management-report\index.js" />
-    <Content Include="assets\bundles\reward-management-report\index.min.js" />
+    <Content Include="assets\bundles\reward-management-report\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\reward-management-report\index.min.js.map" />
     <Content Include="assets\bundles\SuperWinLossDetailByPT\index.js" />
     <Content Include="assets\bundles\SuperWinLossDetailByPT\index.min.js">

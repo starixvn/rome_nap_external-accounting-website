@@ -17,5 +17,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         public string Site { get; set; }
 
         public string SiteLabel { get; set; }
+
+        public string Group { get; set; }
     }
 }
