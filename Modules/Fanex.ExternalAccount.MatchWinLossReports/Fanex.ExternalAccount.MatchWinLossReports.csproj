@@ -1,119 +1,117 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
-            Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
-    <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{BC9BF8EC-943B-468E-B0AB-97DBE2F17B49}</ProjectGuid>
-        <OutputType>Library</OutputType>
-        <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>Fanex.ExternalAccount.MatchWinLossReports</RootNamespace>
-        <AssemblyName>Fanex.ExternalAccount.MatchWinLossReports</AssemblyName>
-        <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-        <FileAlignment>512</FileAlignment>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>bin\Debug\</OutputPath>
-        <DefineConstants>DEBUG;TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DebugType>pdbonly</DebugType>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\Release\</OutputPath>
-        <DefineConstants>TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="Fanex.Caching">
-          <HintPath>..\..\packages\Fanex.Caching.2.2.2\lib\net461\Fanex.Caching.dll</HintPath>
-        </Reference>
-        <Reference Include="Fanex.Caching.Redis">
-          <HintPath>..\..\packages\Fanex.Caching.Redis.2.2.2\lib\net461\Fanex.Caching.Redis.dll</HintPath>
-        </Reference>
-        <Reference Include="Fanex.CustomerSetting.Security">
-          <HintPath>..\..\packages\Fanex.CustomerSetting.Security.2.0.0.6\lib\net40\Fanex.CustomerSetting.Security.dll</HintPath>
-        </Reference>
-        <Reference Include="System"/>
-        <Reference Include="System.Core"/>
-        <Reference Include="System.Data"/>
-        <Reference Include="System.Runtime.Caching">
-          <HintPath>C:\Windows\Microsoft.NET\Framework64\v4.0.30319\System.Runtime.Caching.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Web" />
-        <Reference Include="System.Xml"/>
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Controllers\MatchWinLossReportsController.cs" />
-        <Compile Include="Criteria\BetTypeCriteria.cs" />
-        <Compile Include="Criteria\CurrencyCriteria.cs" />
-        <Compile Include="Criteria\GetDetailReportDataCriteria.cs" />
-        <Compile Include="Criteria\GetSummaryReportDataCriteria.cs" />
-        <Compile Include="Criteria\LeaguesCriteria.cs" />
-        <Compile Include="Criteria\MatchCriteria.cs" />
-        <Compile Include="Criteria\SportsCriteria.cs" />
-        <Compile Include="DataAccesses\MatchWinLossReportsDataAccess.cs" />
-        <Compile Include="Models\BetTypeModel.cs" />
-        <Compile Include="Models\CurrencyModel.cs" />
-        <Compile Include="Models\DetailReportQuery.cs" />
-        <Compile Include="Models\DetailReportResult.cs" />
-        <Compile Include="Models\LeagueModel.cs" />
-        <Compile Include="Models\MatchModel.cs" />
-        <Compile Include="Models\RawEntity.cs" />
-        <Compile Include="Models\SportModel.cs" />
-        <Compile Include="Models\SummaryReportQuery.cs" />
-        <Compile Include="Models\SummaryReportResult.cs" />
-        <Compile Include="Properties\AssemblyInfo.cs"/>
-        <Compile Include="Services\DetailReportExcel.cs" />
-        <Compile Include="Services\MatchWinLossReportsExcel.cs" />
-        <Compile Include="Services\MatchWinLossReportsService.cs" />
-        <Compile Include="Services\SummaryReportExcel.cs" />
-        <Compile Include="ViewModels\MatchWinLossReportsViewModels.cs" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\..\Core.Shared\Core.Shared.csproj">
-        <Project>{05dd3a2f-f9ff-42e1-8d4e-d4f83e51ebf4}</Project>
-        <Name>Core.Shared</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\..\Core\Core.csproj">
-        <Project>{3521a845-d2bf-4916-b02c-0b0e02f774db}</Project>
-        <Name>Core</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\..\Fanex.ExternalAccount.Excel\Fanex.ExternalAccount.Excel.csproj">
-        <Project>{e397e628-a155-4259-a806-d8210d54025d}</Project>
-        <Name>Fanex.ExternalAccount.Excel</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
-        <Project>{016f274c-1f76-450b-b80d-e7fb59be6a2b}</Project>
-        <Name>Fanex.ExternalAccount.Utilities</Name>
-      </ProjectReference>
-    </ItemGroup>
-    <ItemGroup>
-      <None Include="App.config" />
-    </ItemGroup>
-    <ItemGroup>
-      <PackageReference Include="Fanex.NAP.Framework" Version="1.0.0.3" />
-      <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.6" />
-      <PackageReference Include="Microsoft.AspNet.Razor" Version="3.3.0-preview1" />
-      <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.6" />
-      <PackageReference Include="Microsoft.Web.Infrastructure" Version="1.0.0" />
-      <PackageReference Include="NPOI" Version="2.6.1" />
-    </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BC9BF8EC-943B-468E-B0AB-97DBE2F17B49}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fanex.ExternalAccount.MatchWinLossReports</RootNamespace>
+    <AssemblyName>Fanex.ExternalAccount.MatchWinLossReports</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Fanex.Caching">
+      <HintPath>..\..\packages\Fanex.Caching.2.2.2\lib\net461\Fanex.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Caching.Redis">
+      <HintPath>..\..\packages\Fanex.Caching.Redis.2.2.2\lib\net461\Fanex.Caching.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.CustomerSetting.Security">
+      <HintPath>..\..\packages\Fanex.CustomerSetting.Security.2.0.0.6\lib\net40\Fanex.CustomerSetting.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Caching">
+      <HintPath>C:\Windows\Microsoft.NET\Framework64\v4.0.30319\System.Runtime.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\MatchWinLossReportsController.cs" />
+    <Compile Include="Criteria\BetTypeCriteria.cs" />
+    <Compile Include="Criteria\CurrencyCriteria.cs" />
+    <Compile Include="Criteria\GetDetailReportDataCriteria.cs" />
+    <Compile Include="Criteria\GetSummaryReportDataCriteria.cs" />
+    <Compile Include="Criteria\LeaguesCriteria.cs" />
+    <Compile Include="Criteria\MatchCriteria.cs" />
+    <Compile Include="Criteria\SportsCriteria.cs" />
+    <Compile Include="DataAccesses\MatchWinLossReportsDataAccess.cs" />
+    <Compile Include="Models\BetTypeModel.cs" />
+    <Compile Include="Models\CurrencyModel.cs" />
+    <Compile Include="Models\DetailReportQuery.cs" />
+    <Compile Include="Models\DetailReportResult.cs" />
+    <Compile Include="Models\LeagueModel.cs" />
+    <Compile Include="Models\MatchModel.cs" />
+    <Compile Include="Models\RawEntity.cs" />
+    <Compile Include="Models\SportModel.cs" />
+    <Compile Include="Models\SummaryReportQuery.cs" />
+    <Compile Include="Models\SummaryReportResult.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DetailReportExcel.cs" />
+    <Compile Include="Services\MatchWinLossReportsExcel.cs" />
+    <Compile Include="Services\MatchWinLossReportsService.cs" />
+    <Compile Include="Services\SummaryReportExcel.cs" />
+    <Compile Include="ViewModels\MatchWinLossReportsViewModels.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core.Shared\Core.Shared.csproj">
+      <Project>{05dd3a2f-f9ff-42e1-8d4e-d4f83e51ebf4}</Project>
+      <Name>Core.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Core.csproj">
+      <Project>{3521a845-d2bf-4916-b02c-0b0e02f774db}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Fanex.ExternalAccount.Excel\Fanex.ExternalAccount.Excel.csproj">
+      <Project>{e397e628-a155-4259-a806-d8210d54025d}</Project>
+      <Name>Fanex.ExternalAccount.Excel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
+      <Project>{016f274c-1f76-450b-b80d-e7fb59be6a2b}</Project>
+      <Name>Fanex.ExternalAccount.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Fanex.NAP.Framework" Version="1.0.0.2" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.6" />
+    <PackageReference Include="Microsoft.AspNet.Razor" Version="3.2.6" />
+    <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.6" />
+    <PackageReference Include="Microsoft.Web.Infrastructure" Version="1.0.0" />
+    <PackageReference Include="NPOI" Version="2.6.1" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
     <Target Name="BeforeBuild">
     </Target>
     <Target Name="AfterBuild">
     </Target>
     -->
-
 </Project>
