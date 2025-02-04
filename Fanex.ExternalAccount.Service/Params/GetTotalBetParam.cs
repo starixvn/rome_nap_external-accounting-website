@@ -9,5 +9,6 @@ namespace Fanex.ExternalAccount.Service.Params
         public IEnumerable<int> Leagues { get; set; }
         public IEnumerable<int> Events { get; set; }
         public int BaseCurrency { get; set; }
+        public string BaseCurrencyName { get; set; }
     }
 }

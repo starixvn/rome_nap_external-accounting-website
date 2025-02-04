@@ -119,7 +119,7 @@
                 ReportService.MoveBetsDate,
                 Utils.JoinToString(validProductIds),
                 productDetailsXML,
-                param.BaseCurrency,
+                param.BaseCurrencyName,
                 param.Currencies);
 
             var model = superWinLossMCDetailByPTDataAccess.GetWinLossMCByBetType(criteria);

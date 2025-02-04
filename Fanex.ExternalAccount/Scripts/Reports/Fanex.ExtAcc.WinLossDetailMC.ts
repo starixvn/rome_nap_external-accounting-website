@@ -398,8 +398,8 @@ class WinLossDetailMC {
     }
 
     GetParameterCurrency() {
-        var currencyIds = this.$multiSelectCurrency.fanexMultiSelect("getItems", true);
-        return currencyIds.length ? "&currencies=" + currencyIds.join(",") : "";
+        var currencyNames = this.$multiSelectCurrency.fanexMultiSelect("getSelectedTexts", true);
+        return currencyNames.length ? "&currencies=" + currencyNames.join(",") : "";
     }
 
     GetParameterBaseCurrency() {

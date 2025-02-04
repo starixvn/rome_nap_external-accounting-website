@@ -20,8 +20,8 @@
         int UserId { get; }
         bool IsValid { get; }
         bool IsNotValid { get; }
-        string CurrencyIds { get; }
-        int BaseCurrency { get; }
+        string Currencies { get; }
+        string BaseCurrencyName { get; }
         bool IsMultipleCurrency { get; }
     }
 
@@ -37,8 +37,8 @@
         dynamic ToolTipsProducts { get; }
         string ResourceIds { get; }
         int UserId { get; }
-        string CurrencyIds { get; }
-        int BaseCurrency { get; }
+        string Currencies { get; }
+        string BaseCurrencyName { get; }
         bool IsMultipleCurrency { get; }
         bool IsValid { get; }
     }

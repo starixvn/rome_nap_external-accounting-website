@@ -44,8 +44,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
         public WinLossByCurrency EAS_Rpt_WinLossByCurDaily_Com(
             string groupname,
             int custId,
-            string currencyIds,
-            int baseCurrency,
+            string currencies,
+            string baseCurrencyName,
             DateTime fromDate,
             DateTime toDate,
             string productIds,
@@ -62,8 +62,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 {"productids", productIds},
                 {"productdetails", productDetailsXML},
                 {"movebetsday", moveBetsDay},
-                {"basecurrency", baseCurrency},
-                {"currencyids", currencyIds}
+                {"basecurrency", baseCurrencyName},
+                {"currencies", currencies}
             };
 
             if (custId != 0)
@@ -78,8 +78,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             string groupname,
             int custId,
             int masterId,
-            string currencyIds,
-            int baseCurrency,
+            string currencies,
+            string baseCurrencyName,
             DateTime fromDate,
             DateTime toDate,
             string productIds,
@@ -97,7 +97,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 {"productids", productIds},
                 {"productdetails", productDetailsXML},
                 {"movebetsday", moveBetsDay},
-                {"basecurrency", baseCurrency}
+                {"basecurrency", baseCurrencyName}
             };
 
             if (masterId != 0)
@@ -112,8 +112,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             string groupname,
             int custId,
             int agentId,
-            string currencyIds,
-            int baseCurrency,
+            string currencies,
+            string baseCurrencyName,
             DateTime fromDate,
             DateTime toDate,
             string productIds,
@@ -131,7 +131,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 {"productids", productIds},
                 {"productdetails", productDetailsXML},
                 {"movebetsday", moveBetsDay},
-                {"basecurrency", baseCurrency}
+                {"basecurrency", baseCurrencyName}
             };
 
             if (agentId != 0)
@@ -146,8 +146,8 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             string groupname,
             int custId,
             int memberId,
-            string currencyIds,
-            int baseCurrency,
+            string currencies,
+            string baseCurrencyName,
             DateTime fromDate,
             DateTime toDate,
             string productIds,
@@ -165,7 +165,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 {"productids", productIds},
                 {"productdetails", productDetailsXML},
                 {"movebetsday", moveBetsDay},
-                {"basecurrency", baseCurrency}
+                {"basecurrency", baseCurrencyName}
             };
 
             if (memberId != 0)

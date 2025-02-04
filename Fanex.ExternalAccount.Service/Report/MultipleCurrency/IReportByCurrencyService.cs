@@ -18,8 +18,8 @@
             DateTime toDate,
             string productIds,
             string productDetailsXML,
-            string currencyIds,
-            int baseCurrency);
+            string currencies,
+            string baseCurrencyName);
 
         WinLossByCurrency GetMasterWinLossMCDetail(
             string groupname,
@@ -29,8 +29,8 @@
             DateTime toDate,
             string productIds,
             string productDetailsXML,
-            string currencyIds,
-            int baseCurrency);
+            string currencies,
+            string baseCurrencyName);
 
         WinLossByCurrencyMAg GetAgentWinLossMCDetail(
             string groupname,
@@ -40,8 +40,8 @@
             DateTime toDate,
             string productIds,
             string productDetailsXML,
-            string currencyIds,
-            int baseCurrency);
+            string currencies,
+            string baseCurrencyName);
 
         WinLossByCurrencyAg GetMemberWinLossMCDetail(
             string groupname,
@@ -51,8 +51,8 @@
             DateTime toDate,
             string productIds,
             string productDetailsXML,
-            string currencyIds,
-            int baseCurrency);
+            string currencies,
+            string baseCurrencyName);
 #pragma warning restore S107 // Methods should not have too many parameters
     }
 }

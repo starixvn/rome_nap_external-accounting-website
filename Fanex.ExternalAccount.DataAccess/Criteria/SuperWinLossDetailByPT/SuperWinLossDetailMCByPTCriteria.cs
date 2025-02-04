@@ -12,16 +12,16 @@
             DateTime moveBetsDay, 
             string productIds, 
             string productDetails,
-            int baseCurrency,
-            string currencyIds) : base(groupName, fromDate, toDate, balanceUpDay, moveBetsDay, productIds, productDetails, 0, 0)
+            string baseCurrencyName,
+            string currencies) : base(groupName, fromDate, toDate, balanceUpDay, moveBetsDay, productIds, productDetails, 0, 0)
         {
-            BaseCurrency = baseCurrency;
-            CurrencyIds = currencyIds;
+            BaseCurrency = baseCurrencyName;
+            Currencies = currencies;
         }
         
-        public int BaseCurrency { get; }
+        public string BaseCurrency { get; }
 
-        public string CurrencyIds { get; }
+        public string Currencies { get; }
 
         public override string GetSettingKey() => "EAS_Rpt_WinLossDetailByCurrency_ByPT";
     }
