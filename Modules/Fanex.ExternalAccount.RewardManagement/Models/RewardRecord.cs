@@ -14,7 +14,7 @@ namespace Fanex.ExternalAccount.RewardManagement.Models
         public decimal MemberAmount { get; set; }
         public string MemberCurrency { get; set; }
         public bool MemberPaymentStatus { get; set; }
-        public string MemberPaymentStatusMapped => MappingPaymentStatus(MemberPaymentStatus);
+        public string MemberPaymentStatusMapped =>  MappingPaymentStatus(MemberPaymentStatus);
         public DateTime? MemberPaymentDate { get; set; }
 
         public string MemberPaymentDateString => MemberPaymentDate?.ToString(FormatPaymentDate) ?? "";
@@ -34,30 +34,26 @@ namespace Fanex.ExternalAccount.RewardManagement.Models
                 }
             }
         }
-
         
         public string AgentUsername { get; set; }
         public bool AgentPaymentStatus { get; set; }
-        public string AgentPaymentStatusMapped => MappingPaymentStatus(AgentPaymentStatus);
         public DateTime? AgentPaymentDate { get; set; }
-
-        public string AgentPaymentDateString => AgentPaymentDate?.ToString(FormatPaymentDate) ?? "";
-
+        
+        public string AgentPaymentStatusMapped => Recommend.IsDirectMemberOfSuper() || Recommend.IsDirectMemberOfMaster() ? "" : MappingPaymentStatus(AgentPaymentStatus);
+        public string AgentPaymentDateString => Recommend.IsDirectMemberOfSuper() || Recommend.IsDirectMemberOfMaster() ? "" : AgentPaymentDate?.ToString(FormatPaymentDate) ?? "";
         
         public string MasterUsername { get; set; }
         public bool MasterPaymentStatus { get; set; }
-        public string MasterPaymentStatusMapped => MappingPaymentStatus(MasterPaymentStatus);
         public DateTime? MasterPaymentDate { get; set; }
-
-        public string MasterPaymentDateString => MasterPaymentDate?.ToString(FormatPaymentDate) ?? "";
-
-
+        
+        public string MasterPaymentStatusMapped => Recommend.IsDirectMemberOfSuper() ? "" : MappingPaymentStatus(MasterPaymentStatus);
+        public string MasterPaymentDateString => Recommend.IsDirectMemberOfSuper() ? "": MasterPaymentDate?.ToString(FormatPaymentDate) ?? "";
+        
         public string SuperUsername { get; set; }
         public bool SuperPaymentStatus { get; set; }
-
-        public string SuperPaymentStatusMapped => MappingPaymentStatus(SuperPaymentStatus);
         public DateTime? SuperPaymentDate { get; set; }
-
+        
+        public string SuperPaymentStatusMapped => MappingPaymentStatus(SuperPaymentStatus);
         public string SuperPaymentDateString => SuperPaymentDate?.ToString(FormatPaymentDate) ?? "";
         
         private static string MappingPaymentStatus(bool status)
@@ -65,6 +61,6 @@ namespace Fanex.ExternalAccount.RewardManagement.Models
             return status ? "Paid" : "Unpaid";
         }
         
-        public bool IsDirectMember { get; set; }
+        public int Recommend { get; set; }
     }
 }

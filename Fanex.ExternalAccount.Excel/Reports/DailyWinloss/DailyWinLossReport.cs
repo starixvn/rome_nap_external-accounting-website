@@ -50,7 +50,7 @@
                 {
                     item.No,
                     item.Username,
-                    GetLevelType(item.RoleId),
+                    TemplateSettings.GetLevelType(item.RoleId),
                     item.TotalTO,
                     item.ComTO,
                     item.ComTOPercent,
@@ -138,18 +138,6 @@
 
             resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
         }
-
-        private static string GetLevelType(int roleId)
-        {
-            switch (roleId)
-            {
-                case Role.Master:
-                    return "Master";
-                case Role.Agent:
-                    return "Agent";
-                default:
-                    return "Direct member";
-            }
-        }
+        
     }
 }

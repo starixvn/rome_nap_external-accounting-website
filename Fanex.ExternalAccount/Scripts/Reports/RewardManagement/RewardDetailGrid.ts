@@ -98,13 +98,13 @@ class RewardDetailGrid extends BaseReportGrid {
                     AgentUsername, AgentPaymentStatus, AgentPaymentStatusMapped, AgentPaymentDateString,
                     MasterUsername, MasterPaymentStatus, MasterPaymentStatusMapped, MasterPaymentDateString,
                     SuperUsername, SuperPaymentStatus, SuperPaymentStatusMapped, SuperPaymentDateString,
-                    IsDirectMember
+                    Recommend
                 } = element
                 bodyData.push({
                     Columns: [
                         { Name: "CreatedDate", Value: this.getDateTime(CreatedDate), CellAlign: "center" },
                         { Name: "ProgramName", Value: ProgramName },
-                        { Name: "MemberUsername", Value: {username: MemberUsername, isDirectMember: IsDirectMember} },
+                        { Name: "MemberUsername", Value: {username: MemberUsername, isDirectMember: Recommend  == -3 || Recommend == -4} },
                         { Name: "MemberAmount", Value: MemberAmount },
                         { Name: "MemberCurrency", Value: MemberCurrency, CellAlign: "center" },
                         { Name: "MemberPaymentStatus", Value: MemberPaymentStatusMapped, CellAlign: "center", CssClass: StatusColor(MemberPaymentStatus) },

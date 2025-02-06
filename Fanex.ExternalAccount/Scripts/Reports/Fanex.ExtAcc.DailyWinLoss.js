@@ -412,7 +412,7 @@ Fanex.ExtAcc.DailyWinLoss = {
                     Columns: [
                         { Name: "No", Value: (i + 1) },
                         { Name: "Username", Value: this.dataSource[i] },
-                        { Name: "LevelType", Value: this.dataSource[i].RoleId === 3 ? "Master" : this.dataSource[i].RoleId === 2 ? "Agent" : "Direct Member" },
+                        { Name: "LevelType", Value: this.dataSource[i].RoleId === 3 ? "Master Agent" : this.dataSource[i].RoleId === 2 ? "Agent" : "Direct Member" },
                         { Name: "TotalTO", Value: this.dataSource[i].TotalTO },
                         { Name: "ComTO", Value: this.dataSource[i].ComTO },
                         { Name: "ComTOPercent", Value: this.dataSource[i].ComTOPercent },

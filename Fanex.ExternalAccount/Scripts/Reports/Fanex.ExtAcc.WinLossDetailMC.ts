@@ -737,7 +737,7 @@ class WinLossDetailMC {
                 bodyData.push({
                     Columns: [
                         { Name: "Username", Value: this.dataSource[i] },
-                        { Name: "LevelType", Value: this.dataSource[i].RoleId === 3 ? "Master" : "Direct Member" },
+                        { Name: "LevelType", Value: this.dataSource[i].RoleId === 3 ? "Master Agent" : "Direct Member" },
                         { Name: "Currency", Value: this.dataSource[i].Currency },
                         { Name: "Turnover", Value: this.dataSource[i].Turnover },
                         { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },

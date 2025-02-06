@@ -51,7 +51,7 @@
             switch (roleId)
             {
                 case Role.Master:
-                    return "Master";
+                    return "Master Agent";
                 case Role.Agent:
                     return "Agent";
                 default:
