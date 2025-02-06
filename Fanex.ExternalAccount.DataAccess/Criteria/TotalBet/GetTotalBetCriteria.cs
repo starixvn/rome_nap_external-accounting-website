@@ -13,6 +13,8 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.TotalBet
             BaseCurrency = baseCurrencyName;
         }
 
+        
+
         public string GroupName { get; set; }
         public int ViewMode { get; set; }
         public string LeagueIds { get; set; }

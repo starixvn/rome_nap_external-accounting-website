@@ -1,47 +1,171 @@
 ﻿@using Fanex.ExternalAccount.Utilities
-@model Fanex.ExternalAccount.Module.LeftPanel.ViewModels.MasterAgentUsedCreditModel
+@model Fanex.ExternalAccount.Module.LeftPanel.ViewModels.UserCreditModel
 @{
     Layout = null;
 }
-<div class="page-title">Credit Detail</div>
-<table id="tblInner" class="table width-700">
-    <thead>
-        <tr>
-            <th>Username</th>
-            <th>Given Credit</th>
-            <th>Used Credit</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model == null || Model.MasterAgentUsedCreditItems == null || Model.MasterAgentUsedCreditItems.Count == 0)
-        {
-            <tr>
-                <td class="title C" colspan="3">There is no information available.</td>
-            </tr>
-        }
-        else
-        {
-            int index = 0;
-            string className = string.Empty;
-
-            foreach (var item in Model.MasterAgentUsedCreditItems)
-            {
-                className = index % 2 == 0 ? string.Empty : "odd";
-
+<div class="manage-product">
+    <div class="page-title">Credit Detail</div>
+    <div id="tabs" style="border: none ; width: auto">
+        <ul class="tabs">
+            <li>
+                <a href="#tabs-1">@(Model.RoleId == 4 ? ViewLang.Master : ViewLang.Agent)</a>
+            </li>
+            <li>
+                <a href="#tabs-2">@ViewLang.DirectMember</a>
+            </li>
+        </ul>
+        <div id="tabs-1">
+            <table id="tblInner" class="table width-700" style="margin: 10px 0 10px 0">
+                <thead>
                 <tr>
-                    <td class="C @className">@item.Username.DecodeHtml()</td>
-                    <td class="R @className">@Html.Raw(item.GivenCredit.ToStringFormat())</td>
-                    <td class="R @className">@Html.Raw(item.UsedCredit.ToStringFormat())</td>
+                    <th>Username</th>
+                    <th>Given Credit</th>
+                    <th>Used Credit</th>
                 </tr>
+                </thead>
+                <tbody>
+                @if (Model == null || Model.MasterAgentUsedCredit.MasterAgentUsedCreditItems == null || Model.MasterAgentUsedCredit.MasterAgentUsedCreditItems.Count == 0)
+                {
+                    <tr>
+                        <td class="title C" colspan="3">There is no information available.</td>
+                    </tr>
+                }
+                else
+                {
+                    int index = 0;
+                    string className = string.Empty;
 
-                index++;
-            }
-            <tr>
-                <td class="total bold C">TOTAL</td>
-                <td class="total bold R">@Html.Raw(Model.Total.GivenCredit.ToStringFormat())</td>
-                <td class="total bold R">@Html.Raw(Model.Total.UsedCredit.ToStringFormat())</td>
-            </tr>
-        }
-    </tbody>   
-</table>
+                    foreach (var item in Model.MasterAgentUsedCredit.MasterAgentUsedCreditItems)
+                    {
+                        className = index % 2 == 0 ? string.Empty : "odd";
+
+                        <tr>
+                            <td class="C @className">@item.Username.DecodeHtml()</td>
+                            <td class="R @className">@Html.Raw(item.GivenCredit.ToStringFormat())</td>
+                            <td class="R @className">@Html.Raw(item.UsedCredit.ToStringFormat())</td>
+                        </tr>
+
+                        index++;
+                    }
+
+                    <tr>
+                        <td class="total bold C">TOTAL</td>
+                        <td class="total bold R">@Html.Raw(Model.MasterAgentUsedCredit.Total.GivenCredit.ToStringFormat())</td>
+                        <td class="total bold R">@Html.Raw(Model.MasterAgentUsedCredit.Total.UsedCredit.ToStringFormat())</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+        <div id="tabs-2">
+            <table id="tblInner" class="table width-700" style="margin: 10px 0 10px 0">
+                <thead>
+                <tr>
+                    <th class="group-title" colspan="4">Active Account</th>
+                </tr>
+                <tr>
+                    <th>Username</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if (Model == null || Model.DirectMemberUsedCredit.MemberUsedCreditItems == null || Model.DirectMemberUsedCredit.MemberUsedCreditItems.Count == 0)
+                {
+                    <tr>
+                        <td class="title C" colspan="4">There is no information available.</td>
+                    </tr>
+                }
+                else
+                {
+                    var index = 0;
+
+                    foreach (var item in Model.DirectMemberUsedCredit.ActiveMemberUsedCreditItems)
+                    {
+                        var className = index % 2 == 0 ? string.Empty : "odd";
+
+                        <tr>
+                            <td class="C @className">@item.Username.DecodeHtml()</td>
+                            <td class="C @className">@item.FirstName.DecodeHtml()</td>
+                            <td class="C @className">@item.LastName.DecodeHtml()</td>
+                            <td class="R @className">@Html.Raw(item.Amount.ToStringFormat())</td>
+                        </tr>
+
+                        index++;
+                    }
+
+                    <tr>
+                        <td class="total bold R" colspan="3">TOTAL</td>
+                        <td class="total bold R">@Html.Raw(Model.DirectMemberUsedCredit.TotalActiveMemberUsedCredit.ToStringFormat())</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+            <table id="tblInner" class="table width-700" style="margin: 10px 0 10px 0">
+                <thead>
+                <tr>
+                    <th class="group-title" colspan="4">Inactive Account</th>
+                </tr>
+                <tr>
+                    <th>Username</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if (Model == null || Model.DirectMemberUsedCredit.MemberUsedCreditItems == null || Model.DirectMemberUsedCredit.MemberUsedCreditItems.Count == 0)
+                {
+                    <tr>
+                        <td class="title C" colspan="4">There is no information available.</td>
+                    </tr>
+                }
+                else
+                {
+                    var index = 0;
+                    var grandTotal = Model.DirectMemberUsedCredit.TotalActiveMemberUsedCredit + Model.DirectMemberUsedCredit.TotalInactiveMemberUsedCredit;
+
+                    foreach (var item in Model.DirectMemberUsedCredit.InactiveMemberUsedCreditItems)
+                    {
+                        var className = index % 2 == 0 ? string.Empty : "odd";
+
+                        <tr>
+                            <td class="C @className">@item.Username.DecodeHtml()</td>
+                            <td class="C @className">@item.FirstName.DecodeHtml()</td>
+                            <td class="C @className">@item.LastName.DecodeHtml()</td>
+                            <td class="R @className">@Html.Raw(item.Amount.ToStringFormat())</td>
+                        </tr>
+
+                        index++;
+                    }
+
+                    <tr>
+                        <td class="total bold R" colspan="3">TOTAL</td>
+                        <td class="total bold R">@Html.Raw(Model.DirectMemberUsedCredit.TotalInactiveMemberUsedCredit.ToStringFormat())</td>
+                    </tr>
+                    <tr>
+                        <td class="bold R grandTotal" colspan="3">TOTAL Active + Inactive</td>
+                        <td class="bold R grandTotal">@Html.Raw(grandTotal.ToStringFormat())</td>
+                    </tr>
+                }
+                @if (Model.DirectMemberUsedCredit.TotalActiveMemberUsedCredit + Model.DirectMemberUsedCredit.TotalInactiveMemberUsedCredit != 0m)
+                {
+                    <tr>
+                        <td class="bold R defaultBgColor" colspan="4">
+                            <input onclick="ResetInactiveAccountCredit(@ViewBag.CustId, @Model.RoleId)" class="buttonPopup btnResetCredit" type="button" value="Reset All Closed Account Credit To 0"/>
+                            <input class="buttonPopup btnResetCredit" type="button" value="Reset All Account Credit To 0" onclick="ResetAllAccountCredit(@ViewBag.CustId, @Model.RoleId)"/>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $("#tabs").tabs();
+</script>
+<script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/Scripts/MasterAgentUsedCreditController.js")" type="text/javascript"></script>
 @Html.AntiForgeryToken()

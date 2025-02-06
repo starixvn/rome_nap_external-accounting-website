@@ -82,8 +82,8 @@
         }
 
 
-        public Result ResetMemberCredit(int custId, int agentId, bool closedOnly) =>
-            customerDataAccess.ResetMemberCredit(custId, agentId, closedOnly);
+        public Result ResetMemberCredit(int custId, int uplineId, bool closedOnly) =>
+            customerDataAccess.ResetMemberCredit(custId, uplineId, closedOnly);
 
         public Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip)
         {

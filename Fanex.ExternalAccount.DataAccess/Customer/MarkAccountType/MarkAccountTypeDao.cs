@@ -102,7 +102,9 @@
                         Level = Utils.ToInt32(reader["RoleID"]),
                         TypeId = Utils.ToInt32(reader["TypeID"]),
                         MarkDateTime = Utils.ToStringExt(Utils.HasColumn(reader, "MarkedDate") ? Utils.ToDateTime(reader["MarkedDate"]) : DateTime.MinValue),
-                        Remark = Utils.ToString(reader["Remark"])
+                        Remark = Utils.ToString(reader["Remark"]),
+                        AgentId = Utils.ToInt32(reader["AgentId"])
+
                     });
                 }
 

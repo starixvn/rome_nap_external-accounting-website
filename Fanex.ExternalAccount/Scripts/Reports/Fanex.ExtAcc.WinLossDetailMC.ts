@@ -17,6 +17,7 @@ class WinLossDetailMC {
     private supername = "";
     private mastername = "";
     private agentname = "";
+
     private cachedProductAndCurParams = "";
     private fromdate = moment(new Date()).format("MM/DD/YYYY");
     private todate = moment(new Date()).format("MM/DD/YYYY");
@@ -25,6 +26,7 @@ class WinLossDetailMC {
     private fixedsortlist = new Array();
     private url = resolveClientUrl("WinLossDetailMC/GetData");
     private viewlevel = 5;
+    private cachedViewLevel = 5;
     private dataSource = [];
     private totalSource = [];
     private totalRows = 0;
@@ -43,7 +45,7 @@ class WinLossDetailMC {
         {
             HeaderText: "Username", Name: "Username", Width: 130, Sort: true, HeaderAlign: "center",
             CustomCellRender: cell => this.RenderUsernameColumn(cell),
-            CustomSortFunction: (cell1Value, cell2Value, sortDirection) => this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection)
+            CustomSortFunction: ( cell1Value, cell2Value, sortDirection ) => this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection)
         },
         { HeaderText: "Currency Name", Name: "Currency", Width: 130, Sort: true, HeaderAlign: "center" },
         { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -69,8 +71,9 @@ class WinLossDetailMC {
         {
             HeaderText: "Username", Name: "Username", Width: 130, Sort: true, HeaderAlign: "center",
             CustomCellRender: cell => this.RenderUsernameColumn(cell),
-            CustomSortFunction: (cell1Value, cell2Value, sortDirection) => this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection)
+            CustomSortFunction: ( cell1Value, cell2Value, sortDirection ) => this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection)
         },
+        { HeaderText: "Level", Name: "LevelType", Width: 130, Sort: true, HeaderAlign: "center" },
         { HeaderText: "Currency Name", Name: "Currency", Width: 130, Sort: true, HeaderAlign: "center" },
         { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -96,8 +99,9 @@ class WinLossDetailMC {
             HeaderText: "Username", Name: "Username", Width: 130,
             Sort: true, HeaderAlign: "center",
             CustomCellRender: cell => this.RenderUsernameColumn(cell),
-            CustomSortFunction: (cell1Value, cell2Value, sortDirection) => this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection)
+            CustomSortFunction: ( cell1Value, cell2Value, sortDirection ) => this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection)
         },
+        { HeaderText: "Level", Name: "LevelType", Width: 130, Sort: true, HeaderAlign: "center" },
         { HeaderText: "Currency Name", Name: "Currency", Width: 130, Sort: true, HeaderAlign: "center" },
         { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -120,7 +124,7 @@ class WinLossDetailMC {
             HeaderText: "Username", Name: "Username", Width: 130,
             Sort: true, HeaderAlign: "center",
             CustomCellRender: cell => this.RenderUsernameColumn(cell),
-            CustomSortFunction: (cell1Value, cell2Value, sortDirection) => this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection)
+            CustomSortFunction: ( cell1Value, cell2Value, sortDirection ) => this.CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection)
         },
         { HeaderText: "Currency Name", Name: "Currency", Width: 130, Sort: true, HeaderAlign: "center" },
         { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -152,6 +156,7 @@ class WinLossDetailMC {
     ];
     private SAgHeaderColumns = [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
+        { HeaderText: "Level", Name: "LevelType", MergeRowNumber: 2 },
         { HeaderText: "Currency Name", Name: "Currency", MergeRowNumber: 2 },
         { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
         { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
@@ -166,6 +171,7 @@ class WinLossDetailMC {
     ];
     private MAgHeaderColumns = [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
+        { HeaderText: "Level", Name: "LevelType", MergeRowNumber: 2 },
         { HeaderText: "Currency Name", Name: "Currency", MergeRowNumber: 2 },
         { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
         { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
@@ -190,17 +196,17 @@ class WinLossDetailMC {
         { HeaderText: "Reward Currency", Name: "RewardCurrency", MergeRowNumber: 2 }
     ];
 
-    RenderUsernameColumn(cell) {
-        if (cell == null || this.viewlevel < 2) {
+    RenderUsernameColumn( cell ) {
+        if (cell == null || this.viewlevel < 2 || cell.Value.RoleId == 1) {
             return '<div class="text-truncate" style="line-height: 22px; text-align: left; padding-left: 3px" title="' + cell.Value.Username + '">' + cell.Value.Username + "</div>";
         }
-        
+
         return '<div style="line-height: 22px; text-align: left;">' +
             '<a class="text-truncate report-username" style="text-decoration: none; margin: 0" href="" data-custid="' + cell.Value.CustId + '" title="' + cell.Value.Username + '">' + cell.Value.Username + '</a>' +
             '</div>';
     }
 
-    CustomUsernameSortFunction(cell1Value, cell2Value, sortDirection) {
+    CustomUsernameSortFunction( cell1Value, cell2Value, sortDirection ) {
         if (sortDirection == 'asc') {
             return cell1Value.Username > cell2Value.Username ? 1 : -1;
         }
@@ -208,7 +214,7 @@ class WinLossDetailMC {
         return cell1Value.Username < cell2Value.Username ? 1 : -1;
     }
 
-    constructor($: JQueryStatic, topWindow: any, dateRangePickerComponent: DateRangePickerJQueryComponent) {
+    constructor( $: JQueryStatic, topWindow: any, dateRangePickerComponent: DateRangePickerJQueryComponent ) {
         this.$ = $;
         this.topWindow = topWindow;
 
@@ -224,7 +230,7 @@ class WinLossDetailMC {
         Fanex.ExtAcc.InitSuggestion();
 
 
-        $("#ddlGroupName").bind("change", (event) => {
+        $("#ddlGroupName").bind("change", ( event ) => {
             var args = event.data;
             if (args) {
                 var item = args.item;
@@ -247,16 +253,16 @@ class WinLossDetailMC {
             $("#base-currency").find("input, button").prop("disabled", !$("#ckbBaseCurrency").is(":checked"));
         })
 
-        $("#Submit").click((e) => {
+        $("#Submit").click(( e ) => {
             this.CallSubmit();
         });
 
-        $("#txtUserName").keyup(function (e) {
+        $("#txtUserName").keyup(function ( e ) {
             if ($("#txtUserName").val().length > 1) {
                 Fanex.ExtAcc.InitSuggestion();
             }
         });
-        $("#tabSuper").click((e) => {
+        $("#tabSuper").click(( e ) => {
             this.viewlevel = 4;
             this.srecommend = 0;
             this.mrecommend = 0;
@@ -270,7 +276,7 @@ class WinLossDetailMC {
             this.Databind(this.supername);
         });
 
-        $("#tabMaster").click((e) => {
+        $("#tabMaster").click(( e ) => {
             this.viewlevel = 4;
             this.custId = this.mastername === "" ? this.srecommend : 0;
             this.ToggleTabs('block', 'block', 'none', 'none', 3);
@@ -278,7 +284,7 @@ class WinLossDetailMC {
             this.Databind(this.mastername);
         });
 
-        $("#tabAgent").click((e) => {
+        $("#tabAgent").click(( e ) => {
             this.viewlevel = 3;
             this.custId = this.agentname === "" ? this.mrecommend : 0;
             this.ToggleTabs('block', 'block', 'block', 'none', 2);
@@ -302,7 +308,25 @@ class WinLossDetailMC {
         $("#notes").click(() => this.ShowInfo());
         Fanex.ExtAcc.OnResize = this.ResizeReportGrid;
     }
-    
+
+    InitLevelSelection( options ) {
+        $(`#${options.dropdownId}`).empty().select2({
+            placeholder: "Select",
+            data: options.dropdownData,
+            dropdownAutoWidth: true,
+            templateSelection: function ( data ) {
+                return data.text;
+            },
+            sorter: function ( data ) {
+                return data;
+            }
+        }).bind("select2:select", function () {
+            if (options.onClosed) {
+                options.onClosed($(`#${options.dropdownId}`).val())
+            }
+        })
+    }
+
     ResetParameters() {
         this.srecommend = 0;
         this.mrecommend = 0;
@@ -312,7 +336,7 @@ class WinLossDetailMC {
         this.viewlevel = 4;
     }
 
-    InitShowHideControls(status) {
+    InitShowHideControls( status ) {
         $("#headlineDaily").css("display", status);
         $("#mainGrid").css("display", status);
     }
@@ -331,11 +355,11 @@ class WinLossDetailMC {
         this.hideFilter = !this.hideFilter;
     }
 
-    ResizeReportGrid(){
+    ResizeReportGrid() {
         try {
             $("#jqgrid").fanexGrid("resizeGrid");
+        } catch (err) {
         }
-        catch (err) { }
     }
 
     InitCurrencyList() {
@@ -346,9 +370,9 @@ class WinLossDetailMC {
             data: { groupName: this.groupName },
             dataType: "json",
             cache: false,
-            success: (result) => {
+            success: ( result ) => {
                 var dataList = [];
-                $.each(result, function (i, currency) {
+                $.each(result, function ( i, currency ) {
                     dataList.push({
                         id: "rpt_cur_" + currency.CurrencyId,
                         value: currency.CurrencyId,
@@ -370,7 +394,7 @@ class WinLossDetailMC {
         });
     }
 
-    ToggleTabs(levelLine, statusSAg, statusMAg, statusAg, status) {
+    ToggleTabs( levelLine, statusSAg, statusMAg, statusAg, status ) {
         $("#tabSuper").css("display", statusSAg);
         $("#tabMaster").css("display", statusMAg);
         $("#tabAgent").css("display", statusAg);
@@ -378,14 +402,11 @@ class WinLossDetailMC {
         $('#levelLine').css('display', levelLine);
         if (status == 1) {
             $("#SelectedLevel").html("Member");
-        }
-        else if (status == 2) {
+        } else if (status == 2) {
             $("#SelectedLevel").html("Agent");
-        }
-        else if (status == 3) {
+        } else if (status == 3) {
             $("#SelectedLevel").html("Master");
-        }
-        else if (status == 4) {
+        } else if (status == 4) {
             $("#SelectedLevel").html("Super");
         }
     }
@@ -410,7 +431,7 @@ class WinLossDetailMC {
         }
     }
 
-    Databind(username) {
+    Databind( username ) {
         this.username = !username ? "" : username;
         this.groupName = $("#selectedGroupName").html();
         const dateRange = this.dateRangePickerComponent.getDateRangeValues();
@@ -420,8 +441,7 @@ class WinLossDetailMC {
 
         if (dateRange.fromDate == dateRange.toDate) {
             dateInfo = 'on ' + moment(dateRange.fromDate).format('MMM DD, yyyy');
-        }
-        else {
+        } else {
             dateInfo = 'from ' + moment(dateRange.fromDate).format('MMM DD, yyyy') + ' to ' + moment(dateRange.toDate).format('MMM DD, yyyy');
         }
         var currencyInfo = "";
@@ -432,6 +452,7 @@ class WinLossDetailMC {
         }
 
         var selectedCurrency = this.GetParameterCurrency();
+
         if (selectedCurrency === '') {
             this.ShowNoData();
             return;
@@ -451,7 +472,7 @@ class WinLossDetailMC {
             + "&fromdate=" + this.fromdate
             + "&todate=" + this.todate
             + "&viewlevel=" + this.viewlevel
-            + this.cachedProductAndCurParams
+            + this.cachedProductAndCurParams;
 
         Fanex.ExtAcc.BlockUI();
 
@@ -552,14 +573,14 @@ class WinLossDetailMC {
                         Fanex.ExtAcc.Form.Alert("Net Turnover Information", message, 430, height);
                         return false;
                     });
-                $(".report-username").unbind('click').click((event) => {
+                $(".report-username").unbind('click').click(( event ) => {
                     event.preventDefault();
                     var custID = $(event.currentTarget).data("custid");
                     this.GetDownlineWinLossDetail(custID);
                 });
                 Fanex.ExtAcc.UnBlockUI();
             }
-    });
+        });
     }
 
     ChangeHeadlineTab() {
@@ -571,6 +592,7 @@ class WinLossDetailMC {
             this.ToggleTabs('block', 'block', 'none', 'none', 3);
             $("#tabSuper").attr("class", "tabActiveSuper");
         } else if (this.viewlevel == 2) {
+            //case need check
             this.recommend = this.custId;
             this.ToggleTabs('block', 'block', 'block', 'none', 2);
             $("#tabSuper").attr("class", "tabDisableSuper");
@@ -584,7 +606,7 @@ class WinLossDetailMC {
         $("#headlineDaily").css("visibility", "visible");
     }
 
-    Render(dateInfo, currencyInfo) {
+    Render( dateInfo, currencyInfo ) {
         var arrColData = new Array();
         var arrGroupHeaders = new Array();
 
@@ -603,23 +625,30 @@ class WinLossDetailMC {
             customButtons: '<span id="exporttoexcelByCur" title="Export Excel" class="icon-excel"></span>'
         };
 
-        if (this.viewlevel === 1) {
-            arrColData = this.AgColumns;
-            arrGroupHeaders = this.AgHeaderColumns;
-        } else if (this.viewlevel === 2) {
-            arrColData = this.MAgColumns;
-            arrGroupHeaders = this.MAgHeaderColumns;
-        } else if (this.viewlevel === 3) {
-            arrColData = this.SAgColumns;
-            arrGroupHeaders = this.SAgHeaderColumns;
-        } else {
-            arrColData = this.DefaultColumns;
-            arrGroupHeaders = this.DefaultHeaderColumns;
+        switch (this.viewlevel) {
+            case 1:
+                arrColData = this.AgColumns;
+                arrGroupHeaders = this.AgHeaderColumns;
+                break;
+            case 2:
+                arrColData = this.MAgColumns;
+                arrGroupHeaders = this.MAgHeaderColumns;
+                numberOfFrozenColumn = 5;
+                break;
+            case 3:
+                arrColData = this.SAgColumns;
+                arrGroupHeaders = this.SAgHeaderColumns;
+                numberOfFrozenColumn = 5;
+                break;
+            default:
+                arrColData = this.DefaultColumns;
+                arrGroupHeaders = this.DefaultHeaderColumns;
+                break;
         }
 
         var gridOption = {
             customizeHeader: true,
-            groupHeaderRows: [{ Columns: arrGroupHeaders }],
+            groupHeaderRows: [ { Columns: arrGroupHeaders } ],
             columns: arrColData,
             numberOfFrozenColumn: numberOfFrozenColumn,
             autoCalculateGridExpandHeight: true,
@@ -631,12 +660,12 @@ class WinLossDetailMC {
             gridExpandHeight: 256,
             showPager: true,
             pagerOption: {
-                itemsPerPageArray: [50, 100, 500],
+                itemsPerPageArray: [ 50, 100, 500 ],
                 currentPage: 0,
                 totalItem: this.totalRows,
                 itemsPerPage: 50,
                 afterPagedFunction: () => {
-                    $(".report-username").unbind('click').click((event) => {
+                    $(".report-username").unbind('click').click(( event ) => {
                         event.preventDefault();
                         var custID = $(event.currentTarget).data("custid");
                         this.GetDownlineWinLossDetail(custID);
@@ -685,6 +714,7 @@ class WinLossDetailMC {
                 bodyData.push({
                     Columns: [
                         { Name: "Username", Value: this.dataSource[i] },
+                        { Name: "LevelType", Value: this.dataSource[i].RoleId === 2 ? "Agent" : "Direct Member" },
                         { Name: "Currency", Value: this.dataSource[i].Currency },
                         { Name: "Turnover", Value: this.dataSource[i].Turnover },
                         { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
@@ -698,6 +728,32 @@ class WinLossDetailMC {
                         { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
                         { Name: "MAgComm", Value: this.dataSource[i].MAgComm },
                         { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
+                        { Name: "Company", Value: this.dataSource[i].Company },
+                        { Name: "RewardAmount", Value: this.dataSource[i].RewardAmount },
+                        { Name: "RewardCurrency", Value: this.dataSource[i].RewardCurrency }
+                    ]
+                });
+            } else if (this.viewlevel === 3) {
+                bodyData.push({
+                    Columns: [
+                        { Name: "Username", Value: this.dataSource[i] },
+                        { Name: "LevelType", Value: this.dataSource[i].RoleId === 3 ? "Master" : "Direct Member" },
+                        { Name: "Currency", Value: this.dataSource[i].Currency },
+                        { Name: "Turnover", Value: this.dataSource[i].Turnover },
+                        { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
+                        { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
+                        { Name: "MemberWinlost", Value: this.dataSource[i].MemberWinlost },
+                        { Name: "PlayerComm", Value: this.dataSource[i].PlayerComm },
+                        { Name: "MemberTotal", Value: this.dataSource[i].MemberTotal },
+                        { Name: "AgWinlost", Value: this.dataSource[i].AgWinlost },
+                        { Name: "AgComm", Value: this.dataSource[i].AgComm },
+                        { Name: "AgTotal", Value: this.dataSource[i].AgTotal },
+                        { Name: "MAgWinlost", Value: this.dataSource[i].MAgWinlost },
+                        { Name: "MAgComm", Value: this.dataSource[i].MAgComm },
+                        { Name: "MAgTotal", Value: this.dataSource[i].MAgTotal },
+                        { Name: "SAgWinlost", Value: this.dataSource[i].SAgWinlost },
+                        { Name: "SAgComm", Value: this.dataSource[i].SAgComm },
+                        { Name: "SAgTotal", Value: this.dataSource[i].SAgTotal },
                         { Name: "Company", Value: this.dataSource[i].Company },
                         { Name: "RewardAmount", Value: this.dataSource[i].RewardAmount },
                         { Name: "RewardCurrency", Value: this.dataSource[i].RewardCurrency }
@@ -758,7 +814,7 @@ class WinLossDetailMC {
             } else if (this.viewlevel === 2) {
                 footerData.push({
                     Columns: [
-                        { Name: "Username", Value: this.totalSource[i].Username, MergeColNumber: 2, CellAlign: "right" },
+                        { Name: "Username", Value: this.totalSource[i].Username, MergeColNumber: 3, CellAlign: "right" },
                         { Name: "Turnover", Value: this.totalSource[i].Turnover },
                         { Name: "NetTurnover", Value: this.totalSource[i].NetTurnover },
                         { Name: "GrossComm", Value: this.totalSource[i].GrossComm },
@@ -776,7 +832,32 @@ class WinLossDetailMC {
                         { Name: "RewardCurrency", Value: this.totalSource[i].RewardCurrency }
                     ]
                 });
-            } else {
+            }else if(this.viewlevel === 3) {
+                footerData.push({
+                    Columns: [
+                        { Name: "Username", Value: this.totalSource[i].Username, MergeColNumber: 3, CellAlign: "right" },
+                        { Name: "Turnover", Value: this.totalSource[i].Turnover },
+                        { Name: "NetTurnover", Value: this.totalSource[i].NetTurnover },
+                        { Name: "GrossComm", Value: this.totalSource[i].GrossComm },
+                        { Name: "MemberWinlost", Value: this.totalSource[i].MemberWinlost },
+                        { Name: "PlayerComm", Value: this.totalSource[i].PlayerComm },
+                        { Name: "MemberTotal", Value: this.totalSource[i].MemberTotal },
+                        { Name: "AgWinlost", Value: this.totalSource[i].AgWinlost },
+                        { Name: "AgComm", Value: this.totalSource[i].AgComm },
+                        { Name: "AgTotal", Value: this.totalSource[i].AgTotal },
+                        { Name: "MAgWinlost", Value: this.totalSource[i].MAgWinlost },
+                        { Name: "MAgComm", Value: this.totalSource[i].MAgComm },
+                        { Name: "MAgTotal", Value: this.totalSource[i].MAgTotal },
+                        { Name: "SAgWinlost", Value: this.totalSource[i].SAgWinlost },
+                        { Name: "SAgComm", Value: this.totalSource[i].SAgComm },
+                        { Name: "SAgTotal", Value: this.totalSource[i].SAgTotal },
+                        { Name: "Company", Value: this.totalSource[i].Company },
+                        { Name: "RewardAmount", Value: this.totalSource[i].RewardAmount },
+                        { Name: "RewardCurrency", Value: this.totalSource[i].RewardCurrency }
+                    ]
+                });
+            }
+            else {
                 footerData.push({
                     Columns: [
                         { Name: "Username", Value: this.totalSource[i].Username, MergeColNumber: 2, CellAlign: "right" },
@@ -813,7 +894,7 @@ class WinLossDetailMC {
         workaroundForGridOnPhone();
     }
 
-    Customsortfunc(rows) {
+    Customsortfunc( rows ) {
         var countFixedSort = this.fixedsortlist.length;
         if (countFixedSort > 0) {
             for (var i = 0; i < countFixedSort; i++) {
@@ -827,7 +908,7 @@ class WinLossDetailMC {
             }
         }
 
-        $(".report-username").unbind('click').click((event) => {
+        $(".report-username").unbind('click').click(( event ) => {
             event.preventDefault();
             var custID = $(event.currentTarget).data("custid");
             this.GetDownlineWinLossDetail(custID);
@@ -860,7 +941,7 @@ class WinLossDetailMC {
         $(".groupBack").addClass("hide");
     }
 
-    GetDownlineWinLossDetail(custId) {
+    GetDownlineWinLossDetail( custId ) {
         event.preventDefault();
         this.custId = custId;
         this.username = "";

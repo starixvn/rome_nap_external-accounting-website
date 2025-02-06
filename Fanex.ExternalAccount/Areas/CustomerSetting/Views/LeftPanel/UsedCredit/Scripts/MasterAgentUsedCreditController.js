@@ -1,4 +1,4 @@
-﻿function ResetInactiveAccountCredit(agentId) {
+﻿function ResetInactiveAccountCredit(uplineId, viewId) {
     Fanex.ExtAcc.Form.ConfirmBox('Reset Member Credit',
         'Are you sure you want to reset all closed account credit?',
         400,
@@ -11,7 +11,7 @@
                 url: resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/ResetMemberCredit'),
                 type: 'post',
                 data: {
-                    agentId: agentId,
+                    uplineId: uplineId,
                     closedOnly: true,
                     groupName: parent.$('#selectedGroupName').html()
                 }
@@ -23,7 +23,7 @@
                 if (result.isSuccess) {
                     Fanex.ExtAcc.BlockUI();
 
-                    var url = resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?custId=' + agentId + '&roleId=2&groupName=' + parent.$('#selectedGroupName').html());
+                    var url = resolveClientUrl(`CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?custId=${uplineId}&roleId=${viewId}&groupName=${parent.$('#selectedGroupName').html()}`);
                     $.ajax({
                         url: url,
                         type: 'post'
@@ -43,7 +43,7 @@
         'confirmClosedAccCredit');
 }
 
-function ResetAllAccountCredit(agentId) {
+function ResetAllAccountCredit(uplineId, viewId) {
     Fanex.ExtAcc.Form.ConfirmBox('Reset Member Credit',
         'Are you sure you want to reset all account credit?',
         400,
@@ -54,7 +54,7 @@ function ResetAllAccountCredit(agentId) {
                 url: resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/ResetMemberCredit'),
                 type: 'post',
                 data: {
-                    agentId: agentId,
+                    uplineId: uplineId,
                     closedOnly: false,
                     groupName: parent.$('#selectedGroupName').html()
                 }
@@ -66,7 +66,7 @@ function ResetAllAccountCredit(agentId) {
                 if (result.isSuccess) {
                     Fanex.ExtAcc.BlockUI();
 
-                    var url = resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?custId=' + agentId + '&roleId=2&groupName=' + parent.$('#selectedGroupName').html());
+                    var url = resolveClientUrl(`CustomerSetting/LeftPanel/SearchCustomer/UsedCreditPage?custId=${uplineId}&roleId=${viewId}&groupName=${parent.$('#selectedGroupName').html()}`);
                     $.ajax({
                         url: url,
                         type: 'post'

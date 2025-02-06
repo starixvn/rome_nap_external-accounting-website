@@ -12,7 +12,7 @@ namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
         public WinLossByCurrencyDetailReportBuilder(
             List<WinLossByCurrencyDetail> winLossDetail,
             List<WinLossByCurrencyDetail> winLossTotal,
-            int roleId,
+            int uplineRoleId,
             DateTime fromDate,
             DateTime toDate,
             string baseCurrency,
@@ -20,7 +20,7 @@ namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
         {
             Data = winLossDetail;
             DataTotal = winLossTotal;
-            RoleId = roleId;
+            UplineRoleId = uplineRoleId;
             FromDate = fromDate.ToString(MonthDayYearFormat);
             ToDate = toDate.ToString(MonthDayYearFormat);
             BaseCurrency = baseCurrency;
@@ -32,6 +32,8 @@ namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
 
         public bool IsBold { get; }
 
+        public int UplineRoleId { get; }
+        
         public int RoleId { get; }
 
         public string FromDate { get; }
@@ -40,25 +42,25 @@ namespace Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport
 
         public string BaseCurrency { get; }
 
-        public MemoryStream Build(string products = null)
-        {
-            var settings = new TemplateSettings();
-            var filePath = settings.WinLossDetailPath(RoleId);
-            var mem = new MemoryStream();
-
-            using (var report = new WinLossByCurrencyDetailReport(filePath, this, products))
-            {
-                var hssfWorkbook = report.Build();
-                hssfWorkbook.Write(mem);
-            }
-
-            return mem;
-        }
+        // public MemoryStream Build(string products = null)
+        // {
+        //     var settings = new TemplateSettings();
+        //     var filePath = settings.WinLossDetailPath(RoleId);
+        //     var mem = new MemoryStream();
+        //
+        //     using (var report = new WinLossByCurrencyDetailReport(filePath, this, products))
+        //     {
+        //         var hssfWorkbook = report.Build();
+        //         hssfWorkbook.Write(mem);
+        //     }
+        //
+        //     return mem;
+        // }
 
         MemoryStream IWinLossDetailReportBuilder.Build(string products)
         {
             var settings = new TemplateSettings();
-            var filePath = settings.WinLossByCurrencyDetailPath(RoleId);
+            var filePath = settings.WinLossByCurrencyDetailPath(UplineRoleId);
             var mem = new MemoryStream();
 
             using (var report = new WinLossByCurrencyDetailReport(filePath, this, products))

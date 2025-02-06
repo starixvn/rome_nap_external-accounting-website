@@ -24,3 +24,11 @@
 #notes {
     padding: 2px;
 }
+
+.select2-container {
+    span {
+        &.select2-selection {
+            border-radius: 0 !important;
+        }
+    }
+}

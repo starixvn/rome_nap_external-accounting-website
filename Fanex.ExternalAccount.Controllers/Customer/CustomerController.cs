@@ -1,6 +1,4 @@
-﻿using System.Web.Security;
-
-namespace Fanex.ExternalAccount.Controllers.Customer
+﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
     using System;
     using System.Collections.Generic;
@@ -154,7 +152,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     siteDBConfigService.GetSiteDBConfigByCustId(request.CustId).CustDBGroupID,
                     request.Site,
                     request.SiteLabel,
-                    request.Group));
+                    request.Group,
+                    null));
 
             return Content(response);
         }
@@ -205,7 +204,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 request.CustomerNames,
                 request.Site,
                 request.SiteLabel,
-                request.Group));
+                request.Group,
+                null));
 
             return Content(response);
         }
@@ -241,6 +241,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 generalInfo.SiteLabel,
                 siteDBConfigService.GetSiteDBConfigBySite(generalInfo.Site).CustDBGroupID,
                 request.Group,
+                1,
                 CustomerClient.Constants.CreationModes.FullMode));
             return Content(response);
         }
@@ -264,7 +265,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     siteDBConfigService.GetSiteDBConfigByCustId(request.CustId).CustDBGroupID,
                     request.Site,
                     request.SiteLabel,
-                    request.Group));
+                    request.Group,
+                    request.AgentId));
 
             return Content(response);
         }
@@ -289,7 +291,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                     request.CustomerNames,
                     request.Site,
                     request.SiteLabel,
-                    request.Group));
+                    request.Group,
+                    request.AgentId));
 
             return Content(response);
         }
@@ -331,7 +334,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 return Redirect(CustomerClientManager.ClientConfigs.AccessDeniedUrl);
             }
 
-            return Content(await customerServiceClient.GetCustomerSetting(request.CustId, request.RoleId, request.SystemId, request.UplineRoleId, request.Language, request.IsGetUpLine, request.ProductGroupId, request.SiteLabel, request.IsMultipleMode, request.GroupName, request.IsCopy));
+            return Content(await customerServiceClient.GetCustomerSetting(request.CustId, request.RoleId, request.SystemId, request.UplineRoleId, request.Language, request.IsGetUpLine, request.ProductGroupId, request.SiteLabel, request.IsMultipleMode, request.GroupName, request.IsCopy, request.AgentId));
         }
 
         public async Task<ActionResult> GetCurrentWinLossAmount(int custId, int sportType, int betType, string language = "en-US")

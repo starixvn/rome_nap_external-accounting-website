@@ -21,5 +21,6 @@
         public string GroupName { get; set; }
 
         public string Group { get; set; }
+        public int AgentId { get; set; }
     }
 }

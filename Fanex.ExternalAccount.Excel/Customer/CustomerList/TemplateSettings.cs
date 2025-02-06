@@ -34,5 +34,13 @@
 
             return Path.Combine(_dir, fileName);
         }
+
+        public string DirectMemberListPath(bool isMultipleCurrency = false)
+        {
+            var fileName = "CustomerList";
+            fileName += isMultipleCurrency ? "MC.xls" : ".xls";
+
+            return Path.Combine(_dir, fileName);
+        }
     }
 }

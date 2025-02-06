@@ -13,35 +13,49 @@
             _dir = HttpContext.Current.Server.MapPath("~/ExcelTemplates/Reports");
         }
 
-        public string WinLossDetailPath(int roleId)
+        public string WinLossDetailPath(int uplineRoleId)
         {
-            switch (roleId)
+            switch (uplineRoleId)
             {
-                case Role.Member:
-                    return Path.Combine(_dir, "WinLossDetailAg.xls");
-
                 case Role.Agent:
-                    return Path.Combine(_dir, "WinLossDetailMAg.xls");
-
+                    return Path.Combine(_dir, "WinLossDetailAg.xls");
                 case Role.Master:
+                    return Path.Combine(_dir, "WinLossDetailMAg.xls");
+                case Role.Super:
                     return Path.Combine(_dir, "WinLossDetail.xls");
-
-                default:
+                case Role.Group:
                     return Path.Combine(_dir, "WinLossDetailExtra.xls");
+                default:
+                    return "";
             }
         }
-        public string WinLossByCurrencyDetailPath(int roleId)
+
+        public string WinLossByCurrencyDetailPath(int uplineRoleId)
+        {
+            switch (uplineRoleId)
+            {
+                case Role.Agent:
+                    return Path.Combine(_dir, "WinLossMCDetailAg.xls");
+                case Role.Master:
+                    return Path.Combine(_dir, "WinLossMCDetailMAg.xls");
+                case Role.Super:
+                    return Path.Combine(_dir, "WinLossMCDetailSuper.xls");
+                case Role.Group:
+                    return Path.Combine(_dir, "WinLossMCDetail.xls");
+                default:
+                   return "";
+            }
+        }
+        public static string GetLevelType(int roleId)
         {
             switch (roleId)
             {
-                case Role.Member:
-                    return Path.Combine(_dir, "WinLossMCDetailAg.xls");
-
+                case Role.Master:
+                    return "Master";
                 case Role.Agent:
-                    return Path.Combine(_dir, "WinLossMCDetailMAg.xls");
-
+                    return "Agent";
                 default:
-                    return Path.Combine(_dir, "WinLossMCDetail.xls");
+                    return "Direct member";
             }
         }
     }

@@ -75,7 +75,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 UserName = request.UserName,
                 CurrencyIds = request.CurrencyIds,
                 PageIndex = request.PageIndex ?? 1,
-                PageSize = request.PageSize ?? DefaultPageSize
+                PageSize = request.PageSize ?? DefaultPageSize,
+                IsDirectMember = request.IsDirectMember
             }, _authorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP)));
         }
 
@@ -105,7 +106,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 UserName = request.UserName,
                 CurrencyIds = request.CurrencyIds,
                 PageIndex = 1,
-                PageSize = Int32.MaxValue - 1
+                PageSize = Int32.MaxValue - 1,
+                IsDirectMember = request.IsDirectMember
             }, _authorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP));
 
             var builder = new CustomerListPageBuilder(
@@ -116,7 +118,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 request.IsShowSuperLimitDate ?? false,
                 request.IsNoDownlines ?? false,
                 customerList.HasSubGroups,
-                Config.IsMultipleCurrencyGroup(request.GroupName));
+                Config.IsMultipleCurrencyGroup(request.GroupName), 
+                request.IsDirectMember);
             var excelStream = builder.Build();
             var fileName = $"{status}{roleId.DisplayRoleName()}List{DateTime.Now:yyyyMMdd}.xls";
 

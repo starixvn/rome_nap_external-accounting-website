@@ -23,5 +23,7 @@
         public string GroupName { get; set; } = "";
 
         public bool IsCopy { get; set; } = false;
+
+        public int AgentId { get; set; }
     }
 }

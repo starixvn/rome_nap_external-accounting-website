@@ -1,7 +1,7 @@
 ﻿@model QueryViewModel
 @{
     Layout = null;
-    string assetsVersion = "202404041600";
+    string assetsVersion = "20241230001";
 }
 <!DOCTYPE html>
 <html>
@@ -17,7 +17,7 @@
         <table class="tbl-product margin-top10" id="tbl-product">
             <thead>
                 <tr>
-                    <th class="title" colspan="@(Model.CustRole * 2)"> @Model.GetRoleName(Model.CustRole): @Model.CustName</th>
+                    <th class="title" colspan="@(Model.CustRole * 2 + (Model.CustRole == RoleIdentity.Super ? 4 : 2))"> @Model.GetRoleName(Model.CustRole): @Model.CustName</th>
                 </tr>
                 <tr>
                     <th rowspan="2"></th>
@@ -58,16 +58,36 @@
                         <td class="bettype-name">@item.Name</td>
                         <td>@RenderStatus(item.SportType, item.BetType, item.IsDisabled, item.IsDisabledUpline, Model.CustRole)</td>
 
+                        @if (item.IsShowDirectSuperMember)
+                        {
+                            @RenderDownlineStatus(
+                                    item.SportType,
+                                    item.BetType,
+                                    RoleIdentity.SuperDirectMember,
+                                    item.IsDisabledUpline,
+                                    item.DirectSuperMember)
+                        }
+
                         @if (item.IsShowMaster)
                         {
                             totalDisabledMaster = item.Master.TotalDisabled;
-
                             @RenderDownlineStatus(
                                item.SportType,
                                item.BetType,
                                RoleIdentity.Master,
                                item.IsDisabledUpline,
                                item.Master)
+                        }
+
+                        @if (item.IsShowDirectMasterMember)
+                        {
+                            @RenderDownlineStatus(
+                                    item.SportType,
+                                    item.BetType,
+                                    RoleIdentity.MasterDirectMember,
+                                    item.IsDisabledUpline,
+                                    item.DirectMasterMember,
+                                    Model.CustRole == RoleIdentity.Master ? 0 : totalDisabledMaster)
                         }
 
                         @if (item.IsShowAgent)
@@ -134,10 +154,30 @@
 </body>
 </html>
 
-@helper RenderHeaderLevelName(byte roleId)
+@helper RenderHeaderLevelName(short roleId)
 {
     while (roleId > 0 && --roleId > 0)
     {
+        if (roleId == RoleIdentity.Master)
+        {
+            if (Model.ShowColumnByRoles[RoleIdentity.SuperDirectMember])
+            {
+                <th colspan="2">
+                    @Model.GetRoleName(RoleIdentity.SuperDirectMember)
+                </th>
+            }
+        }
+
+        if (roleId == RoleIdentity.Agent)
+        {
+            if (Model.ShowColumnByRoles[RoleIdentity.MasterDirectMember])
+            {
+                <th colspan="2">
+                    @Model.GetRoleName(RoleIdentity.MasterDirectMember)
+                </th>
+            }
+        }
+
         if (Model.ShowColumnByRoles[roleId])
         {
             <th colspan="2">
@@ -147,10 +187,26 @@
     }
 }
 
-@helper RenderHeaderStatus(byte roleId, bool isMultipleBetTypes)
+@helper RenderHeaderStatus(short roleId, bool isMultipleBetTypes)
 {
     while (roleId > 0 && --roleId > 0)
     {
+        if (roleId == RoleIdentity.Master)
+        {
+            if (Model.ShowColumnByRoles[RoleIdentity.SuperDirectMember])
+            {
+                @RenderHeader(RoleIdentity.SuperDirectMember, isMultipleBetTypes);
+            }
+        }
+
+        if (roleId == RoleIdentity.Agent)
+        {
+            if (Model.ShowColumnByRoles[RoleIdentity.MasterDirectMember])
+            {
+                @RenderHeader(RoleIdentity.MasterDirectMember, isMultipleBetTypes);
+            }
+        }
+
         if (Model.ShowColumnByRoles[roleId])
         {
             @RenderHeader(roleId, isMultipleBetTypes);
@@ -158,7 +214,7 @@
     }
 }
 
-@helper RenderHeader(byte roleId, bool isMultipleBetTypes)
+@helper RenderHeader(short roleId, bool isMultipleBetTypes)
 {
     var roleName = Model.GetRoleName(roleId);
     if (isMultipleBetTypes)
@@ -188,7 +244,7 @@
     int betType,
     bool isDisabled,
     bool isDisabledUpline,
-    byte roleId)
+    short roleId)
 {
     var labelText = isDisabled ? Resources.Disabled : Resources.Enabled;
     var labelClass = isDisabledUpline ? "gray" : labelText.ToLowerInvariant();
@@ -218,7 +274,7 @@
 @helper RenderDownlineStatus(
     int sportType,
     int betType,
-    byte roleId,
+    short roleId,
     bool isDisabledUpline,
     DownlineStatusViewModel downlineStatus,
     int totalDisabledUpline = 0)

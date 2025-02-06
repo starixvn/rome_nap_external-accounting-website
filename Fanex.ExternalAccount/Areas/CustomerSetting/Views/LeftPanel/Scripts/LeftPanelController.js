@@ -23,11 +23,11 @@ Array.prototype.contains = function (item) {
     return false;
 };
 
-function GetDownline(custId, pageIndex) {
+function GetDownline(isDirectDownline, custId, pageIndex) {
     parent.Fanex.ExtAcc.BlockUI();
 
     $.ajax({
-        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetDownlineList?custId=' + custId + '&pageIndex=' + pageIndex),
+        url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetDownlineList?isDirectDownline=' + isDirectDownline + '&custId=' + custId + '&pageIndex=' + pageIndex),
         type: 'post'
     })
     .success(function (result) {
@@ -61,7 +61,7 @@ function GetDownline(custId, pageIndex) {
             $('#pages').show();
 
             for (var i = 0; i < pages.length; i++) {
-                var page = '<a id="link-' + pages[i].value + '" class="page" href="javascript:;" onclick="GetDownline(\'' + model.personalInfo.custId.value + '\', ' + pages[i].value + ')">' + pages[i].value + '</a>';
+                var page = '<a id="link-' + pages[i].value + '" class="page" href="javascript:;" onclick="GetDownline(' + isDirectDownline + ',\'' + model.personalInfo.custId.value + '\', ' + pages[i].value + ')">' + pages[i].value + '</a>';
                 $('#pages').append(page);
             }
 

@@ -759,7 +759,7 @@
 
         top.shouldCalculatePopupHeight = false;
         $scope.EnableProductGroup(2, "RNG Games", 800, 320);
-    };   
+    };
 
     $scope.EnableCashout = function (enable, id, disabled) {
         if (disabled) {
@@ -900,7 +900,7 @@
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         parent.Fanex.ExtAcc.Customer.superId = superId;
         $scope.ResetGlobalValueAtSuperOnMember();
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=4" + "&productGroupId=1" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=4" + "&productGroupId=1" + "&groupName=" + parent.$('#selectedGroupName').html() + "&agentId=" +agentId), null, null, true);
     };
 
     $scope.SuperLiveAndRNGCasino = function () {
@@ -914,7 +914,7 @@
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         parent.Fanex.ExtAcc.Customer.superId = superId;
         $scope.ResetGlobalValueAtSuperOnMember();
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=4" + "&productGroupId=3" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=4" + "&productGroupId=3" + "&groupName=" + parent.$('#selectedGroupName').html() + "&agentId=" +agentId), null, null, true);
     };
 
     $scope.SuperRNGGames = function () {
@@ -928,7 +928,7 @@
         parent.Fanex.ExtAcc.Customer.masterId = masterId;
         parent.Fanex.ExtAcc.Customer.superId = superId;
         $scope.ResetGlobalValueAtSuperOnMember();
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=4" + "&productGroupId=2" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
+        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer?custId=' + $scope.model.personalInfo.custId.value + "&roleId=1" + "&uplineRoleId=4" + "&productGroupId=2" + "&groupName=" + parent.$('#selectedGroupName').html() + "&agentId=" +agentId), null, null, true);
     };
 
     $scope.MasterPT = function () {
@@ -975,7 +975,7 @@
 
     $scope.SuperFishingWorld = function () {
         $scope.RenderSupeOnMemberDCS(24);
-    };  
+    };
 
     $scope.RenderSupeOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtSuperOnMember();
@@ -984,7 +984,7 @@
 
     $scope.MasterFishingWorld = function () {
         $scope.RenderMasterOnMemberDCS(24);
-    }; 
+    };
 
     $scope.RenderMasterOnMemberDCS = function (productId) {
         $scope.ResetGlobalValueAtMasterOnMember();

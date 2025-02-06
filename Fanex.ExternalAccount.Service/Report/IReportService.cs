@@ -17,17 +17,21 @@
 
         List<DailyWinLoss> GetDailyWinLoss(DateTime winlostDate, int custId, string groupName);
 
-        List<DailyWinLoss> GetDailyWinLossSuper(DateTime winlostDate, int custId, int masterId);
+        List<DailyWinLoss> GetDailyWinLossSuper(DateTime winlostDate, int custId, int masterId, int memberId);
 
-        List<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId);
+        List<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId, int memberId);
 
         List<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId);
 
         List<WinLossDetailExtra> GetSuperWinLossDetail(string groupname, int custId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
 
         List<WinLossDetail> GetMasterWinLossDetail(int custId, int masterId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
-
+        
+        List<WinLossDetail> GetDirectMemberOfSuperWinLossDetail(int custId, int memberId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
+        
         List<WinLossDetailMAg> GetAgentWinLossDetail(int custId, int agentId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
+        
+        List<WinLossDetailMAg> GetDirectMemberOfMasterWinLossDetail(int custId, int memberId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
 
         List<WinLossDetailAg> GetMemberWinLossDetail(int custId, int memberId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
 

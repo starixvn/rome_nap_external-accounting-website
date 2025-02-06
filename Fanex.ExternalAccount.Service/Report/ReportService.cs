@@ -55,16 +55,16 @@
                 ? _reportDao.EAS_Rpt_WinLossDaily_Com(winlostDate, custId, groupName)
                 : _reportDao.EAS_Rpt_WinLossDaily_Com14(winlostDate, custId, groupName);
 
-        public List<DailyWinLoss> GetDailyWinLossSuper(DateTime winlostDate, int custId, int masterId)
+        public List<DailyWinLoss> GetDailyWinLossSuper(DateTime winlostDate, int custId, int masterId, int memberId)
             => CheckConstraintMoveBetsDay(winlostDate)
-                ? _reportDao.EAS_Rpt_WinLossDaily_SAg(winlostDate, custId, masterId)
-                : _reportDao.EAS_Rpt_WinLossDaily_SAg14(winlostDate, custId, masterId);
+                ? _reportDao.EAS_Rpt_WinLossDaily_SAg(winlostDate, custId, masterId, memberId)
+                : _reportDao.EAS_Rpt_WinLossDaily_SAg14(winlostDate, custId, masterId, memberId);
 
-        public List<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId)
+        public List<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId, int memberId)
             => CheckConstraintMoveBetsDay(winlostDate)
-                ? _reportDao.EAS_Rpt_WinLossDaily_MAg(winlostDate, custId, agentId)
-                : _reportDao.EAS_Rpt_WinLossDaily_MAg14(winlostDate, custId, agentId);
-
+                ? _reportDao.EAS_Rpt_WinLossDaily_MAg(winlostDate, custId, agentId, memberId)
+                : _reportDao.EAS_Rpt_WinLossDaily_MAg14(winlostDate, custId, agentId, memberId);
+        
         public List<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId)
             => CheckConstraintMoveBetsDay(winlostDate)
                 ? _reportDao.EAS_Rpt_WinLossDaily_Ag(winlostDate, custId, memberId)
@@ -86,7 +86,16 @@
             DateTime toDate,
             string productIds,
             string productDetailsXML)
-            => _reportDao.EAS_Rpt_WinLossDetail_SAg(custId, masterId, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
+            => _reportDao.EAS_Rpt_WinLossDetail_SAg(custId, masterId, 0,fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
+        
+        public List<WinLossDetail> GetDirectMemberOfSuperWinLossDetail(
+            int custId,
+            int memberId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            string productDetailsXML)
+            => _reportDao.EAS_Rpt_WinLossDetail_SAg(custId, 0, memberId,fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
 
         public List<WinLossDetailMAg> GetAgentWinLossDetail(
             int custId,
@@ -95,7 +104,16 @@
             DateTime toDate,
             string productIds,
             string productDetailsXML)
-            => _reportDao.EAS_Rpt_WinLossDetail_MAg(custId, agentId, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
+            => _reportDao.EAS_Rpt_WinLossDetail_MAg(custId, agentId, 0,fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);       
+        
+        public List<WinLossDetailMAg> GetDirectMemberOfMasterWinLossDetail(
+            int custId,
+            int memberId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            string productDetailsXML)
+            => _reportDao.EAS_Rpt_WinLossDetail_MAg(custId, 0, memberId, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
 
         public List<WinLossDetailAg> GetMemberWinLossDetail(
             int custId,

@@ -42,8 +42,8 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult ResetMemberCredit(int agentId, bool closedOnly)
-            => JsonBase(customerCommandService.ResetMemberCredit(CurrentSession.UserId, agentId, closedOnly));
+        public ActionResult ResetMemberCredit(int uplineId, bool closedOnly)
+            => JsonBase(customerCommandService.ResetMemberCredit(CurrentSession.UserId, uplineId, closedOnly));
 
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance,
             Policy = AuthenticateAction.AuthenticationType.Host)]

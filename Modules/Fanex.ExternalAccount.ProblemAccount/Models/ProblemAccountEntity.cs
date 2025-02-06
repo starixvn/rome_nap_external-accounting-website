@@ -18,7 +18,8 @@
             DateTime createdDate,
             bool isReviewed,
             byte closedReason,
-            byte locked)
+            byte locked,
+            int agentId)
         {
             CustId = custId;
             Username = username;
@@ -30,6 +31,7 @@
             IsReviewed = isReviewed;
             ClosedReason = closedReason;
             Locked = locked;
+            AgentId = agentId;
         }
 
         public int CustId { get; }
@@ -60,6 +62,8 @@
         public byte ClosedReason { get; }
 
         public byte Locked { get; }
+
+        public int AgentId { get; }
 
         public string LockedClassName
             => new CustomerLockedAccess(Locked).ClassName;

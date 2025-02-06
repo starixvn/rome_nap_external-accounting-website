@@ -98,10 +98,11 @@
             return UpdateGivenCredit(param);
         }
 
-        public DbResult GetDownlineList(int custid, int pageSize, int pageIndex)
+        public DbResult GetDownlineList(bool isDirectDownline, int custid, int pageSize, int pageIndex)
         {
             var param = new Hashtable
             {
+                {"isdirectdownline", isDirectDownline},
                 {"custid", custid},
                 {"pagesize", pageSize},
                 {"pageindex", pageIndex},
@@ -135,7 +136,7 @@
 
             using (var db = new ObjectDb("Acc_CustomerSelUsedCredit_Ag"))
             {
-                db.AddInParameter("agentid", DbType.Int32, custId);
+                db.AddInParameter("uplineid", DbType.Int32, custId);
 
                 using (var reader = db.ExecuteReader())
                 {
@@ -149,14 +150,14 @@
             return items;
         }
 
-        public Result ResetMemberCredit(int custId, int agentId, bool closedOnly)
+        public Result ResetMemberCredit(int custId, int uplineId, bool closedOnly)
         {
             using (var objDb = new ObjectDb("Acc_CustomerUpdResetMemberCredit", 600))
             {
                 var param = new Hashtable
                 {
                     {"userid", custId},
-                    {"agentid", agentId},
+                    {"uplineid", uplineId},
                     {"closedonly", closedOnly},
                     {"ip", HttpContext.Current.Request.UserHostAddress},
                     {"system", "EXTERNAL"},

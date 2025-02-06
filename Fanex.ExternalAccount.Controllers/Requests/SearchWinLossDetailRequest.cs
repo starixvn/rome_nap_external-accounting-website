@@ -40,7 +40,6 @@
         public string Currencies { get; }
         public string BaseCurrencyName { get; }
         public bool IsMultipleCurrency { get; }
-
         public bool IsValid => (ToDate >= FromDate);
     }
 }

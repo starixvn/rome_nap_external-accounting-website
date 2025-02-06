@@ -8,29 +8,34 @@ class RewardDetailGrid extends BaseReportGrid {
         } else {
             return parsedCol1Value < parsedCol2Value ? 1 : -1;
         }
+    }   
+    static customUsernameCell (currentCell){
+        const { username, isDirectMember } = currentCell.Value;
+        
+        return isDirectMember ? `${username}<span class='icon-directmember' title="Direct Member"></span>` : username;
     }
 
     public static readonly DefaultColumns = [
         { HeaderText: "Created Date", Name: "CreatedDate", Width: 170, Sort: true, HeaderAlign: "center", ColumnName2: "Created Date", CustomSortFunction: RewardDetailGrid.sortDateTime },
         { HeaderText: "Program", Name: "ProgramName", Width: 250, Sort: true, HeaderAlign: "center", AllowTruncate: true, ColumnName2: "Program" },
-        { HeaderText: "Username", Name: "MemberUsername", Width: 160, Sort: true, HeaderAlign: "center", AllowTruncate: true, ColumnName2: "Member Username" },
+        { HeaderText: "Username", Name: "MemberUsername", Width: 180, Sort: true, HeaderAlign: "center", AllowTruncate: true, ColumnName2: "Member Username", CustomCellRender: RewardDetailGrid.customUsernameCell },
         { HeaderText: "Amount", Name: "MemberAmount", Width: 150, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "Member Amount" },
-        { HeaderText: "Reward Currency", Name: "MemberCurrency", Width: 150, Sort: true, HeaderAlign: "center", ColumnName2: "Member Reward Currency" },
+        { HeaderText: "Reward Currency", Name: "MemberCurrency", Width: 140, Sort: true, HeaderAlign: "center", ColumnName2: "Member Reward Currency" },
         { HeaderText: "Payment Status", Name: "MemberPaymentStatus", Width: 120, Sort: true, HeaderAlign: "center", ColumnName2: "Member Payment Status" },
-        { HeaderText: "Payment Date", Name: "MemberPaymentDate", Width: 120, Sort: true, HeaderAlign: "center", ColumnName2: "Member Payment Date" },
-        { HeaderText: "Feedback", Name: "MemberFeedBack", Width: 120, Sort: true, HeaderAlign: "center", ColumnName2: "Member Feedback" },
+        { HeaderText: "Payment Date", Name: "MemberPaymentDate", Width: 110, Sort: true, HeaderAlign: "center", ColumnName2: "Member Payment Date" },
+        { HeaderText: "Feedback", Name: "MemberFeedBack", Width: 110, Sort: true, HeaderAlign: "center", ColumnName2: "Member Feedback" },
 
-        { HeaderText: "Username", Name: "AgentUsername", Width: 160, Sort: true, HeaderAlign: "center", AllowTruncate: true, ColumnName2: "Agent Username" },
+        { HeaderText: "Username", Name: "AgentUsername", Width: 180, Sort: true, HeaderAlign: "center", AllowTruncate: true, ColumnName2: "Agent Username" },
         { HeaderText: "Payment Status", Name: "AgentPaymentStatus", Width: 120, Sort: true, HeaderAlign: "center", ColumnName2: "Agent Payment Status" },
-        { HeaderText: "Payment Date", Name: "AgentPaymentDate", Width: 120, Sort: true, HeaderAlign: "center", ColumnName2: "Agent Payment Date" },
+        { HeaderText: "Payment Date", Name: "AgentPaymentDate", Width: 110, Sort: true, HeaderAlign: "center", ColumnName2: "Agent Payment Date" },
 
-        { HeaderText: "Username", Name: "MasterUsername", Width: 160, Sort: true, HeaderAlign: "center", AllowTruncate: true, ColumnName2: "Master Username" },
+        { HeaderText: "Username", Name: "MasterUsername", Width: 180, Sort: true, HeaderAlign: "center", AllowTruncate: true, ColumnName2: "Master Username" },
         { HeaderText: "Payment Status", Name: "MasterPaymentStatus", Width: 120, Sort: true, HeaderAlign: "center", ColumnName2: "Master Payment Status" },
-        { HeaderText: "Payment Date", Name: "MasterPaymentDate", Width: 120, Sort: true, HeaderAlign: "center", ColumnName2: "Master Payment Date" },
+        { HeaderText: "Payment Date", Name: "MasterPaymentDate", Width: 110, Sort: true, HeaderAlign: "center", ColumnName2: "Master Payment Date" },
 
-        { HeaderText: "Username", Name: "SuperUsername", Width: 160, Sort: true, HeaderAlign: "center", AllowTruncate: true, ColumnName2: "Super Username" },
+        { HeaderText: "Username", Name: "SuperUsername", Width: 180, Sort: true, HeaderAlign: "center", AllowTruncate: true, ColumnName2: "Super Username" },
         { HeaderText: "Payment Status", Name: "SuperPaymentStatus", Width: 120, Sort: true, HeaderAlign: "center", ColumnName2: "Super Payment Status" },
-        { HeaderText: "Payment Date", Name: "SuperPaymentDate", Width: 120, Sort: true, HeaderAlign: "center", ColumnName2: "Super Payment Date" },
+        { HeaderText: "Payment Date", Name: "SuperPaymentDate", Width: 110, Sort: true, HeaderAlign: "center", ColumnName2: "Super Payment Date" },
     ]
     public static readonly GroupHeaderColumns = [
         { HeaderText: "Created Date", Name: "CreatedDate", MergeRowNumber: 2 },
@@ -92,13 +97,14 @@ class RewardDetailGrid extends BaseReportGrid {
                     MemberUsername, MemberAmount, MemberCurrency, MemberPaymentStatus, MemberPaymentStatusMapped, MemberPaymentDateString, MemberFeedBackMapped,
                     AgentUsername, AgentPaymentStatus, AgentPaymentStatusMapped, AgentPaymentDateString,
                     MasterUsername, MasterPaymentStatus, MasterPaymentStatusMapped, MasterPaymentDateString,
-                    SuperUsername, SuperPaymentStatus, SuperPaymentStatusMapped, SuperPaymentDateString
+                    SuperUsername, SuperPaymentStatus, SuperPaymentStatusMapped, SuperPaymentDateString,
+                    IsDirectMember
                 } = element
                 bodyData.push({
                     Columns: [
                         { Name: "CreatedDate", Value: this.getDateTime(CreatedDate), CellAlign: "center" },
                         { Name: "ProgramName", Value: ProgramName },
-                        { Name: "MemberUsername", Value: MemberUsername },
+                        { Name: "MemberUsername", Value: {username: MemberUsername, isDirectMember: IsDirectMember} },
                         { Name: "MemberAmount", Value: MemberAmount },
                         { Name: "MemberCurrency", Value: MemberCurrency, CellAlign: "center" },
                         { Name: "MemberPaymentStatus", Value: MemberPaymentStatusMapped, CellAlign: "center", CssClass: StatusColor(MemberPaymentStatus) },

@@ -48,7 +48,8 @@
             var userId = CurrentSession.UserId;
             ViewBag.UserId = userId;
             ViewBag.Code = Encryptor.RandomCaptcha;
-            var result = new Result {
+            var result = new Result
+            {
                 ErrorCode = string.Empty,
                 ErrorMessage = string.Empty
             };
@@ -78,12 +79,20 @@
             if (roleId.IsSuper() || roleId.IsMaster())
             {
                 var items = customerQueryService.MasterAgentUsedCreditItems(custId, roleId);
-
+                var directMembers = customerQueryService.MemberUsedCreditItems(custId);
                 return View(
                     MasterAgentCreditViewl,
-                    new MasterAgentUsedCreditModel
+                    new UserCreditModel
                     {
-                        MasterAgentUsedCreditItems = items
+                        MasterAgentUsedCredit = new MasterAgentUsedCreditModel
+                        {
+                            MasterAgentUsedCreditItems = items,
+                        },
+                        DirectMemberUsedCredit = new MemberUsedCreditModel
+                        {
+                            MemberUsedCreditItems = directMembers
+                        },
+                        RoleId = roleId
                     });
             }
             else
@@ -126,9 +135,9 @@
 
         [HttpPost]
         [AntiXSRFFilter]
-        public ActionResult GetDownlineList(int custId, int pageIndex)
+        public ActionResult GetDownlineList(bool isDirectDownline, int custId, int pageIndex)
 #pragma warning disable S109 // Magic numbers should not be used
-            => JsonBase(customerQueryService.GetDownlineList(custId, 100, pageIndex));
+            => JsonBase(customerQueryService.GetDownlineList(isDirectDownline, custId, 100, pageIndex));
 #pragma warning restore S109 // Magic numbers should not be used
 
         [HttpGet]

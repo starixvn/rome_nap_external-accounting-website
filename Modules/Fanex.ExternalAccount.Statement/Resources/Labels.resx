@@ -178,7 +178,7 @@
     <value>Transfer transactions between Agent and Master/Super.</value>
   </data>
   <data name="Guidelines_TransferAmt_Member" xml:space="preserve">
-    <value>total transfer amount between Agent and Member. Click to view Transfer Details.</value>
+    <value>total transfer amount between Direct Upline and Member. Click to view Transfer Details.</value>
   </data>
   <data name="Guidelines_TransferAmt_SMA" xml:space="preserve">
     <value>total transfer amount. Click to view Transfer Details.</value>

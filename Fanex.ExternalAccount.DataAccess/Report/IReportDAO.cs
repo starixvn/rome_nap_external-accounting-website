@@ -21,13 +21,13 @@
 
         List<DailyWinLoss> EAS_Rpt_WinLossDaily_Com(DateTime winlostDate, int custId, string groupname);
 
-        List<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg14(DateTime winlostDate, int custId, int masterId);
+        List<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg14(DateTime winlostDate, int custId, int masterId, int memberId);
 
-        List<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg(DateTime winlostDate, int custId, int masterId);
+        List<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg(DateTime winlostDate, int custId, int masterId, int memberId);
 
-        List<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg14(DateTime winlostDate, int custId, int agentId);
+        List<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg14(DateTime winlostDate, int custId, int agentId, int memberId);
 
-        List<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg(DateTime winlostDate, int custId, int agentId);
+        List<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg(DateTime winlostDate, int custId, int agentId, int memberId);
 
         List<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag14(DateTime winlostDate, int custId, int memberId);
 
@@ -46,6 +46,7 @@
         List<WinLossDetail> EAS_Rpt_WinLossDetail_SAg(
             int custId,
             int masterId,
+            int memberId,
             DateTime fromDate,
             DateTime toDate,
             string productIds,
@@ -56,6 +57,7 @@
         List<WinLossDetailMAg> EAS_Rpt_WinLossDetail_MAg(
             int custId,
             int agentId,
+            int memberId,
             DateTime fromDate,
             DateTime toDate,
             string productIds,

@@ -12,7 +12,7 @@
         public MemberWinLossByCurrencyDetailReportBuilder(
             List<WinLossByCurrencyDetailAg> winLossDetailAg,
             List<WinLossByCurrencyDetailAg> winLossTotal,
-            int roleId,
+            int uplineRoleId,
             DateTime fromDate,
             DateTime toDate,
             string baseCurrency,
@@ -20,7 +20,7 @@
         {
             Data = winLossDetailAg;
             DataTotal = winLossTotal;
-            RoleId = roleId;
+            UplineRoleId = uplineRoleId;
             FromDate = fromDate.ToString(MonthDayYearFormat);
             ToDate = toDate.ToString(MonthDayYearFormat);
             BaseCurrency = baseCurrency;
@@ -47,6 +47,7 @@
         public bool IsBold { get; }
 
         public int RoleId { get; }
+        public int UplineRoleId { get; }
 
         public string FromDate { get; }
 
@@ -57,7 +58,7 @@
         public MemoryStream Build(string products = null)
         {
             var settings = new TemplateSettings();
-            var filePath = settings.WinLossByCurrencyDetailPath(RoleId);
+            var filePath = settings.WinLossByCurrencyDetailPath(UplineRoleId);
 
             var mem = new MemoryStream();
             using (var report = new WinLossByCurrencyDetailReportAg(filePath, this, products))

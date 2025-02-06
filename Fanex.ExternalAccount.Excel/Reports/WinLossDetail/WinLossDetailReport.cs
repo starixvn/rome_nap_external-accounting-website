@@ -10,7 +10,7 @@
     internal class WinLossDetailReport : TemplateReport, IReportBuilder
     {
         private readonly WinLossDetailReportBuilder _builder;
-        private const int LastColumnIndex = 17;
+        private const int LastColumnIndex = 18;
 
         public WinLossDetailReport(string filePath, WinLossDetailReportBuilder builder, string products = null)
             : base(filePath, products)
@@ -49,6 +49,7 @@
                 var values = new List<object>
                 {
                     item.Username ?? "Dormant Accounts",
+                    TemplateSettings.GetLevelType(item.RoleId),
                     item.Turnover,
                     item.NetTurnover,
                     item.GrossComm,
@@ -83,6 +84,7 @@
             var values = new List<object>
             {
                 "Grand Total",
+                string.Empty,
                 data.Sum(p => p.Turnover),
                 data.Sum(p => p.NetTurnover),
                 data.Sum(p => p.GrossComm),
@@ -108,7 +110,7 @@
         public override void BuildMainTitle(ISheet resultSheet)
         {
 #pragma warning disable S3358 // Ternary operators should not be nested
-            var mainTitle = _builder.RoleId.IsSuper() ? "Super" : _builder.RoleId.IsMaster() ? "Master" : string.Empty;
+            var mainTitle = _builder.UplineRoleId.IsHeadline() ? "Super" : _builder.UplineRoleId.IsSuper() ? "Master" : string.Empty;
 #pragma warning restore S3358 // Ternary operators should not be nested
 
             mainTitle += _builder.FromDate.Equals(_builder.ToDate)

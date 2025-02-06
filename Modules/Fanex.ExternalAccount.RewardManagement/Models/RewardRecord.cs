@@ -64,5 +64,7 @@ namespace Fanex.ExternalAccount.RewardManagement.Models
         {
             return status ? "Paid" : "Unpaid";
         }
+        
+        public bool IsDirectMember { get; set; }
     }
 }

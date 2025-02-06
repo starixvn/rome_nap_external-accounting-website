@@ -4,6 +4,8 @@
     {
         public int CustId { get; set; }
 
+        public int RoleId { get; set; }
+        
         public string Username { get; set; }
 
         public double Turnover { get; set; }

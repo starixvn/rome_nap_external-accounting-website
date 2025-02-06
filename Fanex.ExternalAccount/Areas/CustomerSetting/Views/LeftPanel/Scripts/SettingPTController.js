@@ -20,6 +20,18 @@
         parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('Statement/Index?id=' + custId + '&isinternal=0&username=' + $scope.model.personalInfo.currentLevel.value), null, null, true);
     };
 
+    $scope.GetUplineRoleId = function (agentId, roleId) {
+        if (agentId == -4) {
+            return 4;
+        }
+
+        if(agentId == -3) {
+            return 3;
+        }
+
+        return (roleId + 1);
+    };
+
     $scope.PT = function () {
         parent.Fanex.ExtAcc.Customer.CurrentLevel = $scope.model.personalInfo.roleId.value;
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
@@ -28,8 +40,12 @@
         parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
         parent.Fanex.ExtAcc.Customer.isSuperEditAgent = false;
         $scope.ResetGlobalValue();
+        var agentId = parent.Fanex.ExtAcc.Customer.agentId;
+        var roleId = $scope.model.personalInfo.roleId.value;
+        var uplineRoleId = $scope.GetUplineRoleId(agentId, roleId);
+        var url = parent.resolveClientUrl('Customer/EditCustomer' + "?roleId=" + roleId + "&uplineRoleId=" + uplineRoleId + "&custId=" + $scope.model.personalInfo.custId.value + "&productGroupId=1" + "&groupName=" + parent.$('#selectedGroupName').html() + "&agentId=" + agentId);
 
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer' + "?roleId=" + $scope.model.personalInfo.roleId.value + "&uplineRoleId=" + ($scope.model.personalInfo.roleId.value + 1) + "&custId=" + $scope.model.personalInfo.custId.value + "&productGroupId=1" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
+        parent.Fanex.ExtAcc.LoadMainIFrame(url, null, null, true);
         $scope.collapseSidebar();
     };
 
@@ -41,8 +57,11 @@
         parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
         parent.Fanex.ExtAcc.Customer.isSuperEditAgent = false;
         $scope.ResetGlobalValue();
-
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer' + "?roleId=" + $scope.model.personalInfo.roleId.value + "&uplineRoleId=" + ($scope.model.personalInfo.roleId.value + 1) + "&custId=" + $scope.model.personalInfo.custId.value + "&productGroupId=3" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
+        var agentId = parent.Fanex.ExtAcc.Customer.agentId;
+        var roleId = $scope.model.personalInfo.roleId.value;
+        var uplineRoleId = $scope.GetUplineRoleId(agentId, roleId);
+        var url = parent.resolveClientUrl('Customer/EditCustomer' + "?roleId=" + roleId + "&uplineRoleId=" + uplineRoleId + "&custId=" + $scope.model.personalInfo.custId.value + "&productGroupId=3" + "&groupName=" + parent.$('#selectedGroupName').html() + "&agentId=" + agentId);
+        parent.Fanex.ExtAcc.LoadMainIFrame(url, null, null, true);
         $scope.collapseSidebar();
     }
 
@@ -54,8 +73,11 @@
         parent.Fanex.ExtAcc.Customer.IsFullInfo = true;
         parent.Fanex.ExtAcc.Customer.isSuperEditAgent = false;
         $scope.ResetGlobalValue();
-
-        parent.Fanex.ExtAcc.LoadMainIFrame(parent.resolveClientUrl('Customer/EditCustomer' + "?roleId=" + $scope.model.personalInfo.roleId.value + "&uplineRoleId=" + ($scope.model.personalInfo.roleId.value + 1) + "&custId=" + $scope.model.personalInfo.custId.value + "&productGroupId=2" + "&groupName=" + parent.$('#selectedGroupName').html()), null, null, true);
+        var agentId = parent.Fanex.ExtAcc.Customer.agentId;
+        var roleId = $scope.model.personalInfo.roleId.value;
+        var uplineRoleId = $scope.GetUplineRoleId(agentId, roleId);
+        var url = parent.resolveClientUrl('Customer/EditCustomer' + "?roleId=" + roleId + "&uplineRoleId=" + uplineRoleId + "&custId=" + $scope.model.personalInfo.custId.value + "&productGroupId=2" + "&groupName=" + parent.$('#selectedGroupName').html() + "&agentId=" + agentId);
+        parent.Fanex.ExtAcc.LoadMainIFrame(url, null, null, true);
         $scope.collapseSidebar();
     }
 

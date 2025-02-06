@@ -1,4 +1,6 @@
-﻿namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
+﻿using Fanex.ExternalAccount.Core.Shared;
+
+namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
 {
     using System.Collections.Generic;
     using System.IO;
@@ -25,7 +27,19 @@
         public MemoryStream Build()
         {
             var settings = new TemplateSettings();
-            var filePath = settings.DailyWinLossPath();
+            var filePath = "";
+            switch (RoleId)
+            {
+                case Role.Super:
+                    filePath = settings.MasterDailyWinLossPath();
+                    break;
+                case Role.Master:
+                    filePath = settings.AgentDailyWinLossPath();
+                    break;
+                default:
+                    filePath = settings.DailyWinLossPath();
+                    break;
+            }
             var mem = new MemoryStream();
 
             using (var report = new DailyWinLossReport(filePath, this))

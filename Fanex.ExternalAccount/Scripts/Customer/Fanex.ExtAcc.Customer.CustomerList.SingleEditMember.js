@@ -27,7 +27,14 @@
                             className: "iconEnableEdit",
                             callback: function () {
                                 Fanex.ExtAcc.Customer.IsFullInfo = true;
-                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Customer/EditCustomer?roleId=1&uplineRoleId=2&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + "&productGroupId=" + id + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit ' + name + ' Setting ' + '<font color="#6dcff6">' + title + '</font>', 1250, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
+                                var cachedParams = Fanex.ExtAcc.Customer.CustomerList.cachedParams;
+                                var uplineRoleId = cachedParams.uplineRoleId;
+                                var isDirectMember = cachedParams.isDirectMember;
+                                var agentId = 0;
+                                if (isDirectMember) {
+                                    agentId = uplineRoleId == 4 ? -4 : -3;
+                                }
+                                Fanex.ExtAcc.Form.ShowFrame(resolveClientUrl('Customer/EditCustomer?roleId=1&uplineRoleId=' + uplineRoleId + '&agentId=' + agentId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName + "&productGroupId=" + id + '&custId=' + Fanex.ExtAcc.Customer.UserId), 'Edit ' + name + ' Setting ' + '<font color="#6dcff6">' + title + '</font>', 1250, Fanex.ExtAcc.Customer.GetPopupHeight(270, 480), false, false, 1);
                             }
                         };
                     }
@@ -56,7 +63,7 @@
                             productGroup.Name);
                     }
 
-                    var has3rdParty = false;                    
+                    var has3rdParty = false;
 
                     if (has3rdParty)
                         items.separator5 = "-----";

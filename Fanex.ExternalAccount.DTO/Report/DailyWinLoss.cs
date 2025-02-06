@@ -7,6 +7,8 @@
         public int CustId { get; set; }
 
         public string Username { get; set; }
+        
+        public int RoleId { get; set; }
 
         public double TotalTO { get; set; }
 

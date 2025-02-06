@@ -10,6 +10,9 @@
         public const int Master = 3;
         public const int Super = 4;
         public const int Group = 5;
+        
+        public const int DirectMemberOfSuper = -4;
+        public const int DirectMemberOfMaster = -3;
 
         [DebuggerStepThrough]
         public static string DisplayRoleName(this int role)
@@ -25,6 +28,23 @@
                     return "Agent";
                 default:
                     return "Member";
+            }
+        }
+
+        [DebuggerStepThrough]
+        public static string DisplayRoleName(this int role, int recommend)
+        {
+            EnsureRoleIsInRange(role);
+            switch (role)
+            {
+                case Super:
+                    return "Super";
+                case Master:
+                    return "Master";
+                case Agent:
+                    return "Agent";
+                default:
+                    return recommend.IsDirectMemberOfSuper() ? "Super direct member" : recommend.IsDirectMemberOfMaster() ? "Master direct member" : "Member";
             }
         }
 
@@ -64,9 +84,27 @@
             EnsureRoleIsInRange(role);
             return role == Super;
         }
+        
+        [DebuggerStepThrough]
+        public static bool IsHeadline(this int role)
+        {
+            return role == Group;
+        }
 
         [DebuggerStepThrough]
         public static bool IsNotSuper(this int role) => !IsSuper(role);
+        
+        [DebuggerStepThrough]
+        public static bool IsDirectMemberOfSuper(this int recommend)
+        {
+            return recommend == DirectMemberOfSuper;
+        }
+        
+        [DebuggerStepThrough]
+        public static bool IsDirectMemberOfMaster(this int recommend)
+        {
+            return recommend == DirectMemberOfMaster;
+        }
 
         [DebuggerStepThrough]
         public static int DirectDownlineLevel(this int role)

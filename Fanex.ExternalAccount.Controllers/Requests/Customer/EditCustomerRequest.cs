@@ -15,6 +15,8 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
 
         public bool NoPermissionEditCredit { get; set; }
 
-        internal string ToJson() => JsonConvert.SerializeObject(new { CustId, RoleId, UplineRoleId, NoPermissionEditCredit, ProductGroupId }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+        public int AgentId { get; set; }
+
+        internal string ToJson() => JsonConvert.SerializeObject(new { CustId, RoleId, UplineRoleId, NoPermissionEditCredit, ProductGroupId, AgentId }, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
     }
 }

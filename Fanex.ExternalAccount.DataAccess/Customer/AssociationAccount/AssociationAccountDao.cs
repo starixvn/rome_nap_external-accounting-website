@@ -30,7 +30,8 @@
                         Date = Utils.ToDateTime(reader["Date"]),
                         Closed = Utils.ToBoolean(reader["Closed"]),
                         Enabled = Utils.ToBoolean(reader["Enabled"]),
-                        Suspended = Utils.ToBoolean(reader["Suspended"])
+                        Suspended = Utils.ToBoolean(reader["Suspended"]),
+                        AgentId = Utils.ToInt32(reader["AgentId"])
                     });
                 }
 

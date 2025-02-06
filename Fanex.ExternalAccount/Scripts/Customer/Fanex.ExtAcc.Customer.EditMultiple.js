@@ -317,9 +317,12 @@ Fanex.ExtAcc.Customer.UpdateMultipleDoubleComm = function (allow) {
 Fanex.ExtAcc.Customer.ShowEditMultipleProductGroup = function (uplineRoleId, productGroupId, productGroupName) {
     var ret = this.IdsAndNames();
     top.shouldCalculatePopupHeight = true;
+    var isDirectMember = Fanex.ExtAcc.Customer.CustomerList.cachedParams.isDirectMember;
+    var roleId = isDirectMember ? Fanex.ExtAcc.Customer.Member : Fanex.ExtAcc.Customer.CurrentLevel;
+    var agentId = isDirectMember ? (uplineRoleId == Fanex.ExtAcc.Customer.Super ? -4 : -3) : 0;
     if (!this.IsMultiple) {
         Fanex.ExtAcc.Form.ShowFrame(
-            resolveClientUrl('Customer/EditCustomer?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&productGroupId=' + productGroupId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit ' + productGroupName + ' Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
+            resolveClientUrl('Customer/EditCustomer?roleId=' + roleId + '&agentId=' + agentId + '&uplineRoleId=' + uplineRoleId + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&productGroupId=' + productGroupId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit ' + productGroupName + ' Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
             1250,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);
@@ -343,7 +346,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleProductGroup = function (uplineRoleId, pro
             CustIds += custIdsArr[i] + linkChar;
         }
         Fanex.ExtAcc.Form.ShowFrame(
-            resolveClientUrl('Customer/EditMultiple?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custIds=' + CustIds + '&productGroupId=' + productGroupId + '&usernames=' + Usernames + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Multiple ' + productGroupName + ' Setting',
+            resolveClientUrl('Customer/EditMultiple?roleId=' + roleId + '&agentId=' + agentId + '&uplineRoleId=' + uplineRoleId + '&custIds=' + CustIds + '&productGroupId=' + productGroupId + '&usernames=' + Usernames + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Multiple ' + productGroupName + ' Setting',
             1250,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);

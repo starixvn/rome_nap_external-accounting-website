@@ -17,6 +17,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         uplineId: 0,
         uplineRoleId: 0,
         previousParams: null,
+        isDirectMember: 0,
     },
 
     Init: function (uplineId, uplineRoleId) {
@@ -36,6 +37,8 @@ Fanex.ExtAcc.Customer.CustomerList = {
         this.DOMElements.chkIsNoDownlines = $('#chkIsNoDownlines');
         this.DOMElements.editMult = $('#editMult');
         this.DOMElements.breadcrumbs = $('#breadcrumbs');
+        this.DOMElements.levelTypeSuperView = $("#ddl-level-type-container-super-view");
+        this.DOMElements.levelTypeMasterView = $("#ddl-level-type-container-master-view");
         this.BindingEvents();
         if (isShowCurrency) {
             this.InitCurrencyList();
@@ -121,7 +124,15 @@ Fanex.ExtAcc.Customer.CustomerList = {
         if (isShowCurrency) {
             params.currencyIds = _this.DOMElements.$multiSelectCurrency.fanexMultiSelect("getItems", true).join(",");
         }
-
+        
+        if(params.uplineRoleId === 3){
+            params.isDirectMember = $("#ddl-level-type-master-view").find(":selected").val() === "1";
+        }
+        if(params.uplineRoleId === 4){
+            params.isDirectMember = $("#ddl-level-type-super-view").find(":selected").val() === "1";
+        }
+        
+        _this.cachedParams.isDirectMember = params.isDirectMember;
         _this.cachedParams.previousParams = params;
         _this.Search(params);
     },
@@ -151,7 +162,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                     ? currentRow.MinDate
                     : currentRow.LimitDays !== "" ? currentRow.LimitDays
                         : "";
-                var columns = _this.GetGridBodyRows(currentRow, i, params.pageSize, params.pageIndex - 1, params.uplineRoleId, result.HasSubGroups);
+                var columns = _this.GetGridBodyRows(currentRow, i, params.pageSize, params.pageIndex - 1, params.uplineRoleId, result.HasSubGroups, params.isDirectMember);
                 bodyRows.push({
                     Columns: columns,
                     CssClass: Fanex.ExtAcc.Customer.CustomerList.GetCSSRow(currentRow)
@@ -159,8 +170,8 @@ Fanex.ExtAcc.Customer.CustomerList = {
             }
 
             gridOptions = {
-                groupHeaderRows: _this.GetGridGroupHeader(params.uplineRoleId, result.HasSubGroups),
-                columns: _this.GetGridHeader(params.uplineRoleId, result.HasSubGroups),
+                groupHeaderRows: _this.GetGridGroupHeader(params.uplineRoleId, result.HasSubGroups, params.isDirectMember),
+                columns: _this.GetGridHeader(params.uplineRoleId, result.HasSubGroups, params.isDirectMember),
                 bodyRows: bodyRows,
                 autoCalculateGridExpandHeight: true,
                 numberOfFrozenColumn: numberOfFrozenColumn,
@@ -207,6 +218,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
             _this.DOMElements.editMult.attr('onclick', '');
             _this.DOMElements.editMult.contextMenu(false);
             _this.RenderBreadScrumbs(params.uplineId, params.uplineRoleId);
+            _this.ShowHideLevelTypeFilter(params.uplineRoleId);
             _this.DOMElements.icoExportExcel.off();
             $('#editMult').contextMenu(false);
             if (bodyRows.length > 0) {
@@ -219,7 +231,8 @@ Fanex.ExtAcc.Customer.CustomerList = {
                         uplineRoleId: _this.cachedParams.uplineRoleId,
                         isShowSuperLimitDate: _this.DOMElements.chkShowSuperLimitDate.is(":checked"),
                         IsNoDownlines: _this.DOMElements.chkIsNoDownlines.is(":checked"),
-                        uplineId: _this.cachedParams.uplineId
+                        uplineId: _this.cachedParams.uplineId,
+                        isDirectMember: _this.cachedParams.isDirectMember
                     };
 
                     if (isShowCurrency) {
@@ -259,11 +272,17 @@ Fanex.ExtAcc.Customer.CustomerList = {
         return '';
     },
 
-    GetGridHeader: function (uplineRoleId, hasSubGroups) {
+    GetGridHeader: function (uplineRoleId, hasSubGroups, isDirectMember = false) {
         var columns = [];
         var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
         var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
         var showSubGroups = isSuperList && hasSubGroups;
+        if(isDirectMember){
+            isSuperList = false;
+            isMemberList = true;
+            showSubGroups = isSuperList && hasSubGroups;
+        }
+        
         columns.push({ HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' });
         columns.push({
             HeaderText: '', Name: 'Check', Width: 30, CellAlign: 'center',
@@ -288,7 +307,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 var unlockIcon = cell.Value.LockedAccess.IsLocked
                     ? '<span class="locked-icon" onclick="javascript:Fanex.ExtAcc.Customer.UnlockAccess(' + cell.Value.CustId + ',' + cell.Value.LockedAccess.Locked + ')" title="Click to unlock"></span>'
                     : "";
-                return uplineRoleId === Fanex.ExtAcc.Customer.Agent ?
+                return (uplineRoleId === Fanex.ExtAcc.Customer.Agent || isDirectMember) ?
                     '<span title="' + tooltipUsername + '">' + shortUsername + '</span>' + unlockIcon :
                     '<a id="usr-' + cell.Value.CustId + '" href="' + func + '" title="' + tooltipUsername + '">' + shortUsername + '</a>' + unlockIcon;
             }
@@ -346,11 +365,18 @@ Fanex.ExtAcc.Customer.CustomerList = {
         });
         return columns.filter(function (item) { return item !== undefined });
     },
-    GetGridGroupHeader: function (uplineRoleId, hasSubGroups) {
+    GetGridGroupHeader: function (uplineRoleId, hasSubGroups, isDirectMember = false) {
         var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
         var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
         var showSubGroups = isSuperList && hasSubGroups;
         var columns = [];
+        
+        if(isDirectMember){
+            isSuperList = false;
+            isMemberList = true;
+            showSubGroups = isSuperList && hasSubGroups;
+        }
+        
         columns.push({ HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 });
         columns.push({ HeaderText: '', Name: 'Check', MergeRowNumber: 2 });
         columns.push({ HeaderText: 'Username', Name: 'username', MergeRowNumber: 2 });
@@ -372,11 +398,16 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push({ HeaderText: 'Login IP', Name: 'lastloginip', MergeRowNumber: 2 });
         return [{ Columns: columns.filter(function (item) { return item !== undefined; }) }];
     },
-    GetGridBodyRows: function (currentRow, currentIndex, pageSize, pageIndex, uplineRoleId, hasSubGroups) {
+    GetGridBodyRows: function (currentRow, currentIndex, pageSize, pageIndex, uplineRoleId, hasSubGroups, isDirectMember = false) {
         var columns = [];
         var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
         var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
         var showSubGroups = isSuperList && hasSubGroups;
+        if(isDirectMember){
+            isSuperList = false;
+            isMemberList = true;
+            showSubGroups = isSuperList && hasSubGroups;
+        }
         columns.push({ Name: 'RowNumber', Value: currentIndex + pageSize * (pageIndex) });
         columns.push({ Name: 'Check', Value: currentRow });
         columns.push({ Name: 'username', Value: currentRow });
@@ -435,4 +466,16 @@ Fanex.ExtAcc.Customer.CustomerList = {
         else if (uplineRoleId == Fanex.ExtAcc.Customer.Agent)
             this.DOMElements.breadcrumbs.html('<div class="level-line"></div><div style="float:left">' + linkSuper + '</div><div class="viewNext">&nbsp;</div><div style="float:left">' + linkMaster + '</div><div class="viewNext">&nbsp;</div><div class="level-active">' + linkAgent + '</div>');
     },
+    ShowHideLevelTypeFilter: function (uplineRoleId) {
+        if (uplineRoleId === Fanex.ExtAcc.Customer.Super) {
+            this.DOMElements.levelTypeSuperView.removeClass('hidden');
+            this.DOMElements.levelTypeMasterView.addClass('hidden');
+        } else if (uplineRoleId === Fanex.ExtAcc.Customer.Master) {
+            this.DOMElements.levelTypeSuperView.addClass('hidden');
+            this.DOMElements.levelTypeMasterView.removeClass('hidden');
+        } else {
+            this.DOMElements.levelTypeSuperView.addClass('hidden');
+            this.DOMElements.levelTypeMasterView.addClass('hidden');
+        }
+    }
 }

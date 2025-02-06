@@ -16,11 +16,11 @@ else
     <table class="tbl-product margin-top10" id="tbl-product">
         <thead>
             <tr>
-                <th class="title" colspan="@(Model.CustRole + 1)"> @string.Join(", ", Model.CustNames)</th>
+                <th class="title" colspan="@(Model.CustRole + 3)"> @string.Join(", ", Model.CustNames)</th>
             </tr>
             <tr>
                 <th rowspan="2"></th>
-                @RenderHeaderLevelName(Model.CustRole + 1, isMultipleBetTypes, isDisabledUplineHeader)
+                @RenderHeaderLevelName((short)(Model.CustRole + 1), isMultipleBetTypes, isDisabledUplineHeader)
             </tr>
         </thead>
         <tbody>
@@ -28,21 +28,31 @@ else
             {
                 <tr>
                     <td class="bettype-name">@item.Name</td>
-                    <td>@RenderStatus(item.SportType, item.BetType, item.IsDisabled, item.IsDisabledUpline, Model.CustRole)</td>
+                    <td>@RenderStatus(item.SportType, item.ParentSportType, item.BetType, item.ParentBetType, item.IsDisabled, item.IsDisabledUpline, Model.CustRole)</td>
+
+                    @if (item.DirectSuperMember != null)
+                    {
+                        <td>@RenderStatus(item.SportType, item.ParentSportType, item.BetType, item.ParentBetType, item.IsDisabled, item.IsDisabledUpline, -4)</td>
+                    }
 
                     @if (item.Master != null)
                     {
-                        <td>@RenderStatus(item.SportType, item.BetType, item.IsDisabled, item.IsDisabledUpline, 3)</td>
+                        <td>@RenderStatus(item.SportType, item.ParentSportType, item.BetType, item.ParentBetType, item.IsDisabled, item.IsDisabledUpline, 3)</td>
+                    }
+
+                    @if (item.DirectMasterMember != null)
+                    {
+                        <td>@RenderStatus(item.SportType, item.ParentSportType, item.BetType, item.ParentBetType, item.IsDisabled, item.IsDisabledUpline, -3)</td>
                     }
 
                     @if (item.Agent != null)
                     {
-                        <td>@RenderStatus(item.SportType, item.BetType, item.IsDisabled, item.IsDisabledUpline, 2)</td>
+                        <td>@RenderStatus(item.SportType, item.ParentSportType, item.BetType, item.ParentBetType, item.IsDisabled, item.IsDisabledUpline, 2)</td>
                     }
 
                     @if (item.Member != null)
                     {
-                        <td>@RenderStatus(item.SportType, item.BetType, item.IsDisabled, item.IsDisabledUpline, 1)</td>
+                        <td>@RenderStatus(item.SportType, item.ParentSportType, item.BetType, item.ParentBetType, item.IsDisabled, item.IsDisabledUpline, 1)</td>
                     }
                 </tr>
             }
@@ -56,56 +66,74 @@ else
 
 @Html.AntiForgeryToken()
 
-@helper RenderHeaderLevelName(int roleId, bool isMultipleBetTypes, bool isDisabledUpline)
+@helper RenderHeaderLevelName(short roleId, bool isMultipleBetTypes, bool isDisabledUpline)
+{
+    while (roleId > 0 && --roleId > 0)
+    {
+        if (roleId == RoleIdentity.Master)
+        {
+            @RenderHeaderStatus(-4, isMultipleBetTypes, isDisabledUpline);
+        }
+
+        if (roleId == RoleIdentity.Agent)
+        {
+            @RenderHeaderStatus(-3, isMultipleBetTypes, isDisabledUpline);
+        }
+
+        @RenderHeaderStatus(roleId, isMultipleBetTypes, isDisabledUpline);
+    }
+}
+
+@helper RenderHeaderStatus(short roleId, bool isMultipleBetTypes, bool isDisabledUpline)
 {
     var roleNameDic = new Dictionary<int, string>
     {
         {4, Resources.AllSupers},
+        {-4, Resources.AllSuperDirectMember},
         {3, Resources.AllMasters},
+        {-3, Resources.AllMasterDirectMember},
         {2, Resources.AllAgents },
         {1, Resources.AllMembers }
     };
+    var roleName = Model.GetRoleName((byte)roleId);
+    var id = string.Format("header_{0}", roleId);
+    var tbodyEnableDownlineTooltip = string.Format(Resources.SearchAccountTHeadMulitpleTooltip, Resources.Enable.ToLower(), roleName + "s");
+    var tbodyDisableDownlineTooltip = string.Format(Resources.SearchAccountTHeadMulitpleTooltip, Resources.Disable.ToLower(), roleName + "s");
 
-    while (roleId > 0 && --roleId > 0)
-    {
-        var roleName = Model.GetRoleName((byte)roleId);
-        var id = string.Format("header_{0}", roleId);
-        var tbodyEnableDownlineTooltip = string.Format(Resources.SearchAccountTHeadMulitpleTooltip, Resources.Enable.ToLower(), roleName + "s");
-        var tbodyDisableDownlineTooltip = string.Format(Resources.SearchAccountTHeadMulitpleTooltip, Resources.Disable.ToLower(), roleName + "s");
+    <th>
+        @if (isMultipleBetTypes)
+        {
+            <div class="current-role">@roleNameDic[roleId]</div>
+            <div class="all-status">
+                <input type="checkbox" class="checkbox-hide" id="@id"
+                       data-roleid="@roleId"
+                       data-disabledupline="@isDisabledUpline"
+                       checked="checked"
+                       @(isDisabledUpline ? "disabled " : string.Empty) />
 
-        <th>
-            @if (isMultipleBetTypes)
-            {
-                <div class="current-role">@roleNameDic[roleId]</div>
-                <div class="all-status">
-                    <input type="checkbox" class="checkbox-hide" id="@id"
-                           data-roleid="@roleId"
-                           data-disabledupline="@isDisabledUpline"
-                           checked="checked"
-                           @(isDisabledUpline ? "disabled " : string.Empty) />
-
-                    <label for="@id" class="@(isDisabledUpline ? "gray" : "enabled")"
-                           title="@tbodyDisableDownlineTooltip"
-                           data-enabletooltip="@tbodyEnableDownlineTooltip"
-                           data-disabletooltip="@tbodyDisableDownlineTooltip">
-                        @(isDisabledUpline ? Resources.DisableAll : Resources.EnableAll)
-                    </label>
-                </div>
-            }
-            else
-            {
-                @roleNameDic[roleId]
-            }
-        </th>
-    }
+                <label for="@id" class="@(isDisabledUpline ? "gray" : "enabled")"
+                       title="@tbodyDisableDownlineTooltip"
+                       data-enabletooltip="@tbodyEnableDownlineTooltip"
+                       data-disabletooltip="@tbodyDisableDownlineTooltip">
+                    @(isDisabledUpline ? Resources.DisableAll : Resources.EnableAll)
+                </label>
+            </div>
+        }
+        else
+        {
+            @roleNameDic[roleId]
+        }
+    </th>
 }
 
 @helper RenderStatus(
     int sportType,
+    int parentSportType,
     int betType,
+    int parentBettype,
     bool isDisabled,
     bool isDisabledUpline,
-    byte roleId)
+    short roleId)
 {
     var roleName = Model.GetRoleName(roleId);
     var id = string.Format("{0}_{1}_{2}", roleId, sportType, betType);
@@ -118,13 +146,15 @@ else
            data-sporttype="@sportType"
            data-bettype="@betType"
            data-originstatus="@isDisabled"
+           data-parent-sporttype="@parentSportType"
+           data-parent-bettype="@parentBettype"
            checked="checked"
            @(isDisabledUpline ? "disabled " : string.Empty) />
 
-        <label for="@id" class="@(isDisabledUpline ? "gray" : "enabled")"
-               title="@tbodyDisableDownlineTooltip"
-               data-enabletooltip="@tbodyEnableDownlineTooltip"
-               data-disabletooltip="@tbodyDisableDownlineTooltip">
-            @(isDisabledUpline ? Resources.UplineDisabled : Resources.EnableAll)
-        </label>
+    <label for="@id" class="@(isDisabledUpline ? "gray" : "enabled")"
+           title="@tbodyDisableDownlineTooltip"
+           data-enabletooltip="@tbodyEnableDownlineTooltip"
+           data-disabletooltip="@tbodyDisableDownlineTooltip">
+        @(isDisabledUpline ? Resources.UplineDisabled : Resources.EnableAll)
+    </label>
 }

@@ -13,5 +13,7 @@
         public string MarkDateTime { get; set; }
 
         public string Remark { get; set; }
+
+        public int AgentId { get; set; }
     }
 }

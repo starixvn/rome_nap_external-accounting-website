@@ -43,6 +43,24 @@
 	            <input id="chkShowSuperLimitDate" type="checkbox" />
 	            <div class="label lbl-show-limit-date">@ViewLang.CustomersWithDataLimited</div>
             </div>
+            <div id="ddl-level-type-container-super-view" class="form-group hidden">
+                <div class="label">@ViewLang.Level</div>
+                <div class="user-group pull-left" style="width: 120px">
+                    <select name="ddl-level-type-super-view" style="width: 100%" id="ddl-level-type-super-view">
+                        <option value="0" selected>Master agent</option>
+                        <option value="1">Direct member</option>
+                    </select>
+                </div>
+            </div>
+            <div id="ddl-level-type-container-master-view" class="form-group hidden">
+                <div class="label">@ViewLang.Level</div>
+                <div class="user-group pull-left" style="width: 120px">
+                    <select name="ddl-level-type-master-view" style="width: 100%" id="ddl-level-type-master-view">
+                        <option value="0" selected>Agent</option>
+                        <option value="1">Direct member</option>
+                    </select>
+                </div>
+            </div>
             <div class="form-group @(!Model.RoleId.HasValue || Model.RoleId.Value.IsNotMember() ? string.Empty: "hidden") customer-limit-date">
 	            <input id="chkIsNoDownlines" type="checkbox" />
                 <div class="label lbl-show-limit-date">No Downline</div>

@@ -13,5 +13,9 @@
         }
 
         public string DailyWinLossPath() => Path.Combine(_dir, "DailyWinLoss.xls");
+        
+        public string MasterDailyWinLossPath() => Path.Combine(_dir, "MasterDailyWinLoss.xls");
+        
+        public string AgentDailyWinLossPath() => Path.Combine(_dir, "AgentDailyWinLoss.xls");
     }
 }

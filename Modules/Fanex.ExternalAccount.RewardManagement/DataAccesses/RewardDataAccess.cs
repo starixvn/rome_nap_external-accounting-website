@@ -68,6 +68,7 @@ namespace Fanex.ExternalAccount.RewardManagement.DataAccesses
                             SuperUsername = reader.ToString("SuperUsername"),
                             SuperPaymentStatus = reader.ToBool("SuperPaymentStatus"),
                             SuperPaymentDate = reader.ToDateTime2("SuperPaymentDate"),
+                            IsDirectMember = reader.ToBool("IsDirectMember"),
                         };
                         rewardRecords.Add(entity);
                     }

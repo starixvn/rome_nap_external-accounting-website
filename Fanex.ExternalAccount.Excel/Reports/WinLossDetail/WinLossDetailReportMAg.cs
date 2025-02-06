@@ -9,7 +9,7 @@
     internal class WinLossDetailReportMAg : TemplateReport, IReportBuilder
     {
         private readonly AgentWinLossDetailReportBuilder _builder;
-        private const int LastColumnIndex = 14;
+        private const int LastColumnIndex = 15;
 
         public WinLossDetailReportMAg(string filePath, AgentWinLossDetailReportBuilder builder, string products = null)
             : base(filePath, products)
@@ -47,6 +47,7 @@
                 var values = new List<object>
                 {
                     item.Username ?? "Dormant Accounts",
+                    TemplateSettings.GetLevelType(item.RoleId),
                     item.Turnover,
                     item.NetTurnover,
                     item.GrossComm,
@@ -78,6 +79,7 @@
             var values = new List<object>
             {
                 "Grand Total",
+                string.Empty,
                 data.Sum(p => p.Turnover),
                 data.Sum(p => p.NetTurnover),
                 data.Sum(p => p.GrossComm),
