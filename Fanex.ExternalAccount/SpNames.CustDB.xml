@@ -33,25 +33,25 @@
     <Setting Key="EAS_Rpt_WinLossDaily_MAg" SpName="EAS_Rpt_WinLossDaily_MAg_UAT2" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDaily_Ag14" SpName="EAS_Rpt_WinLossDaily_Ag14" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDaily_Ag" SpName="EAS_Rpt_WinLossDaily_Ag" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDetail_Com" SpName="EAS_Rpt_WinLossDetail_Com_UAT2" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" TimeOut="600" />
+    <Setting Key="EAS_Rpt_WinLossDetail_Com" SpName="EAS_Rpt_WinLossDetail_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" TimeOut="600" />
     <Setting Key="EAS_Rpt_WinLossDetail_SAg" SpName="EAS_Rpt_WinLossDetail_SAg_UAT2" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" TimeOut="600" />
     <Setting Key="EAS_Rpt_WinLossDetail_MAg" SpName="EAS_Rpt_WinLossDetail_MAg_UAT2" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" TimeOut="600" />
-    <Setting Key="EAS_Rpt_WinLossDetail_Ag" SpName="EAS_Rpt_WinLossDetail_Ag_UAT2" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" TimeOut="600" />
+    <Setting Key="EAS_Rpt_WinLossDetail_Ag" SpName="EAS_Rpt_WinLossDetail_Ag" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" TimeOut="600" />
     <Setting Key="EAS_Rpt_WinLossDetailExtra_Com" SpName="EAS_Rpt_WinLossDetailExtra_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" TimeOut="600" />
     <Setting Key="EAS_Rpt_WinLossDaily_SortingOrder" SpName="EAS_Rpt_WinLossDaily_SortingOrder" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_Rpt_ViewExtraPT2" SpName="EAS_Rpt_ViewExtraPT2" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="EAS_Rpt_WinLossDetail_byPT" SpName="EAS_Rpt_WinLossDetail_byPT_UAT2" DbName="DBAGE.bodb02.wsv_xnap" />
+    <Setting Key="EAS_Rpt_WinLossDetail_byPT" SpName="EAS_Rpt_WinLossDetail_byPT" DbName="DBAGE.bodb02.wsv_xnap" />
     <Setting Key="EAS_GetPTProductBySuper" SpName="EAS_GetPTProductBySuper" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="EAS_GetSubGroupList" SpName="EAS_GetSubGroupList" DbName="DBPOL.Nap_UserControl.wsv_xnap" />
-    <Setting Key="EAS_Rpt_WinLossDetail_bySubGroup" SpName="EAS_Rpt_WinLossDetail_bySubGroup_UAT2" DbName="DBAGE.bodb02.wsv_xnap" />
+    <Setting Key="EAS_Rpt_WinLossDetail_bySubGroup" SpName="EAS_Rpt_WinLossDetail_bySubGroup" DbName="DBAGE.bodb02.wsv_xnap" />
   </Function>
   <Function Name="Report By Currency">
     <Setting Key="EAS_GetCurrencyList" SpName="EAS_GetCurrencyList" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_Com" SpName="EAS_Rpt_WinLossDetailByCurrency_Com_UAT2" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_SAg" SpName="EAS_Rpt_WinLossDetailByCurrency_SAg_UAT2" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_MAg" SpName="EAS_Rpt_WinLossDetailByCurrency_MAg_UAT2" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_Ag" SpName="EAS_Rpt_WinLossDetailByCurrency_Ag_UAT2" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_ByPT" SpName="EAS_Rpt_WinLossDetailByCurrency_ByPT_UAT2" DbName="DBAGE.bodb02.wsv_xnap" />
+    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_Com" SpName="EAS_Rpt_WinLossDetailByCurrency_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_SAg" SpName="EAS_Rpt_WinLossDetailByCurrency_SAg" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_MAg" SpName="EAS_Rpt_WinLossDetailByCurrency_MAg" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_Ag" SpName="EAS_Rpt_WinLossDetailByCurrency_Ag" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_ByPT" SpName="EAS_Rpt_WinLossDetailByCurrency_ByPT" DbName="DBAGE.bodb02.wsv_xnap" />
   </Function>
   <Function Name="Group">
     <Setting Key="EAS_GroupInfoDel" SpName="EAS_GroupInfoDel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
