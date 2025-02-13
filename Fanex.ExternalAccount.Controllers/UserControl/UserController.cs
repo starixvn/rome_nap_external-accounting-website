@@ -304,6 +304,7 @@
                 }
 
                 randomDomain = randomDomain ?? internalDomains[new Random().Next(internalDomains.Length)];
+                randomDomain = FormatInternalLoginDomain(randomDomain);
                 var foundDomain = configDomains.Find(item => item.Domain == randomDomain);
                 if (foundDomain != null)
                 {
@@ -312,7 +313,7 @@
 
                 Session["InternalLoginDomains_" + CustomerSite] = configDomains;
 
-                var internalDomain = randomDomain.StartsWith("http") ? $"{randomDomain}{internalLoginAction}" : $"http://{randomDomain}{internalLoginAction}";
+                var internalDomain = randomDomain.StartsWith("http") ? $"{randomDomain}{internalLoginAction}" : $"https://{randomDomain}{internalLoginAction}";
 
                 url = $"{internalDomain}?{(Session[Config.InternalAgentUMToken] == null ? string.Empty : $"UMToken={Session[Config.InternalAgentUMToken]}&")}parameter={param}";
             }
@@ -362,6 +363,18 @@
             }
 
             return model;
+        }
+
+        private string FormatInternalLoginDomain(string configDomain)
+        {
+            return Request.Headers["Host"].Contains("oneops.net") ?
+                string.Format(configDomain, "gatonic.com") :
+                string.Format(configDomain, Request.Headers["Host"]
+                                                    .Replace("www.", string.Empty)
+                                                    .Replace("staging.", string.Empty)
+                                                    .Replace("h1.", string.Empty)
+                                                    .Replace("h2.", string.Empty)
+                                                    .Replace("h3.", string.Empty));
         }
     }
 }
