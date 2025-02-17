@@ -289,10 +289,11 @@
                 var internalLoginAction = internalPaths[1];
                 var configDomains = new List<InternLoginDomain>();
                 string randomDomain = null;
+                string internalLoginSessionKey = $"InternalLoginDomains_{CustomerSite}";
 
-                if (Session["InternalLoginDomains_" + CustomerSite] != null)
+                if (Session[internalLoginSessionKey] != null)
                 {
-                    configDomains = (List<InternLoginDomain>)Session["InternalLoginDomains_" + CustomerSite];
+                    configDomains = (List<InternLoginDomain>)Session[internalLoginSessionKey];
                     randomDomain = configDomains.FirstOrDefault(domain => !domain.IsInUsed)?.Domain;
                 }
                 else
@@ -303,16 +304,16 @@
                     }
                 }
 
-                randomDomain = randomDomain ?? internalDomains[new Random().Next(internalDomains.Length)];
-                randomDomain = FormatInternalLoginDomain(randomDomain);
+                randomDomain = randomDomain ?? internalDomains[new Random().Next(internalDomains.Length)];                
                 var foundDomain = configDomains.Find(item => item.Domain == randomDomain);
                 if (foundDomain != null)
                 {
                     foundDomain.IsInUsed = true;
                 }
 
-                Session["InternalLoginDomains_" + CustomerSite] = configDomains;
+                Session[internalLoginSessionKey] = configDomains;
 
+                randomDomain = FormatInternalLoginDomain(randomDomain);
                 var internalDomain = randomDomain.StartsWith("http") ? $"{randomDomain}{internalLoginAction}" : $"https://{randomDomain}{internalLoginAction}";
 
                 url = $"{internalDomain}?{(Session[Config.InternalAgentUMToken] == null ? string.Empty : $"UMToken={Session[Config.InternalAgentUMToken]}&")}parameter={param}";
