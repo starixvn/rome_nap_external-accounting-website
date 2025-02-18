@@ -75,6 +75,9 @@
       <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Cryptography.Aes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Cryptography.Aes.1.0.0.0\lib\net461\Fanex.Cryptography.Aes.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Customer.Client, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Customer.Client.1.0.1.9\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
     </Reference>
@@ -451,6 +454,7 @@
     <Compile Include="ViewModels\Customer\IndirectEditMemberViewModel.cs" />
     <Compile Include="ViewModels\Customer\SportBookInformationViewModel.cs" />
     <Compile Include="ViewModels\GroupConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\InternalLoginDomain.cs" />
     <Compile Include="ViewModels\VerifyOtpCommand.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\ExternalGroupViewModel.cs" />
