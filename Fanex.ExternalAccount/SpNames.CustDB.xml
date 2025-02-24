@@ -155,6 +155,8 @@
     <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
       <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
+      <Mapping DataField="Phone" ObjectProperty="HomePhone" />
+      <Mapping DataField="HideSabaCasino" ObjectProperty="HideCasino" />
     </Setting>
     <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Age_CustomerUpdPwd" SpName="Age_CustomerUpdPwd" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />

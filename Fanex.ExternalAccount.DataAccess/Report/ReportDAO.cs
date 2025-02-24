@@ -1,10 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Report
 {
-    using Base;
     using Common.Extensions;
     using Data;
     using DTO.Customer;
     using DTO.Report;
+    using Fanex.Data.Repository;
     using Interface.Report;
     using System;
     using System.Collections;
@@ -13,8 +13,15 @@
     using System.Globalization;
     using Utilities;
 
-    public partial class ReportDao : DAOBase, IReportDao
+    public partial class ReportDao : IReportDao
     {
+        private IDynamicRepository dynamicRepository;
+
+        public ReportDao(IDynamicRepository dynamicRepository)
+        {
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+
         public DataTable EAS_CustomerSelUserInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
         {
             using (var db = new ObjectDb("EAS_CustomerSelUserInfo"))

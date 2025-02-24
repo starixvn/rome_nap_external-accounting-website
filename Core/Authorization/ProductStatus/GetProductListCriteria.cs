@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization.ProductStatus
 {
+    using Fanex.Data.Repository;
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.NAP.Framework.Data;
 
     internal class GetProductListCriteria : CriteriaBase
     {

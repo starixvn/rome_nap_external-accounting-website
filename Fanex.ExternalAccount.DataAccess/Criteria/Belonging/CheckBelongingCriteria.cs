@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Belonging
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data;
+    using Fanex.Data.Repository;
 
     public class CheckBelongingCriteria : CriteriaBase
     {
@@ -11,13 +12,15 @@
         {
             UserId = userId;
             GroupName = groupName;
-        
         }
 
         public int UserId { get; }
 
         public string GroupName { get; }
-      
+
+        public int ErrCode { get; }
+
+        public string ErrMsg { get; }
 
         public override string GetSettingKey()
             => "EAS_UserCheckBelonging";

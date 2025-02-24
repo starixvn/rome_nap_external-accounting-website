@@ -4,11 +4,11 @@
     using CaptchaMvc.Interface;
     using Core.Authorization.ProductStatus;
     using Core.Filters;
-    using Data.Configuration;
     using Fanex.Caching;
     using Fanex.Customer.Client;
     using Fanex.Customer.Client.Configurations;
     using Fanex.Customer.Client.NETFramework;
+    using Fanex.Data;
     using Fanex.ExternalAccount.Core.Configurations;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.UI.Helpers;
@@ -25,7 +25,7 @@
     using ONEbook.UM.NETFramework;
     using ONEbook.UM.Services;
     using ONEbook.UM.Transport;
-    using ProductStatus.Setting.Configuration;
+    //using ProductStatus.Setting.Configuration;
     using SharpRaven;
     using System;
     using System.Collections.Generic;
@@ -128,7 +128,11 @@
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            DbSettingProviderManager.Current.Start();
+            DbSettingProviderManager
+                 .StartNewSession()
+                 .Register(true)
+                 .Run();
+
             StaticResources.Init();
 
             var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
@@ -138,12 +142,12 @@
 
             MvcHandler.DisableMvcResponseHeader = true;
 
-            var productStatusConfig = new ProductStatusConfiguration()
-                .UseAuthorizeService(new ProductStatusAuthorizeService())
-                .UseProductStatusActor(new ProductStatusActor())
-                .SetUnAuthorizedUrl("~/Customer/AccessDenied")
-                .UseCustomerProductList(MultipleEditProductStatus.GetProductList);
-            ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
+            //var productStatusConfig = new ProductStatusConfiguration()
+            //    .UseAuthorizeService(new ProductStatusAuthorizeService())
+            //    .UseProductStatusActor(new ProductStatusActor())
+            //    .SetUnAuthorizedUrl("~/Customer/AccessDenied")
+            //    .UseCustomerProductList(MultipleEditProductStatus.GetProductList);
+            //ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
             Fanex.RemotingRef.RefDataTypeContainer
                 .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service"]))
                 .FromApplication("Ext NAP")
