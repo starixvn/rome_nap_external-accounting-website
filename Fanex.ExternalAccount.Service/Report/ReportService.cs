@@ -7,6 +7,7 @@
     using DTO.Report;
     using Fanex.Caching.Memory;
     using Fanex.ExternalAccount.Core.Shared;
+    using Fanex.ExternalAccount.DataAccess.Criteria.Report;
     using Fanex.ExternalAccount.Service.Products;
     using Interface.Report;
     using System;
@@ -41,9 +42,6 @@
 
         public static DateTime MoveBetsDate => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["MoveBetsDay"]);
 
-        public DataTable GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
-            => _reportDao.EAS_CustomerSelUserInfo(groupname, custId, userName, isGetUplineInfo);
-
         public LineInfo SearchCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
             => _reportDao.GetCustomerInfo(groupname, custId, userName, isGetUplineInfo);
 
@@ -51,24 +49,16 @@
             => _reportDao.EAS_CustomerSelUserSearch(custId, username, groupName);
 
         public List<DailyWinLoss> GetDailyWinLoss(DateTime winlostDate, int custId, string groupName)
-            => CheckConstraintMoveBetsDay(winlostDate)
-                ? _reportDao.EAS_Rpt_WinLossDaily_Com(winlostDate, custId, groupName)
-                : _reportDao.EAS_Rpt_WinLossDaily_Com14(winlostDate, custId, groupName);
+            => _reportDao.EAS_Rpt_WinLossDaily_Com(new GetCompanyDailyWinlossCriteria(winlostDate, custId, groupName, MoveBetsDate));
 
         public List<DailyWinLoss> GetDailyWinLossSuper(DateTime winlostDate, int custId, int masterId, int memberId)
-            => CheckConstraintMoveBetsDay(winlostDate)
-                ? _reportDao.EAS_Rpt_WinLossDaily_SAg(winlostDate, custId, masterId, memberId)
-                : _reportDao.EAS_Rpt_WinLossDaily_SAg14(winlostDate, custId, masterId, memberId);
+            => _reportDao.EAS_Rpt_WinLossDaily_SAg(new GetSuperDailyWinlossCriteria(winlostDate, custId, masterId, MoveBetsDate));
 
         public List<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId, int memberId)
-            => CheckConstraintMoveBetsDay(winlostDate)
-                ? _reportDao.EAS_Rpt_WinLossDaily_MAg(winlostDate, custId, agentId, memberId)
-                : _reportDao.EAS_Rpt_WinLossDaily_MAg14(winlostDate, custId, agentId, memberId);
+            => _reportDao.EAS_Rpt_WinLossDaily_MAg(new GetMasterDailyWinlossCriteria(winlostDate, custId, agentId, MoveBetsDate));
         
         public List<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId)
-            => CheckConstraintMoveBetsDay(winlostDate)
-                ? _reportDao.EAS_Rpt_WinLossDaily_Ag(winlostDate, custId, memberId)
-                : _reportDao.EAS_Rpt_WinLossDaily_Ag14(winlostDate, custId, memberId);
+            => _reportDao.EAS_Rpt_WinLossDaily_Ag(new GetAgentDailyWinlossCriteria(winlostDate, custId, memberId, MoveBetsDate));
 
         public List<WinLossDetailExtra> GetSuperWinLossDetail(
             string groupname,
@@ -150,9 +140,6 @@
 
             return balanceUpDay;
         }
-
-        private bool CheckConstraintMoveBetsDay(DateTime fromDate)
-            => DateTime.Compare(fromDate, MoveBetsDate) > 0;
 
         public string BuildTooltipsForLiveCasino(int userId, string groupName, int groupId)
         {

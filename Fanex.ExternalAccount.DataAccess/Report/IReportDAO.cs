@@ -2,6 +2,7 @@
 {
     using DTO.Customer;
     using DTO.Report;
+    using Fanex.ExternalAccount.DataAccess.Criteria.Report;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -11,27 +12,17 @@
     {
         DataTable Age_SelBalanceUpDay();
 
-        DataTable EAS_CustomerSelUserInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
+        LineInfo GetCustomerInfo(GetCustomerInfoCriteria criteria);
 
-        LineInfo GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
+        IEnumerable<SuggestedUserName> EAS_CustomerSelUserSearch(GetSuggestUsernamesCriteria criteria);
 
-        List<SuggestedUserName> EAS_CustomerSelUserSearch(int custId, string username, string groupname);
+        IEnumerable<DailyWinLoss> EAS_Rpt_WinLossDaily_Com(GetCompanyDailyWinlossCriteria criteria);
 
-        List<DailyWinLoss> EAS_Rpt_WinLossDaily_Com14(DateTime winlostDate, int custId, string groupname);
+        IEnumerable<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg(GetSuperDailyWinlossCriteria criteria);
 
-        List<DailyWinLoss> EAS_Rpt_WinLossDaily_Com(DateTime winlostDate, int custId, string groupname);
+        IEnumerable<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg(GetMasterDailyWinlossCriteria criteria);
 
-        List<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg14(DateTime winlostDate, int custId, int masterId, int memberId);
-
-        List<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg(DateTime winlostDate, int custId, int masterId, int memberId);
-
-        List<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg14(DateTime winlostDate, int custId, int agentId, int memberId);
-
-        List<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg(DateTime winlostDate, int custId, int agentId, int memberId);
-
-        List<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag14(DateTime winlostDate, int custId, int memberId);
-
-        List<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag(DateTime winlostDate, int custId, int memberId);
+        IEnumerable<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag(GetAgentDailyWinlossCriteria criteria);
 
         List<WinLossDetailExtra> EAS_Rpt_WinLossDetail_Com(
             string groupname,

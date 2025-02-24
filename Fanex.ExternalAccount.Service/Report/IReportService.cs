@@ -9,8 +9,6 @@
 
     public interface IReportService
     {
-        DataTable GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
-
         LineInfo SearchCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
 
         List<SuggestedUserName> GetSuggestedUserName(int custId, string username, string groupName);

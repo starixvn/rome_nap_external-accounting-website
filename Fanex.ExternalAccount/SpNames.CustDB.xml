@@ -22,7 +22,11 @@
   </Function>
   <Function Name="Report">
     <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerSelUserInfo" SpName="EAS_CustomerSelUserInfo" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_CustomerSelUserInfo" SpName="EAS_CustomerSelUserInfo" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" >
+      <Mapping DataField="srecommend" ObjectProperty="SuperId" />
+      <Mapping DataField="mrecommend" ObjectProperty="MasterId" />
+      <Mapping DataField="recommend" ObjectProperty="AgentId" />
+    </Setting>
     <Setting Key="EAS_CustomerSelUserSearch" SpName="EAS_CustomerSelUserSearch" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_CustomerUpdUserSearch" SpName="EAS_CustomerUpdUserSearch" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDaily_Com14" SpName="EAS_Rpt_WinLossDaily_Com14" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />

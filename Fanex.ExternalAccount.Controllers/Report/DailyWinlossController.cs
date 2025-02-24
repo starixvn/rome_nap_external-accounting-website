@@ -90,17 +90,17 @@
         {
             if (!string.IsNullOrWhiteSpace(_username))
             {
-                var custInfo = reportService.GetCustomerInfo(_groupname, 0, _username, true);
-                if (custInfo == null || custInfo.Rows.Count == 0)
+                var custInfo = reportService.SearchCustomerInfo(_groupname, 0, _username, true);
+                if (custInfo == null)
                 {
                     return false;
                 }
                 
-                _roleId = custInfo.Rows[0].ToInt32("roleid");
-                _srecommend = custInfo.Rows[0].ToInt32("srecommend");
-                _mrecommend = custInfo.Rows[0].ToInt32("mrecommend");
-                _recommend = custInfo.Rows[0].ToInt32("recommend");
-                _memberId = custInfo.Rows[0].ToInt32("custid");
+                _roleId = custInfo.RoleId;
+                _srecommend = custInfo.SuperId;
+                _mrecommend = custInfo.MasterId;
+                _recommend = custInfo.AgentId;
+                _memberId = custInfo.CustId;
             }
 
             return true;

@@ -228,6 +228,13 @@
     <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutCheckCriteria.cs" />
     <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutSelectCriteria.cs" />
     <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutUpdateCriteria.cs" />
+    <Compile Include="Criteria\Report\GetAgentDailyWinlossCriteria.cs" />
+    <Compile Include="Criteria\Report\GetCustomerInfoCriteria.cs" />
+    <Compile Include="Criteria\Report\GetMasterDailyWinlossCriteria.cs" />
+    <Compile Include="Criteria\Report\UpdateSuggestUsernameCriteria.cs" />
+    <Compile Include="Criteria\Report\GetSuggestUsernamesCriteria.cs" />
+    <Compile Include="Criteria\Report\GetSuperDailyWinlossCriteria.cs" />
+    <Compile Include="Criteria\Report\GetCompanyDailyWinlossCriteria.cs" />
     <Compile Include="Criteria\SuperWinLossDetailByPT\SuperPTCriteria.cs" />
     <Compile Include="Criteria\SuperWinLossDetailByPT\SuperWinLossByPTCriteria.cs" />
     <Compile Include="Criteria\SubGroup\ForceKickoutAdminSubGroupCriteria.cs" />
