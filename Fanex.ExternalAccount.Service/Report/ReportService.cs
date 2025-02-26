@@ -21,80 +21,93 @@
 
     public class ReportService : IReportService
     {
-        private const string BalanceUpDayKey = "SUNPLUS.AGENT.MODEL.BL.REPORTS.BALANCEUPDAY";
-        private static readonly ICacheService Cache = new CacheService(new MemoryCache(new MemoryCacheOptions()));
-
         private readonly IReportDao _reportDao;
         private readonly IProductService _productService;
         private readonly IProductDetailService _productDetailService;
+        private readonly IReportUtils _reportUtils;
 
         public ReportService(
             IReportDao reportRespository = null,
             IProductService productService = null,
-            IProductDetailService productDetailService = null)
+            IProductDetailService productDetailService = null,
+            IReportUtils reportUtils = null)
         {
             _reportDao = reportRespository ?? new ReportDao();
             _productService = productService ?? new ProductService();
             _productDetailService = productDetailService ?? new ProductDetailService();
+            _reportUtils = reportUtils ?? new ReportUtils();
         }
 
-        public static DateTime BalanceUpDate => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["BalanceUpDay"]);
-
-        public static DateTime MoveBetsDate => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["MoveBetsDay"]);
-
         public LineInfo SearchCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
-            => _reportDao.GetCustomerInfo(groupname, custId, userName, isGetUplineInfo);
+            => _reportDao.GetCustomerInfo(new GetCustomerInfoCriteria(groupname, custId, userName, isGetUplineInfo));
 
-        public List<SuggestedUserName> GetSuggestedUserName(int custId, string username, string groupName)
-            => _reportDao.EAS_CustomerSelUserSearch(custId, username, groupName);
+        public IEnumerable<SuggestedUserName> GetSuggestedUserName(int custId, string username, string groupName)
+            => _reportDao.EAS_CustomerSelUserSearch(new GetSuggestUsernamesCriteria(custId, username, groupName));
 
-        public List<DailyWinLoss> GetDailyWinLoss(DateTime winlostDate, int custId, string groupName)
-            => _reportDao.EAS_Rpt_WinLossDaily_Com(new GetCompanyDailyWinlossCriteria(winlostDate, custId, groupName, MoveBetsDate));
+        public IEnumerable<DailyWinLoss> GetDailyWinLoss(DateTime winlostDate, int custId, string groupName)
+            => _reportDao.EAS_Rpt_WinLossDaily_Com(new GetCompanyDailyWinlossCriteria(winlostDate, custId, groupName, _reportUtils.MoveBetsDate));
 
-        public List<DailyWinLoss> GetDailyWinLossSuper(DateTime winlostDate, int custId, int masterId, int memberId)
-            => _reportDao.EAS_Rpt_WinLossDaily_SAg(new GetSuperDailyWinlossCriteria(winlostDate, custId, masterId, MoveBetsDate));
+        public IEnumerable<DailyWinLoss> GetDailyWinLossSuper(DateTime winlostDate, int custId, int masterId, int memberId)
+            => _reportDao.EAS_Rpt_WinLossDaily_SAg(new GetSuperDailyWinlossCriteria(winlostDate, custId, masterId, _reportUtils.MoveBetsDate));
 
-        public List<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId, int memberId)
-            => _reportDao.EAS_Rpt_WinLossDaily_MAg(new GetMasterDailyWinlossCriteria(winlostDate, custId, agentId, MoveBetsDate));
+        public IEnumerable<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId, int memberId)
+            => _reportDao.EAS_Rpt_WinLossDaily_MAg(new GetMasterDailyWinlossCriteria(winlostDate, custId, agentId, _reportUtils.MoveBetsDate));
         
-        public List<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId)
-            => _reportDao.EAS_Rpt_WinLossDaily_Ag(new GetAgentDailyWinlossCriteria(winlostDate, custId, memberId, MoveBetsDate));
+        public IEnumerable<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId)
+            => _reportDao.EAS_Rpt_WinLossDaily_Ag(new GetAgentDailyWinlossCriteria(winlostDate, custId, memberId, _reportUtils.MoveBetsDate));
 
-        public List<WinLossDetailExtra> GetSuperWinLossDetail(
+        public IEnumerable<WinLossDetailExtra> GetSuperWinLossDetail(
             string groupname,
             int custId,
             DateTime fromDate,
             DateTime toDate,
             string productIds,
             string productDetailsXML)
-            => _reportDao.EAS_Rpt_WinLossDetail_Com(groupname, custId, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
+            => _reportDao.EAS_Rpt_WinLossDetail_Com(new GetSuperWinlossDetailCriteria(
+                groupname, 
+                custId, 
+                fromDate,
+                toDate, 
+                productIds,
+                productDetailsXML,
+                _reportUtils.BalanceUpDate,
+                _reportUtils.MoveBetsDate));
 
-        public List<WinLossDetail> GetMasterWinLossDetail(
+        public IEnumerable<WinLossDetail> GetMasterWinLossDetail(
             int custId,
             int masterId,
             DateTime fromDate,
             DateTime toDate,
             string productIds,
             string productDetailsXML)
-            => _reportDao.EAS_Rpt_WinLossDetail_SAg(custId, masterId, 0,fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
-        
-        public List<WinLossDetail> GetDirectMemberOfSuperWinLossDetail(
-            int custId,
-            int memberId,
-            DateTime fromDate,
-            DateTime toDate,
-            string productIds,
-            string productDetailsXML)
-            => _reportDao.EAS_Rpt_WinLossDetail_SAg(custId, 0, memberId,fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
+            => _reportDao.EAS_Rpt_WinLossDetail_SAg(new GetMasterWinlossDetailCriteria(
+                custId, 
+                masterId, 
+                0, 
+                fromDate, 
+                toDate, 
+                productIds, 
+                productDetailsXML, 
+                _reportUtils.BalanceUpDate, 
+                _reportUtils.MoveBetsDate));
 
-        public List<WinLossDetailMAg> GetAgentWinLossDetail(
+        public IEnumerable<WinLossDetailMAg> GetAgentWinLossDetail(
             int custId,
             int agentId,
             DateTime fromDate,
             DateTime toDate,
             string productIds,
             string productDetailsXML)
-            => _reportDao.EAS_Rpt_WinLossDetail_MAg(custId, agentId, 0,fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);       
+            => _reportDao.EAS_Rpt_WinLossDetail_MAg(new GetAgentWinlossDetailCriteria(
+                custId, 
+                agentId, 
+                0, 
+                fromDate, 
+                toDate, 
+                productIds, 
+                productDetailsXML, 
+                _reportUtils.BalanceUpDate, 
+                _reportUtils.MoveBetsDate));
         
         public List<WinLossDetailMAg> GetDirectMemberOfMasterWinLossDetail(
             int custId,
@@ -103,43 +116,38 @@
             DateTime toDate,
             string productIds,
             string productDetailsXML)
-            => _reportDao.EAS_Rpt_WinLossDetail_MAg(custId, 0, memberId, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
+            => _reportDao.EAS_Rpt_WinLossDetail_MAg(new GetAgentWinlossDetailCriteria(
+                custId, 
+                0, 
+                memberId, 
+                fromDate, 
+                toDate, 
+                productIds, 
+                productDetailsXML, 
+                _reportUtils.BalanceUpDate, 
+                _reportUtils.MoveBetsDate));
 
-        public List<WinLossDetailAg> GetMemberWinLossDetail(
+        public IEnumerable<WinLossDetailAg> GetMemberWinLossDetail(
             int custId,
             int memberId,
             DateTime fromDate,
             DateTime toDate,
             string productIds,
             string productDetailsXML)
-            => _reportDao.EAS_Rpt_WinLossDetail_Ag(custId, memberId, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
+            => _reportDao.EAS_Rpt_WinLossDetail_Ag(new GetMemberWinlossDetailCriteria(
+                custId, 
+                memberId, 
+                fromDate, 
+                toDate, 
+                productIds, 
+                productDetailsXML, 
+                _reportUtils.BalanceUpDate, 
+                _reportUtils.MoveBetsDate));
 
-        public List<WinLossDetailIBCBetLiveCasino> GetSuperWinLossDetailIBCBetLiveCasino(
-            string groupname,
-            DateTime fromDate,
-            DateTime toDate)
-            => _reportDao.EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(groupname, fromDate, toDate, MoveBetsDate);
+        public IEnumerable<int> GetSortingOrderList(string groupname)
+            => _reportDao.EAS_Rpt_WinLossDaily_SortingOrder(new GetSortingOrderCriteria(groupname));
 
-        public ArrayList GetSortingOrderList(string groupname)
-            => _reportDao.EAS_Rpt_WinLossDaily_SortingOrder(groupname);
-
-        public List<ExtraPTModel> GetExtraPT(string groupName) => _reportDao.EAS_Rpt_ViewExtraPT2(groupName);
-
-        public static DataTable GetBalanceUpDay()
-        {
-            Cache.TryGet<DataTable>(BalanceUpDayKey, out var balanceUpDay);
-            if (balanceUpDay == null)
-            {
-                var reportDao = new ReportDao();
-                balanceUpDay = reportDao.Age_SelBalanceUpDay();
-                if (balanceUpDay != null)
-                {
-                    Cache.Set<DataTable>(BalanceUpDayKey, balanceUpDay, new CacheItemOptions { RelativeExpiration = TimeSpan.FromMinutes(5) });
-                }
-            }
-
-            return balanceUpDay;
-        }
+        public IEnumerable<ExtraPTModel> GetExtraPT(string groupName) => _reportDao.EAS_Rpt_ViewExtraPT2(new GetExtraPTCriteria(groupName));
 
         public string BuildTooltipsForLiveCasino(int userId, string groupName, int groupId)
         {

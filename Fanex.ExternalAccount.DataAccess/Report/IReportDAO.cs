@@ -10,8 +10,6 @@
 
     public interface IReportDao
     {
-        DataTable Age_SelBalanceUpDay();
-
         LineInfo GetCustomerInfo(GetCustomerInfoCriteria criteria);
 
         IEnumerable<SuggestedUserName> EAS_CustomerSelUserSearch(GetSuggestUsernamesCriteria criteria);
@@ -24,47 +22,15 @@
 
         IEnumerable<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag(GetAgentDailyWinlossCriteria criteria);
 
-        List<WinLossDetailExtra> EAS_Rpt_WinLossDetail_Com(
-            string groupname,
-            int custId,
-            DateTime fromDate,
-            DateTime toDate,
-            string productIds,
-            string productDetailsXML,
-            DateTime balanceUpDay,
-            DateTime moveBetsDay);
+        IEnumerable<WinLossDetailExtra> EAS_Rpt_WinLossDetail_Com(GetSuperWinlossDetailCriteria criteria);
 
-        List<WinLossDetail> EAS_Rpt_WinLossDetail_SAg(
-            int custId,
-            int masterId,
+        IEnumerable<WinLossDetail> EAS_Rpt_WinLossDetail_SAg(GetMasterWinlossDetailCriteria criteria);
             int memberId,
-            DateTime fromDate,
-            DateTime toDate,
-            string productIds,
-            string productDetailsXML,
-            DateTime balanceUpDay,
-            DateTime moveBetsDay);
 
-        List<WinLossDetailMAg> EAS_Rpt_WinLossDetail_MAg(
-            int custId,
-            int agentId,
+        IEnumerable<WinLossDetailMAg> EAS_Rpt_WinLossDetail_MAg(GetAgentWinlossDetailCriteria criteria);
             int memberId,
-            DateTime fromDate,
-            DateTime toDate,
-            string productIds,
-            string productDetailsXML,
-            DateTime balanceUpDay,
-            DateTime moveBetsDay);
 
-        List<WinLossDetailAg> EAS_Rpt_WinLossDetail_Ag(
-            int custId,
-            int memberId,
-            DateTime fromDate,
-            DateTime toDate,
-            string productIds,
-            string productDetailsXML,
-            DateTime balanceUpDay,
-            DateTime moveBetsDay);
+        IEnumerable<WinLossDetailAg> EAS_Rpt_WinLossDetail_Ag(GetMemberWinlossDetailCriteria criteria);
 
         List<WinLossDetailIBCBetLiveCasino> EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(
             string groupName,
@@ -72,9 +38,9 @@
             DateTime toDate,
             DateTime movebetDay);
 
-        ArrayList EAS_Rpt_WinLossDaily_SortingOrder(string groupname);
+        IEnumerable<int> EAS_Rpt_WinLossDaily_SortingOrder(GetSortingOrderCriteria criteria);
 
-        List<ExtraPTModel> EAS_Rpt_ViewExtraPT2(string groupName);
+        IEnumerable<ExtraPTModel> EAS_Rpt_ViewExtraPT2(GetExtraPTCriteria criteria);
 
 
 #pragma warning disable S107 // Methods should not have too many parameters

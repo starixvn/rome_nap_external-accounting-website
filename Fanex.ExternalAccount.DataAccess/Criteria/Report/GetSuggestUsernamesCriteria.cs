@@ -1,5 +1,4 @@
-﻿
-namespace Fanex.ExternalAccount.DataAccess.Criteria.Report
+﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Report
 {
     using Fanex.Data.Repository;
 

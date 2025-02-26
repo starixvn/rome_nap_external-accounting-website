@@ -1,13 +1,9 @@
-﻿using Fanex.Data;
-using Fanex.Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.ExternalAccount.DataAccess.Criteria.Report
+﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Report
 {
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+    using System;
+
     public class GetSuperDailyWinlossCriteria : CriteriaBase
     {
         public GetSuperDailyWinlossCriteria(DateTime WinlossDate, int CustId, int MasterId, DateTime MoveBetsDate)

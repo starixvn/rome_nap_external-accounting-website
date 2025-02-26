@@ -1,9 +1,9 @@
-﻿using Fanex.Data;
-using Fanex.Data.Repository;
-using System;
-
-namespace Fanex.ExternalAccount.DataAccess.Criteria.Report
+﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Report
 {
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+    using System;
+
     public class GetAgentDailyWinlossCriteria : CriteriaBase
     {
         public GetAgentDailyWinlossCriteria(DateTime WinlossDate, int CustId, int MemberId, DateTime MoveBetsDate)

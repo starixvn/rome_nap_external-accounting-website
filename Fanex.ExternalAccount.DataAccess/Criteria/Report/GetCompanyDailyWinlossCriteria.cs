@@ -1,14 +1,9 @@
-﻿using Fanex.Data;
-using Fanex.Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.ExternalAccount.DataAccess.Criteria.Report
+﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Report
 {
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+    using System;
+
     public class GetCompanyDailyWinlossCriteria : CriteriaBase
     {
         public GetCompanyDailyWinlossCriteria(DateTime WinlossDate, int CustId, string GroupName, DateTime MoveBetsDate)

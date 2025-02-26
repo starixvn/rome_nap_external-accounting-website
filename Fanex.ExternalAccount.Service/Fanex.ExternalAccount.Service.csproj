@@ -48,11 +48,11 @@
       <HintPath>..\packages\Base32.1.0.0.26\lib\portable-net40+sl40+win+wp80\Base32.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Caching, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Caching.2.2.2\lib\net461\Fanex.Caching.dll</HintPath>
+    <Reference Include="Fanex.Caching, Version=2.2.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Caching.2.2.8\lib\net472\Fanex.Caching.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Caching.Redis, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Caching.Redis.2.2.2\lib\net461\Fanex.Caching.Redis.dll</HintPath>
+    <Reference Include="Fanex.Caching.Redis, Version=2.2.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Caching.Redis.2.2.8\lib\net472\Fanex.Caching.Redis.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
@@ -155,6 +155,7 @@
     <Reference Include="System.Diagnostics.PerformanceCounter, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.PerformanceCounter.4.5.0\lib\net461\System.Diagnostics.PerformanceCounter.dll</HintPath>
     </Reference>
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Pipelines, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Pipelines.4.5.1\lib\netstandard2.0\System.IO.Pipelines.dll</HintPath>
     </Reference>
@@ -235,11 +236,8 @@
     <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossByPTParam.cs" />
     <Compile Include="Report\SuperWinLossDetailByPT\SuperWinLossByPTService.cs" />
     <Compile Include="TotalBet\TotalBetService.cs" />
-    <Compile Include="Report\WinLossDetailIBCBetLiveCasinoRequests.cs" />
     <Compile Include="Report\WinLossDetailRequests.cs" />
-    <Compile Include="Report\IWinLossDetailIBCBetLiveCasinoService.cs" />
     <Compile Include="Report\WinLossDetailService.cs" />
-    <Compile Include="Report\WinLossDetailIBCBetLiveCasinoService.cs" />
     <Compile Include="Report\WinLossDetailServiceImpl.cs" />
     <Compile Include="Statement\IStatementService.cs" />
     <Compile Include="Statement\StatementService.cs" />
