@@ -1,8 +1,6 @@
 namespace Fanex.ExternalAccount.MatchWinLossReports.Criteria
 {
-    using System;
-    using Fanex.NAP.Framework.Data;
-    
+    using Fanex.Data.Repository;
     public class MatchCriteria : CriteriaBase
     {
         public string GroupName { get; set; }

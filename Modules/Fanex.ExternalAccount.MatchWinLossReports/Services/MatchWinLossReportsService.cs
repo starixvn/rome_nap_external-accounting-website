@@ -27,6 +27,7 @@
     public class MatchWinLossReportsService : IMatchWinLossReportsService
     {
         private readonly IMatchWinLossReportsDataAccess _dataAccess;
+        
 
         public MatchWinLossReportsService(IMatchWinLossReportsDataAccess dataAccess = null)
         {

@@ -1,7 +1,7 @@
 namespace Fanex.ExternalAccount.MatchWinLossReports.Services
 {
     using System.Collections.Generic;
-    using Fanex.Common.Extensions;
+    // using Fanex.Common.Extensions;
     using Fanex.ExternalAccount.Excel;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.MatchWinLossReports.Models;
@@ -115,7 +115,7 @@ namespace Fanex.ExternalAccount.MatchWinLossReports.Services
 
         private void WriteFooter(ISheet resultSheet, ref int rowIndex, ref int toRowId)
         {
-            if (report.Events.Count != 0 && !report.Total.IsNullOrDBNull() && !report.Total.Equals(report.GrandTotal))
+            if (report.Events.Count != 0 && !report.Total.Equals(null) && !report.Total.Equals(report.GrandTotal))
             {
                 var text = query.IsMY ? $"Total in {query.BaseCurrency ?? query.Currencies}" : "Total";
                 WriteTotal(resultSheet, report.Total, ref rowIndex, ref toRowId, text);
@@ -126,7 +126,7 @@ namespace Fanex.ExternalAccount.MatchWinLossReports.Services
                 WriteSystemParlay(resultSheet, report.SystemParlayOutright, ref rowIndex, ref toRowId);
             }
 
-            if (!report.GrandTotal.IsNullOrDBNull())
+            if (!report.GrandTotal.Equals(null))
             {
                 var text = query.IsMY ? $"Grand Total in {query.BaseCurrency ?? query.Currencies}" : "Grand Total";
                 WriteTotal(resultSheet, report.GrandTotal, ref rowIndex, ref toRowId, text);

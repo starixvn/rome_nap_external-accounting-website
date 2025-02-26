@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.MatchWinLossReports.Criteria
 {
-    using Fanex.NAP.Framework.Data;
-
+    //using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     public class GetSummaryReportDataCriteria : CriteriaBase
     {
         public string FromDate { get; set; }
@@ -25,8 +25,7 @@
         public int Page { get; set; } = 1;
 
         public int PageSize { get; set; } = 500;
-
-
+        
         public int TotalRows { get; set; }
 
         public override bool IsValid() =>

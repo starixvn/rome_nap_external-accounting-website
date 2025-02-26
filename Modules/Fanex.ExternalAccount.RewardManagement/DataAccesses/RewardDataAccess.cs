@@ -15,8 +15,7 @@ namespace Fanex.ExternalAccount.RewardManagement.DataAccesses
     public class RewardDataAccess : IRewardDataAccess
     {
         private readonly IDynamicRepository repository;
-        public RewardDataAccess(IDynamicRepository repository)
-            => this.repository = repository;
+        public RewardDataAccess(IDynamicRepository repository) => this.repository = repository;
         public IEnumerable<Program> GetPrograms(GeProgramCriteria criteria)
         {
             return repository.Fetch<Program>(criteria);
