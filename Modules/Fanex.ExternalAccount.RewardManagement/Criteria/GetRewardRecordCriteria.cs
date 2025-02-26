@@ -2,9 +2,8 @@ namespace Fanex.ExternalAccount.RewardManagement.Criteria
 {
     using System;
     using Fanex.ExternalAccount.RewardManagement.Requests;
-    using Fanex.NAP.Framework.Data;
 
-    public class GetRewardRecordCriteria : CriteriaBase
+    public class GetRewardRecordCriteria : PagingRewardReportCriteria
     {
         public DateTime FromDate { get; }
 
@@ -17,14 +16,10 @@ namespace Fanex.ExternalAccount.RewardManagement.Criteria
         public string GroupName { get; }
 
         public byte? PaymentStatus { get; }
-
-        public int PageIndex { get; set; } = 0;
-        
-        public int PageSize { get; set; } = 0;
-
-        public int TotalRecords { get; set; }
         
         public override string GetSettingKey() => "EAS_Rpt_RewardDetail_Com";
+        
+        public override bool IsValid() => true; 
 
         public GetRewardRecordCriteria(RewardReportRequest request)
         {

@@ -1,6 +1,5 @@
 namespace Fanex.ExternalAccount.RewardManagement.Models
 {
-    using Fanex.ExternalAccount.Core.Shared;
     using System;
 
     public class RewardRecord
