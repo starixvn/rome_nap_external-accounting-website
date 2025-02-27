@@ -1,7 +1,7 @@
 namespace Fanex.ExternalAccount.RewardManagement.Models
 {
     using System;
-
+    using Fanex.ExternalAccount.Core.Shared;
     public class RewardRecord
     {
         private const string FormatPaymentDate = "MM/dd/yyyy";

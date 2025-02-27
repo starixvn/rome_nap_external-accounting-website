@@ -373,7 +373,10 @@
     <Setting Key="Acc_CustomerUpdSecurityCode_Multiple" SpName="Acc_CustomerUpdSecurityCode_Multiple" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="Headline List">
-    <Setting Key="EAS_CustomerSelByGroupHeadline" SpName="EAS_CustomerSelByGroupHeadline" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_CustomerSelByGroupHeadline" SpName="EAS_CustomerSelByGroupHeadline" DbName="DBCust.CustDB.wsv_xnap" Plain="0" >
+    <Mapping DataField="custheadlineid" ObjectProperty="GroupId"/>
+    <Mapping DataField="groupheadline" ObjectProperty="GroupName"/>
+    <Setting/>
   </Function>
   <Function Name="Customer Setting">
     <Setting Key="Acc_LiteMode_CustSetting_ProductProfileSelect" SpName="Acc_LiteMode_CustSetting_ProductProfileSelect" DbName="DBCUST.CustDB.wsv_xnap" />

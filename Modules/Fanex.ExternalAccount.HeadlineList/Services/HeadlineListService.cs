@@ -17,7 +17,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Services
 
         public HeadlineListService(IHeadlinesDataAccess dataAccess = null)
         {
-            _dataAccess = dataAccess ?? new HeadlinesDataAccess();
+            _dataAccess = dataAccess ?? new HeadlinesDataAccess(null);
         }
 
         public SearchHeadlineResult GetHeadlines(SearchHeadlineQuery query, int userId, string groupName)

@@ -1,7 +1,8 @@
 namespace Fanex.ExternalAccount.HeadlineList.Criteria
 {
     using System.Collections;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
+    
     public class GetHeadlinesCriteria : CriteriaBase
     {
         public int Status { get; set; }
@@ -24,17 +25,17 @@ namespace Fanex.ExternalAccount.HeadlineList.Criteria
             return "EAS_CustomerSelByGroupHeadline";
         }
 
-        public override Hashtable GetSpParams()
-        {
-            return new Hashtable
-            {
-                { "username", Username },
-                { "groupheadline", GroupHeadline },
-                { "status", Status },
-                { "groupname", GroupName },
-                { "userid", UserID },
-            };
-        }
+        // public override Hashtable GetSpParams()
+        // {
+        //     return new Hashtable
+        //     {
+        //         { "username", Username },
+        //         { "groupheadline", GroupHeadline },
+        //         { "status", Status },
+        //         { "groupname", GroupName },
+        //         { "userid", UserID },
+        //     };
+        // }
         
         public override bool IsValid()
         {

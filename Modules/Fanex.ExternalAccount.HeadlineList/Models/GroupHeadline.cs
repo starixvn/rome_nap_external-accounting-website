@@ -9,6 +9,8 @@ namespace Fanex.ExternalAccount.HeadlineList.Models
         public string GroupName { get; set; }
         
         public IList<HeadlineEntity> HeadlineEntities { get; set; }
+        
+        
     }
     
 }
