@@ -32,65 +32,16 @@
 
         IEnumerable<WinLossDetailAg> EAS_Rpt_WinLossDetail_Ag(GetMemberWinlossDetailCriteria criteria);
 
-        List<WinLossDetailIBCBetLiveCasino> EAS_Rpt_WinLossDetailIBCBetLiveCasino_Com(
-            string groupName,
-            DateTime fromDate,
-            DateTime toDate,
-            DateTime movebetDay);
-
         IEnumerable<int> EAS_Rpt_WinLossDaily_SortingOrder(GetSortingOrderCriteria criteria);
 
         IEnumerable<ExtraPTModel> EAS_Rpt_ViewExtraPT2(GetExtraPTCriteria criteria);
 
+        IEnumerable<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_Com(GetSuperWinlossDetailMultiCurrencyCriteria criteria);
 
-#pragma warning disable S107 // Methods should not have too many parameters
-        List<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_Com(
-            string groupname,
-            int custId,
-            string currencyIds,
-            int baseCurrency,
-            DateTime fromDate,
-            DateTime toDate,
-            string productIds,
-            string productDetailsXML,
-            DateTime balanceUpDay,
-            DateTime moveBetsDay);
+        IEnumerable<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_SAg(GetMasterWinlossDetailMultiCurrencyCriteria criteria);
 
-        List<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_SAg(
-            int custId,
-            int masterId,
-            string currencyIds,
-            int baseCurrency,
-            DateTime fromDate,
-            DateTime toDate,
-            string productIds,
-            string productDetailsXML,
-            DateTime balanceUpDay,
-            DateTime moveBetsDay);
+        IEnumerable<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_MAg(GetAgentWinlossDetailMultiCurrencyCriteria criteria);
 
-        List<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_MAg(
-            int custId,
-            int agentId,
-            string currencyIds,
-            int baseCurrency,
-            DateTime fromDate,
-            DateTime toDate,
-            string productIds,
-            string productDetailsXML,
-            DateTime balanceUpDay,
-            DateTime moveBetsDay);
-
-        List<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_Ag(
-            int custId,
-            int memberId,
-            string currencyIds,
-            int baseCurrency,
-            DateTime fromDate,
-            DateTime toDate,
-            string productIds,
-            string productDetailsXML,
-            DateTime balanceUpDay,
-            DateTime moveBetsDay);
-#pragma warning restore S107 // Methods should not have too many parameters
+        IEnumerable<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_Ag(GetMemberWinlossDetailMultiCurrencyCriteria criteria);
     }
 }
