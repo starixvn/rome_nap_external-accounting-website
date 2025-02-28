@@ -286,7 +286,7 @@
         }
     };
 
-    if (this.CurrentLevel !== this.Member && hasReadProtectCustomerFunction) {
+    if (this.CurrentLevel !== this.Member && hasReadProtectCustomerFunction && !this.isEditDirectMember) {
         menuItems.protectedStatus = {
             name: "Edit Multiple Protection Status",
             className: "iconEnableEdit",

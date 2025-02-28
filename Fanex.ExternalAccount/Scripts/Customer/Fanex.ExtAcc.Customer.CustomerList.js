@@ -133,6 +133,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         }
         
         _this.cachedParams.isDirectMember = params.isDirectMember;
+         Fanex.ExtAcc.Customer.isEditDirectMember = params.isDirectMember;
         _this.cachedParams.previousParams = params;
         _this.Search(params);
     },
