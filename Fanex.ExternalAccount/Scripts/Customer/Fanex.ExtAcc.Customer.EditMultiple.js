@@ -269,7 +269,7 @@
         className: "iconEnableEdit",
         callback: function (key, opt) {
             top.shouldCalculatePopupHeight = false;
-            var url = resolveClientUrl('Customer/MultipleSuspend?custIdList=' + Fanex.ExtAcc.Customer.IdsAndNames().Ids + '&roleid=' + Fanex.ExtAcc.Customer.CurrentLevel);
+            var url = resolveClientUrl('Customer/MultipleSuspend?custIdList=' + Fanex.ExtAcc.Customer.IdsAndNames().Ids + '&roleid=' + (Fanex.ExtAcc.Customer.isEditDirectMember ? Fanex.ExtAcc.Customer.Member : Fanex.ExtAcc.Customer.CurrentLevel));
             Fanex.ExtAcc.Customer.Status.ViewSuspendMultiple(Fanex.ExtAcc.Customer.IdsAndNames().Ids, Fanex.ExtAcc.Customer.CurrentLevel);
         }
     }
