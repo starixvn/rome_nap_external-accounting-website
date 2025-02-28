@@ -391,7 +391,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push(!isMemberList ? { HeaderText: 'Commission', Name: 'commision', MergeColNumber: 6 } : undefined);
         columns.push(showSubGroups ? { HeaderText: 'Assigned Sub Groups', Name: 'AssignedSubGroups', MergeRowNumber: 2 } : undefined);
         columns.push(isMemberList ? { HeaderText: 'User Group', Name: 'ugroup', MergeRowNumber: 2 } : undefined);
-        columns.push(isMemberList ? { HeaderText: isDirectMember ? 'Agent Commission' : 'Super Commission', Name: 'discount', MergeColNumber: 3 } : undefined);
+        columns.push(isMemberList ? { HeaderText: isDirectMember ? 'Super Commission' : 'Agent Commission', Name: 'discount', MergeColNumber: 3 } : undefined);
         columns.push(isMemberList ? { HeaderText: 'Player Commission', Name: 'playerdiscount', MergeColNumber: 3 } : undefined);
         columns.push(!isMemberList ? { HeaderText: 'No. of Downlines', Name: 'NoOfDownlines', MergeRowNumber: 2 } : undefined);
         columns.push(isSuperList ? { HeaderText: 'Data Available', Name: 'DateLimit', MergeRowNumber: 2 } : undefined);
