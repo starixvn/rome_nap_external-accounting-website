@@ -3,7 +3,7 @@ using Fanex.Data;
 using Fanex.ExternalAccount.DataAccess.Criteria.AutoTransfer;
 using Fanex.ExternalAccount.Core.Shared.Extensions;
 using Fanex.ExternalAccount.DTO;
-using Fanex.NAP.Framework.Data;
+using Fanex.Data.Repository;
 
 namespace Fanex.ExternalAccount.DataAccess.AutoTransfer
 {

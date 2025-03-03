@@ -1,8 +1,9 @@
-﻿using Fanex.ExternalAccount.DTO;
-using Fanex.NAP.Framework.Data;
-
-namespace Fanex.ExternalAccount.DataAccess.Criteria.AutoTransfer
+﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.AutoTransfer
 {
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+    using Fanex.ExternalAccount.DTO;
+
     public class GetAutoTransferJobStatusCriteria : CriteriaBase
     {
         public GetAutoTransferJobStatusCriteria(SiteDB siteDB)
