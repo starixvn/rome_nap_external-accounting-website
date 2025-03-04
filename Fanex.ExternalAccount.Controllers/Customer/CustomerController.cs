@@ -229,7 +229,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var generalInfo = request.GeneralInfo;
             var rawPassword = Encryptor.Decrypt(generalInfo.Password, HttpContext.Session[HashKeySessionKey].ToString());
-            generalInfo.Password = Encryption.CfsEnCode(rawPassword);
+            generalInfo.Password = rawPassword;
 
             var response = await customerServiceClient.CreateCustomer(new CustomerClient.Params.CreateCustomerParam(
                 generalInfo,
