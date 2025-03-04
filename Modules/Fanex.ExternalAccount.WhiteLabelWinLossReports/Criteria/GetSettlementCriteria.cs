@@ -1,7 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.WhiteLabelWinLossReports.Criteria
 {
     using System;
-    using Fanex.NAP.Framework.Data;
+    //using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetSettlementCriteria : CriteriaBase
     {
@@ -30,5 +31,7 @@
         public string UserName { get; }
 
         public override string GetSettingKey() => "EAS_Rpt_WhiteLabelSettlement";
+        
+        public override bool IsValid() => !string.IsNullOrWhiteSpace(GroupName);
     }
 }

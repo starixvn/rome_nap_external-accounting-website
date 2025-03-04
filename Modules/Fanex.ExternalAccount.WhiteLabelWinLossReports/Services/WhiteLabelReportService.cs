@@ -5,8 +5,9 @@ namespace Fanex.ExternalAccount.WhiteLabelWinLossReports.Services
     using Fanex.ExternalAccount.WhiteLabelWinLossReports.Criteria;
     using Fanex.ExternalAccount.WhiteLabelWinLossReports.Models;
     using Fanex.ExternalAccount.WhiteLabelWinLossReports.Requests;
-    using Fanex.NAP.Framework.Data;
-
+    // using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
+    
     public interface IWhiteLabelReportService
     {
         IEnumerable<WhiteLabelModel> GetWhiteLabels(string groupName);
