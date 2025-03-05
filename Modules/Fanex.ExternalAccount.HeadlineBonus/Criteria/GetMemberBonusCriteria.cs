@@ -1,8 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.HeadlineBonus.Criteria
 {
     using System;
-    using Fanex.NAP.Framework.Data;
-
+    using Fanex.Data.Repository;
     internal class GetMemberBonusCriteria : CriteriaBase
     {
         public GetMemberBonusCriteria(

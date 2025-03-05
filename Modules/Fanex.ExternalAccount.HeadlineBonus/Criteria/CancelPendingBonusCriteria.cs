@@ -1,8 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.HeadlineBonus.Criteria
 {
-    using Fanex.NAP.Framework.Data;
-
-    internal class CancelPendingBonusCriteria : CriteriaBase
+    using Fanex.Data.Repository;
+    internal class CancelPendingBonusCriteria : INonQueryCommand
     {
         public CancelPendingBonusCriteria(
             string groupName,
@@ -27,11 +26,13 @@
         public int UserId { get; }
 
         public string LoginIP { get; }
+        
+        public string GetSettingKey() => "EAS_Bonus_Cancel";
 
-        public override string GetSettingKey()
-            => "EAS_Bonus_Cancel";
-
-        public override bool IsValid()
-            => !string.IsNullOrWhiteSpace(GroupName) && CustId > 0 && TransId > 0;
+        public bool IsValid()  => !string.IsNullOrWhiteSpace(GroupName) && CustId > 0 && TransId > 0;
+        
+        public int Errcode { get; set; }
+        
+        public string Errmsg { get; set; }
     }
 }
