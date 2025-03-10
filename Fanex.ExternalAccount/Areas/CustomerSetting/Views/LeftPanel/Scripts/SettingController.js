@@ -749,7 +749,7 @@
         }
 
         top.shouldCalculatePopupHeight = false;
-        $scope.EnableProductGroup(3, "Live & RNG Casino", 800, 320);
+        $scope.EnableProductGroup(3, "Live & RNG Casino", 950, 400);
     };
 
     $scope.EnableRNGGames = function (enable, id, disabled) {
@@ -819,11 +819,12 @@
             + '&custid=' + personalInfo.custId.value
             + '&custname=' + personalInfo.currentLevel.value
             + '&custRole=' + personalInfo.roleId.value
+            + '&recommend=' + personalInfo.recommend.value
             + '&productid=' + productId
             + '&height=' + height;
         var url = parent.resolveClientUrl(url_SELECT);
         var title = 'Update ' + productName + ' Status: <font color="#6dcff6">' + personalInfo.currentLevel.value + '</font>';
-        parent.Fanex.ExtAcc.Form.ShowFrame(url, title, width, height, false);
+        parent.Fanex.ExtAcc.Form.ShowFrame(url, title, width, height, false, undefined, 0);
     };
 
     $scope.ViewSubTab = function (id) {

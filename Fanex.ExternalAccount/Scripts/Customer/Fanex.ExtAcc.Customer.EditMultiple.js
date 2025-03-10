@@ -666,15 +666,17 @@ Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus = function (productIds) {
         width = 860,
         height = 540,
         custIds = this.Ids().join(',');
-
+    var isDirectMember = Fanex.ExtAcc.Customer.CustomerList.cachedParams.isDirectMember;
+    var currentUplineLevel = this.CurrentLevel + 1;
     if (custIds.len === 0) {
         Fanex.ExtAcc.Form.ShowFrame(blankUrl, title, width, height, false, false, 1);
     } else {
         document.getElementById('productIds').value = productIds.join(',');
         document.getElementById('custIds').value = custIds;
         document.getElementById('custNames').value = this.Names().join(', ');
-        document.getElementById('custRole').value = this.CurrentLevel;
+        document.getElementById('custRole').value = isDirectMember ? Fanex.ExtAcc.Customer.Member : this.CurrentLevel;
         document.getElementById('groupId').value = Fanex.ExtAcc.Customer.GetGroupId();
+        document.getElementById('recommend').value = isDirectMember ? -currentUplineLevel : 0;
         Fanex.ExtAcc.Form.ShowFrame(blankUrl, title, width, height, false, false, 1);
         $('#targetProductStatusSettingForm').attr('action', resolveClientUrl('ProductStatusSetting/MultipleView')).submit();
     }

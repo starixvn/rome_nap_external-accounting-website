@@ -92,7 +92,7 @@ Fanex.ExtAcc.Form = {
         var margin = '30px';
         mainDiv.setAttribute('id', id);
 
-        if (marginRight) {
+        if (marginRight !== undefined) {
             margin = marginRight + 'px';
         }
 

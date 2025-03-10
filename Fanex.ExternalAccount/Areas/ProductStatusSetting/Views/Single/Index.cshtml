@@ -1,7 +1,8 @@
 ﻿@model QueryViewModel
 @{
     Layout = null;
-    string assetsVersion = "20241230001";
+    string assetsVersion = "20250310002";
+    var roleName = Model.Recommend < 0 ? Model.GetRoleName(Model.Recommend) : Model.GetRoleName(Model.CustRole);
 }
 <!DOCTYPE html>
 <html>
@@ -17,14 +18,13 @@
         <table class="tbl-product margin-top10" id="tbl-product">
             <thead>
                 <tr>
-                    <th class="title" colspan="@(Model.CustRole * 2 + (Model.CustRole == RoleIdentity.Super ? 4 : 2))"> @Model.GetRoleName(Model.CustRole): @Model.CustName</th>
+                    <th class="title" colspan="@(Model.CustRole * 2 + (Model.CustRole == RoleIdentity.Super ? 4 : 2))"> @roleName: @Model.CustName</th>
                 </tr>
                 <tr>
                     <th rowspan="2"></th>
                     <th rowspan="2">
                         @if (Model.IsMultipleBetTypes)
                         {
-                            var roleName = Model.GetRoleName(Model.CustRole);
                             <div class="current-role">@roleName</div>
                             <div class="all-status">
                                 <span class="enabled gray"
@@ -41,7 +41,7 @@
                         }
                         else
                         {
-                            @Model.GetRoleName(Model.CustRole)
+                            @roleName
                         }
                     </th>
                     @RenderHeaderLevelName(Model.CustRole)

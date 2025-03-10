@@ -20,7 +20,7 @@ else
             </tr>
             <tr>
                 <th rowspan="2"></th>
-                @RenderHeaderLevelName((short)(Model.CustRole + 1), isMultipleBetTypes, isDisabledUplineHeader)
+                @RenderHeaderLevelName(Model.CustRole, Model.Recommend, isMultipleBetTypes, isDisabledUplineHeader)
             </tr>
         </thead>
         <tbody>
@@ -66,28 +66,38 @@ else
 
 @Html.AntiForgeryToken()
 
-@helper RenderHeaderLevelName(short roleId, bool isMultipleBetTypes, bool isDisabledUpline)
+@helper RenderHeaderLevelName(short roleId, short recommend, bool isMultipleBetTypes, bool isDisabledUpline)
 {
-    while (roleId > 0 && --roleId > 0)
+    while (roleId > 0)
     {
-        if (roleId == RoleIdentity.Master)
+
+        if (roleId == RoleIdentity.Member)
+        {
+            @RenderHeaderStatus(recommend < 0 ? recommend : roleId, isMultipleBetTypes, isDisabledUpline);
+        }
+        else
+        {
+            @RenderHeaderStatus(roleId, isMultipleBetTypes, isDisabledUpline);
+        }
+
+        if (roleId == RoleIdentity.Super)
         {
             @RenderHeaderStatus(-4, isMultipleBetTypes, isDisabledUpline);
         }
 
-        if (roleId == RoleIdentity.Agent)
+        if (roleId == RoleIdentity.Master)
         {
             @RenderHeaderStatus(-3, isMultipleBetTypes, isDisabledUpline);
         }
 
-        @RenderHeaderStatus(roleId, isMultipleBetTypes, isDisabledUpline);
+        roleId--;
     }
 }
 
 @helper RenderHeaderStatus(short roleId, bool isMultipleBetTypes, bool isDisabledUpline)
 {
     var roleNameDic = new Dictionary<int, string>
-    {
+{
         {4, Resources.AllSupers},
         {-4, Resources.AllSuperDirectMember},
         {3, Resources.AllMasters},

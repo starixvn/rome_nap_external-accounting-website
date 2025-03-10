@@ -3,7 +3,7 @@
 
 @{
     Layout = null;
-    string assetsVersion = "201810031426";
+    string assetsVersion = "20250310002";
 }
 
 <!DOCTYPE html>
@@ -39,6 +39,7 @@
             @Html.Hidden("custId", Model.CustIds.Split(',')[0])
             @Html.Hidden("groupId", HttpContext.Current.Request["groupid"])
             @Html.Hidden("isGroup", Model.IsGroup)
+            @Html.Hidden("recommend", Model.Recommend)
         }
     </div>
 
