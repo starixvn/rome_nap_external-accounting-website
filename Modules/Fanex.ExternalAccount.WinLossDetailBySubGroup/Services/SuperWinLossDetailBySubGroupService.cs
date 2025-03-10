@@ -1,4 +1,5 @@
-﻿using Fanex.ExternalAccount.DataAccess.Products;
+﻿using Fanex.ExternalAccount.Core.Shared;
+using Fanex.ExternalAccount.DataAccess.Products;
 
 namespace Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Services
 {
@@ -26,12 +27,14 @@ namespace Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Services
         private readonly IProductService productService;
         private readonly IProductDetailService productDetailService;
         private readonly IReportService reportService;
-
+        private readonly IReportUtils _reportUtils;
+        
         public SuperWinLossDetailBySubGroupService(
             ISuperWinLossDetailBySubGroupDataAccess dataAccess = null,
             IProductService productService = null,
             IProductDetailService productDetailService = null,
-            IReportService reportService = null)
+            IReportService reportService = null,
+            IReportUtils reportUtils = null)
         {
             this.dataAccess = dataAccess ?? new SuperWinLossDetailBySubGroupDataAccess();
             this.productService = productService ?? new ProductService();
@@ -39,6 +42,7 @@ namespace Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Services
             this.reportService = reportService ?? new ReportService(
                 productService: this.productService,
                 productDetailService: this.productDetailService);
+            _reportUtils = reportUtils ?? new ReportUtils();
         }
 
         public SuperWinLossDetailBySubGroupReport GetSuperWinLossDetailBySubGroupReport(
@@ -56,8 +60,8 @@ namespace Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Services
                 dataAccess.GetSubGroupList(request.GroupId, request.SubGroup),
                 request.FromDate,
                 request.ToDate,
-                ReportService.BalanceUpDate,
-                ReportService.MoveBetsDate,
+                _reportUtils.BalanceUpDate,
+                _reportUtils.MoveBetsDate,
                 request.PageIndex + 1,
                 request.PageSize);
 

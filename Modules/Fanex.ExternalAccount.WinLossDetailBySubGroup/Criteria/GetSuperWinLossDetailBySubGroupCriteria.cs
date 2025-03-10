@@ -1,8 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Criteria
 {
     using System;
-    using Fanex.NAP.Framework.Data;
-
+    //using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     public class GetSuperWinLossDetailBySubGroupCriteria : CriteriaBase
     {
         public GetSuperWinLossDetailBySubGroupCriteria(
