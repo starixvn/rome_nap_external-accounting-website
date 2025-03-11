@@ -2847,11 +2847,7 @@
     <Content Include="PTEngine\BettingLimitMappingSection.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="IbcKeys\ibckeydec.snk" />
-    <Content Include="IbcKeys\ibcpkey.snk" />
-    <Content Include="IbcKeys\Web.config" />
     <Content Include="deployment.ignore" />
-    <Content Include="IbcKeys\ibckey.snk" />
     <Content Include="Fanex.ExternalAccount.UI.ruleset" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
