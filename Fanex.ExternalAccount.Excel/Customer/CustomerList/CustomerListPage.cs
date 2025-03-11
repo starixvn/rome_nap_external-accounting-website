@@ -39,9 +39,17 @@
             {
                 BoldAllFonts();
             }
-
-            BuildMainTitle(resultSheet);
-            WriteBodyReport(resultSheet);
+            
+            if (_builder.IsDirectMember)
+            {
+                BuildDirectMemberMainTitle(resultSheet);
+                WriteDirectMemberReport(resultSheet);
+            }
+            else
+            {    
+                BuildMainTitle(resultSheet);
+                WriteBodyReport(resultSheet);
+            }
 
             HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(TemplateSheet));
 
@@ -79,6 +87,14 @@
                 WriteMemberReport(resultSheet, _builder.Data, lastColumnIndex, _builder.IsMultipleCurrencyGroup);
             }
         }
+
+        public void WriteDirectMemberReport(ISheet resultSheet)
+        {
+            var totalColumn = _builder.IsMultipleCurrencyGroup ? 20 : 19;
+            var lastColumnIndex = FirstColumnIndex + totalColumn - 1;
+            WriteMemberReport(resultSheet, _builder.Data, lastColumnIndex, _builder.IsMultipleCurrencyGroup);
+        }
+        
 
         private void WriteMemberReport(
             ISheet resultSheet,
@@ -241,6 +257,13 @@
         public override void BuildMainTitle(ISheet resultSheet)
         {
             var mainTitle = $"{_builder.Status} {_builder.RoleId.DisplayRoleName()} List";
+
+            resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
+        }
+
+        public void BuildDirectMemberMainTitle(ISheet resultSheet)
+        {
+            var mainTitle = $"{_builder.Status} {_builder.UplineRoleId.DisplayRoleName()} Direct Member List";
 
             resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
         }

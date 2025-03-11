@@ -633,6 +633,10 @@
       <DependentUpon>match-win-loss-reports.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\reports\match-win-loss-reports.scss" />
+    <Content Include="ExcelTemplates\Customer\MasterDirectMemberList.xls" />
+    <Content Include="ExcelTemplates\Customer\MasterDirectMemberListMC.xls" />
+    <Content Include="ExcelTemplates\Customer\SuperDirectMemberList.xls" />
+    <Content Include="ExcelTemplates\Customer\SuperDirectMemberListMC.xls" />
     <Content Include="ExcelTemplates\Reports\AgentDailyWinloss.xls" />
     <Content Include="ExcelTemplates\Reports\MasterDailyWinloss.xls" />
     <Content Include="ExcelTemplates\Reports\MatchWinLossDetail.xls" />
