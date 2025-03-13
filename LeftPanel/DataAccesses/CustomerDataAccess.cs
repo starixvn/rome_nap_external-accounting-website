@@ -3,17 +3,15 @@
     using System.Collections.Generic;
     using System.Data;
     using Criteria;
-    using Data.DNAide;
     using DTO;
     using Fanex.ExternalAccount.Module.LeftPanel.Models;
-    using Fanex.NAP.Framework.Data;
     using ViewModels;
 
 #pragma warning disable IDE1006 // Naming Styles
     public interface CustomerDataAccess
 #pragma warning restore IDE1006 // Naming Styles
     {
-        DbResult GetPersonalInfo(string username, string groupName, int userId);
+        DataSet GetPersonalInfo(string username, string groupName, int userId);
 
         DataSet GetLoginInfo(int custId, string groupName);
 
@@ -27,13 +25,13 @@
 
         Result UpdateMemberGivenCredit(int id, int uplineId, decimal newGivenCredit, decimal totalAmt);
 
-        DbResult GetDownlineList(bool isDirectDownline, int custid, int pageSize, int pageIndex);
+        DataSet GetDownlineList(bool isDirectDownline, int custid, int pageSize, int pageIndex, out int totalPages);
 
-        DataRowCollection GetOnlineList(int custid);
+        DataSet GetOnlineList(int custid);
 
-        IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int role);
+        IEnumerable<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int role);
 
-        IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId);
+        IEnumerable<MemberUsedCreditItem> MemberUsedCreditItems(int custId);
 
         Result ResetMemberCredit(int custId, int uplineId, bool closedOnly);
 
@@ -43,7 +41,7 @@
 
         Result CloseCutomer(int custId, bool close, bool clearCredit, string custName);
 
-        Result UnlockAccess(ICriteria criteria);
+        Result UnlockAccess(UnlockAccessCommand command);
 
         Result AllowOutright(int custId, bool allow);
 
@@ -51,7 +49,7 @@
 
         Result ResetSecurityCode(int id, string code, bool force);        
 
-        Result RemoveOTP(RemoveOtpCriteria criteria);
+        Result RemoveOTP(RemoveOtpCommand criteria);
 
         MemberBalanceInfoModel GetMemberBalanceModel(int custId, SiteDB siteDB);
 

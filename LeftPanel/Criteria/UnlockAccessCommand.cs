@@ -1,10 +1,10 @@
-﻿using Fanex.NAP.Framework.Data;
-
-namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
+﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
 {
-    public class UnlockAccessCriteria : CriteriaBase
+    using Fanex.Data.Repository;
+
+    public class UnlockAccessCommand : INonQueryCommand
     {
-        public UnlockAccessCriteria(int custId, int userId, byte locked, string ip, byte systemId)
+        public UnlockAccessCommand(int custId, int userId, byte locked, string ip, byte systemId)
         {
             CustId = custId;
             UserId = userId;
@@ -23,10 +23,14 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
 
         public byte SystemId { get; }
 
-        public override string GetSettingKey()
+        public int ErrCode { get; set; }
+
+        public string ErrMsg { get; set; }
+
+        public string GetSettingKey()
             => "Acc_CustomerUpdLocked";
 
-        public override bool IsValid()
+        public bool IsValid()
             => CustId > 0 && UserId > 0;
     }
 }

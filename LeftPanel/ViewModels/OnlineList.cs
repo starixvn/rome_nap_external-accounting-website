@@ -11,9 +11,9 @@
             Onlines = new List<OnlineInfo>();
         }
 
-        public OnlineList(DataRowCollection dataRows, Func<string, bool> canViewVNIP) : this()
+        public OnlineList(DataSet dataSet, Func<string, bool> canViewVNIP) : this()
         {
-            foreach (DataRow dataRow in dataRows)
+            foreach (DataRow dataRow in dataSet.Tables[0].Rows)
             {
                 Onlines.Add(new OnlineInfo(dataRow, canViewVNIP));
             }

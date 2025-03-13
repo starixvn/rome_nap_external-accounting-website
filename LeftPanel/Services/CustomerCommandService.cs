@@ -123,7 +123,7 @@
         }
 
         public Result UnlockAccess(int custId, int userId, string ip4Address)
-            => customerDataAccess.UnlockAccess(new UnlockAccessCriteria(custId, userId, 0, ip4Address, (byte)Config.SystemId));
+            => customerDataAccess.UnlockAccess(new UnlockAccessCommand(custId, userId, 0, ip4Address, (byte)Config.SystemId));
 
         public Result AllowOutright(int custId, bool allow)
             => customerDataAccess.AllowOutright(custId, allow);
@@ -154,12 +154,7 @@
 
         public async Task<Result> RemoveOtp(int custId, int userId, string ip4Address)
         {
-            var result = customerDataAccess.RemoveOTP(new RemoveOtpCriteria
-            {
-                Custid = custId,
-                Userid = userId,
-                IP = ip4Address
-            });
+            var result = customerDataAccess.RemoveOTP(new RemoveOtpCommand(custId, userId, ip4Address));
 
             var messenger = await telegramBotService.GetMessenger(custId, 0);
             if (telegramBotService.IsEnabledOTPViaTelegram(messenger))

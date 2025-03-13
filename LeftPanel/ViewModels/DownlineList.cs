@@ -2,9 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Data;
-    using Data.DNAide;
     using Extensions;
-    using Utilities;
 
     public class DownlineList
     {
@@ -15,18 +13,17 @@
             CurrentPage = 1;
         }
 
-        public DownlineList(DbResult dbResult, int pageIndex)
+        public DownlineList(DataSet dataSet, int pageIndex, int totalPages)
         {
             Downlines = new List<ObjectInfo>();
             Pages = new List<ObjectInfo>();
 
-            if (dbResult?.ResultSet == null || dbResult.ResultSet.Tables.Count <= 0)
+            if (dataSet == null || dataSet.Tables.Count <= 0)
             {
                 return;
             }
 
-            var downlines = dbResult.ResultSet.Tables[0];
-            var totalPages = Utils.ToInt32(dbResult.Outputs["totalpages"]);
+            var downlines = dataSet.Tables[0];
 
             if (downlines?.Rows.Count > 0)
             {

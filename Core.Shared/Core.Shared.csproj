@@ -161,7 +161,6 @@
     <Compile Include="CustomerDataRangeType.cs" />
     <Compile Include="eFunctions.cs" />
     <Compile Include="Extensions\DateTimeExtension.cs" />
-    <Compile Include="Extensions\ObjectDbExtensions.cs" />
     <Compile Include="PagingConstants.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductGroupConstants.cs" />

@@ -99,12 +99,15 @@
         }
 
         public DownlineList GetDownlineList(bool isDirectDownline, int custid, int pageSize, int pageIndex)
-            => new DownlineList(customerDataAccess.GetDownlineList(isDirectDownline, custid, pageSize, pageIndex), pageIndex);
+        {
+            var downlineListDataSet = customerDataAccess.GetDownlineList(custid, pageSize, pageIndex, out int totalPages);
+            return new DownlineList(downlineListDataSet, pageIndex, totalPages);
+        }
 
-        public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId)
+        public IEnumerable<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId)
             => customerDataAccess.MasterAgentUsedCreditItems(custId, roleId);
 
-        public IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId)
+        public IEnumerable<MemberUsedCreditItem> MemberUsedCreditItems(int custId)
             => customerDataAccess.MemberUsedCreditItems(custId);
 
         public DataTable CustomerSelectClearBalance(int custId)

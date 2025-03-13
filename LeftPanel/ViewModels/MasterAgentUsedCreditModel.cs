@@ -1,16 +1,17 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.ViewModels
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     public class MasterAgentUsedCreditModel
     {
-        public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems { get; set; }
+        public IEnumerable<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems { get; set; }
 
         public MasterAgentUsedCreditItem Total
         {
             get
             {
-                if (MasterAgentUsedCreditItems == null || MasterAgentUsedCreditItems.Count == 0)
+                if (MasterAgentUsedCreditItems == null || !MasterAgentUsedCreditItems.Any())
                 {
                     return new MasterAgentUsedCreditItem();
                 }

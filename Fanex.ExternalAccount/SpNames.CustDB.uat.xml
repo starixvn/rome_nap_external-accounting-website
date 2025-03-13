@@ -145,7 +145,10 @@
     <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelUsedCredit_SAg" SpName="Acc_CustomerSelUsedCredit_SAg" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelUsedCredit_MAg" SpName="Acc_CustomerSelUsedCredit_MAg" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag" DbName="DBCust.CustDB.wsv_xnap" Plain="0" >
+		<Mapping DataField="credit" ObjectProperty="Amount" />
+		<Mapping DataField="closed" ObjectProperty="IsClosed" />
+	</Setting>
     <Setting Key="Acc_CustomerUpdResetMemberCredit" SpName="Acc_CustomerUpdResetMemberCredit" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
@@ -166,7 +169,11 @@
     <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_CustomerSelAllInfo" SpName="EAS_CustomerSelAllInfo" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_CustomerSelAllStatus" SpName="EAS_CustomerSelAllStatus" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerSelLoginInfo" SpName="EAS_CustomerSelLoginInfo" DbName="DBACC.bodb02.wsv_xnap" Plain="0" />
+	  <Setting Key="EAS_CustomerSelLoginInfo" SpName="EAS_CustomerSelLoginInfo" DbName="DBACC.bodb02.wsv_xnap" Plain="0" >
+		  <Mapping DataField="creatdate" ObjectProperty="CreatedDate" />
+		  <Mapping DataField="lastlogged" ObjectProperty="LastLoggedIn" />
+		  <Mapping DataField="pwdexpiry" ObjectProperty="PasswordExpired" />
+	  </Setting>
     <Setting Key="EAS_CustomerSelBalanceInfo" SpName="EAS_CustomerSelBalanceInfo" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerUpdLocked" SpName="Acc_CustomerUpdLocked" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Dot_BalanceDebitInitialize" SpName="Dot_BalanceDebitInitialize" DbName="DBTXN.bodb02.wsv_xnap" />
