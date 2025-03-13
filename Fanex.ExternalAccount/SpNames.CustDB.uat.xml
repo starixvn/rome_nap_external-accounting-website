@@ -433,7 +433,10 @@
     <Setting Key="Acc_CustomerUpdSecurityCode_Multiple" SpName="Acc_CustomerUpdSecurityCode_Multiple" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="Headline List">
-    <Setting Key="EAS_CustomerSelByGroupHeadline" SpName="EAS_CustomerSelByGroupHeadline" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_CustomerSelByGroupHeadline" SpName="EAS_CustomerSelByGroupHeadline" DbName="DBCust.CustDB.wsv_xnap" Plain="0" >
+      <Mapping DataField="custheadlineid" ObjectProperty="GroupId"/>
+      <Mapping DataField="groupheadline" ObjectProperty="GroupName"/>
+    </Setting>
   </Function>
   <Function Name="Customer Setting">
     <Setting Key="Acc_LiteMode_CustSetting_ProductProfileSelect" SpName="Acc_LiteMode_CustSetting_ProductProfileSelect" DbName="DBCUST.CustDB.wsv_xnap" />
@@ -455,13 +458,20 @@
     <Setting Key="EAS_MatchWinloss_Detail" SpName="EAS_MatchWinloss_Detail" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_MatchWinloss_SportSel" SpName="EAS_MatchWinloss_SportSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_MatchWinloss_EventSel" SpName="EAS_MatchWinloss_EventSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_MatchWinloss_BettypeSel" SpName="EAS_MatchWinloss_BettypeSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_MatchWinloss_BettypeSel" SpName="EAS_MatchWinloss_BettypeSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" >
+      <Mapping DataField="bettype" ObjectProperty="BetTypeId"/>
+    </Setting >
   </Function>
   <Function Name="Reward Detail">
-    <Setting Key="Age_Rpt_GetProgramList" SpName="Age_Rpt_GetProgramList" DbName="DBAGE.bodb02.wsv_xnap" Plain="0"/>
-    <Setting Key="EAS_Rpt_RewardDetail_Com" SpName="EAS_Rpt_RewardDetail_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="Age_Rpt_GetProgramList" SpName="Age_Rpt_GetProgramList" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
+      <Mapping DataField="resource_en" ObjectProperty="ProgramName" />
+      <Mapping DataField="resourceid" ObjectProperty="ProgramId" />
+    </Setting>
+    <Setting Key="EAS_Rpt_RewardDetail_Com" SpName="EAS_Rpt_RewardDetail_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" >
+      <Mapping DataField="CurrencyCode" ObjectProperty="MemberCurrency" />
+    </Setting >
   </Function>
- <Function Name="White Label">
+  <Function Name="White Label">
     <Setting Key="EAS_Rpt_WhiteLabelWinLoss" SpName="EAS_Rpt_WhiteLabelWinLoss" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_WhiteLabelListSel" SpName="EAS_WhiteLabelListSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_Rpt_WhiteLabelSettlement" SpName="EAS_Rpt_WhiteLabelSettlement" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
