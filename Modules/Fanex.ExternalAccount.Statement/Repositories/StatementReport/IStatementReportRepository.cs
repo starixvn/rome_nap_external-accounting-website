@@ -1,6 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Statement.Repositories.StatementReport
 {
-    using System.Data;
     using Fanex.ExternalAccount.Statement.Criteria;
     using Fanex.ExternalAccount.Statement.Criteria.StatementReport;
     using Fanex.ExternalAccount.Statement.Models;
@@ -15,9 +14,5 @@
         StatementReportModel TransferDetails(TransferDetailsCriteria criteria);
 
         CustomerInformationModel GetCustomerInfo(GetCustomerInformationByUsername criteria);
-
-        bool CheckInternalByUsername(CheckInternalByUsernameCriteria criteria);
-
-        DataTable GetBalanceUpDay();
     }
 }

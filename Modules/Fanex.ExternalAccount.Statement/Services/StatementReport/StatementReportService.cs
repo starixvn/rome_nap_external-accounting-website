@@ -171,27 +171,7 @@
 
             return result;
         }
-
-        public bool CheckInternalByUsername(CheckInternalByUsernameCriteria criteria)
-        {
-            if (!criteria.IsValid())
-            {
-                return false;
-            }
-
-            bool result = false;
-            try
-            {
-                result = _statementReportRepository.CheckInternalByUsername(criteria);
-            }
-            catch (Exception ex)
-            {
-                LoggingHandler.Log(ex);
-            }
-
-            return result;
-        }
-
+        
         private List<StatementReportCriteria> GetReportDateRange(StatementReportCriteria criteria)
         {
             criteria.FromDate = criteria.FromDate.Year <= 1753 ||

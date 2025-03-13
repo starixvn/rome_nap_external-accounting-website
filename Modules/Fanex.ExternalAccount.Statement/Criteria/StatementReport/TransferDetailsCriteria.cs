@@ -4,7 +4,8 @@
     using Fanex.Common;
     using Fanex.CustomerSetting.Module.Core.Extensions;
     using Fanex.ExternalAccount.Statement.Services;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data;
+    using Fanex.Data.Repository;
 
     public class TransferDetailsCriteria : CriteriaBase
     {

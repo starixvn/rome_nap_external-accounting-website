@@ -104,11 +104,6 @@
         {
             return Json(_statementReportService.GetCustomerInfo(criteria));
         }
-
-        public JsonResult CheckInternalByUsername(CheckInternalByUsernameCriteria criteria)
-        {
-            return Json(_statementReportService.CheckInternalByUsername(criteria));
-        }
        
     }
 }

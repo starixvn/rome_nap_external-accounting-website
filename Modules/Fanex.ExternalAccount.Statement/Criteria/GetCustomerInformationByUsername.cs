@@ -2,7 +2,7 @@
 {
     using CustomerSetting.Module.Core.Web;
     using Fanex.CustomerSetting.Module.Core;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using System.Configuration;
 
     public class GetCustomerInformationByUsername : CriteriaBase

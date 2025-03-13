@@ -234,12 +234,46 @@
     <Setting Key="Age_CustomerUpdUserComm" SpName="Age_CustomerUpdUserComm" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="Statement - Report">
-    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="DBACC.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="Statement_Report_GetList_14" SpName="Acc_StatementSel_14" DbName="DBRPT.bodb_report.wsv_xnap" Plain="0" />
-    <Setting Key="Statement_Report_GetList_WH" SpName="Acc_StatementSel_Old" DbName="DBRPT.bodb_report.wsv_xnap" Plain="0" />
-    <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="DBACC.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="Statement_Report_TransferDetails_WH" SpName="Acc_StatementSelTransfer_Old" DbName="DBARC.bodb_Archive.wsv_xnap" Plain="0" />
-    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="DBACC.bodb02.wsv_xnap" Plain="0" >
+      <Mapping DataField="winlostdate" ObjectProperty="StatementDate" />
+      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+      <Mapping DataField="Comm" ObjectProperty="Commission" />
+      <Mapping DataField="TransferAmt" ObjectProperty="TransferAmount" />
+      <Mapping DataField="ClosingBalance" ObjectProperty="AccumulatedTotal" />
+      <Mapping DataField="VoidAmt" ObjectProperty="VoidCancelled" />
+    </Setting>
+    <Setting Key="Statement_Report_GetList_14" SpName="Acc_StatementSel_14" DbName="DBRPT.bodb_report.wsv_xnap" Plain="0" >
+      <Mapping DataField="winlostdate" ObjectProperty="StatementDate" />
+      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+      <Mapping DataField="Comm" ObjectProperty="Commission" />
+      <Mapping DataField="TransferAmt" ObjectProperty="TransferAmount" />
+      <Mapping DataField="ClosingBalance" ObjectProperty="AccumulatedTotal" />
+      <Mapping DataField="VoidAmt" ObjectProperty="VoidCancelled" />
+    </Setting >
+    <Setting Key="Statement_Report_GetList_WH" SpName="Acc_StatementSel_Old" DbName="DBRPT.bodb_report.wsv_xnap" Plain="0" >
+      <Mapping DataField="winlostdate" ObjectProperty="StatementDate" />
+      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+      <Mapping DataField="Comm" ObjectProperty="Commission" />
+      <Mapping DataField="TransferAmt" ObjectProperty="TransferAmount" />
+      <Mapping DataField="ClosingBalance" ObjectProperty="AccumulatedTotal" />
+      <Mapping DataField="VoidAmt" ObjectProperty="VoidCancelled" />
+    </Setting >
+    <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="DBACC.bodb02.wsv_xnap" Plain="0" >
+      <Mapping DataField="transdate" ObjectProperty="StatementDate" />
+      <Mapping DataField="transtype" ObjectProperty="TransactionType" />
+      <Mapping DataField="transdesc" ObjectProperty="Description" />
+      <Mapping DataField="ExRate" ObjectProperty="ExchangeRate" />
+    </Setting >
+    <Setting Key="Statement_Report_TransferDetails_WH" SpName="Acc_StatementSelTransfer_Old" DbName="DBARC.bodb_Archive.wsv_xnap" Plain="0" >
+      <Mapping DataField="transdate" ObjectProperty="StatementDate" />
+      <Mapping DataField="transtype" ObjectProperty="TransactionType" />
+      <Mapping DataField="transdesc" ObjectProperty="Description" />
+      <Mapping DataField="ExRate" ObjectProperty="ExchangeRate" />
+    </Setting >
+    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" >
+      <Mapping DataField="custid" ObjectProperty="CustomerId" />
+      <Mapping DataField="roleid" ObjectProperty="RoleId" />
+    </Setting >
   </Function>
   <Function Name="DCS">
     <Function Name="Enable Status">
