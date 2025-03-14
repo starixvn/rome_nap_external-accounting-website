@@ -19,8 +19,6 @@
 
         DataSet GetBalanceInfo(int custId);
 
-        DataTable EAS_CustomerSelUserInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
-        
         Result UpdateSMAGivenCredit(int id, int uplineId, decimal newGivenCredit);
 
         Result UpdateMemberGivenCredit(int id, int uplineId, decimal newGivenCredit, decimal totalAmt);
@@ -39,7 +37,7 @@
 
         DataTable CustomerSelectClearBalance(int custId);
 
-        Result CloseCutomer(int custId, bool close, bool clearCredit, string custName);
+        Result CloseCustomer(int custId, bool closed, bool clearCredit, string custName);
 
         Result UnlockAccess(UnlockAccessCommand command);
 

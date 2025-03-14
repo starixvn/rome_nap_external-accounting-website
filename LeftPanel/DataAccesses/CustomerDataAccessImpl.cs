@@ -1,7 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.DataAccesses
 {
-    using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Data;
     using System.Web;
@@ -13,9 +11,7 @@
     using Fanex.ExternalAccount.Module.LeftPanel.Models;
     using Utilities;
     using ViewModels;
-    using FanexCommonConverter = Fanex.Common.Converter;
 
-#pragma warning disable S1192 // String literals should not be duplicated
     public class CustomerDataAccessImpl : CustomerDataAccess
     {
         private readonly IDynamicRepository _dynamicRepository;
@@ -191,98 +187,32 @@
 
         public Result ClearMemberCredit(decimal totalAmt, string username = null)
         {
-            var hash = new Hashtable
-            {
-                {"username", username},
-                {"userid", CurrentSession.Instance.UserId},
-                {"returnerrcode", 1},
-                {"errcode", 0},
-                {"errmsg", string.Empty},
-                {"ip", CurrentContext.Instance.Ip4Address},
-                {"system", "EXTERNAL"},
-                {"totalamt", totalAmt}
-            };
-
-            return ClearCredit(hash);
+            var command = new ClearMemberCreditCommand(totalAmt, username, CurrentSession.Instance.UserId, CurrentContext.Instance.Ip4Address);
+            _dynamicRepository.Execute(command);
+            return new Result(command.ErrCode, command.ErrMsg);
         }
 
         public Result ClearSMACredit(string username = null)
         {
-            var hash = new Hashtable
-            {
-                {"username", username},
-                {"userid", CurrentSession.Instance.UserId},
-                {"returnerrcode", 1},
-                {"errcode", 0},
-                {"errmsg", string.Empty},
-                {"ip", CurrentContext.Instance.Ip4Address},
-                {"system", "EXTERNAL"}
-            };
-            return ClearCredit(hash);
-        }
-
-        private static Result ClearCredit(Hashtable hash)
-        {
-            using (var objDb = new ObjectDb("Acc_CustomerUpdClearCredit", 600))
-            {
-                objDb.AssignParamValues(hash);
-                objDb.ExecuteNonQuery();
-
-                return new Result(objDb.GetParameterValue("errcode"), objDb.GetParameterValue("errmsg"));
-            }
-        }
-
-        public DataTable EAS_CustomerSelUserInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
-        {
-            using (var db = new ObjectDb("EAS_CustomerSelUserInfo"))
-            {
-                if (custId != 0)
-                {
-                    db.AddInParameter("custid", DbType.Int32, custId);
-                }
-
-                db.AddInParameter("groupname", DbType.String, groupname);
-                db.AddInParameter("username", DbType.String, userName);
-                db.AddInParameter("isgetuplineinfo", DbType.Boolean, isGetUplineInfo);
-
-                var ds = db.ExecuteDataSet();
-
-                return ds?.Tables.Count > 0 ? ds.Tables[0] : null;
-            }
+            var command = new ClearSMACreditCommand(username, CurrentSession.Instance.UserId, CurrentContext.Instance.Ip4Address);
+            _dynamicRepository.Execute(command);
+            return new Result(command.ErrCode, command.ErrMsg);
         }
 
         public MemberBalanceInfoModel GetMemberBalanceModel(int custId, SiteDB siteDB)
         {
-            var prefixSp = siteDB.IsSiteDB ? $"SiteDB{siteDB.SiteDBGroupID}_" : string.Empty;
-            using (ObjectDb objdb = new ObjectDb($"{prefixSp}Acc_BalanceMemberSel", 180))
-            {
-                var param = new Hashtable
-                {
-                    { "custid", custId }
-                };
+            var command = new GetMemberBalanceModelCommand(custId, siteDB);
+            _dynamicRepository.Execute(command);
 
-                objdb.ExecuteNonQueryScaleoutDB(param, siteDB.AGIP);
-                return new MemberBalanceInfoModel(
-                    FanexCommonConverter.ToDecimal(objdb.GetParameterValue("balance")),
-                    FanexCommonConverter.ToDecimal(objdb.GetParameterValue("PendingTransfer3rd")),
-                    FanexCommonConverter.ToDecimal(objdb.GetParameterValue("netposition")));
-            }
+            return new MemberBalanceInfoModel(command.Balance, command.PendingTransfer3rd, command.NetPosition);
         }
 
         public decimal GetMemberOustanding(int custId)
         {
-            using (ObjectDb objdb = new ObjectDb("Acc_OutstandingMemberSel", 180))
-            {
-                var param = new Hashtable
-                {
-                    { "custid", custId }
-                };
+            var command = new GetMemberOutstandingCommand(custId);
+            _dynamicRepository.Execute(command);
 
-                objdb.AssignParamValues(param);
-                objdb.ExecuteNonQuery();
-                return FanexCommonConverter.ToDecimal(objdb.GetParameterValue("outstanding"));
-            }
+            return command.Outstanding;
         }
     }
-#pragma warning restore S1192 // String literals should not be duplicated
 }
