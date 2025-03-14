@@ -100,7 +100,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Fanex.Data.ProxyClient" Version="1.0.3.5" />
+    <PackageReference Include="Fanex.Data.ProxyClient" Version="1.0.3.6" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.6" />
     <PackageReference Include="Microsoft.AspNet.Razor" Version="3.2.6" />
     <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.6" />

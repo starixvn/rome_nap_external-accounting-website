@@ -1,8 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Criteria
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
-    public class CloneSettingExtraPTCriteria : CriteriaBase
+    public class CloneSettingExtraPTCommand : INonQueryCommand
     {
         public int CustId { get; set; }
 
@@ -16,11 +16,11 @@
 
         public string ErrMsg { get; set; }
 
-        public override bool IsValid() =>
+        public bool IsValid() =>
             CustId > 0
             && ExistingCustId > 0
             && Creator > 0;
 
-        public override string GetSettingKey() => "EAS_CustomerInsMember_CloneSetting_ExtraPT";
+        public string GetSettingKey() => "EAS_CustomerInsMember_CloneSetting_ExtraPT";
     }
 }

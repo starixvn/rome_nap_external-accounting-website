@@ -1,12 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.ProblemAccount.Criteria
 {
+    using Fanex.Data.Repository;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.ProblemAccount.ViewModels;
-    using Fanex.NAP.Framework.Data;
 
-    public class SetToReviewedCriteria : CriteriaBase
+    public class SetToReviewedCommand : INonQueryCommand
     {
-        public SetToReviewedCriteria(SetToReviewedViewModel viewModel)
+        public SetToReviewedCommand(SetToReviewedViewModel viewModel)
         {
             CustomerList = viewModel.CustIds;
             RoleId = viewModel.RoleId;
@@ -27,11 +27,13 @@
         public int UserId { get; }
 
         public string IP { get; }
+        public int ErrCode { get; set; }
+        public string ErrMsg { get; set; }
 
-        public override string GetSettingKey()
+        public string GetSettingKey()
             => "EAS_ProblemAccount_ReviewStatusUpd";
 
-        public override bool IsValid()
+        public bool IsValid()
             => !string.IsNullOrWhiteSpace(CustomerList)
             && RoleId < Role.Super
             && !string.IsNullOrWhiteSpace(GroupName)

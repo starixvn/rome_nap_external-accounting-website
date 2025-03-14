@@ -1,30 +1,25 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Repositories
 {
-    using Common.Extensions;
-    using Fanex.Data;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.Data.Repository;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.SearchAndCopy.Criteria;
     using Fanex.ExternalAccount.SearchAndCopy.Models;
-    using Fanex.NAP.Framework.Data;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     public interface ISearchAndCopyRepository
     {
-        Result ValidateSettingComm(ValidateCloneSettingComCriteria criteria);
+        Result ValidateSettingComm(ValidateCloneSettingComCommand command);
 
-        Result RegisterCustomer(RegisterCustomerCriteria criteria);
+        Result RegisterCustomer(RegisterCustomerCommand command);
 
         string GetGetGroupParentNameByGroupName(GetGroupParentNameByGroupNameCriteria criteria);
 
-        void RollBackCustomer(RollbackCustomerInsertCriteria criteria);
+        void RollBackCustomer(RollbackCustomerInsertCommand command);
 
-        Result CloneSettingComm(CloneSettingComCriteria criteria);
+        Result CloneSettingComm(CloneSettingComCommand command);
 
-        Result CloneSettingExtraPT(CloneSettingExtraPTCriteria criteria);
+        Result CloneSettingExtraPT(CloneSettingExtraPTCommand command);
 
         IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName, int custDBGroupId);
 
@@ -35,7 +30,7 @@
 
     public class SearchAndCopyRepository : ISearchAndCopyRepository
     {
-        private readonly IDynamicRepository dynamicRepository;
+        private readonly IDynamicRepository _dynamicRepository;
 
         public SearchAndCopyRepository()
             : this(null)
@@ -44,94 +39,50 @@
 
         public SearchAndCopyRepository(IDynamicRepository dynamicRepository)
         {
-            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
+            _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public Result ValidateSettingComm(ValidateCloneSettingComCriteria criteria)
+        public Result ValidateSettingComm(ValidateCloneSettingComCommand command)
         {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                objDb.ExecuteNonQuery();
-                var outputs = objDb.GetOuputParams();
-                return new Result(outputs["errcode"].ToString(), outputs["errmsg"].ToString());
-            }
+            _dynamicRepository.Execute(command);
+            return new Result(command.ErrCode, command.ErrMsg);
         }
 
-        public Result RegisterCustomer(RegisterCustomerCriteria criteria)
+        public Result RegisterCustomer(RegisterCustomerCommand command)
         {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                objDb.ExecuteNonQuery();
-                var outputs = objDb.GetOuputParams();
-                return new Result(outputs["errcode"].ToString(), outputs["errmsg"].ToString(), new { NewCustId = Convert.ToInt32(outputs["custid"]) });
-            }
+            _dynamicRepository.Execute(command);
+            return new Result(command.ErrCode, command.ErrMsg, new { NewCustId = command.CustId });
         }
 
         public string GetGetGroupParentNameByGroupName(GetGroupParentNameByGroupNameCriteria criteria)
-        {   
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                var reader = objDb.ExecuteReader(criteria.GetSpParams());
-                ArrayList groupNames = new ArrayList();
-                while (reader.Read())
-                {
-                    groupNames.Add(reader["GroupName"].ToString());
-                }
+            =>string.Join(",", _dynamicRepository.Fetch<string>(criteria).ToArray());
 
-                return string.Join(",", groupNames.ToArray());
-            }
-        }
-
-        public Result CloneSettingComm(CloneSettingComCriteria criteria)
+        public Result CloneSettingComm(CloneSettingComCommand command)
         {
-            if (!criteria.IsValid())
-            {
-                return new Result(1, "Invalid operation");
-            }
-            
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                objDb.ExecuteNonQuery();
-                var outputs = objDb.GetOuputParams();
-                return new Result(
-                    outputs["errcode"].ToString(), 
-                    outputs["errmsg"].ToString(),
-                    new
-                    {
-                        criteria.CustId,
-                        Case = Convert.ToInt32(outputs["case"]),
-                        HeadlineID_Old = Convert.ToInt32(outputs["old_headline"]),
-                        HeadlineID_New = Convert.ToInt32(outputs["new_headline"])
-                    });
-            }
-        }
-
-        public void RollBackCustomer(RollbackCustomerInsertCriteria criteria)
-        {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                objDb.ExecuteNonQuery();
-            }
-        }
-
-        public Result CloneSettingExtraPT(CloneSettingExtraPTCriteria criteria)
-        {
-            if (!criteria.IsValid())
+            if (!command.IsValid())
             {
                 return new Result(1, "Invalid operation");
             }
 
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            _dynamicRepository.Execute(command);
+            return new Result(command.ErrCode, command.ErrMsg, new { 
+                command.CustId, 
+                command.Case, 
+                HeadlineID_Old = command.Old_Headline, 
+                HeadlineID_New = command.New_Headline });
+        }
+
+        public void RollBackCustomer(RollbackCustomerInsertCommand command)
+            => _dynamicRepository.Execute(command);
+
+        public Result CloneSettingExtraPT(CloneSettingExtraPTCommand command)
+        {
+            if (!command.IsValid())
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                objDb.ExecuteNonQuery();
-                var outputs = objDb.GetOuputParams();
-                return new Result(outputs["errcode"].ToString(), outputs["errmsg"].ToString());
+                return new Result(1, "Invalid operation");
             }
+            _dynamicRepository.Execute(command);
+            return new Result(command.ErrCode, command.ErrMsg);
         }
 
         public IEnumerable<SearchCustomerModel> SearchCustomer(string username, string groupName, int custDBGroupId)
@@ -142,37 +93,16 @@
                 return Enumerable.Empty<SearchCustomerModel>();
             }
 
-            return dynamicRepository.Fetch<SearchCustomerModel>(criteria);
+            return _dynamicRepository.Fetch<SearchCustomerModel>(criteria);
         }
 
         public Result UpdateCRMHeadlineInfo(UpdateCrmHeadlineInfoCriteria criteria)
         {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                objDb.ExecuteNonQuery();
-                var outputs = objDb.GetOuputParams();
-                return new Result(outputs["errcode"].ToString(), outputs["errmsg"].ToString());
-            }
+            _dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
         public IEnumerable<SuperPrefix> GetSuperPrefixes(ICriteria criteria)
-        {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
-                {
-                    while (reader.Read())
-                    {
-                        yield return new SuperPrefix
-                        {
-                            GroupName = reader.ToString("GroupName"),
-                            Prefix = reader.ToString("Prefix"),
-                            AllowNewSuper = reader.ToBool("AllowNewSuper")
-                        };
-                    }
-                }
-            }
-        }
+            => _dynamicRepository.Fetch<SuperPrefix>(criteria);
     }
 }

@@ -1,7 +1,8 @@
-﻿namespace Fanex.ExternalAccount.SearchAndCopy.Criteria
-{
-    using Fanex.NAP.Framework.Data;
+﻿using Fanex.Data;
+using Fanex.Data.Repository;
 
+namespace Fanex.ExternalAccount.SearchAndCopy.Criteria
+{
     public class SearchCustomerCriteria : CriteriaBase
     {
         public SearchCustomerCriteria(string username, string groupName, int custDBGroupId)

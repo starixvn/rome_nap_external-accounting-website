@@ -1,8 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Criteria
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data;
+    using Fanex.Data.Repository;
 
-    public class ValidateCloneSettingComCriteria : CriteriaBase
+    public class ValidateCloneSettingComCommand : INonQueryCommand
     {
         public string Username { get; set; }
 
@@ -13,14 +14,16 @@
         public string IP { get; set; }
 
         [SpParam(Ignored = true)]
-        public int SiteDBGroupId { get; set; } 
+        public int SiteDBGroupId { get; set; }
+        public int ErrCode { get; set; }
+        public string ErrMsg { get; set; }
 
-        public override bool IsValid() => !string.IsNullOrWhiteSpace(Username);
+        public  bool IsValid() => !string.IsNullOrWhiteSpace(Username);
 
-        public override string GetSettingKey() => (SiteDBGroupId == 0 ? string.Empty : $"DBSite{SiteDBGroupId}_" ) + "EAS_CustomerInsMember_CloneSetting_Com_Validate";
+        public  string GetSettingKey() => (SiteDBGroupId == 0 ? string.Empty : $"DBSite{SiteDBGroupId}_" ) + "EAS_CustomerInsMember_CloneSetting_Com_Validate";
     }
 
-    public class RegisterCustomerCriteria : CriteriaBase
+    public class RegisterCustomerCommand : INonQueryCommand
     {
         public string Username { get; set; }
 
@@ -33,10 +36,12 @@
         public byte? RoleId { get; set; }
 
         public byte? UplineId{ get; set; }
+        public int ErrCode { get; set; }
+        public string ErrMsg { get; set; }
+        public int CustId { get; set; }
+        public bool IsValid() => !string.IsNullOrWhiteSpace(Username);
 
-        public override bool IsValid() => !string.IsNullOrWhiteSpace(Username);
-
-        public override string GetSettingKey() => "Acc_CustomerIns_Register";
+        public string GetSettingKey() => "Acc_CustomerIns_Register";
     }
 
     public class GetGroupParentNameByGroupNameCriteria : CriteriaBase
@@ -48,7 +53,7 @@
         public override string GetSettingKey() => "EAS_GroupAdmin_Sel";
     }
 
-    public class CloneSettingComCriteria : CriteriaBase
+    public class CloneSettingComCommand : INonQueryCommand
     {
         public string Username { get; set; }
 
@@ -87,7 +92,13 @@
         [SpParam(Ignored = true)]
         public int SiteDBGroupId { get; set; }
 
-        public override bool IsValid() =>
+        public int Case { get; set; }
+
+        public int Old_Headline { get; set; }
+
+        public int New_Headline { get; set; }
+
+        public bool IsValid() =>
 #pragma warning disable S1067 // Expressions should not be too complex
             Creator > 0
             && ExistingCustId > 0
@@ -96,15 +107,15 @@
             && Credit >= 0;
 #pragma warning restore S1067 // Expressions should not be too complex
 
-        public override string GetSettingKey() => (SiteDBGroupId == 0 ? string.Empty : $"DBSite{SiteDBGroupId}_") + "EAS_CustomerInsMember_CloneSetting_Com";
+        public string GetSettingKey() => (SiteDBGroupId == 0 ? string.Empty : $"DBSite{SiteDBGroupId}_") + "EAS_CustomerInsMember_CloneSetting_Com";
     }
 
-    public class RollbackCustomerInsertCriteria : CriteriaBase
+    public class RollbackCustomerInsertCommand : INonQueryCommand
     {
         public int CustId { get; set; }
 
-        public override bool IsValid() => CustId > 0;
+        public bool IsValid() => CustId > 0;
 
-        public override string GetSettingKey() => "Acc_CustomerIns_Rollback";
+        public string GetSettingKey() => "Acc_CustomerIns_Rollback";
     }
 }

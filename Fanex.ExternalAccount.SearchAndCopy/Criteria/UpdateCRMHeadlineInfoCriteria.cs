@@ -1,29 +1,47 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Criteria
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
-    public class UpdateCrmHeadlineInfoCriteria : CriteriaBase
+    public class UpdateCrmHeadlineInfoCriteria : INonQueryCommand
     {
-        public int CustId { get; set; }
+        public UpdateCrmHeadlineInfoCriteria(
+            int custId,
+            string userName,
+            int @case,
+            int oldHeadline,
+            int newHeadline,
+            int userId,
+            string loginIP)
+        {
+            CustId = custId;
+            UserName = userName;
+            Case = @case;
+            OldHeadline = oldHeadline;
+            NewHeadline = newHeadline;
+            UserId = userId;
+            LoginIP = loginIP;
+        }
 
-        public string UserName { get; set; }
+        public int CustId { get; }
 
-        public int Case { get; set; }
+        public string UserName { get; }
 
-        public int Old_Headline { get; set; }
+        public int Case { get; }
 
-        public int New_Headline { get; set; }
+        public int OldHeadline { get; }
 
-        public int UserId { get; set; }
+        public int NewHeadline { get; }
 
-        public override string GetSettingKey() => "Acc_CRM_HeadlineUpd";
+        public int UserId { get; }
 
-        public override bool IsValid() => true;
+        public string LoginIP { get; }
 
         public int ErrCode { get; set; }
 
         public string ErrMsg { get; set; }
 
-        public string LoginIP { get; set; }
+        public string GetSettingKey() => "Acc_CRM_HeadlineUpd";
+
+        public bool IsValid() => true;
     }
 }

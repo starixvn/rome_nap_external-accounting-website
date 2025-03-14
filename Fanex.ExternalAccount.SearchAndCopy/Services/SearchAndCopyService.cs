@@ -100,7 +100,7 @@
 
             serviceBase.AddMsgAfterCreateNewSMA(new AddMsgAfterCreateNewSMACriteria(newCustId, 0, Role.Super));
 
-            var cloneSettingExtraPTCriteria = new CloneSettingExtraPTCriteria
+            var cloneSettingExtraPTCriteria = new CloneSettingExtraPTCommand
             {
                 CustId = newCustId,
                 ExistingCustId = context.ExistingCustId,
@@ -141,7 +141,7 @@
         private void CopyCustomer(CloneSettingContext context)
         {
             var siteDBGroupId = siteDBConfigService.GetSiteDBConfigBySite(context.Site).CustDBGroupID;
-            context.Result = searchAndCopyRepository.ValidateSettingComm(new ValidateCloneSettingComCriteria
+            context.Result = searchAndCopyRepository.ValidateSettingComm(new ValidateCloneSettingComCommand
             {
                 Username = context.Request.Username,
                 Credit = context.Request.Credit,
@@ -154,7 +154,7 @@
                 return;
             }
 
-            context.Result = searchAndCopyRepository.RegisterCustomer(new RegisterCustomerCriteria
+            context.Result = searchAndCopyRepository.RegisterCustomer(new RegisterCustomerCommand
             {
                 Username = context.Request.Username,
                 SiteDbGroupId = siteDBGroupId,
@@ -175,7 +175,7 @@
 
             });
 
-            context.Result = searchAndCopyRepository.CloneSettingComm(new CloneSettingComCriteria
+            context.Result = searchAndCopyRepository.CloneSettingComm(new CloneSettingComCommand
             {
                 CustId = newCustId,
                 Username = context.Request.Username,
@@ -197,7 +197,7 @@
 
             if (!context.Result.IsSuccess)
             {
-                searchAndCopyRepository.RollBackCustomer(new RollbackCustomerInsertCriteria
+                searchAndCopyRepository.RollBackCustomer(new RollbackCustomerInsertCommand
                 {
                     CustId = newCustId
                 });

@@ -33,6 +33,6 @@
         }
 
         public Result SetToReviewed(SetToReviewedViewModel viewModel)
-            => dataAccess.SetToReviewed(new SetToReviewedCriteria(viewModel));
+            => dataAccess.SetToReviewed(new SetToReviewedCommand(viewModel));
     }
 }
