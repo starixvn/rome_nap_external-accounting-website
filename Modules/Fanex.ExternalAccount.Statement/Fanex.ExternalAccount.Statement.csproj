@@ -257,6 +257,7 @@
     <Compile Include="Services\StatementReport\IStatementReportService.cs" />
     <Compile Include="Services\StatementReport\StatementReportExportExcelService.cs" />
     <Compile Include="Services\StatementReport\StatementReportService.cs" />
+    <Compile Include="ViewModels\StatementViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Labels.ja-JP.resx" />

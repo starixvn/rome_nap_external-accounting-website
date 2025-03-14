@@ -1501,6 +1501,7 @@
     <Content Include="Views\Customer\SportBookInformation-Debug.cshtml" />
     <Content Include="Views\Customer\SportBookInformation.cshtml" />
     <Content Include="Views\HeadlineList\Index.cshtml" />
+    <Content Include="Views\StatementReport\Index.cshtml" />
     <Content Include="Views\WhiteLabelReport\Index.cshtml" />
     <Content Include="Views\RewardManagement\Index.cshtml" />
     <Content Include="Views\MatchWinLossReports\DetailsFilter.cshtml" />
