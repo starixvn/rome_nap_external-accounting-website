@@ -65,6 +65,7 @@
             });
 
             return GetProductDetails(groupName)
+                 .Where(p => productHash.ContainsKey(p.ProductId) && productHash[p.ProductId])
                  .GroupBy(p => p.ResourceId)
                  .Select(p =>
                  {

@@ -35,6 +35,7 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int FastSpin = 87;
         public const int VGaming = 66;
         public const int FaChai = 89;
+        public const int ASKMESLOT = 103;
 
         public const int DummyRNGProductId = 53;
 
@@ -54,7 +55,8 @@ namespace Fanex.ExternalAccount.Core.Shared
             Live22,
             FastSpin,
             VGaming,
-            FaChai
+            FaChai,
+            ASKMESLOT
         };
     }
 }
