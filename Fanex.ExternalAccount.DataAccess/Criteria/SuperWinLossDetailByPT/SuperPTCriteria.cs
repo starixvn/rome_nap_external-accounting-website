@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.SuperWinLossDetailByPT
 {
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class SuperPTCriteria : CriteriaBase
     {
@@ -16,5 +16,7 @@
         public byte SettingStatus { get; }
 
         public override string GetSettingKey() => "EAS_GetPTProductBySuper";
+        
+        public override bool IsValid() => true;
     }
 }

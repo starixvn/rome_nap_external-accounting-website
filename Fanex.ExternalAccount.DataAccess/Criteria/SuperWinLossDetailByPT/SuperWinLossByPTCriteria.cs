@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.SuperWinLossDetailByPT
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using System;
 
     public class SuperWinLossDetailByPTCriteria : CriteriaBase
@@ -46,5 +46,9 @@
         public int PageIndex { get; }
 
         public override string GetSettingKey() => "EAS_Rpt_WinLossDetail_byPT";
+        
+        public override bool IsValid() => true;
+        
+        public int TotalRecords { get; }
     }
 }
