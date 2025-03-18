@@ -3,8 +3,8 @@
     using Fanex.Common;
     using Fanex.Common.Extensions;
     using Fanex.Data;
+    using Fanex.Data.Repository;
     using Fanex.ExternalAccount.DataAccess.Criteria.SuperWinLossDetailByPT;
-    using Fanex.ExternalAccount.DataAccess.Impl.Base;
     using Fanex.ExternalAccount.DTO.Report;
     using System;
     using System.Collections.Generic;
@@ -17,8 +17,19 @@
         IEnumerable<SuperPositionTakingModel> GetSuperPositionTakingList(SuperPTCriteria criteria);
     }
 
-    public class SuperWinLossMCDetailByPTDaoImpl : DAOBase, SuperWinLossMCDetailByPTDao
+    public class SuperWinLossMCDetailByPTDaoImpl : SuperWinLossMCDetailByPTDao
     {
+        private readonly IDynamicRepository dynamicRepository;
+
+        public SuperWinLossMCDetailByPTDaoImpl() : this(null)
+        {
+        }
+
+        public SuperWinLossMCDetailByPTDaoImpl(IDynamicRepository dynamicRepository)
+        {
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+
         public IEnumerable<SuperPositionTakingModel> GetSuperPositionTakingList(SuperPTCriteria criteria)
         {
             if (criteria == null)
@@ -26,24 +37,7 @@
                 throw new ArgumentNullException(nameof(criteria), "Criteria cannot be null");
             }
 
-            var superPTList = new List<SuperPositionTakingModel>();
-
-            using (var reader = ExecDataReader(criteria.GetSettingKey(), criteria.GetSpParams()))
-            {
-                if (reader != null)
-                {
-                    while (reader.Read())
-                    {
-                        superPTList.Add(new SuperPositionTakingModel(
-                            reader.ToInt("CustID"),
-                            reader.To<decimal>("SuperPT"),
-                            reader.ToInt("ProductID"),
-                            reader.To<string>("ProductName")));
-                    }
-                }
-            }
-
-            return superPTList;
+            return dynamicRepository.Fetch<SuperPositionTakingModel>(criteria);
         }
 
         public SuperWinLossDetailMCByProductModel GetWinLossMCByBetType(SuperWinLossDetailMCByPTCriteria criteria)
@@ -55,81 +49,86 @@
 
             var winlossByBettypeData = new List<SuperWinLossDetailMCByProductDTO>();
             var totalByCurrencies = new List<SuperWinLossDetailMCByProductDTO>();
-
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            
+            var dataSet = dynamicRepository.FetchDataSet(criteria);
+            
+            if (dataSet == null || dataSet.Tables.Count == 0)
             {
-                var reader = db.ExecuteReader(criteria.GetSpParams());
-
-                while (reader.Read())
-                {
-                    winlossByBettypeData.Add(BuildWinLossByBetType(reader));
-                }
-
-                reader.NextResult();
-                while (reader.Read())
-                {
-                    totalByCurrencies.Add(BuildTotalWinLossMCByBetType(reader));
-                }
-
-                reader.Close();
+                return new SuperWinLossDetailMCByProductModel(new List<SuperWinLossDetailMCByProductDTO>(), new List<SuperWinLossDetailMCByProductDTO>());
             }
-
+            
+            if (dataSet.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow row in dataSet.Tables[0].Rows)
+                {
+                    winlossByBettypeData.Add(BuildWinLossByBetType(row));
+                }
+            }
+            
+            if (dataSet.Tables.Count > 1 && dataSet.Tables[1].Rows.Count > 0)
+            {
+                foreach (DataRow row in dataSet.Tables[1].Rows)
+                {
+                    totalByCurrencies.Add(BuildTotalWinLossMCByBetType(row));
+                }
+            }
+            
             return new SuperWinLossDetailMCByProductModel(winlossByBettypeData, totalByCurrencies);
         }
 
-        private static SuperWinLossDetailMCByProductDTO BuildWinLossByBetType(IDataReader reader)
+        private static SuperWinLossDetailMCByProductDTO BuildWinLossByBetType(DataRow row)
         {
             return new SuperWinLossDetailMCByProductDTO(
-                Converter.ToInt(reader["custid"]),
-                reader["username"].ToString(),
-                Converter.ToInt(reader["currencyid"]),
-                reader["currencyname"].ToString(),
-                Converter.ToInt(reader["ProductID"]),
-                reader["ProductName"].ToString(),
-                Converter.ToDecimal(reader["Turnover"]),
-                Converter.ToDecimal(reader["TurnoverNoDraw"]),
-                Converter.ToDecimal(reader["GrossComm"]),
-                Converter.ToDecimal(reader["MemberWinlost"]),
-                Converter.ToDecimal(reader["PlayerComm"]),
-                Converter.ToDecimal(reader["MemberTotal"]),
-                Converter.ToDecimal(reader["AgWinlost"]),
-                Converter.ToDecimal(reader["AgComm"]),
-                Converter.ToDecimal(reader["AgTotal"]),
-                Converter.ToDecimal(reader["MAgWinlost"]),
-                Converter.ToDecimal(reader["MAgComm"]),
-                Converter.ToDecimal(reader["MAgTotal"]),
-                Converter.ToDecimal(reader["SAgWinlost"]),
-                Converter.ToDecimal(reader["SAgComm"]),
-                Converter.ToDecimal(reader["SAgTotal"]),
-                Converter.ToDecimal(reader["Company"])
+                Converter.ToInt(row["custid"]),
+                row["username"].ToString(),
+                Converter.ToInt(row["currencyid"]),
+                row["currencyname"].ToString(),
+                Converter.ToInt(row["ProductID"]),
+                row["ProductName"].ToString(),
+                Converter.ToDecimal(row["Turnover"]),
+                Converter.ToDecimal(row["TurnoverNoDraw"]),
+                Converter.ToDecimal(row["GrossComm"]),
+                Converter.ToDecimal(row["MemberWinlost"]),
+                Converter.ToDecimal(row["PlayerComm"]),
+                Converter.ToDecimal(row["MemberTotal"]),
+                Converter.ToDecimal(row["AgWinlost"]),
+                Converter.ToDecimal(row["AgComm"]),
+                Converter.ToDecimal(row["AgTotal"]),
+                Converter.ToDecimal(row["MAgWinlost"]),
+                Converter.ToDecimal(row["MAgComm"]),
+                Converter.ToDecimal(row["MAgTotal"]),
+                Converter.ToDecimal(row["SAgWinlost"]),
+                Converter.ToDecimal(row["SAgComm"]),
+                Converter.ToDecimal(row["SAgTotal"]),
+                Converter.ToDecimal(row["Company"])
             );
         }
 
-        private static SuperWinLossDetailMCByProductDTO BuildTotalWinLossMCByBetType(IDataReader reader)
+        private static SuperWinLossDetailMCByProductDTO BuildTotalWinLossMCByBetType(DataRow row)
         {
             return new SuperWinLossDetailMCByProductDTO(
                 0,
-                reader["total"].ToString(),
+                row["total"].ToString(),
                 0,
                 null,
                 0,
                 null,
-                Converter.ToDecimal(reader["Turnover"]),
-                Converter.ToDecimal(reader["TurnoverNoDraw"]),
-                Converter.ToDecimal(reader["GrossComm"]),
-                Converter.ToDecimal(reader["MemberWinlost"]),
-                Converter.ToDecimal(reader["PlayerComm"]),
-                Converter.ToDecimal(reader["MemberTotal"]),
-                Converter.ToDecimal(reader["AgWinlost"]),
-                Converter.ToDecimal(reader["AgComm"]),
-                Converter.ToDecimal(reader["AgTotal"]),
-                Converter.ToDecimal(reader["MAgWinlost"]),
-                Converter.ToDecimal(reader["MAgComm"]),
-                Converter.ToDecimal(reader["MAgTotal"]),
-                Converter.ToDecimal(reader["SAgWinlost"]),
-                Converter.ToDecimal(reader["SAgComm"]),
-                Converter.ToDecimal(reader["SAgTotal"]),
-                Converter.ToDecimal(reader["Company"])
+                Converter.ToDecimal(row["Turnover"]),
+                Converter.ToDecimal(row["TurnoverNoDraw"]),
+                Converter.ToDecimal(row["GrossComm"]),
+                Converter.ToDecimal(row["MemberWinlost"]),
+                Converter.ToDecimal(row["PlayerComm"]),
+                Converter.ToDecimal(row["MemberTotal"]),
+                Converter.ToDecimal(row["AgWinlost"]),
+                Converter.ToDecimal(row["AgComm"]),
+                Converter.ToDecimal(row["AgTotal"]),
+                Converter.ToDecimal(row["MAgWinlost"]),
+                Converter.ToDecimal(row["MAgComm"]),
+                Converter.ToDecimal(row["MAgTotal"]),
+                Converter.ToDecimal(row["SAgWinlost"]),
+                Converter.ToDecimal(row["SAgComm"]),
+                Converter.ToDecimal(row["SAgTotal"]),
+                Converter.ToDecimal(row["Company"])
             );
         }
     }
