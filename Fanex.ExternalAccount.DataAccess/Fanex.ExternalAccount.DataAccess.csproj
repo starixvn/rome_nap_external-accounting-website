@@ -290,6 +290,7 @@
     <Compile Include="Products\GetProductsCriteria.cs" />
     <Compile Include="Products\GetProductsDetailCriteria.cs" />
     <Compile Include="IPInformatonRepository.cs" />
+    <Compile Include="Products\ProductStatusCriteria.cs" />
     <Compile Include="Report\IReportByCurrencyDAO.cs" />
     <Compile Include="Report\IReportDAO.cs" />
     <Compile Include="Report\ReportByCurrencyDAO.cs" />

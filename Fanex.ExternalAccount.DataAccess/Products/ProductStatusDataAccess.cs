@@ -2,10 +2,9 @@
 {
     using System.Collections;
     using System.Collections.Generic;
-    using Data;
+    using Fanex.Data.Repository;
     using DTO.Products;
-    using Fanex.Common.Extensions;
-    using Fanex.ExternalAccount.Utilities;
+    using System.Linq;
 
     public interface ProductStatusDataAccess
     {
@@ -14,38 +13,24 @@
 
     public class ProductStatusDataAccessImpl : ProductStatusDataAccess
     {
+        private readonly IDynamicRepository dynamicRepository;
+
+        public ProductStatusDataAccessImpl() : this(null)
+        {
+        }
+
+        public ProductStatusDataAccessImpl(IDynamicRepository dynamicRepository)
+        {
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+
         public List<ProductStatusDto> GetProductStatusList(int custId, int roleId, byte settingStatus)
         {
-            var param = new Hashtable
-            {
-                { "custid", custId },
-                { "roleid", roleId },
-                { "settingstatus", settingStatus }
-            };
-            var productStatusList = new List<ProductStatusDto>();
-
-            // Cannot use dynamic mapping here due to old fanex.data
-            using (var db = new ObjectDb("Acc_CustSetting_StatusSettingSelect"))
-            {
-                var reader = db.ExecuteReader(param);
-
-                while (reader.Read())
-                {
-                    productStatusList.Add(new ProductStatusDto
-                    {
-                        ProductId = reader.ToInt32("ProductID"),
-                        IsDisabledUpline = reader.ToBoolean("IsDisabledUpline"),
-                        IsHidden = reader.ToBoolean("IsHidden"),
-                        HasDownline = reader.ToBoolean("HasDownline"),
-                        IsDisabled = reader.ToBoolean("IsDisabled"),
-                        IsDisabledDownline = reader.ToBoolean("IsDisabledDownline"),
-                        IsHiddenUpline = reader.ToBoolean("IsHiddenUpline"),
-                        GroupId = reader.IsDBNull(reader.GetOrdinal("GroupId")) ? (int?)null : reader.ToInt32("GroupId")
-                    });
-                }
-
-                return productStatusList;
-            }
+            var criteria = new ProductStatusCriteria(custId, roleId, settingStatus);
+            var dbResult = dynamicRepository.Fetch<ProductStatusDto>(criteria);
+            return dbResult.ToList();
         }
     }
+
+    // Local criteria class to avoid creating new file
 }
