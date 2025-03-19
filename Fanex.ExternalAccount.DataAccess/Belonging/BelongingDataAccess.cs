@@ -6,39 +6,30 @@
 
     public interface IBelongingDataAccess
     {
-        bool IsBelonging(ICriteria criteria);
-        bool CheckCustomerBelongingCriteria(ICriteria criteria);
+        bool IsBelonging(CheckBelongingCommand command);
+
+        bool CheckCustomerBelongingCriteria(CheckCustomerBelongingCommand command);
     }
 
     public class BelongingDataAccess : IBelongingDataAccess
     {
-        private IDynamicRepository dynamicRepository;
+        private readonly IDynamicRepository dynamicRepository;
 
         public BelongingDataAccess(IDynamicRepository dynamicRepository)
         {
             this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public bool IsBelonging(CheckBelongingCriteria criteria)
+        public bool IsBelonging(CheckBelongingCommand command)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var ouputParams = db.GetOuputParams();
-
-                return Convert.ToBoolean(ouputParams["isbelonging"]);
-            }
+            dynamicRepository.Execute(command);
+            return command.IsBelonging;
         }
 
-        public bool CheckCustomerBelongingCriteria(ICriteria criteria)
+        public bool CheckCustomerBelongingCriteria(CheckCustomerBelongingCommand command)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var ouputParams = db.GetOuputParams();
-
-                return Convert.ToBoolean(ouputParams["isbelonging"]);
-            }
+            dynamicRepository.Execute(command);
+            return command.IsBelonging;
         }
     }
 }

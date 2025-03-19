@@ -1,10 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Belonging
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
-    public class CheckCustomerBelongingCriteria : CriteriaBase
+    public class CheckCustomerBelongingCommand : INonQueryCommand
     {
-        public CheckCustomerBelongingCriteria(
+        public CheckCustomerBelongingCommand(
             string groupName,
             int custId,
             string username)
@@ -20,10 +20,12 @@
 
         public string Username { get; }
 
-        public override string GetSettingKey()
+        public bool IsBelonging { get; set; }
+
+        public string GetSettingKey()
             => "EAS_CustomerSelCheckBelonging";
 
-        public override bool IsValid()
+        public bool IsValid()
             => !string.IsNullOrEmpty(Username) || CustId > 0;
     }
 }

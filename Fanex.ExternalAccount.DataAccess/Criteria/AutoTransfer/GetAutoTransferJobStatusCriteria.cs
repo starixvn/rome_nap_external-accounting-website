@@ -4,7 +4,7 @@
     using Fanex.Data.Repository;
     using Fanex.ExternalAccount.DTO;
 
-    public class GetAutoTransferJobStatusCriteria : CriteriaBase
+    public class GetAutoTransferJobStatusCriteria : INonQueryCommand
     {
         public GetAutoTransferJobStatusCriteria(SiteDB siteDB)
         {
@@ -31,8 +31,8 @@
 
         public string ErrMsg { get; set; }
 
-        public override string GetSettingKey() => $"{SiteDB}Age_ClearBalanceCust_Job_StatusCheck" ;
+        public string GetSettingKey() => $"{SiteDB}Age_ClearBalanceCust_Job_StatusCheck" ;
 
-        public override bool IsValid() => true;
+        public bool IsValid() => true;
     }
 }

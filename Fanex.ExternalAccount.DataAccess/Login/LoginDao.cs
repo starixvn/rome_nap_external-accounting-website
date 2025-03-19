@@ -1,16 +1,14 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Login
 {
-    using Base;
-    using Common;
-    using Data;
-    using Data.DNAide;
-    using DTO;
-    using Interface.Login;
     using System;
     using System.Collections;
     using System.Data;
+    using Common;
+    using Data;
+    using DTO;
+    using Interface.Login;
 
-    public class LoginDao : DAOBase, ILoginDao
+    public class LoginDao : ILoginDao
     {
         public Result Login(
             string username,
@@ -29,7 +27,7 @@
             using (var db = new ObjectDb("EAS_UserLogin"))
             {
                 db.AddInParameter("Username", DbType.String, username);
-                db.AddInParameter("userpwd", DbType.String, Cryptography.CfsEnCode(password));
+                db.AddInParameter("userpwd", DbType.String, Common.Cryptography.CfsEnCode(password));
                 db.AddInParameter("BrowserName", DbType.String, browser);
                 db.AddInParameter("LoginIP", DbType.String, ip);
                 db.AddInParameter("LoginDomain", DbType.String, domain);

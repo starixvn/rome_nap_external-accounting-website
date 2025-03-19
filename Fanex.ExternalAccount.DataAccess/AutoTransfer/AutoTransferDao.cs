@@ -9,7 +9,7 @@ namespace Fanex.ExternalAccount.DataAccess.AutoTransfer
 {
     public interface IAutoTransferDao
     {
-        bool GetAutoTransferJobStatus(int custId, SiteDB siteDB);
+        bool GetAutoTransferJobStatus(GetAutoTransferJobStatusCriteria command);
         Result InsertToastMessage(ICriteria criteria);
         long InsertPersonalMessage(ICriteria criteria);
         void AssignPersonalMessage(long messageId, int custId, string custName);
@@ -17,19 +17,20 @@ namespace Fanex.ExternalAccount.DataAccess.AutoTransfer
 
     public class AutoTransferDao : IAutoTransferDao
     {
-        public bool GetAutoTransferJobStatus(int custId, SiteDB siteDB)
+        private readonly IDynamicRepository _dynamicRepository;
+
+        public AutoTransferDao() : this(null)
+        { }
+
+        public AutoTransferDao(IDynamicRepository dynamicRepository)
         {
-            bool result = false;
-            var criteria = new GetAutoTransferJobStatusCriteria(siteDB);
-            var key = criteria.GetSettingKey();
+            this._dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
 
-            using (var db = new ObjectDb(key))
-            {
-                db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), siteDB.AGIP);
-                result = Converter.ToBool(db.GetParameterValue("IsAutoJobRunning"));
-            }
-
-            return result;
+        public bool GetAutoTransferJobStatus(GetAutoTransferJobStatusCriteria command)
+        {
+            _dynamicRepository.Execute(command);
+            return command.IsAutoJobRunning;
         }
 
         public Result InsertToastMessage(ICriteria criteria)

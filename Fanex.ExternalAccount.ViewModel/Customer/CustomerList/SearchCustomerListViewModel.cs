@@ -6,7 +6,7 @@
 
     public class SearchCustomerListViewModel
     {
-        public List<CustomerListDTO> CustomerList { get; set; }
+        public IEnumerable<CustomerListDTO> CustomerList { get; set; }
 
         public int PageIndex { get; set; }
 

@@ -21,12 +21,12 @@ namespace Fanex.ExternalAccount.Service
 
         public bool IsBelonging(int userId, string groupName, int custId, string username)
         {
-            var criteria = new CheckBelongingCriteria(userId, groupName);
+            var criteria = new CheckBelongingCommand(userId, groupName);
             bool isUserBelonging = !criteria.IsValid() || belongingDataAccess.IsBelonging(criteria);
 
             if (isUserBelonging)
             {
-                var custCriteria = new CheckCustomerBelongingCriteria(groupName, custId, username);
+                var custCriteria = new CheckCustomerBelongingCommand(groupName, custId, username);
                 if (!custCriteria.IsValid())
                 {
                     return true;

@@ -14,6 +14,9 @@
 
         public byte ClosedReason { get; set; }
 
+        public byte Locked { get; set; }
+
+
         public CustomerLockedAccess LockedAccess { get; set; }
 
         public bool Suspended { get; set; }

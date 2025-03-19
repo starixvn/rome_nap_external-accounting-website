@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data;
+    using Fanex.Data.Repository;
 
     public class GetAssociationAccountCriteria : CriteriaBase
     {

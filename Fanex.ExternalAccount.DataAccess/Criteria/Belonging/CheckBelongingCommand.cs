@@ -1,11 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Belonging
 {
-    using Fanex.Data;
     using Fanex.Data.Repository;
 
-    public class CheckBelongingCriteria : CriteriaBase
+    public class CheckBelongingCommand : INonQueryCommand
     {
-        public CheckBelongingCriteria(
+        public CheckBelongingCommand(
             int userId,
             string groupName
           )
@@ -18,14 +17,16 @@
 
         public string GroupName { get; }
 
+        public bool IsBelonging { get; set; }
+
         public int ErrCode { get; }
 
         public string ErrMsg { get; }
 
-        public override string GetSettingKey()
+        public string GetSettingKey()
             => "EAS_UserCheckBelonging";
 
-        public override bool IsValid()
+        public bool IsValid()
             => UserId > 0 && !string.IsNullOrEmpty(GroupName);
     }
 }

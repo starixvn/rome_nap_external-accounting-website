@@ -1,7 +1,8 @@
-﻿using Fanex.NAP.Framework.Data;
-
-namespace Fanex.ExternalAccount.DataAccess.Criteria.AutoTransfer
+﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.AutoTransfer
 {
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+
     public  class AssignPersonalMessageCriteria : CriteriaBase
     {
         public AssignPersonalMessageCriteria(long messageId, int custId, string custName)
