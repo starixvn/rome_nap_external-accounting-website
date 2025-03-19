@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-    using Base;
     using Criteria.UserControl;
     using Data;
     using DTO;
@@ -13,7 +12,7 @@
     using Interface.UserControl;
     using Utilities;
 
-    public class FunctionDao : DAOBase, IFunctionDao
+    public class FunctionDao: IFunctionDao
     {
         private readonly IDynamicRepository dynamicRepository;
 

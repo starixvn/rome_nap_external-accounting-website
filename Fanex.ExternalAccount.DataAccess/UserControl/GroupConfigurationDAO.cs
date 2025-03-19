@@ -1,8 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.UserControl
 {
-    using Common;
     using Criteria.GroupConfiguration;
-    using Fanex.Data.DNAide;
+    using Fanex.Data.Repository;
     using Fanex.ExternalAccount.DTO;
 
     public interface IGroupConfigurationDAO
@@ -12,14 +11,17 @@
 
     public class GroupConfigurationDAO : IGroupConfigurationDAO
     {
+        private readonly IDynamicRepository dynamicRepository;
+
+        public GroupConfigurationDAO(IDynamicRepository dynamicRepository)
+        {
+            this.dynamicRepository = dynamicRepository;
+        }
+
         public Result Update(UpdateGroupConfigurationCriteria criteria)
         {
-            var result = DbHelper.ExecuteDbResult(criteria.GetSettingKey(), criteria.GetSpParams());
-
-            var errorCode = Converter.ToInt(result.Outputs["errorcode"]);
-            var errorMessage = Converter.ToInt(result.Outputs["errormessage"]);
-
-            return new Result(errorCode, errorMessage);
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
     }
 }

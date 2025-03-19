@@ -88,11 +88,26 @@
   <Function Name="Group">
     <Setting Key="EAS_GroupInfoDel" SpName="EAS_GroupInfoDel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_GroupInfoIns" SpName="EAS_GroupInfoIns" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_GroupInfoSel" SpName="EAS_GroupInfoSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_GroupInfoSelAllGroup" SpName="EAS_GroupInfoSelAllGroup" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_GroupInfoSelExternalGroup" SpName="EAS_GroupInfoSelExternalGroup" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_GroupInfoSelByGroupID" SpName="EAS_GroupInfoSelByGroupID" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_GroupInfoSelByGroupName" SpName="EAS_GroupInfoSelByGroupName" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_GroupInfoSel" SpName="EAS_GroupInfoSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+      <Mapping DataField="ParentGroup" ObjectProperty="ParentGroupName" />
+      <Mapping DataField="ParentId" ObjectProperty="ParentGroupId" />
+    </Setting>
+    <Setting Key="EAS_GroupInfoSelAllGroup" SpName="EAS_GroupInfoSelAllGroup" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+      <Mapping DataField="ParentGroup" ObjectProperty="ParentGroupName" />
+      <Mapping DataField="ParentId" ObjectProperty="ParentGroupId" />
+    </Setting>
+    <Setting Key="EAS_GroupInfoSelExternalGroup" SpName="EAS_GroupInfoSelExternalGroup" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+      <Mapping DataField="ParentGroup" ObjectProperty="ParentGroupName" />
+      <Mapping DataField="ParentId" ObjectProperty="ParentGroupId" />
+    </Setting>
+    <Setting Key="EAS_GroupInfoSelByGroupID" SpName="EAS_GroupInfoSelByGroupID" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+      <Mapping DataField="ParentGroup" ObjectProperty="ParentGroupName" />
+      <Mapping DataField="ParentId" ObjectProperty="ParentGroupId" />
+    </Setting>
+    <Setting Key="EAS_GroupInfoSelByGroupName" SpName="EAS_GroupInfoSelByGroupName" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+      <Mapping DataField="ParentGroup" ObjectProperty="ParentGroupName" />
+      <Mapping DataField="ParentId" ObjectProperty="ParentGroupId" />
+    </Setting>
     <Setting Key="EAS_GroupInfoUpd" SpName="EAS_GroupInfoUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_GroupPolicySel" SpName="EAS_GroupPolicySel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_GroupPolicyUpd" SpName="EAS_GroupPolicyUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />

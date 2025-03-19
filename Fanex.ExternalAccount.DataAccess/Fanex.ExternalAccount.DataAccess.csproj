@@ -261,6 +261,16 @@
     <Compile Include="Criteria\UserControl\GetFunctionPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\GetGroupPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\GetUserPolicyCriteria.cs" />
+    <Compile Include="Criteria\UserControl\Group\CreateGroupCriteria.cs" />
+    <Compile Include="Criteria\UserControl\Group\DeleteGroupCriteria.cs" />
+    <Compile Include="Criteria\UserControl\Group\EditGroupCriteria.cs" />
+    <Compile Include="Criteria\UserControl\Group\EditGroupPolicyCriteria.cs" />
+    <Compile Include="Criteria\UserControl\Group\GetAllGroupCriteria.cs" />
+    <Compile Include="Criteria\UserControl\Group\GetAllGroupPolicyCriteria.cs" />
+    <Compile Include="Criteria\UserControl\Group\GetExternalGroupCriteria.cs" />
+    <Compile Include="Criteria\UserControl\Group\GetGroupByIdCriteria.cs" />
+    <Compile Include="Criteria\UserControl\Group\GetGroupByNameCriteria.cs" />
+    <Compile Include="Criteria\UserControl\Group\GetListGroupCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateFunctionCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateMultipleGroupPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateMultipleUserPolicyCriteria.cs" />
