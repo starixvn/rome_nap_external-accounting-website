@@ -256,10 +256,15 @@
     <Compile Include="Criteria\TotalBet\GetEventsCriteria.cs" />
     <Compile Include="Criteria\TotalBet\GetTotalBetCriteria.cs" />
     <Compile Include="Criteria\TotalBet\GetLeaguesCriteria.cs" />
+    <Compile Include="Criteria\UserControl\CreateFunctionCriteria.cs" />
+    <Compile Include="Criteria\UserControl\GetAllFunctionsCriteria.cs" />
+    <Compile Include="Criteria\UserControl\GetFunctionPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\GetGroupPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\GetUserPolicyCriteria.cs" />
+    <Compile Include="Criteria\UserControl\UpdateFunctionCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateMultipleGroupPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateMultipleUserPolicyCriteria.cs" />
+    <Compile Include="Criteria\UserControl\UpdateStatusCriteria.cs" />
     <Compile Include="Customer\AssociationAccount\AssociationAccountDao.cs" />
     <Compile Include="Customer\CustomerList\CustomerListDao.cs" />
     <Compile Include="Customer\GetCustDBConfigBySiteCriteria.cs" />
@@ -346,7 +351,6 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
