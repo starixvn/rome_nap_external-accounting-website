@@ -274,6 +274,7 @@
     <Compile Include="Customer\MarkAccountType\IMarkAccountTypeDao.cs" />
     <Compile Include="Customer\MarkAccountType\MarkAccountTypeDao.cs" />
     <Compile Include="DataRange\DataRangeDao.cs" />
+    <Compile Include="DataRange\DataRangeModel.cs" />
     <Compile Include="DataRange\IDataRangeDao.cs" />
     <Compile Include="ExchangeRate\ExchangeRateDAO.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />

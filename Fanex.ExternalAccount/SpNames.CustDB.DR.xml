@@ -345,7 +345,10 @@
   </Function>
   <Function Name="Data Range">
     <Setting Key="EAS_GetProductID_ByGroupConfiguration" SpName="EAS_GetProductID_ByGroupConfiguration" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd" DbName="DBCust.CustDB.wsv_xnap" />
+    <Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd" DbName="DBCust.CustDB.wsv_xnap">
+      <Mapping DataField="errcode" ObjectProperty="ErrorCode" />
+      <Mapping DataField="errmsg" ObjectProperty="ErrorMessage" />
+    </Setting>
     <Setting Key="EAS_CustomerDateLimitSel" SpName="EAS_CustomerDateLimitSel" DbName="DBCust.CustDB.wsv_xnap" />
   </Function>
   <Function Name="Products">
