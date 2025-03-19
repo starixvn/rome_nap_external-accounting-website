@@ -271,6 +271,12 @@
     <Compile Include="Criteria\UserControl\Group\GetGroupByIdCriteria.cs" />
     <Compile Include="Criteria\UserControl\Group\GetGroupByNameCriteria.cs" />
     <Compile Include="Criteria\UserControl\Group\GetListGroupCriteria.cs" />
+    <Compile Include="Criteria\UserControl\Menu\CreateMenuCriteria.cs" />
+    <Compile Include="Criteria\UserControl\Menu\DeleteMenuCriteria.cs" />
+    <Compile Include="Criteria\UserControl\Menu\GetAllMenusCriteria.cs" />
+    <Compile Include="Criteria\UserControl\Menu\GetMenuByUserIdCriteria.cs" />
+    <Compile Include="Criteria\UserControl\Menu\UpdateMenuCriteria.cs" />
+    <Compile Include="Criteria\UserControl\Menu\UpdateMenuStatusCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateFunctionCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateMultipleGroupPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\UpdateMultipleUserPolicyCriteria.cs" />

@@ -3,186 +3,136 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-    using Base;
+    using Criteria.UserControl.Menu;
     using Data;
     using DTO;
     using DTO.UserControl;
+    using Fanex.Data.Repository;
     using Interface.UserControl;
     using Utilities;
 
-    public class MenuDao : DAOBase, IMenuDao
+    public class MenuDao : IMenuDao
     {
+        private readonly IDynamicRepository dynamicRepository;
+
+        public MenuDao(IDynamicRepository dynamicRepository = null)
+        {
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+
         public IEnumerable<Menu> GetAllMenus()
         {
-            var result = new List<Menu>();
-
-            using (var db = new ObjectDb("EAS_MenuSel"))
-            {
-                using (var reader = db.ExecuteReader())
-                {
-                    if (reader != null)
-                    {
-                        while (reader.Read())
-                        {
-                            result.Add(new Menu
-                            {
-#pragma warning disable S1192 // String literals should not be duplicated
-                                MenuId = reader.ToInt32("MenuId"),
-                                MenuName = reader.ToString("MenuName"),
-                                MenuDesc = reader.ToString("MenuDesc"),
-                                ParentId = reader.ToInt32("ParentId"),
-                                ParentName = reader.ToString("ParentName"),
-                                Url = reader.ToString("Url"),
-                                FuncId = reader.ToInt32("FuncId"),
-                                FuncName = reader.ToString("FuncName"),
-                                DisplayOrder = reader.ToInt32("DisplayOrder"),
-                                ModifiedDate = reader.ToString("ModifiedDate"),
-                                IsActive = reader.ToBoolean("Active")
-#pragma warning restore S1192 // String literals should not be duplicated
-                            });
-                        }
-
-                        return result;
-                    }
-                }
-
-#pragma warning disable S1168 // Empty arrays and collections should be returned instead of null
-                return null;
-#pragma warning restore S1168 // Empty arrays and collections should be returned instead of null
-            }
+            var criteria = new GetAllMenusCriteria();
+            return dynamicRepository.Fetch<Menu>(criteria) ?? new List<Menu>();
         }
 
         public UserCache GetMenuByUserId(int userId)
         {
-            using (var db = new ObjectDb("EAS_MenuSelByUserID"))
+            var criteria = new GetMenuByUserIdCriteria { UserId = userId };
+            var ds = dynamicRepository.FetchDataSet(criteria);
+            
+            if (ds?.Tables.Count == 2)
             {
-#pragma warning disable S1192 // String literals should not be duplicated
-                db.AddInParameter("UserID", DbType.Int32, userId);
-#pragma warning restore S1192 // String literals should not be duplicated
-                using (var ds = db.ExecuteDataSet())
+                var menu = ds.Tables[0];
+                var func = ds.Tables[1];
+
+                var menus = (from c in menu.AsEnumerable()
+                            select new Menu
+                            {
+                                MenuId = c.Field<int>("MenuId"),
+                                MenuName = c.Field<string>("MenuName"),
+                                ParentId = c.Field<int>("ParentId"),
+                                ParentName = c.Field<string>("ParentName"),
+                                Url = c.Field<string>("Url"),
+                                FuncId = c.Field<int>("FuncId"),
+                                FuncKey = c.Field<string>("FuncKey"),
+                                DisplayOrder = c.Field<int>("DisplayOrder"),
+                                IsActive = c.Field<bool>("Active")
+                            }).ToList();
+
+                var funcs = (from c in func.AsEnumerable()
+                            select new Function
+                            {
+                                FuncID = c.Field<int>("funcid"),
+                                ParentID = c.Field<int>("parentId"),
+                                FuncName = c.Field<string>("funcName"),
+                                FuncKey = c.Field<string>("funcKey"),
+                                Policy = c.Field<EPolicy>("policy"),
+                                IsTest = c.Field<bool>("IsTest")
+                            }).ToList();
+
+                return new UserCache
                 {
-#pragma warning disable S109 // Magic numbers should not be used
-                    if (ds?.Tables.Count == 2)
-#pragma warning restore S109 // Magic numbers should not be used
-                    {
-                        var menu = ds.Tables[0];
-                        var func = ds.Tables[1];
-
-                        var menus = (from c in menu.AsEnumerable()
-                                     let parentId = c.Field<int>("ParentId")
-                                     select new Menu
-                                     {
-                                         MenuId = c.Field<int>("MenuId"),
-                                         MenuName = c.Field<string>("MenuName"),
-                                         ParentId = c.Field<int>("ParentId"),
-                                         ParentName = c.Field<string>("ParentName"),
-                                         Url = c.Field<string>("Url"),
-                                         FuncId = c.Field<int>("FuncId"),
-                                         FuncKey = c.Field<string>("FuncKey"),
-                                         DisplayOrder = c.Field<int>("DisplayOrder"),
-                                         IsActive = c.Field<bool>("Active")
-                                     }).ToList();
-
-                        var funcs = (from c in func.AsEnumerable()
-                                     select new Function
-                                     {
-                                         FuncID = c.Field<int>("funcid"),
-                                         ParentID = c.Field<int>("parentId"),
-                                         FuncName = c.Field<string>("funcName"),
-                                         FuncKey = c.Field<string>("funcKey"),
-                                         Policy = c.Field<EPolicy>("policy"),
-                                         IsTest = c.Field<bool>("IsTest")
-                                     }).ToList();
-
-                        return new UserCache
-                        {
-                            MenuList = menus,
-                            PolicyList = funcs
-                        };
-                    }
-                }
-
-                return null;
+                    MenuList = menus,
+                    PolicyList = funcs
+                };
             }
+
+            return null;
         }
 
         public Result CreateMenu(Menu menu, int custId, string ip)
         {
-            using (var db = new ObjectDb("EAS_MenuIns"))
+            var criteria = new CreateMenuCriteria
             {
-                db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("FuncId", DbType.Int32, menu.FuncId);
-                db.AddInParameter("ParentId", DbType.Int32, menu.ParentId);
-                db.AddInParameter("DisplayOrder", DbType.Int32, menu.DisplayOrder);
+                UserId = custId,
+                FuncId = menu.FuncId,
+                ParentId = menu.ParentId,
+                DisplayOrder = menu.DisplayOrder,
+                MenuName = menu.MenuName,
+                MenuDesc = menu.MenuDesc,
+                ParentName = menu.ParentName,
+                URL = menu.Url,
+                IP = ip
+            };
 
-                db.AddInParameter("MenuName", DbType.String, menu.MenuName);
-                db.AddInParameter("MenuDesc", DbType.String, menu.MenuDesc);
-                db.AddInParameter("ParentName", DbType.String, menu.ParentName);
-                db.AddInParameter("URL", DbType.String, menu.Url);
-                db.AddInParameter("IP", DbType.String, ip);
-                db.AddOutParameter("MenuId", DbType.Int32, sizeof(int));
-
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
         public Result UpdateMenu(Menu menu, int custId, string ip)
         {
-            using (var db = new ObjectDb("EAS_MenuUpd"))
+            var criteria = new UpdateMenuCriteria
             {
-                db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("MenuId", DbType.Int32, menu.MenuId);
-                db.AddInParameter("FuncId", DbType.Int32, menu.FuncId);
-                db.AddInParameter("ParentId", DbType.Int32, menu.ParentId);
-                db.AddInParameter("DisplayOrder", DbType.Int32, menu.DisplayOrder);
+                UserId = custId,
+                MenuId = menu.MenuId,
+                FuncId = menu.FuncId,
+                ParentId = menu.ParentId,
+                DisplayOrder = menu.DisplayOrder,
+                MenuName = menu.MenuName,
+                MenuDesc = menu.MenuDesc,
+                ParentName = menu.ParentName,
+                URL = menu.Url,
+                IP = ip
+            };
 
-                db.AddInParameter("MenuName", DbType.String, menu.MenuName);
-                db.AddInParameter("MenuDesc", DbType.String, menu.MenuDesc);
-                db.AddInParameter("ParentName", DbType.String, menu.ParentName);
-                db.AddInParameter("URL", DbType.String, menu.Url);
-                db.AddInParameter("IP", DbType.String, ip);
-
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
         public Result UpdateMenuStatus(int id, bool isActive, int custId)
         {
-            using (var db = new ObjectDb("EAS_MenuUpdStatus"))
+            var criteria = new UpdateMenuStatusCriteria
             {
-                db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("MenuId", DbType.Int32, id);
-                db.AddInParameter("Active", DbType.Boolean, isActive);
+                UserId = custId,
+                MenuId = id,
+                Active = isActive
+            };
 
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
         public Result DeleteMenu(int id, int custId)
         {
-            using (var db = new ObjectDb("EAS_MenuDel"))
+            var criteria = new DeleteMenuCriteria
             {
-                db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("MenuId", DbType.Int32, id);
+                UserId = custId,
+                MenuId = id
+            };
 
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
     }
 }

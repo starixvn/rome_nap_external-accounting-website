@@ -16,7 +16,7 @@
     {
         private readonly IDynamicRepository dynamicRepository;
 
-        public FunctionDao(IDynamicRepository dynamicRepository)
+        public FunctionDao(IDynamicRepository dynamicRepository = null)
         {
             this.dynamicRepository = dynamicRepository;
         }
