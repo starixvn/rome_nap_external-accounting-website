@@ -2,14 +2,18 @@
 {
     using System.Collections.Generic;
     using DTO.UserControl;
-    using NAP.Framework.Data;
+    using Fanex.Data.Repository;
+    using Fanex.ExternalAccount.DataAccess.Criteria.UserControl;
+    
 
     public interface IPolicyDao
     {
-        IEnumerable<GroupPolicy> GetGroupPolicies(ICriteria criteria);
+        IEnumerable<GroupPolicy> GetGroupPolicies(GetGroupPolicyCriteria criteria);
 
-        IEnumerable<UserPolicy> GetUserPolicies(ICriteria criteria);
+        IEnumerable<UserPolicy> GetUserPolicies(GetUserPolicyCriteria criteria);
 
-        DTO.Result UpdatePolicies(ICriteria criteria);
+        DTO.Result UpdateMultipleUserPolicy(UpdateMultipleUserPolicyCriteria criteria);
+
+        DTO.Result UpdateMultipleGroupPolicy(UpdateMultipleGroupPolicyCriteria criteria);
     }
 }

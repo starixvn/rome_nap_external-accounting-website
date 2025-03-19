@@ -16,9 +16,9 @@
     {
         private readonly IDynamicRepository dynamicRepository;
 
-        public GroupDao(IDynamicRepository dynamicRepository)
+        public GroupDao(IDynamicRepository dynamicRepository = null)
         {
-            this.dynamicRepository = dynamicRepository;
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
         public IEnumerable<Group> GetListGroup()
