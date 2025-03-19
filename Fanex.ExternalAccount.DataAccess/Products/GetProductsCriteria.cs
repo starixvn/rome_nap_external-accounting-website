@@ -1,8 +1,6 @@
-﻿using Fanex.ExternalAccount.Core.Shared;
-
-namespace Fanex.ExternalAccount.DataAccess.Products
+﻿namespace Fanex.ExternalAccount.DataAccess.Products
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetProductsCriteria : CriteriaBase
     {

@@ -11,7 +11,7 @@
     using Fanex.ExternalAccount.DTO.Products;
     using Fanex.ExternalAccount.Service.Resources;
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public interface IProductDetailService
     {
@@ -21,9 +21,11 @@
 
         IEnumerable<ProductDetailEntity> GetProductDetails(string groupName);
 
-        string BuildProductDetailsXML(IEnumerable<int> validProductIds, string userSelectedResourceIds, string groupName);
+        string BuildProductDetailsXML(IEnumerable<int> validProductIds, string userSelectedResourceIds,
+            string groupName);
 
-        IEnumerable<int> RemoveProductIds(IEnumerable<int> validProductIds, string userSelectedResourceIds, string groupName);
+        IEnumerable<int> RemoveProductIds(IEnumerable<int> validProductIds, string userSelectedResourceIds,
+            string groupName);
     }
 
     public class ProductDetailService : IProductDetailService
@@ -42,9 +44,11 @@
             var productDetails = GetProductDetails(groupName)
                 .Where(i => i.ResourceId == sabaOthers)
                 .OrderBy(i => i.Order)
-                .Select(i => CacheRef.GetResourceDataByRefIdAndResourceId(i.RefId, i.ChildResourceId.ToString(), string.Empty));
+                .Select(i =>
+                    CacheRef.GetResourceDataByRefIdAndResourceId(i.RefId, i.ChildResourceId.ToString(), string.Empty));
 
-            return string.Format(Lang.SabaOtherSportsLegend, string.Join(", ", productDetails), CacheRef.GetResourceDataByRefIdAndResourceId("ProductDetail", sabaOthers, string.Empty));
+            return string.Format(Lang.SabaOtherSportsLegend, string.Join(", ", productDetails),
+                CacheRef.GetResourceDataByRefIdAndResourceId("ProductDetail", sabaOthers, string.Empty));
         }
 
 
@@ -57,27 +61,24 @@
 
                 if (product.IsParent)
                 {
-                    product.Products.ToList().ForEach(subProduct =>
-                    {
-                        productHash[subProduct.ProductId] = true;
-                    });
+                    product.Products.ToList().ForEach(subProduct => { productHash[subProduct.ProductId] = true; });
                 }
             });
 
             return GetProductDetails(groupName)
                  .Where(p => productHash.ContainsKey(p.ProductId) && productHash[p.ProductId])
-                 .GroupBy(p => p.ResourceId)
-                 .Select(p =>
-                 {
-                     var product = p.FirstOrDefault();
+                .GroupBy(p => p.ResourceId)
+                .Select(p =>
+                {
+                    var product = p.FirstOrDefault();
 
-                     return new ProductDetailDto
-                     {
-                         RefId = product.RefId,
-                         ResourceId = product.ResourceId,
-                         ProductId = product.ProductId
-                     };
-                 });
+                    return new ProductDetailDto
+                    {
+                        RefId = product.RefId,
+                        ResourceId = product.ResourceId,
+                        ProductId = product.ProductId
+                    };
+                });
         }
 
         public IEnumerable<ProductDetailEntity> GetProductDetails(string groupName)
@@ -94,7 +95,8 @@
 
             if (result == null)
             {
-                result = dynamicRepository.Fetch<ProductDetailEntity>(new GetProductsDetailCriteria()).OrderBy(product => product.ProductId).ThenBy(product => product.Order);
+                result = dynamicRepository.Fetch<ProductDetailEntity>(new GetProductsDetailCriteria())
+                    .OrderBy(product => product.ProductId).ThenBy(product => product.Order);
                 Cache.Set(key, result);
             }
 
@@ -118,7 +120,8 @@
             return canView;
         }
 
-        public string BuildProductDetailsXML(IEnumerable<int> validProductIds, string userSelectedResourceIds, string groupName)
+        public string BuildProductDetailsXML(IEnumerable<int> validProductIds, string userSelectedResourceIds,
+            string groupName)
         {
             var validProductDetails = new List<ProductDetailEntity>();
             var productIdsHash = validProductIds.ToDictionary(kvp => kvp, kvp => true);
@@ -133,8 +136,12 @@
                     if (ProductConstants.ProductListHasProductDetail.Any(i => i == group.Key))
                     {
                         var isSportsbook = group.Key == ProductConstants.Sportsbook;
-                        var productDetails = Config.IsOfferProductDetailGroup(groupName) ? group.Where(p => resourceIdsHash.ContainsKey(p.ResourceId)) : group;
-                        validProductDetails.AddRange(isSportsbook ? productDetails.Where(p => resourceIdsHash.ContainsKey(p.ResourceId)) : productDetails);
+                        var productDetails = Config.IsOfferProductDetailGroup(groupName)
+                            ? group.Where(p => resourceIdsHash.ContainsKey(p.ResourceId))
+                            : group;
+                        validProductDetails.AddRange(isSportsbook
+                            ? productDetails.Where(p => resourceIdsHash.ContainsKey(p.ResourceId))
+                            : productDetails);
                     }
                 });
 
@@ -150,6 +157,7 @@
             {
                 xml.Append(product.ToString());
             }
+
             xml.Append("</ROOT>");
             return xml.ToString();
         }
@@ -162,16 +170,14 @@
             {
                 value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .ToList()
-                    .ForEach(text =>
-                    {
-                        results[text] = true;
-                    });
+                    .ForEach(text => { results[text] = true; });
             }
 
             return results;
         }
 
-        public IEnumerable<int> RemoveProductIds(IEnumerable<int> validProductIds, string userSelectedResourceIds, string groupName)
+        public IEnumerable<int> RemoveProductIds(IEnumerable<int> validProductIds, string userSelectedResourceIds,
+            string groupName)
         {
             var removedProductIds = validProductIds.ToList();
             var resourceIds = ToEnumerable(userSelectedResourceIds);
@@ -182,7 +188,9 @@
                 .ToList()
                 .ForEach(group =>
                 {
-                    if (group.Key == ProductConstants.Sportsbook || Config.ProductOfferProductDetails().Contains(group.Key) && Config.IsOfferProductDetailGroup(groupName))
+                    if (group.Key == ProductConstants.Sportsbook ||
+                        Config.ProductOfferProductDetails().Contains(group.Key) &&
+                        Config.IsOfferProductDetailGroup(groupName))
                     {
                         var intersectResourceIds = group.Select(p => p.ResourceId).Intersect(resourceIds);
 
@@ -198,7 +206,7 @@
 
         private static string[] ToEnumerable(string value)
             => string.IsNullOrWhiteSpace(value)
-            ? Array.Empty<string>()
-            : value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                ? Array.Empty<string>()
+                : value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
     }
 }
