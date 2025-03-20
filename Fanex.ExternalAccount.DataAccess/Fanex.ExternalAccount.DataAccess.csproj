@@ -208,11 +208,11 @@
     <Compile Include="Criteria\Customer\CustomerStatus\GetSuspendCustomerDetailInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\UpdateSuspendCustomerCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckLimitNewDownlineCriteria.cs" />
-    <Compile Include="Criteria\Customer\MarkAccountType\AddMarkAccountCriteria.cs" />
+    <Compile Include="Criteria\Customer\MarkAccountType\AddMarkAccountCommand.cs" />
     <Compile Include="Criteria\Customer\MarkAccountType\CheckMarkAccountCriteria.cs" />
     <Compile Include="Criteria\Customer\MarkAccountType\SearchMarkAccountCriteria.cs" />
-    <Compile Include="Criteria\Customer\MarkAccountType\UnmarkMarkAccountCriteria.cs" />
-    <Compile Include="Criteria\Customer\MarkAccountType\UpdateMarkAccountCriteria.cs" />
+    <Compile Include="Criteria\Customer\MarkAccountType\UnmarkMarkAccountCommand.cs" />
+    <Compile Include="Criteria\Customer\MarkAccountType\UpdateMarkAccountCommand.cs" />
     <Compile Include="Criteria\Customer\UpdateSuperInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\GetSuperInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\UpdateDoubleCommCriteria.cs" />

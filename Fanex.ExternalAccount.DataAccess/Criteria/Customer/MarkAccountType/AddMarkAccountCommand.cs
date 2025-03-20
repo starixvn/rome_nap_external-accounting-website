@@ -1,8 +1,8 @@
-﻿using Fanex.NAP.Framework.Data;
-
-namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.MarkAccountType
+﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.MarkAccountType
 {
-    public class AddMarkAccountCriteria : CriteriaBase
+    using Fanex.Data.Repository;
+
+    public class AddMarkAccountCommand : INonQueryCommand
     {
         public int UserId { get; set; }
 
@@ -20,10 +20,10 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.MarkAccountType
 
         public string ErrMsg { get; set; }
 
-        public override string GetSettingKey()
+        public string GetSettingKey()
          => "EAS_AccountType_Multiple_Ins";
 
-        public override bool IsValid()
+        public bool IsValid()
             => UserId > 0 && !string.IsNullOrEmpty(GroupName);
     }
 }

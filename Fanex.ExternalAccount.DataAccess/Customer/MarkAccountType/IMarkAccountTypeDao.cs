@@ -10,10 +10,10 @@
 
         Result Check(CheckMarkAccountCriteria criteria);
 
-        Result Add(AddMarkAccountCriteria criteria);
+        Result Add(AddMarkAccountCommand command);
 
-        Result Update(UpdateMarkAccountCriteria criteria);
+        Result Update(UpdateMarkAccountCommand command);
 
-        Result Unmark(UnmarkMarkAccountCriteria criteria);
+        Result Unmark(UnmarkMarkAccountCommand command);
     }
 }

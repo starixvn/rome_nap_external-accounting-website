@@ -44,7 +44,7 @@
 
             return !result.IsSuccess
                 ? result
-                : markAccountTypeDao.Add(new AddMarkAccountCriteria
+                : markAccountTypeDao.Add(new AddMarkAccountCommand
             {
                 GroupName = newMarkAccountTypeParams.GroupName,
                 Usernames = string.Join(",", usernames),
@@ -103,7 +103,7 @@
 
         public Result SingleUpdate(UpdateMarkAccountTypeParams updateMarkAccountTypeParams)
         {
-            var result = markAccountTypeDao.Update(new UpdateMarkAccountCriteria
+            var result = markAccountTypeDao.Update(new UpdateMarkAccountCommand
             {
                 CustID = updateMarkAccountTypeParams.CustId,
                 TypeID = updateMarkAccountTypeParams.TypeId,
@@ -117,7 +117,7 @@
 
         public Result Unmark(UnmarkAccountTypeParams parameters)
         {
-            var result = markAccountTypeDao.Unmark(new UnmarkMarkAccountCriteria
+            var result = markAccountTypeDao.Unmark(new UnmarkMarkAccountCommand
             {
                 CustID = parameters.CustId,
                 IP = parameters.IP,
@@ -132,7 +132,7 @@
             var errorDeleteUsernames = new List<string>();
             foreach (var account in unmarkAccountTypeParams.Accounts)
             {
-                var result = markAccountTypeDao.Unmark(new UnmarkMarkAccountCriteria
+                var result = markAccountTypeDao.Unmark(new UnmarkMarkAccountCommand
                 {
                     CustID = account.CustId,
                     IP = unmarkAccountTypeParams.IP,

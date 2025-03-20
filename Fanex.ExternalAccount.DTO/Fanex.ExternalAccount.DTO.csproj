@@ -248,6 +248,10 @@
       <Project>{05dd3a2f-f9ff-42e1-8d4e-d4f83e51ebf4}</Project>
       <Name>Core.Shared</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj">
+      <Project>{016f274c-1f76-450b-b80d-e7fb59be6a2b}</Project>
+      <Name>Fanex.ExternalAccount.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\Google.Protobuf.dll" />

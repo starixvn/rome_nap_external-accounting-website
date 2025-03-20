@@ -1,4 +1,7 @@
-﻿namespace Fanex.ExternalAccount.DTO.Customer.MarkAccount
+﻿using System;
+using Fanex.ExternalAccount.Utilities;
+
+namespace Fanex.ExternalAccount.DTO.Customer.MarkAccount
 {
     public class MarkAccount
     {
@@ -10,7 +13,9 @@
 
         public int TypeId { get; set; }
 
-        public string MarkDateTime { get; set; }
+        public DateTime MarkedDate { get; set; }
+
+        public string MarkDateTime => Utils.ToStringExt(MarkedDate);
 
         public string Remark { get; set; }
 

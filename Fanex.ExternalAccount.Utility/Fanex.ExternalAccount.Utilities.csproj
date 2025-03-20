@@ -191,12 +191,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj">
-      <Project>{AA1EA660-0E91-4C46-8100-F39C6A0BFC0B}</Project>
-      <Name>Fanex.ExternalAccount.DTO</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="Fanex.ExternalAccount.Utilities.ruleset" />
     <None Include="packages.config" />

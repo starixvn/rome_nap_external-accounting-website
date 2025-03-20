@@ -1,8 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.MarkAccountType
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
-    public class UnmarkMarkAccountCriteria : CriteriaBase
+    public class UnmarkMarkAccountCommand : INonQueryCommand
     {
         public int CustID { get; set; }
 
@@ -14,10 +14,10 @@
 
         public string ErrMsg { get; set; }
 
-        public override string GetSettingKey()
+        public string GetSettingKey()
          => "EAS_AccountType_Del";
 
-        public override bool IsValid()
+        public bool IsValid()
             => CustID > 0 && UserID > 0;
     }
 }
