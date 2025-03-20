@@ -8,6 +8,9 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using Fanex.Data.Repository;
+    using Fanex.ExternalAccount.DataAccess.Criteria.UserControl.UserCRUD;
+    using System.Linq;
 
 #pragma warning disable S1192 // String literals should not be duplicated
 
@@ -19,7 +22,7 @@
 
         Result ResetPassword(int adminId, int userId, string password, string ip);
 
-        Result CreateUser(int adminId, string userName,int custId, string password, string firstName, string lastName, int groupId, string ip, out string logData);
+        Result CreateUser(int adminId, string userName, int custId, string password, string firstName, string lastName, int groupId, string ip, out string logData);
 
         Result EditUser(int adminId, int userId, string firstName, string lastName, string ip, int groupId);
 
@@ -31,296 +34,181 @@
 
         Result UpdateUserPolicy(int adminId, int userId, string oldPolicy, string policy, string ip);
 
-        Result Acc_CustomerIns_Register(string userName, out int custId);
+        Result RegisterUser(string userName, out int custId);
 
-        Result EAS_eaUserInfo_Ins(int userId, int groupId, int adminId);
+        Result AssignGroup(int userId, int groupId, int adminId);
 
         void Acc_CustomerInsUserInfo_Rollback(int custId);
 
         void Acc_CustomerIns_Rollback(int custId);
 
-        void EAS_WriteLog_UserLog_UserControl_Wrapper(int custId, string trackingValue, int userId, int duration, int actionId);
+        void WriteLog(int custId, string trackingValue, int userId, int duration, int actionId);
     }
-    
+
     public class UserDao : IUserDao
     {
         private const int AdminSiteDBGroupId = 0;
+
+        private readonly IDynamicRepository dynamicRepository;
+
+        public UserDao(IDynamicRepository dynamicRepository = null)
+        {
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+
         public IEnumerable<User> GetListUsers(string userName, int? groupId)
         {
-            var result = new List<User>();
-
-            using (var db = new ObjectDb("EAS_UserInfoSel"))
-            {
-                db.AddInParameter("GroupID", DbType.Int32, groupId);
-                db.AddInParameter("Username", DbType.String, userName);
-
-                using (var reader = db.ExecuteReader())
-                {
-                    if (reader != null)
-                    {
-                        while (reader.Read())
-                        {
-                            result.Add(new User
-                            {
-                                CreatedDate = reader.ToString("CreatedDate"),
-                                Creator = reader.ToString("Creator"),
-                                Enabled = reader.ToBool("Enabled"),
-                                GroupID = reader.ToInt("GroupID"),
-                                UserID = reader.ToInt("CustId"),
-                                Username = reader.ToString("Username"),
-                                FirstName = reader.ToString("FirstName"),
-                                LastName = reader.ToString("LastName"),
-                                GroupName = reader.ToString("GroupName")
-                            });
-                        }
-                    }
-                }
-
-                return result;
-            }
+            var criteria = new GetListUsersCriteria(userName, groupId);
+            return dynamicRepository.Fetch<User>(criteria);
         }
 
         public User GetUserById(int userId)
         {
-            var result = new User();
-
-            using (var db = new ObjectDb("EAS_UserInfoSelByUserID"))
-            {
-                db.AddInParameter("UserID", DbType.Int32, userId);
-
-                using (var reader = db.ExecuteReader())
-                {
-                    if (reader != null)
-                    {
-                        while (reader.Read())
-                        {
-                            result = new User
-                            {
-                                Enabled = reader.ToBool("Enabled"),
-                                GroupID = reader.ToInt("GroupID"),
-                                UserID = reader.ToInt("CustId"),
-                                Username = reader.ToString("Username"),
-                                FirstName = reader.ToString("FirstName"),
-                                LastName = reader.ToString("LastName"),
-                                GroupName = reader.ToString("GroupName")
-                            };
-                        }
-                    }
-                }
-
-                return result;
-            }
+            var getUserByIdCriteria = new GetUserByIdCriteria(userId);
+            return dynamicRepository.Fetch<User>(getUserByIdCriteria).FirstOrDefault();
         }
 
         public Result ResetPassword(int adminId, int userId, string password, string ip)
         {
-            using (var db = new ObjectDb("EAS_UserInfoUpdUserPwd"))
+            var criteria = new ResetPasswordCriteria
             {
-                db.AddInParameter("UserID", DbType.Int32, adminId);
-                db.AddInParameter("CustID", DbType.Int32, userId);
-                db.AddInParameter("UserPwd", DbType.String, Cryptography.CfsEnCode(password));
-                db.AddInParameter("IP", DbType.String, ip);
-
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+                UserID = adminId,
+                CustID = userId,
+                UserPwd = Security.Cryptography.CfsEnCode(password),
+                IP = ip
+            };
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
-        public Result CreateUser(int adminId, string userName, int custId, string password, string firstName, string lastName,
-            int groupId, string ip, out string logData)
+        public Result CreateUser(int adminId, string userName, int custId, string password, string firstName,
+            string lastName, int groupId, string ip, out string logData)
         {
-            using (var db = new ObjectDb("EAS_UserInfoAddNew"))
+            var criteria = new EAS_UserInfoAddNewCriteria
             {
-                db.AddInParameter("UserID", DbType.Int32, adminId);
-                db.AddInParameter("Username", DbType.String, userName);
-                db.AddInParameter("UserPwd", DbType.String, Cryptography.CfsEnCode(password));
-                db.AddInParameter("FirstName", DbType.String, firstName);
-                db.AddInParameter("LastName", DbType.String, lastName);
-                db.AddInParameter("GroupID", DbType.Int32, groupId);
-                db.AddInParameter("IP", DbType.String, ip);
-                db.AddInParameter("CustID", DbType.Int32, custId);
-                db.AddOutParameter("LogData", DbType.String, -1);
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-                logData = (string)db.GetParameterValue("LogData");
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+                UserId = adminId,
+                Username = userName,
+                UserPwd = Security.Cryptography.CfsEnCode(password),
+                FirstName = firstName,
+                LastName = lastName,
+                GroupID = groupId,
+                IP = ip,
+                CustID = custId,
+            };
+            dynamicRepository.Execute(criteria);
+            logData = criteria.LogData;
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
         public Result EditUser(int adminId, int userId, string firstName, string lastName, string ip, int groupId)
         {
-            using (var db = new ObjectDb("EAS_UserInfoUpdAll"))
+            var criteria = new EditUserCriteria
             {
-                db.AddInParameter("UserID", DbType.Int32, adminId);
-                db.AddInParameter("FirstName", DbType.String, firstName);
-                db.AddInParameter("LastName", DbType.String, lastName);
-                db.AddInParameter("GroupID", DbType.Int32, groupId);
-                db.AddInParameter("IP", DbType.String, ip);
-                db.AddInParameter("CustID", DbType.Int32, userId);
+                UserID = adminId,
+                CustID = userId,
+                FirstName = firstName,
+                LastName = lastName,
+                GroupID = groupId,
+                IP = ip,
+            };
 
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
         public Result UpdateStatus(int adminId, int userId, bool active, string ip)
         {
-            using (var db = new ObjectDb("EAS_UserInfoUpdStatus"))
-            {
-                db.AddInParameter("UserID", DbType.Int32, adminId);
-                db.AddInParameter("CustID", DbType.Int32, userId);
-                db.AddInParameter("Enabled", DbType.Boolean, active);
-                db.AddInParameter("IP", DbType.String, ip);
-
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+            var criteria = new UpdateStatusCriteria(adminId, userId, active, ip);
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
         public Result CreateExistUser(int adminId, string userName, int groupId, string ip)
         {
-            using (var db = new ObjectDb("EAS_UserInfoAddExistingUser"))
-            {
-                db.AddInParameter("userID", DbType.Int32, adminId);
-                db.AddInParameter("Username", DbType.String, userName);
-                db.AddInParameter("groupid", DbType.Int32, groupId);
-                db.AddInParameter("IP", DbType.String, ip);
-                db.AddOutParameter("custid", DbType.Int32, sizeof(int));
-
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+            var criteria = new CreateExistUserCriteria(adminId, userName, groupId, ip);
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
         public IEnumerable<Function> GetUserFunction(int userId)
         {
-            using (var db = new ObjectDb("EAS_UserPolicySel"))
+            var criteria = new GetUserFunctionCriteria { UserID = userId };
+            var ds = dynamicRepository.FetchDataSet(criteria);
+            
+            if (ds == null || ds.Tables.Count == 0)
             {
-                var result = new List<Function>();
-
-                db.AddInParameter("UserID", DbType.Int32, userId);
-
-                using (var reader = db.ExecuteReader())
-                {
-                    if (reader != null)
-                    {
-                        while (reader.Read())
-                        {
-                            result.Add(new Function
-                            {
-                                FuncID = reader.ToInt("FuncId"),
-                                FuncName = reader.ToString("FuncName"),
-                                FuncKey = reader.ToString("FuncKey"),
-                                DisplayOrder = reader.ToInt("DisplayOrder"),
-                                ParentID = reader.ToInt("ParentId"),
-                                ParentName = reader.ToString("ParentName"),
-                                Policy = (EPolicy)Convert.ToInt32(reader["UserPolicy"]),
-                                GroupPolicy = (EPolicy)Convert.ToInt32(reader["GroupPolicy"]),
-                                FuncDesc = reader.ToString("FuncDesc")
-                            });
-                        }
-                    }
-                }
-
-                return result;
+                return Enumerable.Empty<Function>();
             }
+
+            var userTable = ds.Tables[0];
+            if (userTable.Rows.Count == 0)
+            {
+                return Enumerable.Empty<Function>();
+            }
+            
+            var users = userTable.AsEnumerable()
+                .Select(c => new Function
+                {
+                    FuncID = c.Field<int?>("FuncId") ?? 0,
+                    FuncName = c.Field<string>("FuncName") ?? string.Empty,
+                    FuncKey = c.Field<string>("FuncKey") ?? string.Empty,
+                    DisplayOrder = c.Field<int?>("DisplayOrder") ?? 0,
+                    ParentID = c.Field<int?>("ParentId") ?? 0,
+                    ParentName = c.Field<string>("ParentName") ?? string.Empty,
+                    Policy = c.Field<EPolicy?>("UserPolicy") ?? EPolicy.None,
+                    GroupPolicy = c.Field<EPolicy?>("GroupPolicy") ?? EPolicy.None,
+                    FuncDesc = c.Field<string>("FuncDesc") ?? string.Empty,
+                    CreatedDate = c.Field<string>("CreatedDate") ?? string.Empty,
+                    Creator = c.Field<int?>("Creator") ?? 0,
+                    Modifier = c.Field<int?>("Modifier") ?? 0,
+                    ModifiedDate = c.Field<string>("ModifiedDate") ?? string.Empty,
+                    IsTest = c.Field<bool?>("IsTest") ?? false
+                })
+                .ToList();
+
+            return users;
         }
 
         public Result UpdateUserPolicy(int adminId, int userId, string oldPolicy, string policy, string ip)
         {
-            using (var db = new ObjectDb("EAS_UserPolicyUpd"))
-            {
-                db.AddInParameter("userID", DbType.Int32, adminId);
-                db.AddInParameter("OldUserPolicy", DbType.String, oldPolicy);
-                db.AddInParameter("UserPolicy", DbType.String, policy);
-                db.AddInParameter("IP", DbType.String, ip);
-                db.AddInParameter("custid", DbType.Int32, userId);
-
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+            var criteria = new UpdateUserPolicyCriteria(adminId, userId, oldPolicy, policy, ip);
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
-        public Result Acc_CustomerIns_Register(string userName, out int custId)
+        public Result RegisterUser(string userName, out int custId)
         {
-            using (var db = new ObjectDb("Acc_CustomerIns_Register"))
-            {
-                db.AddInParameter("username", DbType.String, userName);
-                db.AddInParameter("sitedbgroupid", DbType.Int32, AdminSiteDBGroupId);
-                db.AddInParameter("roleid", DbType.Int32, 6);
-                db.AddOutParameter("custid", DbType.Int32, sizeof(int));
-
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                custId = Converter.ToInt(db.GetParameterValue("custid"), 0);
-                
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+            var registerUserCriteria = new RegisterUserCriteria(userName, AdminSiteDBGroupId, 6);
+            dynamicRepository.Execute(registerUserCriteria);
+            custId = registerUserCriteria.CustId;
+            return new Result(registerUserCriteria.ErrCode, registerUserCriteria.ErrMsg);
         }
 
-        public Result EAS_eaUserInfo_Ins(int userId, int groupId, int adminId)
+        public Result AssignGroup(int userId, int groupId, int adminId)
         {
-            using (var db = new ObjectDb("EAS_eaUserInfo_Ins"))
-            {
-                db.AddInParameter("UserId", DbType.Int32, userId);
-                db.AddInParameter("GroupId", DbType.Int32, groupId);
-                db.AddInParameter("Creator", DbType.Int32, adminId);
-
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+            var assignUserGroupCriteria = new AssignGroupCriteria(userId, groupId, adminId);
+            dynamicRepository.Execute(assignUserGroupCriteria);
+            return new Result(assignUserGroupCriteria.ErrCode, assignUserGroupCriteria.ErrMsg);
         }
 
         public void Acc_CustomerInsUserInfo_Rollback(int custId)
-        {
-            using (var db = new ObjectDb("Acc_CustomerInsUserInfo_Rollback"))
-            {
-                db.AddInParameter("CustId", DbType.Int32, custId);
-                db.ExecuteNonQuery();
-            }
-        }
-        
-        public void Acc_CustomerIns_Rollback(int custId)
-        {
-            using (var db = new ObjectDb("Acc_CustomerIns_Rollback"))
-            {
-                db.AddInParameter("CustId", DbType.Int32, custId);
-                db.ExecuteNonQuery();
-            }
-        }
+            => dynamicRepository.Execute(new Acc_CustomerInsUserInfo_RollbackCriteria(custId));
 
-        public void EAS_WriteLog_UserLog_UserControl_Wrapper(int custId, string trackingValue, int userId, int duration, int actionId)
+        public void Acc_CustomerIns_Rollback(int custId)
+            => dynamicRepository.Execute(new Acc_CustomerIns_RollbackCriteria(custId));
+
+
+        public void WriteLog(int custId, string trackingValue, int userId, int duration, int actionId)
         {
-            using (var db = new ObjectDb("EAS_WriteLog_UserLog_UserControl_Wrapper"))
+            dynamicRepository.Execute(new WriteLogCriteria
             {
-                db.AddInParameter("CustId", DbType.Int32, custId);
-                db.AddInParameter("UserId", DbType.Int32, userId);
-                db.AddInParameter("TrackingValue", DbType.String, trackingValue);
-                db.AddInParameter("TypeID", DbType.Int32, 1);
-                db.AddInParameter("ActionID", DbType.Int32, actionId);
-                db.AddInParameter("Duration", DbType.Int32, duration);
-                db.ExecuteNonQuery();
-            }
+                CustId = custId,
+                UserId = userId,
+                TrackingValue = trackingValue,
+                TypeID = 1,
+                ActionID = actionId,
+                Duration = duration
+            });
         }
     }
 #pragma warning restore S1192 // String literals should not be duplicated

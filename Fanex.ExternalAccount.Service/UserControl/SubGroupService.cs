@@ -1,8 +1,4 @@
-﻿using System.Linq;
-using Fanex.ExternalAccount.DataAccess.Impl.UserControl;
-using Fanex.ExternalAccount.DataAccess.Interface.UserControl;
-
-namespace Fanex.ExternalAccount.Service.UserControl
+﻿namespace Fanex.ExternalAccount.Service.UserControl
 {
     using System.Collections.Generic;
     using Fanex.ExternalAccount.DataAccess.Criteria.SubGroup;
@@ -10,7 +6,20 @@ namespace Fanex.ExternalAccount.Service.UserControl
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.SubGroup;
     using Fanex.ExternalAccount.ViewModel.SubGroup;
+    using System.Linq;
+    using Fanex.ExternalAccount.DataAccess.Impl.UserControl;
+    
+    public interface ISubGroupService
+    {
+        SubGroupViewModel GetListCustomerSubGroup(string groupName, string subGroupName, string username, int pageSize, int pageIndex);
 
+        Result UpdateCustomerSubGroup(string subGroupName, string custIds, bool isAssigned, int userId, string ip6Address);
+
+        IEnumerable<SubGroupAdmin> GetListAdminSubGroup(string groupName);
+
+        Result UpdateSubGroupAdminPassword(int custId, string password, int userId, string ipAddress);
+    }
+    
     public class SubGroupService : ISubGroupService
     {
         private readonly ISubGroupDao _subGroupDao;

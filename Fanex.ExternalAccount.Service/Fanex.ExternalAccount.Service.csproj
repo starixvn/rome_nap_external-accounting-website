@@ -312,13 +312,6 @@
     <Compile Include="UserControl\GroupConfigurationService.cs" />
     <Compile Include="UserControl\GroupService.cs" />
     <Compile Include="UserControl\FunctionService.cs" />
-    <Compile Include="UserControl\ICachingService.cs" />
-    <Compile Include="UserControl\IFunctionService.cs" />
-    <Compile Include="UserControl\IGroupService.cs" />
-    <Compile Include="UserControl\IMenuService.cs" />
-    <Compile Include="UserControl\IPolicyService.cs" />
-    <Compile Include="UserControl\ISubGroupService.cs" />
-    <Compile Include="UserControl\IUserService.cs" />
     <Compile Include="UserControl\MenuService.cs" />
     <Compile Include="UserControl\PolicyService.cs" />
     <Compile Include="UserControl\SubGroupService.cs" />

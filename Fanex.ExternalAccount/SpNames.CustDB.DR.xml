@@ -119,7 +119,10 @@
   <Function Name="SubGroup">
     <Setting Key="EAS_CustomerSelBySubGroup" SpName="EAS_CustomerSelBySubGroup" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_CustomerUpdSubGroup" SpName="EAS_CustomerUpdSubGroup" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserInfoSelBySubGroup" SpName="EAS_UserInfoSelBySubGroup" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_UserInfoSelBySubGroup" SpName="EAS_UserInfoSelBySubGroup" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0">
+      <Mapping DataField="custid" ObjectProperty="CustId" />
+      <Mapping DataField="username" ObjectProperty="Username" />
+    </Setting>
     <Setting Key="EAS_UserInfoUpdSubGroupAdminPwd" SpName="EAS_UserInfoUpdSubGroupAdminPwd" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_OnUser_ForceKickout" SpName="EAS_OnUser_ForceKickout" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
   </Function>
@@ -131,8 +134,12 @@
     <Setting Key="EAS_UserCheckPermission" SpName="EAS_UserCheckPermission" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserCheckPermission_All" SpName="EAS_UserCheckPermission_All" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserInfoAddExistingUser" SpName="EAS_UserInfoAddExistingUser" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserInfoSel" SpName="EAS_UserInfoSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserInfoSelByUserID" SpName="EAS_UserInfoSelByUserID" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_UserInfoSel" SpName="EAS_UserInfoSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+      <Mapping DataField="CustId" ObjectProperty="UserID" />
+    </Setting >
+    <Setting Key="EAS_UserInfoSelByUserID" SpName="EAS_UserInfoSelByUserID" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0">
+      <Mapping DataField="CustId" ObjectProperty="UserID" />   
+    </Setting >
     <Setting Key="EAS_UserInfoUpdStatus" SpName="EAS_UserInfoUpdStatus" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserInfoUpdUserGroup" SpName="EAS_UserInfoUpdUserGroup" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserPolicySel" SpName="EAS_UserPolicySel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />

@@ -1,15 +1,15 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.SubGroup
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
-    public class ForceKickoutAdminSubGroupCriteria : CriteriaBase
+    public class ForceKickoutAdminSubGroupCriteria : INonQueryCommand
     {
         public int CustId { get; set; }
 
-        public override string GetSettingKey()
+        public string GetSettingKey()
             => "EAS_OnUser_ForceKickout";
 
-        public override bool IsValid()
+        public bool IsValid()
             => CustId > 0;
     }
 }

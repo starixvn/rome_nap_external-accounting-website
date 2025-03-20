@@ -8,10 +8,21 @@
     using DTO;
     using DTO.UserControl;
     using Impl.UserControl;
-    using Interface.UserControl;
     using Utilities;
-    using Fanex.Data.Repository;
+    
+    public interface IPolicyService
+    {
+        IEnumerable<HierarchicalFunction> GetHierarchicalFunctions();
 
+        IEnumerable<GroupPolicy> GetGroupPolicies(int functionId);
+
+        IEnumerable<UserPolicy> GetUserPolicies(int functionId);
+
+        DTO.Result UpdateMultipleGroupPolicies(int functionId, string policy, int userId, string ip);
+
+        DTO.Result UpdateMultipleUserPolicies(int functionId, string policy, int userId, string ip);
+    }
+    
     public class PolicyService : IPolicyService
     {
         private readonly IPolicyDao policyDAO;

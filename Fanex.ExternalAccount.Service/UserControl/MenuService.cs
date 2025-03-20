@@ -3,11 +3,27 @@
     using System.Collections.Generic;
     using System.Linq;
     using DataAccess.Impl.UserControl;
-    using DataAccess.Interface.UserControl;
     using DTO;
     using DTO.UserControl;
-    using Interface.UserControl;
+    
+    public interface IMenuService
+    {
+        IEnumerable<Menu> GetAllMenus();
 
+        IEnumerable<Menu> GetMenusByUserId(
+            int userId,
+            string currentGroup,
+            bool isShowAssignSubGroup,
+            bool isShowSuperWinLossDetailBySubGroup);
+
+        Result CreateMenu(Menu menu, int custId, string ip);
+
+        Result UpdateMenu(Menu menu, int custId, string ip);
+
+        Result UpdateMenuStatus(int id, bool isActive, int custId);
+
+        Result DeleteMenu(int id, int custId);
+    }
     public class MenuService : IMenuService
     {
         private const string AssignSubGroupUrl = "~/SubGroup/SubGroupList";

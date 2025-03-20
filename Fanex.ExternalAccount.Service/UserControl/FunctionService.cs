@@ -2,11 +2,23 @@
 {
     using System.Collections.Generic;
     using DataAccess.Impl.UserControl;
-    using DataAccess.Interface.UserControl;
     using DTO;
     using DTO.UserControl;
     using Interface.UserControl;
 
+    public interface IFunctionService
+    {
+        Result CreateFunction(Function function, int custId, string ip, string assignedGroupIDs);
+
+        Result UpdateFunction(Function function, int custId, string ip, string oldAssignedGroupIDs, string assignedGroupIDs);
+
+        IEnumerable<Function> GetAllFunctions();
+
+        Function GetFunctionPolicy(int funcId);
+
+        Result UpdateStatus(int id, bool isTest, int custId, string ip);
+    }
+    
     public class FunctionService : IFunctionService
     {
         private readonly IFunctionDao _funcDao;
