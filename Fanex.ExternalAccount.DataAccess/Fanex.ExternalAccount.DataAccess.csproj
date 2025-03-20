@@ -324,12 +324,6 @@
     <Compile Include="UserControl\FunctionDao.cs" />
     <Compile Include="UserControl\GroupConfigurationDAO.cs" />
     <Compile Include="UserControl\GroupDao.cs" />
-    <Compile Include="UserControl\IFunctionDao.cs" />
-    <Compile Include="UserControl\IGroupDao.cs" />
-    <Compile Include="UserControl\IMenuDao.cs" />
-    <Compile Include="UserControl\IPolicyDao.cs" />
-    <Compile Include="UserControl\ISubGroupDao.cs" />
-    <Compile Include="UserControl\IUserDao.cs" />
     <Compile Include="UserControl\MenuDao.cs" />
     <Compile Include="Products\ProductStatusDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

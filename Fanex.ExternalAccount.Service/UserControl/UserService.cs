@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace Fanex.ExternalAccount.Service.Impl.UserControl
+﻿namespace Fanex.ExternalAccount.Service.Impl.UserControl
 {
+    using System;
     using DataAccess.Impl.UserControl;
-    using DataAccess.Interface.UserControl;
     using DTO;
     using DTO.UserControl;
     using Interface.UserControl;

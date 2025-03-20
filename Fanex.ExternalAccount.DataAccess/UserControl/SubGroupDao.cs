@@ -6,11 +6,23 @@
     using Fanex.Common.Extensions;
     using Fanex.Data;
     using Fanex.ExternalAccount.DataAccess.Criteria.SubGroup;
-    using Fanex.ExternalAccount.DataAccess.Impl.Base;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.SubGroup;
     using Fanex.ExternalAccount.ViewModel.SubGroup;
 
+    public interface ISubGroupDao
+    {
+        SubGroupViewModel GetSubGroupCustomer(GetSubGroupCustomerCriteria criteria);
+
+        Result UpdateSubGroupCustomer(UpdateCustomerSubGroupCriteria criteria);
+
+        IEnumerable<SubGroupAdmin> GetSubGroupAdmin(GetSubGroupAdminCriteria criteria);
+
+        Result UpdateSubGroupAdminPassword(UpdateSubGroupAdminPwdCriteria criteria);
+
+        void ForceKickout(ForceKickoutAdminSubGroupCriteria criteria);
+    }
+    
     public class SubGroupDao : DAOBase, ISubGroupDao
     {
         public void ForceKickout(ForceKickoutAdminSubGroupCriteria criteria)

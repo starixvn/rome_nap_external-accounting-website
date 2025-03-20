@@ -6,7 +6,18 @@
     using Fanex.Data.Repository;
     using DTO;
     using Fanex.ExternalAccount.DataAccess.Criteria.UserControl;
+    
+    public interface IPolicyDao
+    {
+        IEnumerable<GroupPolicy> GetGroupPolicies(GetGroupPolicyCriteria criteria);
 
+        IEnumerable<UserPolicy> GetUserPolicies(GetUserPolicyCriteria criteria);
+
+        DTO.Result UpdateMultipleUserPolicy(UpdateMultipleUserPolicyCriteria criteria);
+
+        DTO.Result UpdateMultipleGroupPolicy(UpdateMultipleGroupPolicyCriteria criteria);
+    }
+    
     public class PolicyDao : IPolicyDao
     {
         public IDynamicRepository dynamicRepository { get; set; }
