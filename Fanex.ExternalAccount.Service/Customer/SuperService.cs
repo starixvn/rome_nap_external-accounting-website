@@ -4,8 +4,9 @@
     using DataAccess.Impl.Customer;
     using DataAccess.Interface.Customer;
     using DTO.Customer;
+    using Fanex.Data.Repository;
+    using Fanex.ExternalAccount.DTO;
     using Interface.Customer;
-    using NAP.Framework.Data;
 
     public class SuperService : CustomerService, ISuperService
     {
@@ -15,7 +16,7 @@
         public CustomerInfo GetSuperInfo(int superId)
             => dynamicRepository.Get<CustomerInfo>(new GetSuperInfoCriteria(superId));
 
-        public DTO.Result UpdateSuperInfo(UpdateSuperInfoCriteria criteria)
+        public Result UpdateSuperInfo(UpdateSuperInfoCommand criteria)
             => _dao.UpdateSuperInfo(criteria);
    
     }

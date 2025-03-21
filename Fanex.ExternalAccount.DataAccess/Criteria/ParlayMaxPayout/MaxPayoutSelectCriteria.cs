@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.ParlayMaxPayout
 {
+    using Fanex.Data.Repository;
     using Fanex.ExternalAccount.DTO.Requests.ParlayMaxPayout;
-    using Fanex.NAP.Framework.Data;
 
     public class MaxPayoutSelectCriteria : CriteriaBase
     {

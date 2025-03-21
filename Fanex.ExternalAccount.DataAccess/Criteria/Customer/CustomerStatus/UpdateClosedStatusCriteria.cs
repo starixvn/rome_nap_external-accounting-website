@@ -1,8 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.CustomerStatus
 {
-    using NAP.Framework.Data;
+    using Fanex.Data;
+    using Fanex.Data.Repository;
 
-    public class UpdateClosedStatusCriteria : CriteriaBase
+    public class UpdateClosedStatusCriteria : INonQueryCommand
     {
         public UpdateClosedStatusCriteria(
             int userId,
@@ -33,8 +34,12 @@
 
         public int SystemId { get; }
 
-        public override string GetSettingKey() => "Acc_CustomerUpdClosed";
+        public int ErrCode { get; set; }
 
-        public override bool IsValid() => UserId > 0 && CustId > 0;
+        public string ErrMsg { get; set; }
+
+        public string GetSettingKey() => "Acc_CustomerUpdClosed";
+
+        public bool IsValid() => UserId > 0 && CustId > 0;
     }
 }

@@ -1,11 +1,12 @@
-﻿using Fanex.ExternalAccount.DTO.AutoTransfer;
-using Fanex.NAP.Framework.Data;
+﻿using Fanex.Data;
+using Fanex.Data.Repository;
+using Fanex.ExternalAccount.DTO.AutoTransfer;
 
 namespace Fanex.ExternalAccount.DataAccess.Criteria.AutoTransfer
 {
-    public class InsertPersonalMessageCriteria : CriteriaBase
+    public class InsertPersonalMessageCommand : INonQueryCommand
     {
-        public InsertPersonalMessageCriteria(
+        public InsertPersonalMessageCommand(
             string contentEN,
             string contentCH,
             string contentCS,
@@ -57,8 +58,10 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.AutoTransfer
 
         public bool IsBatch { get; }
 
-        public override string GetSettingKey() => "Age_Msg_SetMessage";
+        public int MessageIDOutput { get; set; }
 
-        public override bool IsValid() => true;
+        public string GetSettingKey() => "Age_Msg_SetMessage";
+
+        public bool IsValid() => true;
     }
 }

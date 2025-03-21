@@ -21,5 +21,9 @@
         public int RemainUnchangedAgent { get; set; }
 
         public int RemainUnchangedMember { get; set; }
+
+        public int CntAffected { get; set; }
+
+        public int CntUnchanged { get; set; }
     }
 }

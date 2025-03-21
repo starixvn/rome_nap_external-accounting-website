@@ -1,7 +1,7 @@
-﻿using Fanex.NAP.Framework.Data;
-
-namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer
+﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer
 {
+    using Fanex.Data.Repository;
+
     public class CheckMultipleSupersBetSettingCriteria : CriteriaBase
     {
         public CheckMultipleSupersBetSettingCriteria(string sourceUser, string destUsers, string groupName, bool isCopy)
@@ -19,6 +19,10 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer
         public string GroupName { get; }
 
         public bool IsCopy { get; }
+
+        public int ErrCode { get; set; }
+
+        public string ErrMsg { get; set; }
 
         public override string GetSettingKey() => "EAS_CustomerInfo_MultiCheck";
 

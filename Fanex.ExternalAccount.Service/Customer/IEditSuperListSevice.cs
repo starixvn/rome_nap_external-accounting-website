@@ -49,7 +49,7 @@ namespace Fanex.ExternalAccount.Service.Customer
             var custIds = string.Join(",", superIdNameList.Select(idname => idname.Split(';')[0]));
             if (request.IsUpdateInfo)
             {
-                var criteriaInfo = new UpdateMultipleSuperInfoCriteria
+                var criteriaInfo = new UpdateMultipleSuperInfoCommand
                 {
                     CustIDList = custIds,
                     FirstName = request.IsChangeFirstName && string.IsNullOrEmpty(request.FirstName)? string.Empty : request.FirstName,

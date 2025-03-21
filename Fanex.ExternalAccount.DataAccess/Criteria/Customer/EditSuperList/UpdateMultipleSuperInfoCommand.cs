@@ -1,8 +1,8 @@
-﻿using Fanex.NAP.Framework.Data;
-
-namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.EditSuperList
+﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.EditSuperList
 {
-    public class UpdateMultipleSuperInfoCriteria : CriteriaBase
+    using Fanex.ExternalAccount.Core.Shared;
+
+    public class UpdateMultipleSuperInfoCommand : INonQueryBaseCommand
     {
         public string CustIDList { get; set; }
 
@@ -18,9 +18,13 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.EditSuperList
 
         public int UserId { get; set; }
 
+        public int ErrCode { get; set; }
+
         public string ErrMsg { get; set; }
 
-        public override string GetSettingKey()
+        public string GetSettingKey()
          => "EAS_CustomerUpdSuperInfo_Multiple";
+
+        public bool IsValid() => true;
     }
 }

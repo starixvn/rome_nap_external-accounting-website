@@ -1,10 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer
 {
-    using NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
-    public class KickoutCustomerCriteria : CriteriaBase
+    public class KickoutCustomerCommand : INonQueryCommand
     {
-        public KickoutCustomerCriteria(
+        public KickoutCustomerCommand(
             int custId,
             byte roleId,
             string ip,
@@ -24,10 +24,10 @@
 
         public string Mode { get; }
 
-        public override string GetSettingKey()
+        public string GetSettingKey()
             => "Age_OnUser_ForceKickedout";
 
-        public override bool IsValid()
+        public bool IsValid()
             => CustId > 0 && RoleId > 0;
     }
 }

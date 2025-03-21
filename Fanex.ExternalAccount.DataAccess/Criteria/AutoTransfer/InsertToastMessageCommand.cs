@@ -1,12 +1,13 @@
-﻿using Fanex.ExternalAccount.DTO.AutoTransfer;
-using Fanex.NAP.Framework.Data;
+﻿using Fanex.Data;
+using Fanex.Data.Repository;
+using Fanex.ExternalAccount.DTO.AutoTransfer;
 using Newtonsoft.Json;
 
 namespace Fanex.ExternalAccount.DataAccess.Criteria.AutoTransfer
 {
-    public class InsertToastMessageCriteria : CriteriaBase
+    public class InsertToastMessageCommand : INonQueryCommand
     {
-        public InsertToastMessageCriteria(
+        public InsertToastMessageCommand(
             int typeId,
             int siteFunctionId,
             int targetId,
@@ -70,8 +71,8 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.AutoTransfer
 
         public int ToastId { get; set; }
 
-        public override string GetSettingKey() => "Age_ToastMessage_Ins";
+        public string GetSettingKey() => "Age_ToastMessage_Ins";
 
-        public override bool IsValid() => true;
+        public bool IsValid() => true;
     }
 }

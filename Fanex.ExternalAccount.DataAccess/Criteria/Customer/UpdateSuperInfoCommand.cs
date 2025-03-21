@@ -1,10 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.ExternalAccount.Core.Shared;
 
-    public class UpdateSuperInfoCriteria : CriteriaBase
+    public class UpdateSuperInfoCommand : INonQueryBaseCommand
     {
-        public UpdateSuperInfoCriteria(
+        public UpdateSuperInfoCommand(
             int superId,
             string firstName,
             string lastName,
@@ -47,11 +47,13 @@
         public string Ip { get; }
 
         public int UserId { get; }
+        public int ErrCode { get; set; }
+        public string ErrMsg { get; set; }
 
-        public override string GetSettingKey()
+        public string GetSettingKey()
             => "EAS_CustomerUpdSuperInfo";
 
-        public override bool IsValid()
+        public bool IsValid()
             => CustId > 0 && UserId > 0;
     }
 }

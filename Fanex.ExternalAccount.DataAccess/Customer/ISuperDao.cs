@@ -5,6 +5,6 @@
 
     public interface ISuperDao
     {
-        Result UpdateSuperInfo(UpdateSuperInfoCriteria criteria);
+        Result UpdateSuperInfo(UpdateSuperInfoCommand command);
     }
 }

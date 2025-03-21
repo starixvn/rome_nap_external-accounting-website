@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.CustomerStatus
 {
     using Core.Shared;
-    using NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetSingleOpenDownlinesInfoCriteria : CriteriaBase
     {
@@ -28,6 +28,8 @@
         public int PageSize { get; }
 
         public int PageIndex { get; }
+
+        public int TotalRows { get; set; }
 
         public override string GetSettingKey() => "Acc_Customer_CloseInfoDetailSel";
 

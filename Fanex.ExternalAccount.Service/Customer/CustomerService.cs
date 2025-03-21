@@ -42,10 +42,10 @@
         public Result EditUserInfo(Customer customer, string ip, int userId, int subAccId, string language)
             => dataAccess.EditUserInfo(customer, ip, userId, subAccId, language);
 
-        public Result ResetPassword(ResetPasswordCriteria criteria)
+        public Result ResetPassword(ResetPasswordCommand criteria)
             => dataAccess.ResetPassword(criteria);
 
-        public Result ConfigDoubleComm(UpdateDoubleCommCriteria criteria)
+        public Result ConfigDoubleComm(UpdateDoubleCommCommand criteria)
             => dataAccess.ConfigDoubleComm(criteria);
 
         public void KickoutCustomer(int custId, byte roleId, string ip, string mode = null)
@@ -54,7 +54,7 @@
             {
                 try
                 {
-                    dataAccess.KickoutCustomer(new KickoutCustomerCriteria(custId, roleId, ip, mode));
+                    dataAccess.KickoutCustomer(new KickoutCustomerCommand(custId, roleId, ip, mode));
                 }
                 catch (Exception ex)
                 {
@@ -66,7 +66,7 @@
         public SingleUpdateViewModel GetSingleUpdateSuspendViewModel(int custId, string userName)
             => new SingleUpdateViewModel(custId, userName, dataAccess.GetSingleUpdateSuspendAffectedDownlines(new GetSingleSuspendCustomerInfoCriteria(custId)));
 
-        public Result SuspendCustomer(UpdateSuspendCustomerCriteria criteria)
+        public Result SuspendCustomer(UpdateSuspendCustomerCommand criteria)
             => dataAccess.SuspendCustomer(criteria);
 
         public SuspendedCustomerDetailViewModel GetSuspendDownlinesDetail(GetSuspendCustomerDetailInfoCriteria criteria)
@@ -82,7 +82,7 @@
             var successUpdateUnsuspendedList = new StringBuilder();
             foreach (var requestItem in request)
             {
-                var criteria = new UpdateSuspendCustomerCriteria(userId, requestItem.CustId, requestItem.Suspended, "E", ipv4);
+                var criteria = new UpdateSuspendCustomerCommand(userId, requestItem.CustId, requestItem.Suspended, "E", ipv4);
                 var preResult = dataAccess.SuspendCustomer(criteria);
                 if (preResult.IsSuccess)
                 {
@@ -129,7 +129,7 @@
         public Result CheckLimitNewDownline(int custId, int roleId)
         {
             var result = new Result();
-            var isAllow = dataAccess.CheckLimitNewDownline(new CheckLimitNewDownlineCriteria(custId));
+            var isAllow = dataAccess.CheckLimitNewDownline(new CheckLimitNewDownlineCommand(custId));
 
             if (!isAllow)
             {

@@ -1,14 +1,14 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer
 {
-    using Common;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data;
+    using Fanex.Data.Repository;
 
-    public class ResetPasswordCriteria : CriteriaBase
+    public class ResetPasswordCommand : INonQueryCommand
     {
-        public ResetPasswordCriteria(int custId, string password, int userId, string ip)
+        public ResetPasswordCommand(int custId, string password, int userId, string ip)
         {
             CustId = custId;
-            Password = Cryptography.CfsEnCode(password);
+            Password = Common.Cryptography.CfsEnCode(password);
             UserId = userId;
             Language = "en";
             SubAccId = 0;
@@ -27,6 +27,8 @@
         public int ErrCode { get; }
         public string ErrMsg { get; }
 
-        public override string GetSettingKey() => "Age_CustomerUpdPwd";
+        public string GetSettingKey() => "Age_CustomerUpdPwd";
+
+        public bool IsValid() => true;
     }
 }

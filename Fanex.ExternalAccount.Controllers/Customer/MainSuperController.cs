@@ -43,7 +43,7 @@
         [AntiXSRFFilter]        
         public ActionResult EditInfoPost(CustomerInfo customer)
         {
-            var criteria = new UpdateSuperInfoCriteria(
+            var criteria = new UpdateSuperInfoCommand(
                 customer.CustId,
                 customer.FirstName,
                 customer.LastName,

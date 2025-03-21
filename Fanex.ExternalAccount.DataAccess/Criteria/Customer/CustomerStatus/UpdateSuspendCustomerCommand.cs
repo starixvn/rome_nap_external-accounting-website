@@ -1,8 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.CustomerStatus
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
-    public class UpdateSuspendCustomerCriteria : CriteriaBase
+    public class UpdateSuspendCustomerCommand : INonQueryCommand
     {
         public int UserId { get; }
 
@@ -14,7 +14,11 @@
 
         public string IP { get; }
 
-        public UpdateSuspendCustomerCriteria(int userId, int custId, bool suspended, string language, string ip)
+        public int ErrCode { get; set; }
+
+        public string ErrMsg { get; set; }
+
+        public UpdateSuspendCustomerCommand(int userId, int custId, bool suspended, string language, string ip)
         {
             UserId = userId;
             CustId = custId;
@@ -23,12 +27,12 @@
             IP = ip;
         }
 
-        public override string GetSettingKey()
+        public string GetSettingKey()
         {
             return "Acc_CustomerUpdSuspended";
         }
 
-        public override bool IsValid()
+        public bool IsValid()
         {
             return UserId > 0 && CustId > 0;
         }

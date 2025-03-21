@@ -1,19 +1,17 @@
 ﻿#pragma warning disable S1192 // String literals should not be duplicated
 namespace Fanex.ExternalAccount.DataAccess.Impl.Report
 {
-    using Fanex.Common.Extensions;
-    using Fanex.Data;
-    using Fanex.ExternalAccount.DataAccess.Impl.Base;
-    using Fanex.ExternalAccount.DataAccess.Interface.Report;
-    using Fanex.ExternalAccount.DTO.Currency;
-    using Fanex.ExternalAccount.DTO.Report;
-    using Fanex.ExternalAccount.Utilities;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
+    using Fanex.Common.Extensions;
+    using Fanex.ExternalAccount.DataAccess.Interface.Report;
+    using Fanex.ExternalAccount.DTO.Currency;
+    using Fanex.ExternalAccount.DTO.Report;
+    using Fanex.ExternalAccount.Utilities;
 
-    public class ReportByCurrencyDAO : DAOBase, IReportByCurrencyDAO
+    public class ReportByCurrencyDAO : IReportByCurrencyDAO
     {
         public List<CurrencyEntity> EAS_GetCurrencyList(string groupName)
         {

@@ -3,9 +3,9 @@
     using Fanex.Data;
     using Fanex.Data.Repository;
 
-    public  class AssignPersonalMessageCriteria : CriteriaBase
+    public  class AssignPersonalMessageCommand : INonQueryCommand  
     {
-        public AssignPersonalMessageCriteria(long messageId, int custId, string custName)
+        public AssignPersonalMessageCommand(long messageId, int custId, string custName)
         {
             MessageId = messageId;
             CustId = custId;
@@ -23,8 +23,8 @@
 
         public string BetTransId { get; }
 
-        public override string GetSettingKey() => "Age_Msg_SetUsrMessage";
+        public string GetSettingKey() => "Age_Msg_SetUsrMessage";
 
-        public override bool IsValid() => MessageId > 0;
+        public bool IsValid() => MessageId > 0;
     }
 }

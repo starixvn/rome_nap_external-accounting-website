@@ -9,10 +9,10 @@ namespace Fanex.ExternalAccount.DataAccess.AutoTransfer
 {
     public interface IAutoTransferDao
     {
-        bool GetAutoTransferJobStatus(GetAutoTransferJobStatusCriteria command);
-        Result InsertToastMessage(ICriteria criteria);
-        long InsertPersonalMessage(ICriteria criteria);
-        void AssignPersonalMessage(long messageId, int custId, string custName);
+        bool GetAutoTransferJobStatus(GetAutoTransferJobStatusCommand command);
+        Result InsertToastMessage(InsertToastMessageCommand command);
+        long InsertPersonalMessage(InsertPersonalMessageCommand command);
+        void AssignPersonalMessage(AssignPersonalMessageCommand command);
     }
 
     public class AutoTransferDao : IAutoTransferDao
@@ -27,52 +27,25 @@ namespace Fanex.ExternalAccount.DataAccess.AutoTransfer
             this._dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public bool GetAutoTransferJobStatus(GetAutoTransferJobStatusCriteria command)
+        public bool GetAutoTransferJobStatus(GetAutoTransferJobStatusCommand command)
         {
             _dynamicRepository.Execute(command);
             return command.IsAutoJobRunning;
         }
 
-        public Result InsertToastMessage(ICriteria criteria)
+        public Result InsertToastMessage(InsertToastMessageCommand command)
         {
-            Result result;
-
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-
-                var outputs = db.GetOuputParams();
-                result = new Result(outputs["errcode"].ToString(), outputs["errmsg"].ToString());
-            }
-
-            return result;
+            _dynamicRepository.Execute(command);
+            return new Result(command.ErrCode, command.ErrMsg);
         }
 
-        public long InsertPersonalMessage(ICriteria criteria)
+        public long InsertPersonalMessage(InsertPersonalMessageCommand command)
         {
-            long result = 0;
-
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                var reader = db.ExecuteReader(criteria.GetSpParams());
-
-                while (reader.Read())
-                {
-                    result = long.Parse(reader["MessageId"].ToString());
-                }
-            }
-
-            return result;
+            _dynamicRepository.Execute(command);
+            return command.MessageIDOutput;
         }
 
-        public void AssignPersonalMessage(long messageId, int custId, string custName)
-        {
-            var criteria = new AssignPersonalMessageCriteria(messageId, custId, custName);
-
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-            }
-        }
+        public void AssignPersonalMessage(AssignPersonalMessageCommand command)
+            => _dynamicRepository.Execute(command);
     }
 }

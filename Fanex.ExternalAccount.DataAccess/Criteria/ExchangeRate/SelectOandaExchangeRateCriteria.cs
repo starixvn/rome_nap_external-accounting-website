@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.ExchangeRate
 {
-    using NAP.Framework.Data;
     using System;
+    using Fanex.Data.Repository;
 
     public class SelectOandaExchangeRateCriteria : CriteriaBase
     {

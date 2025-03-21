@@ -1,5 +1,4 @@
-﻿using Fanex.Data.Repository;
-namespace Fanex.ExternalAccount.DataAccess.Customer
+﻿namespace Fanex.ExternalAccount.DataAccess.Customer
 {
     using Fanex.Data.Repository;
 

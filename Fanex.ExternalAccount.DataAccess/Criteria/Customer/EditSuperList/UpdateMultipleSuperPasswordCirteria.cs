@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.EditSuperList
 {
-    using Fanex.NAP.Framework.Data;
-    
+    using Fanex.Data.Repository;
+
     public class UpdateMultipleSuperPasswordCirteria : CriteriaBase
     {
         public string CustIDList { get; set; }
@@ -20,5 +20,7 @@
 
         public override string GetSettingKey()
          => "Age_CustomerUpdPwd_Multiple";
+
+        public override bool IsValid() => true;
     }
 }

@@ -4,9 +4,9 @@
     using Fanex.Data.Repository;
     using Fanex.ExternalAccount.DTO;
 
-    public class GetAutoTransferJobStatusCriteria : INonQueryCommand
+    public class GetAutoTransferJobStatusCommand : INonQueryCommand
     {
-        public GetAutoTransferJobStatusCriteria(SiteDB siteDB)
+        public GetAutoTransferJobStatusCommand(SiteDB siteDB)
         {
             SiteDB = siteDB.IsSiteDB ? $"SiteDB{siteDB.SiteDBGroupID}_" : string.Empty;
             FromCustId = 0;

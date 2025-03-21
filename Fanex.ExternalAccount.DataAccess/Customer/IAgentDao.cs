@@ -1,16 +1,14 @@
-﻿namespace Fanex.ExternalAccount.DataAccess.Interface.Customer
-{
-    using Criteria.Customer;
-    using DTO;
-    using Fanex.ExternalAccount.DTO.Customer;
-    using System.Data;
+﻿//namespace Fanex.ExternalAccount.DataAccess.Interface.Customer
+//{
+//    using Criteria.Customer;
+//    using DTO;
+//    using Fanex.ExternalAccount.DTO.Customer;
+//    using System.Data;
 
-    public interface IAgentDao
-    {
-        DataTable GetData(int? userId, int? recommend = null, int? custId = null, bool? enabled = null, bool? closed = null, bool? suspended = null);
+//    public interface IAgentDao
+//    {
+//        Transfer GetTransferOption(int custId);
 
-        Transfer GetTransferOption(int custId);
-
-        Result IsLimitMemberCreationBySuper(CheckMemberCreationCriteria criteria);
-    }
-}
+//        Result IsLimitMemberCreationBySuper(CheckMemberCreationCriteria criteria);
+//    }
+//}

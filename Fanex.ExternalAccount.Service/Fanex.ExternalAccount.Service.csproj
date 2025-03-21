@@ -264,7 +264,6 @@
     <Compile Include="Customer\IEditSuperListSevice.cs" />
     <Compile Include="Customer\MarkAccountType\IMarkAccountTypeService.cs" />
     <Compile Include="Customer\IMasterService.cs" />
-    <Compile Include="Customer\IMemberService.cs" />
     <Compile Include="Customer\ISuperService.cs" />
     <Compile Include="Customer\MarkAccountType\MarkAccountTypeService.cs" />
     <Compile Include="Customer\MarkAccountType\Params\NewMarkAccountTypeParams.cs" />

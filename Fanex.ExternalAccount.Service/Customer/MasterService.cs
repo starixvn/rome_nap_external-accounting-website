@@ -8,6 +8,7 @@
     using DTO.Customer;
     using Fanex.ExternalAccount.DataAccess.AutoTransfer;
     using Fanex.ExternalAccount.DataAccess.Criteria.AutoTransfer;
+    using Fanex.ExternalAccount.DataAccess.Criteria.Customer;
     using Fanex.ExternalAccount.DTO.AutoTransfer;
     using Interface.Customer;
 
@@ -19,15 +20,11 @@
         private readonly ISiteDBConfigService siteDBService = new SiteDBConfigService();
         private readonly IAutoTransferDao autoTransferDao = new AutoTransferDao();
 
-        public DataTable GetData(int? userId, int? recommend = null, int? custId = null, bool? enabled = null,
-            bool? closed = null, bool? suspended = null)
-            => _dao.GetData(userId, recommend, custId, enabled, closed, suspended);
-
         public IEnumerable<int> GetSuperInAutomateTransfer(int custId)
-            => _dao.GetSuperInAutomateTransfer(custId);
+            => _dao.GetSuperInAutomateTransfer(new GetSuperInAutomateTransferCriteria(custId));
 
         public Transfer GetTransferOption(int custId)
-            => _dao.GetTransferOption(custId);
+            => _dao.GetTransferOption(new GetTransferOptionCriteria(custId));
 
         public Result EditTransferOption(
             string transferOption,
@@ -39,22 +36,21 @@
             string language)
         {
             var siteDB = siteDBService.GetSiteDBConfigByCustId(custId);
-            var autoTransferStatus = autoTransferDao.GetAutoTransferJobStatus(custId, siteDB);
+            var autoTransferStatus = autoTransferDao.GetAutoTransferJobStatus(new GetAutoTransferJobStatusCommand(siteDB));
 
             if (autoTransferStatus)
             {
                 return new Result(ErrorCode, Resources.Lang.AutoTransferProcessTime);
             }
 
-            var dbResult = _dao.EditTransferOption(transferOption, autoTransferCondition, custId, userId, ip, subAccId, language);
-            var result = new Result(dbResult.Outputs["errcode"].ToString(), dbResult.Outputs["errmsg"].ToString(), dbResult.ResultSet);
+            var result = _dao.EditTransferOption(new EditTransferOptionCriteria(transferOption, autoTransferCondition, custId, userId, ip, subAccId, language));
 
             if (int.Parse(result.ErrorCode) != 0)
             {
                 return result;
             }
 
-            var rows = dbResult.ResultSet.Tables[0].Rows;
+            var rows = ((DataSet)result.ResultData).Tables[0].Rows;
 
             if (rows.Count == 0)
             {
@@ -65,7 +61,7 @@
             {
                 var uplineId = int.Parse(row["custId"].ToString());
 
-                var toastMessageCriteria = new InsertToastMessageCriteria(
+                var toastMessageCriteria = new InsertToastMessageCommand(
                     ToastMessageTypes.Warning,
                     ToastMessageSiteFunctionIds.ConditionChange,
                     uplineId,
@@ -80,7 +76,7 @@
 
                 var uplineName = row["username"].ToString();
                 var dowlines = row["names"].ToString();
-                var personalMessageCriteria = new InsertPersonalMessageCriteria(
+                var personalMessageCriteria = new InsertPersonalMessageCommand(
                     string.Format(Resources.Lang.TransferCondition_PersonalMessage_en, dowlines),
                     string.Format(Resources.Lang.TransferCondition_PersonalMessage_ch, dowlines),
                     string.Format(Resources.Lang.TransferCondition_PersonalMessage_cs, dowlines),
@@ -90,7 +86,7 @@
                 var messageId = autoTransferDao.InsertPersonalMessage(personalMessageCriteria);
                 if (messageId > 0)
                 {
-                    autoTransferDao.AssignPersonalMessage(messageId, uplineId, uplineName);
+                    autoTransferDao.AssignPersonalMessage(new AssignPersonalMessageCommand(messageId, uplineId, uplineName));
                 }
             }
 
