@@ -10,33 +10,23 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
     using Fanex.ExternalAccount.DTO.Currency;
     using Fanex.ExternalAccount.DTO.Report;
     using Fanex.ExternalAccount.Utilities;
-
+    using Fanex.Data.Repository;
+    using System.Linq;
+    using Fanex.ExternalAccount.DataAccess.Criteria.Report;
+    
     public class ReportByCurrencyDAO : IReportByCurrencyDAO
     {
+        private readonly IDynamicRepository dynamicRepository;
+        
+        public ReportByCurrencyDAO(IDynamicRepository dynamicRepository)
+        {
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+        
         public List<CurrencyEntity> EAS_GetCurrencyList(string groupName)
         {
-            var currencyList = new List<CurrencyEntity>();
-
-            using (var db = new ObjectDb("EAS_GetCurrencyList"))
-            {
-                db.AddInParameter("groupname", DbType.String, groupName);
-
-                using (var reader = db.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        var cur = new CurrencyEntity
-                        {
-                            CurrencyId = Utils.ToInt32(reader[reader.GetOrdinal("CurrencyId")]),
-                            CurrencyName = Utils.ToString(reader[reader.GetOrdinal("CurrencyName")])
-                        };
-
-                        currencyList.Add(cur);
-                    }
-                }
-            }
-
-            return currencyList;
+            var criteria = new GetCurrencyListCriteria(groupName);
+            return dynamicRepository.Fetch<CurrencyEntity>(criteria).ToList();
         }
 
         public WinLossByCurrency EAS_Rpt_WinLossByCurDaily_Com(
@@ -51,25 +41,23 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             DateTime balanceUpDay,
             DateTime moveBetsDay)
         {
-            var parameters = new Hashtable
+            var criteria = new WinLossByCurrencyComCriteria
             {
-                { "groupname", groupname },
-                { "fromdate", fromDate },
-                { "todate", toDate },
-                { "balanceupday", balanceUpDay },
-                { "productids", productIds },
-                { "productdetails", productDetailsXML },
-                { "movebetsday", moveBetsDay },
-                { "basecurrency", baseCurrencyName },
-                { "currencies", currencies }
+                GroupName = groupname,
+                CustId = custId > 0 ? custId : 0,
+                Currencies = currencies,
+                BaseCurrency = baseCurrencyName,
+                FromDate = fromDate,
+                ToDate = toDate,
+                ProductIds = productIds,
+                ProductDetails = productDetailsXML,
+                BalanceUpDay = balanceUpDay,
+                MoveBetsDay = moveBetsDay
             };
 
-            if (custId != 0)
-            {
-                parameters.Add("custid", custId);
-            }
-
-            return GetWinLossByCurrencyDetail("EAS_Rpt_WinLossDetailByCurrency_Com", parameters, "Com");
+            var dataset = dynamicRepository.FetchDataSet(criteria);
+            
+            return ParseWinLossByCurrencyDataSet(dataset);
         }
 
         public WinLossByCurrency EAS_Rpt_WinLossByCurDaily_SAg(
@@ -86,31 +74,24 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             DateTime balanceUpDay,
             DateTime moveBetsDay)
         {
-            var parameters = new Hashtable
+            var criteria = new WinLossByCurrencySAgCriteria
             {
-                { "groupname", groupname },
-                { "custid", custId },
-                { "fromdate", fromDate },
-                { "todate", toDate },
-                { "balanceupday", balanceUpDay },
-                { "productids", productIds },
-                { "productdetails", productDetailsXML },
-                { "movebetsday", moveBetsDay },
-                { "basecurrency", baseCurrencyName }
+                GroupName = groupname,
+                CustId = custId,
+                MasterId = masterId > 0 ? masterId : (int?)null,
+                MemberId = memberId > 0 ? memberId : (int?)null,
+                BaseCurrency = baseCurrencyName,
+                FromDate = fromDate,
+                ToDate = toDate,
+                ProductIds = productIds,
+                ProductDetails = productDetailsXML,
+                BalanceUpDay = balanceUpDay,
+                MoveBetsDay = moveBetsDay
             };
 
-            if (masterId != 0)
-            {
-                parameters.Add("masterid", masterId);
-            }
-
-            if (memberId != 0)
-            {
-                parameters.Add("memberid", memberId);
-                
-            }
-
-            return GetWinLossByCurrencyDetail("EAS_Rpt_WinLossDetailByCurrency_SAg", parameters, "Super");
+            var dataset = dynamicRepository.FetchDataSet(criteria);
+            
+            return ParseWinLossByCurrencyDataSet(dataset);
         }
         
         public WinLossByCurrencyMAg EAS_Rpt_WinLossByCurDaily_MAg(
@@ -127,30 +108,24 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             DateTime balanceUpDay,
             DateTime moveBetsDay)
         {
-            var parameters = new Hashtable
+            var criteria = new WinLossByCurrencyMAgCriteria
             {
-                { "groupname", groupname },
-                { "custid", custId },
-                { "fromdate", fromDate },
-                { "todate", toDate },
-                { "balanceupday", balanceUpDay },
-                { "productids", productIds },
-                { "productdetails", productDetailsXML },
-                { "movebetsday", moveBetsDay },
-                { "basecurrency", baseCurrencyName },
+                GroupName = groupname,
+                CustId = custId,
+                AgentId = agentId > 0 ? agentId : (int?)null,
+                MemberId = memberId > 0 ? memberId : (int?)null,
+                BaseCurrency = baseCurrencyName,
+                FromDate = fromDate,
+                ToDate = toDate,
+                ProductIds = productIds,
+                ProductDetails = productDetailsXML,
+                BalanceUpDay = balanceUpDay,
+                MoveBetsDay = moveBetsDay
             };
 
-            if (agentId != 0)
-            {
-                parameters.Add("agentid", agentId);
-            } 
+            var dataset = dynamicRepository.FetchDataSet(criteria);
             
-            if (memberId != 0)
-            {
-                parameters.Add("memberid", memberId);
-            }
-
-            return GetWinLossByCurrencyDetailMAg("EAS_Rpt_WinLossDetailByCurrency_MAg", parameters);
+            return ParseWinLossByCurrencyMAgDataSet(dataset);
         }      
         
 
@@ -167,53 +142,88 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             DateTime balanceUpDay,
             DateTime moveBetsDay)
         {
-            var parameters = new Hashtable
+            var criteria = new WinLossByCurrencyAgCriteria
             {
-                { "groupname", groupname },
-                { "custid", custId },
-                { "fromdate", fromDate },
-                { "todate", toDate },
-                { "balanceupday", balanceUpDay },
-                { "productids", productIds },
-                { "productdetails", productDetailsXML },
-                { "movebetsday", moveBetsDay },
-                { "basecurrency", baseCurrencyName }
+                GroupName = groupname,
+                CustId = custId,
+                MemberId = memberId > 0 ? memberId : (int?)null,
+                BaseCurrency = baseCurrencyName,
+                FromDate = fromDate,
+                ToDate = toDate,
+                ProductIds = productIds,
+                ProductDetails = productDetailsXML,
+                BalanceUpDay = balanceUpDay,
+                MoveBetsDay = moveBetsDay
             };
 
-            if (memberId != 0)
-            {
-                parameters.Add("memberid", memberId);
-            }
-
-            return GetWinLossByCurrencyDetailAg("EAS_Rpt_WinLossDetailByCurrency_Ag", parameters);
+            var dataset = dynamicRepository.FetchDataSet(criteria);
+            
+            return ParseWinLossByCurrencyAgDataSet(dataset);
         }
 
-        private WinLossByCurrency GetWinLossByCurrencyDetail(string spname, Hashtable parameters, string viewer = "")
+        private WinLossByCurrency ParseWinLossByCurrencyDataSet(DataSet dataset)
         {
             var details = new List<WinLossByCurrencyDetail>();
             var totals = new List<WinLossByCurrencyDetail>();
 
-            using (var reader = ExecDataReader(spname, parameters))
+            if (dataset != null && dataset.Tables.Count >= 2)
             {
-                if (reader != null)
+                // Process details table
+                foreach (var row in dataset.Tables[0].AsEnumerable())
                 {
-                    while (reader.Read())
+                    var entity = new WinLossByCurrencyDetail
                     {
-                        var entity = CreateWinLossByCurrencyDetail(reader);
-                        if (viewer == "Super")
-                        {
-                            entity.RoleId = reader.ToInt("roleid");
-                        }
+                        CustId = row.Field<int?>("custid") ?? 0,
+                        Currency = row.Field<string>("currencyname") ?? string.Empty,
+                        Username = row.Field<string>("username") ?? string.Empty,
+                        Turnover = row.Field<double?>("Turnover") ?? 0,
+                        NetTurnover = row.Field<double?>("TurnoverNoDraw") ?? 0,
+                        GrossComm = row.Field<double?>("GrossComm") ?? 0,
+                        MemberWinlost = row.Field<double?>("MemberWinlost") ?? 0,
+                        PlayerComm = row.Field<double?>("PlayerComm") ?? 0,
+                        MemberTotal = row.Field<double?>("MemberTotal") ?? 0,
+                        AgWinlost = row.Field<double?>("AgWinlost") ?? 0,
+                        AgComm = row.Field<double?>("AgComm") ?? 0,
+                        AgTotal = row.Field<double?>("AgTotal") ?? 0,
+                        MAgWinlost = row.Field<double?>("MAgWinlost") ?? 0,
+                        MAgComm = row.Field<double?>("MAgComm") ?? 0,
+                        MAgTotal = row.Field<double?>("MAgTotal") ?? 0,
+                        SAgWinlost = row.Field<double?>("SAgWinlost") ?? 0,
+                        SAgComm = row.Field<double?>("SAgComm") ?? 0,
+                        SAgTotal = row.Field<double?>("SAgTotal") ?? 0,
+                        Company = row.Field<double?>("Company") ?? 0,
+                        RewardAmount = row.Field<double?>("RewardAmount") ?? 0,
+                        RewardCurrency = row.Field<string>("RewardCurrency") ?? string.Empty
+                    };
+                    details.Add(entity);
+                }
 
-                        details.Add(entity);
-                    }
-
-                    reader.NextResult();
-                    while (reader.Read())
+                // Process totals table
+                foreach (var row in dataset.Tables[1].AsEnumerable())
+                {
+                    var entity = new WinLossByCurrencyDetail
                     {
-                        var entity = CreateWinLossByCurrencyTotal(reader);
-                        totals.Add(entity);
-                    }
+                        Username = row.Field<string>("total") ?? string.Empty,
+                        Turnover = row.Field<double?>("Turnover") ?? 0,
+                        NetTurnover = row.Field<double?>("TurnoverNoDraw") ?? 0,
+                        GrossComm = row.Field<double?>("GrossComm") ?? 0,
+                        MemberWinlost = row.Field<double?>("MemberWinlost") ?? 0,
+                        PlayerComm = row.Field<double?>("PlayerComm") ?? 0,
+                        MemberTotal = row.Field<double?>("MemberTotal") ?? 0,
+                        AgWinlost = row.Field<double?>("AgWinlost") ?? 0,
+                        AgComm = row.Field<double?>("AgComm") ?? 0,
+                        AgTotal = row.Field<double?>("AgTotal") ?? 0,
+                        MAgWinlost = row.Field<double?>("MAgWinlost") ?? 0,
+                        MAgComm = row.Field<double?>("MAgComm") ?? 0,
+                        MAgTotal = row.Field<double?>("MAgTotal") ?? 0,
+                        SAgWinlost = row.Field<double?>("SAgWinlost") ?? 0,
+                        SAgComm = row.Field<double?>("SAgComm") ?? 0,
+                        SAgTotal = row.Field<double?>("SAgTotal") ?? 0,
+                        Company = row.Field<double?>("Company") ?? 0,
+                        RewardAmount = row.Field<double?>("RewardAmount") ?? 0,
+                        RewardCurrency = row.Field<string>("RewardCurrency") ?? string.Empty
+                    };
+                    totals.Add(entity);
                 }
             }
 
@@ -224,77 +234,63 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             };
         }
 
-        private static WinLossByCurrencyDetail CreateWinLossByCurrencyDetail(IDataReader reader) =>
-            new WinLossByCurrencyDetail
-            {
-                CustId = reader.ToInt("custid"),
-                Currency = reader.To<string>("currencyname"),
-                Username = reader.To<string>("username"),
-                Turnover = reader.ToDouble("Turnover"),
-                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-                GrossComm = reader.ToDouble("GrossComm"),
-                MemberWinlost = reader.ToDouble("MemberWinlost"),
-                PlayerComm = reader.ToDouble("PlayerComm"),
-                MemberTotal = reader.ToDouble("MemberTotal"),
-                AgWinlost = reader.ToDouble("AgWinlost"),
-                AgComm = reader.ToDouble("AgComm"),
-                AgTotal = reader.ToDouble("AgTotal"),
-                MAgWinlost = reader.ToDouble("MAgWinlost"),
-                MAgComm = reader.ToDouble("MAgComm"),
-                MAgTotal = reader.ToDouble("MAgTotal"),
-                SAgWinlost = reader.ToDouble("SAgWinlost"),
-                SAgComm = reader.ToDouble("SAgComm"),
-                SAgTotal = reader.ToDouble("SAgTotal"),
-                Company = reader.ToDouble("Company"),
-                RewardAmount = reader.ToDouble("RewardAmount"),
-                RewardCurrency = reader.To<string>("RewardCurrency")
-            };
-
-        private static WinLossByCurrencyDetail CreateWinLossByCurrencyTotal(IDataReader reader) =>
-            new WinLossByCurrencyDetail
-            {
-                Username = reader.To<string>("total"),
-                Turnover = reader.ToDouble("Turnover"),
-                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-                GrossComm = reader.ToDouble("GrossComm"),
-                MemberWinlost = reader.ToDouble("MemberWinlost"),
-                PlayerComm = reader.ToDouble("PlayerComm"),
-                MemberTotal = reader.ToDouble("MemberTotal"),
-                AgWinlost = reader.ToDouble("AgWinlost"),
-                AgComm = reader.ToDouble("AgComm"),
-                AgTotal = reader.ToDouble("AgTotal"),
-                MAgWinlost = reader.ToDouble("MAgWinlost"),
-                MAgComm = reader.ToDouble("MAgComm"),
-                MAgTotal = reader.ToDouble("MAgTotal"),
-                SAgWinlost = reader.ToDouble("SAgWinlost"),
-                SAgComm = reader.ToDouble("SAgComm"),
-                SAgTotal = reader.ToDouble("SAgTotal"),
-                Company = reader.ToDouble("Company"),
-                RewardAmount = reader.ToDouble("RewardAmount"),
-                RewardCurrency = reader.To<string>("RewardCurrency")
-            };
-
-        private WinLossByCurrencyMAg GetWinLossByCurrencyDetailMAg(string spname, Hashtable parameters)
+        private WinLossByCurrencyMAg ParseWinLossByCurrencyMAgDataSet(DataSet dataset)
         {
             var details = new List<WinLossByCurrencyDetailMAg>();
             var totals = new List<WinLossByCurrencyDetailMAg>();
 
-            using (var reader = ExecDataReader(spname, parameters))
+            if (dataset != null && dataset.Tables.Count >= 2)
             {
-                if (reader != null)
+                // Process details table
+                foreach (var row in dataset.Tables[0].AsEnumerable())
                 {
-                    while (reader.Read())
+                    var entity = new WinLossByCurrencyDetailMAg
                     {
-                        var entity = CreateWinLossByCurrencyDetailMAg(reader);
-                        details.Add(entity);
-                    }
+                        CustId = row.Field<int?>("custid") ?? 0,
+                        Currency = row.Field<string>("currencyname") ?? string.Empty,
+                        Username = row.Field<string>("username") ?? string.Empty,
+                        Turnover = row.Field<double?>("Turnover") ?? 0,
+                        NetTurnover = row.Field<double?>("TurnoverNoDraw") ?? 0,
+                        GrossComm = row.Field<double?>("GrossComm") ?? 0,
+                        MemberWinlost = row.Field<double?>("MemberWinlost") ?? 0,
+                        PlayerComm = row.Field<double?>("PlayerComm") ?? 0,
+                        MemberTotal = row.Field<double?>("MemberTotal") ?? 0,
+                        AgWinlost = row.Field<double?>("AgWinlost") ?? 0,
+                        AgComm = row.Field<double?>("AgComm") ?? 0,
+                        AgTotal = row.Field<double?>("AgTotal") ?? 0,
+                        MAgWinlost = row.Field<double?>("MAgWinlost") ?? 0,
+                        MAgComm = row.Field<double?>("MAgComm") ?? 0,
+                        MAgTotal = row.Field<double?>("MAgTotal") ?? 0,
+                        Company = row.Field<double?>("Company") ?? 0,
+                        RewardAmount = row.Field<double?>("RewardAmount") ?? 0,
+                        RewardCurrency = row.Field<string>("RewardCurrency") ?? string.Empty
+                    };
+                    details.Add(entity);
+                }
 
-                    reader.NextResult();
-                    while (reader.Read())
+                // Process totals table
+                foreach (var row in dataset.Tables[1].AsEnumerable())
+                {
+                    var entity = new WinLossByCurrencyDetailMAg
                     {
-                        var entity = CreateWinLossByCurrencyTotalMAg(reader);
-                        totals.Add(entity);
-                    }
+                        Username = row.Field<string>("total") ?? string.Empty,
+                        Turnover = row.Field<double?>("Turnover") ?? 0,
+                        NetTurnover = row.Field<double?>("TurnoverNoDraw") ?? 0,
+                        GrossComm = row.Field<double?>("GrossComm") ?? 0,
+                        MemberWinlost = row.Field<double?>("MemberWinlost") ?? 0,
+                        PlayerComm = row.Field<double?>("PlayerComm") ?? 0,
+                        MemberTotal = row.Field<double?>("MemberTotal") ?? 0,
+                        AgWinlost = row.Field<double?>("AgWinlost") ?? 0,
+                        AgComm = row.Field<double?>("AgComm") ?? 0,
+                        AgTotal = row.Field<double?>("AgTotal") ?? 0,
+                        MAgWinlost = row.Field<double?>("MAgWinlost") ?? 0,
+                        MAgComm = row.Field<double?>("MAgComm") ?? 0,
+                        MAgTotal = row.Field<double?>("MAgTotal") ?? 0,
+                        Company = row.Field<double?>("Company") ?? 0,
+                        RewardAmount = row.Field<double?>("RewardAmount") ?? 0,
+                        RewardCurrency = row.Field<string>("RewardCurrency") ?? string.Empty
+                    };
+                    totals.Add(entity);
                 }
             }
 
@@ -305,72 +301,57 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             };
         }
 
-        private static WinLossByCurrencyDetailMAg CreateWinLossByCurrencyDetailMAg(IDataReader reader) =>
-            new WinLossByCurrencyDetailMAg
-            {
-                CustId = reader.ToInt("custid"),
-                RoleId = reader.ToInt("roleid"),
-                Username = reader.To<string>("username"),
-                Currency = reader.To<string>("currencyname"),
-                Turnover = reader.ToDouble("Turnover"),
-                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-                GrossComm = reader.ToDouble("GrossComm"),
-                MemberWinlost = reader.ToDouble("MemberWinlost"),
-                PlayerComm = reader.ToDouble("PlayerComm"),
-                MemberTotal = reader.ToDouble("MemberTotal"),
-                AgWinlost = reader.ToDouble("AgWinlost"),
-                AgComm = reader.ToDouble("AgComm"),
-                AgTotal = reader.ToDouble("AgTotal"),
-                MAgWinlost = reader.ToDouble("MAgWinlost"),
-                MAgComm = reader.ToDouble("MAgComm"),
-                MAgTotal = reader.ToDouble("MAgTotal"),
-                Company = reader.ToDouble("Company"),
-                RewardAmount = reader.ToDouble("RewardAmount"),
-                RewardCurrency = reader.To<string>("RewardCurrency")
-            };
-
-        private static WinLossByCurrencyDetailMAg CreateWinLossByCurrencyTotalMAg(IDataReader reader) =>
-            new WinLossByCurrencyDetailMAg
-            {
-                Username = reader.To<string>("total"),
-                Turnover = reader.ToDouble("Turnover"),
-                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-                GrossComm = reader.ToDouble("GrossComm"),
-                MemberWinlost = reader.ToDouble("MemberWinlost"),
-                PlayerComm = reader.ToDouble("PlayerComm"),
-                MemberTotal = reader.ToDouble("MemberTotal"),
-                AgWinlost = reader.ToDouble("AgWinlost"),
-                AgComm = reader.ToDouble("AgComm"),
-                AgTotal = reader.ToDouble("AgTotal"),
-                MAgWinlost = reader.ToDouble("MAgWinlost"),
-                MAgComm = reader.ToDouble("MAgComm"),
-                MAgTotal = reader.ToDouble("MAgTotal"),
-                Company = reader.ToDouble("Company"),
-                RewardAmount = reader.ToDouble("RewardAmount"),
-                RewardCurrency = reader.To<string>("RewardCurrency")
-            };
-
-        private WinLossByCurrencyAg GetWinLossByCurrencyDetailAg(string spname, Hashtable parameters)
+        private WinLossByCurrencyAg ParseWinLossByCurrencyAgDataSet(DataSet dataset)
         {
             var details = new List<WinLossByCurrencyDetailAg>();
             var totals = new List<WinLossByCurrencyDetailAg>();
 
-            using (var reader = ExecDataReader(spname, parameters))
+            if (dataset != null && dataset.Tables.Count >= 2)
             {
-                if (reader != null)
+                // Process details table
+                foreach (var row in dataset.Tables[0].AsEnumerable())
                 {
-                    while (reader.Read())
+                    var entity = new WinLossByCurrencyDetailAg
                     {
-                        var entity = CreateWinLossByCurrencyDetailAg(reader);
-                        details.Add(entity);
-                    }
+                        CustId = row.Field<int?>("custid") ?? 0,
+                        Currency = row.Field<string>("currencyname") ?? string.Empty,
+                        Username = row.Field<string>("username") ?? string.Empty,
+                        Turnover = row.Field<double?>("Turnover") ?? 0,
+                        NetTurnover = row.Field<double?>("TurnoverNoDraw") ?? 0,
+                        GrossComm = row.Field<double?>("GrossComm") ?? 0,
+                        MemberWinlost = row.Field<double?>("MemberWinlost") ?? 0,
+                        PlayerComm = row.Field<double?>("PlayerComm") ?? 0,
+                        MemberTotal = row.Field<double?>("MemberTotal") ?? 0,
+                        AgWinlost = row.Field<double?>("AgWinlost") ?? 0,
+                        AgComm = row.Field<double?>("AgComm") ?? 0,
+                        AgTotal = row.Field<double?>("AgTotal") ?? 0,
+                        Company = row.Field<double?>("Company") ?? 0,
+                        RewardAmount = row.Field<double?>("RewardAmount") ?? 0,
+                        RewardCurrency = row.Field<string>("RewardCurrency") ?? string.Empty
+                    };
+                    details.Add(entity);
+                }
 
-                    reader.NextResult();
-                    while (reader.Read())
+                // Process totals table
+                foreach (var row in dataset.Tables[1].AsEnumerable())
+                {
+                    var entity = new WinLossByCurrencyDetailAg
                     {
-                        var entity = CreateWinLossByCurrencyTotalAg(reader);
-                        totals.Add(entity);
-                    }
+                        Username = row.Field<string>("total") ?? string.Empty,
+                        Turnover = row.Field<double?>("Turnover") ?? 0,
+                        NetTurnover = row.Field<double?>("TurnoverNoDraw") ?? 0,
+                        GrossComm = row.Field<double?>("GrossComm") ?? 0,
+                        MemberWinlost = row.Field<double?>("MemberWinlost") ?? 0,
+                        PlayerComm = row.Field<double?>("PlayerComm") ?? 0,
+                        MemberTotal = row.Field<double?>("MemberTotal") ?? 0,
+                        AgWinlost = row.Field<double?>("AgWinlost") ?? 0,
+                        AgComm = row.Field<double?>("AgComm") ?? 0,
+                        AgTotal = row.Field<double?>("AgTotal") ?? 0,
+                        Company = row.Field<double?>("Company") ?? 0,
+                        RewardAmount = row.Field<double?>("RewardAmount") ?? 0,
+                        RewardCurrency = row.Field<string>("RewardCurrency") ?? string.Empty
+                    };
+                    totals.Add(entity);
                 }
             }
 
@@ -380,44 +361,6 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 WinLossTotals = totals
             };
         }
-
-        private static WinLossByCurrencyDetailAg CreateWinLossByCurrencyDetailAg(IDataReader reader) =>
-            new WinLossByCurrencyDetailAg
-            {
-                CustId = reader.ToInt("custid"),
-                Username = reader.To<string>("username"),
-                Currency = reader.To<string>("currencyname"),
-                Turnover = reader.ToDouble("Turnover"),
-                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-                GrossComm = reader.ToDouble("GrossComm"),
-                MemberWinlost = reader.ToDouble("MemberWinlost"),
-                PlayerComm = reader.ToDouble("PlayerComm"),
-                MemberTotal = reader.ToDouble("MemberTotal"),
-                AgWinlost = reader.ToDouble("AgWinlost"),
-                AgComm = reader.ToDouble("AgComm"),
-                AgTotal = reader.ToDouble("AgTotal"),
-                Company = reader.ToDouble("Company"),
-                RewardAmount = reader.ToDouble("RewardAmount"),
-                RewardCurrency = reader.To<string>("RewardCurrency")
-            };
-
-        private static WinLossByCurrencyDetailAg CreateWinLossByCurrencyTotalAg(IDataReader reader) =>
-            new WinLossByCurrencyDetailAg
-            {
-                Username = reader.To<string>("total"),
-                Turnover = reader.ToDouble("Turnover"),
-                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-                GrossComm = reader.ToDouble("GrossComm"),
-                MemberWinlost = reader.ToDouble("MemberWinlost"),
-                PlayerComm = reader.ToDouble("PlayerComm"),
-                MemberTotal = reader.ToDouble("MemberTotal"),
-                AgWinlost = reader.ToDouble("AgWinlost"),
-                AgComm = reader.ToDouble("AgComm"),
-                AgTotal = reader.ToDouble("AgTotal"),
-                Company = reader.ToDouble("Company"),
-                RewardAmount = reader.ToDouble("RewardAmount"),
-                RewardCurrency = reader.To<string>("RewardCurrency")
-            };
     }
 }
 
