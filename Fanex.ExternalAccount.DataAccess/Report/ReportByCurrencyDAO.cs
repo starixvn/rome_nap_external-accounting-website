@@ -18,7 +18,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
     {
         private readonly IDynamicRepository dynamicRepository;
         
-        public ReportByCurrencyDAO(IDynamicRepository dynamicRepository)
+        public ReportByCurrencyDAO(IDynamicRepository dynamicRepository = null)
         {
             this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
