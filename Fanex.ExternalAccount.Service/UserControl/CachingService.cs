@@ -6,8 +6,7 @@
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DataAccess.Impl.UserControl;
     using Fanex.ExternalAccount.DTO.UserControl;
-    using Fanex.ExternalAccount.Service.Interface.UserControl;
-
+    
     public interface ICachingService
     {
         UserCache GetUserCache(int userId, string groupName);

@@ -4,8 +4,7 @@
     using DataAccess.Impl.UserControl;
     using DTO;
     using DTO.UserControl;
-    using Interface.UserControl;
-
+    
     public interface IFunctionService
     {
         Result CreateFunction(Function function, int custId, string ip, string assignedGroupIDs);
