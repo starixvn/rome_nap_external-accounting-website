@@ -281,7 +281,7 @@
 
             Fanex.ExtAcc.Customer.ClosedStatus.ShowMultipleOpenCustomerPopup(
                 Fanex.ExtAcc.Customer.IdsAndNames().Ids,
-                Fanex.ExtAcc.Customer.CurrentLevel);
+                Fanex.ExtAcc.Customer.isEditDirectMember ? Fanex.ExtAcc.Customer.Member : Fanex.ExtAcc.Customer.CurrentLevel);
         }
     };
 
