@@ -15,6 +15,10 @@
     {
         private readonly IDynamicRepository dynamicRepository;
 
+        public BelongingDataAccess() : this(null)
+        {
+        }
+
         public BelongingDataAccess(IDynamicRepository dynamicRepository)
         {
             this.dynamicRepository = dynamicRepository ?? new DynamicRepository();

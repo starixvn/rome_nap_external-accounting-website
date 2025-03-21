@@ -1,8 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.EditSuperList
 {
     using Fanex.Data.Repository;
+    using Fanex.ExternalAccount.Core.Shared;
 
-    public class UpdateMultipleSuperSecurityCodeCriteria : CriteriaBase
+    public class UpdateMultipleSuperSecurityCodeCommand : INonQueryBaseCommand
     {
         public string CustIDList { get; set; }
 
@@ -16,12 +17,14 @@
 
         public int UserId { get; set; }
 
+        public int ErrCode { get; set; }
+
         public string ErrMsg { get; set; }
 
-        public override string GetSettingKey()
+        public string GetSettingKey()
          => "Acc_CustomerUpdSecurityCode_Multiple";
 
-        public override bool IsValid()
+        public bool IsValid()
         {
             return !string.IsNullOrWhiteSpace(CustIDList) && UserId > 0;
         }

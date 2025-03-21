@@ -1,8 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.EditSuperList
 {
-    using Fanex.Data.Repository;
+    using Fanex.ExternalAccount.Core.Shared;
 
-    public class UpdateMultipleSuperPasswordCirteria : CriteriaBase
+    public class UpdateMultipleSuperPasswordCommand : INonQueryBaseCommand
     {
         public string CustIDList { get; set; }
 
@@ -16,11 +16,13 @@
 
         public int UserId { get; set; }
 
+        public int ErrCode { get; set; }
+
         public string ErrMsg { get; set; }
 
-        public override string GetSettingKey()
+        public string GetSettingKey()
          => "Age_CustomerUpdPwd_Multiple";
 
-        public override bool IsValid() => true;
+        public bool IsValid() => true;
     }
 }

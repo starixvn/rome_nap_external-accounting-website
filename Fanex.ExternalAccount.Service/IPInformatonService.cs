@@ -1,17 +1,17 @@
 ﻿namespace Fanex.ExternalAccount.Service
 {
-    using Fanex.Caching;
-    using Fanex.Caching.Memory;
-    using Fanex.ExternalAccount.DataAccess.Criteria.IPInformation;
-    using Fanex.ExternalAccount.DataAccess.Impl.Report;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.NAP.Framework.Data;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Net.Sockets;
     using System.Numerics;
+    using Fanex.Caching;
+    using Fanex.Caching.Memory;
+    using Fanex.Data.Repository;
+    using Fanex.ExternalAccount.DataAccess.Criteria.IPInformation;
+    using Fanex.ExternalAccount.DataAccess.Impl.Report;
+    using Fanex.ExternalAccount.DTO;
 
     public interface IIPInformatonService
     {

@@ -13,7 +13,7 @@
             out int onuserId, 
             out bool hasMultipleGroupsPermission);
 
-        Result Logout(int custId, string username);
+        void Logout(int custId, string username);
 
         bool IsKickedOut(int custId);
         

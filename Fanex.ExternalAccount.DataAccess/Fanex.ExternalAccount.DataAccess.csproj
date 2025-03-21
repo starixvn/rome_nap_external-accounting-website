@@ -194,9 +194,9 @@
     <Compile Include="Criteria\Customer\CustomerStatus\UpdateClosedStatusCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\UpdateProtectedStatusCriteria.cs" />
     <Compile Include="Criteria\Customer\EditSuperList\CheckMultipleSupersCriteria.cs" />
-    <Compile Include="Criteria\Customer\EditSuperList\UpdateMultipleSuperPasswordCirteria.cs" />
+    <Compile Include="Criteria\Customer\EditSuperList\UpdateMultipleSuperPasswordCommand.cs" />
     <Compile Include="Criteria\Customer\EditSuperList\UpdateMultipleSuperInfoCommand.cs" />
-    <Compile Include="Criteria\Customer\EditSuperList\UpdateMultipleSuperSecurityCodeCriteria.cs" />
+    <Compile Include="Criteria\Customer\EditSuperList\UpdateMultipleSuperSecurityCodeCommand.cs" />
     <Compile Include="Criteria\Customer\GetCustomerAllStatusCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerList\SearchMemberListCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerList\SearchCustomerListBaseCriteria.cs" />
@@ -232,6 +232,13 @@
     <Compile Include="Criteria\GroupConfiguration\GetGroupConfigurationCriteria.cs" />
     <Compile Include="Criteria\IPInformation\GetIPInformationCriteria.cs" />
     <Compile Include="Criteria\IPInformation\GetAllSpecialIPCriteria.cs" />
+    <Compile Include="Criteria\Login\CheckExternalGroupCommand.cs" />
+    <Compile Include="Criteria\Login\CheckinCommand.cs" />
+    <Compile Include="Criteria\OTP\GetCustomerOtpDtoCriteria.cs" />
+    <Compile Include="Criteria\Login\GetDbTimeCommand.cs" />
+    <Compile Include="Criteria\Login\IsKickedOutCommand.cs" />
+    <Compile Include="Criteria\Login\LoginCommand.cs" />
+    <Compile Include="Criteria\Login\LogoutCommand.cs" />
     <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutCheckCriteria.cs" />
     <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutSelectCriteria.cs" />
     <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutUpdateCriteria.cs" />
@@ -341,7 +348,6 @@
     <Compile Include="Report\IReportByCurrencyDAO.cs" />
     <Compile Include="Report\IReportDAO.cs" />
     <Compile Include="Report\ReportByCurrencyDAO.cs" />
-    <Compile Include="Report\ReportDao.partial.cs" />
     <Compile Include="Report\ReportDao.cs" />
     <Compile Include="Report\SuperWinLossByPTDataAccess.cs" />
     <Compile Include="Report\SuperWinLossMCByPTDao.cs" />
