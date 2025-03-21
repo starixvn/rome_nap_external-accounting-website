@@ -2,7 +2,7 @@
 {
     using Fanex.Data.Repository;
     
-    public class UpdateMultipleGroupPolicyCriteria : CriteriaBase
+    public class UpdateMultipleGroupPolicyCriteria : NonQueryCommand
     {
         public UpdateMultipleGroupPolicyCriteria(
             int funcId,
@@ -27,9 +27,9 @@
         public int UserId { get; }
 
         public string IP { get; }
-        
+
         public int ErrCode { get; set; }
-        
+
         public string ErrMsg { get; set; }
 
         public override string GetSettingKey()
@@ -37,7 +37,7 @@
 
         public override bool IsValid()
             => FuncId > 0
-            && !string.IsNullOrWhiteSpace(Policy)
-            && UserId > 0;
+               && !string.IsNullOrWhiteSpace(Policy)
+               && UserId > 0;
     }
 }

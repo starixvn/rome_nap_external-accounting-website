@@ -10,12 +10,7 @@
             string ip) : base(funcId, policy, oldPolicy, userId, ip)
         {
         }
-
-        public int ErrCode { get; set; }
         
-        public string ErrMsg { get; set; }
-        
-        public override string GetSettingKey()
-            => "EAS_UserPolicyUpdMultiple";
+        public override string GetSettingKey() => "EAS_UserPolicyUpdMultiple";
     }
 }

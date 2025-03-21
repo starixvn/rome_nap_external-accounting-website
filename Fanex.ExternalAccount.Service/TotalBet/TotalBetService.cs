@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Fanex.CustomerSetting.Module.Core.Services.Impl;
+using Fanex.Data.Repository;
 using Fanex.ExternalAccount.DataAccess.Criteria.TotalBet;
 using Fanex.ExternalAccount.DTO;
 using Fanex.ExternalAccount.DTO.TotalBet;
 using Fanex.ExternalAccount.Service.Params;
-using Fanex.NAP.Framework.Data;
 
 namespace Fanex.ExternalAccount.Service.TotalBet
 {

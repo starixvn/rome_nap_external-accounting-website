@@ -24,17 +24,20 @@
         private readonly SuperWinLossMCDetailByPTDao superWinLossMCDetailByPTDataAccess;
         private readonly IProductService productService;
         private readonly IProductDetailService productDetailService;
+        private readonly IReportUtils reportUtils;
 
         public SuperWinLossDetailByPTServiceImpl(
             SuperWinLossDetailByPTDataAccess superWinLossDetailByPTDataAccess = null,
             SuperWinLossMCDetailByPTDao superWinLossMCDetailByPTDataAccess = null,
             IProductService productService = null,
-            IProductDetailService productDetailService = null)
+            IProductDetailService productDetailService = null,
+            IReportUtils reportUtils = null)
         {
             this.superWinLossDetailByPTDataAccess = superWinLossDetailByPTDataAccess ?? new SuperWinLossDetailByPTDataAccessImpl();
             this.superWinLossMCDetailByPTDataAccess = superWinLossMCDetailByPTDataAccess ?? new SuperWinLossMCDetailByPTDaoImpl();
             this.productService = productService ?? new ProductService();
             this.productDetailService = productDetailService ?? new ProductDetailService();
+            this.reportUtils = reportUtils ?? new ReportUtils();
         }
 
         public SuperWinLossDetailByPTModel GetSuperWinLossDetailByPT(SuperWinLossDetailByPTParam param)
@@ -57,8 +60,8 @@
                 param.GroupName,
                 param.FromDate,
                 param.ToDate,
-                ReportService.BalanceUpDate,
-                ReportService.MoveBetsDate,
+                reportUtils.BalanceUpDate,
+                reportUtils.MoveBetsDate,
                 Utils.JoinToString(validProductIds),
                 productDetailsXML,
                 param.PageSize,
@@ -115,8 +118,8 @@
                 param.GroupName,
                 param.FromDate,
                 param.ToDate,
-                ReportService.BalanceUpDate,
-                ReportService.MoveBetsDate,
+                reportUtils.BalanceUpDate,
+                reportUtils.MoveBetsDate,
                 Utils.JoinToString(validProductIds),
                 productDetailsXML,
                 param.BaseCurrencyName,
