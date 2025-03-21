@@ -315,6 +315,7 @@
     <Compile Include="Criteria\UserControl\ManageUser\UpdateStatusCriteria.cs" />
     <Compile Include="Criteria\UserControl\ManageUser\UpdateUserPolicyCriteria.cs" />
     <Compile Include="Criteria\UserControl\ManageUser\WriteLogCriteria.cs" />
+    <Compile Include="Criteria\ViewMaxPayoutSettingInformation\GetSabaSportsCriteria.cs" />
     <Compile Include="Customer\AssociationAccount\AssociationAccountDao.cs" />
     <Compile Include="Customer\CustomerList\CustomerListDao.cs" />
     <Compile Include="Customer\GetCustDBConfigBySiteCriteria.cs" />

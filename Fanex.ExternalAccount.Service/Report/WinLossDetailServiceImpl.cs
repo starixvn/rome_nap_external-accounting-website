@@ -142,7 +142,7 @@
 
         public dynamic SearchWinLossDetail(ISearchWinLossDetailRequest request)
         {
-            var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
+            var sortingOrderList = new ArrayList(reportService.GetSortingOrderList(request.GroupName).ToArray());
 
             var customerInfo = new LineInfo { RoleId = Role.Super };
 
