@@ -8,7 +8,6 @@
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
-    using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Requests;
     using Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Services;

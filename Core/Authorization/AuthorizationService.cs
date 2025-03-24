@@ -11,7 +11,6 @@
     using DTO.UserControl;
     using Service;
     using Service.Impl.UserControl;
-    using Service.Interface.UserControl;
     using Shared;
 
     public interface AuthorizationService

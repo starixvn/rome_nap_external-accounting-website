@@ -7,7 +7,6 @@
     using CustomerSetting.Security.Authenticate;
     using DataAccess.Criteria.GroupConfiguration;
     using Service.Impl.UserControl;
-    using Service.Interface.UserControl;
     using Service.Products;
     using Service.UserControl;
     using ViewModels;

@@ -16,7 +16,6 @@
     using Service.Impl.Login;
     using Service.Impl.UserControl;
     using Service.Interface.Login;
-    using Service.Interface.UserControl;
     using Utilities;
     using ViewModel.Account;
     using ViewModels;

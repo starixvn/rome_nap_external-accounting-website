@@ -10,7 +10,6 @@
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
-    using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Fanex.ExternalAccount.Service.UserControl;
     using IBCUtils;
 
