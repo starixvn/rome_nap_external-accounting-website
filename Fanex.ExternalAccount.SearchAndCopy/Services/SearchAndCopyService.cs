@@ -117,15 +117,15 @@
             if (_case != 0)
             {
                 var updateCRMHeadlineInfoCriteria = new UpdateCrmHeadlineInfoCriteria
-                {
-                    CustId = newCustId,
-                    UserName = string.Empty,
-                    LoginIP = context.CurrentContext.Ip4Address,
-                    UserId = context.CurrentSession.CustId,
-                    Case = _case,
-                    Old_Headline = headlineID_Old,
-                    New_Headline = headlineID_New
-                };
+                (
+                    newCustId,
+                    string.Empty,
+                    _case,
+                     headlineID_Old,
+                     headlineID_New,
+                    context.CurrentSession.CustId,
+                    context.CurrentContext.Ip4Address
+                );
 
                 context.Result = searchAndCopyRepository.UpdateCRMHeadlineInfo(updateCRMHeadlineInfoCriteria);
 
