@@ -343,7 +343,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Fanex.ExternalAccount.Service.ruleset" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

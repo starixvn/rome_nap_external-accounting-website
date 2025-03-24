@@ -250,7 +250,6 @@
     <Compile Include="UserControl\UserPolicy.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Fanex.ExternalAccount.DTO.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>

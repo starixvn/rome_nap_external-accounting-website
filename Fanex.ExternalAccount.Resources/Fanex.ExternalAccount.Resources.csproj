@@ -88,7 +88,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Fanex.ExternalAccount.Resources.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>
